@@ -129,6 +129,7 @@
   "user.money.customers.billing": "Clients facturés",
   "user.money.amounts": "Comment les montants sont affichés",
   "user.money.finances": "Vos finances dans tous vos espaces",
+  "user.money.businesses": "Vos activités en un coup d'œil",
   "user.money.invoicing": "La facturation en un coup d'œil",
   "user.space.overview": "Votre espace, configuré par vous (Réglages de l'espace)",
   "user.space.editor.levels": "Éditeur d'espace : ajouter, renommer et supprimer des étages",

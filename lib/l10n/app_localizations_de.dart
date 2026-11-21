@@ -22986,6 +22986,76 @@ class AppLocalizationsDe extends AppLocalizations {
   String get myBadgeTitle => 'Mein Badge';
 
   @override
+  String get myBusinessAwaiting => 'Wartet auf Freigabe';
+
+  @override
+  String get myBusinessDeclared => 'Gemeldet, wartet auf Bestätigung';
+
+  @override
+  String get myBusinessDetailEmpty => 'Keine Zeilen.';
+
+  @override
+  String get myBusinessDetailRefused => 'Sie dürfen diese Zeilen nicht lesen.';
+
+  @override
+  String get myBusinessHeld => 'davon zurückgehalten';
+
+  @override
+  String myBusinessIssued(String date) {
+    return 'Ausgestellt am $date';
+  }
+
+  @override
+  String get myBusinessMemberExpenses => 'Ausgaben, die Mitgliedern zustehen';
+
+  @override
+  String get myBusinessNothingOwed =>
+      'Diesem Unternehmen wird nichts geschuldet.';
+
+  @override
+  String get myBusinessOpen => 'Rechnungen dieses Unternehmens öffnen';
+
+  @override
+  String get myBusinessPayablesRefused =>
+      'Was dieses Unternehmen zu zahlen hat, ist für Sie nicht einsehbar.';
+
+  @override
+  String get myBusinessPayablesUnavailable =>
+      'Was dieses Unternehmen zu zahlen hat, konnte nicht gelesen werden. Das heißt nicht, dass nichts zu zahlen ist.';
+
+  @override
+  String get myBusinessReceived => 'Eingegangen, noch nicht zugeordnet';
+
+  @override
+  String get myBusinessRefunds => 'Rückerstattungen an Kunden';
+
+  @override
+  String get myBusinessRetry => 'Erneut versuchen';
+
+  @override
+  String get myBusinessStillOwed => 'Noch offen';
+
+  @override
+  String get myBusinessSuppliers => 'Lieferanten';
+
+  @override
+  String get myBusinessToCollect => 'Einzuziehen';
+
+  @override
+  String get myBusinessUnavailable =>
+      'Dieses Unternehmen konnte nicht gelesen werden. Das heißt nicht, dass nichts geschuldet wird.';
+
+  @override
+  String get myBusinessesFaceBusinesses => 'Meine Unternehmen';
+
+  @override
+  String get myBusinessesFacePersonal => 'Persönlich';
+
+  @override
+  String get myBusinessesIntro =>
+      'Was jedem Ihrer Unternehmen noch zusteht. Die Beträge werden je Unternehmen und je Währung geführt: Sie werden nie zusammengezählt und nie gegen das aufgerechnet, was das Unternehmen schuldet.';
+
+  @override
   String get myFinancesExport => 'Meine Belege exportieren';
 
   @override

@@ -22764,6 +22764,75 @@ class AppLocalizationsEn extends AppLocalizations {
   String get myBadgeTitle => 'My badge';
 
   @override
+  String get myBusinessAwaiting => 'Awaiting approval';
+
+  @override
+  String get myBusinessDeclared => 'Declared, awaiting confirmation';
+
+  @override
+  String get myBusinessDetailEmpty => 'No rows.';
+
+  @override
+  String get myBusinessDetailRefused => 'You may not read these rows.';
+
+  @override
+  String get myBusinessHeld => 'of which on hold';
+
+  @override
+  String myBusinessIssued(String date) {
+    return 'Issued $date';
+  }
+
+  @override
+  String get myBusinessMemberExpenses => 'Expenses owed to members';
+
+  @override
+  String get myBusinessNothingOwed => 'Nothing is owed to this business.';
+
+  @override
+  String get myBusinessOpen => 'Open the invoices of this business';
+
+  @override
+  String get myBusinessPayablesRefused =>
+      'What this business has to pay is not available to you.';
+
+  @override
+  String get myBusinessPayablesUnavailable =>
+      'What this business has to pay could not be read. That is not the same as nothing to pay.';
+
+  @override
+  String get myBusinessReceived => 'Received, not yet matched';
+
+  @override
+  String get myBusinessRefunds => 'Refunds due to customers';
+
+  @override
+  String get myBusinessRetry => 'Try again';
+
+  @override
+  String get myBusinessStillOwed => 'Still owed';
+
+  @override
+  String get myBusinessSuppliers => 'Suppliers';
+
+  @override
+  String get myBusinessToCollect => 'To collect';
+
+  @override
+  String get myBusinessUnavailable =>
+      'This business could not be read. That is not the same as nothing being owed.';
+
+  @override
+  String get myBusinessesFaceBusinesses => 'My businesses';
+
+  @override
+  String get myBusinessesFacePersonal => 'Personal';
+
+  @override
+  String get myBusinessesIntro =>
+      'What each of your businesses is still owed. The figures are kept per business and per currency: they are never added together and never set against what the business owes.';
+
+  @override
   String get myFinancesExport => 'Export my documents';
 
   @override

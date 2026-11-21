@@ -645,6 +645,29 @@ You belong to several spaces and want all your invoices, payments and reminders 
 
 **See also:** [Your invoices](help:user.money.invoices)
 
+<!-- anchor: user.money.businesses -->
+### Your businesses at a glance
+
+**Audience:** Administrator · Owner
+
+You run or manage one or more businesses and want to see, from Me, what each is still owed and what each has to pay.
+
+**Steps**
+
+1. Open [My finances](app:/money). If you may read the finances of a business, a switch at the top offers **Personal** and **My businesses**.
+2. Choose **My businesses**. Each business has a card with one block per currency: **To collect**, **Declared, awaiting confirmation**, **Received, not yet matched** and **Awaiting approval**.
+3. Tap a figure to see the invoices behind it, **Show more** when there are more, and tap an invoice to open it in its business.
+4. Under **To pay**, **Suppliers** and **Expenses owed to members** are listed apart; tap either to see the obligations behind it.
+
+**Good to know**
+
+- Currencies are never added together, and nothing is set against what the business owes. A refund due to customers (**Refunds due to customers**) is a line of its own.
+- A held payable is part of what remains, not an addition to it.
+- A business that could not be read says so, with **Try again**; that is not the same as nothing being owed. A business whose finances you may not read does not appear.
+- Being a customer of a business gives you no access to its figures. Opening a row only takes you to the business: what you may do there is decided by your role in it.
+
+**See also:** [Your finances across spaces](help:user.money.finances)
+
 <!-- anchor: user.money.invoicing -->
 ### Invoicing at a glance
 

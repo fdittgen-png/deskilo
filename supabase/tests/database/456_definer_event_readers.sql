@@ -20,6 +20,8 @@ insert into listed (sig, reason) values
    'callable by the service role only'),
   ('bank_line_status(bank_statement_lines)',
    'callable by the service role only'),
+  ('business_receivable_rows(uuid)',
+   'callable by the service role only'),
   ('clear_sample_data(uuid,uuid)',
    'writes or checks: returns an id, nothing, or a refusal about the object the caller acts on (deletes the sample batch)'),
   ('create_sample_data(uuid,uuid)',
@@ -135,7 +137,7 @@ select is((select coalesce(string_agg(l.sig, ', ' order by l.sig), '') from list
             where l.reason like 'callable by the service role only%'
               and has_function_privilege('authenticated', l.sig::regprocedure, 'execute')), '',
   'every entry listed as callable by the service role only is not executable by a signed-in client');
-select ok((select count(*) from listed) = 36, 'the list holds 36 reasoned exceptions');
+select ok((select count(*) from listed) = 37, 'the list holds 37 reasoned exceptions');
 
 select * from finish();
 rollback;

@@ -22921,6 +22921,75 @@ class AppLocalizationsEs extends AppLocalizations {
   String get myBadgeTitle => 'Mi credencial';
 
   @override
+  String get myBusinessAwaiting => 'Pendiente de aprobación';
+
+  @override
+  String get myBusinessDeclared => 'Declarado, pendiente de confirmación';
+
+  @override
+  String get myBusinessDetailEmpty => 'Ninguna fila.';
+
+  @override
+  String get myBusinessDetailRefused => 'No puede leer estas filas.';
+
+  @override
+  String get myBusinessHeld => 'de los cuales retenido';
+
+  @override
+  String myBusinessIssued(String date) {
+    return 'Emitida el $date';
+  }
+
+  @override
+  String get myBusinessMemberExpenses => 'Gastos debidos a miembros';
+
+  @override
+  String get myBusinessNothingOwed => 'A este negocio no se le debe nada.';
+
+  @override
+  String get myBusinessOpen => 'Abrir las facturas de este negocio';
+
+  @override
+  String get myBusinessPayablesRefused =>
+      'Lo que este negocio debe pagar no está disponible para usted.';
+
+  @override
+  String get myBusinessPayablesUnavailable =>
+      'No se pudo leer lo que este negocio debe pagar. Eso no significa que no haya nada que pagar.';
+
+  @override
+  String get myBusinessReceived => 'Recibido, aún sin conciliar';
+
+  @override
+  String get myBusinessRefunds => 'Reembolsos debidos a clientes';
+
+  @override
+  String get myBusinessRetry => 'Reintentar';
+
+  @override
+  String get myBusinessStillOwed => 'Aún pendiente';
+
+  @override
+  String get myBusinessSuppliers => 'Proveedores';
+
+  @override
+  String get myBusinessToCollect => 'Por cobrar';
+
+  @override
+  String get myBusinessUnavailable =>
+      'No se pudo leer este negocio. Eso no significa que no se deba nada.';
+
+  @override
+  String get myBusinessesFaceBusinesses => 'Mis negocios';
+
+  @override
+  String get myBusinessesFacePersonal => 'Personal';
+
+  @override
+  String get myBusinessesIntro =>
+      'Lo que cada uno de sus negocios aún tiene por cobrar. Los importes se llevan por negocio y por moneda: nunca se suman entre sí ni se compensan con lo que el negocio debe.';
+
+  @override
   String get myFinancesExport => 'Exportar mis documentos';
 
   @override

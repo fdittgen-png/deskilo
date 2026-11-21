@@ -2897,6 +2897,28 @@ Sie gehören mehreren Spaces an und möchten alle Ihre Rechnungen, Zahlungen und
 
 **Siehe auch:** [Ihre Rechnungen](help:user.money.invoices)
 
+### Ihre Unternehmen auf einen Blick
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie führen oder verwalten ein oder mehrere Unternehmen und möchten von Ich aus sehen, was jedem noch zusteht und was jedes zu zahlen hat.
+
+**Schritte**
+
+1. Öffnen Sie [Meine Finanzen](app:/money). Wenn Sie die Finanzen eines Unternehmens lesen dürfen, bietet ein Umschalter oben **Persönlich** und **Meine Unternehmen** an.
+2. Wählen Sie **Meine Unternehmen**. Jedes Unternehmen hat eine Karte mit einem Block je Währung: **Einzuziehen**, **Gemeldet, wartet auf Bestätigung**, **Eingegangen, noch nicht zugeordnet** und **Wartet auf Freigabe**.
+3. Tippen Sie auf einen Betrag, um die Rechnungen dahinter zu sehen, **Mehr anzeigen**, wenn es mehr gibt, und tippen Sie auf eine Rechnung, um sie im jeweiligen Unternehmen zu öffnen.
+4. Unter **Zu zahlen** stehen **Lieferanten** und **Ausgaben, die Mitgliedern zustehen** getrennt; tippen Sie auf eine davon, um die Verpflichtungen dahinter zu sehen.
+
+**Gut zu wissen**
+
+- Währungen werden nie zusammengezählt, und nichts wird gegen das aufgerechnet, was das Unternehmen schuldet. Eine Rückerstattung an Kunden (**Rückerstattungen an Kunden**) ist eine eigene Zeile.
+- Ein zurückgehaltener Betrag ist Teil dessen, was bleibt, kein Zuschlag.
+- Ein Unternehmen, das nicht gelesen werden konnte, sagt das, mit **Erneut versuchen**; das heißt nicht, dass nichts geschuldet wird. Ein Unternehmen, dessen Finanzen Sie nicht lesen dürfen, erscheint nicht.
+- Kunde eines Unternehmens zu sein, gibt keinen Zugang zu dessen Zahlen. Eine Zeile zu öffnen führt Sie nur zum Unternehmen: Was Sie dort tun dürfen, entscheidet Ihre Rolle.
+
+**Siehe auch:** [Ihre Finanzen über alle Bereiche](help:user.money.finances)
+
 ### Rechnungsstellung im Überblick
 
 **Zielgruppe:** Abrechnungsadministrator:in · Inhaber

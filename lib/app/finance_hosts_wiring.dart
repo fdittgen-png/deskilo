@@ -20,6 +20,7 @@ import '../features/money/data/host_finance_reader.dart';
 import '../features/money/data/supabase_member_account_commands.dart';
 import '../features/money/data/supabase_payment_gateway_repository.dart';
 import '../features/money/domain/finance_hosts.dart';
+import '../features/money/providers/business_receivables_providers.dart';
 import '../features/money/providers/finance_host_providers.dart';
 import '../features/money/providers/finance_selection_provider.dart';
 import '../features/money/providers/invoice_group_providers.dart';
@@ -142,3 +143,17 @@ final Override financeWorkspaceEntryFromApp = financeWorkspaceEntryProvider
 /// exception (the network, a refusal of the server) or the pool's typed
 /// refusal, which is a [StateError]. Any other error is a defect and goes on.
 bool _isUnreached(Object error) => error is Exception || error is ConnectionFailure;
+
+/// #4167 — the businesses My businesses reads: the person's own production
+/// workspaces on this installation. A development space is test data and is
+/// never read there, so production and development never share a figure.
+final Override businessWorkspacesFromApp = myBusinessWorkspacesProvider
+    .overrideWith((ref) async {
+      final all = await ref.watch(myWorkspacesProvider.future);
+      final development = ref.watch(myDevelopmentWorkspaceIdsProvider);
+      return [
+        for (final w in all)
+          if (!development.contains(w.id))
+            (networkId: w.networkId, id: w.id, name: w.name),
+      ];
+    });

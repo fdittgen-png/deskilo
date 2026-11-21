@@ -36217,6 +36217,132 @@ abstract class AppLocalizations {
   /// **'My badge'**
   String get myBadgeTitle;
 
+  /// Me › My businesses: the receivables of each business (#4167)
+  ///
+  /// In en, this message translates to:
+  /// **'Awaiting approval'**
+  String get myBusinessAwaiting;
+
+  /// Me › My businesses: the receivables of each business (#4167)
+  ///
+  /// In en, this message translates to:
+  /// **'Declared, awaiting confirmation'**
+  String get myBusinessDeclared;
+
+  /// Me › My businesses: the rows behind a figure (#4167)
+  ///
+  /// In en, this message translates to:
+  /// **'No rows.'**
+  String get myBusinessDetailEmpty;
+
+  /// Me › My businesses: the rows behind a figure (#4167)
+  ///
+  /// In en, this message translates to:
+  /// **'You may not read these rows.'**
+  String get myBusinessDetailRefused;
+
+  /// Me › My businesses: what a business has to pay (#4167)
+  ///
+  /// In en, this message translates to:
+  /// **'of which on hold'**
+  String get myBusinessHeld;
+
+  /// Me › My businesses: the rows behind a figure (#4167)
+  ///
+  /// In en, this message translates to:
+  /// **'Issued {date}'**
+  String myBusinessIssued(String date);
+
+  /// Me › My businesses: what a business has to pay (#4167)
+  ///
+  /// In en, this message translates to:
+  /// **'Expenses owed to members'**
+  String get myBusinessMemberExpenses;
+
+  /// Me › My businesses: the receivables of each business (#4167)
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing is owed to this business.'**
+  String get myBusinessNothingOwed;
+
+  /// Me › My businesses: the receivables of each business (#4167)
+  ///
+  /// In en, this message translates to:
+  /// **'Open the invoices of this business'**
+  String get myBusinessOpen;
+
+  /// Me › My businesses: what a business has to pay (#4167)
+  ///
+  /// In en, this message translates to:
+  /// **'What this business has to pay is not available to you.'**
+  String get myBusinessPayablesRefused;
+
+  /// Me › My businesses: what a business has to pay (#4167)
+  ///
+  /// In en, this message translates to:
+  /// **'What this business has to pay could not be read. That is not the same as nothing to pay.'**
+  String get myBusinessPayablesUnavailable;
+
+  /// Me › My businesses: the receivables of each business (#4167)
+  ///
+  /// In en, this message translates to:
+  /// **'Received, not yet matched'**
+  String get myBusinessReceived;
+
+  /// Me › My businesses: the receivables of each business (#4167)
+  ///
+  /// In en, this message translates to:
+  /// **'Refunds due to customers'**
+  String get myBusinessRefunds;
+
+  /// Me › My businesses: the receivables of each business (#4167)
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get myBusinessRetry;
+
+  /// Me › My businesses: the receivables of each business (#4167)
+  ///
+  /// In en, this message translates to:
+  /// **'Still owed'**
+  String get myBusinessStillOwed;
+
+  /// Me › My businesses: what a business has to pay (#4167)
+  ///
+  /// In en, this message translates to:
+  /// **'Suppliers'**
+  String get myBusinessSuppliers;
+
+  /// Me › My businesses: the receivables of each business (#4167)
+  ///
+  /// In en, this message translates to:
+  /// **'To collect'**
+  String get myBusinessToCollect;
+
+  /// Me › My businesses: the receivables of each business (#4167)
+  ///
+  /// In en, this message translates to:
+  /// **'This business could not be read. That is not the same as nothing being owed.'**
+  String get myBusinessUnavailable;
+
+  /// Me › My businesses: the receivables of each business (#4167)
+  ///
+  /// In en, this message translates to:
+  /// **'My businesses'**
+  String get myBusinessesFaceBusinesses;
+
+  /// Me › My businesses: the receivables of each business (#4167)
+  ///
+  /// In en, this message translates to:
+  /// **'Personal'**
+  String get myBusinessesFacePersonal;
+
+  /// Me › My businesses: the receivables of each business (#4167)
+  ///
+  /// In en, this message translates to:
+  /// **'What each of your businesses is still owed. The figures are kept per business and per currency: they are never added together and never set against what the business owes.'**
+  String get myBusinessesIntro;
+
   /// #2557 C3 Me › Finances: the export menu's tooltip.
   ///
   /// In en, this message translates to:

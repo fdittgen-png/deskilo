@@ -22958,6 +22958,76 @@ class AppLocalizationsIt extends AppLocalizations {
   String get myBadgeTitle => 'Il mio badge';
 
   @override
+  String get myBusinessAwaiting => 'In attesa di approvazione';
+
+  @override
+  String get myBusinessDeclared => 'Dichiarato, in attesa di conferma';
+
+  @override
+  String get myBusinessDetailEmpty => 'Nessuna riga.';
+
+  @override
+  String get myBusinessDetailRefused =>
+      'Non è consentito leggere queste righe.';
+
+  @override
+  String get myBusinessHeld => 'di cui sospeso';
+
+  @override
+  String myBusinessIssued(String date) {
+    return 'Emessa il $date';
+  }
+
+  @override
+  String get myBusinessMemberExpenses => 'Spese dovute ai membri';
+
+  @override
+  String get myBusinessNothingOwed => 'A questa attività non è dovuto nulla.';
+
+  @override
+  String get myBusinessOpen => 'Aprire le fatture di questa attività';
+
+  @override
+  String get myBusinessPayablesRefused =>
+      'Ciò che questa attività deve pagare non è accessibile.';
+
+  @override
+  String get myBusinessPayablesUnavailable =>
+      'Ciò che questa attività deve pagare non ha potuto essere letto. Non significa che non vi sia nulla da pagare.';
+
+  @override
+  String get myBusinessReceived => 'Ricevuto, non ancora abbinato';
+
+  @override
+  String get myBusinessRefunds => 'Rimborsi dovuti ai clienti';
+
+  @override
+  String get myBusinessRetry => 'Riprovare';
+
+  @override
+  String get myBusinessStillOwed => 'Ancora dovuto';
+
+  @override
+  String get myBusinessSuppliers => 'Fornitori';
+
+  @override
+  String get myBusinessToCollect => 'Da incassare';
+
+  @override
+  String get myBusinessUnavailable =>
+      'Questa attività non ha potuto essere letta. Non significa che non sia dovuto nulla.';
+
+  @override
+  String get myBusinessesFaceBusinesses => 'Le mie attività';
+
+  @override
+  String get myBusinessesFacePersonal => 'Personale';
+
+  @override
+  String get myBusinessesIntro =>
+      'Ciò che ciascuna delle attività è ancora in credito. Gli importi sono tenuti per attività e per valuta: non vengono mai sommati né compensati con ciò che l\'attività deve.';
+
+  @override
   String get myFinancesExport => 'Esporta i miei documenti';
 
   @override

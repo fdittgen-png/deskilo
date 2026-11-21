@@ -645,6 +645,29 @@ Vous appartenez à plusieurs espaces et vous voulez toutes vos factures, vos pai
 
 **Voir aussi:** [Vos factures](help:user.money.invoices)
 
+<!-- anchor: user.money.businesses -->
+### Vos activités en un coup d'œil
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous dirigez ou gérez une ou plusieurs activités et vous voulez voir, depuis Moi, ce que chacune doit encore recevoir et ce que chacune doit payer.
+
+**Étapes**
+
+1. Ouvrez [Mes finances](app:/money). Si vous pouvez lire les finances d'une activité, un sélecteur en haut propose **Personnel** et **Mes activités**.
+2. Choisissez **Mes activités**. Chaque activité a une carte avec un bloc par devise : **À encaisser**, **Déclaré, en attente de confirmation**, **Reçu, pas encore rapproché** et **En attente d'approbation**.
+3. Touchez un montant pour voir les factures qui le composent, **Afficher plus** s'il y en a davantage, et touchez une facture pour l'ouvrir dans son activité.
+4. Sous **À payer**, **Fournisseurs** et **Notes de frais dues aux membres** sont listés à part ; touchez l'un ou l'autre pour voir les obligations qui le composent.
+
+**Bon à savoir**
+
+- Les devises ne sont jamais additionnées, et rien n'est compensé avec ce que l'activité doit. Un remboursement dû aux clients (**Remboursements dus aux clients**) est une ligne à part.
+- Un montant à payer mis en attente fait partie de ce qui reste, il ne s'y ajoute pas.
+- Une activité qui n'a pas pu être lue le dit, avec **Réessayer** ; cela ne veut pas dire que rien n'est dû. Une activité dont vous ne pouvez pas lire les finances n'apparaît pas.
+- Être client d'une activité ne donne aucun accès à ses chiffres. Ouvrir une ligne vous amène seulement à l'activité : ce que vous pouvez y faire dépend de votre rôle.
+
+**Voir aussi:** [Vos finances dans tous vos espaces](help:user.money.finances)
+
 <!-- anchor: user.money.invoicing -->
 ### La facturation en un coup d'œil
 
