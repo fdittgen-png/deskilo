@@ -28,6 +28,7 @@ import '../../features/money/providers/guest_pass_providers.dart';
 import '../../features/money/providers/hmrc_providers.dart';
 import '../../features/money/providers/invoice_original_providers.dart';
 import '../../features/money/providers/money_providers.dart';
+import '../../features/money/providers/purchase_order_providers.dart';
 import '../../features/money/providers/recorded_payments_providers.dart';
 import '../../features/money/providers/settlement_review_providers.dart';
 import '../../features/money/providers/standalone_invoice_providers.dart';
@@ -47,6 +48,7 @@ import 'data/bank_statement_repository.dart';
 import 'data/demo_booking_prices.dart';
 import 'data/demo_stock_config_commands.dart';
 import 'data/demo_stock_queries.dart';
+import 'data/demo_stock_receiving_commands.dart';
 import 'data/finance_kpi_repository.dart';
 import 'data/money/demo_credit_moves.dart';
 import 'data/money/demo_invoice_issue_drafts.dart';
@@ -54,6 +56,7 @@ import 'data/money/demo_invoice_original_repository.dart';
 import 'data/money/demo_settlement_reviews.dart';
 import 'data/money_repository.dart';
 import 'data/my_reservations_repository.dart';
+import 'data/purchase_order_repository.dart';
 import 'data/series_previewer.dart';
 import 'data/workspace_repository.dart' show FakeWorkspaceMembership;
 import 'demo_finance_commands.dart';
@@ -282,6 +285,14 @@ List<Override> _moneyPortOverrides(FakeMoneyRepository Function(Ref ref) money) 
   // #4169 — and edits its units, codes and places in memory.
   stockConfigCommandsProvider.overrideWith(
     (ref) => DemoStockConfigCommands(demoFirstSpaceId),
+  ),
+  // #4171 — and receives the deliveries of its orders into that stock.
+  stockReceivingCommandsProvider.overrideWith(
+    (ref) => DemoStockReceivingCommands(
+      demoFirstSpaceId,
+      ref.watch(purchaseOrderRepositoryProvider) as FakePurchaseOrderRepository,
+      ref.watch(stockConfigCommandsProvider) as DemoStockConfigCommands,
+    ),
   ),
 ];
 

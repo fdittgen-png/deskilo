@@ -55868,6 +55868,126 @@ abstract class AppLocalizations {
   /// **'Places'**
   String get stockPlacesTitle;
 
+  /// #4171 receiving into stock: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Put away'**
+  String get stockPutAwayAction;
+
+  /// #4171 receiving into stock: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Left empty: everything this delivery brings of this line.'**
+  String get stockPutAwayAll;
+
+  /// #4171 receiving into stock: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Also put it away into stock'**
+  String get stockPutAwayAlso;
+
+  /// #4171 receiving into stock: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Cost of these goods'**
+  String get stockPutAwayCost;
+
+  /// #4171 receiving into stock: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'A total I enter'**
+  String get stockPutAwayCostEntered;
+
+  /// #4171 receiving into stock: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'The order price'**
+  String get stockPutAwayCostOrder;
+
+  /// #4171 receiving into stock: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Rate to {currency}'**
+  String stockPutAwayCostRate(String currency);
+
+  /// #4171 receiving into stock: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Total cost (minor units)'**
+  String get stockPutAwayCostTotal;
+
+  /// #4171 receiving into stock: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Not known'**
+  String get stockPutAwayCostUnknown;
+
+  /// #4171 receiving into stock: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Put away.'**
+  String get stockPutAwayDone;
+
+  /// #4171 receiving into stock: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Expiry date'**
+  String get stockPutAwayExpiry;
+
+  /// #4171 receiving into stock: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Lot code'**
+  String get stockPutAwayLot;
+
+  /// #4171 receiving into stock: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'{line}: not a stock item, so it stays unallocated. Keep it in stock from the catalogue to put it away.'**
+  String stockPutAwayNotStock(String line);
+
+  /// #4171 receiving into stock: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing is left to put away.'**
+  String get stockPutAwayNothing;
+
+  /// #4171 receiving into stock: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Place'**
+  String get stockPutAwayPlace;
+
+  /// #4171 receiving into stock: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'{line}: {put} put away, {left} still to put away'**
+  String stockPutAwayProgress(String line, String put, String left);
+
+  /// #4171 receiving into stock: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity to put away ({unit})'**
+  String stockPutAwayQuantity(String unit);
+
+  /// #4171 receiving into stock: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Put away what remains'**
+  String get stockPutAwayRemaining;
+
+  /// #4171 receiving into stock: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Put away {order}'**
+  String stockPutAwayTitle(String order);
+
+  /// #4171 receiving into stock: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Variant'**
+  String get stockPutAwayVariant;
+
   /// #4161 an exact quantity and its inventory unit
   ///
   /// In en, this message translates to:
@@ -55904,6 +56024,18 @@ abstract class AppLocalizations {
   /// **'Two variants have the same combination.'**
   String get stockReasonCombinationDuplicate;
 
+  /// #4171 receiving into stock: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'This cost is not valid: a total in minor units, and a rate only for another currency.'**
+  String get stockReasonCostInvalid;
+
+  /// #4171 receiving into stock: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'An order in another currency needs its rate.'**
+  String get stockReasonCostRateMissing;
+
   /// #4169 the stock editors: a text under a field the server refused
   ///
   /// In en, this message translates to:
@@ -55921,6 +56053,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This unit does not measure the same thing as the item.'**
   String get stockReasonDimensionMismatch;
+
+  /// #4171 receiving into stock: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'This is not a valid date.'**
+  String get stockReasonExpiryMalformed;
+
+  /// #4171 receiving into stock: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'This item is tracked by expiry date: give it.'**
+  String get stockReasonExpiryRequired;
 
   /// #4169 the stock editors: a text under a field the server refused
   ///
@@ -55946,11 +56090,29 @@ abstract class AppLocalizations {
   /// **'This item is not one of this business.'**
   String get stockReasonItemForeign;
 
+  /// #4171 receiving into stock: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'This line is not a stock item.'**
+  String get stockReasonItemNotStocked;
+
   /// #4169 the stock editors: a text under a field the server refused
   ///
   /// In en, this message translates to:
   /// **'This kind is not known.'**
   String get stockReasonKindUnknown;
+
+  /// #4171 receiving into stock: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'The line is named twice and the two names disagree.'**
+  String get stockReasonLineConflict;
+
+  /// #4171 receiving into stock: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'This delivery did not bring that line.'**
+  String get stockReasonLineUnknown;
 
   /// #4169 the stock editors: a text under a field the server refused
   ///
@@ -55963,6 +56125,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The main place stays in use.'**
   String get stockReasonLocationDefault;
+
+  /// #4171 receiving into stock: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a place of this business that is in use.'**
+  String get stockReasonLocationForeign;
 
   /// #4169 the stock editors: a text under a field the server refused
   ///
@@ -55987,6 +56155,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'A place kept by the system cannot be used here.'**
   String get stockReasonLocationVirtual;
+
+  /// #4171 receiving into stock: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'This item is tracked by lot: give the lot code (up to 64 characters).'**
+  String get stockReasonLotCodeRequired;
+
+  /// #4171 receiving into stock: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'Parts of one lot must agree on its code, date and cost.'**
+  String get stockReasonLotGroupConflict;
 
   /// #4169 the stock editors: a text under a field the server refused
   ///
@@ -56024,6 +56204,12 @@ abstract class AppLocalizations {
   /// **'This number is out of range.'**
   String get stockReasonOutOfRange;
 
+  /// #4171 receiving into stock: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'More than arrived cannot be put away.'**
+  String get stockReasonOverAllocated;
+
   /// #4169 the stock editors: a text under a field the server refused
   ///
   /// In en, this message translates to:
@@ -56035,6 +56221,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'A price is zero or more.'**
   String get stockReasonPriceInvalid;
+
+  /// #4171 receiving into stock: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'A quantity is a number above zero with at most six decimals.'**
+  String get stockReasonQuantityInvalid;
+
+  /// #4171 receiving into stock: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'This delivery is not one of this business.'**
+  String get stockReasonReceiptUnknown;
 
   /// #4169 the stock editors: a text under a field the server refused
   ///
@@ -56096,6 +56294,12 @@ abstract class AppLocalizations {
   /// **'This unit is not known.'**
   String get stockReasonUnitUnknown;
 
+  /// #4171 receiving into stock: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'The unit of this line is not a unit of the item: add it to the item first.'**
+  String get stockReasonUnitUnmapped;
+
   /// #4169 the stock editors: a text under a field the server refused
   ///
   /// In en, this message translates to:
@@ -56119,6 +56323,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Stock or history names this variant: its combination stays as written.'**
   String get stockReasonVariantInUse;
+
+  /// #4171 receiving into stock: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'This item has variants: choose which one arrived.'**
+  String get stockReasonVariantRequired;
 
   /// #4169 the stock editors: a text under a field the server refused
   ///

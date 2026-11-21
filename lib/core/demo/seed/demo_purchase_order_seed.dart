@@ -9,6 +9,11 @@ import '../../../features/money/domain/purchase_order.dart';
 import '../../../features/money/domain/purchase_order_receipt.dart';
 import '../data/purchase_order_repository.dart';
 
+/// The Demo shop's own items, by order number (the shop keeps them in stock).
+const _shopItem = {3: 'demo-item-mugs', 5: 'demo-item-beans'};
+const _shopName = {3: 'Mugs', 5: 'Coffee beans'};
+const _shopUnit = {3: 'box', 5: 'kg'};
+
 void seedDemoPurchaseOrders(FakePurchaseOrderRepository orders, DateTime now) {
   final suppliers = [
     for (final s in orders.suppliers())
@@ -56,10 +61,12 @@ void seedDemoPurchaseOrders(FakePurchaseOrderRepository orders, DateTime now) {
       lines: [
         PurchaseOrderLine(
           lineNo: 1,
-          serviceId: item(n),
-          description: name(n).isEmpty ? 'Coffee beans' : name(n),
+          // #4171 -- the awaited and the partly received orders are for goods
+          // the Demo shop keeps in stock, so a delivery can be put away.
+          serviceId: _shopItem[n] ?? item(n),
+          description: _shopName[n] ?? (name(n).isEmpty ? 'Coffee beans' : name(n)),
           quantity: 40,
-          unit: 'unit',
+          unit: _shopUnit[n] ?? 'unit',
           unitPriceCents: 90,
           vatRatePercent: 20,
           receivedQuantity: received[1] ?? 0,
@@ -131,6 +138,7 @@ void seedDemoPurchaseOrders(FakePurchaseOrderRepository orders, DateTime now) {
     orderId: 'demo-order-${lastMonth.year}-$order',
     receivedOn: lastMonth.add(Duration(days: days)),
     lines: lines,
+    lineIds: {for (final no in lines.keys) no: 'demo-receipt-$n:$no'},
     note: n == 1 ? 'Towels short by six' : '',
   );
   orders.receipts.addAll([

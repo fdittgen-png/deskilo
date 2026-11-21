@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../money/providers/purchase_order_providers.dart';
 import '../../workspace/providers/operation_context_providers.dart';
 import '../application/stock_walk.dart';
 import '../data/supabase_stock_config_commands.dart';
@@ -84,3 +85,15 @@ final stockConfigCommandsProvider = Provider<StockConfigCommands>(
 final stockReceivingCommandsProvider = Provider<StockReceivingCommands>(
   (ref) => SupabaseStockReceivingCommands(ref.watch(selectedWorkspaceClientProvider)),
 );
+
+/// What was put away of the deliveries of one order, read again after each
+/// put-away.
+final orderPutAwayProvider = FutureProvider.autoDispose
+    .family<List<ReceiptAllocation>, ({String workspaceId, String orderId})>(
+      (ref, key) {
+        // read again when the deliveries are (a delivery recorded with its put-away)
+        ref.watch(purchaseOrderReceiptsProvider(key.workspaceId));
+        return ref.watch(stockReceivingCommandsProvider).allocationsOfOrder(key.workspaceId, key.orderId);
+      },
+      retry: (_, _) => null,
+    );

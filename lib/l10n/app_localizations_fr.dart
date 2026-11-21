@@ -35212,6 +35212,77 @@ class AppLocalizationsFr extends AppLocalizations {
   String get stockPlacesTitle => 'Emplacements';
 
   @override
+  String get stockPutAwayAction => 'Ranger';
+
+  @override
+  String get stockPutAwayAll =>
+      'Laissé vide : tout ce que cette livraison apporte de cette ligne.';
+
+  @override
+  String get stockPutAwayAlso => 'Ranger aussi en stock';
+
+  @override
+  String get stockPutAwayCost => 'Coût de ces marchandises';
+
+  @override
+  String get stockPutAwayCostEntered => 'Un total que je saisis';
+
+  @override
+  String get stockPutAwayCostOrder => 'Le prix de la commande';
+
+  @override
+  String stockPutAwayCostRate(String currency) {
+    return 'Taux vers $currency';
+  }
+
+  @override
+  String get stockPutAwayCostTotal => 'Coût total (unités mineures)';
+
+  @override
+  String get stockPutAwayCostUnknown => 'Inconnu';
+
+  @override
+  String get stockPutAwayDone => 'Rangé.';
+
+  @override
+  String get stockPutAwayExpiry => 'Date de péremption';
+
+  @override
+  String get stockPutAwayLot => 'Code du lot';
+
+  @override
+  String stockPutAwayNotStock(String line) {
+    return '$line : pas un article de stock, donc il reste non affecté. Tenez-le en stock depuis le catalogue pour le ranger.';
+  }
+
+  @override
+  String get stockPutAwayNothing => 'Il n’y a plus rien à ranger.';
+
+  @override
+  String get stockPutAwayPlace => 'Emplacement';
+
+  @override
+  String stockPutAwayProgress(String line, String put, String left) {
+    return '$line : rangé $put, reste à ranger $left';
+  }
+
+  @override
+  String stockPutAwayQuantity(String unit) {
+    return 'Quantité à ranger ($unit)';
+  }
+
+  @override
+  String get stockPutAwayRemaining => 'Ranger le reste';
+
+  @override
+  String stockPutAwayTitle(String order) {
+    return 'Ranger $order';
+  }
+
+  @override
+  String get stockPutAwayVariant => 'Variante';
+
+  @override
   String stockQuantityWithUnit(String quantity, String unit) {
     return '$quantity $unit';
   }
@@ -35235,6 +35306,14 @@ class AppLocalizationsFr extends AppLocalizations {
       'Deux variantes ont la même combinaison.';
 
   @override
+  String get stockReasonCostInvalid =>
+      'Ce coût n’est pas valide : un total en unités mineures, et un taux seulement pour une autre devise.';
+
+  @override
+  String get stockReasonCostRateMissing =>
+      'Une commande dans une autre devise demande son taux.';
+
+  @override
   String get stockReasonDefaultPurchaseTwice =>
       'Une seule unité peut être celle par défaut pour les achats.';
 
@@ -35245,6 +35324,13 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get stockReasonDimensionMismatch =>
       'Cette unité ne mesure pas la même chose que l’article.';
+
+  @override
+  String get stockReasonExpiryMalformed => 'Ce n’est pas une date valide.';
+
+  @override
+  String get stockReasonExpiryRequired =>
+      'Cet article est suivi par date de péremption : indiquez-la.';
 
   @override
   String get stockReasonFactorInvalid =>
@@ -35263,7 +35349,19 @@ class AppLocalizationsFr extends AppLocalizations {
       'Cet article n’est pas un article de cette entreprise.';
 
   @override
+  String get stockReasonItemNotStocked =>
+      'Cette ligne n’est pas un article de stock.';
+
+  @override
   String get stockReasonKindUnknown => 'Ce type n’est pas connu.';
+
+  @override
+  String get stockReasonLineConflict =>
+      'La ligne est désignée deux fois et les deux désignations diffèrent.';
+
+  @override
+  String get stockReasonLineUnknown =>
+      'Cette livraison n’a pas apporté cette ligne.';
 
   @override
   String get stockReasonLocationCycle =>
@@ -35272,6 +35370,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get stockReasonLocationDefault =>
       'L’emplacement principal reste utilisé.';
+
+  @override
+  String get stockReasonLocationForeign =>
+      'Choisissez un emplacement de cette entreprise qui est utilisé.';
 
   @override
   String get stockReasonLocationHasChildren =>
@@ -35288,6 +35390,14 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get stockReasonLocationVirtual =>
       'Un emplacement tenu par le système ne peut pas être utilisé ici.';
+
+  @override
+  String get stockReasonLotCodeRequired =>
+      'Cet article est suivi par lot : indiquez le code du lot (64 caractères au plus).';
+
+  @override
+  String get stockReasonLotGroupConflict =>
+      'Les parties d’un même lot doivent s’accorder sur son code, sa date et son coût.';
 
   @override
   String get stockReasonMalformed =>
@@ -35310,11 +35420,23 @@ class AppLocalizationsFr extends AppLocalizations {
   String get stockReasonOutOfRange => 'Ce nombre est hors limites.';
 
   @override
+  String get stockReasonOverAllocated =>
+      'On ne peut pas ranger plus que ce qui est arrivé.';
+
+  @override
   String get stockReasonParentInactive =>
       'L’emplacement qui le contient n’est plus utilisé.';
 
   @override
   String get stockReasonPriceInvalid => 'Un prix est nul ou positif.';
+
+  @override
+  String get stockReasonQuantityInvalid =>
+      'Une quantité est un nombre supérieur à zéro avec six décimales au plus.';
+
+  @override
+  String get stockReasonReceiptUnknown =>
+      'Cette livraison n’est pas une livraison de cette entreprise.';
 
   @override
   String get stockReasonRegistryUnit =>
@@ -35351,6 +35473,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get stockReasonUnitUnknown => 'Cette unité n’est pas connue.';
 
   @override
+  String get stockReasonUnitUnmapped =>
+      'L’unité de cette ligne n’est pas une unité de l’article : ajoutez-la d’abord à l’article.';
+
+  @override
   String get stockReasonValueForeign =>
       'Cette valeur n’appartient pas à cette dimension.';
 
@@ -35365,6 +35491,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get stockReasonVariantInUse =>
       'Du stock ou un historique désigne cette variante : sa combinaison reste telle quelle.';
+
+  @override
+  String get stockReasonVariantRequired =>
+      'Cet article a des variantes : choisissez laquelle est arrivée.';
 
   @override
   String get stockReasonVariantUnknown =>
