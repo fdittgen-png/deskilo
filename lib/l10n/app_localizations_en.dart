@@ -24213,6 +24213,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Manage fee bands, VAT rates, number sequences and billing rules.';
 
   @override
+  String get permAllowsManageBillingCustomers =>
+      'Create and edit the people and businesses you invoice: their billed name, address, tax numbers and contact.';
+
+  @override
   String get permAllowsManageConfiguration =>
       'Change the features, the environment, the workspace code, imports and reset.';
 
@@ -24346,6 +24350,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get permManageBilling => 'Manage tariffs and billing rules';
+
+  @override
+  String get permManageBillingCustomers => 'Manage billing customers';
 
   @override
   String get permManageConfiguration => 'Manage the configuration';

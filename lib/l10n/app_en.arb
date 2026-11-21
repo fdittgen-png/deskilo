@@ -31894,6 +31894,10 @@
   "@permAllowsManageBilling": {
     "description": "#3628 roles at the desk: one line of what the permission allows"
   },
+  "permAllowsManageBillingCustomers": "Create and edit the people and businesses you invoice: their billed name, address, tax numbers and contact.",
+  "@permAllowsManageBillingCustomers": {
+    "description": "#3628 roles at the desk: one line of what the permission allows"
+  },
   "permAllowsManageConfiguration": "Change the features, the environment, the workspace code, imports and reset.",
   "@permAllowsManageConfiguration": {
     "description": "#3628 roles at the desk: one line of what the permission allows"
@@ -32041,6 +32045,10 @@
   "permManageBilling": "Manage tariffs and billing rules",
   "@permManageBilling": {
     "description": "#982 permission catalog: permManageBilling"
+  },
+  "permManageBillingCustomers": "Manage billing customers",
+  "@permManageBillingCustomers": {
+    "description": "a permission in the role matrix (#4164)"
   },
   "permManageConfiguration": "Manage the configuration",
   "@permManageConfiguration": {

@@ -77,6 +77,7 @@ final Set<String> _exported = {
 /// quietly becomes partial, so each one is an argument somebody has to
 /// disagree with in review.
 const Map<String, String> _notExported = {
+  'billing_parties': 'a billing customer\'s billed name, address, tax identifiers and delivery contact (#4164 A1): no screen lists or edits it yet and the server answers the business\'s own list (billing_customers_v1); the workbook tab and the personal-data export arrive with the customer editor (#4164 A2), and the customer\'s name and address are on each invoice already exported',
   'plans': 'retired (#4042): a business\'s tariffs are its fee bands; no screen writes a plan and the table waits to be dropped',
   'member_term_changes': 'a member\'s dated plan changes and pauses (#3858): the history of their terms, personal data returned by export_my_data to the member it belongs to; the workbook carries each member\'s current share and status',
   'member_period_terms': 'the terms each subscription invoice was computed with (#3858): derived from the invoices and the members\' plans, personal data returned by export_my_data to the member it belongs to; the workbook carries the invoices',
