@@ -75,6 +75,7 @@ configuration.
 | visibility, visibility_set_at | `workspaces.*` | A | **never** — the space's own listing choice; a template must not publish a space | — | 0367 | `152_workspace_visibility_licence` |
 | environment, pair_id | `workspaces.*` | C | **never** — which twin this is | — | #1160 | `environment_pairs_test` |
 | network_id | `workspaces.network_id` | E | never — the birth record `installation id:local id`, stamped by the host the row was born on | — | #2561 | `262_installation_roles` |
+| stock_initialized_at | `workspaces.stock_initialized_at` | E | never — when this business first opened its stock ledger (the old shelf count was imported once, then); written by the server, it is history | — | #4170 | `495_stock_paths` |
 | organisation_id | `workspaces.organisation_id` | E | never — the organisation this business is a house of on this installation, written by the server; its owners set it up again | — | #4004 | `433_organisations` |
 | created_by, created_at, id | `workspaces.*` | E | never | — | — | — |
 | created_datetime, modified_datetime, company_id, site_id, created_by_user, modified_by_user | system columns | C | never | — | #992 | `system_columns_test` |

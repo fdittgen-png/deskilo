@@ -650,16 +650,22 @@ revoke execute on function public.stock_take_out(uuid, uuid, jsonb, text, timest
 
 create or replace function public.stock_consume_v1(
   p_workspace_id uuid, p_request_id uuid, p_lines jsonb, p_occurred_at timestamptz default null
-) returns jsonb language sql security definer set search_path = public as $fn$
-  select public.stock_take_out(p_workspace_id, p_request_id, p_lines, 'consumption', p_occurred_at)
+) returns jsonb language plpgsql security definer set search_path = public as $fn$
+begin
+  perform public.stock_ops_actor(p_workspace_id);
+  return public.stock_take_out(p_workspace_id, p_request_id, p_lines, 'consumption', p_occurred_at);
+end;
 $fn$;
 revoke execute on function public.stock_consume_v1(uuid, uuid, jsonb, timestamptz) from public, anon;
 grant execute on function public.stock_consume_v1(uuid, uuid, jsonb, timestamptz) to authenticated;
 
 create or replace function public.stock_loss_v1(
   p_workspace_id uuid, p_request_id uuid, p_lines jsonb, p_occurred_at timestamptz default null
-) returns jsonb language sql security definer set search_path = public as $fn$
-  select public.stock_take_out(p_workspace_id, p_request_id, p_lines, 'loss', p_occurred_at)
+) returns jsonb language plpgsql security definer set search_path = public as $fn$
+begin
+  perform public.stock_ops_actor(p_workspace_id);
+  return public.stock_take_out(p_workspace_id, p_request_id, p_lines, 'loss', p_occurred_at);
+end;
 $fn$;
 revoke execute on function public.stock_loss_v1(uuid, uuid, jsonb, timestamptz) from public, anon;
 grant execute on function public.stock_loss_v1(uuid, uuid, jsonb, timestamptz) to authenticated;

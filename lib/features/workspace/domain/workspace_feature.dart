@@ -441,15 +441,11 @@ enum WorkspaceFeature {
   /// are not tracked by lot and nothing else changes.
   stockLots,
 
-  /// #4171 — receiving a purchase-order delivery into stock: put away once,
-  /// into explicit places and new lots, with its origin kept. Asked for,
-  /// under the goods ledger. Off: a delivery is recorded as before and no
-  /// stock moves. Turning it on waits for #4170 (G4-A).
+  /// #4171 — a purchase-order delivery put away into stock once, its origin
+  /// kept (feature_manifest_stock.dart). Turning it on waits for #4170 (G4-A).
   stockReceiving,
 
-  /// #4170 — taking goods out of stock for use or as a loss. Asked for, under
-  /// the goods ledger. Off: goods cannot be consumed or written off from the
-  /// stock screens; transfers and receiving are unaffected.
+  /// #4170 — goods taken out for use or as a loss (feature_manifest_stock.dart).
   stockTakeOut;
 
   /// The key of this feature inside `workspaces.feature_flags`.
