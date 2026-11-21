@@ -9,7 +9,7 @@
 -- the put-away, receipts and allocations are insert-only, and only a buyer who manages
 -- the stock (not a delegated session) writes. Rolled back.
 begin;
-select plan(40);
+select plan(42);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -224,6 +224,14 @@ select is(pg_temp.combined(1, 742, 502, '[]', '[]', 101, true), 'ERR DKN01 ', 'a
 select is(pg_temp.putaway(1, 743, current_setting('t.receipt')::uuid, '[' || pg_temp.alloc(2, 1, current_setting('t.main')) || ']', 101, true), 'ERR DKN01 ', 'and cannot put away either');
 select is(pg_temp.putaway(1, 744, pg_temp.u(699), '[' || pg_temp.alloc(2, 1, current_setting('t.main')) || ']'),
   'ERR DKG11 {"field": "receipt", "reason": "receipt_unknown"}', 'a receipt that is not this business''s is unknown');
+
+-- The allocations carry the order and the supplier: read like the receipts (managePurchases or viewFinances), not by a reader of the stock alone.
+select is(pg_temp.run_as(pg_temp.u(3), 'select (select count(*) from public.stock_receipt_allocations)::text'), (select count(*) from public.stock_receipt_allocations where workspace_id = pg_temp.u(101))::text,
+  'a buyer (managePurchases) reads the allocations');
+update public.workspaces set role_permissions = '{"member": ["viewStock"]}' where id = pg_temp.u(101);
+select is(pg_temp.run_as(pg_temp.u(3), 'select (select count(*) from public.stock_receipt_allocations)::text'), '0',
+  'a reader of the stock alone reads none (they name the order and the supplier)');
+update public.workspaces set role_permissions = '{"member": ["managePurchases"]}' where id = pg_temp.u(101);
 
 -- History is kept, and a later edit of a unit does not reinterpret what was put away.
 select is(pg_temp.try(format('update public.purchase_order_receipts set note = %L where id = %L', 'x', current_setting('t.receipt')))

@@ -132,9 +132,12 @@ create index stock_receipt_allocations_receipt on public.stock_receipt_allocatio
 
 alter table public.stock_receipt_allocations enable row level security;
 revoke all on public.stock_receipt_allocations from public, anon, authenticated;
+-- Read like the receipts they come from (managePurchases or viewFinances): an
+-- allocation carries the order, the supplier and the line text, which a reader
+-- of the stock alone does not see (its movements link the receipt line).
 grant select on public.stock_receipt_allocations to authenticated;
 create policy stock_receipt_allocations_select on public.stock_receipt_allocations for select to authenticated
-  using (workspace_id in (select public.workspaces_permitting(array['viewStock', 'manageStock', 'managePurchases']))
+  using (workspace_id in (select public.workspaces_permitting(array['managePurchases', 'viewFinances']))
          and public.feature_effective(workspace_id, 'stockManagement'));
 create policy mcp_delegated_deny on public.stock_receipt_allocations as restrictive for all to authenticated
   using (not public.mcp_is_delegated()) with check (not public.mcp_is_delegated());
