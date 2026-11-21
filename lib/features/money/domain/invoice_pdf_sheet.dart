@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'dart:math' as math;
 import 'dart:typed_data';
 
 import 'package:deskilo_document_pdf/paper_format.dart';
+import 'package:deskilo_document_pdf/report_block_widgets.dart';
 import 'package:deskilo_document_pdf/report_page_footer.dart';
+import 'package:deskilo_document_pdf/report_watermark.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:pdf/widgets.dart' as pw;
 
@@ -14,7 +15,6 @@ import 'invoice_pdf_body.dart';
 import 'invoice_pdf_style.dart';
 import 'invoice_report.dart';
 import 'invoice_sales_tax.dart';
-import 'report_block_widgets.dart';
 
 /// #837 — ONE invoice's sheets. Used for the document itself and then once
 /// per appended reference, so every annex starts on a fresh page and can
@@ -119,12 +119,6 @@ class InvoiceSheet {
   // which normally carries the stamp saying where it went, is first of
   // all a page that is not real.
   late final String watermark = _stamp();
-  // Its size follows its LENGTH: 'ERRATA' and 'FEHLERHAFT' must both land
-  // inside the sheet. (The package's own Watermark scales to the rotated
-  // bounding box it computes, which runs the ends off the corners.)
-  late final double markSize =
-      math.min(120.0, 820 / math.max(watermark.length, 1));
-
   String _stamp() =>strings.development.isNotEmpty
         ? strings.development.toUpperCase()
         : watermarkOverride ??
@@ -280,27 +274,7 @@ class InvoiceSheet {
                     pageNumber: context.pageNumber,
                     child: windowRecipient,
                   ),
-          buildForeground: watermark.isEmpty
-              ? null
-              : (context) => pw.FullPage(
-                    ignoreMargins: true,
-                    child: pw.Opacity(
-                      opacity: pdfWatermarkOpacity,
-                      child: pw.Center(
-                        child: pw.Transform.rotate(
-                          angle: math.pi / 4,
-                          child: pw.Text(
-                            watermark,
-                            style: pw.TextStyle(
-                              fontSize: markSize,
-                              color: pdfWatermark,
-                              fontWeight: pw.FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+          buildForeground: reportWatermarkForeground(watermark),
         );
 
   pw.Widget _header(pw.Context context) => context.pageNumber == 1

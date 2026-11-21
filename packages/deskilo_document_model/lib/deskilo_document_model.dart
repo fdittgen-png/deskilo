@@ -7,3 +7,4 @@ export 'layout_model.dart';
 export 'layout_units.dart';
 export 'layout_xml.dart';
 export 'paper.dart';
+export 'report_blocks.dart';

@@ -9,10 +9,10 @@
 import 'dart:typed_data';
 
 import 'package:deskilo_document_pdf/report_page_footer.dart';
+import 'package:deskilo_document_pdf/report_watermark.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
-import '../../money/domain/invoice_pdf.dart' show watermarkForeground;
 import 'workspace_data_report.dart';
 
 /// The words and formats the report is printed in.
@@ -123,7 +123,7 @@ Future<Uint8List> buildWorkspaceDataReportPdf(
       base: request.baseFont,
       bold: request.boldFont,
     ).copyWith(defaultTextStyle: const pw.TextStyle(fontSize: 9)),
-    buildForeground: watermarkForeground(request.watermark),
+    buildForeground: reportWatermarkForeground(request.watermark),
   );
   pw.Widget footer(pw.Context context) => reportPageFooter(
     context,

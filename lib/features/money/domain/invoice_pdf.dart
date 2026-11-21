@@ -1,20 +1,19 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'dart:math' as math;
 import 'dart:typed_data';
 
 import 'package:deskilo_document_model/paper.dart';
 import 'package:deskilo_document_pdf/paper_format.dart';
+import 'package:deskilo_document_pdf/report_block_widgets.dart';
 import 'package:deskilo_document_pdf/report_flow_page.dart';
+import 'package:deskilo_document_pdf/report_watermark.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 import 'address_window.dart';
 import 'invoice_pdf_sheet.dart';
-import 'invoice_pdf_style.dart';
 import 'invoice_report.dart';
 import 'pinned_pdf.dart';
-import 'report_block_widgets.dart';
 
 
 
@@ -272,7 +271,7 @@ Future<Uint8List> buildBandedLetterPdf({
         pageFormat: pdfPageFormatOf(report.paper),
         theme: pw.ThemeData.withFont(base: baseFont, bold: boldFont),
         margin: const pw.EdgeInsets.fromLTRB(48, 44, 48, 44),
-        buildForeground: watermarkForeground(watermark),
+        buildForeground: reportWatermarkForeground(watermark),
       ),
       documentTitle: documentTitle,
       pageLabel: pageLabel,
@@ -285,33 +284,6 @@ Future<Uint8List> buildBandedLetterPdf({
     ),
   );
   return doc.save();
-}
-
-/// #917 — the diagonal mark, painted the same way on EVERY document
-/// this app produces. Its size follows the word's LENGTH so a long one
-/// ('DÉVELOPPEMENT', 'FEHLERHAFT') still lands inside the sheet.
-pw.Widget Function(pw.Context)? watermarkForeground(String watermark) {
-  if (watermark.isEmpty) return null;
-  final markSize = math.min(120.0, 820 / math.max(watermark.length, 1));
-  return (context) => pw.FullPage(
-        ignoreMargins: true,
-        child: pw.Opacity(
-          opacity: pdfWatermarkOpacity,
-          child: pw.Center(
-            child: pw.Transform.rotate(
-              angle: math.pi / 4,
-              child: pw.Text(
-                watermark,
-                style: pw.TextStyle(
-                  fontSize: markSize,
-                  color: pdfWatermark,
-                  fontWeight: pw.FontWeight.bold,
-                ),
-              ),
-            ),
-          ),
-        ),
-      );
 }
 
 /// #831 — which stamp a document wears, by priority: a proforma says so
