@@ -12396,11 +12396,25 @@ class AppLocalizationsFr extends AppLocalizations {
   String get featureStandaloneInvoicingTitle => 'Factures ponctuelles';
 
   @override
+  String get featureStockLotsDesc =>
+      'Suivre les marchandises par lot ou par date de péremption, avec une durée de conservation. Désactivé : aucun article n’est suivi par lot, et ce qui a été enregistré est conservé tel quel.';
+
+  @override
+  String get featureStockLotsTitle => 'Lots et péremption';
+
+  @override
   String get featureStockManagementDesc =>
       'Suivre les marchandises : où elles sont, dans quelle unité, de quel lot, et chaque mouvement d\'un endroit à un autre. Désactivé : un article du catalogue garde son simple compte en rayon.';
 
   @override
   String get featureStockManagementTitle => 'Gestion des stocks';
+
+  @override
+  String get featureStockReceivingDesc =>
+      'Ranger les marchandises d’une livraison de commande fournisseur dans des emplacements et de nouveaux lots, une seule fois, avec leur origine conservée. Désactivé : une livraison est enregistrée comme avant et aucun stock ne bouge.';
+
+  @override
+  String get featureStockReceivingTitle => 'Réception en stock';
 
   @override
   String get featureSubscriptionInvoicesDesc =>
@@ -28575,6 +28589,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Votre session a expiré. Reconnectez-vous, puis réessayez.';
 
   @override
+  String get refusalStockConfig =>
+      'Cette configuration de stock n’est pas valide : le champ nommé en donne la raison.';
+
+  @override
   String get refusalStockHistory =>
       'Cet article a des mouvements de stock, qui sont conservés : il ne peut pas être supprimé, et son unité de stock et son suivi restent tels quels. Désactivez-le, ou créez un nouvel article.';
 
@@ -28607,8 +28625,16 @@ class AppLocalizationsFr extends AppLocalizations {
       'Cette demande de page n’est pas valide : demandez de 1 à 200 lignes, et ne poursuivez qu’à partir de la position donnée par une page.';
 
   @override
+  String get refusalStockStale =>
+      'Quelqu’un d’autre l’a modifié depuis que vous l’avez ouvert. Relisez-le, puis refaites votre modification.';
+
+  @override
   String get refusalStockUnit =>
       'Cet article n\'a pas cette unité. Ajoutez l\'unité à l\'article, ou saisissez la quantité dans une unité qu\'il connaît.';
+
+  @override
+  String get refusalStockVariant =>
+      'Cet article a des variantes : indiquez laquelle (couleur, taille) déplacer, vendre ou compter. Rien n’a été modifié.';
 
   @override
   String get refusalVatRateVersioned =>
@@ -34961,6 +34987,126 @@ class AppLocalizationsFr extends AppLocalizations {
   String get stockCostUnknown => 'Coût non enregistré';
 
   @override
+  String get stockDimensionAdd => 'Ajouter une dimension';
+
+  @override
+  String get stockDimensionAddValue => 'Ajouter une valeur';
+
+  @override
+  String get stockDimensionName => 'Nom';
+
+  @override
+  String get stockDimensionValue => 'Valeur';
+
+  @override
+  String get stockDimensionsManage => 'Gérer les dimensions';
+
+  @override
+  String get stockDimensionsTitle => 'Dimensions';
+
+  @override
+  String get stockEditAddCode => 'Ajouter un code';
+
+  @override
+  String get stockEditAddUnit => 'Ajouter une unité de conditionnement';
+
+  @override
+  String get stockEditCode => 'Code-barres ou code';
+
+  @override
+  String get stockEditCodeGtin => 'Code-barres (GTIN)';
+
+  @override
+  String get stockEditCodeOwn => 'Code propre';
+
+  @override
+  String get stockEditCodeUnit => 'Désigne l’unité de conditionnement';
+
+  @override
+  String get stockEditCodesTitle => 'Codes-barres et codes';
+
+  @override
+  String get stockEditDefaultPurchase => 'Par défaut pour les achats';
+
+  @override
+  String get stockEditDefaultSale => 'Par défaut pour les ventes';
+
+  @override
+  String get stockEditFactorDen => 'Divisé par';
+
+  @override
+  String get stockEditFactorNum => 'Contient';
+
+  @override
+  String get stockEditInUse =>
+      'Le premier mouvement a fixé l’unité et le suivi de cet article.';
+
+  @override
+  String get stockEditInventoryUnit => 'Unité de stock';
+
+  @override
+  String get stockEditInventoryUnitChoice => 'Unité de stock';
+
+  @override
+  String get stockEditItem => 'Réglages du stock';
+
+  @override
+  String stockEditItemTitle(String item) {
+    return 'Réglages du stock de $item';
+  }
+
+  @override
+  String get stockEditNoRight =>
+      'Votre rôle peut consulter le stock mais pas le modifier.';
+
+  @override
+  String get stockEditNotSaved => 'Rien n’a été enregistré. Réessayez.';
+
+  @override
+  String get stockEditPurchasable => 'Peut être acheté';
+
+  @override
+  String get stockEditRemove => 'Retirer';
+
+  @override
+  String get stockEditSave => 'Enregistrer';
+
+  @override
+  String get stockEditSellable => 'Peut être vendu';
+
+  @override
+  String get stockEditShelfLife => 'Durée de conservation (jours)';
+
+  @override
+  String get stockEditStale =>
+      'Ceci a changé depuis son ouverture. Fermez-le et rouvrez-le.';
+
+  @override
+  String get stockEditStockable => 'Tenu en stock';
+
+  @override
+  String get stockEditTracking => 'Suivi';
+
+  @override
+  String get stockEditTrackingExpiry => 'Par date de péremption';
+
+  @override
+  String get stockEditTrackingLot => 'Par lot';
+
+  @override
+  String get stockEditTrackingNone => 'Sans suivi';
+
+  @override
+  String get stockEditUnitName => 'Unité de conditionnement';
+
+  @override
+  String get stockEditUnitsHint =>
+      'Un conditionnement contient un nombre d’unités de stock ; un tiers de litre est 1 divisé par 3.';
+
+  @override
+  String get stockEditUnitsTitle => 'Unités de conditionnement';
+
+  @override
   String get stockEmpty => 'Rien n’est encore en stock.';
 
   @override
@@ -34978,6 +35124,36 @@ class AppLocalizationsFr extends AppLocalizations {
   String get stockLotTitle => 'Lot';
 
   @override
+  String get stockMappingAdd => 'Ajouter un article fournisseur';
+
+  @override
+  String get stockMappingArticle => 'Référence de l’article';
+
+  @override
+  String get stockMappingNoVariant => 'Sans variante';
+
+  @override
+  String get stockMappingNone =>
+      'Aucun article fournisseur n’est encore associé.';
+
+  @override
+  String get stockMappingSupplier => 'Fournisseur de l’article';
+
+  @override
+  String get stockMappingUnit => 'Unité d’achat';
+
+  @override
+  String get stockMappingVariant => 'Variante';
+
+  @override
+  String get stockMappingsEdit => 'Articles fournisseur';
+
+  @override
+  String stockMappingsTitle(String item) {
+    return 'Articles fournisseur de $item';
+  }
+
+  @override
   String get stockMovementNotFound =>
       'Ce mouvement n’existe pas, ou vous n’avez pas le droit de le voir.';
 
@@ -34991,6 +35167,51 @@ class AppLocalizationsFr extends AppLocalizations {
   String get stockNoLot => 'Sans lot';
 
   @override
+  String get stockPlaceActive => 'Utilisé';
+
+  @override
+  String get stockPlaceBarcode => 'Code-barres';
+
+  @override
+  String get stockPlaceCode => 'Code de l’emplacement';
+
+  @override
+  String get stockPlaceEditTitle => 'Emplacement';
+
+  @override
+  String get stockPlaceKind => 'Type d’emplacement';
+
+  @override
+  String get stockPlaceKindBin => 'Bac';
+
+  @override
+  String get stockPlaceKindShelf => 'Étagère';
+
+  @override
+  String get stockPlaceKindWarehouse => 'Entrepôt';
+
+  @override
+  String get stockPlaceKindZone => 'Zone';
+
+  @override
+  String get stockPlaceName => 'Nom';
+
+  @override
+  String get stockPlaceNoParent => 'Nulle part en particulier';
+
+  @override
+  String get stockPlaceParent => 'Dans';
+
+  @override
+  String get stockPlaceVirtual => 'Tenu par le système';
+
+  @override
+  String get stockPlacesAdd => 'Ajouter un emplacement';
+
+  @override
+  String get stockPlacesTitle => 'Emplacements';
+
+  @override
   String stockQuantityWithUnit(String quantity, String unit) {
     return '$quantity $unit';
   }
@@ -35000,6 +35221,156 @@ class AppLocalizationsFr extends AppLocalizations {
       'Le stock n’a pas pu être lu. Rien n’est affiché comme vide : réessayez.';
 
   @override
+  String get stockReasonCodeDuplicate => 'Ce code est déjà utilisé.';
+
+  @override
+  String get stockReasonCodeMalformed => 'Ce code est vide ou trop long.';
+
+  @override
+  String get stockReasonCodeUnitRemoved =>
+      'Un code désigne cette unité : modifiez d’abord ce code.';
+
+  @override
+  String get stockReasonCombinationDuplicate =>
+      'Deux variantes ont la même combinaison.';
+
+  @override
+  String get stockReasonDefaultPurchaseTwice =>
+      'Une seule unité peut être celle par défaut pour les achats.';
+
+  @override
+  String get stockReasonDefaultSaleTwice =>
+      'Une seule unité peut être celle par défaut pour les ventes.';
+
+  @override
+  String get stockReasonDimensionMismatch =>
+      'Cette unité ne mesure pas la même chose que l’article.';
+
+  @override
+  String get stockReasonFactorInvalid =>
+      'Les deux nombres doivent être des entiers supérieurs à zéro.';
+
+  @override
+  String get stockReasonGtinCheck =>
+      'Le chiffre de contrôle de ce code-barres est faux.';
+
+  @override
+  String get stockReasonGtinLength =>
+      'Un code-barres compte de 8 à 14 chiffres.';
+
+  @override
+  String get stockReasonItemForeign =>
+      'Cet article n’est pas un article de cette entreprise.';
+
+  @override
+  String get stockReasonKindUnknown => 'Ce type n’est pas connu.';
+
+  @override
+  String get stockReasonLocationCycle =>
+      'Un emplacement ne peut pas être dans lui-même.';
+
+  @override
+  String get stockReasonLocationDefault =>
+      'L’emplacement principal reste utilisé.';
+
+  @override
+  String get stockReasonLocationHasChildren =>
+      'Des emplacements qu’il contient sont encore utilisés.';
+
+  @override
+  String get stockReasonLocationOccupied =>
+      'Il y a du stock ici : déplacez-le d’abord.';
+
+  @override
+  String get stockReasonLocationParentForeign =>
+      'Cet emplacement n’appartient pas à cette entreprise.';
+
+  @override
+  String get stockReasonLocationVirtual =>
+      'Un emplacement tenu par le système ne peut pas être utilisé ici.';
+
+  @override
+  String get stockReasonMalformed =>
+      'Cette valeur n’est pas valide pour ce champ.';
+
+  @override
+  String get stockReasonMappingDuplicate =>
+      'Cet article fournisseur est déjà associé.';
+
+  @override
+  String get stockReasonNameDuplicate => 'Ce nom est déjà utilisé.';
+
+  @override
+  String get stockReasonNameMalformed => 'Un nom compte de 1 à 60 caractères.';
+
+  @override
+  String get stockReasonOther => 'Ceci n’est pas valide.';
+
+  @override
+  String get stockReasonOutOfRange => 'Ce nombre est hors limites.';
+
+  @override
+  String get stockReasonParentInactive =>
+      'L’emplacement qui le contient n’est plus utilisé.';
+
+  @override
+  String get stockReasonPriceInvalid => 'Un prix est nul ou positif.';
+
+  @override
+  String get stockReasonRegistryUnit =>
+      'Cette unité appartient au système et ne peut pas être redéfinie.';
+
+  @override
+  String get stockReasonStockOnHand => 'Il y a du stock : sortez-le d’abord.';
+
+  @override
+  String get stockReasonStockWithoutVariant =>
+      'Cet article a du stock sans variante : sortez-le d’abord, puis réceptionnez-le par variante.';
+
+  @override
+  String get stockReasonSupplierForeign =>
+      'Ce fournisseur n’est pas un fournisseur de cette entreprise.';
+
+  @override
+  String get stockReasonTooLong => 'Ce texte est trop long.';
+
+  @override
+  String get stockReasonTrackingUnsupported => 'Ce suivi n’est pas disponible.';
+
+  @override
+  String get stockReasonUnitDuplicate => 'Cette unité est listée deux fois.';
+
+  @override
+  String get stockReasonUnitInUse =>
+      'Un article fournisseur désigne cette unité : modifiez d’abord cet article.';
+
+  @override
+  String get stockReasonUnitNotOfItem => 'L’article ne liste pas cette unité.';
+
+  @override
+  String get stockReasonUnitUnknown => 'Cette unité n’est pas connue.';
+
+  @override
+  String get stockReasonValueForeign =>
+      'Cette valeur n’appartient pas à cette dimension.';
+
+  @override
+  String get stockReasonValuesMissing =>
+      'Choisissez une valeur pour au moins une dimension.';
+
+  @override
+  String get stockReasonVariantHasStock =>
+      'Cette variante a du stock : elle reste utilisée.';
+
+  @override
+  String get stockReasonVariantInUse =>
+      'Du stock ou un historique désigne cette variante : sa combinaison reste telle quelle.';
+
+  @override
+  String get stockReasonVariantUnknown =>
+      'Cette variante n’est pas une variante de cet article.';
+
+  @override
   String get stockStoredLabel => 'Enregistré';
 
   @override
@@ -35007,6 +35378,28 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get stockTabOnHand => 'En stock';
+
+  @override
+  String get stockVariantPrice => 'Prix propre (unités mineures, facultatif)';
+
+  @override
+  String get stockVariantsAdd => 'Ajouter une variante';
+
+  @override
+  String get stockVariantsEdit => 'Variantes';
+
+  @override
+  String get stockVariantsHint =>
+      'Une variante est une valeur de chaque dimension, par exemple rouge et taille M. Le stock est tenu par variante.';
+
+  @override
+  String get stockVariantsNoDimensions =>
+      'Ajoutez d’abord une dimension, comme la couleur ou la taille.';
+
+  @override
+  String stockVariantsTitle(String item) {
+    return 'Variantes de $item';
+  }
 
   @override
   String get stockWhenLabel => 'Quand';

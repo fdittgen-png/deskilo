@@ -281,5 +281,21 @@
   "featureStandaloneInvoicingDesc": "Facturer dès aujourd’hui un client nommé pour une prestation réalisée ou un livrable convenu, avec des lignes détaillées et des dates explicites, sans réservation, abonnement ni mois derrière. Le serveur calcule chaque montant ; vous confirmez un aperçu puis émettez la facture. Désactivé : les factures restent émises par membre et par mois.",
   "@featureStandaloneInvoicingDesc": {
     "description": "#4165 feature switch: featureStandaloneInvoicingDesc"
+  },
+  "featureStockLotsTitle": "Lots et péremption",
+  "@featureStockLotsTitle": {
+    "description": "#4169 the name of the lots and expiry feature"
+  },
+  "featureStockLotsDesc": "Suivre les marchandises par lot ou par date de péremption, avec une durée de conservation. Désactivé : aucun article n’est suivi par lot, et ce qui a été enregistré est conservé tel quel.",
+  "@featureStockLotsDesc": {
+    "description": "#4169 what the lots and expiry feature does, and what off means"
+  },
+  "featureStockReceivingTitle": "Réception en stock",
+  "@featureStockReceivingTitle": {
+    "description": "#4171 the name of the receiving into stock feature"
+  },
+  "featureStockReceivingDesc": "Ranger les marchandises d’une livraison de commande fournisseur dans des emplacements et de nouveaux lots, une seule fois, avec leur origine conservée. Désactivé : une livraison est enregistrée comme avant et aucun stock ne bouge.",
+  "@featureStockReceivingDesc": {
+    "description": "#4171 what the receiving into stock feature does, and what off means"
   }
 }

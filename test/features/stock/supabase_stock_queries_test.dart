@@ -29,6 +29,8 @@ Map<String, Object?> _onHand(String quantity) => {
   'location_name': 'Main',
   'quantity': quantity,
   'unit': 'l',
+  'variant_id': null,
+  'variant_label': null,
 };
 
 ({SupabaseStockQueries queries, List<http.Request> sent}) _with(Object? answer) {
@@ -143,5 +145,16 @@ void main() {
     final body = jsonDecode(h.sent.single.body) as Map<String, Object?>;
     expect(body['p_movement_id'], 'm-1');
     expect(body['p_limit'], 1);
+  });
+
+  test('a variant is read beside its item: red and blue are two rows with their labels', () async {
+    final red = {..._onHand('5.000000'), 'variant_id': 'v-1', 'variant_label': 'Colour: Red · Size: M'};
+    final blue = {..._onHand('3.000000'), 'variant_id': 'v-2', 'variant_label': 'Colour: Blue · Size: M'};
+    final h = _with({'rows': [red, blue], 'complete': true, 'next': null});
+    final page = await h.queries.onHandPage(_ws);
+    expect(page.rows.map((r) => (r.itemLabel, r.quantity.text)), [
+      ('Wine · Colour: Red · Size: M', '5'),
+      ('Wine · Colour: Blue · Size: M', '3'),
+    ]);
   });
 }

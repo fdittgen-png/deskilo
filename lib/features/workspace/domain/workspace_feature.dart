@@ -434,7 +434,18 @@ enum WorkspaceFeature {
   /// #4166 — customer quotes: an offer to a billing customer, sent and
   /// decided, whose accepted revision becomes the customer's first invoice.
   /// Asked for, under invoicing. Off: nothing changes.
-  customerQuotes;
+  customerQuotes,
+
+  /// #4169 — lots and expiry on goods: an item tracked by lot or by expiry
+  /// date, with a shelf life. Asked for, under the goods ledger. Off: items
+  /// are not tracked by lot and nothing else changes.
+  stockLots,
+
+  /// #4171 — receiving a purchase-order delivery into stock: put away once,
+  /// into explicit places and new lots, with its origin kept. Asked for,
+  /// under the goods ledger. Off: a delivery is recorded as before and no
+  /// stock moves. Turning it on waits for #4170 (G4-A).
+  stockReceiving;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
