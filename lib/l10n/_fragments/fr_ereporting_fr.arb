@@ -1,0 +1,14 @@
+{
+  "@@locale": "fr",
+  "frEReportingBlocked": "Le e-reporting France n’a pas été écrit : ces documents ne peuvent pas être classés d’après ce qu’ils ont figé à l’émission : {documents}. Renseignez la qualité du client, puis corrigez-les par un avoir et une nouvelle facture ; les originaux ne sont jamais modifiés.",
+  "frEReportingDocumentNoFrozenCapacity": "{number}: émise avant que la qualité du client soit figée",
+  "frEReportingDocumentCapacityUnknown": "{number}: la qualité du client (professionnel ou consommateur) n’a pas été indiquée",
+  "frEReportingDocumentBuyerCountryMissing": "{number}: le pays du professionnel n’a pas été figé",
+  "frEReportingDocumentBuyerCountryConflict": "{number}: deux pays différents ont été figés",
+  "frEReportingDocumentBuyerVatIdMissing": "{number}: un professionnel à l’étranger exige son numéro de TVA",
+  "frEReportingDocumentUnsupportedCommercialLine": "{number}: une ligne que cette version ne sait pas lire",
+  "frEReportingDocumentGoodsZeroRateUnsupported": "{number}: une ligne de biens à taux zéro : sa catégorie n’est pas déduite du taux",
+  "frEReportingDocumentGoodsAbroadUnsupported": "{number}: les livraisons de biens à un professionnel à l’étranger ne sont pas prises en charge",
+  "frEReportingDocumentMissingReceiptAllocation": "{number}: biens et services avec un paiement : le paiement n’a pas de ventilation certaine entre eux",
+  "frEReportingDocumentAmountRuleUnsupported": "{number}: un service dont la TVA figée diffère de son taux, avec un paiement dans la période"
+}

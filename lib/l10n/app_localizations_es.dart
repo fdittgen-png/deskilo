@@ -13294,6 +13294,61 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String frEReportingBlocked(String documents) {
+    return 'El e-reporting de Francia no se escribió: estos documentos no se pueden clasificar con lo que congelaron al emitirse: $documents. Registre la condición del cliente y corríjalos con una factura rectificativa y una factura nueva; los originales nunca se modifican.';
+  }
+
+  @override
+  String frEReportingDocumentAmountRuleUnsupported(String number) {
+    return '$number: un servicio cuyo impuesto congelado difiere de su tipo, con un pago en el periodo';
+  }
+
+  @override
+  String frEReportingDocumentBuyerCountryConflict(String number) {
+    return '$number: se congelaron dos países distintos';
+  }
+
+  @override
+  String frEReportingDocumentBuyerCountryMissing(String number) {
+    return '$number: no se congeló el país de la empresa';
+  }
+
+  @override
+  String frEReportingDocumentBuyerVatIdMissing(String number) {
+    return '$number: una empresa en el extranjero necesita su número de IVA';
+  }
+
+  @override
+  String frEReportingDocumentCapacityUnknown(String number) {
+    return '$number: no se indicó la condición del cliente (empresa o consumidor)';
+  }
+
+  @override
+  String frEReportingDocumentGoodsAbroadUnsupported(String number) {
+    return '$number: las entregas de bienes a una empresa en el extranjero no están admitidas';
+  }
+
+  @override
+  String frEReportingDocumentGoodsZeroRateUnsupported(String number) {
+    return '$number: una línea de bienes a tipo cero: su categoría no se deduce del tipo';
+  }
+
+  @override
+  String frEReportingDocumentMissingReceiptAllocation(String number) {
+    return '$number: bienes y servicios con un pago: el pago no tiene un reparto cierto entre ambos';
+  }
+
+  @override
+  String frEReportingDocumentNoFrozenCapacity(String number) {
+    return '$number: emitida antes de congelar la condición del cliente';
+  }
+
+  @override
+  String frEReportingDocumentUnsupportedCommercialLine(String number) {
+    return '$number: una línea que esta versión no sabe leer';
+  }
+
+  @override
   String get gebuevProcedureAccessBody =>
       'Cada exportación contable y cada descarga de un archivo queda registrada en el registro de exportaciones: quién, cuándo, qué archivo y su huella. La pista de auditoría enumera estos accesos junto a los documentos.';
 

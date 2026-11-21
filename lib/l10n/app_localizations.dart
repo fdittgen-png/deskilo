@@ -21400,6 +21400,72 @@ abstract class AppLocalizations {
   /// **'{count, plural, one{1 field needs your attention} other{{count} fields need your attention}}'**
   String formErrorSummaryTitle(int count);
 
+  /// #4163 France e-reporting refused: the documents it cannot sort from their frozen facts, each with its reasons.
+  ///
+  /// In en, this message translates to:
+  /// **'The France e-reporting was not written: these documents cannot be sorted from what they froze at issue: {documents}. Record the customer\'s capacity, then correct them with a credit note and a new invoice; the originals are never edited.'**
+  String frEReportingBlocked(String documents);
+
+  /// #4163 one document the France e-reporting cannot sort or split, with its reason (amountRuleUnsupported).
+  ///
+  /// In en, this message translates to:
+  /// **'{number}: a service whose frozen tax differs from its rate, with a payment in the period'**
+  String frEReportingDocumentAmountRuleUnsupported(String number);
+
+  /// #4163 one document the France e-reporting cannot sort or split, with its reason (buyerCountryConflict).
+  ///
+  /// In en, this message translates to:
+  /// **'{number}: two different countries were frozen'**
+  String frEReportingDocumentBuyerCountryConflict(String number);
+
+  /// #4163 one document the France e-reporting cannot sort or split, with its reason (buyerCountryMissing).
+  ///
+  /// In en, this message translates to:
+  /// **'{number}: the business\'s country was not frozen'**
+  String frEReportingDocumentBuyerCountryMissing(String number);
+
+  /// #4163 one document the France e-reporting cannot sort or split, with its reason (buyerVatIdMissing).
+  ///
+  /// In en, this message translates to:
+  /// **'{number}: a business abroad needs its VAT number'**
+  String frEReportingDocumentBuyerVatIdMissing(String number);
+
+  /// #4163 one document the France e-reporting cannot sort or split, with its reason (capacityUnknown).
+  ///
+  /// In en, this message translates to:
+  /// **'{number}: the customer\'s capacity (business or consumer) was not stated'**
+  String frEReportingDocumentCapacityUnknown(String number);
+
+  /// #4163 one document the France e-reporting cannot sort or split, with its reason (goodsAbroadUnsupported).
+  ///
+  /// In en, this message translates to:
+  /// **'{number}: goods delivered to a business abroad are not supported'**
+  String frEReportingDocumentGoodsAbroadUnsupported(String number);
+
+  /// #4163 one document the France e-reporting cannot sort or split, with its reason (goodsZeroRateUnsupported).
+  ///
+  /// In en, this message translates to:
+  /// **'{number}: a goods line at a zero rate: its category is not inferred from the rate'**
+  String frEReportingDocumentGoodsZeroRateUnsupported(String number);
+
+  /// #4163 one document the France e-reporting cannot sort or split, with its reason (missingReceiptAllocation).
+  ///
+  /// In en, this message translates to:
+  /// **'{number}: goods and services with a payment: the payment has no authoritative split between them'**
+  String frEReportingDocumentMissingReceiptAllocation(String number);
+
+  /// #4163 one document the France e-reporting cannot sort or split, with its reason (noFrozenCapacity).
+  ///
+  /// In en, this message translates to:
+  /// **'{number}: issued before the customer\'s capacity was frozen'**
+  String frEReportingDocumentNoFrozenCapacity(String number);
+
+  /// #4163 one document the France e-reporting cannot sort or split, with its reason (unsupportedCommercialLine).
+  ///
+  /// In en, this message translates to:
+  /// **'{number}: a line this version cannot read'**
+  String frEReportingDocumentUnsupportedCommercialLine(String number);
+
   /// #2377 The Swiss archive's procedures document: access logging (GeBüV art. 8).
   ///
   /// In en, this message translates to:

@@ -13364,6 +13364,61 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String frEReportingBlocked(String documents) {
+    return 'Le e-reporting France n’a pas été écrit : ces documents ne peuvent pas être classés d’après ce qu’ils ont figé à l’émission : $documents. Renseignez la qualité du client, puis corrigez-les par un avoir et une nouvelle facture ; les originaux ne sont jamais modifiés.';
+  }
+
+  @override
+  String frEReportingDocumentAmountRuleUnsupported(String number) {
+    return '$number: un service dont la TVA figée diffère de son taux, avec un paiement dans la période';
+  }
+
+  @override
+  String frEReportingDocumentBuyerCountryConflict(String number) {
+    return '$number: deux pays différents ont été figés';
+  }
+
+  @override
+  String frEReportingDocumentBuyerCountryMissing(String number) {
+    return '$number: le pays du professionnel n’a pas été figé';
+  }
+
+  @override
+  String frEReportingDocumentBuyerVatIdMissing(String number) {
+    return '$number: un professionnel à l’étranger exige son numéro de TVA';
+  }
+
+  @override
+  String frEReportingDocumentCapacityUnknown(String number) {
+    return '$number: la qualité du client (professionnel ou consommateur) n’a pas été indiquée';
+  }
+
+  @override
+  String frEReportingDocumentGoodsAbroadUnsupported(String number) {
+    return '$number: les livraisons de biens à un professionnel à l’étranger ne sont pas prises en charge';
+  }
+
+  @override
+  String frEReportingDocumentGoodsZeroRateUnsupported(String number) {
+    return '$number: une ligne de biens à taux zéro : sa catégorie n’est pas déduite du taux';
+  }
+
+  @override
+  String frEReportingDocumentMissingReceiptAllocation(String number) {
+    return '$number: biens et services avec un paiement : le paiement n’a pas de ventilation certaine entre eux';
+  }
+
+  @override
+  String frEReportingDocumentNoFrozenCapacity(String number) {
+    return '$number: émise avant que la qualité du client soit figée';
+  }
+
+  @override
+  String frEReportingDocumentUnsupportedCommercialLine(String number) {
+    return '$number: une ligne que cette version ne sait pas lire';
+  }
+
+  @override
   String get gebuevProcedureAccessBody =>
       'Chaque export comptable et chaque téléchargement d\'archive est inscrit au journal des exports : qui, quand, quel fichier et son empreinte. La piste d\'audit liste ces accès à côté des documents.';
 

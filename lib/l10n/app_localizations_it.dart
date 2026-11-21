@@ -13308,6 +13308,61 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String frEReportingBlocked(String documents) {
+    return 'L’e-reporting Francia non è stato scritto: questi documenti non si possono classificare da ciò che hanno fissato all’emissione: $documents. Registri la qualità del cliente, poi li corregga con una nota di credito e una nuova fattura; gli originali non vengono mai modificati.';
+  }
+
+  @override
+  String frEReportingDocumentAmountRuleUnsupported(String number) {
+    return '$number: un servizio la cui imposta fissata differisce dall’aliquota, con un pagamento nel periodo';
+  }
+
+  @override
+  String frEReportingDocumentBuyerCountryConflict(String number) {
+    return '$number: sono stati fissati due paesi diversi';
+  }
+
+  @override
+  String frEReportingDocumentBuyerCountryMissing(String number) {
+    return '$number: il paese dell’impresa non è stato fissato';
+  }
+
+  @override
+  String frEReportingDocumentBuyerVatIdMissing(String number) {
+    return '$number: un’impresa all’estero richiede la propria partita IVA';
+  }
+
+  @override
+  String frEReportingDocumentCapacityUnknown(String number) {
+    return '$number: la qualità del cliente (impresa o consumatore) non è stata indicata';
+  }
+
+  @override
+  String frEReportingDocumentGoodsAbroadUnsupported(String number) {
+    return '$number: le cessioni di beni a un’impresa all’estero non sono supportate';
+  }
+
+  @override
+  String frEReportingDocumentGoodsZeroRateUnsupported(String number) {
+    return '$number: una riga di beni a aliquota zero: la sua categoria non è dedotta dall’aliquota';
+  }
+
+  @override
+  String frEReportingDocumentMissingReceiptAllocation(String number) {
+    return '$number: beni e servizi con un pagamento: il pagamento non ha una ripartizione certa tra i due';
+  }
+
+  @override
+  String frEReportingDocumentNoFrozenCapacity(String number) {
+    return '$number: emessa prima che la qualità del cliente fosse fissata';
+  }
+
+  @override
+  String frEReportingDocumentUnsupportedCommercialLine(String number) {
+    return '$number: una riga che questa versione non sa leggere';
+  }
+
+  @override
   String get gebuevProcedureAccessBody =>
       'Ogni esportazione contabile e ogni download di un archivio è registrato nel registro delle esportazioni: chi, quando, quale file e la sua impronta. La pista di controllo elenca questi accessi accanto ai documenti.';
 

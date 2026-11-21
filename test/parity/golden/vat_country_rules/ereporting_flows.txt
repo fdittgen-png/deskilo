@@ -1,10 +1,10 @@
 country='FR' vatId='FR12345678901' -> none
 country='fr' vatId='FR12345678901' -> none
 country=' fr ' vatId='FR12345678901' -> none
-country='' vatId='FR12345678901' -> none
-country='' vatId='fr12345678901' -> none
-country='' vatId='DE123456789' -> international
-country='' vatId='F' -> international
+country='' vatId='FR12345678901' -> unresolved:buyer_country_missing
+country='' vatId='fr12345678901' -> unresolved:buyer_country_missing
+country='' vatId='DE123456789' -> unresolved:buyer_country_missing
+country='' vatId='F' -> unresolved:buyer_country_missing
 country='DE' vatId='FR12345678901' -> international
 country='FR' vatId='DE123456789' -> none
 country='BE' vatId='BE0123456789' -> international
