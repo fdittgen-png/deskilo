@@ -12,11 +12,35 @@
 
 import '../../../features/reservations/domain/reservation_refusal.dart';
 import '../../../features/reservations/domain/reservation_repository.dart';
+import '../../../features/workspace/domain/booking_policies.dart';
 import 'demo_booking_refusal.dart';
 import 'reservation_repository.dart';
+import 'workspace_repository.dart';
 
 class RightsCheckedReservationRepository extends FakeReservationRepository {
-  RightsCheckedReservationRepository({super.actor});
+  /// [clock] is the clock the Demo's screens show: a booking is judged "over"
+  /// or "not yet open" on it, never on the device's. [space] is the space's own
+  /// settings: the limit on bookings held at once is the one its start card
+  /// states (#4284).
+  RightsCheckedReservationRepository({
+    super.actor,
+    DateTime Function()? clock,
+    this.space,
+  }) {
+    if (clock != null) now = clock;
+  }
+
+  final FakeWorkspaceRepository? space;
+
+  @override
+  int allowanceFor(String memberId) {
+    final s = space;
+    if (s == null) return super.allowanceFor(memberId);
+    return BookingPolicies.allowanceFor(
+      s.memberOf(memberId)?.maxSimultaneousReservations,
+      s.bookingPolicies[s.workspaces.first.id] ?? const BookingPolicies(),
+    );
+  }
 
   /// Whether the signed-in member holds makeReservations.
   bool Function() mayBook = () => true;

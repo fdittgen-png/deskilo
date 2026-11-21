@@ -69,7 +69,7 @@ class DemoLondonData implements DemoSpaceParts {
       sites: [demoLondonSiteId, 'uk-site-islington', 'uk-site-hackney'],
       mainFloorOffices: [3, 12, 3, 3],
     );
-    final reservations = RightsCheckedReservationRepository(actor: actor);
+    final reservations = RightsCheckedReservationRepository(actor: actor, clock: () => now);
     reservations.resourceSeatIds.addAll(
       plan.seats
           .where((seat) => seat.resourceKind != ResourceKind.seat)

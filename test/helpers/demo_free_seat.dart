@@ -3,6 +3,7 @@
 // #3308 — a seat and a first day the Demo's seeded bookings leave free for a
 // pass: [days] consecutive days of the same local window, from [from] on.
 // Derived from the fixture, so a test does not depend on the day it runs.
+import 'package:deskilo/core/demo/demo_clock.dart';
 import 'package:deskilo/features/plan/domain/seat.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 
@@ -15,8 +16,8 @@ import 'package:deskilo/features/reservations/domain/reservation.dart';
   required int endMinutes,
 }) {
   bool taken(String seat, DateTime day) {
-    final start = DateTime(day.year, day.month, day.day, 0, startMinutes);
-    final end = DateTime(day.year, day.month, day.day, 0, endMinutes);
+    final start = demoAt(day.year, day.month, day.day, 0, startMinutes);
+    final end = demoAt(day.year, day.month, day.day, 0, endMinutes);
     return bookings.any((r) =>
         r.seatId == seat &&
         r.status != ReservationStatus.cancelled &&

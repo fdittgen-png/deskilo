@@ -121,6 +121,7 @@ class FakeReservationRepository with ReadsLeaveNothingOut implements Reservation
   /// the server's fallback and the historical one-place-at-a-time
   /// (#412); tests raise it to exercise the configured allowance.
   int simultaneousAllowance = BookingPolicies.defaultSimultaneous;
+  int allowanceFor(String memberId) => simultaneousAllowance; // #4284: a Demo space follows its own policy
   final resourceSeatIds = <String>{}; // #2631: rooms/parking are no places (seat_is_resource)
 
   /// One place at a time (#412, `enforce_one_place` v2): a member whose
@@ -133,7 +134,7 @@ class FakeReservationRepository with ReadsLeaveNothingOut implements Reservation
             r.isActive &&
             start.isBefore(r.endsAt) &&
             r.startsAt.isBefore(end)).length;
-    if (busy >= simultaneousAllowance) {
+    if (busy >= allowanceFor(memberId)) {
       throw demoBookingRefusal(
           message: 'you already have a reservation in that period', code: 'DKK19');
     }
@@ -475,7 +476,7 @@ class FakeReservationRepository with ReadsLeaveNothingOut implements Reservation
         .toList()) {
       if (other.endsAt.isAfter(at)) {
         running++;
-        if (running >= simultaneousAllowance) {
+        if (running >= allowanceFor(r.memberId)) {
           throw demoBookingRefusal(
               message: 'already checked in elsewhere', code: 'DKK20');
         }

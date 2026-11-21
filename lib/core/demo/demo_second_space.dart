@@ -62,7 +62,7 @@ class DemoSecondSpaceData implements DemoSpaceParts {
     final space = listing.workspaces;
     final plan = FakeFloorPlanRepository();
     seedLeipzigPlan(plan);
-    final reservations = RightsCheckedReservationRepository(actor: actor);
+    final reservations = RightsCheckedReservationRepository(actor: actor, clock: () => now);
     seedLeipzigBookings(reservations, now);
     // #3293 — Leipzig's requests are Leipzig's, stamped on its clock and
     // decided only by whom its rules name.
