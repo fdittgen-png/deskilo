@@ -22,7 +22,7 @@ values (pg_temp.u(101), pg_temp.u(1), true, true, 'active', '2026-01-01'),
        (pg_temp.u(102), pg_temp.u(1), false, false, 'active', '2026-01-01'),
        (pg_temp.u(102), pg_temp.u(2), true, true, 'active', '2026-01-01'),
        (pg_temp.u(103), pg_temp.u(2), true, true, 'active', '2026-01-01'),
-       (pg_temp.u(101), pg_temp.u(3), false, false, 'pending', null);
+       (pg_temp.u(101), pg_temp.u(3), false, false, 'pending', '2026-01-01');
 insert into public.setting_values (scope, workspace_id, key, value, note) values
   ('workspace', pg_temp.u(101), 'business.kind', '"freelancer"'::jsonb, ''),
   ('workspace', pg_temp.u(103), 'business.kind', '"studio"'::jsonb, '');

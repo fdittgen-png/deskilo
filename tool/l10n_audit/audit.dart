@@ -162,6 +162,11 @@ const Map<String, ({int allowed, String reason})> classifiedLiterals = {
     reason: 'Demo records: English invoice descriptions as the London and '
         'New York businesses would store them, not application labels',
   ),
+  'lib/core/demo/seed/demo_freelancer_seed.dart': (
+    allowed: 1,
+    reason: 'Demo records: the freelancer\'s one VAT rate as the fictional '
+        'business names it (#4168), not an application label',
+  ),
   'lib/core/demo/seed/demo_practice_seed.dart': (
     allowed: 1,
     reason: 'Demo records: the practice\'s invoice title as the fictional '
