@@ -99,6 +99,16 @@ enum KnownRefusal {
   /// #4161 (0833) — DKG09: a stock page request that is not valid.
   stockPage,
 
+  /// #4169 (0836) — DKG10: a stock configuration read at a revision that is
+  /// no longer current; DKG11: one that is not valid (the field and reason in
+  /// the detail).
+  stockStale,
+  stockConfig,
+
+  /// #4169 (0837) — DKG12: an item with variants moved, sold or counted
+  /// without naming one.
+  stockVariant,
+
   /// #4008 (0782) — DKM01: a member who left comes back as a new member,
   /// never by changing their old row (for instance to paused).
   memberReturnsAsNew,
@@ -160,6 +170,9 @@ const Map<String, KnownRefusal> _codedRefusals = {
   'DKG07': KnownRefusal.stockMove,
   'DKG08': KnownRefusal.stockHistory,
   'DKG09': KnownRefusal.stockPage,
+  'DKG10': KnownRefusal.stockStale,
+  'DKG11': KnownRefusal.stockConfig,
+  'DKG12': KnownRefusal.stockVariant,
   // #4008 — a member who left (0782).
   'DKM01': KnownRefusal.memberReturnsAsNew,
 };
@@ -249,6 +262,9 @@ String? _stockRefusalText(AppLocalizations l10n, KnownRefusal refusal) =>
       KnownRefusal.stockMove => l10n.refusalStockMove,
       KnownRefusal.stockHistory => l10n.refusalStockHistory,
       KnownRefusal.stockPage => l10n.refusalStockPage,
+      KnownRefusal.stockStale => l10n.refusalStockStale,
+      KnownRefusal.stockConfig => l10n.refusalStockConfig,
+      KnownRefusal.stockVariant => l10n.refusalStockVariant,
       KnownRefusal.memberReturnsAsNew => l10n.refusalMemberReturnsAsNew,
       _ => null,
     };

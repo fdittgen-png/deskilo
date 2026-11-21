@@ -281,5 +281,13 @@
   "featureStandaloneInvoicingDesc": "Einem benannten Kunden noch heute eine erbrachte Leistung oder ein vereinbartes Ergebnis berechnen, mit einzelnen Positionen und ausdrücklichen Daten, ohne Buchung, Abo oder Monat dahinter. Der Server berechnet jeden Betrag; Sie bestätigen eine Vorschau und stellen die Rechnung aus. Aus: Rechnungen werden wie bisher je Mitglied und Monat ausgestellt.",
   "@featureStandaloneInvoicingDesc": {
     "description": "#4165 feature switch: featureStandaloneInvoicingDesc"
+  },
+  "featureStockLotsTitle": "Chargen und Verfall",
+  "@featureStockLotsTitle": {
+    "description": "#4169 the name of the lots and expiry feature"
+  },
+  "featureStockLotsDesc": "Waren nach Charge oder Verfallsdatum verfolgen, mit einer Haltbarkeit. Aus: kein Artikel wird nach Charge verfolgt, und Erfasstes bleibt unverändert.",
+  "@featureStockLotsDesc": {
+    "description": "#4169 what the lots and expiry feature does, and what off means"
   }
 }

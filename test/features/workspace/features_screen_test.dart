@@ -83,7 +83,8 @@ void main() {
     // #4164 — billingCustomers: invoicing customers without an account is
     // asked for.
     // #4166 — customerQuotes: quoting a billing customer is asked for.
-    expect(onCount, featureManifest.length - 59);
+    // #4169 — stockLots: lots and expiry are asked for.
+    expect(onCount, featureManifest.length - 60);
   });
 
   testWidgets(

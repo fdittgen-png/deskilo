@@ -1443,6 +1443,10 @@ window.SETUP_L10N={
    "customerQuotes": [
     "Customer quotes",
     "Offer a billing customer a price before invoicing it: the lines, how long the offer holds, and the answer you record. An accepted quote becomes that customer's first invoice, once. Nothing is invoiced until you convert it. Asked for, under invoicing."
+   ],
+   "stockLots": [
+    "Lots and expiry",
+    "Track goods by lot or by expiry date, with a shelf life. Off: no item is tracked by lot, and what was recorded is kept as it is."
    ]
   },
   "process": {
@@ -3282,6 +3286,10 @@ window.SETUP_L10N={
    "customerQuotes": [
     "Devis clients",
     "Proposez un prix à un client facturé avant de le facturer : les lignes, la durée de validité de l'offre et la réponse que vous enregistrez. Un devis accepté devient la première facture de ce client, une seule fois. Rien n'est facturé avant que vous le convertissiez. À activer, sous la facturation."
+   ],
+   "stockLots": [
+    "Lots et péremption",
+    "Suivre les marchandises par lot ou par date de péremption, avec une durée de conservation. Désactivé : aucun article n’est suivi par lot, et ce qui a été enregistré est conservé tel quel."
    ]
   },
   "process": {
@@ -5121,6 +5129,10 @@ window.SETUP_L10N={
    "customerQuotes": [
     "Kundenangebote",
     "Machen Sie einem Rechnungskunden ein Angebot, bevor Sie ihm eine Rechnung stellen: die Positionen, wie lange das Angebot gilt und die Antwort, die Sie festhalten. Ein angenommenes Angebot wird einmalig zur ersten Rechnung dieses Kunden. Bis Sie es umwandeln, wird nichts berechnet. Auf Anfrage, unter Rechnungen."
+   ],
+   "stockLots": [
+    "Chargen und Verfall",
+    "Waren nach Charge oder Verfallsdatum verfolgen, mit einer Haltbarkeit. Aus: kein Artikel wird nach Charge verfolgt, und Erfasstes bleibt unverändert."
    ]
   },
   "process": {
@@ -6960,6 +6972,10 @@ window.SETUP_L10N={
    "customerQuotes": [
     "Presupuestos de clientes",
     "Ofrezca un precio a un cliente facturado antes de facturarle: las líneas, cuánto tiempo vale la oferta y la respuesta que usted registra. Un presupuesto aceptado se convierte, una sola vez, en la primera factura de ese cliente. No se factura nada hasta que lo convierta. Se activa a petición, dentro de facturación."
+   ],
+   "stockLots": [
+    "Lotes y caducidad",
+    "Seguir las mercancías por lote o por fecha de caducidad, con una vida útil. Desactivado: ningún artículo se sigue por lote y lo registrado se conserva tal cual."
    ]
   },
   "process": {
@@ -8799,6 +8815,10 @@ window.SETUP_L10N={
    "customerQuotes": [
     "Preventivi ai clienti",
     "Proponete un prezzo a un cliente fatturato prima di fatturarlo: le righe, per quanto tempo vale l'offerta e la risposta che registrate. Un preventivo accettato diventa, una sola volta, la prima fattura di quel cliente. Non si fattura nulla finché non lo convertite. Su richiesta, sotto la fatturazione."
+   ],
+   "stockLots": [
+    "Lotti e scadenza",
+    "Seguire le merci per lotto o per data di scadenza, con una durata di conservazione. Disattivato: nessun articolo è seguito per lotto e ciò che è stato registrato resta invariato."
    ]
   },
   "process": {

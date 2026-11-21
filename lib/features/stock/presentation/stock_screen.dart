@@ -14,12 +14,18 @@ import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/ui/kit/page_title.dart';
 import '../../../core/ui/loading_view.dart';
+import '../../workspace/domain/workspace_feature.dart';
+import '../../workspace/domain/workspace_permission.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../application/stock_view.dart';
 import '../application/stock_walk.dart';
 import '../domain/stock_page.dart';
 import '../providers/stock_providers.dart';
 import 'stock_day.dart';
+import 'stock_item_editor.dart';
+import 'stock_mapping_editor.dart';
+import 'stock_place_editor.dart';
+import 'stock_variants_editor.dart';
 
 class StockScreen extends ConsumerWidget {
   const StockScreen({super.key});
@@ -29,10 +35,71 @@ class StockScreen extends ConsumerWidget {
     final l10n = context.l10n;
     final workspaceId = ref.watch(currentWorkspaceProvider).value?.id;
     final view = ref.watch(stockViewProvider);
+    // #4169: the editors are for a person who may manage the stock; the
+    // server asks the same.
+    final mayManage = ref.watch(myPermissionsProvider).contains(WorkspacePermission.manageStock);
+    final items = workspaceId == null
+        ? const <StockItem>[]
+        : ref.watch(stockItemsProvider(workspaceId)).value ?? const <StockItem>[]; // empty-ok: no item to edit is offered
+    final lotsOn = ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.stockLots);
+    final chosen = items.where((i) => i.id == view.itemId).firstOrNull;
     return Scaffold(
       appBar: AppBar(
         title: PageTitle(l10n.permModuleStock),
         actions: [
+          if (workspaceId != null && mayManage && chosen != null)
+            IconButton(
+              key: const ValueKey('stock-edit-item'),
+              icon: const Icon(Icons.tune),
+              tooltip: l10n.stockEditItem,
+              onPressed: () => showStockItemEditor(
+                context,
+                ref.read(stockConfigCommandsProvider),
+                workspaceId: workspaceId,
+                itemId: chosen.id,
+                itemName: chosen.name,
+                lotsOn: lotsOn,
+              ),
+            ),
+          if (workspaceId != null && mayManage && chosen != null) ...[
+            IconButton(
+              key: const ValueKey('stock-edit-variants'),
+              icon: const Icon(Icons.style_outlined),
+              tooltip: l10n.stockVariantsEdit,
+              onPressed: () => showStockVariantsEditor(
+                context,
+                ref.read(stockConfigCommandsProvider),
+                workspaceId: workspaceId,
+                itemId: chosen.id,
+                itemName: chosen.name,
+              ),
+            ),
+            IconButton(
+              key: const ValueKey('stock-edit-mappings'),
+              icon: const Icon(Icons.link),
+              tooltip: l10n.stockMappingsEdit,
+              onPressed: () => showStockMappings(
+                context,
+                ref.read(stockConfigCommandsProvider),
+                workspaceId: workspaceId,
+                itemId: chosen.id,
+                itemName: chosen.name,
+              ),
+            ),
+          ],
+          if (workspaceId != null && mayManage)
+            IconButton(
+              key: const ValueKey('stock-places'),
+              icon: const Icon(Icons.place_outlined),
+              tooltip: l10n.stockPlacesTitle,
+              onPressed: () => showStockPlaces(
+                context,
+                ref.read(stockConfigCommandsProvider),
+                workspaceId: workspaceId,
+                // recorder-key-exempt: a data callback, not a control
+                onChanged: () => ref.invalidate(stockPlacesProvider(workspaceId)),
+              ),
+            ),
           if (workspaceId != null)
             IconButton(
               key: const ValueKey('stock-reload'),
@@ -172,7 +239,7 @@ class _OnHandList extends ConsumerWidget {
       onMore: () => ref.read(provider.notifier).loadMore(),
       tile: (row) => ListTile(
         key: ValueKey('stock-onhand-${row.itemId}-${row.locationId}-${row.lotId}'),
-        title: Text(row.itemName),
+        title: Text(row.itemLabel),
         subtitle: Text(
           '${row.locationLabel} · '
           '${row.lotCode == null ? l10n.stockNoLot : l10n.stockLotLabel(row.lotCode!)}',
@@ -205,7 +272,7 @@ class _MovementsList extends ConsumerWidget {
       onMore: () => ref.read(provider.notifier).loadMore(),
       tile: (m) => ListTile(
         key: ValueKey('stock-movement-${m.id}'),
-        title: Text(m.itemName),
+        title: Text(m.itemLabel),
         subtitle: Text(
           '${m.fromLocationCode} → ${m.toLocationCode} · '
           '${day.formatCompactDate(stockDayOf(ref, m.occurredAt))}',
