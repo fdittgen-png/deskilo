@@ -598,6 +598,15 @@ Apra **Acquisti** e poi **Fornitori**. Il saldo da pagare a ciascun fornitore è
 
 Scelga **Vedi debiti verso il fornitore** per consultare le sue fatture e gli importi residui. Usi **Carica altro** quando disponibile. Se il saldo o l'elenco non sono disponibili, riprovi invece di considerarli zero. Acquisti deve essere attivo e serve il permesso di vedere le finanze o gestire gli acquisti.
 
+<!-- anchor: user.money.customers.billing -->
+### Clienti fatturati
+
+**Destinatari:** Amministratore · Proprietario
+
+Aprire **Denaro** e poi **Clienti fatturati** (l'indirizzo `/money/customers`; la funzione **Clienti fatturati** deve essere attiva sotto la fatturazione). Qui si tengono le persone e le aziende a cui si fattura, con o senza account. Non sono membri: non hanno un account, non vedono nulla dell'attività e non contano tra i membri.
+
+Scegliere **Aggiungere un cliente** e indicare un'azienda o un nome, l'indirizzo postale, il codice paese, la partita IVA e un indirizzo e-mail per la fattura. La partita IVA è controllata solo nella forma, mai verificata. **Fatturato come** (azienda o privato) determina le diciture legali e il trattamento fiscale; solo chi può emettere fatture può modificarlo. Scegliere un cliente per modificarlo. Se qualcun altro lo ha cambiato dopo l'apertura, non viene salvato nulla e si deve riaprirlo. Se l'elenco non può essere letto, riprovare invece di darlo per vuoto. Modificare un cliente non riscrive mai una fattura già emessa: ognuna conserva il nome e l'indirizzo con cui è stata emessa.
+
 <!-- anchor: user.money.amounts -->
 ### Come sono mostrati gli importi
 

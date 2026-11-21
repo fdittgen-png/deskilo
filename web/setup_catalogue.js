@@ -638,6 +638,10 @@ window.SETUP_REGISTRY={
   [
    "organisation",
    true
+  ],
+  [
+   "billingCustomers",
+   false
   ]
  ],
  "requires": {
@@ -746,7 +750,8 @@ window.SETUP_REGISTRY={
   "reminderEmail": "dunning",
   "invoiceEmail": "invoicing",
   "kioskEnrolment": "kioskMode",
-  "stockManagement": "services"
+  "stockManagement": "services",
+  "billingCustomers": "invoicing"
  },
  "availableIn": {
   "recapitulativeStatement": [
@@ -1488,7 +1493,8 @@ window.SETUP_PROCESSES=[
      "invoiceJourney",
      "invoicingWizard",
      "settlementFold",
-     "numberSequences"
+     "numberSequences",
+     "billingCustomers"
     ]
    },
    {
@@ -1841,7 +1847,8 @@ window.SETUP_LEVELS={
       "carnets",
       "guestPasses",
       "reminderEmail",
-      "invoiceEmail"
+      "invoiceEmail",
+      "billingCustomers"
      ],
      "needs": {}
     }

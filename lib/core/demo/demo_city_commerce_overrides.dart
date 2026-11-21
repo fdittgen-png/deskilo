@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/misc.dart' show Override;
 
 import '../../features/money/providers/accounting_connection_providers.dart';
 import '../../features/money/providers/asset_providers.dart';
+import '../../features/money/providers/billing_customer_providers.dart';
 import '../../features/money/providers/book_period_providers.dart';
 import '../../features/money/providers/book_profile_providers.dart';
 import '../../features/money/providers/einvoice_inbox_providers.dart';
@@ -54,6 +55,10 @@ List<Override> demoCityCommerceOverrides(DemoFixture fixture) {
       (ref) => demoPickSpace(ref, buying).inbox,
     ),
     ...demoPurchasingOverrides(buying.home, spaces: buying),
+    // #4164 — each space reads its own billing customers.
+    billingCustomerRepositoryProvider.overrideWith(
+      (ref) => demoPickSpace(ref, demoMapSpaces(stores, (s) => s.billingCustomers)),
+    ),
     // #3307 — the orders to their suppliers.
     ...demoPurchaseOrderOverrides(orderSpaces),
     // #3866 — every space reads its own books and accounting connection.

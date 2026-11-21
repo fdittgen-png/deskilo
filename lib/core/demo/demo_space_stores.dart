@@ -20,6 +20,7 @@ import 'data/book_period_repository.dart';
 import 'data/book_profile_repository.dart';
 import 'data/demo_cost_allocation_repository.dart';
 import 'data/einvoice_inbox_repository.dart';
+import 'data/fake_billing_customers.dart';
 import 'data/lease_commitment_repository.dart';
 import 'data/money/demo_customer_statement.dart';
 import 'data/money_repository.dart';
@@ -38,6 +39,7 @@ import 'demo_spaces.dart';
 import 'demo_trade_city_commerce.dart';
 import 'demo_trade_city_space.dart';
 import 'seed/demo_asset_seed.dart';
+import 'seed/demo_billing_customer_seed.dart';
 import 'seed/demo_book_period_seed.dart';
 import 'seed/demo_city_bank_seed.dart';
 import 'seed/demo_city_books_seed.dart';
@@ -86,6 +88,12 @@ class DemoSpaceStores {
 
   /// #3846 — the passes the space sells, and the rights they are sold under.
   late final DemoGuestPasses guestPasses = demoGuestPasses(fixture, key);
+
+  /// #4164 — the space's billing customers (the Demo's reference
+  /// organisation seeds three; every other space starts with none).
+  late final FakeBillingCustomerRepository billingCustomers = key == DemoSpaceKey.home
+      ? seedDemoBillingCustomers(demoFirstSpaceId)
+      : FakeBillingCustomerRepository();
 
   /// #3846 — the customer statement of the space's own money.
   late final CustomerStatementReader statement = demoCustomerStatementReader(

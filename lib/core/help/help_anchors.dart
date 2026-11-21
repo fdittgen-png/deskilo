@@ -20,6 +20,10 @@ abstract final class HelpAnchor {
   /// The supplier balance and its scoped payable list.
   static const moneySupplierBalance = 'user.money.suppliers.balance';
 
+  /// #4164 — the billing customers: whom the business invoices, with or
+  /// without an account.
+  static const moneyBillingCustomers = 'user.money.customers.billing';
+
   /// #3527 — the Sales, Purchases and Cash pages.
   static const moneySales = 'user.money.sales';
   static const moneyPurchases = 'user.money.purchases';

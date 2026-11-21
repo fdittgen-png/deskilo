@@ -1474,6 +1474,12 @@
       "capabilities": []
     },
     {
+      "key": "billingCustomers",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "bookForOthers",
       "maturity": "beta",
       "lifecycle": "active",

@@ -80,6 +80,7 @@
         "badgeSignIn": false,
         "bankImport": false,
         "biReportDesigner": false,
+        "billingCustomers": false,
         "bookForOthers": true,
         "bookingGate": true,
         "bookingPolicies": true,

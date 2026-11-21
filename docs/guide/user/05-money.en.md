@@ -598,6 +598,15 @@ Open **Purchases** and then **Suppliers**. Each supplier's outstanding balance i
 
 Choose **View supplier payables** to see that supplier's bills and their remaining amounts. Use **Load more** when offered. If the balance or list is unavailable, retry rather than treating it as zero. The workspace needs Purchases enabled and you need permission to view finances or manage purchases.
 
+<!-- anchor: user.money.customers.billing -->
+### Billing customers
+
+**Audience:** Administrator · Owner
+
+Open **Money** and then **Billing customers** (the address `/money/customers`; the feature **Billing customers** must be on under invoicing). This is where you keep the people and businesses you invoice, with or without an account. They are not members: they have no account, see nothing of your business, and are not counted among your members.
+
+Choose **Add a customer** and give a company or a name, the postal address, the country code, the VAT number and an e-mail address for the invoice. The VAT number is checked for its shape only, never verified. **Billed as** (business or person) decides the legal mentions and the tax treatment of what you invoice; only someone who may issue invoices can change it. Choose a customer to edit it. If someone else changed the customer since you opened it, nothing is saved and you are asked to open it again. If the list cannot be read, retry rather than treating it as empty. Changing a customer never rewrites an invoice already issued: each keeps the name and address it was issued with.
+
 <!-- anchor: user.money.amounts -->
 ### How amounts are shown
 

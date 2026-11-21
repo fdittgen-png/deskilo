@@ -128,6 +128,7 @@ const List<DeskWalkPage> deskWalkPages = [
     'purchase-approvals',
   ),
   ('/money/suppliers', PageKind.records, 'money', 'suppliers'),
+  ('/money/customers', PageKind.document, 'money', 'customers'),
   // #3842 — the purchase orders as records, and an order beside the table.
   ('/money/purchase-orders', PageKind.records, 'money', 'purchase-orders'),
   (
