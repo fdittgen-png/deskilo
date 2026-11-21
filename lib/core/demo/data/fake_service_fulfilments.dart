@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #4178 (F4) -- the Demo's engagements of ordered services, with the rules of
-// 0848: one engagement per canonical source line (an invoice that billed a quote
+// 0851: one engagement per canonical source line (an invoice that billed a quote
 // resolves to the quote's), append-only steps at an expected revision, one
 // request one step (a changed payload under it is refused), only ordered ->
 // started -> done or a reasoned cancellation. It reads the quotes and invoices
