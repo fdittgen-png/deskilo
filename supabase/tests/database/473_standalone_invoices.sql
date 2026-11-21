@@ -104,10 +104,10 @@ select is((select total_cents from public.invoices where id = (current_setting('
 select is(pg_temp.as_user(1, format($$select (public.issue_standalone_invoice_v1(%L, %L, 1, '00000000-0000-4000-8000-000000004165'))->>'replayed'$$,
   pg_temp.u(101), current_setting('d.a'))), 'true', 'the same request replays');
 select is(pg_temp.numbers(), '1|2', 'and makes no second invoice nor number');
-select like(pg_temp.as_user(1, format($$select public.issue_standalone_invoice_v1(%L, %L, 2, '00000000-0000-4000-8000-000000004165')::text$$,
-  pg_temp.u(101), current_setting('d.a'))), 'ERR %request conflict%', 'another payload under the same request is refused');
-select like(pg_temp.as_user(1, format($$select public.issue_standalone_invoice_v1(%L, %L, 1, '00000000-0000-4000-8000-000000004166')::text$$,
-  pg_temp.u(101), current_setting('d.a'))), 'ERR DKI01%', 'another request for the issued draft is refused');
+select ok(pg_temp.as_user(1, format($$select public.issue_standalone_invoice_v1(%L, %L, 2, '00000000-0000-4000-8000-000000004165')::text$$,
+  pg_temp.u(101), current_setting('d.a'))) like 'ERR %request conflict%', 'another payload under the same request is refused');
+select ok(pg_temp.as_user(1, format($$select public.issue_standalone_invoice_v1(%L, %L, 1, '00000000-0000-4000-8000-000000004166')::text$$,
+  pg_temp.u(101), current_setting('d.a'))) like 'ERR DKI01%', 'another request for the issued draft is refused');
 select is(pg_temp.numbers(), '1|2', 'without consuming a number');
 
 -- ── a second deliberate invoice, the same customer and month ──
