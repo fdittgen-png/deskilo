@@ -6,6 +6,7 @@ import 'e_invoice_totals.dart';
 import 'einvoice_format.dart';
 import 'einvoice_input.dart';
 import 'invoice.dart';
+import 'invoice_structured_line.dart';
 import 'subdivision.dart';
 import 'swiss_qr_bill.dart';
 import 'vat_rate.dart';
@@ -349,7 +350,13 @@ class _UblWriter {
     // price is split exactly as the breakdown above splits it. #1919 —
     // signed as the document states it: a reversal on an invoice and a
     // charge on a credit note are negative lines.
-    final lineNet =
+    // #4162 — a commercial line states its exact facts (null on a legacy one).
+    final exact = structuredCommercialLine(
+      line,
+      creditNote: creditNote,
+      currency: invoice.currency,
+    );
+    final lineNet = exact?.netCents ??
         sign * vatSplit(line.amountCents, line.vatPercent).netCents;
     // #1091 — keep quantity × unit price arithmetically consistent on
     // the amount actually EMITTED (the NET, not the gross: 4 × €10.00 at
@@ -368,8 +375,9 @@ class _UblWriter {
         : line.vatPercent > 0 ? 'S' : totals.category;
     builder.element('cac:${docName}Line', nest: () {
       cbc('ID', '${index + 1}');
-      cbc(creditNote ? 'CreditedQuantity' : 'InvoicedQuantity', '$quantity',
-          {'unitCode': 'C62'});
+      cbc(creditNote ? 'CreditedQuantity' : 'InvoicedQuantity',
+          exact?.quantity ?? '$quantity',
+          {'unitCode': exact?.unitCode ?? 'C62'});
       money('LineExtensionAmount', lineNet);
       builder.element('cac:Item', nest: () {
         cbc('Name', input.lineText(line));
@@ -382,7 +390,15 @@ class _UblWriter {
         });
       });
       builder.element('cac:Price', nest: () {
-        money('PriceAmount', unitCents);
+        if (exact == null) {
+          money('PriceAmount', unitCents);
+        } else {
+          cbc('PriceAmount', exact.unitPrice, {'currencyID': invoice.currency});
+          if (exact.baseQuantity != null) {
+            cbc('BaseQuantity', exact.baseQuantity!,
+                {'unitCode': exact.baseUnitCode});
+          }
+        }
       });
     });
   }
