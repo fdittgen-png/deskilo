@@ -8,7 +8,7 @@
 -- and never a lot; the count is a read-only mirror once the ledger exists and off/on again
 -- changes nothing; a lost response is read again by its request id. Rolled back.
 begin;
-select plan(65);
+select plan(66);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -59,6 +59,12 @@ $f$;
 create or replace function pg_temp.move(p_req int, p_item int, p_qty text, p_from text, p_to text, p_reason text, p_extra text default '') returns text language sql as $f$
   select pg_temp.run_as(pg_temp.u(1), format('select public.stock_move_v1(%L, %L, %L::jsonb, %L)::text', pg_temp.u(101), pg_temp.u(p_req),
     '[' || pg_temp.line(p_item, p_qty, p_from, p_to, p_extra) || ']', p_reason))
+$f$;
+create or replace function pg_temp.detail_of(p_sql text) returns text language plpgsql as $f$
+declare d text;
+begin execute p_sql; return 'no refusal';
+exception when others then get stacked diagnostics d = pg_exception_detail; return d;
+end
 $f$;
 grant execute on all functions in schema pg_temp to authenticated, anon;
 
@@ -123,6 +129,9 @@ select is(pg_temp.on_hand(301, 'SHELF-B')::text, '0.500000', 'a confirmed charge
 select pg_temp.run_as(pg_temp.u(1), format('select public.record_service_charge(%L, %L, %L, 1)::text', pg_temp.u(101), pg_temp.u(201), pg_temp.u(301)));
 select is(pg_temp.try(format($q$update public.events set status = 'confirmed' where workspace_id = %L and type = 'service_charge' and status <> 'confirmed'$q$, pg_temp.u(101))), 'DKG03',
   'less than the charge says is there: the confirmation is refused, nothing is clipped');
+select is((select pg_temp.detail_of(format($q$update public.events set status = 'confirmed' where workspace_id = %L and type = 'service_charge' and status <> 'confirmed'$q$, pg_temp.u(101)))),
+  format('{"held": "0.500000", "asked": "1", "scope": "main_store", "item_id": "%s"}', pg_temp.u(301)),
+  'and the refusal carries what the main store holds, for the screen that says it');
 select is(pg_temp.on_hand(301, 'SHELF-B')::text, '0.500000', 'and the 0.5 kg that were there are still there');
 
 -- THE NEGATIVE POLICY: one setting, an untracked item only, never a lot.

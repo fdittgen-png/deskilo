@@ -213,13 +213,15 @@ begin
        and bal.location_id in (select t.id from public.stock_place_tree(p_workspace_id, p_root) t);
     if v_expired > 0 and v_expired >= v_left then
       raise exception 'what is left in the main store is past its date: % of % are there fit to sell', p_quantity - v_left, p_quantity
-        using errcode = 'DKG15';
+        using errcode = 'DKG15', detail = jsonb_build_object('scope', 'main_store', 'item_id', p_item_id,
+                'held', (p_quantity - v_left)::text, 'asked', p_quantity::text)::text;
     end if;
     select (s.tracking <> 'none') into v_tracked from public.services s where s.id = p_item_id;
     if coalesce(v_tracked, false)
        or not coalesce((public.setting_value(p_workspace_id, 'stock.allow_negative') #>> '{}')::boolean, false) then
       raise exception 'not enough in the main store: % of % are there', p_quantity - v_left, p_quantity
-        using errcode = 'DKG03';
+        using errcode = 'DKG03', detail = jsonb_build_object('scope', 'main_store', 'item_id', p_item_id,
+                'held', (p_quantity - v_left)::text, 'asked', p_quantity::text)::text;
     end if;
     location_id := p_root;
     lot_id := null;
