@@ -48,6 +48,8 @@ const _switches = <WorkspaceFeature>{
   // #4171 — receiving a delivery into stock is asked for on the order's own
   // receipt pane, not in the setup guide.
   WorkspaceFeature.stockReceiving,
+  // #4170 — taking goods out is asked for on the stock screens, not in the setup guide.
+  WorkspaceFeature.stockTakeOut,
   // Booking and the plan read what is already set up.
   WorkspaceFeature.seriesBooking,
   WorkspaceFeature.seatDayTimeline,

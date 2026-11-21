@@ -207,6 +207,7 @@
         "stockLots": false,
         "stockManagement": false,
         "stockReceiving": false,
+        "stockTakeOut": false,
         "subscriptionInvoices": false,
         "supplyClassification": false,
         "supplyExpenses": false,

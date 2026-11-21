@@ -16294,6 +16294,14 @@
   "@featureStockReceivingTitle": {
     "description": "#4171 the name of the receiving into stock feature"
   },
+  "featureStockTakeOutDesc": "Take goods out of stock for use or as a loss, with the reason and the lot. Off: no consumption or loss is offered; transfers and receiving are unaffected.",
+  "@featureStockTakeOutDesc": {
+    "description": "#4170 what the taking goods out feature does, and what off means"
+  },
+  "featureStockTakeOutTitle": "Taking goods out",
+  "@featureStockTakeOutTitle": {
+    "description": "#4170 the name of the taking goods out feature"
+  },
   "featureSubscriptionInvoicesDesc": "The membership fee is invoiced before the month it pays for, on a date you choose. Off: the fee stays on the whole-month invoice.",
   "@featureSubscriptionInvoicesDesc": {
     "description": "Shown as a text in feature copy (workspace)."
@@ -37311,6 +37319,10 @@
   "@refusalStockItem": {
     "description": "refusal DKG04 (#3824)"
   },
+  "refusalStockLedgerKept": "The stock of this business is kept by its ledger: use a stock command (a transfer, a take-out, a receipt), not the count. Nothing was changed.",
+  "@refusalStockLedgerKept": {
+    "description": "#4170 (0847) DKG13: a count written from outside the ledger."
+  },
   "refusalStockLocation": "This place is not one of this business's, is no longer in use, or is both the start and the end of the move. Nothing was moved.",
   "@refusalStockLocation": {
     "description": "refusal DKG05 (#3824)"
@@ -37330,6 +37342,10 @@
   "refusalStockOff": "Stock management is off in this business. Nothing was moved.",
   "@refusalStockOff": {
     "description": "refusal DKG01 (#3824)"
+  },
+  "refusalStockOnlyExpired": "What is left in the main store is past its date and is never sold. The confirmation was refused; nothing was taken.",
+  "@refusalStockOnlyExpired": {
+    "description": "#4170 (0847) DKG15: only expired stock is left for a sale."
   },
   "refusalStockPage": "This page request is not valid: ask for 1 to 200 rows, and continue only from the position a page gave.",
   "@refusalStockPage": {

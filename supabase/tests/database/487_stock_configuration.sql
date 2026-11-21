@@ -57,9 +57,9 @@ $f$;
 
 create or replace function pg_temp.move(p_req int, p_item int, p_qty numeric, p_from text, p_to text, p_unit text default null)
 returns text language sql as $f$
-  select pg_temp.run_as(pg_temp.u(1), format('select public.stock_move_v1(%L, %L, %L::jsonb, ''receipt'')::text',
+  select pg_temp.run_as(pg_temp.u(1), format('select public.stock_move_v1(%L, %L, %L::jsonb, '||(case when p_from = 'SUPPLIER' then '''receipt''' when p_to in ('CUSTOMER', 'LOSS') then '''loss''' else '''transfer''' end)||')::text',
     pg_temp.u(101), pg_temp.u(p_req), jsonb_build_array(jsonb_build_object('item_id', pg_temp.u(p_item), 'quantity', p_qty,
-      'from', pg_temp.loc(p_from), 'to', pg_temp.loc(p_to)) || case when p_unit is null then '{}'::jsonb else jsonb_build_object('unit', p_unit) end)))
+      'from', pg_temp.loc(p_from), 'to', pg_temp.loc(case when p_to = 'CUSTOMER' then 'LOSS' else p_to end)) || case when p_unit is null then '{}'::jsonb else jsonb_build_object('unit', p_unit) end)))
 $f$;
 grant execute on all functions in schema pg_temp to authenticated, anon;
 
@@ -81,7 +81,7 @@ insert into public.services (id, workspace_id, name, price_cents, active, stock,
   (pg_temp.u(302), pg_temp.u(101), 'Wine', 500, true, null, 'l', 'none', true),
   (pg_temp.u(303), pg_temp.u(102), 'Tea', 200, true, null, 'piece', 'none', true),
   (pg_temp.u(304), pg_temp.u(103), 'Rice', 200, true, null, 'kg', 'none', true);
-update public.workspaces set feature_flags = '{"stockManagement": true}' where id = pg_temp.u(101);
+update public.workspaces set feature_flags = '{"stockManagement": true, "stockTakeOut": true}' where id = pg_temp.u(101);
 update public.workspaces set feature_flags = '{"stockManagement": true}' where id = pg_temp.u(102);
 
 -- Units are exact and per item.

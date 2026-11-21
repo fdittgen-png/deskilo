@@ -660,6 +660,10 @@ window.SETUP_REGISTRY={
    false
   ],
   [
+   "stockTakeOut",
+   false
+  ],
+  [
    "serviceFulfilment",
    false
   ]
@@ -776,6 +780,7 @@ window.SETUP_REGISTRY={
   "customerQuotes": "invoicing",
   "stockLots": "stockManagement",
   "stockReceiving": "stockManagement",
+  "stockTakeOut": "stockManagement",
   "serviceFulfilment": "billingCustomers"
  },
  "availableIn": {
@@ -1493,7 +1498,8 @@ window.SETUP_PROCESSES=[
      "carnets",
      "stockManagement",
      "stockLots",
-     "stockReceiving"
+     "stockReceiving",
+     "stockTakeOut"
     ]
    }
   ]
@@ -1980,7 +1986,8 @@ window.SETUP_LEVELS={
       "purchaseOrders",
       "stockManagement",
       "stockLots",
-      "stockReceiving"
+      "stockReceiving",
+      "stockTakeOut"
      ],
      "needs": {
       "money": "invoices"

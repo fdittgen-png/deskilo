@@ -75,5 +75,13 @@
   "refusalStockVariant": "This item has variants: name which one (colour, size) to move, sell or count. Nothing was changed.",
   "@refusalStockVariant": {
     "description": "#4169 (0837) DKG12: an item with variants moved, sold or counted without naming one."
+  },
+  "refusalStockLedgerKept": "The stock of this business is kept by its ledger: use a stock command (a transfer, a take-out, a receipt), not the count. Nothing was changed.",
+  "@refusalStockLedgerKept": {
+    "description": "#4170 (0847) DKG13: a count written from outside the ledger."
+  },
+  "refusalStockOnlyExpired": "What is left in the main store is past its date and is never sold. The confirmation was refused; nothing was taken.",
+  "@refusalStockOnlyExpired": {
+    "description": "#4170 (0847) DKG15: only expired stock is left for a sale."
   }
 }

@@ -159,6 +159,8 @@ List<TemplateFieldSpec> _workspaceColumns() => [
         _f('workspace.$c', 'workspace', _text, p: _never, reason: 'which row and which twin this is'),
       _f('workspace.network_id', 'workspace', _text, p: _never,
           reason: 'the birth record of this row on its own installation'),
+      _f('workspace.stock_initialized_at', 'workspace', TemplateFieldType.date, p: _never,
+          reason: 'when this space first opened its stock ledger (#4170): history, never a setting'),
       _f('workspace.organisation_id', 'workspace', _text, p: _never,
           reason: 'the organisation of this business on its own installation (#4004)'),
       _f('workspace.dev_mode', 'workspace', _bool, p: _never, reason: "this space's own switch"),

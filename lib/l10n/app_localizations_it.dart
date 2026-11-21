@@ -12495,6 +12495,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featureStockReceivingTitle => 'Ricezione a magazzino';
 
   @override
+  String get featureStockTakeOutDesc =>
+      'Prelevare merci dal magazzino per uso o come perdita, con motivo e lotto. Disattivato: non sono offerti consumo né perdita; i trasferimenti e la ricezione restano invariati.';
+
+  @override
+  String get featureStockTakeOutTitle => 'Uscite di magazzino';
+
+  @override
   String get featureSubscriptionInvoicesDesc =>
       'La quota è fatturata prima del mese che paga, in una data scelta da Lei. Disattivato: la quota resta sulla fattura del mese.';
 
@@ -28645,6 +28652,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Non è un articolo che questa attività tiene a magazzino. Non è stato spostato nulla.';
 
   @override
+  String get refusalStockLedgerKept =>
+      'La giacenza di questa attività è tenuta dal suo registro: usare un’operazione di magazzino (trasferimento, prelievo, ricezione), non il contatore. Nulla è stato modificato.';
+
+  @override
   String get refusalStockLocation =>
       'Questo luogo non appartiene a questa attività, non è più in uso o è sia l\'origine sia la destinazione del movimento. Non è stato spostato nulla.';
 
@@ -28663,6 +28674,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get refusalStockOff =>
       'La gestione delle scorte è disattivata in questa attività. Non è stato spostato nulla.';
+
+  @override
+  String get refusalStockOnlyExpired =>
+      'Ciò che resta nel magazzino principale è scaduto e non viene mai venduto. La conferma è stata rifiutata; nulla è stato prelevato.';
 
   @override
   String get refusalStockPage =>

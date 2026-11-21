@@ -2296,6 +2296,12 @@
       "capabilities": []
     },
     {
+      "key": "stockTakeOut",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "subscriptionInvoices",
       "maturity": "beta",
       "lifecycle": "active",
