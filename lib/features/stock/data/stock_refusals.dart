@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #4169/#4171 -- how a refusal of the stock commands becomes a typed failure:
-// a stale revision (DKG10), a unit or tracking the first movement fixed or a
+// #4169/#4170/#4171 -- how a refusal of the stock commands becomes a typed failure:
+// less than asked on hand (DKG03), a stale revision (DKG10), a unit or tracking the first movement fixed or a
 // history that is kept (DKG08), and a content that is not valid with its
 // field and reason (DKG11). Anything else is not a refusal of ours and is
 // rethrown as it came.
@@ -20,6 +20,8 @@ Never throwStockFailure(PostgrestException e, StackTrace stack) {
       Error.throwWithStackTrace(const StockConfigStale(), stack);
     case 'DKG08':
       Error.throwWithStackTrace(const StockConfigInUse(), stack);
+    case 'DKG03':
+      Error.throwWithStackTrace(StockNotEnough(e.message), stack);
     case 'DKG11':
       Error.throwWithStackTrace(_refused(e.details), stack);
     default:

@@ -5,9 +5,11 @@ import '../../money/providers/purchase_order_providers.dart';
 import '../../workspace/providers/operation_context_providers.dart';
 import '../application/stock_walk.dart';
 import '../data/supabase_stock_config_commands.dart';
+import '../data/supabase_stock_operations.dart';
 import '../data/supabase_stock_queries.dart';
 import '../data/supabase_stock_receiving_commands.dart';
 import '../domain/stock_config_commands.dart';
+import '../domain/stock_operations.dart';
 import '../domain/stock_page.dart';
 import '../domain/stock_queries.dart';
 import '../domain/stock_receiving.dart';
@@ -95,5 +97,18 @@ final orderPutAwayProvider = FutureProvider.autoDispose
         ref.watch(purchaseOrderReceiptsProvider(key.workspaceId));
         return ref.watch(stockReceivingCommandsProvider).allocationsOfOrder(key.workspaceId, key.orderId);
       },
+      retry: (_, _) => null,
+    );
+
+/// #4170 -- the stock commands of the selected business: transfers, take-out,
+/// and the transfers still on their way. The Demo and the tests replace it.
+final stockOperationsProvider = Provider<StockOperations>(
+  (ref) => SupabaseStockOperations(ref.watch(selectedWorkspaceClientProvider)),
+);
+
+/// The transfers of a business that are not fully received.
+final openTransfersProvider = FutureProvider.autoDispose
+    .family<List<StockTransfer>, String>(
+      (ref, workspaceId) => ref.watch(stockOperationsProvider).openTransfers(workspaceId),
       retry: (_, _) => null,
     );
