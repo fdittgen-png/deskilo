@@ -607,6 +607,15 @@ Open **Money** and then **Billing customers** (the address `/money/customers`; t
 
 Choose **Add a customer** and give a company or a name, the postal address, the country code, the VAT number and an e-mail address for the invoice. The VAT number is checked for its shape only, never verified. **Billed as** (business or person) decides the legal mentions and the tax treatment of what you invoice; only someone who may issue invoices can change it. Choose a customer to edit it. If someone else changed the customer since you opened it, nothing is saved and you are asked to open it again. If the list cannot be read, retry rather than treating it as empty. Changing a customer never rewrites an invoice already issued: each keeps the name and address it was issued with.
 
+<!-- anchor: user.money.quotes -->
+### Quotes
+
+**Audience:** Administrator · Owner
+
+Open **Money** and then **Quotes** (the address `/money/quotes`; the feature **Customer quotes** must be on under invoicing). This is where you make an offer to a billing customer before you invoice them.
+
+Choose **New quote**, pick the customer, set the dates and add the lines. **Save draft** keeps it; **Send** freezes that revision, takes the next reference from the quote series and works the amounts out from your own tax settings. A draft shows no amounts: they exist only once it is sent. A sent quote never changes: **Amend** makes another revision, and **Cancel the quote** withdraws it. An offer past its date reads as expired. Nothing is invoiced, booked or paid by a quote; invoicing an accepted one comes next.
+
 <!-- anchor: user.money.amounts -->
 ### How amounts are shown
 

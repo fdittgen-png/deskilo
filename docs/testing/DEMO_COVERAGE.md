@@ -162,3 +162,4 @@ does — but it needs the pipeline to render rather than ingest, which is
 its own piece of work and not something to claim here. Until then, the
 honest statement is that the demo dataset is available for new
 screenshots and the existing ones predate it.
+| Customer quotes (#4166): the head lists a sent quote (EUR 144.00, a reference of the quote series) and a draft with no number and no amounts; sending the draft takes the next reference and freezes its amounts at the seller's rate; an amendment is another revision and the first stays frozen; another space starts with none | `test/core/demo/demo_quote_journey_test.dart` |

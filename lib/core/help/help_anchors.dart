@@ -24,6 +24,10 @@ abstract final class HelpAnchor {
   /// without an account.
   static const moneyBillingCustomers = 'user.money.customers.billing';
 
+  /// #4166 — the customer quotes: an offer to a billing customer, sent and
+  /// amended as revisions.
+  static const moneyQuotes = 'user.money.quotes';
+
   /// #3527 — the Sales, Purchases and Cash pages.
   static const moneySales = 'user.money.sales';
   static const moneyPurchases = 'user.money.purchases';

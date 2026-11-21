@@ -27714,6 +27714,163 @@ class AppLocalizationsIt extends AppLocalizations {
   String get quotaRequestTitle => 'Richiedi mezze giornate extra';
 
   @override
+  String get quoteAmend => 'Modifica';
+
+  @override
+  String get quoteAmountsOnSend =>
+      'Gli importi vengono calcolati all\'invio del preventivo, in base alle impostazioni fiscali proprie.';
+
+  @override
+  String get quoteCancelAction => 'Annulla il preventivo';
+
+  @override
+  String get quoteChooseCustomer => 'Scegliere un cliente';
+
+  @override
+  String quoteDecisionByIssuer(String date, String source) {
+    return 'Registrato da lei, come emittente: $source, il $date. È l\'annotazione della risposta, non la firma del cliente.';
+  }
+
+  @override
+  String get quoteDiscardDraft => 'Scarta la bozza';
+
+  @override
+  String get quoteDraftSaved => 'Bozza salvata.';
+
+  @override
+  String get quoteEditDraft => 'Modifica la bozza';
+
+  @override
+  String get quoteEditTitle => 'Modificare il preventivo';
+
+  @override
+  String get quoteFeatureOff =>
+      'I preventivi sono disattivati in questa attività.';
+
+  @override
+  String get quoteFieldIssuedOn => 'Data dell\'offerta';
+
+  @override
+  String get quoteFieldNotes => 'Note per il cliente';
+
+  @override
+  String get quoteFieldOrder => 'Numero d\'ordine';
+
+  @override
+  String get quoteFieldReference => 'Riferimento del cliente';
+
+  @override
+  String get quoteFieldValidUntil => 'Valido fino al';
+
+  @override
+  String quoteIncomplete(String missing) {
+    return 'Il preventivo non è ancora completo: $missing.';
+  }
+
+  @override
+  String get quoteNewTitle => 'Nuovo preventivo';
+
+  @override
+  String get quoteNoCustomers =>
+      'Aggiungere prima un cliente fatturato: un preventivo è rivolto a uno.';
+
+  @override
+  String get quoteNotAllowedAction =>
+      'Non è consentito farlo con i preventivi di questa attività.';
+
+  @override
+  String quoteOrderLine(String value) {
+    return 'Numero d\'ordine: $value';
+  }
+
+  @override
+  String quoteReferenceLine(String value) {
+    return 'Riferimento del cliente: $value';
+  }
+
+  @override
+  String quoteRevisionLine(String revision, String status) {
+    return 'Revisione $revision · $status';
+  }
+
+  @override
+  String get quoteRevisionsTitle => 'Revisioni';
+
+  @override
+  String get quoteSaveDraft => 'Salva bozza';
+
+  @override
+  String get quoteSend => 'Invia';
+
+  @override
+  String quoteSentAs(String reference) {
+    return 'Inviato come $reference. Questa revisione non cambia mai.';
+  }
+
+  @override
+  String get quoteStale =>
+      'Questa bozza è cambiata dall\'apertura. Riaprirla per vedere quella attuale.';
+
+  @override
+  String get quoteStateRefused =>
+      'Il preventivo non è più in uno stato che lo consente. Riaprirlo.';
+
+  @override
+  String get quoteStatusAccepted => 'Accettato';
+
+  @override
+  String get quoteStatusCancelled => 'Annullato';
+
+  @override
+  String get quoteStatusConverted => 'Fatturato';
+
+  @override
+  String get quoteStatusDeclined => 'Rifiutato';
+
+  @override
+  String get quoteStatusExpired => 'Scaduto';
+
+  @override
+  String get quoteStatusSent => 'Inviato';
+
+  @override
+  String get quoteTotal => 'Totale';
+
+  @override
+  String get quoteUnreached =>
+      'La risposta non è tornata: non si sa se è stato fatto. Aprire il preventivo per vedere a che punto è.';
+
+  @override
+  String quoteValidUntil(String date) {
+    return 'Valido fino al $date';
+  }
+
+  @override
+  String get quotesEmpty =>
+      'Nessun preventivo per ora. Crearne il primo per un cliente fatturato.';
+
+  @override
+  String get quotesIntro =>
+      'Offerte ai clienti fatturati. Un preventivo inviato non cambia mai; una modifica è un\'altra revisione. Non si fattura nulla finché non si converte uno accettato.';
+
+  @override
+  String get quotesLoadFailed =>
+      'I preventivi non hanno potuto essere letti. Non è un elenco vuoto.';
+
+  @override
+  String get quotesNew => 'Nuovo preventivo';
+
+  @override
+  String get quotesNotAllowed =>
+      'Non è consentito leggere i preventivi di questa attività.';
+
+  @override
+  String get quotesRetry => 'Riprovare';
+
+  @override
+  String get quotesTitle => 'Preventivi';
+
+  @override
   String get readStateDenied =>
       'Non ha accesso a questo. Se serve, lo chieda a un amministratore dello spazio.';
 

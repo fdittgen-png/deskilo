@@ -21,6 +21,7 @@ import 'data/book_profile_repository.dart';
 import 'data/demo_cost_allocation_repository.dart';
 import 'data/einvoice_inbox_repository.dart';
 import 'data/fake_billing_customers.dart';
+import 'data/fake_customer_quotes.dart';
 import 'data/lease_commitment_repository.dart';
 import 'data/money/demo_customer_statement.dart';
 import 'data/money_repository.dart';
@@ -44,6 +45,7 @@ import 'seed/demo_book_period_seed.dart';
 import 'seed/demo_city_bank_seed.dart';
 import 'seed/demo_city_books_seed.dart';
 import 'seed/demo_city_purchase_seed.dart';
+import 'seed/demo_customer_quote_seed.dart';
 import 'seed/demo_house_seed.dart' show demoHouseCountry;
 import 'seed/demo_lease_seed.dart';
 import 'seed/demo_london_seed.dart';
@@ -94,6 +96,12 @@ class DemoSpaceStores {
   late final FakeBillingCustomerRepository billingCustomers = key == DemoSpaceKey.home
       ? seedDemoBillingCustomers(demoFirstSpaceId)
       : FakeBillingCustomerRepository();
+
+  /// #4166 — the space's customer quotes (the Demo's reference organisation
+  /// seeds two; every other space starts with none).
+  late final FakeCustomerQuoteRepository customerQuotes = key == DemoSpaceKey.home
+      ? seedDemoCustomerQuotes(demoFirstSpaceId, now: fixture.seededAt)
+      : FakeCustomerQuoteRepository(clock: () => fixture.seededAt);
 
   /// #3846 — the customer statement of the space's own money.
   late final CustomerStatementReader statement = demoCustomerStatementReader(

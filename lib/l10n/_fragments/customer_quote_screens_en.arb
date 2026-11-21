@@ -1,0 +1,220 @@
+{
+  "@@locale": "en",
+  "quotesTitle": "Quotes",
+  "@quotesTitle": {
+    "description": "customer quotes: the quotes list, editor and detail (#4166)"
+  },
+  "quotesIntro": "Offers to your billing customers. A sent quote never changes; an amendment is another revision. Nothing is invoiced until you convert an accepted one.",
+  "@quotesIntro": {
+    "description": "customer quotes: the quotes list, editor and detail (#4166)"
+  },
+  "quotesEmpty": "No quotes yet. Make the first one for a billing customer.",
+  "@quotesEmpty": {
+    "description": "customer quotes: the quotes list, editor and detail (#4166)"
+  },
+  "quotesNew": "New quote",
+  "@quotesNew": {
+    "description": "customer quotes: the quotes list, editor and detail (#4166)"
+  },
+  "quotesLoadFailed": "The quotes could not be read. This is not an empty list.",
+  "@quotesLoadFailed": {
+    "description": "customer quotes: the quotes list, editor and detail (#4166)"
+  },
+  "quotesNotAllowed": "You may not read the quotes of this business.",
+  "@quotesNotAllowed": {
+    "description": "customer quotes: the quotes list, editor and detail (#4166)"
+  },
+  "quotesRetry": "Try again",
+  "@quotesRetry": {
+    "description": "customer quotes: the quotes list, editor and detail (#4166)"
+  },
+  "quoteStatusSent": "Sent",
+  "@quoteStatusSent": {
+    "description": "customer quotes: the quotes list, editor and detail (#4166)"
+  },
+  "quoteStatusAccepted": "Accepted",
+  "@quoteStatusAccepted": {
+    "description": "customer quotes: the quotes list, editor and detail (#4166)"
+  },
+  "quoteStatusDeclined": "Declined",
+  "@quoteStatusDeclined": {
+    "description": "customer quotes: the quotes list, editor and detail (#4166)"
+  },
+  "quoteStatusCancelled": "Cancelled",
+  "@quoteStatusCancelled": {
+    "description": "customer quotes: the quotes list, editor and detail (#4166)"
+  },
+  "quoteStatusConverted": "Invoiced",
+  "@quoteStatusConverted": {
+    "description": "customer quotes: the quotes list, editor and detail (#4166)"
+  },
+  "quoteStatusExpired": "Expired",
+  "@quoteStatusExpired": {
+    "description": "customer quotes: the quotes list, editor and detail (#4166)"
+  },
+  "quoteValidUntil": "Valid until {date}",
+  "@quoteValidUntil": {
+    "description": "customer quotes: the quotes list, editor and detail (#4166)",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "quoteFieldIssuedOn": "Date of the offer",
+  "@quoteFieldIssuedOn": {
+    "description": "customer quotes: the quotes list, editor and detail (#4166)"
+  },
+  "quoteFieldValidUntil": "Valid until",
+  "@quoteFieldValidUntil": {
+    "description": "customer quotes: the quotes list, editor and detail (#4166)"
+  },
+  "quoteFieldReference": "Customer reference",
+  "@quoteFieldReference": {
+    "description": "customer quotes: the quotes list, editor and detail (#4166)"
+  },
+  "quoteFieldOrder": "Order number",
+  "@quoteFieldOrder": {
+    "description": "customer quotes: the quotes list, editor and detail (#4166)"
+  },
+  "quoteFieldNotes": "Notes for the customer",
+  "@quoteFieldNotes": {
+    "description": "customer quotes: the quotes list, editor and detail (#4166)"
+  },
+  "quoteTotal": "Total",
+  "@quoteTotal": {
+    "description": "customer quotes: the quotes list, editor and detail (#4166)"
+  },
+  "quoteNewTitle": "New quote",
+  "@quoteNewTitle": {
+    "description": "customer quotes: the quotes list, editor and detail (#4166)"
+  },
+  "quoteEditTitle": "Edit the quote",
+  "@quoteEditTitle": {
+    "description": "customer quotes: the quotes list, editor and detail (#4166)"
+  },
+  "quoteAmountsOnSend": "Amounts are worked out when you send the quote, from your own tax settings.",
+  "@quoteAmountsOnSend": {
+    "description": "customer quotes: the quotes list, editor and detail (#4166)"
+  },
+  "quoteSaveDraft": "Save draft",
+  "@quoteSaveDraft": {
+    "description": "customer quotes: the quotes list, editor and detail (#4166)"
+  },
+  "quoteSend": "Send",
+  "@quoteSend": {
+    "description": "customer quotes: the quotes list, editor and detail (#4166)"
+  },
+  "quoteAmend": "Amend",
+  "@quoteAmend": {
+    "description": "customer quotes: the quotes list, editor and detail (#4166)"
+  },
+  "quoteCancelAction": "Cancel the quote",
+  "@quoteCancelAction": {
+    "description": "customer quotes: the quotes list, editor and detail (#4166)"
+  },
+  "quoteDiscardDraft": "Discard the draft",
+  "@quoteDiscardDraft": {
+    "description": "customer quotes: the quotes list, editor and detail (#4166)"
+  },
+  "quoteEditDraft": "Edit the draft",
+  "@quoteEditDraft": {
+    "description": "customer quotes: the quotes list, editor and detail (#4166)"
+  },
+  "quoteRevisionsTitle": "Revisions",
+  "@quoteRevisionsTitle": {
+    "description": "customer quotes: the quotes list, editor and detail (#4166)"
+  },
+  "quoteSentAs": "Sent as {reference}. This revision never changes.",
+  "@quoteSentAs": {
+    "description": "customer quotes: the quotes list, editor and detail (#4166)",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
+  "quoteDraftSaved": "Draft saved.",
+  "@quoteDraftSaved": {
+    "description": "customer quotes: the quotes list, editor and detail (#4166)"
+  },
+  "quoteStale": "This draft changed since you opened it. Open it again to see the current one.",
+  "@quoteStale": {
+    "description": "customer quotes: the quotes list, editor and detail (#4166)"
+  },
+  "quoteStateRefused": "The quote is no longer in a state that allows this. Open it again.",
+  "@quoteStateRefused": {
+    "description": "customer quotes: the quotes list, editor and detail (#4166)"
+  },
+  "quoteIncomplete": "The quote is not complete yet: {missing}.",
+  "@quoteIncomplete": {
+    "description": "customer quotes: the quotes list, editor and detail (#4166)",
+    "placeholders": {
+      "missing": {
+        "type": "String"
+      }
+    }
+  },
+  "quoteUnreached": "The answer did not come back, so it is not known whether this was done. Open the quote to see where it stands.",
+  "@quoteUnreached": {
+    "description": "customer quotes: the quotes list, editor and detail (#4166)"
+  },
+  "quoteNotAllowedAction": "You may not do this with quotes in this business.",
+  "@quoteNotAllowedAction": {
+    "description": "customer quotes: the quotes list, editor and detail (#4166)"
+  },
+  "quoteFeatureOff": "Quotes are switched off in this business.",
+  "@quoteFeatureOff": {
+    "description": "customer quotes: the quotes list, editor and detail (#4166)"
+  },
+  "quoteChooseCustomer": "Choose a customer",
+  "@quoteChooseCustomer": {
+    "description": "customer quotes: the quotes list, editor and detail (#4166)"
+  },
+  "quoteNoCustomers": "Add a billing customer first: a quote is made to one.",
+  "@quoteNoCustomers": {
+    "description": "customer quotes: the quotes list, editor and detail (#4166)"
+  },
+  "quoteDecisionByIssuer": "Recorded by you, as the issuer: {source}, on {date}. It is your record of the answer, not the customer's signature.",
+  "@quoteDecisionByIssuer": {
+    "description": "customer quotes: the quotes list, editor and detail (#4166)",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "source": {
+        "type": "String"
+      }
+    }
+  },
+  "quoteReferenceLine": "Customer reference: {value}",
+  "@quoteReferenceLine": {
+    "description": "customer quotes (#4166)",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "quoteOrderLine": "Order number: {value}",
+  "@quoteOrderLine": {
+    "description": "customer quotes (#4166)",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "quoteRevisionLine": "Revision {revision} · {status}",
+  "@quoteRevisionLine": {
+    "description": "customer quotes: a revision and its status (#4166)",
+    "placeholders": {
+      "revision": {
+        "type": "String"
+      },
+      "status": {
+        "type": "String"
+      }
+    }
+  }
+}
