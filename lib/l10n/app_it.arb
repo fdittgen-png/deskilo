@@ -18726,6 +18726,14 @@
   },
   "settingHintPurchaseSupplierLookupPerMinute": "Il numero massimo di ricerche fornitore che una persona può fare al minuto su questo server. Oltre il limite non viene inviato nulla al registro e la ricerca risulta occupata.",
   "settingHintPurchaseSupplierLookupTimeoutSeconds": "Quanto il server attende il registro delle imprese (VIES) prima che una ricerca fornitore sia considerata scaduta. Ciò che Lei ha digitato resta; può riprovare o proseguire a mano.",
+  "settingHintQuoteDefaultValidity": "Per quanti giorni un nuovo preventivo resta valido quando l’autore non indica una data di fine. Mai oltre la validità massima.",
+  "@settingHintQuoteDefaultValidity": {
+    "description": "#4291 hint of the setting quotes.default_validity_days"
+  },
+  "settingHintQuoteMaxValidity": "Il periodo più lungo in cui un preventivo può restare valido, a partire dalla data dell’offerta. Una validità maggiore viene rifiutata al salvataggio del preventivo.",
+  "@settingHintQuoteMaxValidity": {
+    "description": "#4291 hint of the setting quotes.max_validity_days"
+  },
   "settingHintReadinessRecentExportDays": "Giorni in cui un’esportazione registrata dall’app vale ancora come prova recente che il ripristino funziona. Oltre, il ripristino resta non verificato.",
   "@settingHintReadinessRecentExportDays": {
     "description": "#2487 settings: Setting hint."
@@ -18933,6 +18941,14 @@
   },
   "settingLabelPurchaseSupplierLookupPerMinute": "Ricerche fornitore per persona al minuto",
   "settingLabelPurchaseSupplierLookupTimeoutSeconds": "Attesa della ricerca fornitore (secondi)",
+  "settingLabelQuoteDefaultValidity": "Validità predefinita di un preventivo",
+  "@settingLabelQuoteDefaultValidity": {
+    "description": "#4291 label of the setting quotes.default_validity_days"
+  },
+  "settingLabelQuoteMaxValidity": "Validità massima di un preventivo",
+  "@settingLabelQuoteMaxValidity": {
+    "description": "#4291 label of the setting quotes.max_validity_days"
+  },
   "settingLabelReadinessRecentExportDays": "Finestra dell’esportazione recente",
   "@settingLabelReadinessRecentExportDays": {
     "description": "#2487 settings: Setting label."
@@ -20610,6 +20626,117 @@
   "@stockPlacesTitle": {
     "description": "#4169 the stock editors: a label or message"
   },
+  "stockPutAwayAction": "Collocare",
+  "@stockPutAwayAction": {
+    "description": "#4171 receiving into stock: a label or message"
+  },
+  "stockPutAwayAll": "Lasciato vuoto: tutto ciò che questa consegna porta di questa riga.",
+  "@stockPutAwayAll": {
+    "description": "#4171 receiving into stock: a label or message"
+  },
+  "stockPutAwayAlso": "Collocare anche a magazzino",
+  "@stockPutAwayAlso": {
+    "description": "#4171 receiving into stock: a label or message"
+  },
+  "stockPutAwayCost": "Costo di queste merci",
+  "@stockPutAwayCost": {
+    "description": "#4171 receiving into stock: a label or message"
+  },
+  "stockPutAwayCostEntered": "Un totale che inserisco",
+  "@stockPutAwayCostEntered": {
+    "description": "#4171 receiving into stock: a label or message"
+  },
+  "stockPutAwayCostOrder": "Il prezzo dell’ordine",
+  "@stockPutAwayCostOrder": {
+    "description": "#4171 receiving into stock: a label or message"
+  },
+  "stockPutAwayCostRate": "Tasso verso {currency}",
+  "@stockPutAwayCostRate": {
+    "description": "#4171 receiving into stock: a label or message",
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "stockPutAwayCostTotal": "Costo totale (unità minori)",
+  "@stockPutAwayCostTotal": {
+    "description": "#4171 receiving into stock: a label or message"
+  },
+  "stockPutAwayCostUnknown": "Non noto",
+  "@stockPutAwayCostUnknown": {
+    "description": "#4171 receiving into stock: a label or message"
+  },
+  "stockPutAwayDone": "Collocato.",
+  "@stockPutAwayDone": {
+    "description": "#4171 receiving into stock: a label or message"
+  },
+  "stockPutAwayExpiry": "Data di scadenza",
+  "@stockPutAwayExpiry": {
+    "description": "#4171 receiving into stock: a label or message"
+  },
+  "stockPutAwayLot": "Codice del lotto",
+  "@stockPutAwayLot": {
+    "description": "#4171 receiving into stock: a label or message"
+  },
+  "stockPutAwayNotStock": "{line}: non è un articolo di magazzino, quindi resta non assegnato. Tenerlo a magazzino dal catalogo per collocarlo.",
+  "@stockPutAwayNotStock": {
+    "description": "#4171 receiving into stock: a label or message",
+    "placeholders": {
+      "line": {
+        "type": "String"
+      }
+    }
+  },
+  "stockPutAwayNothing": "Non resta nulla da collocare.",
+  "@stockPutAwayNothing": {
+    "description": "#4171 receiving into stock: a label or message"
+  },
+  "stockPutAwayPlace": "Ubicazione",
+  "@stockPutAwayPlace": {
+    "description": "#4171 receiving into stock: a label or message"
+  },
+  "stockPutAwayProgress": "{line}: collocato {put}, da collocare {left}",
+  "@stockPutAwayProgress": {
+    "description": "#4171 receiving into stock: a label or message",
+    "placeholders": {
+      "line": {
+        "type": "String"
+      },
+      "put": {
+        "type": "String"
+      },
+      "left": {
+        "type": "String"
+      }
+    }
+  },
+  "stockPutAwayQuantity": "Quantità da collocare ({unit})",
+  "@stockPutAwayQuantity": {
+    "description": "#4171 receiving into stock: a label or message",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "stockPutAwayRemaining": "Collocare il resto",
+  "@stockPutAwayRemaining": {
+    "description": "#4171 receiving into stock: a label or message"
+  },
+  "stockPutAwayTitle": "Collocare {order}",
+  "@stockPutAwayTitle": {
+    "description": "#4171 receiving into stock: a label or message",
+    "placeholders": {
+      "order": {
+        "type": "String"
+      }
+    }
+  },
+  "stockPutAwayVariant": "Variante",
+  "@stockPutAwayVariant": {
+    "description": "#4171 receiving into stock: a label or message"
+  },
   "stockQuantityWithUnit": "{quantity} {unit}",
   "stockReadFailed": "Non è stato possibile leggere il magazzino. Nulla viene mostrato come vuoto: riprovi.",
   "stockReasonCodeDuplicate": "Questo codice è già in uso.",
@@ -20628,6 +20755,14 @@
   "@stockReasonCombinationDuplicate": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonCostInvalid": "Questo costo non è valido: un totale in unità minori e un tasso solo per un’altra valuta.",
+  "@stockReasonCostInvalid": {
+    "description": "#4171 receiving into stock: a text under a field the server refused"
+  },
+  "stockReasonCostRateMissing": "Un ordine in un’altra valuta richiede il suo tasso.",
+  "@stockReasonCostRateMissing": {
+    "description": "#4171 receiving into stock: a text under a field the server refused"
+  },
   "stockReasonDefaultPurchaseTwice": "Una sola unità può essere quella predefinita per gli acquisti.",
   "@stockReasonDefaultPurchaseTwice": {
     "description": "#4169 the stock editors: a text under a field the server refused"
@@ -20639,6 +20774,14 @@
   "stockReasonDimensionMismatch": "Questa unità non misura la stessa cosa dell’articolo.",
   "@stockReasonDimensionMismatch": {
     "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonExpiryMalformed": "Questa non è una data valida.",
+  "@stockReasonExpiryMalformed": {
+    "description": "#4171 receiving into stock: a text under a field the server refused"
+  },
+  "stockReasonExpiryRequired": "Questo articolo è tracciato per data di scadenza: indicarla.",
+  "@stockReasonExpiryRequired": {
+    "description": "#4171 receiving into stock: a text under a field the server refused"
   },
   "stockReasonFactorInvalid": "Entrambi i numeri devono essere interi maggiori di zero.",
   "@stockReasonFactorInvalid": {
@@ -20656,9 +20799,21 @@
   "@stockReasonItemForeign": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonItemNotStocked": "Questa riga non è un articolo di magazzino.",
+  "@stockReasonItemNotStocked": {
+    "description": "#4171 receiving into stock: a text under a field the server refused"
+  },
   "stockReasonKindUnknown": "Questo tipo non è noto.",
   "@stockReasonKindUnknown": {
     "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonLineConflict": "La riga è indicata due volte e le indicazioni non coincidono.",
+  "@stockReasonLineConflict": {
+    "description": "#4171 receiving into stock: a text under a field the server refused"
+  },
+  "stockReasonLineUnknown": "Questa consegna non ha portato quella riga.",
+  "@stockReasonLineUnknown": {
+    "description": "#4171 receiving into stock: a text under a field the server refused"
   },
   "stockReasonLocationCycle": "Un’ubicazione non può trovarsi dentro se stessa.",
   "@stockReasonLocationCycle": {
@@ -20667,6 +20822,10 @@
   "stockReasonLocationDefault": "L’ubicazione principale resta in uso.",
   "@stockReasonLocationDefault": {
     "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonLocationForeign": "Scegliere un’ubicazione di questa attività che sia in uso.",
+  "@stockReasonLocationForeign": {
+    "description": "#4171 receiving into stock: a text under a field the server refused"
   },
   "stockReasonLocationHasChildren": "Le ubicazioni al suo interno sono ancora in uso.",
   "@stockReasonLocationHasChildren": {
@@ -20683,6 +20842,14 @@
   "stockReasonLocationVirtual": "Un’ubicazione gestita dal sistema non può essere usata qui.",
   "@stockReasonLocationVirtual": {
     "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonLotCodeRequired": "Questo articolo è tracciato per lotto: indicare il codice del lotto (al massimo 64 caratteri).",
+  "@stockReasonLotCodeRequired": {
+    "description": "#4171 receiving into stock: a text under a field the server refused"
+  },
+  "stockReasonLotGroupConflict": "Le parti di un lotto devono coincidere per codice, data e costo.",
+  "@stockReasonLotGroupConflict": {
+    "description": "#4171 receiving into stock: a text under a field the server refused"
   },
   "stockReasonMalformed": "Questo valore non è valido per questo campo.",
   "@stockReasonMalformed": {
@@ -20708,6 +20875,10 @@
   "@stockReasonOutOfRange": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonOverAllocated": "Non si può collocare più di quanto è arrivato.",
+  "@stockReasonOverAllocated": {
+    "description": "#4171 receiving into stock: a text under a field the server refused"
+  },
   "stockReasonParentInactive": "L’ubicazione che la contiene non è più in uso.",
   "@stockReasonParentInactive": {
     "description": "#4169 the stock editors: a text under a field the server refused"
@@ -20715,6 +20886,14 @@
   "stockReasonPriceInvalid": "Un prezzo è zero o più.",
   "@stockReasonPriceInvalid": {
     "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonQuantityInvalid": "Una quantità è un numero maggiore di zero con al massimo sei decimali.",
+  "@stockReasonQuantityInvalid": {
+    "description": "#4171 receiving into stock: a text under a field the server refused"
+  },
+  "stockReasonReceiptUnknown": "Questa consegna non appartiene a questa attività.",
+  "@stockReasonReceiptUnknown": {
+    "description": "#4171 receiving into stock: a text under a field the server refused"
   },
   "stockReasonRegistryUnit": "Questa unità appartiene al sistema e non può essere ridefinita.",
   "@stockReasonRegistryUnit": {
@@ -20756,6 +20935,10 @@
   "@stockReasonUnitUnknown": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonUnitUnmapped": "L’unità di questa riga non è un’unità dell’articolo: aggiungerla prima all’articolo.",
+  "@stockReasonUnitUnmapped": {
+    "description": "#4171 receiving into stock: a text under a field the server refused"
+  },
   "stockReasonValueForeign": "Questo valore non appartiene a questa dimensione.",
   "@stockReasonValueForeign": {
     "description": "#4169 the stock editors: a text under a field the server refused"
@@ -20771,6 +20954,10 @@
   "stockReasonVariantInUse": "Giacenza o storico nominano questa variante: la combinazione resta invariata.",
   "@stockReasonVariantInUse": {
     "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonVariantRequired": "Questo articolo ha delle varianti: scegliere quale è arrivata.",
+  "@stockReasonVariantRequired": {
+    "description": "#4171 receiving into stock: a text under a field the server refused"
   },
   "stockReasonVariantUnknown": "Questa variante non appartiene a questo articolo.",
   "@stockReasonVariantUnknown": {

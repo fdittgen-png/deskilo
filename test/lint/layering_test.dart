@@ -53,6 +53,11 @@ import 'lint_sources.dart';
 /// which any widget in it touching a repository fails.
 
 const Set<String> _knownPairs = {
+  // #4171 — receiving into stock: the stock's put-away of a purchase-order
+  // delivery reads the order and its deliveries (money's domain and providers)
+  // and plugs into the order pane through money's own seam; money imports
+  // nothing of the stock.
+  'stock -> money',
   // #1865 — the task recorder: the help screen offers "Record this
   // task"; the Reserve hub, the booking sheet flow and the reservation
   // sheet call the recorder's seam, and the booking feature maps its own

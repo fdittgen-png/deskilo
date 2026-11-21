@@ -3005,6 +3005,8 @@ Wählen Sie **Neues Angebot**, den Kunden, die Daten und fügen Sie die Position
 
 Hat der Kunde geantwortet, wählen Sie bei einem gesendeten Angebot **Antwort festhalten**: Sie halten seine Antwort als Aussteller fest (angenommen oder abgelehnt, das Datum, wie sie Sie erreicht hat); es ist Ihr Vermerk, nicht seine Unterschrift, und ein Angebot nach seinem Datum kann nicht mehr angenommen werden. Bei einem angenommenen Angebot wählen Sie **Dieses Angebot berechnen**, legen die Daten fest und **Rechnung prüfen**: Die Rechnung wird aus der angenommenen Revision vorab berechnet und mit dem Angenommenen verglichen. Weicht sie ab (Datum, Kundendaten oder Steuerangaben haben sich geändert), bestätigen Sie, dass Sie sie geprüft haben; was noch nicht ausgestellt werden kann, wird genannt. Dann **Rechnung ausstellen**: Ein Angebot ergibt eine Rechnung, was danach auch mit ihr geschieht.
 
+Wie lange ein neues Angebot gültig bleibt, wenn Sie kein Enddatum angeben, und die längste Gültigkeit, die Sie zulassen, sind Ihre eigenen Einstellungen: **Standardgültigkeit eines Angebots** (zunächst 30 Tage) und **Längste Gültigkeit eines Angebots** (zunächst 365 Tage), in den Einstellungen des Arbeitsbereichs. Eine längere Gültigkeit wird beim Speichern des Angebots abgelehnt.
+
 Bei einem gesendeten Angebot öffnet **PDF teilen** das Angebot als Dokument: ein Angebot mit eigener Referenz und Gültigkeit, dem Kunden, den Positionen und dem, was sie ergeben, so wie beim Senden festgeschrieben (netto, Umsatzsteuer je Satz und Gesamtbetrag). Es ist nie eine Rechnung und trägt keine Rechnungsnummer. Sie können es ansehen, speichern oder teilen.
 
 <!-- anchor: user.money.stock -->

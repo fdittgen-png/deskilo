@@ -14,9 +14,12 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/form_kit.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../application/purchase_order_commands.dart';
 import '../../domain/purchase_order.dart';
 import '../../domain/purchase_order_receipt.dart';
+import '../../providers/purchase_order_providers.dart';
+import '../purchase_order_stock_seam.dart';
 
 /// A quantity as a person types it: no trailing ".0".
 String _qty(double q) => q == q.roundToDouble() ? q.toStringAsFixed(0) : '$q';
@@ -54,6 +57,14 @@ class PurchaseOrderReceiptActions extends ConsumerWidget {
                 'purchase-order-received-${order.reference}-${l.lineNo}',
               ),
             ),
+        // #4171 -- what of each delivery is put away into stock, if asked for.
+        if (canWrite)
+          ?ref.watch(purchaseOrderStockSeamProvider)?.deliveryActions(
+            context,
+            ref,
+            workspaceId: workspaceId,
+            order: order,
+          ),
         if (canWrite && order.receivable)
           OutlinedButton.icon(
             key: ValueKey('purchase-order-receive-${order.reference}'),
@@ -64,6 +75,59 @@ class PurchaseOrderReceiptActions extends ConsumerWidget {
           ),
       ],
     );
+  }
+}
+
+/// The delivery recorded together with its put-away into stock (#4171): both,
+/// or neither; the lists are read again once it is done.
+extension on _ReceiptSheet {
+  /// Records the delivery: with its put-away into stock when the form asks for
+  /// it (both, or neither), else as before. Null when done, else the problem.
+  Future<String?> _submit(
+    ReceiptPutAway? put,
+    AppLocalizations l10n,
+    String workspaceId,
+    PurchaseOrder order,
+    PurchaseOrderReceiptDraft d,
+    String requestId,
+  ) async {
+    if (put != null && put.also) {
+      return _recordWithPutAway(put, l10n, workspaceId, order, d, requestId);
+    }
+    final ok = await runGuarded(
+      context,
+      domain: 'money',
+      message: 'purchase order receipt failed',
+      errorText: l10n.purchaseOrderRefused,
+      action: () async {
+        await ref
+            .read(purchaseOrderCommandsProvider)
+            .recordReceipt(workspaceId, requestId, d);
+      },
+    );
+    return ok ? null : l10n.purchaseOrderRefused;
+  }
+
+  Future<String?> _recordWithPutAway(
+    ReceiptPutAway put,
+    AppLocalizations l10n,
+    String workspaceId,
+    PurchaseOrder order,
+    PurchaseOrderReceiptDraft d,
+    String requestId,
+  ) async {
+    final problem = await put.record(
+      l10n,
+      workspaceId,
+      order,
+      ReceiptDelivery(receivedOn: d.receivedOn, delivered: d.quantities, note: d.note, requestId: requestId),
+    );
+    if (problem == null) {
+      ref
+        ..invalidate(purchaseOrdersProvider(workspaceId))
+        ..invalidate(purchaseOrderReceiptsProvider(workspaceId));
+    }
+    return problem;
   }
 }
 
@@ -84,6 +148,12 @@ class _ReceiptSheet {
         if (l.remaining > 0) 'line-${l.lineNo}': _qty(l.remaining),
     });
     final requestId = newRequestId();
+    // #4171 -- "also put away" into stock: read first, so the form opens with
+    // the places, variants and tracking.
+    final put = await ref
+        .read(purchaseOrderStockSeamProvider)
+        ?.receiptPutAway(context, ref, workspaceId: workspaceId, order: order);
+    if (!context.mounted) return;
     PurchaseOrderReceiptDraft draft() => PurchaseOrderReceiptDraft(
       order: order,
       receivedOn: day,
@@ -104,7 +174,10 @@ class _ReceiptSheet {
         title: l10n.purchaseOrderReceiveTitle(order.reference),
         submitLabel: l10n.purchaseOrderReceive,
         submitKey: const ValueKey('purchase-order-receive-confirm'),
-        onDispose: fields.dispose,
+        onDispose: () {
+          fields.dispose();
+          put?.dispose();
+        },
         validate: () {
           // The day cannot be later than today: the picker ends there.
           final problems = draft().problemsOn(ref.read(clockProvider).now());
@@ -114,6 +187,7 @@ class _ReceiptSheet {
               'day': dateInputProblemText(l10n, dayProblem)
             else if (dayRead.date == null)
               'day': l10n.dateFieldRequired,
+            ...?put?.validate(l10n, draft().quantities),
             if (problems.contains(PurchaseOrderReceiptProblem.tooMany))
               for (final l in order.lines)
                 'line-${l.lineNo}': l10n.purchaseOrderReceiveTooMany
@@ -122,20 +196,7 @@ class _ReceiptSheet {
                   l10n.purchaseOrderReceiveNothing,
           };
         },
-        onSubmit: () async {
-          final ok = await runGuarded(
-            context,
-            domain: 'money',
-            message: 'purchase order receipt failed',
-            errorText: l10n.purchaseOrderRefused,
-            action: () async {
-              await ref
-                  .read(purchaseOrderCommandsProvider)
-                  .recordReceipt(workspaceId, requestId, draft());
-            },
-          );
-          return ok ? null : l10n.purchaseOrderRefused;
-        },
+        onSubmit: () => _submit(put, l10n, workspaceId, order, draft(), requestId),
         builder: (context, refresh) => [
           AppDateField(
             key: const ValueKey('purchase-order-receive-day'),
@@ -171,6 +232,7 @@ class _ReceiptSheet {
             label: l10n.purchaseOrderReceiveNote,
             maxLength: 500,
           ),
+          if (put != null) ...put.buildAlso(context, refresh),
         ],
       ),
     );

@@ -3,6 +3,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart' show Ref;
 import 'package:flutter_riverpod/misc.dart' show Override;
 
+import '../../features/money/domain/quote_validity.dart';
 import '../../features/money/providers/accounting_connection_providers.dart';
 import '../../features/money/providers/asset_providers.dart';
 import '../../features/money/providers/billing_customer_providers.dart';
@@ -21,9 +22,11 @@ import '../../features/workspace/providers/kpi_providers.dart';
 import '../../features/workspace/providers/sales_kpi_providers.dart';
 import '../../features/workspace/providers/vendor_kpi_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
+import '../settings/active_settings.dart';
 import 'data/customer_kpi_repository.dart';
 import 'data/fake_business_payables.dart';
 import 'data/fake_business_receivables.dart';
+import 'data/fake_customer_quotes.dart';
 import 'data/item_kpi_repository.dart';
 import 'data/kpi_repositories.dart';
 import 'data/sales_kpi_repository.dart';
@@ -86,9 +89,13 @@ List<Override> demoCityCommerceOverrides(DemoFixture fixture) {
       (ref) => demoPickSpace(ref, demoMapSpaces(stores, (s) => s.billingCustomers)),
     ),
     // #4166 — each space reads its own customer quotes.
-    customerQuoteRepositoryProvider.overrideWith(
-      (ref) => demoPickSpace(ref, demoMapSpaces(stores, (s) => s.customerQuotes)),
-    ),
+    customerQuoteRepositoryProvider.overrideWith((ref) {
+      // #4291 — the Demo's quotes are as long-lived as its settings say.
+      return demoPickSpace<FakeCustomerQuoteRepository>(
+        ref,
+        demoMapSpaces(stores, (s) => s.customerQuotes),
+      )..validity = () => QuoteValidity.fromSettings(ref.read(activeSettingsProvider));
+    }),
     // #3307 — the orders to their suppliers.
     ...demoPurchaseOrderOverrides(orderSpaces),
     // #3866 — every space reads its own books and accounting connection.

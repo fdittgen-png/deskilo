@@ -31398,6 +31398,14 @@ class AppLocalizationsEn extends AppLocalizations {
       'How long the server waits for the company registry (VIES) before a supplier lookup counts as timed out. The person keeps what they typed and may retry or go on by hand.';
 
   @override
+  String get settingHintQuoteDefaultValidity =>
+      'How many days a new quote stays valid when its author states no end date. Never more than the longest validity.';
+
+  @override
+  String get settingHintQuoteMaxValidity =>
+      'The longest a quote may stay valid, counted from its offer date. A longer validity is refused when the quote is saved.';
+
+  @override
   String get settingHintReadinessRecentExportDays =>
       'Days an export the app recorded still counts as recent evidence that recovery works. Older than this, recovery reads as unverified.';
 
@@ -31693,6 +31701,12 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get settingLabelPurchaseSupplierLookupTimeoutSeconds =>
       'Supplier lookup wait (seconds)';
+
+  @override
+  String get settingLabelQuoteDefaultValidity => 'Default validity of a quote';
+
+  @override
+  String get settingLabelQuoteMaxValidity => 'Longest validity of a quote';
 
   @override
   String get settingLabelReadinessRecentExportDays => 'Recent export window';
@@ -34767,6 +34781,77 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockPlacesTitle => 'Places';
 
   @override
+  String get stockPutAwayAction => 'Put away';
+
+  @override
+  String get stockPutAwayAll =>
+      'Left empty: everything this delivery brings of this line.';
+
+  @override
+  String get stockPutAwayAlso => 'Also put it away into stock';
+
+  @override
+  String get stockPutAwayCost => 'Cost of these goods';
+
+  @override
+  String get stockPutAwayCostEntered => 'A total I enter';
+
+  @override
+  String get stockPutAwayCostOrder => 'The order price';
+
+  @override
+  String stockPutAwayCostRate(String currency) {
+    return 'Rate to $currency';
+  }
+
+  @override
+  String get stockPutAwayCostTotal => 'Total cost (minor units)';
+
+  @override
+  String get stockPutAwayCostUnknown => 'Not known';
+
+  @override
+  String get stockPutAwayDone => 'Put away.';
+
+  @override
+  String get stockPutAwayExpiry => 'Expiry date';
+
+  @override
+  String get stockPutAwayLot => 'Lot code';
+
+  @override
+  String stockPutAwayNotStock(String line) {
+    return '$line: not a stock item, so it stays unallocated. Keep it in stock from the catalogue to put it away.';
+  }
+
+  @override
+  String get stockPutAwayNothing => 'Nothing is left to put away.';
+
+  @override
+  String get stockPutAwayPlace => 'Place';
+
+  @override
+  String stockPutAwayProgress(String line, String put, String left) {
+    return '$line: $put put away, $left still to put away';
+  }
+
+  @override
+  String stockPutAwayQuantity(String unit) {
+    return 'Quantity to put away ($unit)';
+  }
+
+  @override
+  String get stockPutAwayRemaining => 'Put away what remains';
+
+  @override
+  String stockPutAwayTitle(String order) {
+    return 'Put away $order';
+  }
+
+  @override
+  String get stockPutAwayVariant => 'Variant';
+
+  @override
   String stockQuantityWithUnit(String quantity, String unit) {
     return '$quantity $unit';
   }
@@ -34790,6 +34875,14 @@ class AppLocalizationsEn extends AppLocalizations {
       'Two variants have the same combination.';
 
   @override
+  String get stockReasonCostInvalid =>
+      'This cost is not valid: a total in minor units, and a rate only for another currency.';
+
+  @override
+  String get stockReasonCostRateMissing =>
+      'An order in another currency needs its rate.';
+
+  @override
   String get stockReasonDefaultPurchaseTwice =>
       'Only one unit can be the default for purchases.';
 
@@ -34800,6 +34893,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get stockReasonDimensionMismatch =>
       'This unit does not measure the same thing as the item.';
+
+  @override
+  String get stockReasonExpiryMalformed => 'This is not a valid date.';
+
+  @override
+  String get stockReasonExpiryRequired =>
+      'This item is tracked by expiry date: give it.';
 
   @override
   String get stockReasonFactorInvalid =>
@@ -34816,13 +34916,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockReasonItemForeign => 'This item is not one of this business.';
 
   @override
+  String get stockReasonItemNotStocked => 'This line is not a stock item.';
+
+  @override
   String get stockReasonKindUnknown => 'This kind is not known.';
+
+  @override
+  String get stockReasonLineConflict =>
+      'The line is named twice and the two names disagree.';
+
+  @override
+  String get stockReasonLineUnknown => 'This delivery did not bring that line.';
 
   @override
   String get stockReasonLocationCycle => 'A place cannot be inside itself.';
 
   @override
   String get stockReasonLocationDefault => 'The main place stays in use.';
+
+  @override
+  String get stockReasonLocationForeign =>
+      'Choose a place of this business that is in use.';
 
   @override
   String get stockReasonLocationHasChildren =>
@@ -34839,6 +34953,14 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get stockReasonLocationVirtual =>
       'A place kept by the system cannot be used here.';
+
+  @override
+  String get stockReasonLotCodeRequired =>
+      'This item is tracked by lot: give the lot code (up to 64 characters).';
+
+  @override
+  String get stockReasonLotGroupConflict =>
+      'Parts of one lot must agree on its code, date and cost.';
 
   @override
   String get stockReasonMalformed => 'This value is not valid for this field.';
@@ -34860,11 +34982,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockReasonOutOfRange => 'This number is out of range.';
 
   @override
+  String get stockReasonOverAllocated =>
+      'More than arrived cannot be put away.';
+
+  @override
   String get stockReasonParentInactive =>
       'The place it is inside is no longer in use.';
 
   @override
   String get stockReasonPriceInvalid => 'A price is zero or more.';
+
+  @override
+  String get stockReasonQuantityInvalid =>
+      'A quantity is a number above zero with at most six decimals.';
+
+  @override
+  String get stockReasonReceiptUnknown =>
+      'This delivery is not one of this business.';
 
   @override
   String get stockReasonRegistryUnit =>
@@ -34903,6 +35037,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockReasonUnitUnknown => 'This unit is not known.';
 
   @override
+  String get stockReasonUnitUnmapped =>
+      'The unit of this line is not a unit of the item: add it to the item first.';
+
+  @override
   String get stockReasonValueForeign =>
       'This value does not belong to this dimension.';
 
@@ -34917,6 +35055,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get stockReasonVariantInUse =>
       'Stock or history names this variant: its combination stays as written.';
+
+  @override
+  String get stockReasonVariantRequired =>
+      'This item has variants: choose which one arrived.';
 
   @override
   String get stockReasonVariantUnknown =>
