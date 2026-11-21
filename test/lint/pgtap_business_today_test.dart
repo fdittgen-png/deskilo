@@ -7,9 +7,9 @@
 // verdict at 23:30 UTC than at noon. The day comes from the business's time zone,
 // through the file's one helper (`pg_temp.today()`, the server's own
 // `workspace_today`).
-import 'dart:io';
-
 import 'package:flutter_test/flutter_test.dart';
+
+import 'lint_sources.dart';
 
 /// The files that date a quote or a standalone invoice.
 final _family = RegExp(r'(quote|standalone|billing_customers|invoice_approval)');
@@ -32,11 +32,10 @@ select is(x, pg_temp.today(), 'good');
   });
 
   test('the quote and standalone invoice pgTAP files take the business day, not the clock\'s', () {
-    final files = Directory('supabase/tests/database')
-        .listSync()
-        .whereType<File>()
-        .where((f) => f.path.endsWith('.sql') && _family.hasMatch(f.uri.pathSegments.last))
-        .toList();
+    final files = [
+      for (final f in sqlFiles('supabase/tests/database'))
+        if (_family.hasMatch(f.uri.pathSegments.last)) f,
+    ];
     expect(files, isNotEmpty);
     final found = [
       for (final f in files) ...bareCurrentDates(f.uri.pathSegments.last, f.readAsStringSync()),
