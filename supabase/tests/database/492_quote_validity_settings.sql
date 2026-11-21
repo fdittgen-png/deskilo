@@ -43,10 +43,10 @@ grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- a customer for each business, and a draft that states its end or does not
 select set_config('t.cust_a', pg_temp.as_user(1, format(
-  $s$select public.billing_customer_create_v1(%L, '{"company": "Atelier A", "street": "1 rue du Port", "postal_code": "34120", "city": "Pezenas", "country_code": "FR"}'::jsonb, 'validity-a')::text$s$,
+  $s$select public.billing_customer_create_v1(%L, '{"company": "Atelier A", "street": "1 rue du Port", "postal_code": "34120", "city": "Pezenas", "country_code": "FR", "vat_id": "FR12345678901"}'::jsonb, 'business')::text$s$,
   pg_temp.u(101))), false);
 select set_config('t.cust_b', pg_temp.as_user(2, format(
-  $s$select public.billing_customer_create_v1(%L, '{"company": "Atelier B", "street": "1 rue du Port", "postal_code": "34120", "city": "Pezenas", "country_code": "FR"}'::jsonb, 'validity-b')::text$s$,
+  $s$select public.billing_customer_create_v1(%L, '{"company": "Atelier B", "street": "1 rue du Port", "postal_code": "34120", "city": "Pezenas", "country_code": "FR", "vat_id": "FR12345678901"}'::jsonb, 'business')::text$s$,
   pg_temp.u(102))), false);
 create function pg_temp.draft(p_user int, p_ws uuid, p_customer text, p_until text) returns text language sql as $$
   select pg_temp.as_user(p_user, format(
