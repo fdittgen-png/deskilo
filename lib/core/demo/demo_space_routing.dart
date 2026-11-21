@@ -30,6 +30,7 @@ import '../../features/money/providers/invoice_original_providers.dart';
 import '../../features/money/providers/money_providers.dart';
 import '../../features/money/providers/recorded_payments_providers.dart';
 import '../../features/money/providers/settlement_review_providers.dart';
+import '../../features/money/providers/standalone_invoice_providers.dart';
 import '../../features/plan/providers/accessory_providers.dart';
 import '../../features/plan/providers/charging_station_providers.dart';
 import '../../features/plan/providers/floor_plan_providers.dart';
@@ -244,6 +245,9 @@ List<Override> _moneyPortOverrides(FakeMoneyRepository Function(Ref ref) money) 
     (ref) => money(ref).reportTemplates,
   ),
   invoiceCommandsProvider.overrideWith((ref) => money(ref).invoiceCommands),
+  standaloneInvoiceCommandsProvider.overrideWith(
+    (ref) => money(ref).standaloneInvoiceCommands,
+  ), // #4165
   taxReportingRepositoryProvider.overrideWith(
     (ref) => money(ref).taxReporting,
   ),

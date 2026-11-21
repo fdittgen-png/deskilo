@@ -19,7 +19,7 @@ select pg_temp.u(n), '00000000-0000-0000-0000-000000000000', 'authenticated', 'a
 -- 4 stranger (owner of another business), 5 a second issuer
 insert into public.workspaces (id, name, country_code, currency_code, timezone, created_by, feature_flags,
                                vat_regime, vat_id, legal_id, street, city, postal_code, address, role_permissions)
-values (pg_temp.u(101), 'Quotes 4166', 'FR', 'EUR', 'Europe/Paris', pg_temp.u(1), '{"invoicing": true, "customerQuotes": true}',
+values (pg_temp.u(101), 'Quotes 4166', 'FR', 'EUR', 'Europe/Paris', pg_temp.u(1), '{"invoicing": true, "standaloneInvoicing": true, "customerQuotes": true}',
         'vat_registered', 'FR40303265045', '30326504500014', '4 avenue de Castelnau', 'Pézenas', '34120',
         '4 avenue de Castelnau, 34120 Pézenas', '{"admin": ["viewFinances"], "member": ["makeReservations"]}'),
        (pg_temp.u(102), 'Other 4166', 'FR', 'EUR', 'Europe/Paris', pg_temp.u(4), '{"invoicing": true}',

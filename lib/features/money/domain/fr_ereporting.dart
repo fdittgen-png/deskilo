@@ -13,8 +13,10 @@
 //    received per day and rate (B2C aggregated, B2B international per
 //    invoice). A seller that opted for the débits owes no payment data.
 //
-// A coworking sells services, so the transaction category is TPS1
-// (taxable services) or TNT1 (not taxable in France: a zero rate).
+// A legacy line is a service: the transaction category is TPS1 (taxable
+// services) or TNT1 (not taxable in France: a zero rate). A commercial line
+// (#4162) states its supply, and #4163 reports goods as TLB1 from the frozen
+// amounts, apart from services at the same rate (fr_ereporting_supply.dart).
 //
 // Both flows are read from [vatTaxPointLedger], so the e-reporting, the
 // VAT return and the FEC cannot disagree about one cent: the
@@ -32,34 +34,8 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart' show TaxReferenceSet;
 import 'package:xml/xml.dart';
 
-/// Who bought, as e-reporting sorts it.
-enum _Kind {
-  /// A private person, in France or abroad: reported per day, aggregated.
-  b2c,
-
-  /// A business with a VAT id outside the reporting country: reported per
-  /// invoice.
-  b2bInternational,
-
-  /// A business of the reporting country: its e-invoice reports it, nothing
-  /// here.
-  b2bDomestic;
-
-  /// The kind of the sale [invoice] made.
-  static _Kind of(Invoice invoice, String homeCountry) {
-    final buyer = invoice.buyerParty;
-    final vatId = (buyer?.vatId ?? '').trim();
-    if (vatId.isEmpty) return b2c;
-    final country = (buyer?.country ?? '').trim().toUpperCase();
-    final prefix = vatId.length >= 2 ? vatId.substring(0, 2).toUpperCase() : '';
-    final abroad = country.isNotEmpty ? country != homeCountry : prefix != homeCountry;
-    return abroad ? b2bInternational : b2bDomestic;
-  }
-}
-
-/// The transaction category of the flow: TPS1 services taxed in France,
-/// TNT1 not taxable in France.
-String _category(double percent) => percent > 0 ? 'TPS1' : 'TNT1';
+import 'fr_ereporting_capacity.dart';
+import 'fr_ereporting_supply.dart';
 
 /// One transaction line: a day, a category and a rate — and, for the
 /// international B2B flow, the invoice behind it.
@@ -130,6 +106,7 @@ class FrEReport {
     required this.internationalTransactions,
     required this.b2cPayments,
     required this.internationalPayments,
+    this.unresolved = const [],
   });
 
   final DateTime start;
@@ -148,6 +125,13 @@ class FrEReport {
   /// Flux 10.2 — one line per invoice, day and rate.
   final List<FrPayment> internationalPayments;
 
+  /// #4163 -- the in-scope documents whose buyer could not be sorted from
+  /// their frozen facts. A report with any is not complete: it is a
+  /// diagnostic, never a payload.
+  final List<FrUnresolved> unresolved;
+
+  bool get isComplete => unresolved.isEmpty;
+
   bool get isEmpty =>
       b2cTransactions.isEmpty &&
       internationalTransactions.isEmpty &&
@@ -156,6 +140,11 @@ class FrEReport {
 
   /// The report in the flows' structure, amounts with a dot, dates ISO.
   String toXml() {
+    if (!isComplete) {
+      throw StateError(
+        'the e-reporting is incomplete: ${unresolved.map((u) => u.number).join(', ')}',
+      );
+    }
     String amount(int cents) => minorToText(cents, currency);
     final builder = XmlBuilder()
       ..processing('xml', 'version="1.0" encoding="UTF-8"');
@@ -253,19 +242,38 @@ FrEReport frEReport(
   String currency = 'EUR',
 }) {
   final byId = {for (final i in invoices) i.id: i};
-  _Kind kindOf(String id) => _Kind.of(byId[id]!, basis.homeCountry);
-  final reportable = [
-    for (final i in invoices)
-      if (_Kind.of(i, basis.homeCountry) != _Kind.b2bDomestic) i,
-  ];
-
-  final sales = vatTaxPointLedger(reportable, reference: reference, dayOf: dayOf)
-      .where((a) => a.within(start, end));
+  final sorted = sortFrInvoices(
+    invoices,
+    basis.homeCountry,
+    _PeriodReach(
+      start: start,
+      end: end,
+      reference: reference,
+      dayOf: dayOf,
+      matches: matches,
+      instalments: instalments,
+    ),
+    onReceipts: basis.onReceipts,
+  );
+  FrBuyerKind? kindOf(String id) => sorted.classes[id];
+  final unresolved = sorted.unresolved;
+  // #4163 -- goods-bearing documents report their frozen lines; the others
+  // keep the tax-point ledger (and, on receipts, are the only ones owed
+  // payment data: goods fall due on delivery).
+  final plain = sorted.plain;
+  final sales = frSales(
+    sorted,
+    byId,
+    reference: reference,
+    dayOf: dayOf,
+    start: start,
+    end: end,
+  );
   final b2cSales = <(DateTime, String, double), FrTransaction>{};
   final intlSales = <FrTransaction>[];
   for (final a in sales) {
-    final category = _category(a.percent);
-    if (kindOf(a.invoiceId) == _Kind.b2c) {
+    final category = a.category;
+    if (kindOf(a.invoiceId) == FrBuyerKind.b2c) {
       final key = (a.on, category, a.percent);
       final seen = b2cSales[key];
       b2cSales[key] = FrTransaction(
@@ -293,68 +301,117 @@ FrEReport frEReport(
     }
   }
 
-  final b2cMoney = <(DateTime, double), FrPayment>{};
-  final intlMoney = <FrPayment>[];
-  if (basis.onReceipts) {
-    final receipts = vatTaxPointLedger(
-      reportable,
-      matches: matches,
-      instalments: instalments,
-      basis: VatTaxPointBasis.receipt,
-      reference: reference,
-      dayOf: dayOf,
-    ).where((a) => a.within(start, end));
-    for (final a in receipts) {
-      if (kindOf(a.invoiceId) == _Kind.b2c) {
-        final key = (a.on, a.percent);
-        final seen = b2cMoney[key];
-        b2cMoney[key] = FrPayment(
-          on: a.on,
-          percent: a.percent,
-          grossCents: (seen?.grossCents ?? 0) + a.grossCents,
-          vatCents: (seen?.vatCents ?? 0) + a.vatCents,
-        );
-      } else {
-        final invoice = byId[a.invoiceId]!;
-        intlMoney.add(
-          FrPayment(
-            on: a.on,
-            percent: a.percent,
-            grossCents: a.grossCents,
-            vatCents: a.vatCents,
-            invoiceNumber: invoice.number,
-            buyerCountry: invoice.buyerParty?.country ?? '',
-            buyerVatId: invoice.buyerParty?.vatId ?? '',
-          ),
-        );
-      }
-    }
-  }
+  final money = basis.onReceipts
+      ? _receipts(
+          byId,
+          kindOf,
+          vatTaxPointLedger(
+            plain,
+            matches: matches,
+            instalments: instalments,
+            basis: VatTaxPointBasis.receipt,
+            reference: reference,
+            dayOf: dayOf,
+          ).where((a) => a.within(start, end)),
+        )
+      : (b2c: <FrPayment>[], international: <FrPayment>[]);
 
-  int byDate(DateTime a, DateTime b) => a.compareTo(b);
   return FrEReport(
+    unresolved: unresolved,
     start: start,
     end: end,
     currency: currency,
     b2cTransactions: b2cSales.values.toList()
-      ..sort((a, b) {
-        final d = byDate(a.on, b.on);
-        return d != 0 ? d : b.percent.compareTo(a.percent);
-      }),
+      ..sort((a, b) => _byDayThenRate(a.on, b.on, a.percent, b.percent)),
     internationalTransactions: intlSales
-      ..sort((a, b) {
-        final d = byDate(a.on, b.on);
-        return d != 0 ? d : a.invoiceNumber.compareTo(b.invoiceNumber);
-      }),
-    b2cPayments: b2cMoney.values.toList()
-      ..sort((a, b) {
-        final d = byDate(a.on, b.on);
-        return d != 0 ? d : b.percent.compareTo(a.percent);
-      }),
-    internationalPayments: intlMoney
-      ..sort((a, b) {
-        final d = byDate(a.on, b.on);
-        return d != 0 ? d : a.invoiceNumber.compareTo(b.invoiceNumber);
-      }),
+      ..sort((a, b) => _byDayThenNumber(a.on, b.on, a.invoiceNumber, b.invoiceNumber)),
+    b2cPayments: money.b2c
+      ..sort((a, b) => _byDayThenRate(a.on, b.on, a.percent, b.percent)),
+    internationalPayments: money.international
+      ..sort((a, b) => _byDayThenNumber(a.on, b.on, a.invoiceNumber, b.invoiceNumber)),
   );
+}
+
+/// Day first, then the higher rate first.
+int _byDayThenRate(DateTime a, DateTime b, double ratea, double rateb) {
+  final d = a.compareTo(b);
+  return d != 0 ? d : rateb.compareTo(ratea);
+}
+
+/// Day first, then the invoice number.
+int _byDayThenNumber(DateTime a, DateTime b, String numa, String numb) {
+  final d = a.compareTo(b);
+  return d != 0 ? d : numa.compareTo(numb);
+}
+
+/// Whether a document's sale, or the money for it, falls in the period.
+class _PeriodReach implements FrPeriodReach {
+  const _PeriodReach({
+    required this.start,
+    required this.end,
+    required this.reference,
+    required this.dayOf,
+    required this.matches,
+    required this.instalments,
+  });
+
+  final DateTime start;
+  final DateTime end;
+  final TaxReferenceSet reference;
+  final DateTime Function(DateTime instant) dayOf;
+  final Map<String, InvoiceMatch> matches;
+  final Map<String, List<TaxPointPayment>> instalments;
+
+  @override
+  bool sale(Invoice invoice) =>
+      vatTaxPointLedger([invoice], reference: reference, dayOf: dayOf)
+          .any((a) => a.within(start, end));
+
+  @override
+  bool receipt(Invoice invoice) => vatTaxPointLedger(
+    [invoice],
+    reference: reference,
+    dayOf: dayOf,
+    matches: matches,
+    instalments: instalments,
+    basis: VatTaxPointBasis.receipt,
+  ).any((a) => a.within(start, end));
+}
+
+/// The money received, from the tax-point [receipts] of the plain invoices:
+/// private customers aggregated per day and rate, businesses abroad per
+/// invoice.
+({List<FrPayment> b2c, List<FrPayment> international}) _receipts(
+  Map<String, Invoice> byId,
+  FrBuyerKind? Function(String id) kindOf,
+  Iterable<VatTaxPointAmount> receipts,
+) {
+  final b2c = <(DateTime, double), FrPayment>{};
+  final international = <FrPayment>[];
+  for (final a in receipts) {
+    if (kindOf(a.invoiceId) == FrBuyerKind.b2c) {
+      final key = (a.on, a.percent);
+      final seen = b2c[key];
+      b2c[key] = FrPayment(
+        on: a.on,
+        percent: a.percent,
+        grossCents: (seen?.grossCents ?? 0) + a.grossCents,
+        vatCents: (seen?.vatCents ?? 0) + a.vatCents,
+      );
+    } else {
+      final invoice = byId[a.invoiceId]!;
+      international.add(
+        FrPayment(
+          on: a.on,
+          percent: a.percent,
+          grossCents: a.grossCents,
+          vatCents: a.vatCents,
+          invoiceNumber: invoice.number,
+          buyerCountry: invoice.buyerParty?.country ?? '',
+          buyerVatId: invoice.buyerParty?.vatId ?? '',
+        ),
+      );
+    }
+  }
+  return (b2c: b2c.values.toList(), international: international);
 }

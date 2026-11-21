@@ -351,10 +351,9 @@ export const CAPABILITIES = [
     "outcome": "A UK workspace owner reviews the nine VAT return boxes, submits through the configured HMRC MTD workflow, and sees a receipt or an explicit uncertain result that requires a checked recovery before retry.",
     "features": [
       "vatDeclarations",
-      "mtdSubmission",
-      "accountingConnectors"
+      "mtdSubmission"
     ],
-    "prerequisites": "A UK VAT-registered workspace with a VAT number, the web application, enabled MTD and accounting connection features, and a configured HMRC application and connection.",
+    "prerequisites": "A UK VAT-registered workspace with a VAT number, the web application, the VAT returns and MTD submission features switched on, and a configured HMRC application and connection (docs/domain/HMRC_SANDBOX_RUN.md).",
     "limitations": "The current evidence uses simulated function replies and a local database. No recorded Developer Hub sandbox submission or HMRC production acceptance is present. A lost response or expired attempt remains unconfirmed until the current attempt has been checked; no receipt is invented.",
     "evidence": [
       "unit:gated",

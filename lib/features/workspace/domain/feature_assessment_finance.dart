@@ -236,21 +236,13 @@ const purchasesAssessment = FeatureAssessment(
 const accountingConnectorsAssessment = FeatureAssessment(
   maturity: FeatureMaturity.beta,
   rationale: _reviewedOwnerBetaRationale,
-  evidence: [
-    'accounting.connections',
-    'tax.hmrc_mtd',
-  ],
+  evidence: ['accounting.connections'],
   limitations:
       'accounting.connections: The evidence exercises the app and database '
       'delivery contract, including permissions, secret isolation and '
       'idempotency. Implemented target adapters remain unaccepted by real '
       'provider accounts; specificationNeeded targets stay unavailable. An '
-      'unresolved transmission is not reported as a successful delivery. '
-      'tax.hmrc_mtd: The current evidence uses simulated function replies and '
-      'a local database. No recorded Developer Hub sandbox submission or '
-      'HMRC production acceptance is present. A lost response or expired '
-      'attempt remains unconfirmed until the current attempt has been '
-      'checked; no receipt is invented.',
+      'unresolved transmission is not reported as a successful delivery.',
 );
 
 const purchasesOrdersAssessment = FeatureAssessment(

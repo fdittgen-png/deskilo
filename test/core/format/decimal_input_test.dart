@@ -4,6 +4,7 @@
 import 'package:deskilo/core/format/cents.dart';
 import 'package:deskilo/core/format/decimal_input.dart';
 import 'package:deskilo/core/i18n/workspace_currency.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show ExactQuantityProblem;
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -88,6 +89,43 @@ void main() {
       WorkspaceCurrency.install('KWD');
       expect(parseMinorInput('1.234', locale: 'de_DE'), 1234);
       expect(parseMinorInput('1,234', locale: 'en_GB'), 1234);
+    });
+  });
+
+  group('a quantity typed by a member (#4161)', () {
+    String? text(String raw, String locale) =>
+        exactQuantityFromInput(raw, locale: locale).value?.text;
+
+    test('0,5 and 0.5 are the same exact quantity in every locale', () {
+      for (final locale in ['fr_FR', 'de_DE', 'es_ES', 'it_IT', 'en_GB']) {
+        expect(text('0,5', locale), '0.5', reason: locale);
+        expect(text('0.5', locale), '0.5', reason: locale);
+      }
+    });
+
+    test('grouping is read by the locale, digits are kept exactly', () {
+      expect(text('1 234,5', 'fr_FR'), '1234.5');
+      expect(text('1.234,5', 'de_DE'), '1234.5');
+      expect(text('0,000001', 'fr_FR'), '0.000001');
+      expect(text('.5', 'en_GB'), '0.5');
+      expect(text('5.', 'en_GB'), '5');
+    });
+
+    test('too many decimals and too large are refused, never rounded', () {
+      expect(exactQuantityFromInput('0,0000001', locale: 'fr_FR').problem, ExactQuantityProblem.tooManyDecimals);
+      expect(exactQuantityFromInput('1 000 000 000 000', locale: 'fr_FR').problem, ExactQuantityProblem.outOfRange);
+    });
+
+    test('what is no number, and a minus where none is allowed, is malformed', () {
+      for (final raw in ['', 'abc', '1e3', '-1']) {
+        expect(exactQuantityFromInput(raw, locale: 'fr_FR').problem, ExactQuantityProblem.malformed, reason: raw);
+      }
+      expect(text('-1', 'fr_FR'), isNull);
+    });
+
+    test('the existing reader still gives the same numbers', () {
+      expect(parseDecimalInput('0,5', locale: 'fr_FR'), 0.5);
+      expect(parseDecimalInput('-1 234,5', locale: 'fr_FR'), -1234.5);
     });
   });
 }

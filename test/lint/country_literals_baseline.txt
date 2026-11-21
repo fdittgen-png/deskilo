@@ -44,6 +44,7 @@ lib/features/money/domain/einvoice_channel_check.dart :: 1 :: which national e-i
 lib/features/money/domain/inbound_einvoice.dart :: 4 :: scheme and country identifiers read from received e-invoices (EAS scheme ids such as VA), not a country decision
 lib/features/money/domain/invoice_national_mentions.dart :: 1 :: the UNCL5305 category 'AE' (reverse charge), not a country
 lib/features/money/domain/recapitulative_statement.dart :: 3 :: the Union's VAT-number prefix spelling (Greece is EL) and the AE category: standards, not a rule
+lib/features/money/presentation/standalone/standalone_line_form.dart :: 1 :: the UN/ECE unit code LS (lump sum) of the job unit, a standard's code, not Lesotho
 lib/features/money/domain/report_letter_layouts.dart :: 1 :: a default country argument or sample value of the report designer, not a country decision
 lib/features/money/presentation/report_layout_defaults.dart :: 1 :: a default country argument or sample value of the report designer, not a country decision
 lib/features/money/presentation/report_sample_data.dart :: 1 :: a default country argument or sample value of the report designer, not a country decision

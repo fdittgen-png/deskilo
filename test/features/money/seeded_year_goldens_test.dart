@@ -609,8 +609,22 @@ final Map<String, Future<String> Function()> _files = {
         .map((i) => i.issuedAt)
         .reduce((a, b) => a.isAfter(b) ? a : b);
     final month = WorkspaceTime.dateOf(last);
+    // #4163 -- the seeded invoices pre-date the frozen capacity; the fixture
+    // states what each buyer declared (a VAT number: a business, none: a
+    // person), as a stored customer capacity would at issue.
+    final stated = [
+      for (final i in b.invoices)
+        i.copyWith(
+          legalSnapshot: {
+            'schema': 1,
+            'buyer_capacity': (i.buyerParty?.vatId ?? '').isEmpty ? 'consumer' : 'business',
+            'capacity_source': 'member',
+            'buyer_country': i.buyerParty?.country ?? '',
+          },
+        ),
+    ];
     return frEReport(
-      b.invoices,
+      stated,
         start: DateTime(month.year, month.month),
       end: DateTime(month.year, month.month + 1, 0),
       matches: b.matches,

@@ -640,6 +640,10 @@ window.SETUP_REGISTRY={
    true
   ],
   [
+   "standaloneInvoicing",
+   false
+  ],
+  [
    "billingCustomers",
    false
   ],
@@ -755,6 +759,7 @@ window.SETUP_REGISTRY={
   "invoiceEmail": "invoicing",
   "kioskEnrolment": "kioskMode",
   "stockManagement": "services",
+  "standaloneInvoicing": "invoicing",
   "billingCustomers": "invoicing",
   "customerQuotes": "invoicing"
  },
@@ -1499,6 +1504,7 @@ window.SETUP_PROCESSES=[
      "invoicingWizard",
      "settlementFold",
      "numberSequences",
+     "standaloneInvoicing",
      "billingCustomers",
      "customerQuotes"
     ]
@@ -1854,6 +1860,7 @@ window.SETUP_LEVELS={
       "guestPasses",
       "reminderEmail",
       "invoiceEmail",
+      "standaloneInvoicing",
       "billingCustomers",
       "customerQuotes"
      ],

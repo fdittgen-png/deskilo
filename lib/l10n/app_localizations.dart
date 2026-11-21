@@ -19888,6 +19888,18 @@ abstract class AppLocalizations {
   /// **'Printable QR cards per seat, desk, office and level — scan to reserve or check in.'**
   String get featureSpaceQrCodesDesc;
 
+  /// #4165 feature switch: featureStandaloneInvoicingDesc
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice a named customer for a completed service or an agreed deliverable today, with itemised lines and explicit dates, and no booking, subscription or month behind it. The server computes every amount; you confirm a preview and issue it. Off: invoices are issued per member and month as before.'**
+  String get featureStandaloneInvoicingDesc;
+
+  /// #4165 feature switch: featureStandaloneInvoicingTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Standalone invoices'**
+  String get featureStandaloneInvoicingTitle;
+
   /// the feature's description on the Features screen (#3824)
   ///
   /// In en, this message translates to:
@@ -21411,6 +21423,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count, plural, one{1 field needs your attention} other{{count} fields need your attention}}'**
   String formErrorSummaryTitle(int count);
+
+  /// #4163 France e-reporting refused: the documents it cannot sort from their frozen facts, each with its reasons.
+  ///
+  /// In en, this message translates to:
+  /// **'The France e-reporting was not written: these documents cannot be sorted from what they froze at issue: {documents}. Record the customer\'s capacity, then correct them with a credit note and a new invoice; the originals are never edited.'**
+  String frEReportingBlocked(String documents);
+
+  /// #4163 one document the France e-reporting cannot sort or split, with its reason (amountRuleUnsupported).
+  ///
+  /// In en, this message translates to:
+  /// **'{number}: a service whose frozen tax differs from its rate, with a payment in the period'**
+  String frEReportingDocumentAmountRuleUnsupported(String number);
+
+  /// #4163 one document the France e-reporting cannot sort or split, with its reason (buyerCountryConflict).
+  ///
+  /// In en, this message translates to:
+  /// **'{number}: two different countries were frozen'**
+  String frEReportingDocumentBuyerCountryConflict(String number);
+
+  /// #4163 one document the France e-reporting cannot sort or split, with its reason (buyerCountryMissing).
+  ///
+  /// In en, this message translates to:
+  /// **'{number}: the business\'s country was not frozen'**
+  String frEReportingDocumentBuyerCountryMissing(String number);
+
+  /// #4163 one document the France e-reporting cannot sort or split, with its reason (buyerVatIdMissing).
+  ///
+  /// In en, this message translates to:
+  /// **'{number}: a business abroad needs its VAT number'**
+  String frEReportingDocumentBuyerVatIdMissing(String number);
+
+  /// #4163 one document the France e-reporting cannot sort or split, with its reason (capacityUnknown).
+  ///
+  /// In en, this message translates to:
+  /// **'{number}: the customer\'s capacity (business or consumer) was not stated'**
+  String frEReportingDocumentCapacityUnknown(String number);
+
+  /// #4163 one document the France e-reporting cannot sort or split, with its reason (goodsAbroadUnsupported).
+  ///
+  /// In en, this message translates to:
+  /// **'{number}: goods delivered to a business abroad are not supported'**
+  String frEReportingDocumentGoodsAbroadUnsupported(String number);
+
+  /// #4163 one document the France e-reporting cannot sort or split, with its reason (goodsZeroRateUnsupported).
+  ///
+  /// In en, this message translates to:
+  /// **'{number}: a goods line at a zero rate: its category is not inferred from the rate'**
+  String frEReportingDocumentGoodsZeroRateUnsupported(String number);
+
+  /// #4163 one document the France e-reporting cannot sort or split, with its reason (missingReceiptAllocation).
+  ///
+  /// In en, this message translates to:
+  /// **'{number}: goods and services with a payment: the payment has no authoritative split between them'**
+  String frEReportingDocumentMissingReceiptAllocation(String number);
+
+  /// #4163 one document the France e-reporting cannot sort or split, with its reason (noFrozenCapacity).
+  ///
+  /// In en, this message translates to:
+  /// **'{number}: issued before the customer\'s capacity was frozen'**
+  String frEReportingDocumentNoFrozenCapacity(String number);
+
+  /// #4163 one document the France e-reporting cannot sort or split, with its reason (unsupportedCommercialLine).
+  ///
+  /// In en, this message translates to:
+  /// **'{number}: a line this version cannot read'**
+  String frEReportingDocumentUnsupportedCommercialLine(String number);
 
   /// #2377 The Swiss archive's procedures document: access logging (GeBüV art. 8).
   ///
@@ -54229,6 +54307,342 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reserved by you for this slot.'**
   String get spaceYoursNow;
+
+  /// #4165 standalone invoice composer: standaloneFactAmount
+  ///
+  /// In en, this message translates to:
+  /// **'an amount this invoice can hold'**
+  String get standaloneFactAmount;
+
+  /// #4165 standalone invoice composer: standaloneFactApproval
+  ///
+  /// In en, this message translates to:
+  /// **'the business’s rules send this invoice for approval, which is not supported here yet'**
+  String get standaloneFactApproval;
+
+  /// #4165 standalone invoice composer: standaloneFactClosed
+  ///
+  /// In en, this message translates to:
+  /// **'this draft was already issued'**
+  String get standaloneFactClosed;
+
+  /// #4165 standalone invoice composer: standaloneFactCurrency
+  ///
+  /// In en, this message translates to:
+  /// **'the business’s currency'**
+  String get standaloneFactCurrency;
+
+  /// #4165 standalone invoice composer: standaloneFactDueDate
+  ///
+  /// In en, this message translates to:
+  /// **'the due date'**
+  String get standaloneFactDueDate;
+
+  /// #4165 standalone invoice composer: standaloneFactDueDateFar
+  ///
+  /// In en, this message translates to:
+  /// **'a due date within a year'**
+  String get standaloneFactDueDateFar;
+
+  /// #4165 standalone invoice composer: standaloneFactDueDatePast
+  ///
+  /// In en, this message translates to:
+  /// **'a due date that is not in the past'**
+  String get standaloneFactDueDatePast;
+
+  /// #4165 standalone invoice composer: standaloneFactLines
+  ///
+  /// In en, this message translates to:
+  /// **'at least one line'**
+  String get standaloneFactLines;
+
+  /// #4165 standalone invoice composer: standaloneFactSalesTax
+  ///
+  /// In en, this message translates to:
+  /// **'this business adds sales tax, which is not supported here yet'**
+  String get standaloneFactSalesTax;
+
+  /// #4165 standalone invoice composer: standaloneFactServiceDate
+  ///
+  /// In en, this message translates to:
+  /// **'the service date'**
+  String get standaloneFactServiceDate;
+
+  /// #4165 standalone invoice composer: standaloneFactStale
+  ///
+  /// In en, this message translates to:
+  /// **'the draft changed: check the invoice again'**
+  String get standaloneFactStale;
+
+  /// #4165 standalone invoice composer: standaloneFactTooManyLines
+  ///
+  /// In en, this message translates to:
+  /// **'at most 100 lines'**
+  String get standaloneFactTooManyLines;
+
+  /// #4165 standalone invoice composer: standaloneFactTotal
+  ///
+  /// In en, this message translates to:
+  /// **'a total above zero'**
+  String get standaloneFactTotal;
+
+  /// #4165 standalone invoice composer: standaloneFactUnknownSubject
+  ///
+  /// In en, this message translates to:
+  /// **'the customer'**
+  String get standaloneFactUnknownSubject;
+
+  /// #4165 standalone invoice composer: standaloneFieldAmount
+  ///
+  /// In en, this message translates to:
+  /// **'an amount this invoice can hold'**
+  String get standaloneFieldAmount;
+
+  /// #4165 standalone invoice composer: standaloneFieldBase
+  ///
+  /// In en, this message translates to:
+  /// **'a price quantity above zero'**
+  String get standaloneFieldBase;
+
+  /// #4165 standalone invoice composer: standaloneFieldBasis
+  ///
+  /// In en, this message translates to:
+  /// **'whether the price includes tax'**
+  String get standaloneFieldBasis;
+
+  /// #4165 standalone invoice composer: standaloneFieldDescription
+  ///
+  /// In en, this message translates to:
+  /// **'a description'**
+  String get standaloneFieldDescription;
+
+  /// #4165 standalone invoice composer: standaloneFieldLineId
+  ///
+  /// In en, this message translates to:
+  /// **'saving the draft again'**
+  String get standaloneFieldLineId;
+
+  /// #4165 standalone invoice composer: standaloneFieldPrice
+  ///
+  /// In en, this message translates to:
+  /// **'a price with at most six decimals'**
+  String get standaloneFieldPrice;
+
+  /// #4165 standalone invoice composer: standaloneFieldQuantity
+  ///
+  /// In en, this message translates to:
+  /// **'a quantity above zero with at most six decimals'**
+  String get standaloneFieldQuantity;
+
+  /// #4165 standalone invoice composer: standaloneFieldSupply
+  ///
+  /// In en, this message translates to:
+  /// **'a service (goods are not invoiced here yet)'**
+  String get standaloneFieldSupply;
+
+  /// #4165 standalone invoice composer: standaloneFieldUnit
+  ///
+  /// In en, this message translates to:
+  /// **'a unit'**
+  String get standaloneFieldUnit;
+
+  /// #4165 standalone invoice composer: standaloneFieldVatRate
+  ///
+  /// In en, this message translates to:
+  /// **'a VAT rate the business has set'**
+  String get standaloneFieldVatRate;
+
+  /// #4165 standalone invoice composer: standaloneInvoiceAddLine
+  ///
+  /// In en, this message translates to:
+  /// **'Add a line'**
+  String get standaloneInvoiceAddLine;
+
+  /// #4165 standalone invoice composer: standaloneInvoiceBuyerReference
+  ///
+  /// In en, this message translates to:
+  /// **'Customer reference'**
+  String get standaloneInvoiceBuyerReference;
+
+  /// #4165 standalone invoice composer: standaloneInvoiceCustomerChoose
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the customer'**
+  String get standaloneInvoiceCustomerChoose;
+
+  /// #4165 standalone invoice composer: standaloneInvoiceDueDate
+  ///
+  /// In en, this message translates to:
+  /// **'Due date'**
+  String get standaloneInvoiceDueDate;
+
+  /// #4165 standalone invoice composer: standaloneInvoiceIssue
+  ///
+  /// In en, this message translates to:
+  /// **'Issue the invoice'**
+  String get standaloneInvoiceIssue;
+
+  /// #4165 standalone invoice composer: standaloneInvoiceIssued
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice {number} issued'**
+  String standaloneInvoiceIssued(String number);
+
+  /// #4165 standalone invoice composer: standaloneInvoiceLineDescription
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get standaloneInvoiceLineDescription;
+
+  /// #4165 standalone invoice composer: standaloneInvoiceLineGross
+  ///
+  /// In en, this message translates to:
+  /// **'The price includes tax'**
+  String get standaloneInvoiceLineGross;
+
+  /// #4165 standalone invoice composer: standaloneInvoiceLinePrice
+  ///
+  /// In en, this message translates to:
+  /// **'Unit price'**
+  String get standaloneInvoiceLinePrice;
+
+  /// #4165 standalone invoice composer: standaloneInvoiceLineQuantity
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity'**
+  String get standaloneInvoiceLineQuantity;
+
+  /// #4165 standalone invoice composer: standaloneInvoiceLineRate
+  ///
+  /// In en, this message translates to:
+  /// **'VAT rate'**
+  String get standaloneInvoiceLineRate;
+
+  /// #4165 standalone invoice composer: standaloneInvoiceLineRateDefault
+  ///
+  /// In en, this message translates to:
+  /// **'The business’s default rate'**
+  String get standaloneInvoiceLineRateDefault;
+
+  /// #4165 standalone invoice composer: standaloneInvoiceLineUnit
+  ///
+  /// In en, this message translates to:
+  /// **'Unit'**
+  String get standaloneInvoiceLineUnit;
+
+  /// #4165 standalone invoice composer: standaloneInvoiceLines
+  ///
+  /// In en, this message translates to:
+  /// **'Lines'**
+  String get standaloneInvoiceLines;
+
+  /// #4165 standalone invoice composer: standaloneInvoiceLookAgain
+  ///
+  /// In en, this message translates to:
+  /// **'Look again'**
+  String get standaloneInvoiceLookAgain;
+
+  /// #4165 standalone invoice composer: standaloneInvoiceMissing
+  ///
+  /// In en, this message translates to:
+  /// **'To complete: {facts}'**
+  String standaloneInvoiceMissing(String facts);
+
+  /// #4165 standalone invoice composer: standaloneInvoiceMissingLine
+  ///
+  /// In en, this message translates to:
+  /// **'Line {number}: {fact}'**
+  String standaloneInvoiceMissingLine(String number, String fact);
+
+  /// #4165 standalone invoice composer: standaloneInvoiceMore
+  ///
+  /// In en, this message translates to:
+  /// **'A customer invoice without a month'**
+  String get standaloneInvoiceMore;
+
+  /// #4165 standalone invoice composer: standaloneInvoiceOpen
+  ///
+  /// In en, this message translates to:
+  /// **'Open the invoice'**
+  String get standaloneInvoiceOpen;
+
+  /// #4165 standalone invoice composer: standaloneInvoiceOrderNumber
+  ///
+  /// In en, this message translates to:
+  /// **'Order number'**
+  String get standaloneInvoiceOrderNumber;
+
+  /// #4165 standalone invoice composer: standaloneInvoicePreview
+  ///
+  /// In en, this message translates to:
+  /// **'Check the invoice'**
+  String get standaloneInvoicePreview;
+
+  /// #4165 standalone invoice composer: standaloneInvoicePreviewNet
+  ///
+  /// In en, this message translates to:
+  /// **'Net'**
+  String get standaloneInvoicePreviewNet;
+
+  /// #4165 standalone invoice composer: standaloneInvoicePreviewTax
+  ///
+  /// In en, this message translates to:
+  /// **'Tax'**
+  String get standaloneInvoicePreviewTax;
+
+  /// #4165 standalone invoice composer: standaloneInvoicePreviewTotal
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get standaloneInvoicePreviewTotal;
+
+  /// #4165 standalone invoice composer: standaloneInvoiceRefused
+  ///
+  /// In en, this message translates to:
+  /// **'The invoice was not issued.'**
+  String get standaloneInvoiceRefused;
+
+  /// #4165 standalone invoice composer: standaloneInvoiceRemoveLine
+  ///
+  /// In en, this message translates to:
+  /// **'Remove this line'**
+  String get standaloneInvoiceRemoveLine;
+
+  /// #4165 standalone invoice composer: standaloneInvoiceServiceDate
+  ///
+  /// In en, this message translates to:
+  /// **'Service date'**
+  String get standaloneInvoiceServiceDate;
+
+  /// #4165 standalone invoice composer: standaloneInvoiceUnavailable
+  ///
+  /// In en, this message translates to:
+  /// **'Standalone invoices are not switched on for this business.'**
+  String get standaloneInvoiceUnavailable;
+
+  /// #4165 standalone invoice composer: standaloneInvoiceUnknown
+  ///
+  /// In en, this message translates to:
+  /// **'We could not confirm whether the invoice was issued. Look again before issuing anything else.'**
+  String get standaloneInvoiceUnknown;
+
+  /// #4165 standalone invoice composer: standaloneUnitHour
+  ///
+  /// In en, this message translates to:
+  /// **'hour'**
+  String get standaloneUnitHour;
+
+  /// #4165 standalone invoice composer: standaloneUnitJob
+  ///
+  /// In en, this message translates to:
+  /// **'job'**
+  String get standaloneUnitJob;
+
+  /// #4165 standalone invoice composer: standaloneUnitPiece
+  ///
+  /// In en, this message translates to:
+  /// **'piece'**
+  String get standaloneUnitPiece;
 
   /// #4068 Note under the balance tile when the balance is positive (a credit).
   ///

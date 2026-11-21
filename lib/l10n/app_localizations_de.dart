@@ -12336,6 +12336,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Druckbare QR-Karten je Platz, Tisch, Büro und Etage — scannen zum Reservieren oder Einchecken.';
 
   @override
+  String get featureStandaloneInvoicingDesc =>
+      'Einem benannten Kunden noch heute eine erbrachte Leistung oder ein vereinbartes Ergebnis berechnen, mit einzelnen Positionen und ausdrücklichen Daten, ohne Buchung, Abo oder Monat dahinter. Der Server berechnet jeden Betrag; Sie bestätigen eine Vorschau und stellen die Rechnung aus. Aus: Rechnungen werden wie bisher je Mitglied und Monat ausgestellt.';
+
+  @override
+  String get featureStandaloneInvoicingTitle => 'Einzelrechnungen';
+
+  @override
   String get featureStockManagementDesc =>
       'Waren verfolgen: wo sie sind, in welcher Einheit, aus welcher Charge, und jede Bewegung zwischen zwei Orten. Aus: ein Katalogartikel behält seinen einfachen Regalbestand.';
 
@@ -13331,6 +13338,61 @@ class AppLocalizationsDe extends AppLocalizations {
       one: '1 Feld braucht Ihre Aufmerksamkeit',
     );
     return '$_temp0';
+  }
+
+  @override
+  String frEReportingBlocked(String documents) {
+    return 'Das Frankreich-E-Reporting wurde nicht geschrieben: Diese Belege lassen sich nach dem, was sie bei der Ausstellung festgehalten haben, nicht einordnen: $documents. Erfassen Sie die Eigenschaft des Kunden und korrigieren Sie sie dann mit einer Gutschrift und einer neuen Rechnung; die Originale werden nie geändert.';
+  }
+
+  @override
+  String frEReportingDocumentAmountRuleUnsupported(String number) {
+    return '$number: eine Dienstleistung, deren festgehaltene Steuer vom Satz abweicht, mit einer Zahlung im Zeitraum';
+  }
+
+  @override
+  String frEReportingDocumentBuyerCountryConflict(String number) {
+    return '$number: zwei verschiedene Länder wurden festgehalten';
+  }
+
+  @override
+  String frEReportingDocumentBuyerCountryMissing(String number) {
+    return '$number: das Land des Unternehmers wurde nicht festgehalten';
+  }
+
+  @override
+  String frEReportingDocumentBuyerVatIdMissing(String number) {
+    return '$number: ein Unternehmer im Ausland braucht seine USt-IdNr.';
+  }
+
+  @override
+  String frEReportingDocumentCapacityUnknown(String number) {
+    return '$number: die Eigenschaft des Kunden (Unternehmer oder Verbraucher) wurde nicht angegeben';
+  }
+
+  @override
+  String frEReportingDocumentGoodsAbroadUnsupported(String number) {
+    return '$number: Warenlieferungen an ein Unternehmen im Ausland werden nicht unterstützt';
+  }
+
+  @override
+  String frEReportingDocumentGoodsZeroRateUnsupported(String number) {
+    return '$number: eine Warenposition mit Nullsatz: ihre Kategorie wird nicht aus dem Satz abgeleitet';
+  }
+
+  @override
+  String frEReportingDocumentMissingReceiptAllocation(String number) {
+    return '$number: Waren und Dienstleistungen mit einer Zahlung: die Zahlung hat keine belastbare Aufteilung auf beide';
+  }
+
+  @override
+  String frEReportingDocumentNoFrozenCapacity(String number) {
+    return '$number: ausgestellt, bevor die Eigenschaft des Kunden festgehalten wurde';
+  }
+
+  @override
+  String frEReportingDocumentUnsupportedCommercialLine(String number) {
+    return '$number: eine Position, die diese Version nicht lesen kann';
   }
 
   @override
@@ -34204,6 +34266,194 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get spaceYoursNow => 'Von Ihnen für dieses Zeitfenster reserviert.';
+
+  @override
+  String get standaloneFactAmount =>
+      'ein Betrag, den die Rechnung aufnehmen kann';
+
+  @override
+  String get standaloneFactApproval =>
+      'die Regeln des Betriebs verlangen eine Genehmigung, die hier noch nicht unterstützt wird';
+
+  @override
+  String get standaloneFactClosed => 'dieser Entwurf wurde bereits ausgestellt';
+
+  @override
+  String get standaloneFactCurrency => 'die Währung des Betriebs';
+
+  @override
+  String get standaloneFactDueDate => 'das Fälligkeitsdatum';
+
+  @override
+  String get standaloneFactDueDateFar =>
+      'ein Fälligkeitsdatum innerhalb eines Jahres';
+
+  @override
+  String get standaloneFactDueDatePast =>
+      'ein Fälligkeitsdatum, das nicht in der Vergangenheit liegt';
+
+  @override
+  String get standaloneFactLines => 'mindestens eine Position';
+
+  @override
+  String get standaloneFactSalesTax =>
+      'dieser Betrieb erhebt Sales Tax, was hier noch nicht unterstützt wird';
+
+  @override
+  String get standaloneFactServiceDate => 'das Leistungsdatum';
+
+  @override
+  String get standaloneFactStale =>
+      'der Entwurf hat sich geändert: Rechnung erneut prüfen';
+
+  @override
+  String get standaloneFactTooManyLines => 'höchstens 100 Positionen';
+
+  @override
+  String get standaloneFactTotal => 'eine Summe über null';
+
+  @override
+  String get standaloneFactUnknownSubject => 'der Kunde';
+
+  @override
+  String get standaloneFieldAmount =>
+      'ein Betrag, den die Rechnung aufnehmen kann';
+
+  @override
+  String get standaloneFieldBase => 'eine Preismenge über null';
+
+  @override
+  String get standaloneFieldBasis => 'ob der Preis die Steuer enthält';
+
+  @override
+  String get standaloneFieldDescription => 'eine Beschreibung';
+
+  @override
+  String get standaloneFieldLineId => 'den Entwurf erneut zu speichern';
+
+  @override
+  String get standaloneFieldPrice =>
+      'ein Preis mit höchstens sechs Nachkommastellen';
+
+  @override
+  String get standaloneFieldQuantity =>
+      'eine Menge über null mit höchstens sechs Nachkommastellen';
+
+  @override
+  String get standaloneFieldSupply =>
+      'eine Dienstleistung (Waren werden hier noch nicht berechnet)';
+
+  @override
+  String get standaloneFieldUnit => 'eine Einheit';
+
+  @override
+  String get standaloneFieldVatRate =>
+      'ein vom Betrieb festgelegter Steuersatz';
+
+  @override
+  String get standaloneInvoiceAddLine => 'Position hinzufügen';
+
+  @override
+  String get standaloneInvoiceBuyerReference => 'Referenz des Kunden';
+
+  @override
+  String get standaloneInvoiceCustomerChoose => 'Kunden wählen';
+
+  @override
+  String get standaloneInvoiceDueDate => 'Fälligkeitsdatum';
+
+  @override
+  String get standaloneInvoiceIssue => 'Rechnung ausstellen';
+
+  @override
+  String standaloneInvoiceIssued(String number) {
+    return 'Rechnung $number ausgestellt';
+  }
+
+  @override
+  String get standaloneInvoiceLineDescription => 'Beschreibung';
+
+  @override
+  String get standaloneInvoiceLineGross => 'Der Preis enthält die Steuer';
+
+  @override
+  String get standaloneInvoiceLinePrice => 'Einzelpreis';
+
+  @override
+  String get standaloneInvoiceLineQuantity => 'Menge';
+
+  @override
+  String get standaloneInvoiceLineRate => 'Steuersatz';
+
+  @override
+  String get standaloneInvoiceLineRateDefault => 'Standardsatz des Betriebs';
+
+  @override
+  String get standaloneInvoiceLineUnit => 'Einheit';
+
+  @override
+  String get standaloneInvoiceLines => 'Positionen';
+
+  @override
+  String get standaloneInvoiceLookAgain => 'Erneut prüfen';
+
+  @override
+  String standaloneInvoiceMissing(String facts) {
+    return 'Zu ergänzen: $facts';
+  }
+
+  @override
+  String standaloneInvoiceMissingLine(String number, String fact) {
+    return 'Position $number: $fact';
+  }
+
+  @override
+  String get standaloneInvoiceMore => 'Kundenrechnung ohne Monat';
+
+  @override
+  String get standaloneInvoiceOpen => 'Rechnung öffnen';
+
+  @override
+  String get standaloneInvoiceOrderNumber => 'Bestellnummer';
+
+  @override
+  String get standaloneInvoicePreview => 'Rechnung prüfen';
+
+  @override
+  String get standaloneInvoicePreviewNet => 'Netto';
+
+  @override
+  String get standaloneInvoicePreviewTax => 'Steuer';
+
+  @override
+  String get standaloneInvoicePreviewTotal => 'Gesamt';
+
+  @override
+  String get standaloneInvoiceRefused =>
+      'Die Rechnung wurde nicht ausgestellt.';
+
+  @override
+  String get standaloneInvoiceRemoveLine => 'Diese Position entfernen';
+
+  @override
+  String get standaloneInvoiceServiceDate => 'Leistungsdatum';
+
+  @override
+  String get standaloneInvoiceUnavailable =>
+      'Einzelrechnungen sind für diesen Betrieb nicht eingeschaltet.';
+
+  @override
+  String get standaloneInvoiceUnknown =>
+      'Wir konnten nicht bestätigen, ob die Rechnung ausgestellt wurde. Prüfen Sie erneut, bevor Sie etwas anderes ausstellen.';
+
+  @override
+  String get standaloneUnitHour => 'Stunde';
+
+  @override
+  String get standaloneUnitJob => 'Pauschale';
+
+  @override
+  String get standaloneUnitPiece => 'Stück';
 
   @override
   String get statementDeskBalanceCredit =>

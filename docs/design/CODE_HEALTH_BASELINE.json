@@ -3,11 +3,15 @@
   "budgets": {
     "partOfFiles": 10,
     "fileLength": {
+      "lib/app/routes/money_routes.dart": 524,
+
       "lib/core/backend/backend_settings.dart": 572,
 
       "lib/core/backend/secondary_federation.dart": 528,
 
       "lib/core/demo/data/messenger_repository.dart": 590,
+
+      "lib/core/demo/data/money_repository.dart": 522,
 
       "lib/core/demo/data/reservation_repository.dart": 760,
 
@@ -53,6 +57,8 @@
 
       "lib/features/task_recorder/application/recorder_controller.dart": 548,
 
+      "lib/features/task_recorder/domain/coverage_manifest.dart": 522,
+
       "lib/features/task_recorder/export/docx/docx_writer.dart": 524,
 
       "lib/features/task_recorder/package/task_package.dart": 592,
@@ -60,6 +66,8 @@
       "lib/features/task_recorder/presentation/screens/task_wizard_screen.dart": 563,
 
       "lib/features/task_recorder/presentation/ui_capture.dart": 592,
+
+      "lib/features/workspace/domain/feature_manifest_part3.dart": 522,
 
       "lib/features/workspace/domain/template_capabilities.dart": 588,
 
@@ -129,6 +137,8 @@
       "lib/features/money/presentation/screens/repartition_wizard_screen.dart": 12,
 
       "lib/features/money/presentation/screens/vat_screen.dart": 7,
+
+      "lib/features/money/presentation/standalone/standalone_invoice_screen.dart": 12,
 
       "lib/features/money/presentation/widgets/billing_rules_dialog.dart": 6,
 
@@ -744,7 +754,7 @@
     {"id":"lib/features/money/data/supabase_payment_gateway_repository.dart#SupabasePaymentGatewayRepository.createPaymentOrder({required PaymentProvider provider,required String workspaceId,required String memberId,required int amountCents,required String currencyCode,required String period,String? requestId})","cog":0,"cyc":1,"len":18,"params":7},
     {"id":"lib/features/money/domain/accountant_handoff.dart#buildAccountantHandoff({required List<Invoice> invoices,required Map<String, InvoiceMatch> matches,required String csv,required DateTime generatedAt})","cog":35,"cyc":20,"len":125,"params":4},
     {"id":"lib/features/money/domain/accounting_tax.dart#projectTax({required AccountingAmount basis,required String scheme,required String authority,required TaxTreatment treatment,required String rateVersion,required RoundingPolicy policy,String? ratePercent})","cog":9,"cyc":9,"len":53,"params":7},
-    {"id":"lib/features/money/domain/fr_ereporting.dart#frEReport(Iterable<Invoice> invoices,{required DateTime start,required DateTime end,required TaxReferenceSet reference,required DateTime Function(DateTime instant) dayOf,Map<String, InvoiceMatch> matches,Map<String, List<TaxPointPayment>> instalments,required EReportingBasis basis,String currency})","cog":23,"cyc":22,"len":124,"params":9},
+    {"id":"lib/features/money/domain/fr_ereporting.dart#frEReport(Iterable<Invoice> invoices,{required DateTime start,required DateTime end,required TaxReferenceSet reference,required DateTime Function(DateTime instant) dayOf,Map<String, InvoiceMatch> matches,Map<String, List<TaxPointPayment>> instalments,required EReportingBasis basis,String currency})","cog":6,"cyc":10,"len":108,"params":9},
     {"id":"lib/features/money/domain/invoice_pdf.dart#buildBandedLetterPdf({required InvoiceReport report,required String pageLabel,Map<String, Uint8List> reportImages,required String documentTitle,required pw.Font baseFont,required pw.Font boldFont,String watermark})","cog":1,"cyc":2,"len":39,"params":7},
     {"id":"lib/features/money/domain/invoicing_wizard.dart#WizardTally.copyWith({int? issued,int? shared,int? reminded,int? paymentsDecided,int? paymentsRegistered,int? matched,int? settled,int? writeoffs,int? refunds})","cog":0,"cyc":10,"len":22,"params":9},
     {"id":"lib/features/money/domain/report_data.dart#legalMentionData(ReportStrings strings,Workspace? workspace,{required TaxReferenceSet reference,InvoiceParty? seller,InvoiceParty? buyer,String clientAddress,String clientName,bool reverseCharged,String counterpartyCategory,List<String> rateExemptionReasons,PaymentTerms? memberTerms,LegalClauseSnapshot? frozen,bool legacy,String? memberCapacity})","cog":4,"cyc":25,"len":118,"params":14},

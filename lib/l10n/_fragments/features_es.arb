@@ -273,5 +273,13 @@
   "featureQuickSearchTitle": "Búsqueda y teclas",
   "featureQuickSearchDesc": "Ctrl+K (⌘K en un Mac) o el botón de búsqueda de la barra encuentra una página, una acción o un registro — un miembro, un cliente, una factura por su número, un proveedor — entre lo que la persona puede abrir; lo reciente primero. ? muestra las teclas de la página. Desactivado: sin botón de búsqueda ni teclas de la aplicación; las teclas propias de una página se mantienen.",
   "featureOrganisationTitle": "Organización de empresas",
-  "featureOrganisationDesc": "Esta empresa encabeza una organización de las empresas del cliente: un centro en otro país o en otra moneda es una casa, una empresa propia con las normas de su país. Desactivado: no se crea ni se cambia ninguna organización desde esta empresa; una casa puede seguir saliendo de ella y los miembros siguen viendo dónde están."
+  "featureOrganisationDesc": "Esta empresa encabeza una organización de las empresas del cliente: un centro en otro país o en otra moneda es una casa, una empresa propia con las normas de su país. Desactivado: no se crea ni se cambia ninguna organización desde esta empresa; una casa puede seguir saliendo de ella y los miembros siguen viendo dónde están.",
+  "featureStandaloneInvoicingTitle": "Facturas independientes",
+  "@featureStandaloneInvoicingTitle": {
+    "description": "#4165 feature switch: featureStandaloneInvoicingTitle"
+  },
+  "featureStandaloneInvoicingDesc": "Facturar hoy a un cliente identificado una prestación realizada o un entregable acordado, con líneas detalladas y fechas explícitas, sin reserva, suscripción ni mes detrás. El servidor calcula cada importe; usted confirma una vista previa y emite la factura. Desactivado: las facturas se emiten por miembro y mes como antes.",
+  "@featureStandaloneInvoicingDesc": {
+    "description": "#4165 feature switch: featureStandaloneInvoicingDesc"
+  }
 }
