@@ -63,7 +63,7 @@
 
       "lib/features/workspace/domain/template_capabilities.dart": 588,
 
-      "lib/features/workspace/domain/workspace_feature.dart": 633,
+      "lib/features/workspace/domain/workspace_feature.dart": 567,
 
       "lib/features/workspace/presentation/member_admin_actions.dart": 697,
 

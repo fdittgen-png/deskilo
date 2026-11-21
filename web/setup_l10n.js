@@ -1430,6 +1430,10 @@ window.SETUP_L10N={
    "organisation": [
     "Organisation of businesses",
     "This business heads an organisation of the customer's businesses: a site in another country or currency is a house, a business of its own with its country's rules. Off: no organisation is made or changed from this business; a house still leaves one, and members still see where they are."
+   ],
+   "billingCustomers": [
+    "Billing customers",
+    "Keep the people and businesses you invoice, with or without an account: the name and address they are billed under, their tax numbers and a contact for the invoice. They are not members and see nothing of your business. Off: you invoice members as before."
    ]
   },
   "process": {
@@ -3256,6 +3260,10 @@ window.SETUP_L10N={
    "organisation": [
     "Organisation d’entreprises",
     "Cette entreprise est à la tête d’une organisation des entreprises du client : un site dans un autre pays ou une autre devise est une maison, une entreprise à part entière avec les règles de son pays. Désactivé : aucune organisation n’est créée ni modifiée depuis cette entreprise ; une maison peut toujours la quitter, et les membres voient toujours où ils sont."
+   ],
+   "billingCustomers": [
+    "Clients facturés",
+    "Gardez les personnes et entreprises que vous facturez, avec ou sans compte : le nom et l'adresse sous lesquels elles sont facturées, leurs numéros fiscaux et un contact pour la facture. Ce ne sont pas des membres et elles ne voient rien de votre activité. Désactivé : vous facturez les membres comme avant."
    ]
   },
   "process": {
@@ -5082,6 +5090,10 @@ window.SETUP_L10N={
    "organisation": [
     "Organisation von Unternehmen",
     "Dieses Unternehmen führt eine Organisation der Unternehmen des Kunden: ein Standort in einem anderen Land oder einer anderen Währung ist ein Haus, ein eigenes Unternehmen mit den Regeln seines Landes. Aus: Von diesem Unternehmen aus wird keine Organisation angelegt oder geändert; ein Haus kann sie weiterhin verlassen, und Mitglieder sehen weiterhin, wo sie sind."
+   ],
+   "billingCustomers": [
+    "Rechnungskunden",
+    "Verwalten Sie die Personen und Unternehmen, denen Sie Rechnungen stellen, mit oder ohne Konto: Name und Anschrift auf der Rechnung, Steuernummern und einen Kontakt für die Rechnung. Sie sind keine Mitglieder und sehen nichts von Ihrem Betrieb. Aus: Sie stellen Mitgliedern Rechnungen wie bisher."
    ]
   },
   "process": {
@@ -6908,6 +6920,10 @@ window.SETUP_L10N={
    "organisation": [
     "Organización de empresas",
     "Esta empresa encabeza una organización de las empresas del cliente: un centro en otro país o en otra moneda es una casa, una empresa propia con las normas de su país. Desactivado: no se crea ni se cambia ninguna organización desde esta empresa; una casa puede seguir saliendo de ella y los miembros siguen viendo dónde están."
+   ],
+   "billingCustomers": [
+    "Clientes facturados",
+    "Mantenga las personas y empresas a las que factura, con o sin cuenta: el nombre y la dirección con los que se les factura, sus números fiscales y un contacto para la factura. No son miembros y no ven nada de su negocio. Desactivado: factura a los miembros como antes."
    ]
   },
   "process": {
@@ -8734,6 +8750,10 @@ window.SETUP_L10N={
    "organisation": [
     "Organizzazione di aziende",
     "Questa azienda è a capo di un’organizzazione delle aziende del cliente: una sede in un altro paese o in un’altra valuta è una casa, un’azienda a sé con le regole del suo paese. Disattivato: nessuna organizzazione viene creata o modificata da questa azienda; una casa può sempre lasciarla e i membri vedono sempre dove si trovano."
+   ],
+   "billingCustomers": [
+    "Clienti fatturati",
+    "Si tengono le persone e le aziende a cui si fattura, con o senza account: il nome e l'indirizzo con cui sono fatturate, i loro numeri fiscali e un contatto per la fattura. Non sono membri e non vedono nulla dell'attività. Disattivato: si fattura ai membri come prima."
    ]
   },
   "process": {

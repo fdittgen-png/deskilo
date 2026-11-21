@@ -7793,6 +7793,210 @@ abstract class AppLocalizations {
   /// **'Bands must increase and end at 100%.'**
   String get billingBandsInvalid;
 
+  /// the billing customers screen and editor (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'Business'**
+  String get billingCustomerBusiness;
+
+  /// the billing customers screen and editor (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'Billed as'**
+  String get billingCustomerCapacity;
+
+  /// the billing customers screen and editor (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'Decides the legal mentions and the tax treatment of what you invoice. Only someone who may issue invoices can change it.'**
+  String get billingCustomerCapacityHelper;
+
+  /// the billing customers screen and editor (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'City'**
+  String get billingCustomerCity;
+
+  /// the billing customers screen and editor (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'Company'**
+  String get billingCustomerCompany;
+
+  /// the billing customers screen and editor (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'Person'**
+  String get billingCustomerConsumer;
+
+  /// the billing customers screen and editor (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'Country code'**
+  String get billingCustomerCountry;
+
+  /// the billing customers screen and editor (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'Two letters, for example FR'**
+  String get billingCustomerCountryHint;
+
+  /// the billing customers screen and editor (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'Use two letters, for example FR.'**
+  String get billingCustomerCountryInvalid;
+
+  /// the billing customers screen and editor (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'Title'**
+  String get billingCustomerCourtesy;
+
+  /// the billing customers screen and editor (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'Edit billing customer'**
+  String get billingCustomerEditTitle;
+
+  /// the billing customers screen and editor (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice e-mail'**
+  String get billingCustomerEmail;
+
+  /// the billing customers screen and editor (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'This does not look like an e-mail address.'**
+  String get billingCustomerEmailInvalid;
+
+  /// the billing customers screen and editor (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'This customer is no longer one of yours. Nothing was saved.'**
+  String get billingCustomerGone;
+
+  /// the billing customers screen and editor (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'Last name'**
+  String get billingCustomerLastName;
+
+  /// the billing customers screen and editor (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'Company registration number'**
+  String get billingCustomerLegalId;
+
+  /// the billing customers screen and editor (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a company or a name.'**
+  String get billingCustomerNameNeeded;
+
+  /// the billing customers screen and editor (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'New billing customer'**
+  String get billingCustomerNewTitle;
+
+  /// the billing customers screen and editor (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'You may not manage billing customers here. Nothing was saved.'**
+  String get billingCustomerNotAllowed;
+
+  /// the billing customers screen and editor (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get billingCustomerPhone;
+
+  /// the billing customers screen and editor (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'The customer could not be saved. Try again.'**
+  String get billingCustomerSaveFailed;
+
+  /// the billing customers screen and editor (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'This customer changed since you opened it. Close it and open it again; nothing was saved.'**
+  String get billingCustomerStale;
+
+  /// the billing customers screen and editor (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'Street and number'**
+  String get billingCustomerStreet;
+
+  /// the billing customers screen and editor (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'Not stated'**
+  String get billingCustomerUnstated;
+
+  /// the billing customers screen and editor (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'VAT number'**
+  String get billingCustomerVatId;
+
+  /// the billing customers screen and editor (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'This does not look like a VAT number. It is only checked for its shape, not verified.'**
+  String get billingCustomerVatInvalid;
+
+  /// the billing customers screen and editor (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'Add a customer'**
+  String get billingCustomersAdd;
+
+  /// the billing customers screen and editor (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'No billing customers yet. Add the first one to invoice it without asking it to create an account.'**
+  String get billingCustomersEmpty;
+
+  /// the billing customers screen and editor (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'The customers could not be read. This is not an empty list.'**
+  String get billingCustomersLoadFailed;
+
+  /// the billing customers screen and editor (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'The people and businesses you invoice. They have no account and see nothing of your business.'**
+  String get billingCustomersNoAccount;
+
+  /// the billing customers screen and editor (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get billingCustomersRetry;
+
+  /// the billing customers screen and editor (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'Search customers'**
+  String get billingCustomersSearch;
+
+  /// the billing customers screen and editor (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'Billing customers'**
+  String get billingCustomersTitle;
+
+  /// the billing customers screen and editor (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'Billing customers are not available on this installation yet. Nothing was changed.'**
+  String get billingCustomersUnavailable;
+
   /// Section header of the fee-band editor
   ///
   /// In en, this message translates to:
@@ -17991,6 +18195,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Report designer (analytics)'**
   String get featureBiReportDesignerTitle;
+
+  /// a feature in the Features list (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'Keep the people and businesses you invoice, with or without an account: the name and address they are billed under, their tax numbers and a contact for the invoice. They are not members and see nothing of your business. Off: you invoice members as before.'**
+  String get featureBillingCustomersDesc;
+
+  /// a feature in the Features list (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'Billing customers'**
+  String get featureBillingCustomersTitle;
 
   /// Feature switch: admins/owners booking for other members
   ///

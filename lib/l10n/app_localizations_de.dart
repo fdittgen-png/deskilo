@@ -5003,6 +5003,121 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Bänder müssen ansteigen und bei 100 % enden.';
 
   @override
+  String get billingCustomerBusiness => 'Unternehmen';
+
+  @override
+  String get billingCustomerCapacity => 'Abgerechnet als';
+
+  @override
+  String get billingCustomerCapacityHelper =>
+      'Bestimmt die Pflichtangaben und die steuerliche Behandlung. Nur wer Rechnungen ausstellen darf, kann es ändern.';
+
+  @override
+  String get billingCustomerCity => 'Ort';
+
+  @override
+  String get billingCustomerCompany => 'Firma';
+
+  @override
+  String get billingCustomerConsumer => 'Privatperson';
+
+  @override
+  String get billingCustomerCountry => 'Ländercode';
+
+  @override
+  String get billingCustomerCountryHint => 'Zwei Buchstaben, zum Beispiel DE';
+
+  @override
+  String get billingCustomerCountryInvalid =>
+      'Verwenden Sie zwei Buchstaben, zum Beispiel DE.';
+
+  @override
+  String get billingCustomerCourtesy => 'Anrede';
+
+  @override
+  String get billingCustomerEditTitle => 'Rechnungskunden bearbeiten';
+
+  @override
+  String get billingCustomerEmail => 'E-Mail für Rechnungen';
+
+  @override
+  String get billingCustomerEmailInvalid =>
+      'Das sieht nicht wie eine E-Mail-Adresse aus.';
+
+  @override
+  String get billingCustomerGone =>
+      'Dieser Kunde gehört nicht mehr zu Ihnen. Nichts wurde gespeichert.';
+
+  @override
+  String get billingCustomerLastName => 'Nachname';
+
+  @override
+  String get billingCustomerLegalId => 'Handelsregisternummer';
+
+  @override
+  String get billingCustomerNameNeeded =>
+      'Geben Sie eine Firma oder einen Namen ein.';
+
+  @override
+  String get billingCustomerNewTitle => 'Neuer Rechnungskunde';
+
+  @override
+  String get billingCustomerNotAllowed =>
+      'Sie dürfen hier keine Rechnungskunden verwalten. Nichts wurde gespeichert.';
+
+  @override
+  String get billingCustomerPhone => 'Telefon';
+
+  @override
+  String get billingCustomerSaveFailed =>
+      'Der Kunde konnte nicht gespeichert werden. Versuchen Sie es erneut.';
+
+  @override
+  String get billingCustomerStale =>
+      'Dieser Kunde wurde seit dem Öffnen geändert. Schließen Sie ihn und öffnen Sie ihn erneut; nichts wurde gespeichert.';
+
+  @override
+  String get billingCustomerStreet => 'Straße und Hausnummer';
+
+  @override
+  String get billingCustomerUnstated => 'Nicht angegeben';
+
+  @override
+  String get billingCustomerVatId => 'USt-IdNr.';
+
+  @override
+  String get billingCustomerVatInvalid =>
+      'Das sieht nicht wie eine USt-IdNr. aus. Geprüft wird nur die Form, nicht das Bestehen.';
+
+  @override
+  String get billingCustomersAdd => 'Kunden hinzufügen';
+
+  @override
+  String get billingCustomersEmpty =>
+      'Noch keine Rechnungskunden. Legen Sie den ersten an, um ihm eine Rechnung zu stellen, ohne dass er ein Konto anlegen muss.';
+
+  @override
+  String get billingCustomersLoadFailed =>
+      'Die Kunden konnten nicht gelesen werden. Das ist keine leere Liste.';
+
+  @override
+  String get billingCustomersNoAccount =>
+      'Die Personen und Unternehmen, denen Sie Rechnungen stellen. Sie haben kein Konto und sehen nichts von Ihrem Betrieb.';
+
+  @override
+  String get billingCustomersRetry => 'Erneut versuchen';
+
+  @override
+  String get billingCustomersSearch => 'Kunden suchen';
+
+  @override
+  String get billingCustomersTitle => 'Rechnungskunden';
+
+  @override
+  String get billingCustomersUnavailable =>
+      'Rechnungskunden sind auf dieser Installation noch nicht verfügbar. Es wurde nichts geändert.';
+
+  @override
   String get billingFeeBands => 'Gebührenbänder';
 
   @override
@@ -11212,6 +11327,13 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get featureBiReportDesignerTitle => 'Berichtsdesigner (Analysen)';
+
+  @override
+  String get featureBillingCustomersDesc =>
+      'Verwalten Sie die Personen und Unternehmen, denen Sie Rechnungen stellen, mit oder ohne Konto: Name und Anschrift auf der Rechnung, Steuernummern und einen Kontakt für die Rechnung. Sie sind keine Mitglieder und sehen nichts von Ihrem Betrieb. Aus: Sie stellen Mitgliedern Rechnungen wie bisher.';
+
+  @override
+  String get featureBillingCustomersTitle => 'Rechnungskunden';
 
   @override
   String get featureBookForOthers => 'Für andere buchen';

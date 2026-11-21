@@ -2985,6 +2985,15 @@ Ouvrez **Achats**, puis **Fournisseurs**. Le solde dû à chaque fournisseur est
 
 Choisissez **Voir les dettes fournisseur** pour consulter ses factures et les montants restants. Utilisez **Charger plus** si proposé. Si le solde ou la liste est indisponible, réessayez au lieu de le considérer comme nul. La fonction Achats doit être activée et vous devez pouvoir voir les finances ou gérer les achats.
 
+<!-- anchor: user.money.customers.billing -->
+### Clients facturés
+
+**Public:** Administrateur·rice · Propriétaire
+
+Ouvrez **Argent** puis **Clients facturés** (l'adresse `/money/customers` ; la fonction **Clients facturés** doit être activée sous la facturation). C'est ici que vous gardez les personnes et entreprises que vous facturez, avec ou sans compte. Ce ne sont pas des membres : elles n'ont pas de compte, ne voient rien de votre activité et ne comptent pas parmi vos membres.
+
+Choisissez **Ajouter un client** et indiquez une société ou un nom, l'adresse postale, le code pays, le numéro de TVA et une adresse e-mail pour la facture. Le numéro de TVA n'est contrôlé que dans sa forme, jamais vérifié. **Facturé comme** (entreprise ou particulier) détermine les mentions légales et le traitement de la taxe ; seule une personne autorisée à émettre des factures peut le modifier. Choisissez un client pour le modifier. Si quelqu'un d'autre l'a modifié depuis votre ouverture, rien n'est enregistré et il vous est demandé de le rouvrir. Si la liste ne peut pas être lue, réessayez plutôt que de la croire vide. Modifier un client ne réécrit jamais une facture déjà émise : chacune garde le nom et l'adresse avec lesquels elle a été émise.
+
 <!-- anchor: user.money.amounts -->
 ### Comment les montants sont affichés
 

@@ -29,6 +29,9 @@ const _switches = <WorkspaceFeature>{
   // #4004 — the organisation: an owner makes one from the head business
   // when a house abroad is added (#4005); the switch sets nothing up.
   WorkspaceFeature.organisation,
+  // #4164 — the billing customers: the screen is where they are added and
+  // edited, in the money area; the switch sets nothing up.
+  WorkspaceFeature.billingCustomers,
   // #3824 — the goods ledger opens itself when switched on (its places and
   // the opening of each count); its places and items are set up on the
   // stock screens of #3823, not in the setup guide.

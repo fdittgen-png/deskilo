@@ -4963,6 +4963,120 @@ class AppLocalizationsEn extends AppLocalizations {
   String get billingBandsInvalid => 'Bands must increase and end at 100%.';
 
   @override
+  String get billingCustomerBusiness => 'Business';
+
+  @override
+  String get billingCustomerCapacity => 'Billed as';
+
+  @override
+  String get billingCustomerCapacityHelper =>
+      'Decides the legal mentions and the tax treatment of what you invoice. Only someone who may issue invoices can change it.';
+
+  @override
+  String get billingCustomerCity => 'City';
+
+  @override
+  String get billingCustomerCompany => 'Company';
+
+  @override
+  String get billingCustomerConsumer => 'Person';
+
+  @override
+  String get billingCustomerCountry => 'Country code';
+
+  @override
+  String get billingCustomerCountryHint => 'Two letters, for example FR';
+
+  @override
+  String get billingCustomerCountryInvalid =>
+      'Use two letters, for example FR.';
+
+  @override
+  String get billingCustomerCourtesy => 'Title';
+
+  @override
+  String get billingCustomerEditTitle => 'Edit billing customer';
+
+  @override
+  String get billingCustomerEmail => 'Invoice e-mail';
+
+  @override
+  String get billingCustomerEmailInvalid =>
+      'This does not look like an e-mail address.';
+
+  @override
+  String get billingCustomerGone =>
+      'This customer is no longer one of yours. Nothing was saved.';
+
+  @override
+  String get billingCustomerLastName => 'Last name';
+
+  @override
+  String get billingCustomerLegalId => 'Company registration number';
+
+  @override
+  String get billingCustomerNameNeeded => 'Enter a company or a name.';
+
+  @override
+  String get billingCustomerNewTitle => 'New billing customer';
+
+  @override
+  String get billingCustomerNotAllowed =>
+      'You may not manage billing customers here. Nothing was saved.';
+
+  @override
+  String get billingCustomerPhone => 'Phone';
+
+  @override
+  String get billingCustomerSaveFailed =>
+      'The customer could not be saved. Try again.';
+
+  @override
+  String get billingCustomerStale =>
+      'This customer changed since you opened it. Close it and open it again; nothing was saved.';
+
+  @override
+  String get billingCustomerStreet => 'Street and number';
+
+  @override
+  String get billingCustomerUnstated => 'Not stated';
+
+  @override
+  String get billingCustomerVatId => 'VAT number';
+
+  @override
+  String get billingCustomerVatInvalid =>
+      'This does not look like a VAT number. It is only checked for its shape, not verified.';
+
+  @override
+  String get billingCustomersAdd => 'Add a customer';
+
+  @override
+  String get billingCustomersEmpty =>
+      'No billing customers yet. Add the first one to invoice it without asking it to create an account.';
+
+  @override
+  String get billingCustomersLoadFailed =>
+      'The customers could not be read. This is not an empty list.';
+
+  @override
+  String get billingCustomersNoAccount =>
+      'The people and businesses you invoice. They have no account and see nothing of your business.';
+
+  @override
+  String get billingCustomersRetry => 'Try again';
+
+  @override
+  String get billingCustomersSearch => 'Search customers';
+
+  @override
+  String get billingCustomersTitle => 'Billing customers';
+
+  @override
+  String get billingCustomersUnavailable =>
+      'Billing customers are not available on this installation yet. Nothing was changed.';
+
+  @override
   String get billingFeeBands => 'Fee bands';
 
   @override
@@ -11110,6 +11224,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get featureBiReportDesignerTitle => 'Report designer (analytics)';
+
+  @override
+  String get featureBillingCustomersDesc =>
+      'Keep the people and businesses you invoice, with or without an account: the name and address they are billed under, their tax numbers and a contact for the invoice. They are not members and see nothing of your business. Off: you invoice members as before.';
+
+  @override
+  String get featureBillingCustomersTitle => 'Billing customers';
 
   @override
   String get featureBookForOthers => 'Book for others';
