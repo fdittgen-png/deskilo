@@ -20598,10 +20598,6 @@
   "@stockMoveFrom": {
     "description": "#4170 transfers and take-out: a label or message"
   },
-  "stockMoveItem": "Artikel",
-  "@stockMoveItem": {
-    "description": "#4170 transfers and take-out: a label or message"
-  },
   "stockMoveOpen": "Ware umlagern",
   "@stockMoveOpen": {
     "description": "#4170 transfers and take-out: a label or message"
@@ -20625,14 +20621,6 @@
   },
   "stockMoveSubmit": "Umlagern",
   "@stockMoveSubmit": {
-    "description": "#4170 transfers and take-out: a label or message"
-  },
-  "stockMoveTitle": "Ware umlagern",
-  "@stockMoveTitle": {
-    "description": "#4170 transfers and take-out: a label or message"
-  },
-  "stockMoveTo": "Einlagern auf",
-  "@stockMoveTo": {
     "description": "#4170 transfers and take-out: a label or message"
   },
   "stockMovementNotFound": "Diese Bewegung gibt es nicht, oder Sie dürfen sie nicht sehen.",
@@ -21087,10 +21075,6 @@
   "@stockTakeOutSubmit": {
     "description": "#4170 transfers and take-out: a label or message"
   },
-  "stockTakeOutTitle": "Ware entnehmen",
-  "@stockTakeOutTitle": {
-    "description": "#4170 transfers and take-out: a label or message"
-  },
   "stockTakeOutUsed": "Vom Betrieb verbraucht",
   "@stockTakeOutUsed": {
     "description": "#4170 transfers and take-out: a label or message"
@@ -21161,10 +21145,6 @@
         "type": "String"
       }
     }
-  },
-  "stockTransferStatusLoaded": "Unterwegs",
-  "@stockTransferStatusLoaded": {
-    "description": "#4170 transfers and take-out: a label or message"
   },
   "stockTransferStatusPartly": "Teilweise empfangen",
   "@stockTransferStatusPartly": {

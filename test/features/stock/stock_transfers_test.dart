@@ -90,7 +90,7 @@ void main() {
         expect(
           find.descendant(
             of: find.byKey(const ValueKey('stock-transfer-status-demo-transfer-1')),
-            matching: find.text(_en.stockTransferStatusLoaded),
+            matching: find.text(_en.stockTransfersOnTheWay),
           ),
           findsOneWidget,
         );

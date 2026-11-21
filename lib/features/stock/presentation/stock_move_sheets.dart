@@ -39,7 +39,7 @@ Future<bool> showStockMoveSheet(
   return showAppFormSheet(
     context,
     AppFormSheet(
-      title: takeOut ? l10n.stockTakeOutTitle : l10n.stockMoveTitle,
+      title: takeOut ? l10n.stockTakeOutOpen : l10n.stockMoveOpen,
       submitLabel: takeOut ? l10n.stockTakeOutSubmit : l10n.stockMoveSubmit,
       submitKey: const ValueKey('stock-move-submit'),
       onDispose: draft.fields.dispose,
@@ -105,31 +105,6 @@ class _MoveDraft {
     }
   }
 
-  Widget _dropdown(
-    BuildContext context,
-    VoidCallback refresh, {
-    required String keyName,
-    required String label,
-    required String? value,
-    required List<(String, String)> options,
-    required ValueChanged<String?> onChanged,
-  }) {
-    // read below the form's scope, where its errors are
-    return Builder(
-      builder: (scoped) => DropdownButtonFormField<String?>(
-        key: ValueKey('stock-move-$keyName'),
-        initialValue: value,
-        isExpanded: true,
-        decoration: InputDecoration(labelText: label, errorText: FormErrorsScope.maybeOf(scoped)?.errors[keyName]),
-        items: [for (final (id, text) in options) DropdownMenuItem<String?>(value: id, child: Text(text))],
-        onChanged: (v) {
-          onChanged(v);
-          refresh();
-        },
-      ),
-    );
-  }
-
   List<Widget> build(BuildContext context, VoidCallback refresh) {
     final l10n = context.l10n;
     final unit = chosen?.unit ?? '';
@@ -151,20 +126,39 @@ class _MoveDraft {
         ),
         const FormGap(),
       ],
-      _dropdown(
-        context,
-        refresh,
+      _PickField(
         keyName: 'item',
-        label: l10n.stockMoveItem,
+        label: l10n.expenseSupplyItem,
         value: item,
         options: [for (final i in items) (i.id, i.name)],
-        onChanged: (v) => item = v,
+        onPicked: (v) {
+          item = v;
+          refresh();
+        },
       ),
       const FormGap(),
-      _dropdown(context, refresh, keyName: 'from', label: l10n.stockMoveFrom, value: from, options: options, onChanged: (v) => from = v),
+      _PickField(
+        keyName: 'from',
+        label: l10n.stockMoveFrom,
+        value: from,
+        options: options,
+        onPicked: (v) {
+          from = v;
+          refresh();
+        },
+      ),
       if (!takeOut) ...[
         const FormGap(),
-        _dropdown(context, refresh, keyName: 'to', label: l10n.stockMoveTo, value: to, options: options, onChanged: (v) => to = v),
+        _PickField(
+          keyName: 'to',
+          label: l10n.stockTransferReceiveTo,
+          value: to,
+          options: options,
+          onPicked: (v) {
+            to = v;
+            refresh();
+          },
+        ),
         if (from != null && to != null && to != from) ...[
           const FormGap(),
           Text(
@@ -185,4 +179,32 @@ class _MoveDraft {
       ),
     ];
   }
+}
+
+/// One choice among [options] (id, text); the form's error for [keyName] is
+/// read below its scope, where it lives.
+class _PickField extends StatelessWidget {
+  const _PickField({
+    required this.keyName,
+    required this.label,
+    required this.value,
+    required this.options,
+    required this.onPicked,
+  });
+
+  final String keyName;
+  final String label;
+  final String? value;
+  final List<(String, String)> options;
+  final ValueChanged<String?> onPicked;
+
+  @override
+  Widget build(BuildContext context) => DropdownButtonFormField<String?>(
+    key: ValueKey('stock-move-$keyName'),
+    initialValue: value,
+    isExpanded: true,
+    decoration: InputDecoration(labelText: label, errorText: FormErrorsScope.maybeOf(context)?.errors[keyName]),
+    items: [for (final (id, text) in options) DropdownMenuItem<String?>(value: id, child: Text(text))],
+    onChanged: onPicked,
+  );
 }

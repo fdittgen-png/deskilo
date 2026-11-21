@@ -104,11 +104,7 @@ class DemoStockOperations implements StockOperations {
     _checkOnHand(asked, [for (final l in lines) l.fromLocationId]);
     for (var i = 0; i < lines.length; i++) {
       await _ledger.post(
-        item: asked[i].item,
-        quantity: asked[i].quantity,
-        from: lines[i].fromLocationId,
-        to: lines[i].toLocationId!,
-        reason: 'transfer',
+        DemoStockPost(item: asked[i].item, quantity: asked[i].quantity, from: lines[i].fromLocationId, to: lines[i].toLocationId!, reason: 'transfer'),
       );
     }
     return _answer(requestId, lines.length);
@@ -136,7 +132,9 @@ class DemoStockOperations implements StockOperations {
     _checkOnHand(asked, [for (final _ in lines) from]);
     final loaded = <String, ExactQuantity>{};
     for (final a in asked) {
-      await _ledger.post(item: a.item, quantity: a.quantity, from: from, to: _transit, reason: 'transfer');
+      await _ledger.post(
+        DemoStockPost(item: a.item, quantity: a.quantity, from: from, to: _transit, reason: 'transfer'),
+      );
       loaded[a.item.id] = (loaded[a.item.id] ?? ExactQuantity.zero) + a.quantity;
     }
     final id = _ledger.nextTransferId();
@@ -203,11 +201,7 @@ class DemoStockOperations implements StockOperations {
     }
     for (final p in plan) {
       await _ledger.post(
-        item: _ledger.itemOf(p.line.itemId)!,
-        quantity: p.quantity,
-        from: _transit,
-        to: p.to,
-        reason: 'transfer',
+        DemoStockPost(item: _ledger.itemOf(p.line.itemId)!, quantity: p.quantity, from: _transit, to: p.to, reason: 'transfer'),
       );
     }
     final open = transfer.lines.any((l) => received[l.id]! < l.loaded);
@@ -258,11 +252,7 @@ class DemoStockOperations implements StockOperations {
     _checkOnHand(asked, [for (final l in lines) l.fromLocationId]);
     for (var i = 0; i < lines.length; i++) {
       await _ledger.post(
-        item: asked[i].item,
-        quantity: asked[i].quantity,
-        from: lines[i].fromLocationId,
-        to: _loss,
-        reason: reason.name,
+        DemoStockPost(item: asked[i].item, quantity: asked[i].quantity, from: lines[i].fromLocationId, to: _loss, reason: reason.name),
       );
     }
     return _answer(requestId, lines.length);

@@ -45207,10 +45207,6 @@
   "@stockMoveFrom": {
     "description": "#4170 transfers and take-out: a label or message"
   },
-  "stockMoveItem": "Item",
-  "@stockMoveItem": {
-    "description": "#4170 transfers and take-out: a label or message"
-  },
   "stockMoveOpen": "Move goods",
   "@stockMoveOpen": {
     "description": "#4170 transfers and take-out: a label or message"
@@ -45234,14 +45230,6 @@
   },
   "stockMoveSubmit": "Move",
   "@stockMoveSubmit": {
-    "description": "#4170 transfers and take-out: a label or message"
-  },
-  "stockMoveTitle": "Move goods",
-  "@stockMoveTitle": {
-    "description": "#4170 transfers and take-out: a label or message"
-  },
-  "stockMoveTo": "Put on",
-  "@stockMoveTo": {
     "description": "#4170 transfers and take-out: a label or message"
   },
   "stockMovementNotFound": "This movement does not exist, or it is not one you may see.",
@@ -45731,10 +45719,6 @@
   "@stockTakeOutSubmit": {
     "description": "#4170 transfers and take-out: a label or message"
   },
-  "stockTakeOutTitle": "Take out goods",
-  "@stockTakeOutTitle": {
-    "description": "#4170 transfers and take-out: a label or message"
-  },
   "stockTakeOutUsed": "Used by the business",
   "@stockTakeOutUsed": {
     "description": "#4170 transfers and take-out: a label or message"
@@ -45805,10 +45789,6 @@
         "type": "String"
       }
     }
-  },
-  "stockTransferStatusLoaded": "On the way",
-  "@stockTransferStatusLoaded": {
-    "description": "#4170 transfers and take-out: a label or message"
   },
   "stockTransferStatusPartly": "Partly received",
   "@stockTransferStatusPartly": {

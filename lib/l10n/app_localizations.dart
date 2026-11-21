@@ -55805,12 +55805,6 @@ abstract class AppLocalizations {
   /// #4170 transfers and take-out: a label or message
   ///
   /// In en, this message translates to:
-  /// **'Item'**
-  String get stockMoveItem;
-
-  /// #4170 transfers and take-out: a label or message
-  ///
-  /// In en, this message translates to:
   /// **'Move goods'**
   String get stockMoveOpen;
 
@@ -55837,18 +55831,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Move'**
   String get stockMoveSubmit;
-
-  /// #4170 transfers and take-out: a label or message
-  ///
-  /// In en, this message translates to:
-  /// **'Move goods'**
-  String get stockMoveTitle;
-
-  /// #4170 transfers and take-out: a label or message
-  ///
-  /// In en, this message translates to:
-  /// **'Put on'**
-  String get stockMoveTo;
 
   /// #4161 a movement address that reads as none
   ///
@@ -56525,12 +56507,6 @@ abstract class AppLocalizations {
   /// #4170 transfers and take-out: a label or message
   ///
   /// In en, this message translates to:
-  /// **'Take out goods'**
-  String get stockTakeOutTitle;
-
-  /// #4170 transfers and take-out: a label or message
-  ///
-  /// In en, this message translates to:
   /// **'Used by the business'**
   String get stockTakeOutUsed;
 
@@ -56586,12 +56562,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{from} → {to}'**
   String stockTransferRoute(String from, String to);
-
-  /// #4170 transfers and take-out: a label or message
-  ///
-  /// In en, this message translates to:
-  /// **'On the way'**
-  String get stockTransferStatusLoaded;
 
   /// #4170 transfers and take-out: a label or message
   ///

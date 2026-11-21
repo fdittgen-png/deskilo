@@ -20598,10 +20598,6 @@
   "@stockMoveFrom": {
     "description": "#4170 transfers and take-out: a label or message"
   },
-  "stockMoveItem": "Articolo",
-  "@stockMoveItem": {
-    "description": "#4170 transfers and take-out: a label or message"
-  },
   "stockMoveOpen": "Spostare merce",
   "@stockMoveOpen": {
     "description": "#4170 transfers and take-out: a label or message"
@@ -20625,14 +20621,6 @@
   },
   "stockMoveSubmit": "Spostare",
   "@stockMoveSubmit": {
-    "description": "#4170 transfers and take-out: a label or message"
-  },
-  "stockMoveTitle": "Spostare merce",
-  "@stockMoveTitle": {
-    "description": "#4170 transfers and take-out: a label or message"
-  },
-  "stockMoveTo": "Collocare su",
-  "@stockMoveTo": {
     "description": "#4170 transfers and take-out: a label or message"
   },
   "stockMovementNotFound": "Questo movimento non esiste, oppure non ha il permesso di vederlo.",
@@ -21087,10 +21075,6 @@
   "@stockTakeOutSubmit": {
     "description": "#4170 transfers and take-out: a label or message"
   },
-  "stockTakeOutTitle": "Prelevare merce",
-  "@stockTakeOutTitle": {
-    "description": "#4170 transfers and take-out: a label or message"
-  },
   "stockTakeOutUsed": "Consumato dall’attività",
   "@stockTakeOutUsed": {
     "description": "#4170 transfers and take-out: a label or message"
@@ -21161,10 +21145,6 @@
         "type": "String"
       }
     }
-  },
-  "stockTransferStatusLoaded": "In viaggio",
-  "@stockTransferStatusLoaded": {
-    "description": "#4170 transfers and take-out: a label or message"
   },
   "stockTransferStatusPartly": "Ricevuto in parte",
   "@stockTransferStatusPartly": {

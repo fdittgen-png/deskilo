@@ -44,6 +44,14 @@ Future<(DemoJourney, ProviderContainer)> _open(
   return (journey, ProviderScope.containerOf(tester.element(find.byType(DeskiloApp))));
 }
 
+/// Two frames and a transition: what a page needs to arrive.
+Future<void> _settle(WidgetTester tester) async {
+  await tester.pump();
+  for (var i = 0; i < 12; i++) {
+    await tester.pump(const Duration(milliseconds: 100));
+  }
+}
+
 String _path(ProviderContainer c) =>
     c.read(routerProvider).routeInformationProvider.value.uri.path;
 
@@ -84,7 +92,7 @@ void main() {
       ),
     ], 'req-transfer');
     container.read(routerProvider).go('/stock');
-    await tester.pumpAndSettle();
+    await _settle(tester);
     expect(find.text('32.5 kg'), findsOneWidget, reason: '12.5 kg and the 20 kg that were put away');
     expect(find.text('30 piece'), findsOneWidget, reason: '36 mugs less the 6 that moved');
     expect(find.text('18 piece'), findsOneWidget, reason: '12 on the shelf and the 6 that moved there');
@@ -98,9 +106,9 @@ void main() {
       (lineId: transfer.lines.single.id, quantity: '6', toLocationId: null),
     ], 'req-receive');
     container.read(routerProvider).go('/reserve');
-    await tester.pumpAndSettle();
+    await _settle(tester);
     container.read(routerProvider).go('/stock');
-    await tester.pumpAndSettle();
+    await _settle(tester);
     expect(find.textContaining('TRANSIT'), findsNothing);
     expect(find.textContaining('BRANCH'), findsOneWidget);
     expect(find.text('6 piece'), findsOneWidget);
@@ -110,7 +118,7 @@ void main() {
   testWidgets('an address that names an item shows the stock of that item only', (tester) async {
     final (_, container) = await _open(tester, persona: DemoPersona.owner, to: '/reserve');
     container.read(routerProvider).go('/stock?item=demo-item-beans');
-    await tester.pumpAndSettle();
+    await _settle(tester);
     expect(find.text('12.5 kg'), findsOneWidget);
     expect(find.text('36 piece'), findsNothing, reason: 'the mugs are another item');
     expect(find.text('24 l'), findsNothing, reason: 'and so is the milk');

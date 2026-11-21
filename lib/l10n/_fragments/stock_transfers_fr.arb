@@ -33,10 +33,6 @@
       }
     }
   },
-  "stockTransferStatusLoaded": "En route",
-  "@stockTransferStatusLoaded": {
-    "description": "#4170 transfers and take-out: a label or message"
-  },
   "stockTransferStatusPartly": "Reçu en partie",
   "@stockTransferStatusPartly": {
     "description": "#4170 transfers and take-out: a label or message"
@@ -91,20 +87,8 @@
   "@stockMoveOpen": {
     "description": "#4170 transfers and take-out: a label or message"
   },
-  "stockMoveTitle": "Déplacer des marchandises",
-  "@stockMoveTitle": {
-    "description": "#4170 transfers and take-out: a label or message"
-  },
-  "stockMoveItem": "Article",
-  "@stockMoveItem": {
-    "description": "#4170 transfers and take-out: a label or message"
-  },
   "stockMoveFrom": "Prélever sur",
   "@stockMoveFrom": {
-    "description": "#4170 transfers and take-out: a label or message"
-  },
-  "stockMoveTo": "Placer sur",
-  "@stockMoveTo": {
     "description": "#4170 transfers and take-out: a label or message"
   },
   "stockMoveQuantity": "Quantité ({unit})",
@@ -130,10 +114,6 @@
   },
   "stockTakeOutOpen": "Sortir des marchandises",
   "@stockTakeOutOpen": {
-    "description": "#4170 transfers and take-out: a label or message"
-  },
-  "stockTakeOutTitle": "Sortir des marchandises",
-  "@stockTakeOutTitle": {
     "description": "#4170 transfers and take-out: a label or message"
   },
   "stockTakeOutUsed": "Utilisé par l’entreprise",

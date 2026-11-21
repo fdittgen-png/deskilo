@@ -20598,10 +20598,6 @@
   "@stockMoveFrom": {
     "description": "#4170 transfers and take-out: a label or message"
   },
-  "stockMoveItem": "Article",
-  "@stockMoveItem": {
-    "description": "#4170 transfers and take-out: a label or message"
-  },
   "stockMoveOpen": "Déplacer des marchandises",
   "@stockMoveOpen": {
     "description": "#4170 transfers and take-out: a label or message"
@@ -20625,14 +20621,6 @@
   },
   "stockMoveSubmit": "Déplacer",
   "@stockMoveSubmit": {
-    "description": "#4170 transfers and take-out: a label or message"
-  },
-  "stockMoveTitle": "Déplacer des marchandises",
-  "@stockMoveTitle": {
-    "description": "#4170 transfers and take-out: a label or message"
-  },
-  "stockMoveTo": "Placer sur",
-  "@stockMoveTo": {
     "description": "#4170 transfers and take-out: a label or message"
   },
   "stockMovementNotFound": "Ce mouvement n’existe pas, ou vous n’avez pas le droit de le voir.",
@@ -21087,10 +21075,6 @@
   "@stockTakeOutSubmit": {
     "description": "#4170 transfers and take-out: a label or message"
   },
-  "stockTakeOutTitle": "Sortir des marchandises",
-  "@stockTakeOutTitle": {
-    "description": "#4170 transfers and take-out: a label or message"
-  },
   "stockTakeOutUsed": "Utilisé par l’entreprise",
   "@stockTakeOutUsed": {
     "description": "#4170 transfers and take-out: a label or message"
@@ -21161,10 +21145,6 @@
         "type": "String"
       }
     }
-  },
-  "stockTransferStatusLoaded": "En route",
-  "@stockTransferStatusLoaded": {
-    "description": "#4170 transfers and take-out: a label or message"
   },
   "stockTransferStatusPartly": "Reçu en partie",
   "@stockTransferStatusPartly": {

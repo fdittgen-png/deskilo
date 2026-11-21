@@ -33,10 +33,6 @@
       }
     }
   },
-  "stockTransferStatusLoaded": "Unterwegs",
-  "@stockTransferStatusLoaded": {
-    "description": "#4170 transfers and take-out: a label or message"
-  },
   "stockTransferStatusPartly": "Teilweise empfangen",
   "@stockTransferStatusPartly": {
     "description": "#4170 transfers and take-out: a label or message"
@@ -91,20 +87,8 @@
   "@stockMoveOpen": {
     "description": "#4170 transfers and take-out: a label or message"
   },
-  "stockMoveTitle": "Ware umlagern",
-  "@stockMoveTitle": {
-    "description": "#4170 transfers and take-out: a label or message"
-  },
-  "stockMoveItem": "Artikel",
-  "@stockMoveItem": {
-    "description": "#4170 transfers and take-out: a label or message"
-  },
   "stockMoveFrom": "Entnehmen von",
   "@stockMoveFrom": {
-    "description": "#4170 transfers and take-out: a label or message"
-  },
-  "stockMoveTo": "Einlagern auf",
-  "@stockMoveTo": {
     "description": "#4170 transfers and take-out: a label or message"
   },
   "stockMoveQuantity": "Menge ({unit})",
@@ -130,10 +114,6 @@
   },
   "stockTakeOutOpen": "Ware entnehmen",
   "@stockTakeOutOpen": {
-    "description": "#4170 transfers and take-out: a label or message"
-  },
-  "stockTakeOutTitle": "Ware entnehmen",
-  "@stockTakeOutTitle": {
     "description": "#4170 transfers and take-out: a label or message"
   },
   "stockTakeOutUsed": "Vom Betrieb verbraucht",

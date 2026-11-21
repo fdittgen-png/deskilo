@@ -16,6 +16,7 @@ import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/trace_logger.dart';
+import '../../../core/ui/app_snack.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../core/ui/kit/page_title.dart';
 import '../../../core/ui/loading_view.dart';
@@ -103,7 +104,7 @@ class StockTransfersScreen extends ConsumerWidget {
       if (done) ref.invalidate(openTransfersProvider(workspaceId));
     } on Object catch (e, st) {
       TraceLogger.instance.warn('stock', 'the move sheet could not read the stock: $e', stackTrace: st);
-      if (context.mounted) ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.l10n.stockReadFailed)));
+      if (context.mounted) AppSnack.error(context, context.l10n.stockReadFailed);
     }
   }
 }
@@ -174,7 +175,7 @@ class _TransferCard extends ConsumerWidget {
                 Chip(
                   key: ValueKey('stock-transfer-status-${transfer.id}'),
                   label: Text(
-                    transfer.status == 'partly_received' ? l10n.stockTransferStatusPartly : l10n.stockTransferStatusLoaded,
+                    transfer.status == 'partly_received' ? l10n.stockTransferStatusPartly : l10n.stockTransfersOnTheWay,
                   ),
                 ),
               ],
@@ -206,7 +207,7 @@ class _TransferCard extends ConsumerWidget {
     try {
       final places = await ref.read(stockPlaceConfigsProvider(workspaceId).future);
       if (!context.mounted) return;
-      final done = await showStockReceiveSheet(
+      final done = await _showReceiveSheet(
         context,
         ref.read(stockOperationsProvider),
         workspaceId: workspaceId,
@@ -216,13 +217,13 @@ class _TransferCard extends ConsumerWidget {
       if (done) ref.invalidate(openTransfersProvider(workspaceId));
     } on Object catch (e, st) {
       TraceLogger.instance.warn('stock', 'the receive sheet could not read the places: $e', stackTrace: st);
-      if (context.mounted) ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.l10n.stockReadFailed)));
+      if (context.mounted) AppSnack.error(context, context.l10n.stockReadFailed);
     }
   }
 }
 
 /// Receives what arrived of [transfer], all or in part; true when done.
-Future<bool> showStockReceiveSheet(
+Future<bool> _showReceiveSheet(
   BuildContext context,
   StockOperations operations, {
   required String workspaceId,

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:convert';
 
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show JsonReader;
 import 'package:meta/meta.dart';
 import '../../l10n/app_localizations.dart';
 import '../data/server_error.dart';
@@ -292,14 +293,15 @@ String? _stockRefusalText(AppLocalizations l10n, KnownRefusal refusal) =>
   final raw = serverErrorDetails(error);
   if (raw == null) return null;
   try {
-    final json = jsonDecode(raw);
-    if (json is! Map<String, dynamic> || json['scope'] != 'main_store') return null;
-    final item = json['item_id'];
-    final held = json['held'];
-    final asked = json['asked'];
-    if (item is! String || held is! String || asked is! String) return null;
+    final r = JsonReader.of(jsonDecode(raw), context: 'DKG03');
+    if (r.stringOrNull('scope') != 'main_store') return null;
+    final item = r.stringOrNull('item_id');
+    final held = r.stringOrNull('held');
+    final asked = r.stringOrNull('asked');
+    if (item == null || held == null || asked == null) return null;
     return (itemId: item, held: held, asked: asked);
-  } on FormatException {
+  } on Object {
+    // a detail that is not our JSON is no hint: the generic words stand
     return null;
   }
 }

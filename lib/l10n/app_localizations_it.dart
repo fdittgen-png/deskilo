@@ -35069,9 +35069,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get stockMoveFrom => 'Prelevare da';
 
   @override
-  String get stockMoveItem => 'Articolo';
-
-  @override
   String get stockMoveOpen => 'Spostare merce';
 
   @override
@@ -35089,12 +35086,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get stockMoveSubmit => 'Spostare';
-
-  @override
-  String get stockMoveTitle => 'Spostare merce';
-
-  @override
-  String get stockMoveTo => 'Collocare su';
 
   @override
   String get stockMovementNotFound =>
@@ -35499,9 +35490,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get stockTakeOutSubmit => 'Prelevare';
 
   @override
-  String get stockTakeOutTitle => 'Prelevare merce';
-
-  @override
   String get stockTakeOutUsed => 'Consumato dall’attività';
 
   @override
@@ -35541,9 +35529,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String stockTransferRoute(String from, String to) {
     return '$from → $to';
   }
-
-  @override
-  String get stockTransferStatusLoaded => 'In viaggio';
 
   @override
   String get stockTransferStatusPartly => 'Ricevuto in parte';

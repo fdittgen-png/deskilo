@@ -114,16 +114,18 @@ class DemoStockReceivingCommands implements StockReceivingCommands {
       final part = allocations[i];
       final item = _ledger.itemOf(row.itemId)!;
       final moved = await _ledger.post(
-        item: item,
-        quantity: row.inventoryQuantity,
-        from: 'demo-place-supplier',
-        to: row.locationId,
-        reason: 'receipt',
-        lotId: (part.lotCode ?? '').isEmpty ? null : row.lotId,
-        lotCode: (part.lotCode ?? '').isEmpty ? null : part.lotCode,
-        variantId: row.variantId,
-        entered: row.enteredQuantity,
-        enteredUnit: row.enteredUnit,
+        DemoStockPost(
+          item: item,
+          quantity: row.inventoryQuantity,
+          from: 'demo-place-supplier',
+          to: row.locationId,
+          reason: 'receipt',
+          lotId: (part.lotCode ?? '').isEmpty ? null : row.lotId,
+          lotCode: (part.lotCode ?? '').isEmpty ? null : part.lotCode,
+          variantId: row.variantId,
+          entered: row.enteredQuantity,
+          enteredUnit: row.enteredUnit,
+        ),
       );
       written.add(
         ReceiptAllocation(

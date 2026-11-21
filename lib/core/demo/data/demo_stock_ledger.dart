@@ -64,20 +64,58 @@ const _stories = <_Story>[
 /// on the machine's calendar.
 final _anchor = DateTime.utc(2026, 11);
 
+/// One movement to book on the ledger: [quantity] (inventory unit) of [item]
+/// from [from] to [to], with what the person entered beside it.
+class DemoStockPost {
+  const DemoStockPost({
+    required this.item,
+    required this.quantity,
+    required this.from,
+    required this.to,
+    required this.reason,
+    this.lotId,
+    this.lotCode,
+    this.variantId,
+    this.entered,
+    this.enteredUnit,
+    this.at,
+    this.id,
+  });
+
+  final StockItem item;
+  final ExactQuantity quantity;
+  final String from;
+  final String to;
+  final String reason;
+  final String? lotId;
+  final String? lotCode;
+  final String? variantId;
+  final ExactQuantity? entered;
+  final String? enteredUnit;
+
+  /// When it happened; the ledger's clock when null.
+  final DateTime? at;
+
+  /// The movement's own address; a fresh one when null.
+  final String? id;
+}
+
 /// The in-memory goods ledger of the reference business.
 class DemoStockLedger {
   DemoStockLedger(this.workspaceId, this._config, [DateTime Function()? now]) : _now = now ?? (() => _anchor) {
     for (final s in _stories.reversed) {
       _book(
-        id: 'demo-stock-movement-${s.n}',
-        item: s.item,
-        quantity: ExactQuantity.parse(s.stored),
-        entered: ExactQuantity.parse(s.entered),
-        enteredUnit: s.enteredUnit,
-        from: s.from ?? _supplier,
-        to: s.to,
-        reason: s.reason,
-        at: _anchor.subtract(Duration(days: s.daysAgo)),
+        DemoStockPost(
+          id: 'demo-stock-movement-${s.n}',
+          item: s.item,
+          quantity: ExactQuantity.parse(s.stored),
+          entered: ExactQuantity.parse(s.entered),
+          enteredUnit: s.enteredUnit,
+          from: s.from ?? _supplier,
+          to: s.to,
+          reason: s.reason,
+          at: _anchor.subtract(Duration(days: s.daysAgo)),
+        ),
       );
     }
     _transfers.add(
@@ -185,83 +223,44 @@ class DemoStockLedger {
       if (p.active) StockPlace(id: p.id, code: p.code, name: p.name),
   ];
 
-  /// Books one movement of [quantity] (inventory unit) from [from] to [to].
-  /// A real place or the road that holds less than asked refuses it, whole;
-  /// a supplier or an opening place is the server's and holds whatever.
-  Future<StockMovementRow> post({
-    required StockItem item,
-    required ExactQuantity quantity,
-    required String from,
-    required String to,
-    required String reason,
-    String? lotId,
-    String? lotCode,
-    String? variantId,
-    ExactQuantity? entered,
-    String? enteredUnit,
-    DateTime? at,
-    int? number,
-  }) async {
+  /// Books [p] on the ledger. A real place or the road that holds less than
+  /// asked refuses it, whole; a supplier or an opening place is the server's
+  /// and holds whatever.
+  Future<StockMovementRow> post(DemoStockPost p) async {
     final places = await _places();
-    final source = places[from];
-    if ((source != null && !source.virtual) || from == _transit) {
-      final held = balance(item.id, from, lotId: lotId);
-      if (held < quantity) {
-        throw StockNotEnough('${held.text} of ${quantity.text} are there');
+    final source = places[p.from];
+    if ((source != null && !source.virtual) || p.from == _transit) {
+      final held = balance(p.item.id, p.from, lotId: p.lotId);
+      if (held < p.quantity) {
+        throw StockNotEnough('${held.text} of ${p.quantity.text} are there');
       }
     }
-    return _book(
-      id: 'demo-stock-movement-${number ?? nextNumber()}',
-      item: item,
-      quantity: quantity,
-      entered: entered ?? quantity,
-      enteredUnit: enteredUnit ?? item.unit,
-      from: from,
-      to: to,
-      reason: reason,
-      at: at ?? _now(),
-      lotId: lotId,
-      lotCode: lotCode,
-      variantId: variantId,
-    );
+    return _book(p);
   }
 
-  StockMovementRow _book({
-    required String id,
-    required StockItem item,
-    required ExactQuantity quantity,
-    required ExactQuantity entered,
-    required String enteredUnit,
-    required String from,
-    required String to,
-    required String reason,
-    required DateTime at,
-    String? lotId,
-    String? lotCode,
-    String? variantId,
-  }) {
-    _add(item, from, lotId, lotCode, -quantity);
-    _add(item, to, lotId, lotCode, quantity);
+  StockMovementRow _book(DemoStockPost p) {
+    _add(p.item, p.from, p.lotId, p.lotCode, -p.quantity);
+    _add(p.item, p.to, p.lotId, p.lotCode, p.quantity);
     final row = StockMovementRow(
       workspaceId: workspaceId,
-      id: id,
-      itemId: item.id,
-      itemName: item.name,
-      lotId: lotId,
-      lotCode: lotCode,
-      fromLocationId: from,
-      fromLocationCode: _codeOf(from),
-      toLocationId: to,
-      toLocationCode: _codeOf(to),
-      quantity: quantity,
-      unit: item.unit,
-      enteredQuantity: entered,
-      enteredUnit: enteredUnit,
-      occurredAt: at,
-      reason: reason,
+      id: p.id ?? 'demo-stock-movement-${nextNumber()}',
+      itemId: p.item.id,
+      itemName: p.item.name,
+      lotId: p.lotId,
+      lotCode: p.lotCode,
+      fromLocationId: p.from,
+      fromLocationCode: _codeOf(p.from),
+      toLocationId: p.to,
+      toLocationCode: _codeOf(p.to),
+      quantity: p.quantity,
+      unit: p.item.unit,
+      enteredQuantity: p.entered ?? p.quantity,
+      enteredUnit: p.enteredUnit ?? p.item.unit,
+      occurredAt: p.at ?? _now(),
+      reason: p.reason,
       unitCost: null,
       causes: const {},
-      variantId: variantId,
+      variantId: p.variantId,
     );
     _movements.insert(0, row);
     return row;
