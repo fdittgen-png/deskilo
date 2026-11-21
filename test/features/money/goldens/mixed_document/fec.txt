@@ -1,0 +1,10 @@
+JournalCode	JournalLib	EcritureNum	EcritureDate	CompteNum	CompteLib	CompAuxNum	CompAuxLib	PieceRef	PieceDate	EcritureLib	Debit	Credit	EcritureLet	DateLet	ValidDate	Montantdevise	Idevise
+VE	Ventes	VE-F-1	20260715	411000	Clients	m1	Ana	F-1	20260715	Facture F-1 2026-07	120,00	0,00	F-1	20260720	20260715		
+VE	Ventes	VE-F-1	20260715	706000	Ventes			F-1	20260715	Facture F-1 2026-07 20 %	0,00	100,00	F-1	20260720	20260715		
+VE	Ventes	VE-F-1	20260715	445710	TVA collectée			F-1	20260715	Facture F-1 2026-07 20 %	0,00	20,00	F-1	20260720	20260715		
+BQ	Banque	BQ-F-1-C1	20260715	512000	Banque			F-1	20260715	Paiement · virement	200,00	0,00	F-1	20260720	20260715		
+BQ	Banque	BQ-F-1-C1	20260715	411000	Clients	m1	Ana	F-1	20260715	Paiement · virement	0,00	200,00	F-1	20260720	20260715		
+BQ	Banque	BQ-F-1-C2	20260715	512000	Banque			F-1	20260715	Paiement · carte	40,00	0,00	F-1	20260720	20260715		
+BQ	Banque	BQ-F-1-C2	20260715	411000	Clients	m1	Ana	F-1	20260715	Paiement · carte	0,00	40,00	F-1	20260720	20260715		
+BQ	Banque	BQ-F-1-R	20260720	411000	Clients	m1	Ana	F-1	20260715	Remboursement F-1	120,00	0,00	F-1	20260720	20260720		
+BQ	Banque	BQ-F-1-R	20260720	512000	Banque			F-1	20260715	Remboursement F-1	0,00	120,00	F-1	20260720	20260720		
