@@ -13,13 +13,45 @@
 --                has no login, so no caller is one.
 --   status gate  every read of members names status = / in active, paused or
 --                pending (never `<>`: a customer is none of those).
---   customer     the function states the rule itself (it names 'customer').
+-- The patterns are about the members row itself: qualified by the alias each read
+-- gives it (comma joins counted), or unqualified where a read has none. A function
+-- that names 'customer' is not placed by that: it is listed too.
 -- What no rule places is listed with its reason. The list is closed both ways.
 begin;
 select plan(7);
 
 create temp table listed (sig text primary key, reason text not null check (length(reason) > 0));
 insert into listed (sig, reason) values
+  ('billing_customers_v1(uuid)',
+   'the business''s billing customers, read under manageBillingCustomers or a finance right (billing_customers_readable): a customer-only subject is its purpose'),
+  ('workspace_readiness(uuid)',
+   'counts under the configuration right; no row, no name'),
+  ('save_purchase_draft_v1(uuid,uuid,integer,jsonb)',
+   'checks that a purchase''s payer and submitter ids are of this business under the purchases right; the purchase is the business''s own record and grants the subject nothing'),
+  ('set_co_owner(uuid,text)',
+   'sets the co-owner state of one subject id: frozen for a customer-only row (members_customer_frozen)'),
+  ('schedule_member_pause(uuid,date,date,uuid)',
+   'a dated pause of one subject id under the right to manage members: a customer-only row never changes status by a command (members_customer_frozen)'),
+  ('request_member_status_change(uuid,text)',
+   'a member''s own request to pause or leave, by login; a customer-only subject has none, and its status never changes by a command (members_customer_frozen)'),
+  ('respond_to_event(uuid,boolean)',
+   'the caller''s own rows, by login: a customer-only subject has no login'),
+  ('my_inbox()',
+   'the caller''s own rows, by login: a customer-only subject has no login'),
+  ('negotiated_item_price(uuid,text,uuid)',
+   'by one subject id, under an explicit finance or customer right: a customer-only subject is a legitimate target, the seller bills it'),
+  ('member_price_negotiation(uuid)',
+   'by one subject id, under an explicit finance or customer right: a customer-only subject is a legitimate target, the seller bills it'),
+  ('member_employment_status(uuid,boolean)',
+   'sets employment of one subject id: refused for a customer-only row by the employment table''s trigger'),
+  ('member_statement(uuid,text)',
+   'by one subject id, under an explicit finance or customer right: a customer-only subject is a legitimate target, the seller bills it'),
+  ('member_account(uuid)',
+   'by one subject id, under an explicit finance or customer right: a customer-only subject is a legitimate target, the seller bills it'),
+  ('assign_workspace_role(uuid,uuid,boolean)',
+   'assigns a custom role to one subject id: refused for a customer-only row by the role-members table''s trigger'),
+  ('billing_party_save_v1(uuid,uuid,jsonb,integer,text)',
+   'edits the billing identity of one billing customer under manageBillingCustomers (status customer only; any other id answers as unknown)'),
   ('member_emails(uuid)',
    'lists addresses through a join on auth.users by user_id: a customer-only subject has no login and no address here'),
   ('room_offer_v1(uuid,uuid)',
@@ -37,7 +69,7 @@ insert into listed (sig, reason) values
   ('clear_sample_data(uuid,uuid)',
    'deletes the sample batch''s own members'),
   ('create_invitation(uuid,boolean,text,text,uuid,boolean)',
-   'a membership invitation for one subject id: accepting it sets a login, which the no-login check refuses for a customer-only row; handing a customer over as a member is an explicit later step (B2)'),
+   'a membership invitation for one subject id: the invitations table refuses one bound to a customer-only row (it would give it a login before the handover, B2)'),
   ('create_invoice(uuid,uuid,text,uuid,boolean,text,boolean,text,text,text)',
    'the issuer is the business owner or the issuing member, found by role and login; the subject is the billing target'),
   ('customer_statement_period_v1(uuid,uuid,date,date)',
@@ -83,7 +115,7 @@ insert into listed (sig, reason) values
   ('schedule_member_share_change(uuid,integer,date,uuid)',
    'a community attribute of one subject id: refused for a customer-only row by members_customer_frozen (role, plan, door, limits) or by the grant-table triggers'),
   ('set_managed_access(uuid,jsonb)',
-   'the managed-profile handover of one subject id (a claim sets a login, refused for a customer-only row); a customer-only row has no managed identity of its own'),
+   'the managed-profile handover of one subject id: refused for a customer-only row (its managed columns are frozen by members_customer_frozen)'),
   ('set_member_customer_capacity(uuid,text)',
    'by one subject id, under an explicit finance or customer right: a customer-only subject is a legitimate target, the seller bills it'),
   ('set_member_einvoice_address(uuid,text,text,text)',
@@ -109,30 +141,53 @@ insert into listed (sig, reason) values
   ('space_host_roster(uuid)',
    'lists or joins through a login (user_id or a profile): a customer-only subject has none, so it cannot appear'),
   ('update_managed_identity(uuid,jsonb)',
-   'edits the managed identity of one subject id under the right to manage the profile; a customer-only row keeps its billing identity in billing_parties, which this does not read'),
+   'edits a managed identity: refused for a customer-only row (managed columns frozen, and managed_identities carries the refusal trigger); its billing identity is in billing_parties'),
   ('vies_check_subject(uuid,uuid)',
    'by one subject id, under an explicit finance or customer right: a customer-only subject is a legitimate target, the seller bills it'),
   ('workspace_owners(uuid)',
    'the owners, by role and login');
 
-create function pg_temp.readers() returns table (sig text, tier text) language sql stable as $$
-  with r as (
-    select p.oid::regprocedure::text as sig, p.prosrc,
+create function pg_temp.readers() returns table (sig text, tier text) language plpgsql stable as $f$
+declare
+  r record;
+  v_read constant text := '(?:\m(?:from|join)\s+|,\s*)(?:"?public"?\s*\.\s*)?"?members"?\M'
+    || '(?:\s+(?:as\s+)?(?!(?:where|on|join|left|right|inner|cross|full|using|for|order|group|limit|union|set|returning|natural|select|and|or|having|offset|window|values)\M)([a-z_][a-z0-9_]*))?';
+  v_aliases text[];
+  v_reads int;
+  v_qual text;
+  v_own int;
+  v_gated int;
+begin
+  for r in
+    select p.oid::regprocedure::text as signature, p.prosrc,
            has_function_privilege('authenticated', p.oid, 'execute')
-             or has_function_privilege('anon', p.oid, 'execute') as client,
-           (select count(*) from regexp_matches(p.prosrc, '\m(from|join)\s+("?public"?\s*\.\s*)?"?members"?\M', 'gi')) as reads,
-           (select count(*) from regexp_matches(p.prosrc, 'status\s*(=|in)\s*\(?\s*''(active|paused|pending)', 'gi')) as gated,
-           (select count(*) from regexp_matches(p.prosrc, 'user_id\s*=\s*(auth\.uid\(\)|\(\s*select auth\.uid\(\)\s*\))', 'gi')) as own
+             or has_function_privilege('anon', p.oid, 'execute') as client
       from pg_proc p join pg_namespace n on n.oid = p.pronamespace
      where n.nspname = 'public' and p.prosecdef and p.prorettype <> 'trigger'::regtype
-       and p.prosrc ~* '\m(from|join)\s+("?public"?\s*\.\s*)?"?members"?\M')
-  select sig, case when not client then 'service'
-                   when prosrc ~* '''customer''' then 'customer'
-                   when own >= reads then 'own row'
-                   when gated >= reads then 'status gate'
-                   else 'unplaced' end
-    from r;
-$$;
+       and p.prosrc ~* v_read
+     order by 1
+  loop
+    -- every read of members, with the alias it is given (an empty one when it has none)
+    select coalesce(array_agg(coalesce(m[1], '')), '{}'), count(*)
+      into v_aliases, v_reads
+      from regexp_matches(r.prosrc, v_read, 'gi') m;
+    -- a predicate counts only when it is about THE members row: qualified by one of those
+    -- aliases, or unqualified where a read has none
+    v_qual := '(?:' || coalesce((select string_agg('\m' || a || '\.', '|') from unnest(v_aliases) a where a <> ''), '(?!)')
+              || case when '' = any (v_aliases) then '|(?<![\w.])' else '' end || ')';
+    select count(*) into v_own from regexp_matches(r.prosrc,
+      v_qual || 'user_id\s*=\s*(auth\.uid\(\)|\(\s*select auth\.uid\(\)\s*\))', 'gi');
+    select count(*) into v_gated from regexp_matches(r.prosrc,
+      v_qual || 'status\s*(=|in)\s*\(?\s*''(active|paused|pending)''', 'gi');
+    sig := r.signature;
+    tier := case when not r.client then 'service'
+                 when v_own >= v_reads then 'own row'
+                 when v_gated >= v_reads then 'status gate'
+                 else 'unplaced' end;
+    return next;
+  end loop;
+end
+$f$;
 
 select is((select coalesce(string_agg(r.sig, ', ' order by r.sig), '') from pg_temp.readers() r
             where r.tier = 'unplaced' and r.sig not in (select sig from listed)), '',
@@ -161,7 +216,7 @@ select is((select string_agg(r.sig || ':' || r.tier, ', ' order by r.sig) from p
   'a reader is found whatever its name''s form and however it became definer; each rule is seen in its source');
 select ok((select count(*) from pg_temp.readers() where tier = 'service') > 50, 'the service-only readers are read');
 select ok((select count(*) from pg_temp.readers() where tier in ('own row', 'status gate')) > 100, 'the own-row and status-gated readers are read');
-select ok((select count(*) from listed) = 47, 'the list holds 47 reasoned exceptions');
+select ok((select count(*) from listed) = 62, 'the list holds 62 reasoned exceptions');
 
 select * from finish();
 rollback;

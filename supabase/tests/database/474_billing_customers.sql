@@ -6,7 +6,7 @@
 -- badge or role; a billing edit changes only the fields it names (and refuses a
 -- stale revision); the member who later joins is the same row. Rolled back.
 begin;
-select plan(45);
+select plan(53);
 
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00004164' || lpad(n::text, 4, '0'))::uuid;
@@ -130,8 +130,8 @@ select is(pg_temp.err(format($s$update public.members set max_active_reservation
   'nor a booking limit or a door');
 select is(pg_temp.err(format($s$update public.members set status = 'customer' where id = %L$s$, pg_temp.u(203))), 'DKU01',
   'and a member is not turned into a customer by an update');
-select is((select count(*) from pg_trigger t where t.tgname = 'customer_subject_refused' and not t.tgisinternal), 12::bigint,
-  'the twelve grant tables carry the refusal');
+select is((select count(*) from pg_trigger t where t.tgname = 'customer_subject_refused' and not t.tgisinternal), 14::bigint,
+  'the fourteen grant tables carry the refusal');
 
 -- ── editing ──
 select is(pg_temp.q(1, format($s$select (public.billing_party_save_v1(%L, %L, '{"city": "Beziers"}'::jsonb, 1))->>'revision'$s$, pg_temp.u(101), (select id from made))),
@@ -145,18 +145,36 @@ select is(pg_temp.q(2, format($s$select public.billing_party_save_v1(%L, %L, '{"
 select is(pg_temp.q(1, format($s$select public.billing_party_save_v1(%L, %L, '{"city": "Wrong"}'::jsonb, null)::text$s$, pg_temp.u(101), pg_temp.u(205))),
   'ERR DKU04', 'a subject of another business is refused');
 
--- an existing member who chooses a billing identity keeps everything else
+-- an existing member is not a billing customer: the billing edit acts on none, answers
+-- as an unknown id does, and writes nothing
 create temp table before_member as select md5(to_jsonb(m)::text) h from public.members m where id = pg_temp.u(203);
-select is(pg_temp.q(1, format($s$select (public.billing_party_save_v1(%L, %L, '{"company": "Coworker Co", "first_name": "Cora"}'::jsonb, 0))->>'revision'$s$, pg_temp.u(101), pg_temp.u(203))),
-  '1', 'a member explicitly given a billing identity starts at revision one');
+select is(pg_temp.q(1, format($s$select public.billing_party_save_v1(%L, %L, '{"company": "Coworker Co"}'::jsonb, 0)::text$s$, pg_temp.u(101), pg_temp.u(203))),
+  'ERR DKU04', 'the billing edit acts on a customer only: a member answers as an unknown id');
+select is(pg_temp.q(1, format($s$select public.billing_party_save_v1(%L, %L, '{"company": "Coworker Co"}'::jsonb, 0)::text$s$, pg_temp.u(101), pg_temp.u(203))),
+  pg_temp.q(1, format($s$select public.billing_party_save_v1(%L, %L, '{"company": "Coworker Co"}'::jsonb, 0)::text$s$, pg_temp.u(101), pg_temp.u(999))),
+  'exactly as an id that does not exist');
+select is((select count(*) from public.billing_parties where member_id = pg_temp.u(203)), 0::bigint, 'nothing was written for the member');
 select is((select md5(to_jsonb(m)::text) from public.members m where id = pg_temp.u(203)),
-  (select h from before_member), 'and its member row (role, plan, profile, capacity) is untouched');
+  (select h from before_member), 'and its member row is untouched');
+
+-- no login, by any path: an invitation bound to it, an owner's update
+select is(pg_temp.err(format($s$insert into public.invitations (workspace_id, created_by, member_id) values (%L, %L, %L)$s$,
+    pg_temp.u(101), pg_temp.u(1), (select id from made))), 'DKU01',
+  'an invitation cannot be bound to a customer: it would give the row a login');
+select is(pg_temp.err(format($s$update public.members set user_id = %L, status = 'pending' where id = %L$s$, pg_temp.u(4), (select id from made))), 'DKU01',
+  'a claim that sets a login and a status in one statement is refused');
+select is(pg_temp.err(format($s$update public.members set user_id = %L where id = %L$s$, pg_temp.u(4), (select id from made))), 'DKU01',
+  'and so is an owner setting a login');
+select is(pg_temp.err(format($s$update public.members set managed_name = 'X' where id = %L$s$, (select id from made))), 'DKU01',
+  'a customer has no managed profile to edit');
+select is(pg_temp.err(format($s$insert into public.managed_identities (member_id, workspace_id, identity) values (%L, %L, '{}'::jsonb)$s$,
+    (select id from made), pg_temp.u(101))), 'DKU01', 'nor a managed identity row');
 
 -- the right alone: a customer yes; an existing member, a capacity, no
 select is(pg_temp.q(5, format($s$select (public.billing_party_save_v1(%L, (select member_id from public.billing_parties where workspace_id = %L limit 1), '{"city": "Lyon"}'::jsonb, null))->>'revision'$s$, pg_temp.u(102), pg_temp.u(102))),
   '2', 'the right alone edits a billing customer');
 select is(pg_temp.q(5, format($s$select public.billing_party_save_v1(%L, %L, '{"company": "Owner Co"}'::jsonb, null)::text$s$, pg_temp.u(102), pg_temp.u(207))),
-  'ERR DKN01', 'but not an existing member''s billing identity: that needs the right to manage members');
+  'ERR DKU04', 'but not a member: it answers as an unknown id');
 select is(pg_temp.q(5, format($s$select public.billing_customer_create_v1(%L, '{"company": "Cap Co"}'::jsonb, 'business')::text$s$, pg_temp.u(102))),
   'ERR DKN01', 'nor a capacity: that needs the right to issue invoices');
 select is(pg_temp.q(5, format($s$select public.billing_party_save_v1(%L, (select member_id from public.billing_parties where workspace_id = %L limit 1), '{"city": "Nice"}'::jsonb, null, 'consumer')::text$s$, pg_temp.u(102), pg_temp.u(102))),
@@ -171,7 +189,11 @@ select ok(not has_function_privilege('authenticated', 'public.billing_party_buye
   'no client calls the engine''s internal functions');
 
 -- ── joining later is the same row ──
+select is(pg_temp.err(format($s$update public.members set status = 'paused' where id = %L$s$, (select id from made))), 'DKU01',
+  'a customer does not change status by a side road: a pause, an exit or a status command is refused');
+select set_config('deskilo.customer_handover', 'on', true);
 update public.members set status = 'active' where id = (select id::uuid from made);
+select set_config('deskilo.customer_handover', '', true);
 select is((select status || '|' || company from public.members m join public.billing_parties b on b.member_id = m.id where m.id = (select id::uuid from made)),
   'active|Atelier Lumi', 'a customer who later becomes a member is the same row, its billing identity kept');
 

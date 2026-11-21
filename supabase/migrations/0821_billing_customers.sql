@@ -111,7 +111,8 @@ create policy members_select on public.members for select
   using (public.is_member_of(workspace_id)
          and (status <> 'customer' or public.billing_customers_readable(workspace_id)));
 
--- 5. A customer-only subject holds no booking, badge, role or community seat.
+-- 5. A customer-only subject holds no booking, badge, role, invitation, managed
+-- profile or community seat.
 create or replace function public.reject_customer_subject() returns trigger
 language plpgsql security definer set search_path = public as $fn$
 declare
@@ -136,7 +137,8 @@ declare
     ['workspace_role_members', 'member_id'], ['resource_favorites', 'member_id'],
     ['resource_ratings', 'member_id'], ['room_rental_audience', 'member_id'],
     ['conversation_participants', 'member_id'], ['push_endpoints', 'member_id'],
-    ['member_public_contact', 'member_id'], ['member_employment', 'member_id']];
+    ['member_public_contact', 'member_id'], ['member_employment', 'member_id'],
+    ['invitations', 'member_id'], ['managed_identities', 'member_id']];
 begin
   foreach v_pair slice 1 in array v_pairs loop
     execute format('drop trigger if exists customer_subject_refused on public.%I', v_pair[1]);
@@ -148,13 +150,24 @@ begin
 end
 $t$;
 
--- A customer-only subject is not given a role, a plan, a door or a booking limit:
--- the community attributes are frozen while it is a customer, whichever command
+-- A customer-only subject is not given a login, a role, a plan, a door, a booking
+-- limit or a managed profile: those are frozen while it is a customer, whichever command
 -- tries to set them, and a member is never turned into a customer by an update
 -- (customers are created by billing_customer_create_v1 only).
 create or replace function public.members_customer_frozen() returns trigger
 language plpgsql set search_path = public as $fn$
 begin
+  -- Until the explicit handover (B2) a customer row never gains a login, by any
+  -- path: an invitation bound to it, a claim, or a direct update.
+  if tg_op = 'UPDATE' and old.status = 'customer' and new.user_id is not null then
+    raise exception 'a billing customer has no login' using errcode = 'DKU01';
+  end if;
+  -- And it never changes status by a side road (a pause, an exit, a status
+  -- command): becoming a member is the explicit handover (B2), which says so.
+  if tg_op = 'UPDATE' and old.status = 'customer' and new.status <> 'customer'
+     and coalesce(current_setting('deskilo.customer_handover', true), '') <> 'on' then
+    raise exception 'a billing customer becomes a member only by the explicit handover' using errcode = 'DKU01';
+  end if;
   if new.status <> 'customer' then return new; end if;
   if tg_op = 'INSERT' then
     if new.is_admin or new.is_owner or new.co_owner <> 'none' or new.is_kiosk then
@@ -164,12 +177,15 @@ begin
     raise exception 'a member is not turned into a billing customer' using errcode = 'DKU01';
   elsif (new.is_admin, new.is_owner, new.co_owner, new.is_kiosk, new.plan_id, new.subscription_pct,
          new.overage_policy, new.max_active_reservations, new.can_reserve_level,
-         new.max_simultaneous_reservations)
+         new.max_simultaneous_reservations, new.managed_identity, new.managed_by,
+         new.managed_access, new.managed_name, new.claimed_at)
         is distinct from
         (old.is_admin, old.is_owner, old.co_owner, old.is_kiosk, old.plan_id, old.subscription_pct,
          old.overage_policy, old.max_active_reservations, old.can_reserve_level,
-         old.max_simultaneous_reservations) then
-    raise exception 'a billing customer holds no role, plan, door or booking limit' using errcode = 'DKU01';
+         old.max_simultaneous_reservations, old.managed_identity, old.managed_by,
+         old.managed_access, old.managed_name, old.claimed_at) then
+    raise exception 'a billing customer holds no role, plan, door, booking limit or managed profile'
+      using errcode = 'DKU01';
   end if;
   return new;
 end
@@ -261,9 +277,9 @@ grant execute on function public.billing_customer_create_v1(uuid, jsonb, text) t
 -- Edits ONE subject's billing identity: the fields named in [p_party] change,
 -- every other field and everything on the member (profile, role, plan) stays.
 -- [p_expected_revision] is the revision the editor read; a stale one is refused.
--- A member who has none yet gets one (the explicit choice of a billing identity,
--- which also needs the right to manage members). The capacity needs the right
--- to issue invoices, as set_member_customer_capacity does.
+-- It acts on a billing customer only. The capacity (business or consumer, which
+-- decides the legal mentions and the tax) needs the right to issue invoices, as
+-- set_member_customer_capacity does.
 create or replace function public.billing_party_save_v1(
   p_workspace uuid, p_subject uuid, p_party jsonb, p_expected_revision integer default null,
   p_capacity text default null)
@@ -281,16 +297,13 @@ begin
   if p_capacity is not null and not public.has_permission(p_workspace, 'issueInvoices') then
     raise exception 'setting the customer capacity needs the right to issue invoices' using errcode = 'DKN01';
   end if;
+  -- Only a billing customer: the billing data of a regular member stays with the
+  -- existing flows. Anything else answers exactly as an unknown id does, so the
+  -- refusal never says that a member exists.
   select * into v_member from public.members
-   where id = p_subject and workspace_id = p_workspace and not is_kiosk
+   where id = p_subject and workspace_id = p_workspace and status = 'customer'
    for update;
   if v_member.id is null then raise exception 'unknown billing subject' using errcode = 'DKU04'; end if;
-  -- A billing customer is this right's own subject. Choosing a billing identity
-  -- for an existing member changes how that member is billed: it also needs the
-  -- right to manage members.
-  if v_member.status <> 'customer' and not public.has_permission(p_workspace, 'manageMembers') then
-    raise exception 'a member''s billing identity is chosen by who manages members' using errcode = 'DKN01';
-  end if;
   v_party := public.billing_party_clean(p_party);
   select * into v_current from public.billing_parties where member_id = p_subject for update;
   if v_current.member_id is null then
