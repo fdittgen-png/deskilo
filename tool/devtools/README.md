@@ -50,6 +50,9 @@ including local Markdown links. The fixture test proves malformed YAML and a
 missing linked file fail, then a corrected skill passes. This is structural
 validation, not a benchmark of instruction quality or agent performance.
 
+`npm test` also asserts that the installed Repomix reports exactly the pinned
+version, that the lock holds it and that a run's provenance names it.
+
 Remove this directory and its ignored outputs to uninstall. Source references:
 [Repomix](https://github.com/yamadashy/repomix),
 [skills_lint](https://github.com/google/skills_lint.dart).

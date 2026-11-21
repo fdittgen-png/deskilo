@@ -1,0 +1,78 @@
+{
+  "scanner": "zizmor 1.32.0",
+  "revision": "4b94bd5bc9f751c0df9921278d3ad0407a3fbf75",
+  "counts": [
+    {
+      "rule": "adhoc-packages",
+      "severity": "Low",
+      "confidence": "High",
+      "count": 1
+    },
+    {
+      "rule": "artipacked",
+      "severity": "Medium",
+      "confidence": "Low",
+      "count": 37
+    },
+    {
+      "rule": "cache-poisoning",
+      "severity": "High",
+      "confidence": "Low",
+      "count": 1
+    },
+    {
+      "rule": "dependabot-cooldown",
+      "severity": "Medium",
+      "confidence": "High",
+      "count": 1
+    },
+    {
+      "rule": "excessive-permissions",
+      "severity": "High",
+      "confidence": "High",
+      "count": 6
+    },
+    {
+      "rule": "github-env",
+      "severity": "High",
+      "confidence": "Low",
+      "count": 1
+    },
+    {
+      "rule": "secrets-inherit",
+      "severity": "Medium",
+      "confidence": "High",
+      "count": 5
+    },
+    {
+      "rule": "self-repository",
+      "severity": "Low",
+      "confidence": "High",
+      "count": 30
+    },
+    {
+      "rule": "superfluous-actions",
+      "severity": "Informational",
+      "confidence": "High",
+      "count": 1
+    },
+    {
+      "rule": "template-injection",
+      "severity": "Informational",
+      "confidence": "Low",
+      "count": 20
+    },
+    {
+      "rule": "template-injection",
+      "severity": "Low",
+      "confidence": "High",
+      "count": 1
+    },
+    {
+      "rule": "unpinned-uses",
+      "severity": "High",
+      "confidence": "High",
+      "count": 114
+    }
+  ]
+}
