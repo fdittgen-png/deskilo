@@ -20,8 +20,13 @@ void main() {
   final workflow = File('.github/workflows/einvoice-validate.yml')
       .readAsStringSync();
 
+  // #3932 -- a format only the sandbox test builds: the AEAT's own answer to
+  // the test is its validation, and no sample document is kept or validated.
+  const sandboxOnly = {EInvoiceFormat.verifactu};
+
   test('every format names its validator and its sample', () {
     for (final format in EInvoiceFormat.values) {
+      if (sandboxOnly.contains(format)) continue;
       expect(eInvoiceValidators[format], isNotNull, reason: format.name);
       expect(eInvoiceSampleFiles[format], isNotNull, reason: format.name);
     }

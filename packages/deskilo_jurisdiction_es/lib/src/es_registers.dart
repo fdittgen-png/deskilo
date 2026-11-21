@@ -12,6 +12,7 @@ import 'package:deskilo_jurisdiction_standards/deskilo_jurisdiction_standards.da
 import 'package:deskilo_xlsx/deskilo_xlsx.dart' show buildXlsx;
 
 import 'vat_register_es.dart';
+import 'verifactu_submission.dart';
 import 'vat_register_es_347.dart';
 import 'vat_register_es_sii.dart';
 
@@ -114,6 +115,34 @@ class EsRegisters extends RegisterContribution {
           ),
           mediaType: 'text/csv',
           fileName: 'modelo-347-${last.year}.csv',
+          provenance: descriptor.toProvenance(),
+        );
+      case 'esVerifactuTest':
+        // #3932 -- not a register, so not one of [kinds] (the declarations
+        // screen offers those): the SOAP message of ONE sandbox test record
+        // built from the one document of the context (a preview, never an
+        // issued invoice). `to` is the instant it is generated.
+        if (context.documents.length != 1) return null;
+        if (context.sellerVatId.trim().isEmpty) {
+          throw const RegisterRefusal(RegisterProblem.vatNumber);
+        }
+        final preview = context.documents.single;
+        final record = verifactuTestRecordFor(
+          preview: preview,
+          seller: RegisterParty(
+            name: context.sellerName,
+            country: 'ES',
+            vatId: context.sellerVatId,
+          ),
+          buyer: preview.buyerParty ?? const RegisterParty(),
+          generatedAt: context.to,
+        );
+        return GeneratedArtifact(
+          bytes: utf8.encode(
+            verifactuSubmissionXml(record, issuerName: context.sellerName),
+          ),
+          mediaType: 'application/xml',
+          fileName: 'verifactu-test-${preview.number}.xml',
           provenance: descriptor.toProvenance(),
         );
     }

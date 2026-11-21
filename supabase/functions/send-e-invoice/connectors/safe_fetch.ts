@@ -155,7 +155,11 @@ export function clientDetail(
   detail: string,
 ): string {
   if (status === "accepted") return "";
-  if (detail === "destination_not_allowed" || detail === "redirect_refused") {
+  if (
+    detail === "destination_not_allowed" || detail === "redirect_refused" ||
+    // #3932 -- fixed keys of the certificate channel, never its material
+    detail === "certificate_unreadable" || detail === "mtls_unavailable"
+  ) {
     return detail;
   }
   return status === "rejected" ? "provider_rejected" : "provider_unreachable";

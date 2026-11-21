@@ -39,10 +39,6 @@ const Map<String, String> _allowed = {
       '#2358 — the Verifactu register slice (chain table, PDF legend and QR) wires it',
   'packages/deskilo_jurisdiction_es/lib/src/verifactu.dart::verifactuQrUrl':
       '#2358 — the Verifactu register slice (chain table, PDF legend and QR) wires it',
-  'packages/deskilo_jurisdiction_es/lib/src/verifactu_submission.dart::verifactuTestRecordFor':
-      '#3932 — the Spanish test document the app builds wires it',
-  'packages/deskilo_jurisdiction_es/lib/src/verifactu_submission.dart::verifactuSubmissionXml':
-      '#3932 — the Spanish test document the app builds wires it',
 
   // Domain rules the app was meant to use and does not yet.
   'packages/deskilo_money_kernel/lib/src/accounting_amount.dart::settleForeign':
