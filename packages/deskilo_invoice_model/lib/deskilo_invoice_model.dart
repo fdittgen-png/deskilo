@@ -19,6 +19,7 @@ export 'src/invoice_kind.dart';
 export 'src/invoice_legal.dart';
 export 'src/invoice_line_cash.dart';
 export 'src/invoice_line_snapshot.dart';
+export 'src/invoice_structured_line.dart';
 export 'src/invoice_seller_kind.dart';
 export 'src/invoice_ubl.dart';
 export 'src/invoice_ubl_check.dart';

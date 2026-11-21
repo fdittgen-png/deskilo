@@ -8732,6 +8732,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get eInvoiceFieldCif => 'CIF del espacio';
 
   @override
+  String get eInvoiceFieldClientCertificate => 'Certificado (PEM)';
+
+  @override
   String get eInvoiceFieldClientId => 'Identificador de cliente';
 
   @override
@@ -8752,6 +8755,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get eInvoiceFieldPassword => 'Contraseña';
+
+  @override
+  String get eInvoiceFieldPrivateKey => 'Clave privada (PEM)';
 
   @override
   String get eInvoiceFieldSecretSet =>
@@ -8882,6 +8888,9 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get eInvoiceMandateTitle =>
       'Obligaciones de facturación electrónica en su país:';
+
+  @override
+  String get eInvoiceProviderEsVerifactu => 'Verifactu (AEAT)';
 
   @override
   String get eInvoiceProviderFrPa => 'Plataforma acreditada francesa (PA)';
@@ -29424,6 +29433,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get reservationCancelledSnack => 'Reserva cancelada.';
+
+  @override
+  String get reservationContextChanged =>
+      'El espacio de trabajo o la cuenta cambió mientras esto estaba abierto. No se envió nada: ábralo de nuevo.';
 
   @override
   String get reservationDeleteReasonLabel => 'Motivo (opcional)';

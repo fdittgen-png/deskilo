@@ -7,6 +7,7 @@
 
 import { assertEquals } from "jsr:@std/assert@1";
 import { handle } from "./handler.ts";
+import { clients } from "./connectors/es_verifactu.ts";
 import type {
   Artifact,
   ClaimResult,
@@ -1737,4 +1738,69 @@ Deno.test("#3883 the latest test's state, for whoever manages the integrations",
   s.grants.clear();
   const refused = await read(await call(s, p.fetchImpl, { workspace_id: WS, action: "test_state" }));
   assertEquals(refused.status, 403);
+});
+
+// #3932 -- the Spanish channel: the AEAT answers the verdict in the upload.
+function esTestStore() {
+  const s = new FakeStore();
+  s.provider = "es_verifactu";
+  s.config = {
+    base_url: "https://www1.agenciatributaria.gob.es/live",
+    client_certificate: "live",
+    private_key: "live",
+    base_url_uat: "https://prewww1.aeat.es/wlpl/TIKE-CONT/ws/SistemaFacturacion/VerifactuSOAP",
+    client_certificate_uat: "-----BEGIN CERTIFICATE-----\nMIIB\n-----END CERTIFICATE-----",
+    private_key_uat: "-----BEGIN PRIVATE KEY-----\nKEY\n-----END PRIVATE KEY-----",
+  };
+  s.member_ = { id: "m2", is_admin: false, is_owner: false, status: "active" };
+  s.grants.add("manageIntegrations");
+  return s;
+}
+const aeat = (state: string, line: string) => () =>
+  new Response(
+    `<e:Envelope xmlns:e="x"><e:Body><r:RespuestaRegFactuSistemaFacturacion xmlns:r="r"><r:CSV>C1</r:CSV>` +
+      `<r:EstadoEnvio>${state}</r:EstadoEnvio><r:RespuestaLinea><r:EstadoRegistro>${line}</r:EstadoRegistro></r:RespuestaLinea>` +
+      `</r:RespuestaRegFactuSistemaFacturacion></e:Body></e:Envelope>`,
+  );
+const esBody = { ...testBody, format: "verifactu", content_base64: btoa("<soapenv:Envelope/>") };
+
+async function withFakeClient<T>(run: () => Promise<T>): Promise<T> {
+  const before = clients.make;
+  clients.make = () => ({ close() {} }) as unknown as Deno.HttpClient;
+  try {
+    return await run();
+  } finally {
+    clients.make = before;
+  }
+}
+
+Deno.test("#3932 the Spanish channel's test goes to the AEAT sandbox and its clean acceptance is the verdict", async () => {
+  const s = esTestStore();
+  const p = provider(aeat("Correcto", "Correcto"));
+  const r = await withFakeClient(async () => await read(await call(s, p.fetchImpl, esBody)));
+  assertEquals(r.status, 200);
+  assertEquals(p.posts, ["https://prewww1.aeat.es/wlpl/TIKE-CONT/ws/SistemaFacturacion/VerifactuSOAP"]);
+  const row = [...s.rows.values()][0];
+  assertEquals([row.kind, row.environment, row.phase], ["test", "uat", "accepted"]);
+  const state = await read(await call(s, p.fetchImpl, { workspace_id: WS, action: "test_state" }));
+  assertEquals([state.body.format, state.body.test.document_status], ["verifactu", "accepted"]);
+});
+
+Deno.test("#3932 a record the AEAT refused is a refused test; one kept with errors has no verdict", async () => {
+  for (const [line, want] of [["Incorrecto", "rejected"], ["AceptadoConErrores", "unknown"]]) {
+    const s = esTestStore();
+    const p = provider(aeat(line === "Incorrecto" ? "Incorrecto" : "ParcialmenteCorrecto", line));
+    await withFakeClient(async () => await call(s, p.fetchImpl, esBody));
+    const state = await read(await call(s, p.fetchImpl, { workspace_id: WS, action: "test_state" }));
+    assertEquals(state.body.test.document_status, want, line);
+  }
+});
+
+Deno.test("#3932 the Spanish channel needs its sandbox certificate and key, never the live ones", async () => {
+  const s = esTestStore();
+  delete s.config.private_key_uat;
+  const p = provider(nothing);
+  const r = await read(await call(s, p.fetchImpl, esBody));
+  assertEquals([r.status, r.body.error, r.body.missing], [409, "sandbox_credentials_missing", ["private_key"]]);
+  assertEquals([s.rows.size, p.posts.length], [0, 0]);
 });

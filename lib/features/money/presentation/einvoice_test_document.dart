@@ -15,9 +15,12 @@ import 'package:meta/meta.dart';
 import '../../../core/files/file_names.dart';
 import '../../../core/jurisdiction/installed_invoice_rules.dart';
 import '../../../core/jurisdiction/installed_payment_slips.dart';
+import '../../../core/jurisdiction/installed_registers.dart';
 import '../../../core/time/clock.dart';
 import '../application/channel_einvoice_xml.dart';
+import '../application/jurisdiction/register_context_builder.dart';
 import '../domain/invoice_line_text.dart';
+import '../domain/vat_filing_files.dart' show VatFilingParty;
 import '../providers/money_providers.dart';
 import 'e_invoice_identity.dart';
 import 'invoice_actions.dart' show requireWorkspaceTaxReference;
@@ -68,6 +71,9 @@ Future<({List<int> bytes, String fileName})?> _buildEInvoiceTestDocument(
     number: number,
   );
   if (invoice == null) return null;
+  if (format == EInvoiceFormat.verifactu) {
+    return _verifactuTestRecord(ref, invoice, sellerOf(invoice, workspace));
+  }
   final words = documentStringsOf(invoiceDocumentLocale(ref, invoice));
   final association = ref.read(sellerIsAssociationProvider);
   final xml = buildChannelEInvoiceXml(
@@ -92,4 +98,35 @@ Future<({List<int> bytes, String fileName})?> _buildEInvoiceTestDocument(
     bytes: utf8.encode(xml),
     fileName: '${safeFileSlug('${format.name} $number')}.xml',
   );
+}
+
+/// #3932 -- the Spanish channel's test: the Spanish add-on builds the SOAP
+/// message of one record from the preview, on a chain of its own. The seller's
+/// country picks the add-on; none installed builds nothing.
+({List<int> bytes, String fileName})? _verifactuTestRecord(
+  WidgetRef ref,
+  Invoice invoice,
+  InvoiceParty seller,
+) {
+  final now = ref.read(clockProvider).now();
+  final context = registerContextOf(
+    [invoice],
+    reference: requireWorkspaceTaxReference(ref),
+    party: VatFilingParty(
+      countryCode: seller.country,
+      name: seller.name,
+      street: '',
+      postalCode: '',
+      city: '',
+      vatId: seller.vatId,
+      legalId: seller.legalId,
+    ),
+    from: now,
+    to: now,
+  );
+  final file = registersOf(seller.country)?.generate(
+    'esVerifactuTest',
+    context,
+  );
+  return file == null ? null : (bytes: file.bytes, fileName: file.fileName);
 }

@@ -3,9 +3,7 @@
 // #4162 (X1.A) -- the readers of a line that carries the commercial contract:
 // a printed document states its exact quantity, unit and entered price, never
 // the legacy integer or a divided total; a legacy line prints as it always
-// did; and a structured invoice refuses a commercial line rather than state it
-// through the integer default.
-import 'package:deskilo/core/jurisdiction/installed_invoice_rules.dart';
+// did.
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/report_data.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
@@ -121,19 +119,5 @@ void main() {
     final unreadable = _commercial('many');
     (unreadable['commercial']! as Map)['version'] = 9;
     expect(_lineOf(_invoice([invoiceLineFromSnapshot(unreadable)]))['qty'], '');
-  });
-
-  test('a structured invoice of a commercial line is refused, not stated by default', () {
-    final invoice = _invoice([invoiceLineFromSnapshot(_commercial('1.5'))]);
-    expect(
-      () => eInvoiceTotalsOf(
-        invoice: invoice,
-        seller: _seller,
-        buyer: _seller,
-        reference: ActiveTaxReference.current,
-        rules: installedNationalInvoiceRules,
-      ),
-      throwsA(isA<CommercialOutputBlocked>()),
-    );
   });
 }

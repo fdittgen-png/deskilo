@@ -428,7 +428,7 @@ constraint document_exchange_rates.document_exchange_rates_workspace_id_fkey FOR
 constraint document_exchange_rates.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint document_exchange_rates.system_company_present CHECK ((company_id IS NOT NULL))
 constraint einvoice_credentials.einvoice_credentials_pkey PRIMARY KEY (workspace_id)
-constraint einvoice_credentials.einvoice_credentials_provider_check CHECK ((provider = ANY (ARRAY['generic'::text, 'peppol'::text, 'fr_pa'::text, 'it_sdi'::text, 'pl_ksef'::text, 'ro_efactura'::text])))
+constraint einvoice_credentials.einvoice_credentials_provider_check CHECK ((provider = ANY (ARRAY['generic'::text, 'peppol'::text, 'fr_pa'::text, 'it_sdi'::text, 'pl_ksef'::text, 'ro_efactura'::text, 'es_verifactu'::text])))
 constraint einvoice_credentials.einvoice_credentials_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint einvoice_credentials.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint einvoice_credentials.system_company_present CHECK ((company_id IS NOT NULL))
@@ -3187,7 +3187,7 @@ routine public.my_workspace_inbox_v1(p_before_at timestamp with time zone, p_bef
 routine public.my_workspace_public_page(p_workspace uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:c02f6d89a75f
 routine public.national_channel_accepted(p_workspace_id uuid, p_country text) -> boolean | function | definer | stable | exec:service_role | body:e34bde1ed90d
 routine public.national_channel_binding(p_workspace_id uuid, p_channel text) -> text | function | definer | stable | exec:service_role | body:eb090529cdbf
-routine public.national_channel_from_transmission() -> trigger | function | definer | volatile | exec:service_role | body:45867485dade
+routine public.national_channel_from_transmission() -> trigger | function | definer | volatile | exec:service_role | body:f2d09592fbbb
 routine public.national_channel_from_verifactu() -> trigger | function | definer | volatile | exec:service_role | body:70ca77cbb29e
 routine public.negotiated_item_price(p_member_id uuid, p_kind text, p_item_id uuid) -> integer | function | definer | stable | exec:authenticated,service_role | body:ec49e4e0e2a2
 routine public.next_document_number(p_workspace_id uuid, p_journal text) -> text | function | definer | volatile | exec:service_role | body:fd6010808751
@@ -3619,7 +3619,7 @@ routine public.set_conversation_prefs(p_conversation_id uuid, p_pinned boolean, 
 routine public.set_deskilo_schema_version(p_version integer) -> void | function | invoker | volatile | exec:service_role | body:264366161abe
 routine public.set_dev_mode(p_workspace_id uuid, p_enabled boolean) -> void | function | definer | volatile | exec:authenticated,service_role | body:b2692f35910c
 routine public.set_dunning_rules(p_workspace_id uuid, p_rules jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:af1c88f3202e
-routine public.set_einvoice_credentials(p_workspace_id uuid, p_config jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:3238682ab266
+routine public.set_einvoice_credentials(p_workspace_id uuid, p_config jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:fb091134afa2
 routine public.set_expense_schedule_supplier(p_schedule_id uuid, p_supplier_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:73819586b316
 routine public.set_expense_schedule_vat(p_schedule_id uuid, p_vat jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:e2971cdc5ddb
 routine public.set_favorite(p_workspace uuid, p_kind text, p_resource uuid, p_on boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:de88f8ec85e3

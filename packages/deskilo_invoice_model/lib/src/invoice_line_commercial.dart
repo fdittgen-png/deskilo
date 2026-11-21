@@ -5,6 +5,7 @@
 // line it is NOT the quantity, so every reader asks here and never prints it.
 import 'commercial_line_snapshot.dart';
 import 'invoice.dart';
+import 'vat_rate.dart';
 
 extension InvoiceLineCommercial on InvoiceLine {
   /// The interpreted facts, or null on a legacy line or one this reader cannot
@@ -32,6 +33,13 @@ extension InvoiceLineCommercial on InvoiceLine {
 }
 
 extension InvoiceLinePrinted on InvoiceLine {
+  /// The tax split of a writer that states an INTEGER quantity (SAF-T): a
+  /// commercial line is refused, never stated through the integer default.
+  ({int netCents, int vatCents}) get splitForIntegerQuantity =>
+      commercial != null
+      ? throw const CommercialOutputBlocked()
+      : vatSplit(amountCents, vatPercent);
+
   /// The quantity a document prints: the exact decimal with its unit, the
   /// legacy integer, or nothing for a line this reader cannot read.
   String get printedQuantity => switch (exactFacts) {

@@ -58,6 +58,25 @@ unknown refusal that carries no backend text), and `bookingErrorText`, in
 presentation, chooses the translated words from that value alone. A timeout or a
 lost answer is not a refusal and stays an unknown outcome under its request id.
 
+**A confirmation acts on the context its data was displayed in (#4157).**
+A booking, check-in, checkout, cancellation, time edit or deletion request is
+confirmed after an await (a sheet, a dialog, a series preview), and the person
+may switch installation, workspace or account meanwhile. The reservation
+confirmations take a `BoundReservation` when they OPEN, before the first await:
+the operation context the data was read under (`WorkspaceContext`) with the
+reservation and event repositories and the recovery of that context. Every
+command re-reads the context after each await and refuses, writing nothing,
+unless `sameOperationAs` holds (identity, installation, workspace, local
+account, epochs, captured business inputs); a missing, signed-out or disposed
+context refuses too, and equal local ids on two installations are two targets.
+Once a command was sent its answer stays with its origin: a late result is not
+shown or refreshed as the new context's. The own-booking sheet returns a closed
+`MySeatAction`, so no unknown choice reaches a command. Evidence:
+`test/features/reservations/application/bound_reservation_test.dart` (the
+permutations) and `bound_confirmation_switch_test.dart` (each real
+confirmation). Not migrated by this slice: the admin-seat, money, profile and
+calendar commands.
+
 **It moves one context at a time, and the ratchet is a count.**
 `test/lint/layering_test.dart` now carries `_repositoryInWidgets`: how
 many widget files in each feature still reach a repository. 66 today.
