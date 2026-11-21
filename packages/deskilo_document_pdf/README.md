@@ -21,4 +21,4 @@ Resolves, analyzes and tests without the app. CI step in
 dart pub get && dart analyze --fatal-infos && dart test
 ```
 
-Host obligations: supply fonts, images, recipient text and, optionally, a markup renderer; a markup element without one reports a diagnostic instead of being dropped.
+Host obligations: supply fonts, images, recipient text and, optionally, a markup renderer; a markup element without one reports a diagnostic instead of being dropped. #4160: `reportBlockWidgets` draws the model's report blocks (images come from the host's map by name; a name it does not hold draws nothing; `maxImageHeight` caps an image in a hard band), and `reportWatermarkForeground` paints the one diagonal word a document wears. Which word is the host's policy (an invoice's proforma/void/copy priority stays in the app); an empty word paints nothing.

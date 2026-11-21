@@ -67,7 +67,7 @@ the CLI `check` measure the PDF.
   design states — `<recipient window="fr"/>`, `<body y="90mm">` —
   rather than something the engine assumes.
 - Two engines draw documents. They share the block renderer
-  (`report_block_widgets.dart`), the ink (`report_style.dart`) and the
+  (`report_block_widgets.dart`, #4160: in `packages/deskilo_document_pdf`, over the blocks of `packages/deskilo_document_model`), the ink (`report_style.dart`) and the
   geometry constants (`address_window.dart`); anything that would make
   a `<markup>` element look different from the same markup in a band is
   a bug, and there is one place to fix it.

@@ -9,12 +9,4 @@ const PdfColor pdfInk = PdfColors.blueGrey900;
 const PdfColor pdfMuted = PdfColors.blueGrey600;
 const PdfColor pdfHairline = PdfColors.blueGrey200;
 
-/// Light grey of the erroneous watermark. Painted at half opacity OVER
-/// the content: as a background it disappeared behind the billed-to card
-/// and the period box, which swallowed half the word. Over white it lands
-/// at the same light grey; over a figure it only greys the stroke, so
-/// every amount stays readable.
-const PdfColor pdfWatermark = PdfColors.grey400;
-
-const double pdfWatermarkOpacity = 0.5;
 const PdfColor pdfZebra = PdfColor.fromInt(0xFFF6F7F9);

@@ -24,7 +24,6 @@ import 'package:pdf/widgets.dart' as pw;
 
 import '../invoice_pdf_template.dart';
 import '../invoice_report.dart';
-import '../report_block_widgets.dart';
 
 export 'package:deskilo_document_pdf/deskilo_document_pdf.dart'
     show layoutImageNames;
@@ -109,7 +108,7 @@ Future<Uint8List> buildLayoutPdf({
   additionalBody: additionalBody,
   lastPage: lastPage,
   markup: (source, images) =>
-      reportBlockWidgets(parseReportMarkup(source), images: images),
+      doc.reportBlockWidgets(parseReportMarkup(source), images: images),
 );
 
 Object? _nonEmpty(Object? v) => v == null || '$v'.isEmpty ? null : v;

@@ -9,14 +9,14 @@
 import 'dart:math' as math;
 import 'dart:typed_data';
 
+import 'package:deskilo_document_model/report_blocks.dart';
+import 'package:deskilo_document_pdf/report_block_widgets.dart';
 import 'package:deskilo_document_pdf/report_flow_page.dart';
 import 'package:deskilo_document_pdf/report_style.dart';
+import 'package:deskilo_document_pdf/report_watermark.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
-import '../../money/domain/invoice_pdf.dart' show watermarkForeground;
-import '../../money/domain/invoice_report.dart';
-import '../../money/domain/report_block_widgets.dart';
 import 'bi_analysis.dart';
 import 'bi_report_content.dart';
 import 'bi_report_definition.dart';
@@ -32,13 +32,13 @@ Future<Uint8List> buildBiReportPdf({
   required List<BiDashboardContent> sections,
   required pw.Font baseFont,
   required pw.Font boldFont,
-  InvoiceReport? report,
+  RenderedReport? report,
   Map<String, Uint8List> images = const {},
   String pageLabel = 'Page',
   String watermark = '',
 }) async {
   final document = pw.Document(title: title);
-  final content = report ?? InvoiceReport(
+  final content = report ?? RenderedReport(
     header: [ReportHeading(title), ReportText(workspaceName),
       ReportMuted('$subtitle · $producedOn')],
     body: const [], footer: const []);
@@ -46,7 +46,7 @@ Future<Uint8List> buildBiReportPdf({
     pageTheme: pw.PageTheme(pageFormat: PdfPageFormat.a4,
         theme: pw.ThemeData.withFont(base: baseFont, bold: boldFont),
         margin: const pw.EdgeInsets.fromLTRB(48, 44, 48, 44),
-        buildForeground: watermarkForeground(watermark)),
+        buildForeground: reportWatermarkForeground(watermark)),
     documentTitle: title, pageLabel: pageLabel,
     firstHeader: (context) => reportBlockWidgets(content.header, images: images),
     continuation: content.continuation.isEmpty ? null :
@@ -379,7 +379,7 @@ Future<Uint8List> buildBiPrintPdf(
   BiPrintDocument doc, {
   required ({pw.Font base, pw.Font bold}) fonts,
   required String pageLabel,
-  InvoiceReport? letterhead,
+  RenderedReport? letterhead,
   Map<String, Uint8List> images = const {},
   String watermark = '',
 }) async {
@@ -394,7 +394,7 @@ Future<Uint8List> buildBiPrintPdf(
         pageFormat: biPrintFormat(doc.style),
         margin: pw.EdgeInsets.all(margin),
         theme: pw.ThemeData.withFont(base: fonts.base, bold: fonts.bold),
-        buildForeground: watermarkForeground(watermark),
+        buildForeground: reportWatermarkForeground(watermark),
       ),
       documentTitle: doc.title,
       pageLabel: pageLabel,
