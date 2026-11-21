@@ -2897,6 +2897,28 @@ Appartiene a più spazi e vuole tutte le Sue fatture, i Suoi pagamenti e i Suoi 
 
 **Vedi anche:** [Le Sue fatture](help:user.money.invoices)
 
+### Le attività a colpo d'occhio
+
+**Destinatari:** Amministratore · Proprietario
+
+Si dirigono o si gestiscono una o più attività e si vuole vedere, da Io, ciò che ciascuna è ancora in credito e ciò che ciascuna deve pagare.
+
+**Passaggi**
+
+1. Aprire [Le mie finanze](app:/money). Se è consentito leggere le finanze di un'attività, un selettore in alto offre **Personale** e **Le mie attività**.
+2. Scegliere **Le mie attività**. Ogni attività ha una scheda con un blocco per valuta: **Da incassare**, **Dichiarato, in attesa di conferma**, **Ricevuto, non ancora abbinato** e **In attesa di approvazione**.
+3. Toccare un importo per vedere le fatture che lo compongono, **Mostra altro** se ce ne sono altre, e toccare una fattura per aprirla nella sua attività.
+4. Sotto **Da pagare**, **Fornitori** e **Spese dovute ai membri** sono elencati a parte; toccarne uno per vedere gli obblighi che lo compongono.
+
+**Da sapere**
+
+- Le valute non vengono mai sommate e nulla viene compensato con ciò che l'attività deve. Un rimborso dovuto ai clienti (**Rimborsi dovuti ai clienti**) è una riga a sé.
+- Un importo da pagare sospeso fa parte di ciò che resta, non si aggiunge.
+- Un'attività che non ha potuto essere letta lo dice, con **Riprovare**; non significa che non sia dovuto nulla. Un'attività di cui non è consentito leggere le finanze non compare.
+- Essere cliente di un'attività non dà accesso ai suoi dati. Aprire una riga porta solo all'attività: ciò che vi si può fare dipende dal ruolo.
+
+**Vedi anche:** [Le finanze in tutti gli spazi](help:user.money.finances)
+
 ### La fatturazione in sintesi
 
 **Destinatari:** Amministratore fatturazione · Proprietario

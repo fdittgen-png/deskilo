@@ -155,6 +155,8 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
     // #2557 C5 — Me › Finances reads the same hosts; the fixture's spaces
     // are the personal home's own, answered by its own read.
     financeHostsFromMe, financeHomeFromMe, demoFinanceCommands(fixture),
+    // #4167 — My businesses names the person's production spaces.
+    businessWorkspacesFromApp,
     // #2552 XPRIV-01 — the persona's mask choice, as the app reads it.
     privateValuesFromAccount,
     // #2575

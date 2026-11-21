@@ -2607,6 +2607,10 @@ routine public.business_kind_setting_check() -> trigger | function | invoker | v
 routine public.business_kinds_profile_check() -> trigger | function | invoker | volatile | exec:service_role | body:ef13acf7a64a
 routine public.business_mail_key_resolved(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:service_role | body:5e0a7e8babe6
 routine public.business_mail_sender_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:7a416bed362a
+routine public.business_payables_page_v1(p_workspace_id uuid, p_currency text, p_creditor_kind text, p_after_created timestamp with time zone, p_after_id uuid, p_limit integer) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:7b7a2823cdb3
+routine public.business_receivable_rows(p_workspace_id uuid) -> TABLE(id uuid, number text, issued_at timestamp with time zone, due_on date, member_id uuid, member_name text, currency text, total_cents bigint, still_due_cents bigint, awaiting_cents bigint, bucket text) | function | definer | stable | exec:service_role | body:1c089d5911b1
+routine public.business_receivables_page_v1(p_workspace_id uuid, p_currency text, p_bucket text, p_after_issued timestamp with time zone, p_after_id uuid, p_limit integer) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:b92c1d4f910a
+routine public.business_receivables_summary_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:108c88dece61
 routine public.buy_package(p_workspace_id uuid, p_package_id uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:d3b206405454
 routine public.calendar_items(p_workspace_id uuid, p_from timestamp with time zone, p_to timestamp with time zone, p_kinds text[], p_member_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:0bb53dbc8a86
 routine public.can_discuss_workspace_application(p_event_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:72a2d4f87c06
@@ -3197,6 +3201,8 @@ routine public.member_profile_projection(p_subject uuid, p_purposes text[], p_vi
 routine public.member_profile_purposes(p_workspace uuid, p_subject uuid) -> text[] | function | definer | stable | exec:service_role | body:60fbc840b60d
 routine public.member_profiles(p_workspace_id uuid, p_user_ids uuid[]) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:d0cab9b779f4
 routine public.member_quota_shortfall(p_member_id uuid, p_at timestamp with time zone) -> integer | function | definer | stable | exec:service_role | body:eb514affa38f
+routine public.member_reimbursements_page_v1(p_workspace_id uuid, p_after_created timestamp with time zone, p_after_id uuid, p_limit integer) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:d93e1d4e432f
+routine public.member_reimbursements_summary_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:97c943a9df62
 routine public.member_return_as_new(p_member uuid) -> void | function | definer | volatile | exec:service_role | body:3c82ec6206d8
 routine public.member_rows_rebalance_credits() -> trigger | function | definer | volatile | exec:service_role | body:ce0cc1f9212d
 routine public.member_share_as_of(p_member_id uuid, p_day date, p_current integer) -> integer | function | definer | stable | exec:service_role | body:6f723e876a8f

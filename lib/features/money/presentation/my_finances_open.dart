@@ -20,13 +20,13 @@ import '../providers/money_face_controller.dart';
 import '../providers/money_focus_controller.dart';
 import 'finance_host_unavailable.dart';
 
-/// Opens [invoiceId] itself, in the Money screen of the space it belongs to
+/// Opens [invoiceId] itself (or, with none, the business), in the Money screen of the space it belongs to
 /// — a development space's invoice opens in that development space.
 Future<void> openMyInvoice(
   BuildContext context,
   WidgetRef ref,
   WorkspaceTarget? target,
-  String invoiceId,
+  String? invoiceId,
   String business,
 ) async {
   final router = GoRouter.of(context);
@@ -54,7 +54,10 @@ Future<void> openMyInvoice(
         retry: () => unawaited(openMyInvoice(context, ref, target, invoiceId, business)));
     return;
   }
-  ref.read(invoiceFocusProvider.notifier).request(target.financeKey, invoiceId);
+  // #4167 — no invoice named: My businesses opens the business itself.
+  if (invoiceId != null) {
+    ref.read(invoiceFocusProvider.notifier).request(target.financeKey, invoiceId);
+  }
   router.go('/money');
 }
 

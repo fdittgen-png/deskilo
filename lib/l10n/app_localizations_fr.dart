@@ -23032,6 +23032,75 @@ class AppLocalizationsFr extends AppLocalizations {
   String get myBadgeTitle => 'Mon badge';
 
   @override
+  String get myBusinessAwaiting => 'En attente d\'approbation';
+
+  @override
+  String get myBusinessDeclared => 'Déclaré, en attente de confirmation';
+
+  @override
+  String get myBusinessDetailEmpty => 'Aucune ligne.';
+
+  @override
+  String get myBusinessDetailRefused => 'Vous ne pouvez pas lire ces lignes.';
+
+  @override
+  String get myBusinessHeld => 'dont en attente';
+
+  @override
+  String myBusinessIssued(String date) {
+    return 'Émise le $date';
+  }
+
+  @override
+  String get myBusinessMemberExpenses => 'Notes de frais dues aux membres';
+
+  @override
+  String get myBusinessNothingOwed => 'Rien n\'est dû à cette activité.';
+
+  @override
+  String get myBusinessOpen => 'Ouvrir les factures de cette activité';
+
+  @override
+  String get myBusinessPayablesRefused =>
+      'Ce que cette activité doit payer ne vous est pas accessible.';
+
+  @override
+  String get myBusinessPayablesUnavailable =>
+      'Ce que cette activité doit payer n\'a pas pu être lu. Cela ne veut pas dire qu\'il n\'y a rien à payer.';
+
+  @override
+  String get myBusinessReceived => 'Reçu, pas encore rapproché';
+
+  @override
+  String get myBusinessRefunds => 'Remboursements dus aux clients';
+
+  @override
+  String get myBusinessRetry => 'Réessayer';
+
+  @override
+  String get myBusinessStillOwed => 'Encore dû';
+
+  @override
+  String get myBusinessSuppliers => 'Fournisseurs';
+
+  @override
+  String get myBusinessToCollect => 'À encaisser';
+
+  @override
+  String get myBusinessUnavailable =>
+      'Cette activité n\'a pas pu être lue. Cela ne veut pas dire que rien n\'est dû.';
+
+  @override
+  String get myBusinessesFaceBusinesses => 'Mes activités';
+
+  @override
+  String get myBusinessesFacePersonal => 'Personnel';
+
+  @override
+  String get myBusinessesIntro =>
+      'Ce que chacune de vos activités doit encore recevoir. Les montants sont tenus par activité et par devise : ils ne sont jamais additionnés ni compensés avec ce que l\'activité doit.';
+
+  @override
   String get myFinancesExport => 'Exporter mes documents';
 
   @override

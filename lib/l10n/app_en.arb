@@ -30013,6 +30013,95 @@
   "@myBadgeTitle": {
     "description": "Shown as a title in my badge tile (workspace)."
   },
+  "myBusinessAwaiting": "Awaiting approval",
+  "@myBusinessAwaiting": {
+    "description": "Me › My businesses: the receivables of each business (#4167)"
+  },
+  "myBusinessDeclared": "Declared, awaiting confirmation",
+  "@myBusinessDeclared": {
+    "description": "Me › My businesses: the receivables of each business (#4167)"
+  },
+  "myBusinessDetailEmpty": "No rows.",
+  "@myBusinessDetailEmpty": {
+    "description": "Me › My businesses: the rows behind a figure (#4167)"
+  },
+  "myBusinessDetailRefused": "You may not read these rows.",
+  "@myBusinessDetailRefused": {
+    "description": "Me › My businesses: the rows behind a figure (#4167)"
+  },
+  "myBusinessHeld": "of which on hold",
+  "@myBusinessHeld": {
+    "description": "Me › My businesses: what a business has to pay (#4167)"
+  },
+  "myBusinessIssued": "Issued {date}",
+  "@myBusinessIssued": {
+    "description": "Me › My businesses: the rows behind a figure (#4167)",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "myBusinessMemberExpenses": "Expenses owed to members",
+  "@myBusinessMemberExpenses": {
+    "description": "Me › My businesses: what a business has to pay (#4167)"
+  },
+  "myBusinessNothingOwed": "Nothing is owed to this business.",
+  "@myBusinessNothingOwed": {
+    "description": "Me › My businesses: the receivables of each business (#4167)"
+  },
+  "myBusinessOpen": "Open the invoices of this business",
+  "@myBusinessOpen": {
+    "description": "Me › My businesses: the receivables of each business (#4167)"
+  },
+  "myBusinessPayablesRefused": "What this business has to pay is not available to you.",
+  "@myBusinessPayablesRefused": {
+    "description": "Me › My businesses: what a business has to pay (#4167)"
+  },
+  "myBusinessPayablesUnavailable": "What this business has to pay could not be read. That is not the same as nothing to pay.",
+  "@myBusinessPayablesUnavailable": {
+    "description": "Me › My businesses: what a business has to pay (#4167)"
+  },
+  "myBusinessReceived": "Received, not yet matched",
+  "@myBusinessReceived": {
+    "description": "Me › My businesses: the receivables of each business (#4167)"
+  },
+  "myBusinessRefunds": "Refunds due to customers",
+  "@myBusinessRefunds": {
+    "description": "Me › My businesses: the receivables of each business (#4167)"
+  },
+  "myBusinessRetry": "Try again",
+  "@myBusinessRetry": {
+    "description": "Me › My businesses: the receivables of each business (#4167)"
+  },
+  "myBusinessStillOwed": "Still owed",
+  "@myBusinessStillOwed": {
+    "description": "Me › My businesses: the receivables of each business (#4167)"
+  },
+  "myBusinessSuppliers": "Suppliers",
+  "@myBusinessSuppliers": {
+    "description": "Me › My businesses: what a business has to pay (#4167)"
+  },
+  "myBusinessToCollect": "To collect",
+  "@myBusinessToCollect": {
+    "description": "Me › My businesses: the receivables of each business (#4167)"
+  },
+  "myBusinessUnavailable": "This business could not be read. That is not the same as nothing being owed.",
+  "@myBusinessUnavailable": {
+    "description": "Me › My businesses: the receivables of each business (#4167)"
+  },
+  "myBusinessesFaceBusinesses": "My businesses",
+  "@myBusinessesFaceBusinesses": {
+    "description": "Me › My businesses: the receivables of each business (#4167)"
+  },
+  "myBusinessesFacePersonal": "Personal",
+  "@myBusinessesFacePersonal": {
+    "description": "Me › My businesses: the receivables of each business (#4167)"
+  },
+  "myBusinessesIntro": "What each of your businesses is still owed. The figures are kept per business and per currency: they are never added together and never set against what the business owes.",
+  "@myBusinessesIntro": {
+    "description": "Me › My businesses: the receivables of each business (#4167)"
+  },
   "myFinancesExport": "Export my documents",
   "@myFinancesExport": {
     "description": "#2557 C3 Me › Finances: the export menu's tooltip."

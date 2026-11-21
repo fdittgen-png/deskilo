@@ -3032,6 +3032,29 @@ Pertenece a varios espacios y quiere ver todas sus facturas, pagos y recordatori
 
 **Véase también:** [Sus facturas](#sus-facturas)
 
+<!-- anchor: user.money.businesses -->
+### Sus negocios de un vistazo
+
+**Público:** Administrador/a · Propietario
+
+Usted dirige o gestiona uno o varios negocios y quiere ver, desde Yo, lo que cada uno tiene aún por cobrar y lo que debe pagar.
+
+**Pasos**
+
+1. Abra [Mis finanzas](https://fdittgen-png.github.io/deskilo/#/money). Si puede leer las finanzas de un negocio, un selector arriba ofrece **Personal** y **Mis negocios**.
+2. Elija **Mis negocios**. Cada negocio tiene una tarjeta con un bloque por moneda: **Por cobrar**, **Declarado, pendiente de confirmación**, **Recibido, aún sin conciliar** y **Pendiente de aprobación**.
+3. Toque una cifra para ver las facturas que la forman, **Mostrar más** si hay más, y toque una factura para abrirla en su negocio.
+4. Bajo **Por pagar**, **Proveedores** y **Gastos debidos a miembros** se listan por separado; toque cualquiera para ver las obligaciones que lo forman.
+
+**Conviene saber**
+
+- Las monedas nunca se suman, y nada se compensa con lo que el negocio debe. Un reembolso debido a clientes (**Reembolsos debidos a clientes**) es una línea aparte.
+- Un importe por pagar retenido forma parte de lo que queda, no se añade.
+- Un negocio que no se pudo leer lo dice, con **Reintentar**; eso no significa que no se deba nada. Un negocio cuyas finanzas no puede leer no aparece.
+- Ser cliente de un negocio no da acceso a sus cifras. Abrir una fila solo le lleva al negocio: lo que puede hacer allí lo decide su rol.
+
+**Véase también:** [Sus finanzas en todos sus espacios](#sus-finanzas-en-todos-sus-espacios)
+
 <!-- anchor: user.money.invoicing -->
 ### La facturación de un vistazo
 
