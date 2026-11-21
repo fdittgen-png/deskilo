@@ -841,5 +841,13 @@
   "featureStandaloneInvoicingDesc": "Invoice a named customer for a completed service or an agreed deliverable today, with itemised lines and explicit dates, and no booking, subscription or month behind it. The server computes every amount; you confirm a preview and issue it. Off: invoices are issued per member and month as before.",
   "@featureStandaloneInvoicingDesc": {
     "description": "#4165 feature switch: featureStandaloneInvoicingDesc"
+  },
+  "featureStockLotsTitle": "Lots and expiry",
+  "@featureStockLotsTitle": {
+    "description": "#4169 the name of the lots and expiry feature"
+  },
+  "featureStockLotsDesc": "Track goods by lot or by expiry date, with a shelf life. Off: no item is tracked by lot, and what was recorded is kept as it is.",
+  "@featureStockLotsDesc": {
+    "description": "#4169 what the lots and expiry feature does, and what off means"
   }
 }

@@ -69,6 +69,8 @@ const Set<WorkspaceFeature> defaultOffFeatures = {
   WorkspaceFeature.invoiceEmail,
   // #3824 — the goods ledger is asked for.
   WorkspaceFeature.stockManagement,
+  // #4169 — lots and expiry are asked for.
+  WorkspaceFeature.stockLots,
   // #4165 — a customer invoice without a member-month is asked for.
   WorkspaceFeature.standaloneInvoicing,
   // #1598 — renaming the gear a member sees is asked for, never
@@ -243,6 +245,7 @@ void main() {
       'kioskEnrolment': true,
       'guestParticipation': true,
       'stockManagement': true,
+      'stockLots': true,
       'standaloneInvoicing': true,
       'billingCustomers': true,
       'customerQuotes': true,

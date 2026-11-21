@@ -113,6 +113,12 @@ const Map<String, ({int allowed, String reason})> classifiedLiterals = {
     reason: 'the FEC journal labels (Ventes, Banque, Achats, Opérations '
         'diverses): statutory French names written into the file',
   ),
+  // #4169 -- the Demo shop's dimension values (Red, Blue): invented stock
+  // data stored as a business keeps it, read back by the same port.
+  'lib/core/demo/data/demo_stock_config_commands.dart': (
+    allowed: 2,
+    reason: 'demo records: the values of the Demo shop\'s Colour dimension',
+  ),
   // #2313 — the demo session's own records: invented data stored as a
   // space would store it (a cleaning contract, its VAT rates, calendar
   // rows), never interface text; a real space's records are not

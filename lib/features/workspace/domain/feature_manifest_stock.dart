@@ -18,4 +18,14 @@ const Map<WorkspaceFeature, FeatureManifestEntry> stockFeatureManifest = {
     requires: WorkspaceFeature.services,
     defaultOn: false,
   ),
+  // #4169 — lots and expiry: an item tracked by lot or by expiry date, with
+  // its shelf life. Asked for, under the goods ledger. Off: no item is
+  // offered a tracking, and what was recorded is kept as it is.
+  WorkspaceFeature.stockLots: FeatureManifestEntry(
+    feature: WorkspaceFeature.stockLots,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.stockManagement,
+    defaultOn: false,
+  ),
 };

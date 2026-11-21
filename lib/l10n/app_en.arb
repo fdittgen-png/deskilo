@@ -16099,6 +16099,14 @@
   "@featureStandaloneInvoicingTitle": {
     "description": "#4165 feature switch: featureStandaloneInvoicingTitle"
   },
+  "featureStockLotsDesc": "Track goods by lot or by expiry date, with a shelf life. Off: no item is tracked by lot, and what was recorded is kept as it is.",
+  "@featureStockLotsDesc": {
+    "description": "#4169 what the lots and expiry feature does, and what off means"
+  },
+  "featureStockLotsTitle": "Lots and expiry",
+  "@featureStockLotsTitle": {
+    "description": "#4169 the name of the lots and expiry feature"
+  },
   "featureStockManagementDesc": "Keep track of goods: where they are, in which unit, from which lot, and every movement between two places. Off: a catalogue item keeps its single shelf count.",
   "@featureStockManagementDesc": {
     "description": "the feature's description on the Features screen (#3824)"
@@ -37112,6 +37120,10 @@
   "@refusalSession": {
     "description": "#1305 Shown when the session expired during an action"
   },
+  "refusalStockConfig": "This stock configuration is not valid: the field it names says why.",
+  "@refusalStockConfig": {
+    "description": "#4169 (0836) DKG11: a stock configuration that is not valid, the field and reason in the detail."
+  },
   "refusalStockHistory": "This item has stock movements, which are kept: it cannot be deleted, and its stock unit and tracking stay as they are. Deactivate it, or create a new item.",
   "@refusalStockHistory": {
     "description": "refusal DKG08 (#3824): deleting an item or a movement the ledger keeps"
@@ -37144,9 +37156,17 @@
   "@refusalStockPage": {
     "description": "#4161 (0833) DKG09: a stock page request that is not valid (size outside 1..200, or a cursor that is not one)."
   },
+  "refusalStockStale": "This was changed by someone else since you opened it. Read it again, then make your change again.",
+  "@refusalStockStale": {
+    "description": "#4169 (0836) DKG10: a stock configuration save of a revision that is no longer current."
+  },
   "refusalStockUnit": "This item has no such unit. Add the unit to the item, or enter the quantity in a unit it lists.",
   "@refusalStockUnit": {
     "description": "refusal DKG02 (#3824)"
+  },
+  "refusalStockVariant": "This item has variants: name which one (colour, size) to move, sell or count. Nothing was changed.",
+  "@refusalStockVariant": {
+    "description": "#4169 (0837) DKG12: an item with variants moved, sold or counted without naming one."
   },
   "refusalVatRateVersioned": "This rate is already on issued invoices, so its percentage stays as it is. Use “Change by law” to set the new value from a date. Nothing was saved.",
   "@refusalVatRateVersioned": {
@@ -44892,6 +44912,163 @@
   "@stockCostUnknown": {
     "description": "#4161 the cost of this movement was never recorded (not zero)"
   },
+  "stockDimensionAdd": "Add a dimension",
+  "@stockDimensionAdd": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockDimensionAddValue": "Add a value",
+  "@stockDimensionAddValue": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockDimensionName": "Name",
+  "@stockDimensionName": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockDimensionValue": "Value",
+  "@stockDimensionValue": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockDimensionsManage": "Manage dimensions",
+  "@stockDimensionsManage": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockDimensionsTitle": "Dimensions",
+  "@stockDimensionsTitle": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditAddCode": "Add a code",
+  "@stockEditAddCode": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditAddUnit": "Add a package unit",
+  "@stockEditAddUnit": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditCode": "Barcode or code",
+  "@stockEditCode": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditCodeGtin": "Barcode (GTIN)",
+  "@stockEditCodeGtin": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditCodeOwn": "Own code",
+  "@stockEditCodeOwn": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditCodeUnit": "Names the package unit",
+  "@stockEditCodeUnit": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditCodesTitle": "Barcodes and codes",
+  "@stockEditCodesTitle": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditDefaultPurchase": "Default for purchases",
+  "@stockEditDefaultPurchase": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditDefaultSale": "Default for sales",
+  "@stockEditDefaultSale": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditFactorDen": "Divided by",
+  "@stockEditFactorDen": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditFactorNum": "Holds",
+  "@stockEditFactorNum": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditInUse": "The first movement fixed the unit and the tracking of this item.",
+  "@stockEditInUse": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditInventoryUnit": "Inventory unit",
+  "@stockEditInventoryUnit": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditInventoryUnitChoice": "Inventory unit",
+  "@stockEditInventoryUnitChoice": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditItem": "Stock settings",
+  "@stockEditItem": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditItemTitle": "Stock settings of {item}",
+  "@stockEditItemTitle": {
+    "placeholders": {
+      "item": {
+        "type": "String"
+      }
+    },
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditNoRight": "Your role may look at the stock but not change it.",
+  "@stockEditNoRight": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditNotSaved": "Nothing was saved. Try again.",
+  "@stockEditNotSaved": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditPurchasable": "Can be bought",
+  "@stockEditPurchasable": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditRemove": "Remove",
+  "@stockEditRemove": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditSave": "Save",
+  "@stockEditSave": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditSellable": "Can be sold",
+  "@stockEditSellable": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditShelfLife": "Shelf life (days)",
+  "@stockEditShelfLife": {
+    "description": "#4169 the stock editors: a label of the lots and expiry tracking"
+  },
+  "stockEditStale": "This changed since you opened it. Close it and open it again.",
+  "@stockEditStale": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditStockable": "Kept in stock",
+  "@stockEditStockable": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditTracking": "Tracking",
+  "@stockEditTracking": {
+    "description": "#4169 the stock editors: a label of the lots and expiry tracking"
+  },
+  "stockEditTrackingExpiry": "By expiry date",
+  "@stockEditTrackingExpiry": {
+    "description": "#4169 the stock editors: a label of the lots and expiry tracking"
+  },
+  "stockEditTrackingLot": "By lot",
+  "@stockEditTrackingLot": {
+    "description": "#4169 the stock editors: a label of the lots and expiry tracking"
+  },
+  "stockEditTrackingNone": "Not tracked",
+  "@stockEditTrackingNone": {
+    "description": "#4169 the stock editors: a label of the lots and expiry tracking"
+  },
+  "stockEditUnitName": "Package unit",
+  "@stockEditUnitName": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditUnitsHint": "A package holds a number of inventory units; a third of a litre is 1 divided by 3.",
+  "@stockEditUnitsHint": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditUnitsTitle": "Package units",
+  "@stockEditUnitsTitle": {
+    "description": "#4169 the stock editors: a label or message"
+  },
   "stockEmpty": "Nothing is in stock yet.",
   "@stockEmpty": {
     "description": "#4161 empty stock, no filter"
@@ -44917,6 +45094,47 @@
   "@stockLotTitle": {
     "description": "#4161 the label of a movement's lot row"
   },
+  "stockMappingAdd": "Add a supplier article",
+  "@stockMappingAdd": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockMappingArticle": "Article reference",
+  "@stockMappingArticle": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockMappingNoVariant": "No variant",
+  "@stockMappingNoVariant": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockMappingNone": "No supplier article is mapped yet.",
+  "@stockMappingNone": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockMappingSupplier": "Supplier of the article",
+  "@stockMappingSupplier": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockMappingUnit": "Purchase unit",
+  "@stockMappingUnit": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockMappingVariant": "Variant",
+  "@stockMappingVariant": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockMappingsEdit": "Supplier articles",
+  "@stockMappingsEdit": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockMappingsTitle": "Supplier articles of {item}",
+  "@stockMappingsTitle": {
+    "description": "#4169 the stock editors: a label or message",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      }
+    }
+  },
   "stockMovementNotFound": "This movement does not exist, or it is not one you may see.",
   "@stockMovementNotFound": {
     "description": "#4161 a movement address that reads as none"
@@ -44932,6 +45150,66 @@
   "stockNoLot": "No lot",
   "@stockNoLot": {
     "description": "#4161 an on-hand row with no lot"
+  },
+  "stockPlaceActive": "In use",
+  "@stockPlaceActive": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockPlaceBarcode": "Barcode",
+  "@stockPlaceBarcode": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockPlaceCode": "Place code",
+  "@stockPlaceCode": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockPlaceEditTitle": "Place",
+  "@stockPlaceEditTitle": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockPlaceKind": "Kind of place",
+  "@stockPlaceKind": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockPlaceKindBin": "Bin",
+  "@stockPlaceKindBin": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockPlaceKindShelf": "Shelf",
+  "@stockPlaceKindShelf": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockPlaceKindWarehouse": "Warehouse",
+  "@stockPlaceKindWarehouse": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockPlaceKindZone": "Zone",
+  "@stockPlaceKindZone": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockPlaceName": "Name",
+  "@stockPlaceName": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockPlaceNoParent": "Nowhere in particular",
+  "@stockPlaceNoParent": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockPlaceParent": "Inside",
+  "@stockPlaceParent": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockPlaceVirtual": "Kept by the system",
+  "@stockPlaceVirtual": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockPlacesAdd": "Add a place",
+  "@stockPlacesAdd": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockPlacesTitle": "Places",
+  "@stockPlacesTitle": {
+    "description": "#4169 the stock editors: a label or message"
   },
   "stockQuantityWithUnit": "{quantity} {unit}",
   "@stockQuantityWithUnit": {
@@ -44949,6 +45227,170 @@
   "@stockReadFailed": {
     "description": "#4161 a stock read failed; never shown as empty"
   },
+  "stockReasonCodeDuplicate": "This code is already used.",
+  "@stockReasonCodeDuplicate": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonCodeMalformed": "This code is empty or too long.",
+  "@stockReasonCodeMalformed": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonCodeUnitRemoved": "A code names this unit: change that code first.",
+  "@stockReasonCodeUnitRemoved": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonCombinationDuplicate": "Two variants have the same combination.",
+  "@stockReasonCombinationDuplicate": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonDefaultPurchaseTwice": "Only one unit can be the default for purchases.",
+  "@stockReasonDefaultPurchaseTwice": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonDefaultSaleTwice": "Only one unit can be the default for sales.",
+  "@stockReasonDefaultSaleTwice": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonDimensionMismatch": "This unit does not measure the same thing as the item.",
+  "@stockReasonDimensionMismatch": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonFactorInvalid": "Both numbers must be whole numbers above zero.",
+  "@stockReasonFactorInvalid": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonGtinCheck": "The check digit of this barcode is wrong.",
+  "@stockReasonGtinCheck": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonGtinLength": "A barcode has 8 to 14 digits.",
+  "@stockReasonGtinLength": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonItemForeign": "This item is not one of this business.",
+  "@stockReasonItemForeign": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonKindUnknown": "This kind is not known.",
+  "@stockReasonKindUnknown": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonLocationCycle": "A place cannot be inside itself.",
+  "@stockReasonLocationCycle": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonLocationDefault": "The main place stays in use.",
+  "@stockReasonLocationDefault": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonLocationHasChildren": "Places inside it are still in use.",
+  "@stockReasonLocationHasChildren": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonLocationOccupied": "There is stock here: move it first.",
+  "@stockReasonLocationOccupied": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonLocationParentForeign": "This place does not belong to this business.",
+  "@stockReasonLocationParentForeign": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonLocationVirtual": "A place kept by the system cannot be used here.",
+  "@stockReasonLocationVirtual": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonMalformed": "This value is not valid for this field.",
+  "@stockReasonMalformed": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonMappingDuplicate": "This supplier article is already mapped.",
+  "@stockReasonMappingDuplicate": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonNameDuplicate": "This name is already used.",
+  "@stockReasonNameDuplicate": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonNameMalformed": "A name has 1 to 60 characters.",
+  "@stockReasonNameMalformed": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonOther": "This is not valid.",
+  "@stockReasonOther": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonOutOfRange": "This number is out of range.",
+  "@stockReasonOutOfRange": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonParentInactive": "The place it is inside is no longer in use.",
+  "@stockReasonParentInactive": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonPriceInvalid": "A price is zero or more.",
+  "@stockReasonPriceInvalid": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonRegistryUnit": "This unit belongs to the system and cannot be redefined.",
+  "@stockReasonRegistryUnit": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonStockOnHand": "There is stock on hand: take it out first.",
+  "@stockReasonStockOnHand": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonStockWithoutVariant": "This item holds stock without a variant: count it out first, then receive it per variant.",
+  "@stockReasonStockWithoutVariant": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonSupplierForeign": "This supplier is not one of this business.",
+  "@stockReasonSupplierForeign": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonTooLong": "This text is too long.",
+  "@stockReasonTooLong": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonTrackingUnsupported": "This tracking is not available.",
+  "@stockReasonTrackingUnsupported": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonUnitDuplicate": "This unit is listed twice.",
+  "@stockReasonUnitDuplicate": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonUnitInUse": "A supplier article names this unit: change that article first.",
+  "@stockReasonUnitInUse": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonUnitNotOfItem": "The item does not list this unit.",
+  "@stockReasonUnitNotOfItem": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonUnitUnknown": "This unit is not known.",
+  "@stockReasonUnitUnknown": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonValueForeign": "This value does not belong to this dimension.",
+  "@stockReasonValueForeign": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonValuesMissing": "Choose a value for at least one dimension.",
+  "@stockReasonValuesMissing": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonVariantHasStock": "This variant has stock: it stays in use.",
+  "@stockReasonVariantHasStock": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonVariantInUse": "Stock or history names this variant: its combination stays as written.",
+  "@stockReasonVariantInUse": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonVariantUnknown": "This variant is not one of this item.",
+  "@stockReasonVariantUnknown": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
   "stockStoredLabel": "Stored",
   "@stockStoredLabel": {
     "description": "#4161 the quantity as stored, in the inventory unit"
@@ -44960,6 +45402,35 @@
   "stockTabOnHand": "On hand",
   "@stockTabOnHand": {
     "description": "#4161 the Stock screen: the tab of what is on hand"
+  },
+  "stockVariantPrice": "Own price (minor units, optional)",
+  "@stockVariantPrice": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockVariantsAdd": "Add a variant",
+  "@stockVariantsAdd": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockVariantsEdit": "Variants",
+  "@stockVariantsEdit": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockVariantsHint": "A variant is one value of each dimension, such as red and size M. Stock is kept per variant.",
+  "@stockVariantsHint": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockVariantsNoDimensions": "Add a dimension, such as colour or size, first.",
+  "@stockVariantsNoDimensions": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockVariantsTitle": "Variants of {item}",
+  "@stockVariantsTitle": {
+    "description": "#4169 the stock editors: a label or message",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      }
+    }
   },
   "stockWhenLabel": "When",
   "@stockWhenLabel": {

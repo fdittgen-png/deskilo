@@ -435,6 +435,12 @@ const List<ExportSource> workspaceExportSources = [
   // #3824 — the goods ledger.
   ExportSource.everyColumn('item_units'),
   ExportSource.everyColumn('item_codes'),
+  // #4169 — the variants and the supplier's article.
+  ExportSource.everyColumn('item_dimensions'),
+  ExportSource.everyColumn('item_dimension_values'),
+  ExportSource.everyColumn('item_variants'),
+  ExportSource.everyColumn('item_variant_values'),
+  ExportSource.everyColumn('supplier_item_mappings'),
   ExportSource.everyColumn('stock_locations'),
   ExportSource.everyColumn('stock_lots'),
   ExportSource.everyColumn('stock_movements'),
