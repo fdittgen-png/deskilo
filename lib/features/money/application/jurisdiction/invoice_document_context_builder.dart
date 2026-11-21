@@ -38,6 +38,11 @@ InvoiceDocumentContext invoiceDocumentContextOf(
   DateTime? correctedIssuedAt,
 }) {
   final invoice = input.invoice;
+  // #4162 — the national profiles state an integer quantity; the exact facts
+  // of a commercial line reach CII and UBL only, so far.
+  if (invoice.lines.any((l) => l.commercial != null)) {
+    throw const CommercialOutputBlocked();
+  }
   final totals = eInvoiceTotalsOf(
     invoice: invoice,
     seller: input.seller,
