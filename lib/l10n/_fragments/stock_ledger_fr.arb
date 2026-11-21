@@ -25,5 +25,9 @@
   "refusalStockLedgerKept": "Le stock de cette entreprise est tenu par son registre : utilisez une opération de stock (transfert, sortie, réception), pas le compteur. Rien n’a été modifié.",
   "@refusalStockLedgerKept": {
     "description": "#4170 (0847) DKG13: a count written from outside the ledger."
+  },
+  "refusalStockOnlyExpired": "Ce qu’il reste au magasin principal a dépassé sa date et n’est jamais vendu. La confirmation a été refusée ; rien n’a été prélevé.",
+  "@refusalStockOnlyExpired": {
+    "description": "#4170 (0847) DKG15: only expired stock is left for a sale."
   }
 }

@@ -16253,6 +16253,10 @@
   "refusalStockMove": "Diese Bewegung kann so nicht gebucht werden: eine Menge über null, ein bekannter Grund und eine bis zweihundert Zeilen, oder dieselbe Anfrage unverändert erneut. Nichts wurde bewegt.",
   "refusalStockNotEnough": "So viel ist an diesem Ort nicht vorhanden. Nichts wurde bewegt.",
   "refusalStockOff": "Die Lagerverwaltung ist in diesem Unternehmen ausgeschaltet. Nichts wurde bewegt.",
+  "refusalStockOnlyExpired": "Was im Hauptlager noch liegt, ist abgelaufen und wird nie verkauft. Die Bestätigung wurde abgelehnt; nichts wurde entnommen.",
+  "@refusalStockOnlyExpired": {
+    "description": "#4170 (0847) DKG15: only expired stock is left for a sale."
+  },
   "refusalStockPage": "Diese Seitenanfrage ist ungültig: Fordern Sie 1 bis 200 Zeilen an und setzen Sie nur an der Position fort, die eine Seite geliefert hat.",
   "refusalStockStale": "Jemand anderes hat dies geändert, seit Sie es geöffnet haben. Lesen Sie es erneut und nehmen Sie Ihre Änderung noch einmal vor.",
   "refusalStockUnit": "Dieser Artikel hat diese Einheit nicht. Fügen Sie die Einheit dem Artikel hinzu oder geben Sie die Menge in einer seiner Einheiten ein.",

@@ -37172,6 +37172,10 @@
   "@refusalStockOff": {
     "description": "refusal DKG01 (#3824)"
   },
+  "refusalStockOnlyExpired": "What is left in the main store is past its date and is never sold. The confirmation was refused; nothing was taken.",
+  "@refusalStockOnlyExpired": {
+    "description": "#4170 (0847) DKG15: only expired stock is left for a sale."
+  },
   "refusalStockPage": "This page request is not valid: ask for 1 to 200 rows, and continue only from the position a page gave.",
   "@refusalStockPage": {
     "description": "#4161 (0833) DKG09: a stock page request that is not valid (size outside 1..200, or a cursor that is not one)."

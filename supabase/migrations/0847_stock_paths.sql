@@ -45,6 +45,8 @@ update public.workspaces w set stock_initialized_at = now()
 
 insert into public.stock_location_kinds (key, virtual, sort_order) values ('in_transit', false, 140)
 on conflict (key) do nothing;
+-- the business's one in-transit place: the system's, never a second one
+create unique index stock_locations_one_transit on public.stock_locations (workspace_id) where kind = 'in_transit';
 
 create or replace function public.stock_initialized(p_workspace_id uuid)
 returns boolean language sql stable security definer set search_path = public as $fn$
@@ -58,13 +60,18 @@ create or replace function public.stock_transit_place(p_workspace_id uuid)
 returns uuid language plpgsql security definer set search_path = public as $fn$
 declare
   v_id uuid;
+  n int;
 begin
   select id into v_id from public.stock_locations where workspace_id = p_workspace_id and kind = 'in_transit';
   if v_id is null then
-    insert into public.stock_locations (workspace_id, kind, code, name)
-    values (p_workspace_id, 'in_transit', 'TRANSIT', 'In transit')
-    on conflict do nothing;
-    select id into v_id from public.stock_locations where workspace_id = p_workspace_id and kind = 'in_transit';
+    -- the code is free to take: a place the business already called TRANSIT stays as it is
+    for n in 0..20 loop
+      insert into public.stock_locations (workspace_id, kind, code, name)
+      values (p_workspace_id, 'in_transit', case when n = 0 then 'TRANSIT' else 'TRANSIT-' || n end, 'In transit')
+      on conflict do nothing;
+      select id into v_id from public.stock_locations where workspace_id = p_workspace_id and kind = 'in_transit';
+      exit when v_id is not null;
+    end loop;
   end if;
   return v_id;
 end;
@@ -161,36 +168,53 @@ $fn$;
 revoke execute on function public.stock_site_of(uuid) from public, anon, authenticated;
 
 -- What a sale confirmed through the legacy bridge takes: from MAIN and the places
--- inside it, place by place, lots soonest-expiry first, exactly. Less than asked
--- is refused (DKG03); only an untracked item, with the business's own setting
--- on, may go below zero at MAIN.
+-- inside it, place by place, lots soonest-expiry first, exactly, NEVER a lot past
+-- its date. Less than asked is refused (DKG03, naming what is there); only
+-- expired stock left is refused as that (DKG15); an item with variants was already
+-- refused by the confirmation itself (0837, DKG12: the sale must name its variant).
+-- Only an untracked item, with the business's own setting on, may go below zero at MAIN.
 create or replace function public.stock_take_in_tree(p_workspace_id uuid, p_item_id uuid, p_root uuid, p_quantity numeric)
 returns table (location_id uuid, lot_id uuid, quantity numeric)
 language plpgsql security definer set search_path = public as $fn$
 declare
   v_left numeric := p_quantity;
   r record;
-  t record;
-  v_avail numeric;
+  b record;
   v_take numeric;
   v_tracked boolean;
+  v_today date := (now() at time zone coalesce(
+    (select nullif(w.timezone, '') from public.workspaces w where w.id = p_workspace_id), 'UTC'))::date;
+  v_expired numeric;
 begin
   for r in select * from public.stock_place_tree(p_workspace_id, p_root) loop
     exit when v_left <= 0;
-    select coalesce(sum(b.quantity), 0) into v_avail from public.stock_balances b
-     where b.item_id = p_item_id and b.location_id = r.id and b.quantity > 0 and b.variant_id is null;
-    v_take := least(v_avail, v_left);
-    if v_take > 0 then
-      for t in select * from public.stock_take(p_workspace_id, p_item_id, r.id, v_take, null) loop
-        location_id := r.id;
-        lot_id := t.lot_id;
-        quantity := t.quantity;
-        return next;
-      end loop;
+    for b in
+      select bal.lot_id as lot, bal.quantity as q
+        from public.stock_balances bal left join public.stock_lots l on l.id = bal.lot_id
+       where bal.workspace_id = p_workspace_id and bal.item_id = p_item_id and bal.location_id = r.id
+         and bal.quantity > 0 and bal.variant_id is null
+         and (l.id is null or l.expires_on is null or l.expires_on >= v_today)
+       order by (bal.lot_id is not null), l.expires_on nulls last, l.created_datetime
+    loop
+      exit when v_left <= 0;
+      v_take := least(b.q, v_left);
+      location_id := r.id;
+      lot_id := b.lot;
+      quantity := v_take;
+      return next;
       v_left := v_left - v_take;
-    end if;
+    end loop;
   end loop;
   if v_left > 0 then
+    select coalesce(sum(bal.quantity), 0) into v_expired
+      from public.stock_balances bal join public.stock_lots l on l.id = bal.lot_id
+     where bal.workspace_id = p_workspace_id and bal.item_id = p_item_id and bal.quantity > 0
+       and bal.variant_id is null and l.expires_on < v_today
+       and bal.location_id in (select t.id from public.stock_place_tree(p_workspace_id, p_root) t);
+    if v_expired > 0 and v_expired >= v_left then
+      raise exception 'what is left in the main store is past its date: % of % are there fit to sell', p_quantity - v_left, p_quantity
+        using errcode = 'DKG15';
+    end if;
     select (s.tracking <> 'none') into v_tracked from public.services s where s.id = p_item_id;
     if coalesce(v_tracked, false)
        or not coalesce((public.setting_value(p_workspace_id, 'stock.allow_negative') #>> '{}')::boolean, false) then
@@ -227,7 +251,9 @@ begin
         end loop;
       end if;$o$,
     $n$      -- exactly what the charge says, from MAIN and the places inside it: less
-      -- there refuses the confirmation (DKG03, naming what is there), never clips
+      -- there refuses the confirmation (DKG03, naming what is there), never clips.
+      -- The item is locked first, as every stock command does (no deadlock with a return)
+      perform 1 from public.services s where s.id = v_service_id for update;
       for t in select * from public.stock_take_in_tree(new.workspace_id, v_service_id, v_main, v_qty) loop
         v_part := v_part + 1;
         perform public.stock_record(new.workspace_id, v_service_id, t.lot_id, t.location_id,
@@ -235,6 +261,20 @@ begin
           'sale', new.actor_member_id, new.id, 1, v_part, jsonb_build_object('event_id', new.id));
       end loop;$n$);
   if v_next is null then raise exception '0847: the anchor of apply_stock_on_confirm was not found' using errcode = 'P0001'; end if;
+  -- once the ledger exists the count is its mirror: with the feature off the bridge
+  -- leaves the count (and the history) alone instead of writing it
+  v_next := pg_temp.anchor_replace(v_next,
+    $o$case when v_ledger then 0 else v_qty end$o$,
+    $n$case when v_ledger or public.stock_initialized(new.workspace_id) then 0 else v_qty end$n$);
+  if v_next is null then raise exception '0847: the anchor of the supply insert was not found' using errcode = 'P0001'; end if;
+  v_next := pg_temp.anchor_replace(v_next,
+    $o$set stock = coalesce(stock, 0) + v_qty,$o$,
+    $n$set stock = case when public.stock_initialized(new.workspace_id) then stock else coalesce(stock, 0) + v_qty end,$n$);
+  if v_next is null then raise exception '0847: the anchor of the supply count was not found' using errcode = 'P0001'; end if;
+  v_next := pg_temp.anchor_replace(v_next,
+    $o$set stock = greatest(0, stock - v_qty)$o$,
+    $n$set stock = case when public.stock_initialized(new.workspace_id) then stock else greatest(0, stock - v_qty) end$n$);
+  if v_next is null then raise exception '0847: the anchor of the charge count was not found' using errcode = 'P0001'; end if;
   execute v_next;
 
   -- once initialized, services.stock is a read-only mirror
@@ -252,6 +292,8 @@ begin
   -- the ledger keeps the stock: a count written from outside it is refused,
   -- whether the feature is on (use a stock command) or off (the history is kept)
   if public.stock_initialized(new.workspace_id) then
+    -- the right is asked before the lifecycle: a person who may not move stock hears that
+    perform public.stock_count_actor(new.workspace_id);
     raise exception 'the stock of this business is kept by its ledger: use a stock command, not the count'
       using errcode = 'DKG13';
   end if;
@@ -259,6 +301,19 @@ begin
     return new;
   end if;$n$);
   if v_next is null then raise exception '0847: the anchor of services_stock_ledger_before was not found' using errcode = 'P0001'; end if;
+  -- a new item cannot bring a count either while the feature is off: no movement would carry it
+  v_next := pg_temp.anchor_replace(v_next,
+    $o$  if tg_op = 'INSERT' then return new; end if;$o$,
+    $n$  if tg_op = 'INSERT' then
+    if coalesce(new.stock, 0) <> 0 and public.stock_initialized(new.workspace_id)
+       and not public.feature_effective(new.workspace_id, 'stockManagement')
+       and coalesce(current_setting('deskilo.stock_count_edit', true), '') <> 'on' then
+      raise exception 'the stock of this business is kept by its ledger: a new item has no count to write'
+        using errcode = 'DKG13';
+    end if;
+    return new;
+  end if;$n$);
+  if v_next is null then raise exception '0847: the anchor of the insert of services_stock_ledger_before was not found' using errcode = 'P0001'; end if;
   execute v_next;
 
   -- the negative policy: only an untracked item at a place, never a lot
@@ -387,6 +442,10 @@ declare
   v_fv boolean;
   v_tv boolean;
 begin
+  -- taking goods out for use or as a loss is its own feature, by whichever door it comes
+  if p_reason in ('consumption', 'loss') and not public.feature_effective(p_workspace_id, 'stockTakeOut') then
+    raise exception 'taking goods out is off in this business' using errcode = 'DKG01';
+  end if;
   -- every item locked first, in id order: opposing requests cannot deadlock
   for e in select value from jsonb_array_elements(p_lines) loop
     v_no := v_no + 1;
@@ -494,7 +553,8 @@ begin
       raise exception 'line %: this item is tracked by lot', v_no using errcode = 'DKG06';
     end if;
     v_ack := coalesce((e ->> 'expired_ack')::boolean, false);
-    if v_lot is not null and not v_fv and p_reason <> 'loss' and not v_ack
+    -- receiving what was loaded never asks again: it left the source with its own acknowledgement
+    if v_lot is not null and not v_fv and p_reason <> 'loss' and not v_ack and p_mode <> 'transfer_receive'
        and public.stock_lot_expired(v_lot, v_today) then
       perform public.stock_config_refuse(format('lines[%s].lot_id', v_no - 1), 'lot_expired');
     end if;
@@ -503,7 +563,8 @@ begin
     if v_lot is null and not v_fv then
       for t in select * from public.stock_take(p_workspace_id, v_item.id, v_from.id, v_qty, v_var) loop
         v_part := v_part + 1;
-        if t.lot_id is not null and p_reason <> 'loss' and not v_ack and public.stock_lot_expired(t.lot_id, v_today) then
+        if t.lot_id is not null and p_reason <> 'loss' and not v_ack and p_mode <> 'transfer_receive'
+           and public.stock_lot_expired(t.lot_id, v_today) then
           perform public.stock_config_refuse(format('lines[%s].lot_id', v_no - 1), 'lot_expired');
         end if;
         v_id := public.stock_record(p_workspace_id, v_item.id, t.lot_id, v_from.id, v_to.id, t.quantity,
@@ -536,6 +597,10 @@ declare
   v_links jsonb := coalesce(p_links, '{}'::jsonb);
   v_out jsonb;
 begin
+  -- a delegated (assistant) session never moves stock, as the typed commands refuse it
+  if auth.uid() is null or public.mcp_is_delegated() then
+    raise exception 'not allowed to move stock' using errcode = 'DKN01';
+  end if;
   select id into v_me from public.members
    where workspace_id = p_workspace_id and user_id = auth.uid() and status = 'active';
   if v_me is null or not public.has_permission(p_workspace_id, 'manageStock') then
@@ -701,6 +766,10 @@ begin
     perform public.stock_config_refuse('lines', 'one_source');
   end if;
   select nullif(p_lines -> 0 ->> 'from', '')::uuid into v_from;
+  -- two steps are for goods that change site: inside one site a transfer is one step
+  if public.stock_site_of(p_to_location_id) is not distinct from public.stock_site_of(v_from) then
+    perform public.stock_config_refuse('to_location_id', 'same_site');
+  end if;
   select jsonb_agg(l || jsonb_build_object('to', v_transit)) into v_lines from jsonb_array_elements(p_lines) l;
   v_moves := public.stock_apply_lines(p_workspace_id, v_me, p_request_id, v_lines, 'transfer', now(), '{}'::jsonb, 'transfer_load');
   insert into public.stock_transfers (workspace_id, from_location_id, to_location_id, request_id, loaded_by)
@@ -838,9 +907,16 @@ declare
   v public.purchase_requests;
 begin
   perform public.stock_ops_actor(p_workspace_id);
+  -- only the stock commands of this family, and only the caller's own request
   select * into v from public.purchase_requests
-   where workspace_id = p_workspace_id and request_id = p_request_id and operation like 'stock\_%';
+   where workspace_id = p_workspace_id and request_id = p_request_id
+     and operation in ('stock_transfer', 'stock_transfer_load', 'stock_transfer_receive', 'stock_consumption', 'stock_loss')
+     and created_by_user = auth.uid();
   if v.id is null then return null; end if;
+  -- the feature and right the command itself asks for
+  if v.operation in ('stock_consumption', 'stock_loss') and not public.feature_effective(p_workspace_id, 'stockTakeOut') then
+    raise exception 'taking goods out is off in this business' using errcode = 'DKG01';
+  end if;
   return jsonb_build_object('operation', v.operation, 'result', v.result);
 end;
 $fn$;
@@ -922,5 +998,36 @@ end;
 $fn$;
 revoke execute on function public.export_workspace_records(uuid) from public, anon;
 grant execute on function public.export_workspace_records(uuid) to authenticated;
+
+
+-- ── the in-transit place is the system's: no second one, no edit, no put-away into it ──
+do $transit$
+declare
+  v_def text;
+  v_next text;
+begin
+  v_def := pg_get_functiondef('public.save_stock_location_v1(uuid, uuid, int, uuid, jsonb)'::regprocedure);
+  v_next := pg_temp.anchor_replace(v_def,
+    $o$    if exists (select 1 from public.stock_location_kinds k where k.key = v_old.kind and k.virtual) then
+      perform public.stock_config_refuse('place', 'location_virtual');$o$,
+    $n$    if v_old.kind = 'in_transit' or exists (select 1 from public.stock_location_kinds k where k.key = v_old.kind and k.virtual) then
+      perform public.stock_config_refuse('place', 'location_virtual');$n$);
+  if v_next is null then raise exception '0847: the anchor of save_stock_location_v1 (place) was not found' using errcode = 'P0001'; end if;
+  v_next := pg_temp.anchor_replace(v_next,
+    $o$  if exists (select 1 from public.stock_location_kinds k where k.key = v_kind and k.virtual) then
+    perform public.stock_config_refuse('kind', 'location_virtual');$o$,
+    $n$  if v_kind = 'in_transit' or exists (select 1 from public.stock_location_kinds k where k.key = v_kind and k.virtual) then
+    perform public.stock_config_refuse('kind', 'location_virtual');$n$);
+  if v_next is null then raise exception '0847: the anchor of save_stock_location_v1 (kind) was not found' using errcode = 'P0001'; end if;
+  execute v_next;
+
+  v_def := pg_get_functiondef('public.stock_put_away_apply(uuid, uuid, uuid, uuid, jsonb)'::regprocedure);
+  v_next := pg_temp.anchor_replace(v_def,
+    $o$l.active and not public.stock_place_is_virtual(l.id)) then$o$,
+    $n$l.active and not public.stock_place_is_virtual(l.id) and l.kind <> 'in_transit') then$n$);
+  if v_next is null then raise exception '0847: the anchor of stock_put_away_apply was not found' using errcode = 'P0001'; end if;
+  execute v_next;
+end
+$transit$;
 
 select public.set_deskilo_schema_version(847);

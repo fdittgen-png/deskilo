@@ -81,7 +81,7 @@ insert into public.services (id, workspace_id, name, price_cents, active, stock,
   (pg_temp.u(302), pg_temp.u(101), 'Wine', 500, true, null, 'l', 'none', true),
   (pg_temp.u(303), pg_temp.u(102), 'Tea', 200, true, null, 'piece', 'none', true),
   (pg_temp.u(304), pg_temp.u(103), 'Rice', 200, true, null, 'kg', 'none', true);
-update public.workspaces set feature_flags = '{"stockManagement": true}' where id = pg_temp.u(101);
+update public.workspaces set feature_flags = '{"stockManagement": true, "stockTakeOut": true}' where id = pg_temp.u(101);
 update public.workspaces set feature_flags = '{"stockManagement": true}' where id = pg_temp.u(102);
 
 -- Units are exact and per item.

@@ -98,7 +98,7 @@ insert into public.item_units (workspace_id, item_id, unit, factor_num, factor_d
   (pg_temp.u(101), pg_temp.u(302), 'glass', 1, 5, false, true);
 
 -- The feature is switched on: A's places and the opening of its count.
-update public.workspaces set feature_flags = feature_flags || '{"stockManagement": true}' where id = pg_temp.u(101);
+update public.workspaces set feature_flags = feature_flags || '{"stockManagement": true, "stockTakeOut": true}' where id = pg_temp.u(101);
 insert into public.stock_locations (workspace_id, kind, code, parent_id)
 values (pg_temp.u(101), 'shelf', 'SHELF-A', pg_temp.loc(101, 'MAIN'));
 
@@ -183,7 +183,7 @@ select ok(pg_temp.move(513, jsonb_build_array(pg_temp.line(301, 1, 'MAIN', 'SHEL
 
 select is(left(pg_temp.run_as(pg_temp.u(2), format('update public.services set stock = 99 where id = %L returning stock::text', pg_temp.u(301))), 9)
           || ' ' || (select stock from public.services where id = pg_temp.u(301))::text,
-  'ERR DKG13 26', 'a member who edits the catalogue cannot change a count either: the ledger keeps it (#4170)');
+  'ERR DKN01 26', 'a member who edits the catalogue but may not move stock cannot change a count');
 select is(pg_temp.refusal(format($q$update public.services set inventory_unit = 'kg' where id = %L$q$, pg_temp.u(301)))
           || ' ' || pg_temp.refusal(format($q$update public.services set tracking = 'lot' where id = %L$q$, pg_temp.u(301))),
   'DKG08 DKG08', 'an item with movements keeps the unit and the tracking its history was written in');
