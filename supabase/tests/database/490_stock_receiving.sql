@@ -9,7 +9,7 @@
 -- the put-away, receipts and allocations are insert-only, and only a buyer who manages
 -- the stock (not a delegated session) writes. Rolled back.
 begin;
-select plan(42);
+select plan(54);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -102,6 +102,8 @@ insert into public.purchase_orders (id, workspace_id, year, number, supplier_id,
   (pg_temp.u(502), pg_temp.u(101), 2026, 2, pg_temp.u(401), 'draft', 'EUR', pg_temp.u(201)),
   (pg_temp.u(504), pg_temp.u(101), 2026, 3, pg_temp.u(401), 'draft', 'EUR', pg_temp.u(201)),
   (pg_temp.u(505), pg_temp.u(101), 2026, 4, pg_temp.u(401), 'draft', 'USD', pg_temp.u(201)),
+  (pg_temp.u(506), pg_temp.u(101), 2026, 5, pg_temp.u(401), 'draft', 'JPY', pg_temp.u(201)),
+  (pg_temp.u(507), pg_temp.u(101), 2026, 6, pg_temp.u(401), 'draft', 'EUR', pg_temp.u(201)),
   (pg_temp.u(503), pg_temp.u(102), 2026, 1, pg_temp.u(402), 'draft', 'EUR', pg_temp.u(204));
 insert into public.purchase_order_lines (workspace_id, order_id, line_no, service_id, description, quantity, unit, unit_price_cents) values
   (pg_temp.u(101), pg_temp.u(501), 1, pg_temp.u(301), '', 2, 'carton', 1200),
@@ -114,6 +116,8 @@ insert into public.purchase_order_lines (workspace_id, order_id, line_no, servic
   (pg_temp.u(101), pg_temp.u(504), 1, pg_temp.u(302), '', 5, 'piece', 80),
   (pg_temp.u(101), pg_temp.u(504), 2, pg_temp.u(304), '', 4, 'piece', 50),
   (pg_temp.u(101), pg_temp.u(505), 1, pg_temp.u(304), '', 2, 'piece', 50),
+  (pg_temp.u(101), pg_temp.u(506), 1, pg_temp.u(304), '', 1, 'piece', 1000),
+  (pg_temp.u(101), pg_temp.u(507), 1, pg_temp.u(304), '', 1, 'piece', 50),
   (pg_temp.u(102), pg_temp.u(503), 1, pg_temp.u(306), '', 1, 'piece', 100);
 update public.purchase_orders set state = 'sent', sent_at = now(), sent_via = 'print' where workspace_id in (pg_temp.u(101), pg_temp.u(102));
 select set_config('t.main', pg_temp.loc('MAIN')::text, false);
@@ -200,6 +204,41 @@ select is((select cost_state || ':' || total_cost_minor::text || ':' || cost_sou
   'known:200:order_price', 'and is the line price times the quantity, labelled as the order price');
 select is(pg_temp.combined(1, 726, 505, '[{"line_no": 1, "quantity": 2}]', '[' || pg_temp.alloc(1, 2, current_setting('t.main'), ', "cost": {"state": "order_price"}') || ']'),
   'ERR DKG11 {"field": "allocations[0].cost", "reason": "cost_rate_missing"}', 'an order price in another currency needs its rate');
+
+-- An entry naming a receipt line AND a line number that disagree is refused, and the lines are read once, by id.
+select is(pg_temp.putaway(1, 761, current_setting('t.receipt')::uuid, format('[{"receipt_line_id": "%s", "line_no": 2, "quantity": 1, "location_id": "%s"}]',
+            (select rl.id from public.purchase_order_receipt_lines rl join public.purchase_order_lines ol on ol.id = rl.order_line_id where rl.receipt_id = current_setting('t.receipt')::uuid and ol.line_no = 1), current_setting('t.main'))),
+  'ERR DKG11 {"field": "allocations[0].line", "reason": "line_conflict"}', 'a receipt line id and a line number that disagree are refused');
+
+-- A malformed quantity, rate or id is a refusal of its field, never a raw cast error.
+select is(pg_temp.putaway(1, 762, current_setting('t.receipt')::uuid, format('[{"line_no": 2, "quantity": "abc", "location_id": "%s"}]', current_setting('t.main'))),
+  'ERR DKG11 {"field": "allocations[0].quantity", "reason": "quantity_invalid"}', 'a quantity that is not a number is refused under its field');
+select is(pg_temp.combined(1, 763, 507, '[{"line_no": 1, "quantity": 1}]', format('[{"line_no": 1, "quantity": 1, "location_id": "%s", "cost": {"state": "known", "total_cost_minor": 5, "source_currency": "USD", "source_rate": 0}}]', current_setting('t.main'))),
+  'ERR DKG11 {"field": "allocations[0].cost", "reason": "cost_invalid"}', 'a rate of zero or below is refused as an invalid cost');
+select is(pg_temp.combined(1, 764, 507, '[{"line_no": 1, "quantity": 1}]', '[{"line_no": 1, "quantity": 1, "location_id": "not-a-uuid"}]'),
+  'ERR DKG11 {"field": "allocations[0].location_id", "reason": "location_foreign"}', 'a place id that is not a uuid is refused under its field');
+
+-- The inventory quantity is computed from the very factor that is stored.
+select is((select bool_and(inventory_quantity = round(entered_quantity * factor_num::numeric / factor_den, 6)) from public.stock_receipt_allocations)::text, 'true',
+  'every allocation''s inventory quantity is its entered quantity times its stored factor');
+
+-- The order price follows each currency''s own minor digits; a rate is never for the business''s own currency.
+select is((pg_temp.combined(1, 771, 505, '[{"line_no": 1, "quantity": 2}]', '[' || pg_temp.alloc(1, 2, current_setting('t.main'), ', "cost": {"state": "order_price", "source_rate": 0.9}') || ']')::jsonb -> 'allocations' -> 0 ->> 'entered_quantity'), '2',
+  'the order price of an order in dollars is converted by its rate');
+select is((select cost_state || ':' || total_cost_minor::text || ':' || source_currency || ':' || source_rate::text from public.stock_lots where cost_source = 'order_price' and source_currency = 'USD'),
+  'known:90:USD:0.9', '50 cents times 2 at 0.9 is 90 euro cents');
+select is((pg_temp.combined(1, 772, 506, '[{"line_no": 1, "quantity": 1}]', '[' || pg_temp.alloc(1, 1, current_setting('t.main'), ', "cost": {"state": "order_price", "source_rate": 0.0065}') || ']')::jsonb -> 'allocations' -> 0 ->> 'entered_quantity'), '1',
+  'the order price of an order in yen is converted');
+select is((select total_cost_minor::text from public.stock_lots where cost_source = 'order_price' and source_currency = 'JPY'), '650',
+  '1000 yen (no minor digits) at 0.0065 euro per yen is 650 euro cents (two minor digits)');
+select is(pg_temp.combined(1, 773, 507, '[{"line_no": 1, "quantity": 1}]', '[' || pg_temp.alloc(1, 1, current_setting('t.main'), ', "cost": {"state": "order_price", "source_rate": 0.9}') || ']'),
+  'ERR DKG11 {"field": "allocations[0].cost", "reason": "cost_invalid"}', 'a rate given for an order in the business''s own currency is refused');
+
+-- The lot of a trace: an unknown cost is null, never 0.
+select is((pg_temp.run_as(pg_temp.u(1), format('select (public.stock_movement_trace_v1(%L, %L) -> ''lot'' -> ''total_cost_minor'')::text', pg_temp.u(101),
+            (select id from public.stock_movements where item_id = pg_temp.u(302) limit 1)))), 'null', 'the trace shows the cost of an unknown-cost lot as null');
+select is((pg_temp.run_as(pg_temp.u(1), format('select (public.stock_movement_trace_v1(%L, %L) -> ''lot'' -> ''total_cost_minor'')::text', pg_temp.u(101),
+            (select m.id from public.stock_movements m join public.stock_lots l on l.id = m.lot_id where m.item_id = pg_temp.u(301) and l.cost_state = 'known' limit 1)))), '2400', 'and the cost of a known lot as it is');
 
 -- Variants: red and blue are separate stock; none, or a stranger, is refused; a failure rolls the delivery back.
 select is(pg_temp.combined(1, 731, 501, '[{"line_no": 6, "quantity": 6}]', '[' || pg_temp.alloc(6, 6, current_setting('t.main')) || ']'),

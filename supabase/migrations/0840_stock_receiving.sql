@@ -94,6 +94,21 @@ begin
 end
 $patch$;
 
+-- The lot a trace shows: the cost of an unknown-cost lot is null, never 0.
+do $trace$
+declare
+  v_def text := pg_get_functiondef('public.stock_movement_trace_v1(uuid, uuid)'::regprocedure);
+  v_next text;
+begin
+  v_next := pg_temp.anchor_replace(v_def,
+    $o$(select to_jsonb(l) - public.system_column_names() - v_lot_hide from public.stock_lots l where l.id = m.lot_id)$o$,
+    $n$(select (to_jsonb(l) || case when l.cost_state = 'unknown' then jsonb_build_object('total_cost_minor', null) else '{}'::jsonb end)
+                - public.system_column_names() - v_lot_hide from public.stock_lots l where l.id = m.lot_id)$n$);
+  if v_next is null then raise exception '0840: the anchor of stock_movement_trace_v1 was not found' using errcode = 'P0001'; end if;
+  execute v_next;
+end
+$trace$;
+
 -- ── what was put away: insert-only ──────────────────────────────────────
 create table public.stock_receipt_allocations (
   id uuid primary key default gen_random_uuid(),
@@ -238,6 +253,9 @@ declare
   v_key text;
   v_plan jsonb := '[]'::jsonb;
   v_ids uuid[] := array[]::uuid[];
+  v_resolved uuid[] := array[]::uuid[];
+  v_r1 uuid;
+  v_r2 uuid;
   v_running jsonb := '{}'::jsonb;
   v_have numeric;
   v_expires date;
@@ -268,29 +286,43 @@ begin
   select coalesce(s.name, '') into v_supplier from public.suppliers s where s.id = v_order.supplier_id;
   select currency_code into v_wscur from public.workspaces where id = p_workspace_id;
 
-  -- the receipt lines this command touches, locked in one order
+  -- the receipt lines this command touches, resolved once and locked in one order
   for e in select value from jsonb_array_elements(p_allocations) loop
     i := i + 1;
-    select rl.id into v_rl.id from public.purchase_order_receipt_lines rl
-      join public.purchase_order_lines ol on ol.id = rl.order_line_id
-     where rl.receipt_id = p_receipt_id and rl.workspace_id = p_workspace_id
-       and ((e ? 'receipt_line_id' and rl.id = nullif(e ->> 'receipt_line_id', '')::uuid)
-         or (e ? 'line_no' and ol.line_no = nullif(e ->> 'line_no', '')::int));
-    if v_rl.id is null then
+    if jsonb_typeof(e) <> 'object' then
+      perform public.stock_config_refuse(format('allocations[%s]', i - 1), 'malformed');
+    end if;
+    if (e ? 'receipt_line_id' and (e ->> 'receipt_line_id') !~ '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$')
+       or (e ? 'line_no' and (e ->> 'line_no') !~ '^[0-9]{1,4}$') then
+      perform public.stock_config_refuse(format('allocations[%s].line', i - 1), 'malformed');
+    end if;
+    v_r1 := null; v_r2 := null;
+    if e ? 'receipt_line_id' then
+      select rl.id into v_r1 from public.purchase_order_receipt_lines rl
+       where rl.receipt_id = p_receipt_id and rl.workspace_id = p_workspace_id
+         and rl.id = (e ->> 'receipt_line_id')::uuid;
+    end if;
+    if e ? 'line_no' then
+      select rl.id into v_r2 from public.purchase_order_receipt_lines rl
+        join public.purchase_order_lines ol on ol.id = rl.order_line_id
+       where rl.receipt_id = p_receipt_id and rl.workspace_id = p_workspace_id
+         and ol.line_no = (e ->> 'line_no')::int;
+    end if;
+    if e ? 'receipt_line_id' and e ? 'line_no' and v_r1 is distinct from v_r2 then
+      perform public.stock_config_refuse(format('allocations[%s].line', i - 1), 'line_conflict');
+    end if;
+    if coalesce(v_r1, v_r2) is null then
       perform public.stock_config_refuse(format('allocations[%s].line', i - 1), 'line_unknown');
     end if;
-    v_ids := v_ids || v_rl.id;
+    v_resolved := v_resolved || coalesce(v_r1, v_r2);
+    v_ids := v_ids || coalesce(v_r1, v_r2);
   end loop;
   perform 1 from public.purchase_order_receipt_lines where id = any (v_ids) order by id for update;
 
   i := 0;
   for e in select value from jsonb_array_elements(p_allocations) loop
     i := i + 1;
-    select rl.* into v_rl from public.purchase_order_receipt_lines rl
-      join public.purchase_order_lines ol on ol.id = rl.order_line_id
-     where rl.receipt_id = p_receipt_id
-       and ((e ? 'receipt_line_id' and rl.id = nullif(e ->> 'receipt_line_id', '')::uuid)
-         or (e ? 'line_no' and ol.line_no = nullif(e ->> 'line_no', '')::int));
+    select rl.* into v_rl from public.purchase_order_receipt_lines rl where rl.id = v_resolved[i];
     select * into v_ol from public.purchase_order_lines where id = v_rl.order_line_id;
     select * into v_item from public.services
      where id = v_ol.service_id and workspace_id = p_workspace_id and stockable;
@@ -305,8 +337,11 @@ begin
     exception when others then
       perform public.stock_config_refuse(format('allocations[%s].line', i - 1), 'unit_unmapped');
     end;
-    v_entered := nullif(e ->> 'quantity', '')::numeric;
-    if v_entered is null or v_entered <= 0 or round(v_entered, 6) <> v_entered then
+    if coalesce(e ->> 'quantity', '') !~ '^[0-9]{1,12}(\.[0-9]{1,6})?$' then
+      perform public.stock_config_refuse(format('allocations[%s].quantity', i - 1), 'quantity_invalid');
+    end if;
+    v_entered := (e ->> 'quantity')::numeric;
+    if v_entered <= 0 then
       perform public.stock_config_refuse(format('allocations[%s].quantity', i - 1), 'quantity_invalid');
     end if;
     v_have := coalesce((select sum(a.entered_quantity) from public.stock_receipt_allocations a
@@ -316,11 +351,15 @@ begin
       perform public.stock_config_refuse(format('allocations[%s].quantity', i - 1), 'over_allocated');
     end if;
     v_running := v_running || jsonb_build_object(v_rl.id::text, coalesce((v_running ->> v_rl.id::text)::numeric, 0) + v_entered);
-    v_inv := round(public.stock_to_inventory(v_item.id, v_unit, v_entered), 6);
+    -- from the same factor that is frozen with the allocation
+    v_inv := round(v_entered * v_fac.num / v_fac.den, 6);
     if v_inv <= 0 then
       perform public.stock_config_refuse(format('allocations[%s].quantity', i - 1), 'quantity_invalid');
     end if;
 
+    if nullif(e ->> 'variant_id', '') is not null and (e ->> 'variant_id') !~ '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$' then
+      perform public.stock_config_refuse(format('allocations[%s].variant_id', i - 1), 'variant_unknown');
+    end if;
     v_var := nullif(e ->> 'variant_id', '')::uuid;
     if v_var is not null and not exists (select 1 from public.item_variants x
          where x.id = v_var and x.item_id = v_item.id and x.workspace_id = p_workspace_id and x.active) then
@@ -329,7 +368,7 @@ begin
     if v_var is null and exists (select 1 from public.item_variants x where x.item_id = v_item.id and x.active) then
       perform public.stock_config_refuse(format('allocations[%s].variant_id', i - 1), 'variant_required');
     end if;
-    v_loc := nullif(e ->> 'location_id', '')::uuid;
+    v_loc := case when (e ->> 'location_id') ~ '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$' then (e ->> 'location_id')::uuid end;
     if v_loc is null or not exists (select 1 from public.stock_locations l
          where l.id = v_loc and l.workspace_id = p_workspace_id and l.active and not public.stock_place_is_virtual(l.id)) then
       perform public.stock_config_refuse(format('allocations[%s].location_id', i - 1), 'location_foreign');
@@ -339,6 +378,9 @@ begin
     v_key := v_rl.id::text || '|' || coalesce(v_var::text, '') || '|' || v_group;
     v_lot_meta := coalesce(e -> 'lot', '{}'::jsonb);
     v_cost := coalesce(e -> 'cost', '{"state": "unknown"}'::jsonb);
+    if jsonb_typeof(v_lot_meta) <> 'object' or jsonb_typeof(v_cost) <> 'object' then
+      perform public.stock_config_refuse(format('allocations[%s].cost', i - 1), 'cost_invalid');
+    end if;
     if v_groups ? v_key then
       -- later members of a group may repeat the first's lot and cost, or omit them
       v_first := v_groups -> v_key;
@@ -368,19 +410,27 @@ begin
         perform public.stock_config_refuse(format('allocations[%s].cost', i - 1), 'cost_invalid');
       end if;
       if v_state = 'known' then
-        if nullif(v_cost ->> 'total_cost_minor', '') is null
-           or (v_cost ->> 'total_cost_minor') !~ '^[0-9]{1,15}$' then
+        if coalesce(v_cost ->> 'total_cost_minor', '') !~ '^[0-9]{1,15}$' then
           perform public.stock_config_refuse(format('allocations[%s].cost', i - 1), 'cost_invalid');
         end if;
         if (nullif(v_cost ->> 'source_currency', '') is null) <> (nullif(v_cost ->> 'source_rate', '') is null)
-           or (v_cost ->> 'source_currency') !~ '^([A-Z]{3})?$'
-           or (nullif(v_cost ->> 'source_rate', '') is not null and (v_cost ->> 'source_rate')::numeric <= 0) then
+           or (nullif(v_cost ->> 'source_currency', '') is not null and (v_cost ->> 'source_currency') !~ '^[A-Z]{3}$')
+           or (nullif(v_cost ->> 'source_rate', '') is not null
+               and ((v_cost ->> 'source_rate') !~ '^[0-9]{1,6}(\.[0-9]{1,10})?$' or (v_cost ->> 'source_rate')::numeric <= 0)) then
           perform public.stock_config_refuse(format('allocations[%s].cost', i - 1), 'cost_invalid');
         end if;
       end if;
-      if v_state = 'order_price' and v_order.currency <> v_wscur
-         and nullif(v_cost ->> 'source_rate', '') is null then
-        perform public.stock_config_refuse(format('allocations[%s].cost', i - 1), 'cost_rate_missing');
+      if v_state = 'order_price' then
+        -- a rate is for an order in another currency: never for the business's own
+        if nullif(v_cost ->> 'source_rate', '') is not null
+           and (v_order.currency = v_wscur
+                or (v_cost ->> 'source_rate') !~ '^[0-9]{1,6}(\.[0-9]{1,10})?$'
+                or (v_cost ->> 'source_rate')::numeric <= 0) then
+          perform public.stock_config_refuse(format('allocations[%s].cost', i - 1), 'cost_invalid');
+        end if;
+        if v_order.currency <> v_wscur and nullif(v_cost ->> 'source_rate', '') is null then
+          perform public.stock_config_refuse(format('allocations[%s].cost', i - 1), 'cost_rate_missing');
+        end if;
       end if;
       v_groups := v_groups || jsonb_build_object(v_key, jsonb_build_object('lot', v_lot_meta, 'cost', v_cost));
     end if;
@@ -408,8 +458,11 @@ begin
       v_src := 'entered';
     elsif v_state = 'order_price' then
       v_rate := case when v_order.currency <> v_wscur then (v_cost ->> 'source_rate')::numeric end;
+      -- the line price is in the order currency's minor units: the cost is in the business's,
+      -- by the rate between the currencies' major units and each one's own number of minor digits
       v_total := round((select min((x ->> 'unit_price_cents')::numeric) from jsonb_array_elements(v_plan) x where x ->> 'key' = g.key)
-                       * v_gentered * coalesce(v_rate, 1));
+                       * v_gentered * coalesce(v_rate, 1)
+                       * power(10::numeric, public.currency_minor_digits(v_wscur) - public.currency_minor_digits(v_order.currency)));
       v_cur := case when v_order.currency <> v_wscur then v_order.currency end;
       v_src := 'order_price';
     else
