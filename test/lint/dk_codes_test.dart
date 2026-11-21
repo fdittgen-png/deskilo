@@ -12,6 +12,10 @@ import 'lint_sources.dart';
 /// Codes the app does not read, each with its reason. A name here must be
 /// raised by some migration and read by no app file.
 const _notForTheApp = <String, String>{
+  'DKC14':
+      'a payment claim naming a standalone invoice: the app offers no payment '
+      'of one until the payment part of #4165 (B), where its words are '
+      'mapped; the refusal is the server\'s guard for any other caller (0820)',
   'DKP02':
       'the app offers no plan to add to a room since plans are retired '
       '(#4042); a room keeps the plans it named already',

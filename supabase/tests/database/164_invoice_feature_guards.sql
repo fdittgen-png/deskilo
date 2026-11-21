@@ -34,8 +34,6 @@ $seed$;
 grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.seed();
-insert into public.validation_policies(workspace_id,event_type,required_count)
- values (current_setting('deskilo.pilot.ws')::uuid,'invoice_issue',1);
 set local role authenticated;
 select lives_ok($$select public.create_invoice(current_setting('deskilo.pilot.ws')::uuid,
  current_setting('deskilo.pilot.m')::uuid,'2026-08')$$,'positive control: whole-month invoice issues');
@@ -75,6 +73,13 @@ select public.set_feature_flags(current_setting('deskilo.pilot.ws')::uuid,
 select lives_ok($$select public.create_invoice(current_setting('deskilo.pilot.ws')::uuid,
  current_setting('deskilo.pilot.m')::uuid,'2026-11',null,false,'subscription')$$,
  'positive control: explicitly enabled subscription issuing remains supported');
+-- The approval policy comes last (#4262): once a workspace requires approval
+-- every issuing command asks for it, so the direct whole-month controls above
+-- run on a workspace without one.
+reset role;
+insert into public.validation_policies(workspace_id,event_type,required_count)
+ values (current_setting('deskilo.pilot.ws')::uuid,'invoice_issue',1);
+set local role authenticated;
 select is((public.request_invoice_issue(current_setting('deskilo.pilot.ws')::uuid,
  current_setting('deskilo.pilot.m')::uuid,'2026-12','subscription')->>'pending')::boolean,true,
  'positive control: enabled invoice can enter the configured approval flow');

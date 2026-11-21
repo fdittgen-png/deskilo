@@ -18,6 +18,7 @@ import '../../../core/ui/loading_view.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../providers/assistant_setup_providers.dart';
 import '../providers/mcp_providers.dart';
+import 'assistant_disclosure_note.dart';
 import 'widgets/connect_checklist_card.dart';
 import 'widgets/connect_workspaces.dart';
 import 'widgets/mcp_client_tabs.dart';
@@ -77,7 +78,7 @@ class _ConnectAssistantScreenState
           Text(
             l10n.mcpConnectIntro,
           ),
-          const SizedBox(height: AppSpacing.md),
+          const AssistantDisclosureNote(),
           _section(l10n.mcpConnectBeforeTitle),
           scope.when(
             loading: () => const LoadingView(),

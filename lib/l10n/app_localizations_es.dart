@@ -1267,6 +1267,13 @@ class AppLocalizationsEs extends AppLocalizations {
       'El pago se usó entretanto. Se lee de nuevo: revise los importes.';
 
   @override
+  String get assistantFlowsBody =>
+      'Lo que un asistente lee o hace con su aprobación se le envía y lo trata la empresa que lo ofrece, según sus propias condiciones; alojar Deskilo usted mismo no hace local ese tratamiento. Actúa en su nombre, solo en los espacios y para las acciones que apruebe, y puede revocarlo en cualquier momento: eso detiene las solicitudes futuras, pero no borra lo que el asistente ya recibió.';
+
+  @override
+  String get assistantFlowsPolicyLink => 'Leer el aviso de privacidad';
+
+  @override
   String get assistantSetupActorConfigurer =>
       'Quién: alguien que gestiona la configuración de este espacio de trabajo';
 

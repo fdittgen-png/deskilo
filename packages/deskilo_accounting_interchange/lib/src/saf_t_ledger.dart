@@ -2,6 +2,8 @@
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
+import 'document_booking.dart';
+
 /// The four accounts the derived postings book to (#669).
 ///
 /// Deliberately the same four the FEC, DATEV and Sage ask for, because
@@ -66,7 +68,7 @@ List<SafTLedgerTransaction> safTSalesTransactions(
   SafTLedgerAccounts accounts,
 ) => [
   for (final invoice in invoices)
-    if (invoice.isCreditNote)
+    if (invoice.reversesSale)
       _creditNote(invoice, accounts)
     else
       SafTLedgerTransaction(
@@ -131,7 +133,7 @@ List<SafTLedgerTransaction> safTNettedReceipts(
   SafTLedgerAccounts accounts,
 ) => [
   for (final invoice in invoices)
-    if (!invoice.isCreditNote)
+    if (!invoice.reversesSale)
       for (final (i, line) in invoice.lines.where((l) => l.isMoneyIn).indexed)
         SafTLedgerTransaction(
           id: '${invoice.number}-C${i + 1}',

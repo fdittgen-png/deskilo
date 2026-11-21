@@ -10,9 +10,10 @@
 // the plan is proved against the walk (ShardPlan.problems) before any
 // result is trusted.
 //
-//   gate       everything outside test/features/ except test/core/, test/app/
-//              and test/a11y/ (lint, tool, i18n, ux, perf and anything a new
+//   gate       everything outside test/features/ except test/core/, test/app/,
+//              test/a11y/ and test/ux/ (lint, tool, i18n, perf and anything a new
 //              root folder adds)
+//   gate2      test/ux/ (#4252: the gate shard reached its 30-minute limit)
 //   money      test/features/money/ files named a..m, and reservations/
 //   money2     test/features/money/ files named n..z, and me/ and auth/
 //   workspace  test/features/workspace/
@@ -45,6 +46,7 @@ import 'dart:io';
 import 'shards.dart';
 
 const gateShard = 'gate';
+const gate2Shard = 'gate2';
 const moneyShard = 'money';
 const money2Shard = 'money2';
 const restShard = 'rest';
@@ -60,6 +62,9 @@ const _moneySplit = 'n';
 const _moneyFolders = ['test/features/reservations/'];
 const _money2Folders = ['test/features/me/', 'test/features/auth/'];
 const _workspaceFolders = ['test/features/workspace/'];
+
+/// #4252 — the UX walks are the second half of the gate, by folder.
+const _uxRoot = 'test/ux/';
 
 /// #3475 — the demo folder of the core shard, split by file name.
 const _demoRoot = 'test/core/demo/';
@@ -98,6 +103,7 @@ String shardOf(String path) {
     return coreShard;
   }
   if (under(_coreRoots)) return coreShard;
+  if (path.startsWith(_uxRoot)) return gate2Shard;
   if (path.startsWith(_moneyRoot)) {
     return path.substring(_moneyRoot.length).compareTo(_moneySplit) < 0
         ? moneyShard
@@ -115,6 +121,7 @@ String shardOf(String path) {
 List<ShardSpec> defaultShards(Iterable<String> files) {
   final by = <String, List<String>>{
     gateShard: [],
+    gate2Shard: [],
     moneyShard: [],
     money2Shard: [],
     workspaceShard: [],

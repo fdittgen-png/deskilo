@@ -8,6 +8,7 @@ import 'package:deskilo_jurisdiction_standards/deskilo_jurisdiction_standards.da
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 import 'datev.dart';
+import 'document_booking.dart';
 import 'datev_fields.dart';
 import 'datev_problem.dart';
 import 'datev_revenue.dart';
@@ -307,7 +308,7 @@ class DatevWriter {
       if (invoice.isVoided) continue; // a cancelled invoice was never booked
       // #831 — a settlement regroups booked revenue; booking it again doubles it.
       if (invoice.kind == InvoiceKind.settlement) continue;
-      if (invoice.isCreditNote) {
+      if (invoice.reversesSale) {
         _bookCreditNote(invoice);
       } else {
         _bookInvoice(invoice);
@@ -368,7 +369,13 @@ class DatevWriter {
         customer,
       ), 'Zahlung ${invoice.number}');
     }
-    _bookSettlement(invoice, matches[invoice.id]);
+    // #4269 -- a negative total that still charges something leaves the member
+    // a credit: its refund is money out, never a settlement.
+    if (invoice.totalCents < 0) {
+      _bookRefund(invoice, matches[invoice.id]);
+    } else {
+      _bookSettlement(invoice, matches[invoice.id]);
+    }
   }
 
   /// A PENDING match is a settlement still awaiting validation (0067) —

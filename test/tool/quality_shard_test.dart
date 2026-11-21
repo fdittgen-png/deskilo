@@ -59,6 +59,7 @@ ProcessResult _dart(List<String> args) =>
 /// #3166 — every shard of the default plan.
 const _allShards = [
   gateShard,
+  gate2Shard,
   moneyShard,
   money2Shard,
   workspaceShard,
@@ -107,6 +108,10 @@ void main() {
       expect(shardOf('test/brand_new_root/a_test.dart'), gateShard);
       expect(shardOf('test/helpers/x_test.dart'), gateShard);
       expect(shardOf('test/tool/a_test.dart'), gateShard);
+      // #4252 — the UX walks are the second half of the gate.
+      expect(shardOf('test/ux/a_test.dart'), gate2Shard);
+      expect(shardOf('test/ux/sub/b_test.dart'), gate2Shard);
+      expect(shardOf('test/ux_extra/a_test.dart'), gateShard);
       // #3166 — money is split by the first character under it.
       expect(shardOf('test/features/money/a_test.dart'), moneyShard);
       expect(shardOf('test/features/money/domain/a_test.dart'), moneyShard);
@@ -301,7 +306,7 @@ void main() {
       '${dir.path}/merged.info',
     ]);
 
-    test('six complete shards: the plan reads them, the rows are green for '
+    test('every shard complete: the plan reads them, the rows are green for '
         'the suite, and the LCOV merges', () {
       for (final id in _allShards) {
         final r = envelope(id);
