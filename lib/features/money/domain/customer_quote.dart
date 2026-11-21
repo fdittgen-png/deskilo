@@ -186,7 +186,10 @@ class CustomerQuote {
       revisions.where((r) => r.sent && !r.superseded).lastOrNull;
 
   /// Whether the issuer can still act on it: a draft or a sent quote.
-  bool get openForActions => status == QuoteStatus.draft || status == QuoteStatus.sent;
+  bool get openForActions =>
+      status == QuoteStatus.draft ||
+      status == QuoteStatus.sent ||
+      status == QuoteStatus.accepted;
 
   /// What the list shows: the working draft, else the current sent revision.
   QuoteRevision? get shown => draft ?? current ?? revisions.lastOrNull;
@@ -273,6 +276,13 @@ enum QuoteRefusalKind {
   /// DKQ03: the quote is in a state that does not allow this.
   state,
 
+  /// DKQ04: the offer is past its validity, so an acceptance is refused.
+  expired,
+
+  /// DKQ08: the invoice would differ from what was accepted; the reviewed
+  /// digest of exactly what would be issued is needed ([QuoteRefusal.detail]).
+  needsReview,
+
   /// DKQ06 (or DKI01): the quote is not complete; [QuoteRefusal.missing] names what.
   incomplete,
 
@@ -287,15 +297,114 @@ enum QuoteRefusalKind {
 }
 
 class QuoteRefusal implements Exception {
-  const QuoteRefusal(this.kind, {this.missing = const []});
+  const QuoteRefusal(this.kind, {this.missing = const [], this.detail = ''});
 
   final QuoteRefusalKind kind;
+
+  /// What the server attached: for [QuoteRefusalKind.needsReview] the digest of
+  /// the invoice that would be issued now.
+  final String detail;
 
   /// The facts the server named (`valid_until`, `line_1_quantity`...), if any.
   final List<String> missing;
 
   @override
   String toString() => 'QuoteRefusal($kind, $missing)';
+}
+
+/// What the issuer enters when recording the customer's answer: never the
+/// customer's signature, the issuer's own record of a decision.
+@immutable
+class QuoteDecisionInput {
+  const QuoteDecisionInput({
+    required this.accepted,
+    required this.revision,
+    required this.decidedOn,
+    required this.source,
+    this.evidence = '',
+  });
+
+  final bool accepted;
+
+  /// The sent, current revision the answer is about.
+  final int revision;
+  final DateTime decidedOn;
+
+  /// `received_outside_app`, `verbal`, `email` or `other`.
+  final String source;
+  final String evidence;
+}
+
+/// What the invoice of an accepted quote would be, as the real issuer previews
+/// it: the facts it cannot accept, or its amounts, set against what was accepted.
+@immutable
+class QuoteConversionPrep {
+  const QuoteConversionPrep({
+    required this.draftRevision,
+    required this.missing,
+    required this.acceptedTotalCents,
+    required this.wouldBeTotalCents,
+    required this.currency,
+    required this.contextChanged,
+    required this.reviewDigest,
+  });
+
+  factory QuoteConversionPrep.fromJson(Object? json) {
+    final r = JsonReader.of(json, context: 'prepare_quote_conversion_v1');
+    final outer = r.objectOrNull('preview');
+    final inner = outer?.objectOrNull('preview');
+    return QuoteConversionPrep(
+      draftRevision: r.integer('draft_revision'),
+      missing: outer?.strings('missing') ?? const [],
+      acceptedTotalCents: int.tryParse(r.stringOr('accepted_total_cents')) ?? 0,
+      wouldBeTotalCents: inner?.intOrNull('total_cents') ?? 0,
+      currency: inner?.stringOr('currency') ?? '',
+      contextChanged: r.isTrue('context_changed'),
+      reviewDigest: r.stringOr('review_digest'),
+    );
+  }
+
+  /// The invoice draft's revision the conversion names.
+  final int draftRevision;
+
+  /// The facts the issuer cannot accept yet (`due_on`, `buyer_vat_id`...).
+  final List<String> missing;
+  final int acceptedTotalCents;
+  final int wouldBeTotalCents;
+  final String currency;
+
+  /// The invoice would differ from what was accepted: it needs an explicit review.
+  final bool contextChanged;
+
+  /// The digest of exactly this preview: what a review is confirmed against.
+  final String reviewDigest;
+
+  bool get issuable => missing.isEmpty;
+}
+
+/// The one initial invoice a quote became.
+@immutable
+class QuoteConverted {
+  const QuoteConverted({
+    required this.invoiceId,
+    required this.number,
+    required this.replayed,
+  });
+
+  factory QuoteConverted.fromJson(Object? json) {
+    final r = JsonReader.of(json, context: 'convert_customer_quote_v1');
+    return QuoteConverted(
+      invoiceId: r.string('invoice_id'),
+      number: r.stringOr('number'),
+      replayed: r.isTrue('replayed'),
+    );
+  }
+
+  final String invoiceId;
+  final String number;
+
+  /// True when the quote had already been converted: the answer is that invoice.
+  final bool replayed;
 }
 
 /// The server's reads and writes of customer quotes.
@@ -321,6 +430,31 @@ abstract interface class CustomerQuoteRepository {
     String quoteId, {
     required int revision,
     required int version,
+  });
+
+  /// Records the customer's answer to the current sent revision.
+  Future<void> recordDecision(
+    String workspaceId,
+    String quoteId,
+    QuoteDecisionInput decision,
+  );
+
+  /// Previews the invoice of an accepted quote for the stated dates; nothing is issued.
+  Future<QuoteConversionPrep> prepareConversion(
+    String workspaceId,
+    String quoteId, {
+    required DateTime serviceDate,
+    required DateTime dueOn,
+  });
+
+  /// Issues the one initial invoice of an accepted quote under [requestId]; the
+  /// same quote answers the same invoice whatever the request.
+  Future<QuoteConverted> convert(
+    String workspaceId,
+    String quoteId, {
+    required int draftRevision,
+    required String requestId,
+    String? reviewedDigest,
   });
 
   Future<void> cancel(String workspaceId, String quoteId);

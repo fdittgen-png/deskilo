@@ -27721,10 +27721,63 @@ class AppLocalizationsIt extends AppLocalizations {
       'Gli importi vengono calcolati all\'invio del preventivo, in base alle impostazioni fiscali proprie.';
 
   @override
+  String get quoteAnswerAccepted => 'Il cliente ha accettato';
+
+  @override
+  String get quoteAnswerDeclined => 'Il cliente ha rifiutato';
+
+  @override
   String get quoteCancelAction => 'Annulla il preventivo';
 
   @override
   String get quoteChooseCustomer => 'Scegliere un cliente';
+
+  @override
+  String get quoteConvert => 'Fatturare questo preventivo';
+
+  @override
+  String quoteConvertAccepted(String amount) {
+    return 'Accettato: $amount';
+  }
+
+  @override
+  String get quoteConvertCheck => 'Controllare la fattura';
+
+  @override
+  String get quoteConvertDiffers =>
+      'Questa fattura differisce da quanto accettato (sono cambiati la data, i dati del cliente o i fatti fiscali). Rivederla prima dell\'emissione.';
+
+  @override
+  String quoteConvertDone(String number) {
+    return 'Fatturato come $number.';
+  }
+
+  @override
+  String get quoteConvertIntro =>
+      'Controllare la fattura prima dell\'emissione. Si basa sulla revisione accettata, per le date seguenti; nulla viene emesso finché non si conferma.';
+
+  @override
+  String get quoteConvertIssue => 'Emettere la fattura';
+
+  @override
+  String quoteConvertMissing(String missing) {
+    return 'La fattura non può ancora essere emessa: $missing.';
+  }
+
+  @override
+  String get quoteConvertNeedsReview =>
+      'La fattura ora differisce da quanto accettato. Controllarla di nuovo e confermare di averla rivista.';
+
+  @override
+  String get quoteConvertOpenInvoice => 'Aprire la fattura';
+
+  @override
+  String get quoteConvertReviewed => 'Ho rivisto questa fattura';
+
+  @override
+  String quoteConvertWouldBe(String amount) {
+    return 'La fattura sarebbe di $amount';
+  }
 
   @override
   String quoteDecisionByIssuer(String date, String source) {
@@ -27744,8 +27797,18 @@ class AppLocalizationsIt extends AppLocalizations {
   String get quoteEditTitle => 'Modificare il preventivo';
 
   @override
+  String get quoteExpiredRefusal =>
+      'L\'offerta era scaduta: non può più essere accettata.';
+
+  @override
   String get quoteFeatureOff =>
       'I preventivi sono disattivati in questa attività.';
+
+  @override
+  String get quoteFieldDecidedOn => 'Data della risposta';
+
+  @override
+  String get quoteFieldEvidence => 'Riferimento o nota (facoltativo)';
 
   @override
   String get quoteFieldIssuedOn => 'Data dell\'offerta';
@@ -27760,12 +27823,19 @@ class AppLocalizationsIt extends AppLocalizations {
   String get quoteFieldReference => 'Riferimento del cliente';
 
   @override
+  String get quoteFieldSource => 'Come è stata ricevuta';
+
+  @override
   String get quoteFieldValidUntil => 'Valido fino al';
 
   @override
   String quoteIncomplete(String missing) {
     return 'Il preventivo non è ancora completo: $missing.';
   }
+
+  @override
+  String get quoteIssuerRecordsNote =>
+      'Questa risposta viene registrata dall\'emittente. Non è la firma del cliente e non fattura nulla.';
 
   @override
   String get quoteNewTitle => 'Nuovo preventivo';
@@ -27782,6 +27852,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String quoteOrderLine(String value) {
     return 'Numero d\'ordine: $value';
   }
+
+  @override
+  String get quoteRecordAnswer => 'Registrare la risposta';
 
   @override
   String quoteReferenceLine(String value) {
@@ -27806,6 +27879,18 @@ class AppLocalizationsIt extends AppLocalizations {
   String quoteSentAs(String reference) {
     return 'Inviato come $reference. Questa revisione non cambia mai.';
   }
+
+  @override
+  String get quoteSourceEmail => 'Per e-mail';
+
+  @override
+  String get quoteSourceOther => 'Altro';
+
+  @override
+  String get quoteSourceReceived => 'Ricevuta fuori dall\'app';
+
+  @override
+  String get quoteSourceVerbal => 'Detta di persona o per telefono';
 
   @override
   String get quoteStale =>

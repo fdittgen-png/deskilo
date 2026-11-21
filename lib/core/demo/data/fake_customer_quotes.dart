@@ -31,6 +31,7 @@ class FakeCustomerQuoteRepository implements CustomerQuoteRepository {
   int _next = 1;
   int _reference = 1;
   int _line = 1;
+  int _invoice = 900;
 
   /// An error the next call raises, once.
   Object? failNext;
@@ -75,6 +76,20 @@ class FakeCustomerQuoteRepository implements CustomerQuoteRepository {
       ..status = QuoteStatus.sent
       ..revisions.add(rev);
     _of(workspaceId).add(q);
+  }
+
+  /// Marks the seeded quote [index] (0-based, in seed order) as accepted by the issuer.
+  void seedAccepted(String workspaceId, int index, {required DateTime decidedOn, String source = 'email'}) {
+    final q = _of(workspaceId)[index];
+    q
+      ..status = QuoteStatus.accepted
+      ..decision = QuoteDecision(
+        accepted: true,
+        revision: q.revisions.last.revision,
+        decidedOn: decidedOn,
+        source: source,
+        evidence: '',
+      );
   }
 
   /// Seeds a draft (never sent) for [subjectId].
@@ -132,8 +147,8 @@ class FakeCustomerQuoteRepository implements CustomerQuoteRepository {
             superseded: r.superseded,
           ),
       ],
-      decision: null,
-      invoiceId: null,
+      decision: q.decision,
+      invoiceId: q.invoiceId,
     );
   }
 
@@ -237,6 +252,84 @@ class FakeCustomerQuoteRepository implements CustomerQuoteRepository {
   }
 
   @override
+  Future<void> recordDecision(
+    String workspaceId,
+    String quoteId,
+    QuoteDecisionInput decision,
+  ) async {
+    _check('recordDecision', write: true);
+    final q = _find(workspaceId, quoteId);
+    final current = q.revisions.where((r) => r.sent && !r.superseded).lastOrNull;
+    if (q.status != QuoteStatus.sent || current == null || current.revision != decision.revision) {
+      throw const QuoteRefusal(QuoteRefusalKind.state);
+    }
+    final today = _clock();
+    final day = DateTime(today.year, today.month, today.day);
+    if (decision.decidedOn.isAfter(day) || decision.decidedOn.isBefore(current.issuedOn)) {
+      throw const QuoteRefusal(QuoteRefusalKind.incomplete, missing: ['decided_on']);
+    }
+    if (decision.accepted &&
+        (decision.decidedOn.isAfter(current.validUntil) || day.isAfter(current.validUntil))) {
+      throw const QuoteRefusal(QuoteRefusalKind.expired);
+    }
+    q
+      ..status = decision.accepted ? QuoteStatus.accepted : QuoteStatus.declined
+      ..decision = QuoteDecision(
+        accepted: decision.accepted,
+        revision: decision.revision,
+        decidedOn: decision.decidedOn,
+        source: decision.source,
+        evidence: decision.evidence,
+      );
+  }
+
+  @override
+  Future<QuoteConversionPrep> prepareConversion(
+    String workspaceId,
+    String quoteId, {
+    required DateTime serviceDate,
+    required DateTime dueOn,
+  }) async {
+    _check('prepareConversion', write: true);
+    final q = _find(workspaceId, quoteId);
+    if (q.status != QuoteStatus.accepted) throw const QuoteRefusal(QuoteRefusalKind.state);
+    final accepted = q.revisions.firstWhere((r) => r.revision == q.decision!.revision);
+    // the Demo seller's rate is the same on the day: the invoice is what was accepted,
+    // unless the service date moves past a rate change (never seeded)
+    return QuoteConversionPrep(
+      draftRevision: 1,
+      missing: dueOn.isBefore(serviceDate) ? const ['due_on'] : const [],
+      acceptedTotalCents: accepted.totalCents,
+      wouldBeTotalCents: accepted.totalCents,
+      currency: currency,
+      contextChanged: false,
+      reviewDigest: 'demo-${q.id}-${accepted.totalCents}',
+    );
+  }
+
+  @override
+  Future<QuoteConverted> convert(
+    String workspaceId,
+    String quoteId, {
+    required int draftRevision,
+    required String requestId,
+    String? reviewedDigest,
+  }) async {
+    _check('convert', write: true);
+    final q = _find(workspaceId, quoteId);
+    final invoice = q.invoiceId;
+    if (invoice != null) {
+      return QuoteConverted(invoiceId: invoice, number: q.invoiceNumber ?? '', replayed: true);
+    }
+    if (q.status != QuoteStatus.accepted) throw const QuoteRefusal(QuoteRefusalKind.state);
+    q
+      ..status = QuoteStatus.converted
+      ..invoiceId = 'demo-quote-invoice-${q.id}'
+      ..invoiceNumber = 'INV-${(_invoice++).toString().padLeft(4, '0')}';
+    return QuoteConverted(invoiceId: q.invoiceId!, number: q.invoiceNumber!, replayed: false);
+  }
+
+  @override
   Future<void> cancel(String workspaceId, String quoteId) async {
     _check('cancel', write: true);
     final q = _find(workspaceId, quoteId);
@@ -263,6 +356,9 @@ class _Quote {
   String? reference;
   QuoteStatus status = QuoteStatus.draft;
   final List<_Rev> revisions = [];
+  QuoteDecision? decision;
+  String? invoiceId;
+  String? invoiceNumber;
 }
 
 class _Rev {

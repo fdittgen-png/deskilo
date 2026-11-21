@@ -41,10 +41,6 @@ const _notForTheApp = <String, String>{
   'DKQ01':
       'a guard behind the quote screens (#4166 cut 2): the quote it names '
       'is chosen from the business\'s own list (0828)',
-  'DKQ08':
-      'the invoice differs from what was accepted: the conversion screen '
-      'shows the difference and takes the reviewed digest in #4166 cut 3 '
-      '(0828)',
   'DKQ09':
       'a guard no screen offers: the invoice draft of a quote changes and '
       'issues only through the quote, never in the invoice editor (0828)',

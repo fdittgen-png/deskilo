@@ -44121,6 +44121,18 @@ abstract class AppLocalizations {
   /// **'Amounts are worked out when you send the quote, from your own tax settings.'**
   String get quoteAmountsOnSend;
 
+  /// customer quotes: the answer and the conversion (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'The customer accepted'**
+  String get quoteAnswerAccepted;
+
+  /// customer quotes: the answer and the conversion (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'The customer declined'**
+  String get quoteAnswerDeclined;
+
   /// customer quotes: the quotes list, editor and detail (#4166)
   ///
   /// In en, this message translates to:
@@ -44132,6 +44144,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Choose a customer'**
   String get quoteChooseCustomer;
+
+  /// customer quotes: the answer and the conversion (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice this quote'**
+  String get quoteConvert;
+
+  /// customer quotes: the answer and the conversion (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Accepted: {amount}'**
+  String quoteConvertAccepted(String amount);
+
+  /// customer quotes: the answer and the conversion (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Check the invoice'**
+  String get quoteConvertCheck;
+
+  /// customer quotes: the answer and the conversion (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'This invoice differs from what was accepted (the date, the customer\'s details or the tax facts changed). Review it before issuing.'**
+  String get quoteConvertDiffers;
+
+  /// customer quotes: the answer and the conversion (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Invoiced as {number}.'**
+  String quoteConvertDone(String number);
+
+  /// customer quotes: the answer and the conversion (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Check the invoice before it is issued. It is made from the accepted revision, for the dates below; nothing is issued until you confirm.'**
+  String get quoteConvertIntro;
+
+  /// customer quotes: the answer and the conversion (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Issue the invoice'**
+  String get quoteConvertIssue;
+
+  /// customer quotes: the answer and the conversion (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'The invoice cannot be issued yet: {missing}.'**
+  String quoteConvertMissing(String missing);
+
+  /// customer quotes: the answer and the conversion (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'The invoice now differs from what was accepted. Check it again and confirm that you reviewed it.'**
+  String get quoteConvertNeedsReview;
+
+  /// customer quotes: the answer and the conversion (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Open the invoice'**
+  String get quoteConvertOpenInvoice;
+
+  /// customer quotes: the answer and the conversion (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'I have reviewed this invoice'**
+  String get quoteConvertReviewed;
+
+  /// customer quotes: the answer and the conversion (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'The invoice would be {amount}'**
+  String quoteConvertWouldBe(String amount);
 
   /// customer quotes: the quotes list, editor and detail (#4166)
   ///
@@ -44163,11 +44247,29 @@ abstract class AppLocalizations {
   /// **'Edit the quote'**
   String get quoteEditTitle;
 
+  /// customer quotes: the answer and the conversion (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'The offer had expired: it can no longer be accepted.'**
+  String get quoteExpiredRefusal;
+
   /// customer quotes: the quotes list, editor and detail (#4166)
   ///
   /// In en, this message translates to:
   /// **'Quotes are switched off in this business.'**
   String get quoteFeatureOff;
+
+  /// customer quotes: the answer and the conversion (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Date of the answer'**
+  String get quoteFieldDecidedOn;
+
+  /// customer quotes: the answer and the conversion (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Reference or note (optional)'**
+  String get quoteFieldEvidence;
 
   /// customer quotes: the quotes list, editor and detail (#4166)
   ///
@@ -44193,6 +44295,12 @@ abstract class AppLocalizations {
   /// **'Customer reference'**
   String get quoteFieldReference;
 
+  /// customer quotes: the answer and the conversion (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'How it was received'**
+  String get quoteFieldSource;
+
   /// customer quotes: the quotes list, editor and detail (#4166)
   ///
   /// In en, this message translates to:
@@ -44204,6 +44312,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The quote is not complete yet: {missing}.'**
   String quoteIncomplete(String missing);
+
+  /// customer quotes: the answer and the conversion (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'You record this answer as the issuer. It is not the customer\'s signature, and it invoices nothing.'**
+  String get quoteIssuerRecordsNote;
 
   /// customer quotes: the quotes list, editor and detail (#4166)
   ///
@@ -44228,6 +44342,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Order number: {value}'**
   String quoteOrderLine(String value);
+
+  /// customer quotes: the answer and the conversion (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Record the answer'**
+  String get quoteRecordAnswer;
 
   /// customer quotes (#4166)
   ///
@@ -44264,6 +44384,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sent as {reference}. This revision never changes.'**
   String quoteSentAs(String reference);
+
+  /// customer quotes: the answer and the conversion (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'By e-mail'**
+  String get quoteSourceEmail;
+
+  /// customer quotes: the answer and the conversion (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get quoteSourceOther;
+
+  /// customer quotes: the answer and the conversion (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Received outside the app'**
+  String get quoteSourceReceived;
+
+  /// customer quotes: the answer and the conversion (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Said in person or by phone'**
+  String get quoteSourceVerbal;
 
   /// customer quotes: the quotes list, editor and detail (#4166)
   ///

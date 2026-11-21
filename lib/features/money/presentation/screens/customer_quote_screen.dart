@@ -20,6 +20,8 @@ import '../../application/customer_quote_commands.dart';
 import '../../domain/customer_quote.dart';
 import '../../providers/billing_customer_providers.dart';
 import '../../providers/customer_quote_providers.dart';
+import '../quotes/quote_conversion_sheet.dart';
+import '../quotes/quote_decision_sheet.dart';
 import '../quotes/quote_text.dart';
 import 'money_view_data.dart';
 
@@ -60,6 +62,23 @@ class _CustomerQuoteScreenState extends ConsumerState<CustomerQuoteScreen> {
       };
     });
     if (leave && outcome is QuoteDone) context.go('/money/quotes');
+  }
+
+  /// The answer sheet, or the conversion sheet; the quote is read again after
+  /// either closes with something done.
+  Future<void> _answer(
+    BuildContext context,
+    String workspaceId,
+    CustomerQuote quote, {
+    required bool convert,
+  }) async {
+    final done = convert
+        ? await QuoteConversion.show(context, workspaceId: workspaceId, quote: quote)
+        : await QuoteDecisionSheet.show(context, ref, workspaceId: workspaceId, quote: quote);
+    if (!done || !mounted) return;
+    ref
+      ..invalidate(customerQuotesProvider(workspaceId))
+      ..invalidate(customerQuoteProvider((workspaceId: workspaceId, quoteId: widget.quoteId)));
   }
 
   @override
@@ -116,6 +135,8 @@ class _CustomerQuoteScreenState extends ConsumerState<CustomerQuoteScreen> {
                         busy: _busy,
                         said: _said,
                         onRun: (act, {leave = false}) => unawaited(_run(id, act, leave: leave)),
+                        onAnswer: (context, {required convert}) =>
+                            unawaited(_answer(context, id, quote, convert: convert)),
                       ),
                     ),
               ),
@@ -132,6 +153,7 @@ class _Content extends ConsumerWidget {
     required this.busy,
     required this.said,
     required this.onRun,
+    required this.onAnswer,
   });
 
   final CustomerQuote quote;
@@ -143,6 +165,9 @@ class _Content extends ConsumerWidget {
     Future<QuoteCommandOutcome<Object?>> Function(CustomerQuoteCommands) act, {
     bool leave,
   }) onRun;
+
+  /// Opens the answer sheet, or the conversion sheet when [convert].
+  final void Function(BuildContext context, {required bool convert}) onAnswer;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -157,7 +182,8 @@ class _Content extends ConsumerWidget {
         if (shown != null) ..._offer(context, shown),
         ..._decision(context),
         if (quote.revisions.length > 1) ..._history(context),
-        if (canIssue && quote.openForActions) ..._actions(context),
+        if (canIssue && (quote.openForActions || quote.invoiceId != null))
+          ..._actions(context),
       ],
     );
   }
@@ -233,7 +259,7 @@ class _Content extends ConsumerWidget {
       const FormGap(),
       Text(
         context.l10n.quoteDecisionByIssuer(
-          decision.source,
+          quoteSourceLabel(context.l10n, decision.source),
           quoteDate(context, decision.decidedOn),
         ),
         key: const ValueKey('quote-decision'),
@@ -269,7 +295,24 @@ class _Content extends ConsumerWidget {
         runSpacing: AppSpacing.sm,
         children: [
           if (draft != null) ..._draftActions(context, draft),
+          if (quote.status == QuoteStatus.accepted && quote.invoiceId == null)
+            FilledButton(
+              key: const ValueKey('quote-convert'),
+              onPressed: busy ? null : () => onAnswer(context, convert: true),
+              child: Text(l10n.quoteConvert),
+            ),
+          if (quote.invoiceId != null)
+            FilledButton(
+              key: const ValueKey('quote-open-invoice'),
+              onPressed: () => context.go('/invoices/${quote.invoiceId}'),
+              child: Text(l10n.quoteConvertOpenInvoice),
+            ),
           if (draft == null && quote.status == QuoteStatus.sent) ...[
+            FilledButton(
+              key: const ValueKey('quote-record-answer'),
+              onPressed: busy ? null : () => onAnswer(context, convert: false),
+              child: Text(l10n.quoteRecordAnswer),
+            ),
             FilledButton(
               key: const ValueKey('quote-amend'),
               onPressed: busy ? null : () => onRun((c) => c.amend(workspaceId, quote.id)),

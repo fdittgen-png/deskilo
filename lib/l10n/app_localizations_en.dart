@@ -27489,10 +27489,63 @@ class AppLocalizationsEn extends AppLocalizations {
       'Amounts are worked out when you send the quote, from your own tax settings.';
 
   @override
+  String get quoteAnswerAccepted => 'The customer accepted';
+
+  @override
+  String get quoteAnswerDeclined => 'The customer declined';
+
+  @override
   String get quoteCancelAction => 'Cancel the quote';
 
   @override
   String get quoteChooseCustomer => 'Choose a customer';
+
+  @override
+  String get quoteConvert => 'Invoice this quote';
+
+  @override
+  String quoteConvertAccepted(String amount) {
+    return 'Accepted: $amount';
+  }
+
+  @override
+  String get quoteConvertCheck => 'Check the invoice';
+
+  @override
+  String get quoteConvertDiffers =>
+      'This invoice differs from what was accepted (the date, the customer\'s details or the tax facts changed). Review it before issuing.';
+
+  @override
+  String quoteConvertDone(String number) {
+    return 'Invoiced as $number.';
+  }
+
+  @override
+  String get quoteConvertIntro =>
+      'Check the invoice before it is issued. It is made from the accepted revision, for the dates below; nothing is issued until you confirm.';
+
+  @override
+  String get quoteConvertIssue => 'Issue the invoice';
+
+  @override
+  String quoteConvertMissing(String missing) {
+    return 'The invoice cannot be issued yet: $missing.';
+  }
+
+  @override
+  String get quoteConvertNeedsReview =>
+      'The invoice now differs from what was accepted. Check it again and confirm that you reviewed it.';
+
+  @override
+  String get quoteConvertOpenInvoice => 'Open the invoice';
+
+  @override
+  String get quoteConvertReviewed => 'I have reviewed this invoice';
+
+  @override
+  String quoteConvertWouldBe(String amount) {
+    return 'The invoice would be $amount';
+  }
 
   @override
   String quoteDecisionByIssuer(String date, String source) {
@@ -27512,7 +27565,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get quoteEditTitle => 'Edit the quote';
 
   @override
+  String get quoteExpiredRefusal =>
+      'The offer had expired: it can no longer be accepted.';
+
+  @override
   String get quoteFeatureOff => 'Quotes are switched off in this business.';
+
+  @override
+  String get quoteFieldDecidedOn => 'Date of the answer';
+
+  @override
+  String get quoteFieldEvidence => 'Reference or note (optional)';
 
   @override
   String get quoteFieldIssuedOn => 'Date of the offer';
@@ -27527,12 +27590,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get quoteFieldReference => 'Customer reference';
 
   @override
+  String get quoteFieldSource => 'How it was received';
+
+  @override
   String get quoteFieldValidUntil => 'Valid until';
 
   @override
   String quoteIncomplete(String missing) {
     return 'The quote is not complete yet: $missing.';
   }
+
+  @override
+  String get quoteIssuerRecordsNote =>
+      'You record this answer as the issuer. It is not the customer\'s signature, and it invoices nothing.';
 
   @override
   String get quoteNewTitle => 'New quote';
@@ -27549,6 +27619,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String quoteOrderLine(String value) {
     return 'Order number: $value';
   }
+
+  @override
+  String get quoteRecordAnswer => 'Record the answer';
 
   @override
   String quoteReferenceLine(String value) {
@@ -27573,6 +27646,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String quoteSentAs(String reference) {
     return 'Sent as $reference. This revision never changes.';
   }
+
+  @override
+  String get quoteSourceEmail => 'By e-mail';
+
+  @override
+  String get quoteSourceOther => 'Other';
+
+  @override
+  String get quoteSourceReceived => 'Received outside the app';
+
+  @override
+  String get quoteSourceVerbal => 'Said in person or by phone';
 
   @override
   String get quoteStale =>

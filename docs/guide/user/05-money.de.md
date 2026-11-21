@@ -603,7 +603,7 @@ Wählen Sie **Lieferantenverbindlichkeiten anzeigen**, um dessen Rechnungen und 
 
 **Zielgruppe:** Administrator:in · Inhaber
 
-Öffnen Sie **Geld** und dann **Rechnungskunden** (die Adresse `/money/customers`; die Funktion **Rechnungskunden** muss unter der Rechnungsstellung aktiviert sein). Hier verwalten Sie die Personen und Unternehmen, denen Sie Rechnungen stellen, mit oder ohne Konto. Sie sind keine Mitglieder: Sie haben kein Konto, sehen nichts von Ihrem Betrieb und zählen nicht zu Ihren Mitgliedern.
+Öffnen Sie **Verkauf & Zahlungseingang** und dann **Rechnungskunden**. Hier verwalten Sie die Personen und Unternehmen, denen Sie Rechnungen stellen, mit oder ohne Konto. Sie sind keine Mitglieder: Sie haben kein Konto, sehen nichts von Ihrem Betrieb und zählen nicht zu Ihren Mitgliedern.
 
 Wählen Sie **Kunden hinzufügen** und geben Sie eine Firma oder einen Namen, die Anschrift, den Ländercode, die USt-IdNr. und eine E-Mail-Adresse für die Rechnung an. Die USt-IdNr. wird nur auf ihre Form geprüft, nie bestätigt. **Abgerechnet als** (Unternehmen oder Privatperson) bestimmt die Pflichtangaben und die steuerliche Behandlung; nur wer Rechnungen ausstellen darf, kann es ändern. Wählen Sie einen Kunden, um ihn zu bearbeiten. Hat jemand anderes den Kunden seit dem Öffnen geändert, wird nichts gespeichert und Sie öffnen ihn erneut. Lässt sich die Liste nicht lesen, versuchen Sie es erneut, statt sie für leer zu halten. Eine Änderung schreibt nie eine bereits ausgestellte Rechnung um: Jede behält Namen und Anschrift, mit denen sie ausgestellt wurde.
 
@@ -612,9 +612,11 @@ Wählen Sie **Kunden hinzufügen** und geben Sie eine Firma oder einen Namen, di
 
 **Zielgruppe:** Administrator:in · Inhaber
 
-Öffnen Sie **Geld** und dann **Angebote** (die Adresse `/money/quotes`; die Funktion **Kundenangebote** muss unter der Rechnungsstellung aktiviert sein). Hier machen Sie einem Rechnungskunden ein Angebot, bevor Sie ihm eine Rechnung stellen.
+Öffnen Sie **Verkauf & Zahlungseingang** und dann **Angebote**. Hier machen Sie einem Rechnungskunden ein Angebot, bevor Sie ihm eine Rechnung stellen.
 
 Wählen Sie **Neues Angebot**, den Kunden, die Daten und fügen Sie die Positionen hinzu. **Entwurf speichern** behält ihn; **Senden** friert diese Revision ein, nimmt die nächste Referenz der Angebotsreihe und berechnet die Beträge aus Ihren eigenen Steuereinstellungen. Ein Entwurf zeigt keine Beträge: Sie entstehen erst beim Senden. Ein gesendetes Angebot ändert sich nie: **Ändern** erzeugt eine weitere Revision, **Angebot stornieren** zieht es zurück. Ein Angebot nach seinem Datum gilt als abgelaufen. Ein Angebot berechnet, bucht und bezahlt nichts; die Rechnung zu einem angenommenen kommt danach.
+
+Hat der Kunde geantwortet, wählen Sie bei einem gesendeten Angebot **Antwort festhalten**: Sie halten seine Antwort als Aussteller fest (angenommen oder abgelehnt, das Datum, wie sie Sie erreicht hat); es ist Ihr Vermerk, nicht seine Unterschrift, und ein Angebot nach seinem Datum kann nicht mehr angenommen werden. Bei einem angenommenen Angebot wählen Sie **Dieses Angebot berechnen**, legen die Daten fest und **Rechnung prüfen**: Die Rechnung wird aus der angenommenen Revision vorab berechnet und mit dem Angenommenen verglichen. Weicht sie ab (Datum, Kundendaten oder Steuerangaben haben sich geändert), bestätigen Sie, dass Sie sie geprüft haben; was noch nicht ausgestellt werden kann, wird genannt. Dann **Rechnung ausstellen**: Ein Angebot ergibt eine Rechnung, was danach auch mit ihr geschieht.
 
 <!-- anchor: user.money.amounts -->
 ### Wie Beträge angezeigt werden

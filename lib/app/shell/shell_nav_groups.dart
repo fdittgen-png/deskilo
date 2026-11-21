@@ -72,6 +72,8 @@ List<NavGroup> navGroupsOf(
     pick('sales', labels.uxNavSales, Icons.sell_outlined, all, {
       'drawer-invoices',
       'drawer-invoice-register',
+      'drawer-quotes',
+      'drawer-billing-customers',
       'drawer-services',
       'drawer-guest-passes',
       'drawer-accessories',
