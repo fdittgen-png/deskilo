@@ -456,6 +456,8 @@ void main() {
         'badgeSecurity': 'app',
         'retention': 'app',
         'bank': 'app',
+        // #4291 — the quote validity answers are set in the app, with its screens.
+        'quotes': 'app',
         'records': 'app',
         'map': 'app',
         'region': 'app',
