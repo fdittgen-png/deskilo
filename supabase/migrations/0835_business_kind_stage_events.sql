@@ -130,7 +130,8 @@ begin
         if public.feature_raw(v_flags_before, v_key) is distinct from public.feature_raw(v_flags_after, v_key)
            or (v_flags_before -> v_key) is distinct from (v_flags_after -> v_key) then
           v_changed := v_changed || jsonb_build_object(v_key, jsonb_build_object(
-            'before', v_flags_before -> v_key, 'after', v_flags_after -> v_key));
+            'before', v_flags_before -> v_key, 'before_present', v_flags_before ? v_key,
+            'after', v_flags_after -> v_key, 'after_present', v_flags_after ? v_key));
         end if;
       end loop;
       v_flags_outcome := case when v_changed = '{}'::jsonb then 'no_change' else 'applied' end;

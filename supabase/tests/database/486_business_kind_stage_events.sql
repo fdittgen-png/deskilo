@@ -57,8 +57,8 @@ select is((select setting_value from (select public.setting_value('00000000-0000
 select is((select count(*)::int from public.configuration_choice_events where workspace_id = '00000000-0000-4000-8000-000000048610' and request_id = '00000000-0000-4000-8000-000000048640'), 2, 'one event per stage');
 select is((select source ->> 'profile_digest' from public.configuration_choice_events where request_id = '00000000-0000-4000-8000-000000048640' and stage = 'kind'),
   current_setting('t.dig'), 'the event names the reviewed source: kind, version and digest');
-select is((select changed -> 'placeBooking' -> 'before' from public.configuration_choice_events where request_id = '00000000-0000-4000-8000-000000048640' and stage = 'flags'),
-  'true'::jsonb, 'the features stage records the raw value before');
+select is((select (changed -> 'placeBooking' ->> 'before_present')::boolean from public.configuration_choice_events where request_id = '00000000-0000-4000-8000-000000048640' and stage = 'flags'),
+  false, 'the features stage records the raw value before: here the flag was absent, which is not false');
 select is((select changed -> 'placeBooking' -> 'after' from public.configuration_choice_events where request_id = '00000000-0000-4000-8000-000000048640' and stage = 'flags'),
   'false'::jsonb, 'and after');
 
@@ -87,8 +87,10 @@ select is(pg_temp.apply('00000000-0000-4000-8000-000000048601', '00000000-0000-4
 select is((select count(*)::int from public.configuration_choice_events where request_id in ('00000000-0000-4000-8000-000000048643', '00000000-0000-4000-8000-000000048644')), 0, 'and neither leaves an event');
 
 -- the record
-select throws_ok($$update public.configuration_choice_events set outcome = 'applied'$$, 'DKK02', 'a recorded stage is never changed');
-select throws_ok($$delete from public.configuration_choice_events$$, 'DKK02', 'nor deleted');
+select throws_ok($$update public.configuration_choice_events set outcome = 'applied'$$, 'DKK02',
+  'a recorded configuration stage is never changed or deleted', 'a recorded stage is never changed');
+select throws_ok($$delete from public.configuration_choice_events$$, 'DKK02',
+  'a recorded configuration stage is never changed or deleted', 'nor deleted');
 select ok(not has_table_privilege('authenticated', 'public.configuration_choice_events', 'insert'), 'no client writes an event');
 select is(pg_temp.as_user('00000000-0000-4000-8000-000000048601', $q$select count(*)::text from public.configuration_choice_events$q$), '5',
   'the owner reads the events of their business: two stages, the refusal and two more');
