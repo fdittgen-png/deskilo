@@ -18,6 +18,7 @@ import '../../../features/plan/domain/seat.dart';
 import '../../../features/reservations/domain/reservation.dart';
 import '../../../features/workspace/domain/member.dart';
 import '../../text/collation.dart';
+import '../demo_clock.dart';
 import 'money/demo_member_account_commands.dart';
 import 'money_repository.dart';
 import 'reservation_repository.dart';
@@ -168,8 +169,8 @@ class FakeGuestPassRepository implements GuestPassRepository {
         workspaceId: workspaceId,
         subjectMemberId: memberId,
         seatId: draft.seatId,
-        startsAt: DateTime(day.year, day.month, day.day + d, 0, draft.startMinutes),
-        endsAt: DateTime(day.year, day.month, day.day + d, 0, draft.endMinutes),
+        startsAt: demoAt(day.year, day.month, day.day + d, 0, draft.startMinutes), // #4284: the space's own clock
+        endsAt: demoAt(day.year, day.month, day.day + d, 0, draft.endMinutes),
       );
       bookings.add(reservations.reservations.last.id);
     }

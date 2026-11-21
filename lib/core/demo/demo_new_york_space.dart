@@ -71,7 +71,7 @@ class DemoNewYorkData implements DemoSpaceParts {
       mainFloorOffices: [3, 3, 3, 3],
       hourly: true,
     );
-    final reservations = RightsCheckedReservationRepository(actor: actor)
+    final reservations = RightsCheckedReservationRepository(actor: actor, clock: () => now)
       ..granularity = BookingGranularity.minutes60;
     reservations.resourceSeatIds.addAll(
       plan.seats

@@ -165,7 +165,7 @@ class DemoFixture implements DemoSpaceParts {
     // are built with a reader rather than a captured id, so a persona
     // switch moves both of them at once and neither can drift.
     final actor = DemoActor(initialDemoPersona.memberId);
-    final reservations = RightsCheckedReservationRepository(actor: () => actor.memberId);
+    final reservations = RightsCheckedReservationRepository(actor: () => actor.memberId, clock: () => today, space: workspaces); // #4284
     final events = FakeEventRepository(
       actor: () => actor.memberId,
       clock: () => today,

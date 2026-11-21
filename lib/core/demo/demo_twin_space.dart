@@ -114,7 +114,7 @@ class DemoTwinData implements DemoSpaceParts {
     plan.desks.addAll([for (final d in source.desks) d.copyWith(workspaceId: ws)]);
     plan.seats.addAll([for (final s in source.seats) s.copyWith(workspaceId: ws)]);
     plan.levelSites.addAll(source.levelSites);
-    final reservations = RightsCheckedReservationRepository(actor: actor);
+    final reservations = RightsCheckedReservationRepository(actor: actor, clock: () => now);
     // #3293 — the twin's requests are stamped on the session clock and
     // decided and read only as its own rules and rights allow.
     final events = FakeEventRepository(

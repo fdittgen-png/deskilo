@@ -74,7 +74,7 @@ class DemoTradeCityData implements DemoSpaceParts {
       sites: city.siteIds,
       mainFloorOffices: [2],
     );
-    final reservations = RightsCheckedReservationRepository(actor: actor)
+    final reservations = RightsCheckedReservationRepository(actor: actor, clock: () => now)
       ..granularity = BookingGranularity.minutes60;
     reservations.resourceSeatIds.addAll(
       plan.seats
