@@ -1,0 +1,14 @@
+{
+  "@@locale": "de",
+  "frEReportingBlocked": "Das Frankreich-E-Reporting wurde nicht geschrieben: Diese Belege lassen sich nach dem, was sie bei der Ausstellung festgehalten haben, nicht einordnen: {documents}. Erfassen Sie die Eigenschaft des Kunden und korrigieren Sie sie dann mit einer Gutschrift und einer neuen Rechnung; die Originale werden nie geändert.",
+  "frEReportingDocumentNoFrozenCapacity": "{number}: ausgestellt, bevor die Eigenschaft des Kunden festgehalten wurde",
+  "frEReportingDocumentCapacityUnknown": "{number}: die Eigenschaft des Kunden (Unternehmer oder Verbraucher) wurde nicht angegeben",
+  "frEReportingDocumentBuyerCountryMissing": "{number}: das Land des Unternehmers wurde nicht festgehalten",
+  "frEReportingDocumentBuyerCountryConflict": "{number}: zwei verschiedene Länder wurden festgehalten",
+  "frEReportingDocumentBuyerVatIdMissing": "{number}: ein Unternehmer im Ausland braucht seine USt-IdNr.",
+  "frEReportingDocumentUnsupportedCommercialLine": "{number}: eine Position, die diese Version nicht lesen kann",
+  "frEReportingDocumentGoodsZeroRateUnsupported": "{number}: eine Warenposition mit Nullsatz: ihre Kategorie wird nicht aus dem Satz abgeleitet",
+  "frEReportingDocumentGoodsAbroadUnsupported": "{number}: Warenlieferungen an ein Unternehmen im Ausland werden nicht unterstützt",
+  "frEReportingDocumentMissingReceiptAllocation": "{number}: Waren und Dienstleistungen mit einer Zahlung: die Zahlung hat keine belastbare Aufteilung auf beide",
+  "frEReportingDocumentAmountRuleUnsupported": "{number}: eine Dienstleistung, deren festgehaltene Steuer vom Satz abweicht, mit einer Zahlung im Zeitraum"
+}

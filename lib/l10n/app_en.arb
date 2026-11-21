@@ -17381,6 +17381,105 @@
       }
     }
   },
+  "frEReportingBlocked": "The France e-reporting was not written: these documents cannot be sorted from what they froze at issue: {documents}. Record the customer's capacity, then correct them with a credit note and a new invoice; the originals are never edited.",
+  "@frEReportingBlocked": {
+    "description": "#4163 France e-reporting refused: the documents it cannot sort from their frozen facts, each with its reasons.",
+    "placeholders": {
+      "documents": {
+        "type": "String"
+      }
+    }
+  },
+  "frEReportingDocumentAmountRuleUnsupported": "{number}: a service whose frozen tax differs from its rate, with a payment in the period",
+  "@frEReportingDocumentAmountRuleUnsupported": {
+    "description": "#4163 one document the France e-reporting cannot sort or split, with its reason (amountRuleUnsupported).",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "frEReportingDocumentBuyerCountryConflict": "{number}: two different countries were frozen",
+  "@frEReportingDocumentBuyerCountryConflict": {
+    "description": "#4163 one document the France e-reporting cannot sort or split, with its reason (buyerCountryConflict).",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "frEReportingDocumentBuyerCountryMissing": "{number}: the business's country was not frozen",
+  "@frEReportingDocumentBuyerCountryMissing": {
+    "description": "#4163 one document the France e-reporting cannot sort or split, with its reason (buyerCountryMissing).",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "frEReportingDocumentBuyerVatIdMissing": "{number}: a business abroad needs its VAT number",
+  "@frEReportingDocumentBuyerVatIdMissing": {
+    "description": "#4163 one document the France e-reporting cannot sort or split, with its reason (buyerVatIdMissing).",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "frEReportingDocumentCapacityUnknown": "{number}: the customer's capacity (business or consumer) was not stated",
+  "@frEReportingDocumentCapacityUnknown": {
+    "description": "#4163 one document the France e-reporting cannot sort or split, with its reason (capacityUnknown).",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "frEReportingDocumentGoodsAbroadUnsupported": "{number}: goods delivered to a business abroad are not supported",
+  "@frEReportingDocumentGoodsAbroadUnsupported": {
+    "description": "#4163 one document the France e-reporting cannot sort or split, with its reason (goodsAbroadUnsupported).",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "frEReportingDocumentGoodsZeroRateUnsupported": "{number}: a goods line at a zero rate: its category is not inferred from the rate",
+  "@frEReportingDocumentGoodsZeroRateUnsupported": {
+    "description": "#4163 one document the France e-reporting cannot sort or split, with its reason (goodsZeroRateUnsupported).",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "frEReportingDocumentMissingReceiptAllocation": "{number}: goods and services with a payment: the payment has no authoritative split between them",
+  "@frEReportingDocumentMissingReceiptAllocation": {
+    "description": "#4163 one document the France e-reporting cannot sort or split, with its reason (missingReceiptAllocation).",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "frEReportingDocumentNoFrozenCapacity": "{number}: issued before the customer's capacity was frozen",
+  "@frEReportingDocumentNoFrozenCapacity": {
+    "description": "#4163 one document the France e-reporting cannot sort or split, with its reason (noFrozenCapacity).",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "frEReportingDocumentUnsupportedCommercialLine": "{number}: a line this version cannot read",
+  "@frEReportingDocumentUnsupportedCommercialLine": {
+    "description": "#4163 one document the France e-reporting cannot sort or split, with its reason (unsupportedCommercialLine).",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
   "gebuevProcedureAccessBody": "Each accounting export and each archive download is written to the export log: who made it, when, which file and its digest. The audit trail lists these accesses beside the documents.",
   "@gebuevProcedureAccessBody": {
     "description": "#2377 The Swiss archive's procedures document: access logging (GeBüV art. 8)."

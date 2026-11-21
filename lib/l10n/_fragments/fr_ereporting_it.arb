@@ -1,0 +1,14 @@
+{
+  "@@locale": "it",
+  "frEReportingBlocked": "L’e-reporting Francia non è stato scritto: questi documenti non si possono classificare da ciò che hanno fissato all’emissione: {documents}. Registri la qualità del cliente, poi li corregga con una nota di credito e una nuova fattura; gli originali non vengono mai modificati.",
+  "frEReportingDocumentNoFrozenCapacity": "{number}: emessa prima che la qualità del cliente fosse fissata",
+  "frEReportingDocumentCapacityUnknown": "{number}: la qualità del cliente (impresa o consumatore) non è stata indicata",
+  "frEReportingDocumentBuyerCountryMissing": "{number}: il paese dell’impresa non è stato fissato",
+  "frEReportingDocumentBuyerCountryConflict": "{number}: sono stati fissati due paesi diversi",
+  "frEReportingDocumentBuyerVatIdMissing": "{number}: un’impresa all’estero richiede la propria partita IVA",
+  "frEReportingDocumentUnsupportedCommercialLine": "{number}: una riga che questa versione non sa leggere",
+  "frEReportingDocumentGoodsZeroRateUnsupported": "{number}: una riga di beni a aliquota zero: la sua categoria non è dedotta dall’aliquota",
+  "frEReportingDocumentGoodsAbroadUnsupported": "{number}: le cessioni di beni a un’impresa all’estero non sono supportate",
+  "frEReportingDocumentMissingReceiptAllocation": "{number}: beni e servizi con un pagamento: il pagamento non ha una ripartizione certa tra i due",
+  "frEReportingDocumentAmountRuleUnsupported": "{number}: un servizio la cui imposta fissata differisce dall’aliquota, con un pagamento nel periodo"
+}

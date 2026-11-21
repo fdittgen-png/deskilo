@@ -13327,6 +13327,61 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String frEReportingBlocked(String documents) {
+    return 'Das Frankreich-E-Reporting wurde nicht geschrieben: Diese Belege lassen sich nach dem, was sie bei der Ausstellung festgehalten haben, nicht einordnen: $documents. Erfassen Sie die Eigenschaft des Kunden und korrigieren Sie sie dann mit einer Gutschrift und einer neuen Rechnung; die Originale werden nie geändert.';
+  }
+
+  @override
+  String frEReportingDocumentAmountRuleUnsupported(String number) {
+    return '$number: eine Dienstleistung, deren festgehaltene Steuer vom Satz abweicht, mit einer Zahlung im Zeitraum';
+  }
+
+  @override
+  String frEReportingDocumentBuyerCountryConflict(String number) {
+    return '$number: zwei verschiedene Länder wurden festgehalten';
+  }
+
+  @override
+  String frEReportingDocumentBuyerCountryMissing(String number) {
+    return '$number: das Land des Unternehmers wurde nicht festgehalten';
+  }
+
+  @override
+  String frEReportingDocumentBuyerVatIdMissing(String number) {
+    return '$number: ein Unternehmer im Ausland braucht seine USt-IdNr.';
+  }
+
+  @override
+  String frEReportingDocumentCapacityUnknown(String number) {
+    return '$number: die Eigenschaft des Kunden (Unternehmer oder Verbraucher) wurde nicht angegeben';
+  }
+
+  @override
+  String frEReportingDocumentGoodsAbroadUnsupported(String number) {
+    return '$number: Warenlieferungen an ein Unternehmen im Ausland werden nicht unterstützt';
+  }
+
+  @override
+  String frEReportingDocumentGoodsZeroRateUnsupported(String number) {
+    return '$number: eine Warenposition mit Nullsatz: ihre Kategorie wird nicht aus dem Satz abgeleitet';
+  }
+
+  @override
+  String frEReportingDocumentMissingReceiptAllocation(String number) {
+    return '$number: Waren und Dienstleistungen mit einer Zahlung: die Zahlung hat keine belastbare Aufteilung auf beide';
+  }
+
+  @override
+  String frEReportingDocumentNoFrozenCapacity(String number) {
+    return '$number: ausgestellt, bevor die Eigenschaft des Kunden festgehalten wurde';
+  }
+
+  @override
+  String frEReportingDocumentUnsupportedCommercialLine(String number) {
+    return '$number: eine Position, die diese Version nicht lesen kann';
+  }
+
+  @override
   String get gebuevProcedureAccessBody =>
       'Jeder Buchhaltungsexport und jeder Download eines Archivs wird im Exportprotokoll festgehalten: wer, wann, welche Datei und ihr Hashwert. Der Prüfpfad führt diese Zugriffe neben den Belegen auf.';
 

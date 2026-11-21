@@ -57,6 +57,7 @@ import 'accounting_export_xero.dart';
 import 'bank_reconciliation_archive.dart';
 import 'e_invoice_identity.dart';
 import 'export_year_books.dart';
+import 'fr_ereporting_blocked_text.dart';
 import 'invoice_actions.dart';
 import 'invoice_documents.dart';
 import 'invoice_original_document.dart';
@@ -499,8 +500,8 @@ class AccountingExportRun {
       context,
       domain: 'money',
       message: 'France e-reporting export failed',
-      action: () async => save(
-        frEReport(
+      action: () async {
+        final report = frEReport(
           exported,
           start: DateTime(month.year, month.month),
           end: DateTime(month.year, month.month + 1, 0),
@@ -510,9 +511,14 @@ class AccountingExportRun {
           basis: EReportingBasis(homeCountry: eReportingCountry,
             onReceipts: workspaceTaxPointBasis(workspace.invoiceLegal, workspace.countryCode, reference: taxReference).onReceipts),
           currency: workspace.currencyCode,
-        ).toXml(),
-        named('e-reporting'),
-      ),
+        );
+        // #4163 -- a report that cannot sort a document is not written.
+        if (!report.isComplete) {
+          if (!context.mounted) return;
+          return AppSnack.error(context, frEReportingBlockedText(l10n, report.unresolved));
+        }
+        await save(report.toXml(), named('e-reporting'));
+      },
     );
   }
 

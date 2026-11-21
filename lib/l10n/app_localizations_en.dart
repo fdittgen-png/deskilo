@@ -13208,6 +13208,61 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String frEReportingBlocked(String documents) {
+    return 'The France e-reporting was not written: these documents cannot be sorted from what they froze at issue: $documents. Record the customer\'s capacity, then correct them with a credit note and a new invoice; the originals are never edited.';
+  }
+
+  @override
+  String frEReportingDocumentAmountRuleUnsupported(String number) {
+    return '$number: a service whose frozen tax differs from its rate, with a payment in the period';
+  }
+
+  @override
+  String frEReportingDocumentBuyerCountryConflict(String number) {
+    return '$number: two different countries were frozen';
+  }
+
+  @override
+  String frEReportingDocumentBuyerCountryMissing(String number) {
+    return '$number: the business\'s country was not frozen';
+  }
+
+  @override
+  String frEReportingDocumentBuyerVatIdMissing(String number) {
+    return '$number: a business abroad needs its VAT number';
+  }
+
+  @override
+  String frEReportingDocumentCapacityUnknown(String number) {
+    return '$number: the customer\'s capacity (business or consumer) was not stated';
+  }
+
+  @override
+  String frEReportingDocumentGoodsAbroadUnsupported(String number) {
+    return '$number: goods delivered to a business abroad are not supported';
+  }
+
+  @override
+  String frEReportingDocumentGoodsZeroRateUnsupported(String number) {
+    return '$number: a goods line at a zero rate: its category is not inferred from the rate';
+  }
+
+  @override
+  String frEReportingDocumentMissingReceiptAllocation(String number) {
+    return '$number: goods and services with a payment: the payment has no authoritative split between them';
+  }
+
+  @override
+  String frEReportingDocumentNoFrozenCapacity(String number) {
+    return '$number: issued before the customer\'s capacity was frozen';
+  }
+
+  @override
+  String frEReportingDocumentUnsupportedCommercialLine(String number) {
+    return '$number: a line this version cannot read';
+  }
+
+  @override
   String get gebuevProcedureAccessBody =>
       'Each accounting export and each archive download is written to the export log: who made it, when, which file and its digest. The audit trail lists these accesses beside the documents.';
 
