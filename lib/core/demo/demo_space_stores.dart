@@ -125,6 +125,8 @@ class DemoSpaceStores {
     hasCustomer: (id) => billingCustomers.of(key.id).any((p) => p.subjectId == id),
     actor: () => fixture.actor.memberId,
     clock: () => fixture.seededAt,
+    // Kessler Conseil's training engagement: done before its invoice
+    seed: key == DemoSpaceKey.freelancer ? (r) => seedFreelancerEngagement(r, customerQuotes) : null,
   );
 
   /// #3846 — the customer statement of the space's own money.

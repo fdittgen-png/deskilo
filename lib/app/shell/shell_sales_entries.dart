@@ -50,10 +50,7 @@ extension SalesEntries on DrawerEntries {
           route: '/money/quotes',
         ),
       // #4178 — the services ordered, followed ordered, started, done.
-      if (sales &&
-          features.contains(WorkspaceFeature.serviceFulfilment) &&
-          (may(WorkspacePermission.viewFinances) ||
-              may(WorkspacePermission.issueInvoices)))
+      if (own.contains(BusinessEntry.engagements))
         DrawerEntry(
           'drawer-engagements',
           Icons.assignment_turned_in_outlined,

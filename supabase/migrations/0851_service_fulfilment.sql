@@ -705,4 +705,14 @@ $fn$;
 revoke execute on function public.export_workspace_records(uuid) from public, anon;
 grant execute on function public.export_workspace_records(uuid) to authenticated;
 
+-- ── 8. the freelancer proposes it ───────────────────────────────────────
+-- A freelancer follows each ordered service from the order to the work done, so
+-- the reviewed kind profile (0834, 0846) proposes `serviceFulfilment` too: a new
+-- version of the profile (the trigger of 0834 raises `profile_version` and
+-- recomputes the digest), so a proposal reviewed on the earlier one is reviewed
+-- again. The generic `service` kind is untouched.
+update public.business_kinds
+   set feature_profile = feature_profile || '{"serviceFulfilment": true}'::jsonb
+ where code = 'freelancer';
+
 select public.set_deskilo_schema_version(851);

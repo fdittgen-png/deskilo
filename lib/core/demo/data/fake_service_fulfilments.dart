@@ -65,6 +65,7 @@ class FakeServiceFulfilmentRepository implements ServiceFulfilmentRepository {
     required this.hasCustomer,
     required this.actor,
     required this.clock,
+    this.seed,
   });
 
   final String workspaceId;
@@ -79,6 +80,28 @@ class FakeServiceFulfilmentRepository implements ServiceFulfilmentRepository {
   final String Function() actor;
   final DateTime Function() clock;
 
+  /// What the space already has (the Demo's engagements), made through the
+  /// repository's own operations before the first answer.
+  final Future<void> Function(FakeServiceFulfilmentRepository repo)? seed;
+  Future<void>? _seeding;
+  var _inSeed = false;
+
+  Future<void> _ready() async {
+    final make = seed;
+    if (make == null || _inSeed) {
+      return;
+    }
+    _seeding ??= () async {
+      _inSeed = true;
+      try {
+        await make(this);
+      } finally {
+        _inSeed = false;
+      }
+    }();
+    await _seeding;
+  }
+
   final _items = <_Engagement>[];
 
   /// request id -> what it asked and what it made or did.
@@ -92,15 +115,19 @@ class FakeServiceFulfilmentRepository implements ServiceFulfilmentRepository {
   ]) => FulfilmentRefusal(kind, detail: detail);
 
   @override
-  Future<List<ServiceFulfilment>> fulfilments(String workspaceId) async => [
-    for (final e in _items) await _view(e),
-  ];
+  Future<List<ServiceFulfilment>> fulfilments(String workspaceId) async {
+    await _ready();
+    return [for (final e in _items) await _view(e)];
+  }
 
   @override
   Future<ServiceFulfilment> fulfilment(
     String workspaceId,
     String fulfilmentId,
-  ) async => await _view(_find(fulfilmentId));
+  ) async {
+    await _ready();
+    return _view(_find(fulfilmentId));
+  }
 
   @override
   Future<ServiceFulfilment?> ofLine(
@@ -109,6 +136,7 @@ class FakeServiceFulfilmentRepository implements ServiceFulfilmentRepository {
     required String id,
     required String lineId,
   }) async {
+    await _ready();
     final source = await _source(workspaceId, kind, id, lineId);
     final found = _byKey(source.key);
     return found == null ? null : await _view(found);
@@ -122,6 +150,7 @@ class FakeServiceFulfilmentRepository implements ServiceFulfilmentRepository {
     required String id,
     required String lineId,
   }) async {
+    await _ready();
     if (kind != 'quote' && kind != 'invoice') {
       throw _refuse(FulfilmentRefusalKind.incomplete, 'kind');
     }
@@ -146,6 +175,7 @@ class FakeServiceFulfilmentRepository implements ServiceFulfilmentRepository {
     required String requestId,
     required DirectEngagementInput input,
   }) async {
+    await _ready();
     final digest = 'direct|${input.toWire()}';
     final replay = await _replay(requestId, digest);
     if (replay != null) return replay;
@@ -189,6 +219,7 @@ class FakeServiceFulfilmentRepository implements ServiceFulfilmentRepository {
     required String requestId,
     String reason = '',
   }) async {
+    await _ready();
     final e = _find(fulfilmentId);
     final why = reason.trim();
     final digest = '$fulfilmentId|$expectedRevision|${to.wire}|$why';
@@ -229,6 +260,7 @@ class FakeServiceFulfilmentRepository implements ServiceFulfilmentRepository {
     required String invoiceId,
     required String lineId,
   }) async {
+    await _ready();
     final e = _find(fulfilmentId);
     if (e.source.key.kind != 'direct') {
       throw _refuse(FulfilmentRefusalKind.state, 'not_direct');
