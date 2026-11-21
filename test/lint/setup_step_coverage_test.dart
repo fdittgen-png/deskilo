@@ -42,6 +42,9 @@ const _switches = <WorkspaceFeature>{
   // #4169 — lots and expiry on those goods are asked for on the item's own
   // stock settings, not in the setup guide.
   WorkspaceFeature.stockLots,
+  // #4171 — receiving a delivery into stock is asked for on the order's own
+  // receipt pane, not in the setup guide.
+  WorkspaceFeature.stockReceiving,
   // Booking and the plan read what is already set up.
   WorkspaceFeature.seriesBooking,
   WorkspaceFeature.seatDayTimeline,

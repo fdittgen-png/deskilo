@@ -7605,6 +7605,14 @@
   },
   "featureStockManagementDesc": "Seguir las mercancías: dónde están, en qué unidad, de qué lote, y cada movimiento entre dos lugares. Desactivado: un artículo del catálogo conserva su simple recuento en estantería.",
   "featureStockManagementTitle": "Gestión de existencias",
+  "featureStockReceivingDesc": "Colocar las mercancías de una entrega de pedido a proveedor en ubicaciones y nuevos lotes, una sola vez, conservando su origen. Desactivado: una entrega se registra como antes y no se mueven existencias.",
+  "@featureStockReceivingDesc": {
+    "description": "#4171 what the receiving into stock feature does, and what off means"
+  },
+  "featureStockReceivingTitle": "Recepción en existencias",
+  "@featureStockReceivingTitle": {
+    "description": "#4171 the name of the receiving into stock feature"
+  },
   "featureSubscriptionInvoicesDesc": "La cuota se factura antes del mes que paga, en la fecha que elija. Desactivado: la cuota sigue en la factura del mes.",
   "featureSubscriptionInvoicesTitle": "Facturas de suscripción",
   "featureSupplyClassificationDesc": "Cada servicio del catálogo indica si está vinculado a los locales (por defecto: tributa donde se encuentra el inmueble, para cualquier cliente) o si es un servicio general, como la gestión del correo o una oficina virtual, por el que una empresa de otro Estado de la UE aplica la inversión del sujeto pasivo. Desactivado: la elección desaparece, salvo en un negocio que no reserva espacios, cuyos servicios nuevos empiezan como servicios generales.",
@@ -18726,6 +18734,14 @@
   },
   "settingHintPurchaseSupplierLookupPerMinute": "El máximo de búsquedas de proveedores que una persona puede hacer por minuto en este servidor. Por encima, no se envía nada al registro y la búsqueda se responde como ocupada.",
   "settingHintPurchaseSupplierLookupTimeoutSeconds": "Cuánto espera el servidor al registro de empresas (VIES) antes de que una búsqueda de proveedor se considere agotada. Se conserva lo que usted escribió y puede volver a intentarlo o continuar a mano.",
+  "settingHintQuoteDefaultValidity": "Cuántos días permanece válido un presupuesto nuevo cuando su autor no indica fecha de fin. Nunca más que la validez máxima.",
+  "@settingHintQuoteDefaultValidity": {
+    "description": "#4291 hint of the setting quotes.default_validity_days"
+  },
+  "settingHintQuoteMaxValidity": "El máximo de tiempo que puede permanecer válido un presupuesto, contado desde su fecha de oferta. Una validez mayor se rechaza al guardar el presupuesto.",
+  "@settingHintQuoteMaxValidity": {
+    "description": "#4291 hint of the setting quotes.max_validity_days"
+  },
   "settingHintReadinessRecentExportDays": "Días durante los que una exportación registrada por la aplicación sigue contando como prueba reciente de que la recuperación funciona. Pasado ese plazo, la recuperación queda sin verificar.",
   "@settingHintReadinessRecentExportDays": {
     "description": "#2487 settings: Setting hint."
@@ -18933,6 +18949,14 @@
   },
   "settingLabelPurchaseSupplierLookupPerMinute": "Búsquedas de proveedores por persona y minuto",
   "settingLabelPurchaseSupplierLookupTimeoutSeconds": "Espera de la búsqueda de proveedores (segundos)",
+  "settingLabelQuoteDefaultValidity": "Validez predeterminada de un presupuesto",
+  "@settingLabelQuoteDefaultValidity": {
+    "description": "#4291 label of the setting quotes.default_validity_days"
+  },
+  "settingLabelQuoteMaxValidity": "Validez máxima de un presupuesto",
+  "@settingLabelQuoteMaxValidity": {
+    "description": "#4291 label of the setting quotes.max_validity_days"
+  },
   "settingLabelReadinessRecentExportDays": "Ventana de exportación reciente",
   "@settingLabelReadinessRecentExportDays": {
     "description": "#2487 settings: Setting label."

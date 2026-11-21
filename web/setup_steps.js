@@ -187,6 +187,8 @@ const STEPS=[
   selectEl(T('resendMollie'),'paymentResend.mollie',opts(RESEND_MOLLIE),T('resendMollieHint'),null,'billing'),
   selectEl(T('resendPaypal'),'paymentResend.paypal',opts(RESEND_PAYPAL),T('resendPaypalHint'),null,'billing'),
   selectEl(T('resendStripe'),'paymentResend.stripe',opts(RESEND_STRIPE),T('resendStripeHint'),null,'billing'),
+  // #4291 — how long a quote stays valid, while quotes are on.
+  ...(on('customerQuotes')?[selectEl(T('quoteDefaultValidity'),'quotes.defaultValidity',opts(QUOTE_VALIDITY),T('quoteDefaultValidityHint'),null,'billing'),selectEl(T('quoteMaxValidity'),'quotes.maxValidity',opts(QUOTE_MAX_VALIDITY),T('quoteMaxValidityHint'),null,'billing')]:[]),
   lbl(T('billingPackages'),'packages','packages'),h('p',{class:'hint'},T('billingPackagesHint')),help('packages'),
   tableRows([T('colName'),T('colDays'),T('colPrice',{currency:S.currency})],'packages',(p,pp)=>[cell(`${pp}.name`),cell(`${pp}.days`,'number'),cell(`${pp}.price`,'number')],()=>({name:'',days:'',price:''}),'+ '+T('billingAddPackage'))]},
  check(){const f=[];

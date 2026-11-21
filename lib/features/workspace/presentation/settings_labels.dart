@@ -87,6 +87,13 @@ String _bankSettingLabel(AppLocalizations l10n, String key) => switch (key) {
       'bank.import_max_bytes' => l10n.settingLabelBankImportMaxBytes,
       'bank.import_max_lines' => l10n.settingLabelBankImportMaxLines,
       'bank.match_window_days' => l10n.settingLabelBankMatchWindowDays,
+      _ => _quoteSettingLabel(l10n, key),
+    };
+
+/// #4291 -- how long a quote stays valid.
+String _quoteSettingLabel(AppLocalizations l10n, String key) => switch (key) {
+      'quotes.default_validity_days' => l10n.settingLabelQuoteDefaultValidity,
+      'quotes.max_validity_days' => l10n.settingLabelQuoteMaxValidity,
       _ => _recordsSettingLabel(l10n, key),
     };
 
@@ -206,6 +213,8 @@ String? _bankSettingHint(AppLocalizations l10n, String key) => switch (key) {
       'bank.import_max_bytes' => l10n.settingHintBankImportMaxBytes,
       'bank.import_max_lines' => l10n.settingHintBankImportMaxLines,
       'bank.match_window_days' => l10n.settingHintBankMatchWindowDays,
+      'quotes.default_validity_days' => l10n.settingHintQuoteDefaultValidity,
+      'quotes.max_validity_days' => l10n.settingHintQuoteMaxValidity,
       'records.hosting_country' => l10n.settingHintRecordsHostingCountry,
       'records.invoice_originals_sweep' => l10n.settingHintRecordsInvoiceOriginalsSweep,
       'business.kind' => l10n.settingHintBusinessKind,

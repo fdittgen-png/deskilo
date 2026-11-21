@@ -313,5 +313,6 @@ String _latestName(AppLocalizations l10n, WorkspaceFeature feature) =>
       WorkspaceFeature.customerQuotes => l10n.featureCustomerQuotesTitle,
       WorkspaceFeature.stockManagement => l10n.featureStockManagementTitle,
       WorkspaceFeature.stockLots => l10n.featureStockLotsTitle,
+      WorkspaceFeature.stockReceiving => l10n.featureStockReceivingTitle,
       _ => feature.name,
     };

@@ -12352,6 +12352,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get featureStockManagementTitle => 'Gestión de existencias';
 
   @override
+  String get featureStockReceivingDesc =>
+      'Colocar las mercancías de una entrega de pedido a proveedor en ubicaciones y nuevos lotes, una sola vez, conservando su origen. Desactivado: una entrega se registra como antes y no se mueven existencias.';
+
+  @override
+  String get featureStockReceivingTitle => 'Recepción en existencias';
+
+  @override
   String get featureSubscriptionInvoicesDesc =>
       'La cuota se factura antes del mes que paga, en la fecha que elija. Desactivado: la cuota sigue en la factura del mes.';
 
@@ -31632,6 +31639,14 @@ class AppLocalizationsEs extends AppLocalizations {
       'Cuánto espera el servidor al registro de empresas (VIES) antes de que una búsqueda de proveedor se considere agotada. Se conserva lo que usted escribió y puede volver a intentarlo o continuar a mano.';
 
   @override
+  String get settingHintQuoteDefaultValidity =>
+      'Cuántos días permanece válido un presupuesto nuevo cuando su autor no indica fecha de fin. Nunca más que la validez máxima.';
+
+  @override
+  String get settingHintQuoteMaxValidity =>
+      'El máximo de tiempo que puede permanecer válido un presupuesto, contado desde su fecha de oferta. Una validez mayor se rechaza al guardar el presupuesto.';
+
+  @override
   String get settingHintReadinessRecentExportDays =>
       'Días durante los que una exportación registrada por la aplicación sigue contando como prueba reciente de que la recuperación funciona. Pasado ese plazo, la recuperación queda sin verificar.';
 
@@ -31949,6 +31964,13 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingLabelPurchaseSupplierLookupTimeoutSeconds =>
       'Espera de la búsqueda de proveedores (segundos)';
+
+  @override
+  String get settingLabelQuoteDefaultValidity =>
+      'Validez predeterminada de un presupuesto';
+
+  @override
+  String get settingLabelQuoteMaxValidity => 'Validez máxima de un presupuesto';
 
   @override
   String get settingLabelReadinessRecentExportDays =>

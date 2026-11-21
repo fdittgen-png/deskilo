@@ -19966,6 +19966,18 @@ abstract class AppLocalizations {
   /// **'Stock management'**
   String get featureStockManagementTitle;
 
+  /// #4171 what the receiving into stock feature does, and what off means
+  ///
+  /// In en, this message translates to:
+  /// **'Put the goods of a purchase-order delivery away into places and new lots, once, with their origin kept. Off: a delivery is recorded as before and no stock moves.'**
+  String get featureStockReceivingDesc;
+
+  /// #4171 the name of the receiving into stock feature
+  ///
+  /// In en, this message translates to:
+  /// **'Receiving into stock'**
+  String get featureStockReceivingTitle;
+
   /// Shown as a text in feature copy (workspace).
   ///
   /// In en, this message translates to:
@@ -50397,6 +50409,18 @@ abstract class AppLocalizations {
   /// **'How long the server waits for the company registry (VIES) before a supplier lookup counts as timed out. The person keeps what they typed and may retry or go on by hand.'**
   String get settingHintPurchaseSupplierLookupTimeoutSeconds;
 
+  /// #4291 hint of the setting quotes.default_validity_days
+  ///
+  /// In en, this message translates to:
+  /// **'How many days a new quote stays valid when its author states no end date. Never more than the longest validity.'**
+  String get settingHintQuoteDefaultValidity;
+
+  /// #4291 hint of the setting quotes.max_validity_days
+  ///
+  /// In en, this message translates to:
+  /// **'The longest a quote may stay valid, counted from its offer date. A longer validity is refused when the quote is saved.'**
+  String get settingHintQuoteMaxValidity;
+
   /// #2487 settings: Setting hint.
   ///
   /// In en, this message translates to:
@@ -50900,6 +50924,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Supplier lookup wait (seconds)'**
   String get settingLabelPurchaseSupplierLookupTimeoutSeconds;
+
+  /// #4291 label of the setting quotes.default_validity_days
+  ///
+  /// In en, this message translates to:
+  /// **'Default validity of a quote'**
+  String get settingLabelQuoteDefaultValidity;
+
+  /// #4291 label of the setting quotes.max_validity_days
+  ///
+  /// In en, this message translates to:
+  /// **'Longest validity of a quote'**
+  String get settingLabelQuoteMaxValidity;
 
   /// #2487 settings: Setting label.
   ///

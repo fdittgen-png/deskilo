@@ -3006,6 +3006,8 @@ Choose **New quote**, pick the customer, set the dates and add the lines. **Save
 
 Once the customer has answered, choose **Record the answer** on a sent quote: you record their answer as the issuer (accepted or declined, the date, how it reached you); it is your record, not their signature, and an offer past its date can no longer be accepted. For an accepted quote choose **Invoice this quote**, set the dates and **Check the invoice**: the invoice is previewed from the accepted revision and set against what was accepted. If it differs (the date, the customer's details or the tax facts changed) you confirm that you reviewed it; what cannot be issued yet is named. Then **Issue the invoice**: one quote makes one invoice, whatever happens next to that invoice.
 
+How long a new quote stays valid when you state no end date, and the longest validity you accept, are your own settings: **Default validity of a quote** (30 days to begin with) and **Longest validity of a quote** (365 days to begin with), in the workspace settings. A longer validity is refused when the quote is saved.
+
 On a sent quote, **Share the PDF** opens the offer as a document: a quote, with its own reference and how long it is valid, the customer, the lines and what they come to as they were frozen when it was sent (the net, the VAT per rate and the total). It is never an invoice and carries no invoice number. You can view it, save it or share it.
 
 <!-- anchor: user.money.amounts -->

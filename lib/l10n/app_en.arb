@@ -16123,6 +16123,14 @@
   "@featureStockManagementTitle": {
     "description": "the feature's name (#3824)"
   },
+  "featureStockReceivingDesc": "Put the goods of a purchase-order delivery away into places and new lots, once, with their origin kept. Off: a delivery is recorded as before and no stock moves.",
+  "@featureStockReceivingDesc": {
+    "description": "#4171 what the receiving into stock feature does, and what off means"
+  },
+  "featureStockReceivingTitle": "Receiving into stock",
+  "@featureStockReceivingTitle": {
+    "description": "#4171 the name of the receiving into stock feature"
+  },
   "featureSubscriptionInvoicesDesc": "The membership fee is invoiced before the month it pays for, on a date you choose. Off: the fee stays on the whole-month invoice.",
   "@featureSubscriptionInvoicesDesc": {
     "description": "Shown as a text in feature copy (workspace)."
@@ -40977,6 +40985,14 @@
   "@settingHintPurchaseSupplierLookupTimeoutSeconds": {
     "description": "#2863 supplier lookup"
   },
+  "settingHintQuoteDefaultValidity": "How many days a new quote stays valid when its author states no end date. Never more than the longest validity.",
+  "@settingHintQuoteDefaultValidity": {
+    "description": "#4291 hint of the setting quotes.default_validity_days"
+  },
+  "settingHintQuoteMaxValidity": "The longest a quote may stay valid, counted from its offer date. A longer validity is refused when the quote is saved.",
+  "@settingHintQuoteMaxValidity": {
+    "description": "#4291 hint of the setting quotes.max_validity_days"
+  },
   "settingHintReadinessRecentExportDays": "Days an export the app recorded still counts as recent evidence that recovery works. Older than this, recovery reads as unverified.",
   "@settingHintReadinessRecentExportDays": {
     "description": "#2487 settings: Setting hint."
@@ -41312,6 +41328,14 @@
   "settingLabelPurchaseSupplierLookupTimeoutSeconds": "Supplier lookup wait (seconds)",
   "@settingLabelPurchaseSupplierLookupTimeoutSeconds": {
     "description": "#2863 supplier lookup"
+  },
+  "settingLabelQuoteDefaultValidity": "Default validity of a quote",
+  "@settingLabelQuoteDefaultValidity": {
+    "description": "#4291 label of the setting quotes.default_validity_days"
+  },
+  "settingLabelQuoteMaxValidity": "Longest validity of a quote",
+  "@settingLabelQuoteMaxValidity": {
+    "description": "#4291 label of the setting quotes.max_validity_days"
   },
   "settingLabelReadinessRecentExportDays": "Recent export window",
   "@settingLabelReadinessRecentExportDays": {

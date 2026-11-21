@@ -3006,6 +3006,8 @@ Scegliere **Nuovo preventivo**, il cliente, le date e aggiungere le righe. **Sal
 
 Quando il cliente ha risposto, scegliere **Registrare la risposta** su un preventivo inviato: si registra la sua risposta come emittente (accettato o rifiutato, la data, come è arrivata); è l'annotazione dell'emittente, non la firma del cliente, e un'offerta oltre la sua data non può più essere accettata. Per un preventivo accettato scegliere **Fatturare questo preventivo**, fissare le date e **Controllare la fattura**: la fattura viene mostrata in anteprima dalla revisione accettata e confrontata con quanto accettato. Se differisce (sono cambiati la data, i dati del cliente o i fatti fiscali), si conferma di averla rivista; ciò che non può ancora essere emesso viene indicato. Poi **Emettere la fattura**: un preventivo dà una sola fattura, qualunque cosa succeda poi a quella fattura.
 
+Per quanto tempo un nuovo preventivo resta valido quando non indica una data di fine, e la validità massima che accetta, sono impostazioni proprie: **Validità predefinita di un preventivo** (all’inizio 30 giorni) e **Validità massima di un preventivo** (all’inizio 365 giorni), nelle impostazioni dello spazio. Una validità maggiore viene rifiutata al salvataggio del preventivo.
+
 Su un preventivo inviato, **Condividi il PDF** apre l’offerta come documento: un preventivo, con un riferimento proprio e la durata di validità, il cliente, le righe e quanto risultano, così come sono state fissate all’invio (il netto, l’IVA per aliquota e il totale). Non è mai una fattura e non reca alcun numero di fattura. Può visualizzarlo, salvarlo o condividerlo.
 
 <!-- anchor: user.money.amounts -->

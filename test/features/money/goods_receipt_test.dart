@@ -249,7 +249,7 @@ void main() {
     expect(repo.receipts.every((r) => !r.receivedOn.isAfter(_today)), isTrue);
   });
 
-  test('a delivery parses with its line numbers', () {
+  test('a delivery parses with its line numbers and the stable id of each receipt line', () {
     final r = PurchaseOrderReceipt.fromJson({
       'id': 'r',
       'order_id': 'o',
@@ -257,6 +257,7 @@ void main() {
       'note': 'short',
       'purchase_order_receipt_lines': [
         {
+          'id': 'rl-2',
           'quantity': 6,
           'purchase_order_lines': {'line_no': 2},
         },
@@ -264,6 +265,7 @@ void main() {
     });
     expect((r.receivedOn, r.note), (DateTime(2026, 11), 'short'));
     expect(r.lines, {2: 6.0});
+    expect(r.lineIds, {2: 'rl-2'}, reason: 'a put-away names the receipt line, not its position');
   });
 
   group('the order card', () {

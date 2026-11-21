@@ -788,6 +788,10 @@ window.SETUP_L10N={
    "businessKind_service": "Another service business",
    "helpAppBusinessKind": "Setup guide → first step (or Workspace settings → What kind of business is it?)",
    "businessKindNoBookingYet": "Booking of classes and appointments is not part of this version. Today you get: your services with prices, invoices, online payment, messages and your public page.",
+   "quoteDefaultValidity": "Default validity of a quote",
+   "quoteDefaultValidityHint": "How many days a new quote stays valid when no end date is stated. Never more than the longest validity. Set in the app's settings.",
+   "quoteMaxValidity": "Longest validity of a quote",
+   "quoteMaxValidityHint": "The longest a quote may stay valid, counted from its offer date; a longer one is refused when the quote is saved. Set in the app's settings.",
    "resendMollie": "Resend window, Mollie",
    "resendMollieHint": "How long after a checkout was first sent to Mollie the same checkout may be sent again under its original request. Keep it below how long Mollie remembers a request (1 hour). Set in the app's settings.",
    "resendPaypal": "Resend window, PayPal",
@@ -1447,6 +1451,10 @@ window.SETUP_L10N={
    "stockLots": [
     "Lots and expiry",
     "Track goods by lot or by expiry date, with a shelf life. Off: no item is tracked by lot, and what was recorded is kept as it is."
+   ],
+   "stockReceiving": [
+    "Receiving into stock",
+    "Put the goods of a purchase-order delivery away into places and new lots, once, with their origin kept. Off: a delivery is recorded as before and no stock moves."
    ]
   },
   "process": {
@@ -2631,6 +2639,10 @@ window.SETUP_L10N={
    "businessKind_service": "Autre entreprise de services",
    "helpAppBusinessKind": "Guide de mise en place → première étape (ou Réglages de l’espace → Quel genre d’activité est-ce ?)",
    "businessKindNoBookingYet": "La réservation de cours et de rendez-vous ne fait pas partie de cette version. Aujourd’hui, vous avez : vos prestations avec leurs prix, les factures, le paiement en ligne, les messages et votre page publique.",
+   "quoteDefaultValidity": "Validité par défaut d'un devis",
+   "quoteDefaultValidityHint": "Nombre de jours pendant lesquels un nouveau devis reste valable quand aucune date de fin n'est indiquée. Jamais plus que la validité maximale. À régler dans les paramètres de l'app.",
+   "quoteMaxValidity": "Validité maximale d'un devis",
+   "quoteMaxValidityHint": "La durée la plus longue pendant laquelle un devis peut rester valable, à compter de sa date d'offre ; une validité plus longue est refusée à l'enregistrement. À régler dans les paramètres de l'app.",
    "resendMollie": "Fenêtre de réémission, Mollie",
    "resendMollieHint": "Combien de temps après le premier envoi d'un paiement à Mollie le même paiement peut être renvoyé sous sa requête d'origine. À garder sous la durée pendant laquelle Mollie retient une requête (1 heure). Se règle dans les paramètres de l'app.",
    "resendPaypal": "Fenêtre de réémission, PayPal",
@@ -3290,6 +3302,10 @@ window.SETUP_L10N={
    "stockLots": [
     "Lots et péremption",
     "Suivre les marchandises par lot ou par date de péremption, avec une durée de conservation. Désactivé : aucun article n’est suivi par lot, et ce qui a été enregistré est conservé tel quel."
+   ],
+   "stockReceiving": [
+    "Réception en stock",
+    "Ranger les marchandises d’une livraison de commande fournisseur dans des emplacements et de nouveaux lots, une seule fois, avec leur origine conservée. Désactivé : une livraison est enregistrée comme avant et aucun stock ne bouge."
    ]
   },
   "process": {
@@ -4474,6 +4490,10 @@ window.SETUP_L10N={
    "businessKind_service": "Anderes Dienstleistungsunternehmen",
    "helpAppBusinessKind": "Einrichtungsleitfaden → erster Schritt (oder Einstellungen des Space → Was für ein Unternehmen ist es?)",
    "businessKindNoBookingYet": "Die Buchung von Kursen und Terminen ist nicht Teil dieser Version. Heute erhalten Sie: Ihre Leistungen mit Preisen, Rechnungen, Online-Zahlung, Nachrichten und Ihre öffentliche Seite.",
+   "quoteDefaultValidity": "Standardgültigkeit eines Angebots",
+   "quoteDefaultValidityHint": "Wie viele Tage ein neues Angebot gültig bleibt, wenn kein Enddatum angegeben ist. Nie länger als die längste Gültigkeit. In den Einstellungen der App festlegen.",
+   "quoteMaxValidity": "Längste Gültigkeit eines Angebots",
+   "quoteMaxValidityHint": "Die längste Zeit, die ein Angebot gültig bleiben darf, gerechnet ab dem Angebotsdatum; eine längere wird beim Speichern abgelehnt. In den Einstellungen der App festlegen.",
    "resendMollie": "Wiederholungsfenster, Mollie",
    "resendMollieHint": "Wie lange nach dem ersten Senden einer Zahlung an Mollie dieselbe Zahlung unter ihrer ursprünglichen Anfrage erneut gesendet werden darf. Unter der Dauer halten, für die Mollie eine Anfrage behält (1 Stunde). Wird in den Einstellungen der App festgelegt.",
    "resendPaypal": "Wiederholungsfenster, PayPal",
@@ -5133,6 +5153,10 @@ window.SETUP_L10N={
    "stockLots": [
     "Chargen und Verfall",
     "Waren nach Charge oder Verfallsdatum verfolgen, mit einer Haltbarkeit. Aus: kein Artikel wird nach Charge verfolgt, und Erfasstes bleibt unverändert."
+   ],
+   "stockReceiving": [
+    "Wareneingang ins Lager",
+    "Die Waren einer Lieferung zu einer Lieferantenbestellung einmalig in Lagerorte und neue Chargen einlagern, mit erhaltener Herkunft. Aus: eine Lieferung wird wie bisher erfasst und kein Bestand bewegt sich."
    ]
   },
   "process": {
@@ -6317,6 +6341,10 @@ window.SETUP_L10N={
    "businessKind_service": "Otra empresa de servicios",
    "helpAppBusinessKind": "Guía de configuración → primer paso (o Ajustes del espacio → ¿Qué tipo de negocio es?)",
    "businessKindNoBookingYet": "La reserva de clases y citas no forma parte de esta versión. Hoy obtiene: sus servicios con precios, facturas, pago en línea, mensajes y su página pública.",
+   "quoteDefaultValidity": "Validez predeterminada de un presupuesto",
+   "quoteDefaultValidityHint": "Cuántos días permanece válido un presupuesto nuevo cuando no se indica fecha de fin. Nunca más que la validez máxima. Se define en los ajustes de la app.",
+   "quoteMaxValidity": "Validez máxima de un presupuesto",
+   "quoteMaxValidityHint": "El máximo de tiempo que puede permanecer válido un presupuesto, contado desde su fecha de oferta; una validez mayor se rechaza al guardar. Se define en los ajustes de la app.",
    "resendMollie": "Ventana de reenvío, Mollie",
    "resendMollieHint": "Cuánto tiempo después del primer envío de un pago a Mollie puede reenviarse el mismo pago con su solicitud original. Manténgala por debajo del tiempo que Mollie conserva una solicitud (1 hora). Se define en los ajustes de la app.",
    "resendPaypal": "Ventana de reenvío, PayPal",
@@ -6976,6 +7004,10 @@ window.SETUP_L10N={
    "stockLots": [
     "Lotes y caducidad",
     "Seguir las mercancías por lote o por fecha de caducidad, con una vida útil. Desactivado: ningún artículo se sigue por lote y lo registrado se conserva tal cual."
+   ],
+   "stockReceiving": [
+    "Recepción en existencias",
+    "Colocar las mercancías de una entrega de pedido a proveedor en ubicaciones y nuevos lotes, una sola vez, conservando su origen. Desactivado: una entrega se registra como antes y no se mueven existencias."
    ]
   },
   "process": {
@@ -8160,6 +8192,10 @@ window.SETUP_L10N={
    "businessKind_service": "Altra impresa di servizi",
    "helpAppBusinessKind": "Guida di configurazione → primo passo (o Impostazioni dello spazio → Che tipo di attività è?)",
    "businessKindNoBookingYet": "La prenotazione di lezioni e appuntamenti non fa parte di questa versione. Oggi ha: i suoi servizi con i prezzi, le fatture, il pagamento online, i messaggi e la sua pagina pubblica.",
+   "quoteDefaultValidity": "Validità predefinita di un preventivo",
+   "quoteDefaultValidityHint": "Per quanti giorni un nuovo preventivo resta valido quando non è indicata una data di fine. Mai oltre la validità massima. Si imposta nelle impostazioni dell'app.",
+   "quoteMaxValidity": "Validità massima di un preventivo",
+   "quoteMaxValidityHint": "Il periodo più lungo in cui un preventivo può restare valido, a partire dalla data dell'offerta; una validità maggiore viene rifiutata al salvataggio. Si imposta nelle impostazioni dell'app.",
    "resendMollie": "Finestra di reinvio, Mollie",
    "resendMollieHint": "Per quanto tempo dopo il primo invio di un pagamento a Mollie lo stesso pagamento può essere reinviato con la sua richiesta originale. Tienila sotto il tempo per cui Mollie conserva una richiesta (1 ora). Si imposta nelle impostazioni dell'app.",
    "resendPaypal": "Finestra di reinvio, PayPal",
@@ -8819,6 +8855,10 @@ window.SETUP_L10N={
    "stockLots": [
     "Lotti e scadenza",
     "Seguire le merci per lotto o per data di scadenza, con una durata di conservazione. Disattivato: nessun articolo è seguito per lotto e ciò che è stato registrato resta invariato."
+   ],
+   "stockReceiving": [
+    "Ricezione a magazzino",
+    "Collocare le merci di una consegna di ordine a fornitore in ubicazioni e nuovi lotti, una sola volta, conservandone l’origine. Disattivato: una consegna è registrata come prima e nessuna giacenza si muove."
    ]
   },
   "process": {

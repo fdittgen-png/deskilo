@@ -7605,6 +7605,14 @@
   },
   "featureStockManagementDesc": "Waren verfolgen: wo sie sind, in welcher Einheit, aus welcher Charge, und jede Bewegung zwischen zwei Orten. Aus: ein Katalogartikel behält seinen einfachen Regalbestand.",
   "featureStockManagementTitle": "Lagerverwaltung",
+  "featureStockReceivingDesc": "Die Waren einer Lieferung zu einer Lieferantenbestellung einmalig in Lagerorte und neue Chargen einlagern, mit erhaltener Herkunft. Aus: eine Lieferung wird wie bisher erfasst und kein Bestand bewegt sich.",
+  "@featureStockReceivingDesc": {
+    "description": "#4171 what the receiving into stock feature does, and what off means"
+  },
+  "featureStockReceivingTitle": "Wareneingang ins Lager",
+  "@featureStockReceivingTitle": {
+    "description": "#4171 the name of the receiving into stock feature"
+  },
   "featureSubscriptionInvoicesDesc": "Der Mitgliedsbeitrag wird vor dem Monat berechnet, den er bezahlt, an einem Datum Ihrer Wahl. Aus: Der Beitrag bleibt auf der Monatsrechnung.",
   "featureSubscriptionInvoicesTitle": "Abo-Rechnungen",
   "featureSupplyClassificationDesc": "Jede Leistung des Katalogs gibt an, ob sie mit den Räumlichkeiten verbunden ist (Standard: steuerbar dort, wo das Gebäude liegt, für jeden Kunden) oder eine allgemeine Dienstleistung ist, etwa Postbearbeitung oder ein virtuelles Büro, für die ein Unternehmen in einem anderen EU-Staat die Steuer selbst schuldet. Aus: Die Auswahl entfällt, außer in einem Betrieb, der keine Plätze bucht; dort beginnen neue Leistungen als allgemeine Dienstleistungen.",
@@ -18726,6 +18734,14 @@
   },
   "settingHintPurchaseSupplierLookupPerMinute": "Wie viele Lieferantensuchen eine Person auf diesem Server höchstens pro Minute stellen darf. Darüber wird nichts an das Register gesendet und die Suche als ausgelastet beantwortet.",
   "settingHintPurchaseSupplierLookupTimeoutSeconds": "Wie lange der Server auf das Unternehmensregister (VIES) wartet, bevor eine Lieferantensuche als abgelaufen gilt. Die Eingaben bleiben erhalten; Sie können es erneut versuchen oder von Hand weitermachen.",
+  "settingHintQuoteDefaultValidity": "Wie viele Tage ein neues Angebot gültig bleibt, wenn der Ersteller kein Enddatum angibt. Nie länger als die längste Gültigkeit.",
+  "@settingHintQuoteDefaultValidity": {
+    "description": "#4291 hint of the setting quotes.default_validity_days"
+  },
+  "settingHintQuoteMaxValidity": "Die längste Zeit, die ein Angebot gültig bleiben darf, gerechnet ab seinem Angebotsdatum. Eine längere Gültigkeit wird beim Speichern des Angebots abgelehnt.",
+  "@settingHintQuoteMaxValidity": {
+    "description": "#4291 hint of the setting quotes.max_validity_days"
+  },
   "settingHintReadinessRecentExportDays": "Tage, in denen ein von der App erfasster Export noch als aktueller Nachweis gilt, dass die Wiederherstellung funktioniert. Danach bleibt die Wiederherstellung ungeprüft.",
   "@settingHintReadinessRecentExportDays": {
     "description": "#2487 settings: Setting hint."
@@ -18933,6 +18949,14 @@
   },
   "settingLabelPurchaseSupplierLookupPerMinute": "Lieferantensuchen pro Person und Minute",
   "settingLabelPurchaseSupplierLookupTimeoutSeconds": "Wartezeit der Lieferantensuche (Sekunden)",
+  "settingLabelQuoteDefaultValidity": "Standardgültigkeit eines Angebots",
+  "@settingLabelQuoteDefaultValidity": {
+    "description": "#4291 label of the setting quotes.default_validity_days"
+  },
+  "settingLabelQuoteMaxValidity": "Längste Gültigkeit eines Angebots",
+  "@settingLabelQuoteMaxValidity": {
+    "description": "#4291 label of the setting quotes.max_validity_days"
+  },
   "settingLabelReadinessRecentExportDays": "Zeitfenster für aktuelle Exporte",
   "@settingLabelReadinessRecentExportDays": {
     "description": "#2487 settings: Setting label."

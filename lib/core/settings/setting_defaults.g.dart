@@ -140,6 +140,10 @@ abstract final class SettingDefaults {
   static const int purchaseSupplierLookupPerMinute = 20;
   /// `purchase.supplier_lookup_timeout_seconds`
   static const int purchaseSupplierLookupTimeoutSeconds = 15;
+  /// `quotes.default_validity_days`
+  static const int quotesDefaultValidityDays = 30;
+  /// `quotes.max_validity_days`
+  static const int quotesMaxValidityDays = 365;
   /// `readiness.recent_export_days`
   static const int readinessRecentExportDays = 90;
   /// `records.cra_authorisation_reference`

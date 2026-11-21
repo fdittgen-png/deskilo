@@ -7605,6 +7605,14 @@
   },
   "featureStockManagementDesc": "Seguire la merce: dove si trova, in quale unità, da quale lotto, e ogni movimento tra due luoghi. Disattivato: un articolo del catalogo mantiene il suo semplice conteggio a scaffale.",
   "featureStockManagementTitle": "Gestione delle scorte",
+  "featureStockReceivingDesc": "Collocare le merci di una consegna di ordine a fornitore in ubicazioni e nuovi lotti, una sola volta, conservandone l’origine. Disattivato: una consegna è registrata come prima e nessuna giacenza si muove.",
+  "@featureStockReceivingDesc": {
+    "description": "#4171 what the receiving into stock feature does, and what off means"
+  },
+  "featureStockReceivingTitle": "Ricezione a magazzino",
+  "@featureStockReceivingTitle": {
+    "description": "#4171 the name of the receiving into stock feature"
+  },
   "featureSubscriptionInvoicesDesc": "La quota è fatturata prima del mese che paga, in una data scelta da Lei. Disattivato: la quota resta sulla fattura del mese.",
   "featureSubscriptionInvoicesTitle": "Fatture di abbonamento",
   "featureSupplyClassificationDesc": "Ogni servizio del catalogo indica se è connesso ai locali (predefinito: tassato dove si trova l'immobile, per qualsiasi cliente) o se è un servizio generico, come la gestione della posta o un ufficio virtuale, per cui un'impresa di un altro Stato UE applica l'inversione contabile. Disattivato: la scelta scompare, tranne in un'attività che non prenota spazi, i cui nuovi servizi partono come servizi generici.",
@@ -18726,6 +18734,14 @@
   },
   "settingHintPurchaseSupplierLookupPerMinute": "Il numero massimo di ricerche fornitore che una persona può fare al minuto su questo server. Oltre il limite non viene inviato nulla al registro e la ricerca risulta occupata.",
   "settingHintPurchaseSupplierLookupTimeoutSeconds": "Quanto il server attende il registro delle imprese (VIES) prima che una ricerca fornitore sia considerata scaduta. Ciò che Lei ha digitato resta; può riprovare o proseguire a mano.",
+  "settingHintQuoteDefaultValidity": "Per quanti giorni un nuovo preventivo resta valido quando l’autore non indica una data di fine. Mai oltre la validità massima.",
+  "@settingHintQuoteDefaultValidity": {
+    "description": "#4291 hint of the setting quotes.default_validity_days"
+  },
+  "settingHintQuoteMaxValidity": "Il periodo più lungo in cui un preventivo può restare valido, a partire dalla data dell’offerta. Una validità maggiore viene rifiutata al salvataggio del preventivo.",
+  "@settingHintQuoteMaxValidity": {
+    "description": "#4291 hint of the setting quotes.max_validity_days"
+  },
   "settingHintReadinessRecentExportDays": "Giorni in cui un’esportazione registrata dall’app vale ancora come prova recente che il ripristino funziona. Oltre, il ripristino resta non verificato.",
   "@settingHintReadinessRecentExportDays": {
     "description": "#2487 settings: Setting hint."
@@ -18933,6 +18949,14 @@
   },
   "settingLabelPurchaseSupplierLookupPerMinute": "Ricerche fornitore per persona al minuto",
   "settingLabelPurchaseSupplierLookupTimeoutSeconds": "Attesa della ricerca fornitore (secondi)",
+  "settingLabelQuoteDefaultValidity": "Validità predefinita di un preventivo",
+  "@settingLabelQuoteDefaultValidity": {
+    "description": "#4291 label of the setting quotes.default_validity_days"
+  },
+  "settingLabelQuoteMaxValidity": "Validità massima di un preventivo",
+  "@settingLabelQuoteMaxValidity": {
+    "description": "#4291 label of the setting quotes.max_validity_days"
+  },
   "settingLabelReadinessRecentExportDays": "Finestra dell’esportazione recente",
   "@settingLabelReadinessRecentExportDays": {
     "description": "#2487 settings: Setting label."

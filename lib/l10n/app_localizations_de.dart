@@ -12381,6 +12381,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get featureStockManagementTitle => 'Lagerverwaltung';
 
   @override
+  String get featureStockReceivingDesc =>
+      'Die Waren einer Lieferung zu einer Lieferantenbestellung einmalig in Lagerorte und neue Chargen einlagern, mit erhaltener Herkunft. Aus: eine Lieferung wird wie bisher erfasst und kein Bestand bewegt sich.';
+
+  @override
+  String get featureStockReceivingTitle => 'Wareneingang ins Lager';
+
+  @override
   String get featureSubscriptionInvoicesDesc =>
       'Der Mitgliedsbeitrag wird vor dem Monat berechnet, den er bezahlt, an einem Datum Ihrer Wahl. Aus: Der Beitrag bleibt auf der Monatsrechnung.';
 
@@ -31723,6 +31730,14 @@ class AppLocalizationsDe extends AppLocalizations {
       'Wie lange der Server auf das Unternehmensregister (VIES) wartet, bevor eine Lieferantensuche als abgelaufen gilt. Die Eingaben bleiben erhalten; Sie können es erneut versuchen oder von Hand weitermachen.';
 
   @override
+  String get settingHintQuoteDefaultValidity =>
+      'Wie viele Tage ein neues Angebot gültig bleibt, wenn der Ersteller kein Enddatum angibt. Nie länger als die längste Gültigkeit.';
+
+  @override
+  String get settingHintQuoteMaxValidity =>
+      'Die längste Zeit, die ein Angebot gültig bleiben darf, gerechnet ab seinem Angebotsdatum. Eine längere Gültigkeit wird beim Speichern des Angebots abgelehnt.';
+
+  @override
   String get settingHintReadinessRecentExportDays =>
       'Tage, in denen ein von der App erfasster Export noch als aktueller Nachweis gilt, dass die Wiederherstellung funktioniert. Danach bleibt die Wiederherstellung ungeprüft.';
 
@@ -32028,6 +32043,14 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get settingLabelPurchaseSupplierLookupTimeoutSeconds =>
       'Wartezeit der Lieferantensuche (Sekunden)';
+
+  @override
+  String get settingLabelQuoteDefaultValidity =>
+      'Standardgültigkeit eines Angebots';
+
+  @override
+  String get settingLabelQuoteMaxValidity =>
+      'Längste Gültigkeit eines Angebots';
 
   @override
   String get settingLabelReadinessRecentExportDays =>
