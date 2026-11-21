@@ -18,6 +18,7 @@ InvoiceLine _line(
   int tax, {
   double vat = 20,
   int? gross,
+  Object? taxPoint,
 }) => InvoiceLine(
   label: supply,
   amountCents: gross ?? net + tax,
@@ -34,7 +35,7 @@ InvoiceLine _line(
       'base_quantity': '1',
     },
     'supply': supply,
-    'tax_facts': <String, Object?>{},
+    'tax_facts': <String, Object?>{'tax_point': ?taxPoint},
     'amounts': {
       'currency': 'EUR',
       'net_minor': '$net',
@@ -82,11 +83,16 @@ Invoice _invoice(
   legalSnapshot: frozen ?? _person,
 );
 
-FrEReport _run(List<Invoice> docs, {Map<String, InvoiceMatch> paid = const {}}) =>
+FrEReport _run(
+  List<Invoice> docs, {
+  Map<String, InvoiceMatch> paid = const {},
+  DateTime? from,
+  DateTime? to,
+}) =>
     frEReport(
       docs,
-      start: DateTime(2026, 9),
-      end: DateTime(2026, 9, 30),
+      start: from ?? DateTime(2026, 9),
+      end: to ?? DateTime(2026, 9, 30),
       matches: paid,
       basis: EReportingBasis(homeCountry: eReportingCountry),
       dayOf: WorkspaceTime.dateOf,
@@ -167,6 +173,32 @@ void main() {
     );
     final r = _run([_invoice('7', [unreadable])]);
     expect(r.unresolved.single.reasons, [FrUnresolvedReason.unsupportedCommercialLine]);
+  });
+
+  test('a delivered line reports on its recorded delivery date, not the invoice day', () {
+    // issued 10 September, delivered 28 August
+    final doc = _invoice('10', [_line('goods', 10000, 2000, taxPoint: '2026-08-28')]);
+    expect(_run([doc]).b2cTransactions, isEmpty, reason: 'September owes nothing');
+    final august = _run([doc], from: DateTime(2026, 8), to: DateTime(2026, 8, 31));
+    expect(august.b2cTransactions.single.on, DateTime(2026, 8, 28));
+    expect(august.b2cTransactions.single.category, 'TLB1');
+  });
+
+  test('without a delivery date, or with one that is not a day, the invoice day is used', () {
+    final none = _run([_invoice('11', [_line('goods', 10000, 2000)])]);
+    final bad = _run([_invoice('12', [_line('goods', 10000, 2000, taxPoint: 'soon')])]);
+    expect(none.b2cTransactions.single.on, DateTime(2026, 9, 10));
+    expect(bad.b2cTransactions.single.on, DateTime(2026, 9, 10));
+  });
+
+  test('two lines at one rate delivered on different days are two sales', () {
+    final r = _run([
+      _invoice('13', [
+        _line('goods', 10000, 2000, taxPoint: '2026-09-02'),
+        _line('goods', 5000, 1000, taxPoint: '2026-09-09'),
+      ]),
+    ]);
+    expect(r.b2cTransactions.map((t) => (t.on.day, t.netCents)), [(2, 10000), (9, 5000)]);
   });
 
   test('a legacy service document still reads as before (TPS1 from the ledger)', () {

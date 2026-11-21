@@ -25,6 +25,10 @@ const String _serviceCategory = 'TPS1';
 typedef FrSupplySale = ({
   String category,
   double percent,
+
+  /// The delivery or service date the line froze (`tax_facts.tax_point`), or
+  /// null when it recorded none: the invoice day then.
+  DateTime? on,
   int netCents,
   int vatCents,
 });
@@ -62,7 +66,7 @@ FrSupply _supplyOf(
   final reasons = <FrUnresolvedReason>[];
   var goods = false;
   var services = false;
-  final sums = <(String, double), ({int net, int vat})>{};
+  final sums = <(String, double, DateTime?), ({int net, int vat})>{};
   for (final line in invoice.lines) {
     final facts = line.exactFacts;
     if (line.unsupportedFacts != null) {
@@ -89,7 +93,7 @@ FrSupply _supplyOf(
     final category = isGoods
         ? _goodsCategory
         : (line.vatPercent > 0 ? _serviceCategory : 'TNT1');
-    final key = (category, line.vatPercent);
+    final key = (category, line.vatPercent, _taxPointOf(facts));
     final seen = sums[key];
     sums[key] = (
       net: (seen?.net ?? 0) + facts.amounts.netMinor,
@@ -116,12 +120,23 @@ FrSupply _supplyOf(
         (
           category: e.key.$1,
           percent: e.key.$2,
+          on: e.key.$3,
           netCents: e.value.net,
           vatCents: e.value.vat,
         ),
     ],
     reasons: reasons.toSet().toList(),
   );
+}
+
+/// The date a commercial line froze for its tax point (`tax_point`, an ISO
+/// day), or null when it recorded none or it is not a day.
+DateTime? _taxPointOf(CommercialLineV1 facts) {
+  final text = facts.taxFacts['tax_point'];
+  if (text is! String) return null;
+  final parsed = DateTime.tryParse(text);
+  if (parsed == null || text.length != 10) return null;
+  return DateTime(parsed.year, parsed.month, parsed.day);
 }
 
 /// Whether a document's sale, or the money for it, falls in the reported
@@ -231,7 +246,7 @@ List<FrSaleLine> frSales(
       ),
     for (final MapEntry(:key, :value) in sorted.goods.entries)
       for (final s in value.sales)
-        if (dayOf(byId[key]!.issuedAt) case final on
+        if (s.on ?? dayOf(byId[key]!.issuedAt) case final on
             when !on.isBefore(from) && !on.isAfter(to))
           (
             invoiceId: key,
