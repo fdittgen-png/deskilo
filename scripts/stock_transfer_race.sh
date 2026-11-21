@@ -39,7 +39,7 @@ set local role authenticated;
 select public.create_workspace('Transfer race', 'FR', 'EUR', 'Europe/Paris', 'dev', false, null) as ws \gset
 reset role;
 commit;
-update public.workspaces set feature_flags = coalesce(feature_flags, '{}'::jsonb) || '{"stockManagement": true}' where id = :'ws';
+update public.workspaces set feature_flags = coalesce(feature_flags, '{}'::jsonb) || '{"stockManagement": true, "stockTakeOut": true}' where id = :'ws';
 insert into public.services (workspace_id, name, price_cents, active, inventory_unit, tracking, stockable)
 values (:'ws', 'Race X', 100, true, 'piece', 'none', true) returning id as x \gset
 insert into public.services (workspace_id, name, price_cents, active, inventory_unit, tracking, stockable)
@@ -70,7 +70,13 @@ for v in "$ws" "$x" "$y" "$z" "$main" "$shelf" "$loss"; do
 done
 expect() { [[ "$2" == "$3" ]] || { echo "::error::$1: expected '$3', got '$2'" >&2; exit 1; }; }
 total() { q "select coalesce(sum(quantity), 0)::int from public.stock_balances where item_id = '$1' and location_id in ('$main', '$shelf')"; }
-wait_marker() { local i=0; while (( i < 100 )); do [[ -e "$1" ]] && return 0; sleep 0.1; ((i+=1)); done; echo "::error::holder did not take its lock" >&2; return 1; }
+# wait_marker MARKER HOLDER-LOG: the holder's own output is shown when it never took its lock
+wait_marker() {
+  local i=0
+  while (( i < 100 )); do [[ -e "$1" ]] && return 0; sleep 0.1; ((i+=1)); done
+  echo "::error::holder did not take its lock; its output: $(tr '\n' ' ' < "$2")" >&2
+  return 1
+}
 wait_lock() {
   local i=0 result
   while (( i < 100 )); do
@@ -99,7 +105,7 @@ select pg_sleep(4);
 commit;
 SQL
 holder=$!
-wait_marker "$scratch/ready"
+wait_marker "$scratch/ready" "$scratch/holder"
 PGAPPNAME="transfer-race-opposing" psql "$url" -X -qAt -v ON_ERROR_STOP=1 >"$scratch/contender" 2>&1 <<SQL &
 begin;
 $(transfer "$b" "$shelf" "$main" "$y" "$x" 1)
@@ -129,7 +135,7 @@ select pg_sleep(4);
 commit;
 SQL
 holder2=$!
-wait_marker "$scratch/ready2"
+wait_marker "$scratch/ready2" "$scratch/holder2"
 PGAPPNAME="transfer-race-last" psql "$url" -X -qAt -v ON_ERROR_STOP=1 >"$scratch/contender2" 2>&1 <<SQL &
 begin;
 $(take "$d" "$first_place")
