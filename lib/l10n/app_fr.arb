@@ -551,6 +551,8 @@
   "assignRefusePayer": "Une facture n'est pas celle de ce client. Rien n'a été enregistré.",
   "assignRefuseSumOver": "Les parts dépassent ce qui reste du paiement. Rien n'a été enregistré.",
   "assignRefuseUsed": "Le paiement a été utilisé entre-temps. Il est relu : vérifiez les montants.",
+  "assistantFlowsBody": "Ce qu'un assistant lit ou fait avec votre accord lui est transmis et traité par l'entreprise qui le fournit, selon ses propres conditions ; héberger Deskilo vous-même ne rend pas ce traitement local. Il agit en votre nom, uniquement dans les espaces et pour les actions que vous approuvez, et vous pouvez le révoquer à tout moment : cela arrête les demandes futures, sans effacer ce que l'assistant a déjà reçu.",
+  "assistantFlowsPolicyLink": "Lire la notice de confidentialité",
   "assistantSetupActorConfigurer": "Qui : une personne qui gère la configuration de cet espace de travail",
   "assistantSetupActorDatabaseAdministrator": "Qui : un administrateur de la base de données",
   "assistantSetupActorInstanceOperator": "Qui : le propriétaire de l'instance ou un délégué",

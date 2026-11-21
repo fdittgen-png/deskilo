@@ -1,6 +1,6 @@
 # DesKilo Privacy Policy
 
-*Last updated: 2026-10-10 · Contact: fdittgen@gmail.com*
+*Last updated: 2026-11-21 · Contact: fdittgen@gmail.com*
 
 DesKilo is a booking and community-ledger app for small self-organized
 coworking spaces, published by Florian Dittgen (Germany). This policy
@@ -17,7 +17,7 @@ describes what the app processes and why. DesKilo is open source
 | Workspace membership, role, subscription percentage | Running your coworking community | Supabase |
 | Reservations and check-ins (seat/level, time) | Desk booking — the app's core function | Supabase |
 | Ledger entries: subscription fees, usage, payments, expenses, services | The community's transparent member ledger | Supabase |
-| Optional profile fields: photo, status text, profession and bio, WhatsApp number, e-mail | Shown only to the audience you pick for each item under *Who sees me*; nothing is public unless you choose it, and WhatsApp, e-mail and presence never go wider than your own spaces | Supabase |
+| Optional profile fields: photo, status text, profession and bio, WhatsApp number, e-mail | Each item has its own default audience, which you change under *Who sees me*: name and photo are shown to people who share a space with you; profession and bio, WhatsApp, e-mail and presence to nobody until you choose. Nothing is public unless you choose it, and WhatsApp, e-mail and presence never go wider than your own spaces | Supabase |
 | Presence (last-seen timestamp, "in the space today") | "Online" dot in the member directory, to the audience you pick | Supabase |
 | Public profile: name, profession, bio | Readable by anyone with the link, signed in or not — only after you publish it; off by default, withdrawn at any time. Never your contact details, presence or spaces | Supabase |
 | Conversations: person to person, groups, messages to a space's hosts | Readable only by the people in the conversation (for a message to a space: its owners and the admins who agreed to be its public contacts, named before you write); see Messages below | the server the conversation lives on |
@@ -45,19 +45,58 @@ describes what the app processes and why. DesKilo is open source
 
 ## Messages
 
-- **Only participants open a conversation**: the two of you, the
-  members of a group or, for a message to a space, the hosts named
-  before you write. A space's owners and admins cannot read your
-  conversations: account messages are reachable only through
-  server functions that check you take part, and a space's direct and
-  group messages only by their participants.
-- **Not end-to-end encrypted.** A message is stored on the server the
-  conversation lives on, and whoever runs that server can technically
-  reach its database. This is an access rule, not encryption.
+- **Only participants open a conversation in the application**: the two
+  of you, the members of a group or, for a message to a space, the hosts
+  named before you write. Being a space's owner or admin does not, by
+  itself, give anyone the right to open your conversations: account
+  messages are reachable only through server functions that check you
+  take part, and a space's direct and group messages only by their
+  participants. The *operator* is a different role from a space's owner or
+  admin: it is whoever runs the server the conversation is stored on (a
+  community that self-hosts is its own operator).
+- **Not end-to-end encrypted.** A message is stored on that server in a
+  form its operator can read, and the operator can technically reach the
+  database. This is an access rule, not encryption: it limits what the
+  application shows, not what the operator can technically do.
 - **Across spaces and servers.** Writing to someone on another server,
   or asking to join a space there, connects you to that server first
   and asks you before anything is sent; that conversation is then
   stored on that server, under its operator.
+
+## Assistants and agents
+
+Only the flows below exist in the code today. Each is optional and off
+until a person turns it on.
+
+- **An external assistant you connect (MCP).** In *Connect an assistant*
+  you approve a named assistant (a client such as Claude or ChatGPT) for
+  the workspaces and the kinds of action you choose. It then calls the
+  installation's published connector endpoint as you, with a delegated
+  token that is limited to those workspaces and actions and to what your
+  own permissions allow; a workspace's owner can also set a ceiling on
+  which fields an assistant may be told. Some actions are only prepared
+  and wait for your confirmation in the app. You can revoke the
+  assistant at any time; revoking stops future requests.
+- **What leaves Deskilo, and where it goes.** What the assistant reads or
+  does with your approval (for example your bookings, balances and the
+  names its answers contain) is sent to that assistant and is processed
+  by the company that provides it, under that provider's own terms,
+  retention and location, which Deskilo does not control and cannot
+  state. Self-hosting Deskilo does not make that processing local.
+  Revoking access does not delete what the assistant already received.
+- **Browser tools on the web app.** Where a workspace has the feature on
+  and you switch it on for this device, the web app offers tools to an
+  agent running in your browser. They act with your signed-in page,
+  through the app's own commands, with the same refusals as the screens;
+  a write that needs a decision opens the app's confirmation. Mobile and
+  desktop builds offer no such tools.
+- **The public setup page.** Its agent tools edit a draft kept in that
+  page in your browser; nothing is sent to a Deskilo server by editing
+  it.
+- **Notices.** An installation or a workspace can state, in its privacy
+  notice, the recipients, purposes and regions of the flows it actually
+  configured. Where a provider's retention or processing location is not
+  stated, it is unknown to Deskilo; do not read silence as an assurance.
 
 ## Push notifications
 
@@ -142,8 +181,14 @@ member — it is the community's bookkeeping obligation, not yours. In
 France and Germany that is ten years for accounting records; the app
 knows the workspace's country because it needs it for VAT.
 
-Nothing in this table leaves the workspace's own database, and none of
-it goes to an analytics service. There is no analytics service.
+The table describes how long the database keeps each item. It is not a
+promise that nothing ever leaves the workspace's database: data leaves it
+when someone with the right exports it (your personal-data export, a
+workspace export, an accounting export), through an integration the
+operator or a space configured (a payment provider, an e-invoicing
+destination, push delivery) and, if you connect one, to an assistant (see
+*Assistants and agents* below). None of it goes to an analytics service.
+There is no analytics service.
 
 ## Your rights (GDPR)
 

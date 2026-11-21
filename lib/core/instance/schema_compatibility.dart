@@ -13,7 +13,6 @@
 /// `test/lint/migration_version_marker_test.dart`, so a migration cannot
 /// land without the app saying it needs it.
 const int requiredSchemaVersion = 826;
-
 /// How a server's schema compares with what this app needs.
 enum SchemaCompatibility {
   /// The server runs exactly this app's schema.

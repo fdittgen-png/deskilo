@@ -139,7 +139,7 @@ The app's default backend is operated by Florian DITTGEN. Spaces created there c
 </tr>
 </table>
 
-On either, a person's profile fields (identity, about, contact channels, presence, reachability) are private by default and are shown only to the audience the person picks. A conversation's content is visible to its participants only — never to a space operator.
+On either, each profile field has its own default audience, which the person can narrow or widen: name and photo are shown to people who share a space with them, who may start a conversation with them defaults to the same people, and profession and bio, WhatsApp and e-mail, and presence are shown to nobody until the person chooses. In the application, a conversation is readable only by its participants: a business owner or admin role alone opens no one else's conversation. Messages are **not end-to-end encrypted**: whoever operates the server a conversation lives on can technically reach its database. See the [privacy policy](PRIVACY.md) for these roles, and for what an external assistant you connect can receive.
 
 <details>
 <summary><b>Privacy, push notifications and costs</b></summary>

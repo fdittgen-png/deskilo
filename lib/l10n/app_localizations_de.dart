@@ -1270,6 +1270,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Zahlung wurde inzwischen verwendet. Sie wird neu gelesen: Prüfen Sie die Beträge.';
 
   @override
+  String get assistantFlowsBody =>
+      'Was ein Assistent mit Ihrer Zustimmung liest oder tut, wird an ihn übermittelt und von dem Unternehmen verarbeitet, das ihn anbietet, nach dessen eigenen Bedingungen; Deskilo selbst zu betreiben macht diese Verarbeitung nicht lokal. Er handelt als Sie, nur in den Arbeitsbereichen und für die Aktionen, die Sie freigeben, und Sie können ihn jederzeit widerrufen: Das beendet künftige Anfragen, löscht aber nicht, was der Assistent schon erhalten hat.';
+
+  @override
+  String get assistantFlowsPolicyLink => 'Datenschutzhinweis lesen';
+
+  @override
   String get assistantSetupActorConfigurer =>
       'Wer: jemand, der die Konfiguration dieses Arbeitsbereichs verwaltet';
 
