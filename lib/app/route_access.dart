@@ -90,6 +90,7 @@ const Map<String, Set<WorkspacePermission>> routePermissions = {
   '/money/guest-passes': {_P.issueInvoices, _P.manageServices},
   '/validation': {_P.manageValidation},
   '/invoicing/wizard': {_P.issueInvoices},
+  '/invoicing/standalone/new': {_P.issueInvoices},
   '/money/repartition-wizard': {_P.issueInvoices, _P.manageBilling},
   '/report-editor': {_P.designDocuments, _P.manageDocuments},
   '/billing': {_P.manageBilling},

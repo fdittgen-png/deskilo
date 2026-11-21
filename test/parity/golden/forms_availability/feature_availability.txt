@@ -158,4 +158,5 @@ kioskEnrolment | everywhere | y y y y y y y y y y
 quickSearch | everywhere | y y y y y y y y y y
 stockManagement | everywhere | y y y y y y y y y y
 organisation | everywhere | y y y y y y y y y y
+standaloneInvoicing | everywhere | y y y y y y y y y y
 billingCustomers | everywhere | y y y y y y y y y y

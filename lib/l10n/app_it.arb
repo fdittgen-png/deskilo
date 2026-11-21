@@ -7572,6 +7572,14 @@
   },
   "featureSpaceQrCodes": "Codici QR degli spazi",
   "featureSpaceQrCodesDesc": "Schede QR stampabili per postazione, tavolo, ufficio e piano — da scansionare per prenotare o fare check-in.",
+  "featureStandaloneInvoicingDesc": "Fatturare oggi a un cliente indicato una prestazione svolta o un risultato concordato, con righe dettagliate e date esplicite, senza prenotazione, abbonamento o mese alle spalle. Il server calcola ogni importo; Lei conferma un’anteprima ed emette la fattura. Disattivato: le fatture restano emesse per membro e per mese.",
+  "@featureStandaloneInvoicingDesc": {
+    "description": "#4165 feature switch: featureStandaloneInvoicingDesc"
+  },
+  "featureStandaloneInvoicingTitle": "Fatture singole",
+  "@featureStandaloneInvoicingTitle": {
+    "description": "#4165 feature switch: featureStandaloneInvoicingTitle"
+  },
   "featureStockManagementDesc": "Seguire la merce: dove si trova, in quale unità, da quale lotto, e ogni movimento tra due luoghi. Disattivato: un articolo del catalogo mantiene il suo semplice conteggio a scaffale.",
   "featureStockManagementTitle": "Gestione delle scorte",
   "featureSubscriptionInvoicesDesc": "La quota è fatturata prima del mese che paga, in una data scelta da Lei. Disattivato: la quota resta sulla fattura del mese.",
@@ -19879,6 +19887,248 @@
     "description": "#670 - whole-space sheet"
   },
   "spaceYoursNow": "Riservato da Lei per questa fascia.",
+  "standaloneFactAmount": "un importo che la fattura possa contenere",
+  "@standaloneFactAmount": {
+    "description": "#4165 standalone invoice composer: standaloneFactAmount"
+  },
+  "standaloneFactApproval": "le regole dell’attività richiedono un’approvazione, non ancora supportata qui",
+  "@standaloneFactApproval": {
+    "description": "#4165 standalone invoice composer: standaloneFactApproval"
+  },
+  "standaloneFactClosed": "questa bozza è già stata emessa",
+  "@standaloneFactClosed": {
+    "description": "#4165 standalone invoice composer: standaloneFactClosed"
+  },
+  "standaloneFactCurrency": "la valuta dell’attività",
+  "@standaloneFactCurrency": {
+    "description": "#4165 standalone invoice composer: standaloneFactCurrency"
+  },
+  "standaloneFactDueDate": "la data di scadenza",
+  "@standaloneFactDueDate": {
+    "description": "#4165 standalone invoice composer: standaloneFactDueDate"
+  },
+  "standaloneFactDueDateFar": "una scadenza entro un anno",
+  "@standaloneFactDueDateFar": {
+    "description": "#4165 standalone invoice composer: standaloneFactDueDateFar"
+  },
+  "standaloneFactDueDatePast": "una scadenza non nel passato",
+  "@standaloneFactDueDatePast": {
+    "description": "#4165 standalone invoice composer: standaloneFactDueDatePast"
+  },
+  "standaloneFactLines": "almeno una riga",
+  "@standaloneFactLines": {
+    "description": "#4165 standalone invoice composer: standaloneFactLines"
+  },
+  "standaloneFactSalesTax": "questa attività aggiunge sales tax, non ancora supportata qui",
+  "@standaloneFactSalesTax": {
+    "description": "#4165 standalone invoice composer: standaloneFactSalesTax"
+  },
+  "standaloneFactServiceDate": "la data della prestazione",
+  "@standaloneFactServiceDate": {
+    "description": "#4165 standalone invoice composer: standaloneFactServiceDate"
+  },
+  "standaloneFactStale": "la bozza è cambiata: verificare di nuovo la fattura",
+  "@standaloneFactStale": {
+    "description": "#4165 standalone invoice composer: standaloneFactStale"
+  },
+  "standaloneFactTooManyLines": "al massimo 100 righe",
+  "@standaloneFactTooManyLines": {
+    "description": "#4165 standalone invoice composer: standaloneFactTooManyLines"
+  },
+  "standaloneFactTotal": "un totale superiore a zero",
+  "@standaloneFactTotal": {
+    "description": "#4165 standalone invoice composer: standaloneFactTotal"
+  },
+  "standaloneFactUnknownSubject": "il cliente",
+  "@standaloneFactUnknownSubject": {
+    "description": "#4165 standalone invoice composer: standaloneFactUnknownSubject"
+  },
+  "standaloneFieldAmount": "un importo che la fattura possa contenere",
+  "@standaloneFieldAmount": {
+    "description": "#4165 standalone invoice composer: standaloneFieldAmount"
+  },
+  "standaloneFieldBase": "una quantità di prezzo superiore a zero",
+  "@standaloneFieldBase": {
+    "description": "#4165 standalone invoice composer: standaloneFieldBase"
+  },
+  "standaloneFieldBasis": "se il prezzo include l’imposta",
+  "@standaloneFieldBasis": {
+    "description": "#4165 standalone invoice composer: standaloneFieldBasis"
+  },
+  "standaloneFieldDescription": "una descrizione",
+  "@standaloneFieldDescription": {
+    "description": "#4165 standalone invoice composer: standaloneFieldDescription"
+  },
+  "standaloneFieldLineId": "salvare di nuovo la bozza",
+  "@standaloneFieldLineId": {
+    "description": "#4165 standalone invoice composer: standaloneFieldLineId"
+  },
+  "standaloneFieldPrice": "un prezzo con al massimo sei decimali",
+  "@standaloneFieldPrice": {
+    "description": "#4165 standalone invoice composer: standaloneFieldPrice"
+  },
+  "standaloneFieldQuantity": "una quantità superiore a zero con al massimo sei decimali",
+  "@standaloneFieldQuantity": {
+    "description": "#4165 standalone invoice composer: standaloneFieldQuantity"
+  },
+  "standaloneFieldSupply": "un servizio (i beni non si fatturano ancora qui)",
+  "@standaloneFieldSupply": {
+    "description": "#4165 standalone invoice composer: standaloneFieldSupply"
+  },
+  "standaloneFieldUnit": "un’unità",
+  "@standaloneFieldUnit": {
+    "description": "#4165 standalone invoice composer: standaloneFieldUnit"
+  },
+  "standaloneFieldVatRate": "un’aliquota IVA definita dall’attività",
+  "@standaloneFieldVatRate": {
+    "description": "#4165 standalone invoice composer: standaloneFieldVatRate"
+  },
+  "standaloneInvoiceAddLine": "Aggiungere una riga",
+  "@standaloneInvoiceAddLine": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceAddLine"
+  },
+  "standaloneInvoiceBuyerReference": "Riferimento del cliente",
+  "@standaloneInvoiceBuyerReference": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceBuyerReference"
+  },
+  "standaloneInvoiceCustomerChoose": "Scegliere il cliente",
+  "@standaloneInvoiceCustomerChoose": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceCustomerChoose"
+  },
+  "standaloneInvoiceDueDate": "Data di scadenza",
+  "@standaloneInvoiceDueDate": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceDueDate"
+  },
+  "standaloneInvoiceIssue": "Emettere la fattura",
+  "@standaloneInvoiceIssue": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceIssue"
+  },
+  "standaloneInvoiceIssued": "Fattura {number} emessa",
+  "@standaloneInvoiceIssued": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceIssued",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "standaloneInvoiceLineDescription": "Descrizione",
+  "@standaloneInvoiceLineDescription": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceLineDescription"
+  },
+  "standaloneInvoiceLineGross": "Il prezzo include l’imposta",
+  "@standaloneInvoiceLineGross": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceLineGross"
+  },
+  "standaloneInvoiceLinePrice": "Prezzo unitario",
+  "@standaloneInvoiceLinePrice": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceLinePrice"
+  },
+  "standaloneInvoiceLineQuantity": "Quantità",
+  "@standaloneInvoiceLineQuantity": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceLineQuantity"
+  },
+  "standaloneInvoiceLineRate": "Aliquota IVA",
+  "@standaloneInvoiceLineRate": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceLineRate"
+  },
+  "standaloneInvoiceLineRateDefault": "L’aliquota predefinita dell’attività",
+  "@standaloneInvoiceLineRateDefault": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceLineRateDefault"
+  },
+  "standaloneInvoiceLineUnit": "Unità",
+  "@standaloneInvoiceLineUnit": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceLineUnit"
+  },
+  "standaloneInvoiceLines": "Righe",
+  "@standaloneInvoiceLines": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceLines"
+  },
+  "standaloneInvoiceLookAgain": "Verificare di nuovo",
+  "@standaloneInvoiceLookAgain": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceLookAgain"
+  },
+  "standaloneInvoiceMissing": "Da completare: {facts}",
+  "@standaloneInvoiceMissing": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceMissing",
+    "placeholders": {
+      "facts": {
+        "type": "String"
+      }
+    }
+  },
+  "standaloneInvoiceMissingLine": "Riga {number}: {fact}",
+  "@standaloneInvoiceMissingLine": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceMissingLine",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "fact": {
+        "type": "String"
+      }
+    }
+  },
+  "standaloneInvoiceMore": "Fattura cliente senza mese",
+  "@standaloneInvoiceMore": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceMore"
+  },
+  "standaloneInvoiceOpen": "Aprire la fattura",
+  "@standaloneInvoiceOpen": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceOpen"
+  },
+  "standaloneInvoiceOrderNumber": "Numero d’ordine",
+  "@standaloneInvoiceOrderNumber": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceOrderNumber"
+  },
+  "standaloneInvoicePreview": "Verificare la fattura",
+  "@standaloneInvoicePreview": {
+    "description": "#4165 standalone invoice composer: standaloneInvoicePreview"
+  },
+  "standaloneInvoicePreviewNet": "Netto",
+  "@standaloneInvoicePreviewNet": {
+    "description": "#4165 standalone invoice composer: standaloneInvoicePreviewNet"
+  },
+  "standaloneInvoicePreviewTax": "Imposta",
+  "@standaloneInvoicePreviewTax": {
+    "description": "#4165 standalone invoice composer: standaloneInvoicePreviewTax"
+  },
+  "standaloneInvoicePreviewTotal": "Totale",
+  "@standaloneInvoicePreviewTotal": {
+    "description": "#4165 standalone invoice composer: standaloneInvoicePreviewTotal"
+  },
+  "standaloneInvoiceRefused": "La fattura non è stata emessa.",
+  "@standaloneInvoiceRefused": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceRefused"
+  },
+  "standaloneInvoiceRemoveLine": "Rimuovere questa riga",
+  "@standaloneInvoiceRemoveLine": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceRemoveLine"
+  },
+  "standaloneInvoiceServiceDate": "Data della prestazione",
+  "@standaloneInvoiceServiceDate": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceServiceDate"
+  },
+  "standaloneInvoiceUnavailable": "Le fatture singole non sono attivate per questa attività.",
+  "@standaloneInvoiceUnavailable": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceUnavailable"
+  },
+  "standaloneInvoiceUnknown": "Non abbiamo potuto confermare se la fattura è stata emessa. Verifichi di nuovo prima di emetterne un’altra.",
+  "@standaloneInvoiceUnknown": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceUnknown"
+  },
+  "standaloneUnitHour": "ora",
+  "@standaloneUnitHour": {
+    "description": "#4165 standalone invoice composer: standaloneUnitHour"
+  },
+  "standaloneUnitJob": "forfait",
+  "@standaloneUnitJob": {
+    "description": "#4165 standalone invoice composer: standaloneUnitJob"
+  },
+  "standaloneUnitPiece": "pezzo",
+  "@standaloneUnitPiece": {
+    "description": "#4165 standalone invoice composer: standaloneUnitPiece"
+  },
   "statementDeskBalanceCredit": "Credito: questo importo è a suo favore",
   "statementDeskBalanceOwed": "Dovuto: lei deve questo importo",
   "statementDeskBalanceSettled": "Saldato: non è dovuto nulla",

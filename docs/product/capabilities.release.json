@@ -2260,6 +2260,12 @@
       "capabilities": []
     },
     {
+      "key": "standaloneInvoicing",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "stockManagement",
       "maturity": "beta",
       "lifecycle": "active",

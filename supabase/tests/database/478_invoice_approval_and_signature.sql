@@ -16,7 +16,7 @@ select pg_temp.u(n), '00000000-0000-0000-0000-000000000000', 'authenticated', 'a
        'ap' || n || '@example.test', '', now(), now(), now() from generate_series(1, 3) n;
 insert into public.workspaces (id, name, country_code, currency_code, timezone, created_by, feature_flags,
                                vat_regime, vat_id, legal_id, street, city, postal_code, address)
-values (pg_temp.u(101), 'Approval 4262', 'FR', 'EUR', 'Europe/Paris', pg_temp.u(1), '{"invoicing": true}',
+values (pg_temp.u(101), 'Approval 4262', 'FR', 'EUR', 'Europe/Paris', pg_temp.u(1), '{"invoicing": true, "standaloneInvoicing": true}',
         'vat_registered', 'FR40303265045', '30326504500014', '4 avenue de Castelnau', 'Pézenas', '34120',
         '4 avenue de Castelnau, 34120 Pézenas');
 insert into public.members (id, workspace_id, user_id, is_owner, is_admin, status, joined_at)

@@ -182,6 +182,8 @@ const Map<SetupProcess, List<SetupLevel>> setupLevels = {
         WorkspaceFeature.adminInvoicing,
         WorkspaceFeature.subscriptionInvoices,
         WorkspaceFeature.usageInvoices,
+        // #4165 — a customer invoice without a member-month.
+        WorkspaceFeature.standaloneInvoicing,
         WorkspaceFeature.usageRecords,
         WorkspaceFeature.invoiceSettlement,
         WorkspaceFeature.invoiceJourney,

@@ -263,6 +263,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/einvoice-config', RouteClass.workspace, namesRole: true, place: 'drawer-legal-identity', measure: PageMeasure.form),
   RouteRule('/documents', RouteClass.workspace, place: 'drawer-documents', measure: PageMeasure.work),
   RouteRule('/invoicing/wizard', RouteClass.workspace, namesRole: true, place: 'drawer-invoices', measure: PageMeasure.work),
+  RouteRule('/invoicing/standalone/new', RouteClass.workspace, namesRole: true, place: 'drawer-invoices', measure: PageMeasure.work), // #4165
   RouteRule('/member/:memberId', RouteClass.workspace, namesRole: true, place: 'drawer-members', measure: PageMeasure.reading),
   RouteRule('/report-editor', RouteClass.workspace, namesRole: true, place: 'drawer-reports-templates', measure: PageMeasure.work),
   RouteRule('/roles', RouteClass.workspace, namesRole: true, place: 'drawer-roles', measure: PageMeasure.work),

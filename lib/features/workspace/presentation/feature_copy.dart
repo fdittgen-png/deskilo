@@ -296,6 +296,7 @@ String _latestDescription(AppLocalizations l10n, WorkspaceFeature feature) =>
       WorkspaceFeature.placeBooking => l10n.featurePlaceBookingDesc,
       WorkspaceFeature.reminderEmail => l10n.featureReminderEmailDesc,
       WorkspaceFeature.invoiceEmail => l10n.featureInvoiceEmailDesc,
+      WorkspaceFeature.standaloneInvoicing => l10n.featureStandaloneInvoicingDesc,
       WorkspaceFeature.kioskEnrolment => l10n.featureKioskEnrolmentDesc,
       WorkspaceFeature.quickSearch => l10n.featureQuickSearchDesc,
       WorkspaceFeature.organisation => l10n.featureOrganisationDesc,

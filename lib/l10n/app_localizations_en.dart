@@ -12218,6 +12218,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Printable QR cards per seat, desk, office and level — scan to reserve or check in.';
 
   @override
+  String get featureStandaloneInvoicingDesc =>
+      'Invoice a named customer for a completed service or an agreed deliverable today, with itemised lines and explicit dates, and no booking, subscription or month behind it. The server computes every amount; you confirm a preview and issue it. Off: invoices are issued per member and month as before.';
+
+  @override
+  String get featureStandaloneInvoicingTitle => 'Standalone invoices';
+
+  @override
   String get featureStockManagementDesc =>
       'Keep track of goods: where they are, in which unit, from which lot, and every movement between two places. Off: a catalogue item keeps its single shelf count.';
 
@@ -33883,6 +33890,187 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get spaceYoursNow => 'Reserved by you for this slot.';
+
+  @override
+  String get standaloneFactAmount => 'an amount this invoice can hold';
+
+  @override
+  String get standaloneFactApproval =>
+      'the business’s rules send this invoice for approval, which is not supported here yet';
+
+  @override
+  String get standaloneFactClosed => 'this draft was already issued';
+
+  @override
+  String get standaloneFactCurrency => 'the business’s currency';
+
+  @override
+  String get standaloneFactDueDate => 'the due date';
+
+  @override
+  String get standaloneFactDueDateFar => 'a due date within a year';
+
+  @override
+  String get standaloneFactDueDatePast => 'a due date that is not in the past';
+
+  @override
+  String get standaloneFactLines => 'at least one line';
+
+  @override
+  String get standaloneFactSalesTax =>
+      'this business adds sales tax, which is not supported here yet';
+
+  @override
+  String get standaloneFactServiceDate => 'the service date';
+
+  @override
+  String get standaloneFactStale =>
+      'the draft changed: check the invoice again';
+
+  @override
+  String get standaloneFactTooManyLines => 'at most 100 lines';
+
+  @override
+  String get standaloneFactTotal => 'a total above zero';
+
+  @override
+  String get standaloneFactUnknownSubject => 'the customer';
+
+  @override
+  String get standaloneFieldAmount => 'an amount this invoice can hold';
+
+  @override
+  String get standaloneFieldBase => 'a price quantity above zero';
+
+  @override
+  String get standaloneFieldBasis => 'whether the price includes tax';
+
+  @override
+  String get standaloneFieldDescription => 'a description';
+
+  @override
+  String get standaloneFieldLineId => 'saving the draft again';
+
+  @override
+  String get standaloneFieldPrice => 'a price with at most six decimals';
+
+  @override
+  String get standaloneFieldQuantity =>
+      'a quantity above zero with at most six decimals';
+
+  @override
+  String get standaloneFieldSupply =>
+      'a service (goods are not invoiced here yet)';
+
+  @override
+  String get standaloneFieldUnit => 'a unit';
+
+  @override
+  String get standaloneFieldVatRate => 'a VAT rate the business has set';
+
+  @override
+  String get standaloneInvoiceAddLine => 'Add a line';
+
+  @override
+  String get standaloneInvoiceBuyerReference => 'Customer reference';
+
+  @override
+  String get standaloneInvoiceCustomerChoose => 'Choose the customer';
+
+  @override
+  String get standaloneInvoiceDueDate => 'Due date';
+
+  @override
+  String get standaloneInvoiceIssue => 'Issue the invoice';
+
+  @override
+  String standaloneInvoiceIssued(String number) {
+    return 'Invoice $number issued';
+  }
+
+  @override
+  String get standaloneInvoiceLineDescription => 'Description';
+
+  @override
+  String get standaloneInvoiceLineGross => 'The price includes tax';
+
+  @override
+  String get standaloneInvoiceLinePrice => 'Unit price';
+
+  @override
+  String get standaloneInvoiceLineQuantity => 'Quantity';
+
+  @override
+  String get standaloneInvoiceLineRate => 'VAT rate';
+
+  @override
+  String get standaloneInvoiceLineRateDefault => 'The business’s default rate';
+
+  @override
+  String get standaloneInvoiceLineUnit => 'Unit';
+
+  @override
+  String get standaloneInvoiceLines => 'Lines';
+
+  @override
+  String get standaloneInvoiceLookAgain => 'Look again';
+
+  @override
+  String standaloneInvoiceMissing(String facts) {
+    return 'To complete: $facts';
+  }
+
+  @override
+  String standaloneInvoiceMissingLine(String number, String fact) {
+    return 'Line $number: $fact';
+  }
+
+  @override
+  String get standaloneInvoiceMore => 'A customer invoice without a month';
+
+  @override
+  String get standaloneInvoiceOpen => 'Open the invoice';
+
+  @override
+  String get standaloneInvoiceOrderNumber => 'Order number';
+
+  @override
+  String get standaloneInvoicePreview => 'Check the invoice';
+
+  @override
+  String get standaloneInvoicePreviewNet => 'Net';
+
+  @override
+  String get standaloneInvoicePreviewTax => 'Tax';
+
+  @override
+  String get standaloneInvoicePreviewTotal => 'Total';
+
+  @override
+  String get standaloneInvoiceRefused => 'The invoice was not issued.';
+
+  @override
+  String get standaloneInvoiceRemoveLine => 'Remove this line';
+
+  @override
+  String get standaloneInvoiceServiceDate => 'Service date';
+
+  @override
+  String get standaloneInvoiceUnavailable =>
+      'Standalone invoices are not switched on for this business.';
+
+  @override
+  String get standaloneInvoiceUnknown =>
+      'We could not confirm whether the invoice was issued. Look again before issuing anything else.';
+
+  @override
+  String get standaloneUnitHour => 'hour';
+
+  @override
+  String get standaloneUnitJob => 'job';
+
+  @override
+  String get standaloneUnitPiece => 'piece';
 
   @override
   String get statementDeskBalanceCredit =>

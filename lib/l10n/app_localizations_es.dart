@@ -12300,6 +12300,13 @@ class AppLocalizationsEs extends AppLocalizations {
       'Tarjetas QR imprimibles por puesto, mesa, oficina y planta — escanee para reservar o fichar.';
 
   @override
+  String get featureStandaloneInvoicingDesc =>
+      'Facturar hoy a un cliente identificado una prestación realizada o un entregable acordado, con líneas detalladas y fechas explícitas, sin reserva, suscripción ni mes detrás. El servidor calcula cada importe; usted confirma una vista previa y emite la factura. Desactivado: las facturas se emiten por miembro y mes como antes.';
+
+  @override
+  String get featureStandaloneInvoicingTitle => 'Facturas independientes';
+
+  @override
   String get featureStockManagementDesc =>
       'Seguir las mercancías: dónde están, en qué unidad, de qué lote, y cada movimiento entre dos lugares. Desactivado: un artículo del catálogo conserva su simple recuento en estantería.';
 
@@ -34166,6 +34173,189 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get spaceYoursNow => 'Reservado por usted para esta franja.';
+
+  @override
+  String get standaloneFactAmount => 'un importe que la factura admita';
+
+  @override
+  String get standaloneFactApproval =>
+      'las reglas de la empresa piden aprobación, que aquí aún no se admite';
+
+  @override
+  String get standaloneFactClosed => 'este borrador ya se emitió';
+
+  @override
+  String get standaloneFactCurrency => 'la moneda de la empresa';
+
+  @override
+  String get standaloneFactDueDate => 'la fecha de vencimiento';
+
+  @override
+  String get standaloneFactDueDateFar => 'un vencimiento dentro de un año';
+
+  @override
+  String get standaloneFactDueDatePast =>
+      'un vencimiento que no esté en el pasado';
+
+  @override
+  String get standaloneFactLines => 'al menos una línea';
+
+  @override
+  String get standaloneFactSalesTax =>
+      'esta empresa añade impuesto de ventas, que aquí aún no se admite';
+
+  @override
+  String get standaloneFactServiceDate => 'la fecha de la prestación';
+
+  @override
+  String get standaloneFactStale =>
+      'el borrador cambió: revise de nuevo la factura';
+
+  @override
+  String get standaloneFactTooManyLines => 'como máximo 100 líneas';
+
+  @override
+  String get standaloneFactTotal => 'un total mayor que cero';
+
+  @override
+  String get standaloneFactUnknownSubject => 'el cliente';
+
+  @override
+  String get standaloneFieldAmount => 'un importe que la factura admita';
+
+  @override
+  String get standaloneFieldBase => 'una cantidad de precio mayor que cero';
+
+  @override
+  String get standaloneFieldBasis => 'si el precio incluye el impuesto';
+
+  @override
+  String get standaloneFieldDescription => 'una descripción';
+
+  @override
+  String get standaloneFieldLineId => 'guardar de nuevo el borrador';
+
+  @override
+  String get standaloneFieldPrice => 'un precio con seis decimales como máximo';
+
+  @override
+  String get standaloneFieldQuantity =>
+      'una cantidad mayor que cero con seis decimales como máximo';
+
+  @override
+  String get standaloneFieldSupply =>
+      'un servicio (los bienes aún no se facturan aquí)';
+
+  @override
+  String get standaloneFieldUnit => 'una unidad';
+
+  @override
+  String get standaloneFieldVatRate => 'un tipo de IVA definido por la empresa';
+
+  @override
+  String get standaloneInvoiceAddLine => 'Añadir una línea';
+
+  @override
+  String get standaloneInvoiceBuyerReference => 'Referencia del cliente';
+
+  @override
+  String get standaloneInvoiceCustomerChoose => 'Elegir el cliente';
+
+  @override
+  String get standaloneInvoiceDueDate => 'Fecha de vencimiento';
+
+  @override
+  String get standaloneInvoiceIssue => 'Emitir la factura';
+
+  @override
+  String standaloneInvoiceIssued(String number) {
+    return 'Factura $number emitida';
+  }
+
+  @override
+  String get standaloneInvoiceLineDescription => 'Descripción';
+
+  @override
+  String get standaloneInvoiceLineGross => 'El precio incluye el impuesto';
+
+  @override
+  String get standaloneInvoiceLinePrice => 'Precio unitario';
+
+  @override
+  String get standaloneInvoiceLineQuantity => 'Cantidad';
+
+  @override
+  String get standaloneInvoiceLineRate => 'Tipo de IVA';
+
+  @override
+  String get standaloneInvoiceLineRateDefault =>
+      'El tipo por defecto de la empresa';
+
+  @override
+  String get standaloneInvoiceLineUnit => 'Unidad';
+
+  @override
+  String get standaloneInvoiceLines => 'Líneas';
+
+  @override
+  String get standaloneInvoiceLookAgain => 'Comprobar de nuevo';
+
+  @override
+  String standaloneInvoiceMissing(String facts) {
+    return 'Por completar: $facts';
+  }
+
+  @override
+  String standaloneInvoiceMissingLine(String number, String fact) {
+    return 'Línea $number: $fact';
+  }
+
+  @override
+  String get standaloneInvoiceMore => 'Factura de cliente sin mes';
+
+  @override
+  String get standaloneInvoiceOpen => 'Abrir la factura';
+
+  @override
+  String get standaloneInvoiceOrderNumber => 'Número de pedido';
+
+  @override
+  String get standaloneInvoicePreview => 'Revisar la factura';
+
+  @override
+  String get standaloneInvoicePreviewNet => 'Neto';
+
+  @override
+  String get standaloneInvoicePreviewTax => 'Impuesto';
+
+  @override
+  String get standaloneInvoicePreviewTotal => 'Total';
+
+  @override
+  String get standaloneInvoiceRefused => 'La factura no se emitió.';
+
+  @override
+  String get standaloneInvoiceRemoveLine => 'Quitar esta línea';
+
+  @override
+  String get standaloneInvoiceServiceDate => 'Fecha de la prestación';
+
+  @override
+  String get standaloneInvoiceUnavailable =>
+      'Las facturas independientes no están activadas para esta empresa.';
+
+  @override
+  String get standaloneInvoiceUnknown =>
+      'No pudimos confirmar si la factura se emitió. Compruebe de nuevo antes de emitir otra.';
+
+  @override
+  String get standaloneUnitHour => 'hora';
+
+  @override
+  String get standaloneUnitJob => 'trabajo';
+
+  @override
+  String get standaloneUnitPiece => 'unidad';
 
   @override
   String get statementDeskBalanceCredit =>

@@ -833,5 +833,13 @@
   "featureOrganisationDesc": "This business heads an organisation of the customer's businesses: a site in another country or currency is a house, a business of its own with its country's rules. Off: no organisation is made or changed from this business; a house still leaves one, and members still see where they are.",
   "@featureOrganisationDesc": {
     "description": "#4004 what the organisation feature does, and what it does when off"
+  },
+  "featureStandaloneInvoicingTitle": "Standalone invoices",
+  "@featureStandaloneInvoicingTitle": {
+    "description": "#4165 feature switch: featureStandaloneInvoicingTitle"
+  },
+  "featureStandaloneInvoicingDesc": "Invoice a named customer for a completed service or an agreed deliverable today, with itemised lines and explicit dates, and no booking, subscription or month behind it. The server computes every amount; you confirm a preview and issue it. Off: invoices are issued per member and month as before.",
+  "@featureStandaloneInvoicingDesc": {
+    "description": "#4165 feature switch: featureStandaloneInvoicingDesc"
   }
 }

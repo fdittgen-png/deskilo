@@ -79,9 +79,10 @@ void main() {
     // #3673 — reminderEmail and invoiceEmail: both are asked for.
     // #3824 — stockManagement: keeping a goods ledger is asked for.
     // #3997 — siteDocuments, reserved and off, is retired: one fewer.
+    // #4165 — standaloneInvoicing: a standalone customer invoice is asked for.
     // #4164 — billingCustomers: invoicing customers without an account is
     // asked for.
-    expect(onCount, featureManifest.length - 57);
+    expect(onCount, featureManifest.length - 58);
   });
 
   testWidgets(
