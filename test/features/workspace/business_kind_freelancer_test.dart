@@ -41,16 +41,13 @@ class _Kinds implements BusinessKindRepository {
   Future<BusinessKindApplied> applyKind(
     String workspaceId, {
     required String requestId,
-    required String kind,
-    required List<String> moreKinds,
-    required int reviewedVersion,
-    required String reviewedDigest,
+    required ReviewedKind reviewed,
     required Map<String, bool> flags,
     required Map<String, bool> expected,
   }) async {
     final answer = applied;
     if (answer == null) throw const BusinessKindApplyUnsupported();
-    applies.add((kind, reviewedVersion, reviewedDigest));
+    applies.add((reviewed.kind, reviewed.version, reviewed.digest));
     return answer;
   }
 }

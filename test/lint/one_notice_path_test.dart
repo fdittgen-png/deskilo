@@ -32,6 +32,7 @@ const _ceilings = <String, int>{
   'lib/features/profile': 0,
   'lib/features/reservations': 2,
   'lib/features/search': 0,
+  'lib/features/stock': 0,
   'lib/features/task_recorder': 11,
   'lib/features/visits': 0,
   'lib/features/workspace': 21,

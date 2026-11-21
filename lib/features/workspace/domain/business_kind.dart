@@ -70,13 +70,28 @@ abstract interface class BusinessKindRepository {
   Future<BusinessKindApplied> applyKind(
     String workspaceId, {
     required String requestId,
-    required String kind,
-    required List<String> moreKinds,
-    required int reviewedVersion,
-    required String reviewedDigest,
+    required ReviewedKind reviewed,
     required Map<String, bool> flags,
     required Map<String, bool> expected,
   });
+}
+
+/// What the person reviewed before confirming (#4168): the kind and the other
+/// kinds, and the version and digest of the kind's profile. The server refuses
+/// a kind whose profile has changed since.
+@immutable
+class ReviewedKind {
+  const ReviewedKind({
+    required this.kind,
+    required this.moreKinds,
+    required this.version,
+    required this.digest,
+  });
+
+  final String kind;
+  final List<String> moreKinds;
+  final int version;
+  final String digest;
 }
 
 /// What the server observed for each stage of a confirmation.

@@ -2990,9 +2990,20 @@ Elija **Ver pagos pendientes del proveedor** para consultar sus facturas y los i
 
 **Público:** Administrador/a · Propietario
 
-Abra **Dinero** y luego **Clientes facturados** (la dirección `/money/customers`; la función **Clientes facturados** debe estar activada bajo la facturación). Aquí guarda las personas y empresas a las que factura, con o sin cuenta. No son miembros: no tienen cuenta, no ven nada de su negocio y no cuentan entre sus miembros.
+Abra **Ventas y cobros** y luego **Clientes facturados**. Aquí guarda las personas y empresas a las que factura, con o sin cuenta. No son miembros: no tienen cuenta, no ven nada de su negocio y no cuentan entre sus miembros.
 
 Elija **Añadir un cliente** e indique una empresa o un nombre, la dirección postal, el código de país, el número de IVA y un correo para la factura. El número de IVA solo se comprueba en su forma, nunca se verifica. **Facturado como** (empresa o particular) determina las menciones legales y el tratamiento fiscal; solo quien puede emitir facturas puede cambiarlo. Elija un cliente para editarlo. Si alguien más lo cambió desde que lo abrió, no se guarda nada y se le pide abrirlo de nuevo. Si no se puede leer la lista, reintente en lugar de darla por vacía. Cambiar un cliente nunca reescribe una factura ya emitida: cada una conserva el nombre y la dirección con los que se emitió.
+
+<!-- anchor: user.money.quotes -->
+### Presupuestos
+
+**Público:** Administrador/a · Propietario
+
+Abra **Ventas y cobros** y luego **Presupuestos**. Aquí hace una oferta a un cliente facturado antes de facturarle.
+
+Elija **Nuevo presupuesto**, el cliente, las fechas y añada las líneas. **Guardar borrador** lo conserva; **Enviar** congela esa revisión, toma la siguiente referencia de la serie de presupuestos y calcula los importes según su propia configuración fiscal. Un borrador no muestra importes: existen solo cuando se envía. Un presupuesto enviado nunca cambia: **Modificar** crea otra revisión y **Cancelar el presupuesto** lo retira. Una oferta pasada de fecha se lee como caducada. Un presupuesto no factura, no contabiliza ni cobra nada; facturar uno aceptado viene después.
+
+Cuando el cliente haya respondido, elija **Registrar la respuesta** en un presupuesto enviado: usted registra su respuesta como emisor (aceptado o rechazado, la fecha, cómo le llegó); es su registro, no la firma del cliente, y una oferta pasada de fecha ya no puede aceptarse. En un presupuesto aceptado elija **Facturar este presupuesto**, fije las fechas y **Comprobar la factura**: la factura se previsualiza a partir de la revisión aceptada y se compara con lo aceptado. Si difiere (cambió la fecha, los datos del cliente o los hechos fiscales), confirma que la ha revisado; lo que aún no puede emitirse se nombra. Después **Emitir la factura**: un presupuesto da una sola factura, pase lo que pase después con ella.
 
 <!-- anchor: user.money.amounts -->
 ### Cómo se muestran los importes
@@ -3031,6 +3042,29 @@ Pertenece a varios espacios y quiere ver todas sus facturas, pagos y recordatori
 - Desde la misma pantalla se accede al historial completo, al uso y a otros servidores.
 
 **Véase también:** [Sus facturas](#sus-facturas)
+
+<!-- anchor: user.money.businesses -->
+### Sus negocios de un vistazo
+
+**Público:** Administrador/a · Propietario
+
+Usted dirige o gestiona uno o varios negocios y quiere ver, desde Yo, lo que cada uno tiene aún por cobrar y lo que debe pagar.
+
+**Pasos**
+
+1. Abra [Mis finanzas](https://fdittgen-png.github.io/deskilo/#/money). Si puede leer las finanzas de un negocio, un selector arriba ofrece **Personal** y **Mis negocios**.
+2. Elija **Mis negocios**. Cada negocio tiene una tarjeta con un bloque por moneda: **Por cobrar**, **Declarado, pendiente de confirmación**, **Recibido, aún sin conciliar** y **Pendiente de aprobación**.
+3. Toque una cifra para ver las facturas que la forman, **Mostrar más** si hay más, y toque una factura para abrirla en su negocio.
+4. Bajo **Por pagar**, **Proveedores** y **Gastos debidos a miembros** se listan por separado; toque cualquiera para ver las obligaciones que lo forman.
+
+**Conviene saber**
+
+- Las monedas nunca se suman, y nada se compensa con lo que el negocio debe. Un reembolso debido a clientes (**Reembolsos debidos a clientes**) es una línea aparte.
+- Un importe por pagar retenido forma parte de lo que queda, no se añade.
+- Un negocio que no se pudo leer lo dice, con **Reintentar**; eso no significa que no se deba nada. Un negocio cuyas finanzas no puede leer no aparece.
+- Ser cliente de un negocio no da acceso a sus cifras. Abrir una fila solo le lleva al negocio: lo que puede hacer allí lo decide su rol.
+
+**Véase también:** [Sus finanzas en todos sus espacios](#sus-finanzas-en-todos-sus-espacios)
 
 <!-- anchor: user.money.invoicing -->
 ### La facturación de un vistazo

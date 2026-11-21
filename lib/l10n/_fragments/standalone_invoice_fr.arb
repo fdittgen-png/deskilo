@@ -1,0 +1,244 @@
+{
+  "standaloneInvoiceMore": "Facture client sans mois",
+  "@standaloneInvoiceMore": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceMore"
+  },
+  "standaloneInvoiceCustomerChoose": "Choisir le client",
+  "@standaloneInvoiceCustomerChoose": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceCustomerChoose"
+  },
+  "standaloneInvoiceServiceDate": "Date de la prestation",
+  "@standaloneInvoiceServiceDate": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceServiceDate"
+  },
+  "standaloneInvoiceDueDate": "Date d’échéance",
+  "@standaloneInvoiceDueDate": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceDueDate"
+  },
+  "standaloneInvoiceBuyerReference": "Référence du client",
+  "@standaloneInvoiceBuyerReference": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceBuyerReference"
+  },
+  "standaloneInvoiceOrderNumber": "Numéro de commande",
+  "@standaloneInvoiceOrderNumber": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceOrderNumber"
+  },
+  "standaloneInvoiceLines": "Lignes",
+  "@standaloneInvoiceLines": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceLines"
+  },
+  "standaloneInvoiceAddLine": "Ajouter une ligne",
+  "@standaloneInvoiceAddLine": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceAddLine"
+  },
+  "standaloneInvoiceRemoveLine": "Retirer cette ligne",
+  "@standaloneInvoiceRemoveLine": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceRemoveLine"
+  },
+  "standaloneInvoiceLineDescription": "Description",
+  "@standaloneInvoiceLineDescription": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceLineDescription"
+  },
+  "standaloneInvoiceLineQuantity": "Quantité",
+  "@standaloneInvoiceLineQuantity": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceLineQuantity"
+  },
+  "standaloneInvoiceLineUnit": "Unité",
+  "@standaloneInvoiceLineUnit": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceLineUnit"
+  },
+  "standaloneInvoiceLinePrice": "Prix unitaire",
+  "@standaloneInvoiceLinePrice": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceLinePrice"
+  },
+  "standaloneInvoiceLineGross": "Le prix est TTC",
+  "@standaloneInvoiceLineGross": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceLineGross"
+  },
+  "standaloneInvoiceLineRate": "Taux de TVA",
+  "@standaloneInvoiceLineRate": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceLineRate"
+  },
+  "standaloneInvoiceLineRateDefault": "Le taux par défaut de l’entreprise",
+  "@standaloneInvoiceLineRateDefault": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceLineRateDefault"
+  },
+  "standaloneUnitHour": "heure",
+  "@standaloneUnitHour": {
+    "description": "#4165 standalone invoice composer: standaloneUnitHour"
+  },
+  "standaloneUnitPiece": "pièce",
+  "@standaloneUnitPiece": {
+    "description": "#4165 standalone invoice composer: standaloneUnitPiece"
+  },
+  "standaloneUnitJob": "forfait",
+  "@standaloneUnitJob": {
+    "description": "#4165 standalone invoice composer: standaloneUnitJob"
+  },
+  "standaloneInvoicePreview": "Vérifier la facture",
+  "@standaloneInvoicePreview": {
+    "description": "#4165 standalone invoice composer: standaloneInvoicePreview"
+  },
+  "standaloneInvoicePreviewTotal": "Total",
+  "@standaloneInvoicePreviewTotal": {
+    "description": "#4165 standalone invoice composer: standaloneInvoicePreviewTotal"
+  },
+  "standaloneInvoicePreviewNet": "HT",
+  "@standaloneInvoicePreviewNet": {
+    "description": "#4165 standalone invoice composer: standaloneInvoicePreviewNet"
+  },
+  "standaloneInvoicePreviewTax": "TVA",
+  "@standaloneInvoicePreviewTax": {
+    "description": "#4165 standalone invoice composer: standaloneInvoicePreviewTax"
+  },
+  "standaloneInvoiceMissing": "À compléter : {facts}",
+  "@standaloneInvoiceMissing": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceMissing",
+    "placeholders": {
+      "facts": {
+        "type": "String"
+      }
+    }
+  },
+  "standaloneInvoiceMissingLine": "Ligne {number} : {fact}",
+  "@standaloneInvoiceMissingLine": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceMissingLine",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "fact": {
+        "type": "String"
+      }
+    }
+  },
+  "standaloneInvoiceIssue": "Émettre la facture",
+  "@standaloneInvoiceIssue": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceIssue"
+  },
+  "standaloneInvoiceIssued": "Facture {number} émise",
+  "@standaloneInvoiceIssued": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceIssued",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "standaloneInvoiceOpen": "Ouvrir la facture",
+  "@standaloneInvoiceOpen": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceOpen"
+  },
+  "standaloneInvoiceRefused": "La facture n’a pas été émise.",
+  "@standaloneInvoiceRefused": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceRefused"
+  },
+  "standaloneInvoiceUnknown": "Nous n’avons pas pu confirmer l’émission de la facture. Vérifiez à nouveau avant d’en émettre une autre.",
+  "@standaloneInvoiceUnknown": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceUnknown"
+  },
+  "standaloneInvoiceLookAgain": "Vérifier à nouveau",
+  "@standaloneInvoiceLookAgain": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceLookAgain"
+  },
+  "standaloneInvoiceUnavailable": "Les factures ponctuelles ne sont pas activées pour cette entreprise.",
+  "@standaloneInvoiceUnavailable": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceUnavailable"
+  },
+  "standaloneFactServiceDate": "la date de la prestation",
+  "@standaloneFactServiceDate": {
+    "description": "#4165 standalone invoice composer: standaloneFactServiceDate"
+  },
+  "standaloneFactDueDate": "la date d’échéance",
+  "@standaloneFactDueDate": {
+    "description": "#4165 standalone invoice composer: standaloneFactDueDate"
+  },
+  "standaloneFactDueDatePast": "une échéance qui n’est pas passée",
+  "@standaloneFactDueDatePast": {
+    "description": "#4165 standalone invoice composer: standaloneFactDueDatePast"
+  },
+  "standaloneFactDueDateFar": "une échéance dans l’année",
+  "@standaloneFactDueDateFar": {
+    "description": "#4165 standalone invoice composer: standaloneFactDueDateFar"
+  },
+  "standaloneFactLines": "au moins une ligne",
+  "@standaloneFactLines": {
+    "description": "#4165 standalone invoice composer: standaloneFactLines"
+  },
+  "standaloneFactTooManyLines": "100 lignes au plus",
+  "@standaloneFactTooManyLines": {
+    "description": "#4165 standalone invoice composer: standaloneFactTooManyLines"
+  },
+  "standaloneFactStale": "le brouillon a changé : vérifiez de nouveau la facture",
+  "@standaloneFactStale": {
+    "description": "#4165 standalone invoice composer: standaloneFactStale"
+  },
+  "standaloneFactClosed": "ce brouillon a déjà été émis",
+  "@standaloneFactClosed": {
+    "description": "#4165 standalone invoice composer: standaloneFactClosed"
+  },
+  "standaloneFactApproval": "les règles de l’entreprise soumettent cette facture à approbation, ce qui n’est pas encore pris en charge ici",
+  "@standaloneFactApproval": {
+    "description": "#4165 standalone invoice composer: standaloneFactApproval"
+  },
+  "standaloneFactSalesTax": "cette entreprise ajoute une taxe de vente, ce qui n’est pas encore pris en charge ici",
+  "@standaloneFactSalesTax": {
+    "description": "#4165 standalone invoice composer: standaloneFactSalesTax"
+  },
+  "standaloneFactAmount": "un montant que la facture peut contenir",
+  "@standaloneFactAmount": {
+    "description": "#4165 standalone invoice composer: standaloneFactAmount"
+  },
+  "standaloneFactTotal": "un total supérieur à zéro",
+  "@standaloneFactTotal": {
+    "description": "#4165 standalone invoice composer: standaloneFactTotal"
+  },
+  "standaloneFactCurrency": "la devise de l’entreprise",
+  "@standaloneFactCurrency": {
+    "description": "#4165 standalone invoice composer: standaloneFactCurrency"
+  },
+  "standaloneFactUnknownSubject": "le client",
+  "@standaloneFactUnknownSubject": {
+    "description": "#4165 standalone invoice composer: standaloneFactUnknownSubject"
+  },
+  "standaloneFieldDescription": "une description",
+  "@standaloneFieldDescription": {
+    "description": "#4165 standalone invoice composer: standaloneFieldDescription"
+  },
+  "standaloneFieldQuantity": "une quantité supérieure à zéro, avec six décimales au plus",
+  "@standaloneFieldQuantity": {
+    "description": "#4165 standalone invoice composer: standaloneFieldQuantity"
+  },
+  "standaloneFieldUnit": "une unité",
+  "@standaloneFieldUnit": {
+    "description": "#4165 standalone invoice composer: standaloneFieldUnit"
+  },
+  "standaloneFieldPrice": "un prix avec six décimales au plus",
+  "@standaloneFieldPrice": {
+    "description": "#4165 standalone invoice composer: standaloneFieldPrice"
+  },
+  "standaloneFieldBase": "une quantité de prix supérieure à zéro",
+  "@standaloneFieldBase": {
+    "description": "#4165 standalone invoice composer: standaloneFieldBase"
+  },
+  "standaloneFieldBasis": "si le prix est TTC",
+  "@standaloneFieldBasis": {
+    "description": "#4165 standalone invoice composer: standaloneFieldBasis"
+  },
+  "standaloneFieldSupply": "une prestation de services (les biens ne se facturent pas encore ici)",
+  "@standaloneFieldSupply": {
+    "description": "#4165 standalone invoice composer: standaloneFieldSupply"
+  },
+  "standaloneFieldVatRate": "un taux de TVA défini par l’entreprise",
+  "@standaloneFieldVatRate": {
+    "description": "#4165 standalone invoice composer: standaloneFieldVatRate"
+  },
+  "standaloneFieldAmount": "un montant que la facture peut contenir",
+  "@standaloneFieldAmount": {
+    "description": "#4165 standalone invoice composer: standaloneFieldAmount"
+  },
+  "standaloneFieldLineId": "enregistrer à nouveau le brouillon",
+  "@standaloneFieldLineId": {
+    "description": "#4165 standalone invoice composer: standaloneFieldLineId"
+  }
+}

@@ -74,10 +74,7 @@ class DemoBusinessKindRepository implements BusinessKindRepository {
   Future<BusinessKindApplied> applyKind(
     String workspaceId, {
     required String requestId,
-    required String kind,
-    required List<String> moreKinds,
-    required int reviewedVersion,
-    required String reviewedDigest,
+    required ReviewedKind reviewed,
     required Map<String, bool> flags,
     required Map<String, bool> expected,
   }) => throw const BusinessKindApplyUnsupported();

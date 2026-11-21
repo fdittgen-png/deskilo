@@ -129,6 +129,18 @@ const List<DeskWalkPage> deskWalkPages = [
   ),
   ('/money/suppliers', PageKind.records, 'money', 'suppliers'),
   ('/money/customers', PageKind.document, 'money', 'customers'),
+  // #4161 — the stock records, and one movement at its address.
+  ('/stock', PageKind.document, 'stock', 'stock'),
+  (
+    '/stock/movements/demo-stock-movement-1',
+    PageKind.document,
+    'stock',
+    'stock-movement',
+  ),
+  // #4166 — the quotes: the list, a sent quote and the editor of a draft.
+  ('/money/quotes', PageKind.document, 'money', 'quotes'),
+  ('/money/quotes/quote-1', PageKind.document, 'money', 'quote-open'),
+  ('/money/quotes/quote-2/edit', PageKind.task, 'money', 'quote-edit'),
   // #3842 — the purchase orders as records, and an order beside the table.
   ('/money/purchase-orders', PageKind.records, 'money', 'purchase-orders'),
   (

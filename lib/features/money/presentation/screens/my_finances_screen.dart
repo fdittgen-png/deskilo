@@ -20,12 +20,16 @@ import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../domain/account_activity.dart';
+import '../../domain/business_payables.dart';
+import '../../domain/business_receivables.dart';
 import '../../domain/finance_filter.dart';
 import '../../domain/finance_overview.dart';
 import '../../providers/account_activity_providers.dart';
+import '../../providers/business_receivables_providers.dart';
 import '../../providers/finance_overview_provider.dart';
 import '../../providers/invoice_group_providers.dart';
 import '../my_finances_open.dart';
+import '../widgets/business_detail_sheet.dart';
 import '../widgets/dev_label.dart';
 import '../widgets/finance_document_views.dart';
 import '../widgets/finance_selection_bar.dart';
@@ -33,6 +37,7 @@ import '../widgets/finances_owed_summary.dart';
 import '../widgets/host_payment_pages.dart';
 import '../widgets/invoice_groups_bar.dart';
 import '../widgets/invoice_process_sheet.dart';
+import '../widgets/my_businesses_face.dart';
 import '../widgets/my_finances_parts.dart';
 import '../widgets/own_finance_export_menu.dart';
 import '../widgets/personal_payment_provider.dart';
@@ -54,6 +59,9 @@ class _MyFinancesState extends ConsumerState<MyFinancesScreen> {
   /// #3556 — one of my own groups, or none.
   String? _groupId;
 
+  /// #4167 — Personal (everything above, unchanged) or My businesses.
+  FinancesFace _face = FinancesFace.personal;
+
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
@@ -68,6 +76,44 @@ class _MyFinancesState extends ConsumerState<MyFinancesScreen> {
     final (owed, options) = (prod.payable.length, all.workspaces);
     // #3682 — while a source has not answered, an empty list is not "none".
     final partial = all.notAnswered.isNotEmpty;
+    // #4167 — My businesses is reachable only for a person who may read at least
+    // one business's finances; being a customer of a business grants nothing.
+    final businesses = ref.watch(myBusinessReceivablesProvider).value ?? // empty-ok: each business says its own failure in the face; with no list the face is not offered
+        const <BusinessReceivablesSource>[];
+    final hasBusinesses = businesses.any((s) => s is BusinessReceivablesAnswered);
+    final payables = ref.watch(myBusinessPayablesProvider).value ?? const <BusinessPayables>[]; // empty-ok: each direction of each business says its own failure; nothing is invented for what was not read
+    Widget faceSwitch() => FinancesFaceSwitch(
+      key: const ValueKey('finances-face-switch'),
+      selected: _face,
+      onChanged: (f) => setState(() => _face = f),
+    );
+    if (hasBusinesses && _face == FinancesFace.businesses) {
+      return Scaffold(
+        appBar: AppBar(title: PageTitle(l10n.tabMoney)),
+        body: Column(
+          children: [
+            faceSwitch(),
+            Expanded(
+              child: MyBusinessesFace(
+                sources: [
+                  for (final s in businesses)
+                    if (s is! BusinessReceivablesRefused) s,
+                ],
+                payables: payables,
+                onRetry: () => ref
+                  ..invalidate(myBusinessReceivablesProvider)
+                  ..invalidate(myBusinessPayablesProvider),
+                onDetail: (detail) => unawaited(showBusinessDetail(context, detail)),
+                onOpen: (workspaceId) {
+                  final s = businesses.firstWhere((s) => s.workspaceId == workspaceId);
+                  unawaited(openMyInvoice(context, ref, s.target, null, s.name));
+                },
+              ),
+            ),
+          ],
+        ),
+      );
+    }
     return DefaultTabController(
       length: 4,
       child: Scaffold(
@@ -102,7 +148,9 @@ class _MyFinancesState extends ConsumerState<MyFinancesScreen> {
               ),
             ),
           AsyncData() => Column(
-              children: [FinancesCoverage(overview: all), // #2557 C4
+              children: [
+                if (hasBusinesses) faceSwitch(),
+                FinancesCoverage(overview: all), // #2557 C4
                 if (options.length > 1 || _filter.workspaceId != null)
                   FinancesWorkspaceFilter(
                     key: const ValueKey('my-finances-finances-workspace-filter'),

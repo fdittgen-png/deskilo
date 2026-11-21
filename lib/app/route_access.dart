@@ -44,7 +44,14 @@ const Map<String, Set<WorkspacePermission>> routePermissions = {
   '/money/suppliers': {_P.viewFinances, _P.manageBilling, _P.managePurchases},
   // #4164 — the list reads under the rights that read the customers' money; the
   // editor's own door needs manageBillingCustomers.
+  // #4161 — the stock records and one movement: who sees or moves the stock.
+  '/stock': {_P.viewStock, _P.manageStock},
+  '/stock/movements/:id': {_P.viewStock, _P.manageStock},
   '/money/customers': {_P.manageBillingCustomers, _P.issueInvoices, _P.viewFinances},
+  // #4166 — the quotes read under the right to issue or the finances; the server decides who acts.
+  '/money/quotes': {_P.issueInvoices, _P.viewFinances},
+  '/money/quotes/:id': {_P.issueInvoices, _P.viewFinances},
+  '/money/quotes/:id/edit': {_P.issueInvoices},
   // #3615 — a supplier's payables: who reads the finances or the purchases.
   '/money/suppliers/:id': {_P.viewFinances, _P.managePurchases},
   '/money/purchase-orders': {_P.viewFinances, _P.managePurchases},
@@ -90,6 +97,7 @@ const Map<String, Set<WorkspacePermission>> routePermissions = {
   '/money/guest-passes': {_P.issueInvoices, _P.manageServices},
   '/validation': {_P.manageValidation},
   '/invoicing/wizard': {_P.issueInvoices},
+  '/invoicing/standalone/new': {_P.issueInvoices},
   '/money/repartition-wizard': {_P.issueInvoices, _P.manageBilling},
   '/report-editor': {_P.designDocuments, _P.manageDocuments},
   '/billing': {_P.manageBilling},

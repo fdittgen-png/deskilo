@@ -16,10 +16,10 @@ select pg_temp.u(n), '00000000-0000-0000-0000-000000000000', 'authenticated', 'a
        'sa' || n || '@example.test', '', now(), now(), now() from generate_series(1, 4) n;
 insert into public.workspaces (id, name, country_code, currency_code, timezone, created_by, feature_flags,
                                vat_regime, vat_id, legal_id, street, city, postal_code, address)
-values (pg_temp.u(101), 'Standalone 4165', 'FR', 'EUR', 'Europe/Paris', pg_temp.u(1), '{"invoicing": true}',
+values (pg_temp.u(101), 'Standalone 4165', 'FR', 'EUR', 'Europe/Paris', pg_temp.u(1), '{"invoicing": true, "standaloneInvoicing": true}',
         'vat_registered', 'FR40303265045', '30326504500014', '4 avenue de Castelnau', 'Pézenas', '34120',
         '4 avenue de Castelnau, 34120 Pézenas'),
-       (pg_temp.u(102), 'Other 4165', 'FR', 'EUR', 'Europe/Paris', pg_temp.u(4), '{"invoicing": true}',
+       (pg_temp.u(102), 'Other 4165', 'FR', 'EUR', 'Europe/Paris', pg_temp.u(4), '{"invoicing": true, "standaloneInvoicing": true}',
         'vat_registered', 'FR40303265045', '30326504500014', '4 avenue de Castelnau', 'Pézenas', '34120',
         '4 avenue de Castelnau, 34120 Pézenas');
 insert into public.members (id, workspace_id, user_id, is_owner, is_admin, status, joined_at)
@@ -171,7 +171,7 @@ select is(public.preview_standalone_invoice_v1(pg_temp.u(101), current_setting('
 -- ── the currency's own minor unit ──
 insert into public.workspaces (id, name, country_code, currency_code, timezone, created_by, feature_flags,
                                vat_regime, vat_id, legal_id, street, city, postal_code, address)
-select pg_temp.u(n), 'Cur ' || c, 'FR', c, 'Europe/Paris', pg_temp.u(1), '{"invoicing": true}',
+select pg_temp.u(n), 'Cur ' || c, 'FR', c, 'Europe/Paris', pg_temp.u(1), '{"invoicing": true, "standaloneInvoicing": true}',
        'vat_registered', 'FR40303265045', '30326504500014', '4 avenue de Castelnau', 'Pézenas', '34120', '4 avenue de Castelnau, 34120 Pézenas'
   from (values (103, 'JPY'), (104, 'KWD')) v(n, c);
 insert into public.members (id, workspace_id, user_id, is_owner, is_admin, status, joined_at)

@@ -2990,9 +2990,20 @@ Choose **View supplier payables** to see that supplier's bills and their remaini
 
 **Audience:** Administrator · Owner
 
-Open **Money** and then **Billing customers** (the address `/money/customers`; the feature **Billing customers** must be on under invoicing). This is where you keep the people and businesses you invoice, with or without an account. They are not members: they have no account, see nothing of your business, and are not counted among your members.
+Open **Sales & collections** and then **Billing customers**. This is where you keep the people and businesses you invoice, with or without an account. They are not members: they have no account, see nothing of your business, and are not counted among your members.
 
 Choose **Add a customer** and give a company or a name, the postal address, the country code, the VAT number and an e-mail address for the invoice. The VAT number is checked for its shape only, never verified. **Billed as** (business or person) decides the legal mentions and the tax treatment of what you invoice; only someone who may issue invoices can change it. Choose a customer to edit it. If someone else changed the customer since you opened it, nothing is saved and you are asked to open it again. If the list cannot be read, retry rather than treating it as empty. Changing a customer never rewrites an invoice already issued: each keeps the name and address it was issued with.
+
+<!-- anchor: user.money.quotes -->
+### Quotes
+
+**Audience:** Administrator · Owner
+
+Open **Sales & collections** and then **Quotes**. This is where you make an offer to a billing customer before you invoice them.
+
+Choose **New quote**, pick the customer, set the dates and add the lines. **Save draft** keeps it; **Send** freezes that revision, takes the next reference from the quote series and works the amounts out from your own tax settings. A draft shows no amounts: they exist only once it is sent. A sent quote never changes: **Amend** makes another revision, and **Cancel the quote** withdraws it. An offer past its date reads as expired. Nothing is invoiced, booked or paid by a quote; invoicing an accepted one comes next.
+
+Once the customer has answered, choose **Record the answer** on a sent quote: you record their answer as the issuer (accepted or declined, the date, how it reached you); it is your record, not their signature, and an offer past its date can no longer be accepted. For an accepted quote choose **Invoice this quote**, set the dates and **Check the invoice**: the invoice is previewed from the accepted revision and set against what was accepted. If it differs (the date, the customer's details or the tax facts changed) you confirm that you reviewed it; what cannot be issued yet is named. Then **Issue the invoice**: one quote makes one invoice, whatever happens next to that invoice.
 
 <!-- anchor: user.money.amounts -->
 ### How amounts are shown
@@ -3031,6 +3042,29 @@ You belong to several spaces and want all your invoices, payments and reminders 
 - Full history, usage and other servers are reachable from the same screen.
 
 **See also:** [Your invoices](#your-invoices)
+
+<!-- anchor: user.money.businesses -->
+### Your businesses at a glance
+
+**Audience:** Administrator · Owner
+
+You run or manage one or more businesses and want to see, from Me, what each is still owed and what each has to pay.
+
+**Steps**
+
+1. Open [My finances](https://fdittgen-png.github.io/deskilo/#/money). If you may read the finances of a business, a switch at the top offers **Personal** and **My businesses**.
+2. Choose **My businesses**. Each business has a card with one block per currency: **To collect**, **Declared, awaiting confirmation**, **Received, not yet matched** and **Awaiting approval**.
+3. Tap a figure to see the invoices behind it, **Show more** when there are more, and tap an invoice to open it in its business.
+4. Under **To pay**, **Suppliers** and **Expenses owed to members** are listed apart; tap either to see the obligations behind it.
+
+**Good to know**
+
+- Currencies are never added together, and nothing is set against what the business owes. A refund due to customers (**Refunds due to customers**) is a line of its own.
+- A held payable is part of what remains, not an addition to it.
+- A business that could not be read says so, with **Try again**; that is not the same as nothing being owed. A business whose finances you may not read does not appear.
+- Being a customer of a business gives you no access to its figures. Opening a row only takes you to the business: what you may do there is decided by your role in it.
+
+**See also:** [Your finances across spaces](#your-finances-across-spaces)
 
 <!-- anchor: user.money.invoicing -->
 ### Invoicing at a glance

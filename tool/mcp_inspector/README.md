@@ -49,6 +49,9 @@ the previous file before attempting the request. Each run uses a private tempora
 configuration and isolated memory-only authentication storage, removed on exit.
 The saved JSON is an offline comparison input, not an attestation of live access.
 
+Tests assert that the installed Inspector CLI reports exactly the pinned version
+and that the lock holds it.
+
 Tests exercise the actual pinned client against a local HTTP fixture plus negative
 contract cases, secret handling, timeout cleanup and recovery. That fixture is not
 a Deskilo deployment. Without an explicit endpoint and delegated bearer, live

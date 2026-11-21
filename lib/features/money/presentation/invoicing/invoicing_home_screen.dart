@@ -18,6 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/features/enabled_feature_keys.dart';
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
@@ -207,6 +208,14 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
         l.invoicingMorePaid,
         () => _filter.value = InvoicingFilter.paid,
       ),
+      // #4165 — a customer invoice without a member-month.
+      if (featureOn(ref.watch(enabledFeatureKeysProvider), 'standaloneInvoicing', byDefault: false))
+        (
+          'invoicing-more-standalone',
+          Icons.edit_note,
+          l.standaloneInvoiceMore,
+          () => context.go('/invoicing/standalone/new'),
+        ),
       ...widget.more,
     ];
     // An entry is chosen by its key, never by its place in the list.

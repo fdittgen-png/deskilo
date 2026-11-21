@@ -8,6 +8,8 @@ import '../../features/money/providers/asset_providers.dart';
 import '../../features/money/providers/billing_customer_providers.dart';
 import '../../features/money/providers/book_period_providers.dart';
 import '../../features/money/providers/book_profile_providers.dart';
+import '../../features/money/providers/business_receivables_providers.dart';
+import '../../features/money/providers/customer_quote_providers.dart';
 import '../../features/money/providers/einvoice_inbox_providers.dart';
 import '../../features/money/providers/premises_lease_providers.dart';
 import '../../features/money/providers/room_rental_providers.dart';
@@ -20,6 +22,8 @@ import '../../features/workspace/providers/sales_kpi_providers.dart';
 import '../../features/workspace/providers/vendor_kpi_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import 'data/customer_kpi_repository.dart';
+import 'data/fake_business_payables.dart';
+import 'data/fake_business_receivables.dart';
 import 'data/item_kpi_repository.dart';
 import 'data/kpi_repositories.dart';
 import 'data/sales_kpi_repository.dart';
@@ -29,6 +33,7 @@ import 'demo_fixture.dart';
 import 'demo_purchase_order_overrides.dart';
 import 'demo_purchasing_overrides.dart';
 import 'demo_space_pick.dart';
+import 'demo_space_routing.dart' show kDemoInstallationId;
 import 'seed/demo_purchase_seed.dart';
 
 DemoCapacityKpiRepository demoCapacityKpi(Ref ref, DemoFixture fixture) {
@@ -51,6 +56,27 @@ List<Override> demoCityCommerceOverrides(DemoFixture fixture) {
   final DemoSpaces<DemoSpaceContracts> contracts = demoMapSpaces(stores, (s) => s.figures.contracts);
   final orderSpaces = demoMapSpaces(stores, (s) => s.orders);
   return [
+    // #4167 — what each business of the head's organisation is still owed,
+    // from that space's own invoices.
+    businessInstallationIdProvider.overrideWith((ref) => kDemoInstallationId),
+    businessReceivablesRepositoryProvider.overrideWith(
+      (ref) => FakeBusinessReceivablesRepository((id) {
+        for (final key in DemoSpaceKey.values) {
+          if (key.id == id) return fixture.space(key).money;
+        }
+        return null;
+      }),
+    ),
+    // #4167 (B) — what each business has to pay, from the obligations its
+    // own purchasing keeps.
+    businessPayablesRepositoryProvider.overrideWith(
+      (ref) => FakeBusinessPayablesRepository((id) {
+        for (final key in DemoSpaceKey.values) {
+          if (key.id == id) return buying.at(key).purchases;
+        }
+        return null;
+      }),
+    ),
     eInvoiceInboxRepositoryProvider.overrideWith(
       (ref) => demoPickSpace(ref, buying).inbox,
     ),
@@ -58,6 +84,10 @@ List<Override> demoCityCommerceOverrides(DemoFixture fixture) {
     // #4164 — each space reads its own billing customers.
     billingCustomerRepositoryProvider.overrideWith(
       (ref) => demoPickSpace(ref, demoMapSpaces(stores, (s) => s.billingCustomers)),
+    ),
+    // #4166 — each space reads its own customer quotes.
+    customerQuoteRepositoryProvider.overrideWith(
+      (ref) => demoPickSpace(ref, demoMapSpaces(stores, (s) => s.customerQuotes)),
     ),
     // #3307 — the orders to their suppliers.
     ...demoPurchaseOrderOverrides(orderSpaces),

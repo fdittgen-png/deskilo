@@ -41,6 +41,7 @@ signed-out on  /invoice-register -> /auth
 signed-out on  /invoices -> /auth
 signed-out on  /invoices/:id -> /auth
 signed-out on  /invoices/customer/:id -> /auth
+signed-out on  /invoicing/standalone/new -> /auth
 signed-out on  /invoicing/wizard -> /auth
 signed-out on  /kiosk -> /auth
 signed-out on  /kiosk-gate -> /auth
@@ -86,6 +87,9 @@ signed-out on  /money/purchase-orders/order/:id -> /auth
 signed-out on  /money/purchases -> /auth
 signed-out on  /money/purchases/approvals -> /auth
 signed-out on  /money/purchases/doc/:id -> /auth
+signed-out on  /money/quotes -> /auth
+signed-out on  /money/quotes/:id -> /auth
+signed-out on  /money/quotes/:id/edit -> /auth
 signed-out on  /money/repartition -> /auth
 signed-out on  /money/repartition-wizard -> /auth
 signed-out on  /money/sales -> /auth
@@ -134,6 +138,8 @@ signed-out on  /setup/launch -> /auth
 signed-out on  /setup/levels -> /auth
 signed-out on  /setup/step/:id -> /auth
 signed-out on  /space/:kind/:id -> /auth
+signed-out on  /stock -> /auth
+signed-out on  /stock/movements/:id -> /auth
 signed-out on  /suppliers -> /auth
 signed-out on  /task-recorder -> /auth
 signed-out on  /task-recorder/guide -> /auth
@@ -193,6 +199,7 @@ signed-out off /invoice-register -> /auth
 signed-out off /invoices -> /auth
 signed-out off /invoices/:id -> /auth
 signed-out off /invoices/customer/:id -> /auth
+signed-out off /invoicing/standalone/new -> /auth
 signed-out off /invoicing/wizard -> /auth
 signed-out off /kiosk -> /auth
 signed-out off /kiosk-gate -> /auth
@@ -238,6 +245,9 @@ signed-out off /money/purchase-orders/order/:id -> /auth
 signed-out off /money/purchases -> /auth
 signed-out off /money/purchases/approvals -> /auth
 signed-out off /money/purchases/doc/:id -> /auth
+signed-out off /money/quotes -> /auth
+signed-out off /money/quotes/:id -> /auth
+signed-out off /money/quotes/:id/edit -> /auth
 signed-out off /money/repartition -> /auth
 signed-out off /money/repartition-wizard -> /auth
 signed-out off /money/sales -> /auth
@@ -286,6 +296,8 @@ signed-out off /setup/launch -> /auth
 signed-out off /setup/levels -> /auth
 signed-out off /setup/step/:id -> /auth
 signed-out off /space/:kind/:id -> /auth
+signed-out off /stock -> /auth
+signed-out off /stock/movements/:id -> /auth
 signed-out off /suppliers -> /auth
 signed-out off /task-recorder -> /auth
 signed-out off /task-recorder/guide -> /auth
@@ -345,6 +357,7 @@ no-space on  /invoice-register -> /me
 no-space on  /invoices -> /me
 no-space on  /invoices/:id -> /me
 no-space on  /invoices/customer/:id -> /me
+no-space on  /invoicing/standalone/new -> /me
 no-space on  /invoicing/wizard -> /me
 no-space on  /kiosk -> /me
 no-space on  /kiosk-gate -> /me
@@ -390,6 +403,9 @@ no-space on  /money/purchase-orders/order/:id -> /me
 no-space on  /money/purchases -> /me
 no-space on  /money/purchases/approvals -> /me
 no-space on  /money/purchases/doc/:id -> /me
+no-space on  /money/quotes -> /me
+no-space on  /money/quotes/:id -> /me
+no-space on  /money/quotes/:id/edit -> /me
 no-space on  /money/repartition -> /me
 no-space on  /money/repartition-wizard -> /me
 no-space on  /money/sales -> /me
@@ -438,6 +454,8 @@ no-space on  /setup/launch -> /me
 no-space on  /setup/levels -> /me
 no-space on  /setup/step/:id -> /me
 no-space on  /space/:kind/:id -> /me
+no-space on  /stock -> /me
+no-space on  /stock/movements/:id -> /me
 no-space on  /suppliers -> /me
 no-space on  /task-recorder -> (open)
 no-space on  /task-recorder/guide -> /task-recorder
@@ -497,6 +515,7 @@ no-space off /invoice-register -> /me
 no-space off /invoices -> /me
 no-space off /invoices/:id -> /me
 no-space off /invoices/customer/:id -> /me
+no-space off /invoicing/standalone/new -> /me
 no-space off /invoicing/wizard -> /me
 no-space off /kiosk -> /me
 no-space off /kiosk-gate -> /me
@@ -542,6 +561,9 @@ no-space off /money/purchase-orders/order/:id -> /me
 no-space off /money/purchases -> /me
 no-space off /money/purchases/approvals -> /me
 no-space off /money/purchases/doc/:id -> /me
+no-space off /money/quotes -> /me
+no-space off /money/quotes/:id -> /me
+no-space off /money/quotes/:id/edit -> /me
 no-space off /money/repartition -> /me
 no-space off /money/repartition-wizard -> /me
 no-space off /money/sales -> /me
@@ -590,6 +612,8 @@ no-space off /setup/launch -> /me
 no-space off /setup/levels -> /me
 no-space off /setup/step/:id -> /me
 no-space off /space/:kind/:id -> /me
+no-space off /stock -> /me
+no-space off /stock/movements/:id -> /me
 no-space off /suppliers -> /me
 no-space off /task-recorder -> (open)
 no-space off /task-recorder/guide -> /task-recorder
@@ -649,6 +673,7 @@ member on  /invoice-register -> (open)
 member on  /invoices -> (open)
 member on  /invoices/:id -> (open)
 member on  /invoices/customer/:id -> /calendar
+member on  /invoicing/standalone/new -> /calendar
 member on  /invoicing/wizard -> /calendar
 member on  /kiosk -> /reserve
 member on  /kiosk-gate -> /reserve
@@ -694,6 +719,9 @@ member on  /money/purchase-orders/order/:id -> /calendar
 member on  /money/purchases -> /money
 member on  /money/purchases/approvals -> /calendar
 member on  /money/purchases/doc/:id -> /money
+member on  /money/quotes -> /calendar
+member on  /money/quotes/:id -> /calendar
+member on  /money/quotes/:id/edit -> /calendar
 member on  /money/repartition -> (open)
 member on  /money/repartition-wizard -> /calendar
 member on  /money/sales -> /calendar
@@ -742,6 +770,8 @@ member on  /setup/launch -> /calendar
 member on  /setup/levels -> /calendar
 member on  /setup/step/:id -> /calendar
 member on  /space/:kind/:id -> (open)
+member on  /stock -> /calendar
+member on  /stock/movements/:id -> /calendar
 member on  /suppliers -> /calendar
 member on  /task-recorder -> (open)
 member on  /task-recorder/guide -> /task-recorder
@@ -801,6 +831,7 @@ member off /invoice-register -> /messages
 member off /invoices -> /messages
 member off /invoices/:id -> /messages
 member off /invoices/customer/:id -> /messages
+member off /invoicing/standalone/new -> /messages
 member off /invoicing/wizard -> /messages
 member off /kiosk -> /messages
 member off /kiosk-gate -> /messages
@@ -846,6 +877,9 @@ member off /money/purchase-orders/order/:id -> /messages
 member off /money/purchases -> /messages
 member off /money/purchases/approvals -> /messages
 member off /money/purchases/doc/:id -> /messages
+member off /money/quotes -> /messages
+member off /money/quotes/:id -> /messages
+member off /money/quotes/:id/edit -> /messages
 member off /money/repartition -> /messages
 member off /money/repartition-wizard -> /messages
 member off /money/sales -> /messages
@@ -894,6 +928,8 @@ member off /setup/launch -> /messages
 member off /setup/levels -> /messages
 member off /setup/step/:id -> /messages
 member off /space/:kind/:id -> /messages
+member off /stock -> /messages
+member off /stock/movements/:id -> /messages
 member off /suppliers -> /messages
 member off /task-recorder -> (open)
 member off /task-recorder/guide -> /task-recorder
@@ -953,6 +989,7 @@ admin on  /invoice-register -> (open)
 admin on  /invoices -> (open)
 admin on  /invoices/:id -> (open)
 admin on  /invoices/customer/:id -> (open)
+admin on  /invoicing/standalone/new -> /calendar
 admin on  /invoicing/wizard -> /calendar
 admin on  /kiosk -> /reserve
 admin on  /kiosk-gate -> /reserve
@@ -998,6 +1035,9 @@ admin on  /money/purchase-orders/order/:id -> /money
 admin on  /money/purchases -> /money
 admin on  /money/purchases/approvals -> /money
 admin on  /money/purchases/doc/:id -> /money
+admin on  /money/quotes -> /money
+admin on  /money/quotes/:id -> /money
+admin on  /money/quotes/:id/edit -> /calendar
 admin on  /money/repartition -> (open)
 admin on  /money/repartition-wizard -> /calendar
 admin on  /money/sales -> /invoices
@@ -1046,6 +1086,8 @@ admin on  /setup/launch -> /calendar
 admin on  /setup/levels -> /calendar
 admin on  /setup/step/:id -> /calendar
 admin on  /space/:kind/:id -> (open)
+admin on  /stock -> /calendar
+admin on  /stock/movements/:id -> /calendar
 admin on  /suppliers -> /money/suppliers
 admin on  /task-recorder -> (open)
 admin on  /task-recorder/guide -> /task-recorder
@@ -1106,6 +1148,7 @@ admin off /invoice-register -> /messages
 admin off /invoices -> /messages
 admin off /invoices/:id -> /messages
 admin off /invoices/customer/:id -> /messages
+admin off /invoicing/standalone/new -> /messages
 admin off /invoicing/wizard -> /messages
 admin off /kiosk -> /messages
 admin off /kiosk-gate -> /messages
@@ -1151,6 +1194,9 @@ admin off /money/purchase-orders/order/:id -> /messages
 admin off /money/purchases -> /messages
 admin off /money/purchases/approvals -> /messages
 admin off /money/purchases/doc/:id -> /messages
+admin off /money/quotes -> /messages
+admin off /money/quotes/:id -> /messages
+admin off /money/quotes/:id/edit -> /messages
 admin off /money/repartition -> /messages
 admin off /money/repartition-wizard -> /messages
 admin off /money/sales -> /messages
@@ -1199,6 +1245,8 @@ admin off /setup/launch -> /messages
 admin off /setup/levels -> /messages
 admin off /setup/step/:id -> /messages
 admin off /space/:kind/:id -> /messages
+admin off /stock -> /messages
+admin off /stock/movements/:id -> /messages
 admin off /suppliers -> /messages
 admin off /task-recorder -> (open)
 admin off /task-recorder/guide -> /task-recorder
@@ -1258,6 +1306,7 @@ owner on  /invoice-register -> (open)
 owner on  /invoices -> (open)
 owner on  /invoices/:id -> (open)
 owner on  /invoices/customer/:id -> (open)
+owner on  /invoicing/standalone/new -> /money
 owner on  /invoicing/wizard -> (open)
 owner on  /kiosk -> /reserve
 owner on  /kiosk-gate -> /reserve
@@ -1303,6 +1352,9 @@ owner on  /money/purchase-orders/order/:id -> /money
 owner on  /money/purchases -> /money
 owner on  /money/purchases/approvals -> /money
 owner on  /money/purchases/doc/:id -> /money
+owner on  /money/quotes -> /money
+owner on  /money/quotes/:id -> /money
+owner on  /money/quotes/:id/edit -> /money
 owner on  /money/repartition -> (open)
 owner on  /money/repartition-wizard -> /money
 owner on  /money/sales -> /invoices
@@ -1351,6 +1403,8 @@ owner on  /setup/launch -> (open)
 owner on  /setup/levels -> (open)
 owner on  /setup/step/:id -> (open)
 owner on  /space/:kind/:id -> (open)
+owner on  /stock -> /reserve
+owner on  /stock/movements/:id -> /reserve
 owner on  /suppliers -> /money/suppliers
 owner on  /task-recorder -> (open)
 owner on  /task-recorder/guide -> /task-recorder
@@ -1411,6 +1465,7 @@ owner off /invoice-register -> /messages
 owner off /invoices -> /messages
 owner off /invoices/:id -> /messages
 owner off /invoices/customer/:id -> /messages
+owner off /invoicing/standalone/new -> /messages
 owner off /invoicing/wizard -> /messages
 owner off /kiosk -> /messages
 owner off /kiosk-gate -> /messages
@@ -1456,6 +1511,9 @@ owner off /money/purchase-orders/order/:id -> /messages
 owner off /money/purchases -> /messages
 owner off /money/purchases/approvals -> /messages
 owner off /money/purchases/doc/:id -> /messages
+owner off /money/quotes -> /messages
+owner off /money/quotes/:id -> /messages
+owner off /money/quotes/:id/edit -> /messages
 owner off /money/repartition -> /messages
 owner off /money/repartition-wizard -> /messages
 owner off /money/sales -> /messages
@@ -1504,6 +1562,8 @@ owner off /setup/launch -> /workspace-settings
 owner off /setup/levels -> /workspace-settings
 owner off /setup/step/:id -> /workspace-settings
 owner off /space/:kind/:id -> /messages
+owner off /stock -> /messages
+owner off /stock/movements/:id -> /messages
 owner off /suppliers -> /messages
 owner off /task-recorder -> (open)
 owner off /task-recorder/guide -> /task-recorder

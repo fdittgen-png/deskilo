@@ -2857,9 +2857,19 @@ Scelga **Vedi debiti verso il fornitore** per consultare le sue fatture e gli im
 
 **Destinatari:** Amministratore · Proprietario
 
-Aprire **Denaro** e poi **Clienti fatturati** (l'indirizzo `/money/customers`; la funzione **Clienti fatturati** deve essere attiva sotto la fatturazione). Qui si tengono le persone e le aziende a cui si fattura, con o senza account. Non sono membri: non hanno un account, non vedono nulla dell'attività e non contano tra i membri.
+Aprire **Vendite e incassi** e poi **Clienti fatturati**. Qui si tengono le persone e le aziende a cui si fattura, con o senza account. Non sono membri: non hanno un account, non vedono nulla dell'attività e non contano tra i membri.
 
 Scegliere **Aggiungere un cliente** e indicare un'azienda o un nome, l'indirizzo postale, il codice paese, la partita IVA e un indirizzo e-mail per la fattura. La partita IVA è controllata solo nella forma, mai verificata. **Fatturato come** (azienda o privato) determina le diciture legali e il trattamento fiscale; solo chi può emettere fatture può modificarlo. Scegliere un cliente per modificarlo. Se qualcun altro lo ha cambiato dopo l'apertura, non viene salvato nulla e si deve riaprirlo. Se l'elenco non può essere letto, riprovare invece di darlo per vuoto. Modificare un cliente non riscrive mai una fattura già emessa: ognuna conserva il nome e l'indirizzo con cui è stata emessa.
+
+### Preventivi
+
+**Destinatari:** Amministratore · Proprietario
+
+Aprire **Vendite e incassi** e poi **Preventivi**. Qui si fa un'offerta a un cliente fatturato prima di fatturargli.
+
+Scegliere **Nuovo preventivo**, il cliente, le date e aggiungere le righe. **Salva bozza** la conserva; **Invia** congela quella revisione, prende il riferimento successivo della serie dei preventivi e calcola gli importi in base alle impostazioni fiscali proprie. Una bozza non mostra importi: esistono solo dopo l'invio. Un preventivo inviato non cambia mai: **Modifica** crea un'altra revisione e **Annulla il preventivo** lo ritira. Un'offerta oltre la sua data risulta scaduta. Un preventivo non fattura, non registra e non incassa nulla; la fatturazione di uno accettato viene dopo.
+
+Quando il cliente ha risposto, scegliere **Registrare la risposta** su un preventivo inviato: si registra la sua risposta come emittente (accettato o rifiutato, la data, come è arrivata); è l'annotazione dell'emittente, non la firma del cliente, e un'offerta oltre la sua data non può più essere accettata. Per un preventivo accettato scegliere **Fatturare questo preventivo**, fissare le date e **Controllare la fattura**: la fattura viene mostrata in anteprima dalla revisione accettata e confrontata con quanto accettato. Se differisce (sono cambiati la data, i dati del cliente o i fatti fiscali), si conferma di averla rivista; ciò che non può ancora essere emesso viene indicato. Poi **Emettere la fattura**: un preventivo dà una sola fattura, qualunque cosa succeda poi a quella fattura.
 
 ### Come sono mostrati gli importi
 
@@ -2896,6 +2906,28 @@ Appartiene a più spazi e vuole tutte le Sue fatture, i Suoi pagamenti e i Suoi 
 - Cronologia completa, utilizzo e altri server sono raggiungibili dalla stessa schermata.
 
 **Vedi anche:** [Le Sue fatture](help:user.money.invoices)
+
+### Le attività a colpo d'occhio
+
+**Destinatari:** Amministratore · Proprietario
+
+Si dirigono o si gestiscono una o più attività e si vuole vedere, da Io, ciò che ciascuna è ancora in credito e ciò che ciascuna deve pagare.
+
+**Passaggi**
+
+1. Aprire [Le mie finanze](app:/money). Se è consentito leggere le finanze di un'attività, un selettore in alto offre **Personale** e **Le mie attività**.
+2. Scegliere **Le mie attività**. Ogni attività ha una scheda con un blocco per valuta: **Da incassare**, **Dichiarato, in attesa di conferma**, **Ricevuto, non ancora abbinato** e **In attesa di approvazione**.
+3. Toccare un importo per vedere le fatture che lo compongono, **Mostra altro** se ce ne sono altre, e toccare una fattura per aprirla nella sua attività.
+4. Sotto **Da pagare**, **Fornitori** e **Spese dovute ai membri** sono elencati a parte; toccarne uno per vedere gli obblighi che lo compongono.
+
+**Da sapere**
+
+- Le valute non vengono mai sommate e nulla viene compensato con ciò che l'attività deve. Un rimborso dovuto ai clienti (**Rimborsi dovuti ai clienti**) è una riga a sé.
+- Un importo da pagare sospeso fa parte di ciò che resta, non si aggiunge.
+- Un'attività che non ha potuto essere letta lo dice, con **Riprovare**; non significa che non sia dovuto nulla. Un'attività di cui non è consentito leggere le finanze non compare.
+- Essere cliente di un'attività non dà accesso ai suoi dati. Aprire una riga porta solo all'attività: ciò che vi si può fare dipende dal ruolo.
+
+**Vedi anche:** [Le finanze in tutti gli spazi](help:user.money.finances)
 
 ### La fatturazione in sintesi
 

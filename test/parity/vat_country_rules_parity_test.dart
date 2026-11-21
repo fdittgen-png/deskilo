@@ -12,9 +12,9 @@
 //   * the nine boxes of the British Making Tax Digital return.
 //
 // Row -> branch table (the golden files carry the rows):
-//   ereporting_flows.txt   country 'FR'/'fr'/' fr ' x VAT id FR..: domestic;
-//                          blank country decided by the id prefix; a foreign
-//                          country with an FR-prefixed id: abroad; no id: b2c
+//   ereporting_flows.txt   #4163: the frozen capacity and country decide, a
+//                          VAT id never; a business with no country, or abroad
+//                          with no VAT number, is unresolved
 //   siren_gap.txt          seller FR|fr|' fr '|DE|blank x buyer FR|fr|DE|blank x
 //                          company set|blank x legal id set|blank x regime
 //   exemption_codes.txt    each regime x FR|fr| fr |DE|blank
@@ -33,7 +33,11 @@ import 'parity_golden.dart';
 
 const _dir = 'test/parity/golden/vat_country_rules';
 
-Invoice _invoice(InvoiceParty? buyer, {InvoiceParty? seller}) => Invoice(
+Invoice _invoice(
+  InvoiceParty? buyer, {
+  InvoiceParty? seller,
+  Map<String, Object?>? frozen,
+}) => Invoice(
   id: 'i',
   workspaceId: 'ws',
   memberId: 'm',
@@ -52,13 +56,25 @@ Invoice _invoice(InvoiceParty? buyer, {InvoiceParty? seller}) => Invoice(
   signature: '',
   buyerParty: buyer,
   sellerParty: seller,
+  legalSnapshot: frozen,
 );
 
+/// #4163 -- INTENDED CHANGE: the flow is decided by the capacity the document
+/// FROZE (here stated as a customer would: a row with a VAT number is a
+/// business, one without is a person) and its frozen country, never by the
+/// VAT identifier alone. A business without a country, or a business abroad
+/// without a VAT number, is unresolved: the golden names the reason.
 String _flow(String country, String vatId) {
   final report = frEReport(
     [
       _invoice(
         InvoiceParty(name: 'B', country: country, vatId: vatId),
+        frozen: {
+          'schema': 1,
+          'buyer_capacity': vatId.isEmpty ? 'consumer' : 'business',
+          'capacity_source': 'member',
+          'buyer_country': country,
+        },
       ),
     ],
     start: DateTime(2026, 9),
@@ -67,6 +83,9 @@ String _flow(String country, String vatId) {
     dayOf: (instant) => DateTime(instant.year, instant.month, instant.day),
     basis: EReportingBasis(homeCountry: eReportingCountry, onReceipts: false),
   );
+  if (report.unresolved.isNotEmpty) {
+    return 'unresolved:${report.unresolved.single.reasons.single.code}';
+  }
   if (report.internationalTransactions.isNotEmpty) return 'international';
   if (report.b2cTransactions.isNotEmpty) return 'b2c';
   return 'none';

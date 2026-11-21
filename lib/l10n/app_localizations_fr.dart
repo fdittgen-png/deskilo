@@ -12389,6 +12389,13 @@ class AppLocalizationsFr extends AppLocalizations {
       'Cartes QR imprimables par poste, table, bureau et niveau — scanner pour réserver ou pointer.';
 
   @override
+  String get featureStandaloneInvoicingDesc =>
+      'Facturer dès aujourd’hui un client nommé pour une prestation réalisée ou un livrable convenu, avec des lignes détaillées et des dates explicites, sans réservation, abonnement ni mois derrière. Le serveur calcule chaque montant ; vous confirmez un aperçu puis émettez la facture. Désactivé : les factures restent émises par membre et par mois.';
+
+  @override
+  String get featureStandaloneInvoicingTitle => 'Factures ponctuelles';
+
+  @override
   String get featureStockManagementDesc =>
       'Suivre les marchandises : où elles sont, dans quelle unité, de quel lot, et chaque mouvement d\'un endroit à un autre. Désactivé : un article du catalogue garde son simple compte en rayon.';
 
@@ -13386,6 +13393,61 @@ class AppLocalizationsFr extends AppLocalizations {
       one: '$count champ demande votre attention',
     );
     return '$_temp0';
+  }
+
+  @override
+  String frEReportingBlocked(String documents) {
+    return 'Le e-reporting France n’a pas été écrit : ces documents ne peuvent pas être classés d’après ce qu’ils ont figé à l’émission : $documents. Renseignez la qualité du client, puis corrigez-les par un avoir et une nouvelle facture ; les originaux ne sont jamais modifiés.';
+  }
+
+  @override
+  String frEReportingDocumentAmountRuleUnsupported(String number) {
+    return '$number: un service dont la TVA figée diffère de son taux, avec un paiement dans la période';
+  }
+
+  @override
+  String frEReportingDocumentBuyerCountryConflict(String number) {
+    return '$number: deux pays différents ont été figés';
+  }
+
+  @override
+  String frEReportingDocumentBuyerCountryMissing(String number) {
+    return '$number: le pays du professionnel n’a pas été figé';
+  }
+
+  @override
+  String frEReportingDocumentBuyerVatIdMissing(String number) {
+    return '$number: un professionnel à l’étranger exige son numéro de TVA';
+  }
+
+  @override
+  String frEReportingDocumentCapacityUnknown(String number) {
+    return '$number: la qualité du client (professionnel ou consommateur) n’a pas été indiquée';
+  }
+
+  @override
+  String frEReportingDocumentGoodsAbroadUnsupported(String number) {
+    return '$number: les livraisons de biens à un professionnel à l’étranger ne sont pas prises en charge';
+  }
+
+  @override
+  String frEReportingDocumentGoodsZeroRateUnsupported(String number) {
+    return '$number: une ligne de biens à taux zéro : sa catégorie n’est pas déduite du taux';
+  }
+
+  @override
+  String frEReportingDocumentMissingReceiptAllocation(String number) {
+    return '$number: biens et services avec un paiement : le paiement n’a pas de ventilation certaine entre eux';
+  }
+
+  @override
+  String frEReportingDocumentNoFrozenCapacity(String number) {
+    return '$number: émise avant que la qualité du client soit figée';
+  }
+
+  @override
+  String frEReportingDocumentUnsupportedCommercialLine(String number) {
+    return '$number: une ligne que cette version ne sait pas lire';
   }
 
   @override
@@ -22988,6 +23050,75 @@ class AppLocalizationsFr extends AppLocalizations {
   String get myBadgeTitle => 'Mon badge';
 
   @override
+  String get myBusinessAwaiting => 'En attente d\'approbation';
+
+  @override
+  String get myBusinessDeclared => 'Déclaré, en attente de confirmation';
+
+  @override
+  String get myBusinessDetailEmpty => 'Aucune ligne.';
+
+  @override
+  String get myBusinessDetailRefused => 'Vous ne pouvez pas lire ces lignes.';
+
+  @override
+  String get myBusinessHeld => 'dont en attente';
+
+  @override
+  String myBusinessIssued(String date) {
+    return 'Émise le $date';
+  }
+
+  @override
+  String get myBusinessMemberExpenses => 'Notes de frais dues aux membres';
+
+  @override
+  String get myBusinessNothingOwed => 'Rien n\'est dû à cette activité.';
+
+  @override
+  String get myBusinessOpen => 'Ouvrir les factures de cette activité';
+
+  @override
+  String get myBusinessPayablesRefused =>
+      'Ce que cette activité doit payer ne vous est pas accessible.';
+
+  @override
+  String get myBusinessPayablesUnavailable =>
+      'Ce que cette activité doit payer n\'a pas pu être lu. Cela ne veut pas dire qu\'il n\'y a rien à payer.';
+
+  @override
+  String get myBusinessReceived => 'Reçu, pas encore rapproché';
+
+  @override
+  String get myBusinessRefunds => 'Remboursements dus aux clients';
+
+  @override
+  String get myBusinessRetry => 'Réessayer';
+
+  @override
+  String get myBusinessStillOwed => 'Encore dû';
+
+  @override
+  String get myBusinessSuppliers => 'Fournisseurs';
+
+  @override
+  String get myBusinessToCollect => 'À encaisser';
+
+  @override
+  String get myBusinessUnavailable =>
+      'Cette activité n\'a pas pu être lue. Cela ne veut pas dire que rien n\'est dû.';
+
+  @override
+  String get myBusinessesFaceBusinesses => 'Mes activités';
+
+  @override
+  String get myBusinessesFacePersonal => 'Personnel';
+
+  @override
+  String get myBusinessesIntro =>
+      'Ce que chacune de vos activités doit encore recevoir. Les montants sont tenus par activité et par devise : ils ne sont jamais additionnés ni compensés avec ce que l\'activité doit.';
+
+  @override
   String get myFinancesExport => 'Exporter mes documents';
 
   @override
@@ -27687,6 +27818,248 @@ class AppLocalizationsFr extends AppLocalizations {
   String get quotaRequestTitle => 'Demander des demi-journées supplémentaires';
 
   @override
+  String get quoteAmend => 'Modifier';
+
+  @override
+  String get quoteAmountsOnSend =>
+      'Les montants sont calculés à l\'envoi du devis, d\'après vos propres réglages fiscaux.';
+
+  @override
+  String get quoteAnswerAccepted => 'Le client a accepté';
+
+  @override
+  String get quoteAnswerDeclined => 'Le client a refusé';
+
+  @override
+  String get quoteCancelAction => 'Annuler le devis';
+
+  @override
+  String get quoteChooseCustomer => 'Choisir un client';
+
+  @override
+  String get quoteConvert => 'Facturer ce devis';
+
+  @override
+  String quoteConvertAccepted(String amount) {
+    return 'Accepté : $amount';
+  }
+
+  @override
+  String get quoteConvertCheck => 'Vérifier la facture';
+
+  @override
+  String get quoteConvertDiffers =>
+      'Cette facture diffère de ce qui a été accepté (la date, les données du client ou les faits fiscaux ont changé). Revoyez-la avant l\'émission.';
+
+  @override
+  String quoteConvertDone(String number) {
+    return 'Facturé sous le numéro $number.';
+  }
+
+  @override
+  String get quoteConvertIntro =>
+      'Vérifiez la facture avant son émission. Elle est faite d\'après la révision acceptée, pour les dates ci-dessous ; rien n\'est émis avant votre confirmation.';
+
+  @override
+  String get quoteConvertIssue => 'Émettre la facture';
+
+  @override
+  String quoteConvertMissing(String missing) {
+    return 'La facture ne peut pas encore être émise : $missing.';
+  }
+
+  @override
+  String get quoteConvertNeedsReview =>
+      'La facture diffère maintenant de ce qui a été accepté. Vérifiez-la de nouveau et confirmez que vous l\'avez revue.';
+
+  @override
+  String get quoteConvertOpenInvoice => 'Ouvrir la facture';
+
+  @override
+  String get quoteConvertReviewed => 'J\'ai revu cette facture';
+
+  @override
+  String quoteConvertWouldBe(String amount) {
+    return 'La facture serait de $amount';
+  }
+
+  @override
+  String quoteDecisionByIssuer(String date, String source) {
+    return 'Enregistré par vous, comme émetteur : $source, le $date. C\'est votre trace de la réponse, pas la signature du client.';
+  }
+
+  @override
+  String get quoteDiscardDraft => 'Supprimer le brouillon';
+
+  @override
+  String get quoteDraftSaved => 'Brouillon enregistré.';
+
+  @override
+  String get quoteEditDraft => 'Modifier le brouillon';
+
+  @override
+  String get quoteEditTitle => 'Modifier le devis';
+
+  @override
+  String get quoteExpiredRefusal =>
+      'L\'offre avait expiré : elle ne peut plus être acceptée.';
+
+  @override
+  String get quoteFeatureOff =>
+      'Les devis sont désactivés dans cette activité.';
+
+  @override
+  String get quoteFieldDecidedOn => 'Date de la réponse';
+
+  @override
+  String get quoteFieldEvidence => 'Référence ou note (facultatif)';
+
+  @override
+  String get quoteFieldIssuedOn => 'Date de l\'offre';
+
+  @override
+  String get quoteFieldNotes => 'Notes pour le client';
+
+  @override
+  String get quoteFieldOrder => 'Numéro de commande';
+
+  @override
+  String get quoteFieldReference => 'Référence du client';
+
+  @override
+  String get quoteFieldSource => 'Comment elle a été reçue';
+
+  @override
+  String get quoteFieldValidUntil => 'Valable jusqu\'au';
+
+  @override
+  String quoteIncomplete(String missing) {
+    return 'Le devis n\'est pas encore complet : $missing.';
+  }
+
+  @override
+  String get quoteIssuerRecordsNote =>
+      'Vous enregistrez cette réponse comme émetteur. Ce n\'est pas la signature du client, et elle ne facture rien.';
+
+  @override
+  String get quoteNewTitle => 'Nouveau devis';
+
+  @override
+  String get quoteNoCustomers =>
+      'Ajoutez d\'abord un client facturé : un devis lui est destiné.';
+
+  @override
+  String get quoteNotAllowedAction =>
+      'Vous ne pouvez pas faire cela avec les devis de cette activité.';
+
+  @override
+  String quoteOrderLine(String value) {
+    return 'Numéro de commande : $value';
+  }
+
+  @override
+  String get quoteRecordAnswer => 'Enregistrer la réponse';
+
+  @override
+  String quoteReferenceLine(String value) {
+    return 'Référence du client : $value';
+  }
+
+  @override
+  String quoteRevisionLine(String revision, String status) {
+    return 'Révision $revision · $status';
+  }
+
+  @override
+  String get quoteRevisionsTitle => 'Révisions';
+
+  @override
+  String get quoteSaveDraft => 'Enregistrer le brouillon';
+
+  @override
+  String get quoteSend => 'Envoyer';
+
+  @override
+  String quoteSentAs(String reference) {
+    return 'Envoyé sous la référence $reference. Cette révision ne change jamais.';
+  }
+
+  @override
+  String get quoteSourceEmail => 'Par e-mail';
+
+  @override
+  String get quoteSourceOther => 'Autre';
+
+  @override
+  String get quoteSourceReceived => 'Reçue en dehors de l\'application';
+
+  @override
+  String get quoteSourceVerbal => 'Dite en personne ou par téléphone';
+
+  @override
+  String get quoteStale =>
+      'Ce brouillon a changé depuis votre ouverture. Rouvrez-le pour voir le brouillon actuel.';
+
+  @override
+  String get quoteStateRefused =>
+      'Le devis n\'est plus dans un état qui le permet. Rouvrez-le.';
+
+  @override
+  String get quoteStatusAccepted => 'Accepté';
+
+  @override
+  String get quoteStatusCancelled => 'Annulé';
+
+  @override
+  String get quoteStatusConverted => 'Facturé';
+
+  @override
+  String get quoteStatusDeclined => 'Refusé';
+
+  @override
+  String get quoteStatusExpired => 'Expiré';
+
+  @override
+  String get quoteStatusSent => 'Envoyé';
+
+  @override
+  String get quoteTotal => 'Total';
+
+  @override
+  String get quoteUnreached =>
+      'La réponse n\'est pas revenue : on ne sait pas si c\'est fait. Ouvrez le devis pour voir où il en est.';
+
+  @override
+  String quoteValidUntil(String date) {
+    return 'Valable jusqu\'au $date';
+  }
+
+  @override
+  String get quotesEmpty =>
+      'Aucun devis pour l\'instant. Faites le premier pour un client facturé.';
+
+  @override
+  String get quotesIntro =>
+      'Offres à vos clients facturés. Un devis envoyé ne change jamais ; une modification est une autre révision. Rien n\'est facturé avant que vous convertissiez un devis accepté.';
+
+  @override
+  String get quotesLoadFailed =>
+      'Les devis n\'ont pas pu être lus. Ce n\'est pas une liste vide.';
+
+  @override
+  String get quotesNew => 'Nouveau devis';
+
+  @override
+  String get quotesNotAllowed =>
+      'Vous ne pouvez pas lire les devis de cette activité.';
+
+  @override
+  String get quotesRetry => 'Réessayer';
+
+  @override
+  String get quotesTitle => 'Devis';
+
+  @override
   String get readStateDenied =>
       'Vous n’avez pas accès à cette page. Demandez à un administrateur de l’espace si vous en avez besoin.';
 
@@ -28228,6 +28601,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get refusalStockOff =>
       'La gestion des stocks est désactivée dans cette entreprise. Rien n\'a été déplacé.';
+
+  @override
+  String get refusalStockPage =>
+      'Cette demande de page n’est pas valide : demandez de 1 à 200 lignes, et ne poursuivez qu’à partir de la position donnée par une page.';
 
   @override
   String get refusalStockUnit =>
@@ -34292,6 +34669,188 @@ class AppLocalizationsFr extends AppLocalizations {
   String get spaceYoursNow => 'Réservé par vous pour ce créneau.';
 
   @override
+  String get standaloneFactAmount => 'un montant que la facture peut contenir';
+
+  @override
+  String get standaloneFactApproval =>
+      'les règles de l’entreprise soumettent cette facture à approbation, ce qui n’est pas encore pris en charge ici';
+
+  @override
+  String get standaloneFactClosed => 'ce brouillon a déjà été émis';
+
+  @override
+  String get standaloneFactCurrency => 'la devise de l’entreprise';
+
+  @override
+  String get standaloneFactDueDate => 'la date d’échéance';
+
+  @override
+  String get standaloneFactDueDateFar => 'une échéance dans l’année';
+
+  @override
+  String get standaloneFactDueDatePast => 'une échéance qui n’est pas passée';
+
+  @override
+  String get standaloneFactLines => 'au moins une ligne';
+
+  @override
+  String get standaloneFactSalesTax =>
+      'cette entreprise ajoute une taxe de vente, ce qui n’est pas encore pris en charge ici';
+
+  @override
+  String get standaloneFactServiceDate => 'la date de la prestation';
+
+  @override
+  String get standaloneFactStale =>
+      'le brouillon a changé : vérifiez de nouveau la facture';
+
+  @override
+  String get standaloneFactTooManyLines => '100 lignes au plus';
+
+  @override
+  String get standaloneFactTotal => 'un total supérieur à zéro';
+
+  @override
+  String get standaloneFactUnknownSubject => 'le client';
+
+  @override
+  String get standaloneFieldAmount => 'un montant que la facture peut contenir';
+
+  @override
+  String get standaloneFieldBase => 'une quantité de prix supérieure à zéro';
+
+  @override
+  String get standaloneFieldBasis => 'si le prix est TTC';
+
+  @override
+  String get standaloneFieldDescription => 'une description';
+
+  @override
+  String get standaloneFieldLineId => 'enregistrer à nouveau le brouillon';
+
+  @override
+  String get standaloneFieldPrice => 'un prix avec six décimales au plus';
+
+  @override
+  String get standaloneFieldQuantity =>
+      'une quantité supérieure à zéro, avec six décimales au plus';
+
+  @override
+  String get standaloneFieldSupply =>
+      'une prestation de services (les biens ne se facturent pas encore ici)';
+
+  @override
+  String get standaloneFieldUnit => 'une unité';
+
+  @override
+  String get standaloneFieldVatRate => 'un taux de TVA défini par l’entreprise';
+
+  @override
+  String get standaloneInvoiceAddLine => 'Ajouter une ligne';
+
+  @override
+  String get standaloneInvoiceBuyerReference => 'Référence du client';
+
+  @override
+  String get standaloneInvoiceCustomerChoose => 'Choisir le client';
+
+  @override
+  String get standaloneInvoiceDueDate => 'Date d’échéance';
+
+  @override
+  String get standaloneInvoiceIssue => 'Émettre la facture';
+
+  @override
+  String standaloneInvoiceIssued(String number) {
+    return 'Facture $number émise';
+  }
+
+  @override
+  String get standaloneInvoiceLineDescription => 'Description';
+
+  @override
+  String get standaloneInvoiceLineGross => 'Le prix est TTC';
+
+  @override
+  String get standaloneInvoiceLinePrice => 'Prix unitaire';
+
+  @override
+  String get standaloneInvoiceLineQuantity => 'Quantité';
+
+  @override
+  String get standaloneInvoiceLineRate => 'Taux de TVA';
+
+  @override
+  String get standaloneInvoiceLineRateDefault =>
+      'Le taux par défaut de l’entreprise';
+
+  @override
+  String get standaloneInvoiceLineUnit => 'Unité';
+
+  @override
+  String get standaloneInvoiceLines => 'Lignes';
+
+  @override
+  String get standaloneInvoiceLookAgain => 'Vérifier à nouveau';
+
+  @override
+  String standaloneInvoiceMissing(String facts) {
+    return 'À compléter : $facts';
+  }
+
+  @override
+  String standaloneInvoiceMissingLine(String number, String fact) {
+    return 'Ligne $number : $fact';
+  }
+
+  @override
+  String get standaloneInvoiceMore => 'Facture client sans mois';
+
+  @override
+  String get standaloneInvoiceOpen => 'Ouvrir la facture';
+
+  @override
+  String get standaloneInvoiceOrderNumber => 'Numéro de commande';
+
+  @override
+  String get standaloneInvoicePreview => 'Vérifier la facture';
+
+  @override
+  String get standaloneInvoicePreviewNet => 'HT';
+
+  @override
+  String get standaloneInvoicePreviewTax => 'TVA';
+
+  @override
+  String get standaloneInvoicePreviewTotal => 'Total';
+
+  @override
+  String get standaloneInvoiceRefused => 'La facture n’a pas été émise.';
+
+  @override
+  String get standaloneInvoiceRemoveLine => 'Retirer cette ligne';
+
+  @override
+  String get standaloneInvoiceServiceDate => 'Date de la prestation';
+
+  @override
+  String get standaloneInvoiceUnavailable =>
+      'Les factures ponctuelles ne sont pas activées pour cette entreprise.';
+
+  @override
+  String get standaloneInvoiceUnknown =>
+      'Nous n’avons pas pu confirmer l’émission de la facture. Vérifiez à nouveau avant d’en émettre une autre.';
+
+  @override
+  String get standaloneUnitHour => 'heure';
+
+  @override
+  String get standaloneUnitJob => 'forfait';
+
+  @override
+  String get standaloneUnitPiece => 'pièce';
+
+  @override
   String get statementDeskBalanceCredit =>
       'Avoir : ce montant est en votre faveur';
 
@@ -34368,6 +34927,66 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get statusTo => 'Au';
+
+  @override
+  String get stockCostLabel => 'Coût par unité';
+
+  @override
+  String get stockCostNotShown => 'Coût non affiché';
+
+  @override
+  String get stockCostUnknown => 'Coût non enregistré';
+
+  @override
+  String get stockEmpty => 'Rien n’est encore en stock.';
+
+  @override
+  String get stockEmptyFiltered => 'Rien ne correspond à ces filtres.';
+
+  @override
+  String get stockEnteredLabel => 'Saisi';
+
+  @override
+  String stockLotLabel(String code) {
+    return 'Lot $code';
+  }
+
+  @override
+  String get stockLotTitle => 'Lot';
+
+  @override
+  String get stockMovementNotFound =>
+      'Ce mouvement n’existe pas, ou vous n’avez pas le droit de le voir.';
+
+  @override
+  String get stockMovementTitle => 'Mouvement';
+
+  @override
+  String get stockMovementsEmpty => 'Aucun mouvement pour l’instant.';
+
+  @override
+  String get stockNoLot => 'Sans lot';
+
+  @override
+  String stockQuantityWithUnit(String quantity, String unit) {
+    return '$quantity $unit';
+  }
+
+  @override
+  String get stockReadFailed =>
+      'Le stock n’a pas pu être lu. Rien n’est affiché comme vide : réessayez.';
+
+  @override
+  String get stockStoredLabel => 'Enregistré';
+
+  @override
+  String get stockTabMovements => 'Mouvements';
+
+  @override
+  String get stockTabOnHand => 'En stock';
+
+  @override
+  String get stockWhenLabel => 'Quand';
 
   @override
   String get subprocessAttendance => 'Présence et utilisation';

@@ -7579,6 +7579,14 @@
   },
   "featureSpaceQrCodes": "Codes QR des espaces",
   "featureSpaceQrCodesDesc": "Cartes QR imprimables par poste, table, bureau et niveau — scanner pour réserver ou pointer.",
+  "featureStandaloneInvoicingDesc": "Facturer dès aujourd’hui un client nommé pour une prestation réalisée ou un livrable convenu, avec des lignes détaillées et des dates explicites, sans réservation, abonnement ni mois derrière. Le serveur calcule chaque montant ; vous confirmez un aperçu puis émettez la facture. Désactivé : les factures restent émises par membre et par mois.",
+  "@featureStandaloneInvoicingDesc": {
+    "description": "#4165 feature switch: featureStandaloneInvoicingDesc"
+  },
+  "featureStandaloneInvoicingTitle": "Factures ponctuelles",
+  "@featureStandaloneInvoicingTitle": {
+    "description": "#4165 feature switch: featureStandaloneInvoicingTitle"
+  },
   "featureStockManagementDesc": "Suivre les marchandises : où elles sont, dans quelle unité, de quel lot, et chaque mouvement d'un endroit à un autre. Désactivé : un article du catalogue garde son simple compte en rayon.",
   "featureStockManagementTitle": "Gestion des stocks",
   "featureSubscriptionInvoicesDesc": "La cotisation est facturée avant le mois qu'elle paie, à une date que vous choisissez. Désactivé : la cotisation reste sur la facture du mois.",
@@ -8216,6 +8224,17 @@
   "financesYourCredit": "Votre avoir",
   "formErrorSummaryGoTo": "Aller au premier problème",
   "formErrorSummaryTitle": "{count, plural, one{{count} champ demande votre attention} other{{count} champs demandent votre attention}}",
+  "frEReportingBlocked": "Le e-reporting France n’a pas été écrit : ces documents ne peuvent pas être classés d’après ce qu’ils ont figé à l’émission : {documents}. Renseignez la qualité du client, puis corrigez-les par un avoir et une nouvelle facture ; les originaux ne sont jamais modifiés.",
+  "frEReportingDocumentAmountRuleUnsupported": "{number}: un service dont la TVA figée diffère de son taux, avec un paiement dans la période",
+  "frEReportingDocumentBuyerCountryConflict": "{number}: deux pays différents ont été figés",
+  "frEReportingDocumentBuyerCountryMissing": "{number}: le pays du professionnel n’a pas été figé",
+  "frEReportingDocumentBuyerVatIdMissing": "{number}: un professionnel à l’étranger exige son numéro de TVA",
+  "frEReportingDocumentCapacityUnknown": "{number}: la qualité du client (professionnel ou consommateur) n’a pas été indiquée",
+  "frEReportingDocumentGoodsAbroadUnsupported": "{number}: les livraisons de biens à un professionnel à l’étranger ne sont pas prises en charge",
+  "frEReportingDocumentGoodsZeroRateUnsupported": "{number}: une ligne de biens à taux zéro : sa catégorie n’est pas déduite du taux",
+  "frEReportingDocumentMissingReceiptAllocation": "{number}: biens et services avec un paiement : le paiement n’a pas de ventilation certaine entre eux",
+  "frEReportingDocumentNoFrozenCapacity": "{number}: émise avant que la qualité du client soit figée",
+  "frEReportingDocumentUnsupportedCommercialLine": "{number}: une ligne que cette version ne sait pas lire",
   "gebuevProcedureAccessBody": "Chaque export comptable et chaque téléchargement d'archive est inscrit au journal des exports : qui, quand, quel fichier et son empreinte. La piste d'audit liste ces accès à côté des documents.",
   "gebuevProcedureAccessHeading": "Accès (art. 8)",
   "gebuevProcedureCarriersBody": "Cette archive se lit avec n'importe quel outil zip et éditeur de texte. Une copie de tout l'espace est prouvée par un export de l'espace terminé, inscrit avec son empreinte : la liste de préparation indique la date du dernier et en demande un nouveau lorsqu'il est ancien.",
@@ -13266,6 +13285,27 @@
   "moneyUsageUnlimited": "{used, plural, one{{used} demi-journée utilisée} other{{used} demi-journées utilisées}}",
   "monthFreeCount": "{free}/{total}",
   "myBadgeTitle": "Mon badge",
+  "myBusinessAwaiting": "En attente d'approbation",
+  "myBusinessDeclared": "Déclaré, en attente de confirmation",
+  "myBusinessDetailEmpty": "Aucune ligne.",
+  "myBusinessDetailRefused": "Vous ne pouvez pas lire ces lignes.",
+  "myBusinessHeld": "dont en attente",
+  "myBusinessIssued": "Émise le {date}",
+  "myBusinessMemberExpenses": "Notes de frais dues aux membres",
+  "myBusinessNothingOwed": "Rien n'est dû à cette activité.",
+  "myBusinessOpen": "Ouvrir les factures de cette activité",
+  "myBusinessPayablesRefused": "Ce que cette activité doit payer ne vous est pas accessible.",
+  "myBusinessPayablesUnavailable": "Ce que cette activité doit payer n'a pas pu être lu. Cela ne veut pas dire qu'il n'y a rien à payer.",
+  "myBusinessReceived": "Reçu, pas encore rapproché",
+  "myBusinessRefunds": "Remboursements dus aux clients",
+  "myBusinessRetry": "Réessayer",
+  "myBusinessStillOwed": "Encore dû",
+  "myBusinessSuppliers": "Fournisseurs",
+  "myBusinessToCollect": "À encaisser",
+  "myBusinessUnavailable": "Cette activité n'a pas pu être lue. Cela ne veut pas dire que rien n'est dû.",
+  "myBusinessesFaceBusinesses": "Mes activités",
+  "myBusinessesFacePersonal": "Personnel",
+  "myBusinessesIntro": "Ce que chacune de vos activités doit encore recevoir. Les montants sont tenus par activité et par devise : ils ne sont jamais additionnés ni compensés avec ce que l'activité doit.",
   "myFinancesExport": "Exporter mes documents",
   "myFinancesExportWorkspace": "{workspace} — documents (CSV)",
   "myInvoicesTitle": "Mes factures",
@@ -15901,6 +15941,74 @@
   "quotaRequestExplainer": "Vos réservations sont plafonnées par votre abonnement. Les demi-journées supplémentaires pour {period} s'appliquent une fois validées.",
   "quotaRequestPending": "Demande envoyée — en attente de validation.",
   "quotaRequestTitle": "Demander des demi-journées supplémentaires",
+  "quoteAmend": "Modifier",
+  "quoteAmountsOnSend": "Les montants sont calculés à l'envoi du devis, d'après vos propres réglages fiscaux.",
+  "quoteAnswerAccepted": "Le client a accepté",
+  "quoteAnswerDeclined": "Le client a refusé",
+  "quoteCancelAction": "Annuler le devis",
+  "quoteChooseCustomer": "Choisir un client",
+  "quoteConvert": "Facturer ce devis",
+  "quoteConvertAccepted": "Accepté : {amount}",
+  "quoteConvertCheck": "Vérifier la facture",
+  "quoteConvertDiffers": "Cette facture diffère de ce qui a été accepté (la date, les données du client ou les faits fiscaux ont changé). Revoyez-la avant l'émission.",
+  "quoteConvertDone": "Facturé sous le numéro {number}.",
+  "quoteConvertIntro": "Vérifiez la facture avant son émission. Elle est faite d'après la révision acceptée, pour les dates ci-dessous ; rien n'est émis avant votre confirmation.",
+  "quoteConvertIssue": "Émettre la facture",
+  "quoteConvertMissing": "La facture ne peut pas encore être émise : {missing}.",
+  "quoteConvertNeedsReview": "La facture diffère maintenant de ce qui a été accepté. Vérifiez-la de nouveau et confirmez que vous l'avez revue.",
+  "quoteConvertOpenInvoice": "Ouvrir la facture",
+  "quoteConvertReviewed": "J'ai revu cette facture",
+  "quoteConvertWouldBe": "La facture serait de {amount}",
+  "quoteDecisionByIssuer": "Enregistré par vous, comme émetteur : {source}, le {date}. C'est votre trace de la réponse, pas la signature du client.",
+  "quoteDiscardDraft": "Supprimer le brouillon",
+  "quoteDraftSaved": "Brouillon enregistré.",
+  "quoteEditDraft": "Modifier le brouillon",
+  "quoteEditTitle": "Modifier le devis",
+  "quoteExpiredRefusal": "L'offre avait expiré : elle ne peut plus être acceptée.",
+  "quoteFeatureOff": "Les devis sont désactivés dans cette activité.",
+  "quoteFieldDecidedOn": "Date de la réponse",
+  "quoteFieldEvidence": "Référence ou note (facultatif)",
+  "quoteFieldIssuedOn": "Date de l'offre",
+  "quoteFieldNotes": "Notes pour le client",
+  "quoteFieldOrder": "Numéro de commande",
+  "quoteFieldReference": "Référence du client",
+  "quoteFieldSource": "Comment elle a été reçue",
+  "quoteFieldValidUntil": "Valable jusqu'au",
+  "quoteIncomplete": "Le devis n'est pas encore complet : {missing}.",
+  "quoteIssuerRecordsNote": "Vous enregistrez cette réponse comme émetteur. Ce n'est pas la signature du client, et elle ne facture rien.",
+  "quoteNewTitle": "Nouveau devis",
+  "quoteNoCustomers": "Ajoutez d'abord un client facturé : un devis lui est destiné.",
+  "quoteNotAllowedAction": "Vous ne pouvez pas faire cela avec les devis de cette activité.",
+  "quoteOrderLine": "Numéro de commande : {value}",
+  "quoteRecordAnswer": "Enregistrer la réponse",
+  "quoteReferenceLine": "Référence du client : {value}",
+  "quoteRevisionLine": "Révision {revision} · {status}",
+  "quoteRevisionsTitle": "Révisions",
+  "quoteSaveDraft": "Enregistrer le brouillon",
+  "quoteSend": "Envoyer",
+  "quoteSentAs": "Envoyé sous la référence {reference}. Cette révision ne change jamais.",
+  "quoteSourceEmail": "Par e-mail",
+  "quoteSourceOther": "Autre",
+  "quoteSourceReceived": "Reçue en dehors de l'application",
+  "quoteSourceVerbal": "Dite en personne ou par téléphone",
+  "quoteStale": "Ce brouillon a changé depuis votre ouverture. Rouvrez-le pour voir le brouillon actuel.",
+  "quoteStateRefused": "Le devis n'est plus dans un état qui le permet. Rouvrez-le.",
+  "quoteStatusAccepted": "Accepté",
+  "quoteStatusCancelled": "Annulé",
+  "quoteStatusConverted": "Facturé",
+  "quoteStatusDeclined": "Refusé",
+  "quoteStatusExpired": "Expiré",
+  "quoteStatusSent": "Envoyé",
+  "quoteTotal": "Total",
+  "quoteUnreached": "La réponse n'est pas revenue : on ne sait pas si c'est fait. Ouvrez le devis pour voir où il en est.",
+  "quoteValidUntil": "Valable jusqu'au {date}",
+  "quotesEmpty": "Aucun devis pour l'instant. Faites le premier pour un client facturé.",
+  "quotesIntro": "Offres à vos clients facturés. Un devis envoyé ne change jamais ; une modification est une autre révision. Rien n'est facturé avant que vous convertissiez un devis accepté.",
+  "quotesLoadFailed": "Les devis n'ont pas pu être lus. Ce n'est pas une liste vide.",
+  "quotesNew": "Nouveau devis",
+  "quotesNotAllowed": "Vous ne pouvez pas lire les devis de cette activité.",
+  "quotesRetry": "Réessayer",
+  "quotesTitle": "Devis",
   "readStateDenied": "Vous n’avez pas accès à cette page. Demandez à un administrateur de l’espace si vous en avez besoin.",
   "@readStateDenied": {
     "description": "#3061 shared read-failure messages: connectivity and denied access"
@@ -16116,6 +16224,7 @@
   "refusalStockMove": "Ce mouvement ne peut pas être enregistré tel quel : une quantité au-dessus de zéro, un motif connu et une à deux cents lignes, ou la même demande renvoyée sans changement. Rien n'a été déplacé.",
   "refusalStockNotEnough": "Il n'y en a pas autant à cet endroit. Rien n'a été déplacé.",
   "refusalStockOff": "La gestion des stocks est désactivée dans cette entreprise. Rien n'a été déplacé.",
+  "refusalStockPage": "Cette demande de page n’est pas valide : demandez de 1 à 200 lignes, et ne poursuivez qu’à partir de la position donnée par une page.",
   "refusalStockUnit": "Cet article n'a pas cette unité. Ajoutez l'unité à l'article, ou saisissez la quantité dans une unité qu'il connaît.",
   "refusalVatRateVersioned": "Ce taux figure déjà sur des factures émises : son pourcentage reste tel quel. Utilisez « Changement par la loi » pour fixer la nouvelle valeur à partir d’une date. Rien n’a été enregistré.",
   "@refusalVatRateVersioned": {
@@ -19875,6 +19984,248 @@
     "description": "#670 - whole-space sheet"
   },
   "spaceYoursNow": "Réservé par vous pour ce créneau.",
+  "standaloneFactAmount": "un montant que la facture peut contenir",
+  "@standaloneFactAmount": {
+    "description": "#4165 standalone invoice composer: standaloneFactAmount"
+  },
+  "standaloneFactApproval": "les règles de l’entreprise soumettent cette facture à approbation, ce qui n’est pas encore pris en charge ici",
+  "@standaloneFactApproval": {
+    "description": "#4165 standalone invoice composer: standaloneFactApproval"
+  },
+  "standaloneFactClosed": "ce brouillon a déjà été émis",
+  "@standaloneFactClosed": {
+    "description": "#4165 standalone invoice composer: standaloneFactClosed"
+  },
+  "standaloneFactCurrency": "la devise de l’entreprise",
+  "@standaloneFactCurrency": {
+    "description": "#4165 standalone invoice composer: standaloneFactCurrency"
+  },
+  "standaloneFactDueDate": "la date d’échéance",
+  "@standaloneFactDueDate": {
+    "description": "#4165 standalone invoice composer: standaloneFactDueDate"
+  },
+  "standaloneFactDueDateFar": "une échéance dans l’année",
+  "@standaloneFactDueDateFar": {
+    "description": "#4165 standalone invoice composer: standaloneFactDueDateFar"
+  },
+  "standaloneFactDueDatePast": "une échéance qui n’est pas passée",
+  "@standaloneFactDueDatePast": {
+    "description": "#4165 standalone invoice composer: standaloneFactDueDatePast"
+  },
+  "standaloneFactLines": "au moins une ligne",
+  "@standaloneFactLines": {
+    "description": "#4165 standalone invoice composer: standaloneFactLines"
+  },
+  "standaloneFactSalesTax": "cette entreprise ajoute une taxe de vente, ce qui n’est pas encore pris en charge ici",
+  "@standaloneFactSalesTax": {
+    "description": "#4165 standalone invoice composer: standaloneFactSalesTax"
+  },
+  "standaloneFactServiceDate": "la date de la prestation",
+  "@standaloneFactServiceDate": {
+    "description": "#4165 standalone invoice composer: standaloneFactServiceDate"
+  },
+  "standaloneFactStale": "le brouillon a changé : vérifiez de nouveau la facture",
+  "@standaloneFactStale": {
+    "description": "#4165 standalone invoice composer: standaloneFactStale"
+  },
+  "standaloneFactTooManyLines": "100 lignes au plus",
+  "@standaloneFactTooManyLines": {
+    "description": "#4165 standalone invoice composer: standaloneFactTooManyLines"
+  },
+  "standaloneFactTotal": "un total supérieur à zéro",
+  "@standaloneFactTotal": {
+    "description": "#4165 standalone invoice composer: standaloneFactTotal"
+  },
+  "standaloneFactUnknownSubject": "le client",
+  "@standaloneFactUnknownSubject": {
+    "description": "#4165 standalone invoice composer: standaloneFactUnknownSubject"
+  },
+  "standaloneFieldAmount": "un montant que la facture peut contenir",
+  "@standaloneFieldAmount": {
+    "description": "#4165 standalone invoice composer: standaloneFieldAmount"
+  },
+  "standaloneFieldBase": "une quantité de prix supérieure à zéro",
+  "@standaloneFieldBase": {
+    "description": "#4165 standalone invoice composer: standaloneFieldBase"
+  },
+  "standaloneFieldBasis": "si le prix est TTC",
+  "@standaloneFieldBasis": {
+    "description": "#4165 standalone invoice composer: standaloneFieldBasis"
+  },
+  "standaloneFieldDescription": "une description",
+  "@standaloneFieldDescription": {
+    "description": "#4165 standalone invoice composer: standaloneFieldDescription"
+  },
+  "standaloneFieldLineId": "enregistrer à nouveau le brouillon",
+  "@standaloneFieldLineId": {
+    "description": "#4165 standalone invoice composer: standaloneFieldLineId"
+  },
+  "standaloneFieldPrice": "un prix avec six décimales au plus",
+  "@standaloneFieldPrice": {
+    "description": "#4165 standalone invoice composer: standaloneFieldPrice"
+  },
+  "standaloneFieldQuantity": "une quantité supérieure à zéro, avec six décimales au plus",
+  "@standaloneFieldQuantity": {
+    "description": "#4165 standalone invoice composer: standaloneFieldQuantity"
+  },
+  "standaloneFieldSupply": "une prestation de services (les biens ne se facturent pas encore ici)",
+  "@standaloneFieldSupply": {
+    "description": "#4165 standalone invoice composer: standaloneFieldSupply"
+  },
+  "standaloneFieldUnit": "une unité",
+  "@standaloneFieldUnit": {
+    "description": "#4165 standalone invoice composer: standaloneFieldUnit"
+  },
+  "standaloneFieldVatRate": "un taux de TVA défini par l’entreprise",
+  "@standaloneFieldVatRate": {
+    "description": "#4165 standalone invoice composer: standaloneFieldVatRate"
+  },
+  "standaloneInvoiceAddLine": "Ajouter une ligne",
+  "@standaloneInvoiceAddLine": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceAddLine"
+  },
+  "standaloneInvoiceBuyerReference": "Référence du client",
+  "@standaloneInvoiceBuyerReference": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceBuyerReference"
+  },
+  "standaloneInvoiceCustomerChoose": "Choisir le client",
+  "@standaloneInvoiceCustomerChoose": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceCustomerChoose"
+  },
+  "standaloneInvoiceDueDate": "Date d’échéance",
+  "@standaloneInvoiceDueDate": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceDueDate"
+  },
+  "standaloneInvoiceIssue": "Émettre la facture",
+  "@standaloneInvoiceIssue": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceIssue"
+  },
+  "standaloneInvoiceIssued": "Facture {number} émise",
+  "@standaloneInvoiceIssued": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceIssued",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "standaloneInvoiceLineDescription": "Description",
+  "@standaloneInvoiceLineDescription": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceLineDescription"
+  },
+  "standaloneInvoiceLineGross": "Le prix est TTC",
+  "@standaloneInvoiceLineGross": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceLineGross"
+  },
+  "standaloneInvoiceLinePrice": "Prix unitaire",
+  "@standaloneInvoiceLinePrice": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceLinePrice"
+  },
+  "standaloneInvoiceLineQuantity": "Quantité",
+  "@standaloneInvoiceLineQuantity": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceLineQuantity"
+  },
+  "standaloneInvoiceLineRate": "Taux de TVA",
+  "@standaloneInvoiceLineRate": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceLineRate"
+  },
+  "standaloneInvoiceLineRateDefault": "Le taux par défaut de l’entreprise",
+  "@standaloneInvoiceLineRateDefault": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceLineRateDefault"
+  },
+  "standaloneInvoiceLineUnit": "Unité",
+  "@standaloneInvoiceLineUnit": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceLineUnit"
+  },
+  "standaloneInvoiceLines": "Lignes",
+  "@standaloneInvoiceLines": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceLines"
+  },
+  "standaloneInvoiceLookAgain": "Vérifier à nouveau",
+  "@standaloneInvoiceLookAgain": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceLookAgain"
+  },
+  "standaloneInvoiceMissing": "À compléter : {facts}",
+  "@standaloneInvoiceMissing": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceMissing",
+    "placeholders": {
+      "facts": {
+        "type": "String"
+      }
+    }
+  },
+  "standaloneInvoiceMissingLine": "Ligne {number} : {fact}",
+  "@standaloneInvoiceMissingLine": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceMissingLine",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "fact": {
+        "type": "String"
+      }
+    }
+  },
+  "standaloneInvoiceMore": "Facture client sans mois",
+  "@standaloneInvoiceMore": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceMore"
+  },
+  "standaloneInvoiceOpen": "Ouvrir la facture",
+  "@standaloneInvoiceOpen": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceOpen"
+  },
+  "standaloneInvoiceOrderNumber": "Numéro de commande",
+  "@standaloneInvoiceOrderNumber": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceOrderNumber"
+  },
+  "standaloneInvoicePreview": "Vérifier la facture",
+  "@standaloneInvoicePreview": {
+    "description": "#4165 standalone invoice composer: standaloneInvoicePreview"
+  },
+  "standaloneInvoicePreviewNet": "HT",
+  "@standaloneInvoicePreviewNet": {
+    "description": "#4165 standalone invoice composer: standaloneInvoicePreviewNet"
+  },
+  "standaloneInvoicePreviewTax": "TVA",
+  "@standaloneInvoicePreviewTax": {
+    "description": "#4165 standalone invoice composer: standaloneInvoicePreviewTax"
+  },
+  "standaloneInvoicePreviewTotal": "Total",
+  "@standaloneInvoicePreviewTotal": {
+    "description": "#4165 standalone invoice composer: standaloneInvoicePreviewTotal"
+  },
+  "standaloneInvoiceRefused": "La facture n’a pas été émise.",
+  "@standaloneInvoiceRefused": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceRefused"
+  },
+  "standaloneInvoiceRemoveLine": "Retirer cette ligne",
+  "@standaloneInvoiceRemoveLine": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceRemoveLine"
+  },
+  "standaloneInvoiceServiceDate": "Date de la prestation",
+  "@standaloneInvoiceServiceDate": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceServiceDate"
+  },
+  "standaloneInvoiceUnavailable": "Les factures ponctuelles ne sont pas activées pour cette entreprise.",
+  "@standaloneInvoiceUnavailable": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceUnavailable"
+  },
+  "standaloneInvoiceUnknown": "Nous n’avons pas pu confirmer l’émission de la facture. Vérifiez à nouveau avant d’en émettre une autre.",
+  "@standaloneInvoiceUnknown": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceUnknown"
+  },
+  "standaloneUnitHour": "heure",
+  "@standaloneUnitHour": {
+    "description": "#4165 standalone invoice composer: standaloneUnitHour"
+  },
+  "standaloneUnitJob": "forfait",
+  "@standaloneUnitJob": {
+    "description": "#4165 standalone invoice composer: standaloneUnitJob"
+  },
+  "standaloneUnitPiece": "pièce",
+  "@standaloneUnitPiece": {
+    "description": "#4165 standalone invoice composer: standaloneUnitPiece"
+  },
   "statementDeskBalanceCredit": "Avoir : ce montant est en votre faveur",
   "statementDeskBalanceOwed": "Dû : vous devez ce montant",
   "statementDeskBalanceSettled": "Soldé : rien n'est dû",
@@ -19942,6 +20293,24 @@
   "@statusTo": {
     "description": "#934 workspace status / repartition wizard: statusTo"
   },
+  "stockCostLabel": "Coût par unité",
+  "stockCostNotShown": "Coût non affiché",
+  "stockCostUnknown": "Coût non enregistré",
+  "stockEmpty": "Rien n’est encore en stock.",
+  "stockEmptyFiltered": "Rien ne correspond à ces filtres.",
+  "stockEnteredLabel": "Saisi",
+  "stockLotLabel": "Lot {code}",
+  "stockLotTitle": "Lot",
+  "stockMovementNotFound": "Ce mouvement n’existe pas, ou vous n’avez pas le droit de le voir.",
+  "stockMovementTitle": "Mouvement",
+  "stockMovementsEmpty": "Aucun mouvement pour l’instant.",
+  "stockNoLot": "Sans lot",
+  "stockQuantityWithUnit": "{quantity} {unit}",
+  "stockReadFailed": "Le stock n’a pas pu être lu. Rien n’est affiché comme vide : réessayez.",
+  "stockStoredLabel": "Enregistré",
+  "stockTabMovements": "Mouvements",
+  "stockTabOnHand": "En stock",
+  "stockWhenLabel": "Quand",
   "subprocessAttendance": "Présence et utilisation",
   "subprocessAttendanceDesc": "Enregistrer la présence et clôturer les pointages en fin de journée.",
   "subprocessAvailability": "Jours et heures d’ouverture",

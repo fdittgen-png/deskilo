@@ -96,6 +96,9 @@ enum KnownRefusal {
   /// is kept: the item is deactivated instead.
   stockHistory,
 
+  /// #4161 (0833) — DKG09: a stock page request that is not valid.
+  stockPage,
+
   /// #4008 (0782) — DKM01: a member who left comes back as a new member,
   /// never by changing their old row (for instance to paused).
   memberReturnsAsNew,
@@ -156,6 +159,7 @@ const Map<String, KnownRefusal> _codedRefusals = {
   'DKG06': KnownRefusal.stockLot,
   'DKG07': KnownRefusal.stockMove,
   'DKG08': KnownRefusal.stockHistory,
+  'DKG09': KnownRefusal.stockPage,
   // #4008 — a member who left (0782).
   'DKM01': KnownRefusal.memberReturnsAsNew,
 };
@@ -244,6 +248,7 @@ String? _stockRefusalText(AppLocalizations l10n, KnownRefusal refusal) =>
       KnownRefusal.stockLot => l10n.refusalStockLot,
       KnownRefusal.stockMove => l10n.refusalStockMove,
       KnownRefusal.stockHistory => l10n.refusalStockHistory,
+      KnownRefusal.stockPage => l10n.refusalStockPage,
       KnownRefusal.memberReturnsAsNew => l10n.refusalMemberReturnsAsNew,
       _ => null,
     };

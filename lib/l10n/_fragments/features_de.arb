@@ -273,5 +273,13 @@
   "featureQuickSearchTitle": "Suche und Tasten",
   "featureQuickSearchDesc": "Strg+K (⌘K auf einem Mac) oder die Suchschaltfläche der Leiste findet eine Seite, eine Aktion oder einen Eintrag — ein Mitglied, einen Kunden, eine Rechnung über ihre Nummer, einen Lieferanten — unter dem, was die Person öffnen darf; zuletzt Geöffnetes zuerst. ? zeigt die Tasten der Seite. Aus: keine Suchschaltfläche und keine Tasten der App; die eigenen Tasten einer Seite bleiben.",
   "featureOrganisationTitle": "Organisation von Unternehmen",
-  "featureOrganisationDesc": "Dieses Unternehmen führt eine Organisation der Unternehmen des Kunden: ein Standort in einem anderen Land oder einer anderen Währung ist ein Haus, ein eigenes Unternehmen mit den Regeln seines Landes. Aus: Von diesem Unternehmen aus wird keine Organisation angelegt oder geändert; ein Haus kann sie weiterhin verlassen, und Mitglieder sehen weiterhin, wo sie sind."
+  "featureOrganisationDesc": "Dieses Unternehmen führt eine Organisation der Unternehmen des Kunden: ein Standort in einem anderen Land oder einer anderen Währung ist ein Haus, ein eigenes Unternehmen mit den Regeln seines Landes. Aus: Von diesem Unternehmen aus wird keine Organisation angelegt oder geändert; ein Haus kann sie weiterhin verlassen, und Mitglieder sehen weiterhin, wo sie sind.",
+  "featureStandaloneInvoicingTitle": "Einzelrechnungen",
+  "@featureStandaloneInvoicingTitle": {
+    "description": "#4165 feature switch: featureStandaloneInvoicingTitle"
+  },
+  "featureStandaloneInvoicingDesc": "Einem benannten Kunden noch heute eine erbrachte Leistung oder ein vereinbartes Ergebnis berechnen, mit einzelnen Positionen und ausdrücklichen Daten, ohne Buchung, Abo oder Monat dahinter. Der Server berechnet jeden Betrag; Sie bestätigen eine Vorschau und stellen die Rechnung aus. Aus: Rechnungen werden wie bisher je Mitglied und Monat ausgestellt.",
+  "@featureStandaloneInvoicingDesc": {
+    "description": "#4165 feature switch: featureStandaloneInvoicingDesc"
+  }
 }

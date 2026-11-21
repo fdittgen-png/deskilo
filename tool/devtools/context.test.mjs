@@ -46,3 +46,18 @@ test('context exports tracked scope with provenance and keeps ignored/untracked 
   assert.notEqual(cli.status, 0);
   assert.match(cli.stderr, /Choose a scope/);
 });
+
+test('the installed Repomix reports exactly the pinned version, and provenance names it', () => {
+  const pinned = JSON.parse(readFileSync(new URL('./package.json', import.meta.url))).devDependencies.repomix;
+  assert.match(pinned, /^\d+\.\d+\.\d+$/, 'an exact pin, never a range');
+  const reported = execFileSync(
+    process.execPath,
+    [fileURLToPath(new URL('./node_modules/repomix/bin/repomix.cjs', import.meta.url)), '--version'],
+    { encoding: 'utf8' },
+  ).trim();
+  assert.equal(reported, pinned);
+  const lock = JSON.parse(readFileSync(new URL('./package-lock.json', import.meta.url)));
+  assert.equal(lock.packages['node_modules/repomix'].version, pinned, 'the lock holds the pin');
+  // the provenance a run writes names the same version (context.mjs)
+  assert.match(readFileSync(new URL('./context.mjs', import.meta.url), 'utf8'), new RegExp(`repomix: '${pinned.replaceAll('.', '\\.')}'`));
+});

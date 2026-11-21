@@ -21,6 +21,7 @@ import 'package:deskilo/core/demo/data/bank_statement_demo_seed.dart';
 import 'package:deskilo/core/demo/data/book_period_repository.dart';
 import 'package:deskilo/core/demo/data/book_profile_repository.dart';
 import 'package:deskilo/core/demo/data/demo_kiosk_devices.dart';
+import 'package:deskilo/core/demo/data/demo_stock_queries.dart';
 import 'package:deskilo/core/demo/data/fake_organisation_repository.dart';
 import 'package:deskilo/core/demo/data/kpi_repositories.dart';
 import 'package:deskilo/core/demo/data/lease_commitment_repository.dart';
@@ -54,6 +55,7 @@ import 'package:deskilo/features/money/domain/bank/bank_match.dart';
 import 'package:deskilo/features/money/domain/billing_customer.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/money/domain/book_chart.dart';
+import 'package:deskilo/features/money/domain/customer_quote.dart';
 import 'package:deskilo/features/money/domain/einvoice_inbox.dart';
 import 'package:deskilo/features/money/domain/lease_commitment.dart';
 import 'package:deskilo/features/money/domain/purchase.dart';
@@ -79,6 +81,7 @@ import '../../helpers/demo_pass_einvoice_journeys.dart';
 import '../../helpers/demo_payment_journeys.dart';
 import '../../helpers/demo_plan_booking_journeys.dart';
 import '../../helpers/demo_settings_shell_journeys.dart';
+import '../../helpers/demo_standalone_journey.dart';
 import '../../helpers/demo_vies_export_journeys.dart';
 import '../../helpers/demo_whatsapp_journeys.dart';
 
@@ -1241,6 +1244,22 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
       return refused == null && after.houseOf(demoPracticeSpaceId) != null;
     },
   ),
+  // #4161 — the owner reads the shop stock: exact quantities, a syrup
+  // received in thirds of a litre is 0.999999 l, and its movements.
+  WorkspaceFeature.stockManagement: _action(
+    _owner,
+    'Ada reads the shop stock and finds the syrup received in thirds of a '
+    'litre at exactly 0.999999 l',
+    (w) async {
+      const stock = DemoStockQueries(demoFirstSpaceId);
+      final onHand = await stock.onHandPage(demoFirstSpaceId);
+      final moves = await stock.movementsPage(demoFirstSpaceId);
+      return onHand.rows.any(
+            (r) => r.itemName == 'Syrup' && r.quantity.text == '0.999999',
+          ) &&
+          moves.rows.isNotEmpty;
+    },
+  ),
   // #4164 — the owner keeps a customer with no account: a business is added
   // to the head's billing customers and is listed beside the seeded ones.
   WorkspaceFeature.billingCustomers: _action(
@@ -1259,6 +1278,29 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
       return before > 0 &&
           after.length == before + 1 &&
           after.any((c) => c.displayName == 'Studio Nord');
+    },
+  ),
+  // #4166 — the owner sends a quote to a billing customer: the first send takes
+  // the next reference from the quote series and freezes the revision.
+  WorkspaceFeature.customerQuotes: _action(
+    _owner,
+    'Ada sends the draft quote to Hanna Weiss and it takes the next reference',
+    (w) async {
+      final quotes = w.house(DemoSpaceKey.home).stores.customerQuotes;
+      final draft = (await quotes.quotes(demoFirstSpaceId)).firstWhere(
+        (q) => q.status == QuoteStatus.draft,
+      );
+      final rev = draft.draft!;
+      final sent = await quotes.send(
+        demoFirstSpaceId,
+        draft.id,
+        revision: rev.revision,
+        version: rev.draftVersion,
+      );
+      final after = await quotes.quote(demoFirstSpaceId, draft.id);
+      return sent.reference.startsWith('QUO-') &&
+          after.status == QuoteStatus.sent &&
+          after.current?.totals != null;
     },
   ),
   // #3610 — Ctrl+K finds an invoice of the Demo by its number, and a
@@ -1352,6 +1394,14 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
     'Ada e-mails an invoice and sees it recorded with its date; the '
     'customer without an address is refused',
     (_) => invoiceEmailJourney(),
+  ),
+  // #4165 — a customer invoice without a member-month, drafted and issued.
+  WorkspaceFeature.standaloneInvoicing: _action(
+    _owner,
+    'Ada invoices 1.5 hours at 80.00 to a customer with no booking behind it: '
+    'the preview and the issued invoice state the exact quantity, and the same '
+    'request never issues twice',
+    (_) => standaloneInvoiceJourney(),
   ),
 };
 

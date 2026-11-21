@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'shell_cash_entries.dart';
 import 'shell_drawer_entries.dart';
 import 'shell_sales_entries.dart';
+import 'shell_stock_entries.dart';
 
 /// One titled group of entries, with its sub-groups.
 @immutable
@@ -44,6 +45,7 @@ List<NavGroup> navGroupsOf(
   final all = [
     ...entries.money(),
     ...entries.salesPages(),
+    ...entries.stockPages(),
     ...administration,
   ];
   NavGroup pick(
@@ -72,6 +74,8 @@ List<NavGroup> navGroupsOf(
     pick('sales', labels.uxNavSales, Icons.sell_outlined, all, {
       'drawer-invoices',
       'drawer-invoice-register',
+      'drawer-quotes',
+      'drawer-billing-customers',
       'drawer-services',
       'drawer-guest-passes',
       'drawer-accessories',
@@ -91,6 +95,8 @@ List<NavGroup> navGroupsOf(
         'drawer-purchase-orders',
         'drawer-purchase-approvals',
         'drawer-purchases-to-pay',
+        // #4161 — the goods ledger's records sit with what is bought.
+        'drawer-stock',
       },
     ),
     pick(

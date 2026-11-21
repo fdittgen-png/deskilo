@@ -20,6 +20,7 @@
 //     the amounts of a currency with three minor digits.
 //   * anything else, or nothing typed: null — the caller says what blank
 //     means.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show ExactQuantity, ExactQuantityProblem, ExactQuantityResult;
 import 'package:intl/intl.dart';
 import 'package:intl/number_symbols_data.dart' show numberFormatSymbols;
 
@@ -51,6 +52,26 @@ num? parseDecimalInput(
   bool allowNegative = true,
   bool threeDecimals = false,
 }) {
+  final text = _decimalInputText(
+    raw,
+    locale: locale,
+    grouping: grouping,
+    allowNegative: allowNegative,
+    threeDecimals: threeDecimals,
+  );
+  return text == null ? null : double.tryParse(text);
+}
+
+/// #4161 -- the number typed in [raw] as canonical dot-decimal TEXT (`-12.5`),
+/// or null: the same rules as [parseDecimalInput], with no `double` in
+/// between, so an exact reader (`ExactQuantity`) sees every digit typed.
+String? _decimalInputText(
+  String raw, {
+  String? locale,
+  bool grouping = true,
+  bool allowNegative = true,
+  bool threeDecimals = false,
+}) {
   var text = raw.trim();
   if (grouping) text = text.replaceAll(_groupingChars, '');
   if (text.isEmpty) return null;
@@ -69,10 +90,24 @@ num? parseDecimalInput(
   final normal = grouping
       ? _grouped(text, _symbolsOf(locale!).group, threeDecimals)
       : _ungrouped(text);
-  if (normal == null) return null;
-  final value = double.tryParse(normal);
-  if (value == null) return null;
-  return negative ? -value : value;
+  if (normal == null || double.tryParse(normal) == null) return null;
+  return negative ? '-$normal' : normal;
+}
+
+/// #4161 -- a quantity typed by a member: the locale entry (`0,5`, `1 234,5`)
+/// mapped to canonical text and read exactly, or the reason it is none. A
+/// text that is no number is `malformed`; one with too many decimals or too
+/// large is refused with its own problem, never rounded.
+ExactQuantityResult exactQuantityFromInput(
+  String raw, {
+  required String locale,
+  bool allowNegative = false,
+}) {
+  final text = _decimalInputText(raw, locale: locale, allowNegative: allowNegative);
+  if (text == null) return (value: null, problem: ExactQuantityProblem.malformed);
+  // `.5` and `5.` are what a keyboard types; the kernel reads `0.5` and `5`.
+  final whole = text.replaceFirstMapped(RegExp(r'^(-?)\.'), (m) => '${m[1]}0.');
+  return ExactQuantity.tryParse(whole.endsWith('.') ? whole.substring(0, whole.length - 1) : whole);
 }
 
 String? _ungrouped(String text) {

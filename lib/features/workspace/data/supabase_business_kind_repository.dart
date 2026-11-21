@@ -60,10 +60,7 @@ class SupabaseBusinessKindRepository implements BusinessKindRepository {
   Future<BusinessKindApplied> applyKind(
     String workspaceId, {
     required String requestId,
-    required String kind,
-    required List<String> moreKinds,
-    required int reviewedVersion,
-    required String reviewedDigest,
+    required ReviewedKind reviewed,
     required Map<String, bool> flags,
     required Map<String, bool> expected,
   }) async {
@@ -73,10 +70,10 @@ class SupabaseBusinessKindRepository implements BusinessKindRepository {
         params: {
           'p_workspace': workspaceId,
           'p_request_id': requestId,
-          'p_kind': kind,
-          'p_more_kinds': moreKinds.join(','),
-          'p_reviewed_version': reviewedVersion,
-          'p_reviewed_digest': reviewedDigest,
+          'p_kind': reviewed.kind,
+          'p_more_kinds': reviewed.moreKinds.join(','),
+          'p_reviewed_version': reviewed.version,
+          'p_reviewed_digest': reviewed.digest,
           'p_flags': flags,
           'p_expected': expected.isEmpty ? null : expected,
         },

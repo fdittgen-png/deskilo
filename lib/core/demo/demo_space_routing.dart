@@ -30,10 +30,12 @@ import '../../features/money/providers/invoice_original_providers.dart';
 import '../../features/money/providers/money_providers.dart';
 import '../../features/money/providers/recorded_payments_providers.dart';
 import '../../features/money/providers/settlement_review_providers.dart';
+import '../../features/money/providers/standalone_invoice_providers.dart';
 import '../../features/plan/providers/accessory_providers.dart';
 import '../../features/plan/providers/charging_station_providers.dart';
 import '../../features/plan/providers/floor_plan_providers.dart';
 import '../../features/reservations/providers/reservation_providers.dart';
+import '../../features/stock/providers/stock_providers.dart';
 import '../../features/workspace/domain/member.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
 import '../../features/workspace/providers/kpi_providers.dart';
@@ -43,6 +45,7 @@ import '../../features/workspace/providers/workspace_roles_providers.dart';
 import '../storage/resume_place_store.dart';
 import 'data/bank_statement_repository.dart';
 import 'data/demo_booking_prices.dart';
+import 'data/demo_stock_queries.dart';
 import 'data/finance_kpi_repository.dart';
 import 'data/money/demo_credit_moves.dart';
 import 'data/money/demo_invoice_issue_drafts.dart';
@@ -54,6 +57,7 @@ import 'data/series_previewer.dart';
 import 'data/workspace_repository.dart' show FakeWorkspaceMembership;
 import 'demo_finance_commands.dart';
 import 'demo_fixture.dart';
+import 'demo_space_ids.dart';
 import 'demo_space_pick.dart';
 
 /// Demo's one fictional installation: nothing is verified against a
@@ -154,6 +158,8 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
     // #2557 C5 — Me › Finances reads the same hosts; the fixture's spaces
     // are the personal home's own, answered by its own read.
     financeHostsFromMe, financeHomeFromMe, demoFinanceCommands(fixture),
+    // #4167 — My businesses names the person's production spaces.
+    businessWorkspacesFromApp,
     // #2552 XPRIV-01 — the persona's mask choice, as the app reads it.
     privateValuesFromAccount,
     // #2575
@@ -244,6 +250,9 @@ List<Override> _moneyPortOverrides(FakeMoneyRepository Function(Ref ref) money) 
     (ref) => money(ref).reportTemplates,
   ),
   invoiceCommandsProvider.overrideWith((ref) => money(ref).invoiceCommands),
+  standaloneInvoiceCommandsProvider.overrideWith(
+    (ref) => money(ref).standaloneInvoiceCommands,
+  ), // #4165
   taxReportingRepositoryProvider.overrideWith(
     (ref) => money(ref).taxReporting,
   ),
@@ -263,6 +272,11 @@ List<Override> _moneyPortOverrides(FakeMoneyRepository Function(Ref ref) money) 
   // #2365
   accountingSourceQueriesProvider.overrideWith(
     (ref) => money(ref).accountingSource,
+  ),
+  // #4161 — the reference business keeps a small shop stock; no other Demo
+  // business keeps one.
+  stockQueriesProvider.overrideWith(
+    (ref) => const DemoStockQueries(demoFirstSpaceId),
   ),
 ];
 

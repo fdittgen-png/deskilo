@@ -603,9 +603,20 @@ Choisissez **Voir les dettes fournisseur** pour consulter ses factures et les mo
 
 **Public:** Administrateur·rice · Propriétaire
 
-Ouvrez **Argent** puis **Clients facturés** (l'adresse `/money/customers` ; la fonction **Clients facturés** doit être activée sous la facturation). C'est ici que vous gardez les personnes et entreprises que vous facturez, avec ou sans compte. Ce ne sont pas des membres : elles n'ont pas de compte, ne voient rien de votre activité et ne comptent pas parmi vos membres.
+Ouvrez **Ventes et encaissements** puis **Clients facturés**. C'est ici que vous gardez les personnes et entreprises que vous facturez, avec ou sans compte. Ce ne sont pas des membres : elles n'ont pas de compte, ne voient rien de votre activité et ne comptent pas parmi vos membres.
 
 Choisissez **Ajouter un client** et indiquez une société ou un nom, l'adresse postale, le code pays, le numéro de TVA et une adresse e-mail pour la facture. Le numéro de TVA n'est contrôlé que dans sa forme, jamais vérifié. **Facturé comme** (entreprise ou particulier) détermine les mentions légales et le traitement de la taxe ; seule une personne autorisée à émettre des factures peut le modifier. Choisissez un client pour le modifier. Si quelqu'un d'autre l'a modifié depuis votre ouverture, rien n'est enregistré et il vous est demandé de le rouvrir. Si la liste ne peut pas être lue, réessayez plutôt que de la croire vide. Modifier un client ne réécrit jamais une facture déjà émise : chacune garde le nom et l'adresse avec lesquels elle a été émise.
+
+<!-- anchor: user.money.quotes -->
+### Devis
+
+**Public:** Administrateur·rice · Propriétaire
+
+Ouvrez **Ventes et encaissements** puis **Devis**. C'est ici que vous faites une offre à un client facturé avant de le facturer.
+
+Choisissez **Nouveau devis**, le client, les dates et ajoutez les lignes. **Enregistrer le brouillon** le garde ; **Envoyer** fige cette révision, prend la référence suivante de la série des devis et calcule les montants d'après vos propres réglages fiscaux. Un brouillon n'affiche aucun montant : ils n'existent qu'une fois le devis envoyé. Un devis envoyé ne change jamais : **Modifier** crée une autre révision et **Annuler le devis** le retire. Une offre dont la date est passée est lue comme expirée. Un devis ne facture, ne comptabilise et n'encaisse rien ; la facturation d'un devis accepté vient ensuite.
+
+Quand le client a répondu, choisissez **Enregistrer la réponse** sur un devis envoyé : vous enregistrez sa réponse comme émetteur (accepté ou refusé, la date, comment elle vous est parvenue) ; c'est votre trace, pas sa signature, et une offre dont la date est passée ne peut plus être acceptée. Pour un devis accepté, choisissez **Facturer ce devis**, fixez les dates et **Vérifier la facture** : la facture est prévisualisée d'après la révision acceptée et comparée à ce qui a été accepté. Si elle diffère (la date, les données du client ou les faits fiscaux ont changé), vous confirmez que vous l'avez revue ; ce qui ne peut pas encore être émis est nommé. Puis **Émettre la facture** : un devis donne une seule facture, quoi qu'il arrive ensuite à cette facture.
 
 <!-- anchor: user.money.amounts -->
 ### Comment les montants sont affichés
@@ -644,6 +655,29 @@ Vous appartenez à plusieurs espaces et vous voulez toutes vos factures, vos pai
 - L'historique complet, l'usage et les autres serveurs sont accessibles depuis le même écran.
 
 **Voir aussi:** [Vos factures](help:user.money.invoices)
+
+<!-- anchor: user.money.businesses -->
+### Vos activités en un coup d'œil
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous dirigez ou gérez une ou plusieurs activités et vous voulez voir, depuis Moi, ce que chacune doit encore recevoir et ce que chacune doit payer.
+
+**Étapes**
+
+1. Ouvrez [Mes finances](app:/money). Si vous pouvez lire les finances d'une activité, un sélecteur en haut propose **Personnel** et **Mes activités**.
+2. Choisissez **Mes activités**. Chaque activité a une carte avec un bloc par devise : **À encaisser**, **Déclaré, en attente de confirmation**, **Reçu, pas encore rapproché** et **En attente d'approbation**.
+3. Touchez un montant pour voir les factures qui le composent, **Afficher plus** s'il y en a davantage, et touchez une facture pour l'ouvrir dans son activité.
+4. Sous **À payer**, **Fournisseurs** et **Notes de frais dues aux membres** sont listés à part ; touchez l'un ou l'autre pour voir les obligations qui le composent.
+
+**Bon à savoir**
+
+- Les devises ne sont jamais additionnées, et rien n'est compensé avec ce que l'activité doit. Un remboursement dû aux clients (**Remboursements dus aux clients**) est une ligne à part.
+- Un montant à payer mis en attente fait partie de ce qui reste, il ne s'y ajoute pas.
+- Une activité qui n'a pas pu être lue le dit, avec **Réessayer** ; cela ne veut pas dire que rien n'est dû. Une activité dont vous ne pouvez pas lire les finances n'apparaît pas.
+- Être client d'une activité ne donne aucun accès à ses chiffres. Ouvrir une ligne vous amène seulement à l'activité : ce que vous pouvez y faire dépend de votre rôle.
+
+**Voir aussi:** [Vos finances dans tous vos espaces](help:user.money.finances)
 
 <!-- anchor: user.money.invoicing -->
 ### La facturation en un coup d'œil

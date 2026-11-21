@@ -63,6 +63,7 @@ import 'seed/demo_city_people_seed.dart';
 import 'seed/demo_commerce_seed.dart';
 import 'seed/demo_decision_seed.dart';
 import 'seed/demo_flags.dart';
+import 'seed/demo_french_reporting_seed.dart';
 import 'seed/demo_history_seed.dart';
 import 'seed/demo_money_finish.dart';
 import 'seed/demo_money_seed.dart';
@@ -210,6 +211,7 @@ class DemoFixture implements DemoSpaceParts {
             actor: () => actor.memberId, credits: credits);
     seedDemoHistoryMoney(money, today);
     seedDemoMoneyStory(money, today, reservations.reservations);
+    seedDemoFrenchReporting(money, DateTime(today.year, today.month - 1, 28));
     seedDemoNewcomers(workspaces, money, reservations, today); // #3674
     seedDemoYearOfResources(reservations, workspaces, today);
     finishDemoMoney(money, today);

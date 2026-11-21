@@ -22,6 +22,7 @@ import 'route_env.dart';
 import 'route_redirect.dart';
 import 'routes/auth_routes.dart';
 import 'routes/billing_customer_routes.dart';
+import 'routes/customer_quote_routes.dart';
 import 'routes/directory_routes.dart';
 import 'routes/editor_routes.dart';
 import 'routes/events_routes.dart';
@@ -34,6 +35,7 @@ import 'routes/money_routes.dart';
 import 'routes/plan_routes.dart';
 import 'routes/profile_routes.dart';
 import 'routes/reservations_routes.dart';
+import 'routes/stock_routes.dart';
 import 'routes/task_recorder_routes.dart';
 import 'routes/workspace_routes.dart';
 import 'shell/desk_frame.dart' show deskModalObserverProvider;
@@ -122,6 +124,8 @@ GoRouter router(Ref ref) {
       ...taskRecorderRoutes(env),
       ...moneyRoutes(env),
       ...billingCustomerRoutes(env),
+      ...stockRoutes(env),
+      ...customerQuoteRoutes(env),
     ],
   );
   ref.onDispose(router.dispose);

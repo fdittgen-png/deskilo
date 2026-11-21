@@ -67,10 +67,12 @@ class BusinessKindCommands {
       final applied = await _kinds.applyKind(
         workspaceId,
         requestId: newRequestId(),
-        kind: kind,
-        moreKinds: moreKinds,
-        reviewedVersion: reviewed.profileVersion,
-        reviewedDigest: reviewed.profileDigest,
+        reviewed: ReviewedKind(
+          kind: kind,
+          moreKinds: moreKinds,
+          version: reviewed.profileVersion,
+          digest: reviewed.profileDigest,
+        ),
         flags: flags,
         expected: expected,
       );

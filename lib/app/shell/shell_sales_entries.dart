@@ -37,6 +37,31 @@ extension SalesEntries on DrawerEntries {
           () => go('/invoice-register'),
           route: '/invoice-register',
         ),
+      // #4166 — the quotes: an offer to a billing customer before an invoice.
+      if (sales &&
+          features.contains(WorkspaceFeature.customerQuotes) &&
+          (may(WorkspacePermission.viewFinances) ||
+              may(WorkspacePermission.issueInvoices)))
+        DrawerEntry(
+          'drawer-quotes',
+          Icons.request_quote_outlined,
+          l10n.quotesTitle,
+          () => go('/money/quotes'),
+          route: '/money/quotes',
+        ),
+      // #4164 — the people and businesses invoiced, with or without an account.
+      if (sales &&
+          features.contains(WorkspaceFeature.billingCustomers) &&
+          (may(WorkspacePermission.manageBillingCustomers) ||
+              may(WorkspacePermission.viewFinances) ||
+              may(WorkspacePermission.issueInvoices)))
+        DrawerEntry(
+          'drawer-billing-customers',
+          Icons.groups_outlined,
+          l10n.billingCustomersTitle,
+          () => go('/money/customers'),
+          route: '/money/customers',
+        ),
     ];
   }
 }

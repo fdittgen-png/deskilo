@@ -2990,9 +2990,20 @@ Wählen Sie **Lieferantenverbindlichkeiten anzeigen**, um dessen Rechnungen und 
 
 **Zielgruppe:** Administrator:in · Inhaber
 
-Öffnen Sie **Geld** und dann **Rechnungskunden** (die Adresse `/money/customers`; die Funktion **Rechnungskunden** muss unter der Rechnungsstellung aktiviert sein). Hier verwalten Sie die Personen und Unternehmen, denen Sie Rechnungen stellen, mit oder ohne Konto. Sie sind keine Mitglieder: Sie haben kein Konto, sehen nichts von Ihrem Betrieb und zählen nicht zu Ihren Mitgliedern.
+Öffnen Sie **Verkauf & Zahlungseingang** und dann **Rechnungskunden**. Hier verwalten Sie die Personen und Unternehmen, denen Sie Rechnungen stellen, mit oder ohne Konto. Sie sind keine Mitglieder: Sie haben kein Konto, sehen nichts von Ihrem Betrieb und zählen nicht zu Ihren Mitgliedern.
 
 Wählen Sie **Kunden hinzufügen** und geben Sie eine Firma oder einen Namen, die Anschrift, den Ländercode, die USt-IdNr. und eine E-Mail-Adresse für die Rechnung an. Die USt-IdNr. wird nur auf ihre Form geprüft, nie bestätigt. **Abgerechnet als** (Unternehmen oder Privatperson) bestimmt die Pflichtangaben und die steuerliche Behandlung; nur wer Rechnungen ausstellen darf, kann es ändern. Wählen Sie einen Kunden, um ihn zu bearbeiten. Hat jemand anderes den Kunden seit dem Öffnen geändert, wird nichts gespeichert und Sie öffnen ihn erneut. Lässt sich die Liste nicht lesen, versuchen Sie es erneut, statt sie für leer zu halten. Eine Änderung schreibt nie eine bereits ausgestellte Rechnung um: Jede behält Namen und Anschrift, mit denen sie ausgestellt wurde.
+
+<!-- anchor: user.money.quotes -->
+### Angebote
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Öffnen Sie **Verkauf & Zahlungseingang** und dann **Angebote**. Hier machen Sie einem Rechnungskunden ein Angebot, bevor Sie ihm eine Rechnung stellen.
+
+Wählen Sie **Neues Angebot**, den Kunden, die Daten und fügen Sie die Positionen hinzu. **Entwurf speichern** behält ihn; **Senden** friert diese Revision ein, nimmt die nächste Referenz der Angebotsreihe und berechnet die Beträge aus Ihren eigenen Steuereinstellungen. Ein Entwurf zeigt keine Beträge: Sie entstehen erst beim Senden. Ein gesendetes Angebot ändert sich nie: **Ändern** erzeugt eine weitere Revision, **Angebot stornieren** zieht es zurück. Ein Angebot nach seinem Datum gilt als abgelaufen. Ein Angebot berechnet, bucht und bezahlt nichts; die Rechnung zu einem angenommenen kommt danach.
+
+Hat der Kunde geantwortet, wählen Sie bei einem gesendeten Angebot **Antwort festhalten**: Sie halten seine Antwort als Aussteller fest (angenommen oder abgelehnt, das Datum, wie sie Sie erreicht hat); es ist Ihr Vermerk, nicht seine Unterschrift, und ein Angebot nach seinem Datum kann nicht mehr angenommen werden. Bei einem angenommenen Angebot wählen Sie **Dieses Angebot berechnen**, legen die Daten fest und **Rechnung prüfen**: Die Rechnung wird aus der angenommenen Revision vorab berechnet und mit dem Angenommenen verglichen. Weicht sie ab (Datum, Kundendaten oder Steuerangaben haben sich geändert), bestätigen Sie, dass Sie sie geprüft haben; was noch nicht ausgestellt werden kann, wird genannt. Dann **Rechnung ausstellen**: Ein Angebot ergibt eine Rechnung, was danach auch mit ihr geschieht.
 
 <!-- anchor: user.money.amounts -->
 ### Wie Beträge angezeigt werden
@@ -3031,6 +3042,29 @@ Sie gehören mehreren Spaces an und möchten alle Ihre Rechnungen, Zahlungen und
 - Vollständiger Verlauf, Nutzung und andere Server sind von demselben Bildschirm aus erreichbar.
 
 **Siehe auch:** [Ihre Rechnungen](#ihre-rechnungen)
+
+<!-- anchor: user.money.businesses -->
+### Ihre Unternehmen auf einen Blick
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie führen oder verwalten ein oder mehrere Unternehmen und möchten von Ich aus sehen, was jedem noch zusteht und was jedes zu zahlen hat.
+
+**Schritte**
+
+1. Öffnen Sie [Meine Finanzen](https://fdittgen-png.github.io/deskilo/#/money). Wenn Sie die Finanzen eines Unternehmens lesen dürfen, bietet ein Umschalter oben **Persönlich** und **Meine Unternehmen** an.
+2. Wählen Sie **Meine Unternehmen**. Jedes Unternehmen hat eine Karte mit einem Block je Währung: **Einzuziehen**, **Gemeldet, wartet auf Bestätigung**, **Eingegangen, noch nicht zugeordnet** und **Wartet auf Freigabe**.
+3. Tippen Sie auf einen Betrag, um die Rechnungen dahinter zu sehen, **Mehr anzeigen**, wenn es mehr gibt, und tippen Sie auf eine Rechnung, um sie im jeweiligen Unternehmen zu öffnen.
+4. Unter **Zu zahlen** stehen **Lieferanten** und **Ausgaben, die Mitgliedern zustehen** getrennt; tippen Sie auf eine davon, um die Verpflichtungen dahinter zu sehen.
+
+**Gut zu wissen**
+
+- Währungen werden nie zusammengezählt, und nichts wird gegen das aufgerechnet, was das Unternehmen schuldet. Eine Rückerstattung an Kunden (**Rückerstattungen an Kunden**) ist eine eigene Zeile.
+- Ein zurückgehaltener Betrag ist Teil dessen, was bleibt, kein Zuschlag.
+- Ein Unternehmen, das nicht gelesen werden konnte, sagt das, mit **Erneut versuchen**; das heißt nicht, dass nichts geschuldet wird. Ein Unternehmen, dessen Finanzen Sie nicht lesen dürfen, erscheint nicht.
+- Kunde eines Unternehmens zu sein, gibt keinen Zugang zu dessen Zahlen. Eine Zeile zu öffnen führt Sie nur zum Unternehmen: Was Sie dort tun dürfen, entscheidet Ihre Rolle.
+
+**Siehe auch:** [Ihre Finanzen über alle Bereiche](#ihre-finanzen-in-allen-workspaces)
 
 <!-- anchor: user.money.invoicing -->
 ### Rechnungsstellung im Überblick

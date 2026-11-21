@@ -263,6 +263,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/einvoice-config', RouteClass.workspace, namesRole: true, place: 'drawer-legal-identity', measure: PageMeasure.form),
   RouteRule('/documents', RouteClass.workspace, place: 'drawer-documents', measure: PageMeasure.work),
   RouteRule('/invoicing/wizard', RouteClass.workspace, namesRole: true, place: 'drawer-invoices', measure: PageMeasure.work),
+  RouteRule('/invoicing/standalone/new', RouteClass.workspace, namesRole: true, place: 'drawer-invoices', measure: PageMeasure.work), // #4165
   RouteRule('/member/:memberId', RouteClass.workspace, namesRole: true, place: 'drawer-members', measure: PageMeasure.reading),
   RouteRule('/report-editor', RouteClass.workspace, namesRole: true, place: 'drawer-reports-templates', measure: PageMeasure.work),
   RouteRule('/roles', RouteClass.workspace, namesRole: true, place: 'drawer-roles', measure: PageMeasure.work),
@@ -277,7 +278,12 @@ const List<RouteRule> routeRules = [
   RouteRule('/money/payments', RouteClass.workspace, namesRole: true, place: 'drawer-tab-${ShellBranch.money}', measure: PageMeasure.work), // #3614
   RouteRule('/money/suppliers', RouteClass.workspace, namesRole: true, place: 'drawer-suppliers', measure: PageMeasure.work), // #3615
   RouteRule('/money/suppliers/:id', RouteClass.workspace, namesRole: true, place: 'drawer-suppliers', measure: PageMeasure.work), // #3615
-  RouteRule('/money/customers', RouteClass.workspace, namesRole: true, place: 'drawer-tab-${ShellBranch.money}', measure: PageMeasure.reading), // #4164
+  RouteRule('/stock', RouteClass.workspace, namesRole: true, place: 'drawer-stock', measure: PageMeasure.work), // #4161
+  RouteRule('/stock/movements/:id', RouteClass.workspace, namesRole: true, place: 'drawer-stock', measure: PageMeasure.work), // #4161
+  RouteRule('/money/quotes', RouteClass.workspace, namesRole: true, place: 'drawer-quotes', measure: PageMeasure.reading), // #4166
+  RouteRule('/money/quotes/:id', RouteClass.workspace, namesRole: true, place: 'drawer-quotes', measure: PageMeasure.reading), // #4166
+  RouteRule('/money/quotes/:id/edit', RouteClass.workspace, namesRole: true, place: 'drawer-quotes', measure: PageMeasure.reading), // #4166
+  RouteRule('/money/customers', RouteClass.workspace, namesRole: true, place: 'drawer-billing-customers', measure: PageMeasure.reading), // #4164
   RouteRule('/money/purchase-orders', RouteClass.workspace, namesRole: true, place: 'drawer-purchase-orders', measure: PageMeasure.work),
   // #3608 — the order's form, a long task: a page with its own columns.
   RouteRule('/money/purchase-orders/new', RouteClass.workspace, namesRole: true, place: 'drawer-purchase-orders', measure: PageMeasure.work),

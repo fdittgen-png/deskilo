@@ -7,6 +7,7 @@ on:
       - '.github/**'
       - 'scripts/install_zizmor.sh'
       - 'scripts/workflow_audit.sh'
+      - 'scripts/workflow_audit_summary.py'
   workflow_dispatch:
 
 permissions:

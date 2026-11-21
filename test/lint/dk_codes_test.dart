@@ -41,36 +41,9 @@ const _notForTheApp = <String, String>{
   'DKQ01':
       'a guard behind the quote screens (#4166 cut 2): the quote it names '
       'is chosen from the business\'s own list (0828)',
-  'DKQ02':
-      'the stale-draft refusal of the quote editor, which reads it in '
-      '#4166 cut 2; until then no screen edits a quote (0828)',
-  'DKQ03':
-      'a quote command in a state that does not allow it (a sent quote '
-      'amended twice, a converted one converted again); the quote screens '
-      'read it in #4166 cut 2 (0828)',
-  'DKQ04':
-      'an acceptance or a send after the offer\'s validity; the quote '
-      'screens word it in #4166 cut 2 (0828)',
-  'DKQ05':
-      'a guard no screen offers: a sent revision, a decision and a '
-      'conversion are never changed or deleted (0828)',
-  'DKQ06':
-      'a quote that is not complete (a line fact, a date); the quote '
-      'editor checks before it sends and words the server\'s list in '
-      '#4166 cut 2 (0828)',
-  'DKQ07':
-      'an answer to an assistant: quotes are made in the app by a person, '
-      'never through a delegated token (0828)',
-  'DKQ08':
-      'the invoice differs from what was accepted: the conversion screen '
-      'shows the difference and takes the reviewed digest in #4166 cut 3 '
-      '(0828)',
   'DKQ09':
       'a guard no screen offers: the invoice draft of a quote changes and '
       'issues only through the quote, never in the invoice editor (0828)',
-  'DKQ10':
-      'quotes are switched off in this business; the quote screens appear '
-      'only where the feature is on and word this in #4166 cut 2 (0828)',
   'DKR02':
       'an operator\'s refusal: a personal home cannot drop the '
       'workspace host role while it holds workspaces (0559)',

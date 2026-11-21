@@ -28,6 +28,7 @@ const Map<String, String> _matrixRows = {
 /// (test/app/fixtures/route_outcomes.golden) says where each one lands.
 const Map<String, String> _noLayoutOfItsOwn = {
   '/me/spaces/manage': 'forwards to /profiles, which the desk walk renders',
+  '/invoicing/standalone/new': '#4165 composer behind its feature; its widget tests walk it at phone and desk',
   '/me/account/connections': 'forwards to /connections, which is walked',
   '/discover/workspace': 'forwards to /discover without a workspace chosen',
   '/account-messages/thread': 'forwards to /account-messages without a thread',

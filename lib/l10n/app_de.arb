@@ -7579,6 +7579,14 @@
   },
   "featureSpaceQrCodes": "Raum-QR-Codes",
   "featureSpaceQrCodesDesc": "Druckbare QR-Karten je Platz, Tisch, Büro und Etage — scannen zum Reservieren oder Einchecken.",
+  "featureStandaloneInvoicingDesc": "Einem benannten Kunden noch heute eine erbrachte Leistung oder ein vereinbartes Ergebnis berechnen, mit einzelnen Positionen und ausdrücklichen Daten, ohne Buchung, Abo oder Monat dahinter. Der Server berechnet jeden Betrag; Sie bestätigen eine Vorschau und stellen die Rechnung aus. Aus: Rechnungen werden wie bisher je Mitglied und Monat ausgestellt.",
+  "@featureStandaloneInvoicingDesc": {
+    "description": "#4165 feature switch: featureStandaloneInvoicingDesc"
+  },
+  "featureStandaloneInvoicingTitle": "Einzelrechnungen",
+  "@featureStandaloneInvoicingTitle": {
+    "description": "#4165 feature switch: featureStandaloneInvoicingTitle"
+  },
   "featureStockManagementDesc": "Waren verfolgen: wo sie sind, in welcher Einheit, aus welcher Charge, und jede Bewegung zwischen zwei Orten. Aus: ein Katalogartikel behält seinen einfachen Regalbestand.",
   "featureStockManagementTitle": "Lagerverwaltung",
   "featureSubscriptionInvoicesDesc": "Der Mitgliedsbeitrag wird vor dem Monat berechnet, den er bezahlt, an einem Datum Ihrer Wahl. Aus: Der Beitrag bleibt auf der Monatsrechnung.",
@@ -8216,6 +8224,17 @@
   "financesYourCredit": "Ihr Guthaben",
   "formErrorSummaryGoTo": "Zum ersten Problem",
   "formErrorSummaryTitle": "{count, plural, one{1 Feld braucht Ihre Aufmerksamkeit} other{{count} Felder brauchen Ihre Aufmerksamkeit}}",
+  "frEReportingBlocked": "Das Frankreich-E-Reporting wurde nicht geschrieben: Diese Belege lassen sich nach dem, was sie bei der Ausstellung festgehalten haben, nicht einordnen: {documents}. Erfassen Sie die Eigenschaft des Kunden und korrigieren Sie sie dann mit einer Gutschrift und einer neuen Rechnung; die Originale werden nie geändert.",
+  "frEReportingDocumentAmountRuleUnsupported": "{number}: eine Dienstleistung, deren festgehaltene Steuer vom Satz abweicht, mit einer Zahlung im Zeitraum",
+  "frEReportingDocumentBuyerCountryConflict": "{number}: zwei verschiedene Länder wurden festgehalten",
+  "frEReportingDocumentBuyerCountryMissing": "{number}: das Land des Unternehmers wurde nicht festgehalten",
+  "frEReportingDocumentBuyerVatIdMissing": "{number}: ein Unternehmer im Ausland braucht seine USt-IdNr.",
+  "frEReportingDocumentCapacityUnknown": "{number}: die Eigenschaft des Kunden (Unternehmer oder Verbraucher) wurde nicht angegeben",
+  "frEReportingDocumentGoodsAbroadUnsupported": "{number}: Warenlieferungen an ein Unternehmen im Ausland werden nicht unterstützt",
+  "frEReportingDocumentGoodsZeroRateUnsupported": "{number}: eine Warenposition mit Nullsatz: ihre Kategorie wird nicht aus dem Satz abgeleitet",
+  "frEReportingDocumentMissingReceiptAllocation": "{number}: Waren und Dienstleistungen mit einer Zahlung: die Zahlung hat keine belastbare Aufteilung auf beide",
+  "frEReportingDocumentNoFrozenCapacity": "{number}: ausgestellt, bevor die Eigenschaft des Kunden festgehalten wurde",
+  "frEReportingDocumentUnsupportedCommercialLine": "{number}: eine Position, die diese Version nicht lesen kann",
   "gebuevProcedureAccessBody": "Jeder Buchhaltungsexport und jeder Download eines Archivs wird im Exportprotokoll festgehalten: wer, wann, welche Datei und ihr Hashwert. Der Prüfpfad führt diese Zugriffe neben den Belegen auf.",
   "gebuevProcedureAccessHeading": "Zugriffe (Art. 8)",
   "gebuevProcedureCarriersBody": "Dieses Archiv lässt sich mit jedem Zip-Programm und Texteditor lesen. Eine Kopie des ganzen Space wird durch einen abgeschlossenen Export des Space belegt, der mit seinem Hashwert festgehalten wird: die Bereitschafts-Checkliste zeigt, wann der letzte erstellt wurde, und verlangt einen neuen, wenn er alt ist.",
@@ -13266,6 +13285,27 @@
   "moneyUsageUnlimited": "{used, plural, one{{used} halber Tag genutzt} other{{used} halbe Tage genutzt}}",
   "monthFreeCount": "{free}/{total}",
   "myBadgeTitle": "Mein Badge",
+  "myBusinessAwaiting": "Wartet auf Freigabe",
+  "myBusinessDeclared": "Gemeldet, wartet auf Bestätigung",
+  "myBusinessDetailEmpty": "Keine Zeilen.",
+  "myBusinessDetailRefused": "Sie dürfen diese Zeilen nicht lesen.",
+  "myBusinessHeld": "davon zurückgehalten",
+  "myBusinessIssued": "Ausgestellt am {date}",
+  "myBusinessMemberExpenses": "Ausgaben, die Mitgliedern zustehen",
+  "myBusinessNothingOwed": "Diesem Unternehmen wird nichts geschuldet.",
+  "myBusinessOpen": "Rechnungen dieses Unternehmens öffnen",
+  "myBusinessPayablesRefused": "Was dieses Unternehmen zu zahlen hat, ist für Sie nicht einsehbar.",
+  "myBusinessPayablesUnavailable": "Was dieses Unternehmen zu zahlen hat, konnte nicht gelesen werden. Das heißt nicht, dass nichts zu zahlen ist.",
+  "myBusinessReceived": "Eingegangen, noch nicht zugeordnet",
+  "myBusinessRefunds": "Rückerstattungen an Kunden",
+  "myBusinessRetry": "Erneut versuchen",
+  "myBusinessStillOwed": "Noch offen",
+  "myBusinessSuppliers": "Lieferanten",
+  "myBusinessToCollect": "Einzuziehen",
+  "myBusinessUnavailable": "Dieses Unternehmen konnte nicht gelesen werden. Das heißt nicht, dass nichts geschuldet wird.",
+  "myBusinessesFaceBusinesses": "Meine Unternehmen",
+  "myBusinessesFacePersonal": "Persönlich",
+  "myBusinessesIntro": "Was jedem Ihrer Unternehmen noch zusteht. Die Beträge werden je Unternehmen und je Währung geführt: Sie werden nie zusammengezählt und nie gegen das aufgerechnet, was das Unternehmen schuldet.",
   "myFinancesExport": "Meine Belege exportieren",
   "myFinancesExportWorkspace": "{workspace} – Belege (CSV)",
   "myInvoicesTitle": "Meine Rechnungen",
@@ -15901,6 +15941,74 @@
   "quotaRequestExplainer": "Ihre Reservierungen sind durch Ihr Abo begrenzt. Zusätzliche halbe Tage für {period} gelten nach der Freigabe.",
   "quotaRequestPending": "Antrag gesendet — wartet auf Freigabe.",
   "quotaRequestTitle": "Zusätzliche halbe Tage beantragen",
+  "quoteAmend": "Ändern",
+  "quoteAmountsOnSend": "Die Beträge werden beim Senden des Angebots aus Ihren eigenen Steuereinstellungen berechnet.",
+  "quoteAnswerAccepted": "Der Kunde hat angenommen",
+  "quoteAnswerDeclined": "Der Kunde hat abgelehnt",
+  "quoteCancelAction": "Angebot stornieren",
+  "quoteChooseCustomer": "Kunde wählen",
+  "quoteConvert": "Dieses Angebot berechnen",
+  "quoteConvertAccepted": "Angenommen: {amount}",
+  "quoteConvertCheck": "Rechnung prüfen",
+  "quoteConvertDiffers": "Diese Rechnung weicht vom Angenommenen ab (Datum, Kundendaten oder Steuerangaben haben sich geändert). Prüfen Sie sie vor der Ausstellung.",
+  "quoteConvertDone": "Berechnet als {number}.",
+  "quoteConvertIntro": "Prüfen Sie die Rechnung vor der Ausstellung. Sie entsteht aus der angenommenen Revision für die folgenden Daten; nichts wird ausgestellt, bis Sie bestätigen.",
+  "quoteConvertIssue": "Rechnung ausstellen",
+  "quoteConvertMissing": "Die Rechnung kann noch nicht ausgestellt werden: {missing}.",
+  "quoteConvertNeedsReview": "Die Rechnung weicht jetzt vom Angenommenen ab. Prüfen Sie sie erneut und bestätigen Sie, dass Sie sie geprüft haben.",
+  "quoteConvertOpenInvoice": "Rechnung öffnen",
+  "quoteConvertReviewed": "Ich habe diese Rechnung geprüft",
+  "quoteConvertWouldBe": "Die Rechnung betrüge {amount}",
+  "quoteDecisionByIssuer": "Von Ihnen als Aussteller festgehalten: {source}, am {date}. Es ist Ihr Vermerk der Antwort, nicht die Unterschrift des Kunden.",
+  "quoteDiscardDraft": "Entwurf verwerfen",
+  "quoteDraftSaved": "Entwurf gespeichert.",
+  "quoteEditDraft": "Entwurf bearbeiten",
+  "quoteEditTitle": "Angebot bearbeiten",
+  "quoteExpiredRefusal": "Das Angebot war abgelaufen: es kann nicht mehr angenommen werden.",
+  "quoteFeatureOff": "Angebote sind in diesem Unternehmen ausgeschaltet.",
+  "quoteFieldDecidedOn": "Datum der Antwort",
+  "quoteFieldEvidence": "Referenz oder Notiz (optional)",
+  "quoteFieldIssuedOn": "Datum des Angebots",
+  "quoteFieldNotes": "Hinweise für den Kunden",
+  "quoteFieldOrder": "Bestellnummer",
+  "quoteFieldReference": "Referenz des Kunden",
+  "quoteFieldSource": "Wie sie eingegangen ist",
+  "quoteFieldValidUntil": "Gültig bis",
+  "quoteIncomplete": "Das Angebot ist noch nicht vollständig: {missing}.",
+  "quoteIssuerRecordsNote": "Sie halten diese Antwort als Aussteller fest. Sie ist nicht die Unterschrift des Kunden und berechnet nichts.",
+  "quoteNewTitle": "Neues Angebot",
+  "quoteNoCustomers": "Legen Sie zuerst einen Rechnungskunden an: ein Angebot gilt einem solchen.",
+  "quoteNotAllowedAction": "Sie dürfen das mit Angeboten in diesem Unternehmen nicht tun.",
+  "quoteOrderLine": "Bestellnummer: {value}",
+  "quoteRecordAnswer": "Antwort festhalten",
+  "quoteReferenceLine": "Referenz des Kunden: {value}",
+  "quoteRevisionLine": "Revision {revision} · {status}",
+  "quoteRevisionsTitle": "Revisionen",
+  "quoteSaveDraft": "Entwurf speichern",
+  "quoteSend": "Senden",
+  "quoteSentAs": "Gesendet als {reference}. Diese Revision ändert sich nie.",
+  "quoteSourceEmail": "Per E-Mail",
+  "quoteSourceOther": "Sonstiges",
+  "quoteSourceReceived": "Außerhalb der App erhalten",
+  "quoteSourceVerbal": "Mündlich oder telefonisch",
+  "quoteStale": "Dieser Entwurf hat sich seit dem Öffnen geändert. Öffnen Sie ihn erneut, um den aktuellen zu sehen.",
+  "quoteStateRefused": "Das Angebot ist nicht mehr in einem Zustand, der das erlaubt. Öffnen Sie es erneut.",
+  "quoteStatusAccepted": "Angenommen",
+  "quoteStatusCancelled": "Storniert",
+  "quoteStatusConverted": "Berechnet",
+  "quoteStatusDeclined": "Abgelehnt",
+  "quoteStatusExpired": "Abgelaufen",
+  "quoteStatusSent": "Gesendet",
+  "quoteTotal": "Gesamt",
+  "quoteUnreached": "Die Antwort kam nicht zurück, daher ist nicht bekannt, ob es erledigt wurde. Öffnen Sie das Angebot, um den Stand zu sehen.",
+  "quoteValidUntil": "Gültig bis {date}",
+  "quotesEmpty": "Noch keine Angebote. Erstellen Sie das erste für einen Rechnungskunden.",
+  "quotesIntro": "Angebote an Ihre Rechnungskunden. Ein gesendetes Angebot ändert sich nie; eine Änderung ist eine weitere Revision. Es wird nichts berechnet, bis Sie ein angenommenes Angebot umwandeln.",
+  "quotesLoadFailed": "Die Angebote konnten nicht gelesen werden. Das ist keine leere Liste.",
+  "quotesNew": "Neues Angebot",
+  "quotesNotAllowed": "Sie dürfen die Angebote dieses Unternehmens nicht lesen.",
+  "quotesRetry": "Erneut versuchen",
+  "quotesTitle": "Angebote",
   "readStateDenied": "Dafür haben Sie keinen Zugriff. Fragen Sie bei Bedarf eine Administratorin oder einen Administrator des Arbeitsbereichs.",
   "@readStateDenied": {
     "description": "#3061 shared read-failure messages: connectivity and denied access"
@@ -16116,6 +16224,7 @@
   "refusalStockMove": "Diese Bewegung kann so nicht gebucht werden: eine Menge über null, ein bekannter Grund und eine bis zweihundert Zeilen, oder dieselbe Anfrage unverändert erneut. Nichts wurde bewegt.",
   "refusalStockNotEnough": "So viel ist an diesem Ort nicht vorhanden. Nichts wurde bewegt.",
   "refusalStockOff": "Die Lagerverwaltung ist in diesem Unternehmen ausgeschaltet. Nichts wurde bewegt.",
+  "refusalStockPage": "Diese Seitenanfrage ist ungültig: Fordern Sie 1 bis 200 Zeilen an und setzen Sie nur an der Position fort, die eine Seite geliefert hat.",
   "refusalStockUnit": "Dieser Artikel hat diese Einheit nicht. Fügen Sie die Einheit dem Artikel hinzu oder geben Sie die Menge in einer seiner Einheiten ein.",
   "refusalVatRateVersioned": "Dieser Satz steht bereits auf ausgestellten Rechnungen, sein Prozentsatz bleibt daher unverändert. Nutzen Sie „Änderung per Gesetz“, um den neuen Wert ab einem Datum festzulegen. Es wurde nichts gespeichert.",
   "@refusalVatRateVersioned": {
@@ -19875,6 +19984,248 @@
     "description": "#670 - whole-space sheet"
   },
   "spaceYoursNow": "Von Ihnen für dieses Zeitfenster reserviert.",
+  "standaloneFactAmount": "ein Betrag, den die Rechnung aufnehmen kann",
+  "@standaloneFactAmount": {
+    "description": "#4165 standalone invoice composer: standaloneFactAmount"
+  },
+  "standaloneFactApproval": "die Regeln des Betriebs verlangen eine Genehmigung, die hier noch nicht unterstützt wird",
+  "@standaloneFactApproval": {
+    "description": "#4165 standalone invoice composer: standaloneFactApproval"
+  },
+  "standaloneFactClosed": "dieser Entwurf wurde bereits ausgestellt",
+  "@standaloneFactClosed": {
+    "description": "#4165 standalone invoice composer: standaloneFactClosed"
+  },
+  "standaloneFactCurrency": "die Währung des Betriebs",
+  "@standaloneFactCurrency": {
+    "description": "#4165 standalone invoice composer: standaloneFactCurrency"
+  },
+  "standaloneFactDueDate": "das Fälligkeitsdatum",
+  "@standaloneFactDueDate": {
+    "description": "#4165 standalone invoice composer: standaloneFactDueDate"
+  },
+  "standaloneFactDueDateFar": "ein Fälligkeitsdatum innerhalb eines Jahres",
+  "@standaloneFactDueDateFar": {
+    "description": "#4165 standalone invoice composer: standaloneFactDueDateFar"
+  },
+  "standaloneFactDueDatePast": "ein Fälligkeitsdatum, das nicht in der Vergangenheit liegt",
+  "@standaloneFactDueDatePast": {
+    "description": "#4165 standalone invoice composer: standaloneFactDueDatePast"
+  },
+  "standaloneFactLines": "mindestens eine Position",
+  "@standaloneFactLines": {
+    "description": "#4165 standalone invoice composer: standaloneFactLines"
+  },
+  "standaloneFactSalesTax": "dieser Betrieb erhebt Sales Tax, was hier noch nicht unterstützt wird",
+  "@standaloneFactSalesTax": {
+    "description": "#4165 standalone invoice composer: standaloneFactSalesTax"
+  },
+  "standaloneFactServiceDate": "das Leistungsdatum",
+  "@standaloneFactServiceDate": {
+    "description": "#4165 standalone invoice composer: standaloneFactServiceDate"
+  },
+  "standaloneFactStale": "der Entwurf hat sich geändert: Rechnung erneut prüfen",
+  "@standaloneFactStale": {
+    "description": "#4165 standalone invoice composer: standaloneFactStale"
+  },
+  "standaloneFactTooManyLines": "höchstens 100 Positionen",
+  "@standaloneFactTooManyLines": {
+    "description": "#4165 standalone invoice composer: standaloneFactTooManyLines"
+  },
+  "standaloneFactTotal": "eine Summe über null",
+  "@standaloneFactTotal": {
+    "description": "#4165 standalone invoice composer: standaloneFactTotal"
+  },
+  "standaloneFactUnknownSubject": "der Kunde",
+  "@standaloneFactUnknownSubject": {
+    "description": "#4165 standalone invoice composer: standaloneFactUnknownSubject"
+  },
+  "standaloneFieldAmount": "ein Betrag, den die Rechnung aufnehmen kann",
+  "@standaloneFieldAmount": {
+    "description": "#4165 standalone invoice composer: standaloneFieldAmount"
+  },
+  "standaloneFieldBase": "eine Preismenge über null",
+  "@standaloneFieldBase": {
+    "description": "#4165 standalone invoice composer: standaloneFieldBase"
+  },
+  "standaloneFieldBasis": "ob der Preis die Steuer enthält",
+  "@standaloneFieldBasis": {
+    "description": "#4165 standalone invoice composer: standaloneFieldBasis"
+  },
+  "standaloneFieldDescription": "eine Beschreibung",
+  "@standaloneFieldDescription": {
+    "description": "#4165 standalone invoice composer: standaloneFieldDescription"
+  },
+  "standaloneFieldLineId": "den Entwurf erneut zu speichern",
+  "@standaloneFieldLineId": {
+    "description": "#4165 standalone invoice composer: standaloneFieldLineId"
+  },
+  "standaloneFieldPrice": "ein Preis mit höchstens sechs Nachkommastellen",
+  "@standaloneFieldPrice": {
+    "description": "#4165 standalone invoice composer: standaloneFieldPrice"
+  },
+  "standaloneFieldQuantity": "eine Menge über null mit höchstens sechs Nachkommastellen",
+  "@standaloneFieldQuantity": {
+    "description": "#4165 standalone invoice composer: standaloneFieldQuantity"
+  },
+  "standaloneFieldSupply": "eine Dienstleistung (Waren werden hier noch nicht berechnet)",
+  "@standaloneFieldSupply": {
+    "description": "#4165 standalone invoice composer: standaloneFieldSupply"
+  },
+  "standaloneFieldUnit": "eine Einheit",
+  "@standaloneFieldUnit": {
+    "description": "#4165 standalone invoice composer: standaloneFieldUnit"
+  },
+  "standaloneFieldVatRate": "ein vom Betrieb festgelegter Steuersatz",
+  "@standaloneFieldVatRate": {
+    "description": "#4165 standalone invoice composer: standaloneFieldVatRate"
+  },
+  "standaloneInvoiceAddLine": "Position hinzufügen",
+  "@standaloneInvoiceAddLine": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceAddLine"
+  },
+  "standaloneInvoiceBuyerReference": "Referenz des Kunden",
+  "@standaloneInvoiceBuyerReference": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceBuyerReference"
+  },
+  "standaloneInvoiceCustomerChoose": "Kunden wählen",
+  "@standaloneInvoiceCustomerChoose": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceCustomerChoose"
+  },
+  "standaloneInvoiceDueDate": "Fälligkeitsdatum",
+  "@standaloneInvoiceDueDate": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceDueDate"
+  },
+  "standaloneInvoiceIssue": "Rechnung ausstellen",
+  "@standaloneInvoiceIssue": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceIssue"
+  },
+  "standaloneInvoiceIssued": "Rechnung {number} ausgestellt",
+  "@standaloneInvoiceIssued": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceIssued",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "standaloneInvoiceLineDescription": "Beschreibung",
+  "@standaloneInvoiceLineDescription": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceLineDescription"
+  },
+  "standaloneInvoiceLineGross": "Der Preis enthält die Steuer",
+  "@standaloneInvoiceLineGross": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceLineGross"
+  },
+  "standaloneInvoiceLinePrice": "Einzelpreis",
+  "@standaloneInvoiceLinePrice": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceLinePrice"
+  },
+  "standaloneInvoiceLineQuantity": "Menge",
+  "@standaloneInvoiceLineQuantity": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceLineQuantity"
+  },
+  "standaloneInvoiceLineRate": "Steuersatz",
+  "@standaloneInvoiceLineRate": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceLineRate"
+  },
+  "standaloneInvoiceLineRateDefault": "Standardsatz des Betriebs",
+  "@standaloneInvoiceLineRateDefault": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceLineRateDefault"
+  },
+  "standaloneInvoiceLineUnit": "Einheit",
+  "@standaloneInvoiceLineUnit": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceLineUnit"
+  },
+  "standaloneInvoiceLines": "Positionen",
+  "@standaloneInvoiceLines": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceLines"
+  },
+  "standaloneInvoiceLookAgain": "Erneut prüfen",
+  "@standaloneInvoiceLookAgain": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceLookAgain"
+  },
+  "standaloneInvoiceMissing": "Zu ergänzen: {facts}",
+  "@standaloneInvoiceMissing": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceMissing",
+    "placeholders": {
+      "facts": {
+        "type": "String"
+      }
+    }
+  },
+  "standaloneInvoiceMissingLine": "Position {number}: {fact}",
+  "@standaloneInvoiceMissingLine": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceMissingLine",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "fact": {
+        "type": "String"
+      }
+    }
+  },
+  "standaloneInvoiceMore": "Kundenrechnung ohne Monat",
+  "@standaloneInvoiceMore": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceMore"
+  },
+  "standaloneInvoiceOpen": "Rechnung öffnen",
+  "@standaloneInvoiceOpen": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceOpen"
+  },
+  "standaloneInvoiceOrderNumber": "Bestellnummer",
+  "@standaloneInvoiceOrderNumber": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceOrderNumber"
+  },
+  "standaloneInvoicePreview": "Rechnung prüfen",
+  "@standaloneInvoicePreview": {
+    "description": "#4165 standalone invoice composer: standaloneInvoicePreview"
+  },
+  "standaloneInvoicePreviewNet": "Netto",
+  "@standaloneInvoicePreviewNet": {
+    "description": "#4165 standalone invoice composer: standaloneInvoicePreviewNet"
+  },
+  "standaloneInvoicePreviewTax": "Steuer",
+  "@standaloneInvoicePreviewTax": {
+    "description": "#4165 standalone invoice composer: standaloneInvoicePreviewTax"
+  },
+  "standaloneInvoicePreviewTotal": "Gesamt",
+  "@standaloneInvoicePreviewTotal": {
+    "description": "#4165 standalone invoice composer: standaloneInvoicePreviewTotal"
+  },
+  "standaloneInvoiceRefused": "Die Rechnung wurde nicht ausgestellt.",
+  "@standaloneInvoiceRefused": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceRefused"
+  },
+  "standaloneInvoiceRemoveLine": "Diese Position entfernen",
+  "@standaloneInvoiceRemoveLine": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceRemoveLine"
+  },
+  "standaloneInvoiceServiceDate": "Leistungsdatum",
+  "@standaloneInvoiceServiceDate": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceServiceDate"
+  },
+  "standaloneInvoiceUnavailable": "Einzelrechnungen sind für diesen Betrieb nicht eingeschaltet.",
+  "@standaloneInvoiceUnavailable": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceUnavailable"
+  },
+  "standaloneInvoiceUnknown": "Wir konnten nicht bestätigen, ob die Rechnung ausgestellt wurde. Prüfen Sie erneut, bevor Sie etwas anderes ausstellen.",
+  "@standaloneInvoiceUnknown": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceUnknown"
+  },
+  "standaloneUnitHour": "Stunde",
+  "@standaloneUnitHour": {
+    "description": "#4165 standalone invoice composer: standaloneUnitHour"
+  },
+  "standaloneUnitJob": "Pauschale",
+  "@standaloneUnitJob": {
+    "description": "#4165 standalone invoice composer: standaloneUnitJob"
+  },
+  "standaloneUnitPiece": "Stück",
+  "@standaloneUnitPiece": {
+    "description": "#4165 standalone invoice composer: standaloneUnitPiece"
+  },
   "statementDeskBalanceCredit": "Guthaben: dieser Betrag steht Ihnen zu",
   "statementDeskBalanceOwed": "Geschuldet: Sie schulden diesen Betrag",
   "statementDeskBalanceSettled": "Ausgeglichen: nichts ist offen",
@@ -19942,6 +20293,24 @@
   "@statusTo": {
     "description": "#934 workspace status / repartition wizard: statusTo"
   },
+  "stockCostLabel": "Kosten je Einheit",
+  "stockCostNotShown": "Kosten nicht angezeigt",
+  "stockCostUnknown": "Kosten nicht erfasst",
+  "stockEmpty": "Es ist noch nichts auf Lager.",
+  "stockEmptyFiltered": "Zu diesen Filtern gibt es nichts.",
+  "stockEnteredLabel": "Erfasst",
+  "stockLotLabel": "Charge {code}",
+  "stockLotTitle": "Charge",
+  "stockMovementNotFound": "Diese Bewegung gibt es nicht, oder Sie dürfen sie nicht sehen.",
+  "stockMovementTitle": "Bewegung",
+  "stockMovementsEmpty": "Noch keine Bewegungen.",
+  "stockNoLot": "Ohne Charge",
+  "stockQuantityWithUnit": "{quantity} {unit}",
+  "stockReadFailed": "Der Bestand konnte nicht gelesen werden. Nichts wird als leer angezeigt: Versuchen Sie es erneut.",
+  "stockStoredLabel": "Gespeichert",
+  "stockTabMovements": "Bewegungen",
+  "stockTabOnHand": "Bestand",
+  "stockWhenLabel": "Wann",
   "subprocessAttendance": "Anwesenheit und Nutzung",
   "subprocessAttendanceDesc": "Anwesenheit erfassen und Check-ins am Tagesende abschließen.",
   "subprocessAvailability": "Öffnungstage und Zeiten",

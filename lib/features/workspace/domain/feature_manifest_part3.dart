@@ -470,6 +470,15 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest3 = {
     requires: WorkspaceFeature.invoicing,
     defaultOn: false,
   ),
+  // #4165 — a standalone customer invoice, drafted and issued without a
+  // member-month. Asked for, under invoicing.
+  WorkspaceFeature.standaloneInvoicing: FeatureManifestEntry(
+    feature: WorkspaceFeature.standaloneInvoicing,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.invoicing,
+    defaultOn: false,
+  ),
   // #3675 — the devices a business enrolled as kiosks, and badge sign-in
   // limited to them. On by default, so a new business that turns badge
   // sign-in on has the setting's default (enrolled kiosks only) in force.

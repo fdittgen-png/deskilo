@@ -19918,6 +19918,18 @@ abstract class AppLocalizations {
   /// **'Printable QR cards per seat, desk, office and level — scan to reserve or check in.'**
   String get featureSpaceQrCodesDesc;
 
+  /// #4165 feature switch: featureStandaloneInvoicingDesc
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice a named customer for a completed service or an agreed deliverable today, with itemised lines and explicit dates, and no booking, subscription or month behind it. The server computes every amount; you confirm a preview and issue it. Off: invoices are issued per member and month as before.'**
+  String get featureStandaloneInvoicingDesc;
+
+  /// #4165 feature switch: featureStandaloneInvoicingTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Standalone invoices'**
+  String get featureStandaloneInvoicingTitle;
+
   /// the feature's description on the Features screen (#3824)
   ///
   /// In en, this message translates to:
@@ -21441,6 +21453,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count, plural, one{1 field needs your attention} other{{count} fields need your attention}}'**
   String formErrorSummaryTitle(int count);
+
+  /// #4163 France e-reporting refused: the documents it cannot sort from their frozen facts, each with its reasons.
+  ///
+  /// In en, this message translates to:
+  /// **'The France e-reporting was not written: these documents cannot be sorted from what they froze at issue: {documents}. Record the customer\'s capacity, then correct them with a credit note and a new invoice; the originals are never edited.'**
+  String frEReportingBlocked(String documents);
+
+  /// #4163 one document the France e-reporting cannot sort or split, with its reason (amountRuleUnsupported).
+  ///
+  /// In en, this message translates to:
+  /// **'{number}: a service whose frozen tax differs from its rate, with a payment in the period'**
+  String frEReportingDocumentAmountRuleUnsupported(String number);
+
+  /// #4163 one document the France e-reporting cannot sort or split, with its reason (buyerCountryConflict).
+  ///
+  /// In en, this message translates to:
+  /// **'{number}: two different countries were frozen'**
+  String frEReportingDocumentBuyerCountryConflict(String number);
+
+  /// #4163 one document the France e-reporting cannot sort or split, with its reason (buyerCountryMissing).
+  ///
+  /// In en, this message translates to:
+  /// **'{number}: the business\'s country was not frozen'**
+  String frEReportingDocumentBuyerCountryMissing(String number);
+
+  /// #4163 one document the France e-reporting cannot sort or split, with its reason (buyerVatIdMissing).
+  ///
+  /// In en, this message translates to:
+  /// **'{number}: a business abroad needs its VAT number'**
+  String frEReportingDocumentBuyerVatIdMissing(String number);
+
+  /// #4163 one document the France e-reporting cannot sort or split, with its reason (capacityUnknown).
+  ///
+  /// In en, this message translates to:
+  /// **'{number}: the customer\'s capacity (business or consumer) was not stated'**
+  String frEReportingDocumentCapacityUnknown(String number);
+
+  /// #4163 one document the France e-reporting cannot sort or split, with its reason (goodsAbroadUnsupported).
+  ///
+  /// In en, this message translates to:
+  /// **'{number}: goods delivered to a business abroad are not supported'**
+  String frEReportingDocumentGoodsAbroadUnsupported(String number);
+
+  /// #4163 one document the France e-reporting cannot sort or split, with its reason (goodsZeroRateUnsupported).
+  ///
+  /// In en, this message translates to:
+  /// **'{number}: a goods line at a zero rate: its category is not inferred from the rate'**
+  String frEReportingDocumentGoodsZeroRateUnsupported(String number);
+
+  /// #4163 one document the France e-reporting cannot sort or split, with its reason (missingReceiptAllocation).
+  ///
+  /// In en, this message translates to:
+  /// **'{number}: goods and services with a payment: the payment has no authoritative split between them'**
+  String frEReportingDocumentMissingReceiptAllocation(String number);
+
+  /// #4163 one document the France e-reporting cannot sort or split, with its reason (noFrozenCapacity).
+  ///
+  /// In en, this message translates to:
+  /// **'{number}: issued before the customer\'s capacity was frozen'**
+  String frEReportingDocumentNoFrozenCapacity(String number);
+
+  /// #4163 one document the France e-reporting cannot sort or split, with its reason (unsupportedCommercialLine).
+  ///
+  /// In en, this message translates to:
+  /// **'{number}: a line this version cannot read'**
+  String frEReportingDocumentUnsupportedCommercialLine(String number);
 
   /// #2377 The Swiss archive's procedures document: access logging (GeBüV art. 8).
   ///
@@ -36169,6 +36247,132 @@ abstract class AppLocalizations {
   /// **'My badge'**
   String get myBadgeTitle;
 
+  /// Me › My businesses: the receivables of each business (#4167)
+  ///
+  /// In en, this message translates to:
+  /// **'Awaiting approval'**
+  String get myBusinessAwaiting;
+
+  /// Me › My businesses: the receivables of each business (#4167)
+  ///
+  /// In en, this message translates to:
+  /// **'Declared, awaiting confirmation'**
+  String get myBusinessDeclared;
+
+  /// Me › My businesses: the rows behind a figure (#4167)
+  ///
+  /// In en, this message translates to:
+  /// **'No rows.'**
+  String get myBusinessDetailEmpty;
+
+  /// Me › My businesses: the rows behind a figure (#4167)
+  ///
+  /// In en, this message translates to:
+  /// **'You may not read these rows.'**
+  String get myBusinessDetailRefused;
+
+  /// Me › My businesses: what a business has to pay (#4167)
+  ///
+  /// In en, this message translates to:
+  /// **'of which on hold'**
+  String get myBusinessHeld;
+
+  /// Me › My businesses: the rows behind a figure (#4167)
+  ///
+  /// In en, this message translates to:
+  /// **'Issued {date}'**
+  String myBusinessIssued(String date);
+
+  /// Me › My businesses: what a business has to pay (#4167)
+  ///
+  /// In en, this message translates to:
+  /// **'Expenses owed to members'**
+  String get myBusinessMemberExpenses;
+
+  /// Me › My businesses: the receivables of each business (#4167)
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing is owed to this business.'**
+  String get myBusinessNothingOwed;
+
+  /// Me › My businesses: the receivables of each business (#4167)
+  ///
+  /// In en, this message translates to:
+  /// **'Open the invoices of this business'**
+  String get myBusinessOpen;
+
+  /// Me › My businesses: what a business has to pay (#4167)
+  ///
+  /// In en, this message translates to:
+  /// **'What this business has to pay is not available to you.'**
+  String get myBusinessPayablesRefused;
+
+  /// Me › My businesses: what a business has to pay (#4167)
+  ///
+  /// In en, this message translates to:
+  /// **'What this business has to pay could not be read. That is not the same as nothing to pay.'**
+  String get myBusinessPayablesUnavailable;
+
+  /// Me › My businesses: the receivables of each business (#4167)
+  ///
+  /// In en, this message translates to:
+  /// **'Received, not yet matched'**
+  String get myBusinessReceived;
+
+  /// Me › My businesses: the receivables of each business (#4167)
+  ///
+  /// In en, this message translates to:
+  /// **'Refunds due to customers'**
+  String get myBusinessRefunds;
+
+  /// Me › My businesses: the receivables of each business (#4167)
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get myBusinessRetry;
+
+  /// Me › My businesses: the receivables of each business (#4167)
+  ///
+  /// In en, this message translates to:
+  /// **'Still owed'**
+  String get myBusinessStillOwed;
+
+  /// Me › My businesses: what a business has to pay (#4167)
+  ///
+  /// In en, this message translates to:
+  /// **'Suppliers'**
+  String get myBusinessSuppliers;
+
+  /// Me › My businesses: the receivables of each business (#4167)
+  ///
+  /// In en, this message translates to:
+  /// **'To collect'**
+  String get myBusinessToCollect;
+
+  /// Me › My businesses: the receivables of each business (#4167)
+  ///
+  /// In en, this message translates to:
+  /// **'This business could not be read. That is not the same as nothing being owed.'**
+  String get myBusinessUnavailable;
+
+  /// Me › My businesses: the receivables of each business (#4167)
+  ///
+  /// In en, this message translates to:
+  /// **'My businesses'**
+  String get myBusinessesFaceBusinesses;
+
+  /// Me › My businesses: the receivables of each business (#4167)
+  ///
+  /// In en, this message translates to:
+  /// **'Personal'**
+  String get myBusinessesFacePersonal;
+
+  /// Me › My businesses: the receivables of each business (#4167)
+  ///
+  /// In en, this message translates to:
+  /// **'What each of your businesses is still owed. The figures are kept per business and per currency: they are never added together and never set against what the business owes.'**
+  String get myBusinessesIntro;
+
   /// #2557 C3 Me › Finances: the export menu's tooltip.
   ///
   /// In en, this message translates to:
@@ -43935,6 +44139,414 @@ abstract class AppLocalizations {
   /// **'Request extra half-days'**
   String get quotaRequestTitle;
 
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Amend'**
+  String get quoteAmend;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Amounts are worked out when you send the quote, from your own tax settings.'**
+  String get quoteAmountsOnSend;
+
+  /// customer quotes: the answer and the conversion (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'The customer accepted'**
+  String get quoteAnswerAccepted;
+
+  /// customer quotes: the answer and the conversion (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'The customer declined'**
+  String get quoteAnswerDeclined;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel the quote'**
+  String get quoteCancelAction;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a customer'**
+  String get quoteChooseCustomer;
+
+  /// customer quotes: the answer and the conversion (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice this quote'**
+  String get quoteConvert;
+
+  /// customer quotes: the answer and the conversion (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Accepted: {amount}'**
+  String quoteConvertAccepted(String amount);
+
+  /// customer quotes: the answer and the conversion (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Check the invoice'**
+  String get quoteConvertCheck;
+
+  /// customer quotes: the answer and the conversion (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'This invoice differs from what was accepted (the date, the customer\'s details or the tax facts changed). Review it before issuing.'**
+  String get quoteConvertDiffers;
+
+  /// customer quotes: the answer and the conversion (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Invoiced as {number}.'**
+  String quoteConvertDone(String number);
+
+  /// customer quotes: the answer and the conversion (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Check the invoice before it is issued. It is made from the accepted revision, for the dates below; nothing is issued until you confirm.'**
+  String get quoteConvertIntro;
+
+  /// customer quotes: the answer and the conversion (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Issue the invoice'**
+  String get quoteConvertIssue;
+
+  /// customer quotes: the answer and the conversion (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'The invoice cannot be issued yet: {missing}.'**
+  String quoteConvertMissing(String missing);
+
+  /// customer quotes: the answer and the conversion (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'The invoice now differs from what was accepted. Check it again and confirm that you reviewed it.'**
+  String get quoteConvertNeedsReview;
+
+  /// customer quotes: the answer and the conversion (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Open the invoice'**
+  String get quoteConvertOpenInvoice;
+
+  /// customer quotes: the answer and the conversion (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'I have reviewed this invoice'**
+  String get quoteConvertReviewed;
+
+  /// customer quotes: the answer and the conversion (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'The invoice would be {amount}'**
+  String quoteConvertWouldBe(String amount);
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Recorded by you, as the issuer: {source}, on {date}. It is your record of the answer, not the customer\'s signature.'**
+  String quoteDecisionByIssuer(String date, String source);
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Discard the draft'**
+  String get quoteDiscardDraft;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Draft saved.'**
+  String get quoteDraftSaved;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Edit the draft'**
+  String get quoteEditDraft;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Edit the quote'**
+  String get quoteEditTitle;
+
+  /// customer quotes: the answer and the conversion (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'The offer had expired: it can no longer be accepted.'**
+  String get quoteExpiredRefusal;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Quotes are switched off in this business.'**
+  String get quoteFeatureOff;
+
+  /// customer quotes: the answer and the conversion (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Date of the answer'**
+  String get quoteFieldDecidedOn;
+
+  /// customer quotes: the answer and the conversion (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Reference or note (optional)'**
+  String get quoteFieldEvidence;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Date of the offer'**
+  String get quoteFieldIssuedOn;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Notes for the customer'**
+  String get quoteFieldNotes;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Order number'**
+  String get quoteFieldOrder;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Customer reference'**
+  String get quoteFieldReference;
+
+  /// customer quotes: the answer and the conversion (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'How it was received'**
+  String get quoteFieldSource;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Valid until'**
+  String get quoteFieldValidUntil;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'The quote is not complete yet: {missing}.'**
+  String quoteIncomplete(String missing);
+
+  /// customer quotes: the answer and the conversion (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'You record this answer as the issuer. It is not the customer\'s signature, and it invoices nothing.'**
+  String get quoteIssuerRecordsNote;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'New quote'**
+  String get quoteNewTitle;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Add a billing customer first: a quote is made to one.'**
+  String get quoteNoCustomers;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'You may not do this with quotes in this business.'**
+  String get quoteNotAllowedAction;
+
+  /// customer quotes (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Order number: {value}'**
+  String quoteOrderLine(String value);
+
+  /// customer quotes: the answer and the conversion (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Record the answer'**
+  String get quoteRecordAnswer;
+
+  /// customer quotes (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Customer reference: {value}'**
+  String quoteReferenceLine(String value);
+
+  /// customer quotes: a revision and its status (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Revision {revision} · {status}'**
+  String quoteRevisionLine(String revision, String status);
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Revisions'**
+  String get quoteRevisionsTitle;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Save draft'**
+  String get quoteSaveDraft;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Send'**
+  String get quoteSend;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Sent as {reference}. This revision never changes.'**
+  String quoteSentAs(String reference);
+
+  /// customer quotes: the answer and the conversion (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'By e-mail'**
+  String get quoteSourceEmail;
+
+  /// customer quotes: the answer and the conversion (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get quoteSourceOther;
+
+  /// customer quotes: the answer and the conversion (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Received outside the app'**
+  String get quoteSourceReceived;
+
+  /// customer quotes: the answer and the conversion (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Said in person or by phone'**
+  String get quoteSourceVerbal;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'This draft changed since you opened it. Open it again to see the current one.'**
+  String get quoteStale;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'The quote is no longer in a state that allows this. Open it again.'**
+  String get quoteStateRefused;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Accepted'**
+  String get quoteStatusAccepted;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get quoteStatusCancelled;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Invoiced'**
+  String get quoteStatusConverted;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Declined'**
+  String get quoteStatusDeclined;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Expired'**
+  String get quoteStatusExpired;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Sent'**
+  String get quoteStatusSent;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get quoteTotal;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'The answer did not come back, so it is not known whether this was done. Open the quote to see where it stands.'**
+  String get quoteUnreached;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Valid until {date}'**
+  String quoteValidUntil(String date);
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'No quotes yet. Make the first one for a billing customer.'**
+  String get quotesEmpty;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Offers to your billing customers. A sent quote never changes; an amendment is another revision. Nothing is invoiced until you convert an accepted one.'**
+  String get quotesIntro;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'The quotes could not be read. This is not an empty list.'**
+  String get quotesLoadFailed;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'New quote'**
+  String get quotesNew;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'You may not read the quotes of this business.'**
+  String get quotesNotAllowed;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get quotesRetry;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Quotes'**
+  String get quotesTitle;
+
   /// #3061 shared read-failure messages: connectivity and denied access
   ///
   /// In en, this message translates to:
@@ -44756,6 +45368,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Stock management is off in this business. Nothing was moved.'**
   String get refusalStockOff;
+
+  /// #4161 (0833) DKG09: a stock page request that is not valid (size outside 1..200, or a cursor that is not one).
+  ///
+  /// In en, this message translates to:
+  /// **'This page request is not valid: ask for 1 to 200 rows, and continue only from the position a page gave.'**
+  String get refusalStockPage;
 
   /// refusal DKG02 (#3824)
   ///
@@ -54260,6 +54878,342 @@ abstract class AppLocalizations {
   /// **'Reserved by you for this slot.'**
   String get spaceYoursNow;
 
+  /// #4165 standalone invoice composer: standaloneFactAmount
+  ///
+  /// In en, this message translates to:
+  /// **'an amount this invoice can hold'**
+  String get standaloneFactAmount;
+
+  /// #4165 standalone invoice composer: standaloneFactApproval
+  ///
+  /// In en, this message translates to:
+  /// **'the business’s rules send this invoice for approval, which is not supported here yet'**
+  String get standaloneFactApproval;
+
+  /// #4165 standalone invoice composer: standaloneFactClosed
+  ///
+  /// In en, this message translates to:
+  /// **'this draft was already issued'**
+  String get standaloneFactClosed;
+
+  /// #4165 standalone invoice composer: standaloneFactCurrency
+  ///
+  /// In en, this message translates to:
+  /// **'the business’s currency'**
+  String get standaloneFactCurrency;
+
+  /// #4165 standalone invoice composer: standaloneFactDueDate
+  ///
+  /// In en, this message translates to:
+  /// **'the due date'**
+  String get standaloneFactDueDate;
+
+  /// #4165 standalone invoice composer: standaloneFactDueDateFar
+  ///
+  /// In en, this message translates to:
+  /// **'a due date within a year'**
+  String get standaloneFactDueDateFar;
+
+  /// #4165 standalone invoice composer: standaloneFactDueDatePast
+  ///
+  /// In en, this message translates to:
+  /// **'a due date that is not in the past'**
+  String get standaloneFactDueDatePast;
+
+  /// #4165 standalone invoice composer: standaloneFactLines
+  ///
+  /// In en, this message translates to:
+  /// **'at least one line'**
+  String get standaloneFactLines;
+
+  /// #4165 standalone invoice composer: standaloneFactSalesTax
+  ///
+  /// In en, this message translates to:
+  /// **'this business adds sales tax, which is not supported here yet'**
+  String get standaloneFactSalesTax;
+
+  /// #4165 standalone invoice composer: standaloneFactServiceDate
+  ///
+  /// In en, this message translates to:
+  /// **'the service date'**
+  String get standaloneFactServiceDate;
+
+  /// #4165 standalone invoice composer: standaloneFactStale
+  ///
+  /// In en, this message translates to:
+  /// **'the draft changed: check the invoice again'**
+  String get standaloneFactStale;
+
+  /// #4165 standalone invoice composer: standaloneFactTooManyLines
+  ///
+  /// In en, this message translates to:
+  /// **'at most 100 lines'**
+  String get standaloneFactTooManyLines;
+
+  /// #4165 standalone invoice composer: standaloneFactTotal
+  ///
+  /// In en, this message translates to:
+  /// **'a total above zero'**
+  String get standaloneFactTotal;
+
+  /// #4165 standalone invoice composer: standaloneFactUnknownSubject
+  ///
+  /// In en, this message translates to:
+  /// **'the customer'**
+  String get standaloneFactUnknownSubject;
+
+  /// #4165 standalone invoice composer: standaloneFieldAmount
+  ///
+  /// In en, this message translates to:
+  /// **'an amount this invoice can hold'**
+  String get standaloneFieldAmount;
+
+  /// #4165 standalone invoice composer: standaloneFieldBase
+  ///
+  /// In en, this message translates to:
+  /// **'a price quantity above zero'**
+  String get standaloneFieldBase;
+
+  /// #4165 standalone invoice composer: standaloneFieldBasis
+  ///
+  /// In en, this message translates to:
+  /// **'whether the price includes tax'**
+  String get standaloneFieldBasis;
+
+  /// #4165 standalone invoice composer: standaloneFieldDescription
+  ///
+  /// In en, this message translates to:
+  /// **'a description'**
+  String get standaloneFieldDescription;
+
+  /// #4165 standalone invoice composer: standaloneFieldLineId
+  ///
+  /// In en, this message translates to:
+  /// **'saving the draft again'**
+  String get standaloneFieldLineId;
+
+  /// #4165 standalone invoice composer: standaloneFieldPrice
+  ///
+  /// In en, this message translates to:
+  /// **'a price with at most six decimals'**
+  String get standaloneFieldPrice;
+
+  /// #4165 standalone invoice composer: standaloneFieldQuantity
+  ///
+  /// In en, this message translates to:
+  /// **'a quantity above zero with at most six decimals'**
+  String get standaloneFieldQuantity;
+
+  /// #4165 standalone invoice composer: standaloneFieldSupply
+  ///
+  /// In en, this message translates to:
+  /// **'a service (goods are not invoiced here yet)'**
+  String get standaloneFieldSupply;
+
+  /// #4165 standalone invoice composer: standaloneFieldUnit
+  ///
+  /// In en, this message translates to:
+  /// **'a unit'**
+  String get standaloneFieldUnit;
+
+  /// #4165 standalone invoice composer: standaloneFieldVatRate
+  ///
+  /// In en, this message translates to:
+  /// **'a VAT rate the business has set'**
+  String get standaloneFieldVatRate;
+
+  /// #4165 standalone invoice composer: standaloneInvoiceAddLine
+  ///
+  /// In en, this message translates to:
+  /// **'Add a line'**
+  String get standaloneInvoiceAddLine;
+
+  /// #4165 standalone invoice composer: standaloneInvoiceBuyerReference
+  ///
+  /// In en, this message translates to:
+  /// **'Customer reference'**
+  String get standaloneInvoiceBuyerReference;
+
+  /// #4165 standalone invoice composer: standaloneInvoiceCustomerChoose
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the customer'**
+  String get standaloneInvoiceCustomerChoose;
+
+  /// #4165 standalone invoice composer: standaloneInvoiceDueDate
+  ///
+  /// In en, this message translates to:
+  /// **'Due date'**
+  String get standaloneInvoiceDueDate;
+
+  /// #4165 standalone invoice composer: standaloneInvoiceIssue
+  ///
+  /// In en, this message translates to:
+  /// **'Issue the invoice'**
+  String get standaloneInvoiceIssue;
+
+  /// #4165 standalone invoice composer: standaloneInvoiceIssued
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice {number} issued'**
+  String standaloneInvoiceIssued(String number);
+
+  /// #4165 standalone invoice composer: standaloneInvoiceLineDescription
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get standaloneInvoiceLineDescription;
+
+  /// #4165 standalone invoice composer: standaloneInvoiceLineGross
+  ///
+  /// In en, this message translates to:
+  /// **'The price includes tax'**
+  String get standaloneInvoiceLineGross;
+
+  /// #4165 standalone invoice composer: standaloneInvoiceLinePrice
+  ///
+  /// In en, this message translates to:
+  /// **'Unit price'**
+  String get standaloneInvoiceLinePrice;
+
+  /// #4165 standalone invoice composer: standaloneInvoiceLineQuantity
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity'**
+  String get standaloneInvoiceLineQuantity;
+
+  /// #4165 standalone invoice composer: standaloneInvoiceLineRate
+  ///
+  /// In en, this message translates to:
+  /// **'VAT rate'**
+  String get standaloneInvoiceLineRate;
+
+  /// #4165 standalone invoice composer: standaloneInvoiceLineRateDefault
+  ///
+  /// In en, this message translates to:
+  /// **'The business’s default rate'**
+  String get standaloneInvoiceLineRateDefault;
+
+  /// #4165 standalone invoice composer: standaloneInvoiceLineUnit
+  ///
+  /// In en, this message translates to:
+  /// **'Unit'**
+  String get standaloneInvoiceLineUnit;
+
+  /// #4165 standalone invoice composer: standaloneInvoiceLines
+  ///
+  /// In en, this message translates to:
+  /// **'Lines'**
+  String get standaloneInvoiceLines;
+
+  /// #4165 standalone invoice composer: standaloneInvoiceLookAgain
+  ///
+  /// In en, this message translates to:
+  /// **'Look again'**
+  String get standaloneInvoiceLookAgain;
+
+  /// #4165 standalone invoice composer: standaloneInvoiceMissing
+  ///
+  /// In en, this message translates to:
+  /// **'To complete: {facts}'**
+  String standaloneInvoiceMissing(String facts);
+
+  /// #4165 standalone invoice composer: standaloneInvoiceMissingLine
+  ///
+  /// In en, this message translates to:
+  /// **'Line {number}: {fact}'**
+  String standaloneInvoiceMissingLine(String number, String fact);
+
+  /// #4165 standalone invoice composer: standaloneInvoiceMore
+  ///
+  /// In en, this message translates to:
+  /// **'A customer invoice without a month'**
+  String get standaloneInvoiceMore;
+
+  /// #4165 standalone invoice composer: standaloneInvoiceOpen
+  ///
+  /// In en, this message translates to:
+  /// **'Open the invoice'**
+  String get standaloneInvoiceOpen;
+
+  /// #4165 standalone invoice composer: standaloneInvoiceOrderNumber
+  ///
+  /// In en, this message translates to:
+  /// **'Order number'**
+  String get standaloneInvoiceOrderNumber;
+
+  /// #4165 standalone invoice composer: standaloneInvoicePreview
+  ///
+  /// In en, this message translates to:
+  /// **'Check the invoice'**
+  String get standaloneInvoicePreview;
+
+  /// #4165 standalone invoice composer: standaloneInvoicePreviewNet
+  ///
+  /// In en, this message translates to:
+  /// **'Net'**
+  String get standaloneInvoicePreviewNet;
+
+  /// #4165 standalone invoice composer: standaloneInvoicePreviewTax
+  ///
+  /// In en, this message translates to:
+  /// **'Tax'**
+  String get standaloneInvoicePreviewTax;
+
+  /// #4165 standalone invoice composer: standaloneInvoicePreviewTotal
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get standaloneInvoicePreviewTotal;
+
+  /// #4165 standalone invoice composer: standaloneInvoiceRefused
+  ///
+  /// In en, this message translates to:
+  /// **'The invoice was not issued.'**
+  String get standaloneInvoiceRefused;
+
+  /// #4165 standalone invoice composer: standaloneInvoiceRemoveLine
+  ///
+  /// In en, this message translates to:
+  /// **'Remove this line'**
+  String get standaloneInvoiceRemoveLine;
+
+  /// #4165 standalone invoice composer: standaloneInvoiceServiceDate
+  ///
+  /// In en, this message translates to:
+  /// **'Service date'**
+  String get standaloneInvoiceServiceDate;
+
+  /// #4165 standalone invoice composer: standaloneInvoiceUnavailable
+  ///
+  /// In en, this message translates to:
+  /// **'Standalone invoices are not switched on for this business.'**
+  String get standaloneInvoiceUnavailable;
+
+  /// #4165 standalone invoice composer: standaloneInvoiceUnknown
+  ///
+  /// In en, this message translates to:
+  /// **'We could not confirm whether the invoice was issued. Look again before issuing anything else.'**
+  String get standaloneInvoiceUnknown;
+
+  /// #4165 standalone invoice composer: standaloneUnitHour
+  ///
+  /// In en, this message translates to:
+  /// **'hour'**
+  String get standaloneUnitHour;
+
+  /// #4165 standalone invoice composer: standaloneUnitJob
+  ///
+  /// In en, this message translates to:
+  /// **'job'**
+  String get standaloneUnitJob;
+
+  /// #4165 standalone invoice composer: standaloneUnitPiece
+  ///
+  /// In en, this message translates to:
+  /// **'piece'**
+  String get standaloneUnitPiece;
+
   /// #4068 Note under the balance tile when the balance is positive (a credit).
   ///
   /// In en, this message translates to:
@@ -54391,6 +55345,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'To'**
   String get statusTo;
+
+  /// #4161 the cost per unit of a movement
+  ///
+  /// In en, this message translates to:
+  /// **'Cost per unit'**
+  String get stockCostLabel;
+
+  /// #4161 a reader without finance rights: the cost is not shown (not zero)
+  ///
+  /// In en, this message translates to:
+  /// **'Cost not shown'**
+  String get stockCostNotShown;
+
+  /// #4161 the cost of this movement was never recorded (not zero)
+  ///
+  /// In en, this message translates to:
+  /// **'Cost not recorded'**
+  String get stockCostUnknown;
+
+  /// #4161 empty stock, no filter
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing is in stock yet.'**
+  String get stockEmpty;
+
+  /// #4161 empty result under filters
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing matches these filters.'**
+  String get stockEmptyFiltered;
+
+  /// #4161 the quantity and unit as entered
+  ///
+  /// In en, this message translates to:
+  /// **'Entered'**
+  String get stockEnteredLabel;
+
+  /// #4161 a lot, by its code
+  ///
+  /// In en, this message translates to:
+  /// **'Lot {code}'**
+  String stockLotLabel(String code);
+
+  /// #4161 the label of a movement's lot row
+  ///
+  /// In en, this message translates to:
+  /// **'Lot'**
+  String get stockLotTitle;
+
+  /// #4161 a movement address that reads as none
+  ///
+  /// In en, this message translates to:
+  /// **'This movement does not exist, or it is not one you may see.'**
+  String get stockMovementNotFound;
+
+  /// #4161 the page of one movement
+  ///
+  /// In en, this message translates to:
+  /// **'Movement'**
+  String get stockMovementTitle;
+
+  /// #4161 no movements
+  ///
+  /// In en, this message translates to:
+  /// **'No movements yet.'**
+  String get stockMovementsEmpty;
+
+  /// #4161 an on-hand row with no lot
+  ///
+  /// In en, this message translates to:
+  /// **'No lot'**
+  String get stockNoLot;
+
+  /// #4161 an exact quantity and its inventory unit
+  ///
+  /// In en, this message translates to:
+  /// **'{quantity} {unit}'**
+  String stockQuantityWithUnit(String quantity, String unit);
+
+  /// #4161 a stock read failed; never shown as empty
+  ///
+  /// In en, this message translates to:
+  /// **'The stock could not be read. Nothing is shown as empty: try again.'**
+  String get stockReadFailed;
+
+  /// #4161 the quantity as stored, in the inventory unit
+  ///
+  /// In en, this message translates to:
+  /// **'Stored'**
+  String get stockStoredLabel;
+
+  /// #4161 the Stock screen: the tab of the movements
+  ///
+  /// In en, this message translates to:
+  /// **'Movements'**
+  String get stockTabMovements;
+
+  /// #4161 the Stock screen: the tab of what is on hand
+  ///
+  /// In en, this message translates to:
+  /// **'On hand'**
+  String get stockTabOnHand;
+
+  /// #4161 when a movement happened
+  ///
+  /// In en, this message translates to:
+  /// **'When'**
+  String get stockWhenLabel;
 
   /// Shown as the title in process names (workspace).
   ///

@@ -5,6 +5,7 @@ import 'package:deskilo/features/money/domain/money_repository.dart';
 import 'package:deskilo/features/money/domain/reminder_evidence.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 
+import '../../seed/demo_frozen_capacity.dart';
 import '../money_repository.dart';
 import 'demo_buyers.dart';
 
@@ -28,7 +29,8 @@ class DemoInvoiceQueries implements InvoiceQueries {
   Future<List<Invoice>> fetchInvoices(String workspaceId) async {
     final own = ownOnlyFor?.call();
     return List.unmodifiable(
-      own == null ? _m.invoices : _m.invoices.where((i) => i.memberId == own),
+      (own == null ? _m.invoices : _m.invoices.where((i) => i.memberId == own))
+          .map(withDemoCapacity),
     );
   }
 
