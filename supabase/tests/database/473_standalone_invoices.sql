@@ -6,7 +6,7 @@
 -- refuses before a number is taken, two deliberate invoices of one customer
 -- and month coexist with the monthly one, and no client writes a draft.
 begin;
-select plan(28);
+select plan(34);
 
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00004165' || lpad(n::text, 4, '0'))::uuid;
@@ -143,6 +143,24 @@ select is(pg_temp.as_user(1, format($$select (public.create_invoice(%L, %L, to_c
 select is((select string_agg(source, ',' order by source) from public.invoices
             where workspace_id = pg_temp.u(101) and member_id = pg_temp.u(203)),
   'monthly,standalone,standalone', 'two standalone and one monthly invoice of one customer and month');
+
+-- ── the existing paths that must not take a standalone invoice ──
+select ok(pg_temp.as_user(1, format($$select public.create_invoice(%L, %L, '2026-10', %L)::text$$,
+  pg_temp.u(101), pg_temp.u(203), current_setting('i.a')::jsonb ->> 'invoice_id')) like 'ERR DKI01%',
+  'a standalone invoice is not replaced by a monthly one');
+select is((select voided_at is null from public.invoices where id = (current_setting('i.a')::jsonb ->> 'invoice_id')::uuid),
+  true, 'and it was not voided');
+select ok(pg_temp.as_user(3, format($$select public.record_payment(%L, %L, 14400, 'x', '', null, null, array[%L]::uuid[])::text$$,
+  pg_temp.u(101), pg_temp.u(203), current_setting('i.a')::jsonb ->> 'invoice_id')) like 'ERR DKC14%',
+  'a payment declaration naming a standalone invoice is refused up front');
+select ok(pg_temp.as_user(3, format($$select public.record_payment(%L, %L, 14400, 'x', '', null, null, array[%L, %L]::uuid[])::text$$,
+  pg_temp.u(101), pg_temp.u(203), current_setting('i.a')::jsonb ->> 'invoice_id',
+  (select id::text from public.invoices where member_id = pg_temp.u(203) and source = 'monthly'))) like 'ERR DKC14%',
+  'nor one that mixes it with a monthly invoice');
+select ok(pg_temp.as_user(1, format($$select public.issue_standalone_invoice_v1(%L, %L, null, '00000000-0000-4000-8000-000000004168')::text$$,
+  pg_temp.u(101), current_setting('d.e'))) like 'ERR DKI01%', 'an issue without a revision is stale, never unguarded');
+select is(public.preview_standalone_invoice_v1(pg_temp.u(101), current_setting('d.e')::uuid, null) -> 'missing',
+  '["draft_stale"]'::jsonb, 'and so is a preview without one');
 
 -- ── the currency's own minor unit ──
 insert into public.workspaces (id, name, country_code, currency_code, timezone, created_by, feature_flags,

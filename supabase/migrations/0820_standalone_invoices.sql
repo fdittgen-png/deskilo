@@ -129,17 +129,6 @@ create policy mcp_delegated_deny on public.standalone_invoice_drafts
   using (not public.mcp_is_delegated()) with check (not public.mcp_is_delegated());
 
 -- ── 5. small internal helpers ────────────────────────────────────────────
--- The minor digits of a currency, as the kernel's Currencies table says.
-create or replace function public.standalone_currency_exponent(p_currency text)
-returns integer language sql immutable set search_path = public as $fn$
-  select case
-    when upper(p_currency) in ('BIF','CLP','DJF','GNF','ISK','JPY','KMF','KRW','PYG','RWF',
-                               'UGX','VND','VUV','XAF','XOF','XPF') then 0
-    when upper(p_currency) in ('BHD','IQD','JOD','KWD','LYD','OMR','TND') then 3
-    else 2 end
-$fn$;
-revoke execute on function public.standalone_currency_exponent(text) from public, anon, authenticated;
-
 -- The customer of a standalone invoice (a seam: the billing-customer work
 -- restates it). Today: a member of this business, active, not a kiosk.
 create or replace function public.standalone_invoice_subject(p_workspace_id uuid, p_subject uuid)
@@ -215,7 +204,7 @@ declare
   v_unit jsonb := coalesce(p_line -> 'unit', '{}'::jsonb);
   v_unit_code text; v_unit_label text; v_unit_un text;
   v_qty numeric; v_price numeric; v_base numeric;
-  v_exp integer := public.standalone_currency_exponent(p_currency);
+  v_exp integer := public.currency_minor_digits(p_currency);
   v_raw numeric; v_amount bigint; v_net bigint; v_tax bigint; v_gross bigint; v_t bigint;
   v_pct numeric := coalesce(p_percent, 0);
   v_line_id uuid;
@@ -599,7 +588,7 @@ begin
     if v_draft.status <> 'draft' then
       raise exception 'invoice_essentials_missing' using errcode = 'DKI01', detail = 'draft_closed';
     end if;
-    if v_draft.revision <> p_expected_revision then
+    if v_draft.revision is distinct from p_expected_revision then
       raise exception 'invoice_essentials_missing' using errcode = 'DKI01', detail = 'draft_stale';
     end if;
     update public.standalone_invoice_drafts
@@ -633,7 +622,7 @@ begin
   if v_draft.id is null then
     return jsonb_build_object('missing', jsonb_build_array('draft_unknown'), 'preview', null);
   end if;
-  if v_draft.revision <> p_revision then
+  if v_draft.revision is distinct from p_revision then
     return jsonb_build_object('missing', jsonb_build_array('draft_stale'), 'preview', null);
   end if;
   begin
@@ -684,7 +673,7 @@ begin
   if v_draft.id is null then
     raise exception 'invoice_essentials_missing' using errcode = 'DKI01', detail = 'draft_unknown';
   end if;
-  if v_draft.revision <> p_revision then
+  if v_draft.revision is distinct from p_revision then
     raise exception 'invoice_essentials_missing' using errcode = 'DKI01', detail = 'draft_stale';
   end if;
   v_id := public.standalone_invoice_issue_core(p_workspace_id, v_actor, v_draft);
@@ -696,5 +685,45 @@ begin
 end $fn$;
 revoke execute on function public.issue_standalone_invoice_v1(uuid, uuid, integer, uuid) from public, anon;
 grant execute on function public.issue_standalone_invoice_v1(uuid, uuid, integer, uuid) to authenticated;
+
+-- ── 8. the existing paths that must not take a standalone invoice ─────────
+-- (1) a replacement voids the invoice it replaces and issues a MONTHLY one:
+-- a standalone invoice is not replaceable by create_invoice.
+-- (2) a payment claim is keyed by month; a standalone invoice has none, so
+-- until the payment part (B) a claim, declaration or online payment that
+-- names one is refused up front.
+do $patch$
+declare
+  v_def text;
+  v_old text;
+begin
+  v_def := pg_get_functiondef('public.create_invoice(uuid,uuid,text,uuid,boolean,text,boolean,text,text,text)'::regprocedure);
+  v_old := $a$    select * into v_replaced from public.invoices
+      where id = p_replaces and workspace_id = p_workspace_id;$a$;
+  if (length(v_def) - length(replace(v_def, v_old, ''))) / length(v_old) <> 1 then
+    raise exception '0820: the replacement lookup of create_invoice is not found exactly once'
+      using errcode = 'P0001';
+  end if;
+  execute replace(v_def, v_old, v_old || $b$
+
+    if v_replaced.source = 'standalone' then
+      raise exception 'invoice_essentials_missing'
+        using errcode = 'DKI01', detail = 'standalone_not_replaceable';
+    end if;$b$);
+
+  v_def := pg_get_functiondef('public.check_payment_claim(uuid,uuid,uuid[],text,text)'::regprocedure);
+  v_old := $a$  select string_agg(distinct i.period, ', ' order by i.period) into v_months$a$;
+  if (length(v_def) - length(replace(v_def, v_old, ''))) / length(v_old) <> 1 then
+    raise exception '0820: the month lookup of check_payment_claim is not found exactly once'
+      using errcode = 'P0001';
+  end if;
+  execute replace(v_def, v_old, $b$  if exists (select 1 from public.invoices i
+              where i.id = any (p_ids) and i.source = 'standalone') then
+    raise exception 'a standalone invoice is not paid through a month-keyed claim yet'
+      using errcode = 'DKC14';
+  end if;
+$b$ || v_old);
+end
+$patch$;
 
 select public.set_deskilo_schema_version(820);
