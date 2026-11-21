@@ -49,6 +49,7 @@
 # review {"path":"test/features/money/money_screen_test.dart","before":38,"after":40,"invariant":"#4218 Pay online while the business identity is not known: the scroll to the button and the tap each settle once before the message and the absent order are read","cost":"one test, under 1 s locally"}
 # review {"path":"test/features/reservations/bound_confirmation_switch_test.dart","before":0,"after":20,"invariant":"each real confirmation (own-seat cancel, booking confirm, detail cancel, deletion request) is driven to its dialog or sheet, the context is switched, and the confirm tap settles on the stale refusal; the unchanged-context twins settle on the write","cost":"nine widget tests, about two seconds in all"}
 # review {"path":"test/features/money/billing_customers_screen_test.dart","before":0,"after":10,"invariant":"each test opens the real sheet and settles the list, the sheet and the refusal it shows; a stale revision and a lost answer are asserted by the words on the screen","cost":"about one second for the file"}
+# review {"path":"test/features/reservations/bound_confirmation_switch_test.dart","before":20,"after":33,"invariant":"the detail time edit (with and without a repeat), extend, end early and the hub series-preview confirmation are each driven to their picker or question, the context is switched, and the confirming tap settles on the stale refusal with no write on either installation; the unchanged-context twins settle on the one write","cost":"eight further widget tests, about three seconds in all"}
 19 test/app/desk_members/members_desk_test.dart
 11 test/app/entry_intents_flow_test.dart
 27 test/app/shell/desk_routes_test.dart
@@ -151,7 +152,7 @@
 10 test/features/profile/status_text_edit_test.dart
 13 test/features/profile/whatsapp_edit_test.dart
 12 test/features/reservations/booking_gate_test.dart
-20 test/features/reservations/bound_confirmation_switch_test.dart
+33 test/features/reservations/bound_confirmation_switch_test.dart
 13 test/features/reservations/calendar_file_button_test.dart
 13 test/features/reservations/checkin_rides_reservation_test.dart
 15 test/features/reservations/getting_started_card_test.dart
