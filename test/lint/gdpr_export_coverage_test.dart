@@ -53,6 +53,12 @@ String _latestExportBody() {
 /// Tables with a member or user column that `export_my_data` does not
 /// return, and why each is right to leave out.
 const Map<String, String> _notExported = {
+  'configuration_choice_events':
+      '#4168 — the server\'s append-only record of what each confirmation of a '
+          'business kind did, naming the owner who confirmed it by user id. It is '
+          'provenance of the business\'s configuration, not data about a person: a '
+          'rights request is answered by the space (record_rights_request) from '
+          'its configuration history (0835)',
   'customer_quotes':
       '#4166 — an offer the business made to a billing customer, keyed by '
           'that customer\'s subject. A customer has no account here, so no '
