@@ -14,6 +14,7 @@ written out and each proposed rule naming its issue.
 | invariant | enforced by | executed by |
 |---|---|---|
 | an unreadable place or booking answers as unknown; booking events follow the booking's visibility | place visibility helpers, booking event policy and server readers (0809) | `463_place_visibility_contract.sql`, `460_definer_place_readers.sql` |
+| a customer quote's sent revision never changes, an acceptance is what the issuer recorded, expiry stops a late acceptance only, and one quote makes at most one initial invoice whatever the request id; a quote touches no invoice, ledger entry or number | `customer_quote_frozen` triggers, `record_customer_quote_decision_v1`, `customer_quote_conversions` PRIMARY KEY (quote_id), `convert_customer_quote_v1` (0828, #4166) | `476_customer_quotes.sql` |
 | a billing customer (`members.status = 'customer'`, no login) is invisible to coworkers and holds no booking, badge, role, plan or door; the billing identity is the seller's own record, edited by named fields with a revision check | `members_select`, the no-login check, `members_customer_frozen`, the `customer_subject_refused` triggers, `billing_party_save_v1` (0821, #4164) | `474_billing_customers.sql`, `475_definer_member_readers.sql` (every definer reader of members is placed or reasoned) |
 | a seat cannot hold two overlapping reservations | `exclude using gist` on `reservations` (0005) | `23_domain_invariants.sql` |
 | a check-in is your own booking, inside its window | `check_in_reservation` | `23_domain_invariants.sql` |

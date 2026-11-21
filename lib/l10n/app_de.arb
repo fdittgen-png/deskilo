@@ -7031,6 +7031,8 @@
   "@featureCustomRolesTitle": {
     "description": "#1287 custom roles: the feature switch title"
   },
+  "featureCustomerQuotesDesc": "Machen Sie einem Rechnungskunden ein Angebot, bevor Sie ihm eine Rechnung stellen: die Positionen, wie lange das Angebot gilt und die Antwort, die Sie festhalten. Ein angenommenes Angebot wird einmalig zur ersten Rechnung dieses Kunden. Bis Sie es umwandeln, wird nichts berechnet. Auf Anfrage, unter Rechnungen.",
+  "featureCustomerQuotesTitle": "Kundenangebote",
   "featureDataAccessLogDesc": "Mitglieder sehen, wer wann ihre Finanzen eingesehen hat (vom Server geschrieben, nie umgehbar). Aus: die Zeile ist verborgen, das Protokoll bleibt.",
   "@featureDataAccessLogDesc": {
     "description": "#718/#719"

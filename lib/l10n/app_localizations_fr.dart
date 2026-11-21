@@ -11497,6 +11497,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get featureCustomRolesTitle => 'Rôles définis par cet espace';
 
   @override
+  String get featureCustomerQuotesDesc =>
+      'Proposez un prix à un client facturé avant de le facturer : les lignes, la durée de validité de l\'offre et la réponse que vous enregistrez. Un devis accepté devient la première facture de ce client, une seule fois. Rien n\'est facturé avant que vous le convertissiez. À activer, sous la facturation.';
+
+  @override
+  String get featureCustomerQuotesTitle => 'Devis clients';
+
+  @override
   String get featureDataAccessLogDesc =>
       'Chaque membre voit qui a consulté ses finances et quand (écrit par le serveur, jamais contournable). Désactivé : la ligne est masquée, le journal est conservé.';
 

@@ -161,6 +161,8 @@ const workspaceProcesses = <WorkspaceProcess>[
       WorkspaceFeature.standaloneInvoicing,
       // #4164 — beside the invoices: whom they are made out to.
       WorkspaceFeature.billingCustomers,
+            // #4166 — before the invoices: the offer that becomes the first one.
+            WorkspaceFeature.customerQuotes,
     ]),
     WorkspaceSubprocess('collection', [
       WorkspaceFeature.onlinePayments,

@@ -7031,6 +7031,8 @@
   "@featureCustomRolesTitle": {
     "description": "#1287 custom roles: the feature switch title"
   },
+  "featureCustomerQuotesDesc": "Ofrezca un precio a un cliente facturado antes de facturarle: las líneas, cuánto tiempo vale la oferta y la respuesta que usted registra. Un presupuesto aceptado se convierte, una sola vez, en la primera factura de ese cliente. No se factura nada hasta que lo convierta. Se activa a petición, dentro de facturación.",
+  "featureCustomerQuotesTitle": "Presupuestos de clientes",
   "featureDataAccessLogDesc": "Cada miembro ve quién consultó sus finanzas y cuándo (lo escribe el servidor, nunca se omite). Desactivado: la fila se oculta, el registro se conserva.",
   "@featureDataAccessLogDesc": {
     "description": "#718/#719"

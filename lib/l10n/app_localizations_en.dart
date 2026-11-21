@@ -11363,6 +11363,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureCustomRolesTitle => 'Roles this space defines';
 
   @override
+  String get featureCustomerQuotesDesc =>
+      'Offer a billing customer a price before invoicing it: the lines, how long the offer holds, and the answer you record. An accepted quote becomes that customer\'s first invoice, once. Nothing is invoiced until you convert it. Asked for, under invoicing.';
+
+  @override
+  String get featureCustomerQuotesTitle => 'Customer quotes';
+
+  @override
   String get featureDataAccessLogDesc =>
       'Members see who looked at their finances and when (written by the server, never skippable). Off hides the row; the log is still kept.';
 

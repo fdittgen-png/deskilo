@@ -82,7 +82,8 @@ void main() {
     // #4165 — standaloneInvoicing: a standalone customer invoice is asked for.
     // #4164 — billingCustomers: invoicing customers without an account is
     // asked for.
-    expect(onCount, featureManifest.length - 58);
+    // #4166 — customerQuotes: quoting a billing customer is asked for.
+    expect(onCount, featureManifest.length - 59);
   });
 
   testWidgets(

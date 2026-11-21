@@ -15050,6 +15050,14 @@
   "@featureCustomRolesTitle": {
     "description": "#1287 custom roles: the feature switch title"
   },
+  "featureCustomerQuotesDesc": "Offer a billing customer a price before invoicing it: the lines, how long the offer holds, and the answer you record. An accepted quote becomes that customer's first invoice, once. Nothing is invoiced until you convert it. Asked for, under invoicing.",
+  "@featureCustomerQuotesDesc": {
+    "description": "a feature in the Features list (#4166)"
+  },
+  "featureCustomerQuotesTitle": "Customer quotes",
+  "@featureCustomerQuotesTitle": {
+    "description": "a feature in the Features list (#4166)"
+  },
   "featureDataAccessLogDesc": "Members see who looked at their finances and when (written by the server, never skippable). Off hides the row; the log is still kept.",
   "@featureDataAccessLogDesc": {
     "description": "#718/#719"

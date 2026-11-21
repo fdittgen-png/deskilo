@@ -11467,6 +11467,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get featureCustomRolesTitle => 'Rollen, die dieser Bereich festlegt';
 
   @override
+  String get featureCustomerQuotesDesc =>
+      'Machen Sie einem Rechnungskunden ein Angebot, bevor Sie ihm eine Rechnung stellen: die Positionen, wie lange das Angebot gilt und die Antwort, die Sie festhalten. Ein angenommenes Angebot wird einmalig zur ersten Rechnung dieses Kunden. Bis Sie es umwandeln, wird nichts berechnet. Auf Anfrage, unter Rechnungen.';
+
+  @override
+  String get featureCustomerQuotesTitle => 'Kundenangebote';
+
+  @override
   String get featureDataAccessLogDesc =>
       'Mitglieder sehen, wer wann ihre Finanzen eingesehen hat (vom Server geschrieben, nie umgehbar). Aus: die Zeile ist verborgen, das Protokoll bleibt.';
 
