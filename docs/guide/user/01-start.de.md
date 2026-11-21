@@ -388,6 +388,7 @@ Sie öffnen den Raum und möchten zuerst sehen, was auf Sie wartet, dann die Zah
 
 **Gut zu wissen**
 
+- Ein Geschäft ohne Orte öffnet auf **Ihr Geschäft**: **Einem Kunden eine Rechnung stellen**, **Angebote**, **Kunden**, **Rechnungen** und **Me**, jeweils nur, wenn die Funktion eingeschaltet ist und Ihre Rolle sie nutzen darf.
 - Sie sehen nur die Zahlen, die Ihre Rolle lesen darf. Eine Zahl, die nicht gelesen werden konnte, zeigt **Nicht verfügbar**, nie null.
 - **Aktive Mitgliedschaften** zählt Mitgliedschaften, nicht Personen. **Überfällige Forderungen** lässt Rechnungen ohne nachgewiesene Fälligkeit oder in der Warteschleife weg und zählt sie getrennt. Beides sind Zahlen von heute: Es wird kein Verlauf aufbewahrt.
 - **Anpassen** braucht das Recht, die Zahlen des Raums zu lesen, und den Berichtsdesigner.

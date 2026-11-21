@@ -34,6 +34,7 @@ import '../../domain/bi_modules.dart';
 import '../../domain/bi_overview_layout.dart';
 import '../../domain/bi_query.dart';
 import '../../domain/bi_saved_view.dart';
+import '../../domain/business_entries.dart';
 import '../../domain/kpi_contract.dart';
 import '../../domain/workspace_feature.dart';
 import '../../domain/workspace_permission.dart';
@@ -41,6 +42,7 @@ import '../../providers/attention_providers.dart';
 import '../../providers/bi_providers.dart';
 import '../../providers/workspace_providers.dart';
 import '../widgets/bi_module_section.dart';
+import '../widgets/business_entries_card.dart';
 import '../widgets/overview_layout_editor.dart';
 import '../widgets/setup_resume_banner.dart';
 import 'attention_screen.dart';
@@ -123,6 +125,7 @@ class _WorkspaceOverviewScreenState
     // resume first.
     final setup = setupResumeBannerFor(ref, workspace?.id,
         configures: rights.contains(WorkspacePermission.manageConfiguration));
+    final entries = businessEntriesFor(features, rights);
     final title = Theme.of(context).textTheme.titleMedium;
     Widget heading(String text, String key) => Padding(
       padding: const EdgeInsets.only(top: AppSpacing.lg, bottom: AppSpacing.sm),
@@ -140,6 +143,9 @@ class _WorkspaceOverviewScreenState
           ?setup,
           // #4005 — a house's own first task, while its prices are unnamed.
           if (workspace != null) HousePricesCard(workspace: workspace),
+          // #4168 — a business without places opens on its own entries.
+          if (!features.contains(WorkspaceFeature.placeBooking) && entries.isNotEmpty)
+            BusinessEntriesCard(entries: entries),
           heading(l10n.overviewNeedsAttention, 'overview-attention'),
           if (workspace != null &&
               modules.any((m) => m.id == _pendingActions))

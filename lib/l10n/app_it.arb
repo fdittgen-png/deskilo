@@ -3448,6 +3448,14 @@
       }
     }
   },
+  "businessEntriesTitle": "La sua attività",
+  "@businessEntriesTitle": {
+    "description": "#4168 title of the card of direct entries on the overview of a business without places"
+  },
+  "businessEntryNewInvoice": "Fatturare a un cliente",
+  "@businessEntryNewInvoice": {
+    "description": "#4168 the entry that opens a new invoice for a customer of a business without places"
+  },
   "businessExampleApproveBookings": "Per esempio: un membro chiede la sala riunioni per giovedì e la responsabile la conferma.",
   "businessExampleAssociation": "Per esempio: i membri eleggono un consiglio e tengono un'assemblea generale ogni anno.",
   "businessExampleDoorTablet": "Per esempio: i membri passano il badge su un tablet all'ingresso quando arrivano.",

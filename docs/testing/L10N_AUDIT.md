@@ -6,7 +6,7 @@ Every string in `lib/` that reaches a member's eyes and does NOT come from `AppL
 
 Positions read: label, field label, field hint, field helper, field error, field counter, field prefix, field suffix, tooltip, accessibility label, title, subtitle, dismiss label, document lines, bullet list, paragraphs, the text of Text/SelectableText/TextSpan, a tooltip's message, the four snack helpers and a semantics label. Keys, paths, wire values, formats, trace text and literals made only of interpolations are not user-facing and are not listed.
 
-88 literal(s) in 19 file(s) — each a written decision below. Anything outside them fails `test/lint/l10n_audit_test.dart`.
+89 literal(s) in 20 file(s) — each a written decision below. Anything outside them fails `test/lint/l10n_audit_test.dart`.
 
 | file | symbol/widget | literal | surface | action |
 |---|---|---|---|---|
@@ -24,12 +24,13 @@ Positions read: label, field label, field hint, field helper, field error, field
 | `lib/core/demo/seed/demo_city_workflow_seed.dart:97` | label | Bruno · card | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_city_workflow_seed.dart:106` | title | House rules | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_city_workflow_seed.dart:113` | title | Printing and workspace guide | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_freelancer_seed.dart:221` | label | Standard | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_french_reporting_seed.dart:48` | title | Welcome kit and day pass | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_french_reporting_seed.dart:50` | label | Welcome kit | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_french_reporting_seed.dart:51` | label | Day pass | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_london_seed.dart:227` | label | Standard | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_london_seed.dart:228` | label | Reduced | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_london_seed.dart:229` | label | Zero rate | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_london_seed.dart:253` | label | Standard | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_london_seed.dart:254` | label | Reduced | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_london_seed.dart:255` | label | Zero rate | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_money_seed.dart:229` | label | Standard | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_money_seed.dart:232` | label | Intermediate | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_money_seed.dart:238` | label | Reduced | core/demo | KEEP_NON_UI_LITERAL |
@@ -114,6 +115,7 @@ Positions read: label, field label, field hint, field helper, field error, field
 - **`lib/core/demo/seed/demo_french_reporting_seed.dart`** (3) — demo records: the title and the two line labels of the goods invoice (#4163), as a space stores them
 - **`lib/core/demo/seed/demo_london_seed.dart`** (3) — Demo records: the London space's VAT rate labels as the space stores them (#3290)
 - **`lib/core/demo/seed/demo_city_money_seed.dart`** (2) — Demo records: English invoice descriptions as the London and New York businesses would store them, not application labels
+- **`lib/core/demo/seed/demo_freelancer_seed.dart`** (1) — Demo records: the freelancer's one VAT rate as the fictional business names it (#4168), not an application label
 - **`lib/core/demo/seed/demo_practice_seed.dart`** (1) — Demo records: the practice's invoice title as the fictional business stores it (#3863), not an application label
 - **`lib/core/demo/seed/demo_city_purchase_seed.dart`** (1) — Demo records: an English supplier invoice title as the fictional business stores it, not an application label
 - **`lib/core/demo/seed/demo_city_workflow_seed.dart`** (5) — Demo records: fictional expense, badge and document titles stored by the English-speaking spaces, not application interface labels

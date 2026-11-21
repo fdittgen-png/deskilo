@@ -449,6 +449,7 @@ You open the space and want to see first what needs you, then the figures you ma
 
 **Good to know**
 
+- A business without places opens on **Your business**: **Invoice a customer**, **Quotes**, **Customers**, **Invoices** and **Me**, each only when its feature is on and your role may use it.
 - You see only the figures your role may read. A figure that could not be read shows **Not available**, never zero.
 - **Active memberships** counts memberships, not people. **Overdue receivables** leaves out invoices with no proven due date or on hold and counts them apart. Both are today's figures: no history is kept.
 - **Customize** needs the right to read the workspace figures and the report designer.
@@ -3603,6 +3604,9 @@ You run a studio, a practice or a salon rather than a coworking space, and want 
 - Nothing changes until **Save**; **Cancel** leaves everything as it is. Choosing a kind later proposes again and never switches anything silently.
 - A feature not yet reviewed as stable is switched on only if you tick it; switch it on later in **Features** otherwise.
 - Coworking proposes nothing, and switching places off deletes nothing: switch them on again and the floor plan and bookings are back.
+
+- **Freelancer** is for one person who sells services to customers: it keeps places off and switches on invoicing, billing customers, quotes and purchases, and never a provider, messages or a public page. It is its own kind: **Service** stays as it was.
+- Me names the kind each of your businesses set, beside its country and currency.
 
 **See also:** [Features](#switch-whole-processes-on-or-off)
 

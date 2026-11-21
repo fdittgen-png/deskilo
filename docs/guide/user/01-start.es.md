@@ -388,6 +388,7 @@ Abre el espacio y quiere ver primero lo que le espera, y después las cifras que
 
 **Conviene saber**
 
+- Un negocio sin lugares se abre en **Su negocio**: **Facturar a un cliente**, **Presupuestos**, **Clientes**, **Facturas** y **Me**, cada uno solo cuando su función está activada y su rol puede usarla.
 - Solo ve las cifras que su rol puede leer. Una cifra que no pudo leerse muestra **No disponible**, nunca cero.
 - **Membresías activas** cuenta membresías, no personas. **Cobros vencidos** deja fuera las facturas sin vencimiento probado o en espera y las cuenta aparte. Ambas son cifras de hoy: no se guarda historial.
 - **Personalizar** requiere el derecho a leer las cifras del espacio y el diseñador de informes.

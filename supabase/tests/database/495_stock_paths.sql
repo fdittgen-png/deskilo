@@ -8,7 +8,7 @@
 -- and never a lot; the count is a read-only mirror once the ledger exists and off/on again
 -- changes nothing; a lost response is read again by its request id. Rolled back.
 begin;
-select plan(66);
+select plan(72);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -71,7 +71,7 @@ grant execute on all functions in schema pg_temp to authenticated, anon;
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
 select pg_temp.u(n), '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', 'paths-' || n || '@deskilo.test', '', now(), now(), now() from generate_series(1, 4) n;
 insert into public.workspaces (id, name, country_code, currency_code, timezone, created_by, feature_flags, role_permissions) values
-  (pg_temp.u(101), 'Paths A', 'FR', 'EUR', 'Europe/Paris', pg_temp.u(1), '{"services": true, "stockManagement": true, "stockTakeOut": true}', '{"member": ["viewStock"]}'),
+  (pg_temp.u(101), 'Paths A', 'FR', 'EUR', 'Europe/Paris', pg_temp.u(1), '{"services": true, "stockManagement": true, "stockTakeOut": true, "purchases": true, "purchaseOrders": true, "stockReceiving": true}', '{"member": ["viewStock", "manageServices"]}'),
   (pg_temp.u(102), 'Paths B', 'FR', 'EUR', 'Europe/Paris', pg_temp.u(3), '{"services": true, "stockManagement": true, "stockTakeOut": true}', '{}');
 insert into public.members (id, workspace_id, user_id, is_owner, is_admin, status) values
   (pg_temp.u(201), pg_temp.u(101), pg_temp.u(1), true, true, 'active'),
@@ -95,6 +95,15 @@ select pg_temp.move(902, 302, '5', 'SUPPLIER', 'MAIN', 'receipt', format(', "new
 select pg_temp.move(903, 303, '24', 'SUPPLIER', 'SHELF-B', 'receipt');
 select set_config('t.old', (select id::text from public.stock_lots where lot_code = 'OLD'), false);
 select set_config('t.new', (select id::text from public.stock_lots where lot_code = 'NEW'), false);
+
+
+-- fixtures of the review-in-review cases: a sent purchase order for the water, and a second business's supplier
+insert into public.suppliers (id, workspace_id, supplier_number, name) values (pg_temp.u(401), pg_temp.u(101), 'S-1', 'Water Co');
+insert into public.purchase_orders (id, workspace_id, year, number, supplier_id, state, currency, created_by_member_id)
+values (pg_temp.u(501), pg_temp.u(101), 2026, 1, pg_temp.u(401), 'draft', 'EUR', pg_temp.u(201));
+insert into public.purchase_order_lines (workspace_id, order_id, line_no, service_id, description, quantity, unit, unit_price_cents)
+values (pg_temp.u(101), pg_temp.u(501), 1, pg_temp.u(303), '', 5, 'piece', 100);
+update public.purchase_orders set state = 'sent', sent_at = now(), sent_via = 'print' where id = pg_temp.u(501);
 
 -- ONE PATH: the generic move checks its reason against the places.
 select is(pg_temp.move(910, 303, '1', 'SHELF-B', 'CUSTOMER', 'sale'), 'ERR DKG11 {"field": "lines[0]", "reason": "reason_places"}', 'a sale through the generic move needs its commercial source');
@@ -272,7 +281,7 @@ select is(pg_temp.run_as(pg_temp.u(1), format('select coalesce(public.stock_comm
 update public.workspaces set role_permissions = '{"member": ["viewStock", "manageStock"]}' where id = pg_temp.u(101);
 select is(pg_temp.run_as(pg_temp.u(2), format('select coalesce(public.stock_command_outcome_v1(%L, %L)::text, ''none'')', pg_temp.u(101), pg_temp.u(960))), 'none',
   'and a request somebody else made is not read, though the reader may move stock too');
-update public.workspaces set role_permissions = '{"member": ["viewStock"]}' where id = pg_temp.u(101);
+update public.workspaces set role_permissions = '{"member": ["viewStock", "manageServices"]}' where id = pg_temp.u(101);
 
 -- 7. The bridge never takes a lot past its date, and says which refusal it is.
 select is(pg_temp.charge(302, 3) || ' NEW ' || pg_temp.lotq('NEW')::text || ' OLD ' || pg_temp.lotq('OLD')::text, 'ok NEW 2.000000 OLD 2.000000',
@@ -288,6 +297,47 @@ select ok(regexp_replace(pg_get_functiondef('public.apply_stock_on_confirm()'::r
 
 select ok(regexp_replace(pg_get_functiondef('public.import_workspace_configuration(uuid, jsonb, text)'::regprocedure), '\s+', ' ', 'g') like '%stock = case when public.stock_initialized(p_workspace_id) then stock else%',
   'a configuration file''s counts are ignored once the ledger exists: the import does not write them');
+
+
+-- 8. A shelf cannot be made inside the in-transit place: it would become that place's site.
+select is(pg_temp.save_place_t(null, null, 990, format('{"kind": "shelf", "code": "UNDER", "parent_id": "%s"}', current_setting('t.transit'))),
+  'ERR DKG11 {"field": "parent_id", "reason": "location_virtual"}', 'no place is made inside the in-transit place');
+
+-- 9. A real put-away aimed at the in-transit place is refused.
+select is(pg_temp.run_as(pg_temp.u(1), format($q$select public.record_receipt_and_put_away_v1(%L, %L, (select revision from public.purchase_orders where id = %L), current_date,
+    '[{"line_no": 1, "quantity": 5}]'::jsonb, 'dock', %L, %L::jsonb)::text$q$, pg_temp.u(101), pg_temp.u(501), pg_temp.u(501), pg_temp.u(991),
+    format('[{"line_no": 1, "quantity": 5, "location_id": "%s"}]', current_setting('t.transit')))),
+  'ERR DKG11 {"field": "allocations[0].location_id", "reason": "location_foreign"}', 'a delivery is not put away into the in-transit place');
+
+-- 10. A supply confirmed with the feature OFF after initialization: no movement, and the count column unchanged.
+select set_config('t.cnt', (select stock::text from public.services where id = pg_temp.u(303)), false);
+select set_config('t.state2', pg_temp.ledger_state(), false);
+update public.workspaces set feature_flags = feature_flags || '{"stockManagement": false}' where id = pg_temp.u(101);
+insert into public.events (id, workspace_id, type, action, actor_member_id, subject_member_id, payload, status)
+values (pg_temp.u(992), pg_temp.u(101), 'expense', 'submitted', pg_temp.u(201), pg_temp.u(201),
+        format('{"supply": {"service_id": "%s", "quantity": 3, "unit_price_cents": 100}}', pg_temp.u(303))::jsonb, 'pending');
+select is(pg_temp.try(format($q$update public.events set status = 'confirmed' where id = %L$q$, pg_temp.u(992))) || ' ' || (pg_temp.ledger_state() = current_setting('t.state2'))::text
+          || ' ' || ((select stock::text from public.services where id = pg_temp.u(303)) = current_setting('t.cnt'))::text,
+  'ok true true', 'a supply confirmed with the feature off after initialization writes no movement and leaves services.stock as it was');
+update public.workspaces set feature_flags = feature_flags || '{"stockManagement": true}' where id = pg_temp.u(101);
+
+-- 11. A viewer who may edit the catalogue but not move stock hears that first (DKN01), not the ledger's refusal.
+select is(left(pg_temp.run_as(pg_temp.u(2), format('update public.services set stock = 99 where id = %L returning stock::text', pg_temp.u(303))), 9), 'ERR DKN01',
+  'a catalogue editor who may not move stock is told so before the ledger keeps the count');
+
+-- 12. The outcome of a take-out is refused when its feature is off.
+update public.workspaces set feature_flags = feature_flags || '{"stockTakeOut": false}' where id = pg_temp.u(101);
+select is(left(pg_temp.run_as(pg_temp.u(1), format('select public.stock_command_outcome_v1(%L, %L)::text', pg_temp.u(101), pg_temp.u(951))), 9), 'ERR DKG01',
+  'the outcome of a consumption is not read with stockTakeOut off');
+update public.workspaces set feature_flags = feature_flags || '{"stockTakeOut": true}' where id = pg_temp.u(101);
+
+-- 13. A real import onto an initialized business: the file's counts are ignored, and an item new from it is stocked.
+select set_config('t.cnt2', (select stock::text from public.services where id = pg_temp.u(303)), false);
+select pg_temp.run_as(pg_temp.u(1), format($q$select public.import_workspace_configuration(%L, %L::jsonb)::text$q$, pg_temp.u(101),
+  '{"tables": {"services": [{"name": "Water", "price_cents": 100, "active": true, "stock": 999}, {"name": "Imported", "price_cents": 100, "active": true, "stock": 7}]}}'));
+select is((select stock::text from public.services where id = pg_temp.u(303)) || ' ' ||
+          (select (stockable)::text || ' ' || coalesce(stock::text, 'null') from public.services where workspace_id = pg_temp.u(101) and name = 'Imported'),
+  current_setting('t.cnt2') || ' true null', 'the import ignores the counts of the file once the ledger exists, and an item new from it is stocked');
 
 -- WHO MAY, AND WHERE.
 select is(pg_temp.cmd(2, 'stock_transfer_v1', 970, pg_temp.arr(pg_temp.line(303, '1', 'SHELF-B', 'MAIN'))), 'ERR DKN01 ', 'a member who only sees the stock moves nothing');

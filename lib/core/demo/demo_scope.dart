@@ -29,6 +29,7 @@ import 'package:deskilo/core/demo/data/business_kind_repository.dart';
 import 'package:deskilo/core/demo/data/connected_installations.dart';
 import 'package:deskilo/core/demo/data/demo_bi_export_repository.dart';
 import 'package:deskilo/core/demo/data/demo_kiosk_devices.dart';
+import 'package:deskilo/core/demo/data/demo_my_business_kinds.dart';
 import 'package:deskilo/core/demo/data/demo_sample_data_repository.dart';
 import 'package:deskilo/core/demo/data/me_repository.dart';
 import 'package:deskilo/core/demo/data/messenger_repository.dart';
@@ -70,6 +71,7 @@ import 'package:deskilo/features/money/providers/usage_read_providers.dart';
 import 'package:deskilo/features/money/providers/vies_providers.dart';
 import 'package:deskilo/features/visits/providers/visits_providers.dart';
 import 'package:deskilo/features/workspace/providers/business_kind_providers.dart';
+import 'package:deskilo/features/workspace/providers/my_business_kind_providers.dart';
 import 'package:deskilo/features/workspace/providers/organisation_providers.dart';
 import 'package:deskilo/features/workspace/providers/settings_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_application_providers.dart';
@@ -206,6 +208,12 @@ List<Override> _serverOnlyOverrides(DemoFixture fixture) => [
   // #3550 — the five kinds and their profiles.
   businessKindRepositoryProvider.overrideWith(
     (ref) => DemoBusinessKindRepository(ref.watch(settingsRepositoryProvider)),
+  ),
+  // #4168 — Me names the kind each business set.
+  myBusinessKindsReaderProvider.overrideWith(
+    (ref) => DemoMyBusinessKinds(ref.watch(settingsRepositoryProvider), () async => [
+      for (final w in await ref.read(myWorkspacesProvider.future)) w.id,
+    ]),
   ),
   // #2872/#3963 — the Demo is its own sample data: its one batch is counted
   // from its space, and a fill answers it.
