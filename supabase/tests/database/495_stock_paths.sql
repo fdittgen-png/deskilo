@@ -242,7 +242,7 @@ select ok(regexp_replace(pg_get_functiondef('public.stock_put_away_apply(uuid, u
   'a delivery is never put away into the in-transit place');
 insert into public.workspaces (id, name, country_code, currency_code, timezone, created_by, feature_flags) values (pg_temp.u(103), 'Paths C', 'FR', 'EUR', 'Europe/Paris', pg_temp.u(1), '{}');
 insert into public.stock_locations (workspace_id, kind, code) values (pg_temp.u(103), 'shelf', 'TRANSIT');
-select pg_temp.try(format('select public.stock_transit_place(%L)', pg_temp.u(103)));
+select set_config('t.tp', 'made:' || pg_temp.try(format('select public.stock_transit_place(%L)', pg_temp.u(103))), false);
 select is((select code from public.stock_locations where workspace_id = pg_temp.u(103) and kind = 'in_transit'), 'TRANSIT-1',
   'a place the business already called TRANSIT does not stop the system from having its own');
 
