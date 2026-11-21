@@ -1,5 +1,5 @@
 {
-  "about": "The web build's size budget (#3622): the ONE place the numbers live. tool/web/size_budget_check.mjs compares a request trace (tool/web/first_load_trace.mjs) and the build folder with them; web.yml runs it after the build it already makes. Every ceiling is the value measured on master on 2026-11-12 (Flutter 3.47.5, flutter build web --release --no-web-resources-cdn --pwa-strategy=none) rounded up; it only falls. The first-load and settled ceilings were raised on 2026-11-14 (measured 8500193): the application code is one unit until it is split by area (#3828), so every feature adds to the first download; they fall again with that split. The deployment and on-demand ceilings were raised on 2026-11-15 (measured 118501371 and 40914686): three days of pages, strings in five languages and guide texts had used the half per cent of headroom they were set with. To RAISE one: change the number here in the PR that needs it and give the reason in that PR's text; a raise with no reason is a review finding. To LOWER one: do it in the PR that made the build smaller.",
+  "about": "The web build's size budget (#3622): the ONE place the numbers live. tool/web/size_budget_check.mjs compares a request trace (tool/web/first_load_trace.mjs) and the build folder with them; web.yml runs it after the build it already makes. Every ceiling is the value measured on master on 2026-11-12 (Flutter 3.47.5, flutter build web --release --no-web-resources-cdn --pwa-strategy=none) rounded up; it only falls. The first-load and settled ceilings were raised on 2026-11-14 (measured 8500193): the application code is one unit until it is split by area (#3828), so every feature adds to the first download; they fall again with that split. The deployment and on-demand ceilings were raised on 2026-11-15 (measured 118501371 and 40914686): three days of pages, strings in five languages and guide texts had used the half per cent of headroom they were set with. To RAISE one: change the number here in the PR that needs it and give the reason in that PR's text; a raise with no reason is a review finding. To LOWER one: do it in the PR that made the build smaller. The deployment ceiling was raised on 2026-11-21 (measured 120041820, #4169): the stock editors, variants and lots added their pages and strings in five languages to the deployed files; the first load stayed under its ceiling.",
   "budgets": {
     "first_load_wire_bytes": {
       "max": 8800000,
@@ -20,8 +20,8 @@
       "raise": "A new guide image or help text raises it by its own size; state the size and the guide in the PR."
     },
     "deployment_bytes": {
-      "max": 120000000,
-      "measured": 118501371,
+      "max": 121500000,
+      "measured": 120041820,
       "measures": "Raw size of every file in build/web, the whole deployment the static host stores and serves.",
       "raise": "Only with the reason in the PR text; a larger deployment with a flat first load needs a one-line explanation of what was added."
     }
