@@ -1,0 +1,158 @@
+{
+  "@@locale": "fr",
+  "engagementsTitle": "Prestations suivies",
+  "engagementsIntro": "Suivez chaque prestation commandée : commandée, commencée, terminée. Le devis, la facture et les paiements restent tels quels à côté.",
+  "engagementsNew": "Nouvelle prestation",
+  "engagementsEmpty": "Aucune prestation pour l'instant. Ouvrez-en une depuis un devis accepté, ou ajoutez-en une directement.",
+  "engagementsLoadFailed": "Les prestations n'ont pas pu être lues. Ce n'est pas une liste vide.",
+  "engagementStateOrdered": "Commandée",
+  "engagementStateStarted": "Commencée",
+  "engagementStateDone": "Terminée",
+  "engagementStateCancelled": "Annulée",
+  "engagementStart": "Commencer",
+  "engagementFinish": "Marquer terminée",
+  "engagementCancel": "Annuler la prestation",
+  "engagementCancelReason": "Pourquoi elle est annulée",
+  "engagementFromQuote": "Du devis {reference}",
+  "engagementFromInvoice": "De la facture {number}",
+  "engagementDirect": "Engagée directement",
+  "engagementBilledOn": "Facturée sur",
+  "engagementPaidOf": "{paid} payés sur {total}",
+  "engagementCorrectedBy": "Corrigée par {number}",
+  "engagementNoInvoice": "Pas encore facturée. Suivre le travail ne change rien aux comptes.",
+  "engagementOpenFromLine": "Suivre cette prestation",
+  "engagementOpenExisting": "Ouvrir son suivi",
+  "engagementDirectTitle": "Nouvelle prestation",
+  "engagementFieldDescription": "Ce qui est commandé",
+  "engagementSave": "Engager",
+  "engagementRefusedStale": "La prestation a évolué entre-temps. Elle a été relue : vérifiez et réessayez.",
+  "engagementRefusedState": "Cette étape n'est pas possible dans l'état actuel de la prestation.",
+  "engagementRefusedReused": "Cette demande a déjà servi à autre chose. Recommencez.",
+  "engagementRefusedIncomplete": "Il manque quelque chose ou une valeur est hors limites : vérifiez les détails.",
+  "engagementRefusedUnknown": "Cette prestation, ce devis, cette facture ou ce client est introuvable.",
+  "engagementRefusedOff": "Le suivi des prestations est désactivé dans cette entreprise.",
+  "engagementRefusedDenied": "Votre rôle ne le permet pas.",
+  "engagementUnreached": "Aucune réponse n'est arrivée, rien n'est affirmé. Réessayez : la même demande n'est traitée qu'une fois.",
+  "@engagementsTitle": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementsIntro": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementsNew": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementsEmpty": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementsLoadFailed": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementStateOrdered": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementStateStarted": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementStateDone": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementStateCancelled": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementStart": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementFinish": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementCancel": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementCancelReason": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementFromQuote": {
+    "description": "service engagements (#4178)",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
+  "@engagementFromInvoice": {
+    "description": "service engagements (#4178)",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "@engagementDirect": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementBilledOn": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementPaidOf": {
+    "description": "service engagements (#4178)",
+    "placeholders": {
+      "paid": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "@engagementCorrectedBy": {
+    "description": "service engagements (#4178)",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "@engagementNoInvoice": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementOpenFromLine": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementOpenExisting": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementDirectTitle": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementFieldDescription": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementSave": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementRefusedStale": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementRefusedState": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementRefusedReused": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementRefusedIncomplete": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementRefusedUnknown": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementRefusedOff": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementRefusedDenied": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementUnreached": {
+    "description": "service engagements (#4178)"
+  }
+}

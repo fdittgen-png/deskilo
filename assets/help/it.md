@@ -2875,6 +2875,18 @@ Per quanto tempo un nuovo preventivo resta valido quando non indica una data di 
 
 Su un preventivo inviato, **Condividi il PDF** apre l’offerta come documento: un preventivo, con un riferimento proprio e la durata di validità, il cliente, le righe e quanto risultano, così come sono state fissate all’invio (il netto, l’IVA per aliquota e il totale). Non è mai una fattura e non reca alcun numero di fattura. Può visualizzarlo, salvarlo o condividerlo.
 
+### Servizi in corso
+
+**Destinatari:** Amministratore · Proprietario
+
+Aprite **Vendite e incassi** e poi **Servizi in corso**. Qui seguite ogni servizio che vi è stato ordinato, dall'ordine al lavoro concluso.
+
+Aprite l'avanzamento di una riga di un preventivo accettato con **Seguire questo servizio** sul preventivo, oppure scegliete **Nuovo servizio** per concordarne uno direttamente, prima di qualsiasi preventivo o fattura: il cliente, ciò che è ordinato e in che quantità. Un servizio è **Ordinato**, poi **Avviato**, poi **Concluso**; prima che sia concluso potete **Annullare il servizio**, indicando il motivo. Ogni passaggio resta nella sua cronologia.
+
+Il preventivo, la fattura e i pagamenti restano esattamente come sono: il servizio mostra le fatture su cui è fatturato, quanto è stato pagato ed eventuali correzioni, ma seguire il lavoro non fattura, non incassa e non cambia nulla. Esiste un solo servizio per riga ordinata, comunque lo raggiungiate: dal preventivo o dalla fattura che l'ha fatturato.
+
+Se un passaggio viene rifiutato perché il servizio è cambiato nel frattempo, viene riletto e riprovate; se non è arrivata risposta, la stessa richiesta viene reinviata e il server la soddisfa una volta sola.
+
 ### Come sono mostrati gli importi
 
 **Destinatari:** Tutti

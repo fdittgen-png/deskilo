@@ -6011,6 +6011,161 @@
   "@emblemTooHeavy": {
     "description": "#1289 emblem: still too heavy after re-encoding"
   },
+  "engagementBilledOn": "Abgerechnet auf",
+  "@engagementBilledOn": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementCancel": "Auftrag stornieren",
+  "@engagementCancel": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementCancelReason": "Warum storniert wird",
+  "@engagementCancelReason": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementCorrectedBy": "Korrigiert durch {number}",
+  "@engagementCorrectedBy": {
+    "description": "service engagements (#4178)",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "engagementDirect": "Direkt vereinbart",
+  "@engagementDirect": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementDirectTitle": "Neuer Auftrag",
+  "@engagementDirectTitle": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementFieldDescription": "Was bestellt ist",
+  "@engagementFieldDescription": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementFinish": "Als erledigt markieren",
+  "@engagementFinish": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementFromInvoice": "Aus Rechnung {number}",
+  "@engagementFromInvoice": {
+    "description": "service engagements (#4178)",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "engagementFromQuote": "Aus Angebot {reference}",
+  "@engagementFromQuote": {
+    "description": "service engagements (#4178)",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
+  "engagementNoInvoice": "Noch nicht abgerechnet. Das Verfolgen der Arbeit ändert nichts an den Büchern.",
+  "@engagementNoInvoice": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementOpenExisting": "Auftrag öffnen",
+  "@engagementOpenExisting": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementOpenFromLine": "Diese Leistung verfolgen",
+  "@engagementOpenFromLine": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementPaidOf": "{paid} von {total} bezahlt",
+  "@engagementPaidOf": {
+    "description": "service engagements (#4178)",
+    "placeholders": {
+      "paid": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "engagementRefusedDenied": "Ihre Rolle erlaubt das nicht.",
+  "@engagementRefusedDenied": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementRefusedIncomplete": "Etwas fehlt oder liegt außerhalb des Bereichs: Angaben prüfen.",
+  "@engagementRefusedIncomplete": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementRefusedOff": "Die Leistungsverfolgung ist in diesem Unternehmen ausgeschaltet.",
+  "@engagementRefusedOff": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementRefusedReused": "Diese Anfrage wurde schon für etwas anderes verwendet. Beginnen Sie neu.",
+  "@engagementRefusedReused": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementRefusedStale": "Der Auftrag hat sich inzwischen geändert. Er wurde neu gelesen: prüfen und erneut versuchen.",
+  "@engagementRefusedStale": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementRefusedState": "Dieser Schritt ist im aktuellen Stand des Auftrags nicht möglich.",
+  "@engagementRefusedState": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementRefusedUnknown": "Dieser Auftrag, dieses Angebot, diese Rechnung oder dieser Kunde wurde nicht gefunden.",
+  "@engagementRefusedUnknown": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementSave": "Vereinbaren",
+  "@engagementSave": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementStart": "Beginnen",
+  "@engagementStart": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementStateCancelled": "Storniert",
+  "@engagementStateCancelled": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementStateDone": "Erledigt",
+  "@engagementStateDone": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementStateOrdered": "Bestellt",
+  "@engagementStateOrdered": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementStateStarted": "Begonnen",
+  "@engagementStateStarted": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementUnreached": "Es kam keine Antwort, daher wird nichts behauptet. Versuchen Sie es erneut: dieselbe Anfrage wird nur einmal beantwortet.",
+  "@engagementUnreached": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementsEmpty": "Noch kein Auftrag. Öffnen Sie einen aus einem angenommenen Angebot oder legen Sie direkt einen an.",
+  "@engagementsEmpty": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementsIntro": "Verfolgen Sie jede bestellte Leistung: bestellt, begonnen, erledigt. Angebot, Rechnung und Zahlungen bleiben daneben unverändert.",
+  "@engagementsIntro": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementsLoadFailed": "Die Aufträge konnten nicht gelesen werden. Das ist keine leere Liste.",
+  "@engagementsLoadFailed": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementsNew": "Neuer Auftrag",
+  "@engagementsNew": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementsTitle": "Leistungsaufträge",
+  "@engagementsTitle": {
+    "description": "service engagements (#4178)"
+  },
   "entitlementBlockedFull": "Sie haben diesen Monat alle Tage aufgebraucht. Bitten Sie einen Admin um mehr oder beantragen Sie zusätzliche Halbtage.",
   "entitlementDaysLeft": "Noch {left} Tage",
   "entitlementDaysUsed": "{used} von {total} Tagen genutzt",

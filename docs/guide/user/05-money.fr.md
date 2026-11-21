@@ -622,6 +622,19 @@ La durée pendant laquelle un nouveau devis reste valable quand vous n’indique
 
 Sur un devis envoyé, **Partager le PDF** ouvre l’offre comme un document : un devis, avec sa propre référence et sa durée de validité, le client, les lignes et ce qu’elles représentent telles qu’elles ont été figées à l’envoi (le net, la TVA par taux et le total). Ce n’est jamais une facture et il ne porte aucun numéro de facture. Vous pouvez le consulter, l’enregistrer ou le partager.
 
+<!-- anchor: user.money.engagements -->
+### Prestations suivies
+
+**Public:** Administrateur·rice · Propriétaire
+
+Ouvrez **Ventes et encaissements** puis **Prestations suivies**. C'est ici que vous suivez chaque prestation commandée, de la commande au travail terminé.
+
+Ouvrez le suivi d'une ligne de devis accepté avec **Suivre cette prestation** sur le devis, ou choisissez **Nouvelle prestation** pour en engager une directement, avant tout devis ou facture : le client, ce qui est commandé et en quelle quantité. Une prestation est **Commandée**, puis **Commencée**, puis **Terminée** ; avant qu'elle soit terminée, vous pouvez **Annuler la prestation**, en en donnant le motif. Chaque étape reste dans son historique.
+
+Le devis, la facture et les paiements restent exactement tels quels à côté : la prestation montre les factures sur lesquelles elle est facturée, ce qui a été payé et toute correction, mais suivre le travail ne facture, n'encaisse et ne change rien. Il n'existe qu'une prestation par ligne commandée, quel que soit le chemin : depuis le devis, ou depuis la facture qui l'a facturée.
+
+Si une étape est refusée parce que la prestation a évolué entre-temps, elle est relue et vous réessayez ; si aucune réponse n'est arrivée, la même demande est renvoyée et le serveur ne la traite qu'une fois.
+
 <!-- anchor: user.money.amounts -->
 ### Comment les montants sont affichés
 

@@ -9679,6 +9679,124 @@ class AppLocalizationsIt extends AppLocalizations {
       'Quell’immagine è troppo pesante per un segno mostrato a 28 pixel.';
 
   @override
+  String get engagementBilledOn => 'Fatturato su';
+
+  @override
+  String get engagementCancel => 'Annullare il servizio';
+
+  @override
+  String get engagementCancelReason => 'Perché viene annullato';
+
+  @override
+  String engagementCorrectedBy(String number) {
+    return 'Corretto da $number';
+  }
+
+  @override
+  String get engagementDirect => 'Concordato direttamente';
+
+  @override
+  String get engagementDirectTitle => 'Nuovo servizio';
+
+  @override
+  String get engagementFieldDescription => 'Cosa è stato ordinato';
+
+  @override
+  String get engagementFinish => 'Segnare come concluso';
+
+  @override
+  String engagementFromInvoice(String number) {
+    return 'Dalla fattura $number';
+  }
+
+  @override
+  String engagementFromQuote(String reference) {
+    return 'Dal preventivo $reference';
+  }
+
+  @override
+  String get engagementNoInvoice =>
+      'Non ancora fatturato. Seguire il lavoro non cambia nulla nei conti.';
+
+  @override
+  String get engagementOpenExisting => 'Aprire il suo avanzamento';
+
+  @override
+  String get engagementOpenFromLine => 'Seguire questo servizio';
+
+  @override
+  String engagementPaidOf(String paid, String total) {
+    return '$paid di $total pagati';
+  }
+
+  @override
+  String get engagementRefusedDenied => 'Il suo ruolo non lo consente.';
+
+  @override
+  String get engagementRefusedIncomplete =>
+      'Manca qualcosa o è fuori intervallo: controllate i dati.';
+
+  @override
+  String get engagementRefusedOff =>
+      'L\'avanzamento dei servizi è disattivato in questa azienda.';
+
+  @override
+  String get engagementRefusedReused =>
+      'Quella richiesta è già stata usata per altro. Ricominciate.';
+
+  @override
+  String get engagementRefusedStale =>
+      'Il servizio è cambiato nel frattempo. È stato riletto: controllate e riprovate.';
+
+  @override
+  String get engagementRefusedState =>
+      'Quel passaggio non è possibile nello stato attuale del servizio.';
+
+  @override
+  String get engagementRefusedUnknown =>
+      'Quel servizio, preventivo, fattura o cliente non è stato trovato.';
+
+  @override
+  String get engagementSave => 'Concordare';
+
+  @override
+  String get engagementStart => 'Avviare';
+
+  @override
+  String get engagementStateCancelled => 'Annullato';
+
+  @override
+  String get engagementStateDone => 'Concluso';
+
+  @override
+  String get engagementStateOrdered => 'Ordinato';
+
+  @override
+  String get engagementStateStarted => 'Avviato';
+
+  @override
+  String get engagementUnreached =>
+      'Non è arrivata risposta, quindi non si afferma nulla. Riprovate: la stessa richiesta viene soddisfatta una volta sola.';
+
+  @override
+  String get engagementsEmpty =>
+      'Nessun servizio per ora. Apritene uno da un preventivo accettato o aggiungetene uno direttamente.';
+
+  @override
+  String get engagementsIntro =>
+      'Seguite ogni servizio ordinato: ordinato, avviato, concluso. Il preventivo, la fattura e i pagamenti restano invariati accanto.';
+
+  @override
+  String get engagementsLoadFailed =>
+      'Non è stato possibile leggere i servizi. Non è un elenco vuoto.';
+
+  @override
+  String get engagementsNew => 'Nuovo servizio';
+
+  @override
+  String get engagementsTitle => 'Servizi in corso';
+
+  @override
   String get entitlementBlockedFull =>
       'Ha usato tutti i suoi giorni questo mese. Ne chieda altri a un amministratore o richieda mezze giornate extra.';
 

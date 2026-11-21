@@ -20,6 +20,7 @@ import '../../application/customer_quote_commands.dart';
 import '../../domain/customer_quote.dart';
 import '../../providers/billing_customer_providers.dart';
 import '../../providers/customer_quote_providers.dart';
+import '../engagements/follow_line_button.dart';
 import '../quote_print.dart';
 import '../quotes/quote_conversion_sheet.dart';
 import '../quotes/quote_decision_sheet.dart';
@@ -170,6 +171,14 @@ class _Content extends ConsumerWidget {
   /// Opens the answer sheet, or the conversion sheet when [convert].
   final void Function(BuildContext context, {required bool convert}) onAnswer;
 
+  /// Whether an accepted line offers its engagement: the feature is on, the
+  /// person may issue, and the accepted revision is the one shown.
+  bool canFollow(WidgetRef ref) =>
+      canIssue &&
+      (quote.status == QuoteStatus.accepted || quote.status == QuoteStatus.converted) &&
+      quote.decision?.revision == quote.shown?.revision &&
+      MoneyViewData.gates(ref).serviceFulfilmentOn;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final names = quoteCustomerNames(
@@ -180,7 +189,7 @@ class _Content extends ConsumerWidget {
       padding: const EdgeInsets.all(AppSpacing.md),
       children: [
         ..._header(context, names),
-        if (shown != null) ..._offer(context, shown),
+        if (shown != null) ..._offer(context, shown, canFollow: canFollow(ref)),
         ..._share(context, ref),
         ..._decision(context),
         if (quote.revisions.length > 1) ..._history(context),
@@ -216,7 +225,7 @@ class _Content extends ConsumerWidget {
   }
 
   /// The revision on offer: dates, terms, lines, and the amounts a sent one froze.
-  List<Widget> _offer(BuildContext context, QuoteRevision shown) {
+  List<Widget> _offer(BuildContext context, QuoteRevision shown, {required bool canFollow}) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
     final totals = shown.totals;
@@ -235,6 +244,10 @@ class _Content extends ConsumerWidget {
           contentPadding: EdgeInsets.zero,
           title: Text(line.description),
           subtitle: Text('${line.quantity} ${line.unitLabel} × ${line.unitPrice}'),
+          // #4178 — an accepted line is followed as an engagement of its own
+          trailing: canFollow && line.lineId != null
+              ? FollowLineButton(workspaceId: workspaceId, quoteId: quote.id, lineId: line.lineId!)
+              : null,
         ),
       if (totals != null)
         ListTile(

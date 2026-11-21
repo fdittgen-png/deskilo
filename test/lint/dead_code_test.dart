@@ -18,16 +18,6 @@ import '../../tool/dead_code/scan.dart';
 
 /// `path::name` → why it stays, naming the issue that resolves it.
 const Map<String, String> _allowed = {
-  // The engagement screens (cut C of #4178) read and act through these.
-  'lib/features/money/providers/service_fulfilment_providers.dart::serviceFulfilmentCommandProvider':
-      '#4178 — the engagement screens take their steps through it (cut C)',
-  'lib/features/money/providers/service_fulfilment_providers.dart::serviceFulfilmentsProvider':
-      '#4178 — the engagements list screen reads it (cut C)',
-  'lib/features/money/providers/service_fulfilment_providers.dart::serviceFulfilmentProvider':
-      '#4178 — the engagement screen reads it (cut C)',
-  // The Stock screen is the consumer of the exact quantity and the paged reads.
-  'lib/core/format/decimal_input.dart::exactQuantityFromInput':
-      '#4161 — the Stock screen reads a quantity a member types',
   // The workbook's sources as data: the export coverage lint reads them now,
   // the about-this-export sheet will list them for the operator.
   'lib/features/workspace/domain/workspace_export_sources.dart::workspaceExportSources':

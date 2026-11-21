@@ -9605,6 +9605,124 @@ class AppLocalizationsEn extends AppLocalizations {
       'That image is too heavy for a mark shown at 28 pixels.';
 
   @override
+  String get engagementBilledOn => 'Billed on';
+
+  @override
+  String get engagementCancel => 'Cancel the engagement';
+
+  @override
+  String get engagementCancelReason => 'Why it is cancelled';
+
+  @override
+  String engagementCorrectedBy(String number) {
+    return 'Corrected by $number';
+  }
+
+  @override
+  String get engagementDirect => 'Committed directly';
+
+  @override
+  String get engagementDirectTitle => 'New engagement';
+
+  @override
+  String get engagementFieldDescription => 'What is ordered';
+
+  @override
+  String get engagementFinish => 'Mark done';
+
+  @override
+  String engagementFromInvoice(String number) {
+    return 'From invoice $number';
+  }
+
+  @override
+  String engagementFromQuote(String reference) {
+    return 'From quote $reference';
+  }
+
+  @override
+  String get engagementNoInvoice =>
+      'Not invoiced yet. Following the work changes nothing in the books.';
+
+  @override
+  String get engagementOpenExisting => 'Open its engagement';
+
+  @override
+  String get engagementOpenFromLine => 'Follow this service';
+
+  @override
+  String engagementPaidOf(String paid, String total) {
+    return '$paid of $total paid';
+  }
+
+  @override
+  String get engagementRefusedDenied => 'Your role does not allow this.';
+
+  @override
+  String get engagementRefusedIncomplete =>
+      'Something is missing or out of range: check the details.';
+
+  @override
+  String get engagementRefusedOff =>
+      'Service fulfilment is switched off in this business.';
+
+  @override
+  String get engagementRefusedReused =>
+      'That request was already used for something else. Start again.';
+
+  @override
+  String get engagementRefusedStale =>
+      'The engagement moved on meanwhile. It was read again: check it and retry.';
+
+  @override
+  String get engagementRefusedState =>
+      'That step is not possible from where the engagement stands.';
+
+  @override
+  String get engagementRefusedUnknown =>
+      'That engagement, quote, invoice or customer was not found.';
+
+  @override
+  String get engagementSave => 'Commit';
+
+  @override
+  String get engagementStart => 'Start';
+
+  @override
+  String get engagementStateCancelled => 'Cancelled';
+
+  @override
+  String get engagementStateDone => 'Done';
+
+  @override
+  String get engagementStateOrdered => 'Ordered';
+
+  @override
+  String get engagementStateStarted => 'Started';
+
+  @override
+  String get engagementUnreached =>
+      'No answer came, so nothing is claimed. Try again: the same request is answered only once.';
+
+  @override
+  String get engagementsEmpty =>
+      'No engagement yet. Open one from an accepted quote, or add one directly.';
+
+  @override
+  String get engagementsIntro =>
+      'Follow each service you were ordered: ordered, started, done. The quote, the invoice and the payments stay as they are beside it.';
+
+  @override
+  String get engagementsLoadFailed =>
+      'The engagements could not be read. This is not an empty list.';
+
+  @override
+  String get engagementsNew => 'New engagement';
+
+  @override
+  String get engagementsTitle => 'Service engagements';
+
+  @override
   String get entitlementBlockedFull =>
       'You\'ve used all your days this month. Ask an admin for more or request extra half-days.';
 

@@ -9718,6 +9718,124 @@ class AppLocalizationsFr extends AppLocalizations {
       'Cette image est trop lourde pour une marque affichée à 28 pixels.';
 
   @override
+  String get engagementBilledOn => 'Facturée sur';
+
+  @override
+  String get engagementCancel => 'Annuler la prestation';
+
+  @override
+  String get engagementCancelReason => 'Pourquoi elle est annulée';
+
+  @override
+  String engagementCorrectedBy(String number) {
+    return 'Corrigée par $number';
+  }
+
+  @override
+  String get engagementDirect => 'Engagée directement';
+
+  @override
+  String get engagementDirectTitle => 'Nouvelle prestation';
+
+  @override
+  String get engagementFieldDescription => 'Ce qui est commandé';
+
+  @override
+  String get engagementFinish => 'Marquer terminée';
+
+  @override
+  String engagementFromInvoice(String number) {
+    return 'De la facture $number';
+  }
+
+  @override
+  String engagementFromQuote(String reference) {
+    return 'Du devis $reference';
+  }
+
+  @override
+  String get engagementNoInvoice =>
+      'Pas encore facturée. Suivre le travail ne change rien aux comptes.';
+
+  @override
+  String get engagementOpenExisting => 'Ouvrir son suivi';
+
+  @override
+  String get engagementOpenFromLine => 'Suivre cette prestation';
+
+  @override
+  String engagementPaidOf(String paid, String total) {
+    return '$paid payés sur $total';
+  }
+
+  @override
+  String get engagementRefusedDenied => 'Votre rôle ne le permet pas.';
+
+  @override
+  String get engagementRefusedIncomplete =>
+      'Il manque quelque chose ou une valeur est hors limites : vérifiez les détails.';
+
+  @override
+  String get engagementRefusedOff =>
+      'Le suivi des prestations est désactivé dans cette entreprise.';
+
+  @override
+  String get engagementRefusedReused =>
+      'Cette demande a déjà servi à autre chose. Recommencez.';
+
+  @override
+  String get engagementRefusedStale =>
+      'La prestation a évolué entre-temps. Elle a été relue : vérifiez et réessayez.';
+
+  @override
+  String get engagementRefusedState =>
+      'Cette étape n\'est pas possible dans l\'état actuel de la prestation.';
+
+  @override
+  String get engagementRefusedUnknown =>
+      'Cette prestation, ce devis, cette facture ou ce client est introuvable.';
+
+  @override
+  String get engagementSave => 'Engager';
+
+  @override
+  String get engagementStart => 'Commencer';
+
+  @override
+  String get engagementStateCancelled => 'Annulée';
+
+  @override
+  String get engagementStateDone => 'Terminée';
+
+  @override
+  String get engagementStateOrdered => 'Commandée';
+
+  @override
+  String get engagementStateStarted => 'Commencée';
+
+  @override
+  String get engagementUnreached =>
+      'Aucune réponse n\'est arrivée, rien n\'est affirmé. Réessayez : la même demande n\'est traitée qu\'une fois.';
+
+  @override
+  String get engagementsEmpty =>
+      'Aucune prestation pour l\'instant. Ouvrez-en une depuis un devis accepté, ou ajoutez-en une directement.';
+
+  @override
+  String get engagementsIntro =>
+      'Suivez chaque prestation commandée : commandée, commencée, terminée. Le devis, la facture et les paiements restent tels quels à côté.';
+
+  @override
+  String get engagementsLoadFailed =>
+      'Les prestations n\'ont pas pu être lues. Ce n\'est pas une liste vide.';
+
+  @override
+  String get engagementsNew => 'Nouvelle prestation';
+
+  @override
+  String get engagementsTitle => 'Prestations suivies';
+
+  @override
   String get entitlementBlockedFull =>
       'Vous avez utilisé tous vos jours ce mois-ci. Demandez-en plus à un administrateur ou demandez des demi-journées supplémentaires.';
 

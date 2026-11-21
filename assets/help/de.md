@@ -2875,6 +2875,18 @@ Wie lange ein neues Angebot gültig bleibt, wenn Sie kein Enddatum angeben, und 
 
 Bei einem gesendeten Angebot öffnet **PDF teilen** das Angebot als Dokument: ein Angebot mit eigener Referenz und Gültigkeit, dem Kunden, den Positionen und dem, was sie ergeben, so wie beim Senden festgeschrieben (netto, Umsatzsteuer je Satz und Gesamtbetrag). Es ist nie eine Rechnung und trägt keine Rechnungsnummer. Sie können es ansehen, speichern oder teilen.
 
+### Leistungsaufträge
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Öffnen Sie **Verkauf & Zahlungseingang** und dann **Leistungsaufträge**. Hier verfolgen Sie jede bestellte Leistung, von der Bestellung bis zur erledigten Arbeit.
+
+Öffnen Sie den Auftrag einer Position eines angenommenen Angebots mit **Diese Leistung verfolgen** im Angebot, oder wählen Sie **Neuer Auftrag**, um direkt einen zu vereinbaren, vor jedem Angebot oder jeder Rechnung: den Kunden, was bestellt ist und wie viel. Ein Auftrag ist **Bestellt**, dann **Begonnen**, dann **Erledigt**; bevor er erledigt ist, können Sie ihn **stornieren** und geben dazu den Grund an. Jeder Schritt bleibt im Verlauf.
+
+Angebot, Rechnung und Zahlungen bleiben daneben genau wie sie sind: Der Auftrag zeigt die Rechnungen, auf denen er abgerechnet ist, was bezahlt wurde und jede Korrektur, aber das Verfolgen der Arbeit stellt nichts in Rechnung, kassiert nichts und ändert nichts. Für jede bestellte Position gibt es genau einen Auftrag, gleich wie Sie ihn erreichen: vom Angebot oder von der Rechnung, die ihn abgerechnet hat.
+
+Wird ein Schritt abgelehnt, weil sich der Auftrag inzwischen geändert hat, wird er neu gelesen und Sie versuchen es noch einmal; kam keine Antwort, wird dieselbe Anfrage erneut gesendet und der Server beantwortet sie nur einmal.
+
 ### Wie Beträge angezeigt werden
 
 **Zielgruppe:** Alle

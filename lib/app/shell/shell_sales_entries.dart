@@ -49,6 +49,18 @@ extension SalesEntries on DrawerEntries {
           () => go('/money/quotes'),
           route: '/money/quotes',
         ),
+      // #4178 — the services ordered, followed ordered, started, done.
+      if (sales &&
+          features.contains(WorkspaceFeature.serviceFulfilment) &&
+          (may(WorkspacePermission.viewFinances) ||
+              may(WorkspacePermission.issueInvoices)))
+        DrawerEntry(
+          'drawer-engagements',
+          Icons.assignment_turned_in_outlined,
+          l10n.engagementsTitle,
+          () => go('/money/engagements'),
+          route: '/money/engagements',
+        ),
       // #4164 — the people and businesses invoiced, with or without an account.
       if (sales &&
           features.contains(WorkspaceFeature.billingCustomers) &&

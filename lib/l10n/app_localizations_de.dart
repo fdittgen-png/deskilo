@@ -9696,6 +9696,124 @@ class AppLocalizationsDe extends AppLocalizations {
       'Dieses Bild ist zu schwer für ein Zeichen, das mit 28 Pixeln angezeigt wird.';
 
   @override
+  String get engagementBilledOn => 'Abgerechnet auf';
+
+  @override
+  String get engagementCancel => 'Auftrag stornieren';
+
+  @override
+  String get engagementCancelReason => 'Warum storniert wird';
+
+  @override
+  String engagementCorrectedBy(String number) {
+    return 'Korrigiert durch $number';
+  }
+
+  @override
+  String get engagementDirect => 'Direkt vereinbart';
+
+  @override
+  String get engagementDirectTitle => 'Neuer Auftrag';
+
+  @override
+  String get engagementFieldDescription => 'Was bestellt ist';
+
+  @override
+  String get engagementFinish => 'Als erledigt markieren';
+
+  @override
+  String engagementFromInvoice(String number) {
+    return 'Aus Rechnung $number';
+  }
+
+  @override
+  String engagementFromQuote(String reference) {
+    return 'Aus Angebot $reference';
+  }
+
+  @override
+  String get engagementNoInvoice =>
+      'Noch nicht abgerechnet. Das Verfolgen der Arbeit ändert nichts an den Büchern.';
+
+  @override
+  String get engagementOpenExisting => 'Auftrag öffnen';
+
+  @override
+  String get engagementOpenFromLine => 'Diese Leistung verfolgen';
+
+  @override
+  String engagementPaidOf(String paid, String total) {
+    return '$paid von $total bezahlt';
+  }
+
+  @override
+  String get engagementRefusedDenied => 'Ihre Rolle erlaubt das nicht.';
+
+  @override
+  String get engagementRefusedIncomplete =>
+      'Etwas fehlt oder liegt außerhalb des Bereichs: Angaben prüfen.';
+
+  @override
+  String get engagementRefusedOff =>
+      'Die Leistungsverfolgung ist in diesem Unternehmen ausgeschaltet.';
+
+  @override
+  String get engagementRefusedReused =>
+      'Diese Anfrage wurde schon für etwas anderes verwendet. Beginnen Sie neu.';
+
+  @override
+  String get engagementRefusedStale =>
+      'Der Auftrag hat sich inzwischen geändert. Er wurde neu gelesen: prüfen und erneut versuchen.';
+
+  @override
+  String get engagementRefusedState =>
+      'Dieser Schritt ist im aktuellen Stand des Auftrags nicht möglich.';
+
+  @override
+  String get engagementRefusedUnknown =>
+      'Dieser Auftrag, dieses Angebot, diese Rechnung oder dieser Kunde wurde nicht gefunden.';
+
+  @override
+  String get engagementSave => 'Vereinbaren';
+
+  @override
+  String get engagementStart => 'Beginnen';
+
+  @override
+  String get engagementStateCancelled => 'Storniert';
+
+  @override
+  String get engagementStateDone => 'Erledigt';
+
+  @override
+  String get engagementStateOrdered => 'Bestellt';
+
+  @override
+  String get engagementStateStarted => 'Begonnen';
+
+  @override
+  String get engagementUnreached =>
+      'Es kam keine Antwort, daher wird nichts behauptet. Versuchen Sie es erneut: dieselbe Anfrage wird nur einmal beantwortet.';
+
+  @override
+  String get engagementsEmpty =>
+      'Noch kein Auftrag. Öffnen Sie einen aus einem angenommenen Angebot oder legen Sie direkt einen an.';
+
+  @override
+  String get engagementsIntro =>
+      'Verfolgen Sie jede bestellte Leistung: bestellt, begonnen, erledigt. Angebot, Rechnung und Zahlungen bleiben daneben unverändert.';
+
+  @override
+  String get engagementsLoadFailed =>
+      'Die Aufträge konnten nicht gelesen werden. Das ist keine leere Liste.';
+
+  @override
+  String get engagementsNew => 'Neuer Auftrag';
+
+  @override
+  String get engagementsTitle => 'Leistungsaufträge';
+
+  @override
   String get entitlementBlockedFull =>
       'Sie haben diesen Monat alle Tage aufgebraucht. Bitten Sie einen Admin um mehr oder beantragen Sie zusätzliche Halbtage.';
 
