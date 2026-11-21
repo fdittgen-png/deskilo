@@ -14,6 +14,14 @@ const PdfColor reportInk = PdfColors.blueGrey900;
 const PdfColor reportMuted = PdfColors.blueGrey600;
 const PdfColor reportHairline = PdfColors.blueGrey200;
 
+/// Light grey of the diagonal watermark. Painted at half opacity OVER the
+/// content: as a background it disappeared behind the billed-to card and the
+/// period box, which swallowed half the word. Over white it lands at the same
+/// light grey; over a figure it only greys the stroke, so every amount stays
+/// readable.
+const PdfColor reportWatermark = PdfColors.grey400;
+const double reportWatermarkOpacity = 0.5;
+
 /// Point sizes of the four typographic roles.
 const double reportHeadingSize = 20;
 const double reportSubheadingSize = 8;

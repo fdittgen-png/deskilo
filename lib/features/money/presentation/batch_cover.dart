@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_document_pdf/report_block_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 import '../../workspace/providers/workspace_providers.dart';
-import '../domain/report_block_widgets.dart';
 import 'invoice_documents.dart';
 
 /// #671 — the cover page for a batch print, rendered from the report
