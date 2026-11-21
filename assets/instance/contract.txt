@@ -2957,7 +2957,7 @@ routine public.import_closure_days(p_workspace_id uuid, p_days jsonb, p_apply bo
 routine public.import_floor_plan(p_workspace_id uuid, p_plan jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:bc90d83d1544
 routine public.import_floor_plan_v2(p_workspace_id uuid, p_plan jsonb, p_accessories jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:f20c38cf0ab5
 routine public.import_floor_plan_v3(p_workspace_id uuid, p_plan jsonb, p_accessories jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:0d1d17272fcd
-routine public.import_workspace_configuration(p_workspace_id uuid, p_configuration jsonb, p_mode text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:802ca73d3d4e
+routine public.import_workspace_configuration(p_workspace_id uuid, p_configuration jsonb, p_mode text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:14dcba04b607
 routine public.imported_branding(p_current jsonb, p_incoming jsonb, p_mode text) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:fa95d80a7677
 routine public.imported_feature_flags(p_flags jsonb) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:39acec231f00
 routine public.imported_lexicon(p_current jsonb, p_incoming jsonb, p_mode text) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:8b21e6a016db
@@ -3797,7 +3797,7 @@ routine public.save_setup_journey(p_workspace_id uuid, p_answers jsonb, p_levels
 routine public.save_setup_step_draft(p_workspace_id uuid, p_step text, p_payload jsonb, p_expected_version integer, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:fdb127d50874
 routine public.save_standalone_invoice_draft_v1(p_workspace_id uuid, p_draft_id uuid, p_expected_revision integer, p_subject uuid, p_service_date date, p_due_on date, p_buyer_reference text, p_purchase_order text, p_lines jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:469627be70ed
 routine public.save_stock_item_v1(p_workspace_id uuid, p_item_id uuid, p_expected_revision integer, p_request_id uuid, p_item jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:ee5d95488817
-routine public.save_stock_location_v1(p_workspace_id uuid, p_place_id uuid, p_expected_revision integer, p_request_id uuid, p_place jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:8b4768cd0861
+routine public.save_stock_location_v1(p_workspace_id uuid, p_place_id uuid, p_expected_revision integer, p_request_id uuid, p_place jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:cc63bb848e5a
 routine public.save_supplier(p_workspace_id uuid, p_supplier_id uuid, p_name text, p_tax_id text, p_tax_id_kind text, p_street text, p_postal_code text, p_city text, p_country_code text, p_contact text, p_number text, p_subdivision text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:527806d558d6
 routine public.save_supplier_item_mapping_v1(p_workspace_id uuid, p_mapping_id uuid, p_expected_revision integer, p_request_id uuid, p_mapping jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:8d4b026fb03b
 routine public.save_vat_declaration(p_workspace_id uuid, p_period_start date, p_period_end date, p_lines jsonb, p_total_net_cents integer, p_total_vat_cents integer, p_currency text, p_invoice_count integer) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:0729051c79e0
@@ -3991,7 +3991,7 @@ routine public.stock_to_inventory(p_item_id uuid, p_unit text, p_quantity numeri
 routine public.stock_transfer_load_v1(p_workspace_id uuid, p_request_id uuid, p_to_location_id uuid, p_lines jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:659abd3337f7
 routine public.stock_transfer_receive_v1(p_workspace_id uuid, p_request_id uuid, p_transfer_id uuid, p_lines jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:da146b514dee
 routine public.stock_transfer_v1(p_workspace_id uuid, p_request_id uuid, p_lines jsonb, p_occurred_at timestamp with time zone) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:20cbe40c6baa
-routine public.stock_transit_place(p_workspace_id uuid) -> uuid | function | definer | volatile | exec:service_role | body:4f6447d4aa77
+routine public.stock_transit_place(p_workspace_id uuid) -> uuid | function | definer | volatile | exec:service_role | body:1d8476503f84
 routine public.stock_unit_factor(p_item_id uuid, p_unit text) -> TABLE(num bigint, den bigint) | function | definer | stable | exec:service_role | body:775c0e0a9533
 routine public.stock_value_at_v1(p_workspace_id uuid, p_at timestamp with time zone) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:ea761add5e0f
 routine public.stock_variant_label(p_variant_id uuid) -> text | function | definer | stable | exec:service_role | body:3c5414fbb3c4
