@@ -3,6 +3,8 @@
 // #3550 — the Demo's kinds of business: the rows 0703 seeds (and 0834's
 // freelancer), with the profiles 0709 and 0834 give them. The kind is kept in the Demo's settings, as the
 // server keeps it in the registry.
+import 'package:meta/meta.dart';
+
 import '../../../features/workspace/domain/business_kind.dart';
 import '../../../features/workspace/domain/business_profile.dart';
 import '../../settings/settings.dart';
@@ -21,6 +23,7 @@ const demoNoPlacesProfile = {
 
 /// #4168 — the freelancer's profile: the money side of a one-person service
 /// business, no places, no provider, no messages, no public page.
+@visibleForTesting
 const demoFreelancerProfile = {
   'placeBooking': false,
   'moneyTab': true,
