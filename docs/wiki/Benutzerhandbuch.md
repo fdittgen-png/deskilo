@@ -3007,6 +3007,8 @@ Hat der Kunde geantwortet, wählen Sie bei einem gesendeten Angebot **Antwort fe
 
 Wie lange ein neues Angebot gültig bleibt, wenn Sie kein Enddatum angeben, und die längste Gültigkeit, die Sie zulassen, sind Ihre eigenen Einstellungen: **Standardgültigkeit eines Angebots** (zunächst 30 Tage) und **Längste Gültigkeit eines Angebots** (zunächst 365 Tage), in den Einstellungen des Arbeitsbereichs. Eine längere Gültigkeit wird beim Speichern des Angebots abgelehnt.
 
+Bei einem gesendeten Angebot öffnet **PDF teilen** das Angebot als Dokument: ein Angebot mit eigener Referenz und Gültigkeit, dem Kunden, den Positionen und dem, was sie ergeben, so wie beim Senden festgeschrieben (netto, Umsatzsteuer je Satz und Gesamtbetrag). Es ist nie eine Rechnung und trägt keine Rechnungsnummer. Sie können es ansehen, speichern oder teilen.
+
 <!-- anchor: user.money.amounts -->
 ### Wie Beträge angezeigt werden
 

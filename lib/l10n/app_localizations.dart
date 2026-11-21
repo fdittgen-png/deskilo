@@ -9197,6 +9197,12 @@ abstract class AppLocalizations {
   /// **'Members book seats, desks and rooms on a floor plan.'**
   String get businessKindDescCoworking;
 
+  /// #4168 the freelancer business kind and its review
+  ///
+  /// In en, this message translates to:
+  /// **'One person selling and invoicing their own services: customers, quotes and invoices, no premises.'**
+  String get businessKindDescFreelancer;
+
   /// #3550 the one-line description of the business kind 'practice'
   ///
   /// In en, this message translates to:
@@ -9232,6 +9238,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Coworking space'**
   String get businessKindNameCoworking;
+
+  /// #4168 the freelancer business kind and its review
+  ///
+  /// In en, this message translates to:
+  /// **'Freelancer'**
+  String get businessKindNameFreelancer;
 
   /// #3550 the name of the business kind 'practice'
   ///
@@ -9274,6 +9286,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count, plural, one{everything about places — seats, floor plan, kiosk, rooms (1 feature)} other{everything about places — seats, floor plan, kiosk, rooms ({count} features)}}'**
   String businessKindPlacesOff(int count);
+
+  /// #4168 the freelancer business kind and its review
+  ///
+  /// In en, this message translates to:
+  /// **'This kind of business was updated while you were choosing. Close this window and open it again to review what it proposes now.'**
+  String get businessKindProfileChanged;
+
+  /// #4168 the freelancer business kind and its review
+  ///
+  /// In en, this message translates to:
+  /// **'The kind was saved, but its features were not changed: they changed meanwhile. Review them in Features.'**
+  String get businessKindSavedFlagsRefused;
 
   /// #3550 the disclosure that lists every feature name of the proposal
   ///
@@ -13508,6 +13532,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Coworking'**
   String get discoveryKindCoworking;
+
+  /// #4168 the freelancer business kind and its review
+  ///
+  /// In en, this message translates to:
+  /// **'Freelancers'**
+  String get discoveryKindFreelancers;
 
   /// #3554 Discover: a kind is chosen and no business of it was found; {kind} is the chip's label
   ///
@@ -46502,6 +46532,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Purchase order {reference}'**
   String reportDocPurchaseOrderTitle(String reference);
+
+  /// #4166 the quote as a printed document: its kind in the report designer and the word on the paper
+  ///
+  /// In en, this message translates to:
+  /// **'Quote'**
+  String get reportDocQuote;
+
+  /// #4166 title of a printed quote, with its reference
+  ///
+  /// In en, this message translates to:
+  /// **'Quote {reference}'**
+  String reportDocQuoteTitle(String reference);
 
   /// Shown as a text in report kind labels (money).
   ///

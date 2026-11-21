@@ -3464,12 +3464,14 @@
   "businessKindConsentLater": "Puede activarlas más tarde en Funciones.",
   "businessKindConsentTitle": "Aún no estable — solo se activa si lo marca",
   "businessKindDescCoworking": "Los miembros reservan plazas, mesas y salas en un plano.",
+  "businessKindDescFreelancer": "Una persona que vende y factura sus propios servicios: clientes, presupuestos y facturas, sin local.",
   "businessKindDescPractice": "Citas: masaje, terapia, coaching, asesoría.",
   "businessKindDescSalon": "Belleza, peluquería, uñas, tatuaje.",
   "businessKindDescService": "Cualquier otro negocio que vende sus servicios.",
   "businessKindDescStudio": "Clases y cursos: yoga, danza, música, arte.",
   "businessKindMoreTitle": "También es… (opcional)",
   "businessKindNameCoworking": "Espacio de coworking",
+  "businessKindNameFreelancer": "Profesional independiente",
   "businessKindNamePractice": "Consulta",
   "businessKindNameSalon": "Salón",
   "businessKindNameService": "Empresa de servicios",
@@ -3477,6 +3479,8 @@
   "businessKindNoBookingYet": "La reserva de clases y citas no forma parte de esta versión. Hoy obtiene: sus servicios con precios, facturas, pago en línea, mensajes y su página pública.",
   "businessKindNoChange": "Las funciones se quedan como están.",
   "businessKindPlacesOff": "{count, plural, one{todo lo relativo a plazas — asientos, plano, quiosco, salas (1 función)} other{todo lo relativo a plazas — asientos, plano, quiosco, salas ({count} funciones)}}",
+  "businessKindProfileChanged": "Este tipo de negocio se actualizó mientras elegía. Cierre esta ventana y ábrala de nuevo para revisar lo que propone ahora.",
+  "businessKindSavedFlagsRefused": "Se guardó el tipo, pero no se cambiaron sus funciones: cambiaron entretanto. Revíselas en Funciones.",
   "businessKindShowAll": "Mostrar todo",
   "businessKindSwitchesOff": "Desactiva: {features}",
   "businessKindSwitchesOn": "Activa: {features}",
@@ -5182,6 +5186,7 @@
   "discoveryHoursClosed": "No se publicaron días habituales de apertura",
   "discoveryKindAll": "Todos los tipos",
   "discoveryKindCoworking": "Coworking",
+  "discoveryKindFreelancers": "Profesionales independientes",
   "discoveryKindNoMatch": "Ningún resultado en «{kind}»",
   "discoveryKindPractices": "Consultas",
   "discoveryKindSalons": "Salones",
@@ -16745,6 +16750,19 @@
   },
   "reportDocPurchaseOrder": "Pedido de compra",
   "reportDocPurchaseOrderTitle": "Pedido de compra {reference}",
+  "reportDocQuote": "Presupuesto",
+  "@reportDocQuote": {
+    "description": "#4166 the quote as a printed document: its kind in the report designer and the word on the paper"
+  },
+  "reportDocQuoteTitle": "Presupuesto {reference}",
+  "@reportDocQuoteTitle": {
+    "description": "#4166 title of a printed quote, with its reference",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
   "reportDocSpaceCodes": "Tarjetas QR de espacios",
   "reportDocStatus": "Situación del espacio",
   "@reportDocStatus": {

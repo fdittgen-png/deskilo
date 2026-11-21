@@ -3464,12 +3464,14 @@
   "businessKindConsentLater": "Vous pourrez les activer plus tard dans Fonctions.",
   "businessKindConsentTitle": "Pas encore stable — activé seulement si vous cochez",
   "businessKindDescCoworking": "Les membres réservent places, bureaux et salles sur un plan.",
+  "businessKindDescFreelancer": "Une personne qui vend et facture ses propres services : clients, devis et factures, sans local.",
   "businessKindDescPractice": "Rendez-vous : massage, thérapie, coaching, conseil.",
   "businessKindDescSalon": "Beauté, coiffure, ongles, tatouage.",
   "businessKindDescService": "Toute autre entreprise qui vend ses services.",
   "businessKindDescStudio": "Cours et ateliers : yoga, danse, musique, art.",
   "businessKindMoreTitle": "C’est aussi… (facultatif)",
   "businessKindNameCoworking": "Espace de coworking",
+  "businessKindNameFreelancer": "Indépendant·e",
   "businessKindNamePractice": "Cabinet",
   "businessKindNameSalon": "Salon",
   "businessKindNameService": "Entreprise de services",
@@ -3477,6 +3479,8 @@
   "businessKindNoBookingYet": "La réservation de cours et de rendez-vous ne fait pas partie de cette version. Aujourd’hui, vous avez : vos prestations avec leurs prix, les factures, le paiement en ligne, les messages et votre page publique.",
   "businessKindNoChange": "Les fonctions restent telles quelles.",
   "businessKindPlacesOff": "{count, plural, one{tout ce qui concerne les places — sièges, plan, borne, salles ({count} fonction)} other{tout ce qui concerne les places — sièges, plan, borne, salles ({count} fonctions)}}",
+  "businessKindProfileChanged": "Ce genre d'activité a été mis à jour pendant votre choix. Fermez cette fenêtre et rouvrez-la pour revoir ce qu'il propose maintenant.",
+  "businessKindSavedFlagsRefused": "Le genre a été enregistré, mais ses fonctions n'ont pas été modifiées : elles ont changé entre-temps. Revoyez-les dans Fonctions.",
   "businessKindShowAll": "Tout afficher",
   "businessKindSwitchesOff": "Désactive : {features}",
   "businessKindSwitchesOn": "Active : {features}",
@@ -5182,6 +5186,7 @@
   "discoveryHoursClosed": "Aucun jour d’ouverture habituel publié",
   "discoveryKindAll": "Tous les types",
   "discoveryKindCoworking": "Coworking",
+  "discoveryKindFreelancers": "Indépendant·es",
   "discoveryKindNoMatch": "Aucun résultat dans « {kind} »",
   "discoveryKindPractices": "Cabinets",
   "discoveryKindSalons": "Salons",
@@ -16745,6 +16750,19 @@
   },
   "reportDocPurchaseOrder": "Bon de commande",
   "reportDocPurchaseOrderTitle": "Bon de commande {reference}",
+  "reportDocQuote": "Devis",
+  "@reportDocQuote": {
+    "description": "#4166 the quote as a printed document: its kind in the report designer and the word on the paper"
+  },
+  "reportDocQuoteTitle": "Devis {reference}",
+  "@reportDocQuoteTitle": {
+    "description": "#4166 title of a printed quote, with its reference",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
   "reportDocSpaceCodes": "Cartes QR des espaces",
   "reportDocStatus": "Situation de l'espace",
   "@reportDocStatus": {

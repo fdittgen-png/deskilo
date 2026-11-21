@@ -7627,6 +7627,10 @@
   "@businessKindDescCoworking": {
     "description": "#3550 the one-line description of the business kind 'coworking'"
   },
+  "businessKindDescFreelancer": "One person selling and invoicing their own services: customers, quotes and invoices, no premises.",
+  "@businessKindDescFreelancer": {
+    "description": "#4168 the freelancer business kind and its review"
+  },
   "businessKindDescPractice": "Appointments: massage, therapy, coaching, consulting.",
   "@businessKindDescPractice": {
     "description": "#3550 the one-line description of the business kind 'practice'"
@@ -7650,6 +7654,10 @@
   "businessKindNameCoworking": "Coworking space",
   "@businessKindNameCoworking": {
     "description": "#3550 the name of the business kind 'coworking'"
+  },
+  "businessKindNameFreelancer": "Freelancer",
+  "@businessKindNameFreelancer": {
+    "description": "#4168 the freelancer business kind and its review"
   },
   "businessKindNamePractice": "Practice",
   "@businessKindNamePractice": {
@@ -7683,6 +7691,14 @@
         "type": "int"
       }
     }
+  },
+  "businessKindProfileChanged": "This kind of business was updated while you were choosing. Close this window and open it again to review what it proposes now.",
+  "@businessKindProfileChanged": {
+    "description": "#4168 the freelancer business kind and its review"
+  },
+  "businessKindSavedFlagsRefused": "The kind was saved, but its features were not changed: they changed meanwhile. Review them in Features.",
+  "@businessKindSavedFlagsRefused": {
+    "description": "#4168 the freelancer business kind and its review"
   },
   "businessKindShowAll": "Show all",
   "@businessKindShowAll": {
@@ -11145,6 +11161,10 @@
   "discoveryKindCoworking": "Coworking",
   "@discoveryKindCoworking": {
     "description": "#3554 Discover: chip narrowing the search to coworking spaces (plural sense)"
+  },
+  "discoveryKindFreelancers": "Freelancers",
+  "@discoveryKindFreelancers": {
+    "description": "#4168 the freelancer business kind and its review"
   },
   "discoveryKindNoMatch": "Nothing found in “{kind}”",
   "@discoveryKindNoMatch": {
@@ -38010,6 +38030,19 @@
   "reportDocPurchaseOrderTitle": "Purchase order {reference}",
   "@reportDocPurchaseOrderTitle": {
     "description": "#3652 Title of a printed purchase order, with its reference.",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
+  "reportDocQuote": "Quote",
+  "@reportDocQuote": {
+    "description": "#4166 the quote as a printed document: its kind in the report designer and the word on the paper"
+  },
+  "reportDocQuoteTitle": "Quote {reference}",
+  "@reportDocQuoteTitle": {
+    "description": "#4166 title of a printed quote, with its reference",
     "placeholders": {
       "reference": {
         "type": "String"

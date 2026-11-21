@@ -8,6 +8,7 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:meta/meta.dart';
 
+import 'customer_quote_lines.dart';
 import 'standalone_invoice.dart';
 
 /// Where a quote stands. A quote with anything sent is never deleted.
@@ -41,28 +42,6 @@ class QuoteTotals {
   final String currency;
 }
 
-/// A line of a sent revision as the server froze it: the invoice line
-/// snapshot, whose words are `label` and whose quantity, unit and price are the
-/// exact facts of its `commercial` member. A line without one reads as what it
-/// has, never as a failure.
-StandaloneLine _frozenLine(JsonReader r) {
-  final facts = r.objectOrNull('commercial');
-  final unit = facts?.objectOrNull('unit');
-  final price = facts?.objectOrNull('unit_price');
-  return StandaloneLine(
-    lineId: facts?.stringOrNull('line_id'),
-    description: r.stringOr('label'),
-    quantity: facts?.stringOr('quantity') ?? '',
-    unitCode: unit?.stringOr('code') ?? '',
-    unitLabel: unit?.stringOr('label') ?? '',
-    unEceCode: unit?.stringOr('un_ece_code') ?? '',
-    unitPrice: price?.stringOr('amount') ?? '',
-    grossPrice: price?.stringOr('basis') == 'gross',
-    baseQuantity: price?.stringOr('base_quantity', '1') ?? '1',
-    supply: r.stringOr('supply', 'general'),
-  );
-}
-
 /// One revision of a quote: the working draft (editable at its version) or a
 /// sent one (frozen: the lines are its snapshot).
 @immutable
@@ -80,6 +59,7 @@ class QuoteRevision {
     required this.totals,
     required this.contentDigest,
     required this.superseded,
+    this.amounts = const [],
   });
 
   factory QuoteRevision.fromJson(JsonReader r) => QuoteRevision(
@@ -95,8 +75,12 @@ class QuoteRevision {
     // is the invoice line snapshot the issuer froze (label, commercial facts).
     lines: r.objects(
       'lines',
-      r.stringOr('status') == 'sent' ? _frozenLine : StandaloneLine.fromJson,
+      r.stringOr('status') == 'sent' ? frozenQuoteLine : StandaloneLine.fromJson,
     ),
+    // What each frozen line comes to, in the order of [lines]; none for a draft.
+    amounts: r.stringOr('status') == 'sent'
+        ? r.objects('lines', QuoteLineAmounts.fromJson)
+        : const [],
     totals: r.objectOrNull('totals') == null
         ? null
         : QuoteTotals.fromJson(r.objectOrNull('totals')!),
@@ -117,6 +101,9 @@ class QuoteRevision {
   final String purchaseOrder;
   final String notes;
   final List<StandaloneLine> lines;
+
+  /// What each line of a sent revision comes to (same order as [lines]).
+  final List<QuoteLineAmounts> amounts;
 
   /// Null for a draft: its amounts exist only once the revision is sent.
   final QuoteTotals? totals;

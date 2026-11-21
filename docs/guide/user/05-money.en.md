@@ -620,6 +620,8 @@ Once the customer has answered, choose **Record the answer** on a sent quote: yo
 
 How long a new quote stays valid when you state no end date, and the longest validity you accept, are your own settings: **Default validity of a quote** (30 days to begin with) and **Longest validity of a quote** (365 days to begin with), in the workspace settings. A longer validity is refused when the quote is saved.
 
+On a sent quote, **Share the PDF** opens the offer as a document: a quote, with its own reference and how long it is valid, the customer, the lines and what they come to as they were frozen when it was sent (the net, the VAT per rate and the total). It is never an invoice and carries no invoice number. You can view it, save it or share it.
+
 <!-- anchor: user.money.amounts -->
 ### How amounts are shown
 

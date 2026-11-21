@@ -5827,6 +5827,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Members book seats, desks and rooms on a floor plan.';
 
   @override
+  String get businessKindDescFreelancer =>
+      'One person selling and invoicing their own services: customers, quotes and invoices, no premises.';
+
+  @override
   String get businessKindDescPractice =>
       'Appointments: massage, therapy, coaching, consulting.';
 
@@ -5846,6 +5850,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get businessKindNameCoworking => 'Coworking space';
+
+  @override
+  String get businessKindNameFreelancer => 'Freelancer';
 
   @override
   String get businessKindNamePractice => 'Practice';
@@ -5877,6 +5884,14 @@ class AppLocalizationsEn extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get businessKindProfileChanged =>
+      'This kind of business was updated while you were choosing. Close this window and open it again to review what it proposes now.';
+
+  @override
+  String get businessKindSavedFlagsRefused =>
+      'The kind was saved, but its features were not changed: they changed meanwhile. Review them in Features.';
 
   @override
   String get businessKindShowAll => 'Show all';
@@ -8508,6 +8523,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get discoveryKindCoworking => 'Coworking';
+
+  @override
+  String get discoveryKindFreelancers => 'Freelancers';
 
   @override
   String discoveryKindNoMatch(String kind) {
@@ -28994,6 +29012,14 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String reportDocPurchaseOrderTitle(String reference) {
     return 'Purchase order $reference';
+  }
+
+  @override
+  String get reportDocQuote => 'Quote';
+
+  @override
+  String reportDocQuoteTitle(String reference) {
+    return 'Quote $reference';
   }
 
   @override

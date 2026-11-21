@@ -342,6 +342,7 @@ constraint book_profiles.system_company_present CHECK ((company_id IS NOT NULL))
 constraint business_kinds.business_kinds_code_check CHECK ((code ~ '^[a-z][a-z_]{1,31}$'::text))
 constraint business_kinds.business_kinds_feature_profile_check CHECK ((jsonb_typeof(feature_profile) = 'object'::text))
 constraint business_kinds.business_kinds_pkey PRIMARY KEY (code)
+constraint business_kinds.business_kinds_profile_version_check CHECK ((profile_version >= 1))
 constraint business_kinds.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint capability_states.capability_states_capability_key_check CHECK ((capability_key = 'accountingConnectors'::text))
 constraint capability_states.capability_states_changed_by_member_id_same_workspace FOREIGN KEY (workspace_id, changed_by_member_id) REFERENCES members(workspace_id, id)
@@ -366,6 +367,16 @@ constraint closure_days.closure_days_workspace_id_day_key UNIQUE (workspace_id, 
 constraint closure_days.closure_days_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint closure_days.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint closure_days.system_company_present CHECK ((company_id IS NOT NULL))
+constraint configuration_choice_events.configuration_choice_events_changed_check CHECK ((jsonb_typeof(changed) = 'object'::text))
+constraint configuration_choice_events.configuration_choice_events_outcome_check CHECK ((outcome = ANY (ARRAY['applied'::text, 'no_change'::text, 'refused'::text])))
+constraint configuration_choice_events.configuration_choice_events_pkey PRIMARY KEY (id)
+constraint configuration_choice_events.configuration_choice_events_refusal_check CHECK ((char_length(refusal) <= 120))
+constraint configuration_choice_events.configuration_choice_events_source_check CHECK ((jsonb_typeof(source) = 'object'::text))
+constraint configuration_choice_events.configuration_choice_events_stage_check CHECK ((stage = ANY (ARRAY['kind'::text, 'flags'::text])))
+constraint configuration_choice_events.configuration_choice_events_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint configuration_choice_events.configuration_choice_events_workspace_id_request_id_stage_key UNIQUE (workspace_id, request_id, stage)
+constraint configuration_choice_events.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint configuration_choice_events.system_company_present CHECK ((company_id IS NOT NULL))
 constraint conversation_participants.conversation_participants_conversation_id_fkey FOREIGN KEY (conversation_id) REFERENCES conversations(id) ON DELETE CASCADE
 constraint conversation_participants.conversation_participants_member_id_fkey FOREIGN KEY (member_id) REFERENCES members(id) ON DELETE CASCADE
 constraint conversation_participants.conversation_participants_pkey PRIMARY KEY (conversation_id, member_id)
@@ -2507,6 +2518,7 @@ routine public.analytics_reservation_target() -> trigger | function | definer | 
 routine public.analytics_seat_changed() -> trigger | function | definer | volatile | exec:service_role | body:1638777ebde6
 routine public.analytics_seat_reopen(p_seat_id uuid) -> void | function | definer | volatile | exec:service_role | body:b0d459ad9d1f
 routine public.analytics_workspace_changed() -> trigger | function | definer | volatile | exec:service_role | body:2ecc9180a068
+routine public.apply_business_kind_v1(p_workspace uuid, p_request_id uuid, p_kind text, p_more_kinds text, p_reviewed_version integer, p_reviewed_digest text, p_flags jsonb, p_expected jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:b2bd1e51a2bc
 routine public.apply_declared_payment_claim() -> trigger | function | definer | volatile | exec:service_role | body:77ed10671be0
 routine public.apply_due_member_term_changes(p_workspace_id uuid) -> integer | function | definer | volatile | exec:service_role | body:7d7ca9ea50b9
 routine public.apply_expense_occurrence_decision() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:7345bbfc47c5
@@ -2605,6 +2617,7 @@ routine public.branding_clean(p_incoming jsonb, p_strict boolean) -> jsonb | fun
 routine public.business_document_language(p_locale text, p_country text, p_on date) -> text | function | definer | stable | exec:service_role | body:aa4b68900fc1
 routine public.business_kind_setting_check() -> trigger | function | invoker | volatile | exec:service_role | body:50eaa3943a8a
 routine public.business_kinds_profile_check() -> trigger | function | invoker | volatile | exec:service_role | body:ef13acf7a64a
+routine public.business_kinds_profile_version() -> trigger | function | invoker | volatile | exec:service_role | body:884d0ef1c153
 routine public.business_mail_key_resolved(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:service_role | body:5e0a7e8babe6
 routine public.business_mail_sender_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:7a416bed362a
 routine public.business_payables_page_v1(p_workspace_id uuid, p_currency text, p_creditor_kind text, p_after_created timestamp with time zone, p_after_id uuid, p_limit integer) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:7b7a2823cdb3
@@ -2657,6 +2670,7 @@ routine public.complete_rights_request(p_request_id uuid, p_outcome jsonb, p_ref
 routine public.compute_postings(p_workspace_id uuid, p_issuer_site_id uuid, p_from date, p_to date) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:1003ddf7306c
 routine public.compute_vat_return(p_workspace uuid, p_start date, p_end date) -> TABLE(direction text, percent numeric, category text, tax_point date, credit_note boolean, correction boolean, corrects uuid, gross_cents bigint, net_cents bigint, vat_cents bigint, invoice_count integer) | function | definer | stable | exec:authenticated,service_role | body:aa24ffac9871
 routine public.configuration_change_set(p_to uuid, p_snapshot jsonb, p_entities text[], p_mode text) -> jsonb | function | definer | stable | exec:service_role | body:20f005547b90
+routine public.configuration_choice_events_append_only() -> trigger | function | invoker | volatile | exec:service_role | body:e2335e838288
 routine public.configuration_group_states(p_set jsonb) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:f26d382ab7a3
 routine public.configuration_source_fence(p_workspace_id uuid, p_configuration jsonb) -> jsonb | function | invoker | stable | exec:service_role | body:f9c0e8a2ed15
 routine public.confirm_asset_valuations_v1(p_workspace_id uuid, p_batch_id uuid, p_revision integer, p_supersedes uuid, p_reason text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:49cf3011d081
@@ -4068,6 +4082,7 @@ trigger book_mappings.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_s
 trigger book_periods.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.book_periods FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger book_profiles.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.book_profiles FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger business_kinds.business_kinds_profile_check CREATE TRIGGER business_kinds_profile_check BEFORE INSERT OR UPDATE OF feature_profile ON public.business_kinds FOR EACH ROW EXECUTE FUNCTION business_kinds_profile_check()
+trigger business_kinds.business_kinds_profile_version CREATE TRIGGER business_kinds_profile_version BEFORE INSERT OR UPDATE OF feature_profile ON public.business_kinds FOR EACH ROW EXECUTE FUNCTION business_kinds_profile_version()
 trigger business_kinds.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.business_kinds FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger capability_states.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.capability_states FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger charging_stations.charging_stations_fee CREATE TRIGGER charging_stations_fee AFTER INSERT OR DELETE OR UPDATE ON public.charging_stations FOR EACH ROW EXECUTE FUNCTION charging_stations_fee()
@@ -4075,6 +4090,8 @@ trigger charging_stations.charging_stations_guard CREATE TRIGGER charging_statio
 trigger charging_stations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.charging_stations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger closure_days.realtime_deletion_signal CREATE TRIGGER realtime_deletion_signal AFTER DELETE ON public.closure_days REFERENCING OLD TABLE AS old_rows FOR EACH STATEMENT EXECUTE FUNCTION realtime_deletion_signal()
 trigger closure_days.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.closure_days FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger configuration_choice_events.configuration_choice_events_append_only CREATE TRIGGER configuration_choice_events_append_only BEFORE DELETE OR UPDATE ON public.configuration_choice_events FOR EACH ROW EXECUTE FUNCTION configuration_choice_events_append_only()
+trigger configuration_choice_events.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.configuration_choice_events FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger conversation_participants.customer_subject_refused CREATE TRIGGER customer_subject_refused BEFORE INSERT OR UPDATE OF member_id ON public.conversation_participants FOR EACH ROW EXECUTE FUNCTION reject_customer_subject('member_id')
 trigger conversation_participants.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.conversation_participants FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger conversations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.conversations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()

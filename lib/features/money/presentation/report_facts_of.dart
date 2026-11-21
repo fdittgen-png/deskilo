@@ -189,3 +189,16 @@ PaymentTerms? memberTermsFor(WidgetRef ref, String memberId) => ref
     ?.where((m) => m.id == memberId)
     .firstOrNull
     ?.paymentTerms;
+
+/// #4166 — the business's name, address and currency as a quote prints them
+/// (its letterhead): read here, with the other document facts.
+({String name, String address, String currency}) quoteLetterheadOf(
+  WidgetRef ref,
+) {
+  final workspace = ref.read(currentWorkspaceProvider).value;
+  return (
+    name: workspace?.name ?? '',
+    address: workspace?.address ?? '',
+    currency: workspace?.currencyCode ?? '',
+  );
+}

@@ -620,6 +620,8 @@ Quand le client a répondu, choisissez **Enregistrer la réponse** sur un devis 
 
 La durée pendant laquelle un nouveau devis reste valable quand vous n’indiquez pas de date de fin, et la validité la plus longue que vous acceptez, sont vos propres réglages : **Validité par défaut d’un devis** (30 jours au départ) et **Validité maximale d’un devis** (365 jours au départ), dans les paramètres de l’espace. Une validité plus longue est refusée à l’enregistrement du devis.
 
+Sur un devis envoyé, **Partager le PDF** ouvre l’offre comme un document : un devis, avec sa propre référence et sa durée de validité, le client, les lignes et ce qu’elles représentent telles qu’elles ont été figées à l’envoi (le net, la TVA par taux et le total). Ce n’est jamais une facture et il ne porte aucun numéro de facture. Vous pouvez le consulter, l’enregistrer ou le partager.
+
 <!-- anchor: user.money.amounts -->
 ### Comment les montants sont affichés
 
