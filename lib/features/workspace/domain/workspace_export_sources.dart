@@ -418,6 +418,11 @@ const List<ExportSource> workspaceExportSources = [
   ExportSource.everyColumn('suppliers'),
   // #4164 — the billing identity of each customer the business invoices.
   ExportSource.everyColumn('billing_parties'),
+  // #4166 — the customer quotes, what was sent, what was decided, what was invoiced.
+  ExportSource.everyColumn('customer_quotes'),
+  ExportSource.everyColumn('customer_quote_revisions'),
+  ExportSource.everyColumn('customer_quote_decisions'),
+  ExportSource.everyColumn('customer_quote_conversions'),
   ExportSource.everyColumn('purchase_documents'),
   ExportSource.everyColumn('purchase_lines'),
   ExportSource.everyColumn('purchase_obligations'),

@@ -11438,6 +11438,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get featureCustomRolesTitle => 'Roles que define este espacio';
 
   @override
+  String get featureCustomerQuotesDesc =>
+      'Ofrezca un precio a un cliente facturado antes de facturarle: las líneas, cuánto tiempo vale la oferta y la respuesta que usted registra. Un presupuesto aceptado se convierte, una sola vez, en la primera factura de ese cliente. No se factura nada hasta que lo convierta. Se activa a petición, dentro de facturación.';
+
+  @override
+  String get featureCustomerQuotesTitle => 'Presupuestos de clientes';
+
+  @override
   String get featureDataAccessLogDesc =>
       'Cada miembro ve quién consultó sus finanzas y cuándo (lo escribe el servidor, nunca se omite). Desactivado: la fila se oculta, el registro se conserva.';
 

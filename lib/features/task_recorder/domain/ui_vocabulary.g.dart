@@ -8776,6 +8776,8 @@ const Set<String> uiLabelKeys = {
   'featureCustomFieldsTitle',
   'featureCustomRolesDesc',
   'featureCustomRolesTitle',
+  'featureCustomerQuotesDesc',
+  'featureCustomerQuotesTitle',
   'featureDataAccessLogDesc',
   'featureDataAccessLogTitle',
   'featureDataExport',

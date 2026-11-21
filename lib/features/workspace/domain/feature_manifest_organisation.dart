@@ -27,4 +27,14 @@ const Map<WorkspaceFeature, FeatureManifestEntry> organisationFeatureManifest =
         requires: WorkspaceFeature.invoicing,
         defaultOn: false,
       ),
+      // #4166 — the quotes a business makes to its billing customers, and
+      // the one conversion of an accepted quote into an invoice. Asked for,
+      // under invoicing.
+      WorkspaceFeature.customerQuotes: FeatureManifestEntry(
+        feature: WorkspaceFeature.customerQuotes,
+        surface: FeatureSurface.money,
+        tier: FeatureTier.platform,
+        requires: WorkspaceFeature.invoicing,
+        defaultOn: false,
+      ),
     };

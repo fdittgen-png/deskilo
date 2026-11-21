@@ -196,6 +196,8 @@ const Map<SetupProcess, List<SetupLevel>> setupLevels = {
         WorkspaceFeature.invoiceAddressWindow,
         // #4164 — the people and businesses invoiced without an account.
         WorkspaceFeature.billingCustomers,
+        // #4166 — the offers made to them before an invoice.
+        WorkspaceFeature.customerQuotes,
       },
     ),
   ],
