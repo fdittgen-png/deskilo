@@ -289,5 +289,13 @@
   "featureStockLotsDesc": "Seguire le merci per lotto o per data di scadenza, con una durata di conservazione. Disattivato: nessun articolo è seguito per lotto e ciò che è stato registrato resta invariato.",
   "@featureStockLotsDesc": {
     "description": "#4169 what the lots and expiry feature does, and what off means"
+  },
+  "featureStockReceivingTitle": "Ricezione a magazzino",
+  "@featureStockReceivingTitle": {
+    "description": "#4171 the name of the receiving into stock feature"
+  },
+  "featureStockReceivingDesc": "Collocare le merci di una consegna di ordine a fornitore in ubicazioni e nuovi lotti, una sola volta, conservandone l’origine. Disattivato: una consegna è registrata come prima e nessuna giacenza si muove.",
+  "@featureStockReceivingDesc": {
+    "description": "#4171 what the receiving into stock feature does, and what off means"
   }
 }

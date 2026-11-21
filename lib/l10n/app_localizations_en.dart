@@ -12264,6 +12264,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureStockManagementTitle => 'Stock management';
 
   @override
+  String get featureStockReceivingDesc =>
+      'Put the goods of a purchase-order delivery away into places and new lots, once, with their origin kept. Off: a delivery is recorded as before and no stock moves.';
+
+  @override
+  String get featureStockReceivingTitle => 'Receiving into stock';
+
+  @override
   String get featureSubscriptionInvoicesDesc =>
       'The membership fee is invoiced before the month it pays for, on a date you choose. Off: the fee stays on the whole-month invoice.';
 

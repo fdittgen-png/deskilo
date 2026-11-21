@@ -28,4 +28,14 @@ const Map<WorkspaceFeature, FeatureManifestEntry> stockFeatureManifest = {
     requires: WorkspaceFeature.stockManagement,
     defaultOn: false,
   ),
+  // #4171 — receiving a delivery into stock: put away once, into explicit
+  // places and new lots, with its origin kept. Asked for, under the goods
+  // ledger. Off: a delivery is recorded as before and no stock moves.
+  WorkspaceFeature.stockReceiving: FeatureManifestEntry(
+    feature: WorkspaceFeature.stockReceiving,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.stockManagement,
+    defaultOn: false,
+  ),
 };

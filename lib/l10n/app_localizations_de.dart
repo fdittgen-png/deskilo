@@ -12375,6 +12375,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get featureStockManagementTitle => 'Lagerverwaltung';
 
   @override
+  String get featureStockReceivingDesc =>
+      'Die Waren einer Lieferung zu einer Lieferantenbestellung einmalig in Lagerorte und neue Chargen einlagern, mit erhaltener Herkunft. Aus: eine Lieferung wird wie bisher erfasst und kein Bestand bewegt sich.';
+
+  @override
+  String get featureStockReceivingTitle => 'Wareneingang ins Lager';
+
+  @override
   String get featureSubscriptionInvoicesDesc =>
       'Der Mitgliedsbeitrag wird vor dem Monat berechnet, den er bezahlt, an einem Datum Ihrer Wahl. Aus: Der Beitrag bleibt auf der Monatsrechnung.';
 

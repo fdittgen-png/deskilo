@@ -654,6 +654,10 @@ window.SETUP_REGISTRY={
   [
    "stockLots",
    false
+  ],
+  [
+   "stockReceiving",
+   false
   ]
  ],
  "requires": {
@@ -766,7 +770,8 @@ window.SETUP_REGISTRY={
   "standaloneInvoicing": "invoicing",
   "billingCustomers": "invoicing",
   "customerQuotes": "invoicing",
-  "stockLots": "stockManagement"
+  "stockLots": "stockManagement",
+  "stockReceiving": "stockManagement"
  },
  "availableIn": {
   "recapitulativeStatement": [
@@ -1482,7 +1487,8 @@ window.SETUP_PROCESSES=[
      "memberPaymentTerms",
      "carnets",
      "stockManagement",
-     "stockLots"
+     "stockLots",
+     "stockReceiving"
     ]
    }
   ]
@@ -1966,7 +1972,8 @@ window.SETUP_LEVELS={
       "foreignCurrencyPurchases",
       "purchaseOrders",
       "stockManagement",
-      "stockLots"
+      "stockLots",
+      "stockReceiving"
      ],
      "needs": {
       "money": "invoices"

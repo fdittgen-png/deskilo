@@ -289,5 +289,13 @@
   "featureStockLotsDesc": "Waren nach Charge oder Verfallsdatum verfolgen, mit einer Haltbarkeit. Aus: kein Artikel wird nach Charge verfolgt, und Erfasstes bleibt unverändert.",
   "@featureStockLotsDesc": {
     "description": "#4169 what the lots and expiry feature does, and what off means"
+  },
+  "featureStockReceivingTitle": "Wareneingang ins Lager",
+  "@featureStockReceivingTitle": {
+    "description": "#4171 the name of the receiving into stock feature"
+  },
+  "featureStockReceivingDesc": "Die Waren einer Lieferung zu einer Lieferantenbestellung einmalig in Lagerorte und neue Chargen einlagern, mit erhaltener Herkunft. Aus: eine Lieferung wird wie bisher erfasst und kein Bestand bewegt sich.",
+  "@featureStockReceivingDesc": {
+    "description": "#4171 what the receiving into stock feature does, and what off means"
   }
 }

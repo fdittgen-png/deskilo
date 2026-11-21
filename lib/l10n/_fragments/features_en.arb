@@ -849,5 +849,13 @@
   "featureStockLotsDesc": "Track goods by lot or by expiry date, with a shelf life. Off: no item is tracked by lot, and what was recorded is kept as it is.",
   "@featureStockLotsDesc": {
     "description": "#4169 what the lots and expiry feature does, and what off means"
+  },
+  "featureStockReceivingTitle": "Receiving into stock",
+  "@featureStockReceivingTitle": {
+    "description": "#4171 the name of the receiving into stock feature"
+  },
+  "featureStockReceivingDesc": "Put the goods of a purchase-order delivery away into places and new lots, once, with their origin kept. Off: a delivery is recorded as before and no stock moves.",
+  "@featureStockReceivingDesc": {
+    "description": "#4171 what the receiving into stock feature does, and what off means"
   }
 }

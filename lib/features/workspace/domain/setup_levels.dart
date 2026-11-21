@@ -267,6 +267,8 @@ const Map<SetupProcess, List<SetupLevel>> setupLevels = {
         WorkspaceFeature.stockManagement,
         // #4169 — lots and expiry on those goods.
         WorkspaceFeature.stockLots,
+        // #4171 — a delivery put away into stock.
+        WorkspaceFeature.stockReceiving,
       },
     ),
   ],

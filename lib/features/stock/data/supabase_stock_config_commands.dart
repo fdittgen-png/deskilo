@@ -1,13 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'dart:convert';
 
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../core/trace/trace_logger.dart';
 import '../domain/stock_config.dart';
 import '../domain/stock_config_commands.dart';
 import '../domain/stock_variants.dart';
+import 'stock_refusals.dart';
 
 /// #4169 (A1) -- `save_stock_item_v1` and `save_stock_location_v1` behind the
 /// port, and the table reads that fill the editors. A refusal of the server
@@ -263,27 +262,7 @@ class SupabaseStockConfigCommands implements StockConfigCommands {
         replayed: r.boolOr('replayed', fallback: false),
       );
     } on PostgrestException catch (e, stack) {
-      switch (e.code) {
-        case 'DKG10':
-          Error.throwWithStackTrace(const StockConfigStale(), stack);
-        case 'DKG08':
-          Error.throwWithStackTrace(const StockConfigInUse(), stack);
-        case 'DKG11':
-          Error.throwWithStackTrace(_refused(e.details), stack);
-        default:
-          rethrow;
-      }
-    }
-  }
-
-  /// The field and the reason the server wrote as JSON in its detail.
-  StockConfigRefused _refused(Object? details) {
-    try {
-      final r = JsonReader.of(jsonDecode('$details'), context: 'DKG11');
-      return StockConfigRefused(r.string('field'), r.string('reason'));
-    } on Object catch (error, stack) {
-      TraceLogger.instance.warn('stock', 'a stock refusal detail was not JSON: $error\n$stack');
-      return const StockConfigRefused('request', 'malformed');
+      throwStockFailure(e, stack);
     }
   }
 }

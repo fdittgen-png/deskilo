@@ -5,9 +5,11 @@ import '../../workspace/providers/operation_context_providers.dart';
 import '../application/stock_walk.dart';
 import '../data/supabase_stock_config_commands.dart';
 import '../data/supabase_stock_queries.dart';
+import '../data/supabase_stock_receiving_commands.dart';
 import '../domain/stock_config_commands.dart';
 import '../domain/stock_page.dart';
 import '../domain/stock_queries.dart';
+import '../domain/stock_receiving.dart';
 
 /// #4161 -- the stock reads of the selected business. The Demo and the tests
 /// replace it.
@@ -75,4 +77,10 @@ final stockMovementProvider = FutureProvider.autoDispose
 /// edit, and the guarded saves. The Demo and the tests replace it.
 final stockConfigCommandsProvider = Provider<StockConfigCommands>(
   (ref) => SupabaseStockConfigCommands(ref.watch(selectedWorkspaceClientProvider)),
+);
+
+/// #4171 -- receiving a delivery into stock: the put-away commands of the
+/// selected business. The Demo and the tests replace it.
+final stockReceivingCommandsProvider = Provider<StockReceivingCommands>(
+  (ref) => SupabaseStockReceivingCommands(ref.watch(selectedWorkspaceClientProvider)),
 );

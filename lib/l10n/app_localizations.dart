@@ -19954,6 +19954,18 @@ abstract class AppLocalizations {
   /// **'Stock management'**
   String get featureStockManagementTitle;
 
+  /// #4171 what the receiving into stock feature does, and what off means
+  ///
+  /// In en, this message translates to:
+  /// **'Put the goods of a purchase-order delivery away into places and new lots, once, with their origin kept. Off: a delivery is recorded as before and no stock moves.'**
+  String get featureStockReceivingDesc;
+
+  /// #4171 the name of the receiving into stock feature
+  ///
+  /// In en, this message translates to:
+  /// **'Receiving into stock'**
+  String get featureStockReceivingTitle;
+
   /// Shown as a text in feature copy (workspace).
   ///
   /// In en, this message translates to:

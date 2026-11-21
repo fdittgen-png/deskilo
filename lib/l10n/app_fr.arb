@@ -7597,6 +7597,14 @@
   },
   "featureStockManagementDesc": "Suivre les marchandises : où elles sont, dans quelle unité, de quel lot, et chaque mouvement d'un endroit à un autre. Désactivé : un article du catalogue garde son simple compte en rayon.",
   "featureStockManagementTitle": "Gestion des stocks",
+  "featureStockReceivingDesc": "Ranger les marchandises d’une livraison de commande fournisseur dans des emplacements et de nouveaux lots, une seule fois, avec leur origine conservée. Désactivé : une livraison est enregistrée comme avant et aucun stock ne bouge.",
+  "@featureStockReceivingDesc": {
+    "description": "#4171 what the receiving into stock feature does, and what off means"
+  },
+  "featureStockReceivingTitle": "Réception en stock",
+  "@featureStockReceivingTitle": {
+    "description": "#4171 the name of the receiving into stock feature"
+  },
   "featureSubscriptionInvoicesDesc": "La cotisation est facturée avant le mois qu'elle paie, à une date que vous choisissez. Désactivé : la cotisation reste sur la facture du mois.",
   "featureSubscriptionInvoicesTitle": "Factures d'abonnement",
   "featureSupplyClassificationDesc": "Chaque service du catalogue indique s'il est rattaché aux locaux (par défaut : imposé là où se trouve l'immeuble, pour tout client) ou s'il s'agit d'une prestation générale, comme le traitement du courrier ou la domiciliation, qu'une entreprise d'un autre État de l'UE autoliquide. Désactivé : le choix disparaît, sauf dans une activité qui ne réserve aucun espace, dont les nouveaux services commencent comme prestations générales.",

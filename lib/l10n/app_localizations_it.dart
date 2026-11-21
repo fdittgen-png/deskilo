@@ -12357,6 +12357,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featureStockManagementTitle => 'Gestione delle scorte';
 
   @override
+  String get featureStockReceivingDesc =>
+      'Collocare le merci di una consegna di ordine a fornitore in ubicazioni e nuovi lotti, una sola volta, conservandone l’origine. Disattivato: una consegna è registrata come prima e nessuna giacenza si muove.';
+
+  @override
+  String get featureStockReceivingTitle => 'Ricezione a magazzino';
+
+  @override
   String get featureSubscriptionInvoicesDesc =>
       'La quota è fatturata prima del mese che paga, in una data scelta da Lei. Disattivato: la quota resta sulla fattura del mese.';
 

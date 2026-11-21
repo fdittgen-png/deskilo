@@ -289,5 +289,13 @@
   "featureStockLotsDesc": "Seguir las mercancías por lote o por fecha de caducidad, con una vida útil. Desactivado: ningún artículo se sigue por lote y lo registrado se conserva tal cual.",
   "@featureStockLotsDesc": {
     "description": "#4169 what the lots and expiry feature does, and what off means"
+  },
+  "featureStockReceivingTitle": "Recepción en existencias",
+  "@featureStockReceivingTitle": {
+    "description": "#4171 the name of the receiving into stock feature"
+  },
+  "featureStockReceivingDesc": "Colocar las mercancías de una entrega de pedido a proveedor en ubicaciones y nuevos lotes, una sola vez, conservando su origen. Desactivado: una entrega se registra como antes y no se mueven existencias.",
+  "@featureStockReceivingDesc": {
+    "description": "#4171 what the receiving into stock feature does, and what off means"
   }
 }

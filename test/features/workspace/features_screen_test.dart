@@ -84,7 +84,8 @@ void main() {
     // asked for.
     // #4166 — customerQuotes: quoting a billing customer is asked for.
     // #4169 — stockLots: lots and expiry are asked for.
-    expect(onCount, featureManifest.length - 60);
+    // #4171 — stockReceiving: receiving into stock is asked for.
+    expect(onCount, featureManifest.length - 61);
   });
 
   testWidgets(

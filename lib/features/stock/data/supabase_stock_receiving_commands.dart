@@ -1,0 +1,80 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+
+import '../domain/stock_receiving.dart';
+import 'stock_refusals.dart';
+
+/// #4171 (A) -- `put_away_receipt_v1` and `record_receipt_and_put_away_v1`
+/// behind the port, and the allocation read. A refusal of the server becomes
+/// the typed failure the screen shows under its field; a request id that is
+/// retried answers the same ids and says so.
+class SupabaseStockReceivingCommands implements StockReceivingCommands {
+  SupabaseStockReceivingCommands(this._client);
+
+  final SupabaseClient _client;
+
+  @override
+  Future<List<ReceiptAllocation>> allocations(String workspaceId, String receiptId) async {
+    final rows = await _client
+        .from('stock_receipt_allocations')
+        .select(
+          'id, receipt_line_id, item_id, variant_id, lot_id, location_id, movement_id, '
+          'entered_unit, entered_quantity, inventory_quantity, order_reference, supplier_name, line_text',
+        )
+        .eq('workspace_id', workspaceId)
+        .eq('receipt_id', receiptId)
+        .order('part');
+    return [for (final row in rows) ReceiptAllocation.fromJson(row)];
+  }
+
+  @override
+  Future<PutAwayResult> putAway(
+    String workspaceId,
+    String receiptId,
+    List<PutAwayAllocation> allocations,
+    String requestId,
+  ) => _call('put_away_receipt_v1', {
+    'p_workspace_id': workspaceId,
+    'p_receipt_id': receiptId,
+    'p_request_id': requestId,
+    'p_allocations': [for (final a in allocations) a.toJson()],
+  });
+
+  @override
+  Future<PutAwayResult> recordAndPutAway(
+    String workspaceId, {
+    required String orderId,
+    required int orderRevision,
+    required String receivedOn,
+    required List<DeliveredLine> lines,
+    required List<PutAwayAllocation> allocations,
+    required String requestId,
+    String note = '',
+  }) => _call('record_receipt_and_put_away_v1', {
+    'p_workspace_id': workspaceId,
+    'p_order_id': orderId,
+    'p_revision': orderRevision,
+    'p_received_on': receivedOn,
+    'p_lines': [
+      for (final l in lines) {'line_no': l.lineNo, 'quantity': l.quantity},
+    ],
+    'p_note': note,
+    'p_request_id': requestId,
+    'p_allocations': [for (final a in allocations) a.toJson()],
+  });
+
+  Future<PutAwayResult> _call(String rpc, Map<String, Object?> params) async {
+    try {
+      final answer = await _client.rpc<Object?>(rpc, params: params);
+      final r = JsonReader.of(answer, context: rpc);
+      return (
+        receiptId: r.string('receipt_id'),
+        replayed: r.boolOr('replayed', fallback: false),
+        allocations: [for (final a in r.list('allocations')) ReceiptAllocation.fromJson(a)],
+      );
+    } on PostgrestException catch (e, stack) {
+      throwStockFailure(e, stack);
+    }
+  }
+}

@@ -205,6 +205,7 @@
         "standaloneInvoicing": false,
         "stockLots": false,
         "stockManagement": false,
+        "stockReceiving": false,
         "subscriptionInvoices": false,
         "supplyClassification": false,
         "supplyExpenses": false,
