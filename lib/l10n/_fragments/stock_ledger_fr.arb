@@ -24,6 +24,6 @@
   },
   "refusalStockLedgerKept": "Le stock de cette entreprise est tenu par son registre : utilisez une opération de stock (transfert, sortie, réception), pas le compteur. Rien n’a été modifié.",
   "@refusalStockLedgerKept": {
-    "description": "#4170 (0850) DKG13: a count written from outside the ledger."
+    "description": "#4170 (0847) DKG13: a count written from outside the ledger."
   }
 }

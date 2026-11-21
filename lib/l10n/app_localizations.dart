@@ -45381,7 +45381,7 @@ abstract class AppLocalizations {
   /// **'This is not an item this business keeps in stock. Nothing was moved.'**
   String get refusalStockItem;
 
-  /// #4170 (0850) DKG13: a count written from outside the ledger.
+  /// #4170 (0847) DKG13: a count written from outside the ledger.
   ///
   /// In en, this message translates to:
   /// **'The stock of this business is kept by its ledger: use a stock command (a transfer, a take-out, a receipt), not the count. Nothing was changed.'**

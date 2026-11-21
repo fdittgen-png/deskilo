@@ -16246,7 +16246,7 @@
   "refusalStockItem": "Ce n'est pas un article que cette entreprise garde en stock. Rien n'a été déplacé.",
   "refusalStockLedgerKept": "Le stock de cette entreprise est tenu par son registre : utilisez une opération de stock (transfert, sortie, réception), pas le compteur. Rien n’a été modifié.",
   "@refusalStockLedgerKept": {
-    "description": "#4170 (0850) DKG13: a count written from outside the ledger."
+    "description": "#4170 (0847) DKG13: a count written from outside the ledger."
   },
   "refusalStockLocation": "Cet endroit n'appartient pas à cette entreprise, n'est plus utilisé, ou est à la fois le départ et l'arrivée du mouvement. Rien n'a été déplacé.",
   "refusalStockLot": "Ce lot appartient à un autre article, ou l'article est suivi par lot et aucun n'a été indiqué. Rien n'a été déplacé.",

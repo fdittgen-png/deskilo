@@ -234,7 +234,7 @@ begin
           public.stock_place(new.workspace_id, 'customer'), t.quantity, v_unit, t.quantity, now(),
           'sale', new.actor_member_id, new.id, 1, v_part, jsonb_build_object('event_id', new.id));
       end loop;$n$);
-  if v_next is null then raise exception '0850: the anchor of apply_stock_on_confirm was not found' using errcode = 'P0001'; end if;
+  if v_next is null then raise exception '0847: the anchor of apply_stock_on_confirm was not found' using errcode = 'P0001'; end if;
   execute v_next;
 
   -- once initialized, services.stock is a read-only mirror
@@ -258,7 +258,7 @@ begin
   if not public.feature_effective(new.workspace_id, 'stockManagement') then
     return new;
   end if;$n$);
-  if v_next is null then raise exception '0850: the anchor of services_stock_ledger_before was not found' using errcode = 'P0001'; end if;
+  if v_next is null then raise exception '0847: the anchor of services_stock_ledger_before was not found' using errcode = 'P0001'; end if;
   execute v_next;
 
   -- the negative policy: only an untracked item at a place, never a lot
@@ -268,7 +268,7 @@ begin
     $n$if v_left < 0 and (coalesce((public.setting_value(new.workspace_id, 'stock.allow_negative') #>> '{}')::boolean, false) = false
                           or new.lot_id is not null
                           or exists (select 1 from public.services s where s.id = new.item_id and s.tracking <> 'none')) then$n$);
-  if v_next is null then raise exception '0850: the anchor of stock_movements_apply was not found' using errcode = 'P0001'; end if;
+  if v_next is null then raise exception '0847: the anchor of stock_movements_apply was not found' using errcode = 'P0001'; end if;
   execute v_next;
 end
 $patch$;
@@ -923,4 +923,4 @@ $fn$;
 revoke execute on function public.export_workspace_records(uuid) from public, anon;
 grant execute on function public.export_workspace_records(uuid) to authenticated;
 
-select public.set_deskilo_schema_version(850);
+select public.set_deskilo_schema_version(847);

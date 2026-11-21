@@ -24,6 +24,6 @@
   },
   "refusalStockLedgerKept": "Las existencias de este negocio las lleva su libro: use una operación de existencias (traslado, salida, recepción), no el contador. No se cambió nada.",
   "@refusalStockLedgerKept": {
-    "description": "#4170 (0850) DKG13: a count written from outside the ledger."
+    "description": "#4170 (0847) DKG13: a count written from outside the ledger."
   }
 }

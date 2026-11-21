@@ -78,6 +78,6 @@
   },
   "refusalStockLedgerKept": "The stock of this business is kept by its ledger: use a stock command (a transfer, a take-out, a receipt), not the count. Nothing was changed.",
   "@refusalStockLedgerKept": {
-    "description": "#4170 (0850) DKG13: a count written from outside the ledger."
+    "description": "#4170 (0847) DKG13: a count written from outside the ledger."
   }
 }

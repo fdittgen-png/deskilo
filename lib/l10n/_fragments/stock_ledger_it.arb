@@ -24,6 +24,6 @@
   },
   "refusalStockLedgerKept": "La giacenza di questa attività è tenuta dal suo registro: usare un’operazione di magazzino (trasferimento, prelievo, ricezione), non il contatore. Nulla è stato modificato.",
   "@refusalStockLedgerKept": {
-    "description": "#4170 (0850) DKG13: a count written from outside the ledger."
+    "description": "#4170 (0847) DKG13: a count written from outside the ledger."
   }
 }

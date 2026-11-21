@@ -24,6 +24,6 @@
   },
   "refusalStockLedgerKept": "Der Bestand dieses Betriebs wird vom Lagerbuch geführt: nutzen Sie einen Lagervorgang (Umlagerung, Entnahme, Wareneingang), nicht den Zähler. Nichts wurde geändert.",
   "@refusalStockLedgerKept": {
-    "description": "#4170 (0850) DKG13: a count written from outside the ledger."
+    "description": "#4170 (0847) DKG13: a count written from outside the ledger."
   }
 }

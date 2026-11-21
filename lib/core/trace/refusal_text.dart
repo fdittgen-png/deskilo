@@ -109,7 +109,7 @@ enum KnownRefusal {
   /// without naming one.
   stockVariant,
 
-  /// #4170 (0850) — DKG13: a count written from outside the ledger once the
+  /// #4170 (0847) — DKG13: a count written from outside the ledger once the
   /// ledger exists (it keeps the stock).
   stockLedgerKept,
 

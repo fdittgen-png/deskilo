@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #4170 (0850-0852, A): one authoritative stock path. The generic move checks its reason
+-- #4170 (0847-0849, A): one authoritative stock path. The generic move checks its reason
 -- against the places; a transfer inside a site is one step (exact, fractional, converted by
 -- its factor), between sites it is loaded into transit and received in part with the sum
 -- unchanged at each step; consumption and loss need stockTakeOut and an acknowledged expired

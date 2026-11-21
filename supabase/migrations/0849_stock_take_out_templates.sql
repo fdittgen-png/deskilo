@@ -646,4 +646,4 @@ on conflict (key) where owner_workspace_id is null do update
       configuration = excluded.configuration,
       floor_plan = excluded.floor_plan;
 
-select public.set_deskilo_schema_version(852);
+select public.set_deskilo_schema_version(849);
