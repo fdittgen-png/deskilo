@@ -8,6 +8,7 @@
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 
+import 'document_booking.dart';
 import 'sage.dart';
 
 /// Who each invoice's customer is in Sage.
@@ -144,7 +145,7 @@ class _Document {
     _sales(rows, blockers, groupOf);
     // #2365 — the payments an invoice itself netted were money in on its
     // date. A receipt carries no tax (T9): the tax was the invoice's.
-    if (!invoice.isCreditNote) {
+    if (!invoice.reversesSale) {
       for (final line in invoice.lines.where((l) => l.isMoneyIn)) {
         rows.add(
           _row('SR', accounts.bank, 'Payment ${invoice.number}', -line.amountCents),
@@ -184,7 +185,7 @@ class _Document {
     Set<SageBlocker> blockers,
     String Function(InvoiceVatTotal) groupOf,
   ) {
-    int amount(int cents) => invoice.isCreditNote ? cents.abs() : cents;
+    int amount(int cents) => invoice.reversesSale ? cents.abs() : cents;
     final parts = invoice.vatTotals.isEmpty
         ? [(net: invoice.netCents, tax: invoice.vatCents, group: '', category: 'O')]
         : [
@@ -211,7 +212,7 @@ class _Document {
       }
       rows.add(
         _row(
-          invoice.isCreditNote ? 'SC' : 'SI',
+          invoice.reversesSale ? 'SC' : 'SI',
           accounts.sales,
           invoice.title,
           amount(p.net),

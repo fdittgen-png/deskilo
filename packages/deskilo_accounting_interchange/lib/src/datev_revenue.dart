@@ -7,6 +7,7 @@
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 
+import 'document_booking.dart';
 
 /// The automatic revenue account of the rate [percent] in [reference]'s
 /// German [chart]: [base] for the standard rate and wherever the chart names
@@ -94,7 +95,7 @@ List<DatevRevenuePart> datevRevenueParts(
   final parts = <DatevRevenueTarget, int>{};
   for (final line in invoice.lines) {
     // A credit note's positions are negative, an invoice's charges positive.
-    final ofSign = invoice.isCreditNote
+    final ofSign = invoice.reversesSale
         ? line.amountCents < 0
         : line.amountCents > 0;
     if (!ofSign) continue;

@@ -12,6 +12,7 @@ import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 import 'datev.dart';
+import 'document_booking.dart';
 import 'datev_creditors.dart';
 import 'datev_debtors.dart';
 import 'datev_fields.dart';
@@ -240,7 +241,7 @@ List<DatevProblem> _taxProblems(DatevRequest r) {
     for (final i in r.invoices)
       if (!i.isVoided && i.kind != InvoiceKind.settlement)
         for (final l in i.lines)
-          if (i.isCreditNote ? l.amountCents < 0 : l.amountCents > 0)
+          if (i.reversesSale ? l.amountCents < 0 : l.amountCents > 0)
             l.vatPercent,
   };
   return [

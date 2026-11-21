@@ -3,6 +3,7 @@ import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 
+import 'document_booking.dart';
 import 'fec_accounts.dart';
 import 'fec_lettering.dart';
 
@@ -150,7 +151,7 @@ class FecWriter {
   /// The sales and bank journals, document by document.
   void bookInvoices() {
     for (final invoice in ordered) {
-      if (invoice.isCreditNote) {
+      if (invoice.reversesSale) {
         bookCreditNote(invoice);
       } else {
         bookSale(invoice);
@@ -320,6 +321,9 @@ class FecWriter {
     bookCredits(invoice);
     final match = matches[invoice.id];
     bookSettlement(invoice, match);
+    // #4269 -- a sale whose netted credits exceed its charges leaves the
+    // member a credit: what was paid back is money out, as on a credit note.
+    bookFecRefund(write, invoice, match, accounts, customersLabel, bankLabel);
     bookFecWriteOff(write, invoice, match, accounts, customersLabel, dayOf);
   }
 

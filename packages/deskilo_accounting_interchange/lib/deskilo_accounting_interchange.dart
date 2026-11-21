@@ -9,6 +9,7 @@ export 'src/accounting_interchange.dart';
 export 'src/archive_fec.dart';
 export 'src/customer_id_rule.dart';
 export 'src/datev.dart';
+export 'src/document_booking.dart';
 export 'src/datev_creditors.dart';
 export 'src/datev_debtors.dart';
 export 'src/datev_fields.dart';
