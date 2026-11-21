@@ -1,0 +1,11 @@
+{
+  "@@locale": "en",
+  "featureCustomerQuotesTitle": "Customer quotes",
+  "featureCustomerQuotesDesc": "Offer a billing customer a price before invoicing it: the lines, how long the offer holds, and the answer you record. An accepted quote becomes that customer's first invoice, once. Nothing is invoiced until you convert it. Asked for, under invoicing.",
+  "@featureCustomerQuotesTitle": {
+    "description": "a feature in the Features list (#4166)"
+  },
+  "@featureCustomerQuotesDesc": {
+    "description": "a feature in the Features list (#4166)"
+  }
+}

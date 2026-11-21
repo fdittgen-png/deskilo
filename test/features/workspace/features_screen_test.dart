@@ -81,7 +81,8 @@ void main() {
     // #3997 — siteDocuments, reserved and off, is retired: one fewer.
     // #4164 — billingCustomers: invoicing customers without an account is
     // asked for.
-    expect(onCount, featureManifest.length - 57);
+    // #4166 — customerQuotes: quoting a billing customer is asked for.
+    expect(onCount, featureManifest.length - 58);
   });
 
   testWidgets(

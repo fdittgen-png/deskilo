@@ -1434,6 +1434,10 @@ window.SETUP_L10N={
    "billingCustomers": [
     "Billing customers",
     "Keep the people and businesses you invoice, with or without an account: the name and address they are billed under, their tax numbers and a contact for the invoice. They are not members and see nothing of your business. Off: you invoice members as before."
+   ],
+   "customerQuotes": [
+    "Customer quotes",
+    "Offer a billing customer a price before invoicing it: the lines, how long the offer holds, and the answer you record. An accepted quote becomes that customer's first invoice, once. Nothing is invoiced until you convert it. Asked for, under invoicing."
    ]
   },
   "process": {
@@ -3264,6 +3268,10 @@ window.SETUP_L10N={
    "billingCustomers": [
     "Clients facturés",
     "Gardez les personnes et entreprises que vous facturez, avec ou sans compte : le nom et l'adresse sous lesquels elles sont facturées, leurs numéros fiscaux et un contact pour la facture. Ce ne sont pas des membres et elles ne voient rien de votre activité. Désactivé : vous facturez les membres comme avant."
+   ],
+   "customerQuotes": [
+    "Devis clients",
+    "Proposez un prix à un client facturé avant de le facturer : les lignes, la durée de validité de l'offre et la réponse que vous enregistrez. Un devis accepté devient la première facture de ce client, une seule fois. Rien n'est facturé avant que vous le convertissiez. À activer, sous la facturation."
    ]
   },
   "process": {
@@ -5094,6 +5102,10 @@ window.SETUP_L10N={
    "billingCustomers": [
     "Rechnungskunden",
     "Verwalten Sie die Personen und Unternehmen, denen Sie Rechnungen stellen, mit oder ohne Konto: Name und Anschrift auf der Rechnung, Steuernummern und einen Kontakt für die Rechnung. Sie sind keine Mitglieder und sehen nichts von Ihrem Betrieb. Aus: Sie stellen Mitgliedern Rechnungen wie bisher."
+   ],
+   "customerQuotes": [
+    "Kundenangebote",
+    "Machen Sie einem Rechnungskunden ein Angebot, bevor Sie ihm eine Rechnung stellen: die Positionen, wie lange das Angebot gilt und die Antwort, die Sie festhalten. Ein angenommenes Angebot wird einmalig zur ersten Rechnung dieses Kunden. Bis Sie es umwandeln, wird nichts berechnet. Auf Anfrage, unter Rechnungen."
    ]
   },
   "process": {
@@ -6924,6 +6936,10 @@ window.SETUP_L10N={
    "billingCustomers": [
     "Clientes facturados",
     "Mantenga las personas y empresas a las que factura, con o sin cuenta: el nombre y la dirección con los que se les factura, sus números fiscales y un contacto para la factura. No son miembros y no ven nada de su negocio. Desactivado: factura a los miembros como antes."
+   ],
+   "customerQuotes": [
+    "Presupuestos de clientes",
+    "Ofrezca un precio a un cliente facturado antes de facturarle: las líneas, cuánto tiempo vale la oferta y la respuesta que usted registra. Un presupuesto aceptado se convierte, una sola vez, en la primera factura de ese cliente. No se factura nada hasta que lo convierta. Se activa a petición, dentro de facturación."
    ]
   },
   "process": {
@@ -8754,6 +8770,10 @@ window.SETUP_L10N={
    "billingCustomers": [
     "Clienti fatturati",
     "Si tengono le persone e le aziende a cui si fattura, con o senza account: il nome e l'indirizzo con cui sono fatturate, i loro numeri fiscali e un contatto per la fattura. Non sono membri e non vedono nulla dell'attività. Disattivato: si fattura ai membri come prima."
+   ],
+   "customerQuotes": [
+    "Preventivi ai clienti",
+    "Proponete un prezzo a un cliente fatturato prima di fatturarlo: le righe, per quanto tempo vale l'offerta e la risposta che registrate. Un preventivo accettato diventa, una sola volta, la prima fattura di quel cliente. Non si fattura nulla finché non lo convertite. Su richiesta, sotto la fatturazione."
    ]
   },
   "process": {

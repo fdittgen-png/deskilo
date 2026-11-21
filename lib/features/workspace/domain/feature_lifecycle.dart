@@ -241,6 +241,7 @@ const Map<WorkspaceFeature, FeatureAssessment> featureAssessments = {
   WorkspaceFeature.stockManagement: _ownerBeta,
   WorkspaceFeature.organisation: _ownerBeta,
   WorkspaceFeature.billingCustomers: _ownerBeta,
+  WorkspaceFeature.customerQuotes: _ownerBeta,
 };
 
 /// Keys that were registered once and are gone. They stay here so a

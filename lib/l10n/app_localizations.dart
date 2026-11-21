@@ -18430,6 +18430,18 @@ abstract class AppLocalizations {
   /// **'Roles this space defines'**
   String get featureCustomRolesTitle;
 
+  /// a feature in the Features list (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Offer a billing customer a price before invoicing it: the lines, how long the offer holds, and the answer you record. An accepted quote becomes that customer\'s first invoice, once. Nothing is invoiced until you convert it. Asked for, under invoicing.'**
+  String get featureCustomerQuotesDesc;
+
+  /// a feature in the Features list (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Customer quotes'**
+  String get featureCustomerQuotesTitle;
+
   /// #718/#719
   ///
   /// In en, this message translates to:

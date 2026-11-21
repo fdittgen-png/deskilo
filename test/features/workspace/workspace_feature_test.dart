@@ -136,6 +136,8 @@ const Set<WorkspaceFeature> defaultOffFeatures = {
   // #4164 — billing customers are asked for: a business that invoices only
   // its members never sees them.
   WorkspaceFeature.billingCustomers,
+  // #4166 — quotes are asked for, under invoicing.
+  WorkspaceFeature.customerQuotes,
 };
 
 /// #2566 — what a key nobody has chosen resolves to: a core feature that
@@ -240,6 +242,7 @@ void main() {
       'guestParticipation': true,
       'stockManagement': true,
       'billingCustomers': true,
+      'customerQuotes': true,
     });
 
     expect(enabled.contains(WorkspaceFeature.adminSeatBlocking), isTrue);

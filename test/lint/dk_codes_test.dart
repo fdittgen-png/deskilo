@@ -65,6 +65,12 @@ const _notForTheApp = <String, String>{
       'the invoice differs from what was accepted: the conversion screen '
       'shows the difference and takes the reviewed digest in #4166 cut 3 '
       '(0828)',
+  'DKQ09':
+      'a guard no screen offers: the invoice draft of a quote changes and '
+      'issues only through the quote, never in the invoice editor (0828)',
+  'DKQ10':
+      'quotes are switched off in this business; the quote screens appear '
+      'only where the feature is on and word this in #4166 cut 2 (0828)',
   'DKR02':
       'an operator\'s refusal: a personal home cannot drop the '
       'workspace host role while it holds workspaces (0559)',

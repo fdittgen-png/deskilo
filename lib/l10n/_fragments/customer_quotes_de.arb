@@ -1,0 +1,5 @@
+{
+  "@@locale": "de",
+  "featureCustomerQuotesTitle": "Kundenangebote",
+  "featureCustomerQuotesDesc": "Machen Sie einem Rechnungskunden ein Angebot, bevor Sie ihm eine Rechnung stellen: die Positionen, wie lange das Angebot gilt und die Antwort, die Sie festhalten. Ein angenommenes Angebot wird einmalig zur ersten Rechnung dieses Kunden. Bis Sie es umwandeln, wird nichts berechnet. Auf Anfrage, unter Rechnungen."
+}
