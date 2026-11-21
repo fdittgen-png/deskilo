@@ -17,6 +17,10 @@ const _listFile = 'supabase/tests/database/456_definer_event_readers.sql';
 /// #4144 -- the readers of bookings and places, the same way.
 const _placeListFile = 'supabase/tests/database/460_definer_place_readers.sql';
 
+/// #4164 -- the readers of members, which a customer-only subject (status
+/// 'customer', no login) must not reach unless the function says why it may.
+const _memberListFile = 'supabase/tests/database/475_definer_member_readers.sql';
+
 /// The `(name, argument types)` of each `('<signature>', '<reason>')` entry
 /// of the database test's list.
 List<({String name, List<String> types, String reason})> listedReaders(
@@ -103,6 +107,16 @@ void main() {
   test('every reasoned exception of the database test is a definer routine of the contract', () {
     final listed = listedReaders(File(_listFile).readAsStringSync());
     expect(listed, hasLength(36));
+    expect(listed.every((l) => l.reason.trim().isNotEmpty), isTrue);
+    final definers = contractDefiners(
+      File('assets/instance/contract.txt').readAsStringSync(),
+    );
+    expect(missingFromContract(listed, definers), isEmpty);
+  });
+
+  test('every reasoned exception of the members test is a definer routine of the contract', () {
+    final listed = listedReaders(File(_memberListFile).readAsStringSync());
+    expect(listed, hasLength(63));
     expect(listed.every((l) => l.reason.trim().isNotEmpty), isTrue);
     final definers = contractDefiners(
       File('assets/instance/contract.txt').readAsStringSync(),

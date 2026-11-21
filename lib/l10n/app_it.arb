@@ -14014,6 +14014,7 @@
   "permAllowsIssueInvoices": "Emettere fatture, abbinare i pagamenti e inviare solleciti.",
   "permAllowsMakeReservations": "Prenotare, vedere le proprie prenotazioni e registrare ingressi e uscite.",
   "permAllowsManageBilling": "Gestire fasce tariffarie, aliquote IVA, numerazioni e regole di fatturazione.",
+  "permAllowsManageBillingCustomers": "Creare e modificare le persone e le aziende a cui si fattura: nome in fattura, indirizzo, numeri fiscali e contatto.",
   "permAllowsManageConfiguration": "Modificare funzioni, ambiente, codice dello spazio, importazioni e ripristino.",
   "permAllowsManageDocuments": "Gestire i link della biblioteca dei documenti.",
   "permAllowsManageIntegrations": "Configurare i fornitori di pagamento, le credenziali di fatturazione elettronica e WhatsApp.",
@@ -14075,6 +14076,7 @@
   "@permManageBilling": {
     "description": "#982 permission catalog: permManageBilling"
   },
+  "permManageBillingCustomers": "Gestire i clienti fatturati",
   "permManageConfiguration": "Gestire la configurazione",
   "@permManageConfiguration": {
     "description": "#982 permission catalog: permManageConfiguration"

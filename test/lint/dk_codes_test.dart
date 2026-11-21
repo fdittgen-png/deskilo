@@ -34,6 +34,23 @@ const _notForTheApp = <String, String>{
       'target raises it with the command\'s own reason, mcp_confirm '
       'answers it as conflict/refused and the assistant reads the reason '
       '(0817)',
+  'DKU01':
+      'a guard no screen offers: a billing customer is never given a '
+      'booking, badge, role, plan, door or community place; the tables '
+      'and members refuse it (0821)',
+  'DKU02':
+      'an answer to an assistant: billing customers are managed in the '
+      'app by a person, never through a delegated token (0821)',
+  'DKU03':
+      'the customer editor (#4164 A2) checks the name or company before '
+      'it sends; the server\'s refusal is the guard behind it (0821)',
+  'DKU04':
+      'a guard behind the customer editor: the subject it edits is '
+      'chosen from the business\'s own list (0821; read by the editor in '
+      '#4164 A2)',
+  'DKU05':
+      'the stale-revision refusal of the customer editor, which reads it '
+      'in #4164 A2; until then no screen edits a billing identity (0821)',
   'DKR02':
       'an operator\'s refusal: a personal home cannot drop the '
       'workspace host role while it holds workspaces (0559)',

@@ -1,0 +1,5 @@
+{
+  "@@locale": "es",
+  "permManageBillingCustomers": "Gestionar clientes facturados",
+  "permAllowsManageBillingCustomers": "Crear y editar las personas y empresas a las que factura: nombre facturado, dirección, números fiscales y contacto."
+}

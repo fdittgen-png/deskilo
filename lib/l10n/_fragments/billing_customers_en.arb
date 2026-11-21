@@ -1,0 +1,11 @@
+{
+  "@@locale": "en",
+  "permManageBillingCustomers": "Manage billing customers",
+  "@permManageBillingCustomers": {
+    "description": "a permission in the role matrix (#4164)"
+  },
+  "permAllowsManageBillingCustomers": "Create and edit the people and businesses you invoice: their billed name, address, tax numbers and contact.",
+  "@permAllowsManageBillingCustomers": {
+    "description": "#3628 roles at the desk: one line of what the permission allows"
+  }
+}

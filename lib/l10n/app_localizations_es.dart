@@ -24380,6 +24380,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Gestionar tramos de tarifas, tipos de IVA, numeraciones y reglas de facturación.';
 
   @override
+  String get permAllowsManageBillingCustomers =>
+      'Crear y editar las personas y empresas a las que factura: nombre facturado, dirección, números fiscales y contacto.';
+
+  @override
   String get permAllowsManageConfiguration =>
       'Cambiar las funciones, el entorno, el código del espacio, las importaciones y el reinicio.';
 
@@ -24515,6 +24519,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get permManageBilling => 'Gestionar tarifas y reglas de facturación';
+
+  @override
+  String get permManageBillingCustomers => 'Gestionar clientes facturados';
 
   @override
   String get permManageConfiguration => 'Gestionar la configuración';

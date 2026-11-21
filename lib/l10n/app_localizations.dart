@@ -38666,6 +38666,12 @@ abstract class AppLocalizations {
   /// #3628 roles at the desk: one line of what the permission allows
   ///
   /// In en, this message translates to:
+  /// **'Create and edit the people and businesses you invoice: their billed name, address, tax numbers and contact.'**
+  String get permAllowsManageBillingCustomers;
+
+  /// #3628 roles at the desk: one line of what the permission allows
+  ///
+  /// In en, this message translates to:
   /// **'Change the features, the environment, the workspace code, imports and reset.'**
   String get permAllowsManageConfiguration;
 
@@ -38884,6 +38890,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Manage tariffs and billing rules'**
   String get permManageBilling;
+
+  /// a permission in the role matrix (#4164)
+  ///
+  /// In en, this message translates to:
+  /// **'Manage billing customers'**
+  String get permManageBillingCustomers;
 
   /// #982 permission catalog: permManageConfiguration
   ///
