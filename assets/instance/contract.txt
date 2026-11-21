@@ -3956,13 +3956,13 @@ routine public.stock_config_bool(p_obj jsonb, p_key text, p_field text, p_defaul
 routine public.stock_config_int(p_obj jsonb, p_key text, p_field text) -> integer | function | invoker | immutable | exec:service_role | body:4d79fbde3696
 routine public.stock_config_refuse(p_field text, p_reason text) -> void | function | invoker | immutable | exec:service_role | body:2998ad53b2b4
 routine public.stock_config_uuid(p_obj jsonb, p_key text, p_field text) -> uuid | function | invoker | immutable | exec:service_role | body:44939cbcaa4c
-routine public.stock_consume_v1(p_workspace_id uuid, p_request_id uuid, p_lines jsonb, p_occurred_at timestamp with time zone) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:acf6b225d7ec
+routine public.stock_consume_v1(p_workspace_id uuid, p_request_id uuid, p_lines jsonb, p_occurred_at timestamp with time zone) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:fec6db5939ae
 routine public.stock_count_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:d3b0836023b9
 routine public.stock_fefo_proposal_v1(p_workspace_id uuid, p_item_id uuid, p_variant_id uuid, p_location_id uuid, p_quantity numeric) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:f11900768530
 routine public.stock_gtin_valid(p_code text) -> boolean | function | invoker | immutable | exec:service_role | body:f1fa32962018
 routine public.stock_initialized(p_workspace_id uuid) -> boolean | function | definer | stable | exec:service_role | body:1c264a71eaa3
 routine public.stock_locations_keep_history() -> trigger | function | invoker | volatile | exec:service_role | body:1826d91a77de
-routine public.stock_loss_v1(p_workspace_id uuid, p_request_id uuid, p_lines jsonb, p_occurred_at timestamp with time zone) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:ef3490c0d7fd
+routine public.stock_loss_v1(p_workspace_id uuid, p_request_id uuid, p_lines jsonb, p_occurred_at timestamp with time zone) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f0cc69109af4
 routine public.stock_lot_expired(p_lot_id uuid, p_today date) -> boolean | function | definer | stable | exec:service_role | body:055f120d07b7
 routine public.stock_move_v1(p_workspace_id uuid, p_request_id uuid, p_lines jsonb, p_reason text, p_occurred_at timestamp with time zone, p_links jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:667eb0b2beab
 routine public.stock_movement_trace_v1(p_workspace_id uuid, p_movement_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:3d441a273701
@@ -4032,7 +4032,7 @@ routine public.tell_owners_kiosk_device(p_workspace_id uuid, p_change text, p_de
 routine public.template_blocked_validations(p_tables jsonb, p_selected text[]) -> jsonb | function | invoker | immutable | exec:service_role | body:c094ee38e47a
 routine public.template_compatibility(p_template workspace_templates, p_groups text[]) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:99d317191047
 routine public.template_customizations(p_workspace_id uuid, p_template workspace_templates, p_groups jsonb) -> jsonb | function | definer | stable | exec:service_role | body:9906b0d4a427
-routine public.template_field_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:afb5b7a0a0e4
+routine public.template_field_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:07a639edf046
 routine public.template_local_needs(p_template_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:680fc4d8017c
 routine public.template_local_slot_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:41d51bce65a7
 routine public.template_outline(p_template_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e7a5648e8753
