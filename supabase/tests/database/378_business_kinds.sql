@@ -40,7 +40,7 @@ insert into public.members (workspace_id, user_id, is_owner, is_admin, joined_at
 
 -- the registry
 select is((select array_agg(code order by sort_order) from public.business_kinds),
-          array['coworking','studio','practice','salon','service'], 'the five kinds are seeded in order');
+          array['coworking','studio','practice','salon','freelancer','service'], 'the six kinds are seeded in order (a freelancer between salon and service)');
 select is((select default_value #>> '{}' from public.setting_definitions where key = 'business.kind'),
           'coworking', 'every workspace reads coworking until it says otherwise');
 select is((select edit_permission from public.setting_definitions where key = 'business.more_kinds'),
