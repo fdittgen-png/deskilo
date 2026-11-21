@@ -6364,6 +6364,7 @@ const Set<String> uiRoutes = {
   '/money/customers',
   '/stock',
   '/stock/movements/:id',
+  '/stock/transfers',
   '/money/quotes',
   '/money/quotes/:id',
   '/money/quotes/:id/edit',

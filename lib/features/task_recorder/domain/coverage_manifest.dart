@@ -394,6 +394,7 @@ const List<RouteCoverage> routeCoverage = [
   // #4161 — the stock records and one movement at its address.
   RouteCoverage('/stock', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/stock/movements/:id', CoverageStatus.planned, owner: '#1884'),
+  RouteCoverage('/stock/transfers', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/money/quotes', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/money/quotes/:id', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/money/quotes/:id/edit', CoverageStatus.planned, owner: '#1884'),
