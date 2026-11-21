@@ -1,0 +1,21 @@
+{
+  "@@locale": "fr",
+  "stockTabOnHand": "En stock",
+  "stockTabMovements": "Mouvements",
+  "stockMovementTitle": "Mouvement",
+  "stockLotLabel": "Lot {code}",
+  "stockNoLot": "Sans lot",
+  "stockEnteredLabel": "Saisi",
+  "stockStoredLabel": "Enregistré",
+  "stockWhenLabel": "Quand",
+  "stockCostLabel": "Coût par unité",
+  "stockCostNotShown": "Coût non affiché",
+  "stockCostUnknown": "Coût non enregistré",
+  "stockEmpty": "Rien n’est encore en stock.",
+  "stockEmptyFiltered": "Rien ne correspond à ces filtres.",
+  "stockMovementsEmpty": "Aucun mouvement pour l’instant.",
+  "stockReadFailed": "Le stock n’a pas pu être lu. Rien n’est affiché comme vide : réessayez.",
+  "stockMovementNotFound": "Ce mouvement n’existe pas, ou vous n’avez pas le droit de le voir.",
+  "stockQuantityWithUnit": "{quantity} {unit}",
+  "stockLotTitle": "Lot"
+}

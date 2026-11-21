@@ -59,5 +59,9 @@
   "refusalStockHistory": "This item has stock movements, which are kept: it cannot be deleted, and its stock unit and tracking stay as they are. Deactivate it, or create a new item.",
   "@refusalStockHistory": {
     "description": "refusal DKG08 (#3824): deleting an item or a movement the ledger keeps"
+  },
+  "refusalStockPage": "This page request is not valid: ask for 1 to 200 rows, and continue only from the position a page gave.",
+  "@refusalStockPage": {
+    "description": "#4161 (0833) DKG09: a stock page request that is not valid (size outside 1..200, or a cursor that is not one)."
   }
 }

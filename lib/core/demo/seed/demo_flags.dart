@@ -36,11 +36,6 @@ const Map<WorkspaceFeature, String> demoFeaturesLeftOff = {
       'every name the Demo prints is replaced by an invented one from the '
       'first screen, so the Demo keeps it off and the owner can turn it on '
       'from Features for a session, the cast returning when it is turned off',
-  // #3824 — the goods ledger has no screen before stock S2, and its Demo
-  // is the shop of stock S11 (#3823), whose figures agree with its pages.
-  WorkspaceFeature.stockManagement:
-      'the goods ledger is a server foundation without a screen yet; the '
-      'Demo shop of the stock epic shows it',
 };
 
 /// ws-1: every feature on, except [demoFeaturesLeftOff] and anything whose

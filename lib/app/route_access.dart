@@ -44,6 +44,9 @@ const Map<String, Set<WorkspacePermission>> routePermissions = {
   '/money/suppliers': {_P.viewFinances, _P.manageBilling, _P.managePurchases},
   // #4164 — the list reads under the rights that read the customers' money; the
   // editor's own door needs manageBillingCustomers.
+  // #4161 — the stock records and one movement: who sees or moves the stock.
+  '/stock': {_P.viewStock, _P.manageStock},
+  '/stock/movements/:id': {_P.viewStock, _P.manageStock},
   '/money/customers': {_P.manageBillingCustomers, _P.issueInvoices, _P.viewFinances},
   // #4166 — the quotes read under the right to issue or the finances; the server decides who acts.
   '/money/quotes': {_P.issueInvoices, _P.viewFinances},

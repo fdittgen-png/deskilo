@@ -278,6 +278,8 @@ const List<RouteRule> routeRules = [
   RouteRule('/money/payments', RouteClass.workspace, namesRole: true, place: 'drawer-tab-${ShellBranch.money}', measure: PageMeasure.work), // #3614
   RouteRule('/money/suppliers', RouteClass.workspace, namesRole: true, place: 'drawer-suppliers', measure: PageMeasure.work), // #3615
   RouteRule('/money/suppliers/:id', RouteClass.workspace, namesRole: true, place: 'drawer-suppliers', measure: PageMeasure.work), // #3615
+  RouteRule('/stock', RouteClass.workspace, namesRole: true, place: 'drawer-stock', measure: PageMeasure.work), // #4161
+  RouteRule('/stock/movements/:id', RouteClass.workspace, namesRole: true, place: 'drawer-stock', measure: PageMeasure.work), // #4161
   RouteRule('/money/quotes', RouteClass.workspace, namesRole: true, place: 'drawer-quotes', measure: PageMeasure.reading), // #4166
   RouteRule('/money/quotes/:id', RouteClass.workspace, namesRole: true, place: 'drawer-quotes', measure: PageMeasure.reading), // #4166
   RouteRule('/money/quotes/:id/edit', RouteClass.workspace, namesRole: true, place: 'drawer-quotes', measure: PageMeasure.reading), // #4166

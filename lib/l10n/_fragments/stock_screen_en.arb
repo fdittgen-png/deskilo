@@ -1,0 +1,88 @@
+{
+  "@@locale": "en",
+  "stockTabOnHand": "On hand",
+  "@stockTabOnHand": {
+    "description": "#4161 the Stock screen: the tab of what is on hand"
+  },
+  "stockTabMovements": "Movements",
+  "@stockTabMovements": {
+    "description": "#4161 the Stock screen: the tab of the movements"
+  },
+  "stockMovementTitle": "Movement",
+  "@stockMovementTitle": {
+    "description": "#4161 the page of one movement"
+  },
+  "stockLotLabel": "Lot {code}",
+  "@stockLotLabel": {
+    "description": "#4161 a lot, by its code",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "stockNoLot": "No lot",
+  "@stockNoLot": {
+    "description": "#4161 an on-hand row with no lot"
+  },
+  "stockEnteredLabel": "Entered",
+  "@stockEnteredLabel": {
+    "description": "#4161 the quantity and unit as entered"
+  },
+  "stockStoredLabel": "Stored",
+  "@stockStoredLabel": {
+    "description": "#4161 the quantity as stored, in the inventory unit"
+  },
+  "stockWhenLabel": "When",
+  "@stockWhenLabel": {
+    "description": "#4161 when a movement happened"
+  },
+  "stockCostLabel": "Cost per unit",
+  "@stockCostLabel": {
+    "description": "#4161 the cost per unit of a movement"
+  },
+  "stockCostNotShown": "Cost not shown",
+  "@stockCostNotShown": {
+    "description": "#4161 a reader without finance rights: the cost is not shown (not zero)"
+  },
+  "stockCostUnknown": "Cost not recorded",
+  "@stockCostUnknown": {
+    "description": "#4161 the cost of this movement was never recorded (not zero)"
+  },
+  "stockEmpty": "Nothing is in stock yet.",
+  "@stockEmpty": {
+    "description": "#4161 empty stock, no filter"
+  },
+  "stockEmptyFiltered": "Nothing matches these filters.",
+  "@stockEmptyFiltered": {
+    "description": "#4161 empty result under filters"
+  },
+  "stockMovementsEmpty": "No movements yet.",
+  "@stockMovementsEmpty": {
+    "description": "#4161 no movements"
+  },
+  "stockReadFailed": "The stock could not be read. Nothing is shown as empty: try again.",
+  "@stockReadFailed": {
+    "description": "#4161 a stock read failed; never shown as empty"
+  },
+  "stockMovementNotFound": "This movement does not exist, or it is not one you may see.",
+  "@stockMovementNotFound": {
+    "description": "#4161 a movement address that reads as none"
+  },
+  "stockQuantityWithUnit": "{quantity} {unit}",
+  "@stockQuantityWithUnit": {
+    "description": "#4161 an exact quantity and its inventory unit",
+    "placeholders": {
+      "quantity": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "stockLotTitle": "Lot",
+  "@stockLotTitle": {
+    "description": "#4161 the label of a movement's lot row"
+  }
+}
