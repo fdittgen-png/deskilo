@@ -7,6 +7,10 @@ import '../../l10n/app_localizations.dart';
 /// changes: every account is then asked again, once.
 const kPrivacyPolicyVersion = '2026-10-10';
 
+/// #4205 — the published policy page (the store listings, the README and the
+/// help point at it); the assistant screens link it.
+const kPrivacyPolicyPageUrl = 'https://fdittgen-png.github.io/deskilo/privacy.html';
+
 /// Where the same text lives outside the app: its section of the published
 /// user guide (the guide site's element id is the section's anchor).
 const kPrivacyGuideUrl =

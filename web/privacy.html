@@ -29,7 +29,7 @@
 </head>
 <body>
 <h1>DesKilo Privacy Policy</h1>
-<p><em>Last updated: 2026-10-10 · Contact: fdittgen@gmail.com</em></p>
+<p><em>Last updated: 2026-11-21 · Contact: fdittgen@gmail.com</em></p>
 <p>DesKilo is a booking, community and ledger app for small self-organized spaces, published by Florian Dittgen (Germany). This page says, for each kind of data, what flows, to whom, when, and who decides. DesKilo is free software (AGPL-3.0-or-later): everything below can be checked in the code at <a href="https://github.com/fdittgen-png/deskilo">https://github.com/fdittgen-png/deskilo</a>.</p>
 
 <h2>Who is responsible</h2>
@@ -47,7 +47,7 @@
 <tr><td>Membership, role, subscription</td><td>The space's owners and admins</td><td>From joining until you leave</td><td>The space's owner</td></tr>
 <tr><td>Bookings and check-ins (seat or level, time)</td><td>The members of the space: the floor plan shows occupancy</td><td>When you book or check in</td><td>You; the space keeps past bookings as its occupancy record, up to its booking-history limit</td></tr>
 <tr><td>Ledger, invoices, payments, expenses</td><td>You, the space's owners and the admins holding the matching permission</td><td>As the space bills and you pay</td><td>The space's owner; kept for the statutory accounting period</td></tr>
-<tr><td>Profile: photo, status, profession and bio, WhatsApp and e-mail, presence ("in the space today")</td><td>Only the audience you pick for each item under <em>Who sees me</em>. Nothing is public unless you choose it; WhatsApp, e-mail and presence never go wider than your own spaces.</td><td>When you fill an item in</td><td>You, item by item</td></tr>
+<tr><td>Profile: photo, status, profession and bio, WhatsApp and e-mail, presence ("in the space today")</td><td>Each item has its own default audience, which you change under <em>Who sees me</em>: name and photo reach people who share a space with you; profession and bio, WhatsApp, e-mail and presence reach nobody until you choose. Nothing is public unless you choose it; WhatsApp, e-mail and presence never go wider than your own spaces.</td><td>When you fill an item in</td><td>You, item by item</td></tr>
 <tr><td>Public profile: name, profession, bio</td><td>Anyone with the link, signed in or not. Never your contact details, presence or spaces.</td><td>Only after you publish it; off by default; withdraw it at any time</td><td>You</td></tr>
 <tr><td>Conversations: person to person, groups</td><td>Only the people in the conversation. Stored on the server the conversation lives on (see <a href="#messages">Messages</a>).</td><td>When you write</td><td>You decide who may write to you first (<em>Who can start a conversation with me</em>) and can block anyone</td></tr>
 <tr><td>A message to a space ("Write to the hosts")</td><td>The space's hosts: its owners and the admins who agreed to be its public contacts, named before you write</td><td>When you write to the hosts</td><td>You; the space decides whether it takes such messages</td></tr>
@@ -61,9 +61,19 @@
 
 <h2 id="messages">Messages</h2>
 <ul>
-<li><strong>Only participants open a conversation</strong>: the two of you, the members of a group or, for a message to a space, the hosts named before you write. A space's owners and admins cannot read your conversations; the server enforces this, it is not a setting.</li>
-<li><strong>Not end-to-end encrypted.</strong> A message is stored on the server the conversation lives on, and whoever runs that server can technically reach its database. This is an access rule, not encryption — one more reason a community may prefer to run its own server.</li>
+<li><strong>Only participants open a conversation in the application</strong>: the two of you, the members of a group or, for a message to a space, the hosts named before you write. Being a space's owner or admin does not, by itself, give anyone the right to open your conversations; the server enforces this, it is not a setting. The <em>operator</em> is a different role: whoever runs the server the conversation is stored on (a community that self-hosts is its own operator).</li>
+<li><strong>Not end-to-end encrypted.</strong> A message is stored on that server in a form its operator can read, and the operator can technically reach the database. This is an access rule, not encryption: it limits what the application shows, not what the operator can technically do — one more reason a community may prefer to run its own server.</li>
 <li><strong>Across spaces and servers.</strong> Your conversations from every space and every server you connected appear in one list. Writing to someone on another server, or asking to join a space there, connects you to that server first and asks you before anything is sent; that conversation is then stored on that server, under its operator.</li>
+</ul>
+
+<h2 id="assistants">Assistants and agents</h2>
+<p>Only the flows below exist in the code today. Each is optional and off until a person turns it on.</p>
+<ul>
+<li><strong>An external assistant you connect (MCP).</strong> In <em>Connect an assistant</em> you approve a named assistant (a client such as Claude or ChatGPT) for the workspaces and the kinds of action you choose. It then calls the installation's published connector endpoint as you, with a delegated token limited to those workspaces and actions and to what your own permissions allow; a workspace's owner can also set a ceiling on which fields an assistant may be told. Some actions are only prepared and wait for your confirmation in the app. You can revoke the assistant at any time; revoking stops future requests.</li>
+<li><strong>What leaves Deskilo, and where it goes.</strong> What the assistant reads or does with your approval (for example your bookings, balances and the names its answers contain) is sent to that assistant and is processed by the company that provides it, under that provider's own terms, retention and location, which Deskilo does not control and cannot state. Self-hosting Deskilo does not make that processing local. Revoking access does not delete what the assistant already received.</li>
+<li><strong>Browser tools on the web app.</strong> Where a workspace has the feature on and you switch it on for this device, the web app offers tools to an agent running in your browser. They act with your signed-in page, through the app's own commands, with the same refusals as the screens; a write that needs a decision opens the app's confirmation. Mobile and desktop builds offer no such tools.</li>
+<li><strong>The public setup page.</strong> Its agent tools edit a draft kept in that page in your browser; nothing is sent to a Deskilo server by editing it.</li>
+<li><strong>Notices.</strong> An installation or a workspace can state, in its privacy notice, the recipients, purposes and regions of the flows it actually configured. Where a provider's retention or processing location is not stated, it is unknown to Deskilo; do not read silence as an assurance.</li>
 </ul>
 
 <h2>Push notifications</h2>

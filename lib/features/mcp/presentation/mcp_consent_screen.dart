@@ -15,6 +15,7 @@ import '../domain/mcp_onboarding.dart';
 import '../providers/assistant_setup_providers.dart';
 import '../providers/mcp_consent_form_provider.dart';
 import '../providers/mcp_providers.dart';
+import 'assistant_disclosure_note.dart';
 import 'mcp_consent_refusal.dart';
 import 'widgets/mcp_consent_parts.dart';
 import 'widgets/mcp_consent_workspace_card.dart';
@@ -235,7 +236,7 @@ class _McpConsentScreenState extends ConsumerState<McpConsentScreen> {
                 ),
                 for (final w in c.options.workspaces) ConsentWorkspaceCard(w),
               ],
-              const SizedBox(height: AppSpacing.lg),
+              const AssistantDisclosureNote(),
               Row(
                 children: [
                   Expanded(

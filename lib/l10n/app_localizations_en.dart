@@ -1259,6 +1259,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'The payment was used in the meantime. It is read again: check the amounts.';
 
   @override
+  String get assistantFlowsBody =>
+      'What an assistant reads or does with your approval is sent to it and processed by the company that provides it, under that company\'s own terms; self-hosting Deskilo does not make that processing local. It acts as you, only in the workspaces and for the actions you approve, and you can revoke it at any time: that stops future requests, it does not delete what the assistant already received.';
+
+  @override
+  String get assistantFlowsPolicyLink => 'Read the privacy notice';
+
+  @override
   String get assistantSetupActorConfigurer =>
       'Who: someone who manages this workspace\'s configuration';
 
