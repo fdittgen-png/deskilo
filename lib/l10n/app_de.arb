@@ -7572,6 +7572,14 @@
   },
   "featureSpaceQrCodes": "Raum-QR-Codes",
   "featureSpaceQrCodesDesc": "Druckbare QR-Karten je Platz, Tisch, Büro und Etage — scannen zum Reservieren oder Einchecken.",
+  "featureStandaloneInvoicingDesc": "Einem benannten Kunden noch heute eine erbrachte Leistung oder ein vereinbartes Ergebnis berechnen, mit einzelnen Positionen und ausdrücklichen Daten, ohne Buchung, Abo oder Monat dahinter. Der Server berechnet jeden Betrag; Sie bestätigen eine Vorschau und stellen die Rechnung aus. Aus: Rechnungen werden wie bisher je Mitglied und Monat ausgestellt.",
+  "@featureStandaloneInvoicingDesc": {
+    "description": "#4165 feature switch: featureStandaloneInvoicingDesc"
+  },
+  "featureStandaloneInvoicingTitle": "Einzelrechnungen",
+  "@featureStandaloneInvoicingTitle": {
+    "description": "#4165 feature switch: featureStandaloneInvoicingTitle"
+  },
   "featureStockManagementDesc": "Waren verfolgen: wo sie sind, in welcher Einheit, aus welcher Charge, und jede Bewegung zwischen zwei Orten. Aus: ein Katalogartikel behält seinen einfachen Regalbestand.",
   "featureStockManagementTitle": "Lagerverwaltung",
   "featureSubscriptionInvoicesDesc": "Der Mitgliedsbeitrag wird vor dem Monat berechnet, den er bezahlt, an einem Datum Ihrer Wahl. Aus: Der Beitrag bleibt auf der Monatsrechnung.",
@@ -19879,6 +19887,248 @@
     "description": "#670 - whole-space sheet"
   },
   "spaceYoursNow": "Von Ihnen für dieses Zeitfenster reserviert.",
+  "standaloneFactAmount": "ein Betrag, den die Rechnung aufnehmen kann",
+  "@standaloneFactAmount": {
+    "description": "#4165 standalone invoice composer: standaloneFactAmount"
+  },
+  "standaloneFactApproval": "die Regeln des Betriebs verlangen eine Genehmigung, die hier noch nicht unterstützt wird",
+  "@standaloneFactApproval": {
+    "description": "#4165 standalone invoice composer: standaloneFactApproval"
+  },
+  "standaloneFactClosed": "dieser Entwurf wurde bereits ausgestellt",
+  "@standaloneFactClosed": {
+    "description": "#4165 standalone invoice composer: standaloneFactClosed"
+  },
+  "standaloneFactCurrency": "die Währung des Betriebs",
+  "@standaloneFactCurrency": {
+    "description": "#4165 standalone invoice composer: standaloneFactCurrency"
+  },
+  "standaloneFactDueDate": "das Fälligkeitsdatum",
+  "@standaloneFactDueDate": {
+    "description": "#4165 standalone invoice composer: standaloneFactDueDate"
+  },
+  "standaloneFactDueDateFar": "ein Fälligkeitsdatum innerhalb eines Jahres",
+  "@standaloneFactDueDateFar": {
+    "description": "#4165 standalone invoice composer: standaloneFactDueDateFar"
+  },
+  "standaloneFactDueDatePast": "ein Fälligkeitsdatum, das nicht in der Vergangenheit liegt",
+  "@standaloneFactDueDatePast": {
+    "description": "#4165 standalone invoice composer: standaloneFactDueDatePast"
+  },
+  "standaloneFactLines": "mindestens eine Position",
+  "@standaloneFactLines": {
+    "description": "#4165 standalone invoice composer: standaloneFactLines"
+  },
+  "standaloneFactSalesTax": "dieser Betrieb erhebt Sales Tax, was hier noch nicht unterstützt wird",
+  "@standaloneFactSalesTax": {
+    "description": "#4165 standalone invoice composer: standaloneFactSalesTax"
+  },
+  "standaloneFactServiceDate": "das Leistungsdatum",
+  "@standaloneFactServiceDate": {
+    "description": "#4165 standalone invoice composer: standaloneFactServiceDate"
+  },
+  "standaloneFactStale": "der Entwurf hat sich geändert: Rechnung erneut prüfen",
+  "@standaloneFactStale": {
+    "description": "#4165 standalone invoice composer: standaloneFactStale"
+  },
+  "standaloneFactTooManyLines": "höchstens 100 Positionen",
+  "@standaloneFactTooManyLines": {
+    "description": "#4165 standalone invoice composer: standaloneFactTooManyLines"
+  },
+  "standaloneFactTotal": "eine Summe über null",
+  "@standaloneFactTotal": {
+    "description": "#4165 standalone invoice composer: standaloneFactTotal"
+  },
+  "standaloneFactUnknownSubject": "der Kunde",
+  "@standaloneFactUnknownSubject": {
+    "description": "#4165 standalone invoice composer: standaloneFactUnknownSubject"
+  },
+  "standaloneFieldAmount": "ein Betrag, den die Rechnung aufnehmen kann",
+  "@standaloneFieldAmount": {
+    "description": "#4165 standalone invoice composer: standaloneFieldAmount"
+  },
+  "standaloneFieldBase": "eine Preismenge über null",
+  "@standaloneFieldBase": {
+    "description": "#4165 standalone invoice composer: standaloneFieldBase"
+  },
+  "standaloneFieldBasis": "ob der Preis die Steuer enthält",
+  "@standaloneFieldBasis": {
+    "description": "#4165 standalone invoice composer: standaloneFieldBasis"
+  },
+  "standaloneFieldDescription": "eine Beschreibung",
+  "@standaloneFieldDescription": {
+    "description": "#4165 standalone invoice composer: standaloneFieldDescription"
+  },
+  "standaloneFieldLineId": "den Entwurf erneut zu speichern",
+  "@standaloneFieldLineId": {
+    "description": "#4165 standalone invoice composer: standaloneFieldLineId"
+  },
+  "standaloneFieldPrice": "ein Preis mit höchstens sechs Nachkommastellen",
+  "@standaloneFieldPrice": {
+    "description": "#4165 standalone invoice composer: standaloneFieldPrice"
+  },
+  "standaloneFieldQuantity": "eine Menge über null mit höchstens sechs Nachkommastellen",
+  "@standaloneFieldQuantity": {
+    "description": "#4165 standalone invoice composer: standaloneFieldQuantity"
+  },
+  "standaloneFieldSupply": "eine Dienstleistung (Waren werden hier noch nicht berechnet)",
+  "@standaloneFieldSupply": {
+    "description": "#4165 standalone invoice composer: standaloneFieldSupply"
+  },
+  "standaloneFieldUnit": "eine Einheit",
+  "@standaloneFieldUnit": {
+    "description": "#4165 standalone invoice composer: standaloneFieldUnit"
+  },
+  "standaloneFieldVatRate": "ein vom Betrieb festgelegter Steuersatz",
+  "@standaloneFieldVatRate": {
+    "description": "#4165 standalone invoice composer: standaloneFieldVatRate"
+  },
+  "standaloneInvoiceAddLine": "Position hinzufügen",
+  "@standaloneInvoiceAddLine": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceAddLine"
+  },
+  "standaloneInvoiceBuyerReference": "Referenz des Kunden",
+  "@standaloneInvoiceBuyerReference": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceBuyerReference"
+  },
+  "standaloneInvoiceCustomerChoose": "Kunden wählen",
+  "@standaloneInvoiceCustomerChoose": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceCustomerChoose"
+  },
+  "standaloneInvoiceDueDate": "Fälligkeitsdatum",
+  "@standaloneInvoiceDueDate": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceDueDate"
+  },
+  "standaloneInvoiceIssue": "Rechnung ausstellen",
+  "@standaloneInvoiceIssue": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceIssue"
+  },
+  "standaloneInvoiceIssued": "Rechnung {number} ausgestellt",
+  "@standaloneInvoiceIssued": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceIssued",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "standaloneInvoiceLineDescription": "Beschreibung",
+  "@standaloneInvoiceLineDescription": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceLineDescription"
+  },
+  "standaloneInvoiceLineGross": "Der Preis enthält die Steuer",
+  "@standaloneInvoiceLineGross": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceLineGross"
+  },
+  "standaloneInvoiceLinePrice": "Einzelpreis",
+  "@standaloneInvoiceLinePrice": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceLinePrice"
+  },
+  "standaloneInvoiceLineQuantity": "Menge",
+  "@standaloneInvoiceLineQuantity": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceLineQuantity"
+  },
+  "standaloneInvoiceLineRate": "Steuersatz",
+  "@standaloneInvoiceLineRate": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceLineRate"
+  },
+  "standaloneInvoiceLineRateDefault": "Standardsatz des Betriebs",
+  "@standaloneInvoiceLineRateDefault": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceLineRateDefault"
+  },
+  "standaloneInvoiceLineUnit": "Einheit",
+  "@standaloneInvoiceLineUnit": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceLineUnit"
+  },
+  "standaloneInvoiceLines": "Positionen",
+  "@standaloneInvoiceLines": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceLines"
+  },
+  "standaloneInvoiceLookAgain": "Erneut prüfen",
+  "@standaloneInvoiceLookAgain": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceLookAgain"
+  },
+  "standaloneInvoiceMissing": "Zu ergänzen: {facts}",
+  "@standaloneInvoiceMissing": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceMissing",
+    "placeholders": {
+      "facts": {
+        "type": "String"
+      }
+    }
+  },
+  "standaloneInvoiceMissingLine": "Position {number}: {fact}",
+  "@standaloneInvoiceMissingLine": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceMissingLine",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "fact": {
+        "type": "String"
+      }
+    }
+  },
+  "standaloneInvoiceMore": "Kundenrechnung ohne Monat",
+  "@standaloneInvoiceMore": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceMore"
+  },
+  "standaloneInvoiceOpen": "Rechnung öffnen",
+  "@standaloneInvoiceOpen": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceOpen"
+  },
+  "standaloneInvoiceOrderNumber": "Bestellnummer",
+  "@standaloneInvoiceOrderNumber": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceOrderNumber"
+  },
+  "standaloneInvoicePreview": "Rechnung prüfen",
+  "@standaloneInvoicePreview": {
+    "description": "#4165 standalone invoice composer: standaloneInvoicePreview"
+  },
+  "standaloneInvoicePreviewNet": "Netto",
+  "@standaloneInvoicePreviewNet": {
+    "description": "#4165 standalone invoice composer: standaloneInvoicePreviewNet"
+  },
+  "standaloneInvoicePreviewTax": "Steuer",
+  "@standaloneInvoicePreviewTax": {
+    "description": "#4165 standalone invoice composer: standaloneInvoicePreviewTax"
+  },
+  "standaloneInvoicePreviewTotal": "Gesamt",
+  "@standaloneInvoicePreviewTotal": {
+    "description": "#4165 standalone invoice composer: standaloneInvoicePreviewTotal"
+  },
+  "standaloneInvoiceRefused": "Die Rechnung wurde nicht ausgestellt.",
+  "@standaloneInvoiceRefused": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceRefused"
+  },
+  "standaloneInvoiceRemoveLine": "Diese Position entfernen",
+  "@standaloneInvoiceRemoveLine": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceRemoveLine"
+  },
+  "standaloneInvoiceServiceDate": "Leistungsdatum",
+  "@standaloneInvoiceServiceDate": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceServiceDate"
+  },
+  "standaloneInvoiceUnavailable": "Einzelrechnungen sind für diesen Betrieb nicht eingeschaltet.",
+  "@standaloneInvoiceUnavailable": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceUnavailable"
+  },
+  "standaloneInvoiceUnknown": "Wir konnten nicht bestätigen, ob die Rechnung ausgestellt wurde. Prüfen Sie erneut, bevor Sie etwas anderes ausstellen.",
+  "@standaloneInvoiceUnknown": {
+    "description": "#4165 standalone invoice composer: standaloneInvoiceUnknown"
+  },
+  "standaloneUnitHour": "Stunde",
+  "@standaloneUnitHour": {
+    "description": "#4165 standalone invoice composer: standaloneUnitHour"
+  },
+  "standaloneUnitJob": "Pauschale",
+  "@standaloneUnitJob": {
+    "description": "#4165 standalone invoice composer: standaloneUnitJob"
+  },
+  "standaloneUnitPiece": "Stück",
+  "@standaloneUnitPiece": {
+    "description": "#4165 standalone invoice composer: standaloneUnitPiece"
+  },
   "statementDeskBalanceCredit": "Guthaben: dieser Betrag steht Ihnen zu",
   "statementDeskBalanceOwed": "Geschuldet: Sie schulden diesen Betrag",
   "statementDeskBalanceSettled": "Ausgeglichen: nichts ist offen",

@@ -356,6 +356,11 @@ const List<RouteCoverage> routeCoverage = [
     CoverageStatus.excluded,
     category: ProtectedSurface.payment,
   ),
+  RouteCoverage(
+    '/invoicing/standalone/new',
+    CoverageStatus.excluded,
+    category: ProtectedSurface.payment,
+  ),
   RouteCoverage('/member/:memberId', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/report-editor', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/roles', CoverageStatus.recorded),

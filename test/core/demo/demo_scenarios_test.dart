@@ -79,6 +79,7 @@ import '../../helpers/demo_pass_einvoice_journeys.dart';
 import '../../helpers/demo_payment_journeys.dart';
 import '../../helpers/demo_plan_booking_journeys.dart';
 import '../../helpers/demo_settings_shell_journeys.dart';
+import '../../helpers/demo_standalone_journey.dart';
 import '../../helpers/demo_vies_export_journeys.dart';
 import '../../helpers/demo_whatsapp_journeys.dart';
 
@@ -1352,6 +1353,14 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
     'Ada e-mails an invoice and sees it recorded with its date; the '
     'customer without an address is refused',
     (_) => invoiceEmailJourney(),
+  ),
+  // #4165 — a customer invoice without a member-month, drafted and issued.
+  WorkspaceFeature.standaloneInvoicing: _action(
+    _owner,
+    'Ada invoices 1.5 hours at 80.00 to a customer with no booking behind it: '
+    'the preview and the issued invoice state the exact quantity, and the same '
+    'request never issues twice',
+    (_) => standaloneInvoiceJourney(),
   ),
 };
 

@@ -45,6 +45,7 @@ import 'money/demo_member_account_queries.dart';
 import 'money/demo_money_seeds.dart';
 import 'money/demo_payment_gateway_repository.dart';
 import 'money/demo_report_template_repository.dart';
+import 'money/demo_standalone_invoice_commands.dart';
 import 'money/demo_tax_reporting_repository.dart';
 
 export 'money/demo_invoice_action_commands.dart';
@@ -382,6 +383,7 @@ class FakeMoneyRepository with DemoClaimsStore implements MoneyRepository, Accou
   @override late final accountCommands = DemoMemberAccountCommands(this);
   late final reportTemplates = DemoReportTemplates(this);
   late final invoiceCommands = DemoInvoiceCommands(this);
+  late final standaloneInvoiceCommands = DemoStandaloneInvoiceCommands(this); // #4165
   late final taxReporting = DemoTaxReporting(this);
   late final commercialTerms = DemoCommercialTerms(this);
   late final expenses = DemoExpenses(this);

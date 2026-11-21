@@ -12311,6 +12311,13 @@ class AppLocalizationsIt extends AppLocalizations {
       'Schede QR stampabili per postazione, tavolo, ufficio e piano — da scansionare per prenotare o fare check-in.';
 
   @override
+  String get featureStandaloneInvoicingDesc =>
+      'Fatturare oggi a un cliente indicato una prestazione svolta o un risultato concordato, con righe dettagliate e date esplicite, senza prenotazione, abbonamento o mese alle spalle. Il server calcola ogni importo; Lei conferma un’anteprima ed emette la fattura. Disattivato: le fatture restano emesse per membro e per mese.';
+
+  @override
+  String get featureStandaloneInvoicingTitle => 'Fatture singole';
+
+  @override
   String get featureStockManagementDesc =>
       'Seguire la merce: dove si trova, in quale unità, da quale lotto, e ogni movimento tra due luoghi. Disattivato: un articolo del catalogo mantiene il suo semplice conteggio a scaffale.';
 
@@ -34201,6 +34208,190 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get spaceYoursNow => 'Riservato da Lei per questa fascia.';
+
+  @override
+  String get standaloneFactAmount =>
+      'un importo che la fattura possa contenere';
+
+  @override
+  String get standaloneFactApproval =>
+      'le regole dell’attività richiedono un’approvazione, non ancora supportata qui';
+
+  @override
+  String get standaloneFactClosed => 'questa bozza è già stata emessa';
+
+  @override
+  String get standaloneFactCurrency => 'la valuta dell’attività';
+
+  @override
+  String get standaloneFactDueDate => 'la data di scadenza';
+
+  @override
+  String get standaloneFactDueDateFar => 'una scadenza entro un anno';
+
+  @override
+  String get standaloneFactDueDatePast => 'una scadenza non nel passato';
+
+  @override
+  String get standaloneFactLines => 'almeno una riga';
+
+  @override
+  String get standaloneFactSalesTax =>
+      'questa attività aggiunge sales tax, non ancora supportata qui';
+
+  @override
+  String get standaloneFactServiceDate => 'la data della prestazione';
+
+  @override
+  String get standaloneFactStale =>
+      'la bozza è cambiata: verificare di nuovo la fattura';
+
+  @override
+  String get standaloneFactTooManyLines => 'al massimo 100 righe';
+
+  @override
+  String get standaloneFactTotal => 'un totale superiore a zero';
+
+  @override
+  String get standaloneFactUnknownSubject => 'il cliente';
+
+  @override
+  String get standaloneFieldAmount =>
+      'un importo che la fattura possa contenere';
+
+  @override
+  String get standaloneFieldBase => 'una quantità di prezzo superiore a zero';
+
+  @override
+  String get standaloneFieldBasis => 'se il prezzo include l’imposta';
+
+  @override
+  String get standaloneFieldDescription => 'una descrizione';
+
+  @override
+  String get standaloneFieldLineId => 'salvare di nuovo la bozza';
+
+  @override
+  String get standaloneFieldPrice => 'un prezzo con al massimo sei decimali';
+
+  @override
+  String get standaloneFieldQuantity =>
+      'una quantità superiore a zero con al massimo sei decimali';
+
+  @override
+  String get standaloneFieldSupply =>
+      'un servizio (i beni non si fatturano ancora qui)';
+
+  @override
+  String get standaloneFieldUnit => 'un’unità';
+
+  @override
+  String get standaloneFieldVatRate => 'un’aliquota IVA definita dall’attività';
+
+  @override
+  String get standaloneInvoiceAddLine => 'Aggiungere una riga';
+
+  @override
+  String get standaloneInvoiceBuyerReference => 'Riferimento del cliente';
+
+  @override
+  String get standaloneInvoiceCustomerChoose => 'Scegliere il cliente';
+
+  @override
+  String get standaloneInvoiceDueDate => 'Data di scadenza';
+
+  @override
+  String get standaloneInvoiceIssue => 'Emettere la fattura';
+
+  @override
+  String standaloneInvoiceIssued(String number) {
+    return 'Fattura $number emessa';
+  }
+
+  @override
+  String get standaloneInvoiceLineDescription => 'Descrizione';
+
+  @override
+  String get standaloneInvoiceLineGross => 'Il prezzo include l’imposta';
+
+  @override
+  String get standaloneInvoiceLinePrice => 'Prezzo unitario';
+
+  @override
+  String get standaloneInvoiceLineQuantity => 'Quantità';
+
+  @override
+  String get standaloneInvoiceLineRate => 'Aliquota IVA';
+
+  @override
+  String get standaloneInvoiceLineRateDefault =>
+      'L’aliquota predefinita dell’attività';
+
+  @override
+  String get standaloneInvoiceLineUnit => 'Unità';
+
+  @override
+  String get standaloneInvoiceLines => 'Righe';
+
+  @override
+  String get standaloneInvoiceLookAgain => 'Verificare di nuovo';
+
+  @override
+  String standaloneInvoiceMissing(String facts) {
+    return 'Da completare: $facts';
+  }
+
+  @override
+  String standaloneInvoiceMissingLine(String number, String fact) {
+    return 'Riga $number: $fact';
+  }
+
+  @override
+  String get standaloneInvoiceMore => 'Fattura cliente senza mese';
+
+  @override
+  String get standaloneInvoiceOpen => 'Aprire la fattura';
+
+  @override
+  String get standaloneInvoiceOrderNumber => 'Numero d’ordine';
+
+  @override
+  String get standaloneInvoicePreview => 'Verificare la fattura';
+
+  @override
+  String get standaloneInvoicePreviewNet => 'Netto';
+
+  @override
+  String get standaloneInvoicePreviewTax => 'Imposta';
+
+  @override
+  String get standaloneInvoicePreviewTotal => 'Totale';
+
+  @override
+  String get standaloneInvoiceRefused => 'La fattura non è stata emessa.';
+
+  @override
+  String get standaloneInvoiceRemoveLine => 'Rimuovere questa riga';
+
+  @override
+  String get standaloneInvoiceServiceDate => 'Data della prestazione';
+
+  @override
+  String get standaloneInvoiceUnavailable =>
+      'Le fatture singole non sono attivate per questa attività.';
+
+  @override
+  String get standaloneInvoiceUnknown =>
+      'Non abbiamo potuto confermare se la fattura è stata emessa. Verifichi di nuovo prima di emetterne un’altra.';
+
+  @override
+  String get standaloneUnitHour => 'ora';
+
+  @override
+  String get standaloneUnitJob => 'forfait';
+
+  @override
+  String get standaloneUnitPiece => 'pezzo';
 
   @override
   String get statementDeskBalanceCredit =>

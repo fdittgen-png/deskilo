@@ -273,5 +273,13 @@
   "featureQuickSearchTitle": "Recherche et touches",
   "featureQuickSearchDesc": "Ctrl+K (⌘K sur un Mac) ou le bouton de recherche de la barre trouve une page, une action ou une fiche — un membre, un client, une facture par son numéro, un fournisseur — parmi ce que la personne peut ouvrir ; les éléments récents d'abord. ? liste les touches de la page. Désactivé : ni bouton de recherche ni touches de l'application ; les touches propres d'une page restent.",
   "featureOrganisationTitle": "Organisation d’entreprises",
-  "featureOrganisationDesc": "Cette entreprise est à la tête d’une organisation des entreprises du client : un site dans un autre pays ou une autre devise est une maison, une entreprise à part entière avec les règles de son pays. Désactivé : aucune organisation n’est créée ni modifiée depuis cette entreprise ; une maison peut toujours la quitter, et les membres voient toujours où ils sont."
+  "featureOrganisationDesc": "Cette entreprise est à la tête d’une organisation des entreprises du client : un site dans un autre pays ou une autre devise est une maison, une entreprise à part entière avec les règles de son pays. Désactivé : aucune organisation n’est créée ni modifiée depuis cette entreprise ; une maison peut toujours la quitter, et les membres voient toujours où ils sont.",
+  "featureStandaloneInvoicingTitle": "Factures ponctuelles",
+  "@featureStandaloneInvoicingTitle": {
+    "description": "#4165 feature switch: featureStandaloneInvoicingTitle"
+  },
+  "featureStandaloneInvoicingDesc": "Facturer dès aujourd’hui un client nommé pour une prestation réalisée ou un livrable convenu, avec des lignes détaillées et des dates explicites, sans réservation, abonnement ni mois derrière. Le serveur calcule chaque montant ; vous confirmez un aperçu puis émettez la facture. Désactivé : les factures restent émises par membre et par mois.",
+  "@featureStandaloneInvoicingDesc": {
+    "description": "#4165 feature switch: featureStandaloneInvoicingDesc"
+  }
 }

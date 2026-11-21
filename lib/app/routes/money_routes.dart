@@ -40,6 +40,7 @@ import '../../features/money/presentation/screens/vat_declarations_screen.dart';
 import '../../features/money/presentation/screens/vat_return_page.dart';
 import '../../features/money/presentation/screens/vat_screen.dart';
 import '../../features/money/presentation/screens/workspace_status_screen.dart';
+import '../../features/money/presentation/standalone/standalone_invoice_screen.dart';
 import '../../features/money/presentation/widgets/expense_repartition_sheet.dart'
     show expenseRepartitionPage;
 import '../../features/money/presentation/widgets/purchase_order_record.dart';
@@ -154,6 +155,17 @@ List<RouteBase> _invoicingRoutes(RouteEnv env) {
         initialRun: WizardRun.values
             .asNameMap()[state.uri.queryParameters['run'] ?? ''],
       ),
+    ),
+    // #4165 — a standalone customer invoice: customer, lines, preview, issue.
+    GoRoute(
+      path: '/invoicing/standalone/new',
+      redirect: env.guard(
+        const RouteAccess(
+          features: [WorkspaceFeature.standaloneInvoicing],
+          to: '/money',
+        ),
+      ),
+      builder: (context, state) => const StandaloneInvoiceScreen(),
     ),
     // #822 — the report editor as a full-screen designer.
     GoRoute(

@@ -201,6 +201,7 @@
         "singleRoomLevelNames": true,
         "spaceInquiries": true,
         "spaceQrCodes": true,
+        "standaloneInvoicing": false,
         "stockManagement": false,
         "subscriptionInvoices": false,
         "supplyClassification": false,

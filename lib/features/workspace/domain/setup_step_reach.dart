@@ -62,6 +62,7 @@ const Map<String, Set<WorkspaceFeature>> setupStepTakesIn = {
     _F.priceNegotiations,
     _F.subscriptionInvoices,
     _F.usageInvoices,
+    _F.standaloneInvoicing,
   },
   // The services screen: priced accessories and where a service is taxed.
   // #3308 — the passes are what the space sells at the desk, beside its services.

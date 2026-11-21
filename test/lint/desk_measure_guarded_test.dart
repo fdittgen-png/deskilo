@@ -24,6 +24,7 @@ const _notGuardedYet = <String, String>{
   // its names and sizes): to join the guards once measured with both.
   // An address that only redirects: it draws no page.
   '/money/sales': '#3874 redirects to /invoices, draws nothing',
+  '/invoicing/standalone/new': '#4165 a composer behind its feature: joins the guards with the payment part',
 };
 
 /// The route patterns the desk guards' [sources] open: every address

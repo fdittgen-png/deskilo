@@ -158,6 +158,7 @@ const workspaceProcesses = <WorkspaceProcess>[
       WorkspaceFeature.invoicingWizard,
       WorkspaceFeature.settlementFold,
       WorkspaceFeature.numberSequences,
+      WorkspaceFeature.standaloneInvoicing,
       // #4164 — beside the invoices: whom they are made out to.
       WorkspaceFeature.billingCustomers,
     ]),
