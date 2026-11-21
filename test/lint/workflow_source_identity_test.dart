@@ -264,7 +264,9 @@ void main() {
     // lockfile-keyed pub cache and the secret-scanner archive stays with it: 12.
     // 2026-11-15 #4015: the branch check restores the same lockfile-keyed pub
     // cache, so a dispatched folder run starts as fast as a test shard: 13.
-    expect(seen, 13, reason: 'cache steps counted on 2026-11-02: pub x7, '
+    // 2026-11-21 #4252: the gate shard is split in two, so the second half
+    // restores the same lockfile-keyed pub cache: 14.
+    expect(seen, 14, reason: 'cache steps counted on 2026-11-02: pub x7, '
         'pods, avd — a new one is a deliberate decision, bump with a reason');
   });
 }
