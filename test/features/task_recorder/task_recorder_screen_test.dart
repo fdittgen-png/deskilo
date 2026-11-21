@@ -11,6 +11,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:deskilo/app/recorder_target_wiring.dart';
 import 'package:deskilo/core/files/file_saver.dart';
 import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/features/task_recorder/application/recorder_controller.dart';
@@ -54,6 +55,7 @@ class _Harness {
   _Harness({bool available = true}) {
     container = ProviderContainer(
       overrides: [
+        ...recorderTargetsFromApp,
         ...formatPinOverrides(),
         recorderStoreProvider.overrideWithValue(store),
         recorderScopeProvider.overrideWithValue(canaryScope),

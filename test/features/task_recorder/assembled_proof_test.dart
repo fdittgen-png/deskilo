@@ -19,6 +19,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:archive/archive.dart';
+import 'package:deskilo/app/recorder_target_wiring.dart';
 import 'package:deskilo/features/task_recorder/application/workbench_import.dart';
 import 'package:deskilo/features/task_recorder/data/recorder_store.dart';
 import 'package:deskilo/features/task_recorder/domain/action_registry.dart';
@@ -92,7 +93,11 @@ void main() {
     final en = lookupAppLocalizations(const Locale('en'));
     final package = writeTaskPackage(
       recording,
-      transcript: recordingTranscript(en, recording),
+      transcript: recordingTranscript(
+        en,
+        recording,
+        vocabulary: const EventTargetVocabulary(),
+      ),
     );
     for (final f in ZipDecoder().decodeBytes(package).files) {
       _clean('package ${f.name}', utf8.decode(f.content));

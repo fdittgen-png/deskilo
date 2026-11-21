@@ -39,6 +39,7 @@ import '../../storyboard/storyboard_pictures.dart';
 import '../../storyboard/storyboard_preview.dart';
 import '../recorder_labels.dart';
 import '../recorder_pages.dart';
+import '../recorder_target_vocabulary.dart';
 import '../recording_export.dart';
 import '../route_classification.dart' show taskWorkbenchRoute;
 import '../widgets/recording_steps_view.dart';
@@ -219,6 +220,7 @@ class _TaskWorkbenchScreenState extends ConsumerState<TaskWorkbenchScreen> {
         package: package,
         assets: assets,
         storyboard: keep ? StoryboardReview.of(board) : null,
+        vocabulary: ref.read(recorderTargetVocabularyProvider),
       ),
       fileName: package
           ? 'deskilo-task$taskPackageExtension'

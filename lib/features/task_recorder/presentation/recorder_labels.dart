@@ -12,14 +12,13 @@ import 'package:deskilo_task_recording/task_recording.dart';
 import '../../../core/calendar/calendar_item.dart';
 import '../../../core/calendar/calendar_kind_labels.dart';
 import '../../../l10n/app_localizations.dart';
-import '../../events/domain/workspace_event.dart';
-import '../../events/presentation/event_labels.dart' show eventTypeLabel;
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/domain/workspace_permission.dart';
 import '../../workspace/presentation/feature_names.dart';
 import '../../workspace/presentation/screens/roles_screen_labels.dart'
     show permissionLabel;
 import '../domain/action_registry.dart';
+import 'recorder_target_vocabulary.dart';
 import 'ui_labels.g.dart';
 
 /// The sentence for a registered action; null for one this build does
@@ -263,8 +262,9 @@ String endReasonLabel(AppLocalizations l10n, RecordingEndReason? r) =>
 /// One step as the person reads it: a title and an optional detail.
 ({String title, String? detail}) stepText(
   AppLocalizations l10n,
-  RecordedStep step,
-) {
+  RecordedStep step, {
+  required RecorderTargetVocabulary vocabulary,
+}) {
   // #2142 — a generic step reads in the app's own words when it has
   // them (its label, shown in the reader's language), else by its name.
   final label = step.payload.values['label'];
@@ -274,7 +274,12 @@ String endReasonLabel(AppLocalizations l10n, RecordingEndReason? r) =>
       words
     else if (step.target != null)
       _uiTargetText(l10n, step.action, step.target!) ??
-          targetLabel(l10n, step.target!, action: step.action),
+          targetLabel(
+            l10n,
+            step.target!,
+            action: step.action,
+            vocabulary: vocabulary,
+          ),
     for (final e in step.payload.toJson().entries)
       if (e.key != 'label') _valueLabel(l10n, e.value),
   ];
@@ -314,7 +319,11 @@ String endReasonLabel(AppLocalizations l10n, RecordingEndReason? r) =>
 /// #1872 — the steps as readable Markdown, for a package's transcript.
 /// Words come from the labels above; nothing the recording does not
 /// hold is added, and a note stays marked as the person's own.
-String recordingTranscript(AppLocalizations l10n, TaskRecording recording) {
+String recordingTranscript(
+  AppLocalizations l10n,
+  TaskRecording recording, {
+  required RecorderTargetVocabulary vocabulary,
+}) {
   final out = StringBuffer(
     '# ${recording.title ?? (l10n.taskRecorderUntitled)}\n\n',
   );
@@ -324,7 +333,7 @@ String recordingTranscript(AppLocalizations l10n, TaskRecording recording) {
       segment = step.segment;
       out.writeln('— ${l10n.taskRecorderSegmentGap} —');
     }
-    final text = stepText(l10n, step);
+    final text = stepText(l10n, step, vocabulary: vocabulary);
     out.write('${step.seq}. ${text.title}');
     if (text.detail != null) out.write(' — ${text.detail}');
     out.writeln();
@@ -349,12 +358,20 @@ String recordingTranscript(AppLocalizations l10n, TaskRecording recording) {
   return out.toString();
 }
 
+const _noVocabulary =
+    'a validation-rule target needs the composed RecorderTargetVocabulary';
+
 /// The words for a step's target: a booking field, or a workspace
 /// feature by its own name (#1884).
 /// A step's target in words. The vocabulary depends on the action (a
 /// calendar kind and an event type can share a wire name), so the action
 /// picks it; a target outside it reads "not recorded".
-String targetLabel(AppLocalizations l10n, String target, {String? action}) {
+String targetLabel(
+  AppLocalizations l10n,
+  String target, {
+  String? action,
+  RecorderTargetVocabulary? vocabulary,
+}) {
   T? find<T>(List<T> values, bool Function(T) test) =>
       values.where(test).firstOrNull;
   switch (action) {
@@ -377,11 +394,14 @@ String targetLabel(AppLocalizations l10n, String target, {String? action}) {
       if (target == validationDefaultRule) {
         return l10n.taskRecorderTargetDefaultRule;
       }
-      final rule = find(
-        EventType.values,
-        (t) => t != EventType.unknown && t.dbName == target,
+      // The events feature owns the wording of an event type; the app composes
+      // it in (#4158). A scope that did not is a bug, not an unknown target.
+      final rule = (vocabulary ?? (throw StateError(_noVocabulary))).labelOf(
+        l10n,
+        action!,
+        target,
       );
-      if (rule != null) return eventTypeLabel(l10n, rule);
+      if (rule != null) return rule;
   }
   final kind = CalendarKind.values.where((k) => k.wire == target);
   if (kind.isNotEmpty) return calendarKindLabel(l10n, kind.first);

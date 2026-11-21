@@ -17,6 +17,7 @@ import '../../guide/guide_compiler.dart';
 import '../../guide/guide_session.dart';
 import '../guide_host/guide_step_text.dart' show guideDestinationLabel;
 import '../recorder_labels.dart';
+import '../recorder_target_vocabulary.dart';
 
 class RecordingStepsView extends StatelessWidget {
   const RecordingStepsView({
@@ -110,7 +111,11 @@ class _StepTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final text = stepText(l10n, step);
+    final text = stepText(
+      l10n,
+      step,
+      vocabulary: ref.watch(recorderTargetVocabularyProvider),
+    );
     final unanswered = answered
         ? null
         : (l10n.taskRecorderNoOutcome);

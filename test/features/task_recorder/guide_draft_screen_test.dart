@@ -8,6 +8,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:deskilo/app/recorder_target_wiring.dart';
 import 'package:deskilo/core/files/file_picker.dart';
 import 'package:deskilo/core/files/file_saver.dart';
 import 'package:deskilo/features/task_recorder/domain/task_recording_codec.dart';
@@ -34,6 +35,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          ...recorderTargetsFromApp,
           guideStoreProvider.overrideWithValue(null),
           filePickerProvider.overrideWithValue(
             (_) async => XFile.fromData(
@@ -125,6 +127,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          ...recorderTargetsFromApp,
           guideStoreProvider.overrideWithValue(null),
           filePickerProvider.overrideWithValue(
             (_) async => XFile.fromData(

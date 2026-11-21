@@ -4,6 +4,7 @@ import 'dart:ui' show Locale;
 
 import 'package:deskilo/app/feature_sheets_wiring.dart';
 import 'package:deskilo/app/realtime_invalidations.dart';
+import 'package:deskilo/app/recorder_target_wiring.dart';
 import 'package:deskilo/app/shell/desk_navigation.dart';
 import 'package:deskilo/app/shell/shell_bar_visibility.dart';
 import 'package:deskilo/app/shell/shell_drawer.dart' show navigationDefaultProvider;
@@ -440,6 +441,7 @@ List<Override> standardTestOverrides({
         .overrideWithValue(auth ?? FakeAuthRepository.signedIn()),
     enabledFeatureKeysFromWorkspace, // #2495
     ...realtimeWiringFromApp, // #2495
+    ...recorderTargetsFromApp, // #4158
     ...featureSheetsFromApp, // #2495
     workbookOriginRepositoryProvider.overrideWithValue(FakeWorkbookOriginRepository()),
     connectedInstallationsProvider.overrideWith((ref)=>connectedInstallations ?? FakeConnectedInstallations()),

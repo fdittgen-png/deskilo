@@ -27,6 +27,7 @@ import '../../export/docx_export.dart';
 import '../../package/task_package.dart';
 import '../../providers/recorder_providers.dart';
 import '../recorder_labels.dart';
+import '../recorder_target_vocabulary.dart';
 import '../recording_export.dart';
 import '../widgets/recording_steps_view.dart';
 
@@ -72,6 +73,7 @@ class _RecordingReviewScreenState extends ConsumerState<RecordingReviewScreen> {
         context.l10n,
         export,
         package: package,
+        vocabulary: ref.read(recorderTargetVocabularyProvider),
       ),
       fileName: package ? '$stem$taskPackageExtension' : '$stem.json',
       containsValues: export.capturesValues,

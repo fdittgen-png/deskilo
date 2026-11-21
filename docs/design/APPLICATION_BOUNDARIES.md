@@ -90,7 +90,6 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 - `reservations -> visits`
 - `reservations -> workspace`
 - `search -> workspace`
-- `task_recorder -> events`
 - `task_recorder -> workspace`
 - `visits -> auth`
 - `workspace -> auth`
@@ -107,7 +106,6 @@ Reciprocal:
 - `calendar <-> reservations`
 - `directory <-> workspace`
 - `events <-> money`
-- `events <-> task_recorder`
 - `events <-> workspace`
 - `money <-> plan`
 - `money <-> workspace`
