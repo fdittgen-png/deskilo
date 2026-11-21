@@ -5,6 +5,7 @@ import 'package:xml/xml.dart';
 import 'e_invoice_totals.dart';
 import 'einvoice_input.dart';
 import 'invoice.dart';
+import 'invoice_structured_line.dart';
 import 'subdivision.dart';
 import 'swiss_qr_bill.dart';
 import 'vat_rate.dart';
@@ -161,9 +162,16 @@ class _CiiWriter {
   }
 
   void tradeLine(int index, InvoiceLine line) {
+    // #4162 — a commercial line states its exact facts (null on a legacy one).
+    final exact = structuredCommercialLine(
+      line,
+      creditNote: invoice.isCreditNote,
+      currency: invoice.currency,
+    );
     // BT-131/BT-146 are tax-exclusive: split the gross like the
     // breakdown does.
-    final lineNet = vatSplit(line.amountCents, line.vatPercent).netCents;
+    final lineNet =
+        exact?.netCents ?? vatSplit(line.amountCents, line.vatPercent).netCents;
     // #1091 — divisibility is tested on the NET, which is what the
     // unit price is emitted from. See invoice_ubl.dart.
     final quantity = line.quantity > 1 && lineNet % line.quantity == 0
@@ -185,11 +193,20 @@ class _CiiWriter {
         });
       builder.element('ram:SpecifiedLineTradeAgreement', nest: () {
         builder.element('ram:NetPriceProductTradePrice', nest: () {
-          money('ChargeAmount', unitCents);
+          if (exact == null) {
+            money('ChargeAmount', unitCents);
+          } else {
+            ram('ChargeAmount', exact.unitPrice);
+            if (exact.baseQuantity != null) {
+              ram('BasisQuantity', exact.baseQuantity!,
+                  {'unitCode': exact.baseUnitCode});
+            }
+          }
         });
       });
       builder.element('ram:SpecifiedLineTradeDelivery', nest: () {
-        ram('BilledQuantity', '$quantity', {'unitCode': 'C62'});
+        ram('BilledQuantity', exact?.quantity ?? '$quantity',
+            {'unitCode': exact?.unitCode ?? 'C62'});
       });
       builder.element('ram:SpecifiedLineTradeSettlement', nest: () {
         builder

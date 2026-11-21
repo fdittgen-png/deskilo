@@ -2,7 +2,6 @@
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 
 import 'invoice.dart';
-import 'invoice_line_commercial.dart';
 import 'national_invoice_rules.dart';
 import 'vat_compliance.dart';
 import 'vat_rate.dart';
@@ -75,12 +74,6 @@ EInvoiceTotals eInvoiceTotalsOf({
   required TaxReferenceSet reference,
   required NationalInvoiceRules rules,
 }) {
-  // #4162 -- the structured writers state an integer quantity; a commercial
-  // line's exact facts are carried by X1.B. Until then none is written from a
-  // line it cannot state, never through the integer default.
-  if (invoice.lines.any((l) => l.commercial != null)) {
-    throw const CommercialOutputBlocked();
-  }
   final regime = vatRegimeFromWire(seller.vatRegime);
   final category = invoice.counterpartyCategory.isNotEmpty
       ? invoice.counterpartyCategory

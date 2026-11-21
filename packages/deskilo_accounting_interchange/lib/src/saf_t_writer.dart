@@ -430,7 +430,7 @@ class SafTWriter {
   }
 
   void invoiceLine(int i, InvoiceLine line) {
-    final split = vatSplit(line.amountCents, line.vatPercent);
+    final split = line.splitForIntegerQuantity;
     // #1091 — the UnitPrice below is the NET per unit, so the
     // quantity must divide the NET. See invoice_ubl.dart.
     final quantity = line.quantity > 1 && split.netCents % line.quantity == 0
