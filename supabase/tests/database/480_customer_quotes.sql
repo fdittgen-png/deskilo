@@ -7,7 +7,7 @@
 -- whatever the request id; a changed invoice context needs its reviewed digest; and
 -- nothing financial exists until the invoice is issued by #4165's issuer.
 begin;
-select plan(75);
+select plan(82);
 
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00004166' || lpad(n::text, 4, '0'))::uuid;
@@ -316,6 +316,46 @@ select is(pg_temp.as_user(1, format($s$select public.prepare_quote_conversion_v1
 select is(pg_temp.as_user(1, $s$select count(*)::text from public.customer_quotes$s$), '0', 'and the raw tables show nothing');
 update public.workspaces set feature_flags = feature_flags || '{"customerQuotes": true}'::jsonb where id = pg_temp.u(101);
 select is(pg_temp.as_user(1, $s$select count(*)::text from public.customer_quotes$s$) <> '0', true, 'switched on again, the quotes are back');
+
+-- ── a business takes its quotes with it (0837) ──
+-- Another business with a sent quote, its recorded decision and the invoice draft its
+-- conversion prepared: every direct delete or change is refused as before, and deleting the
+-- business takes all of them. (A converted quote keeps its invoice, which is retained, and
+-- the invoice refuses the deletion; that is the invoices' rule, not the quotes'.)
+insert into public.workspaces (id, name, country_code, currency_code, timezone, created_by)
+values (pg_temp.u(103), 'Gone 4166', 'FR', 'EUR', 'Europe/Paris', pg_temp.u(1));
+insert into public.members (id, workspace_id, user_id, is_owner, is_admin, status, joined_at)
+values (pg_temp.u(206), pg_temp.u(103), pg_temp.u(6), false, false, 'active', '2026-01-01');
+insert into public.customer_quotes (id, workspace_id, subject_member_id, reference, status)
+values (pg_temp.u(401), pg_temp.u(103), pg_temp.u(206), 'QUO-GONE', 'accepted');
+insert into public.customer_quote_revisions (id, quote_id, workspace_id, revision, status, issued_on, valid_until, lines,
+                                              frozen, content_digest, sent_at, sent_by_member_id)
+values (pg_temp.u(402), pg_temp.u(401), pg_temp.u(103), 1, 'sent', current_date - 5, current_date + 20, '[]'::jsonb,
+        '{"totals": {"total_cents": 100}}'::jsonb, 'x', now(), pg_temp.u(206));
+insert into public.customer_quote_decisions (quote_id, workspace_id, revision_id, decision, decided_on, source, recorded_by_member_id)
+values (pg_temp.u(401), pg_temp.u(103), pg_temp.u(402), 'accepted', current_date, 'verbal', pg_temp.u(206));
+insert into public.standalone_invoice_drafts
+select * from jsonb_populate_record(null::public.standalone_invoice_drafts, jsonb_build_object(
+  'id', pg_temp.u(403), 'workspace_id', pg_temp.u(103), 'subject_member_id', pg_temp.u(206), 'revision', 1, 'status', 'draft',
+  'service_date', current_date, 'due_on', current_date + 30, 'buyer_reference', '', 'purchase_order', '',
+  'lines', '[]'::jsonb, 'origin_quote_id', pg_temp.u(401)));
+select throws_ok(format($s$delete from public.customer_quotes where id = %L$s$, pg_temp.u(401)), 'DKQ05', null,
+  'a sent quote is still never deleted on its own');
+select throws_ok(format($s$delete from public.customer_quote_revisions where id = %L$s$, pg_temp.u(402)), 'DKQ05', null,
+  'nor its sent revision');
+select throws_ok(format($s$delete from public.customer_quote_decisions where quote_id = %L$s$, pg_temp.u(401)), 'DKQ05', null,
+  'nor the decision the issuer recorded');
+select throws_ok(format($s$delete from public.standalone_invoice_drafts where id = %L$s$, pg_temp.u(403)), 'DKQ09', null,
+  'nor the invoice draft that came from the quote');
+select lives_ok(format($s$delete from public.workspaces where id = %L$s$, pg_temp.u(103)),
+  'a business with a sent quote, its decision and a prepared conversion can be deleted');
+select is((select (select count(*) from public.customer_quotes where workspace_id = pg_temp.u(103))
+            + (select count(*) from public.customer_quote_revisions where workspace_id = pg_temp.u(103))
+            + (select count(*) from public.customer_quote_decisions where workspace_id = pg_temp.u(103))
+            + (select count(*) from public.standalone_invoice_drafts where workspace_id = pg_temp.u(103)))::int, 0,
+  'its quotes, revisions, decision and draft went with it');
+select ok(exists (select 1 from public.customer_quotes where workspace_id = pg_temp.u(101)),
+  'another business keeps its quotes');
 
 select * from finish();
 rollback;
