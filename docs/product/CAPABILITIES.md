@@ -382,9 +382,9 @@ A billing manager connects a legal issuer to an implemented accounting target, m
 A UK workspace owner reviews the nine VAT return boxes, submits through the configured HMRC MTD workflow, and sees a receipt or an explicit uncertain result that requires a checked recovery before retry.
 
 - **Code:** shipped · provider `hmrc`
-- **Needs:** A UK VAT-registered workspace with a VAT number, the web application, enabled MTD and accounting connection features, and a configured HMRC application and connection.
+- **Needs:** A UK VAT-registered workspace with a VAT number, the web application, the VAT returns and MTD submission features switched on, and a configured HMRC application and connection (docs/domain/HMRC_SANDBOX_RUN.md).
 - **Limits:** The current evidence uses simulated function replies and a local database. No recorded Developer Hub sandbox submission or HMRC production acceptance is present. A lost response or expired attempt remains unconfirmed until the current attempt has been checked; no receipt is invented.
-- **Feature flags:** `vatDeclarations`, `mtdSubmission`, `accountingConnectors`
+- **Feature flags:** `vatDeclarations`, `mtdSubmission`
 - `unit` · **gated** · [`test/features/money/hmrc_repository_test.dart`](../../test/features/money/hmrc_repository_test.dart)
 - `unit` · **gated** · [`test/features/money/hmrc_submit_sheet_test.dart`](../../test/features/money/hmrc_submit_sheet_test.dart)
 - `local_integration` · **gated** · [`supabase/tests/database/338_hmrc_recovery.sql`](../../supabase/tests/database/338_hmrc_recovery.sql)
