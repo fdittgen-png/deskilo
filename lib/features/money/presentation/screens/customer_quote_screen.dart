@@ -20,6 +20,7 @@ import '../../application/customer_quote_commands.dart';
 import '../../domain/customer_quote.dart';
 import '../../providers/billing_customer_providers.dart';
 import '../../providers/customer_quote_providers.dart';
+import '../quote_print.dart';
 import '../quotes/quote_conversion_sheet.dart';
 import '../quotes/quote_decision_sheet.dart';
 import '../quotes/quote_text.dart';
@@ -180,6 +181,7 @@ class _Content extends ConsumerWidget {
       children: [
         ..._header(context, names),
         if (shown != null) ..._offer(context, shown),
+        ..._share(context, ref),
         ..._decision(context),
         if (quote.revisions.length > 1) ..._history(context),
         if (canIssue && (quote.openForActions || quote.invoiceId != null))
@@ -252,6 +254,25 @@ class _Content extends ConsumerWidget {
   }
 
   /// What the issuer recorded, never a customer's signature.
+  /// The offer as a document: what the customer holds, to look at, save or
+  /// share. A quote nothing was sent of has none.
+  List<Widget> _share(BuildContext context, WidgetRef ref) {
+    if (quoteDocumentRevision(quote) == null) return const [];
+    return [
+      const FormGap(),
+      Align(
+        alignment: AlignmentDirectional.centerStart,
+        child: OutlinedButton.icon(
+          key: const ValueKey('quote-print'),
+          icon: const Icon(Icons.ios_share),
+          label: Text(context.l10n.invoicePageMoreShare),
+          onPressed: () =>
+              QuotePrint(context, ref).show(workspaceId: workspaceId, quote: quote),
+        ),
+      ),
+    ];
+  }
+
   List<Widget> _decision(BuildContext context) {
     final decision = quote.decision;
     if (decision == null) return const [];

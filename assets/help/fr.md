@@ -2871,6 +2871,8 @@ Choisissez **Nouveau devis**, le client, les dates et ajoutez les lignes. **Enre
 
 Quand le client a répondu, choisissez **Enregistrer la réponse** sur un devis envoyé : vous enregistrez sa réponse comme émetteur (accepté ou refusé, la date, comment elle vous est parvenue) ; c'est votre trace, pas sa signature, et une offre dont la date est passée ne peut plus être acceptée. Pour un devis accepté, choisissez **Facturer ce devis**, fixez les dates et **Vérifier la facture** : la facture est prévisualisée d'après la révision acceptée et comparée à ce qui a été accepté. Si elle diffère (la date, les données du client ou les faits fiscaux ont changé), vous confirmez que vous l'avez revue ; ce qui ne peut pas encore être émis est nommé. Puis **Émettre la facture** : un devis donne une seule facture, quoi qu'il arrive ensuite à cette facture.
 
+Sur un devis envoyé, **Partager le PDF** ouvre l’offre comme un document : un devis, avec sa propre référence et sa durée de validité, le client, les lignes et ce qu’elles représentent telles qu’elles ont été figées à l’envoi (le net, la TVA par taux et le total). Ce n’est jamais une facture et il ne porte aucun numéro de facture. Vous pouvez le consulter, l’enregistrer ou le partager.
+
 ### Comment les montants sont affichés
 
 **Public:** Tout le monde

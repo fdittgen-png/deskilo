@@ -112,6 +112,8 @@ const List<ReportKind> fixedReportKinds = [
       numbersFirstPage: true),
   // #3307 — the order the space sends its supplier.
   ReportKind(id: 'purchase_order', slot: ReportDocSlot('purchase_order')),
+  // #4166 — what a business sends a customer before invoicing: a quote.
+  ReportKind(id: 'quote', slot: ReportDocSlot('quote')),
   // #3673 — a customer's open items as of a date, one currency each.
   ReportKind(id: 'customer_statement', slot: ReportDocSlot('customer_statement')),
   // #3839 — a customer's statement for a period, one currency each.

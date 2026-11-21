@@ -29239,6 +29239,14 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get reportDocQuote => 'Preventivo';
+
+  @override
+  String reportDocQuoteTitle(String reference) {
+    return 'Preventivo $reference';
+  }
+
+  @override
   String get reportDocSpaceCodes => 'Schede QR degli spazi';
 
   @override

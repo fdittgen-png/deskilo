@@ -17,6 +17,8 @@ ReportBands professionalReportBands({
   if (kind.slot is ReportRootSlot ||
       kind.slot is ReportProformaSlot ||
       kind.isReminder || kind.id == 'vat_declaration' ||
+      // #4166 — a quote states its own reference, date and validity.
+      kind.id == 'quote' ||
       kind.id == 'bi_analytics' || kind.id == 'workspace_configuration' ||
       bookReportKinds.contains(kind.id) || kind.id == 'bank_reconciliation') {
     return content;

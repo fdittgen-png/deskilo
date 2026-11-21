@@ -28997,6 +28997,14 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get reportDocQuote => 'Quote';
+
+  @override
+  String reportDocQuoteTitle(String reference) {
+    return 'Quote $reference';
+  }
+
+  @override
   String get reportDocSpaceCodes => 'Space QR cards';
 
   @override
