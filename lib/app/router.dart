@@ -21,6 +21,7 @@ import 'resume_places.dart';
 import 'route_env.dart';
 import 'route_redirect.dart';
 import 'routes/auth_routes.dart';
+import 'routes/billing_customer_routes.dart';
 import 'routes/directory_routes.dart';
 import 'routes/editor_routes.dart';
 import 'routes/events_routes.dart';
@@ -120,6 +121,7 @@ GoRouter router(Ref ref) {
       ...mcpRoutes(env),
       ...taskRecorderRoutes(env),
       ...moneyRoutes(env),
+      ...billingCustomerRoutes(env),
     ],
   );
   ref.onDispose(router.dispose);

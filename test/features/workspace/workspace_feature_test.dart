@@ -133,6 +133,9 @@ const Set<WorkspaceFeature> defaultOffFeatures = {
   WorkspaceFeature.taskRecorder,
   // #1835 — a space admits guests deliberately, never by default.
   WorkspaceFeature.guestParticipation,
+  // #4164 — billing customers are asked for: a business that invoices only
+  // its members never sees them.
+  WorkspaceFeature.billingCustomers,
 };
 
 /// #2566 — what a key nobody has chosen resolves to: a core feature that
@@ -236,6 +239,7 @@ void main() {
       'kioskEnrolment': true,
       'guestParticipation': true,
       'stockManagement': true,
+      'billingCustomers': true,
     });
 
     expect(enabled.contains(WorkspaceFeature.adminSeatBlocking), isTrue);

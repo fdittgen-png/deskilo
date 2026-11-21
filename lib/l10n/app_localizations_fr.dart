@@ -5023,6 +5023,120 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les paliers doivent croître et se terminer à 100 %.';
 
   @override
+  String get billingCustomerBusiness => 'Entreprise';
+
+  @override
+  String get billingCustomerCapacity => 'Facturé comme';
+
+  @override
+  String get billingCustomerCapacityHelper =>
+      'Détermine les mentions légales et le traitement de la taxe. Seule une personne autorisée à émettre des factures peut le modifier.';
+
+  @override
+  String get billingCustomerCity => 'Ville';
+
+  @override
+  String get billingCustomerCompany => 'Société';
+
+  @override
+  String get billingCustomerConsumer => 'Particulier';
+
+  @override
+  String get billingCustomerCountry => 'Code pays';
+
+  @override
+  String get billingCustomerCountryHint => 'Deux lettres, par exemple FR';
+
+  @override
+  String get billingCustomerCountryInvalid =>
+      'Utilisez deux lettres, par exemple FR.';
+
+  @override
+  String get billingCustomerCourtesy => 'Civilité';
+
+  @override
+  String get billingCustomerEditTitle => 'Modifier le client facturé';
+
+  @override
+  String get billingCustomerEmail => 'E-mail de facturation';
+
+  @override
+  String get billingCustomerEmailInvalid =>
+      'Ceci ne ressemble pas à une adresse e-mail.';
+
+  @override
+  String get billingCustomerGone =>
+      'Ce client n\'est plus l\'un des vôtres. Rien n\'a été enregistré.';
+
+  @override
+  String get billingCustomerLastName => 'Nom';
+
+  @override
+  String get billingCustomerLegalId => 'Numéro d\'immatriculation';
+
+  @override
+  String get billingCustomerNameNeeded => 'Saisissez une société ou un nom.';
+
+  @override
+  String get billingCustomerNewTitle => 'Nouveau client facturé';
+
+  @override
+  String get billingCustomerNotAllowed =>
+      'Vous ne pouvez pas gérer les clients facturés ici. Rien n\'a été enregistré.';
+
+  @override
+  String get billingCustomerPhone => 'Téléphone';
+
+  @override
+  String get billingCustomerSaveFailed =>
+      'Le client n\'a pas pu être enregistré. Réessayez.';
+
+  @override
+  String get billingCustomerStale =>
+      'Ce client a changé depuis son ouverture. Fermez-le et rouvrez-le ; rien n\'a été enregistré.';
+
+  @override
+  String get billingCustomerStreet => 'Rue et numéro';
+
+  @override
+  String get billingCustomerUnstated => 'Non précisé';
+
+  @override
+  String get billingCustomerVatId => 'Numéro de TVA';
+
+  @override
+  String get billingCustomerVatInvalid =>
+      'Ceci ne ressemble pas à un numéro de TVA. Seule sa forme est vérifiée, pas son existence.';
+
+  @override
+  String get billingCustomersAdd => 'Ajouter un client';
+
+  @override
+  String get billingCustomersEmpty =>
+      'Aucun client facturé pour l\'instant. Ajoutez le premier pour le facturer sans lui demander de créer un compte.';
+
+  @override
+  String get billingCustomersLoadFailed =>
+      'Les clients n\'ont pas pu être lus. Ce n\'est pas une liste vide.';
+
+  @override
+  String get billingCustomersNoAccount =>
+      'Les personnes et entreprises que vous facturez. Elles n\'ont pas de compte et ne voient rien de votre activité.';
+
+  @override
+  String get billingCustomersRetry => 'Réessayer';
+
+  @override
+  String get billingCustomersSearch => 'Rechercher un client';
+
+  @override
+  String get billingCustomersTitle => 'Clients facturés';
+
+  @override
+  String get billingCustomersUnavailable =>
+      'Les clients facturés ne sont pas encore disponibles sur cette installation. Rien n\'a été modifié.';
+
+  @override
   String get billingFeeBands => 'Paliers tarifaires';
 
   @override
@@ -11247,6 +11361,13 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get featureBiReportDesignerTitle =>
       'Concepteur de rapports (analyses)';
+
+  @override
+  String get featureBillingCustomersDesc =>
+      'Gardez les personnes et entreprises que vous facturez, avec ou sans compte : le nom et l\'adresse sous lesquels elles sont facturées, leurs numéros fiscaux et un contact pour la facture. Ce ne sont pas des membres et elles ne voient rien de votre activité. Désactivé : vous facturez les membres comme avant.';
+
+  @override
+  String get featureBillingCustomersTitle => 'Clients facturés';
 
   @override
   String get featureBookForOthers => 'Réserver pour d\'autres';

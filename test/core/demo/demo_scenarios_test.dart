@@ -51,6 +51,7 @@ import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/accounting_connection.dart';
 import 'package:deskilo/features/money/domain/asset_valuation.dart';
 import 'package:deskilo/features/money/domain/bank/bank_match.dart';
+import 'package:deskilo/features/money/domain/billing_customer.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/money/domain/book_chart.dart';
 import 'package:deskilo/features/money/domain/einvoice_inbox.dart';
@@ -1238,6 +1239,26 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
       final refused = await organisations.add(before.id, demoPracticeSpaceId);
       final after = (await organisations.myOrganisations()).single;
       return refused == null && after.houseOf(demoPracticeSpaceId) != null;
+    },
+  ),
+  // #4164 — the owner keeps a customer with no account: a business is added
+  // to the head's billing customers and is listed beside the seeded ones.
+  WorkspaceFeature.billingCustomers: _action(
+    _owner,
+    'Ada adds Studio Nord, a business with no account, to her billing '
+    'customers',
+    (w) async {
+      final customers = w.house(DemoSpaceKey.home).stores.billingCustomers;
+      final before = (await customers.fetch(demoFirstSpaceId)).length;
+      await customers.create(
+        demoFirstSpaceId,
+        const BillingPartyDraft(company: 'Studio Nord', city: 'Kiel'),
+        capacity: 'business',
+      );
+      final after = await customers.fetch(demoFirstSpaceId);
+      return before > 0 &&
+          after.length == before + 1 &&
+          after.any((c) => c.displayName == 'Studio Nord');
     },
   ),
   // #3610 — Ctrl+K finds an invoice of the Demo by its number, and a

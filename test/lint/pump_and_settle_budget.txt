@@ -48,6 +48,7 @@
 # review {"path":"test/features/money/my_finances_selection_test.dart","before":36,"after":44,"invariant":"#4218 the read of the correction: a declaration over two months interrupted after the first says what was recorded and tries again on what is still selected, and Open and Configure for a business that cannot be entered say so: each tap, confirmation and send settles once before the stored payments or the message are read","cost":"three tests in 2 s locally"}
 # review {"path":"test/features/money/money_screen_test.dart","before":38,"after":40,"invariant":"#4218 Pay online while the business identity is not known: the scroll to the button and the tap each settle once before the message and the absent order are read","cost":"one test, under 1 s locally"}
 # review {"path":"test/features/reservations/bound_confirmation_switch_test.dart","before":0,"after":20,"invariant":"each real confirmation (own-seat cancel, booking confirm, detail cancel, deletion request) is driven to its dialog or sheet, the context is switched, and the confirm tap settles on the stale refusal; the unchanged-context twins settle on the write","cost":"nine widget tests, about two seconds in all"}
+# review {"path":"test/features/money/billing_customers_screen_test.dart","before":0,"after":10,"invariant":"each test opens the real sheet and settles the list, the sheet and the refusal it shows; a stale revision and a lost answer are asserted by the words on the screen","cost":"about one second for the file"}
 19 test/app/desk_members/members_desk_test.dart
 11 test/app/entry_intents_flow_test.dart
 27 test/app/shell/desk_routes_test.dart
@@ -101,6 +102,7 @@
 11 test/features/money/accountant_handoff_flow_test.dart
 11 test/features/money/asset_register_test.dart
 11 test/features/money/asset_valuations_screen_test.dart
+10 test/features/money/billing_customers_screen_test.dart
 20 test/features/money/billing_screen_test.dart
 11 test/features/money/billing_v2_integration_test.dart
 10 test/features/money/book_chart_sheet_test.dart

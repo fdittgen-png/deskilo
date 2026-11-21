@@ -57,9 +57,9 @@ const Map<String, String> _notExported = {
       '#4164 A1 — the billed name, address, tax identifiers and contact the '
           'business holds for a customer it invoices. A customer-only subject '
           'has no account, so no export_my_data call is theirs; a rights request '
-          'is answered by the space (record_rights_request), and the export of '
-          'this identity arrives with the customer editor (#4164 A2); the name '
-          'and address are already on each invoice the person is billed on',
+          'is answered by the space (record_rights_request) from the workspace '
+          'records export, which carries this table (0825); the name and '
+          'address are already on each invoice the person is billed on',
   'guest_passes':
       '#3308 — a pass sold at the desk to a guest, keyed by the guest\'s '
           'customer record. A guest has no account, so no export_my_data call '

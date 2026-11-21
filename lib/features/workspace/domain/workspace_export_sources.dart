@@ -416,6 +416,8 @@ const List<ExportSource> workspaceExportSources = [
   ExportSource.everyColumn('invoice_dunning_holds'),
   ExportSource.everyColumn('tax_exemption_certificates'),
   ExportSource.everyColumn('suppliers'),
+  // #4164 — the billing identity of each customer the business invoices.
+  ExportSource.everyColumn('billing_parties'),
   ExportSource.everyColumn('purchase_documents'),
   ExportSource.everyColumn('purchase_lines'),
   ExportSource.everyColumn('purchase_obligations'),

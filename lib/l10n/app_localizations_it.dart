@@ -5002,6 +5002,119 @@ class AppLocalizationsIt extends AppLocalizations {
       'Le fasce devono crescere e terminare al 100%.';
 
   @override
+  String get billingCustomerBusiness => 'Azienda';
+
+  @override
+  String get billingCustomerCapacity => 'Fatturato come';
+
+  @override
+  String get billingCustomerCapacityHelper =>
+      'Determina le diciture legali e il trattamento fiscale. Solo chi può emettere fatture può modificarlo.';
+
+  @override
+  String get billingCustomerCity => 'Città';
+
+  @override
+  String get billingCustomerCompany => 'Azienda';
+
+  @override
+  String get billingCustomerConsumer => 'Privato';
+
+  @override
+  String get billingCustomerCountry => 'Codice paese';
+
+  @override
+  String get billingCustomerCountryHint => 'Due lettere, per esempio IT';
+
+  @override
+  String get billingCustomerCountryInvalid =>
+      'Usare due lettere, per esempio IT.';
+
+  @override
+  String get billingCustomerCourtesy => 'Titolo';
+
+  @override
+  String get billingCustomerEditTitle => 'Modificare il cliente fatturato';
+
+  @override
+  String get billingCustomerEmail => 'E-mail per le fatture';
+
+  @override
+  String get billingCustomerEmailInvalid => 'Non sembra un indirizzo e-mail.';
+
+  @override
+  String get billingCustomerGone =>
+      'Questo cliente non è più tra quelli dell\'attività. Non è stato salvato nulla.';
+
+  @override
+  String get billingCustomerLastName => 'Cognome';
+
+  @override
+  String get billingCustomerLegalId => 'Numero di iscrizione al registro';
+
+  @override
+  String get billingCustomerNameNeeded => 'Inserire un\'azienda o un nome.';
+
+  @override
+  String get billingCustomerNewTitle => 'Nuovo cliente fatturato';
+
+  @override
+  String get billingCustomerNotAllowed =>
+      'Non è consentito gestire i clienti fatturati qui. Non è stato salvato nulla.';
+
+  @override
+  String get billingCustomerPhone => 'Telefono';
+
+  @override
+  String get billingCustomerSaveFailed =>
+      'Non è stato possibile salvare il cliente. Riprovare.';
+
+  @override
+  String get billingCustomerStale =>
+      'Questo cliente è cambiato dopo l\'apertura. Lo si chiuda e lo si riapra; non è stato salvato nulla.';
+
+  @override
+  String get billingCustomerStreet => 'Via e numero';
+
+  @override
+  String get billingCustomerUnstated => 'Non indicato';
+
+  @override
+  String get billingCustomerVatId => 'Partita IVA';
+
+  @override
+  String get billingCustomerVatInvalid =>
+      'Non sembra una partita IVA. Si controlla solo la forma, non l\'esistenza.';
+
+  @override
+  String get billingCustomersAdd => 'Aggiungere un cliente';
+
+  @override
+  String get billingCustomersEmpty =>
+      'Nessun cliente fatturato per ora. Si aggiunga il primo per fatturargli senza chiedergli di creare un account.';
+
+  @override
+  String get billingCustomersLoadFailed =>
+      'Non è stato possibile leggere i clienti. Non è un elenco vuoto.';
+
+  @override
+  String get billingCustomersNoAccount =>
+      'Le persone e le aziende a cui si fattura. Non hanno un account e non vedono nulla dell\'attività.';
+
+  @override
+  String get billingCustomersRetry => 'Riprovare';
+
+  @override
+  String get billingCustomersSearch => 'Cercare un cliente';
+
+  @override
+  String get billingCustomersTitle => 'Clienti fatturati';
+
+  @override
+  String get billingCustomersUnavailable =>
+      'I clienti fatturati non sono ancora disponibili su questa installazione. Non è stato modificato nulla.';
+
+  @override
   String get billingFeeBands => 'Fasce tariffarie';
 
   @override
@@ -11201,6 +11314,13 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get featureBiReportDesignerTitle => 'Editor di report (analisi)';
+
+  @override
+  String get featureBillingCustomersDesc =>
+      'Si tengono le persone e le aziende a cui si fattura, con o senza account: il nome e l\'indirizzo con cui sono fatturate, i loro numeri fiscali e un contatto per la fattura. Non sono membri e non vedono nulla dell\'attività. Disattivato: si fattura ai membri come prima.';
+
+  @override
+  String get featureBillingCustomersTitle => 'Clienti fatturati';
 
   @override
   String get featureBookForOthers => 'Prenota per altri';

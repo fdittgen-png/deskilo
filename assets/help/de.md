@@ -2853,6 +2853,14 @@ Sie möchten das erfasste Geld sehen, das hereinkam und hinausging, und was noch
 
 Wählen Sie **Lieferantenverbindlichkeiten anzeigen**, um dessen Rechnungen und Restbeträge zu sehen. Nutzen Sie **Mehr laden**, wenn angeboten. Ist der Saldo oder die Liste nicht verfügbar, versuchen Sie es erneut, statt null anzunehmen. Einkäufe muss aktiviert sein; Sie brauchen die Berechtigung, Finanzen einzusehen oder Einkäufe zu verwalten.
 
+### Rechnungskunden
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Öffnen Sie **Geld** und dann **Rechnungskunden** (die Adresse `/money/customers`; die Funktion **Rechnungskunden** muss unter der Rechnungsstellung aktiviert sein). Hier verwalten Sie die Personen und Unternehmen, denen Sie Rechnungen stellen, mit oder ohne Konto. Sie sind keine Mitglieder: Sie haben kein Konto, sehen nichts von Ihrem Betrieb und zählen nicht zu Ihren Mitgliedern.
+
+Wählen Sie **Kunden hinzufügen** und geben Sie eine Firma oder einen Namen, die Anschrift, den Ländercode, die USt-IdNr. und eine E-Mail-Adresse für die Rechnung an. Die USt-IdNr. wird nur auf ihre Form geprüft, nie bestätigt. **Abgerechnet als** (Unternehmen oder Privatperson) bestimmt die Pflichtangaben und die steuerliche Behandlung; nur wer Rechnungen ausstellen darf, kann es ändern. Wählen Sie einen Kunden, um ihn zu bearbeiten. Hat jemand anderes den Kunden seit dem Öffnen geändert, wird nichts gespeichert und Sie öffnen ihn erneut. Lässt sich die Liste nicht lesen, versuchen Sie es erneut, statt sie für leer zu halten. Eine Änderung schreibt nie eine bereits ausgestellte Rechnung um: Jede behält Namen und Anschrift, mit denen sie ausgestellt wurde.
+
 ### Wie Beträge angezeigt werden
 
 **Zielgruppe:** Alle

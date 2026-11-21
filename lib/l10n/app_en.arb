@@ -6529,6 +6529,142 @@
   "@billingBandsInvalid": {
     "description": "Validation error blocking the band save"
   },
+  "billingCustomerBusiness": "Business",
+  "@billingCustomerBusiness": {
+    "description": "the billing customers screen and editor (#4164)"
+  },
+  "billingCustomerCapacity": "Billed as",
+  "@billingCustomerCapacity": {
+    "description": "the billing customers screen and editor (#4164)"
+  },
+  "billingCustomerCapacityHelper": "Decides the legal mentions and the tax treatment of what you invoice. Only someone who may issue invoices can change it.",
+  "@billingCustomerCapacityHelper": {
+    "description": "the billing customers screen and editor (#4164)"
+  },
+  "billingCustomerCity": "City",
+  "@billingCustomerCity": {
+    "description": "the billing customers screen and editor (#4164)"
+  },
+  "billingCustomerCompany": "Company",
+  "@billingCustomerCompany": {
+    "description": "the billing customers screen and editor (#4164)"
+  },
+  "billingCustomerConsumer": "Person",
+  "@billingCustomerConsumer": {
+    "description": "the billing customers screen and editor (#4164)"
+  },
+  "billingCustomerCountry": "Country code",
+  "@billingCustomerCountry": {
+    "description": "the billing customers screen and editor (#4164)"
+  },
+  "billingCustomerCountryHint": "Two letters, for example FR",
+  "@billingCustomerCountryHint": {
+    "description": "the billing customers screen and editor (#4164)"
+  },
+  "billingCustomerCountryInvalid": "Use two letters, for example FR.",
+  "@billingCustomerCountryInvalid": {
+    "description": "the billing customers screen and editor (#4164)"
+  },
+  "billingCustomerCourtesy": "Title",
+  "@billingCustomerCourtesy": {
+    "description": "the billing customers screen and editor (#4164)"
+  },
+  "billingCustomerEditTitle": "Edit billing customer",
+  "@billingCustomerEditTitle": {
+    "description": "the billing customers screen and editor (#4164)"
+  },
+  "billingCustomerEmail": "Invoice e-mail",
+  "@billingCustomerEmail": {
+    "description": "the billing customers screen and editor (#4164)"
+  },
+  "billingCustomerEmailInvalid": "This does not look like an e-mail address.",
+  "@billingCustomerEmailInvalid": {
+    "description": "the billing customers screen and editor (#4164)"
+  },
+  "billingCustomerGone": "This customer is no longer one of yours. Nothing was saved.",
+  "@billingCustomerGone": {
+    "description": "the billing customers screen and editor (#4164)"
+  },
+  "billingCustomerLastName": "Last name",
+  "@billingCustomerLastName": {
+    "description": "the billing customers screen and editor (#4164)"
+  },
+  "billingCustomerLegalId": "Company registration number",
+  "@billingCustomerLegalId": {
+    "description": "the billing customers screen and editor (#4164)"
+  },
+  "billingCustomerNameNeeded": "Enter a company or a name.",
+  "@billingCustomerNameNeeded": {
+    "description": "the billing customers screen and editor (#4164)"
+  },
+  "billingCustomerNewTitle": "New billing customer",
+  "@billingCustomerNewTitle": {
+    "description": "the billing customers screen and editor (#4164)"
+  },
+  "billingCustomerNotAllowed": "You may not manage billing customers here. Nothing was saved.",
+  "@billingCustomerNotAllowed": {
+    "description": "the billing customers screen and editor (#4164)"
+  },
+  "billingCustomerPhone": "Phone",
+  "@billingCustomerPhone": {
+    "description": "the billing customers screen and editor (#4164)"
+  },
+  "billingCustomerSaveFailed": "The customer could not be saved. Try again.",
+  "@billingCustomerSaveFailed": {
+    "description": "the billing customers screen and editor (#4164)"
+  },
+  "billingCustomerStale": "This customer changed since you opened it. Close it and open it again; nothing was saved.",
+  "@billingCustomerStale": {
+    "description": "the billing customers screen and editor (#4164)"
+  },
+  "billingCustomerStreet": "Street and number",
+  "@billingCustomerStreet": {
+    "description": "the billing customers screen and editor (#4164)"
+  },
+  "billingCustomerUnstated": "Not stated",
+  "@billingCustomerUnstated": {
+    "description": "the billing customers screen and editor (#4164)"
+  },
+  "billingCustomerVatId": "VAT number",
+  "@billingCustomerVatId": {
+    "description": "the billing customers screen and editor (#4164)"
+  },
+  "billingCustomerVatInvalid": "This does not look like a VAT number. It is only checked for its shape, not verified.",
+  "@billingCustomerVatInvalid": {
+    "description": "the billing customers screen and editor (#4164)"
+  },
+  "billingCustomersAdd": "Add a customer",
+  "@billingCustomersAdd": {
+    "description": "the billing customers screen and editor (#4164)"
+  },
+  "billingCustomersEmpty": "No billing customers yet. Add the first one to invoice it without asking it to create an account.",
+  "@billingCustomersEmpty": {
+    "description": "the billing customers screen and editor (#4164)"
+  },
+  "billingCustomersLoadFailed": "The customers could not be read. This is not an empty list.",
+  "@billingCustomersLoadFailed": {
+    "description": "the billing customers screen and editor (#4164)"
+  },
+  "billingCustomersNoAccount": "The people and businesses you invoice. They have no account and see nothing of your business.",
+  "@billingCustomersNoAccount": {
+    "description": "the billing customers screen and editor (#4164)"
+  },
+  "billingCustomersRetry": "Try again",
+  "@billingCustomersRetry": {
+    "description": "the billing customers screen and editor (#4164)"
+  },
+  "billingCustomersSearch": "Search customers",
+  "@billingCustomersSearch": {
+    "description": "the billing customers screen and editor (#4164)"
+  },
+  "billingCustomersTitle": "Billing customers",
+  "@billingCustomersTitle": {
+    "description": "the billing customers screen and editor (#4164)"
+  },
+  "billingCustomersUnavailable": "Billing customers are not available on this installation yet. Nothing was changed.",
+  "@billingCustomersUnavailable": {
+    "description": "the billing customers screen and editor (#4164)"
+  },
   "billingFeeBands": "Fee bands",
   "@billingFeeBands": {
     "description": "Section header of the fee-band editor"
@@ -14765,6 +14901,14 @@
   "featureBiReportDesignerTitle": "Report designer (analytics)",
   "@featureBiReportDesignerTitle": {
     "description": "#2579 analytical reports"
+  },
+  "featureBillingCustomersDesc": "Keep the people and businesses you invoice, with or without an account: the name and address they are billed under, their tax numbers and a contact for the invoice. They are not members and see nothing of your business. Off: you invoice members as before.",
+  "@featureBillingCustomersDesc": {
+    "description": "a feature in the Features list (#4164)"
+  },
+  "featureBillingCustomersTitle": "Billing customers",
+  "@featureBillingCustomersTitle": {
+    "description": "a feature in the Features list (#4164)"
   },
   "featureBookForOthers": "Book for others",
   "@featureBookForOthers": {

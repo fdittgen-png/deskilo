@@ -2985,6 +2985,15 @@ Abra **Compras** y después **Proveedores**. El saldo pendiente de cada proveedo
 
 Elija **Ver pagos pendientes del proveedor** para consultar sus facturas y los importes restantes. Use **Cargar más** cuando aparezca. Si el saldo o la lista no están disponibles, vuelva a intentarlo en lugar de suponer que son cero. Compras debe estar activado y necesita permiso para ver las finanzas o gestionar compras.
 
+<!-- anchor: user.money.customers.billing -->
+### Clientes facturados
+
+**Público:** Administrador/a · Propietario
+
+Abra **Dinero** y luego **Clientes facturados** (la dirección `/money/customers`; la función **Clientes facturados** debe estar activada bajo la facturación). Aquí guarda las personas y empresas a las que factura, con o sin cuenta. No son miembros: no tienen cuenta, no ven nada de su negocio y no cuentan entre sus miembros.
+
+Elija **Añadir un cliente** e indique una empresa o un nombre, la dirección postal, el código de país, el número de IVA y un correo para la factura. El número de IVA solo se comprueba en su forma, nunca se verifica. **Facturado como** (empresa o particular) determina las menciones legales y el tratamiento fiscal; solo quien puede emitir facturas puede cambiarlo. Elija un cliente para editarlo. Si alguien más lo cambió desde que lo abrió, no se guarda nada y se le pide abrirlo de nuevo. Si no se puede leer la lista, reintente en lugar de darla por vacía. Cambiar un cliente nunca reescribe una factura ya emitida: cada una conserva el nombre y la dirección con los que se emitió.
+
 <!-- anchor: user.money.amounts -->
 ### Cómo se muestran los importes
 
