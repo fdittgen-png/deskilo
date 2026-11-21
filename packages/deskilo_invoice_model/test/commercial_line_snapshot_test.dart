@@ -210,9 +210,10 @@ void main() {
     });
   });
 
-  test('a structured invoice of a commercial line is refused until X1.B', () {
-    final line = invoiceLineFromSnapshot(_legacy({'commercial': _line()}));
-    expect(line.exactFacts, isNotNull);
-    expect(const CommercialOutputBlocked().toString(), 'CommercialOutputBlocked');
+  test('a writer of an integer quantity (SAF-T) refuses a commercial line', () {
+    final commercial = invoiceLineFromSnapshot(_legacy({'commercial': _line()}));
+    expect(() => commercial.splitForIntegerQuantity, throwsA(isA<CommercialOutputBlocked>()));
+    final legacy = invoiceLineFromSnapshot(_legacy({'amount_cents': 1200, 'vat_percent': 20}));
+    expect(legacy.splitForIntegerQuantity.netCents, 1000);
   });
 }

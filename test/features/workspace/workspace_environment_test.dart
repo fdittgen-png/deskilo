@@ -11,6 +11,7 @@ import 'dart:io';
 
 import 'package:deskilo/features/money/domain/invoice_pdf.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
+import 'package:deskilo_document_pdf/report_watermark.dart';
 import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/source_of.dart';
 
@@ -152,9 +153,9 @@ void main() {
   group('every document, not only the invoice', () {
     test('the shared foreground painter is used, or absent for a real '
         'workspace', () {
-      expect(watermarkForeground(''), isNull,
+      expect(reportWatermarkForeground(''), isNull,
           reason: 'a production document carries nothing');
-      expect(watermarkForeground('DEVELOPMENT'), isNotNull);
+      expect(reportWatermarkForeground('DEVELOPMENT'), isNotNull);
     });
 
     test('every builder the app has takes the mark — a statement, an '
@@ -166,7 +167,7 @@ void main() {
       expect(pdf, contains('Future<Uint8List> buildBandedLetterPdf('));
       expect(
         pdf.substring(pdf.indexOf('buildBandedLetterPdf(')),
-        contains('buildForeground: watermarkForeground(watermark)'),
+        contains('buildForeground: reportWatermarkForeground(watermark)'),
       );
       final decl = sourceOf('lib/features/money/presentation/screens/vat_declarations_screen.dart');
       expect(decl, contains('await letterDocPdf(context, ref,'));

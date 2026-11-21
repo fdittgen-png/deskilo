@@ -286,6 +286,12 @@ const _pdfStrings = InvoicePdfStrings(
   page: 'Page',
 );
 
+/// #4162 — the measured-line samples, validated beside the format ones.
+const _measuredSamples = {
+  'en16931-ubl-measured.xml',
+  'en16931-cii-measured.xml',
+};
+
 /// format id → file name and bytes.
 Future<Map<String, Uint8List>> _samples() async {
   final invoice = _invoice();
@@ -299,6 +305,64 @@ Future<Map<String, Uint8List>> _samples() async {
     buyer: _buyer,
     lineText: _line,
     iban: 'FR7630006000011234567890189', reference: ActiveTaxReference.current));
+  // #4162 — the same invoice with one measured line: 0.75 kg at 12.00 net,
+  // 20 %: its exact quantity and unit code are what KoSIT validates.
+  final measured = invoice.copyWith(
+    lines: [
+      invoiceLineFromSnapshot(<String, Object?>{
+        'kind': 'service',
+        'label': 'Beans',
+        'quantity': 1,
+        'amount_cents': 1080,
+        'vat_percent': 20,
+        'vat_category': 'S',
+        'commercial': <String, Object?>{
+          'version': 1,
+          'line_id': 'L-1',
+          'quantity': '0.75',
+          'unit': <String, Object?>{
+            'code': 'kg',
+            'un_ece_code': 'KGM',
+            'label': 'kg',
+          },
+          'unit_price': <String, Object?>{
+            'amount': '12',
+            'currency': 'EUR',
+            'basis': 'net',
+            'base_quantity': '1',
+          },
+          'supply': 'goods',
+          'tax_facts': <String, Object?>{},
+          'amounts': <String, Object?>{
+            'currency': 'EUR',
+            'net_minor': '900',
+            'tax_minor': '180',
+            'gross_minor': '1080',
+          },
+        },
+      }),
+    ],
+    vatTotals: const [
+      InvoiceVatTotal(
+        percent: 20,
+        category: 'S',
+        grossCents: 1080,
+        netCents: 900,
+        vatCents: 180,
+      ),
+    ],
+    totalCents: 1080,
+  );
+  EInvoiceInput measuredInput() => EInvoiceInput(
+    paymentReferenceRules: installedPaymentReferenceRules,
+    nationalRules: installedNationalInvoiceRules,
+    invoice: measured,
+    seller: _seller,
+    buyer: _buyer,
+    lineText: _line,
+    iban: 'FR7630006000011234567890189',
+    reference: ActiveTaxReference.current,
+  );
   final pdf = await buildInvoicePdf(InvoicePdfRequest(invoice: invoice,
     strings: _pdfStrings,
     money: (cents) => '${(cents / 100).toStringAsFixed(2)} EUR',
@@ -347,6 +411,8 @@ Future<Map<String, Uint8List>> _samples() async {
     profile: profile);
   return {
     'en16931-ubl.xml': utf8.encode(ubl),
+    'en16931-ubl-measured.xml': utf8.encode(buildInvoiceUbl(measuredInput())),
+    'en16931-cii-measured.xml': utf8.encode(buildInvoiceCii(measuredInput())),
     'peppol-bis.xml': utf8.encode(
       profiled(
         UblProfile.peppolBis,
@@ -412,8 +478,9 @@ void main() {
       }
       expect(
         samples.keys.toSet(),
-        eInvoiceSampleFiles.values.toSet(),
-        reason: 'one sample per format the app claims is validated',
+        {...eInvoiceSampleFiles.values, ..._measuredSamples},
+        reason: 'one sample per format the app claims is validated, and the '
+            'measured line of #4162 in both EN 16931 syntaxes',
       );
       final dir = Platform.environment['EINVOICE_SAMPLES_DIR'] ?? '';
       if (dir.isEmpty) return;

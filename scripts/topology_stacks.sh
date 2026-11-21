@@ -21,7 +21,9 @@
 #   seed      users (two at P), the equal-id workspace at W-A and W-B, one reservation each,
 #             a second member of it at W-A (SEP-05), and at W-A the
 #             invoice-preview fixture (#2585: a member, a stranger of
-#             another workspace, seeded money); at P the directory fixture
+#             another workspace, seeded money), and at W-A and W-B the
+#             booking fixture (#4159: equal local ids, a member who books,
+#             one who does not see the rented room); at P the directory fixture
 #             (#2472 C2): three more accounts, W-A and W-B enrolled, their
 #             membership facts and one group without a message
 #   down      restore any fault, stop P and W-B, remove the W-A fixture rows
@@ -241,6 +243,63 @@ update public.workspaces set feature_flags = feature_flags || '{"invoiceSettleme
 SQL
 }
 
+# #4159 -- the booking fixture, W-A and W-B alike, with EQUAL local ids: a
+# workspace open all day with an owner, a member M who books, a member N who
+# does not see the rented room, an own seat, a seat of a rented external room
+# that only M may see, and tomorrow's 14:00-15:00 of the own seat already held
+# by N on the fifth day. Prints the local 10:00 of each of the next five days
+# as ISO UTC, in the workspace's own time zone, so no test computes a clock
+# hour itself and no two scenarios share a day (no daily limit is exercised).
+BWS=00000000-0000-4000-8000-000000415910
+BSEAT=00000000-0000-4000-8000-000000415951
+BRENTED=00000000-0000-4000-8000-000000415952
+BMEMBER=00000000-0000-4000-8000-000000415971
+BOTHER=00000000-0000-4000-8000-000000415972
+seed_booking() { # db tz owner m n -> five local 10:00s, ISO UTC, |-joined
+  local db=$1 tz=$2
+  psql "$db" -qX -v ON_ERROR_STOP=1 >/dev/null <<SQL || return 1
+insert into public.workspaces (id, name, country_code, currency_code, timezone, created_by, feature_flags, role_permissions)
+values ('$BWS', 'Booking 4159', 'FR', 'EUR', '$tz', '$3', '{"externalRooms": true}',
+        '{"member": ["makeReservations"], "admin": ["manageReservations", "makeReservations"]}');
+update public.workspaces set booking_rules = coalesce(booking_rules, '{}'::jsonb)
+  || '{"open_weekdays": [1, 2, 3, 4, 5, 6, 7], "work_start_minutes": 0, "work_end_minutes": 1440}'::jsonb
+ where id = '$BWS';
+insert into public.members (workspace_id, user_id, is_owner, is_admin, status, joined_at)
+values ('$BWS', '$3', true, true, 'active', '2026-01-01');
+insert into public.members (id, workspace_id, user_id, is_owner, is_admin, status, joined_at)
+values ('$BMEMBER', '$BWS', '$4', false, false, 'active', '2026-01-01'),
+       ('$BOTHER', '$BWS', '$5', false, false, 'active', '2026-01-01');
+insert into public.levels (id, workspace_id, name, sort_order, kind)
+values ('00000000-0000-4000-8000-000000415921', '$BWS', 'Ground', 0, 'own'),
+       ('00000000-0000-4000-8000-000000415922', '$BWS', 'Next door', 1, 'external');
+insert into public.offices (id, workspace_id, level_id, name, x, y, w, h)
+values ('00000000-0000-4000-8000-000000415931', '$BWS', '00000000-0000-4000-8000-000000415921', 'Open space', 0, 0, 10, 10),
+       ('00000000-0000-4000-8000-000000415932', '$BWS', '00000000-0000-4000-8000-000000415922', 'Studio', 0, 0, 10, 10);
+insert into public.desks (id, workspace_id, office_id, name, x, y, w, h)
+values ('00000000-0000-4000-8000-000000415941', '$BWS', '00000000-0000-4000-8000-000000415931', 'D1', 0, 0, 2, 1),
+       ('00000000-0000-4000-8000-000000415942', '$BWS', '00000000-0000-4000-8000-000000415932', 'D2', 0, 0, 2, 1);
+insert into public.seats (id, workspace_id, desk_id, name, x, y)
+values ('$BSEAT', '$BWS', '00000000-0000-4000-8000-000000415941', 'S1', 0, 0),
+       ('$BRENTED', '$BWS', '00000000-0000-4000-8000-000000415942', 'S2', 0, 0);
+insert into public.suppliers (id, workspace_id, supplier_number, name)
+values ('00000000-0000-4000-8000-000000415961', '$BWS', 'SUP-4159', 'Next door');
+insert into public.room_rentals (id, workspace_id, office_id, supplier_id, available_from, currency, status)
+values ('00000000-0000-4000-8000-000000415962', '$BWS', '00000000-0000-4000-8000-000000415932',
+        '00000000-0000-4000-8000-000000415961', '2026-01-01', 'EUR', 'active');
+insert into public.room_rental_audience (workspace_id, rental_id, member_id)
+values ('$BWS', '00000000-0000-4000-8000-000000415962', '$BMEMBER');
+insert into public.reservations (workspace_id, member_id, seat_id, starts_at, ends_at, status, space_label)
+values ('$BWS', '$BOTHER', '$BSEAT',
+        ((current_date + 5)::timestamp + time '10:00') at time zone '$tz',
+        ((current_date + 5)::timestamp + time '11:00') at time zone '$tz', 'reserved', 'S1');
+SQL
+  psql "$db" -qtAX -v ON_ERROR_STOP=1 <<SQL | head -1
+select string_agg(to_char(((current_date + d)::timestamp + time '10:00') at time zone '$tz'
+                          at time zone 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS"Z"'), '|' order by d)
+  from generate_series(1, 5) d;
+SQL
+}
+
 # #2472 C2 -- the directory fixture at P, as the facts flow leaves it: W-A
 # and W-B enrolled (operator_enrol_installation; the origin is a label, P
 # never calls it for the directory), and the facts membership_fact_apply
@@ -307,6 +366,13 @@ seed() {
   d_b=$(mkuser "${API[p]}" "${SERVICE[p]}" "topology-dir-b-$run@deskilo.test") || fail "P: directory B"
   d_c=$(mkuser "${API[p]}" "${SERVICE[p]}" "topology-dir-c-$run@deskilo.test") || fail "P: directory C"
 
+  # #4159 -- the booking fixture's accounts, one set per stack.
+  bk_wa_owner=$(mkuser "${API[wa]}" "${SERVICE[wa]}" "booking-wa-owner-$run@deskilo.test") || fail "W-A: booking owner"
+  bk_wa_member=$(mkuser "${API[wa]}" "${SERVICE[wa]}" "booking-wa-member-$run@deskilo.test") || fail "W-A: booking member"
+  bk_wa_other=$(mkuser "${API[wa]}" "${SERVICE[wa]}" "booking-wa-other-$run@deskilo.test") || fail "W-A: booking other"
+  bk_wb_owner=$(mkuser "${API[wb]}" "${SERVICE[wb]}" "booking-wb-owner-$run@deskilo.test") || fail "W-B: booking owner"
+  bk_wb_member=$(mkuser "${API[wb]}" "${SERVICE[wb]}" "booking-wb-member-$run@deskilo.test") || fail "W-B: booking member"
+  bk_wb_other=$(mkuser "${API[wb]}" "${SERVICE[wb]}" "booking-wb-other-$run@deskilo.test") || fail "W-B: booking other"
   pv_owner=$(mkuser "${API[wa]}" "${SERVICE[wa]}" "preview-owner-$run@deskilo.test") || fail "W-A: preview owner"
   pv_member=$(mkuser "${API[wa]}" "${SERVICE[wa]}" "preview-member-$run@deskilo.test") || fail "W-A: preview member"
   seed_preview "${DB[wa]}" "$pv_owner" "$pv_member" || fail "W-A: preview fixture"
@@ -317,6 +383,10 @@ seed() {
   psql "${DB[wa]}" -qX -v ON_ERROR_STOP=1 -c "insert into public.members (id, workspace_id, user_id, is_owner, is_admin)
     values ('0000000e-0a04-4000-8000-0000000e0a04', '$WS', '$a_peer', false, false)" >/dev/null \
     || fail "W-A: peer member"
+  bk_a=$(seed_booking "${DB[wa]}" Europe/Paris "$bk_wa_owner" "$bk_wa_member" "$bk_wa_other") || fail "W-A: booking fixture"
+  bk_b=$(seed_booking "${DB[wb]}" America/New_York "$bk_wb_owner" "$bk_wb_member" "$bk_wb_other") || fail "W-B: booking fixture"
+  [ "${bk_a//[^|]/}" = "||||" ] || fail "W-A: booking windows '$bk_a'"
+  [ "${bk_b//[^|]/}" = "||||" ] || fail "W-B: booking windows '$bk_b'"
   wa_inst=$(psql "${DB[wa]}" -qtAX -c "select installation_id from public.installation_identity")
   wb_inst=$(psql "${DB[wb]}" -qtAX -c "select installation_id from public.installation_identity")
   [ -n "$wa_inst" ] && [ -n "$wb_inst" ] && [ "$wa_inst" != "$wb_inst" ] \
@@ -346,12 +416,22 @@ seed() {
          "stranger": {"id": "$a_stranger", "email": "topology-a-stranger-$run@deskilo.test"},
          "peer": {"id": "$a_peer", "email": "topology-a-peer-$run@deskilo.test"},
          "reservationId": "0000000e-0a0a-4000-8000-0000000e0a0a", "timezone": "Europe/Paris",
+         "booking": {"workspaceId": "$BWS", "seatId": "$BSEAT", "rentedSeatId": "$BRENTED",
+                     "memberId": "$BMEMBER", "otherMemberId": "$BOTHER", "timezone": "Europe/Paris",
+                     "starts": "$bk_a",
+                     "owner": {"id": "$bk_wa_owner", "email": "booking-wa-owner-$run@deskilo.test"},
+                     "member": {"id": "$bk_wa_member", "email": "booking-wa-member-$run@deskilo.test"},
+                     "other": {"id": "$bk_wa_other", "email": "booking-wa-other-$run@deskilo.test"}},
          "preview": {"workspaceId": "$PWS", "memberId": "$PMEMBER",
                      "member": {"id": "$pv_member", "email": "preview-member-$run@deskilo.test"},
                      "owner": {"id": "$pv_owner", "email": "preview-owner-$run@deskilo.test"}}},
   "wb": {"url": "${API[wb]}", "anon": "${ANON[wb]}", "service": "${SERVICE[wb]}",
          "roles": ["personal_home", "workspace_host"],
          "user": {"id": "$b_user", "email": "topology-b-$run@deskilo.test"},
+         "booking": {"workspaceId": "$BWS", "seatId": "$BSEAT", "rentedSeatId": "$BRENTED",
+                     "memberId": "$BMEMBER", "otherMemberId": "$BOTHER", "timezone": "America/New_York",
+                     "starts": "$bk_b",
+                     "member": {"id": "$bk_wb_member", "email": "booking-wb-member-$run@deskilo.test"}},
          "reservationId": "0000000e-0b0a-4000-8000-0000000e0b0a", "timezone": "America/New_York"}
 }
 JSON
@@ -496,7 +576,7 @@ cleanup() {
   out=$(supabase status -o env 2>/dev/null) || out=
   db=$(val DB_URL <<<"$out")
   if [ -n "$db" ]; then
-    psql "$db" -qX -c "delete from public.workspaces where id in ('$WS', '$PWS') or name like 'SEP-06 control %'" >/dev/null 2>&1 || true
+    psql "$db" -qX -c "delete from public.workspaces where id in ('$WS', '$PWS', '$BWS') or name like 'SEP-06 control %'" >/dev/null 2>&1 || true
   fi
   for name in p wb; do
     [ -d "$DIR/$name" ] && supabase stop --workdir "$DIR/$name" --no-backup >/dev/null 2>&1 || true

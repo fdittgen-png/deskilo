@@ -17,7 +17,7 @@ written out and each proposed rule naming its issue.
 | a billing customer (`members.status = 'customer'`, no login) is invisible to coworkers and holds no booking, badge, role, plan or door; the billing identity is the seller's own record, edited by named fields with a revision check | `members_select`, the no-login check, `members_customer_frozen`, the `customer_subject_refused` triggers, `billing_party_save_v1` (0821, #4164) | `474_billing_customers.sql`, `475_definer_member_readers.sql` (every definer reader of members is placed or reasoned) |
 | a seat cannot hold two overlapping reservations | `exclude using gist` on `reservations` (0005) | `23_domain_invariants.sql` |
 | a check-in is your own booking, inside its window | `check_in_reservation` | `23_domain_invariants.sql` |
-| a booking replayed with the same client request id books once | `create_reservation_once` (0214) | `24_booking_idempotency.sql` |
+| a booking replayed with the same client request id books once | `create_reservation_once` (0214) | `24_booking_idempotency.sql`; the production adapter and recovery over signed HTTP against the replayed database (`test/topology/booking_http_test.dart`, #4159: a lost answer is unknown, then recovers the one reservation) |
 | an issued invoice cannot be edited or deleted | trigger `invoices_no_mutation` (0060, revised 0061) | `20_money_invariants.sql` |
 | a payment webhook delivered twice creates money once | `settle_online_payment`, `for update` + status guard (0205) | `20_money_invariants.sql`, `22_reconciliation.sql` |
 | a webhook whose amount disagrees with the intent is refused | `settle_online_payment` (0205, #1138) | `22_reconciliation.sql` |
