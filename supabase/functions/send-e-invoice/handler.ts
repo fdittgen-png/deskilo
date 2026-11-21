@@ -707,6 +707,22 @@ async function dispatchPrepared(
       destination,
     );
   }
+  // #3932 -- a platform that decides in the answer to the upload: its verdict
+  // is recorded beside the upload, as a later status query would
+  if (outcome.verdict !== undefined && outcome.status === "accepted") {
+    try {
+      await store.lookup(
+        id,
+        null,
+        outcome.externalId,
+        outcome.receipt,
+        { status: outcome.verdict, detail: clientDetail(outcome.verdict, outcome.detail) },
+        "",
+      );
+    } catch (error) {
+      console.error("send-e-invoice: verdict write failed", error);
+    }
+  }
   return answer(
     outcome.status,
     id,

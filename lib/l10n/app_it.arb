@@ -5352,6 +5352,10 @@
   "@eInvoiceFieldCif": {
     "description": "#2358 connector field"
   },
+  "eInvoiceFieldClientCertificate": "Certificato (PEM)",
+  "@eInvoiceFieldClientCertificate": {
+    "description": "#3932 connector field: the business's certificate"
+  },
   "eInvoiceFieldClientId": "ID client",
   "@eInvoiceFieldClientId": {
     "description": "#2358 connector field"
@@ -5379,6 +5383,10 @@
   "eInvoiceFieldPassword": "Password",
   "@eInvoiceFieldPassword": {
     "description": "#2358 connector field"
+  },
+  "eInvoiceFieldPrivateKey": "Chiave privata (PEM)",
+  "@eInvoiceFieldPrivateKey": {
+    "description": "#3932 connector field: the certificate's private key"
   },
   "eInvoiceFieldSecretSet": "Salvato — lasci vuoto per conservarlo.",
   "@eInvoiceFieldSecretSet": {
@@ -5553,6 +5561,10 @@
   "eInvoiceMandateTitle": "Obblighi di fatturazione elettronica nel Suo paese:",
   "@eInvoiceMandateTitle": {
     "description": "#2358 e-invoice sheet: header above the mandate calendar"
+  },
+  "eInvoiceProviderEsVerifactu": "Verifactu (AEAT)",
+  "@eInvoiceProviderEsVerifactu": {
+    "description": "#3932 connector name"
   },
   "eInvoiceProviderFrPa": "Piattaforma accreditata francese (PA)",
   "@eInvoiceProviderFrPa": {
@@ -17353,6 +17365,7 @@
     "description": "#1643 calendar file: reservationCalendarFileWhen"
   },
   "reservationCancelledSnack": "Prenotazione annullata.",
+  "reservationContextChanged": "Lo spazio di lavoro o l’account è cambiato mentre questo era aperto. Non è stato inviato nulla: lo riapra.",
   "reservationDeleteReasonLabel": "Motivo (facoltativo)",
   "@reservationDeleteReasonLabel": {
     "description": "Reservation deletion requests (#492)"

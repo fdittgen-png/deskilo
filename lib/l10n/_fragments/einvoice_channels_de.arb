@@ -152,6 +152,10 @@
   "@eInvoiceProviderRoEfactura": {
     "description": "#2358 connector name"
   },
+  "eInvoiceProviderEsVerifactu": "Verifactu (AEAT)",
+  "@eInvoiceProviderEsVerifactu": {
+    "description": "#3932 connector name"
+  },
   "eInvoiceProviderHelp": "Der Kanal bestimmt das Format: Jedes Netz erhält das XML, das es annimmt, eine Person erhält das Factur-X-PDF.",
   "@eInvoiceProviderHelp": {
     "description": "#2358 e-invoice config: what the connector does"
@@ -207,6 +211,14 @@
   "eInvoiceFieldAccessToken": "Zugriffstoken (ANAF-OAuth)",
   "@eInvoiceFieldAccessToken": {
     "description": "#2358 connector field"
+  },
+  "eInvoiceFieldClientCertificate": "Zertifikat (PEM)",
+  "@eInvoiceFieldClientCertificate": {
+    "description": "#3932 connector field: the business's certificate"
+  },
+  "eInvoiceFieldPrivateKey": "Privater Schlüssel (PEM)",
+  "@eInvoiceFieldPrivateKey": {
+    "description": "#3932 connector field: the certificate's private key"
   },
   "eInvoiceFieldSecretSet": "Gespeichert — leer lassen, um ihn zu behalten.",
   "@eInvoiceFieldSecretSet": {

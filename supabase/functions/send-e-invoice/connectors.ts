@@ -18,6 +18,7 @@ import {
   Submission,
   unreachable,
 } from "./connectors/common.ts";
+import { esVerifactuConnector } from "./connectors/es_verifactu.ts";
 import { frPaConnector } from "./connectors/fr_pa.ts";
 import { genericConnector } from "./connectors/generic.ts";
 import { itSdiConnector } from "./connectors/it_sdi.ts";
@@ -38,6 +39,7 @@ const CONNECTORS: readonly Connector[] = [
   itSdiConnector,
   plKsefConnector,
   roEfacturaConnector,
+  esVerifactuConnector,
 ];
 
 /** The registry of a list of connectors (#3338). The installed one is built
