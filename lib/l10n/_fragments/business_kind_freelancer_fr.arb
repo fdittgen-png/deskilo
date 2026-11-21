@@ -1,0 +1,8 @@
+{
+  "@@locale": "fr",
+  "businessKindNameFreelancer": "Indépendant·e",
+  "businessKindDescFreelancer": "Une personne qui vend et facture ses propres services : clients, devis et factures, sans local.",
+  "discoveryKindFreelancers": "Indépendant·es",
+  "businessKindProfileChanged": "Ce genre d'activité a été mis à jour pendant votre choix. Fermez cette fenêtre et rouvrez-la pour revoir ce qu'il propose maintenant.",
+  "businessKindSavedFlagsRefused": "Le genre a été enregistré, mais ses fonctions n'ont pas été modifiées : elles ont changé entre-temps. Revoyez-les dans Fonctions."
+}

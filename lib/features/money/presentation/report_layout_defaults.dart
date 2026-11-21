@@ -46,6 +46,8 @@ LetterStrings _letterStringsOf(AppLocalizations l10n, {bool salesTax = false}) =
       page: l10n.invoicePdfPage,
       purchaseOrder: l10n.reportDocPurchaseOrder,
       expectedOn: l10n.reportExpectedDelivery,
+      quote: l10n.reportDocQuote,
+      validUntil: l10n.quoteFieldValidUntil,
     );
 
 /// [resolveLayoutXml] with the app's words and the owner's BANDS

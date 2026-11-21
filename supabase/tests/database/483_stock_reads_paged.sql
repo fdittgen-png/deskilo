@@ -217,7 +217,8 @@ $f$;
 select is((pg_temp.page('stock_movements_page_v1', 2, format(', %L, null, 1', pg_temp.u(304))) :: jsonb -> 'rows' -> 0)
           - 'item_name' - 'lot_code' - 'from_location_code' - 'to_location_code' - 'id' - 'item_id' - 'lot_id'
           - 'from_location_id' - 'to_location_id' - 'quantity' - 'unit' - 'entered_quantity' - 'entered_unit'
-          - 'occurred_at' - 'reason' - 'actor_member_id' - 'event_id' - 'invoice_id' - 'workspace_id',
+          - 'occurred_at' - 'reason' - 'actor_member_id' - 'event_id' - 'invoice_id' - 'workspace_id'
+          - 'variant_id' - 'variant_label',
   '{"unit_cost": null, "receipt_line_id": null, "purchase_line_id": null}'::jsonb,
   'a member who only sees the stock reads no cost, receipt or purchase cause: null, not zero');
 select ok((pg_temp.page('stock_movements_page_v1', 1, format(', %L, null, 1', pg_temp.u(304))) :: jsonb -> 'rows' -> 0 ->> 'unit_cost') is not null,

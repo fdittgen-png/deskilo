@@ -281,5 +281,21 @@
   "featureStandaloneInvoicingDesc": "Fatturare oggi a un cliente indicato una prestazione svolta o un risultato concordato, con righe dettagliate e date esplicite, senza prenotazione, abbonamento o mese alle spalle. Il server calcola ogni importo; Lei conferma un’anteprima ed emette la fattura. Disattivato: le fatture restano emesse per membro e per mese.",
   "@featureStandaloneInvoicingDesc": {
     "description": "#4165 feature switch: featureStandaloneInvoicingDesc"
+  },
+  "featureStockLotsTitle": "Lotti e scadenza",
+  "@featureStockLotsTitle": {
+    "description": "#4169 the name of the lots and expiry feature"
+  },
+  "featureStockLotsDesc": "Seguire le merci per lotto o per data di scadenza, con una durata di conservazione. Disattivato: nessun articolo è seguito per lotto e ciò che è stato registrato resta invariato.",
+  "@featureStockLotsDesc": {
+    "description": "#4169 what the lots and expiry feature does, and what off means"
+  },
+  "featureStockReceivingTitle": "Ricezione a magazzino",
+  "@featureStockReceivingTitle": {
+    "description": "#4171 the name of the receiving into stock feature"
+  },
+  "featureStockReceivingDesc": "Collocare le merci di una consegna di ordine a fornitore in ubicazioni e nuovi lotti, una sola volta, conservandone l’origine. Disattivato: una consegna è registrata come prima e nessuna giacenza si muove.",
+  "@featureStockReceivingDesc": {
+    "description": "#4171 what the receiving into stock feature does, and what off means"
   }
 }

@@ -21,6 +21,7 @@ import 'package:deskilo/core/demo/data/bank_statement_demo_seed.dart';
 import 'package:deskilo/core/demo/data/book_period_repository.dart';
 import 'package:deskilo/core/demo/data/book_profile_repository.dart';
 import 'package:deskilo/core/demo/data/demo_kiosk_devices.dart';
+import 'package:deskilo/core/demo/data/demo_stock_config_commands.dart';
 import 'package:deskilo/core/demo/data/demo_stock_queries.dart';
 import 'package:deskilo/core/demo/data/fake_organisation_repository.dart';
 import 'package:deskilo/core/demo/data/kpi_repositories.dart';
@@ -63,6 +64,7 @@ import 'package:deskilo/features/money/domain/purchase_order.dart';
 import 'package:deskilo/features/money/domain/workspace_asset.dart';
 import 'package:deskilo/features/plan/domain/seat.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
+import 'package:deskilo/features/stock/domain/stock_config.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/member_badge.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
@@ -1258,6 +1260,42 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
             (r) => r.itemName == 'Syrup' && r.quantity.text == '0.999999',
           ) &&
           moves.rows.isNotEmpty;
+    },
+  ),
+  // #4169 — the owner tracks the T-shirt by expiry date with a shelf life; the
+  // syrup, which has history, keeps the tracking its first movement fixed.
+  WorkspaceFeature.stockLots: _action(
+    _owner,
+    'Ada tracks the T-shirt by expiry date with a shelf life of 30 days, and '
+    'is told the syrup keeps the tracking its first movement fixed',
+    (w) async {
+      final config = DemoStockConfigCommands(demoFirstSpaceId);
+      final shirt = (await config.item(demoFirstSpaceId, 'demo-item-shirt'))!;
+      await config.saveItem(
+        demoFirstSpaceId,
+        StockItemConfig(
+          itemId: shirt.itemId, revision: shirt.revision, stockable: shirt.stockable,
+          purchasable: shirt.purchasable, sellable: shirt.sellable, inventoryUnit: shirt.inventoryUnit,
+          tracking: 'expiry', shelfLifeDays: 30, units: shirt.units, codes: shirt.codes,
+        ),
+        'r-1',
+      );
+      final saved = (await config.item(demoFirstSpaceId, 'demo-item-shirt'))!;
+      final syrup = (await config.item(demoFirstSpaceId, 'demo-item-syrup'))!;
+      try {
+        await config.saveItem(
+          demoFirstSpaceId,
+          StockItemConfig(
+            itemId: syrup.itemId, revision: syrup.revision, stockable: true, purchasable: true,
+            sellable: true, inventoryUnit: syrup.inventoryUnit, tracking: 'lot', shelfLifeDays: null,
+            units: syrup.units, codes: syrup.codes,
+          ),
+          'r-2',
+        );
+        return false;
+      } on StockConfigInUse {
+        return saved.tracking == 'expiry' && saved.shelfLifeDays == 30;
+      }
     },
   ),
   // #4164 — the owner keeps a customer with no account: a business is added

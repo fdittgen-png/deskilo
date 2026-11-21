@@ -2272,7 +2272,19 @@
       "capabilities": []
     },
     {
+      "key": "stockLots",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "stockManagement",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "stockReceiving",
       "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []

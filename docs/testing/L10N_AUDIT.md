@@ -6,10 +6,12 @@ Every string in `lib/` that reaches a member's eyes and does NOT come from `AppL
 
 Positions read: label, field label, field hint, field helper, field error, field counter, field prefix, field suffix, tooltip, accessibility label, title, subtitle, dismiss label, document lines, bullet list, paragraphs, the text of Text/SelectableText/TextSpan, a tooltip's message, the four snack helpers and a semantics label. Keys, paths, wire values, formats, trace text and literals made only of interpolations are not user-facing and are not listed.
 
-86 literal(s) in 18 file(s) — each a written decision below. Anything outside them fails `test/lint/l10n_audit_test.dart`.
+88 literal(s) in 19 file(s) — each a written decision below. Anything outside them fails `test/lint/l10n_audit_test.dart`.
 
 | file | symbol/widget | literal | surface | action |
 |---|---|---|---|---|
+| `lib/core/demo/data/demo_stock_config_commands.dart:136` | label | Red | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/data/demo_stock_config_commands.dart:137` | label | Blue | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_calendar_seed.dart:57` | title | Check-in | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_calendar_seed.dart:69` | title | Check-out | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_calendar_seed.dart:81` | title | Check-in | core/demo | KEEP_NON_UI_LITERAL |
@@ -102,6 +104,7 @@ Positions read: label, field label, field hint, field helper, field error, field
 - **`packages/deskilo_jurisdiction_ca/lib/src/ca_archive.dart`** (5) — a verbatim English README with its statutory citations
 - **`packages/deskilo_jurisdiction_de/lib/src/de_archive.dart`** (4) — a verbatim English README with its statutory citations
 - **`packages/deskilo_jurisdiction_fr/lib/src/fr_fec_format.dart`** (4) — the FEC journal labels (Ventes, Banque, Achats, Opérations diverses): statutory French names written into the file
+- **`lib/core/demo/data/demo_stock_config_commands.dart`** (2) — demo records: the values of the Demo shop's Colour dimension
 - **`lib/core/demo/seed/demo_calendar_seed.dart`** (4) — demo records: calendar rows as a space stores them, an event titled `type.action` as the server writes it
 - **`lib/core/demo/seed/demo_people_seed.dart`** (8) — demo records: badge labels, document titles and a group name as a space stores them
 - **`lib/core/demo/seed/demo_second_space_seed.dart`** (2) — demo records: the German space's document titles as it stores them

@@ -303,6 +303,8 @@ String _latestDescription(AppLocalizations l10n, WorkspaceFeature feature) =>
       WorkspaceFeature.billingCustomers => l10n.featureBillingCustomersDesc,
       WorkspaceFeature.customerQuotes => l10n.featureCustomerQuotesDesc,
       WorkspaceFeature.stockManagement => l10n.featureStockManagementDesc,
+      WorkspaceFeature.stockLots => l10n.featureStockLotsDesc,
+      WorkspaceFeature.stockReceiving => l10n.featureStockReceivingDesc,
       _ => feature.name,
     };
 

@@ -5827,6 +5827,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Members book seats, desks and rooms on a floor plan.';
 
   @override
+  String get businessKindDescFreelancer =>
+      'One person selling and invoicing their own services: customers, quotes and invoices, no premises.';
+
+  @override
   String get businessKindDescPractice =>
       'Appointments: massage, therapy, coaching, consulting.';
 
@@ -5846,6 +5850,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get businessKindNameCoworking => 'Coworking space';
+
+  @override
+  String get businessKindNameFreelancer => 'Freelancer';
 
   @override
   String get businessKindNamePractice => 'Practice';
@@ -5877,6 +5884,14 @@ class AppLocalizationsEn extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get businessKindProfileChanged =>
+      'This kind of business was updated while you were choosing. Close this window and open it again to review what it proposes now.';
+
+  @override
+  String get businessKindSavedFlagsRefused =>
+      'The kind was saved, but its features were not changed: they changed meanwhile. Review them in Features.';
 
   @override
   String get businessKindShowAll => 'Show all';
@@ -8508,6 +8523,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get discoveryKindCoworking => 'Coworking';
+
+  @override
+  String get discoveryKindFreelancers => 'Freelancers';
 
   @override
   String discoveryKindNoMatch(String kind) {
@@ -12232,11 +12250,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureStandaloneInvoicingTitle => 'Standalone invoices';
 
   @override
+  String get featureStockLotsDesc =>
+      'Track goods by lot or by expiry date, with a shelf life. Off: no item is tracked by lot, and what was recorded is kept as it is.';
+
+  @override
+  String get featureStockLotsTitle => 'Lots and expiry';
+
+  @override
   String get featureStockManagementDesc =>
       'Keep track of goods: where they are, in which unit, from which lot, and every movement between two places. Off: a catalogue item keeps its single shelf count.';
 
   @override
   String get featureStockManagementTitle => 'Stock management';
+
+  @override
+  String get featureStockReceivingDesc =>
+      'Put the goods of a purchase-order delivery away into places and new lots, once, with their origin kept. Off: a delivery is recorded as before and no stock moves.';
+
+  @override
+  String get featureStockReceivingTitle => 'Receiving into stock';
 
   @override
   String get featureSubscriptionInvoicesDesc =>
@@ -28232,6 +28264,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Your session has ended. Sign in again, then retry.';
 
   @override
+  String get refusalStockConfig =>
+      'This stock configuration is not valid: the field it names says why.';
+
+  @override
   String get refusalStockHistory =>
       'This item has stock movements, which are kept: it cannot be deleted, and its stock unit and tracking stay as they are. Deactivate it, or create a new item.';
 
@@ -28264,8 +28300,16 @@ class AppLocalizationsEn extends AppLocalizations {
       'This page request is not valid: ask for 1 to 200 rows, and continue only from the position a page gave.';
 
   @override
+  String get refusalStockStale =>
+      'This was changed by someone else since you opened it. Read it again, then make your change again.';
+
+  @override
   String get refusalStockUnit =>
       'This item has no such unit. Add the unit to the item, or enter the quantity in a unit it lists.';
+
+  @override
+  String get refusalStockVariant =>
+      'This item has variants: name which one (colour, size) to move, sell or count. Nothing was changed.';
 
   @override
   String get refusalVatRateVersioned =>
@@ -28994,6 +29038,14 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String reportDocPurchaseOrderTitle(String reference) {
     return 'Purchase order $reference';
+  }
+
+  @override
+  String get reportDocQuote => 'Quote';
+
+  @override
+  String reportDocQuoteTitle(String reference) {
+    return 'Quote $reference';
   }
 
   @override
@@ -34480,6 +34532,126 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockCostUnknown => 'Cost not recorded';
 
   @override
+  String get stockDimensionAdd => 'Add a dimension';
+
+  @override
+  String get stockDimensionAddValue => 'Add a value';
+
+  @override
+  String get stockDimensionName => 'Name';
+
+  @override
+  String get stockDimensionValue => 'Value';
+
+  @override
+  String get stockDimensionsManage => 'Manage dimensions';
+
+  @override
+  String get stockDimensionsTitle => 'Dimensions';
+
+  @override
+  String get stockEditAddCode => 'Add a code';
+
+  @override
+  String get stockEditAddUnit => 'Add a package unit';
+
+  @override
+  String get stockEditCode => 'Barcode or code';
+
+  @override
+  String get stockEditCodeGtin => 'Barcode (GTIN)';
+
+  @override
+  String get stockEditCodeOwn => 'Own code';
+
+  @override
+  String get stockEditCodeUnit => 'Names the package unit';
+
+  @override
+  String get stockEditCodesTitle => 'Barcodes and codes';
+
+  @override
+  String get stockEditDefaultPurchase => 'Default for purchases';
+
+  @override
+  String get stockEditDefaultSale => 'Default for sales';
+
+  @override
+  String get stockEditFactorDen => 'Divided by';
+
+  @override
+  String get stockEditFactorNum => 'Holds';
+
+  @override
+  String get stockEditInUse =>
+      'The first movement fixed the unit and the tracking of this item.';
+
+  @override
+  String get stockEditInventoryUnit => 'Inventory unit';
+
+  @override
+  String get stockEditInventoryUnitChoice => 'Inventory unit';
+
+  @override
+  String get stockEditItem => 'Stock settings';
+
+  @override
+  String stockEditItemTitle(String item) {
+    return 'Stock settings of $item';
+  }
+
+  @override
+  String get stockEditNoRight =>
+      'Your role may look at the stock but not change it.';
+
+  @override
+  String get stockEditNotSaved => 'Nothing was saved. Try again.';
+
+  @override
+  String get stockEditPurchasable => 'Can be bought';
+
+  @override
+  String get stockEditRemove => 'Remove';
+
+  @override
+  String get stockEditSave => 'Save';
+
+  @override
+  String get stockEditSellable => 'Can be sold';
+
+  @override
+  String get stockEditShelfLife => 'Shelf life (days)';
+
+  @override
+  String get stockEditStale =>
+      'This changed since you opened it. Close it and open it again.';
+
+  @override
+  String get stockEditStockable => 'Kept in stock';
+
+  @override
+  String get stockEditTracking => 'Tracking';
+
+  @override
+  String get stockEditTrackingExpiry => 'By expiry date';
+
+  @override
+  String get stockEditTrackingLot => 'By lot';
+
+  @override
+  String get stockEditTrackingNone => 'Not tracked';
+
+  @override
+  String get stockEditUnitName => 'Package unit';
+
+  @override
+  String get stockEditUnitsHint =>
+      'A package holds a number of inventory units; a third of a litre is 1 divided by 3.';
+
+  @override
+  String get stockEditUnitsTitle => 'Package units';
+
+  @override
   String get stockEmpty => 'Nothing is in stock yet.';
 
   @override
@@ -34497,6 +34669,35 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockLotTitle => 'Lot';
 
   @override
+  String get stockMappingAdd => 'Add a supplier article';
+
+  @override
+  String get stockMappingArticle => 'Article reference';
+
+  @override
+  String get stockMappingNoVariant => 'No variant';
+
+  @override
+  String get stockMappingNone => 'No supplier article is mapped yet.';
+
+  @override
+  String get stockMappingSupplier => 'Supplier of the article';
+
+  @override
+  String get stockMappingUnit => 'Purchase unit';
+
+  @override
+  String get stockMappingVariant => 'Variant';
+
+  @override
+  String get stockMappingsEdit => 'Supplier articles';
+
+  @override
+  String stockMappingsTitle(String item) {
+    return 'Supplier articles of $item';
+  }
+
+  @override
   String get stockMovementNotFound =>
       'This movement does not exist, or it is not one you may see.';
 
@@ -34510,6 +34711,51 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockNoLot => 'No lot';
 
   @override
+  String get stockPlaceActive => 'In use';
+
+  @override
+  String get stockPlaceBarcode => 'Barcode';
+
+  @override
+  String get stockPlaceCode => 'Place code';
+
+  @override
+  String get stockPlaceEditTitle => 'Place';
+
+  @override
+  String get stockPlaceKind => 'Kind of place';
+
+  @override
+  String get stockPlaceKindBin => 'Bin';
+
+  @override
+  String get stockPlaceKindShelf => 'Shelf';
+
+  @override
+  String get stockPlaceKindWarehouse => 'Warehouse';
+
+  @override
+  String get stockPlaceKindZone => 'Zone';
+
+  @override
+  String get stockPlaceName => 'Name';
+
+  @override
+  String get stockPlaceNoParent => 'Nowhere in particular';
+
+  @override
+  String get stockPlaceParent => 'Inside';
+
+  @override
+  String get stockPlaceVirtual => 'Kept by the system';
+
+  @override
+  String get stockPlacesAdd => 'Add a place';
+
+  @override
+  String get stockPlacesTitle => 'Places';
+
+  @override
   String stockQuantityWithUnit(String quantity, String unit) {
     return '$quantity $unit';
   }
@@ -34519,6 +34765,153 @@ class AppLocalizationsEn extends AppLocalizations {
       'The stock could not be read. Nothing is shown as empty: try again.';
 
   @override
+  String get stockReasonCodeDuplicate => 'This code is already used.';
+
+  @override
+  String get stockReasonCodeMalformed => 'This code is empty or too long.';
+
+  @override
+  String get stockReasonCodeUnitRemoved =>
+      'A code names this unit: change that code first.';
+
+  @override
+  String get stockReasonCombinationDuplicate =>
+      'Two variants have the same combination.';
+
+  @override
+  String get stockReasonDefaultPurchaseTwice =>
+      'Only one unit can be the default for purchases.';
+
+  @override
+  String get stockReasonDefaultSaleTwice =>
+      'Only one unit can be the default for sales.';
+
+  @override
+  String get stockReasonDimensionMismatch =>
+      'This unit does not measure the same thing as the item.';
+
+  @override
+  String get stockReasonFactorInvalid =>
+      'Both numbers must be whole numbers above zero.';
+
+  @override
+  String get stockReasonGtinCheck =>
+      'The check digit of this barcode is wrong.';
+
+  @override
+  String get stockReasonGtinLength => 'A barcode has 8 to 14 digits.';
+
+  @override
+  String get stockReasonItemForeign => 'This item is not one of this business.';
+
+  @override
+  String get stockReasonKindUnknown => 'This kind is not known.';
+
+  @override
+  String get stockReasonLocationCycle => 'A place cannot be inside itself.';
+
+  @override
+  String get stockReasonLocationDefault => 'The main place stays in use.';
+
+  @override
+  String get stockReasonLocationHasChildren =>
+      'Places inside it are still in use.';
+
+  @override
+  String get stockReasonLocationOccupied =>
+      'There is stock here: move it first.';
+
+  @override
+  String get stockReasonLocationParentForeign =>
+      'This place does not belong to this business.';
+
+  @override
+  String get stockReasonLocationVirtual =>
+      'A place kept by the system cannot be used here.';
+
+  @override
+  String get stockReasonMalformed => 'This value is not valid for this field.';
+
+  @override
+  String get stockReasonMappingDuplicate =>
+      'This supplier article is already mapped.';
+
+  @override
+  String get stockReasonNameDuplicate => 'This name is already used.';
+
+  @override
+  String get stockReasonNameMalformed => 'A name has 1 to 60 characters.';
+
+  @override
+  String get stockReasonOther => 'This is not valid.';
+
+  @override
+  String get stockReasonOutOfRange => 'This number is out of range.';
+
+  @override
+  String get stockReasonParentInactive =>
+      'The place it is inside is no longer in use.';
+
+  @override
+  String get stockReasonPriceInvalid => 'A price is zero or more.';
+
+  @override
+  String get stockReasonRegistryUnit =>
+      'This unit belongs to the system and cannot be redefined.';
+
+  @override
+  String get stockReasonStockOnHand =>
+      'There is stock on hand: take it out first.';
+
+  @override
+  String get stockReasonStockWithoutVariant =>
+      'This item holds stock without a variant: count it out first, then receive it per variant.';
+
+  @override
+  String get stockReasonSupplierForeign =>
+      'This supplier is not one of this business.';
+
+  @override
+  String get stockReasonTooLong => 'This text is too long.';
+
+  @override
+  String get stockReasonTrackingUnsupported =>
+      'This tracking is not available.';
+
+  @override
+  String get stockReasonUnitDuplicate => 'This unit is listed twice.';
+
+  @override
+  String get stockReasonUnitInUse =>
+      'A supplier article names this unit: change that article first.';
+
+  @override
+  String get stockReasonUnitNotOfItem => 'The item does not list this unit.';
+
+  @override
+  String get stockReasonUnitUnknown => 'This unit is not known.';
+
+  @override
+  String get stockReasonValueForeign =>
+      'This value does not belong to this dimension.';
+
+  @override
+  String get stockReasonValuesMissing =>
+      'Choose a value for at least one dimension.';
+
+  @override
+  String get stockReasonVariantHasStock =>
+      'This variant has stock: it stays in use.';
+
+  @override
+  String get stockReasonVariantInUse =>
+      'Stock or history names this variant: its combination stays as written.';
+
+  @override
+  String get stockReasonVariantUnknown =>
+      'This variant is not one of this item.';
+
+  @override
   String get stockStoredLabel => 'Stored';
 
   @override
@@ -34526,6 +34919,28 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get stockTabOnHand => 'On hand';
+
+  @override
+  String get stockVariantPrice => 'Own price (minor units, optional)';
+
+  @override
+  String get stockVariantsAdd => 'Add a variant';
+
+  @override
+  String get stockVariantsEdit => 'Variants';
+
+  @override
+  String get stockVariantsHint =>
+      'A variant is one value of each dimension, such as red and size M. Stock is kept per variant.';
+
+  @override
+  String get stockVariantsNoDimensions =>
+      'Add a dimension, such as colour or size, first.';
+
+  @override
+  String stockVariantsTitle(String item) {
+    return 'Variants of $item';
+  }
 
   @override
   String get stockWhenLabel => 'When';

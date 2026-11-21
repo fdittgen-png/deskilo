@@ -5865,6 +5865,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'I membri prenotano posti, scrivanie e sale su una planimetria.';
 
   @override
+  String get businessKindDescFreelancer =>
+      'Una persona che vende e fattura i propri servizi: clienti, preventivi e fatture, senza locali.';
+
+  @override
   String get businessKindDescPractice =>
       'Appuntamenti: massaggio, terapia, coaching, consulenza.';
 
@@ -5885,6 +5889,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get businessKindNameCoworking => 'Spazio di coworking';
+
+  @override
+  String get businessKindNameFreelancer => 'Libero professionista';
 
   @override
   String get businessKindNamePractice => 'Ambulatorio';
@@ -5916,6 +5923,14 @@ class AppLocalizationsIt extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get businessKindProfileChanged =>
+      'Questo tipo di attività è stato aggiornato durante la scelta. Chiudere questa finestra e riaprirla per rivedere ciò che propone ora.';
+
+  @override
+  String get businessKindSavedFlagsRefused =>
+      'Il tipo è stato salvato, ma le sue funzioni non sono state modificate: sono cambiate nel frattempo. Rivederle in Funzioni.';
 
   @override
   String get businessKindShowAll => 'Mostra tutto';
@@ -8560,6 +8575,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get discoveryKindCoworking => 'Coworking';
+
+  @override
+  String get discoveryKindFreelancers => 'Liberi professionisti';
 
   @override
   String discoveryKindNoMatch(String kind) {
@@ -12325,11 +12343,25 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featureStandaloneInvoicingTitle => 'Fatture singole';
 
   @override
+  String get featureStockLotsDesc =>
+      'Seguire le merci per lotto o per data di scadenza, con una durata di conservazione. Disattivato: nessun articolo è seguito per lotto e ciò che è stato registrato resta invariato.';
+
+  @override
+  String get featureStockLotsTitle => 'Lotti e scadenza';
+
+  @override
   String get featureStockManagementDesc =>
       'Seguire la merce: dove si trova, in quale unità, da quale lotto, e ogni movimento tra due luoghi. Disattivato: un articolo del catalogo mantiene il suo semplice conteggio a scaffale.';
 
   @override
   String get featureStockManagementTitle => 'Gestione delle scorte';
+
+  @override
+  String get featureStockReceivingDesc =>
+      'Collocare le merci di una consegna di ordine a fornitore in ubicazioni e nuovi lotti, una sola volta, conservandone l’origine. Disattivato: una consegna è registrata come prima e nessuna giacenza si muove.';
+
+  @override
+  String get featureStockReceivingTitle => 'Ricezione a magazzino';
 
   @override
   String get featureSubscriptionInvoicesDesc =>
@@ -28470,6 +28502,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'La sua sessione è scaduta. Acceda di nuovo, poi riprovi.';
 
   @override
+  String get refusalStockConfig =>
+      'Questa configurazione di magazzino non è valida: il campo indicato ne spiega il motivo.';
+
+  @override
   String get refusalStockHistory =>
       'Questo articolo ha movimenti di magazzino, che vengono conservati: non può essere eliminato, e la sua unità di magazzino e la sua tracciabilità restano invariate. Disattivalo o crea un nuovo articolo.';
 
@@ -28502,8 +28538,16 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questa richiesta di pagina non è valida: richiedere da 1 a 200 righe e proseguire solo dalla posizione indicata da una pagina.';
 
   @override
+  String get refusalStockStale =>
+      'Qualcun altro lo ha modificato da quando lo ha aperto. Lo rilegga e rifaccia la sua modifica.';
+
+  @override
   String get refusalStockUnit =>
       'Questo articolo non ha questa unità. Aggiungi l\'unità all\'articolo o inserisci la quantità in un\'unità che ha.';
+
+  @override
+  String get refusalStockVariant =>
+      'Questo articolo ha delle varianti: indicare quale (colore, taglia) spostare, vendere o contare. Nulla è stato modificato.';
 
   @override
   String get refusalVatRateVersioned =>
@@ -29236,6 +29280,14 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String reportDocPurchaseOrderTitle(String reference) {
     return 'Ordine di acquisto $reference';
+  }
+
+  @override
+  String get reportDocQuote => 'Preventivo';
+
+  @override
+  String reportDocQuoteTitle(String reference) {
+    return 'Preventivo $reference';
   }
 
   @override
@@ -34803,6 +34855,126 @@ class AppLocalizationsIt extends AppLocalizations {
   String get stockCostUnknown => 'Costo non registrato';
 
   @override
+  String get stockDimensionAdd => 'Aggiungere una dimensione';
+
+  @override
+  String get stockDimensionAddValue => 'Aggiungere un valore';
+
+  @override
+  String get stockDimensionName => 'Nome';
+
+  @override
+  String get stockDimensionValue => 'Valore';
+
+  @override
+  String get stockDimensionsManage => 'Gestire le dimensioni';
+
+  @override
+  String get stockDimensionsTitle => 'Dimensioni';
+
+  @override
+  String get stockEditAddCode => 'Aggiungere un codice';
+
+  @override
+  String get stockEditAddUnit => 'Aggiungere un’unità di confezione';
+
+  @override
+  String get stockEditCode => 'Codice a barre o codice';
+
+  @override
+  String get stockEditCodeGtin => 'Codice a barre (GTIN)';
+
+  @override
+  String get stockEditCodeOwn => 'Codice proprio';
+
+  @override
+  String get stockEditCodeUnit => 'Indica l’unità di confezione';
+
+  @override
+  String get stockEditCodesTitle => 'Codici a barre e codici';
+
+  @override
+  String get stockEditDefaultPurchase => 'Predefinita per gli acquisti';
+
+  @override
+  String get stockEditDefaultSale => 'Predefinita per le vendite';
+
+  @override
+  String get stockEditFactorDen => 'Diviso per';
+
+  @override
+  String get stockEditFactorNum => 'Contiene';
+
+  @override
+  String get stockEditInUse =>
+      'Il primo movimento ha fissato l’unità e il tracciamento di questo articolo.';
+
+  @override
+  String get stockEditInventoryUnit => 'Unità di magazzino';
+
+  @override
+  String get stockEditInventoryUnitChoice => 'Unità di magazzino';
+
+  @override
+  String get stockEditItem => 'Impostazioni di magazzino';
+
+  @override
+  String stockEditItemTitle(String item) {
+    return 'Impostazioni di magazzino di $item';
+  }
+
+  @override
+  String get stockEditNoRight =>
+      'Il ruolo consente di vedere il magazzino ma non di modificarlo.';
+
+  @override
+  String get stockEditNotSaved => 'Nulla è stato salvato. Riprovare.';
+
+  @override
+  String get stockEditPurchasable => 'Può essere acquistato';
+
+  @override
+  String get stockEditRemove => 'Rimuovere';
+
+  @override
+  String get stockEditSave => 'Salvare';
+
+  @override
+  String get stockEditSellable => 'Può essere venduto';
+
+  @override
+  String get stockEditShelfLife => 'Durata di conservazione (giorni)';
+
+  @override
+  String get stockEditStale =>
+      'Questo è cambiato dopo l’apertura. Chiuderlo e riaprirlo.';
+
+  @override
+  String get stockEditStockable => 'Tenuto a magazzino';
+
+  @override
+  String get stockEditTracking => 'Tracciamento';
+
+  @override
+  String get stockEditTrackingExpiry => 'Per data di scadenza';
+
+  @override
+  String get stockEditTrackingLot => 'Per lotto';
+
+  @override
+  String get stockEditTrackingNone => 'Non tracciato';
+
+  @override
+  String get stockEditUnitName => 'Unità di confezione';
+
+  @override
+  String get stockEditUnitsHint =>
+      'Una confezione contiene un numero di unità di magazzino; un terzo di litro è 1 diviso 3.';
+
+  @override
+  String get stockEditUnitsTitle => 'Unità di confezione';
+
+  @override
   String get stockEmpty => 'Non c’è ancora nulla in magazzino.';
 
   @override
@@ -34820,6 +34992,36 @@ class AppLocalizationsIt extends AppLocalizations {
   String get stockLotTitle => 'Lotto';
 
   @override
+  String get stockMappingAdd => 'Aggiungere un articolo del fornitore';
+
+  @override
+  String get stockMappingArticle => 'Riferimento dell’articolo';
+
+  @override
+  String get stockMappingNoVariant => 'Senza variante';
+
+  @override
+  String get stockMappingNone =>
+      'Nessun articolo del fornitore è ancora associato.';
+
+  @override
+  String get stockMappingSupplier => 'Fornitore dell’articolo';
+
+  @override
+  String get stockMappingUnit => 'Unità di acquisto';
+
+  @override
+  String get stockMappingVariant => 'Variante';
+
+  @override
+  String get stockMappingsEdit => 'Articoli del fornitore';
+
+  @override
+  String stockMappingsTitle(String item) {
+    return 'Articoli del fornitore di $item';
+  }
+
+  @override
   String get stockMovementNotFound =>
       'Questo movimento non esiste, oppure non ha il permesso di vederlo.';
 
@@ -34833,6 +35035,51 @@ class AppLocalizationsIt extends AppLocalizations {
   String get stockNoLot => 'Senza lotto';
 
   @override
+  String get stockPlaceActive => 'In uso';
+
+  @override
+  String get stockPlaceBarcode => 'Codice a barre';
+
+  @override
+  String get stockPlaceCode => 'Codice dell’ubicazione';
+
+  @override
+  String get stockPlaceEditTitle => 'Ubicazione';
+
+  @override
+  String get stockPlaceKind => 'Tipo di ubicazione';
+
+  @override
+  String get stockPlaceKindBin => 'Cassetto';
+
+  @override
+  String get stockPlaceKindShelf => 'Scaffale';
+
+  @override
+  String get stockPlaceKindWarehouse => 'Magazzino';
+
+  @override
+  String get stockPlaceKindZone => 'Zona';
+
+  @override
+  String get stockPlaceName => 'Nome';
+
+  @override
+  String get stockPlaceNoParent => 'In nessun luogo in particolare';
+
+  @override
+  String get stockPlaceParent => 'All’interno di';
+
+  @override
+  String get stockPlaceVirtual => 'Gestita dal sistema';
+
+  @override
+  String get stockPlacesAdd => 'Aggiungere un’ubicazione';
+
+  @override
+  String get stockPlacesTitle => 'Ubicazioni';
+
+  @override
   String stockQuantityWithUnit(String quantity, String unit) {
     return '$quantity $unit';
   }
@@ -34842,6 +35089,157 @@ class AppLocalizationsIt extends AppLocalizations {
       'Non è stato possibile leggere il magazzino. Nulla viene mostrato come vuoto: riprovi.';
 
   @override
+  String get stockReasonCodeDuplicate => 'Questo codice è già in uso.';
+
+  @override
+  String get stockReasonCodeMalformed =>
+      'Questo codice è vuoto o troppo lungo.';
+
+  @override
+  String get stockReasonCodeUnitRemoved =>
+      'Un codice nomina questa unità: modificare prima quel codice.';
+
+  @override
+  String get stockReasonCombinationDuplicate =>
+      'Due varianti hanno la stessa combinazione.';
+
+  @override
+  String get stockReasonDefaultPurchaseTwice =>
+      'Una sola unità può essere quella predefinita per gli acquisti.';
+
+  @override
+  String get stockReasonDefaultSaleTwice =>
+      'Una sola unità può essere quella predefinita per le vendite.';
+
+  @override
+  String get stockReasonDimensionMismatch =>
+      'Questa unità non misura la stessa cosa dell’articolo.';
+
+  @override
+  String get stockReasonFactorInvalid =>
+      'Entrambi i numeri devono essere interi maggiori di zero.';
+
+  @override
+  String get stockReasonGtinCheck =>
+      'La cifra di controllo di questo codice a barre è errata.';
+
+  @override
+  String get stockReasonGtinLength => 'Un codice a barre ha da 8 a 14 cifre.';
+
+  @override
+  String get stockReasonItemForeign =>
+      'Questo articolo non appartiene a questa attività.';
+
+  @override
+  String get stockReasonKindUnknown => 'Questo tipo non è noto.';
+
+  @override
+  String get stockReasonLocationCycle =>
+      'Un’ubicazione non può trovarsi dentro se stessa.';
+
+  @override
+  String get stockReasonLocationDefault =>
+      'L’ubicazione principale resta in uso.';
+
+  @override
+  String get stockReasonLocationHasChildren =>
+      'Le ubicazioni al suo interno sono ancora in uso.';
+
+  @override
+  String get stockReasonLocationOccupied =>
+      'Qui c’è giacenza: prima spostarla.';
+
+  @override
+  String get stockReasonLocationParentForeign =>
+      'Questa ubicazione non appartiene a questa attività.';
+
+  @override
+  String get stockReasonLocationVirtual =>
+      'Un’ubicazione gestita dal sistema non può essere usata qui.';
+
+  @override
+  String get stockReasonMalformed =>
+      'Questo valore non è valido per questo campo.';
+
+  @override
+  String get stockReasonMappingDuplicate =>
+      'Questo articolo del fornitore è già associato.';
+
+  @override
+  String get stockReasonNameDuplicate => 'Questo nome è già in uso.';
+
+  @override
+  String get stockReasonNameMalformed => 'Un nome ha da 1 a 60 caratteri.';
+
+  @override
+  String get stockReasonOther => 'Questo non è valido.';
+
+  @override
+  String get stockReasonOutOfRange => 'Questo numero è fuori intervallo.';
+
+  @override
+  String get stockReasonParentInactive =>
+      'L’ubicazione che la contiene non è più in uso.';
+
+  @override
+  String get stockReasonPriceInvalid => 'Un prezzo è zero o più.';
+
+  @override
+  String get stockReasonRegistryUnit =>
+      'Questa unità appartiene al sistema e non può essere ridefinita.';
+
+  @override
+  String get stockReasonStockOnHand => 'C’è giacenza: prima scaricarla.';
+
+  @override
+  String get stockReasonStockWithoutVariant =>
+      'Questo articolo ha giacenza senza variante: scaricarla prima, poi caricarla per variante.';
+
+  @override
+  String get stockReasonSupplierForeign =>
+      'Questo fornitore non appartiene a questa attività.';
+
+  @override
+  String get stockReasonTooLong => 'Questo testo è troppo lungo.';
+
+  @override
+  String get stockReasonTrackingUnsupported =>
+      'Questo tracciamento non è disponibile.';
+
+  @override
+  String get stockReasonUnitDuplicate => 'Questa unità è elencata due volte.';
+
+  @override
+  String get stockReasonUnitInUse =>
+      'Un articolo del fornitore nomina questa unità: modificare prima quell’articolo.';
+
+  @override
+  String get stockReasonUnitNotOfItem => 'L’articolo non elenca questa unità.';
+
+  @override
+  String get stockReasonUnitUnknown => 'Questa unità non è nota.';
+
+  @override
+  String get stockReasonValueForeign =>
+      'Questo valore non appartiene a questa dimensione.';
+
+  @override
+  String get stockReasonValuesMissing =>
+      'Scegliere un valore per almeno una dimensione.';
+
+  @override
+  String get stockReasonVariantHasStock =>
+      'Questa variante ha giacenza: resta in uso.';
+
+  @override
+  String get stockReasonVariantInUse =>
+      'Giacenza o storico nominano questa variante: la combinazione resta invariata.';
+
+  @override
+  String get stockReasonVariantUnknown =>
+      'Questa variante non appartiene a questo articolo.';
+
+  @override
   String get stockStoredLabel => 'Registrato';
 
   @override
@@ -34849,6 +35247,28 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get stockTabOnHand => 'Disponibile';
+
+  @override
+  String get stockVariantPrice => 'Prezzo proprio (unità minori, facoltativo)';
+
+  @override
+  String get stockVariantsAdd => 'Aggiungere una variante';
+
+  @override
+  String get stockVariantsEdit => 'Varianti';
+
+  @override
+  String get stockVariantsHint =>
+      'Una variante è un valore per ciascuna dimensione, ad esempio rosso e taglia M. La giacenza è tenuta per variante.';
+
+  @override
+  String get stockVariantsNoDimensions =>
+      'Aggiungere prima una dimensione, come il colore o la taglia.';
+
+  @override
+  String stockVariantsTitle(String item) {
+    return 'Varianti di $item';
+  }
 
   @override
   String get stockWhenLabel => 'Quando';

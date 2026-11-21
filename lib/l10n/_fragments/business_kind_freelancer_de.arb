@@ -1,0 +1,8 @@
+{
+  "@@locale": "de",
+  "businessKindNameFreelancer": "Freiberufler:in",
+  "businessKindDescFreelancer": "Eine Person, die ihre eigenen Leistungen verkauft und abrechnet: Kunden, Angebote und Rechnungen, ohne Räume.",
+  "discoveryKindFreelancers": "Freiberufler:innen",
+  "businessKindProfileChanged": "Diese Art von Unternehmen wurde während Ihrer Auswahl aktualisiert. Schließen Sie dieses Fenster und öffnen Sie es erneut, um zu prüfen, was sie jetzt vorschlägt.",
+  "businessKindSavedFlagsRefused": "Die Art wurde gespeichert, ihre Funktionen aber nicht geändert: Sie haben sich inzwischen geändert. Prüfen Sie sie unter Funktionen."
+}

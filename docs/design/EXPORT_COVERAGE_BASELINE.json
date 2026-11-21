@@ -110,6 +110,7 @@
   "columns.services": [
     "created_at",
     "stock",
+    "stock_revision",
     "supply_class",
     "vat_rate_id"
   ],

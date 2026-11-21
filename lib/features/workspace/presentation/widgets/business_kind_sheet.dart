@@ -15,9 +15,9 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../application/business_kind_commands.dart';
 import '../../domain/business_kind.dart';
 import '../../domain/business_kind_proposal.dart';
-import '../../domain/feature_flags_write.dart';
 import '../../domain/feature_lifecycle.dart';
 import '../../domain/feature_operation.dart';
 import '../../domain/workspace.dart';
@@ -40,6 +40,7 @@ String _kindDescription(AppLocalizations l10n, String code) => switch (code) {
   'studio' => l10n.businessKindDescStudio,
   'practice' => l10n.businessKindDescPractice,
   'salon' => l10n.businessKindDescSalon,
+  'freelancer' => l10n.businessKindDescFreelancer,
   'service' => l10n.businessKindDescService,
   _ => '',
 };
@@ -89,6 +90,12 @@ class _Choice {
           ticked.contains(WorkspaceFeature.values.byName(e.key)))
         e.key: e.value,
   };
+
+  /// The kind as the owner saw it: its version and digest are what a save
+  /// checks the registry against.
+  BusinessKind get chosen =>
+      kinds.where((k) => k.code == kind).firstOrNull ??
+      BusinessKind(code: kind, sortOrder: 0);
 
   /// Whether the chosen kind switches the places off.
   bool get withoutPlaces =>
@@ -353,7 +360,7 @@ class BusinessKindTile extends ConsumerWidget {
     _Choice choice,
   ) async {
     try {
-      await ref
+      final outcome = await ref
           .read(businessKindCommandsProvider)
           .save(
             choice.workspace.id,
@@ -361,16 +368,28 @@ class BusinessKindTile extends ConsumerWidget {
             moreKinds: choice.moreKinds,
             flags: choice.flags,
             raw: choice.raw,
+            reviewed: choice.chosen,
           );
-    } on FeatureFlagsConflict catch (e, st) {
+      if (outcome == BusinessKindOutcome.kindSavedFlagsRefused) {
+        TraceLogger.instance.warn(
+          'workspace',
+          'business kind saved, its features refused: the flags moved',
+        );
+        ref
+          ..invalidate(currentSettingsProvider)
+          ..invalidate(businessProfileProvider)
+          ..invalidate(myWorkspacesProvider);
+        return l10n.businessKindSavedFlagsRefused;
+      }
+    } on BusinessKindProfileChanged catch (e, st) {
       TraceLogger.instance.warn(
         'workspace',
-        'business kind features conflicted',
+        'business kind profile changed after the review',
         error: e,
         stackTrace: st,
       );
-      ref.invalidate(myWorkspacesProvider);
-      return l10n.featureChangedMeanwhile;
+      ref.invalidate(businessKindsProvider);
+      return l10n.businessKindProfileChanged;
     } on Exception catch (e, st) {
       TraceLogger.instance.error(
         'workspace',

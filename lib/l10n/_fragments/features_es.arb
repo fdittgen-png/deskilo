@@ -281,5 +281,21 @@
   "featureStandaloneInvoicingDesc": "Facturar hoy a un cliente identificado una prestación realizada o un entregable acordado, con líneas detalladas y fechas explícitas, sin reserva, suscripción ni mes detrás. El servidor calcula cada importe; usted confirma una vista previa y emite la factura. Desactivado: las facturas se emiten por miembro y mes como antes.",
   "@featureStandaloneInvoicingDesc": {
     "description": "#4165 feature switch: featureStandaloneInvoicingDesc"
+  },
+  "featureStockLotsTitle": "Lotes y caducidad",
+  "@featureStockLotsTitle": {
+    "description": "#4169 the name of the lots and expiry feature"
+  },
+  "featureStockLotsDesc": "Seguir las mercancías por lote o por fecha de caducidad, con una vida útil. Desactivado: ningún artículo se sigue por lote y lo registrado se conserva tal cual.",
+  "@featureStockLotsDesc": {
+    "description": "#4169 what the lots and expiry feature does, and what off means"
+  },
+  "featureStockReceivingTitle": "Recepción en existencias",
+  "@featureStockReceivingTitle": {
+    "description": "#4171 the name of the receiving into stock feature"
+  },
+  "featureStockReceivingDesc": "Colocar las mercancías de una entrega de pedido a proveedor en ubicaciones y nuevos lotes, una sola vez, conservando su origen. Desactivado: una entrega se registra como antes y no se mueven existencias.",
+  "@featureStockReceivingDesc": {
+    "description": "#4171 what the receiving into stock feature does, and what off means"
   }
 }

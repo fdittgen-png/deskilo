@@ -15,5 +15,11 @@
   "refusalStockLot": "Ce lot appartient à un autre article, ou l'article est suivi par lot et aucun n'a été indiqué. Rien n'a été déplacé.",
   "refusalStockMove": "Ce mouvement ne peut pas être enregistré tel quel : une quantité au-dessus de zéro, un motif connu et une à deux cents lignes, ou la même demande renvoyée sans changement. Rien n'a été déplacé.",
   "refusalStockHistory": "Cet article a des mouvements de stock, qui sont conservés : il ne peut pas être supprimé, et son unité de stock et son suivi restent tels quels. Désactivez-le, ou créez un nouvel article.",
-  "refusalStockPage": "Cette demande de page n’est pas valide : demandez de 1 à 200 lignes, et ne poursuivez qu’à partir de la position donnée par une page."
+  "refusalStockPage": "Cette demande de page n’est pas valide : demandez de 1 à 200 lignes, et ne poursuivez qu’à partir de la position donnée par une page.",
+  "refusalStockStale": "Quelqu’un d’autre l’a modifié depuis que vous l’avez ouvert. Relisez-le, puis refaites votre modification.",
+  "refusalStockConfig": "Cette configuration de stock n’est pas valide : le champ nommé en donne la raison.",
+  "refusalStockVariant": "Cet article a des variantes : indiquez laquelle (couleur, taille) déplacer, vendre ou compter. Rien n’a été modifié.",
+  "@refusalStockVariant": {
+    "description": "#4169 (0837) DKG12: an item with variants moved, sold or counted without naming one."
+  }
 }

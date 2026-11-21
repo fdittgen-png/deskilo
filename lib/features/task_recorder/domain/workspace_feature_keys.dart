@@ -55,6 +55,8 @@ const Set<String> workspaceFeatureKeys = {
   'kioskEnrolment',
   'quickSearch',
   'stockManagement',
+  'stockLots',
+  'stockReceiving',
   'organisation',
   'billingCustomers',
   'customerQuotes',

@@ -1,0 +1,8 @@
+{
+  "@@locale": "es",
+  "businessKindNameFreelancer": "Profesional independiente",
+  "businessKindDescFreelancer": "Una persona que vende y factura sus propios servicios: clientes, presupuestos y facturas, sin local.",
+  "discoveryKindFreelancers": "Profesionales independientes",
+  "businessKindProfileChanged": "Este tipo de negocio se actualizó mientras elegía. Cierre esta ventana y ábrala de nuevo para revisar lo que propone ahora.",
+  "businessKindSavedFlagsRefused": "Se guardó el tipo, pero no se cambiaron sus funciones: cambiaron entretanto. Revíselas en Funciones."
+}

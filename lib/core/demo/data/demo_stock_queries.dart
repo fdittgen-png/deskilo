@@ -18,7 +18,9 @@ const _beans = StockItem(id: 'demo-item-beans', name: 'Coffee beans', unit: 'kg'
 const _milk = StockItem(id: 'demo-item-milk', name: 'Oat milk', unit: 'l');
 const _mugs = StockItem(id: 'demo-item-mugs', name: 'Mugs', unit: 'piece');
 const _syrup = StockItem(id: 'demo-item-syrup', name: 'Syrup', unit: 'l');
-const _items = [_beans, _milk, _mugs, _syrup];
+// A T-shirt with no stock yet: the item the Demo's variants are edited on.
+const _shirt = StockItem(id: 'demo-item-shirt', name: 'T-shirt', unit: 'piece');
+const _items = [_beans, _milk, _mugs, _syrup, _shirt];
 
 /// What the Demo business holds, per item and place.
 const _balances = <(StockItem, StockPlace, String)>[

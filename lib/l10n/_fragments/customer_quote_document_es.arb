@@ -1,0 +1,15 @@
+{
+  "reportDocQuote": "Presupuesto",
+  "@reportDocQuote": {
+    "description": "#4166 the quote as a printed document: its kind in the report designer and the word on the paper"
+  },
+  "reportDocQuoteTitle": "Presupuesto {reference}",
+  "@reportDocQuoteTitle": {
+    "description": "#4166 title of a printed quote, with its reference",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      }
+    }
+  }
+}

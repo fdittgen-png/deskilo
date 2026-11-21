@@ -178,7 +178,7 @@ class SupabasePurchaseOrderRepository implements PurchaseOrderRepository {
         .from('purchase_order_receipts')
         .select(
           'id, order_id, received_on, note, '
-          'purchase_order_receipt_lines(quantity, purchase_order_lines(line_no))',
+          'purchase_order_receipt_lines(id, quantity, purchase_order_lines(line_no))',
         )
         .eq('workspace_id', workspaceId)
         .order('received_on', ascending: false)
