@@ -37,15 +37,18 @@ enum DemoSpaceKey {
   practice(demoPracticeSpaceId, 'the Berlin practice', 'EUR'),
   // #4005 — the house abroad the Demo adds, dormant until it is added.
   house(demoHouseSpaceId, 'Kraków', 'PLN'),
+  // #4168 — a freelancer's business, outside the organisation (no places).
+  freelancer(demoFreelancerSpaceId, 'Kessler Conseil', 'EUR'),
   twin(demoTwinSpaceId, 'the development twin', 'EUR');
 
   const DemoSpaceKey(this.id, this.label, this.currency);
 
   /// #4005 — the spaces a Demo session lists from its start: every one but
-  /// the house abroad, which is dormant until the visitor adds it.
+  /// the house abroad, which is dormant until the visitor adds it, and the
+  /// freelancer's business (#4168), which only its owner, Bruno, belongs to.
   static List<DemoSpaceKey> get listedAtStart => [
     for (final key in values)
-      if (key != house) key,
+      if (key != house && key != freelancer) key,
   ];
 
   final String id;
@@ -109,6 +112,7 @@ class DemoSpaces<T> {
   T get milan => at(DemoSpaceKey.milan);
   T get practice => at(DemoSpaceKey.practice);
   T get house => at(DemoSpaceKey.house);
+  T get freelancer => at(DemoSpaceKey.freelancer);
   T get twin => at(DemoSpaceKey.twin);
 }
 
@@ -137,9 +141,11 @@ extension DemoFixtureSpaces on DemoFixture {
 
 /// #3863 — whether the space [workspaces] looks at books places: a business
 /// without them (the practice) has no seat, and is whole so.
-bool demoHasPlaces(FakeWorkspaceRepository workspaces) =>
-    workspaces.workspaces
-        .where((w) => w.id == workspaces.myMember.workspaceId)
-        .firstOrNull
-        ?.featureFlags['placeBooking'] !=
-    false;
+bool demoHasPlaces(FakeWorkspaceRepository workspaces) {
+  final row = workspaces.workspaces
+      .where((w) => w.id == workspaces.myMember.workspaceId)
+      .firstOrNull;
+  // #4168 — a space whose row is not listed for the persona (its owner is
+  // someone else) is not asked for a seat.
+  return row != null && row.featureFlags['placeBooking'] != false;
+}

@@ -388,6 +388,7 @@ Apre lo spazio e vuole vedere prima ciò che La aspetta, poi le cifre che può l
 
 **Da sapere**
 
+- Un’attività senza luoghi si apre su **La sua attività**: **Fatturare a un cliente**, **Preventivi**, **Clienti**, **Fatture** e **Me**, ciascuno solo quando la sua funzione è attiva e il suo ruolo può usarla.
 - Vede solo le cifre che il Suo ruolo può leggere. Una cifra che non è stato possibile leggere mostra **Non disponibile**, mai zero.
 - **Iscrizioni attive** conta iscrizioni, non persone. **Crediti scaduti** esclude le fatture senza scadenza provata o in sospeso e le conta a parte. Sono cifre di oggi: non se ne conserva lo storico.
 - **Personalizzi** richiede il diritto di leggere le cifre dello spazio e il designer dei report.

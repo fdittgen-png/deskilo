@@ -10,8 +10,8 @@ begin;
 select plan(11);
 
 select is((select feature_profile from public.business_kinds where code = 'freelancer'),
-  '{"placeBooking": false, "moneyTab": true, "services": true, "invoicing": true, "billingCustomers": true, "customerQuotes": true, "purchases": true}'::jsonb,
-  'the freelancer proposes the money side and switches the places off');
+  '{"placeBooking": false, "moneyTab": true, "services": true, "invoicing": true, "billingCustomers": true, "customerQuotes": true, "purchases": true, "standaloneInvoicing": true}'::jsonb,
+  'the freelancer proposes the money side, the invoice a quote ends in, and switches the places off');
 select is((select count(*)::int from public.business_kinds k, jsonb_object_keys(k.feature_profile) key
             where k.code = 'freelancer' and key in ('onlinePayments', 'messagesHub', 'publicListings', 'stockManagement', 'seriesBooking')),
   0, 'and proposes no provider, messages, public page, stock or scheduling');

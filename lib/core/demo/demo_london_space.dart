@@ -166,6 +166,7 @@ class DemoLondonData implements DemoSpaceParts {
       space: space, fields: city.fields, roles: city.roles,
       credits: city.credits, workspaceId: demoLondonSpaceId, prefix: 'uk', now: now,
     ));
+    seedLondonFinanceRole(city.roles);
     city.accessories.seedSmallCatalog(workspaceId: demoLondonSpaceId);
     seedCityCharger(city.chargingStations, 'uk');
     events.viewerPermissions = demoViewerPermissions(space, city.roles, demoLondonSpaceId, actor);

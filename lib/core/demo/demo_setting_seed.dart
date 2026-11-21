@@ -16,4 +16,12 @@ const List<SettingVersion> demoSettingSeed = [
     value: 'practice',
     validFrom: 'v1',
   ),
+  // #4168 — Kessler Conseil is explicitly a freelancer: Me names it.
+  SettingVersion(
+    scope: SettingScope.workspace,
+    workspaceId: demoFreelancerSpaceId,
+    key: businessKindKey,
+    value: 'freelancer',
+    validFrom: 'v1',
+  ),
 ];

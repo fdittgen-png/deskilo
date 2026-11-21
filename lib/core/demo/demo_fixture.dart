@@ -52,6 +52,7 @@ import 'demo_persona.dart';
 import 'demo_practice_space.dart';
 import 'demo_second_space.dart';
 import 'demo_space_listing.dart';
+import 'demo_space_listings.dart';
 import 'demo_space_pick.dart';
 import 'demo_space_stores.dart';
 import 'demo_trade_city_space.dart';
@@ -242,7 +243,7 @@ class DemoFixture implements DemoSpaceParts {
         actorName: demoCast.first.name);
     final directory = FakeDirectoryRepository();
     seedDemoDirectory(directory);
-    final (listings, twinSource) = _listSpaces(workspaces, floorPlan, roles, actor.memberId, today);
+    final (listings, twinSource) = listDemoSpaces(workspaces, floorPlan, roles, actor.memberId, today);
     // The wall tablet greets the member whose badge it read.
     reservations
       ..kioskUserId = demoCast[1].userId
@@ -460,32 +461,6 @@ class DemoFixture implements DemoSpaceParts {
     auth.signInAs(persona.userId);
   }
 }
-
-/// #3846 — the spaces beside the main one are listed now (the switcher and
-/// the profiles need their rows and people) and built when first read.
-(DemoListings, DemoTwinSource) _listSpaces(
-  FakeWorkspaceRepository home,
-  FakeFloorPlanRepository floorPlan,
-  FakeWorkspaceRoles roles,
-  String memberId,
-  DateTime today,
-) {
-  final listings = (
-    leipzig: DemoSecondSpaceData.list(home: home, now: today),
-    london: DemoLondonData.list(home: home),
-    newYork: DemoNewYorkData.list(home: home),
-    zurich: DemoTradeCityData.list(city: demoZurich, home: home),
-    milan: DemoTradeCityData.list(city: demoMilan, home: home),
-    practice: DemoPracticeData.list(home: home),
-    house: DemoHouseData.list(home: home),
-  );
-  final twin = DemoTwinData.list(home: home, productionPlan: floorPlan, productionRoles: roles);
-  for (final listing in [listings.leipzig, listings.london, listings.newYork, listings.zurich, listings.milan, listings.practice, listings.house, twin.listing]) {
-    listing.viewAs(memberId);
-  }
-  return (listings, twin);
-}
-
 
 FakeProfileRepository _profilesForSpaces(DemoListings spaces, DateTime today) =>
     seedDemoPhotos(seedDemoVatNumbers(demoProfiles(today: today)))..profiles.addAll([

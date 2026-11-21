@@ -6,6 +6,7 @@
 // built. The fixture delegates to one of these (`DemoFixture.london` ...).
 import 'demo_dataset.dart';
 import 'demo_fixture.dart';
+import 'demo_freelancer_space.dart';
 import 'demo_house_space.dart';
 import 'demo_london_space.dart';
 import 'demo_new_york_space.dart';
@@ -28,6 +29,7 @@ typedef DemoListings = ({
   DemoSpaceListing milan,
   DemoSpaceListing practice,
   DemoSpaceListing house,
+  DemoSpaceListing freelancer,
 });
 
 class DemoLazySpaces {
@@ -108,6 +110,17 @@ class DemoLazySpaces {
     ),
   );
 
+  /// #4168 — Kessler Conseil: a freelancer's business, owned by Bruno.
+  late final DemoFreelancerData freelancer = _space(
+    DemoSpaceKey.freelancer,
+    listings.freelancer,
+    () => DemoFreelancerData.build(
+      listing: listings.freelancer,
+      actor: () => activeMemberId,
+      now: _home.seededAt,
+    ),
+  );
+
   /// #4005 — the house abroad the Demo adds: empty, dormant until added.
   late final DemoHouseData house = _space(
     DemoSpaceKey.house,
@@ -148,6 +161,7 @@ class DemoLazySpaces {
     DemoSpaceKey.milan => milan,
     DemoSpaceKey.practice => practice,
     DemoSpaceKey.house => house,
+    DemoSpaceKey.freelancer => freelancer,
     DemoSpaceKey.twin => twin,
   };
 
@@ -224,6 +238,7 @@ class DemoLazySpaces {
         DemoSpaceKey.milan => listings.milan,
         DemoSpaceKey.practice => listings.practice,
         DemoSpaceKey.house => listings.house,
+        DemoSpaceKey.freelancer => listings.freelancer,
         DemoSpaceKey.twin => _twinSource.listing,
       };
       return listing == null
@@ -244,6 +259,7 @@ class DemoLazySpaces {
     listings.milan,
     listings.practice,
     listings.house,
+    listings.freelancer,
     _twinSource.listing,
   ];
 }
