@@ -342,6 +342,7 @@ constraint book_profiles.system_company_present CHECK ((company_id IS NOT NULL))
 constraint business_kinds.business_kinds_code_check CHECK ((code ~ '^[a-z][a-z_]{1,31}$'::text))
 constraint business_kinds.business_kinds_feature_profile_check CHECK ((jsonb_typeof(feature_profile) = 'object'::text))
 constraint business_kinds.business_kinds_pkey PRIMARY KEY (code)
+constraint business_kinds.business_kinds_profile_version_check CHECK ((profile_version >= 1))
 constraint business_kinds.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint capability_states.capability_states_capability_key_check CHECK ((capability_key = 'accountingConnectors'::text))
 constraint capability_states.capability_states_changed_by_member_id_same_workspace FOREIGN KEY (workspace_id, changed_by_member_id) REFERENCES members(workspace_id, id)
@@ -2605,6 +2606,7 @@ routine public.branding_clean(p_incoming jsonb, p_strict boolean) -> jsonb | fun
 routine public.business_document_language(p_locale text, p_country text, p_on date) -> text | function | definer | stable | exec:service_role | body:aa4b68900fc1
 routine public.business_kind_setting_check() -> trigger | function | invoker | volatile | exec:service_role | body:50eaa3943a8a
 routine public.business_kinds_profile_check() -> trigger | function | invoker | volatile | exec:service_role | body:ef13acf7a64a
+routine public.business_kinds_profile_version() -> trigger | function | invoker | volatile | exec:service_role | body:884d0ef1c153
 routine public.business_mail_key_resolved(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:service_role | body:5e0a7e8babe6
 routine public.business_mail_sender_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:7a416bed362a
 routine public.buy_package(p_workspace_id uuid, p_package_id uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:d3b206405454
@@ -4058,6 +4060,7 @@ trigger book_mappings.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_s
 trigger book_periods.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.book_periods FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger book_profiles.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.book_profiles FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger business_kinds.business_kinds_profile_check CREATE TRIGGER business_kinds_profile_check BEFORE INSERT OR UPDATE OF feature_profile ON public.business_kinds FOR EACH ROW EXECUTE FUNCTION business_kinds_profile_check()
+trigger business_kinds.business_kinds_profile_version CREATE TRIGGER business_kinds_profile_version BEFORE INSERT OR UPDATE OF feature_profile ON public.business_kinds FOR EACH ROW EXECUTE FUNCTION business_kinds_profile_version()
 trigger business_kinds.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.business_kinds FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger capability_states.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.capability_states FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger charging_stations.charging_stations_fee CREATE TRIGGER charging_stations_fee AFTER INSERT OR DELETE OR UPDATE ON public.charging_stations FOR EACH ROW EXECUTE FUNCTION charging_stations_fee()

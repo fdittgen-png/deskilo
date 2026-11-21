@@ -68,7 +68,7 @@ select pg_temp.act_as('00000000-0000-4000-8000-0000003549a3');
 select is((select count(*)::int from public.setting_values
             where workspace_id = '00000000-0000-4000-8000-0000003549b1' and key like 'business.%'),
           0, 'another tenant reads none of its kind settings');
-select is((select count(*)::int from public.business_kinds), 5, 'everyone signed in reads the kinds');
+select is((select count(*)::int from public.business_kinds), 6, 'everyone signed in reads the kinds');
 
 select * from finish();
 rollback;
