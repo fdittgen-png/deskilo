@@ -40,31 +40,31 @@ const _notForTheApp = <String, String>{
       'and members refuse it (0821)',
   'DKQ01':
       'a guard behind the quote screens (#4166 cut 2): the quote it names '
-      'is chosen from the business\'s own list (0826)',
+      'is chosen from the business\'s own list (0828)',
   'DKQ02':
       'the stale-draft refusal of the quote editor, which reads it in '
-      '#4166 cut 2; until then no screen edits a quote (0826)',
+      '#4166 cut 2; until then no screen edits a quote (0828)',
   'DKQ03':
       'a quote command in a state that does not allow it (a sent quote '
       'amended twice, a converted one converted again); the quote screens '
-      'read it in #4166 cut 2 (0826)',
+      'read it in #4166 cut 2 (0828)',
   'DKQ04':
       'an acceptance or a send after the offer\'s validity; the quote '
-      'screens word it in #4166 cut 2 (0826)',
+      'screens word it in #4166 cut 2 (0828)',
   'DKQ05':
       'a guard no screen offers: a sent revision, a decision and a '
-      'conversion are never changed or deleted (0826)',
+      'conversion are never changed or deleted (0828)',
   'DKQ06':
       'a quote that is not complete (a line fact, a date); the quote '
       'editor checks before it sends and words the server\'s list in '
-      '#4166 cut 2 (0826)',
+      '#4166 cut 2 (0828)',
   'DKQ07':
       'an answer to an assistant: quotes are made in the app by a person, '
-      'never through a delegated token (0826)',
+      'never through a delegated token (0828)',
   'DKQ08':
       'the invoice differs from what was accepted: the conversion screen '
       'shows the difference and takes the reviewed digest in #4166 cut 3 '
-      '(0826)',
+      '(0828)',
   'DKR02':
       'an operator\'s refusal: a personal home cannot drop the '
       'workspace host role while it holds workspaces (0559)',

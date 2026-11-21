@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #4166 (0826, cut 1): a customer quote, as the real roles. The issuer drafts,
+-- #4166 (0828, cut 1): a customer quote, as the real roles. The issuer drafts,
 -- sends (freezes) and amends; a finance reader reads and writes nothing; a
 -- coworker, a stranger and a delegated token get no quote at all. A sent revision
 -- never changes; an accepted revision is what the ISSUER recorded; expiry stops a
