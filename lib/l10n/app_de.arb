@@ -14014,6 +14014,7 @@
   "permAllowsIssueInvoices": "Rechnungen ausstellen, Zahlungen zuordnen und Mahnungen senden.",
   "permAllowsMakeReservations": "Buchen, die eigenen Buchungen sehen und ein- und auschecken.",
   "permAllowsManageBilling": "Gebührenbänder, Steuersätze, Nummernkreise und Abrechnungsregeln verwalten.",
+  "permAllowsManageBillingCustomers": "Die Personen und Unternehmen anlegen und bearbeiten, denen Sie Rechnungen stellen: Rechnungsname, Adresse, Steuernummern und Kontakt.",
   "permAllowsManageConfiguration": "Funktionen, Umgebung, Space-Code, Importe und Zurücksetzen ändern.",
   "permAllowsManageDocuments": "Die Links der Dokumentenbibliothek verwalten.",
   "permAllowsManageIntegrations": "Zahlungsanbieter, E-Rechnungs-Zugänge und WhatsApp einrichten.",
@@ -14075,6 +14076,7 @@
   "@permManageBilling": {
     "description": "#982 permission catalog: permManageBilling"
   },
+  "permManageBillingCustomers": "Rechnungskunden verwalten",
   "permManageConfiguration": "Konfiguration verwalten",
   "@permManageConfiguration": {
     "description": "#982 permission catalog: permManageConfiguration"

@@ -1598,7 +1598,8 @@ window.SETUP_L10N={
    "managePrivacy": "Handle personal data and rights requests",
    "viewStock": "See the stock",
    "manageStock": "Move goods in and out of stock",
-   "approveStockAdjustments": "Approve stock adjustments"
+   "approveStockAdjustments": "Approve stock adjustments",
+   "manageBillingCustomers": "Manage billing customers"
   },
   "domain": {
    "payment": "Payment",
@@ -3423,7 +3424,8 @@ window.SETUP_L10N={
    "managePrivacy": "Gérer les données personnelles et les demandes de droits",
    "viewStock": "Voir les stocks",
    "manageStock": "Entrer et sortir des marchandises du stock",
-   "approveStockAdjustments": "Approuver les ajustements de stock"
+   "approveStockAdjustments": "Approuver les ajustements de stock",
+   "manageBillingCustomers": "Gérer les clients facturés"
   },
   "domain": {
    "payment": "Paiement",
@@ -5248,7 +5250,8 @@ window.SETUP_L10N={
    "managePrivacy": "Personenbezogene Daten und Betroffenenanfragen bearbeiten",
    "viewStock": "Lager einsehen",
    "manageStock": "Waren ein- und auslagern",
-   "approveStockAdjustments": "Bestandskorrekturen genehmigen"
+   "approveStockAdjustments": "Bestandskorrekturen genehmigen",
+   "manageBillingCustomers": "Rechnungskunden verwalten"
   },
   "domain": {
    "payment": "Zahlung",
@@ -7073,7 +7076,8 @@ window.SETUP_L10N={
    "managePrivacy": "Gestionar los datos personales y las solicitudes de derechos",
    "viewStock": "Ver las existencias",
    "manageStock": "Entrar y sacar mercancías del almacén",
-   "approveStockAdjustments": "Aprobar ajustes de existencias"
+   "approveStockAdjustments": "Aprobar ajustes de existencias",
+   "manageBillingCustomers": "Gestionar clientes facturados"
   },
   "domain": {
    "payment": "Pago",
@@ -8898,7 +8902,8 @@ window.SETUP_L10N={
    "managePrivacy": "Gestire i dati personali e le richieste di diritti",
    "viewStock": "Vedere le scorte",
    "manageStock": "Movimentare la merce in entrata e in uscita",
-   "approveStockAdjustments": "Approvare le rettifiche di magazzino"
+   "approveStockAdjustments": "Approvare le rettifiche di magazzino",
+   "manageBillingCustomers": "Gestire i clienti fatturati"
   },
   "domain": {
    "payment": "Pagamento",

@@ -24451,6 +24451,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Gebührenbänder, Steuersätze, Nummernkreise und Abrechnungsregeln verwalten.';
 
   @override
+  String get permAllowsManageBillingCustomers =>
+      'Die Personen und Unternehmen anlegen und bearbeiten, denen Sie Rechnungen stellen: Rechnungsname, Adresse, Steuernummern und Kontakt.';
+
+  @override
   String get permAllowsManageConfiguration =>
       'Funktionen, Umgebung, Space-Code, Importe und Zurücksetzen ändern.';
 
@@ -24586,6 +24590,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get permManageBilling => 'Tarife und Abrechnungsregeln verwalten';
+
+  @override
+  String get permManageBillingCustomers => 'Rechnungskunden verwalten';
 
   @override
   String get permManageConfiguration => 'Konfiguration verwalten';

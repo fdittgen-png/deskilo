@@ -1,0 +1,5 @@
+{
+  "@@locale": "de",
+  "permManageBillingCustomers": "Rechnungskunden verwalten",
+  "permAllowsManageBillingCustomers": "Die Personen und Unternehmen anlegen und bearbeiten, denen Sie Rechnungen stellen: Rechnungsname, Adresse, Steuernummern und Kontakt."
+}
