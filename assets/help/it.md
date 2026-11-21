@@ -430,6 +430,7 @@ Apre lo spazio e vuole vedere prima ciò che La aspetta, poi le cifre che può l
 
 **Da sapere**
 
+- Un’attività senza luoghi si apre su **La sua attività**: **Fatturare a un cliente**, **Preventivi**, **Clienti**, **Fatture** e **Me**, ciascuno solo quando la sua funzione è attiva e il suo ruolo può usarla.
 - Vede solo le cifre che il Suo ruolo può leggere. Una cifra che non è stato possibile leggere mostra **Non disponibile**, mai zero.
 - **Iscrizioni attive** conta iscrizioni, non persone. **Crediti scaduti** esclude le fatture senza scadenza provata o in sospeso e le conta a parte. Sono cifre di oggi: non se ne conserva lo storico.
 - **Personalizzi** richiede il diritto di leggere le cifre dello spazio e il designer dei report.
@@ -3448,6 +3449,9 @@ Gestisce uno studio, un ambulatorio o un salone invece di uno spazio di coworkin
 - Nulla cambia prima di **Salva**; **Annulla** lascia tutto com’è. Scegliere un tipo più tardi propone di nuovo e non cambia mai nulla in silenzio.
 - Una funzione non ancora stabile si attiva solo se la spunta; altrimenti la attivi più tardi in **Funzioni**.
 - Il coworking non propone nulla, e disattivare i posti non cancella nulla: li riattivi e planimetria e prenotazioni tornano.
+
+- **Libero professionista** è per una persona che vende servizi ai clienti: tiene disattivati i luoghi e attiva la fatturazione, i clienti di fatturazione, i preventivi e gli acquisti, mai un fornitore, i messaggi o una pagina pubblica. È un tipo a sé: **Servizio** resta com’era.
+- Me indica il tipo che ciascuna delle sue attività ha scelto, accanto al paese e alla valuta.
 
 **Vedi anche:** [Funzioni](help:user.features.processes)
 

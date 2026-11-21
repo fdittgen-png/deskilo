@@ -388,6 +388,7 @@ Vous ouvrez l'espace et voulez voir d'abord ce qui vous attend, puis les chiffre
 
 **Bon à savoir**
 
+- Une activité sans lieux s’ouvre sur **Votre activité** : **Facturer un client**, **Devis**, **Clients**, **Factures** et **Me**, chacun seulement quand sa fonction est activée et que votre rôle peut l’utiliser.
 - Vous ne voyez que les chiffres que votre rôle peut lire. Un chiffre qui n'a pas pu être lu affiche **Non disponible**, jamais zéro.
 - **Adhésions actives** compte des adhésions, pas des personnes. **Créances échues** laisse de côté les factures sans échéance prouvée ou en attente, et les compte à part. Ce sont des chiffres du jour : aucun historique n'est conservé.
 - **Personnaliser** demande le droit de lire les chiffres de l'espace et le concepteur de rapports.

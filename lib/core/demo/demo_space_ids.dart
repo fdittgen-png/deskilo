@@ -18,3 +18,6 @@ const demoPracticeSpaceId = 'ws-7';
 /// #4005 — the house abroad the Demo adds: dormant until the visitor adds
 /// it from Settings › Organisation.
 const demoHouseSpaceId = 'ws-9';
+
+/// #4168 -- Kessler Conseil, a freelancer's business: no places, owned by Bruno.
+const demoFreelancerSpaceId = 'ws-10';

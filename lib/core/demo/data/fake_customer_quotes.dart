@@ -27,8 +27,10 @@ class FakeCustomerQuoteRepository implements CustomerQuoteRepository {
   final int vatPercent;
   final String currency;
 
-  /// How long a quote stays valid, as the business's own settings say (#4291):
-  /// the Demo wires it to its settings; the registry default otherwise.
+  /// #4168 — when set, a conversion issues the REAL invoice into the space's money.
+  StandaloneInvoiceCommands? invoicing;
+
+  /// #4291 — how long a quote stays valid: the business's settings, else the default.
   QuoteValidity Function() validity = () => const QuoteValidity();
   final DateTime Function() _clock;
 
@@ -71,15 +73,21 @@ class FakeCustomerQuoteRepository implements CustomerQuoteRepository {
     required List<StandaloneLine> lines,
     required DateTime issuedOn,
     required DateTime validUntil,
-    String notes = '',
+    // the notes of the first revision, and each later sent revision's lines
+    ({String notes, List<List<StandaloneLine>> amendments}) extras = (notes: '', amendments: const []),
   }) {
     final q = _Quote('quote-${_next++}', subjectId);
-    final rev = _Rev(1, issuedOn, validUntil, _withIds(lines), notes: notes);
-    _freeze(rev);
+    q.revisions.add(_Rev(1, issuedOn, validUntil, _withIds(lines), notes: extras.notes));
+    for (final later in extras.amendments) {
+      q.revisions.add(_Rev(q.revisions.length + 1, issuedOn, validUntil, _withIds(later), notes: extras.notes));
+    }
+    for (final rev in q.revisions) {
+      _freeze(rev);
+      rev.superseded = rev != q.revisions.last;
+    }
     q
       ..reference = _newReference()
-      ..status = QuoteStatus.sent
-      ..revisions.add(rev);
+      ..status = QuoteStatus.sent;
     _of(workspaceId).add(q);
   }
 
@@ -352,8 +360,8 @@ class FakeCustomerQuoteRepository implements CustomerQuoteRepository {
     final q = _find(workspaceId, quoteId);
     if (q.status != QuoteStatus.accepted) throw const QuoteRefusal(QuoteRefusalKind.state);
     final accepted = q.revisions.firstWhere((r) => r.revision == q.decision!.revision);
-    // the Demo seller's rate is the same on the day: the invoice is what was accepted,
-    // unless the service date moves past a rate change (never seeded)
+    final commands = invoicing;
+    if (commands != null) return _previewInvoice(commands, workspaceId, q, accepted, serviceDate, dueOn);
     return QuoteConversionPrep(
       draftRevision: 1,
       missing: dueOn.isBefore(serviceDate) ? const ['due_on'] : const [],
@@ -362,6 +370,43 @@ class FakeCustomerQuoteRepository implements CustomerQuoteRepository {
       currency: currency,
       contextChanged: false,
       reviewDigest: 'demo-${q.id}-${accepted.totalCents}',
+    );
+  }
+
+  /// The real invoice of the accepted lines, previewed against what was accepted.
+  Future<QuoteConversionPrep> _previewInvoice(
+    StandaloneInvoiceCommands commands,
+    String workspaceId,
+    _Quote q,
+    _Rev accepted,
+    DateTime serviceDate,
+    DateTime dueOn,
+  ) async {
+    final saved = await commands.saveDraft(
+      workspaceId: workspaceId,
+      draft: StandaloneDraft(
+        draftId: q.conversionDraftId,
+        revision: q.conversionRevision,
+        subjectMemberId: q.subjectId,
+        serviceDate: serviceDate,
+        dueOn: dueOn,
+        buyerReference: accepted.buyerReference,
+        purchaseOrder: accepted.purchaseOrder,
+        lines: accepted.lines,
+      ),
+    );
+    q..conversionDraftId = saved.draftId..conversionRevision = saved.revision;
+    final preview = await commands.preview(workspaceId: workspaceId, draftId: saved.draftId, revision: saved.revision);
+    final changed = preview.missing.isEmpty && preview.totalCents != accepted.totalCents;
+    q.conversionDigest = changed ? 'demo-${q.id}-${preview.totalCents}' : '';
+    return QuoteConversionPrep(
+      draftRevision: saved.revision,
+      missing: preview.missing,
+      acceptedTotalCents: accepted.totalCents,
+      wouldBeTotalCents: preview.totalCents,
+      currency: preview.currency.isEmpty ? currency : preview.currency,
+      contextChanged: changed,
+      reviewDigest: q.conversionDigest ?? '',
     );
   }
 
@@ -380,6 +425,18 @@ class FakeCustomerQuoteRepository implements CustomerQuoteRepository {
       return QuoteConverted(invoiceId: invoice, number: q.invoiceNumber ?? '', replayed: true);
     }
     if (q.status != QuoteStatus.accepted) throw const QuoteRefusal(QuoteRefusalKind.state);
+    final commands = invoicing;
+    if (commands != null) {
+      final draftId = q.conversionDraftId;
+      if (draftId == null) throw const QuoteRefusal(QuoteRefusalKind.state);
+      final digest = q.conversionDigest ?? '';
+      if (digest.isNotEmpty && reviewedDigest != digest) {
+        throw QuoteRefusal(QuoteRefusalKind.needsReview, detail: digest);
+      }
+      final issued = await commands.issue(workspaceId: workspaceId, draftId: draftId, revision: draftRevision, requestId: requestId);
+      q..status = QuoteStatus.converted..invoiceId = issued.invoiceId..invoiceNumber = issued.number;
+      return QuoteConverted(invoiceId: issued.invoiceId, number: issued.number, replayed: false);
+    }
     q
       ..status = QuoteStatus.converted
       ..invoiceId = 'demo-quote-invoice-${q.id}'
@@ -417,6 +474,9 @@ class _Quote {
   QuoteDecision? decision;
   String? invoiceId;
   String? invoiceNumber;
+  String? conversionDraftId; // the draft a conversion prepared, and the digest of what differs
+  int? conversionRevision;
+  String? conversionDigest;
 }
 
 class _Rev {

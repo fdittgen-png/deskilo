@@ -4,6 +4,7 @@
 // passes and the register, each asking what its page asks.
 import 'package:flutter/material.dart';
 
+import '../../features/workspace/domain/business_entries.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
 import 'shell_drawer_entries.dart';
@@ -13,6 +14,8 @@ extension SalesEntries on DrawerEntries {
   /// The guest passes and the invoice register.
   List<DrawerEntry> salesPages() {
     final sales = features.contains(WorkspaceFeature.invoicing);
+    // #4168 — one rule for the menu and for the overview of a business.
+    final own = businessEntriesFor(features, permissions);
     return <DrawerEntry>[
       // #3863 — a pass is a day at a place: the entry asks what its route
       // asks, the places too.
@@ -38,10 +41,7 @@ extension SalesEntries on DrawerEntries {
           route: '/invoice-register',
         ),
       // #4166 — the quotes: an offer to a billing customer before an invoice.
-      if (sales &&
-          features.contains(WorkspaceFeature.customerQuotes) &&
-          (may(WorkspacePermission.viewFinances) ||
-              may(WorkspacePermission.issueInvoices)))
+      if (own.contains(BusinessEntry.quotes))
         DrawerEntry(
           'drawer-quotes',
           Icons.request_quote_outlined,
@@ -62,11 +62,7 @@ extension SalesEntries on DrawerEntries {
           route: '/money/engagements',
         ),
       // #4164 — the people and businesses invoiced, with or without an account.
-      if (sales &&
-          features.contains(WorkspaceFeature.billingCustomers) &&
-          (may(WorkspacePermission.manageBillingCustomers) ||
-              may(WorkspacePermission.viewFinances) ||
-              may(WorkspacePermission.issueInvoices)))
+      if (own.contains(BusinessEntry.customers))
         DrawerEntry(
           'drawer-billing-customers',
           Icons.groups_outlined,

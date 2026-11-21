@@ -47,6 +47,7 @@ import 'seed/demo_city_bank_seed.dart';
 import 'seed/demo_city_books_seed.dart';
 import 'seed/demo_city_purchase_seed.dart';
 import 'seed/demo_customer_quote_seed.dart';
+import 'seed/demo_freelancer_seed.dart';
 import 'seed/demo_house_seed.dart' show demoHouseCountry;
 import 'seed/demo_lease_seed.dart';
 import 'seed/demo_london_seed.dart';
@@ -94,15 +95,25 @@ class DemoSpaceStores {
 
   /// #4164 — the space's billing customers (the Demo's reference
   /// organisation seeds three; every other space starts with none).
-  late final FakeBillingCustomerRepository billingCustomers = key == DemoSpaceKey.home
-      ? seedDemoBillingCustomers(demoFirstSpaceId)
-      : FakeBillingCustomerRepository();
+  late final FakeBillingCustomerRepository billingCustomers = switch (key) {
+    DemoSpaceKey.home => seedDemoBillingCustomers(demoFirstSpaceId),
+    // #4168 — the freelancer's three customers, none with an account here.
+    DemoSpaceKey.freelancer => seedFreelancerBillingCustomers(),
+    _ => FakeBillingCustomerRepository(),
+  };
 
   /// #4166 — the space's customer quotes (the Demo's reference organisation
   /// seeds two; every other space starts with none).
-  late final FakeCustomerQuoteRepository customerQuotes = key == DemoSpaceKey.home
-      ? seedDemoCustomerQuotes(demoFirstSpaceId, now: fixture.seededAt)
-      : FakeCustomerQuoteRepository(clock: () => fixture.seededAt);
+  late final FakeCustomerQuoteRepository customerQuotes = switch (key) {
+    DemoSpaceKey.home => seedDemoCustomerQuotes(demoFirstSpaceId, now: fixture.seededAt),
+    // #4168 — the freelancer's accepted quote; its conversion issues the real
+    // invoice into the business's own money.
+    DemoSpaceKey.freelancer => seedFreelancerQuotes(
+      fixture.seededAt,
+      fixture.space(key).money.standaloneInvoiceCommands,
+    ),
+    _ => FakeCustomerQuoteRepository(clock: () => fixture.seededAt),
+  };
 
   /// #4178 — the engagements of the services ordered in the space, over its
   /// own quotes and invoices (it reads them and changes none).
@@ -134,6 +145,7 @@ DemoSpaceStores buildDemoSpaceStores(DemoFixture fixture, DemoSpaceKey key) =>
       DemoSpaceKey.milan => _trade(fixture, DemoSpaceKey.milan, demoMilan, fixture.milan),
       DemoSpaceKey.practice => _practice(fixture),
       DemoSpaceKey.house => _house(fixture),
+      DemoSpaceKey.freelancer => _freelancer(fixture),
       DemoSpaceKey.twin => _twin(fixture),
     };
 
@@ -195,6 +207,32 @@ DemoSpaceStores _practice(DemoFixture fixture) {
       ),
     ),
     fixture.practice.money,
+  );
+}
+
+/// #4168 — Kessler Conseil's purchases: the printer's bill it has not paid.
+DemoSpaceStores _freelancer(DemoFixture fixture) {
+  final buying = DemoPurchasing(
+    suppliers: FakeSupplierRepository(),
+    inbox: FakeEInvoiceInboxRepository(),
+    purchases: FakePurchaseRepository(
+      actor: () => fixture.activeMemberId,
+      workspaceId: demoFreelancerSpaceId,
+    ),
+  );
+  seedFreelancerPurchases(buying.purchases, fixture.seededAt);
+  return _empty(
+    fixture,
+    DemoSpaceKey.freelancer,
+    buying,
+    _emptyBooks(
+      fixture,
+      FakeBookProfileRepository(
+        money: fixture.space(DemoSpaceKey.freelancer).money,
+        purchases: buying.purchases,
+      ),
+    ),
+    fixture.space(DemoSpaceKey.freelancer).money,
   );
 }
 

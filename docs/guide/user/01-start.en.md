@@ -388,6 +388,7 @@ You open the space and want to see first what needs you, then the figures you ma
 
 **Good to know**
 
+- A business without places opens on **Your business**: **Invoice a customer**, **Quotes**, **Customers**, **Invoices** and **Me**, each only when its feature is on and your role may use it.
 - You see only the figures your role may read. A figure that could not be read shows **Not available**, never zero.
 - **Active memberships** counts memberships, not people. **Overdue receivables** leaves out invoices with no proven due date or on hold and counts them apart. Both are today's figures: no history is kept.
 - **Customize** needs the right to read the workspace figures and the report designer.
