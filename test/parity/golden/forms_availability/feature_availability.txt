@@ -163,3 +163,4 @@ billingCustomers | everywhere | y y y y y y y y y y
 customerQuotes | everywhere | y y y y y y y y y y
 stockLots | everywhere | y y y y y y y y y y
 stockReceiving | everywhere | y y y y y y y y y y
+serviceFulfilment | everywhere | y y y y y y y y y y
