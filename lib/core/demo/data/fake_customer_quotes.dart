@@ -107,51 +107,103 @@ class FakeCustomerQuoteRepository implements CustomerQuoteRepository {
 
   String _newReference() => 'QUO-${(_reference++).toString().padLeft(4, '0')}';
 
-  /// Worked out from the lines at the Demo seller's one rate; a net line.
+  /// Freezes the revision as the issuer does: each line's amounts worked out
+  /// at the Demo seller's one rate (half up, per line), the total the sum of
+  /// the lines.
   void _freeze(_Rev rev) {
-    var net = 0.0;
-    for (final l in rev.lines) {
-      net += (double.tryParse(l.quantity) ?? 0) * (double.tryParse(l.unitPrice) ?? 0);
-    }
     rev
       ..sent = true
-      ..totalCents = (net * (100 + vatPercent)).round();
+      ..frozen = [for (final l in rev.lines) _frozenLine(l)];
+    rev.totalCents = rev.frozen.fold<int>(
+      0,
+      (sum, l) => sum + (l['amount_cents']! as int),
+    );
   }
 
+  /// A line as `standalone_invoice_line_v1` freezes it: the invoice line
+  /// snapshot (`label`, the exact facts in `commercial`), never the input.
+  Map<String, Object?> _frozenLine(StandaloneLine l) {
+    final net = ((double.tryParse(l.quantity) ?? 0) *
+            (double.tryParse(l.unitPrice) ?? 0) * 100).round();
+    final tax = (net * vatPercent / 100).round();
+    return {
+      'kind': 'service',
+      'label': l.description,
+      'supply': l.supply,
+      'quantity': 1,
+      'vat_percent': vatPercent,
+      'amount_cents': net + tax,
+      'vat_category': 'S',
+      'commercial': {
+        'version': 1,
+        'line_id': l.lineId,
+        'quantity': l.quantity,
+        'unit': {'code': l.unitCode, 'label': l.unitLabel, 'un_ece_code': l.unEceCode},
+        'supply': l.supply,
+        'unit_price': {
+          'amount': l.unitPrice,
+          'currency': currency,
+          'basis': l.grossPrice ? 'gross' : 'net',
+          'base_quantity': l.baseQuantity,
+        },
+        'tax_facts': {'category': 'S', 'vat_percent': vatPercent},
+        'amounts': {
+          'currency': currency,
+          'net_minor': '$net',
+          'tax_minor': '$tax',
+          'gross_minor': '${net + tax}',
+          'rule': 'half_up_per_line',
+        },
+      },
+    };
+  }
+
+  static String _day(DateTime d) => d.toIso8601String().substring(0, 10);
+
+  /// The quote as `customer_quote_v1` answers it, read back through the same
+  /// reader the real repository uses: the Demo cannot drift from the shape.
   CustomerQuote _view(_Quote q) {
     final today = _clock();
     final day = DateTime(today.year, today.month, today.day);
     final current = q.revisions.where((r) => r.sent && !r.superseded).lastOrNull;
-    return CustomerQuote(
-      id: q.id,
-      subjectId: q.subjectId,
-      reference: q.reference,
-      status: q.status,
-      expired:
+    final d = q.decision;
+    return CustomerQuote.fromJson({
+      'quote_id': q.id,
+      'subject_id': q.subjectId,
+      'reference': q.reference,
+      'status': q.status.name,
+      'expired':
           q.status == QuoteStatus.sent &&
           (current == null || current.validUntil.isBefore(day)),
-      revisions: [
+      'revisions': [
         for (final r in q.revisions)
-          QuoteRevision(
-            revision: r.revision,
-            sent: r.sent,
-            draftVersion: r.version,
-            issuedOn: r.issuedOn,
-            validUntil: r.validUntil,
-            buyerReference: r.buyerReference,
-            purchaseOrder: r.purchaseOrder,
-            notes: r.notes,
-            lines: r.lines,
-            totals: r.sent ? QuoteTotals(totalCents: r.totalCents, currency: currency) : null,
-            contentDigest: r.sent ? 'demo-${q.id}-${r.revision}' : '',
-            superseded: r.superseded,
-          ),
+          {
+            'revision': r.revision,
+            'status': r.sent ? 'sent' : 'draft',
+            'draft_version': r.version,
+            'issued_on': _day(r.issuedOn),
+            'valid_until': _day(r.validUntil),
+            'buyer_reference': r.buyerReference,
+            'purchase_order': r.purchaseOrder,
+            'notes': r.notes,
+            'lines': r.sent ? r.frozen : [for (final l in r.lines) l.toWire()],
+            'totals': r.sent ? {'total_cents': r.totalCents, 'currency': currency} : null,
+            'content_digest': r.sent ? 'demo-${q.id}-${r.revision}' : '',
+            'superseded': r.superseded,
+          },
       ],
-      decision: q.decision,
-      invoiceId: q.invoiceId,
-    );
+      'decision': d == null
+          ? null
+          : {
+              'decision': d.accepted ? 'accepted' : 'declined',
+              'revision': d.revision,
+              'decided_on': _day(d.decidedOn),
+              'source': d.source,
+              'evidence': d.evidence,
+            },
+      'conversion': q.invoiceId == null ? null : {'invoice_id': q.invoiceId},
+    });
   }
-
   @override
   Future<List<CustomerQuote>> quotes(String workspaceId) async {
     _check('quotes');
@@ -376,4 +428,7 @@ class _Rev {
   bool sent = false;
   bool superseded = false;
   int totalCents = 0;
+
+  /// The invoice line snapshots of a sent revision.
+  List<Map<String, Object?>> frozen = const [];
 }
