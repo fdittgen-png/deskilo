@@ -81,26 +81,32 @@ class DeskRail extends StatelessWidget {
       key: const ValueKey('desk-rail'),
       color: theme.colorScheme.surfaceContainerLow,
       child: SafeArea(
-        child: ListView(
+        // Not a ListView: a lazy list drops its first items once Tab has walked
+        // past its cache, and a focus stop that was disposed can no longer be
+        // the one Tab comes back to (#4279). Every item stays built.
+        child: SingleChildScrollView(
           padding: AppSpacing.xsAll,
-          children: [
-            _RailItem(
-              key: const ValueKey('rail-back-to-me'),
-              icon: const PersonalAvatar(),
-              label: context.l10n.spaceBackToMe,
-              onTap: onBackToMe,
-            ),
-            if (houses.isNotEmpty && current != null)
-              _houseItem(context, current!, selected: true),
-            for (final house in houses) _houseItem(context, house),
-            const Divider(),
-            for (final e in destinations) item(e),
-            const Divider(),
-            for (final g in groups)
-              if (!g.isEmpty) _RailGroup(group: g, path: path),
-            const Divider(),
-            for (final e in account) item(e),
-          ],
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _RailItem(
+                key: const ValueKey('rail-back-to-me'),
+                icon: const PersonalAvatar(),
+                label: context.l10n.spaceBackToMe,
+                onTap: onBackToMe,
+              ),
+              if (houses.isNotEmpty && current != null)
+                _houseItem(context, current!, selected: true),
+              for (final house in houses) _houseItem(context, house),
+              const Divider(),
+              for (final e in destinations) item(e),
+              const Divider(),
+              for (final g in groups)
+                if (!g.isEmpty) _RailGroup(group: g, path: path),
+              const Divider(),
+              for (final e in account) item(e),
+            ],
+          ),
         ),
       ),
     );
@@ -276,17 +282,14 @@ class _RailGroup extends StatelessWidget {
   @override
   Widget build(BuildContext context) => MenuAnchor(
     alignmentOffset: const Offset(AppSpacing.xs, 0),
-    style: const MenuStyle(
-      alignment: AlignmentDirectional.topEnd,
-    ),
+    style: const MenuStyle(alignment: AlignmentDirectional.topEnd),
     menuChildren: _children(group),
     builder: (context, controller, _) => _RailItem(
       key: ValueKey('rail-group-${group.id}'),
       icon: Icon(group.icon),
       label: group.title,
       selected: _active(group),
-      onTap: () =>
-          controller.isOpen ? controller.close() : controller.open(),
+      onTap: () => controller.isOpen ? controller.close() : controller.open(),
     ),
   );
 }

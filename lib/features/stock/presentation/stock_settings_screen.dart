@@ -16,11 +16,9 @@ import '../../../core/settings/settings.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/ui/kit/page_title.dart';
 import '../../../core/ui/loading_view.dart';
-import '../../workspace/domain/feature_lifecycle.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/domain/workspace_permission.dart';
-import '../../workspace/presentation/widgets/feature_capability_list.dart';
-import '../../workspace/presentation/widgets/feature_switch_flow.dart';
+import '../../workspace/presentation/widgets/feature_switch_list.dart';
 import '../../workspace/presentation/widgets/settings_editor.dart';
 import '../../workspace/providers/workspace_providers.dart';
 
@@ -39,7 +37,6 @@ class StockSettingsScreen extends ConsumerWidget {
     final l10n = context.l10n;
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final held = ref.watch(myPermissionsProvider);
-    final raw = workspace == null ? const <WorkspaceFeature>{} : resolveEnabledFeatures(workspace.featureFlags);
     return Scaffold(
       appBar: AppBar(
         title: PageTitle(l10n.stockSettingsTitle),
@@ -55,22 +52,9 @@ class StockSettingsScreen extends ConsumerWidget {
                   children: [
                     if (held.contains(WorkspacePermission.manageConfiguration)) ...[
                       Text(l10n.stockSettingsFeatures, style: Theme.of(context).textTheme.titleMedium),
-                      FeatureCapabilityList(
-                        key: const ValueKey('stock-settings-features'),
-                        shrinkWrap: true,
-                        showHint: false,
-                        rows: [for (final f in stockSettingsFeatures) featureManifest[f]!],
-                        raw: raw,
-                        country: workspace.countryCode,
-                        onChanged: (feature, {required value}) => switchWorkspaceFeature(
-                          context,
-                          ref,
-                          workspace: workspace,
-                          enabled: raw,
-                          feature: feature,
-                          value: value,
-                          assessments: featureAssessments,
-                        ),
+                      const FeatureSwitchList(
+                        key: ValueKey('stock-settings-features'),
+                        features: stockSettingsFeatures,
                       ),
                       const SizedBox(height: AppSpacing.md),
                     ],
