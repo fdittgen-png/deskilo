@@ -6,7 +6,7 @@
 -- badge or role; a billing edit changes only the fields it names (and refuses a
 -- stale revision); the member who later joins is the same row. Rolled back.
 begin;
-select plan(41);
+select plan(45);
 
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00004164' || lpad(n::text, 4, '0'))::uuid;
@@ -152,6 +152,15 @@ select is(pg_temp.q(1, format($s$select (public.billing_party_save_v1(%L, %L, '{
 select is((select md5(to_jsonb(m)::text) from public.members m where id = pg_temp.u(203)),
   (select h from before_member), 'and its member row (role, plan, profile, capacity) is untouched');
 
+-- the right alone: a customer yes; an existing member, a capacity, no
+select is(pg_temp.q(5, format($s$select (public.billing_party_save_v1(%L, (select member_id from public.billing_parties where workspace_id = %L limit 1), '{"city": "Lyon"}'::jsonb, null))->>'revision'$s$, pg_temp.u(102), pg_temp.u(102))),
+  '2', 'the right alone edits a billing customer');
+select is(pg_temp.q(5, format($s$select public.billing_party_save_v1(%L, %L, '{"company": "Owner Co"}'::jsonb, null)::text$s$, pg_temp.u(102), pg_temp.u(207))),
+  'ERR DKN01', 'but not an existing member''s billing identity: that needs the right to manage members');
+select is(pg_temp.q(5, format($s$select public.billing_customer_create_v1(%L, '{"company": "Cap Co"}'::jsonb, 'business')::text$s$, pg_temp.u(102))),
+  'ERR DKN01', 'nor a capacity: that needs the right to issue invoices');
+select is(pg_temp.q(5, format($s$select public.billing_party_save_v1(%L, (select member_id from public.billing_parties where workspace_id = %L limit 1), '{"city": "Nice"}'::jsonb, null, 'consumer')::text$s$, pg_temp.u(102), pg_temp.u(102))),
+  'ERR DKN01', 'on an edit either');
 -- ── the engine's internal functions ──
 select is((select public.billing_party_buyer(pg_temp.u(101), (select id::uuid from made)) ->> 'display_name'), 'Atelier Lumi',
   'the buyer is a profile-shaped object named by its company');

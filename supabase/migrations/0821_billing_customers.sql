@@ -226,6 +226,11 @@ begin
   if p_capacity is not null and p_capacity not in ('business', 'consumer') then
     raise exception 'unknown customer capacity' using errcode = '22023';
   end if;
+  -- The capacity decides the tax treatment of what is billed: it stays with the
+  -- right that already sets it (set_member_customer_capacity).
+  if p_capacity is not null and not public.has_permission(p_workspace, 'issueInvoices') then
+    raise exception 'setting the customer capacity needs the right to issue invoices' using errcode = 'DKN01';
+  end if;
   v_party := public.billing_party_clean(p_party);
   if coalesce(v_party ->> 'company', '') = '' and coalesce(v_party ->> 'first_name', '') = ''
      and coalesce(v_party ->> 'last_name', '') = '' then
@@ -256,7 +261,9 @@ grant execute on function public.billing_customer_create_v1(uuid, jsonb, text) t
 -- Edits ONE subject's billing identity: the fields named in [p_party] change,
 -- every other field and everything on the member (profile, role, plan) stays.
 -- [p_expected_revision] is the revision the editor read; a stale one is refused.
--- A member who has none yet gets one (the explicit choice of a billing identity).
+-- A member who has none yet gets one (the explicit choice of a billing identity,
+-- which also needs the right to manage members). The capacity needs the right
+-- to issue invoices, as set_member_customer_capacity does.
 create or replace function public.billing_party_save_v1(
   p_workspace uuid, p_subject uuid, p_party jsonb, p_expected_revision integer default null,
   p_capacity text default null)
@@ -271,10 +278,19 @@ begin
   if p_capacity is not null and p_capacity not in ('business', 'consumer') then
     raise exception 'unknown customer capacity' using errcode = '22023';
   end if;
+  if p_capacity is not null and not public.has_permission(p_workspace, 'issueInvoices') then
+    raise exception 'setting the customer capacity needs the right to issue invoices' using errcode = 'DKN01';
+  end if;
   select * into v_member from public.members
    where id = p_subject and workspace_id = p_workspace and not is_kiosk
    for update;
   if v_member.id is null then raise exception 'unknown billing subject' using errcode = 'DKU04'; end if;
+  -- A billing customer is this right's own subject. Choosing a billing identity
+  -- for an existing member changes how that member is billed: it also needs the
+  -- right to manage members.
+  if v_member.status <> 'customer' and not public.has_permission(p_workspace, 'manageMembers') then
+    raise exception 'a member''s billing identity is chosen by who manages members' using errcode = 'DKN01';
+  end if;
   v_party := public.billing_party_clean(p_party);
   select * into v_current from public.billing_parties where member_id = p_subject for update;
   if v_current.member_id is null then

@@ -30,8 +30,6 @@ insert into listed (sig, reason) values
    'joins the account badge pins through user_id: a customer-only subject has no login'),
   ('bank_statement_lines_v1(uuid)',
    'names a payee through a profile join (user_id): a customer-only subject has no profile and appears unnamed'),
-  ('billing_party_save_v1(uuid,uuid,jsonb,integer,text)',
-   'edits the billing identity of one subject id under the manageBillingCustomers right: a customer-only subject is its purpose'),
   ('calendar_items(uuid,timestamp with time zone,timestamp with time zone,text[],uuid)',
    'checks that one subject id exists in the business under the caller''s right to read its calendar; a customer-only subject has no calendar item'),
   ('can_manage_managed_profile(uuid)',
@@ -163,7 +161,7 @@ select is((select string_agg(r.sig || ':' || r.tier, ', ' order by r.sig) from p
   'a reader is found whatever its name''s form and however it became definer; each rule is seen in its source');
 select ok((select count(*) from pg_temp.readers() where tier = 'service') > 50, 'the service-only readers are read');
 select ok((select count(*) from pg_temp.readers() where tier in ('own row', 'status gate')) > 100, 'the own-row and status-gated readers are read');
-select ok((select count(*) from listed) = 48, 'the list holds 48 reasoned exceptions');
+select ok((select count(*) from listed) = 47, 'the list holds 47 reasoned exceptions');
 
 select * from finish();
 rollback;
