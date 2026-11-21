@@ -7555,6 +7555,14 @@
       }
     }
   },
+  "businessEntriesTitle": "Your business",
+  "@businessEntriesTitle": {
+    "description": "#4168 title of the card of direct entries on the overview of a business without places"
+  },
+  "businessEntryNewInvoice": "Invoice a customer",
+  "@businessEntryNewInvoice": {
+    "description": "#4168 the entry that opens a new invoice for a customer of a business without places"
+  },
   "businessExampleApproveBookings": "For example: a member asks for Thursday's meeting room and the manager confirms it.",
   "@businessExampleApproveBookings": {
     "description": "#3283 a business example under the setup question approve_bookings."
@@ -40993,6 +41001,14 @@
   "@settingHintPurchaseSupplierLookupTimeoutSeconds": {
     "description": "#2863 supplier lookup"
   },
+  "settingHintQuoteDefaultValidity": "How many days a new quote stays valid when its author states no end date. Never more than the longest validity.",
+  "@settingHintQuoteDefaultValidity": {
+    "description": "#4291 hint of the setting quotes.default_validity_days"
+  },
+  "settingHintQuoteMaxValidity": "The longest a quote may stay valid, counted from its offer date. A longer validity is refused when the quote is saved.",
+  "@settingHintQuoteMaxValidity": {
+    "description": "#4291 hint of the setting quotes.max_validity_days"
+  },
   "settingHintReadinessRecentExportDays": "Days an export the app recorded still counts as recent evidence that recovery works. Older than this, recovery reads as unverified.",
   "@settingHintReadinessRecentExportDays": {
     "description": "#2487 settings: Setting hint."
@@ -41328,6 +41344,14 @@
   "settingLabelPurchaseSupplierLookupTimeoutSeconds": "Supplier lookup wait (seconds)",
   "@settingLabelPurchaseSupplierLookupTimeoutSeconds": {
     "description": "#2863 supplier lookup"
+  },
+  "settingLabelQuoteDefaultValidity": "Default validity of a quote",
+  "@settingLabelQuoteDefaultValidity": {
+    "description": "#4291 label of the setting quotes.default_validity_days"
+  },
+  "settingLabelQuoteMaxValidity": "Longest validity of a quote",
+  "@settingLabelQuoteMaxValidity": {
+    "description": "#4291 label of the setting quotes.max_validity_days"
   },
   "settingLabelReadinessRecentExportDays": "Recent export window",
   "@settingLabelReadinessRecentExportDays": {
@@ -45235,6 +45259,117 @@
   "@stockPlacesTitle": {
     "description": "#4169 the stock editors: a label or message"
   },
+  "stockPutAwayAction": "Put away",
+  "@stockPutAwayAction": {
+    "description": "#4171 receiving into stock: a label or message"
+  },
+  "stockPutAwayAll": "Left empty: everything this delivery brings of this line.",
+  "@stockPutAwayAll": {
+    "description": "#4171 receiving into stock: a label or message"
+  },
+  "stockPutAwayAlso": "Also put it away into stock",
+  "@stockPutAwayAlso": {
+    "description": "#4171 receiving into stock: a label or message"
+  },
+  "stockPutAwayCost": "Cost of these goods",
+  "@stockPutAwayCost": {
+    "description": "#4171 receiving into stock: a label or message"
+  },
+  "stockPutAwayCostEntered": "A total I enter",
+  "@stockPutAwayCostEntered": {
+    "description": "#4171 receiving into stock: a label or message"
+  },
+  "stockPutAwayCostOrder": "The order price",
+  "@stockPutAwayCostOrder": {
+    "description": "#4171 receiving into stock: a label or message"
+  },
+  "stockPutAwayCostRate": "Rate to {currency}",
+  "@stockPutAwayCostRate": {
+    "description": "#4171 receiving into stock: a label or message",
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "stockPutAwayCostTotal": "Total cost (minor units)",
+  "@stockPutAwayCostTotal": {
+    "description": "#4171 receiving into stock: a label or message"
+  },
+  "stockPutAwayCostUnknown": "Not known",
+  "@stockPutAwayCostUnknown": {
+    "description": "#4171 receiving into stock: a label or message"
+  },
+  "stockPutAwayDone": "Put away.",
+  "@stockPutAwayDone": {
+    "description": "#4171 receiving into stock: a label or message"
+  },
+  "stockPutAwayExpiry": "Expiry date",
+  "@stockPutAwayExpiry": {
+    "description": "#4171 receiving into stock: a label or message"
+  },
+  "stockPutAwayLot": "Lot code",
+  "@stockPutAwayLot": {
+    "description": "#4171 receiving into stock: a label or message"
+  },
+  "stockPutAwayNotStock": "{line}: not a stock item, so it stays unallocated. Keep it in stock from the catalogue to put it away.",
+  "@stockPutAwayNotStock": {
+    "description": "#4171 receiving into stock: a label or message",
+    "placeholders": {
+      "line": {
+        "type": "String"
+      }
+    }
+  },
+  "stockPutAwayNothing": "Nothing is left to put away.",
+  "@stockPutAwayNothing": {
+    "description": "#4171 receiving into stock: a label or message"
+  },
+  "stockPutAwayPlace": "Place",
+  "@stockPutAwayPlace": {
+    "description": "#4171 receiving into stock: a label or message"
+  },
+  "stockPutAwayProgress": "{line}: {put} put away, {left} still to put away",
+  "@stockPutAwayProgress": {
+    "description": "#4171 receiving into stock: a label or message",
+    "placeholders": {
+      "line": {
+        "type": "String"
+      },
+      "put": {
+        "type": "String"
+      },
+      "left": {
+        "type": "String"
+      }
+    }
+  },
+  "stockPutAwayQuantity": "Quantity to put away ({unit})",
+  "@stockPutAwayQuantity": {
+    "description": "#4171 receiving into stock: a label or message",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "stockPutAwayRemaining": "Put away what remains",
+  "@stockPutAwayRemaining": {
+    "description": "#4171 receiving into stock: a label or message"
+  },
+  "stockPutAwayTitle": "Put away {order}",
+  "@stockPutAwayTitle": {
+    "description": "#4171 receiving into stock: a label or message",
+    "placeholders": {
+      "order": {
+        "type": "String"
+      }
+    }
+  },
+  "stockPutAwayVariant": "Variant",
+  "@stockPutAwayVariant": {
+    "description": "#4171 receiving into stock: a label or message"
+  },
   "stockQuantityWithUnit": "{quantity} {unit}",
   "@stockQuantityWithUnit": {
     "description": "#4161 an exact quantity and its inventory unit",
@@ -45267,6 +45402,14 @@
   "@stockReasonCombinationDuplicate": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonCostInvalid": "This cost is not valid: a total in minor units, and a rate only for another currency.",
+  "@stockReasonCostInvalid": {
+    "description": "#4171 receiving into stock: a text under a field the server refused"
+  },
+  "stockReasonCostRateMissing": "An order in another currency needs its rate.",
+  "@stockReasonCostRateMissing": {
+    "description": "#4171 receiving into stock: a text under a field the server refused"
+  },
   "stockReasonDefaultPurchaseTwice": "Only one unit can be the default for purchases.",
   "@stockReasonDefaultPurchaseTwice": {
     "description": "#4169 the stock editors: a text under a field the server refused"
@@ -45278,6 +45421,14 @@
   "stockReasonDimensionMismatch": "This unit does not measure the same thing as the item.",
   "@stockReasonDimensionMismatch": {
     "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonExpiryMalformed": "This is not a valid date.",
+  "@stockReasonExpiryMalformed": {
+    "description": "#4171 receiving into stock: a text under a field the server refused"
+  },
+  "stockReasonExpiryRequired": "This item is tracked by expiry date: give it.",
+  "@stockReasonExpiryRequired": {
+    "description": "#4171 receiving into stock: a text under a field the server refused"
   },
   "stockReasonFactorInvalid": "Both numbers must be whole numbers above zero.",
   "@stockReasonFactorInvalid": {
@@ -45295,9 +45446,21 @@
   "@stockReasonItemForeign": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonItemNotStocked": "This line is not a stock item.",
+  "@stockReasonItemNotStocked": {
+    "description": "#4171 receiving into stock: a text under a field the server refused"
+  },
   "stockReasonKindUnknown": "This kind is not known.",
   "@stockReasonKindUnknown": {
     "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonLineConflict": "The line is named twice and the two names disagree.",
+  "@stockReasonLineConflict": {
+    "description": "#4171 receiving into stock: a text under a field the server refused"
+  },
+  "stockReasonLineUnknown": "This delivery did not bring that line.",
+  "@stockReasonLineUnknown": {
+    "description": "#4171 receiving into stock: a text under a field the server refused"
   },
   "stockReasonLocationCycle": "A place cannot be inside itself.",
   "@stockReasonLocationCycle": {
@@ -45306,6 +45469,10 @@
   "stockReasonLocationDefault": "The main place stays in use.",
   "@stockReasonLocationDefault": {
     "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonLocationForeign": "Choose a place of this business that is in use.",
+  "@stockReasonLocationForeign": {
+    "description": "#4171 receiving into stock: a text under a field the server refused"
   },
   "stockReasonLocationHasChildren": "Places inside it are still in use.",
   "@stockReasonLocationHasChildren": {
@@ -45322,6 +45489,14 @@
   "stockReasonLocationVirtual": "A place kept by the system cannot be used here.",
   "@stockReasonLocationVirtual": {
     "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonLotCodeRequired": "This item is tracked by lot: give the lot code (up to 64 characters).",
+  "@stockReasonLotCodeRequired": {
+    "description": "#4171 receiving into stock: a text under a field the server refused"
+  },
+  "stockReasonLotGroupConflict": "Parts of one lot must agree on its code, date and cost.",
+  "@stockReasonLotGroupConflict": {
+    "description": "#4171 receiving into stock: a text under a field the server refused"
   },
   "stockReasonMalformed": "This value is not valid for this field.",
   "@stockReasonMalformed": {
@@ -45347,6 +45522,10 @@
   "@stockReasonOutOfRange": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonOverAllocated": "More than arrived cannot be put away.",
+  "@stockReasonOverAllocated": {
+    "description": "#4171 receiving into stock: a text under a field the server refused"
+  },
   "stockReasonParentInactive": "The place it is inside is no longer in use.",
   "@stockReasonParentInactive": {
     "description": "#4169 the stock editors: a text under a field the server refused"
@@ -45354,6 +45533,14 @@
   "stockReasonPriceInvalid": "A price is zero or more.",
   "@stockReasonPriceInvalid": {
     "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonQuantityInvalid": "A quantity is a number above zero with at most six decimals.",
+  "@stockReasonQuantityInvalid": {
+    "description": "#4171 receiving into stock: a text under a field the server refused"
+  },
+  "stockReasonReceiptUnknown": "This delivery is not one of this business.",
+  "@stockReasonReceiptUnknown": {
+    "description": "#4171 receiving into stock: a text under a field the server refused"
   },
   "stockReasonRegistryUnit": "This unit belongs to the system and cannot be redefined.",
   "@stockReasonRegistryUnit": {
@@ -45395,6 +45582,10 @@
   "@stockReasonUnitUnknown": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonUnitUnmapped": "The unit of this line is not a unit of the item: add it to the item first.",
+  "@stockReasonUnitUnmapped": {
+    "description": "#4171 receiving into stock: a text under a field the server refused"
+  },
   "stockReasonValueForeign": "This value does not belong to this dimension.",
   "@stockReasonValueForeign": {
     "description": "#4169 the stock editors: a text under a field the server refused"
@@ -45410,6 +45601,10 @@
   "stockReasonVariantInUse": "Stock or history names this variant: its combination stays as written.",
   "@stockReasonVariantInUse": {
     "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonVariantRequired": "This item has variants: choose which one arrived.",
+  "@stockReasonVariantRequired": {
+    "description": "#4171 receiving into stock: a text under a field the server refused"
   },
   "stockReasonVariantUnknown": "This variant is not one of this item.",
   "@stockReasonVariantUnknown": {

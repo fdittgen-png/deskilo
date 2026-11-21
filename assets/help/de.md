@@ -430,6 +430,7 @@ Sie öffnen den Raum und möchten zuerst sehen, was auf Sie wartet, dann die Zah
 
 **Gut zu wissen**
 
+- Ein Geschäft ohne Orte öffnet auf **Ihr Geschäft**: **Einem Kunden eine Rechnung stellen**, **Angebote**, **Kunden**, **Rechnungen** und **Me**, jeweils nur, wenn die Funktion eingeschaltet ist und Ihre Rolle sie nutzen darf.
 - Sie sehen nur die Zahlen, die Ihre Rolle lesen darf. Eine Zahl, die nicht gelesen werden konnte, zeigt **Nicht verfügbar**, nie null.
 - **Aktive Mitgliedschaften** zählt Mitgliedschaften, nicht Personen. **Überfällige Forderungen** lässt Rechnungen ohne nachgewiesene Fälligkeit oder in der Warteschleife weg und zählt sie getrennt. Beides sind Zahlen von heute: Es wird kein Verlauf aufbewahrt.
 - **Anpassen** braucht das Recht, die Zahlen des Raums zu lesen, und den Berichtsdesigner.
@@ -2871,6 +2872,8 @@ Wählen Sie **Neues Angebot**, den Kunden, die Daten und fügen Sie die Position
 
 Hat der Kunde geantwortet, wählen Sie bei einem gesendeten Angebot **Antwort festhalten**: Sie halten seine Antwort als Aussteller fest (angenommen oder abgelehnt, das Datum, wie sie Sie erreicht hat); es ist Ihr Vermerk, nicht seine Unterschrift, und ein Angebot nach seinem Datum kann nicht mehr angenommen werden. Bei einem angenommenen Angebot wählen Sie **Dieses Angebot berechnen**, legen die Daten fest und **Rechnung prüfen**: Die Rechnung wird aus der angenommenen Revision vorab berechnet und mit dem Angenommenen verglichen. Weicht sie ab (Datum, Kundendaten oder Steuerangaben haben sich geändert), bestätigen Sie, dass Sie sie geprüft haben; was noch nicht ausgestellt werden kann, wird genannt. Dann **Rechnung ausstellen**: Ein Angebot ergibt eine Rechnung, was danach auch mit ihr geschieht.
 
+Wie lange ein neues Angebot gültig bleibt, wenn Sie kein Enddatum angeben, und die längste Gültigkeit, die Sie zulassen, sind Ihre eigenen Einstellungen: **Standardgültigkeit eines Angebots** (zunächst 30 Tage) und **Längste Gültigkeit eines Angebots** (zunächst 365 Tage), in den Einstellungen des Arbeitsbereichs. Eine längere Gültigkeit wird beim Speichern des Angebots abgelehnt.
+
 Bei einem gesendeten Angebot öffnet **PDF teilen** das Angebot als Dokument: ein Angebot mit eigener Referenz und Gültigkeit, dem Kunden, den Positionen und dem, was sie ergeben, so wie beim Senden festgeschrieben (netto, Umsatzsteuer je Satz und Gesamtbetrag). Es ist nie eine Rechnung und trägt keine Rechnungsnummer. Sie können es ansehen, speichern oder teilen.
 
 ### Wie Beträge angezeigt werden
@@ -3434,6 +3437,9 @@ Sie führen ein Studio, eine Praxis oder einen Salon statt eines Coworking-Space
 - Nichts ändert sich vor **Speichern**; **Abbrechen** lässt alles, wie es ist. Eine spätere Wahl schlägt erneut vor und schaltet nie stillschweigend um.
 - Eine noch nicht stabile Funktion wird nur eingeschaltet, wenn Sie sie ankreuzen; sonst später unter **Funktionen**.
 - Coworking schlägt nichts vor, und Plätze auszuschalten löscht nichts: Schalten Sie sie wieder ein, und Raumplan und Buchungen sind zurück.
+
+- **Freiberufler** ist für eine Person, die Kunden Dienstleistungen verkauft: Orte bleiben ausgeschaltet, eingeschaltet werden Rechnungen, Rechnungskunden, Angebote und Einkäufe, nie ein Anbieter, Nachrichten oder eine öffentliche Seite. Es ist eine eigene Art: **Dienstleistung** bleibt, wie es war.
+- Me nennt die Art, die jedes Ihrer Geschäfte gewählt hat, neben Land und Währung.
 
 **Siehe auch:** [Funktionen](help:user.features.processes)
 

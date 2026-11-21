@@ -424,6 +424,7 @@
 </ol>
 <h4 class="lbl lbl-know">Bon à savoir</h4>
 <ul>
+<li>Une activité sans lieux s’ouvre sur <strong>Votre activité</strong> : <strong>Facturer un client</strong>, <strong>Devis</strong>, <strong>Clients</strong>, <strong>Factures</strong> et <strong>Me</strong>, chacun seulement quand sa fonction est activée et que votre rôle peut l’utiliser.</li>
 <li>Vous ne voyez que les chiffres que votre rôle peut lire. Un chiffre qui n'a pas pu être lu affiche <strong>Non disponible</strong>, jamais zéro.</li>
 <li><strong>Adhésions actives</strong> compte des adhésions, pas des personnes. <strong>Créances échues</strong> laisse de côté les factures sans échéance prouvée ou en attente, et les compte à part. Ce sont des chiffres du jour : aucun historique n'est conservé.</li>
 <li><strong>Personnaliser</strong> demande le droit de lire les chiffres de l'espace et le concepteur de rapports.</li>
@@ -2186,6 +2187,7 @@
 </div></article><article class="section no-media" id="user.money.quotes" data-roles="admin owner"><header><h3>Devis <a class="permalink" href="#user.money.quotes" aria-label="link">#</a></h3><div class="roles"><span class="role role-admin">Administrateur·rice</span><span class="role role-owner">Propriétaire</span></div></header><div class="body"><p>Ouvrez <strong>Ventes et encaissements</strong> puis <strong>Devis</strong>. C'est ici que vous faites une offre à un client facturé avant de le facturer.</p>
 <p>Choisissez <strong>Nouveau devis</strong>, le client, les dates et ajoutez les lignes. <strong>Enregistrer le brouillon</strong> le garde ; <strong>Envoyer</strong> fige cette révision, prend la référence suivante de la série des devis et calcule les montants d'après vos propres réglages fiscaux. Un brouillon n'affiche aucun montant : ils n'existent qu'une fois le devis envoyé. Un devis envoyé ne change jamais : <strong>Modifier</strong> crée une autre révision et <strong>Annuler le devis</strong> le retire. Une offre dont la date est passée est lue comme expirée. Un devis ne facture, ne comptabilise et n'encaisse rien ; la facturation d'un devis accepté vient ensuite.</p>
 <p>Quand le client a répondu, choisissez <strong>Enregistrer la réponse</strong> sur un devis envoyé : vous enregistrez sa réponse comme émetteur (accepté ou refusé, la date, comment elle vous est parvenue) ; c'est votre trace, pas sa signature, et une offre dont la date est passée ne peut plus être acceptée. Pour un devis accepté, choisissez <strong>Facturer ce devis</strong>, fixez les dates et <strong>Vérifier la facture</strong> : la facture est prévisualisée d'après la révision acceptée et comparée à ce qui a été accepté. Si elle diffère (la date, les données du client ou les faits fiscaux ont changé), vous confirmez que vous l'avez revue ; ce qui ne peut pas encore être émis est nommé. Puis <strong>Émettre la facture</strong> : un devis donne une seule facture, quoi qu'il arrive ensuite à cette facture.</p>
+<p>La durée pendant laquelle un nouveau devis reste valable quand vous n’indiquez pas de date de fin, et la validité la plus longue que vous acceptez, sont vos propres réglages : <strong>Validité par défaut d’un devis</strong> (30 jours au départ) et <strong>Validité maximale d’un devis</strong> (365 jours au départ), dans les paramètres de l’espace. Une validité plus longue est refusée à l’enregistrement du devis.</p>
 <p>Sur un devis envoyé, <strong>Partager le PDF</strong> ouvre l’offre comme un document : un devis, avec sa propre référence et sa durée de validité, le client, les lignes et ce qu’elles représentent telles qu’elles ont été figées à l’envoi (le net, la TVA par taux et le total). Ce n’est jamais une facture et il ne porte aucun numéro de facture. Vous pouvez le consulter, l’enregistrer ou le partager.</p>
 </div></article><article class="section no-media" id="user.money.amounts" data-roles="all"><header><h3>Comment les montants sont affichés <a class="permalink" href="#user.money.amounts" aria-label="link">#</a></h3><div class="roles"><span class="role role-all">Tout le monde</span></div></header><div class="body"><p>Vous voulez lire un chiffre sans vous demander ce qu'il inclut.</p>
 <h4 class="lbl lbl-know">Bon à savoir</h4>
@@ -2577,11 +2579,27 @@
 </ol>
 <h4 class="lbl lbl-know">Bon à savoir</h4>
 <ul>
-<li>La réservation de cours et de rendez-vous ne fait pas partie de cette version. Aujourd’hui, vous avez : vos prestations avec leurs prix, les factures, le paiement en ligne, les messages et votre page publique.</li>
-<li>Un genre sans places désactive tout ce qui concerne les places — sièges, plan, borne, salles. <strong>Tout afficher</strong> liste chaque fonction.</li>
-<li>Rien ne change avant <strong>Enregistrer</strong> ; <strong>Annuler</strong> laisse tout tel quel. Choisir un genre plus tard propose à nouveau et ne change jamais rien en silence.</li>
-<li>Une fonction pas encore stable n’est activée que si vous la cochez ; sinon activez-la plus tard dans <strong>Fonctions</strong>.</li>
-<li>Le coworking ne propose rien, et désactiver les places ne supprime rien : réactivez-les et le plan et les réservations reviennent.</li>
+<li>
+<p>La réservation de cours et de rendez-vous ne fait pas partie de cette version. Aujourd’hui, vous avez : vos prestations avec leurs prix, les factures, le paiement en ligne, les messages et votre page publique.</p>
+</li>
+<li>
+<p>Un genre sans places désactive tout ce qui concerne les places — sièges, plan, borne, salles. <strong>Tout afficher</strong> liste chaque fonction.</p>
+</li>
+<li>
+<p>Rien ne change avant <strong>Enregistrer</strong> ; <strong>Annuler</strong> laisse tout tel quel. Choisir un genre plus tard propose à nouveau et ne change jamais rien en silence.</p>
+</li>
+<li>
+<p>Une fonction pas encore stable n’est activée que si vous la cochez ; sinon activez-la plus tard dans <strong>Fonctions</strong>.</p>
+</li>
+<li>
+<p>Le coworking ne propose rien, et désactiver les places ne supprime rien : réactivez-les et le plan et les réservations reviennent.</p>
+</li>
+<li>
+<p><strong>Indépendant</strong> est pour une personne seule qui vend des services à des clients : il garde les lieux désactivés et active la facturation, les clients de facturation, les devis et les achats, jamais un prestataire, des messages ni une page publique. C’est un type à part entière : <strong>Service</strong> reste inchangé.</p>
+</li>
+<li>
+<p>Me nomme le type que chacune de vos activités a choisi, à côté de son pays et de sa devise.</p>
+</li>
 </ul>
 <p class="see-also"><strong>Voir aussi:</strong> <a href="#activer-ou-d%C3%A9sactiver-des-processus-entiers">Fonctions</a></p>
 </div></article><article class="section" id="user.workspace.settings.country" data-roles="owner admin"><header><h3>Pays <a class="permalink" href="#user.workspace.settings.country" aria-label="link">#</a></h3><div class="roles"><span class="role role-owner">Propriétaire</span><span class="role role-admin">Administrateur·rice avec l'autorisation</span></div></header><div class="body"><p>Vous voulez que l'espace sache où il est établi. <strong>Espace</strong> s'ouvre sur <strong>Informations générales</strong>.</p>

@@ -500,6 +500,9 @@ You run a studio, a practice or a salon rather than a coworking space, and want 
 - A feature not yet reviewed as stable is switched on only if you tick it; switch it on later in **Features** otherwise.
 - Coworking proposes nothing, and switching places off deletes nothing: switch them on again and the floor plan and bookings are back.
 
+- **Freelancer** is for one person who sells services to customers: it keeps places off and switches on invoicing, billing customers, quotes and purchases, and never a provider, messages or a public page. It is its own kind: **Service** stays as it was.
+- Me names the kind each of your businesses set, beside its country and currency.
+
 **See also:** [Features](help:user.features.processes)
 
 <!-- anchor: user.workspace.settings.country -->

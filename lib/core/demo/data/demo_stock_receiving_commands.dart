@@ -1,0 +1,167 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+//
+// #4171 (B) -- the Demo's receiving into stock, behind the same port as the
+// server's: a delivery of the Demo's order is recorded and put away in one
+// call (both, or neither), or what remains of a recorded delivery is put away
+// later, in parts. Nothing is put away that did not arrive, a line that is not
+// a stock item is named, a tracked item needs its lot, and a retried request
+// answers the same ids. Nothing leaves the process.
+import 'package:deskilo/features/money/domain/purchase_order.dart';
+import 'package:deskilo/features/money/domain/purchase_order_receipt.dart';
+import 'package:deskilo/features/stock/domain/stock_config.dart';
+import 'package:deskilo/features/stock/domain/stock_receiving.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
+import 'demo_stock_config_commands.dart';
+import 'purchase_order_repository.dart';
+
+/// The in-memory put-away of the reference business.
+class DemoStockReceivingCommands implements StockReceivingCommands {
+  DemoStockReceivingCommands(this.workspaceId, this._orders, this._config);
+
+  final String workspaceId;
+  final FakePurchaseOrderRepository _orders;
+  final DemoStockConfigCommands _config;
+
+  final List<({ReceiptAllocation row, String receiptId})> _rows = [];
+  final Map<String, PutAwayResult> _answers = {};
+  int _next = 1;
+
+  static StockConfigRefused _refused(String field, String reason) => StockConfigRefused(field, reason);
+
+  bool _mine(String id) => id == workspaceId;
+
+  @override
+  Future<List<ReceiptAllocation>> allocations(String workspaceId, String receiptId) async =>
+      _mine(workspaceId) ? [for (final r in _rows) if (r.receiptId == receiptId) r.row] : const [];
+
+  @override
+  Future<List<ReceiptAllocation>> allocationsOfOrder(String workspaceId, String orderId) async {
+    if (!_mine(workspaceId)) return const [];
+    final receipts = {for (final r in _orders.receipts) if (r.orderId == orderId) r.id};
+    return [for (final r in _rows) if (receipts.contains(r.receiptId)) r.row];
+  }
+
+  @override
+  Future<PutAwayResult> putAway(
+    String workspaceId,
+    String receiptId,
+    List<PutAwayAllocation> allocations,
+    String requestId,
+  ) async {
+    if (_answers[requestId] case final done?) return (receiptId: done.receiptId, replayed: true, allocations: done.allocations);
+    if (!_mine(workspaceId)) throw _refused('receipt', 'receipt_unknown');
+    final written = await _apply(receiptId, allocations);
+    return _answers[requestId] = (receiptId: receiptId, replayed: false, allocations: written);
+  }
+
+  @override
+  Future<PutAwayResult> recordAndPutAway(
+    String workspaceId,
+    DeliveryDraft delivery,
+    List<PutAwayAllocation> allocations,
+    String requestId,
+  ) async {
+    if (_answers[requestId] case final done?) return (receiptId: done.receiptId, replayed: true, allocations: done.allocations);
+    if (!_mine(workspaceId)) throw _refused('receipt', 'receipt_unknown');
+    final i = _orders.orders.indexWhere((o) => o.id == delivery.orderId);
+    if (i < 0) throw _refused('request', 'malformed');
+    final savedOrder = _orders.orders[i];
+    final savedReceipts = [..._orders.receipts];
+    final order = savedOrder;
+    try {
+      await _orders.recordReceipt(
+        workspaceId,
+        'derived-$requestId',
+        PurchaseOrderReceiptDraft(
+          order: order,
+          receivedOn: DateTime.parse(delivery.receivedOn),
+          note: delivery.note,
+          quantities: {for (final l in delivery.lines) l.lineNo: double.parse(l.quantity)},
+        ),
+      );
+      final receipt = _orders.receipts.last;
+      final written = await _apply(receipt.id, allocations);
+      return _answers[requestId] = (receiptId: receipt.id, replayed: false, allocations: written);
+    } on Object {
+      // both halves or neither
+      _orders.orders[i] = savedOrder;
+      _orders.receipts
+        ..clear()
+        ..addAll(savedReceipts);
+      rethrow;
+    }
+  }
+
+  Future<List<ReceiptAllocation>> _apply(String receiptId, List<PutAwayAllocation> allocations) async {
+    final receipt = _orders.receipts.where((r) => r.id == receiptId).firstOrNull;
+    if (receipt == null) throw _refused('receipt', 'receipt_unknown');
+    final order = _orders.orders.firstWhere((o) => o.id == receipt.orderId);
+    final places = (await _config.places(workspaceId)).where((p) => !p.virtual && p.active).map((p) => p.id).toSet();
+    final running = <int, double>{};
+    final planned = <ReceiptAllocation>[];
+    for (var i = 0; i < allocations.length; i++) {
+      planned.add(await _plan(receipt, order, places, running, i, allocations[i]));
+    }
+    for (final row in planned) {
+      _rows.add((row: row, receiptId: receiptId));
+    }
+    return planned;
+  }
+
+  /// One part, refused as the server refuses it, or the allocation it makes.
+  Future<ReceiptAllocation> _plan(
+    PurchaseOrderReceipt receipt,
+    PurchaseOrder order,
+    Set<String> places,
+    Map<int, double> running,
+    int i,
+    PutAwayAllocation a,
+  ) async {
+    final line = order.lines.where((l) => l.lineNo == a.lineNo).firstOrNull;
+    final received = receipt.lines[a.lineNo];
+    if (line == null || received == null) throw _refused('allocations[$i].line', 'line_unknown');
+    final item = line.serviceId == null ? null : await _config.item(workspaceId, line.serviceId!);
+    if (item == null || !item.stockable) throw _refused('allocations[$i].line', 'item_not_stocked');
+    final unit = line.unit.isEmpty ? item.inventoryUnit : line.unit;
+    final factor = unit == item.inventoryUnit
+        ? (1, 1)
+        : item.units.where((u) => u.unit == unit).map((u) => (u.factorNum, u.factorDen)).firstOrNull;
+    if (factor == null) throw _refused('allocations[$i].line', 'unit_unmapped');
+    final qty = double.tryParse(a.quantity);
+    if (qty == null || qty <= 0) throw _refused('allocations[$i].quantity', 'quantity_invalid');
+    final already = _rows
+            .where((r) => r.row.receiptLineId == '${receipt.id}:${a.lineNo}')
+            .fold(0.0, (s, r) => s + double.parse(r.row.enteredQuantity.text)) +
+        (running[a.lineNo] ?? 0);
+    if (already + qty > received) throw _refused('allocations[$i].quantity', 'over_allocated');
+    running[a.lineNo] = (running[a.lineNo] ?? 0) + qty;
+    if (!places.contains(a.locationId)) throw _refused('allocations[$i].location_id', 'location_foreign');
+    await _checkVariantAndLot(item, a, i);
+    final n = _next++;
+    return ReceiptAllocation(
+      id: 'demo-alloc-$n',
+      receiptLineId: '${receipt.id}:${a.lineNo}',
+      itemId: item.itemId,
+      variantId: a.variantId,
+      lotId: 'demo-lot-$n',
+      locationId: a.locationId,
+      movementId: 'demo-movement-$n',
+      enteredQuantity: ExactQuantity.parse(a.quantity),
+      inventoryQuantity: ExactQuantity.parse('${qty * factor.$1 / factor.$2}'),
+      lineNo: a.lineNo,
+      enteredUnit: unit,
+      orderReference: order.reference,
+      supplierName: order.supplierName,
+      lineText: line.description,
+    );
+  }
+
+  /// A variant when the item has some, and the lot code and date its tracking asks for.
+  Future<void> _checkVariantAndLot(StockItemConfig item, PutAwayAllocation a, int i) async {
+    final variants = (await _config.variants(workspaceId, item.itemId)).where((v) => v.active);
+    if (variants.isNotEmpty && a.variantId == null) throw _refused('allocations[$i].variant_id', 'variant_required');
+    if (item.tracking != 'none' && (a.lotCode ?? '').isEmpty) throw _refused('allocations[$i].lot.code', 'lot_code_required');
+    if (item.tracking == 'expiry' && a.expiresOn == null) throw _refused('allocations[$i].lot.expires_on', 'expiry_required');
+  }
+}

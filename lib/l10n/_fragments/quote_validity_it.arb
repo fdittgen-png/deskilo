@@ -1,0 +1,18 @@
+{
+  "settingLabelQuoteDefaultValidity": "Validità predefinita di un preventivo",
+  "@settingLabelQuoteDefaultValidity": {
+    "description": "#4291 label of the setting quotes.default_validity_days"
+  },
+  "settingHintQuoteDefaultValidity": "Per quanti giorni un nuovo preventivo resta valido quando l’autore non indica una data di fine. Mai oltre la validità massima.",
+  "@settingHintQuoteDefaultValidity": {
+    "description": "#4291 hint of the setting quotes.default_validity_days"
+  },
+  "settingLabelQuoteMaxValidity": "Validità massima di un preventivo",
+  "@settingLabelQuoteMaxValidity": {
+    "description": "#4291 label of the setting quotes.max_validity_days"
+  },
+  "settingHintQuoteMaxValidity": "Il periodo più lungo in cui un preventivo può restare valido, a partire dalla data dell’offerta. Una validità maggiore viene rifiutata al salvataggio del preventivo.",
+  "@settingHintQuoteMaxValidity": {
+    "description": "#4291 hint of the setting quotes.max_validity_days"
+  }
+}

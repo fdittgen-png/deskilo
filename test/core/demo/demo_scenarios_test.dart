@@ -23,6 +23,7 @@ import 'package:deskilo/core/demo/data/book_profile_repository.dart';
 import 'package:deskilo/core/demo/data/demo_kiosk_devices.dart';
 import 'package:deskilo/core/demo/data/demo_stock_config_commands.dart';
 import 'package:deskilo/core/demo/data/demo_stock_queries.dart';
+import 'package:deskilo/core/demo/data/demo_stock_receiving_commands.dart';
 import 'package:deskilo/core/demo/data/fake_organisation_repository.dart';
 import 'package:deskilo/core/demo/data/kpi_repositories.dart';
 import 'package:deskilo/core/demo/data/lease_commitment_repository.dart';
@@ -65,6 +66,7 @@ import 'package:deskilo/features/money/domain/workspace_asset.dart';
 import 'package:deskilo/features/plan/domain/seat.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/stock/domain/stock_config.dart';
+import 'package:deskilo/features/stock/domain/stock_receiving.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/member_badge.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
@@ -1295,6 +1297,36 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
         return false;
       } on StockConfigInUse {
         return saved.tracking == 'expiry' && saved.shelfLifeDays == 30;
+      }
+    },
+  ),
+  // #4171 — the delivery of the partly received order is put away into the
+  // shop's stock, once: what arrived is put away, no more than arrived is.
+  WorkspaceFeature.stockReceiving: _action(
+    _owner,
+    'Ada puts the 20 kg of coffee beans that arrived into the main store, '
+    'and is told she cannot put away more than arrived',
+    (w) async {
+      final orders = FakePurchaseOrderRepository(
+        suppliers: () => w.purchasing.suppliers.suppliers,
+        services: () => w.f.money.services,
+        now: () => w.now,
+      );
+      seedDemoPurchaseOrders(orders, w.now);
+      final config = DemoStockConfigCommands(demoFirstSpaceId);
+      final receiving = DemoStockReceivingCommands(demoFirstSpaceId, orders, config);
+      final place = (await config.places(demoFirstSpaceId)).firstWhere((p) => p.code == 'MAIN').id;
+      await receiving.putAway(demoFirstSpaceId, 'demo-receipt-3', [
+        PutAwayAllocation(lineNo: 1, quantity: '20', locationId: place),
+      ], 'req-1');
+      try {
+        await receiving.putAway(demoFirstSpaceId, 'demo-receipt-3', [
+          PutAwayAllocation(lineNo: 1, quantity: '1', locationId: place),
+        ], 'req-2');
+        return false;
+      } on StockConfigRefused catch (e) {
+        final rows = await receiving.allocationsOfOrder(demoFirstSpaceId, 'demo-order-${w.now.year}-5');
+        return e.reason == 'over_allocated' && rows.map((a) => a.enteredQuantity.text).toList().join() == '20';
       }
     },
   ),

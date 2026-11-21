@@ -618,6 +618,8 @@ Elija **Nuevo presupuesto**, el cliente, las fechas y añada las líneas. **Guar
 
 Cuando el cliente haya respondido, elija **Registrar la respuesta** en un presupuesto enviado: usted registra su respuesta como emisor (aceptado o rechazado, la fecha, cómo le llegó); es su registro, no la firma del cliente, y una oferta pasada de fecha ya no puede aceptarse. En un presupuesto aceptado elija **Facturar este presupuesto**, fije las fechas y **Comprobar la factura**: la factura se previsualiza a partir de la revisión aceptada y se compara con lo aceptado. Si difiere (cambió la fecha, los datos del cliente o los hechos fiscales), confirma que la ha revisado; lo que aún no puede emitirse se nombra. Después **Emitir la factura**: un presupuesto da una sola factura, pase lo que pase después con ella.
 
+El tiempo que un presupuesto nuevo permanece válido cuando no indica fecha de fin, y la validez máxima que acepta, son sus propios ajustes: **Validez predeterminada de un presupuesto** (30 días al principio) y **Validez máxima de un presupuesto** (365 días al principio), en los ajustes del espacio. Una validez mayor se rechaza al guardar el presupuesto.
+
 En un presupuesto enviado, **Compartir el PDF** abre la oferta como documento: un presupuesto, con su propia referencia y su plazo de validez, el cliente, las líneas y lo que suman tal como se fijaron al enviarlo (el neto, el IVA por tipo y el total). Nunca es una factura y no lleva número de factura. Puede verlo, guardarlo o compartirlo.
 
 <!-- anchor: user.money.amounts -->

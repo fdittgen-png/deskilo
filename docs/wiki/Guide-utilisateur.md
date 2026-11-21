@@ -449,6 +449,7 @@ Vous ouvrez l'espace et voulez voir d'abord ce qui vous attend, puis les chiffre
 
 **Bon à savoir**
 
+- Une activité sans lieux s’ouvre sur **Votre activité** : **Facturer un client**, **Devis**, **Clients**, **Factures** et **Me**, chacun seulement quand sa fonction est activée et que votre rôle peut l’utiliser.
 - Vous ne voyez que les chiffres que votre rôle peut lire. Un chiffre qui n'a pas pu être lu affiche **Non disponible**, jamais zéro.
 - **Adhésions actives** compte des adhésions, pas des personnes. **Créances échues** laisse de côté les factures sans échéance prouvée ou en attente, et les compte à part. Ce sont des chiffres du jour : aucun historique n'est conservé.
 - **Personnaliser** demande le droit de lire les chiffres de l'espace et le concepteur de rapports.
@@ -3005,6 +3006,8 @@ Choisissez **Nouveau devis**, le client, les dates et ajoutez les lignes. **Enre
 
 Quand le client a répondu, choisissez **Enregistrer la réponse** sur un devis envoyé : vous enregistrez sa réponse comme émetteur (accepté ou refusé, la date, comment elle vous est parvenue) ; c'est votre trace, pas sa signature, et une offre dont la date est passée ne peut plus être acceptée. Pour un devis accepté, choisissez **Facturer ce devis**, fixez les dates et **Vérifier la facture** : la facture est prévisualisée d'après la révision acceptée et comparée à ce qui a été accepté. Si elle diffère (la date, les données du client ou les faits fiscaux ont changé), vous confirmez que vous l'avez revue ; ce qui ne peut pas encore être émis est nommé. Puis **Émettre la facture** : un devis donne une seule facture, quoi qu'il arrive ensuite à cette facture.
 
+La durée pendant laquelle un nouveau devis reste valable quand vous n’indiquez pas de date de fin, et la validité la plus longue que vous acceptez, sont vos propres réglages : **Validité par défaut d’un devis** (30 jours au départ) et **Validité maximale d’un devis** (365 jours au départ), dans les paramètres de l’espace. Une validité plus longue est refusée à l’enregistrement du devis.
+
 Sur un devis envoyé, **Partager le PDF** ouvre l’offre comme un document : un devis, avec sa propre référence et sa durée de validité, le client, les lignes et ce qu’elles représentent telles qu’elles ont été figées à l’envoi (le net, la TVA par taux et le total). Ce n’est jamais une facture et il ne porte aucun numéro de facture. Vous pouvez le consulter, l’enregistrer ou le partager.
 
 <!-- anchor: user.money.amounts -->
@@ -3601,6 +3604,9 @@ Vous tenez un studio, un cabinet ou un salon plutôt qu’un espace de coworking
 - Rien ne change avant **Enregistrer** ; **Annuler** laisse tout tel quel. Choisir un genre plus tard propose à nouveau et ne change jamais rien en silence.
 - Une fonction pas encore stable n’est activée que si vous la cochez ; sinon activez-la plus tard dans **Fonctions**.
 - Le coworking ne propose rien, et désactiver les places ne supprime rien : réactivez-les et le plan et les réservations reviennent.
+
+- **Indépendant** est pour une personne seule qui vend des services à des clients : il garde les lieux désactivés et active la facturation, les clients de facturation, les devis et les achats, jamais un prestataire, des messages ni une page publique. C’est un type à part entière : **Service** reste inchangé.
+- Me nomme le type que chacune de vos activités a choisi, à côté de son pays et de sa devise.
 
 **Voir aussi:** [Fonctions](#activer-ou-désactiver-des-processus-entiers)
 

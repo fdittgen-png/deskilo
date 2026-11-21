@@ -18,10 +18,12 @@ import '../../../core/ui/server_label.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../workspace/domain/member.dart';
 import '../../workspace/domain/workspace.dart';
+import '../../workspace/presentation/business_kind_names.dart';
 import '../../workspace/presentation/member_labels.dart';
 import '../../workspace/presentation/screens/organisation_overview_screen.dart';
 import '../../workspace/presentation/widgets/brand_swatch.dart';
 import '../../workspace/presentation/widgets/workspace_avatar.dart';
+import '../../workspace/providers/my_business_kind_providers.dart';
 import '../../workspace/providers/organisation_providers.dart';
 import '../application/me_spaces_layout.dart';
 import '../providers/space_prefs_provider.dart';
@@ -297,6 +299,8 @@ class _MeSpacesListState extends ConsumerState<MeSpacesList> {
     final l10n = context.l10n;
     final notifier = ref.read(spacePrefsProvider.notifier);
     final members = [for (final space in group) (space, _memberOf(space))];
+    // #4168 — the kind the business set, named; none when it chose none.
+    final kind = ref.watch(myBusinessKindsProvider).value?[group.first.id];
     return MeWorkspaceRow(
       key: ValueKey('me-space-pair-${group.first.pairId.isEmpty ? group.first.id : group.first.pairId}'),
       dragIndex: dragIndex,
@@ -337,6 +341,7 @@ class _MeSpacesListState extends ConsumerState<MeSpacesList> {
       name: group.first.name,
       lastUsed: group.any((s) => s.id == widget.lastUsedId),
       detail: {
+        if (kind != null) businessKindLabel(l10n, kind) ?? kind,
         // #4006 — where the business is and what it counts in.
         if (group.first.countryCode.isNotEmpty)
           localizedCountryName(l10n, group.first.countryCode),

@@ -430,6 +430,7 @@ Apre lo spazio e vuole vedere prima ciò che La aspetta, poi le cifre che può l
 
 **Da sapere**
 
+- Un’attività senza luoghi si apre su **La sua attività**: **Fatturare a un cliente**, **Preventivi**, **Clienti**, **Fatture** e **Me**, ciascuno solo quando la sua funzione è attiva e il suo ruolo può usarla.
 - Vede solo le cifre che il Suo ruolo può leggere. Una cifra che non è stato possibile leggere mostra **Non disponibile**, mai zero.
 - **Iscrizioni attive** conta iscrizioni, non persone. **Crediti scaduti** esclude le fatture senza scadenza provata o in sospeso e le conta a parte. Sono cifre di oggi: non se ne conserva lo storico.
 - **Personalizzi** richiede il diritto di leggere le cifre dello spazio e il designer dei report.
@@ -2871,6 +2872,8 @@ Scegliere **Nuovo preventivo**, il cliente, le date e aggiungere le righe. **Sal
 
 Quando il cliente ha risposto, scegliere **Registrare la risposta** su un preventivo inviato: si registra la sua risposta come emittente (accettato o rifiutato, la data, come è arrivata); è l'annotazione dell'emittente, non la firma del cliente, e un'offerta oltre la sua data non può più essere accettata. Per un preventivo accettato scegliere **Fatturare questo preventivo**, fissare le date e **Controllare la fattura**: la fattura viene mostrata in anteprima dalla revisione accettata e confrontata con quanto accettato. Se differisce (sono cambiati la data, i dati del cliente o i fatti fiscali), si conferma di averla rivista; ciò che non può ancora essere emesso viene indicato. Poi **Emettere la fattura**: un preventivo dà una sola fattura, qualunque cosa succeda poi a quella fattura.
 
+Per quanto tempo un nuovo preventivo resta valido quando non indica una data di fine, e la validità massima che accetta, sono impostazioni proprie: **Validità predefinita di un preventivo** (all’inizio 30 giorni) e **Validità massima di un preventivo** (all’inizio 365 giorni), nelle impostazioni dello spazio. Una validità maggiore viene rifiutata al salvataggio del preventivo.
+
 Su un preventivo inviato, **Condividi il PDF** apre l’offerta come documento: un preventivo, con un riferimento proprio e la durata di validità, il cliente, le righe e quanto risultano, così come sono state fissate all’invio (il netto, l’IVA per aliquota e il totale). Non è mai una fattura e non reca alcun numero di fattura. Può visualizzarlo, salvarlo o condividerlo.
 
 ### Come sono mostrati gli importi
@@ -3434,6 +3437,9 @@ Gestisce uno studio, un ambulatorio o un salone invece di uno spazio di coworkin
 - Nulla cambia prima di **Salva**; **Annulla** lascia tutto com’è. Scegliere un tipo più tardi propone di nuovo e non cambia mai nulla in silenzio.
 - Una funzione non ancora stabile si attiva solo se la spunta; altrimenti la attivi più tardi in **Funzioni**.
 - Il coworking non propone nulla, e disattivare i posti non cancella nulla: li riattivi e planimetria e prenotazioni tornano.
+
+- **Libero professionista** è per una persona che vende servizi ai clienti: tiene disattivati i luoghi e attiva la fatturazione, i clienti di fatturazione, i preventivi e gli acquisti, mai un fornitore, i messaggi o una pagina pubblica. È un tipo a sé: **Servizio** resta com’era.
+- Me indica il tipo che ciascuna delle sue attività ha scelto, accanto al paese e alla valuta.
 
 **Vedi anche:** [Funzioni](help:user.features.processes)
 

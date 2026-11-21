@@ -130,6 +130,7 @@ void main() {
     }
     // Each space is coherent: the fail-closed check of the start, at its build.
     expect(forward.validateAllSpaces(), isEmpty);
-    expect(forward.builtSpaces, keys.toSet());
+    // Checking every space builds the freelancer's too (#4168): listed for Bruno only.
+    expect(forward.builtSpaces, {...keys, DemoSpaceKey.freelancer});
   });
 }

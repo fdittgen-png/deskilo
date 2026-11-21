@@ -449,6 +449,7 @@ You open the space and want to see first what needs you, then the figures you ma
 
 **Good to know**
 
+- A business without places opens on **Your business**: **Invoice a customer**, **Quotes**, **Customers**, **Invoices** and **Me**, each only when its feature is on and your role may use it.
 - You see only the figures your role may read. A figure that could not be read shows **Not available**, never zero.
 - **Active memberships** counts memberships, not people. **Overdue receivables** leaves out invoices with no proven due date or on hold and counts them apart. Both are today's figures: no history is kept.
 - **Customize** needs the right to read the workspace figures and the report designer.
@@ -3005,6 +3006,8 @@ Choose **New quote**, pick the customer, set the dates and add the lines. **Save
 
 Once the customer has answered, choose **Record the answer** on a sent quote: you record their answer as the issuer (accepted or declined, the date, how it reached you); it is your record, not their signature, and an offer past its date can no longer be accepted. For an accepted quote choose **Invoice this quote**, set the dates and **Check the invoice**: the invoice is previewed from the accepted revision and set against what was accepted. If it differs (the date, the customer's details or the tax facts changed) you confirm that you reviewed it; what cannot be issued yet is named. Then **Issue the invoice**: one quote makes one invoice, whatever happens next to that invoice.
 
+How long a new quote stays valid when you state no end date, and the longest validity you accept, are your own settings: **Default validity of a quote** (30 days to begin with) and **Longest validity of a quote** (365 days to begin with), in the workspace settings. A longer validity is refused when the quote is saved.
+
 On a sent quote, **Share the PDF** opens the offer as a document: a quote, with its own reference and how long it is valid, the customer, the lines and what they come to as they were frozen when it was sent (the net, the VAT per rate and the total). It is never an invoice and carries no invoice number. You can view it, save it or share it.
 
 <!-- anchor: user.money.amounts -->
@@ -3601,6 +3604,9 @@ You run a studio, a practice or a salon rather than a coworking space, and want 
 - Nothing changes until **Save**; **Cancel** leaves everything as it is. Choosing a kind later proposes again and never switches anything silently.
 - A feature not yet reviewed as stable is switched on only if you tick it; switch it on later in **Features** otherwise.
 - Coworking proposes nothing, and switching places off deletes nothing: switch them on again and the floor plan and bookings are back.
+
+- **Freelancer** is for one person who sells services to customers: it keeps places off and switches on invoicing, billing customers, quotes and purchases, and never a provider, messages or a public page. It is its own kind: **Service** stays as it was.
+- Me names the kind each of your businesses set, beside its country and currency.
 
 **See also:** [Features](#switch-whole-processes-on-or-off)
 
