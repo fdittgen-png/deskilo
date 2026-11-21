@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:convert';
+
 import 'package:meta/meta.dart';
 import '../../l10n/app_localizations.dart';
 import '../data/server_error.dart';
@@ -230,6 +232,7 @@ KnownRefusal? knownRefusalOf(Object error) {
 /// The sentence for [error] when it is a known refusal, else null — the
 /// caller keeps its own text for everything else.
 String? knownRefusalText(AppLocalizations l10n, Object error) =>
+    _mainStoreText(l10n, error) ??
     switch (knownRefusalOf(error)) {
       KnownRefusal.permission => l10n.refusalPermission,
       KnownRefusal.session => l10n.refusalSession,
@@ -279,3 +282,39 @@ String? _stockRefusalText(AppLocalizations l10n, KnownRefusal refusal) =>
       KnownRefusal.memberReturnsAsNew => l10n.refusalMemberReturnsAsNew,
       _ => null,
     };
+
+/// #4170 — what the main store holds, when a sale's confirmation was refused
+/// for it (DKG03 less than asked, DKG15 only goods past their date): the
+/// server says it as a JSON detail, read here, never its sentence.
+({String itemId, String held, String asked})? _mainStoreOf(Object error) {
+  final code = serverErrorCode(error);
+  if (code != 'DKG03' && code != 'DKG15') return null;
+  final raw = serverErrorDetails(error);
+  if (raw == null) return null;
+  try {
+    final json = jsonDecode(raw);
+    if (json is! Map<String, dynamic> || json['scope'] != 'main_store') return null;
+    final item = json['item_id'];
+    final held = json['held'];
+    final asked = json['asked'];
+    if (item is! String || held is! String || asked is! String) return null;
+    return (itemId: item, held: held, asked: asked);
+  } on FormatException {
+    return null;
+  }
+}
+
+String? _mainStoreText(AppLocalizations l10n, Object error) {
+  final main = _mainStoreOf(error);
+  if (main == null) return null;
+  return serverErrorCode(error) == 'DKG15'
+      ? l10n.refusalMainStoreExpired(main.held, main.asked)
+      : l10n.refusalMainStoreShort(main.held, main.asked);
+}
+
+/// #4170 — the Stock page of the item a sale's confirmation was refused for,
+/// or null when [error] is not that refusal.
+String? refusalStockLinkOf(Object error) {
+  final main = _mainStoreOf(error);
+  return main == null ? null : '/stock?item=${Uri.encodeQueryComponent(main.itemId)}';
+}

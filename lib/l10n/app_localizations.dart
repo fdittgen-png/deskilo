@@ -45333,6 +45333,18 @@ abstract class AppLocalizations {
   /// **'This changed in the meantime. Reopen it to see where it stands.'**
   String get refusalChangedMeanwhile;
 
+  /// #4170 a sale refused for what the main store holds
+  ///
+  /// In en, this message translates to:
+  /// **'The main store holds only {held} of the {asked} this sale asks for that is fit to sell: the rest is past its date. Nothing was taken and the sale was not confirmed.'**
+  String refusalMainStoreExpired(String held, String asked);
+
+  /// #4170 a sale refused for what the main store holds
+  ///
+  /// In en, this message translates to:
+  /// **'The main store holds {held} of the {asked} this sale asks for. Nothing was taken and the sale was not confirmed.'**
+  String refusalMainStoreShort(String held, String asked);
+
   /// #4008 Refusal DKM01: a member who left cannot be paused or otherwise changed back; setting them active brings them back as a new member
   ///
   /// In en, this message translates to:
@@ -45344,6 +45356,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The currency and the country are fixed once this space has issued a document or recorded money. Nothing was saved.'**
   String get refusalMoneyLocaleLocked;
+
+  /// #4170 a sale refused for what the main store holds
+  ///
+  /// In en, this message translates to:
+  /// **'Open the stock'**
+  String get refusalOpenStock;
 
   /// #1305 Shown when the server refuses an action for lack of a permission
   ///

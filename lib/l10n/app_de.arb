@@ -16230,10 +16230,38 @@
     "description": "#2380 (0660) Refusal DKB07: the first payment of an invoice is undone after its later payments."
   },
   "refusalChangedMeanwhile": "Das hat sich inzwischen geändert. Öffnen Sie es erneut, um den aktuellen Stand zu sehen.",
+  "refusalMainStoreExpired": "Das Hauptlager enthält nur {held} von den {asked}, die dieser Verkauf verlangt, die verkäuflich sind: der Rest ist abgelaufen. Nichts wurde entnommen und der Verkauf wurde nicht bestätigt.",
+  "@refusalMainStoreExpired": {
+    "description": "#4170 a sale refused for what the main store holds",
+    "placeholders": {
+      "held": {
+        "type": "String"
+      },
+      "asked": {
+        "type": "String"
+      }
+    }
+  },
+  "refusalMainStoreShort": "Das Hauptlager enthält {held} von den {asked}, die dieser Verkauf verlangt. Nichts wurde entnommen und der Verkauf wurde nicht bestätigt.",
+  "@refusalMainStoreShort": {
+    "description": "#4170 a sale refused for what the main store holds",
+    "placeholders": {
+      "held": {
+        "type": "String"
+      },
+      "asked": {
+        "type": "String"
+      }
+    }
+  },
   "refusalMemberReturnsAsNew": "Ein ausgetretenes Mitglied kommt als neues Mitglied zurück: Setzen Sie es auf aktiv, um es wieder aufzunehmen.",
   "refusalMoneyLocaleLocked": "Währung und Land stehen fest, sobald dieser Space ein Dokument ausgestellt oder Geld erfasst hat. Es wurde nichts gespeichert.",
   "@refusalMoneyLocaleLocked": {
     "description": "#2332: refusalMoneyLocaleLocked"
+  },
+  "refusalOpenStock": "Lager öffnen",
+  "@refusalOpenStock": {
+    "description": "#4170 a sale refused for what the main store holds"
   },
   "refusalPermission": "Dafür haben Sie keine Berechtigung. Ein Inhaber des Space kann sie in der Rollenverwaltung erteilen.",
   "refusalPersonalHomeHostsNoWorkspace": "Diese Installation ist ein persönliches Zuhause und beherbergt keinen Arbeitsbereich. Legen Sie den Arbeitsbereich auf einer Installation an, die Arbeitsbereiche beherbergt.",

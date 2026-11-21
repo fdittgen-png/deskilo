@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../l10n/context_l10n.dart';
 import '../ui/app_snack.dart';
@@ -96,11 +97,16 @@ Future<bool> runGuarded(
       // session ended", "someone already decided" each say what to do,
       // where the caller's generic text would only say "try again".
       final l10n = context.l10n;
+      // #4170 — a sale refused for what the main store holds links to that item's stock
+      final stockLink = isTransientNetworkFailure(e) ? null : refusalStockLinkOf(e);
       AppSnack.error(
         context,
         isTransientNetworkFailure(e)
             ? (l10n.errorOffline)
             : knownRefusalText(l10n, e) ?? errorText,
+        action: stockLink == null
+            ? null
+            : SnackBarAction(label: l10n.refusalOpenStock, onPressed: () => context.go(stockLink)),
       );
     }
     return false;

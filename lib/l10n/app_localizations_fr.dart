@@ -28576,12 +28576,25 @@ class AppLocalizationsFr extends AppLocalizations {
       'Cet élément a changé entre-temps. Rouvrez-le pour voir où il en est.';
 
   @override
+  String refusalMainStoreExpired(String held, String asked) {
+    return 'Le magasin principal ne contient que $held sur les $asked que cette vente demande qui soient vendables : le reste a dépassé sa date. Rien n’a été prélevé et la vente n’a pas été confirmée.';
+  }
+
+  @override
+  String refusalMainStoreShort(String held, String asked) {
+    return 'Le magasin principal contient $held sur les $asked que cette vente demande. Rien n’a été prélevé et la vente n’a pas été confirmée.';
+  }
+
+  @override
   String get refusalMemberReturnsAsNew =>
       'Un membre parti revient comme nouveau membre : rendez-le actif pour l’accueillir de nouveau.';
 
   @override
   String get refusalMoneyLocaleLocked =>
       'La devise et le pays sont figés dès que l\'espace a émis un document ou enregistré de l\'argent. Rien n\'a été enregistré.';
+
+  @override
+  String get refusalOpenStock => 'Ouvrir le stock';
 
   @override
   String get refusalPermission =>

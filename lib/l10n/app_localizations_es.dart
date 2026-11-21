@@ -28455,12 +28455,25 @@ class AppLocalizationsEs extends AppLocalizations {
       'Esto ha cambiado mientras tanto. Vuelva a abrirlo para ver cómo está.';
 
   @override
+  String refusalMainStoreExpired(String held, String asked) {
+    return 'El almacén principal solo tiene $held de los $asked que pide esta venta aptos para vender: el resto ha caducado. No se retiró nada y la venta no se confirmó.';
+  }
+
+  @override
+  String refusalMainStoreShort(String held, String asked) {
+    return 'El almacén principal tiene $held de los $asked que pide esta venta. No se retiró nada y la venta no se confirmó.';
+  }
+
+  @override
   String get refusalMemberReturnsAsNew =>
       'Un miembro que se fue vuelve como miembro nuevo: actívelo para darle de nuevo la bienvenida.';
 
   @override
   String get refusalMoneyLocaleLocked =>
       'La moneda y el país quedan fijados en cuanto el espacio ha emitido un documento o registrado dinero. No se ha guardado nada.';
+
+  @override
+  String get refusalOpenStock => 'Abrir las existencias';
 
   @override
   String get refusalPermission =>

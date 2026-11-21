@@ -183,5 +183,33 @@
   "stockReasonTransferUnknown": "Questo trasferimento non appartiene a questa attività.",
   "@stockReasonTransferUnknown": {
     "description": "#4170 transfers and take-out: a label or message"
+  },
+  "refusalMainStoreShort": "Il magazzino principale contiene {held} dei {asked} richiesti da questa vendita. Nulla è stato prelevato e la vendita non è stata confermata.",
+  "@refusalMainStoreShort": {
+    "description": "#4170 a sale refused for what the main store holds",
+    "placeholders": {
+      "held": {
+        "type": "String"
+      },
+      "asked": {
+        "type": "String"
+      }
+    }
+  },
+  "refusalMainStoreExpired": "Il magazzino principale contiene solo {held} dei {asked} richiesti da questa vendita che siano vendibili: il resto è scaduto. Nulla è stato prelevato e la vendita non è stata confermata.",
+  "@refusalMainStoreExpired": {
+    "description": "#4170 a sale refused for what the main store holds",
+    "placeholders": {
+      "held": {
+        "type": "String"
+      },
+      "asked": {
+        "type": "String"
+      }
+    }
+  },
+  "refusalOpenStock": "Aprire il magazzino",
+  "@refusalOpenStock": {
+    "description": "#4170 a sale refused for what the main store holds"
   }
 }

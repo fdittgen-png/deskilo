@@ -107,6 +107,15 @@ void main() {
     expect(await operations.openTransfers(demoFirstSpaceId), isEmpty);
   });
 
+  testWidgets('an address that names an item shows the stock of that item only', (tester) async {
+    final (_, container) = await _open(tester, persona: DemoPersona.owner, to: '/reserve');
+    container.read(routerProvider).go('/stock?item=demo-item-beans');
+    await tester.pumpAndSettle();
+    expect(find.text('12.5 kg'), findsOneWidget);
+    expect(find.text('36 piece'), findsNothing, reason: 'the mugs are another item');
+    expect(find.text('24 l'), findsNothing, reason: 'and so is the milk');
+  });
+
   testWidgets('a movement address opens directly, and an id of nothing says so', (tester) async {
     final (_, container) = await _open(tester, persona: DemoPersona.owner, to: '/stock');
     container.read(routerProvider).go('/stock/movements/demo-stock-movement-1');

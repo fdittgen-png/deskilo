@@ -183,5 +183,33 @@
   "stockReasonTransferUnknown": "Ce transfert n’est pas de cette entreprise.",
   "@stockReasonTransferUnknown": {
     "description": "#4170 transfers and take-out: a label or message"
+  },
+  "refusalMainStoreShort": "Le magasin principal contient {held} sur les {asked} que cette vente demande. Rien n’a été prélevé et la vente n’a pas été confirmée.",
+  "@refusalMainStoreShort": {
+    "description": "#4170 a sale refused for what the main store holds",
+    "placeholders": {
+      "held": {
+        "type": "String"
+      },
+      "asked": {
+        "type": "String"
+      }
+    }
+  },
+  "refusalMainStoreExpired": "Le magasin principal ne contient que {held} sur les {asked} que cette vente demande qui soient vendables : le reste a dépassé sa date. Rien n’a été prélevé et la vente n’a pas été confirmée.",
+  "@refusalMainStoreExpired": {
+    "description": "#4170 a sale refused for what the main store holds",
+    "placeholders": {
+      "held": {
+        "type": "String"
+      },
+      "asked": {
+        "type": "String"
+      }
+    }
+  },
+  "refusalOpenStock": "Ouvrir le stock",
+  "@refusalOpenStock": {
+    "description": "#4170 a sale refused for what the main store holds"
   }
 }

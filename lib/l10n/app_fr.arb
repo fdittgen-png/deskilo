@@ -16230,10 +16230,38 @@
     "description": "#2380 (0660) Refusal DKB07: the first payment of an invoice is undone after its later payments."
   },
   "refusalChangedMeanwhile": "Cet élément a changé entre-temps. Rouvrez-le pour voir où il en est.",
+  "refusalMainStoreExpired": "Le magasin principal ne contient que {held} sur les {asked} que cette vente demande qui soient vendables : le reste a dépassé sa date. Rien n’a été prélevé et la vente n’a pas été confirmée.",
+  "@refusalMainStoreExpired": {
+    "description": "#4170 a sale refused for what the main store holds",
+    "placeholders": {
+      "held": {
+        "type": "String"
+      },
+      "asked": {
+        "type": "String"
+      }
+    }
+  },
+  "refusalMainStoreShort": "Le magasin principal contient {held} sur les {asked} que cette vente demande. Rien n’a été prélevé et la vente n’a pas été confirmée.",
+  "@refusalMainStoreShort": {
+    "description": "#4170 a sale refused for what the main store holds",
+    "placeholders": {
+      "held": {
+        "type": "String"
+      },
+      "asked": {
+        "type": "String"
+      }
+    }
+  },
   "refusalMemberReturnsAsNew": "Un membre parti revient comme nouveau membre : rendez-le actif pour l’accueillir de nouveau.",
   "refusalMoneyLocaleLocked": "La devise et le pays sont figés dès que l'espace a émis un document ou enregistré de l'argent. Rien n'a été enregistré.",
   "@refusalMoneyLocaleLocked": {
     "description": "#2332: refusalMoneyLocaleLocked"
+  },
+  "refusalOpenStock": "Ouvrir le stock",
+  "@refusalOpenStock": {
+    "description": "#4170 a sale refused for what the main store holds"
   },
   "refusalPermission": "Vous n'avez pas l'autorisation pour cela. Un propriétaire de l'espace peut l'accorder dans Gestion des rôles.",
   "refusalPersonalHomeHostsNoWorkspace": "Cette installation est un espace personnel : elle n'héberge aucun espace de travail. Créez l'espace de travail sur une installation qui en héberge.",

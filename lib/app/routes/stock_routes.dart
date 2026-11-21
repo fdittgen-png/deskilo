@@ -6,8 +6,8 @@
 // here too, so the entry, the link and the read agree.
 import 'package:go_router/go_router.dart';
 
+import '../../features/stock/presentation/stock_entry.dart';
 import '../../features/stock/presentation/stock_movement_screen.dart';
-import '../../features/stock/presentation/stock_screen.dart';
 import '../../features/stock/presentation/stock_transfers_screen.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../route_access.dart';
@@ -23,7 +23,7 @@ List<RouteBase> stockRoutes(RouteEnv env) {
     GoRoute(
       path: '/stock',
       redirect: env.guard(access),
-      builder: (context, state) => const StockScreen(),
+      builder: (context, state) => StockEntry(itemId: state.uri.queryParameters['item']),
       routes: [
         GoRoute(
           path: 'transfers',
