@@ -34,6 +34,11 @@ String buildChannelEInvoiceXml(
     'format',
     'Factur-X is a PDF',
   ),
+  EInvoiceFormat.verifactu => throw ArgumentError.value(
+    format,
+    'format',
+    'a Verifactu record is built by the Spanish add-on, from a preview',
+  ),
   EInvoiceFormat.en16931Cii => buildInvoiceCii(input),
   EInvoiceFormat.fatturaPa => _viaProfile(
     format,

@@ -52,7 +52,8 @@ enum UblProfile {
 /// FatturaPA, KSeF only FA(3), RO e-Factura only CIUS-RO; a French
 /// accredited platform takes the EN 16931 CII under the French CIUS.
 /// Factur-X (the PDF with its XML inside) stays the document a PERSON
-/// receives: the e-mail leg and the generic upload.
+/// receives: the e-mail leg and the generic upload. The Verifactu record is
+/// the AEAT's SOAP message: only the sandbox test builds it so far (#3932).
 enum EInvoiceFormat {
   facturX('pdf', 'application/pdf'),
   en16931Ubl('xml', 'application/xml'),
@@ -61,7 +62,8 @@ enum EInvoiceFormat {
   xrechnung('xml', 'application/xml'),
   ciusRo('xml', 'application/xml'),
   fatturaPa('xml', 'application/xml'),
-  ksefFa3('xml', 'application/xml');
+  ksefFa3('xml', 'application/xml'),
+  verifactu('xml', 'application/xml');
 
   const EInvoiceFormat(this.extension, this.mimeType);
 
