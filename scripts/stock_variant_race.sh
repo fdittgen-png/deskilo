@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # SPDX-License-Identifier: AGPL-3.0-or-later
-# #4169 (A2) -- two sessions moving the SAME variant. The ledger's balance of
+# #4169 (A2) -- two sessions moving the SAME variant (taken out as a consumption to
+# the loss place since #4170: the generic move checks its reason against the places). The ledger's balance of
 # an item, a variant, a lot and a place is one row (stock_balances, unique on
 # the four, nulls not distinct), and a move updates it under that row's lock,
 # so the second session waits for the first and then finds the stock gone:
@@ -45,7 +46,7 @@ set local role authenticated;
 select public.create_workspace('Variant race', 'FR', 'EUR', 'Europe/Paris', 'dev', false, null) as ws \gset
 reset role;
 commit;
-update public.workspaces set feature_flags = coalesce(feature_flags, '{}'::jsonb) || '{"stockManagement": true}' where id = :'ws';
+update public.workspaces set feature_flags = coalesce(feature_flags, '{}'::jsonb) || '{"stockManagement": true, "stockTakeOut": true}' where id = :'ws';
 insert into public.services (workspace_id, name, price_cents, active, inventory_unit, tracking, stockable)
 values (:'ws', 'Race shirt', 2500, true, 'piece', 'none', true) returning id as item \gset
 begin;
@@ -67,7 +68,7 @@ select id as vred from public.item_variants where item_id = :'item' and canonica
 select id as vblue from public.item_variants where item_id = :'item' and canonical = :'dim' || ':' || :'blue' \gset
 select id as main from public.stock_locations where workspace_id = :'ws' and code = 'MAIN' \gset
 select id as supplier from public.stock_locations where workspace_id = :'ws' and kind = 'supplier' \gset
-select id as customer from public.stock_locations where workspace_id = :'ws' and kind = 'customer' \gset
+select id as customer from public.stock_locations where workspace_id = :'ws' and kind = 'loss' \gset
 begin;
 select set_config('request.jwt.claims', '{"sub":"$owner","role":"authenticated","aal":"aal2"}', true);
 set local role authenticated;
@@ -89,7 +90,7 @@ movements() { q "select count(*) from public.stock_movements where request_id = 
 expect "the fixture: 4 red and 4 blue at MAIN" "$(balance "$vred")/$(balance "$vblue")" "4/4"
 # take REQUEST VARIANT QUANTITY
 take() {
-  echo "$as_owner select 'moved' from (select public.stock_move_v1('$ws', '$1', jsonb_build_array(jsonb_build_object('item_id', '$item', 'quantity', $3, 'from', '$main', 'to', '$customer', 'variant_id', '$2')), 'sale')) x;"
+  echo "$as_owner select 'moved' from (select public.stock_move_v1('$ws', '$1', jsonb_build_array(jsonb_build_object('item_id', '$item', 'quantity', $3, 'from', '$main', 'to', '$customer', 'variant_id', '$2')), 'consumption')) x;"
 }
 wait_marker() {
   local i=0
