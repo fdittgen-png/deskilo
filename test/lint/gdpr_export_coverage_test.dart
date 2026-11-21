@@ -58,7 +58,7 @@ const Map<String, String> _notExported = {
           'that customer\'s subject. A customer has no account here, so no '
           'export_my_data call is theirs; a rights request is answered by the '
           'space (record_rights_request) from the workspace records export, '
-          'which carries the quote tables (0826)',
+          'which carries the quote tables (0828)',
   'billing_parties':
       '#4164 A1 — the billed name, address, tax identifiers and contact the '
           'business holds for a customer it invoices. A customer-only subject '
