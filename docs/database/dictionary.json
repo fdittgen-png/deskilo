@@ -3,14 +3,14 @@
         "counts": {
             "enums": 0,
             "views": 0,
-            "tables": 259,
-            "columns": 4036,
+            "tables": 272,
+            "columns": 4258,
             "domains": 0,
             "partitions": 0,
-            "foreignKeys": 613
+            "foreignKeys": 654
         },
         "source": "PostgreSQL catalogues (pg_class, pg_attribute, pg_constraint, pg_index, pg_inherits, pg_type) of the migration replay",
-        "checksum": "bd598388fc2bb890c7404bac0bd550dbc9f40307886c57861c3176d1aa220753",
+        "checksum": "cda439c1b37b6bc4cc8b34e7b7cb715b7c88aca8a77ccfc4b14ddd22ab7e5a33",
         "excluded": [
             "pg_catalog",
             "information_schema",
@@ -19,7 +19,7 @@
             "managed platform schemas (auth, storage, realtime, ...): version-qualified, not application migrations",
             "row values, function bodies, view definitions"
         ],
-        "schemaMarker": 813,
+        "schemaMarker": 842,
         "postgresMajor": 17,
         "applicationSchema": "public"
     },
@@ -7223,6 +7223,444 @@
         },
         {
             "kind": "table",
+            "name": "billing_parties",
+            "schema": "public",
+            "columns": [
+                {
+                    "name": "member_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 1
+                },
+                {
+                    "name": "workspace_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 2
+                },
+                {
+                    "name": "revision",
+                    "type": "integer",
+                    "default": "1",
+                    "notNull": true,
+                    "position": 3
+                },
+                {
+                    "name": "courtesy",
+                    "type": "text",
+                    "default": "''::text",
+                    "notNull": true,
+                    "position": 4
+                },
+                {
+                    "name": "first_name",
+                    "type": "text",
+                    "default": "<redacted>",
+                    "notNull": true,
+                    "position": 5
+                },
+                {
+                    "name": "last_name",
+                    "type": "text",
+                    "default": "<redacted>",
+                    "notNull": true,
+                    "position": 6
+                },
+                {
+                    "name": "company",
+                    "type": "text",
+                    "default": "''::text",
+                    "notNull": true,
+                    "position": 7
+                },
+                {
+                    "name": "street",
+                    "type": "text",
+                    "default": "''::text",
+                    "notNull": true,
+                    "position": 8
+                },
+                {
+                    "name": "postal_code",
+                    "type": "text",
+                    "default": "''::text",
+                    "notNull": true,
+                    "position": 9
+                },
+                {
+                    "name": "city",
+                    "type": "text",
+                    "default": "''::text",
+                    "notNull": true,
+                    "position": 10
+                },
+                {
+                    "name": "subdivision",
+                    "type": "text",
+                    "default": "''::text",
+                    "notNull": true,
+                    "position": 11
+                },
+                {
+                    "name": "country_code",
+                    "type": "text",
+                    "default": "''::text",
+                    "notNull": true,
+                    "position": 12
+                },
+                {
+                    "name": "vat_id",
+                    "type": "text",
+                    "default": "''::text",
+                    "notNull": true,
+                    "position": 13
+                },
+                {
+                    "name": "legal_id",
+                    "type": "text",
+                    "default": "''::text",
+                    "notNull": true,
+                    "position": 14
+                },
+                {
+                    "name": "email",
+                    "type": "text",
+                    "default": "<redacted>",
+                    "notNull": true,
+                    "position": 15
+                },
+                {
+                    "name": "phone",
+                    "type": "text",
+                    "default": "<redacted>",
+                    "notNull": true,
+                    "position": 16
+                },
+                {
+                    "name": "provenance",
+                    "type": "text",
+                    "default": "'seller_entered'::text",
+                    "notNull": true,
+                    "position": 17
+                },
+                {
+                    "name": "created_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 18
+                },
+                {
+                    "name": "modified_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 19
+                },
+                {
+                    "name": "company_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 20
+                },
+                {
+                    "name": "site_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 21
+                },
+                {
+                    "name": "created_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 22
+                },
+                {
+                    "name": "modified_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 23
+                }
+            ],
+            "indexes": [
+                {
+                    "name": "billing_parties_pkey",
+                    "valid": true,
+                    "unique": true,
+                    "primary": true,
+                    "definition": "CREATE UNIQUE INDEX billing_parties_pkey ON public.billing_parties USING btree (member_id)"
+                },
+                {
+                    "name": "billing_parties_workspace_idx",
+                    "valid": true,
+                    "unique": false,
+                    "primary": false,
+                    "definition": "CREATE INDEX billing_parties_workspace_idx ON public.billing_parties USING btree (workspace_id)"
+                }
+            ],
+            "constraints": [
+                {
+                    "name": "billing_parties_check",
+                    "type": "check",
+                    "columns": [
+                        "company",
+                        "first_name",
+                        "last_name"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK (((company <> ''::text) OR (first_name <> ''::text) OR (last_name <> ''::text)))"
+                },
+                {
+                    "name": "billing_parties_city_check",
+                    "type": "check",
+                    "columns": [
+                        "city"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((char_length(city) <= 120))"
+                },
+                {
+                    "name": "billing_parties_company_check",
+                    "type": "check",
+                    "columns": [
+                        "company"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((char_length(company) <= 200))"
+                },
+                {
+                    "name": "billing_parties_country_code_check",
+                    "type": "check",
+                    "columns": [
+                        "country_code"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK (((country_code = ''::text) OR (country_code ~ '^[A-Za-z]{2}$'::text)))"
+                },
+                {
+                    "name": "billing_parties_courtesy_check",
+                    "type": "check",
+                    "columns": [
+                        "courtesy"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((char_length(courtesy) <= 40))"
+                },
+                {
+                    "name": "billing_parties_email_check",
+                    "type": "check",
+                    "columns": [
+                        "email"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((char_length(email) <= 254))"
+                },
+                {
+                    "name": "billing_parties_first_name_check",
+                    "type": "check",
+                    "columns": [
+                        "first_name"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((char_length(first_name) <= 120))"
+                },
+                {
+                    "name": "billing_parties_last_name_check",
+                    "type": "check",
+                    "columns": [
+                        "last_name"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((char_length(last_name) <= 120))"
+                },
+                {
+                    "name": "billing_parties_legal_id_check",
+                    "type": "check",
+                    "columns": [
+                        "legal_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((char_length(legal_id) <= 60))"
+                },
+                {
+                    "name": "billing_parties_member_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "member_id"
+                    ],
+                    "onDelete": "CASCADE",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (member_id) REFERENCES members(id) ON DELETE CASCADE",
+                    "references": {
+                        "table": "members",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "billing_parties_phone_check",
+                    "type": "check",
+                    "columns": [
+                        "phone"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((char_length(phone) <= 60))"
+                },
+                {
+                    "name": "billing_parties_pkey",
+                    "type": "primary key",
+                    "columns": [
+                        "member_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "PRIMARY KEY (member_id)"
+                },
+                {
+                    "name": "billing_parties_postal_code_check",
+                    "type": "check",
+                    "columns": [
+                        "postal_code"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((char_length(postal_code) <= 40))"
+                },
+                {
+                    "name": "billing_parties_provenance_check",
+                    "type": "check",
+                    "columns": [
+                        "provenance"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((provenance = 'seller_entered'::text))"
+                },
+                {
+                    "name": "billing_parties_revision_check",
+                    "type": "check",
+                    "columns": [
+                        "revision"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((revision >= 1))"
+                },
+                {
+                    "name": "billing_parties_street_check",
+                    "type": "check",
+                    "columns": [
+                        "street"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((char_length(street) <= 200))"
+                },
+                {
+                    "name": "billing_parties_subdivision_check",
+                    "type": "check",
+                    "columns": [
+                        "subdivision"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((char_length(subdivision) <= 120))"
+                },
+                {
+                    "name": "billing_parties_vat_id_check",
+                    "type": "check",
+                    "columns": [
+                        "vat_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((char_length(vat_id) <= 40))"
+                },
+                {
+                    "name": "billing_parties_workspace_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "workspace_id"
+                    ],
+                    "onDelete": "CASCADE",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE",
+                    "references": {
+                        "table": "workspaces",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "system_columns_order",
+                    "type": "check",
+                    "columns": [
+                        "modified_datetime",
+                        "created_datetime"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((modified_datetime >= created_datetime))"
+                },
+                {
+                    "name": "system_company_present",
+                    "type": "check",
+                    "columns": [
+                        "company_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((company_id IS NOT NULL))"
+                }
+            ]
+        },
+        {
+            "kind": "table",
             "name": "book_accounts",
             "schema": "public",
             "columns": [
@@ -8714,6 +9152,20 @@
                     "type": "uuid",
                     "notNull": false,
                     "position": 10
+                },
+                {
+                    "name": "profile_version",
+                    "type": "integer",
+                    "default": "1",
+                    "notNull": true,
+                    "position": 11
+                },
+                {
+                    "name": "profile_digest",
+                    "type": "text",
+                    "default": "''::text",
+                    "notNull": true,
+                    "position": 12
                 }
             ],
             "indexes": [
@@ -8758,6 +9210,17 @@
                     "validated": true,
                     "deferrable": false,
                     "definition": "PRIMARY KEY (code)"
+                },
+                {
+                    "name": "business_kinds_profile_version_check",
+                    "type": "check",
+                    "columns": [
+                        "profile_version"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((profile_version >= 1))"
                 },
                 {
                     "name": "system_columns_order",
@@ -9397,6 +9860,258 @@
                     },
                     "onDeleteColumns": [
                     ]
+                },
+                {
+                    "name": "system_columns_order",
+                    "type": "check",
+                    "columns": [
+                        "modified_datetime",
+                        "created_datetime"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((modified_datetime >= created_datetime))"
+                },
+                {
+                    "name": "system_company_present",
+                    "type": "check",
+                    "columns": [
+                        "company_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((company_id IS NOT NULL))"
+                }
+            ]
+        },
+        {
+            "kind": "table",
+            "name": "configuration_choice_events",
+            "schema": "public",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "uuid",
+                    "default": "gen_random_uuid()",
+                    "notNull": true,
+                    "position": 1
+                },
+                {
+                    "name": "workspace_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 2
+                },
+                {
+                    "name": "request_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 3
+                },
+                {
+                    "name": "stage",
+                    "type": "text",
+                    "notNull": true,
+                    "position": 4
+                },
+                {
+                    "name": "outcome",
+                    "type": "text",
+                    "notNull": true,
+                    "position": 5
+                },
+                {
+                    "name": "actor_user_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 6
+                },
+                {
+                    "name": "source",
+                    "type": "jsonb",
+                    "notNull": true,
+                    "position": 7
+                },
+                {
+                    "name": "changed",
+                    "type": "jsonb",
+                    "default": "'{}'::jsonb",
+                    "notNull": true,
+                    "position": 8
+                },
+                {
+                    "name": "target_fingerprint",
+                    "type": "text",
+                    "default": "''::text",
+                    "notNull": true,
+                    "position": 9
+                },
+                {
+                    "name": "refusal",
+                    "type": "text",
+                    "default": "''::text",
+                    "notNull": true,
+                    "position": 10
+                },
+                {
+                    "name": "created_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 11
+                },
+                {
+                    "name": "modified_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 12
+                },
+                {
+                    "name": "company_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 13
+                },
+                {
+                    "name": "site_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 14
+                },
+                {
+                    "name": "created_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 15
+                },
+                {
+                    "name": "modified_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 16
+                }
+            ],
+            "indexes": [
+                {
+                    "name": "configuration_choice_events_pkey",
+                    "valid": true,
+                    "unique": true,
+                    "primary": true,
+                    "definition": "CREATE UNIQUE INDEX configuration_choice_events_pkey ON public.configuration_choice_events USING btree (id)"
+                },
+                {
+                    "name": "configuration_choice_events_workspace_id_request_id_stage_key",
+                    "valid": true,
+                    "unique": true,
+                    "primary": false,
+                    "definition": "CREATE UNIQUE INDEX configuration_choice_events_workspace_id_request_id_stage_key ON public.configuration_choice_events USING btree (workspace_id, request_id, stage)"
+                }
+            ],
+            "constraints": [
+                {
+                    "name": "configuration_choice_events_changed_check",
+                    "type": "check",
+                    "columns": [
+                        "changed"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((jsonb_typeof(changed) = 'object'::text))"
+                },
+                {
+                    "name": "configuration_choice_events_outcome_check",
+                    "type": "check",
+                    "columns": [
+                        "outcome"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((outcome = ANY (ARRAY['applied'::text, 'no_change'::text, 'refused'::text])))"
+                },
+                {
+                    "name": "configuration_choice_events_pkey",
+                    "type": "primary key",
+                    "columns": [
+                        "id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "PRIMARY KEY (id)"
+                },
+                {
+                    "name": "configuration_choice_events_refusal_check",
+                    "type": "check",
+                    "columns": [
+                        "refusal"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((char_length(refusal) <= 120))"
+                },
+                {
+                    "name": "configuration_choice_events_source_check",
+                    "type": "check",
+                    "columns": [
+                        "source"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((jsonb_typeof(source) = 'object'::text))"
+                },
+                {
+                    "name": "configuration_choice_events_stage_check",
+                    "type": "check",
+                    "columns": [
+                        "stage"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((stage = ANY (ARRAY['kind'::text, 'flags'::text])))"
+                },
+                {
+                    "name": "configuration_choice_events_workspace_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "workspace_id"
+                    ],
+                    "onDelete": "CASCADE",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE",
+                    "references": {
+                        "table": "workspaces",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "configuration_choice_events_workspace_id_request_id_stage_key",
+                    "type": "unique",
+                    "columns": [
+                        "workspace_id",
+                        "request_id",
+                        "stage"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "UNIQUE (workspace_id, request_id, stage)"
                 },
                 {
                     "name": "system_columns_order",
@@ -10132,6 +10847,1120 @@
                     "validated": true,
                     "deferrable": false,
                     "definition": "UNIQUE (workspace_id, id)"
+                },
+                {
+                    "name": "system_columns_order",
+                    "type": "check",
+                    "columns": [
+                        "modified_datetime",
+                        "created_datetime"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((modified_datetime >= created_datetime))"
+                },
+                {
+                    "name": "system_company_present",
+                    "type": "check",
+                    "columns": [
+                        "company_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((company_id IS NOT NULL))"
+                }
+            ]
+        },
+        {
+            "kind": "table",
+            "name": "customer_quote_conversions",
+            "schema": "public",
+            "columns": [
+                {
+                    "name": "quote_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 1
+                },
+                {
+                    "name": "workspace_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 2
+                },
+                {
+                    "name": "revision_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 3
+                },
+                {
+                    "name": "draft_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 4
+                },
+                {
+                    "name": "invoice_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 5
+                },
+                {
+                    "name": "line_map",
+                    "type": "jsonb",
+                    "default": "'[]'::jsonb",
+                    "notNull": true,
+                    "position": 6
+                },
+                {
+                    "name": "converted_by_member_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 7
+                },
+                {
+                    "name": "converted_at",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 8
+                },
+                {
+                    "name": "created_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 9
+                },
+                {
+                    "name": "modified_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 10
+                },
+                {
+                    "name": "company_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 11
+                },
+                {
+                    "name": "site_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 12
+                },
+                {
+                    "name": "created_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 13
+                },
+                {
+                    "name": "modified_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 14
+                }
+            ],
+            "indexes": [
+                {
+                    "name": "customer_quote_conversions_draft_id_key",
+                    "valid": true,
+                    "unique": true,
+                    "primary": false,
+                    "definition": "CREATE UNIQUE INDEX customer_quote_conversions_draft_id_key ON public.customer_quote_conversions USING btree (draft_id)"
+                },
+                {
+                    "name": "customer_quote_conversions_invoice_id_key",
+                    "valid": true,
+                    "unique": true,
+                    "primary": false,
+                    "definition": "CREATE UNIQUE INDEX customer_quote_conversions_invoice_id_key ON public.customer_quote_conversions USING btree (invoice_id)"
+                },
+                {
+                    "name": "customer_quote_conversions_pkey",
+                    "valid": true,
+                    "unique": true,
+                    "primary": true,
+                    "definition": "CREATE UNIQUE INDEX customer_quote_conversions_pkey ON public.customer_quote_conversions USING btree (quote_id)"
+                }
+            ],
+            "constraints": [
+                {
+                    "name": "customer_quote_conversions_draft_id_key",
+                    "type": "unique",
+                    "columns": [
+                        "draft_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "UNIQUE (draft_id)"
+                },
+                {
+                    "name": "customer_quote_conversions_invoice_id_key",
+                    "type": "unique",
+                    "columns": [
+                        "invoice_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "UNIQUE (invoice_id)"
+                },
+                {
+                    "name": "customer_quote_conversions_pkey",
+                    "type": "primary key",
+                    "columns": [
+                        "quote_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "PRIMARY KEY (quote_id)"
+                },
+                {
+                    "name": "customer_quote_conversions_workspace_id_invoice_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "workspace_id",
+                        "invoice_id"
+                    ],
+                    "onDelete": "RESTRICT",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (workspace_id, invoice_id) REFERENCES invoices(workspace_id, id) ON DELETE RESTRICT",
+                    "references": {
+                        "table": "invoices",
+                        "schema": "public",
+                        "columns": [
+                            "workspace_id",
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "customer_quote_conversions_workspace_id_quote_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "workspace_id",
+                        "quote_id"
+                    ],
+                    "onDelete": "RESTRICT",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (workspace_id, quote_id) REFERENCES customer_quotes(workspace_id, id) ON DELETE RESTRICT",
+                    "references": {
+                        "table": "customer_quotes",
+                        "schema": "public",
+                        "columns": [
+                            "workspace_id",
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "customer_quote_conversions_workspace_id_revision_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "workspace_id",
+                        "revision_id"
+                    ],
+                    "onDelete": "RESTRICT",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (workspace_id, revision_id) REFERENCES customer_quote_revisions(workspace_id, id) ON DELETE RESTRICT",
+                    "references": {
+                        "table": "customer_quote_revisions",
+                        "schema": "public",
+                        "columns": [
+                            "workspace_id",
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "system_columns_order",
+                    "type": "check",
+                    "columns": [
+                        "modified_datetime",
+                        "created_datetime"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((modified_datetime >= created_datetime))"
+                },
+                {
+                    "name": "system_company_present",
+                    "type": "check",
+                    "columns": [
+                        "company_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((company_id IS NOT NULL))"
+                }
+            ]
+        },
+        {
+            "kind": "table",
+            "name": "customer_quote_decisions",
+            "schema": "public",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "uuid",
+                    "default": "gen_random_uuid()",
+                    "notNull": true,
+                    "position": 1
+                },
+                {
+                    "name": "quote_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 2
+                },
+                {
+                    "name": "workspace_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 3
+                },
+                {
+                    "name": "revision_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 4
+                },
+                {
+                    "name": "decision",
+                    "type": "text",
+                    "notNull": true,
+                    "position": 5
+                },
+                {
+                    "name": "decided_on",
+                    "type": "date",
+                    "notNull": true,
+                    "position": 6
+                },
+                {
+                    "name": "source",
+                    "type": "text",
+                    "notNull": true,
+                    "position": 7
+                },
+                {
+                    "name": "evidence",
+                    "type": "text",
+                    "default": "''::text",
+                    "notNull": true,
+                    "position": 8
+                },
+                {
+                    "name": "recorded_by_member_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 9
+                },
+                {
+                    "name": "recorded_at",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 10
+                },
+                {
+                    "name": "recorded_by_issuer",
+                    "type": "boolean",
+                    "default": "true",
+                    "notNull": true,
+                    "position": 11
+                },
+                {
+                    "name": "created_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 12
+                },
+                {
+                    "name": "modified_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 13
+                },
+                {
+                    "name": "company_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 14
+                },
+                {
+                    "name": "site_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 15
+                },
+                {
+                    "name": "created_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 16
+                },
+                {
+                    "name": "modified_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 17
+                }
+            ],
+            "indexes": [
+                {
+                    "name": "customer_quote_decisions_pkey",
+                    "valid": true,
+                    "unique": true,
+                    "primary": true,
+                    "definition": "CREATE UNIQUE INDEX customer_quote_decisions_pkey ON public.customer_quote_decisions USING btree (id)"
+                },
+                {
+                    "name": "customer_quote_decisions_quote_id_key",
+                    "valid": true,
+                    "unique": true,
+                    "primary": false,
+                    "definition": "CREATE UNIQUE INDEX customer_quote_decisions_quote_id_key ON public.customer_quote_decisions USING btree (quote_id)"
+                }
+            ],
+            "constraints": [
+                {
+                    "name": "customer_quote_decisions_decision_check",
+                    "type": "check",
+                    "columns": [
+                        "decision"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((decision = ANY (ARRAY['accepted'::text, 'declined'::text])))"
+                },
+                {
+                    "name": "customer_quote_decisions_evidence_check",
+                    "type": "check",
+                    "columns": [
+                        "evidence"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((char_length(evidence) <= 1000))"
+                },
+                {
+                    "name": "customer_quote_decisions_pkey",
+                    "type": "primary key",
+                    "columns": [
+                        "id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "PRIMARY KEY (id)"
+                },
+                {
+                    "name": "customer_quote_decisions_quote_id_key",
+                    "type": "unique",
+                    "columns": [
+                        "quote_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "UNIQUE (quote_id)"
+                },
+                {
+                    "name": "customer_quote_decisions_recorded_by_issuer_check",
+                    "type": "check",
+                    "columns": [
+                        "recorded_by_issuer"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK (recorded_by_issuer)"
+                },
+                {
+                    "name": "customer_quote_decisions_source_check",
+                    "type": "check",
+                    "columns": [
+                        "source"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((source = ANY (ARRAY['received_outside_app'::text, 'verbal'::text, 'email'::text, 'other'::text])))"
+                },
+                {
+                    "name": "customer_quote_decisions_workspace_id_quote_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "workspace_id",
+                        "quote_id"
+                    ],
+                    "onDelete": "RESTRICT",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (workspace_id, quote_id) REFERENCES customer_quotes(workspace_id, id) ON DELETE RESTRICT",
+                    "references": {
+                        "table": "customer_quotes",
+                        "schema": "public",
+                        "columns": [
+                            "workspace_id",
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "customer_quote_decisions_workspace_id_revision_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "workspace_id",
+                        "revision_id"
+                    ],
+                    "onDelete": "RESTRICT",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (workspace_id, revision_id) REFERENCES customer_quote_revisions(workspace_id, id) ON DELETE RESTRICT",
+                    "references": {
+                        "table": "customer_quote_revisions",
+                        "schema": "public",
+                        "columns": [
+                            "workspace_id",
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "system_columns_order",
+                    "type": "check",
+                    "columns": [
+                        "modified_datetime",
+                        "created_datetime"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((modified_datetime >= created_datetime))"
+                },
+                {
+                    "name": "system_company_present",
+                    "type": "check",
+                    "columns": [
+                        "company_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((company_id IS NOT NULL))"
+                }
+            ]
+        },
+        {
+            "kind": "table",
+            "name": "customer_quote_revisions",
+            "schema": "public",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "uuid",
+                    "default": "gen_random_uuid()",
+                    "notNull": true,
+                    "position": 1
+                },
+                {
+                    "name": "quote_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 2
+                },
+                {
+                    "name": "workspace_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 3
+                },
+                {
+                    "name": "revision",
+                    "type": "integer",
+                    "notNull": true,
+                    "position": 4
+                },
+                {
+                    "name": "status",
+                    "type": "text",
+                    "default": "'draft'::text",
+                    "notNull": true,
+                    "position": 5
+                },
+                {
+                    "name": "draft_version",
+                    "type": "integer",
+                    "default": "1",
+                    "notNull": true,
+                    "position": 6
+                },
+                {
+                    "name": "issued_on",
+                    "type": "date",
+                    "notNull": true,
+                    "position": 7
+                },
+                {
+                    "name": "valid_until",
+                    "type": "date",
+                    "notNull": true,
+                    "position": 8
+                },
+                {
+                    "name": "buyer_reference",
+                    "type": "text",
+                    "default": "''::text",
+                    "notNull": true,
+                    "position": 9
+                },
+                {
+                    "name": "purchase_order",
+                    "type": "text",
+                    "default": "''::text",
+                    "notNull": true,
+                    "position": 10
+                },
+                {
+                    "name": "notes",
+                    "type": "text",
+                    "default": "''::text",
+                    "notNull": true,
+                    "position": 11
+                },
+                {
+                    "name": "lines",
+                    "type": "jsonb",
+                    "default": "'[]'::jsonb",
+                    "notNull": true,
+                    "position": 12
+                },
+                {
+                    "name": "frozen",
+                    "type": "jsonb",
+                    "notNull": false,
+                    "position": 13
+                },
+                {
+                    "name": "content_digest",
+                    "type": "text",
+                    "notNull": false,
+                    "position": 14
+                },
+                {
+                    "name": "sent_at",
+                    "type": "timestamp with time zone",
+                    "notNull": false,
+                    "position": 15
+                },
+                {
+                    "name": "sent_by_member_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 16
+                },
+                {
+                    "name": "superseded_at",
+                    "type": "timestamp with time zone",
+                    "notNull": false,
+                    "position": 17
+                },
+                {
+                    "name": "created_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 18
+                },
+                {
+                    "name": "modified_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 19
+                },
+                {
+                    "name": "company_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 20
+                },
+                {
+                    "name": "site_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 21
+                },
+                {
+                    "name": "created_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 22
+                },
+                {
+                    "name": "modified_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 23
+                }
+            ],
+            "indexes": [
+                {
+                    "name": "customer_quote_revisions_pkey",
+                    "valid": true,
+                    "unique": true,
+                    "primary": true,
+                    "definition": "CREATE UNIQUE INDEX customer_quote_revisions_pkey ON public.customer_quote_revisions USING btree (id)"
+                },
+                {
+                    "name": "customer_quote_revisions_quote_id_revision_key",
+                    "valid": true,
+                    "unique": true,
+                    "primary": false,
+                    "definition": "CREATE UNIQUE INDEX customer_quote_revisions_quote_id_revision_key ON public.customer_quote_revisions USING btree (quote_id, revision)"
+                },
+                {
+                    "name": "customer_quote_revisions_workspace_id_id_key",
+                    "valid": true,
+                    "unique": true,
+                    "primary": false,
+                    "definition": "CREATE UNIQUE INDEX customer_quote_revisions_workspace_id_id_key ON public.customer_quote_revisions USING btree (workspace_id, id)"
+                }
+            ],
+            "constraints": [
+                {
+                    "name": "customer_quote_revisions_buyer_reference_check",
+                    "type": "check",
+                    "columns": [
+                        "buyer_reference"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((char_length(buyer_reference) <= 120))"
+                },
+                {
+                    "name": "customer_quote_revisions_check",
+                    "type": "check",
+                    "columns": [
+                        "valid_until",
+                        "issued_on"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((valid_until >= issued_on))"
+                },
+                {
+                    "name": "customer_quote_revisions_check1",
+                    "type": "check",
+                    "columns": [
+                        "status",
+                        "sent_at",
+                        "frozen",
+                        "content_digest"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK (((status = 'sent'::text) = ((sent_at IS NOT NULL) AND (frozen IS NOT NULL) AND (content_digest IS NOT NULL))))"
+                },
+                {
+                    "name": "customer_quote_revisions_draft_version_check",
+                    "type": "check",
+                    "columns": [
+                        "draft_version"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((draft_version >= 1))"
+                },
+                {
+                    "name": "customer_quote_revisions_lines_check",
+                    "type": "check",
+                    "columns": [
+                        "lines"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((jsonb_typeof(lines) = 'array'::text))"
+                },
+                {
+                    "name": "customer_quote_revisions_notes_check",
+                    "type": "check",
+                    "columns": [
+                        "notes"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((char_length(notes) <= 2000))"
+                },
+                {
+                    "name": "customer_quote_revisions_pkey",
+                    "type": "primary key",
+                    "columns": [
+                        "id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "PRIMARY KEY (id)"
+                },
+                {
+                    "name": "customer_quote_revisions_purchase_order_check",
+                    "type": "check",
+                    "columns": [
+                        "purchase_order"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((char_length(purchase_order) <= 120))"
+                },
+                {
+                    "name": "customer_quote_revisions_quote_id_revision_key",
+                    "type": "unique",
+                    "columns": [
+                        "quote_id",
+                        "revision"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "UNIQUE (quote_id, revision)"
+                },
+                {
+                    "name": "customer_quote_revisions_revision_check",
+                    "type": "check",
+                    "columns": [
+                        "revision"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((revision >= 1))"
+                },
+                {
+                    "name": "customer_quote_revisions_status_check",
+                    "type": "check",
+                    "columns": [
+                        "status"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((status = ANY (ARRAY['draft'::text, 'sent'::text])))"
+                },
+                {
+                    "name": "customer_quote_revisions_workspace_id_id_key",
+                    "type": "unique",
+                    "columns": [
+                        "workspace_id",
+                        "id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "UNIQUE (workspace_id, id)"
+                },
+                {
+                    "name": "customer_quote_revisions_workspace_id_quote_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "workspace_id",
+                        "quote_id"
+                    ],
+                    "onDelete": "RESTRICT",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (workspace_id, quote_id) REFERENCES customer_quotes(workspace_id, id) ON DELETE RESTRICT",
+                    "references": {
+                        "table": "customer_quotes",
+                        "schema": "public",
+                        "columns": [
+                            "workspace_id",
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "system_columns_order",
+                    "type": "check",
+                    "columns": [
+                        "modified_datetime",
+                        "created_datetime"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((modified_datetime >= created_datetime))"
+                },
+                {
+                    "name": "system_company_present",
+                    "type": "check",
+                    "columns": [
+                        "company_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((company_id IS NOT NULL))"
+                }
+            ]
+        },
+        {
+            "kind": "table",
+            "name": "customer_quotes",
+            "schema": "public",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "uuid",
+                    "default": "gen_random_uuid()",
+                    "notNull": true,
+                    "position": 1
+                },
+                {
+                    "name": "workspace_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 2
+                },
+                {
+                    "name": "subject_member_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 3
+                },
+                {
+                    "name": "reference",
+                    "type": "text",
+                    "notNull": false,
+                    "position": 4
+                },
+                {
+                    "name": "status",
+                    "type": "text",
+                    "default": "'draft'::text",
+                    "notNull": true,
+                    "position": 5
+                },
+                {
+                    "name": "created_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 6
+                },
+                {
+                    "name": "modified_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 7
+                },
+                {
+                    "name": "company_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 8
+                },
+                {
+                    "name": "site_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 9
+                },
+                {
+                    "name": "created_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 10
+                },
+                {
+                    "name": "modified_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 11
+                }
+            ],
+            "indexes": [
+                {
+                    "name": "customer_quotes_pkey",
+                    "valid": true,
+                    "unique": true,
+                    "primary": true,
+                    "definition": "CREATE UNIQUE INDEX customer_quotes_pkey ON public.customer_quotes USING btree (id)"
+                },
+                {
+                    "name": "customer_quotes_reference_key",
+                    "valid": true,
+                    "unique": true,
+                    "primary": false,
+                    "definition": "CREATE UNIQUE INDEX customer_quotes_reference_key ON public.customer_quotes USING btree (workspace_id, reference) WHERE (reference IS NOT NULL)"
+                },
+                {
+                    "name": "customer_quotes_workspace_id_id_key",
+                    "valid": true,
+                    "unique": true,
+                    "primary": false,
+                    "definition": "CREATE UNIQUE INDEX customer_quotes_workspace_id_id_key ON public.customer_quotes USING btree (workspace_id, id)"
+                },
+                {
+                    "name": "customer_quotes_workspace_idx",
+                    "valid": true,
+                    "unique": false,
+                    "primary": false,
+                    "definition": "CREATE INDEX customer_quotes_workspace_idx ON public.customer_quotes USING btree (workspace_id, status)"
+                }
+            ],
+            "constraints": [
+                {
+                    "name": "customer_quotes_check",
+                    "type": "check",
+                    "columns": [
+                        "status",
+                        "reference"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK (((status = 'draft'::text) OR (reference IS NOT NULL)))"
+                },
+                {
+                    "name": "customer_quotes_pkey",
+                    "type": "primary key",
+                    "columns": [
+                        "id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "PRIMARY KEY (id)"
+                },
+                {
+                    "name": "customer_quotes_status_check",
+                    "type": "check",
+                    "columns": [
+                        "status"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((status = ANY (ARRAY['draft'::text, 'sent'::text, 'accepted'::text, 'declined'::text, 'cancelled'::text, 'converted'::text])))"
+                },
+                {
+                    "name": "customer_quotes_workspace_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "workspace_id"
+                    ],
+                    "onDelete": "CASCADE",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE",
+                    "references": {
+                        "table": "workspaces",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "customer_quotes_workspace_id_id_key",
+                    "type": "unique",
+                    "columns": [
+                        "workspace_id",
+                        "id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "UNIQUE (workspace_id, id)"
+                },
+                {
+                    "name": "customer_quotes_workspace_id_subject_member_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "workspace_id",
+                        "subject_member_id"
+                    ],
+                    "onDelete": "RESTRICT",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (workspace_id, subject_member_id) REFERENCES members(workspace_id, id) ON DELETE RESTRICT",
+                    "references": {
+                        "table": "members",
+                        "schema": "public",
+                        "columns": [
+                            "workspace_id",
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
                 },
                 {
                     "name": "system_columns_order",
@@ -12060,7 +13889,7 @@
                     "inherited": false,
                     "validated": true,
                     "deferrable": false,
-                    "definition": "CHECK ((provider = ANY (ARRAY['generic'::text, 'peppol'::text, 'fr_pa'::text, 'it_sdi'::text, 'pl_ksef'::text, 'ro_efactura'::text])))"
+                    "definition": "CHECK ((provider = ANY (ARRAY['generic'::text, 'peppol'::text, 'fr_pa'::text, 'it_sdi'::text, 'pl_ksef'::text, 'ro_efactura'::text, 'es_verifactu'::text])))"
                 },
                 {
                     "name": "einvoice_credentials_workspace_id_fkey",
@@ -15397,7 +17226,7 @@
                     "inherited": false,
                     "validated": true,
                     "deferrable": false,
-                    "definition": "CHECK (((state <> 'applied'::text) OR ((command_kind = ANY (ARRAY['invoice_issue'::text, 'invoice_create'::text, 'invoice_replace'::text, 'settle_invoices'::text])) = (invoice_id IS NOT NULL))))"
+                    "definition": "CHECK (((state <> 'applied'::text) OR ((command_kind = ANY (ARRAY['invoice_issue'::text, 'invoice_create'::text, 'invoice_replace'::text, 'settle_invoices'::text, 'standalone_invoice_issue'::text])) = (invoice_id IS NOT NULL))))"
                 },
                 {
                     "name": "financial_command_receipts_check1",
@@ -15420,7 +17249,7 @@
                     "inherited": false,
                     "validated": true,
                     "deferrable": false,
-                    "definition": "CHECK ((command_kind = ANY (ARRAY['invoice_issue'::text, 'invoice_create'::text, 'invoice_replace'::text, 'settle_invoices'::text, 'invoice_void'::text, 'refund'::text])))"
+                    "definition": "CHECK ((command_kind = ANY (ARRAY['invoice_issue'::text, 'invoice_create'::text, 'invoice_replace'::text, 'settle_invoices'::text, 'invoice_void'::text, 'refund'::text, 'standalone_invoice_issue'::text])))"
                 },
                 {
                     "name": "financial_command_receipts_payload_digest_check",
@@ -15465,7 +17294,7 @@
                     "inherited": false,
                     "validated": true,
                     "deferrable": false,
-                    "definition": "CHECK (((command_kind = ANY (ARRAY['invoice_issue'::text, 'invoice_create'::text, 'invoice_replace'::text, 'settle_invoices'::text])) = (subject_invoice_id IS NULL)))"
+                    "definition": "CHECK (((command_kind = ANY (ARRAY['invoice_issue'::text, 'invoice_create'::text, 'invoice_replace'::text, 'settle_invoices'::text, 'standalone_invoice_issue'::text])) = (subject_invoice_id IS NULL)))"
                 },
                 {
                     "name": "financial_command_receipts_workspace_id_actor_member_id_req_key",
@@ -22450,6 +24279,26 @@
                     "default": "false",
                     "notNull": true,
                     "position": 39
+                },
+                {
+                    "name": "source",
+                    "type": "text",
+                    "comment": "#4165 -- monthly: derived from a member-month (every invoice before this); standalone: itemised ad hoc lines under a draft",
+                    "default": "'monthly'::text",
+                    "notNull": true,
+                    "position": 40
+                },
+                {
+                    "name": "service_date",
+                    "type": "date",
+                    "notNull": false,
+                    "position": 41
+                },
+                {
+                    "name": "due_on",
+                    "type": "date",
+                    "notNull": false,
+                    "position": 42
                 }
             ],
             "indexes": [
@@ -22759,6 +24608,33 @@
                     ]
                 },
                 {
+                    "name": "invoices_source_check",
+                    "type": "check",
+                    "columns": [
+                        "source"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((source = ANY (ARRAY['monthly'::text, 'standalone'::text])))"
+                },
+                {
+                    "name": "invoices_standalone_shape",
+                    "type": "check",
+                    "columns": [
+                        "source",
+                        "period",
+                        "service_date",
+                        "due_on",
+                        "kind",
+                        "replaces_invoice_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK (((source = 'monthly'::text) OR ((period IS NULL) AND (service_date IS NOT NULL) AND (due_on IS NOT NULL) AND (kind = 'full'::text) AND (replaces_invoice_id IS NULL))))"
+                },
+                {
                     "name": "invoices_title_check",
                     "type": "check",
                     "columns": [
@@ -22920,6 +24796,12 @@
                     "type": "uuid",
                     "notNull": false,
                     "position": 12
+                },
+                {
+                    "name": "variant_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 13
                 }
             ],
             "indexes": [
@@ -23010,6 +24892,31 @@
                     "definition": "PRIMARY KEY (id)"
                 },
                 {
+                    "name": "item_codes_variant_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "item_id",
+                        "variant_id"
+                    ],
+                    "onDelete": "NO ACTION",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (item_id, variant_id) REFERENCES item_variants(item_id, id)",
+                    "references": {
+                        "table": "item_variants",
+                        "schema": "public",
+                        "columns": [
+                            "item_id",
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
                     "name": "item_codes_workspace_id_code_key",
                     "type": "unique",
                     "columns": [
@@ -23068,6 +24975,439 @@
                     },
                     "onDeleteColumns": [
                     ]
+                },
+                {
+                    "name": "system_columns_order",
+                    "type": "check",
+                    "columns": [
+                        "modified_datetime",
+                        "created_datetime"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((modified_datetime >= created_datetime))"
+                },
+                {
+                    "name": "system_company_present",
+                    "type": "check",
+                    "columns": [
+                        "company_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((company_id IS NOT NULL))"
+                }
+            ]
+        },
+        {
+            "kind": "table",
+            "name": "item_dimension_values",
+            "schema": "public",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "uuid",
+                    "default": "gen_random_uuid()",
+                    "notNull": true,
+                    "position": 1
+                },
+                {
+                    "name": "workspace_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 2
+                },
+                {
+                    "name": "dimension_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 3
+                },
+                {
+                    "name": "label",
+                    "type": "text",
+                    "notNull": true,
+                    "position": 4
+                },
+                {
+                    "name": "active",
+                    "type": "boolean",
+                    "default": "true",
+                    "notNull": true,
+                    "position": 5
+                },
+                {
+                    "name": "created_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 6
+                },
+                {
+                    "name": "modified_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 7
+                },
+                {
+                    "name": "company_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 8
+                },
+                {
+                    "name": "site_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 9
+                },
+                {
+                    "name": "created_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 10
+                },
+                {
+                    "name": "modified_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 11
+                }
+            ],
+            "indexes": [
+                {
+                    "name": "item_dimension_values_dimension_id_label_key",
+                    "valid": true,
+                    "unique": true,
+                    "primary": false,
+                    "definition": "CREATE UNIQUE INDEX item_dimension_values_dimension_id_label_key ON public.item_dimension_values USING btree (dimension_id, label)"
+                },
+                {
+                    "name": "item_dimension_values_id_dimension_id_key",
+                    "valid": true,
+                    "unique": true,
+                    "primary": false,
+                    "definition": "CREATE UNIQUE INDEX item_dimension_values_id_dimension_id_key ON public.item_dimension_values USING btree (id, dimension_id)"
+                },
+                {
+                    "name": "item_dimension_values_pkey",
+                    "valid": true,
+                    "unique": true,
+                    "primary": true,
+                    "definition": "CREATE UNIQUE INDEX item_dimension_values_pkey ON public.item_dimension_values USING btree (id)"
+                },
+                {
+                    "name": "item_dimension_values_workspace_id_id_key",
+                    "valid": true,
+                    "unique": true,
+                    "primary": false,
+                    "definition": "CREATE UNIQUE INDEX item_dimension_values_workspace_id_id_key ON public.item_dimension_values USING btree (workspace_id, id)"
+                }
+            ],
+            "constraints": [
+                {
+                    "name": "item_dimension_values_dimension_id_label_key",
+                    "type": "unique",
+                    "columns": [
+                        "dimension_id",
+                        "label"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "UNIQUE (dimension_id, label)"
+                },
+                {
+                    "name": "item_dimension_values_id_dimension_id_key",
+                    "type": "unique",
+                    "columns": [
+                        "id",
+                        "dimension_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "UNIQUE (id, dimension_id)"
+                },
+                {
+                    "name": "item_dimension_values_label_check",
+                    "type": "check",
+                    "columns": [
+                        "label"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK (((char_length(btrim(label)) >= 1) AND (char_length(btrim(label)) <= 60)))"
+                },
+                {
+                    "name": "item_dimension_values_pkey",
+                    "type": "primary key",
+                    "columns": [
+                        "id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "PRIMARY KEY (id)"
+                },
+                {
+                    "name": "item_dimension_values_workspace_id_dimension_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "workspace_id",
+                        "dimension_id"
+                    ],
+                    "onDelete": "CASCADE",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (workspace_id, dimension_id) REFERENCES item_dimensions(workspace_id, id) ON DELETE CASCADE",
+                    "references": {
+                        "table": "item_dimensions",
+                        "schema": "public",
+                        "columns": [
+                            "workspace_id",
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "item_dimension_values_workspace_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "workspace_id"
+                    ],
+                    "onDelete": "CASCADE",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE",
+                    "references": {
+                        "table": "workspaces",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "item_dimension_values_workspace_id_id_key",
+                    "type": "unique",
+                    "columns": [
+                        "workspace_id",
+                        "id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "UNIQUE (workspace_id, id)"
+                },
+                {
+                    "name": "system_columns_order",
+                    "type": "check",
+                    "columns": [
+                        "modified_datetime",
+                        "created_datetime"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((modified_datetime >= created_datetime))"
+                },
+                {
+                    "name": "system_company_present",
+                    "type": "check",
+                    "columns": [
+                        "company_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((company_id IS NOT NULL))"
+                }
+            ]
+        },
+        {
+            "kind": "table",
+            "name": "item_dimensions",
+            "schema": "public",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "uuid",
+                    "default": "gen_random_uuid()",
+                    "notNull": true,
+                    "position": 1
+                },
+                {
+                    "name": "workspace_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 2
+                },
+                {
+                    "name": "name",
+                    "type": "text",
+                    "notNull": true,
+                    "position": 3
+                },
+                {
+                    "name": "active",
+                    "type": "boolean",
+                    "default": "true",
+                    "notNull": true,
+                    "position": 4
+                },
+                {
+                    "name": "revision",
+                    "type": "integer",
+                    "default": "1",
+                    "notNull": true,
+                    "position": 5
+                },
+                {
+                    "name": "created_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 6
+                },
+                {
+                    "name": "modified_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 7
+                },
+                {
+                    "name": "company_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 8
+                },
+                {
+                    "name": "site_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 9
+                },
+                {
+                    "name": "created_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 10
+                },
+                {
+                    "name": "modified_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 11
+                }
+            ],
+            "indexes": [
+                {
+                    "name": "item_dimensions_pkey",
+                    "valid": true,
+                    "unique": true,
+                    "primary": true,
+                    "definition": "CREATE UNIQUE INDEX item_dimensions_pkey ON public.item_dimensions USING btree (id)"
+                },
+                {
+                    "name": "item_dimensions_workspace_id_id_key",
+                    "valid": true,
+                    "unique": true,
+                    "primary": false,
+                    "definition": "CREATE UNIQUE INDEX item_dimensions_workspace_id_id_key ON public.item_dimensions USING btree (workspace_id, id)"
+                },
+                {
+                    "name": "item_dimensions_workspace_id_name_key",
+                    "valid": true,
+                    "unique": true,
+                    "primary": false,
+                    "definition": "CREATE UNIQUE INDEX item_dimensions_workspace_id_name_key ON public.item_dimensions USING btree (workspace_id, name)"
+                }
+            ],
+            "constraints": [
+                {
+                    "name": "item_dimensions_name_check",
+                    "type": "check",
+                    "columns": [
+                        "name"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK (((char_length(btrim(name)) >= 1) AND (char_length(btrim(name)) <= 60)))"
+                },
+                {
+                    "name": "item_dimensions_pkey",
+                    "type": "primary key",
+                    "columns": [
+                        "id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "PRIMARY KEY (id)"
+                },
+                {
+                    "name": "item_dimensions_workspace_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "workspace_id"
+                    ],
+                    "onDelete": "CASCADE",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE",
+                    "references": {
+                        "table": "workspaces",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "item_dimensions_workspace_id_id_key",
+                    "type": "unique",
+                    "columns": [
+                        "workspace_id",
+                        "id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "UNIQUE (workspace_id, id)"
+                },
+                {
+                    "name": "item_dimensions_workspace_id_name_key",
+                    "type": "unique",
+                    "columns": [
+                        "workspace_id",
+                        "name"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "UNIQUE (workspace_id, name)"
                 },
                 {
                     "name": "system_columns_order",
@@ -23301,6 +25641,438 @@
                 },
                 {
                     "name": "item_units_workspace_id_item_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "workspace_id",
+                        "item_id"
+                    ],
+                    "onDelete": "CASCADE",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (workspace_id, item_id) REFERENCES services(workspace_id, id) ON DELETE CASCADE",
+                    "references": {
+                        "table": "services",
+                        "schema": "public",
+                        "columns": [
+                            "workspace_id",
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "system_columns_order",
+                    "type": "check",
+                    "columns": [
+                        "modified_datetime",
+                        "created_datetime"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((modified_datetime >= created_datetime))"
+                },
+                {
+                    "name": "system_company_present",
+                    "type": "check",
+                    "columns": [
+                        "company_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((company_id IS NOT NULL))"
+                }
+            ]
+        },
+        {
+            "kind": "table",
+            "name": "item_variant_values",
+            "schema": "public",
+            "columns": [
+                {
+                    "name": "variant_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 1
+                },
+                {
+                    "name": "dimension_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 2
+                },
+                {
+                    "name": "value_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 3
+                },
+                {
+                    "name": "workspace_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 4
+                },
+                {
+                    "name": "created_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 5
+                },
+                {
+                    "name": "modified_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 6
+                },
+                {
+                    "name": "company_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 7
+                },
+                {
+                    "name": "site_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 8
+                },
+                {
+                    "name": "created_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 9
+                },
+                {
+                    "name": "modified_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 10
+                }
+            ],
+            "indexes": [
+                {
+                    "name": "item_variant_values_pkey",
+                    "valid": true,
+                    "unique": true,
+                    "primary": true,
+                    "definition": "CREATE UNIQUE INDEX item_variant_values_pkey ON public.item_variant_values USING btree (variant_id, dimension_id)"
+                }
+            ],
+            "constraints": [
+                {
+                    "name": "item_variant_values_pkey",
+                    "type": "primary key",
+                    "columns": [
+                        "variant_id",
+                        "dimension_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "PRIMARY KEY (variant_id, dimension_id)"
+                },
+                {
+                    "name": "item_variant_values_value_id_dimension_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "value_id",
+                        "dimension_id"
+                    ],
+                    "onDelete": "NO ACTION",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (value_id, dimension_id) REFERENCES item_dimension_values(id, dimension_id)",
+                    "references": {
+                        "table": "item_dimension_values",
+                        "schema": "public",
+                        "columns": [
+                            "id",
+                            "dimension_id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "item_variant_values_workspace_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "workspace_id"
+                    ],
+                    "onDelete": "CASCADE",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE",
+                    "references": {
+                        "table": "workspaces",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "item_variant_values_workspace_id_variant_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "workspace_id",
+                        "variant_id"
+                    ],
+                    "onDelete": "CASCADE",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (workspace_id, variant_id) REFERENCES item_variants(workspace_id, id) ON DELETE CASCADE",
+                    "references": {
+                        "table": "item_variants",
+                        "schema": "public",
+                        "columns": [
+                            "workspace_id",
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "system_columns_order",
+                    "type": "check",
+                    "columns": [
+                        "modified_datetime",
+                        "created_datetime"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((modified_datetime >= created_datetime))"
+                },
+                {
+                    "name": "system_company_present",
+                    "type": "check",
+                    "columns": [
+                        "company_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((company_id IS NOT NULL))"
+                }
+            ]
+        },
+        {
+            "kind": "table",
+            "name": "item_variants",
+            "schema": "public",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "uuid",
+                    "default": "gen_random_uuid()",
+                    "notNull": true,
+                    "position": 1
+                },
+                {
+                    "name": "workspace_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 2
+                },
+                {
+                    "name": "item_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 3
+                },
+                {
+                    "name": "canonical",
+                    "type": "text",
+                    "notNull": true,
+                    "position": 4
+                },
+                {
+                    "name": "price_cents",
+                    "type": "integer",
+                    "notNull": false,
+                    "position": 5
+                },
+                {
+                    "name": "active",
+                    "type": "boolean",
+                    "default": "true",
+                    "notNull": true,
+                    "position": 6
+                },
+                {
+                    "name": "created_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 7
+                },
+                {
+                    "name": "modified_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 8
+                },
+                {
+                    "name": "company_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 9
+                },
+                {
+                    "name": "site_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 10
+                },
+                {
+                    "name": "created_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 11
+                },
+                {
+                    "name": "modified_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 12
+                }
+            ],
+            "indexes": [
+                {
+                    "name": "item_variants_item_id_canonical_key",
+                    "valid": true,
+                    "unique": true,
+                    "primary": false,
+                    "definition": "CREATE UNIQUE INDEX item_variants_item_id_canonical_key ON public.item_variants USING btree (item_id, canonical)"
+                },
+                {
+                    "name": "item_variants_item_id_id_key",
+                    "valid": true,
+                    "unique": true,
+                    "primary": false,
+                    "definition": "CREATE UNIQUE INDEX item_variants_item_id_id_key ON public.item_variants USING btree (item_id, id)"
+                },
+                {
+                    "name": "item_variants_pkey",
+                    "valid": true,
+                    "unique": true,
+                    "primary": true,
+                    "definition": "CREATE UNIQUE INDEX item_variants_pkey ON public.item_variants USING btree (id)"
+                },
+                {
+                    "name": "item_variants_workspace_id_id_key",
+                    "valid": true,
+                    "unique": true,
+                    "primary": false,
+                    "definition": "CREATE UNIQUE INDEX item_variants_workspace_id_id_key ON public.item_variants USING btree (workspace_id, id)"
+                }
+            ],
+            "constraints": [
+                {
+                    "name": "item_variants_item_id_canonical_key",
+                    "type": "unique",
+                    "columns": [
+                        "item_id",
+                        "canonical"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "UNIQUE (item_id, canonical)"
+                },
+                {
+                    "name": "item_variants_item_id_id_key",
+                    "type": "unique",
+                    "columns": [
+                        "item_id",
+                        "id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "UNIQUE (item_id, id)"
+                },
+                {
+                    "name": "item_variants_pkey",
+                    "type": "primary key",
+                    "columns": [
+                        "id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "PRIMARY KEY (id)"
+                },
+                {
+                    "name": "item_variants_price_cents_check",
+                    "type": "check",
+                    "columns": [
+                        "price_cents"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK (((price_cents IS NULL) OR (price_cents >= 0)))"
+                },
+                {
+                    "name": "item_variants_workspace_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "workspace_id"
+                    ],
+                    "onDelete": "CASCADE",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE",
+                    "references": {
+                        "table": "workspaces",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "item_variants_workspace_id_id_key",
+                    "type": "unique",
+                    "columns": [
+                        "workspace_id",
+                        "id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "UNIQUE (workspace_id, id)"
+                },
+                {
+                    "name": "item_variants_workspace_id_item_id_fkey",
                     "type": "foreign key",
                     "match": "SIMPLE",
                     "columns": [
@@ -31504,6 +34276,18 @@
                     "definition": "CHECK (((customer_capacity IS NULL) OR (customer_capacity = ANY (ARRAY['business'::text, 'consumer'::text]))))"
                 },
                 {
+                    "name": "members_customer_has_no_login",
+                    "type": "check",
+                    "columns": [
+                        "status",
+                        "user_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK (((status <> 'customer'::text) OR (user_id IS NULL)))"
+                },
+                {
                     "name": "members_home_site_id_fkey",
                     "type": "foreign key",
                     "match": "SIMPLE",
@@ -31683,7 +34467,7 @@
                     "inherited": false,
                     "validated": true,
                     "deferrable": false,
-                    "definition": "CHECK ((status = ANY (ARRAY['active'::text, 'paused'::text, 'pending'::text, 'exited'::text])))"
+                    "definition": "CHECK ((status = ANY (ARRAY['active'::text, 'paused'::text, 'pending'::text, 'exited'::text, 'customer'::text])))"
                 },
                 {
                     "name": "members_subscription_pct_check",
@@ -53734,6 +56518,13 @@
                     "type": "integer",
                     "notNull": false,
                     "position": 26
+                },
+                {
+                    "name": "stock_revision",
+                    "type": "integer",
+                    "default": "1",
+                    "notNull": true,
+                    "position": 27
                 }
             ],
             "indexes": [
@@ -55650,6 +58441,358 @@
         },
         {
             "kind": "table",
+            "name": "standalone_invoice_drafts",
+            "schema": "public",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "uuid",
+                    "default": "gen_random_uuid()",
+                    "notNull": true,
+                    "position": 1
+                },
+                {
+                    "name": "workspace_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 2
+                },
+                {
+                    "name": "subject_member_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 3
+                },
+                {
+                    "name": "revision",
+                    "type": "integer",
+                    "default": "1",
+                    "notNull": true,
+                    "position": 4
+                },
+                {
+                    "name": "status",
+                    "type": "text",
+                    "default": "'draft'::text",
+                    "notNull": true,
+                    "position": 5
+                },
+                {
+                    "name": "service_date",
+                    "type": "date",
+                    "notNull": false,
+                    "position": 6
+                },
+                {
+                    "name": "due_on",
+                    "type": "date",
+                    "notNull": false,
+                    "position": 7
+                },
+                {
+                    "name": "buyer_reference",
+                    "type": "text",
+                    "default": "''::text",
+                    "notNull": true,
+                    "position": 8
+                },
+                {
+                    "name": "purchase_order",
+                    "type": "text",
+                    "default": "''::text",
+                    "notNull": true,
+                    "position": 9
+                },
+                {
+                    "name": "lines",
+                    "type": "jsonb",
+                    "default": "'[]'::jsonb",
+                    "notNull": true,
+                    "position": 10
+                },
+                {
+                    "name": "issued_invoice_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 11
+                },
+                {
+                    "name": "created_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 12
+                },
+                {
+                    "name": "modified_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 13
+                },
+                {
+                    "name": "company_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 14
+                },
+                {
+                    "name": "site_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 15
+                },
+                {
+                    "name": "created_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 16
+                },
+                {
+                    "name": "modified_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 17
+                },
+                {
+                    "name": "origin_quote_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 18
+                }
+            ],
+            "indexes": [
+                {
+                    "name": "standalone_invoice_drafts_one_invoice",
+                    "valid": true,
+                    "unique": true,
+                    "primary": false,
+                    "definition": "CREATE UNIQUE INDEX standalone_invoice_drafts_one_invoice ON public.standalone_invoice_drafts USING btree (issued_invoice_id) WHERE (issued_invoice_id IS NOT NULL)"
+                },
+                {
+                    "name": "standalone_invoice_drafts_one_per_quote",
+                    "valid": true,
+                    "unique": true,
+                    "primary": false,
+                    "definition": "CREATE UNIQUE INDEX standalone_invoice_drafts_one_per_quote ON public.standalone_invoice_drafts USING btree (origin_quote_id) WHERE (origin_quote_id IS NOT NULL)"
+                },
+                {
+                    "name": "standalone_invoice_drafts_pkey",
+                    "valid": true,
+                    "unique": true,
+                    "primary": true,
+                    "definition": "CREATE UNIQUE INDEX standalone_invoice_drafts_pkey ON public.standalone_invoice_drafts USING btree (id)"
+                },
+                {
+                    "name": "standalone_invoice_drafts_workspace_idx",
+                    "valid": true,
+                    "unique": false,
+                    "primary": false,
+                    "definition": "CREATE INDEX standalone_invoice_drafts_workspace_idx ON public.standalone_invoice_drafts USING btree (workspace_id, status)"
+                }
+            ],
+            "constraints": [
+                {
+                    "name": "standalone_invoice_drafts_buyer_reference_check",
+                    "type": "check",
+                    "columns": [
+                        "buyer_reference"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((char_length(buyer_reference) <= 120))"
+                },
+                {
+                    "name": "standalone_invoice_drafts_check",
+                    "type": "check",
+                    "columns": [
+                        "status",
+                        "issued_invoice_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK (((status = 'issued'::text) = (issued_invoice_id IS NOT NULL)))"
+                },
+                {
+                    "name": "standalone_invoice_drafts_lines_check",
+                    "type": "check",
+                    "columns": [
+                        "lines"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((jsonb_typeof(lines) = 'array'::text))"
+                },
+                {
+                    "name": "standalone_invoice_drafts_origin_quote_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "origin_quote_id"
+                    ],
+                    "onDelete": "RESTRICT",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (origin_quote_id) REFERENCES customer_quotes(id) ON DELETE RESTRICT",
+                    "references": {
+                        "table": "customer_quotes",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "standalone_invoice_drafts_pkey",
+                    "type": "primary key",
+                    "columns": [
+                        "id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "PRIMARY KEY (id)"
+                },
+                {
+                    "name": "standalone_invoice_drafts_purchase_order_check",
+                    "type": "check",
+                    "columns": [
+                        "purchase_order"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((char_length(purchase_order) <= 120))"
+                },
+                {
+                    "name": "standalone_invoice_drafts_revision_check",
+                    "type": "check",
+                    "columns": [
+                        "revision"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((revision >= 1))"
+                },
+                {
+                    "name": "standalone_invoice_drafts_status_check",
+                    "type": "check",
+                    "columns": [
+                        "status"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((status = ANY (ARRAY['draft'::text, 'issued'::text])))"
+                },
+                {
+                    "name": "standalone_invoice_drafts_workspace_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "workspace_id"
+                    ],
+                    "onDelete": "CASCADE",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE",
+                    "references": {
+                        "table": "workspaces",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "standalone_invoice_drafts_workspace_id_issued_invoice_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "workspace_id",
+                        "issued_invoice_id"
+                    ],
+                    "onDelete": "RESTRICT",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (workspace_id, issued_invoice_id) REFERENCES invoices(workspace_id, id) ON DELETE RESTRICT",
+                    "references": {
+                        "table": "invoices",
+                        "schema": "public",
+                        "columns": [
+                            "workspace_id",
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "standalone_invoice_drafts_workspace_id_subject_member_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "workspace_id",
+                        "subject_member_id"
+                    ],
+                    "onDelete": "RESTRICT",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (workspace_id, subject_member_id) REFERENCES members(workspace_id, id) ON DELETE RESTRICT",
+                    "references": {
+                        "table": "members",
+                        "schema": "public",
+                        "columns": [
+                            "workspace_id",
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "system_columns_order",
+                    "type": "check",
+                    "columns": [
+                        "modified_datetime",
+                        "created_datetime"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((modified_datetime >= created_datetime))"
+                },
+                {
+                    "name": "system_company_present",
+                    "type": "check",
+                    "columns": [
+                        "company_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((company_id IS NOT NULL))"
+                }
+            ]
+        },
+        {
+            "kind": "table",
             "name": "stock_balances",
             "schema": "public",
             "columns": [
@@ -55728,15 +58871,21 @@
                     "type": "uuid",
                     "notNull": false,
                     "position": 12
+                },
+                {
+                    "name": "variant_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 13
                 }
             ],
             "indexes": [
                 {
-                    "name": "stock_balances_item_id_lot_id_location_id_key",
+                    "name": "stock_balances_item_variant_lot_location_key",
                     "valid": true,
                     "unique": true,
                     "primary": false,
-                    "definition": "CREATE UNIQUE INDEX stock_balances_item_id_lot_id_location_id_key ON public.stock_balances USING btree (item_id, lot_id, location_id) NULLS NOT DISTINCT"
+                    "definition": "CREATE UNIQUE INDEX stock_balances_item_variant_lot_location_key ON public.stock_balances USING btree (item_id, variant_id, lot_id, location_id) NULLS NOT DISTINCT"
                 },
                 {
                     "name": "stock_balances_location",
@@ -55751,21 +58900,29 @@
                     "unique": true,
                     "primary": true,
                     "definition": "CREATE UNIQUE INDEX stock_balances_pkey ON public.stock_balances USING btree (id)"
+                },
+                {
+                    "name": "stock_balances_variant",
+                    "valid": true,
+                    "unique": false,
+                    "primary": false,
+                    "definition": "CREATE INDEX stock_balances_variant ON public.stock_balances USING btree (variant_id) WHERE (variant_id IS NOT NULL)"
                 }
             ],
             "constraints": [
                 {
-                    "name": "stock_balances_item_id_lot_id_location_id_key",
+                    "name": "stock_balances_item_variant_lot_location_key",
                     "type": "unique",
                     "columns": [
                         "item_id",
+                        "variant_id",
                         "lot_id",
                         "location_id"
                     ],
                     "inherited": false,
                     "validated": true,
                     "deferrable": false,
-                    "definition": "UNIQUE NULLS NOT DISTINCT (item_id, lot_id, location_id)"
+                    "definition": "UNIQUE NULLS NOT DISTINCT (item_id, variant_id, lot_id, location_id)"
                 },
                 {
                     "name": "stock_balances_pkey",
@@ -55777,6 +58934,31 @@
                     "validated": true,
                     "deferrable": false,
                     "definition": "PRIMARY KEY (id)"
+                },
+                {
+                    "name": "stock_balances_variant_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "item_id",
+                        "variant_id"
+                    ],
+                    "onDelete": "NO ACTION",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (item_id, variant_id) REFERENCES item_variants(item_id, id)",
+                    "references": {
+                        "table": "item_variants",
+                        "schema": "public",
+                        "columns": [
+                            "item_id",
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
                 },
                 {
                     "name": "stock_balances_workspace_id_fkey",
@@ -56102,6 +59284,13 @@
                     "type": "uuid",
                     "notNull": false,
                     "position": 14
+                },
+                {
+                    "name": "revision",
+                    "type": "integer",
+                    "default": "1",
+                    "notNull": true,
+                    "position": 15
                 }
             ],
             "indexes": [
@@ -56416,6 +59605,25 @@
                     "type": "uuid",
                     "notNull": false,
                     "position": 17
+                },
+                {
+                    "name": "variant_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 18
+                },
+                {
+                    "name": "cost_state",
+                    "type": "text",
+                    "default": "'known'::text",
+                    "notNull": true,
+                    "position": 19
+                },
+                {
+                    "name": "cost_source",
+                    "type": "text",
+                    "notNull": false,
+                    "position": 20
                 }
             ],
             "indexes": [
@@ -56460,6 +59668,28 @@
                     "validated": true,
                     "deferrable": false,
                     "definition": "CHECK (((source_currency IS NULL) = (source_rate IS NULL)))"
+                },
+                {
+                    "name": "stock_lots_cost_source_check",
+                    "type": "check",
+                    "columns": [
+                        "cost_source"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK (((cost_source IS NULL) OR (cost_source = ANY (ARRAY['entered'::text, 'order_price'::text]))))"
+                },
+                {
+                    "name": "stock_lots_cost_state_check",
+                    "type": "check",
+                    "columns": [
+                        "cost_state"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((cost_state = ANY (ARRAY['known'::text, 'unknown'::text])))"
                 },
                 {
                     "name": "stock_lots_label_code_check",
@@ -56560,6 +59790,45 @@
                     "validated": true,
                     "deferrable": false,
                     "definition": "CHECK ((total_cost_minor >= 0))"
+                },
+                {
+                    "name": "stock_lots_unknown_cost_is_bare",
+                    "type": "check",
+                    "columns": [
+                        "cost_state",
+                        "total_cost_minor",
+                        "source_currency",
+                        "cost_source"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK (((cost_state <> 'unknown'::text) OR ((total_cost_minor = 0) AND (source_currency IS NULL) AND (cost_source IS NULL))))"
+                },
+                {
+                    "name": "stock_lots_variant_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "item_id",
+                        "variant_id"
+                    ],
+                    "onDelete": "NO ACTION",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (item_id, variant_id) REFERENCES item_variants(item_id, id)",
+                    "references": {
+                        "table": "item_variants",
+                        "schema": "public",
+                        "columns": [
+                            "item_id",
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
                 },
                 {
                     "name": "stock_lots_workspace_id_fkey",
@@ -56810,6 +60079,25 @@
                     "type": "uuid",
                     "notNull": false,
                     "position": 26
+                },
+                {
+                    "name": "entered_factor_num",
+                    "type": "bigint",
+                    "comment": "#4169: the factor of the entered unit to the inventory unit, frozen with the movement (null before it was kept)",
+                    "notNull": false,
+                    "position": 27
+                },
+                {
+                    "name": "entered_factor_den",
+                    "type": "bigint",
+                    "notNull": false,
+                    "position": 28
+                },
+                {
+                    "name": "variant_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 29
                 }
             ],
             "indexes": [
@@ -56928,6 +60216,31 @@
                         "schema": "public",
                         "columns": [
                             "key"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "stock_movements_variant_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "item_id",
+                        "variant_id"
+                    ],
+                    "onDelete": "NO ACTION",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (item_id, variant_id) REFERENCES item_variants(item_id, id)",
+                    "references": {
+                        "table": "item_variants",
+                        "schema": "public",
+                        "columns": [
+                            "item_id",
+                            "id"
                         ]
                     },
                     "onDeleteColumns": [
@@ -57219,6 +60532,560 @@
                     "validated": true,
                     "deferrable": false,
                     "definition": "CHECK ((modified_datetime >= created_datetime))"
+                }
+            ]
+        },
+        {
+            "kind": "table",
+            "name": "stock_receipt_allocations",
+            "schema": "public",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "uuid",
+                    "default": "gen_random_uuid()",
+                    "notNull": true,
+                    "position": 1
+                },
+                {
+                    "name": "workspace_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 2
+                },
+                {
+                    "name": "receipt_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 3
+                },
+                {
+                    "name": "receipt_line_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 4
+                },
+                {
+                    "name": "order_line_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 5
+                },
+                {
+                    "name": "item_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 6
+                },
+                {
+                    "name": "variant_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 7
+                },
+                {
+                    "name": "entered_unit",
+                    "type": "text",
+                    "notNull": true,
+                    "position": 8
+                },
+                {
+                    "name": "entered_quantity",
+                    "type": "numeric(18,6)",
+                    "notNull": true,
+                    "position": 9
+                },
+                {
+                    "name": "factor_num",
+                    "type": "bigint",
+                    "notNull": true,
+                    "position": 10
+                },
+                {
+                    "name": "factor_den",
+                    "type": "bigint",
+                    "notNull": true,
+                    "position": 11
+                },
+                {
+                    "name": "inventory_quantity",
+                    "type": "numeric(18,6)",
+                    "notNull": true,
+                    "position": 12
+                },
+                {
+                    "name": "lot_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 13
+                },
+                {
+                    "name": "location_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 14
+                },
+                {
+                    "name": "movement_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 15
+                },
+                {
+                    "name": "command_request_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 16
+                },
+                {
+                    "name": "part",
+                    "type": "integer",
+                    "notNull": true,
+                    "position": 17
+                },
+                {
+                    "name": "order_reference",
+                    "type": "text",
+                    "default": "''::text",
+                    "notNull": true,
+                    "position": 18
+                },
+                {
+                    "name": "supplier_name",
+                    "type": "text",
+                    "default": "''::text",
+                    "notNull": true,
+                    "position": 19
+                },
+                {
+                    "name": "line_text",
+                    "type": "text",
+                    "default": "''::text",
+                    "notNull": true,
+                    "position": 20
+                },
+                {
+                    "name": "created_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 21
+                },
+                {
+                    "name": "modified_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 22
+                },
+                {
+                    "name": "company_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 23
+                },
+                {
+                    "name": "site_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 24
+                },
+                {
+                    "name": "created_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 25
+                },
+                {
+                    "name": "modified_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 26
+                }
+            ],
+            "indexes": [
+                {
+                    "name": "stock_receipt_allocations_command_request_id_part_key",
+                    "valid": true,
+                    "unique": true,
+                    "primary": false,
+                    "definition": "CREATE UNIQUE INDEX stock_receipt_allocations_command_request_id_part_key ON public.stock_receipt_allocations USING btree (command_request_id, part)"
+                },
+                {
+                    "name": "stock_receipt_allocations_line",
+                    "valid": true,
+                    "unique": false,
+                    "primary": false,
+                    "definition": "CREATE INDEX stock_receipt_allocations_line ON public.stock_receipt_allocations USING btree (receipt_line_id)"
+                },
+                {
+                    "name": "stock_receipt_allocations_movement_id_key",
+                    "valid": true,
+                    "unique": true,
+                    "primary": false,
+                    "definition": "CREATE UNIQUE INDEX stock_receipt_allocations_movement_id_key ON public.stock_receipt_allocations USING btree (movement_id)"
+                },
+                {
+                    "name": "stock_receipt_allocations_pkey",
+                    "valid": true,
+                    "unique": true,
+                    "primary": true,
+                    "definition": "CREATE UNIQUE INDEX stock_receipt_allocations_pkey ON public.stock_receipt_allocations USING btree (id)"
+                },
+                {
+                    "name": "stock_receipt_allocations_receipt",
+                    "valid": true,
+                    "unique": false,
+                    "primary": false,
+                    "definition": "CREATE INDEX stock_receipt_allocations_receipt ON public.stock_receipt_allocations USING btree (receipt_id)"
+                },
+                {
+                    "name": "stock_receipt_allocations_workspace_id_id_key",
+                    "valid": true,
+                    "unique": true,
+                    "primary": false,
+                    "definition": "CREATE UNIQUE INDEX stock_receipt_allocations_workspace_id_id_key ON public.stock_receipt_allocations USING btree (workspace_id, id)"
+                }
+            ],
+            "constraints": [
+                {
+                    "name": "stock_receipt_allocations_command_request_id_part_key",
+                    "type": "unique",
+                    "columns": [
+                        "command_request_id",
+                        "part"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "UNIQUE (command_request_id, part)"
+                },
+                {
+                    "name": "stock_receipt_allocations_entered_quantity_check",
+                    "type": "check",
+                    "columns": [
+                        "entered_quantity"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((entered_quantity > (0)::numeric))"
+                },
+                {
+                    "name": "stock_receipt_allocations_factor_den_check",
+                    "type": "check",
+                    "columns": [
+                        "factor_den"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((factor_den > 0))"
+                },
+                {
+                    "name": "stock_receipt_allocations_factor_num_check",
+                    "type": "check",
+                    "columns": [
+                        "factor_num"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((factor_num > 0))"
+                },
+                {
+                    "name": "stock_receipt_allocations_inventory_quantity_check",
+                    "type": "check",
+                    "columns": [
+                        "inventory_quantity"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((inventory_quantity > (0)::numeric))"
+                },
+                {
+                    "name": "stock_receipt_allocations_item_id_variant_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "item_id",
+                        "variant_id"
+                    ],
+                    "onDelete": "NO ACTION",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (item_id, variant_id) REFERENCES item_variants(item_id, id)",
+                    "references": {
+                        "table": "item_variants",
+                        "schema": "public",
+                        "columns": [
+                            "item_id",
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "stock_receipt_allocations_movement_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "movement_id"
+                    ],
+                    "onDelete": "NO ACTION",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (movement_id) REFERENCES stock_movements(id)",
+                    "references": {
+                        "table": "stock_movements",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "stock_receipt_allocations_movement_id_key",
+                    "type": "unique",
+                    "columns": [
+                        "movement_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "UNIQUE (movement_id)"
+                },
+                {
+                    "name": "stock_receipt_allocations_order_line_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "order_line_id"
+                    ],
+                    "onDelete": "NO ACTION",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (order_line_id) REFERENCES purchase_order_lines(id)",
+                    "references": {
+                        "table": "purchase_order_lines",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "stock_receipt_allocations_part_check",
+                    "type": "check",
+                    "columns": [
+                        "part"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((part >= 1))"
+                },
+                {
+                    "name": "stock_receipt_allocations_pkey",
+                    "type": "primary key",
+                    "columns": [
+                        "id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "PRIMARY KEY (id)"
+                },
+                {
+                    "name": "stock_receipt_allocations_receipt_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "receipt_id"
+                    ],
+                    "onDelete": "NO ACTION",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (receipt_id) REFERENCES purchase_order_receipts(id)",
+                    "references": {
+                        "table": "purchase_order_receipts",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "stock_receipt_allocations_receipt_line_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "receipt_line_id"
+                    ],
+                    "onDelete": "NO ACTION",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (receipt_line_id) REFERENCES purchase_order_receipt_lines(id)",
+                    "references": {
+                        "table": "purchase_order_receipt_lines",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "stock_receipt_allocations_workspace_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "workspace_id"
+                    ],
+                    "onDelete": "CASCADE",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE",
+                    "references": {
+                        "table": "workspaces",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "stock_receipt_allocations_workspace_id_id_key",
+                    "type": "unique",
+                    "columns": [
+                        "workspace_id",
+                        "id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "UNIQUE (workspace_id, id)"
+                },
+                {
+                    "name": "stock_receipt_allocations_workspace_id_item_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "workspace_id",
+                        "item_id"
+                    ],
+                    "onDelete": "NO ACTION",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (workspace_id, item_id) REFERENCES services(workspace_id, id)",
+                    "references": {
+                        "table": "services",
+                        "schema": "public",
+                        "columns": [
+                            "workspace_id",
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "stock_receipt_allocations_workspace_id_location_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "workspace_id",
+                        "location_id"
+                    ],
+                    "onDelete": "NO ACTION",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (workspace_id, location_id) REFERENCES stock_locations(workspace_id, id)",
+                    "references": {
+                        "table": "stock_locations",
+                        "schema": "public",
+                        "columns": [
+                            "workspace_id",
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "stock_receipt_allocations_workspace_id_lot_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "workspace_id",
+                        "lot_id"
+                    ],
+                    "onDelete": "NO ACTION",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (workspace_id, lot_id) REFERENCES stock_lots(workspace_id, id)",
+                    "references": {
+                        "table": "stock_lots",
+                        "schema": "public",
+                        "columns": [
+                            "workspace_id",
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "system_columns_order",
+                    "type": "check",
+                    "columns": [
+                        "modified_datetime",
+                        "created_datetime"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((modified_datetime >= created_datetime))"
+                },
+                {
+                    "name": "system_company_present",
+                    "type": "check",
+                    "columns": [
+                        "company_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((company_id IS NOT NULL))"
                 }
             ]
         },
@@ -57660,6 +61527,325 @@
                         "table": "workspaces",
                         "schema": "public",
                         "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "system_columns_order",
+                    "type": "check",
+                    "columns": [
+                        "modified_datetime",
+                        "created_datetime"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((modified_datetime >= created_datetime))"
+                },
+                {
+                    "name": "system_company_present",
+                    "type": "check",
+                    "columns": [
+                        "company_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((company_id IS NOT NULL))"
+                }
+            ]
+        },
+        {
+            "kind": "table",
+            "name": "supplier_item_mappings",
+            "schema": "public",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "uuid",
+                    "default": "gen_random_uuid()",
+                    "notNull": true,
+                    "position": 1
+                },
+                {
+                    "name": "workspace_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 2
+                },
+                {
+                    "name": "supplier_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 3
+                },
+                {
+                    "name": "item_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 4
+                },
+                {
+                    "name": "variant_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 5
+                },
+                {
+                    "name": "article_ref",
+                    "type": "text",
+                    "notNull": true,
+                    "position": 6
+                },
+                {
+                    "name": "purchase_unit",
+                    "type": "text",
+                    "notNull": false,
+                    "position": 7
+                },
+                {
+                    "name": "active",
+                    "type": "boolean",
+                    "default": "true",
+                    "notNull": true,
+                    "position": 8
+                },
+                {
+                    "name": "revision",
+                    "type": "integer",
+                    "default": "1",
+                    "notNull": true,
+                    "position": 9
+                },
+                {
+                    "name": "created_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 10
+                },
+                {
+                    "name": "modified_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 11
+                },
+                {
+                    "name": "company_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 12
+                },
+                {
+                    "name": "site_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 13
+                },
+                {
+                    "name": "created_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 14
+                },
+                {
+                    "name": "modified_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 15
+                }
+            ],
+            "indexes": [
+                {
+                    "name": "supplier_item_mappings_pkey",
+                    "valid": true,
+                    "unique": true,
+                    "primary": true,
+                    "definition": "CREATE UNIQUE INDEX supplier_item_mappings_pkey ON public.supplier_item_mappings USING btree (id)"
+                },
+                {
+                    "name": "supplier_item_mappings_supplier_id_article_ref_key",
+                    "valid": true,
+                    "unique": true,
+                    "primary": false,
+                    "definition": "CREATE UNIQUE INDEX supplier_item_mappings_supplier_id_article_ref_key ON public.supplier_item_mappings USING btree (supplier_id, article_ref)"
+                },
+                {
+                    "name": "supplier_item_mappings_workspace_id_id_key",
+                    "valid": true,
+                    "unique": true,
+                    "primary": false,
+                    "definition": "CREATE UNIQUE INDEX supplier_item_mappings_workspace_id_id_key ON public.supplier_item_mappings USING btree (workspace_id, id)"
+                }
+            ],
+            "constraints": [
+                {
+                    "name": "supplier_item_mappings_article_ref_check",
+                    "type": "check",
+                    "columns": [
+                        "article_ref"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK (((char_length(btrim(article_ref)) >= 1) AND (char_length(btrim(article_ref)) <= 80)))"
+                },
+                {
+                    "name": "supplier_item_mappings_item_id_purchase_unit_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "item_id",
+                        "purchase_unit"
+                    ],
+                    "onDelete": "NO ACTION",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (item_id, purchase_unit) REFERENCES item_units(item_id, unit)",
+                    "references": {
+                        "table": "item_units",
+                        "schema": "public",
+                        "columns": [
+                            "item_id",
+                            "unit"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "supplier_item_mappings_item_id_variant_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "item_id",
+                        "variant_id"
+                    ],
+                    "onDelete": "NO ACTION",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (item_id, variant_id) REFERENCES item_variants(item_id, id)",
+                    "references": {
+                        "table": "item_variants",
+                        "schema": "public",
+                        "columns": [
+                            "item_id",
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "supplier_item_mappings_pkey",
+                    "type": "primary key",
+                    "columns": [
+                        "id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "PRIMARY KEY (id)"
+                },
+                {
+                    "name": "supplier_item_mappings_supplier_id_article_ref_key",
+                    "type": "unique",
+                    "columns": [
+                        "supplier_id",
+                        "article_ref"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "UNIQUE (supplier_id, article_ref)"
+                },
+                {
+                    "name": "supplier_item_mappings_workspace_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "workspace_id"
+                    ],
+                    "onDelete": "CASCADE",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE",
+                    "references": {
+                        "table": "workspaces",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "supplier_item_mappings_workspace_id_id_key",
+                    "type": "unique",
+                    "columns": [
+                        "workspace_id",
+                        "id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "UNIQUE (workspace_id, id)"
+                },
+                {
+                    "name": "supplier_item_mappings_workspace_id_item_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "workspace_id",
+                        "item_id"
+                    ],
+                    "onDelete": "NO ACTION",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (workspace_id, item_id) REFERENCES services(workspace_id, id)",
+                    "references": {
+                        "table": "services",
+                        "schema": "public",
+                        "columns": [
+                            "workspace_id",
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "supplier_item_mappings_workspace_id_supplier_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "workspace_id",
+                        "supplier_id"
+                    ],
+                    "onDelete": "NO ACTION",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (workspace_id, supplier_id) REFERENCES suppliers(workspace_id, id)",
+                    "references": {
+                        "table": "suppliers",
+                        "schema": "public",
+                        "columns": [
+                            "workspace_id",
                             "id"
                         ]
                     },
