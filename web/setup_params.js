@@ -78,6 +78,10 @@ const SUP_LOOKUP_RATE=[['5','optPerMinute',{n:5}],['10','optPerMinute',{n:10}],[
 // #2571 — a US space's own longer retention (workspace setting
 // retention.us_years, 0..30 years; it extends the rule, never shortens it).
 const RET_US_YEARS=[['0','retUsRule'],['5','optYears',{n:5}],['6','optYears',{n:6}],['7','optYears',{n:7}],['10','optYears',{n:10}]];
+// #4291 — how long a quote stays valid (workspace settings
+// quotes.default_validity_days 1..365 and quotes.max_validity_days 1..1825).
+const QUOTE_VALIDITY=[['14','optDays',{n:14}],['30','optDaysDefault',{n:30}],['60','optDays',{n:60}],['90','optDays',{n:90}],['180','optDays',{n:180}],['365','optOneYear']];
+const QUOTE_MAX_VALIDITY=[['90','optDays',{n:90}],['180','optDays',{n:180}],['365','optOneYear'],['730','optYears',{n:2}],['1825','optYears',{n:5}]];
 // #2380 — the bank statement import: bank.import_max_bytes (64 KiB..20 MiB),
 // bank.import_max_lines (100..20000), bank.match_window_days (1..366).
 const BANK_MAX_BYTES=[['1048576','optMegabytes',{n:1}],['5242880','optMegabytes',{n:5}],['10485760','optMegabytes',{n:10}],['20971520','optMegabytes',{n:20}]];
@@ -136,6 +140,7 @@ const PARAM_META=[
  ['enrolment.accepting','enrolAccepting','bool'],['enrolment.lifetime','enrolLifetime','enum',()=>ID_LIFETIME.map(x=>x[0])],
  ['enrolment.reconcile','enrolReconcile','enum',()=>ID_RECONCILE.map(x=>x[0])],['enrolment.skew','enrolSkew','enum',()=>ID_SKEW.map(x=>x[0])],
  ['directory.pageSize','dirPageSize','enum',()=>DIR_PAGE.map(x=>x[0])],['directory.queryLength','dirQueryLength','enum',()=>DIR_QUERY.map(x=>x[0])],
+ ['quotes.defaultValidity','quoteDefaultValidity','enum',()=>QUOTE_VALIDITY.map(x=>x[0]),{needs:'customerQuotes'}],['quotes.maxValidity','quoteMaxValidity','enum',()=>QUOTE_MAX_VALIDITY.map(x=>x[0]),{needs:'customerQuotes'}],
  ['paymentResend.mollie','resendMollie','enum',()=>RESEND_MOLLIE.map(x=>x[0]),{needs:'moneyTab'}],['paymentResend.paypal','resendPaypal','enum',()=>RESEND_PAYPAL.map(x=>x[0]),{needs:'moneyTab'}],
  ['paymentResend.stripe','resendStripe','enum',()=>RESEND_STRIPE.map(x=>x[0]),{needs:'moneyTab'}],
  ['federation.retentionHours','fedRetention','enum',()=>FED_RETENTION.map(x=>x[0])],
@@ -217,7 +222,7 @@ const PARAM_EXCLUDED={
 // never read by the app (secrets never travel). Keyed by the answer's path;
 // what is not listed is applied by the import. The review step lists every
 // 'app' and 'file' answer as what remains to do in the app.
-const DEST={businessKind:'app',name:'app',environment:'app',network:'app',enrolment:'app',directory:'app',federation:'app',inbox:'app',supplierLookup:'app',badgeSecurity:'app',stock:'app',retention:'app',bank:'app',records:'app',map:'app',region:'app',bi:'app',members:'app',einvoice:'file'};
+const DEST={businessKind:'app',name:'app',environment:'app',network:'app',enrolment:'app',directory:'app',federation:'app',inbox:'app',supplierLookup:'app',badgeSecurity:'app',stock:'app',retention:'app',bank:'app',quotes:'app',records:'app',map:'app',region:'app',bi:'app',members:'app',einvoice:'file'};
 const DEST_TEXT={import:['destImport','destImportHint'],app:['destApp','destAppHint'],file:['destFile','destFileHint']};
 const destOf=path=>DEST[String(path||'').split('.')[0]]||'import';
 // Where each answer lives in the app, and the guide section that explains it
