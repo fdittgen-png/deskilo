@@ -28256,6 +28256,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'La gestione delle scorte è disattivata in questa attività. Non è stato spostato nulla.';
 
   @override
+  String get refusalStockPage =>
+      'Questa richiesta di pagina non è valida: richiedere da 1 a 200 righe e proseguire solo dalla posizione indicata da una pagina.';
+
+  @override
   String get refusalStockUnit =>
       'Questo articolo non ha questa unità. Aggiungi l\'unità all\'articolo o inserisci la quantità in un\'unità che ha.';
 
@@ -34546,6 +34550,66 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get statusTo => 'Al';
+
+  @override
+  String get stockCostLabel => 'Costo per unità';
+
+  @override
+  String get stockCostNotShown => 'Costo non mostrato';
+
+  @override
+  String get stockCostUnknown => 'Costo non registrato';
+
+  @override
+  String get stockEmpty => 'Non c’è ancora nulla in magazzino.';
+
+  @override
+  String get stockEmptyFiltered => 'Nulla corrisponde a questi filtri.';
+
+  @override
+  String get stockEnteredLabel => 'Inserito';
+
+  @override
+  String stockLotLabel(String code) {
+    return 'Lotto $code';
+  }
+
+  @override
+  String get stockLotTitle => 'Lotto';
+
+  @override
+  String get stockMovementNotFound =>
+      'Questo movimento non esiste, oppure non ha il permesso di vederlo.';
+
+  @override
+  String get stockMovementTitle => 'Movimento';
+
+  @override
+  String get stockMovementsEmpty => 'Ancora nessun movimento.';
+
+  @override
+  String get stockNoLot => 'Senza lotto';
+
+  @override
+  String stockQuantityWithUnit(String quantity, String unit) {
+    return '$quantity $unit';
+  }
+
+  @override
+  String get stockReadFailed =>
+      'Non è stato possibile leggere il magazzino. Nulla viene mostrato come vuoto: riprovi.';
+
+  @override
+  String get stockStoredLabel => 'Registrato';
+
+  @override
+  String get stockTabMovements => 'Movimenti';
+
+  @override
+  String get stockTabOnHand => 'Disponibile';
+
+  @override
+  String get stockWhenLabel => 'Quando';
 
   @override
   String get subprocessAttendance => 'Presenze e utilizzo';

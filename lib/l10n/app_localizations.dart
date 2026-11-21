@@ -44931,6 +44931,12 @@ abstract class AppLocalizations {
   /// **'Stock management is off in this business. Nothing was moved.'**
   String get refusalStockOff;
 
+  /// #4161 (0833) DKG09: a stock page request that is not valid (size outside 1..200, or a cursor that is not one).
+  ///
+  /// In en, this message translates to:
+  /// **'This page request is not valid: ask for 1 to 200 rows, and continue only from the position a page gave.'**
+  String get refusalStockPage;
+
   /// refusal DKG02 (#3824)
   ///
   /// In en, this message translates to:
@@ -54901,6 +54907,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'To'**
   String get statusTo;
+
+  /// #4161 the cost per unit of a movement
+  ///
+  /// In en, this message translates to:
+  /// **'Cost per unit'**
+  String get stockCostLabel;
+
+  /// #4161 a reader without finance rights: the cost is not shown (not zero)
+  ///
+  /// In en, this message translates to:
+  /// **'Cost not shown'**
+  String get stockCostNotShown;
+
+  /// #4161 the cost of this movement was never recorded (not zero)
+  ///
+  /// In en, this message translates to:
+  /// **'Cost not recorded'**
+  String get stockCostUnknown;
+
+  /// #4161 empty stock, no filter
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing is in stock yet.'**
+  String get stockEmpty;
+
+  /// #4161 empty result under filters
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing matches these filters.'**
+  String get stockEmptyFiltered;
+
+  /// #4161 the quantity and unit as entered
+  ///
+  /// In en, this message translates to:
+  /// **'Entered'**
+  String get stockEnteredLabel;
+
+  /// #4161 a lot, by its code
+  ///
+  /// In en, this message translates to:
+  /// **'Lot {code}'**
+  String stockLotLabel(String code);
+
+  /// #4161 the label of a movement's lot row
+  ///
+  /// In en, this message translates to:
+  /// **'Lot'**
+  String get stockLotTitle;
+
+  /// #4161 a movement address that reads as none
+  ///
+  /// In en, this message translates to:
+  /// **'This movement does not exist, or it is not one you may see.'**
+  String get stockMovementNotFound;
+
+  /// #4161 the page of one movement
+  ///
+  /// In en, this message translates to:
+  /// **'Movement'**
+  String get stockMovementTitle;
+
+  /// #4161 no movements
+  ///
+  /// In en, this message translates to:
+  /// **'No movements yet.'**
+  String get stockMovementsEmpty;
+
+  /// #4161 an on-hand row with no lot
+  ///
+  /// In en, this message translates to:
+  /// **'No lot'**
+  String get stockNoLot;
+
+  /// #4161 an exact quantity and its inventory unit
+  ///
+  /// In en, this message translates to:
+  /// **'{quantity} {unit}'**
+  String stockQuantityWithUnit(String quantity, String unit);
+
+  /// #4161 a stock read failed; never shown as empty
+  ///
+  /// In en, this message translates to:
+  /// **'The stock could not be read. Nothing is shown as empty: try again.'**
+  String get stockReadFailed;
+
+  /// #4161 the quantity as stored, in the inventory unit
+  ///
+  /// In en, this message translates to:
+  /// **'Stored'**
+  String get stockStoredLabel;
+
+  /// #4161 the Stock screen: the tab of the movements
+  ///
+  /// In en, this message translates to:
+  /// **'Movements'**
+  String get stockTabMovements;
+
+  /// #4161 the Stock screen: the tab of what is on hand
+  ///
+  /// In en, this message translates to:
+  /// **'On hand'**
+  String get stockTabOnHand;
+
+  /// #4161 when a movement happened
+  ///
+  /// In en, this message translates to:
+  /// **'When'**
+  String get stockWhenLabel;
 
   /// Shown as the title in process names (workspace).
   ///
