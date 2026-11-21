@@ -62,6 +62,7 @@ import 'package:deskilo/features/money/domain/einvoice_inbox.dart';
 import 'package:deskilo/features/money/domain/lease_commitment.dart';
 import 'package:deskilo/features/money/domain/purchase.dart';
 import 'package:deskilo/features/money/domain/purchase_order.dart';
+import 'package:deskilo/features/money/domain/service_fulfilment.dart';
 import 'package:deskilo/features/money/domain/workspace_asset.dart';
 import 'package:deskilo/features/plan/domain/seat.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
@@ -1371,6 +1372,30 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
       return sent.reference.startsWith('QUO-') &&
           after.status == QuoteStatus.sent &&
           after.current?.totals != null;
+    },
+  ),
+  // #4178 — the owner commits a service to a billing customer and starts it:
+  // the engagement is ordered, then started, and nothing is invoiced by it.
+  WorkspaceFeature.serviceFulfilment: _action(
+    _owner,
+    'Ada commits a coaching service to Hanna Weiss and starts it',
+    (w) async {
+      final house = w.house(DemoSpaceKey.home).stores;
+      final customer = (await house.billingCustomers.fetch(demoFirstSpaceId)).first;
+      final invoices = w.f.money.invoices.length;
+      final opened = await house.serviceFulfilments.openDirect(
+        demoFirstSpaceId,
+        requestId: 'scenario-engagement',
+        input: DirectEngagementInput(subjectId: customer.subjectId, description: 'Coaching', quantity: '3'),
+      );
+      final started = await house.serviceFulfilments.transition(
+        demoFirstSpaceId,
+        opened.fulfilment.id,
+        expectedRevision: opened.fulfilment.revision,
+        to: FulfilmentState.started,
+        requestId: 'scenario-engagement-start',
+      );
+      return started.state == FulfilmentState.started && w.f.money.invoices.length == invoices;
     },
   ),
   // #3610 — Ctrl+K finds an invoice of the Demo by its number, and a
