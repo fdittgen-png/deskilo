@@ -50397,6 +50397,18 @@ abstract class AppLocalizations {
   /// **'How long the server waits for the company registry (VIES) before a supplier lookup counts as timed out. The person keeps what they typed and may retry or go on by hand.'**
   String get settingHintPurchaseSupplierLookupTimeoutSeconds;
 
+  /// #4291 hint of the setting quotes.default_validity_days
+  ///
+  /// In en, this message translates to:
+  /// **'How many days a new quote stays valid when its author states no end date. Never more than the longest validity.'**
+  String get settingHintQuoteDefaultValidity;
+
+  /// #4291 hint of the setting quotes.max_validity_days
+  ///
+  /// In en, this message translates to:
+  /// **'The longest a quote may stay valid, counted from its offer date. A longer validity is refused when the quote is saved.'**
+  String get settingHintQuoteMaxValidity;
+
   /// #2487 settings: Setting hint.
   ///
   /// In en, this message translates to:
@@ -50900,6 +50912,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Supplier lookup wait (seconds)'**
   String get settingLabelPurchaseSupplierLookupTimeoutSeconds;
+
+  /// #4291 label of the setting quotes.default_validity_days
+  ///
+  /// In en, this message translates to:
+  /// **'Default validity of a quote'**
+  String get settingLabelQuoteDefaultValidity;
+
+  /// #4291 label of the setting quotes.max_validity_days
+  ///
+  /// In en, this message translates to:
+  /// **'Longest validity of a quote'**
+  String get settingLabelQuoteMaxValidity;
 
   /// #2487 settings: Setting label.
   ///

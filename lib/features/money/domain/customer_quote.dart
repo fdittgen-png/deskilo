@@ -225,7 +225,7 @@ class QuoteDraftInput {
   final String subjectId;
   final List<StandaloneLine> lines;
 
-  /// Null: the business's today / 30 days after it.
+  /// Null: the business's today, and the end its own default validity gives.
   final DateTime? issuedOn;
   final DateTime? validUntil;
   final String buyerReference;

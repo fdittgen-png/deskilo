@@ -31398,6 +31398,14 @@ class AppLocalizationsEn extends AppLocalizations {
       'How long the server waits for the company registry (VIES) before a supplier lookup counts as timed out. The person keeps what they typed and may retry or go on by hand.';
 
   @override
+  String get settingHintQuoteDefaultValidity =>
+      'How many days a new quote stays valid when its author states no end date. Never more than the longest validity.';
+
+  @override
+  String get settingHintQuoteMaxValidity =>
+      'The longest a quote may stay valid, counted from its offer date. A longer validity is refused when the quote is saved.';
+
+  @override
   String get settingHintReadinessRecentExportDays =>
       'Days an export the app recorded still counts as recent evidence that recovery works. Older than this, recovery reads as unverified.';
 
@@ -31693,6 +31701,12 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get settingLabelPurchaseSupplierLookupTimeoutSeconds =>
       'Supplier lookup wait (seconds)';
+
+  @override
+  String get settingLabelQuoteDefaultValidity => 'Default validity of a quote';
+
+  @override
+  String get settingLabelQuoteMaxValidity => 'Longest validity of a quote';
 
   @override
   String get settingLabelReadinessRecentExportDays => 'Recent export window';

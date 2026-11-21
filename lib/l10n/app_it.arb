@@ -18726,6 +18726,14 @@
   },
   "settingHintPurchaseSupplierLookupPerMinute": "Il numero massimo di ricerche fornitore che una persona può fare al minuto su questo server. Oltre il limite non viene inviato nulla al registro e la ricerca risulta occupata.",
   "settingHintPurchaseSupplierLookupTimeoutSeconds": "Quanto il server attende il registro delle imprese (VIES) prima che una ricerca fornitore sia considerata scaduta. Ciò che Lei ha digitato resta; può riprovare o proseguire a mano.",
+  "settingHintQuoteDefaultValidity": "Per quanti giorni un nuovo preventivo resta valido quando l’autore non indica una data di fine. Mai oltre la validità massima.",
+  "@settingHintQuoteDefaultValidity": {
+    "description": "#4291 hint of the setting quotes.default_validity_days"
+  },
+  "settingHintQuoteMaxValidity": "Il periodo più lungo in cui un preventivo può restare valido, a partire dalla data dell’offerta. Una validità maggiore viene rifiutata al salvataggio del preventivo.",
+  "@settingHintQuoteMaxValidity": {
+    "description": "#4291 hint of the setting quotes.max_validity_days"
+  },
   "settingHintReadinessRecentExportDays": "Giorni in cui un’esportazione registrata dall’app vale ancora come prova recente che il ripristino funziona. Oltre, il ripristino resta non verificato.",
   "@settingHintReadinessRecentExportDays": {
     "description": "#2487 settings: Setting hint."
@@ -18933,6 +18941,14 @@
   },
   "settingLabelPurchaseSupplierLookupPerMinute": "Ricerche fornitore per persona al minuto",
   "settingLabelPurchaseSupplierLookupTimeoutSeconds": "Attesa della ricerca fornitore (secondi)",
+  "settingLabelQuoteDefaultValidity": "Validità predefinita di un preventivo",
+  "@settingLabelQuoteDefaultValidity": {
+    "description": "#4291 label of the setting quotes.default_validity_days"
+  },
+  "settingLabelQuoteMaxValidity": "Validità massima di un preventivo",
+  "@settingLabelQuoteMaxValidity": {
+    "description": "#4291 label of the setting quotes.max_validity_days"
+  },
   "settingLabelReadinessRecentExportDays": "Finestra dell’esportazione recente",
   "@settingLabelReadinessRecentExportDays": {
     "description": "#2487 settings: Setting label."

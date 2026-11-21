@@ -31771,6 +31771,14 @@ class AppLocalizationsFr extends AppLocalizations {
       'Durée pendant laquelle le serveur attend le registre des sociétés (VIES) avant qu’une recherche fournisseur soit considérée comme expirée. La personne garde ce qu’elle a saisi et peut réessayer ou continuer à la main.';
 
   @override
+  String get settingHintQuoteDefaultValidity =>
+      'Nombre de jours pendant lesquels un nouveau devis reste valable quand son auteur n’indique pas de date de fin. Jamais plus que la validité maximale.';
+
+  @override
+  String get settingHintQuoteMaxValidity =>
+      'La durée la plus longue pendant laquelle un devis peut rester valable, à compter de sa date d’offre. Une validité plus longue est refusée à l’enregistrement du devis.';
+
+  @override
   String get settingHintReadinessRecentExportDays =>
       'Jours pendant lesquels un export enregistré par l’application compte encore comme preuve récente que la reprise fonctionne. Au-delà, la reprise reste non vérifiée.';
 
@@ -32086,6 +32094,13 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingLabelPurchaseSupplierLookupTimeoutSeconds =>
       'Attente de la recherche fournisseur (secondes)';
+
+  @override
+  String get settingLabelQuoteDefaultValidity =>
+      'Validité par défaut d’un devis';
+
+  @override
+  String get settingLabelQuoteMaxValidity => 'Validité maximale d’un devis';
 
   @override
   String get settingLabelReadinessRecentExportDays => 'Fenêtre d’export récent';

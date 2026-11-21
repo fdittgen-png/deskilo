@@ -18726,6 +18726,14 @@
   },
   "settingHintPurchaseSupplierLookupPerMinute": "Wie viele Lieferantensuchen eine Person auf diesem Server höchstens pro Minute stellen darf. Darüber wird nichts an das Register gesendet und die Suche als ausgelastet beantwortet.",
   "settingHintPurchaseSupplierLookupTimeoutSeconds": "Wie lange der Server auf das Unternehmensregister (VIES) wartet, bevor eine Lieferantensuche als abgelaufen gilt. Die Eingaben bleiben erhalten; Sie können es erneut versuchen oder von Hand weitermachen.",
+  "settingHintQuoteDefaultValidity": "Wie viele Tage ein neues Angebot gültig bleibt, wenn der Ersteller kein Enddatum angibt. Nie länger als die längste Gültigkeit.",
+  "@settingHintQuoteDefaultValidity": {
+    "description": "#4291 hint of the setting quotes.default_validity_days"
+  },
+  "settingHintQuoteMaxValidity": "Die längste Zeit, die ein Angebot gültig bleiben darf, gerechnet ab seinem Angebotsdatum. Eine längere Gültigkeit wird beim Speichern des Angebots abgelehnt.",
+  "@settingHintQuoteMaxValidity": {
+    "description": "#4291 hint of the setting quotes.max_validity_days"
+  },
   "settingHintReadinessRecentExportDays": "Tage, in denen ein von der App erfasster Export noch als aktueller Nachweis gilt, dass die Wiederherstellung funktioniert. Danach bleibt die Wiederherstellung ungeprüft.",
   "@settingHintReadinessRecentExportDays": {
     "description": "#2487 settings: Setting hint."
@@ -18933,6 +18941,14 @@
   },
   "settingLabelPurchaseSupplierLookupPerMinute": "Lieferantensuchen pro Person und Minute",
   "settingLabelPurchaseSupplierLookupTimeoutSeconds": "Wartezeit der Lieferantensuche (Sekunden)",
+  "settingLabelQuoteDefaultValidity": "Standardgültigkeit eines Angebots",
+  "@settingLabelQuoteDefaultValidity": {
+    "description": "#4291 label of the setting quotes.default_validity_days"
+  },
+  "settingLabelQuoteMaxValidity": "Längste Gültigkeit eines Angebots",
+  "@settingLabelQuoteMaxValidity": {
+    "description": "#4291 label of the setting quotes.max_validity_days"
+  },
   "settingLabelReadinessRecentExportDays": "Zeitfenster für aktuelle Exporte",
   "@settingLabelReadinessRecentExportDays": {
     "description": "#2487 settings: Setting label."
