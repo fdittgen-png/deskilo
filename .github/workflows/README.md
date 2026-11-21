@@ -91,6 +91,15 @@ The pinned, checksum-verified scanner writes `report/workflow-security/`:
 revision, dirty-tree status, version, JSON locations and a Markdown summary.
 First-party action tags accepted by the existing hygiene test appear as pinning
 findings; they are policy differences, not newly introduced regressions.
+The summary also compares the counts per rule, severity and confidence with
+`.github/workflow-audit-baseline.json` (the counts at a recorded revision for
+the pinned scanner): a count above its baseline is listed as a new finding, one
+below it as resolved. A baseline written by another scanner version is shown and
+not compared. The comparison is a review aid: it never fails a run. Record a new
+baseline in a reviewed change with
+`WORKFLOW_AUDIT_WRITE_BASELINE=1 bash scripts/workflow_audit.sh <zizmor>` and
+commit the file (`test/tool/workflow_audit_summary_test.dart` pins its shape and
+the scanner version).
 The audit reports findings without suppressing tool/input failures. It does not
 run fixes, request a token, upload SARIF, or change required status checks.
 Remove the Pub entry to stop the pilot; remove `workflow-security.yml` to stop

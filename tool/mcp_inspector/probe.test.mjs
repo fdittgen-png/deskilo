@@ -157,3 +157,13 @@ test('the pinned client lists a real HTTP fixture, refuses redirects and times o
   exposed = tools;
   assert.equal((await captureLive({ ...options, expected: tools.map(tool => tool.name) })).tools, tools.length);
 });
+
+test('the installed Inspector CLI reports exactly the pinned version, and the lock holds it', async () => {
+  const pinned = JSON.parse(await readFile(new URL('./package.json', import.meta.url))).devDependencies['@modelcontextprotocol/inspector'];
+  assert.match(pinned, /^\d+\.\d+\.\d+$/, 'an exact pin, never a range');
+  const cli = fileURLToPath(new URL('./node_modules/@modelcontextprotocol/inspector/clients/cli/build/index.js', import.meta.url));
+  const { stdout } = await promisify(execFile)(process.execPath, [cli, '--version'], { encoding: 'utf8' });
+  assert.equal(stdout.trim(), pinned);
+  const lock = JSON.parse(await readFile(new URL('./package-lock.json', import.meta.url)));
+  assert.equal(lock.packages['node_modules/@modelcontextprotocol/inspector'].version, pinned);
+});
