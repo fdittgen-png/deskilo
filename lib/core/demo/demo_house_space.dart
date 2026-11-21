@@ -51,7 +51,7 @@ class DemoHouseData implements DemoSpaceParts {
     required DateTime now,
   }) {
     final space = listing.workspaces;
-    final reservations = RightsCheckedReservationRepository(actor: actor);
+    final reservations = RightsCheckedReservationRepository(actor: actor, clock: () => now);
     final events = FakeEventRepository(
       actor: actor,
       workspaceId: demoHouseSpaceId,
