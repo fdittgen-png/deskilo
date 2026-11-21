@@ -32,6 +32,27 @@ class _Kinds implements BusinessKindRepository {
     required String kind,
     required List<String> moreKinds,
   }) async => writes.add((kind, moreKinds));
+
+  /// Null: the server has no `apply_business_kind_v1`; else what it observed.
+  BusinessKindApplied? applied;
+  final applies = <(String, int, String)>[];
+
+  @override
+  Future<BusinessKindApplied> applyKind(
+    String workspaceId, {
+    required String requestId,
+    required String kind,
+    required List<String> moreKinds,
+    required int reviewedVersion,
+    required String reviewedDigest,
+    required Map<String, bool> flags,
+    required Map<String, bool> expected,
+  }) async {
+    final answer = applied;
+    if (answer == null) throw const BusinessKindApplyUnsupported();
+    applies.add((kind, reviewedVersion, reviewedDigest));
+    return answer;
+  }
 }
 
 BusinessKind _freelancer({int version = 1, String digest = 'aa'}) => BusinessKind(
@@ -157,5 +178,34 @@ void main() {
     expect(outcome, BusinessKindOutcome.kindSavedFlagsRefused);
     expect(kinds.writes.single.$1, 'freelancer');
     expect(workspace.flagWrites, isEmpty);
+  });
+
+  test('a server that records the stages answers for both: the reviewed '
+      'profile goes with the request, a refused kind stage asks for a new '
+      'review and a refused features stage keeps the kind', () async {
+    final workspace = FakeWorkspaceRepository.withWorkspace();
+    final kinds = _Kinds([_freelancer(version: 2, digest: 'bb')]);
+    final commands = BusinessKindCommands(kinds, workspace);
+    Future<BusinessKindOutcome> save() => commands.save(
+      'ws-1',
+      kind: 'freelancer',
+      moreKinds: const [],
+      flags: const {'invoicing': true},
+      raw: const {},
+      reviewed: _freelancer(version: 2, digest: 'bb'),
+    );
+
+    kinds.applied = const BusinessKindApplied(kindStage: 'applied', flagsStage: 'applied');
+    expect(await save(), BusinessKindOutcome.applied);
+    expect(kinds.applies.single, ('freelancer', 2, 'bb'));
+    // the earlier writers are not used when the server records the stages
+    expect(kinds.writes, isEmpty);
+    expect(workspace.flagWrites, isEmpty);
+
+    kinds.applied = const BusinessKindApplied(kindStage: 'applied', flagsStage: 'refused', refusal: 'DK409');
+    expect(await save(), BusinessKindOutcome.kindSavedFlagsRefused);
+
+    kinds.applied = const BusinessKindApplied(kindStage: 'refused', flagsStage: 'none', refusal: 'profile_changed');
+    await expectLater(save(), throwsA(isA<BusinessKindProfileChanged>()));
   });
 }

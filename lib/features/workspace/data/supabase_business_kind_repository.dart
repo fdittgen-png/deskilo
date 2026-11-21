@@ -2,8 +2,10 @@
 //
 // #3550 — the active kinds of public.business_kinds, readable by everyone
 // signed in (0703).
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/backend/schema_version.dart' show isMissingFunction;
 import '../../../core/trace/trace_logger.dart';
 import '../domain/business_kind.dart';
 
@@ -53,4 +55,43 @@ class SupabaseBusinessKindRepository implements BusinessKindRepository {
       'p_more_kinds': moreKinds.join(','),
     },
   );
+
+  @override
+  Future<BusinessKindApplied> applyKind(
+    String workspaceId, {
+    required String requestId,
+    required String kind,
+    required List<String> moreKinds,
+    required int reviewedVersion,
+    required String reviewedDigest,
+    required Map<String, bool> flags,
+    required Map<String, bool> expected,
+  }) async {
+    try {
+      final answer = await _client.rpc<Object?>(
+        'apply_business_kind_v1',
+        params: {
+          'p_workspace': workspaceId,
+          'p_request_id': requestId,
+          'p_kind': kind,
+          'p_more_kinds': moreKinds.join(','),
+          'p_reviewed_version': reviewedVersion,
+          'p_reviewed_digest': reviewedDigest,
+          'p_flags': flags,
+          'p_expected': expected.isEmpty ? null : expected,
+        },
+      );
+      final r = JsonReader.of(answer, context: 'apply_business_kind_v1');
+      return BusinessKindApplied(
+        kindStage: r.string('kind_stage'),
+        flagsStage: r.string('flags_stage'),
+        refusal: r.stringOrNull('refusal') ?? '',
+      );
+    } on PostgrestException catch (e, st) {
+      if (isMissingFunction(e)) {
+        Error.throwWithStackTrace(const BusinessKindApplyUnsupported(), st);
+      }
+      rethrow;
+    }
+  }
 }

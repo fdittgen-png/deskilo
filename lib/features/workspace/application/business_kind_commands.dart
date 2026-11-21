@@ -11,6 +11,7 @@
 // for it. The result says which stages happened: the kind saved and its
 // features applied, or the kind saved and its features refused because the
 // flags moved meanwhile: a saved kind is not a fully applied recipe.
+import '../../../core/ids/request_id.dart';
 import '../domain/business_kind.dart';
 import '../domain/feature_flags_write.dart';
 import '../domain/workspace_feature.dart';
@@ -56,19 +57,40 @@ class BusinessKindCommands {
     required Set<WorkspaceFeature> raw,
     required BusinessKind reviewed,
   }) async {
+    final byKey = WorkspaceFeature.values.asNameMap();
+    final expected = {
+      for (final key in flags.keys) key: raw.contains(byKey[key]),
+    };
+    // a server that records the stages answers for both; an earlier one is
+    // written to by the earlier writers below
+    try {
+      final applied = await _kinds.applyKind(
+        workspaceId,
+        requestId: newRequestId(),
+        kind: kind,
+        moreKinds: moreKinds,
+        reviewedVersion: reviewed.profileVersion,
+        reviewedDigest: reviewed.profileDigest,
+        flags: flags,
+        expected: expected,
+      );
+      if (applied.kindStage == 'refused') {
+        throw BusinessKindProfileChanged(kind);
+      }
+      return applied.flagsStage == 'refused'
+          ? BusinessKindOutcome.kindSavedFlagsRefused
+          : BusinessKindOutcome.applied;
+    } on BusinessKindApplyUnsupported {
+      // fall through to the earlier writers
+    }
     final now = (await _kinds.kinds()).where((k) => k.code == kind).firstOrNull;
     if (now == null || !reviewed.sameProfileAs(now)) {
       throw BusinessKindProfileChanged(kind);
     }
     await _kinds.setKind(workspaceId, kind: kind, moreKinds: moreKinds);
     if (flags.isEmpty) return BusinessKindOutcome.applied;
-    final byKey = WorkspaceFeature.values.asNameMap();
     try {
-      await _workspaces.setFeatureFlags(
-        workspaceId,
-        flags,
-        expected: {for (final key in flags.keys) key: raw.contains(byKey[key])},
-      );
+      await _workspaces.setFeatureFlags(workspaceId, flags, expected: expected);
     } on FeatureFlagsConflict {
       return BusinessKindOutcome.kindSavedFlagsRefused;
     }

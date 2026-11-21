@@ -62,4 +62,46 @@ abstract interface class BusinessKindRepository {
     required String kind,
     required List<String> moreKinds,
   });
+
+  /// #4168 — the confirmation as one recorded request (`apply_business_kind_v1`,
+  /// 0835): the server checks the reviewed profile, saves the kind, writes the
+  /// features against the read-set and records what each stage did. Throws
+  /// [BusinessKindApplyUnsupported] on a server from before it.
+  Future<BusinessKindApplied> applyKind(
+    String workspaceId, {
+    required String requestId,
+    required String kind,
+    required List<String> moreKinds,
+    required int reviewedVersion,
+    required String reviewedDigest,
+    required Map<String, bool> flags,
+    required Map<String, bool> expected,
+  });
+}
+
+/// What the server observed for each stage of a confirmation.
+@immutable
+class BusinessKindApplied {
+  const BusinessKindApplied({
+    required this.kindStage,
+    required this.flagsStage,
+    this.refusal = '',
+  });
+
+  /// `applied`, `no_change` or `refused`.
+  final String kindStage;
+
+  /// `applied`, `no_change`, `refused` or `none` (no features were confirmed).
+  final String flagsStage;
+
+  /// The typed refusal of the stage that was refused, else empty.
+  final String refusal;
+}
+
+/// The server has no `apply_business_kind_v1`: the app uses the earlier writers.
+class BusinessKindApplyUnsupported implements Exception {
+  const BusinessKindApplyUnsupported();
+
+  @override
+  String toString() => 'BusinessKindApplyUnsupported';
 }

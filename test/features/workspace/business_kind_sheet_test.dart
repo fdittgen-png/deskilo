@@ -47,6 +47,18 @@ class _Kinds implements BusinessKindRepository {
     required String kind,
     required List<String> moreKinds,
   }) async => writes.add((kind, moreKinds));
+
+  @override
+  Future<BusinessKindApplied> applyKind(
+    String workspaceId, {
+    required String requestId,
+    required String kind,
+    required List<String> moreKinds,
+    required int reviewedVersion,
+    required String reviewedDigest,
+    required Map<String, bool> flags,
+    required Map<String, bool> expected,
+  }) => throw const BusinessKindApplyUnsupported();
 }
 
 /// The profile 0834 seeds for the freelancer: no provider, no messages.

@@ -69,4 +69,16 @@ class DemoBusinessKindRepository implements BusinessKindRepository {
       ].join(','),
     );
   }
+
+  @override
+  Future<BusinessKindApplied> applyKind(
+    String workspaceId, {
+    required String requestId,
+    required String kind,
+    required List<String> moreKinds,
+    required int reviewedVersion,
+    required String reviewedDigest,
+    required Map<String, bool> flags,
+    required Map<String, bool> expected,
+  }) => throw const BusinessKindApplyUnsupported();
 }
