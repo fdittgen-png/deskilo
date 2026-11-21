@@ -59,9 +59,9 @@ $f$;
 
 create or replace function pg_temp.move(p_req int, p_item int, p_qty numeric, p_from text, p_to text, p_unit text default null)
 returns text language sql as $f$
-  select pg_temp.run_as(pg_temp.u(1), format('select public.stock_move_v1(%L, %L, %L::jsonb, ''receipt'')::text',
+  select pg_temp.run_as(pg_temp.u(1), format('select public.stock_move_v1(%L, %L, %L::jsonb, '||(case when p_from = 'SUPPLIER' then '''receipt''' when p_to in ('CUSTOMER', 'LOSS') then '''loss''' else '''transfer''' end)||')::text',
     pg_temp.u(101), pg_temp.u(p_req), jsonb_build_array(jsonb_build_object('item_id', pg_temp.u(p_item), 'quantity', p_qty,
-      'from', pg_temp.loc(p_from), 'to', pg_temp.loc(p_to)) || case when p_unit is null then '{}'::jsonb else jsonb_build_object('unit', p_unit) end)))
+      'from', pg_temp.loc(p_from), 'to', pg_temp.loc(case when p_to = 'CUSTOMER' then 'LOSS' else p_to end)) || case when p_unit is null then '{}'::jsonb else jsonb_build_object('unit', p_unit) end)))
 $f$;
 
 create or replace function pg_temp.try(p_sql text) returns text language plpgsql as $f$
@@ -93,9 +93,9 @@ returns text language sql as $f$
 $f$;
 create or replace function pg_temp.move(p_req int, p_item int, p_qty numeric, p_from text, p_to text, p_variant uuid default null, p_extra jsonb default '{}'::jsonb)
 returns text language sql as $f$
-  select pg_temp.run_as(pg_temp.u(1), format('select public.stock_move_v1(%L, %L, %L::jsonb, ''receipt'')::text',
+  select pg_temp.run_as(pg_temp.u(1), format('select public.stock_move_v1(%L, %L, %L::jsonb, '||(case when p_from = 'SUPPLIER' then '''receipt''' when p_to in ('CUSTOMER', 'LOSS') then '''loss''' else '''transfer''' end)||')::text',
     pg_temp.u(101), pg_temp.u(p_req), jsonb_build_array(jsonb_build_object('item_id', pg_temp.u(p_item), 'quantity', p_qty,
-      'from', pg_temp.loc(p_from), 'to', pg_temp.loc(p_to)) || case when p_variant is null then '{}'::jsonb else jsonb_build_object('variant_id', p_variant) end || p_extra)))
+      'from', pg_temp.loc(p_from), 'to', pg_temp.loc(case when p_to = 'CUSTOMER' then 'LOSS' else p_to end)) || case when p_variant is null then '{}'::jsonb else jsonb_build_object('variant_id', p_variant) end || p_extra)))
 $f$;
 create or replace function pg_temp.on_hand(p_variant uuid, p_item int default 301) returns numeric language sql stable as $f$
   select coalesce(sum(quantity), 0) from public.stock_balances where item_id = pg_temp.u(p_item)
@@ -233,7 +233,7 @@ select is(pg_temp.try(format($q$update public.events set status = 'confirmed' wh
           || ' ' || (select count(*) from public.stock_balances where item_id = pg_temp.u(301) and location_id = pg_temp.loc('MAIN') and quantity < 0)::text,
   'DKG12 0', 'with allow_negative on it is still refused, never minus one');
 delete from public.setting_values where key = 'stock.allow_negative' and workspace_id = pg_temp.u(101);
-select is(pg_temp.try(format('update public.services set stock = 40 where id = %L', pg_temp.u(301))), 'DKG12', 'a shelf-count edit of an item with variants is refused');
+select is(pg_temp.try(format('update public.services set stock = 40 where id = %L', pg_temp.u(301))), 'DKG13', 'a shelf-count edit is refused: the ledger keeps the stock (and an item with variants keeps its count per variant)');
 select is(pg_temp.on_hand(null::uuid)::text, '0', 'no plain stock was created by any of it');
 
 -- Deactivating a variant that has stock, and activating variants over plain stock.
@@ -270,8 +270,8 @@ select is((select count(*) from public.stock_movements where item_id = pg_temp.u
   'an item without variants keeps variant_id null (the released 410 test runs unchanged on this migration)');
 
 -- The item row is locked before the quantity is computed, so the factor that computed it is the one frozen.
-select ok(regexp_replace(pg_get_functiondef('public.stock_move_v1(uuid, uuid, jsonb, text, timestamptz, jsonb)'::regprocedure), '\s+', ' ', 'g') like '%and stockable for update%',
-  'stock_move_v1 takes the item row for update before it converts the quantity');
+select ok(regexp_replace(pg_get_functiondef('public.stock_apply_lines(uuid, uuid, uuid, jsonb, text, timestamptz, jsonb, text)'::regprocedure), '\s+', ' ', 'g') like '%order by id for update%',
+  'the item rows are locked (in id order) before any quantity is converted');
 
 select * from finish();
 rollback;

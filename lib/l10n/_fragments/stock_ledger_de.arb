@@ -21,5 +21,9 @@
   "refusalStockVariant": "Dieser Artikel hat Varianten: Geben Sie an, welche (Farbe, Größe) bewegt, verkauft oder gezählt wird. Nichts wurde geändert.",
   "@refusalStockVariant": {
     "description": "#4169 (0837) DKG12: an item with variants moved, sold or counted without naming one."
+  },
+  "refusalStockLedgerKept": "Der Bestand dieses Betriebs wird vom Lagerbuch geführt: nutzen Sie einen Lagervorgang (Umlagerung, Entnahme, Wareneingang), nicht den Zähler. Nichts wurde geändert.",
+  "@refusalStockLedgerKept": {
+    "description": "#4170 (0850) DKG13: a count written from outside the ledger."
   }
 }

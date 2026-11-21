@@ -12271,6 +12271,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureStockReceivingTitle => 'Receiving into stock';
 
   @override
+  String get featureStockTakeOutDesc =>
+      'Take goods out of stock for use or as a loss, with the reason and the lot. Off: no consumption or loss is offered; transfers and receiving are unaffected.';
+
+  @override
+  String get featureStockTakeOutTitle => 'Taking goods out';
+
+  @override
   String get featureSubscriptionInvoicesDesc =>
       'The membership fee is invoiced before the month it pays for, on a date you choose. Off: the fee stays on the whole-month invoice.';
 
@@ -28274,6 +28281,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get refusalStockItem =>
       'This is not an item this business keeps in stock. Nothing was moved.';
+
+  @override
+  String get refusalStockLedgerKept =>
+      'The stock of this business is kept by its ledger: use a stock command (a transfer, a take-out, a receipt), not the count. Nothing was changed.';
 
   @override
   String get refusalStockLocation =>

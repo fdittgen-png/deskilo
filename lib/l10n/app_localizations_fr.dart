@@ -12417,6 +12417,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get featureStockReceivingTitle => 'Réception en stock';
 
   @override
+  String get featureStockTakeOutDesc =>
+      'Sortir des marchandises du stock pour usage ou comme perte, avec le motif et le lot. Désactivé : ni consommation ni perte n’est proposée ; les transferts et la réception ne changent pas.';
+
+  @override
+  String get featureStockTakeOutTitle => 'Sorties de stock';
+
+  @override
   String get featureSubscriptionInvoicesDesc =>
       'La cotisation est facturée avant le mois qu\'elle paie, à une date que vous choisissez. Désactivé : la cotisation reste sur la facture du mois.';
 
@@ -28599,6 +28606,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get refusalStockItem =>
       'Ce n\'est pas un article que cette entreprise garde en stock. Rien n\'a été déplacé.';
+
+  @override
+  String get refusalStockLedgerKept =>
+      'Le stock de cette entreprise est tenu par son registre : utilisez une opération de stock (transfert, sortie, réception), pas le compteur. Rien n’a été modifié.';
 
   @override
   String get refusalStockLocation =>

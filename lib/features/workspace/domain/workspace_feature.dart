@@ -445,7 +445,12 @@ enum WorkspaceFeature {
   /// into explicit places and new lots, with its origin kept. Asked for,
   /// under the goods ledger. Off: a delivery is recorded as before and no
   /// stock moves. Turning it on waits for #4170 (G4-A).
-  stockReceiving;
+  stockReceiving,
+
+  /// #4170 — taking goods out of stock for use or as a loss. Asked for, under
+  /// the goods ledger. Off: goods cannot be consumed or written off from the
+  /// stock screens; transfers and receiving are unaffected.
+  stockTakeOut;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;

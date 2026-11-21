@@ -12353,6 +12353,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get featureStockReceivingTitle => 'Recepción en existencias';
 
   @override
+  String get featureStockTakeOutDesc =>
+      'Sacar mercancías de las existencias para uso o como pérdida, con el motivo y el lote. Desactivado: no se ofrece consumo ni pérdida; las transferencias y la recepción no cambian.';
+
+  @override
+  String get featureStockTakeOutTitle => 'Salidas de existencias';
+
+  @override
   String get featureSubscriptionInvoicesDesc =>
       'La cuota se factura antes del mes que paga, en la fecha que elija. Desactivado: la cuota sigue en la factura del mes.';
 
@@ -28478,6 +28485,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get refusalStockItem =>
       'No es un artículo que este negocio tenga en existencias. No se ha movido nada.';
+
+  @override
+  String get refusalStockLedgerKept =>
+      'Las existencias de este negocio las lleva su libro: use una operación de existencias (traslado, salida, recepción), no el contador. No se cambió nada.';
 
   @override
   String get refusalStockLocation =>

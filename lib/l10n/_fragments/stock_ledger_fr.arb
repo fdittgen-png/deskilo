@@ -21,5 +21,9 @@
   "refusalStockVariant": "Cet article a des variantes : indiquez laquelle (couleur, taille) déplacer, vendre ou compter. Rien n’a été modifié.",
   "@refusalStockVariant": {
     "description": "#4169 (0837) DKG12: an item with variants moved, sold or counted without naming one."
+  },
+  "refusalStockLedgerKept": "Le stock de cette entreprise est tenu par son registre : utilisez une opération de stock (transfert, sortie, réception), pas le compteur. Rien n’a été modifié.",
+  "@refusalStockLedgerKept": {
+    "description": "#4170 (0850) DKG13: a count written from outside the ledger."
   }
 }

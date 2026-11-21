@@ -658,6 +658,10 @@ window.SETUP_REGISTRY={
   [
    "stockReceiving",
    false
+  ],
+  [
+   "stockTakeOut",
+   false
   ]
  ],
  "requires": {
@@ -771,7 +775,8 @@ window.SETUP_REGISTRY={
   "billingCustomers": "invoicing",
   "customerQuotes": "invoicing",
   "stockLots": "stockManagement",
-  "stockReceiving": "stockManagement"
+  "stockReceiving": "stockManagement",
+  "stockTakeOut": "stockManagement"
  },
  "availableIn": {
   "recapitulativeStatement": [
@@ -1488,7 +1493,8 @@ window.SETUP_PROCESSES=[
      "carnets",
      "stockManagement",
      "stockLots",
-     "stockReceiving"
+     "stockReceiving",
+     "stockTakeOut"
     ]
    }
   ]
@@ -1973,7 +1979,8 @@ window.SETUP_LEVELS={
       "purchaseOrders",
       "stockManagement",
       "stockLots",
-      "stockReceiving"
+      "stockReceiving",
+      "stockTakeOut"
      ],
      "needs": {
       "money": "invoices"

@@ -19966,6 +19966,18 @@ abstract class AppLocalizations {
   /// **'Receiving into stock'**
   String get featureStockReceivingTitle;
 
+  /// #4170 what the taking goods out feature does, and what off means
+  ///
+  /// In en, this message translates to:
+  /// **'Take goods out of stock for use or as a loss, with the reason and the lot. Off: no consumption or loss is offered; transfers and receiving are unaffected.'**
+  String get featureStockTakeOutDesc;
+
+  /// #4170 the name of the taking goods out feature
+  ///
+  /// In en, this message translates to:
+  /// **'Taking goods out'**
+  String get featureStockTakeOutTitle;
+
   /// Shown as a text in feature copy (workspace).
   ///
   /// In en, this message translates to:
@@ -45368,6 +45380,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This is not an item this business keeps in stock. Nothing was moved.'**
   String get refusalStockItem;
+
+  /// #4170 (0850) DKG13: a count written from outside the ledger.
+  ///
+  /// In en, this message translates to:
+  /// **'The stock of this business is kept by its ledger: use a stock command (a transfer, a take-out, a receipt), not the count. Nothing was changed.'**
+  String get refusalStockLedgerKept;
 
   /// refusal DKG05 (#3824)
   ///

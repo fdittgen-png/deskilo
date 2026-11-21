@@ -12382,6 +12382,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get featureStockReceivingTitle => 'Wareneingang ins Lager';
 
   @override
+  String get featureStockTakeOutDesc =>
+      'Waren für den Verbrauch oder als Verlust aus dem Lager nehmen, mit Grund und Charge. Aus: weder Verbrauch noch Verlust werden angeboten; Umlagerungen und Wareneingang bleiben unberührt.';
+
+  @override
+  String get featureStockTakeOutTitle => 'Warenausgang';
+
+  @override
   String get featureSubscriptionInvoicesDesc =>
       'Der Mitgliedsbeitrag wird vor dem Monat berechnet, den er bezahlt, an einem Datum Ihrer Wahl. Aus: Der Beitrag bleibt auf der Monatsrechnung.';
 
@@ -28561,6 +28568,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get refusalStockItem =>
       'Dies ist kein Artikel, den dieses Unternehmen auf Lager führt. Nichts wurde bewegt.';
+
+  @override
+  String get refusalStockLedgerKept =>
+      'Der Bestand dieses Betriebs wird vom Lagerbuch geführt: nutzen Sie einen Lagervorgang (Umlagerung, Entnahme, Wareneingang), nicht den Zähler. Nichts wurde geändert.';
 
   @override
   String get refusalStockLocation =>

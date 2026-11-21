@@ -1451,6 +1451,10 @@ window.SETUP_L10N={
    "stockReceiving": [
     "Receiving into stock",
     "Put the goods of a purchase-order delivery away into places and new lots, once, with their origin kept. Off: a delivery is recorded as before and no stock moves."
+   ],
+   "stockTakeOut": [
+    "Taking goods out",
+    "Take goods out of stock for use or as a loss, with the reason and the lot. Off: no consumption or loss is offered; transfers and receiving are unaffected."
    ]
   },
   "process": {
@@ -3298,6 +3302,10 @@ window.SETUP_L10N={
    "stockReceiving": [
     "Réception en stock",
     "Ranger les marchandises d’une livraison de commande fournisseur dans des emplacements et de nouveaux lots, une seule fois, avec leur origine conservée. Désactivé : une livraison est enregistrée comme avant et aucun stock ne bouge."
+   ],
+   "stockTakeOut": [
+    "Sorties de stock",
+    "Sortir des marchandises du stock pour usage ou comme perte, avec le motif et le lot. Désactivé : ni consommation ni perte n’est proposée ; les transferts et la réception ne changent pas."
    ]
   },
   "process": {
@@ -5145,6 +5153,10 @@ window.SETUP_L10N={
    "stockReceiving": [
     "Wareneingang ins Lager",
     "Die Waren einer Lieferung zu einer Lieferantenbestellung einmalig in Lagerorte und neue Chargen einlagern, mit erhaltener Herkunft. Aus: eine Lieferung wird wie bisher erfasst und kein Bestand bewegt sich."
+   ],
+   "stockTakeOut": [
+    "Warenausgang",
+    "Waren für den Verbrauch oder als Verlust aus dem Lager nehmen, mit Grund und Charge. Aus: weder Verbrauch noch Verlust werden angeboten; Umlagerungen und Wareneingang bleiben unberührt."
    ]
   },
   "process": {
@@ -6992,6 +7004,10 @@ window.SETUP_L10N={
    "stockReceiving": [
     "Recepción en existencias",
     "Colocar las mercancías de una entrega de pedido a proveedor en ubicaciones y nuevos lotes, una sola vez, conservando su origen. Desactivado: una entrega se registra como antes y no se mueven existencias."
+   ],
+   "stockTakeOut": [
+    "Salidas de existencias",
+    "Sacar mercancías de las existencias para uso o como pérdida, con el motivo y el lote. Desactivado: no se ofrece consumo ni pérdida; las transferencias y la recepción no cambian."
    ]
   },
   "process": {
@@ -8839,6 +8855,10 @@ window.SETUP_L10N={
    "stockReceiving": [
     "Ricezione a magazzino",
     "Collocare le merci di una consegna di ordine a fornitore in ubicazioni e nuovi lotti, una sola volta, conservandone l’origine. Disattivato: una consegna è registrata come prima e nessuna giacenza si muove."
+   ],
+   "stockTakeOut": [
+    "Uscite di magazzino",
+    "Prelevare merci dal magazzino per uso o come perdita, con motivo e lotto. Disattivato: non sono offerti consumo né perdita; i trasferimenti e la ricezione restano invariati."
    ]
   },
   "process": {

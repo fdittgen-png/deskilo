@@ -38,4 +38,14 @@ const Map<WorkspaceFeature, FeatureManifestEntry> stockFeatureManifest = {
     requires: WorkspaceFeature.stockManagement,
     defaultOn: false,
   ),
+  // #4170 — taking goods out for use or as a loss, with the reason and the lot.
+  // Asked for, under the goods ledger. Off: no consumption or loss is offered;
+  // transfers and receiving need only the ledger.
+  WorkspaceFeature.stockTakeOut: FeatureManifestEntry(
+    feature: WorkspaceFeature.stockTakeOut,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.stockManagement,
+    defaultOn: false,
+  ),
 };

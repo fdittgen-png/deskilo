@@ -16123,6 +16123,14 @@
   "@featureStockReceivingTitle": {
     "description": "#4171 the name of the receiving into stock feature"
   },
+  "featureStockTakeOutDesc": "Take goods out of stock for use or as a loss, with the reason and the lot. Off: no consumption or loss is offered; transfers and receiving are unaffected.",
+  "@featureStockTakeOutDesc": {
+    "description": "#4170 what the taking goods out feature does, and what off means"
+  },
+  "featureStockTakeOutTitle": "Taking goods out",
+  "@featureStockTakeOutTitle": {
+    "description": "#4170 the name of the taking goods out feature"
+  },
   "featureSubscriptionInvoicesDesc": "The membership fee is invoiced before the month it pays for, on a date you choose. Off: the fee stays on the whole-month invoice.",
   "@featureSubscriptionInvoicesDesc": {
     "description": "Shown as a text in feature copy (workspace)."
@@ -37139,6 +37147,10 @@
   "refusalStockItem": "This is not an item this business keeps in stock. Nothing was moved.",
   "@refusalStockItem": {
     "description": "refusal DKG04 (#3824)"
+  },
+  "refusalStockLedgerKept": "The stock of this business is kept by its ledger: use a stock command (a transfer, a take-out, a receipt), not the count. Nothing was changed.",
+  "@refusalStockLedgerKept": {
+    "description": "#4170 (0850) DKG13: a count written from outside the ledger."
   },
   "refusalStockLocation": "This place is not one of this business's, is no longer in use, or is both the start and the end of the move. Nothing was moved.",
   "@refusalStockLocation": {

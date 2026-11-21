@@ -105,7 +105,7 @@ values (pg_temp.u(101), 'shelf', 'SHELF-A', pg_temp.loc(101, 'MAIN'));
 select is((select string_agg(kind || ':' || code, ' ' order by kind) from public.stock_locations
             where workspace_id = pg_temp.u(101) and kind <> 'shelf')
           || ' / ' || pg_temp.on_hand(301, 'MAIN')::text,
-  'customer:CUSTOMER loss:LOSS opening:OPENING supplier:SUPPLIER warehouse:MAIN / 5.000000',
+  'customer:CUSTOMER in_transit:TRANSIT loss:LOSS opening:OPENING supplier:SUPPLIER warehouse:MAIN / 5.000000',
   'switched on, the business has its four virtual places and MAIN, and the shelf count is the opening');
 
 -- A receipt in: 2 cartons of 12.
@@ -122,16 +122,16 @@ select ok(pg_temp.move(501, jsonb_build_array(pg_temp.line(301, 3, 'SUPPLIER', '
 select pg_temp.move(502, jsonb_build_array(pg_temp.line(301, 10, 'MAIN', 'SHELF-A')), 'transfer');
 select is(pg_temp.on_hand(301, 'MAIN')::text || ' ' || pg_temp.on_hand(301, 'SHELF-A')::text,
   '19.000000 10.000000', 'a transfer moves from one place to the other');
-select pg_temp.move(503, jsonb_build_array(pg_temp.line(301, 3, 'SHELF-A', 'CUSTOMER')), 'sale');
+select pg_temp.move(503, jsonb_build_array(pg_temp.line(301, 3, 'SHELF-A', 'LOSS')), 'consumption');
 select is(pg_temp.on_hand(301, 'SHELF-A')::text || ' ' || (select stock from public.services where id = pg_temp.u(301))::text,
   '7.000000 26', 'a take-out leaves the shelf, and the shelf count mirrors the sum over the real places');
-select is(left(pg_temp.move(504, jsonb_build_array(pg_temp.line(301, 50, 'SHELF-A', 'CUSTOMER')), 'sale'), 9)
+select is(left(pg_temp.move(504, jsonb_build_array(pg_temp.line(301, 50, 'SHELF-A', 'LOSS')), 'consumption'), 9)
           || ' ' || pg_temp.on_hand(301, 'SHELF-A')::text,
   'ERR DKG03 7.000000', 'a move that would go below zero is refused with DKG03 and moves nothing');
 
 -- Units: 2 litres in, 3 glasses of a fifth of a litre out.
 select pg_temp.move(505, jsonb_build_array(pg_temp.line(302, 2, 'SUPPLIER', 'MAIN', 'l')), 'receipt');
-select pg_temp.move(506, jsonb_build_array(pg_temp.line(302, 3, 'MAIN', 'CUSTOMER', 'glass')), 'sale');
+select pg_temp.move(506, jsonb_build_array(pg_temp.line(302, 3, 'MAIN', 'LOSS', 'glass')), 'consumption');
 select is(pg_temp.on_hand(302, 'MAIN'), 1.400000::numeric, '3 glasses of 1/5 litre taken from 2 litres leave 1.4 exactly');
 select is(pg_temp.on_hand(302, 'MAIN')::text || ' ' || (select entered_quantity || ' ' || entered_unit
             from public.stock_movements where request_id = pg_temp.u(506)),
@@ -151,10 +151,10 @@ select pg_temp.move(509, jsonb_build_array(pg_temp.line(303, 10, 'SUPPLIER', 'MA
          '{"new_lot": {"code": "A", "total_cost_minor": 1000}}')), 'receipt', '2026-01-10 10:00+01');
 select pg_temp.move(510, jsonb_build_array(pg_temp.line(303, 10, 'SUPPLIER', 'MAIN', null,
          '{"new_lot": {"code": "B", "total_cost_minor": 1500}}')), 'receipt', '2026-02-10 10:00+01');
-select ok(pg_temp.move(511, jsonb_build_array(pg_temp.line(303, 5, 'MAIN', 'CUSTOMER')), 'sale') like 'ERR DKG06 %',
+select ok(pg_temp.move(511, jsonb_build_array(pg_temp.line(303, 5, 'MAIN', 'LOSS')), 'consumption') like 'ERR DKG06 %',
   'an item tracked by lot does not leave without its lot');
-select pg_temp.move(512, jsonb_build_array(pg_temp.line(303, 5, 'MAIN', 'CUSTOMER', null,
-         jsonb_build_object('lot_id', (select id from public.stock_lots where item_id = pg_temp.u(303) and lot_code = 'A')))), 'sale');
+select pg_temp.move(512, jsonb_build_array(pg_temp.line(303, 5, 'MAIN', 'LOSS', null,
+         jsonb_build_object('lot_id', (select id from public.stock_lots where item_id = pg_temp.u(303) and lot_code = 'A')))), 'consumption');
 select is(pg_temp.run_as(pg_temp.u(1), format($q$select (public.stock_value_at_v1(%L, '2026-01-31 00:00+01') ->> 'total_minor')
             || ' ' || (public.stock_value_at_v1(%L, '2026-03-01 00:00+01') ->> 'total_minor')
             || ' ' || (public.stock_value_at_v1(%L, now()) ->> 'total_minor')$q$, pg_temp.u(101), pg_temp.u(101), pg_temp.u(101))),
@@ -183,7 +183,7 @@ select ok(pg_temp.move(513, jsonb_build_array(pg_temp.line(301, 1, 'MAIN', 'SHEL
 
 select is(left(pg_temp.run_as(pg_temp.u(2), format('update public.services set stock = 99 where id = %L returning stock::text', pg_temp.u(301))), 9)
           || ' ' || (select stock from public.services where id = pg_temp.u(301))::text,
-  'ERR DKN01 26', 'a member who edits the catalogue but may not move stock cannot change a count');
+  'ERR DKG13 26', 'a member who edits the catalogue cannot change a count either: the ledger keeps it (#4170)');
 select is(pg_temp.refusal(format($q$update public.services set inventory_unit = 'kg' where id = %L$q$, pg_temp.u(301)))
           || ' ' || pg_temp.refusal(format($q$update public.services set tracking = 'lot' where id = %L$q$, pg_temp.u(301))),
   'DKG08 DKG08', 'an item with movements keeps the unit and the tracking its history was written in');
@@ -213,11 +213,12 @@ select is((select stock from public.services where id = pg_temp.u(301))::text ||
 select ok(pg_temp.run_as(pg_temp.u(1), format('select public.record_service_charge(%L, %L, %L, 500)::text',
          pg_temp.u(101), pg_temp.u(201), pg_temp.u(301))) like '%out of stock: 24 left%',
   'an empty shelf refuses as before');
-update public.services set stock = 30 where id = pg_temp.u(301);
-select is((select stock from public.services where id = pg_temp.u(301))::text || ' ' || pg_temp.on_hand(301, 'MAIN')::text
-          || ' ' || (select string_agg(reason || ':' || quantity, ',') from public.stock_movements
-                      where item_id = pg_temp.u(301) and from_location_id = pg_temp.loc(101, 'LOSS')),
-  '30 23.000000 adjustment:6.000000', 'an edited count is an adjustment from the loss place, and the count still mirrors the ledger');
+-- Once the ledger exists the count is a read-only mirror (#4170): an edit is refused (DKG13), the ledger keeps the stock.
+create or replace function pg_temp.try(p_sql text) returns text language plpgsql as $f$
+begin execute p_sql; return 'ok'; exception when others then return sqlstate; end
+$f$;
+select is(pg_temp.try(format('update public.services set stock = 30 where id = %L', pg_temp.u(301))) || ' ' || pg_temp.on_hand(301, 'MAIN')::text,
+  'DKG13 17.000000', 'an edited count is refused once the ledger exists, and changes no balance');
 
 select * from finish();
 rollback;

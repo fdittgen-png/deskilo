@@ -297,5 +297,13 @@
   "featureStockReceivingDesc": "Collocare le merci di una consegna di ordine a fornitore in ubicazioni e nuovi lotti, una sola volta, conservandone l’origine. Disattivato: una consegna è registrata come prima e nessuna giacenza si muove.",
   "@featureStockReceivingDesc": {
     "description": "#4171 what the receiving into stock feature does, and what off means"
+  },
+  "featureStockTakeOutTitle": "Uscite di magazzino",
+  "@featureStockTakeOutTitle": {
+    "description": "#4170 the name of the taking goods out feature"
+  },
+  "featureStockTakeOutDesc": "Prelevare merci dal magazzino per uso o come perdita, con motivo e lotto. Disattivato: non sono offerti consumo né perdita; i trasferimenti e la ricezione restano invariati.",
+  "@featureStockTakeOutDesc": {
+    "description": "#4170 what the taking goods out feature does, and what off means"
   }
 }
