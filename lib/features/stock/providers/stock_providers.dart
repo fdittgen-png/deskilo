@@ -84,3 +84,11 @@ final stockConfigCommandsProvider = Provider<StockConfigCommands>(
 final stockReceivingCommandsProvider = Provider<StockReceivingCommands>(
   (ref) => SupabaseStockReceivingCommands(ref.watch(selectedWorkspaceClientProvider)),
 );
+
+/// What was put away of the deliveries of one order, read again after each
+/// put-away.
+final orderPutAwayProvider = FutureProvider.autoDispose
+    .family<List<ReceiptAllocation>, ({String workspaceId, String orderId})>(
+      (ref, key) => ref.watch(stockReceivingCommandsProvider).allocationsOfOrder(key.workspaceId, key.orderId),
+      retry: (_, _) => null,
+    );

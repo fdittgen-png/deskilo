@@ -118,6 +118,7 @@ class ReceiptAllocation {
     required this.movementId,
     required this.enteredQuantity,
     required this.inventoryQuantity,
+    this.lineNo = 0,
     this.enteredUnit = '',
     this.orderReference = '',
     this.supplierName = '',
@@ -136,6 +137,7 @@ class ReceiptAllocation {
       movementId: r.string('movement_id'),
       enteredQuantity: ExactQuantity.parse(r.string('entered_quantity')),
       inventoryQuantity: ExactQuantity.parse(r.string('inventory_quantity')),
+      lineNo: r.objectOrNull('purchase_order_lines')?.integer('line_no') ?? 0,
       enteredUnit: r.stringOr('entered_unit'),
       orderReference: r.stringOr('order_reference'),
       supplierName: r.stringOr('supplier_name'),
@@ -150,6 +152,9 @@ class ReceiptAllocation {
   final String lotId;
   final String locationId;
   final String movementId;
+
+  /// The number of the order line it came from (0 when the read did not say).
+  final int lineNo;
 
   /// In the unit of the order line, as the delivery counted it.
   final ExactQuantity enteredQuantity;
@@ -192,6 +197,9 @@ class DeliveryDraft {
 abstract interface class StockReceivingCommands {
   /// What was put away of one delivery, oldest first.
   Future<List<ReceiptAllocation>> allocations(String workspaceId, String receiptId);
+
+  /// What was put away of every delivery of one order, oldest first.
+  Future<List<ReceiptAllocation>> allocationsOfOrder(String workspaceId, String orderId);
 
   /// Puts away (more of) a recorded delivery.
   Future<PutAwayResult> putAway(

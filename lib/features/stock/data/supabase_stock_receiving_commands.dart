@@ -30,6 +30,21 @@ class SupabaseStockReceivingCommands implements StockReceivingCommands {
   }
 
   @override
+  Future<List<ReceiptAllocation>> allocationsOfOrder(String workspaceId, String orderId) async {
+    final rows = await _client
+        .from('stock_receipt_allocations')
+        .select(
+          'id, receipt_line_id, item_id, variant_id, lot_id, location_id, movement_id, '
+          'entered_unit, entered_quantity, inventory_quantity, order_reference, supplier_name, line_text, '
+          'purchase_order_lines(line_no), purchase_order_receipts!inner(order_id)',
+        )
+        .eq('workspace_id', workspaceId)
+        .eq('purchase_order_receipts.order_id', orderId)
+        .order('created_datetime');
+    return [for (final row in rows) ReceiptAllocation.fromJson(row)];
+  }
+
+  @override
   Future<PutAwayResult> putAway(
     String workspaceId,
     String receiptId,
