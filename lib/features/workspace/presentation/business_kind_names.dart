@@ -11,6 +11,7 @@ String? businessKindLabel(AppLocalizations l10n, String code) => switch (code) {
   'studio' => l10n.businessKindNameStudio,
   'practice' => l10n.businessKindNamePractice,
   'salon' => l10n.businessKindNameSalon,
+  'freelancer' => l10n.businessKindNameFreelancer,
   'service' => l10n.businessKindNameService,
   _ => null,
 };
@@ -23,6 +24,7 @@ const List<String> discoverableBusinessKinds = [
   'studio',
   'practice',
   'salon',
+  'freelancer',
   'service',
 ];
 
@@ -34,6 +36,7 @@ String? businessKindChipLabel(AppLocalizations l10n, String code) =>
       'studio' => l10n.discoveryKindStudios,
       'practice' => l10n.discoveryKindPractices,
       'salon' => l10n.discoveryKindSalons,
+      'freelancer' => l10n.discoveryKindFreelancers,
       'service' => l10n.discoveryKindServices,
       _ => null,
     };

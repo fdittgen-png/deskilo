@@ -4,6 +4,7 @@
 // signed in (0703).
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/trace/trace_logger.dart';
 import '../domain/business_kind.dart';
 
 class SupabaseBusinessKindRepository implements BusinessKindRepository {
@@ -13,12 +14,30 @@ class SupabaseBusinessKindRepository implements BusinessKindRepository {
 
   @override
   Future<List<BusinessKind>> kinds() async {
-    final rows = await _client
-        .from('business_kinds')
-        .select('code, sort_order, feature_profile')
-        .eq('active', true)
-        .order('sort_order');
-    return [for (final r in rows) BusinessKind.fromJson(r)];
+    try {
+      final rows = await _client
+          .from('business_kinds')
+          .select('code, sort_order, feature_profile, profile_version, profile_digest')
+          .eq('active', true)
+          .order('sort_order');
+      return [for (final r in rows) BusinessKind.fromJson(r)];
+    } on PostgrestException catch (e, st) {
+      // 42703: a server from before 0834 has no profile version or digest: read
+      // the kinds as it has them, every profile at the first version.
+      if (e.code != '42703') rethrow;
+      TraceLogger.instance.warn(
+        'workspace',
+        'the server keeps no profile version for its business kinds',
+        error: e,
+        stackTrace: st,
+      );
+      final rows = await _client
+          .from('business_kinds')
+          .select('code, sort_order, feature_profile')
+          .eq('active', true)
+          .order('sort_order');
+      return [for (final r in rows) BusinessKind.fromJson(r)];
+    }
   }
 
   @override

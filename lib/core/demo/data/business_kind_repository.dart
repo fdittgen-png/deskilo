@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #3550 — the Demo's kinds of business: the five rows 0703 seeds, with the
-// profiles 0709 gives them. The kind is kept in the Demo's settings, as the
+// #3550 — the Demo's kinds of business: the rows 0703 seeds (and 0834's
+// freelancer), with the profiles 0709 and 0834 give them. The kind is kept in the Demo's settings, as the
 // server keeps it in the registry.
 import '../../../features/workspace/domain/business_kind.dart';
 import '../../../features/workspace/domain/business_profile.dart';
@@ -19,6 +19,18 @@ const demoNoPlacesProfile = {
   'publicListings': true,
 };
 
+/// #4168 — the freelancer's profile: the money side of a one-person service
+/// business, no places, no provider, no messages, no public page.
+const demoFreelancerProfile = {
+  'placeBooking': false,
+  'moneyTab': true,
+  'services': true,
+  'invoicing': true,
+  'billingCustomers': true,
+  'customerQuotes': true,
+  'purchases': true,
+};
+
 class DemoBusinessKindRepository implements BusinessKindRepository {
   const DemoBusinessKindRepository(this._settings);
 
@@ -30,6 +42,7 @@ class DemoBusinessKindRepository implements BusinessKindRepository {
     BusinessKind(code: 'studio', sortOrder: 20, profile: demoNoPlacesProfile),
     BusinessKind(code: 'practice', sortOrder: 30, profile: demoNoPlacesProfile),
     BusinessKind(code: 'salon', sortOrder: 40, profile: demoNoPlacesProfile),
+    BusinessKind(code: 'freelancer', sortOrder: 45, profile: demoFreelancerProfile),
     BusinessKind(code: 'service', sortOrder: 50, profile: demoNoPlacesProfile),
   ];
 

@@ -1,0 +1,23 @@
+{
+  "@@locale": "en",
+  "businessKindNameFreelancer": "Freelancer",
+  "@businessKindNameFreelancer": {
+    "description": "#4168 the freelancer business kind and its review"
+  },
+  "businessKindDescFreelancer": "One person selling and invoicing their own services: customers, quotes and invoices, no premises.",
+  "@businessKindDescFreelancer": {
+    "description": "#4168 the freelancer business kind and its review"
+  },
+  "discoveryKindFreelancers": "Freelancers",
+  "@discoveryKindFreelancers": {
+    "description": "#4168 the freelancer business kind and its review"
+  },
+  "businessKindProfileChanged": "This kind of business was updated while you were choosing. Close this window and open it again to review what it proposes now.",
+  "@businessKindProfileChanged": {
+    "description": "#4168 the freelancer business kind and its review"
+  },
+  "businessKindSavedFlagsRefused": "The kind was saved, but its features were not changed: they changed meanwhile. Review them in Features.",
+  "@businessKindSavedFlagsRefused": {
+    "description": "#4168 the freelancer business kind and its review"
+  }
+}

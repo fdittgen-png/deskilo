@@ -5865,6 +5865,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'I membri prenotano posti, scrivanie e sale su una planimetria.';
 
   @override
+  String get businessKindDescFreelancer =>
+      'Una persona che vende e fattura i propri servizi: clienti, preventivi e fatture, senza locali.';
+
+  @override
   String get businessKindDescPractice =>
       'Appuntamenti: massaggio, terapia, coaching, consulenza.';
 
@@ -5885,6 +5889,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get businessKindNameCoworking => 'Spazio di coworking';
+
+  @override
+  String get businessKindNameFreelancer => 'Libero professionista';
 
   @override
   String get businessKindNamePractice => 'Ambulatorio';
@@ -5916,6 +5923,14 @@ class AppLocalizationsIt extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get businessKindProfileChanged =>
+      'Questo tipo di attività è stato aggiornato durante la scelta. Chiudere questa finestra e riaprirla per rivedere ciò che propone ora.';
+
+  @override
+  String get businessKindSavedFlagsRefused =>
+      'Il tipo è stato salvato, ma le sue funzioni non sono state modificate: sono cambiate nel frattempo. Rivederle in Funzioni.';
 
   @override
   String get businessKindShowAll => 'Mostra tutto';
@@ -8560,6 +8575,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get discoveryKindCoworking => 'Coworking';
+
+  @override
+  String get discoveryKindFreelancers => 'Liberi professionisti';
 
   @override
   String discoveryKindNoMatch(String kind) {
