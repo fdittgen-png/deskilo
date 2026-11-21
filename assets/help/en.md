@@ -2857,7 +2857,7 @@ Choose **View supplier payables** to see that supplier's bills and their remaini
 
 **Audience:** Administrator · Owner
 
-Open **Money** and then **Billing customers** (the address `/money/customers`; the feature **Billing customers** must be on under invoicing). This is where you keep the people and businesses you invoice, with or without an account. They are not members: they have no account, see nothing of your business, and are not counted among your members.
+Open **Sales & collections** and then **Billing customers**. This is where you keep the people and businesses you invoice, with or without an account. They are not members: they have no account, see nothing of your business, and are not counted among your members.
 
 Choose **Add a customer** and give a company or a name, the postal address, the country code, the VAT number and an e-mail address for the invoice. The VAT number is checked for its shape only, never verified. **Billed as** (business or person) decides the legal mentions and the tax treatment of what you invoice; only someone who may issue invoices can change it. Choose a customer to edit it. If someone else changed the customer since you opened it, nothing is saved and you are asked to open it again. If the list cannot be read, retry rather than treating it as empty. Changing a customer never rewrites an invoice already issued: each keeps the name and address it was issued with.
 
@@ -2865,9 +2865,11 @@ Choose **Add a customer** and give a company or a name, the postal address, the 
 
 **Audience:** Administrator · Owner
 
-Open **Money** and then **Quotes** (the address `/money/quotes`; the feature **Customer quotes** must be on under invoicing). This is where you make an offer to a billing customer before you invoice them.
+Open **Sales & collections** and then **Quotes**. This is where you make an offer to a billing customer before you invoice them.
 
 Choose **New quote**, pick the customer, set the dates and add the lines. **Save draft** keeps it; **Send** freezes that revision, takes the next reference from the quote series and works the amounts out from your own tax settings. A draft shows no amounts: they exist only once it is sent. A sent quote never changes: **Amend** makes another revision, and **Cancel the quote** withdraws it. An offer past its date reads as expired. Nothing is invoiced, booked or paid by a quote; invoicing an accepted one comes next.
+
+Once the customer has answered, choose **Record the answer** on a sent quote: you record their answer as the issuer (accepted or declined, the date, how it reached you); it is your record, not their signature, and an offer past its date can no longer be accepted. For an accepted quote choose **Invoice this quote**, set the dates and **Check the invoice**: the invoice is previewed from the accepted revision and set against what was accepted. If it differs (the date, the customer's details or the tax facts changed) you confirm that you reviewed it; what cannot be issued yet is named. Then **Issue the invoice**: one quote makes one invoice, whatever happens next to that invoice.
 
 ### How amounts are shown
 

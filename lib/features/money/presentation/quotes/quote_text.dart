@@ -27,6 +27,8 @@ String quoteRefusalText(AppLocalizations l10n, QuoteRefusal refusal) =>
     switch (refusal.kind) {
       QuoteRefusalKind.stale => l10n.quoteStale,
       QuoteRefusalKind.state => l10n.quoteStateRefused,
+      QuoteRefusalKind.expired => l10n.quoteExpiredRefusal,
+      QuoteRefusalKind.needsReview => l10n.quoteConvertNeedsReview,
       QuoteRefusalKind.incomplete => l10n.quoteIncomplete(
         refusal.missing.isEmpty ? '-' : refusal.missing.join(', '),
       ),

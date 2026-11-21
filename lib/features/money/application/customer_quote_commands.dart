@@ -82,6 +82,62 @@ class CustomerQuoteCommands {
     () => _repository.send(workspaceId, quoteId, revision: revision, version: version),
   );
 
+  /// Records the customer's answer; the issuer's own record, never a signature.
+  Future<QuoteCommandOutcome<void>> recordDecision(
+    String workspaceId,
+    String quoteId,
+    QuoteDecisionInput decision,
+  ) => _run(
+    'quote decision not recorded',
+    () => _repository.recordDecision(workspaceId, quoteId, decision),
+  );
+
+  /// Previews the invoice of an accepted quote: the real issuer's own preview,
+  /// nothing issued, nothing numbered.
+  Future<QuoteCommandOutcome<QuoteConversionPrep>> prepareConversion(
+    String workspaceId,
+    String quoteId, {
+    required DateTime serviceDate,
+    required DateTime dueOn,
+  }) => _run(
+    'quote conversion not prepared',
+    () => _repository.prepareConversion(
+      workspaceId,
+      quoteId,
+      serviceDate: serviceDate,
+      dueOn: dueOn,
+    ),
+  );
+
+  /// Issues the one initial invoice of an accepted quote. [requestId] is drawn
+  /// once per confirmed review: a second tap is the same attempt, and the server
+  /// answers the same invoice whatever the request. A lost answer is looked up
+  /// in the quote itself (its recorded conversion) before anything is offered.
+  Future<QuoteCommandOutcome<QuoteConverted>> convert(
+    String workspaceId,
+    String quoteId, {
+    required int draftRevision,
+    required String requestId,
+    String? reviewedDigest,
+  }) async {
+    final outcome = await _run<QuoteConverted>(
+      'quote not converted',
+      () => _repository.convert(
+        workspaceId,
+        quoteId,
+        draftRevision: draftRevision,
+        requestId: requestId,
+        reviewedDigest: reviewedDigest,
+      ),
+    );
+    if (outcome is! QuoteUnreached<QuoteConverted>) return outcome;
+    final now = await read(workspaceId, quoteId);
+    final invoiceId = now?.invoiceId;
+    return invoiceId == null
+        ? outcome
+        : QuoteDone(QuoteConverted(invoiceId: invoiceId, number: '', replayed: true));
+  }
+
   Future<QuoteCommandOutcome<void>> cancel(String workspaceId, String quoteId) =>
       _run('quote not cancelled', () => _repository.cancel(workspaceId, quoteId));
 

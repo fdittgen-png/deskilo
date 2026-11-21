@@ -8,6 +8,9 @@
 // incomplete quote names what is missing.
 import 'package:deskilo/core/demo/data/fake_billing_customers.dart';
 import 'package:deskilo/core/demo/data/fake_customer_quotes.dart';
+import 'package:deskilo/core/time/calendar_days.dart';
+import 'package:deskilo/core/time/clock.dart';
+import 'package:deskilo/features/money/application/customer_quote_commands.dart';
 import 'package:deskilo/features/money/domain/billing_customer.dart';
 import 'package:deskilo/features/money/domain/customer_quote.dart';
 import 'package:deskilo/features/money/domain/standalone_invoice.dart';
@@ -47,10 +50,13 @@ const _lumi = BillingParty(
 );
 
 class _Setup {
-  _Setup(this.quotes, this.workspaceId);
+  _Setup(this.quotes, this.workspaceId, this.today);
 
   final FakeCustomerQuoteRepository quotes;
   final String workspaceId;
+
+  /// The day the screen's own clock reads.
+  final DateTime today;
 }
 
 /// Opens [screen] over a fake with one sent quote (QUO-0001 for Atelier Lumi,
@@ -64,7 +70,8 @@ Future<_Setup> _open(
   tester.view.physicalSize = const Size(900, 1600);
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
-  final quotes = FakeCustomerQuoteRepository(clock: () => _now);
+  var clockNow = _now;
+  final quotes = FakeCustomerQuoteRepository(clock: () => clockNow);
   final customers = FakeBillingCustomerRepository();
   final router = GoRouter(
     routes: [
@@ -91,6 +98,10 @@ Future<_Setup> _open(
   await _settle(tester);
   final container = ProviderScope.containerOf(tester.element(find.byType(Scaffold).first));
   final workspaceId = container.read(currentWorkspaceProvider).value!.id;
+  // the screen's own clock is the day: the quotes are dated from it
+  final read = container.read(clockProvider).now();
+  final today = DateTime(read.year, read.month, read.day);
+  clockNow = today;
   customers.seed(workspaceId, _lumi);
   if (withQuotes) {
     quotes
@@ -98,15 +109,15 @@ Future<_Setup> _open(
         workspaceId,
         subjectId: 'c-1',
         lines: const [_line],
-        issuedOn: DateTime(2026, 11, 16),
-        validUntil: DateTime(2026, 12, 16),
+        issuedOn: addCalendarDays(today, -5),
+        validUntil: addCalendarDays(today, 25),
       )
       ..seedDraft(
         workspaceId,
         subjectId: 'c-1',
         lines: const [_line],
-        issuedOn: _now,
-        validUntil: DateTime(2026, 12, 21),
+        issuedOn: today,
+        validUntil: addCalendarDays(today, 30),
       );
   }
   container
@@ -115,7 +126,7 @@ Future<_Setup> _open(
     ..invalidate(customerQuoteProvider((workspaceId: workspaceId, quoteId: 'quote-1')))
     ..invalidate(customerQuoteProvider((workspaceId: workspaceId, quoteId: 'quote-2')));
   await _settle(tester);
-  return _Setup(quotes, workspaceId);
+  return _Setup(quotes, workspaceId, today);
 }
 
 /// Lets the futures and frames of one interaction finish: a few bounded pumps.
@@ -254,5 +265,72 @@ void main() {
     expect(find.textContaining('detail-'), findsOneWidget);
     final all = await setup.quotes.quotes(setup.workspaceId);
     expect(all.where((q) => q.status == QuoteStatus.sent).length, 2);
+  });
+
+  testWidgets('the issuer records the customer\'s answer, said as the issuer\'s '
+      'own record; an acceptance after the validity is refused', (tester) async {
+    final setup = await _open(tester, const CustomerQuoteScreen(quoteId: 'quote-1'));
+    await tester.tap(find.byKey(const ValueKey('quote-record-answer')));
+    await _settle(tester);
+    expect(find.byKey(const ValueKey('quote-decision-note')), findsOneWidget);
+    expect(find.textContaining('not the customer'), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('quote-decision-submit')));
+    await _settle(tester);
+    await _settle(tester);
+    expect(setup.quotes.calls, contains('recordDecision'));
+    expect(find.textContaining(_en.quoteStatusAccepted), findsWidgets);
+    expect(find.byKey(const ValueKey('quote-decision')), findsOneWidget);
+    expect(find.byKey(const ValueKey('quote-convert')), findsOneWidget);
+  });
+
+  testWidgets('an accepted quote is checked and invoiced once: the preview '
+      'sets the invoice against what was accepted, and the same quote answers '
+      'the same invoice', (tester) async {
+    final setup = await _open(tester, const CustomerQuoteScreen(quoteId: 'quote-1'));
+    await setup.quotes.recordDecision(
+      setup.workspaceId,
+      'quote-1',
+      QuoteDecisionInput(accepted: true, revision: 1, decidedOn: setup.today, source: 'email'),
+    );
+    ProviderScope.containerOf(tester.element(find.byType(Scaffold).first))
+        .invalidate(customerQuoteProvider((workspaceId: setup.workspaceId, quoteId: 'quote-1')));
+    await _settle(tester);
+    await tester.tap(find.byKey(const ValueKey('quote-convert')));
+    await _settle(tester);
+    expect(find.byKey(const ValueKey('quote-convert-issue')), findsNothing);
+    await tester.tap(find.byKey(const ValueKey('quote-convert-check')));
+    await _settle(tester);
+    expect(find.byKey(const ValueKey('quote-convert-accepted')), findsOneWidget);
+    expect(find.textContaining('144'), findsWidgets);
+    await tester.tap(find.byKey(const ValueKey('quote-convert-issue')));
+    await _settle(tester);
+    expect(find.byKey(const ValueKey('quote-convert-done')), findsOneWidget);
+    // a second conversion of the same quote answers the same invoice
+    final again = await setup.quotes.convert(
+      setup.workspaceId,
+      'quote-1',
+      draftRevision: 1,
+      requestId: 'another-request',
+    );
+    expect(again.replayed, isTrue);
+    expect(again.invoiceId, 'demo-quote-invoice-quote-1');
+  });
+
+  testWidgets('a lost answer to the conversion is looked up in the quote, '
+      'never issued twice', (tester) async {
+    final setup = await _open(tester, const CustomerQuoteScreen(quoteId: 'quote-1'));
+    await setup.quotes.recordDecision(
+      setup.workspaceId,
+      'quote-1',
+      QuoteDecisionInput(accepted: true, revision: 1, decidedOn: setup.today, source: 'email'),
+    );
+    // the invoice was made, then the answer was lost
+    await setup.quotes.convert(setup.workspaceId, 'quote-1', draftRevision: 1, requestId: 'r1');
+    setup.quotes.failNext = Exception('offline');
+    final outcome = await ProviderScope.containerOf(tester.element(find.byType(Scaffold).first))
+        .read(customerQuoteCommandProvider)
+        .convert(setup.workspaceId, 'quote-1', draftRevision: 1, requestId: 'r1');
+    expect(outcome, isA<QuoteDone<QuoteConverted>>());
+    expect((outcome as QuoteDone<QuoteConverted>).value.replayed, isTrue);
   });
 }

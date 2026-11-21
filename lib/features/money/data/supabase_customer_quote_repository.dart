@@ -94,6 +94,70 @@ class SupabaseCustomerQuoteRepository implements CustomerQuoteRepository {
   );
 
   @override
+  Future<void> recordDecision(
+    String workspaceId,
+    String quoteId,
+    QuoteDecisionInput decision,
+  ) async {
+    await _asRefusal(
+      () => _client.rpc<Object?>(
+        'record_customer_quote_decision_v1',
+        params: {
+          'p_workspace_id': workspaceId,
+          'p_quote_id': quoteId,
+          'p_revision': decision.revision,
+          'p_decision': decision.accepted ? 'accepted' : 'declined',
+          'p_decided_on': isoDay(decision.decidedOn),
+          'p_source': decision.source,
+          'p_evidence': decision.evidence,
+        },
+      ),
+    );
+  }
+
+  @override
+  Future<QuoteConversionPrep> prepareConversion(
+    String workspaceId,
+    String quoteId, {
+    required DateTime serviceDate,
+    required DateTime dueOn,
+  }) async => QuoteConversionPrep.fromJson(
+    await _asRefusal(
+      () => _client.rpc<Object?>(
+        'prepare_quote_conversion_v1',
+        params: {
+          'p_workspace_id': workspaceId,
+          'p_quote_id': quoteId,
+          'p_service_date': isoDay(serviceDate),
+          'p_due_on': isoDay(dueOn),
+        },
+      ),
+    ),
+  );
+
+  @override
+  Future<QuoteConverted> convert(
+    String workspaceId,
+    String quoteId, {
+    required int draftRevision,
+    required String requestId,
+    String? reviewedDigest,
+  }) async => QuoteConverted.fromJson(
+    await _asRefusal(
+      () => _client.rpc<Object?>(
+        'convert_customer_quote_v1',
+        params: {
+          'p_workspace_id': workspaceId,
+          'p_quote_id': quoteId,
+          'p_draft_revision': draftRevision,
+          'p_request_id': requestId,
+          'p_reviewed_digest': reviewedDigest,
+        },
+      ),
+    ),
+  );
+
+  @override
   Future<void> cancel(String workspaceId, String quoteId) async {
     await _asRefusal(
       () => _client.rpc<Object?>(
@@ -124,7 +188,9 @@ class SupabaseCustomerQuoteRepository implements CustomerQuoteRepository {
       // failure that is not one passes through untouched.
       final kind = switch (e.code) {
         'DKQ02' => QuoteRefusalKind.stale,
-        'DKQ03' || 'DKQ04' || 'DKQ05' => QuoteRefusalKind.state,
+        'DKQ03' || 'DKQ05' => QuoteRefusalKind.state,
+        'DKQ04' => QuoteRefusalKind.expired,
+        'DKQ08' => QuoteRefusalKind.needsReview,
         'DKQ06' || 'DKI01' => QuoteRefusalKind.incomplete,
         'DKQ10' => QuoteRefusalKind.featureOff,
         'DKN01' || 'DKQ07' || '28000' => QuoteRefusalKind.notAllowed,
@@ -135,7 +201,10 @@ class SupabaseCustomerQuoteRepository implements CustomerQuoteRepository {
       Error.throwWithStackTrace(
         QuoteRefusal(
           kind,
-          missing: detail.isEmpty ? const [] : detail.split(','),
+          missing: detail.isEmpty || kind == QuoteRefusalKind.needsReview
+              ? const []
+              : detail.split(','),
+          detail: kind == QuoteRefusalKind.needsReview ? detail : '',
         ),
         st,
       );

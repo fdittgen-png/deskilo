@@ -29,7 +29,7 @@ FakeCustomerQuoteRepository seedDemoCustomerQuotes(
   required DateTime now,
 }) {
   final today = DateTime(now.year, now.month, now.day);
-  final repo = FakeCustomerQuoteRepository(clock: () => now)
+  return FakeCustomerQuoteRepository(clock: () => now)
     ..seedSent(
       workspaceId,
       subjectId: 'demo-customer-lumi',
@@ -44,6 +44,15 @@ FakeCustomerQuoteRepository seedDemoCustomerQuotes(
       lines: const [_workshop],
       issuedOn: today,
       validUntil: today.add(const Duration(days: 30)),
-    );
-  return repo;
+    )
+    // a third offer the customer answered: the issuer recorded its acceptance,
+    // and it waits to be invoiced
+    ..seedSent(
+      workspaceId,
+      subjectId: 'demo-customer-nordlicht',
+      lines: const [_workshop],
+      issuedOn: today.subtract(const Duration(days: 12)),
+      validUntil: today.add(const Duration(days: 18)),
+    )
+    ..seedAccepted(workspaceId, 2, decidedOn: today.subtract(const Duration(days: 3)));
 }

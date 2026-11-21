@@ -1,0 +1,119 @@
+{
+  "@@locale": "en",
+  "quoteRecordAnswer": "Record the answer",
+  "@quoteRecordAnswer": {
+    "description": "customer quotes: the answer and the conversion (#4166)"
+  },
+  "quoteAnswerAccepted": "The customer accepted",
+  "@quoteAnswerAccepted": {
+    "description": "customer quotes: the answer and the conversion (#4166)"
+  },
+  "quoteAnswerDeclined": "The customer declined",
+  "@quoteAnswerDeclined": {
+    "description": "customer quotes: the answer and the conversion (#4166)"
+  },
+  "quoteFieldDecidedOn": "Date of the answer",
+  "@quoteFieldDecidedOn": {
+    "description": "customer quotes: the answer and the conversion (#4166)"
+  },
+  "quoteFieldSource": "How it was received",
+  "@quoteFieldSource": {
+    "description": "customer quotes: the answer and the conversion (#4166)"
+  },
+  "quoteSourceReceived": "Received outside the app",
+  "@quoteSourceReceived": {
+    "description": "customer quotes: the answer and the conversion (#4166)"
+  },
+  "quoteSourceVerbal": "Said in person or by phone",
+  "@quoteSourceVerbal": {
+    "description": "customer quotes: the answer and the conversion (#4166)"
+  },
+  "quoteSourceEmail": "By e-mail",
+  "@quoteSourceEmail": {
+    "description": "customer quotes: the answer and the conversion (#4166)"
+  },
+  "quoteSourceOther": "Other",
+  "@quoteSourceOther": {
+    "description": "customer quotes: the answer and the conversion (#4166)"
+  },
+  "quoteFieldEvidence": "Reference or note (optional)",
+  "@quoteFieldEvidence": {
+    "description": "customer quotes: the answer and the conversion (#4166)"
+  },
+  "quoteIssuerRecordsNote": "You record this answer as the issuer. It is not the customer's signature, and it invoices nothing.",
+  "@quoteIssuerRecordsNote": {
+    "description": "customer quotes: the answer and the conversion (#4166)"
+  },
+  "quoteExpiredRefusal": "The offer had expired: it can no longer be accepted.",
+  "@quoteExpiredRefusal": {
+    "description": "customer quotes: the answer and the conversion (#4166)"
+  },
+  "quoteConvert": "Invoice this quote",
+  "@quoteConvert": {
+    "description": "customer quotes: the answer and the conversion (#4166)"
+  },
+  "quoteConvertIntro": "Check the invoice before it is issued. It is made from the accepted revision, for the dates below; nothing is issued until you confirm.",
+  "@quoteConvertIntro": {
+    "description": "customer quotes: the answer and the conversion (#4166)"
+  },
+  "quoteConvertCheck": "Check the invoice",
+  "@quoteConvertCheck": {
+    "description": "customer quotes: the answer and the conversion (#4166)"
+  },
+  "quoteConvertAccepted": "Accepted: {amount}",
+  "@quoteConvertAccepted": {
+    "description": "customer quotes: the answer and the conversion (#4166)",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "quoteConvertWouldBe": "The invoice would be {amount}",
+  "@quoteConvertWouldBe": {
+    "description": "customer quotes: the answer and the conversion (#4166)",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "quoteConvertDiffers": "This invoice differs from what was accepted (the date, the customer's details or the tax facts changed). Review it before issuing.",
+  "@quoteConvertDiffers": {
+    "description": "customer quotes: the answer and the conversion (#4166)"
+  },
+  "quoteConvertReviewed": "I have reviewed this invoice",
+  "@quoteConvertReviewed": {
+    "description": "customer quotes: the answer and the conversion (#4166)"
+  },
+  "quoteConvertNeedsReview": "The invoice now differs from what was accepted. Check it again and confirm that you reviewed it.",
+  "@quoteConvertNeedsReview": {
+    "description": "customer quotes: the answer and the conversion (#4166)"
+  },
+  "quoteConvertMissing": "The invoice cannot be issued yet: {missing}.",
+  "@quoteConvertMissing": {
+    "description": "customer quotes: the answer and the conversion (#4166)",
+    "placeholders": {
+      "missing": {
+        "type": "String"
+      }
+    }
+  },
+  "quoteConvertIssue": "Issue the invoice",
+  "@quoteConvertIssue": {
+    "description": "customer quotes: the answer and the conversion (#4166)"
+  },
+  "quoteConvertDone": "Invoiced as {number}.",
+  "@quoteConvertDone": {
+    "description": "customer quotes: the answer and the conversion (#4166)",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "quoteConvertOpenInvoice": "Open the invoice",
+  "@quoteConvertOpenInvoice": {
+    "description": "customer quotes: the answer and the conversion (#4166)"
+  }
+}

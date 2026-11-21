@@ -44,7 +44,7 @@ void main() {
       revision: draft.draft!.revision,
       version: draft.draft!.draftVersion,
     );
-    expect((sentNow as QuoteDone<QuoteSent>).value.reference, 'QUO-0002');
+    expect((sentNow as QuoteDone<QuoteSent>).value.reference, 'QUO-0003');
     final after = await container.read(customerQuoteRepositoryProvider).quote(id, draft.id);
     expect(after.current!.totals!.totalCents, 78000);
 
@@ -63,5 +63,43 @@ void main() {
     final other = await container.read(currentWorkspaceProvider.future);
     expect(other?.id, demoSecondSpaceId);
     expect(await container.read(customerQuotesProvider(other!.id).future), isEmpty);
+  });
+
+  test('the head\'s accepted quote is previewed and invoiced once; the same '
+      'quote answers the same invoice whatever the request', () async {
+    final id = (await container.read(currentWorkspaceProvider.future))!.id;
+    final quotes = await container.read(customerQuotesProvider(id).future);
+    final accepted = quotes.singleWhere((q) => q.status == QuoteStatus.accepted);
+    expect(accepted.decision!.accepted, isTrue);
+    final commands = container.read(customerQuoteCommandProvider);
+    final today = DateTime(2026, 11, 21);
+    final prep = await commands.prepareConversion(
+      id,
+      accepted.id,
+      serviceDate: today,
+      dueOn: today.add(const Duration(days: 14)),
+    );
+    final preview = (prep as QuoteDone<QuoteConversionPrep>).value;
+    expect(preview.issuable, isTrue);
+    expect(preview.contextChanged, isFalse);
+    expect(preview.wouldBeTotalCents, preview.acceptedTotalCents);
+    final first = await commands.convert(
+      id,
+      accepted.id,
+      draftRevision: preview.draftRevision,
+      requestId: 'request-one',
+    );
+    final other = await commands.convert(
+      id,
+      accepted.id,
+      draftRevision: preview.draftRevision,
+      requestId: 'request-two',
+    );
+    expect((first as QuoteDone<QuoteConverted>).value.replayed, isFalse);
+    expect((other as QuoteDone<QuoteConverted>).value.invoiceId, first.value.invoiceId);
+    expect(other.value.replayed, isTrue);
+    final after = await container.read(customerQuoteRepositoryProvider).quote(id, accepted.id);
+    expect(after.status, QuoteStatus.converted);
+    expect(after.invoiceId, first.value.invoiceId);
   });
 }

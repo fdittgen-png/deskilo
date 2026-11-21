@@ -27767,10 +27767,63 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Beträge werden beim Senden des Angebots aus Ihren eigenen Steuereinstellungen berechnet.';
 
   @override
+  String get quoteAnswerAccepted => 'Der Kunde hat angenommen';
+
+  @override
+  String get quoteAnswerDeclined => 'Der Kunde hat abgelehnt';
+
+  @override
   String get quoteCancelAction => 'Angebot stornieren';
 
   @override
   String get quoteChooseCustomer => 'Kunde wählen';
+
+  @override
+  String get quoteConvert => 'Dieses Angebot berechnen';
+
+  @override
+  String quoteConvertAccepted(String amount) {
+    return 'Angenommen: $amount';
+  }
+
+  @override
+  String get quoteConvertCheck => 'Rechnung prüfen';
+
+  @override
+  String get quoteConvertDiffers =>
+      'Diese Rechnung weicht vom Angenommenen ab (Datum, Kundendaten oder Steuerangaben haben sich geändert). Prüfen Sie sie vor der Ausstellung.';
+
+  @override
+  String quoteConvertDone(String number) {
+    return 'Berechnet als $number.';
+  }
+
+  @override
+  String get quoteConvertIntro =>
+      'Prüfen Sie die Rechnung vor der Ausstellung. Sie entsteht aus der angenommenen Revision für die folgenden Daten; nichts wird ausgestellt, bis Sie bestätigen.';
+
+  @override
+  String get quoteConvertIssue => 'Rechnung ausstellen';
+
+  @override
+  String quoteConvertMissing(String missing) {
+    return 'Die Rechnung kann noch nicht ausgestellt werden: $missing.';
+  }
+
+  @override
+  String get quoteConvertNeedsReview =>
+      'Die Rechnung weicht jetzt vom Angenommenen ab. Prüfen Sie sie erneut und bestätigen Sie, dass Sie sie geprüft haben.';
+
+  @override
+  String get quoteConvertOpenInvoice => 'Rechnung öffnen';
+
+  @override
+  String get quoteConvertReviewed => 'Ich habe diese Rechnung geprüft';
+
+  @override
+  String quoteConvertWouldBe(String amount) {
+    return 'Die Rechnung betrüge $amount';
+  }
 
   @override
   String quoteDecisionByIssuer(String date, String source) {
@@ -27790,8 +27843,18 @@ class AppLocalizationsDe extends AppLocalizations {
   String get quoteEditTitle => 'Angebot bearbeiten';
 
   @override
+  String get quoteExpiredRefusal =>
+      'Das Angebot war abgelaufen: es kann nicht mehr angenommen werden.';
+
+  @override
   String get quoteFeatureOff =>
       'Angebote sind in diesem Unternehmen ausgeschaltet.';
+
+  @override
+  String get quoteFieldDecidedOn => 'Datum der Antwort';
+
+  @override
+  String get quoteFieldEvidence => 'Referenz oder Notiz (optional)';
 
   @override
   String get quoteFieldIssuedOn => 'Datum des Angebots';
@@ -27806,12 +27869,19 @@ class AppLocalizationsDe extends AppLocalizations {
   String get quoteFieldReference => 'Referenz des Kunden';
 
   @override
+  String get quoteFieldSource => 'Wie sie eingegangen ist';
+
+  @override
   String get quoteFieldValidUntil => 'Gültig bis';
 
   @override
   String quoteIncomplete(String missing) {
     return 'Das Angebot ist noch nicht vollständig: $missing.';
   }
+
+  @override
+  String get quoteIssuerRecordsNote =>
+      'Sie halten diese Antwort als Aussteller fest. Sie ist nicht die Unterschrift des Kunden und berechnet nichts.';
 
   @override
   String get quoteNewTitle => 'Neues Angebot';
@@ -27828,6 +27898,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String quoteOrderLine(String value) {
     return 'Bestellnummer: $value';
   }
+
+  @override
+  String get quoteRecordAnswer => 'Antwort festhalten';
 
   @override
   String quoteReferenceLine(String value) {
@@ -27852,6 +27925,18 @@ class AppLocalizationsDe extends AppLocalizations {
   String quoteSentAs(String reference) {
     return 'Gesendet als $reference. Diese Revision ändert sich nie.';
   }
+
+  @override
+  String get quoteSourceEmail => 'Per E-Mail';
+
+  @override
+  String get quoteSourceOther => 'Sonstiges';
+
+  @override
+  String get quoteSourceReceived => 'Außerhalb der App erhalten';
+
+  @override
+  String get quoteSourceVerbal => 'Mündlich oder telefonisch';
 
   @override
   String get quoteStale =>
