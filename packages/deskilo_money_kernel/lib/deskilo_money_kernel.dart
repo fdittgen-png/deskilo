@@ -10,6 +10,7 @@ export 'src/courtesy.dart';
 export 'src/currencies.dart';
 export 'src/date_text.dart';
 export 'src/euro_format.dart';
+export 'src/exact_quantity.dart';
 export 'src/expense_repartition.dart';
 export 'src/fiscal_year.dart';
 export 'src/json_reader.dart';
