@@ -148,6 +148,7 @@ signed-out on  /stock/places -> /auth
 signed-out on  /stock/reorder -> /auth
 signed-out on  /stock/settings -> /auth
 signed-out on  /stock/transfers -> /auth
+signed-out on  /stock/value -> /auth
 signed-out on  /suppliers -> /auth
 signed-out on  /task-recorder -> /auth
 signed-out on  /task-recorder/guide -> /auth
@@ -314,6 +315,7 @@ signed-out off /stock/places -> /auth
 signed-out off /stock/reorder -> /auth
 signed-out off /stock/settings -> /auth
 signed-out off /stock/transfers -> /auth
+signed-out off /stock/value -> /auth
 signed-out off /suppliers -> /auth
 signed-out off /task-recorder -> /auth
 signed-out off /task-recorder/guide -> /auth
@@ -480,6 +482,7 @@ no-space on  /stock/places -> /me
 no-space on  /stock/reorder -> /me
 no-space on  /stock/settings -> /me
 no-space on  /stock/transfers -> /me
+no-space on  /stock/value -> /me
 no-space on  /suppliers -> /me
 no-space on  /task-recorder -> (open)
 no-space on  /task-recorder/guide -> /task-recorder
@@ -646,6 +649,7 @@ no-space off /stock/places -> /me
 no-space off /stock/reorder -> /me
 no-space off /stock/settings -> /me
 no-space off /stock/transfers -> /me
+no-space off /stock/value -> /me
 no-space off /suppliers -> /me
 no-space off /task-recorder -> (open)
 no-space off /task-recorder/guide -> /task-recorder
@@ -812,6 +816,7 @@ member on  /stock/places -> /calendar
 member on  /stock/reorder -> /calendar
 member on  /stock/settings -> /calendar
 member on  /stock/transfers -> /calendar
+member on  /stock/value -> /calendar
 member on  /suppliers -> /calendar
 member on  /task-recorder -> (open)
 member on  /task-recorder/guide -> /task-recorder
@@ -978,6 +983,7 @@ member off /stock/places -> /messages
 member off /stock/reorder -> /messages
 member off /stock/settings -> /messages
 member off /stock/transfers -> /messages
+member off /stock/value -> /messages
 member off /suppliers -> /messages
 member off /task-recorder -> (open)
 member off /task-recorder/guide -> /task-recorder
@@ -1144,6 +1150,7 @@ admin on  /stock/places -> /calendar
 admin on  /stock/reorder -> /calendar
 admin on  /stock/settings -> /calendar
 admin on  /stock/transfers -> /calendar
+admin on  /stock/value -> /reserve
 admin on  /suppliers -> /money/suppliers
 admin on  /task-recorder -> (open)
 admin on  /task-recorder/guide -> /task-recorder
@@ -1311,6 +1318,7 @@ admin off /stock/places -> /messages
 admin off /stock/reorder -> /messages
 admin off /stock/settings -> /messages
 admin off /stock/transfers -> /messages
+admin off /stock/value -> /messages
 admin off /suppliers -> /messages
 admin off /task-recorder -> (open)
 admin off /task-recorder/guide -> /task-recorder
@@ -1477,6 +1485,7 @@ owner on  /stock/places -> /reserve
 owner on  /stock/reorder -> /reserve
 owner on  /stock/settings -> /reserve
 owner on  /stock/transfers -> /reserve
+owner on  /stock/value -> /reserve
 owner on  /suppliers -> /money/suppliers
 owner on  /task-recorder -> (open)
 owner on  /task-recorder/guide -> /task-recorder
@@ -1644,6 +1653,7 @@ owner off /stock/places -> /messages
 owner off /stock/reorder -> /messages
 owner off /stock/settings -> /messages
 owner off /stock/transfers -> /messages
+owner off /stock/value -> /messages
 owner off /suppliers -> /messages
 owner off /task-recorder -> (open)
 owner off /task-recorder/guide -> /task-recorder

@@ -2950,6 +2950,18 @@ Apra **Magazzino → Articoli**. Ogni riga mostra il **codice a barre**, l’**u
 - **Cerchi** per nome, codice a barre o indirizzo. Digitare o scansionare un codice a barre nella ricerca e confermare apre quell’articolo.
 - Le liste lunghe si caricano a pagine: scelga *Mostra altri*.
 
+### Valore del magazzino e origine della merce
+
+**Destinatari:** Amministratore · Proprietario
+
+Vuole vedere quanto vale il magazzino, da dove viene una consegna e se è stata pagata.
+
+Apra **Magazzino → Valore del magazzino** (serve il diritto di gestire gli acquisti o di leggere le finanze). La pagina mostra il **costo noto** di ciò che è disponibile, a una data, con il momento del calcolo e il numero di movimenti. È un *valore operativo*: i movimenti registrati al costo registrato di ogni lotto. Non è un saldo contabilizzato del magazzino e non indica un costo del venduto.
+
+La merce dal costo **ignoto** (un lotto ricevuto senza costo, o senza lotto) è elencata per quantità e **non** è nel totale; la pagina dice *Non completo* finché ne esiste, e un costo noto di zero è una riga valorizzata, non ignota. Un movimento registrato dopo con data anteriore cambia un calcolo successivo, mai i fatti registrati prima.
+
+Apra un movimento (**Magazzino → Movimenti**) e legga **Da dove viene**: la ricezione, l’ordine, le fatture fornitore collegate a quell’ordine, quanto deve ciascuna e i pagamenti e gli storni che la regolano. Si mostra solo ciò che è registrato; nulla viene abbinato per nome, data o importo. Una parte che non può vedere dice *non le viene mostrato* (non equivale a non pagato); una parte senza nulla di registrato dice *non collegato*; un elenco troncato lo dice. Collegare una fattura non cambia mai quanto costa la merce. Aprirla non cambia nulla.
+
 ### Come sono mostrati gli importi
 
 **Destinatari:** Tutti

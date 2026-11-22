@@ -16,6 +16,7 @@ import '../../features/stock/presentation/stock_reorder_screen.dart';
 import '../../features/stock/presentation/stock_screen.dart';
 import '../../features/stock/presentation/stock_settings_screen.dart';
 import '../../features/stock/presentation/stock_transfers_screen.dart';
+import '../../features/stock/presentation/stock_value_screen.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../route_access.dart';
 import '../route_env.dart';
@@ -62,6 +63,12 @@ List<RouteBase> stockRoutes(RouteEnv env) {
           path: 'reorder',
           redirect: env.guard(reorderAccess),
           builder: (context, state) => const StockReorderScreen(),
+        ),
+        // #4173 — the operational value of what is on hand, for who may see what goods cost.
+        GoRoute(
+          path: 'value',
+          redirect: env.guard(access),
+          builder: (context, state) => const StockValueScreen(),
         ),
         GoRoute(
           path: 'transfers',

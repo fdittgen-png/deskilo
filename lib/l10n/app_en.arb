@@ -46218,6 +46218,114 @@
   "@stockTakeOutUsed": {
     "description": "#4170 transfers and take-out: a label or message"
   },
+  "stockTraceBill": "Bill {reference}",
+  "@stockTraceBill": {
+    "description": "#4173 the goods trace and the stock value",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTraceBillsUnavailable": "The bills are not shown to you.",
+  "@stockTraceBillsUnavailable": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockTraceLotCostKnown": "Lot cost: {amount}",
+  "@stockTraceLotCostKnown": {
+    "description": "#4173 the goods trace and the stock value",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTraceMore": "More exist than are listed here.",
+  "@stockTraceMore": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockTraceNoBill": "No bill is linked to this order yet.",
+  "@stockTraceNoBill": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockTraceNoPayment": "No payment is recorded for it.",
+  "@stockTraceNoPayment": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockTraceNoPurchase": "No purchase is recorded for this movement.",
+  "@stockTraceNoPurchase": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockTraceNote": "Only what is recorded is shown: nothing is matched on a name, a date or an amount. Linking a bill never changes what the goods cost.",
+  "@stockTraceNote": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockTraceOrder": "Order {reference} · {supplier}",
+  "@stockTraceOrder": {
+    "description": "#4173 the goods trace and the stock value",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      },
+      "supplier": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTraceOwed": "Owed: {amount}",
+  "@stockTraceOwed": {
+    "description": "#4173 the goods trace and the stock value",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTracePaid": "Paid {amount} on {date}",
+  "@stockTracePaid": {
+    "description": "#4173 the goods trace and the stock value",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTracePaymentsUnavailable": "Payments are not shown to you (that is not the same as unpaid).",
+  "@stockTracePaymentsUnavailable": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockTracePurchaseUnavailable": "The purchase side is not shown to you.",
+  "@stockTracePurchaseUnavailable": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockTraceReceived": "Received on {date}",
+  "@stockTraceReceived": {
+    "description": "#4173 the goods trace and the stock value",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTraceReversed": "Reversed {amount} on {date}",
+  "@stockTraceReversed": {
+    "description": "#4173 the goods trace and the stock value",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTraceTitle": "Where this came from",
+  "@stockTraceTitle": {
+    "description": "#4173 the goods trace and the stock value"
+  },
   "stockTransferLine": "{item}: {left} {unit} on the way of {loaded}",
   "@stockTransferLine": {
     "description": "#4170 transfers and take-out: a label or message",
@@ -46300,6 +46408,82 @@
   "stockTransfersTitle": "Transfers",
   "@stockTransfersTitle": {
     "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockValueBasis": "An operational value from the recorded movements at their recorded lot costs. It is not a posted stock-book balance and states no cost of goods.",
+  "@stockValueBasis": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockValueComplete": "Every item on hand has a known cost.",
+  "@stockValueComplete": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockValueCutoff": "As of {at}, calculated {calculated} from {count, plural, one{one movement} other{{count} movements}}.",
+  "@stockValueCutoff": {
+    "description": "#4173 the goods trace and the stock value",
+    "placeholders": {
+      "at": {
+        "type": "String"
+      },
+      "calculated": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "stockValueIncomplete": "Not complete: goods whose cost is unknown are not in this total.",
+  "@stockValueIncomplete": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockValueKnownTotal": "Known cost: {amount}",
+  "@stockValueKnownTotal": {
+    "description": "#4173 the goods trace and the stock value",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "stockValueLine": "{quantity} · {amount}",
+  "@stockValueLine": {
+    "description": "#4173 the goods trace and the stock value",
+    "placeholders": {
+      "quantity": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "stockValueLinesTitle": "Priced goods",
+  "@stockValueLinesTitle": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockValueMovesLater": "A movement recorded later with an earlier date changes a later calculation, never the facts recorded before.",
+  "@stockValueMovesLater": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockValueNeedsRight": "Seeing what goods cost needs the right to manage purchases or to read the finances.",
+  "@stockValueNeedsRight": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockValueTitle": "Stock value",
+  "@stockValueTitle": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockValueUncostedNoCost": "the lot has no cost",
+  "@stockValueUncostedNoCost": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockValueUncostedNoLot": "no lot",
+  "@stockValueUncostedNoLot": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockValueUncostedTitle": "Cost unknown",
+  "@stockValueUncostedTitle": {
+    "description": "#4173 the goods trace and the stock value"
   },
   "stockVariantPrice": "Own price (minor units, optional)",
   "@stockVariantPrice": {

@@ -53,6 +53,8 @@ const Map<String, Set<WorkspacePermission>> routePermissions = {
   // #4294 — what is low and what to order: seen by who sees the stock or buys; the draft order itself
   // needs managePurchases, which the screen and the server ask.
   '/stock/reorder': {_P.viewStock, _P.manageStock, _P.managePurchases},
+  // #4173 — what the goods on hand cost: who reads the finances or manages the purchases (the server asks the same).
+  '/stock/value': {_P.viewFinances, _P.managePurchases},
   // #4299 — the item registry and the places read like the stock; its settings
   // are for who manages the stock or the configuration.
   '/stock/items': {_P.viewStock, _P.manageStock},

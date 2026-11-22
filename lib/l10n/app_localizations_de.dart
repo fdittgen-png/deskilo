@@ -35921,6 +35921,74 @@ class AppLocalizationsDe extends AppLocalizations {
   String get stockTakeOutUsed => 'Vom Betrieb verbraucht';
 
   @override
+  String stockTraceBill(String reference) {
+    return 'Rechnung $reference';
+  }
+
+  @override
+  String get stockTraceBillsUnavailable =>
+      'Die Rechnungen werden Ihnen nicht angezeigt.';
+
+  @override
+  String stockTraceLotCostKnown(String amount) {
+    return 'Chargenkosten: $amount';
+  }
+
+  @override
+  String get stockTraceMore => 'Es gibt mehr, als hier aufgelistet sind.';
+
+  @override
+  String get stockTraceNoBill =>
+      'Mit dieser Bestellung ist noch keine Rechnung verknüpft.';
+
+  @override
+  String get stockTraceNoPayment => 'Dafür ist keine Zahlung erfasst.';
+
+  @override
+  String get stockTraceNoPurchase =>
+      'Für diese Bewegung ist kein Einkauf erfasst.';
+
+  @override
+  String get stockTraceNote =>
+      'Gezeigt wird nur, was erfasst ist: nichts wird über Name, Datum oder Betrag zugeordnet. Eine Rechnung zu verknüpfen ändert nie, was die Ware kostet.';
+
+  @override
+  String stockTraceOrder(String reference, String supplier) {
+    return 'Bestellung $reference · $supplier';
+  }
+
+  @override
+  String stockTraceOwed(String amount) {
+    return 'Geschuldet: $amount';
+  }
+
+  @override
+  String stockTracePaid(String amount, String date) {
+    return '$amount bezahlt am $date';
+  }
+
+  @override
+  String get stockTracePaymentsUnavailable =>
+      'Zahlungen werden Ihnen nicht angezeigt (das heißt nicht „unbezahlt“).';
+
+  @override
+  String get stockTracePurchaseUnavailable =>
+      'Die Einkaufsseite wird Ihnen nicht angezeigt.';
+
+  @override
+  String stockTraceReceived(String date) {
+    return 'Eingegangen am $date';
+  }
+
+  @override
+  String stockTraceReversed(String amount, String date) {
+    return '$amount storniert am $date';
+  }
+
+  @override
+  String get stockTraceTitle => 'Woher es kam';
+
+  @override
   String stockTransferLine(
     String item,
     String left,
@@ -35970,6 +36038,62 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get stockTransfersTitle => 'Umlagerungen';
+
+  @override
+  String get stockValueBasis =>
+      'Ein operativer Wert aus den erfassten Bewegungen zu den erfassten Chargenkosten. Er ist kein gebuchter Lagerbuchsaldo und nennt keinen Wareneinsatz.';
+
+  @override
+  String get stockValueComplete =>
+      'Jeder vorrätige Artikel hat bekannte Kosten.';
+
+  @override
+  String stockValueCutoff(String at, String calculated, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Bewegungen',
+      one: 'einer Bewegung',
+    );
+    return 'Stand $at, berechnet $calculated aus $_temp0.';
+  }
+
+  @override
+  String get stockValueIncomplete =>
+      'Nicht vollständig: Ware mit unbekannten Kosten ist in dieser Summe nicht enthalten.';
+
+  @override
+  String stockValueKnownTotal(String amount) {
+    return 'Bekannte Kosten: $amount';
+  }
+
+  @override
+  String stockValueLine(String quantity, String amount) {
+    return '$quantity · $amount';
+  }
+
+  @override
+  String get stockValueLinesTitle => 'Bewertete Ware';
+
+  @override
+  String get stockValueMovesLater =>
+      'Eine später erfasste Bewegung mit früherem Datum ändert eine spätere Berechnung, nie die zuvor erfassten Tatsachen.';
+
+  @override
+  String get stockValueNeedsRight =>
+      'Um zu sehen, was Ware kostet, braucht es das Recht, den Einkauf zu verwalten oder die Finanzen einzusehen.';
+
+  @override
+  String get stockValueTitle => 'Lagerwert';
+
+  @override
+  String get stockValueUncostedNoCost => 'die Charge hat keine Kosten';
+
+  @override
+  String get stockValueUncostedNoLot => 'keine Charge';
+
+  @override
+  String get stockValueUncostedTitle => 'Kosten unbekannt';
 
   @override
   String get stockVariantPrice => 'Eigener Preis (Nebeneinheit, optional)';

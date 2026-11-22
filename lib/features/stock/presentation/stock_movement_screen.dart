@@ -20,6 +20,7 @@ import '../domain/stock_page.dart';
 import '../providers/stock_providers.dart';
 import 'stock_day.dart';
 import 'stock_place_text.dart';
+import 'stock_trace_section.dart';
 
 @visibleForTesting
 /// A cost in minor units of [currency] (`250.5`) as the major amount it is
@@ -144,6 +145,8 @@ class _Detail extends ConsumerWidget {
         row('when', l10n.stockWhenLabel, day),
         row('reason', l10n.creditMoveReasonLabel, m.reason),
         row('cost', l10n.stockCostLabel, cost),
+        // #4173 — where it came from: the receipt, the order, the bills and their payments, as recorded.
+        StockTraceSection(workspaceId: m.workspaceId, movementId: m.id),
       ],
     );
   }

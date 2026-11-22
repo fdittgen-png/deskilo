@@ -54,6 +54,7 @@ import 'data/demo_stock_queries.dart';
 import 'data/demo_stock_receiving_commands.dart';
 import 'data/demo_stock_registry.dart';
 import 'data/demo_stock_reorder.dart';
+import 'data/demo_stock_trace.dart';
 import 'data/finance_kpi_repository.dart';
 import 'data/money/demo_credit_moves.dart';
 import 'data/money/demo_invoice_issue_drafts.dart';
@@ -314,6 +315,15 @@ List<Override> _moneyPortOverrides(FakeMoneyRepository Function(Ref ref) money) 
       ref.watch(purchaseOrderRepositoryProvider) as FakePurchaseOrderRepository,
       ref.watch(stockConfigCommandsProvider) as DemoStockConfigCommands,
       ref.watch(_demoStockLedgerProvider),
+    ),
+  ),
+  // #4173 — and traces its goods to the orders they were put away from, and values them.
+  stockTraceReaderProvider.overrideWith(
+    (ref) => DemoStockTrace(
+      demoFirstSpaceId,
+      ref.watch(_demoStockLedgerProvider),
+      ref.watch(purchaseOrderRepositoryProvider) as FakePurchaseOrderRepository,
+      ref.watch(stockReceivingCommandsProvider) as DemoStockReceivingCommands,
     ),
   ),
   // #4170 — and moves, transfers between its sites and takes out of that same stock.

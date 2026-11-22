@@ -35862,6 +35862,74 @@ class AppLocalizationsIt extends AppLocalizations {
   String get stockTakeOutUsed => 'Consumato dall’attività';
 
   @override
+  String stockTraceBill(String reference) {
+    return 'Fattura $reference';
+  }
+
+  @override
+  String get stockTraceBillsUnavailable =>
+      'Le fatture non le vengono mostrate.';
+
+  @override
+  String stockTraceLotCostKnown(String amount) {
+    return 'Costo del lotto: $amount';
+  }
+
+  @override
+  String get stockTraceMore => 'Ne esistono più di quelli elencati qui.';
+
+  @override
+  String get stockTraceNoBill =>
+      'Nessuna fattura è ancora collegata a questo ordine.';
+
+  @override
+  String get stockTraceNoPayment => 'Nessun pagamento è registrato.';
+
+  @override
+  String get stockTraceNoPurchase =>
+      'Nessun acquisto è registrato per questo movimento.';
+
+  @override
+  String get stockTraceNote =>
+      'Si mostra solo ciò che è registrato: nulla viene abbinato per nome, data o importo. Collegare una fattura non cambia mai quanto costa la merce.';
+
+  @override
+  String stockTraceOrder(String reference, String supplier) {
+    return 'Ordine $reference · $supplier';
+  }
+
+  @override
+  String stockTraceOwed(String amount) {
+    return 'Dovuto: $amount';
+  }
+
+  @override
+  String stockTracePaid(String amount, String date) {
+    return '$amount pagati il $date';
+  }
+
+  @override
+  String get stockTracePaymentsUnavailable =>
+      'I pagamenti non le vengono mostrati (non equivale a «non pagato»).';
+
+  @override
+  String get stockTracePurchaseUnavailable =>
+      'Il lato acquisti non le viene mostrato.';
+
+  @override
+  String stockTraceReceived(String date) {
+    return 'Ricevuto il $date';
+  }
+
+  @override
+  String stockTraceReversed(String amount, String date) {
+    return '$amount stornati il $date';
+  }
+
+  @override
+  String get stockTraceTitle => 'Da dove viene';
+
+  @override
   String stockTransferLine(
     String item,
     String left,
@@ -35910,6 +35978,62 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get stockTransfersTitle => 'Trasferimenti';
+
+  @override
+  String get stockValueBasis =>
+      'Un valore operativo dei movimenti registrati al costo di lotto registrato. Non è un saldo contabilizzato del magazzino e non indica un costo del venduto.';
+
+  @override
+  String get stockValueComplete =>
+      'Ogni articolo disponibile ha un costo noto.';
+
+  @override
+  String stockValueCutoff(String at, String calculated, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count movimenti',
+      one: 'un movimento',
+    );
+    return 'Al $at, calcolato $calculated da $_temp0.';
+  }
+
+  @override
+  String get stockValueIncomplete =>
+      'Non completo: la merce con costo ignoto non è in questo totale.';
+
+  @override
+  String stockValueKnownTotal(String amount) {
+    return 'Costo noto: $amount';
+  }
+
+  @override
+  String stockValueLine(String quantity, String amount) {
+    return '$quantity · $amount';
+  }
+
+  @override
+  String get stockValueLinesTitle => 'Merce valorizzata';
+
+  @override
+  String get stockValueMovesLater =>
+      'Un movimento registrato dopo con data anteriore cambia un calcolo successivo, mai i fatti registrati prima.';
+
+  @override
+  String get stockValueNeedsRight =>
+      'Vedere quanto costa la merce richiede il diritto di gestire gli acquisti o di leggere le finanze.';
+
+  @override
+  String get stockValueTitle => 'Valore del magazzino';
+
+  @override
+  String get stockValueUncostedNoCost => 'il lotto non ha costo';
+
+  @override
+  String get stockValueUncostedNoLot => 'senza lotto';
+
+  @override
+  String get stockValueUncostedTitle => 'Costo ignoto';
 
   @override
   String get stockVariantPrice => 'Prezzo proprio (unità minori, facoltativo)';

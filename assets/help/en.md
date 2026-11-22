@@ -2950,6 +2950,18 @@ Open **Stock → Items**. Each line shows the **barcode**, the **unit**, the **p
 - **Search** by name, barcode or address. Typing or scanning a barcode into the search and confirming opens that item.
 - Long lists load by pages: choose *Show more*.
 
+### Stock value and where goods came from
+
+**Audience:** Administrator · Owner
+
+You want to see what the stock on hand is worth, and where a delivery came from and whether it was paid.
+
+Open **Stock → Stock value** (it needs the right to manage purchases or to read the finances). The page shows the **known cost** of what is on hand, as of a date, with when it was calculated and from how many movements. It is an *operational value*: the recorded movements at the cost recorded for each lot. It is not a posted stock-book balance and it states no cost of goods.
+
+Goods whose cost is **unknown** (a lot received with no cost, or goods with no lot) are listed by quantity and are **not** in the total; the page says *Not complete* while any exist, and a known cost of zero is a priced line, not an unknown one. A movement recorded later with an earlier date changes a later calculation, never the facts recorded before.
+
+Open any movement (**Stock → Movements**) and read **Where this came from**: the receipt, the order, the supplier bills linked to that order, what each bill owes and the payments and reversals that settle it. Only what is recorded is shown; nothing is matched on a name, a date or an amount. A part you may not see says *not shown to you* (that is not the same as unpaid); a part with nothing recorded says *not linked*; a list cut short says so. Linking a bill never changes what the goods cost. Opening it changes nothing.
+
 ### How amounts are shown
 
 **Audience:** Everyone

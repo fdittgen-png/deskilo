@@ -21346,6 +21346,22 @@
   "@stockTakeOutUsed": {
     "description": "#4170 transfers and take-out: a label or message"
   },
+  "stockTraceBill": "Fattura {reference}",
+  "stockTraceBillsUnavailable": "Le fatture non le vengono mostrate.",
+  "stockTraceLotCostKnown": "Costo del lotto: {amount}",
+  "stockTraceMore": "Ne esistono più di quelli elencati qui.",
+  "stockTraceNoBill": "Nessuna fattura è ancora collegata a questo ordine.",
+  "stockTraceNoPayment": "Nessun pagamento è registrato.",
+  "stockTraceNoPurchase": "Nessun acquisto è registrato per questo movimento.",
+  "stockTraceNote": "Si mostra solo ciò che è registrato: nulla viene abbinato per nome, data o importo. Collegare una fattura non cambia mai quanto costa la merce.",
+  "stockTraceOrder": "Ordine {reference} · {supplier}",
+  "stockTraceOwed": "Dovuto: {amount}",
+  "stockTracePaid": "{amount} pagati il {date}",
+  "stockTracePaymentsUnavailable": "I pagamenti non le vengono mostrati (non equivale a «non pagato»).",
+  "stockTracePurchaseUnavailable": "Il lato acquisti non le viene mostrato.",
+  "stockTraceReceived": "Ricevuto il {date}",
+  "stockTraceReversed": "{amount} stornati il {date}",
+  "stockTraceTitle": "Da dove viene",
   "stockTransferLine": "{item}: {left} {unit} in viaggio su {loaded}",
   "@stockTransferLine": {
     "description": "#4170 transfers and take-out: a label or message",
@@ -21429,6 +21445,19 @@
   "@stockTransfersTitle": {
     "description": "#4170 transfers and take-out: a label or message"
   },
+  "stockValueBasis": "Un valore operativo dei movimenti registrati al costo di lotto registrato. Non è un saldo contabilizzato del magazzino e non indica un costo del venduto.",
+  "stockValueComplete": "Ogni articolo disponibile ha un costo noto.",
+  "stockValueCutoff": "Al {at}, calcolato {calculated} da {count, plural, one{un movimento} other{{count} movimenti}}.",
+  "stockValueIncomplete": "Non completo: la merce con costo ignoto non è in questo totale.",
+  "stockValueKnownTotal": "Costo noto: {amount}",
+  "stockValueLine": "{quantity} · {amount}",
+  "stockValueLinesTitle": "Merce valorizzata",
+  "stockValueMovesLater": "Un movimento registrato dopo con data anteriore cambia un calcolo successivo, mai i fatti registrati prima.",
+  "stockValueNeedsRight": "Vedere quanto costa la merce richiede il diritto di gestire gli acquisti o di leggere le finanze.",
+  "stockValueTitle": "Valore del magazzino",
+  "stockValueUncostedNoCost": "il lotto non ha costo",
+  "stockValueUncostedNoLot": "senza lotto",
+  "stockValueUncostedTitle": "Costo ignoto",
   "stockVariantPrice": "Prezzo proprio (unità minori, facoltativo)",
   "@stockVariantPrice": {
     "description": "#4169 the stock editors: a label or message"

@@ -35526,6 +35526,72 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockTakeOutUsed => 'Used by the business';
 
   @override
+  String stockTraceBill(String reference) {
+    return 'Bill $reference';
+  }
+
+  @override
+  String get stockTraceBillsUnavailable => 'The bills are not shown to you.';
+
+  @override
+  String stockTraceLotCostKnown(String amount) {
+    return 'Lot cost: $amount';
+  }
+
+  @override
+  String get stockTraceMore => 'More exist than are listed here.';
+
+  @override
+  String get stockTraceNoBill => 'No bill is linked to this order yet.';
+
+  @override
+  String get stockTraceNoPayment => 'No payment is recorded for it.';
+
+  @override
+  String get stockTraceNoPurchase =>
+      'No purchase is recorded for this movement.';
+
+  @override
+  String get stockTraceNote =>
+      'Only what is recorded is shown: nothing is matched on a name, a date or an amount. Linking a bill never changes what the goods cost.';
+
+  @override
+  String stockTraceOrder(String reference, String supplier) {
+    return 'Order $reference · $supplier';
+  }
+
+  @override
+  String stockTraceOwed(String amount) {
+    return 'Owed: $amount';
+  }
+
+  @override
+  String stockTracePaid(String amount, String date) {
+    return 'Paid $amount on $date';
+  }
+
+  @override
+  String get stockTracePaymentsUnavailable =>
+      'Payments are not shown to you (that is not the same as unpaid).';
+
+  @override
+  String get stockTracePurchaseUnavailable =>
+      'The purchase side is not shown to you.';
+
+  @override
+  String stockTraceReceived(String date) {
+    return 'Received on $date';
+  }
+
+  @override
+  String stockTraceReversed(String amount, String date) {
+    return 'Reversed $amount on $date';
+  }
+
+  @override
+  String get stockTraceTitle => 'Where this came from';
+
+  @override
   String stockTransferLine(
     String item,
     String left,
@@ -35574,6 +35640,61 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get stockTransfersTitle => 'Transfers';
+
+  @override
+  String get stockValueBasis =>
+      'An operational value from the recorded movements at their recorded lot costs. It is not a posted stock-book balance and states no cost of goods.';
+
+  @override
+  String get stockValueComplete => 'Every item on hand has a known cost.';
+
+  @override
+  String stockValueCutoff(String at, String calculated, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count movements',
+      one: 'one movement',
+    );
+    return 'As of $at, calculated $calculated from $_temp0.';
+  }
+
+  @override
+  String get stockValueIncomplete =>
+      'Not complete: goods whose cost is unknown are not in this total.';
+
+  @override
+  String stockValueKnownTotal(String amount) {
+    return 'Known cost: $amount';
+  }
+
+  @override
+  String stockValueLine(String quantity, String amount) {
+    return '$quantity · $amount';
+  }
+
+  @override
+  String get stockValueLinesTitle => 'Priced goods';
+
+  @override
+  String get stockValueMovesLater =>
+      'A movement recorded later with an earlier date changes a later calculation, never the facts recorded before.';
+
+  @override
+  String get stockValueNeedsRight =>
+      'Seeing what goods cost needs the right to manage purchases or to read the finances.';
+
+  @override
+  String get stockValueTitle => 'Stock value';
+
+  @override
+  String get stockValueUncostedNoCost => 'the lot has no cost';
+
+  @override
+  String get stockValueUncostedNoLot => 'no lot';
+
+  @override
+  String get stockValueUncostedTitle => 'Cost unknown';
 
   @override
   String get stockVariantPrice => 'Own price (minor units, optional)';
