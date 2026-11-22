@@ -6526,6 +6526,7 @@ const Set<String> uiRoutes = {
   '/stock/reorder',
   '/stock/value',
   '/stock/transfers',
+  '/stock/counts',
   '/stock/items',
   '/stock/places',
   '/stock/settings',
