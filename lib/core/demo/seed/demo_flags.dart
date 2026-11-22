@@ -32,14 +32,6 @@ const Map<WorkspaceFeature, String> demoFeaturesLeftOff = {
       '#4295: the server side (plans, tasks, the blind count, the history) is '
       "delivered first; the Demo's plan for its high-value shelf arrives with "
       'its screens, which turn the feature on and add its scenario',
-  WorkspaceFeature.stockCounts:
-      '#4172: the server side (counts and their approval) is delivered first; '
-      "the Demo's count and its approval, on the same ledger as its movements, "
-      'arrive with their screens, which turn the feature on and add its scenario',
-  WorkspaceFeature.stockReturns:
-      '#4172: the server side (bounded returns and corrections) is delivered '
-      "first; the Demo's partial return, on the same ledger as its sales, "
-      'arrives with its screens, which turn the feature on and add its scenario',
   WorkspaceFeature.stockReorder:
       '#4294: the server side (points, alerts, list) is delivered first; the '
       "Demo's low-stock list, on the same ledger as its transfers, arrives with "

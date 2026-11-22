@@ -55856,6 +55856,114 @@ abstract class AppLocalizations {
   /// **'Cost not recorded'**
   String get stockCostUnknown;
 
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get stockCountsApply;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel the count'**
+  String get stockCountsCancel;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'No count yet.'**
+  String get stockCountsEmpty;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Item'**
+  String get stockCountsItem;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'{item} at {place}: counted {observed} against {baseline} ({difference})'**
+  String stockCountsLine(
+    String item,
+    String place,
+    String observed,
+    String baseline,
+    String difference,
+  );
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Counted ({unit})'**
+  String stockCountsObserved(String unit);
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Count'**
+  String get stockCountsOpen;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Place'**
+  String get stockCountsPlace;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Reason (optional)'**
+  String get stockCountsReason;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Reject'**
+  String get stockCountsReject;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'The stock moved since this was counted: count it again.'**
+  String get stockCountsStale;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Applied'**
+  String get stockCountsStateApplied;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get stockCountsStateCancelled;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for approval'**
+  String get stockCountsStateRecorded;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected'**
+  String get stockCountsStateRejected;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Record the count'**
+  String get stockCountsSubmit;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Stock counts'**
+  String get stockCountsTitle;
+
   /// #4169 the stock editors: a label or message
   ///
   /// In en, this message translates to:
@@ -57055,6 +57163,144 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Find an item by name, barcode or address'**
   String get stockRegistrySearch;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Goods come back to'**
+  String get stockReversalBackTo;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Correct this movement'**
+  String get stockReversalCorrectionOpen;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Correct a movement'**
+  String get stockReversalCorrectionTitle;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Return from the customer'**
+  String get stockReversalCustomerOpen;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Return from the customer'**
+  String get stockReversalCustomerTitle;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'{kind}: {quantity} {unit}'**
+  String stockReversalEntry(String kind, String quantity, String unit);
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'This movement is fully reversed.'**
+  String get stockReversalFully;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Corrected'**
+  String get stockReversalKindCorrection;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Returned by the customer'**
+  String get stockReversalKindCustomer;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Returned to the supplier'**
+  String get stockReversalKindSupplier;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Goods leave from'**
+  String get stockReversalLeavesFrom;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'This movement follows an invoice: any refund or credit note is made in the invoice itself.'**
+  String get stockReversalMoneyInvoice;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Whether a credit exists for this movement is not shown here: the money is corrected apart.'**
+  String get stockReversalMoneyUnavailable;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'At most {quantity} {unit} can still be reversed.'**
+  String stockReversalMoreThanRemains(String quantity, String unit);
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'No payment, refund or credit is made by this. If money is involved, correct it in the invoice or the supplier payment, apart.'**
+  String get stockReversalNoMoney;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Note (optional)'**
+  String get stockReversalNote;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Can still be reversed: {quantity} {unit} · already reversed: {reversed}'**
+  String stockReversalRemaining(String quantity, String unit, String reversed);
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Returns and corrections'**
+  String get stockReversalSection;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'{item}: {quantity} {unit}, {from} → {to}'**
+  String stockReversalSource(
+    String item,
+    String quantity,
+    String unit,
+    String from,
+    String to,
+  );
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Record'**
+  String get stockReversalSubmit;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Return to the supplier'**
+  String get stockReversalSupplierOpen;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Return to the supplier'**
+  String get stockReversalSupplierTitle;
 
   /// the stock pages and group (#4299)
   ///

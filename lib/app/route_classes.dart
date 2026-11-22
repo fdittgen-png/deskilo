@@ -280,6 +280,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/money/suppliers/:id', RouteClass.workspace, namesRole: true, place: 'drawer-suppliers', measure: PageMeasure.work), // #3615
   RouteRule('/stock', RouteClass.workspace, namesRole: true, place: 'drawer-stock', measure: PageMeasure.work), // #4161
   RouteRule('/stock/movements/:id', RouteClass.workspace, namesRole: true, place: 'drawer-stock', measure: PageMeasure.work), // #4161
+  RouteRule('/stock/counts', RouteClass.workspace, namesRole: true, place: 'drawer-stock-counts', measure: PageMeasure.work), // #4172
   RouteRule('/stock/transfers', RouteClass.workspace, namesRole: true, place: 'drawer-stock-transfers', measure: PageMeasure.work), // #4170
   RouteRule('/stock/movements', RouteClass.workspace, namesRole: true, place: 'drawer-stock-movements', measure: PageMeasure.work), // #4299
   RouteRule('/stock/movements/:id', RouteClass.workspace, namesRole: true, place: 'drawer-stock-movements', measure: PageMeasure.work), // #4161

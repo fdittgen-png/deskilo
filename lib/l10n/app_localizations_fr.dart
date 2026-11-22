@@ -35240,6 +35240,68 @@ class AppLocalizationsFr extends AppLocalizations {
   String get stockCostUnknown => 'Coût non enregistré';
 
   @override
+  String get stockCountsApply => 'Appliquer';
+
+  @override
+  String get stockCountsCancel => 'Annuler le comptage';
+
+  @override
+  String get stockCountsEmpty => 'Aucun comptage pour l’instant.';
+
+  @override
+  String get stockCountsItem => 'Article';
+
+  @override
+  String stockCountsLine(
+    String item,
+    String place,
+    String observed,
+    String baseline,
+    String difference,
+  ) {
+    return '$item à $place : compté $observed contre $baseline ($difference)';
+  }
+
+  @override
+  String stockCountsObserved(String unit) {
+    return 'Compté ($unit)';
+  }
+
+  @override
+  String get stockCountsOpen => 'Compter';
+
+  @override
+  String get stockCountsPlace => 'Lieu';
+
+  @override
+  String get stockCountsReason => 'Motif (facultatif)';
+
+  @override
+  String get stockCountsReject => 'Rejeter';
+
+  @override
+  String get stockCountsStale =>
+      'Le stock a bougé depuis ce comptage : comptez à nouveau.';
+
+  @override
+  String get stockCountsStateApplied => 'Appliqué';
+
+  @override
+  String get stockCountsStateCancelled => 'Annulé';
+
+  @override
+  String get stockCountsStateRecorded => 'En attente d’approbation';
+
+  @override
+  String get stockCountsStateRejected => 'Rejeté';
+
+  @override
+  String get stockCountsSubmit => 'Enregistrer le comptage';
+
+  @override
+  String get stockCountsTitle => 'Comptages de stock';
+
+  @override
   String get stockDimensionAdd => 'Ajouter une dimension';
 
   @override
@@ -35940,6 +36002,89 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get stockRegistrySearch =>
       'Trouver un article par nom, code-barres ou adresse';
+
+  @override
+  String get stockReversalBackTo => 'Les marchandises reviennent à';
+
+  @override
+  String get stockReversalCorrectionOpen => 'Corriger ce mouvement';
+
+  @override
+  String get stockReversalCorrectionTitle => 'Corriger un mouvement';
+
+  @override
+  String get stockReversalCustomerOpen => 'Retour du client';
+
+  @override
+  String get stockReversalCustomerTitle => 'Retour du client';
+
+  @override
+  String stockReversalEntry(String kind, String quantity, String unit) {
+    return '$kind : $quantity $unit';
+  }
+
+  @override
+  String get stockReversalFully => 'Ce mouvement est entièrement annulé.';
+
+  @override
+  String get stockReversalKindCorrection => 'Corrigé';
+
+  @override
+  String get stockReversalKindCustomer => 'Retourné par le client';
+
+  @override
+  String get stockReversalKindSupplier => 'Retourné au fournisseur';
+
+  @override
+  String get stockReversalLeavesFrom => 'Les marchandises partent de';
+
+  @override
+  String get stockReversalMoneyInvoice =>
+      'Ce mouvement suit une facture : tout remboursement ou avoir se fait dans la facture elle-même.';
+
+  @override
+  String get stockReversalMoneyUnavailable =>
+      'Savoir s’il existe un avoir pour ce mouvement n’est pas montré ici : l’argent se corrige à part.';
+
+  @override
+  String stockReversalMoreThanRemains(String quantity, String unit) {
+    return 'Au plus $quantity $unit peuvent encore être annulés.';
+  }
+
+  @override
+  String get stockReversalNoMoney =>
+      'Cela ne fait ni paiement, ni remboursement, ni avoir. Si de l’argent est en jeu, corrigez-le à part, dans la facture ou le paiement du fournisseur.';
+
+  @override
+  String get stockReversalNote => 'Note (facultative)';
+
+  @override
+  String stockReversalRemaining(String quantity, String unit, String reversed) {
+    return 'Peut encore être annulé : $quantity $unit · déjà annulé : $reversed';
+  }
+
+  @override
+  String get stockReversalSection => 'Retours et corrections';
+
+  @override
+  String stockReversalSource(
+    String item,
+    String quantity,
+    String unit,
+    String from,
+    String to,
+  ) {
+    return '$item : $quantity $unit, $from → $to';
+  }
+
+  @override
+  String get stockReversalSubmit => 'Enregistrer';
+
+  @override
+  String get stockReversalSupplierOpen => 'Retour au fournisseur';
+
+  @override
+  String get stockReversalSupplierTitle => 'Retour au fournisseur';
 
   @override
   String get stockSettingsElsewhere =>
