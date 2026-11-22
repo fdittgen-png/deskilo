@@ -133,9 +133,10 @@ export interface TransmissionStore {
   /** #3883 -- the workspace's latest sandbox test document, if any. */
   latestTest(workspaceId: string): Promise<TransmissionRow | null>;
   artifact(id: string): Promise<Artifact | null>;
-  /** [hash] is the document the caller verified: the claim is refused with
-   * `binding_changed` when the row's document is another (0862). */
-  claim(id: string, owner: string, windowSeconds: number, hash?: string): Promise<ClaimResult>;
+  /** [binding] is the document, format and receiver the caller verified
+   * (sha256 of `hash|format|scheme|id`): the claim is refused with
+   * `binding_changed` when the row holds another (0862). */
+  claim(id: string, owner: string, windowSeconds: number, binding?: string): Promise<ClaimResult>;
   record(
     id: string,
     generation: number,
@@ -317,12 +318,12 @@ export function supabaseStore(admin: SupabaseClient): TransmissionStore {
         receiverId: data.receiver_id,
       };
     },
-    claim(id, owner, windowSeconds, hash) {
+    claim(id, owner, windowSeconds, binding) {
       return rpc<ClaimResult>("claim_einvoice_dispatch_v1", {
         p_id: id,
         p_owner: owner,
         p_window_seconds: windowSeconds,
-        p_hash: hash ?? null,
+        p_binding: binding ?? null,
       });
     },
     async record(id, generation, owner, phase, externalId, detail, receipt) {

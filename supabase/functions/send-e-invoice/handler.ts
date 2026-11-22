@@ -145,6 +145,19 @@ async function sha256(bytes: Uint8Array<ArrayBuffer>): Promise<string> {
     .join("");
 }
 
+/** The binding of a transmission as the database keeps it: the document's
+ * hash, its format and its receiver. */
+async function bindingOf(
+  hash: string,
+  format: string,
+  receiverScheme: string,
+  receiverId: string,
+): Promise<string> {
+  return await sha256(
+    new TextEncoder().encode([hash, format, receiverScheme, receiverId].join("|")),
+  );
+}
+
 /** What an older client can read: it knows accepted, rejected and failed
  * only, so an unresolved phase reads `failed` with words that say the
  * document was NOT sent again. `phase` carries the truth for new readers. */
@@ -582,6 +595,12 @@ export async function handle(req: Request, deps: Deps): Promise<Response> {
     mimeType,
     format,
     number: invoice.number,
+    binding: await bindingOf(
+      hash,
+      format,
+      payload.receiver_scheme ?? "",
+      payload.receiver_id ?? "",
+    ),
   });
 }
 
@@ -598,6 +617,9 @@ interface Dispatch {
   mimeType: string;
   format: string;
   number: string;
+  /** The binding the request verified (an invoice's send); a test
+   * document has none. */
+  binding?: string;
 }
 
 /** Steps 2-5 of a send, for an invoice's document and a sandbox test
@@ -638,7 +660,7 @@ async function dispatchPrepared(
   const owner = crypto.randomUUID();
   let claim;
   try {
-    claim = await store.claim(id, owner, DISPATCH_WINDOW_SECONDS, hash);
+    claim = await store.claim(id, owner, DISPATCH_WINDOW_SECONDS, d.binding);
   } catch (error) {
     console.error("send-e-invoice: claim failed", safeError(error));
     return json({ error: "claim_failed" }, 500);

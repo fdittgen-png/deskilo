@@ -8,7 +8,7 @@
 -- uncertain, accepted or rejected one keeps the conflict; the first attempt's envelope stays and the new
 -- attempt has its own. Rolled back.
 begin;
-select plan(32);
+select plan(34);
 
 create or replace function pg_temp.v(p text) returns text language sql as $$ select current_setting('cs.' || p) $$;
 create or replace function pg_temp.as_actor(p_who text, p_sql text, p_delegated boolean default false) returns text
@@ -144,10 +144,15 @@ select set_config('cs.t2', (pg_temp.prep('customer', 'h1', '') ->> 'id'), false)
 select is((pg_temp.prep('customer', 'h2', '') ->> 'outcome'), 'prepared', 'prepared and abandoned, then a changed document: prepared again');
 select is((select sha256 from public.invoice_transmission_artifacts where transmission_id = pg_temp.v('t2')::uuid), 'h2', 'the artifact holds the new document');
 
-select is((public.claim_einvoice_dispatch_v1(pg_temp.v('t2')::uuid, pg_temp.v('o')::uuid, 150, 'h1') ->> 'detail'), 'binding_changed',
+create or replace function pg_temp.binding(p_hash text, p_scheme text) returns text language sql as $$
+  select encode(sha256(convert_to(concat_ws('|', p_hash, 'facturX', p_scheme, ''), 'utf8')), 'hex') $$;
+select is((public.claim_einvoice_dispatch_v1(pg_temp.v('t2')::uuid, pg_temp.v('o')::uuid, 150, pg_temp.binding('h1', '')) ->> 'detail'), 'binding_changed',
   'a claim of the document that was replaced is refused: nothing old is sent');
-select is((public.claim_einvoice_dispatch_v1(pg_temp.v('t2')::uuid, pg_temp.v('o')::uuid, 150, 'h2') ->> 'claimed'), 'true',
-  'the claim of the current document wins');
+select is((pg_temp.prep('customer', 'h2', 'iso') ->> 'outcome'), 'prepared', 'the receiver alone changes: prepared again');
+select is((public.claim_einvoice_dispatch_v1(pg_temp.v('t2')::uuid, pg_temp.v('o')::uuid, 150, pg_temp.binding('h2', '')) ->> 'detail'), 'binding_changed',
+  'a claim that verified the old receiver is refused too: nothing goes to the old receiver');
+select is((public.claim_einvoice_dispatch_v1(pg_temp.v('t2')::uuid, pg_temp.v('o')::uuid, 150, pg_temp.binding('h2', 'iso')) ->> 'claimed'), 'true',
+  'the claim of the current document and receiver wins');
 
 -- every other phase keeps the conflict
 select is((pg_temp.prep('government', 'h3', 'iso') ->> 'outcome'), 'conflict', 'sent, then a changed document: conflict');

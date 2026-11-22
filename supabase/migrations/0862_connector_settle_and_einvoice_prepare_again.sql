@@ -1,6 +1,6 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: transforming
--- (claim_einvoice_dispatch_v1 gains a defaulted hash and is restated whole; accounting_connection_manageable_v1, hmrc_actor, hmrc_connection_manageable_v1 and
+-- (claim_einvoice_dispatch_v1 gains a defaulted binding and is restated whole; accounting_connection_manageable_v1, hmrc_actor, hmrc_connection_manageable_v1 and
 --  revoke_hmrc_connection_v1 are patched at asserted anchors of their live definitions; hmrc_actor and
 --  hmrc_connection_manageable_v1 gain a defaulted purpose, so their one-argument signatures are dropped;
 --  prepare_einvoice_v1 is restated whole)
@@ -13,9 +13,9 @@
 --   * The HMRC connection is revoked like every other connector's when mtdSubmission or
 --     vatDeclarations is off: hmrc_actor takes a purpose, and `revoke` asks for the owner and nothing
 --     else; the revoke function and the manageable door pass it.
---   * A claim names the document hash its caller verified and is refused (`binding_changed`) when the
---     row was prepared again with another document since: a request never sends a document the row no
---     longer holds.
+--   * A claim names the binding (document, format and receiver) its caller verified and is refused
+--     (`binding_changed`) when the row was prepared again with another since: a request never sends a
+--     document, or to a receiver, the row no longer holds.
 --   * A `prepared` or `failed` e-invoice transmission whose document or receiver changed is prepared
 --     again: a new prepare replaces the stored artifact and the binding under the row's lock and
 --     answers `prepared`. A `sent`, `uncertain`, `accepted` or `rejected` one keeps the conflict. The
@@ -100,13 +100,13 @@ revoke execute on function public.hmrc_connection_manageable_v1(uuid, text) from
 grant execute on function public.hmrc_connection_manageable_v1(uuid, text) to authenticated;
 
 -- ── the claim is of the document the caller verified ──────────────────
--- A claim that names the document hash it verified is refused (`binding_changed`) when the row has been
--- prepared again with another document since: no request sends a document the row no longer holds.
+-- A claim that names the binding it verified is refused (`binding_changed`) when the row has been prepared
+-- again with another document or receiver since: no request sends what the row no longer holds.
 drop function if exists public.claim_einvoice_dispatch_v1(uuid, uuid, integer);
 
 -- restates 0689
 create or replace function public.claim_einvoice_dispatch_v1(
-  p_id uuid, p_owner uuid, p_window_seconds integer, p_hash text default null
+  p_id uuid, p_owner uuid, p_window_seconds integer, p_binding text default null
 ) returns jsonb language plpgsql security definer set search_path = public
 as $fn$
 declare
@@ -123,16 +123,16 @@ begin
     set phase = 'sent', owner_id = p_owner, generation = generation + 1,
         deadline = now() + make_interval(secs => p_window_seconds)
     where id = p_id and phase in ('prepared', 'failed')
-      -- the claim is of the document the caller verified (0862)
-      and (p_hash is null or document_hash = p_hash)
+      -- the claim is of the document and receiver the caller verified (0862)
+      and (p_binding is null or binding_hash = p_binding)
     returning * into v_row;
   if found then
     return jsonb_build_object('claimed', true, 'phase', 'sent',
       'generation', v_row.generation);
   end if;
   select * into v_row from public.invoice_transmissions where id = p_id;
-  if v_row.phase in ('prepared', 'failed') and p_hash is not null
-     and v_row.document_hash is distinct from p_hash then
+  if v_row.phase in ('prepared', 'failed') and p_binding is not null
+     and v_row.binding_hash is distinct from p_binding then
     return jsonb_build_object('claimed', false, 'phase', v_row.phase, 'detail', 'binding_changed');
   end if;
   return jsonb_build_object('claimed', false, 'phase', v_row.phase,

@@ -232,11 +232,13 @@ class FakeStore implements TransmissionStore {
   artifact(id: string) {
     return Promise.resolve(this.rows.get(id)?.artifact ?? null);
   }
-  claim(id: string, owner: string, window: number, hash?: string): Promise<ClaimResult> {
+  async claim(id: string, owner: string, window: number, binding?: string): Promise<ClaimResult> {
     const r = this.rows.get(id)!;
-    // 0862: the claim is of the document the handler verified
-    if (hash !== undefined && r.artifact.sha256 !== hash) {
-      return Promise.resolve({ claimed: false, phase: r.phase, detail: "binding_changed" });
+    // 0862: the claim is of the document and receiver the handler verified
+    if (binding !== undefined) {
+      const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(r.binding));
+      const held = [...new Uint8Array(digest)].map((b) => b.toString(16).padStart(2, "0")).join("");
+      if (held !== binding) return { claimed: false, phase: r.phase, detail: "binding_changed" };
     }
     if (r.phase === "sent" && r.deadline < this.now) r.phase = "uncertain";
     if (r.phase === "prepared" || r.phase === "failed") {
@@ -1864,9 +1866,9 @@ Deno.test("#4324: a request holding a document the row replaced sends nothing", 
   const p = provider(ok);
   const real = s.claim.bind(s);
   // the document is replaced between the request's verification and its claim
-  s.claim = (id, owner, window, hash) => {
-    s.rows.get(id)!.artifact.sha256 = "replaced";
-    return real(id, owner, window, hash);
+  s.claim = (id, owner, window, binding) => {
+    s.rows.get(id)!.binding = "replaced|facturX||";
+    return real(id, owner, window, binding);
   };
   const r = await read(await call(s, p.fetchImpl, bodyOf()));
   assertEquals(r.status, 409);
