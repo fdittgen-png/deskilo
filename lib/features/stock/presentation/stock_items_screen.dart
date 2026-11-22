@@ -4,21 +4,33 @@
 // (`/stock/items`). Each item opens its settings, its variants and its supplier
 // articles; a person who may only look sees the list and no editor. A list that
 // could not be read says so: it is never shown as "no items".
+// #4293 -- and it is the product and place registry: per item (per variant) the barcode, unit,
+// retail price, last known cost (or "cost not shown"), home address and what is on hand, filtered
+// by a place or by "no home place", read in bounded pages. A barcode typed or scanned into the
+// search opens its item.
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/help/help_anchors.dart';
 import '../../../core/help/help_dot.dart';
+import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
+import '../../../core/trace/trace_logger.dart';
+import '../../../core/ui/dropdown_field.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../core/ui/kit/page_title.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/domain/workspace_permission.dart';
 import '../../workspace/providers/workspace_providers.dart';
+import '../domain/stock_config.dart';
 import '../domain/stock_page.dart';
+import '../domain/stock_registry.dart';
 import '../providers/stock_providers.dart';
+import 'stock_home_sheet.dart';
 import 'stock_item_editor.dart';
 import 'stock_mapping_editor.dart';
 import 'stock_variants_editor.dart';
@@ -33,7 +45,7 @@ class StockItemsScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: PageTitle(l10n.stockItemsTitle),
-        actions: [HelpDot(l10n.permModuleStock, anchor: HelpAnchor.moneyStock)],
+        actions: [HelpDot(l10n.permModuleStock, anchor: HelpAnchor.moneyStockRegistry)],
       ),
       body: workspaceId == null
           ? const LoadingView()
@@ -55,106 +67,307 @@ class StockItemsScreen extends ConsumerWidget {
   }
 }
 
-class _Items extends ConsumerWidget {
+class _Items extends ConsumerStatefulWidget {
   const _Items({required this.workspaceId});
 
   final String workspaceId;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<_Items> createState() => _ItemsState();
+}
+
+class _ItemsState extends ConsumerState<_Items> {
+  final _search = TextEditingController();
+  final _rows = <StockRegistryRow>[];
+  StockCursor? _next;
+  bool _loading = true;
+  bool _failed = false;
+  String? _place;
+  bool _noHome = false;
+  String _query = '';
+  int _generation = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    unawaited(_load(reset: true));
+  }
+
+  @override
+  void dispose() {
+    _search.dispose();
+    super.dispose();
+  }
+
+  Future<void> _load({required bool reset}) async {
+    final generation = ++_generation;
+    setState(() {
+      _loading = true;
+      _failed = false;
+      if (reset) {
+        _rows.clear();
+        _next = null;
+      }
+    });
+    try {
+      final page = await ref.read(stockRegistryProvider).page(
+        widget.workspaceId,
+        placeId: _place,
+        noHome: _noHome,
+        after: reset ? null : _next,
+      );
+      if (!mounted || generation != _generation) return;
+      setState(() {
+        _rows.addAll(page.rows);
+        _next = page.complete ? null : page.next;
+        _loading = false;
+      });
+    } on Object catch (e, st) {
+      TraceLogger.instance.warn('stock', 'the registry was not read: $e', stackTrace: st);
+      if (!mounted || generation != _generation) return;
+      setState(() {
+        _failed = true;
+        _loading = false;
+      });
+    }
+  }
+
+  bool _matches(StockRegistryRow r, String separator) {
+    final q = _query.trim().toLowerCase();
+    if (q.isEmpty) return true;
+    return r.label.toLowerCase().contains(q) ||
+        (r.barcode ?? '').toLowerCase().contains(q) ||
+        (r.homeAddressPath ?? '').split(stockAddressJoint).join(separator).toLowerCase().contains(q);
+  }
+
+  /// A barcode typed or scanned: the item that has it opens.
+  void _scanned(String code, bool mayManage) {
+    final hit = _rows.where((r) => r.barcode == code.trim()).firstOrNull;
+    if (hit == null || !mayManage) return;
+    final lotsOn = ref.read(enabledFeaturesSyncProvider).contains(WorkspaceFeature.stockLots);
+    unawaited(
+      showStockItemEditor(
+        context,
+        ref.read(stockConfigCommandsProvider),
+        workspaceId: widget.workspaceId,
+        itemId: hit.itemId,
+        itemName: hit.itemName,
+        lotsOn: lotsOn,
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final l10n = context.l10n;
-    return ref
-        .watch(stockItemsProvider(workspaceId))
-        .when(
-          loading: () => const LoadingView(),
-          error: (_, _) => Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(l10n.stockReadFailed, key: const ValueKey('stock-items-failed')),
-                const FormGap(),
-                OutlinedButton(
-                  key: const ValueKey('stock-items-retry'),
-                  onPressed: () => ref.invalidate(stockItemsProvider(workspaceId)),
-                  child: Text(l10n.identityConnectRetry),
-                ),
-              ],
+    final mayManage = ref.watch(myPermissionsProvider).contains(WorkspacePermission.manageStock);
+    final separator = ref.watch(stockAddressSeparatorProvider);
+    final places = ref.watch(stockPlaceConfigsProvider(widget.workspaceId)).value ?? const <StockPlaceConfig>[]; // empty-ok: the places only feed a filter and a choice
+    if (_failed) {
+      return Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(l10n.stockReadFailed, key: const ValueKey('stock-items-failed')),
+            const FormGap(),
+            OutlinedButton(
+              key: const ValueKey('stock-items-retry'),
+              onPressed: () => unawaited(_load(reset: true)),
+              child: Text(l10n.identityConnectRetry),
             ),
+          ],
+        ),
+      );
+    }
+    final shown = [for (final r in _rows) if (_matches(r, separator)) r];
+    final seen = <String>{};
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+          child: Column(
+            children: [
+              AppTextField(
+                key: const ValueKey('stock-registry-search'),
+                controller: _search,
+                fieldKey: 'search',
+                label: l10n.stockRegistrySearch,
+                onChanged: (v) => setState(() => _query = v),
+                onSubmitted: (v) => _scanned(v, mayManage),
+              ),
+              const FormGap.small(),
+              AppDropdownField<String?>(
+                key: const ValueKey('stock-registry-place'),
+                label: l10n.stockRegistryPlaceFilter,
+                value: _place,
+                items: [
+                  (null, l10n.stockRegistryAllPlaces),
+                  for (final p in [...places.where((p) => !p.virtual)]..sort((a, b) => a.addressPath.compareTo(b.addressPath)))
+                    (p.id, p.addressPath.split(stockAddressJoint).join(separator)),
+                ],
+                onChanged: _noHome
+                    ? null
+                    : (v) {
+                        _place = v;
+                        unawaited(_load(reset: true));
+                      },
+              ),
+              SwitchListTile(
+                key: const ValueKey('stock-registry-no-home'),
+                contentPadding: EdgeInsets.zero,
+                title: Text(l10n.stockRegistryNoHomeFilter),
+                value: _noHome,
+                onChanged: (v) {
+                  _noHome = v;
+                  if (v) _place = null;
+                  unawaited(_load(reset: true));
+                },
+              ),
+            ],
           ),
-          data: (items) => items.isEmpty
+        ),
+        Expanded(
+          child: _loading && _rows.isEmpty
+              ? const LoadingView()
+              : shown.isEmpty
               ? Center(
                   child: Padding(
                     padding: const EdgeInsets.all(AppSpacing.md),
                     child: Text(l10n.stockItemsEmpty, key: const ValueKey('stock-items-empty'), textAlign: TextAlign.center),
                   ),
                 )
-              : ListView.separated(
-                  itemCount: items.length,
-                  separatorBuilder: (_, _) => const Divider(height: 1),
-                  itemBuilder: (context, i) => _ItemRow(workspaceId: workspaceId, item: items[i]),
+              : ListView(
+                  children: [
+                    for (final r in shown)
+                      _RegistryRow(
+                        workspaceId: widget.workspaceId,
+                        row: r,
+                        // the item's own tools sit on its first row only
+                        showTools: seen.add(r.itemId),
+                        places: places,
+                        separator: separator,
+                        onHomeChanged: () => _load(reset: true),
+                      ),
+                    if (_next != null)
+                      TextButton(
+                        key: const ValueKey('stock-registry-more'),
+                        onPressed: _loading ? null : () => unawaited(_load(reset: false)),
+                        child: Text(l10n.stockRegistryMore),
+                      ),
+                  ],
                 ),
-        );
+        ),
+      ],
+    );
   }
 }
 
-class _ItemRow extends ConsumerWidget {
-  const _ItemRow({required this.workspaceId, required this.item});
+class _RegistryRow extends ConsumerWidget {
+  const _RegistryRow({
+    required this.workspaceId,
+    required this.row,
+    required this.showTools,
+    required this.places,
+    required this.separator,
+    required this.onHomeChanged,
+  });
 
   final String workspaceId;
-  final StockItem item;
+  final StockRegistryRow row;
+  final bool showTools;
+  final List<StockPlaceConfig> places;
+  final String separator;
+  final VoidCallback onHomeChanged;
+
+  String _details(BuildContext context) {
+    final l10n = context.l10n;
+    final format = appFormatOf(context);
+    final cost = !row.costVisible
+        ? l10n.stockRegistryCostHidden
+        : row.costMinor == null
+        ? l10n.stockRegistryCostUnknown
+        : l10n.stockRegistryCost(format.money(row.costMinor!));
+    return [
+      if (row.barcode != null) row.barcode!,
+      if (row.unit.isNotEmpty) row.unit,
+      if (row.priceCents != null) l10n.stockRegistryPrice(format.money(row.priceCents!)),
+      cost,
+      if (row.homeAddressPath == null) l10n.stockRegistryNoHome,
+      if (row.homeAddressPath != null)
+        l10n.stockRegistryHome(row.homeAddressPath!.split(stockAddressJoint).join(separator)),
+      l10n.stockRegistryOnHand(l10n.stockQuantityWithUnit(row.onHand.text, row.unit)),
+    ].join(' · ');
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    // #4169: the editors are for a person who may manage the stock; the server
-    // asks the same.
+    // #4169: the editors are for a person who may manage the stock; the server asks the same.
     final mayManage = ref.watch(myPermissionsProvider).contains(WorkspacePermission.manageStock);
     final lotsOn = ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.stockLots);
     return ListTile(
-      key: ValueKey('stock-item-${item.id}'),
-      title: Text(item.name),
-      subtitle: item.unit.isEmpty ? null : Text(item.unit),
+      key: ValueKey('stock-item-${row.key}'),
+      title: Text(row.label),
+      subtitle: Text(_details(context)),
       trailing: !mayManage
           ? null
           : Wrap(
               children: [
                 IconButton(
-                  key: ValueKey('stock-edit-item-${item.id}'),
-                  icon: const Icon(Icons.tune),
-                  tooltip: l10n.stockEditItem,
-                  onPressed: () => showStockItemEditor(
-                    context,
-                    ref.read(stockConfigCommandsProvider),
-                    workspaceId: workspaceId,
-                    itemId: item.id,
-                    itemName: item.name,
-                    lotsOn: lotsOn,
-                  ),
+                  key: ValueKey('stock-home-${row.key}'),
+                  icon: const Icon(Icons.place_outlined),
+                  tooltip: l10n.stockRegistryHomePlace,
+                  onPressed: () async {
+                    final saved = await showStockHomeSheet(
+                      context,
+                      ref.read(stockRegistryProvider),
+                      workspaceId: workspaceId,
+                      row: row,
+                      places: places,
+                      separator: separator,
+                    );
+                    if (saved) onHomeChanged();
+                  },
                 ),
-                IconButton(
-                  key: ValueKey('stock-edit-variants-${item.id}'),
-                  icon: const Icon(Icons.style_outlined),
-                  tooltip: l10n.stockVariantsEdit,
-                  onPressed: () => showStockVariantsEditor(
-                    context,
-                    ref.read(stockConfigCommandsProvider),
-                    workspaceId: workspaceId,
-                    itemId: item.id,
-                    itemName: item.name,
+                if (showTools) ...[
+                  IconButton(
+                    key: ValueKey('stock-edit-item-${row.itemId}'),
+                    icon: const Icon(Icons.tune),
+                    tooltip: l10n.stockEditItem,
+                    onPressed: () => showStockItemEditor(
+                      context,
+                      ref.read(stockConfigCommandsProvider),
+                      workspaceId: workspaceId,
+                      itemId: row.itemId,
+                      itemName: row.itemName,
+                      lotsOn: lotsOn,
+                    ),
                   ),
-                ),
-                IconButton(
-                  key: ValueKey('stock-edit-mappings-${item.id}'),
-                  icon: const Icon(Icons.link),
-                  tooltip: l10n.stockMappingsEdit,
-                  onPressed: () => showStockMappings(
-                    context,
-                    ref.read(stockConfigCommandsProvider),
-                    workspaceId: workspaceId,
-                    itemId: item.id,
-                    itemName: item.name,
+                  IconButton(
+                    key: ValueKey('stock-edit-variants-${row.itemId}'),
+                    icon: const Icon(Icons.style_outlined),
+                    tooltip: l10n.stockVariantsEdit,
+                    onPressed: () => showStockVariantsEditor(
+                      context,
+                      ref.read(stockConfigCommandsProvider),
+                      workspaceId: workspaceId,
+                      itemId: row.itemId,
+                      itemName: row.itemName,
+                    ),
                   ),
-                ),
+                  IconButton(
+                    key: ValueKey('stock-edit-mappings-${row.itemId}'),
+                    icon: const Icon(Icons.link),
+                    tooltip: l10n.stockMappingsEdit,
+                    onPressed: () => showStockMappings(
+                      context,
+                      ref.read(stockConfigCommandsProvider),
+                      workspaceId: workspaceId,
+                      itemId: row.itemId,
+                      itemName: row.itemName,
+                    ),
+                  ),
+                ],
               ],
             ),
     );

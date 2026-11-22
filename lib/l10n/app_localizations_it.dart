@@ -35478,6 +35478,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get stockReasonGtinLength => 'Un codice a barre ha da 8 a 14 cifre.';
 
   @override
+  String get stockReasonHomeInvalid =>
+      'Scelga un’ubicazione di questa azienda in uso che non sia di fornitore, cliente, perdita o transito.';
+
+  @override
   String get stockReasonItemForeign =>
       'Questo articolo non appartiene a questa attività.';
 
@@ -35685,6 +35689,67 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get stockReasonWrongSite =>
       'La merce viene ricevuta su un luogo della sede di destinazione.';
+
+  @override
+  String get stockRegistryAllPlaces => 'Tutte le ubicazioni';
+
+  @override
+  String stockRegistryCost(String amount) {
+    return 'costo $amount';
+  }
+
+  @override
+  String get stockRegistryCostHidden => 'costo non mostrato';
+
+  @override
+  String get stockRegistryCostUnknown => 'costo sconosciuto';
+
+  @override
+  String stockRegistryHome(String address) {
+    return 'ubicazione $address';
+  }
+
+  @override
+  String get stockRegistryHomeHelp =>
+      'Dove va questo articolo, perché ricevimento, conteggio e prelievo sappiano dove andare. È un’indicazione: la merce può stare altrove e cambiarla non sposta nulla.';
+
+  @override
+  String get stockRegistryHomeNone => 'Nessuna ubicazione abituale';
+
+  @override
+  String get stockRegistryHomePlace => 'Ubicazione abituale';
+
+  @override
+  String stockRegistryHomeTitle(String item) {
+    return 'Ubicazione abituale di $item';
+  }
+
+  @override
+  String get stockRegistryMore => 'Mostra altri';
+
+  @override
+  String get stockRegistryNoHome => 'nessuna ubicazione abituale';
+
+  @override
+  String get stockRegistryNoHomeFilter =>
+      'Solo articoli senza ubicazione abituale';
+
+  @override
+  String stockRegistryOnHand(String quantity) {
+    return '$quantity disponibili';
+  }
+
+  @override
+  String get stockRegistryPlaceFilter => 'Ubicazione abituale';
+
+  @override
+  String stockRegistryPrice(String amount) {
+    return 'prezzo $amount';
+  }
+
+  @override
+  String get stockRegistrySearch =>
+      'Cerchi un articolo per nome, codice a barre o indirizzo';
 
   @override
   String get stockSettingsElsewhere =>

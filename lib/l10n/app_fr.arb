@@ -21062,6 +21062,7 @@
   "@stockReasonGtinLength": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonHomeInvalid": "Choisissez un emplacement de cette entreprise en service, qui ne soit ni un fournisseur, ni un client, ni une perte, ni un transit.",
   "stockReasonItemForeign": "Cet article n’est pas un article de cette entreprise.",
   "@stockReasonItemForeign": {
     "description": "#4169 the stock editors: a text under a field the server refused"
@@ -21270,6 +21271,22 @@
   "@stockReasonWrongSite": {
     "description": "#4170 transfers and take-out: a label or message"
   },
+  "stockRegistryAllPlaces": "Tous les emplacements",
+  "stockRegistryCost": "coût {amount}",
+  "stockRegistryCostHidden": "coût non affiché",
+  "stockRegistryCostUnknown": "coût inconnu",
+  "stockRegistryHome": "rangé en {address}",
+  "stockRegistryHomeHelp": "Où cet article est rangé, pour que la réception, l’inventaire et le prélèvement sachent où il va. C’est un conseil : le stock peut être ailleurs, et le changer ne déplace rien.",
+  "stockRegistryHomeNone": "Pas d’emplacement de rangement",
+  "stockRegistryHomePlace": "Emplacement de rangement",
+  "stockRegistryHomeTitle": "Emplacement de rangement de {item}",
+  "stockRegistryMore": "Afficher plus",
+  "stockRegistryNoHome": "pas d’emplacement de rangement",
+  "stockRegistryNoHomeFilter": "Seulement les articles sans emplacement de rangement",
+  "stockRegistryOnHand": "{quantity} en stock",
+  "stockRegistryPlaceFilter": "Emplacement de rangement",
+  "stockRegistryPrice": "prix {amount}",
+  "stockRegistrySearch": "Trouver un article par nom, code-barres ou adresse",
   "stockSettingsElsewhere": "Les réglages du stock se tiennent sur la page Réglages du stock.",
   "@stockSettingsElsewhere": {
     "description": "the stock pages and group (#4299)"
