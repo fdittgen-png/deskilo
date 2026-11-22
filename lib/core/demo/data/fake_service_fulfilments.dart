@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #4178 -- the Demo's engagements, with the rules of 0851 (one per canonical source
+// #4178 -- the Demo's engagements, with the rules of 0852 (one per canonical source
 // line, append-only steps at an expected revision, one request one step), reading the
 // space's quotes and invoices and changing none. Its answers are the server's JSON,
 // read back through the real reader: the Demo cannot drift from the shape.

@@ -721,4 +721,4 @@ update public.business_kinds
    set feature_profile = feature_profile || '{"serviceFulfilment": true}'::jsonb
  where code = 'freelancer';
 
-select public.set_deskilo_schema_version(851);
+select public.set_deskilo_schema_version(852);

@@ -4,8 +4,8 @@
 --
 -- #4178 (F4, first of three files) -- the `serviceFulfilment` feature in the
 -- server's copy of the manifest and in the setup levels: asked for, under the
--- billing customers, off by default. The second file (0851) carries the tables and
--- the commands, the third (0852) the template field registry and the builtin
+-- billing customers, off by default. The second file (0852) carries the tables and
+-- the commands, the third (0853) the template field registry and the builtin
 -- template. The generators: tool/build_feature_registry_sql.dart and
 -- tool/build_setup_steps.dart.
 
@@ -192,4 +192,4 @@ returns jsonb language sql immutable set search_path = public as $fn$
 $fn$;
 revoke execute on function public.setup_level_catalogue() from public, anon, authenticated;
 
-select public.set_deskilo_schema_version(850);
+select public.set_deskilo_schema_version(851);

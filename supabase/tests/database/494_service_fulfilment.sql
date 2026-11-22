@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #4178 (0851, F4): service fulfilment, as the real roles. An accepted quote line, an
+-- #4178 (0852, F4): service fulfilment, as the real roles. An accepted quote line, an
 -- issued invoice line or a direct commitment becomes ONE engagement, followed
 -- ordered -> started -> done or cancelled with a reason, every step kept; the quote, the
 -- invoice and the payments beside it are read and never changed. One engagement per

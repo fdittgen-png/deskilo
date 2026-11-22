@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #4178 (F4) -- service fulfilment over the RPCs of 0851. A server refusal
+// #4178 (F4) -- service fulfilment over the RPCs of 0852. A server refusal
 // becomes a typed [FulfilmentRefusal]; a transport failure passes through
 // untouched (a write is never retried here: the same request identity is what
 // makes a retry safe, and the screen offers it).
@@ -176,7 +176,7 @@ class SupabaseServiceFulfilmentRepository
     );
   }
 
-  /// The server's refusals of 0851 by code: DKF02 stale (the detail is the
+  /// The server's refusals of 0852 by code: DKF02 stale (the detail is the
   /// current revision), DKF03 and DKF04 state, DKF05 a request used for
   /// something else, DKF06 an incomplete fact (the detail names it), DKF01
   /// unknown, DKF10 switched off, DKF07, 42501 and 28000 not allowed.

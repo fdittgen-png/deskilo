@@ -58,11 +58,11 @@ const Map<String, String> _notExported = {
           'customer, keyed by that customer\'s subject. A customer has no account '
           'here, so no export_my_data call is theirs; a rights request is answered '
           'by the space (record_rights_request) from the workspace records export, '
-          'which carries the engagement tables (0851)',
+          'which carries the engagement tables (0852)',
   'service_fulfilment_transitions':
       '#4178 — one step of such an engagement, stamped with the issuer who took '
           'it. The issuer\'s own export is the space\'s workspace records export, '
-          'which carries the steps (0851); a customer is not an account of this '
+          'which carries the steps (0852); a customer is not an account of this '
           'export',
   'customer_quotes':
       '#4166 — an offer the business made to a billing customer, keyed by '

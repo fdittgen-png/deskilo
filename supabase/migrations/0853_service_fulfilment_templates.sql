@@ -5,8 +5,8 @@
 --
 -- #4178 (F4, third of three files) -- the `serviceFulfilment` feature in the
 -- template field registry and in the builtin template that writes the feature
--- flags (off). The first file (0850) carries the server's feature registry and
--- the setup levels, the second (0851) the tables and the commands.
+-- flags (off). The first file (0851) carries the server's feature registry and
+-- the setup levels, the second (0852) the tables and the commands.
 
 create or replace function public.template_field_registry()
 returns jsonb
@@ -649,4 +649,4 @@ on conflict (key) where owner_workspace_id is null do update
       configuration = excluded.configuration,
       floor_plan = excluded.floor_plan;
 
-select public.set_deskilo_schema_version(852);
+select public.set_deskilo_schema_version(853);
