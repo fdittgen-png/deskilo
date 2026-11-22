@@ -57,6 +57,9 @@ const Map<String, Set<WorkspacePermission>> routePermissions = {
   '/stock/reorder': {_P.viewStock, _P.manageStock, _P.managePurchases},
   // #4173 — what the goods on hand cost: who reads the finances or manages the purchases (the server asks the same).
   '/stock/value': {_P.viewFinances, _P.managePurchases},
+  // #4295 — who counts (the right countStock implies nothing else) or manages the stock.
+  '/stock/cycle-counts': {_P.countStock, _P.manageStock},
+  '/stock/cycle-counts/:taskId': {_P.countStock, _P.manageStock},
   // #4299 — the item registry and the places read like the stock; its settings
   // are for who manages the stock or the configuration.
   '/stock/items': {_P.viewStock, _P.manageStock},

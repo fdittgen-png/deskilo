@@ -135,6 +135,7 @@
   "user.money.stock.registry": "El registro de artículos",
   "user.money.stock.value": "Valor de las existencias y origen de la mercancía",
   "user.money.stock.reversals": "Devoluciones, correcciones y recuentos",
+  "user.money.stock.cycle": "Recuentos cíclicos",
   "user.money.amounts": "Cómo se muestran los importes",
   "user.money.finances": "Sus finanzas en todos sus espacios",
   "user.money.businesses": "Sus negocios de un vistazo",

@@ -135,6 +135,7 @@
   "user.money.stock.registry": "Le registre des articles",
   "user.money.stock.value": "Valeur du stock et origine des marchandises",
   "user.money.stock.reversals": "Retours, corrections et comptages",
+  "user.money.stock.cycle": "Inventaires tournants",
   "user.money.amounts": "Comment les montants sont affichés",
   "user.money.finances": "Vos finances dans tous vos espaces",
   "user.money.businesses": "Vos activités en un coup d'œil",
