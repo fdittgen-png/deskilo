@@ -798,5 +798,7 @@
  "stockSepDash": "Bindestrich ( - )",
  "stockSepDot": "Punkt ( . )",
  "stockSepSlash": "Schrägstrich ( / )",
- "stockSepColon": "Doppelpunkt ( : )"
+ "stockSepColon": "Doppelpunkt ( : )",
+ "einvoiceStuck": "Unterbrochener E-Rechnungsversuch",
+ "einvoiceStuckHint": "Wie lange eine E-Rechnung vorbereitet bleiben darf, ohne dass ein Versand begonnen hat, bevor die Inhaberin oder der Inhaber erfährt, dass der Versuch stehen geblieben ist. Einstellbar in den Einstellungen der App."
 }

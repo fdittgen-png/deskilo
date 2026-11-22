@@ -320,11 +320,13 @@ String? settingRangeLabel(AppLocalizations l10n, SettingDefinition d) {
   return null;
 }
 
-/// #4217 — the window to send a checkout again, per provider.
+/// #4217 — the window to send a checkout again, per provider; #4325 — how long
+/// a prepared e-invoice may wait for its dispatch before the owner is told.
 String _paymentSettingLabel(AppLocalizations l10n, String key) => switch (key) {
       'payments.resend_window_mollie_minutes' => l10n.settingLabelPaymentsResendWindowMollieMinutes,
       'payments.resend_window_paypal_minutes' => l10n.settingLabelPaymentsResendWindowPaypalMinutes,
       'payments.resend_window_stripe_minutes' => l10n.settingLabelPaymentsResendWindowStripeMinutes,
+      'einvoice.stuck_attempt_minutes' => l10n.settingLabelEinvoiceStuckAttemptMinutes,
       _ => key,
     };
 
@@ -332,5 +334,6 @@ String? _paymentSettingHint(AppLocalizations l10n, String key) => switch (key) {
       'payments.resend_window_mollie_minutes' => l10n.settingHintPaymentsResendWindowMollieMinutes,
       'payments.resend_window_paypal_minutes' => l10n.settingHintPaymentsResendWindowPaypalMinutes,
       'payments.resend_window_stripe_minutes' => l10n.settingHintPaymentsResendWindowStripeMinutes,
+      'einvoice.stuck_attempt_minutes' => l10n.settingHintEinvoiceStuckAttemptMinutes,
       _ => null,
     };

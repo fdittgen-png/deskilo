@@ -6482,6 +6482,9 @@
   "eventCredentialCleared": "{actor} hat die Zugangsdaten von {provider} ({area}) gelöscht: {keys}.",
   "eventCredentialReplaced": "{actor} hat die Zugangsdaten von {provider} ({area}) ersetzt: {keys}.",
   "eventCredentialSet": "{actor} hat die Zugangsdaten von {provider} ({area}) hinterlegt: {keys}.",
+  "eventEinvoiceNoticeEnded": "Erledigt",
+  "eventEinvoiceOutcomeUncertain": "Das Ergebnis einer E-Rechnung ist unbekannt: Ihr Versand blieb stehen, bevor eine Antwort erfasst wurde. Sie wird nicht erneut gesendet. Prüfen Sie den Eintrag der Plattform und regeln Sie es von Hand.",
+  "eventEinvoiceStuckPrepared": "Eine E-Rechnung wurde vorbereitet und nie gesendet. Senden Sie sie erneut über ihre Rechnung oder lassen Sie sie liegen.",
   "eventExpenseDeviation": "validiert {scheduled} — {reason}",
   "eventExpenseRepartitionLine": "{count, plural, one{{actor} verteilt „{title}“ — {amount} auf 1 Mitglied} other{{actor} verteilt „{title}“ — {amount} auf {count} Mitglieder}}",
   "@eventExpenseRepartitionLine": {
@@ -6675,6 +6678,7 @@
   "eventTypeBadgeSecurityAlert": "Schutz der Badge-Anmeldung",
   "eventTypeCommitmentVariance": "Mietabweichung",
   "eventTypeCredentialChange": "Änderung der Zugangsdaten",
+  "eventTypeEinvoiceOutcomeUnknown": "E-Rechnungsversand unterbrochen",
   "eventTypeExpense": "Ausgabe",
   "eventTypeExpenseRepartition": "Gemeinsame Ausgabe",
   "eventTypeExpenseSchedule": "Geplante Ausgabe",
@@ -18856,6 +18860,7 @@
   "@settingHintDunningFirstAfterDays": {
     "description": "#2484 settings: Setting hint."
   },
+  "settingHintEinvoiceStuckAttemptMinutes": "Wie viele Minuten eine E-Rechnung vorbereitet bleiben darf, ohne dass ein Versand begonnen hat, bevor die Inhaberin oder der Inhaber erfährt, dass der Versuch stehen geblieben ist. Ein begonnener Versand ohne Ergebnis wird gemeldet, sobald seine eigene Frist abgelaufen ist.",
   "settingHintFederationAnswerWaitSeconds": "Sekunden, die ein Server auf die Antwort auf eine signierte Nachricht an einen anderen Server wartet, bevor er dieselbe Nachricht erneut sendet. Mindestens 30; unter der Statusgültigkeit halten.",
   "settingHintFederationRetentionHours": "Stunden, die ein Server die Empfangsbelege signierter Nachrichten zwischen Servern und ein persönliches Zuhause die Spuren beendeter Mitgliedschaften aufbewahrt, bevor die stündliche Bereinigung sie entfernt. Nie kürzer als die längste Statusgültigkeit plus die doppelte Uhrabweichung.",
   "settingHintIdentityClockSkewSeconds": "Sekunden Uhrabweichung zwischen persönlichem Zuhause und Workspace-Server, die noch akzeptiert werden, 0 bis 30.",
@@ -19072,6 +19077,7 @@
   "@settingLabelDunningFirstAfterDays": {
     "description": "#2484 settings: Setting label."
   },
+  "settingLabelEinvoiceStuckAttemptMinutes": "Unterbrochener E-Rechnungsversuch",
   "settingLabelFederationAnswerWaitSeconds": "Wartezeit auf Antwort im Server-Austausch",
   "settingLabelFederationRetentionHours": "Aufbewahrung des Server-Austauschs",
   "settingLabelIdentityClockSkewSeconds": "Erlaubte Uhrabweichung",

@@ -803,7 +803,9 @@ window.SETUP_L10N={
    "stockSepDash": "Dash ( - )",
    "stockSepDot": "Dot ( . )",
    "stockSepSlash": "Slash ( / )",
-   "stockSepColon": "Colon ( : )"
+   "stockSepColon": "Colon ( : )",
+   "einvoiceStuck": "E-invoice attempt left half-way",
+   "einvoiceStuckHint": "How long an e-invoice may stay prepared, with no dispatch started, before the owner is told that its attempt stopped. Set in the app's settings."
   },
   "feature": {
    "calendarTab": [
@@ -2672,7 +2674,9 @@ window.SETUP_L10N={
    "stockSepDash": "Tiret ( - )",
    "stockSepDot": "Point ( . )",
    "stockSepSlash": "Barre oblique ( / )",
-   "stockSepColon": "Deux-points ( : )"
+   "stockSepColon": "Deux-points ( : )",
+   "einvoiceStuck": "Tentative de facture électronique interrompue",
+   "einvoiceStuckHint": "Combien de temps une facture électronique peut rester préparée, sans envoi commencé, avant que le propriétaire soit prévenu que sa tentative s’est arrêtée. Réglé dans les paramètres de l’application."
   },
   "feature": {
    "calendarTab": [
@@ -4541,7 +4545,9 @@ window.SETUP_L10N={
    "stockSepDash": "Bindestrich ( - )",
    "stockSepDot": "Punkt ( . )",
    "stockSepSlash": "Schrägstrich ( / )",
-   "stockSepColon": "Doppelpunkt ( : )"
+   "stockSepColon": "Doppelpunkt ( : )",
+   "einvoiceStuck": "Unterbrochener E-Rechnungsversuch",
+   "einvoiceStuckHint": "Wie lange eine E-Rechnung vorbereitet bleiben darf, ohne dass ein Versand begonnen hat, bevor die Inhaberin oder der Inhaber erfährt, dass der Versuch stehen geblieben ist. Einstellbar in den Einstellungen der App."
   },
   "feature": {
    "calendarTab": [
@@ -6410,7 +6416,9 @@ window.SETUP_L10N={
    "stockSepDash": "Guion ( - )",
    "stockSepDot": "Punto ( . )",
    "stockSepSlash": "Barra ( / )",
-   "stockSepColon": "Dos puntos ( : )"
+   "stockSepColon": "Dos puntos ( : )",
+   "einvoiceStuck": "Intento de factura electrónica interrumpido",
+   "einvoiceStuckHint": "Cuánto tiempo puede quedar preparada una factura electrónica, sin que se haya iniciado el envío, antes de avisar al propietario de que el intento se detuvo. Se ajusta en los ajustes de la aplicación."
   },
   "feature": {
    "calendarTab": [
@@ -8279,7 +8287,9 @@ window.SETUP_L10N={
    "stockSepDash": "Trattino ( - )",
    "stockSepDot": "Punto ( . )",
    "stockSepSlash": "Barra ( / )",
-   "stockSepColon": "Due punti ( : )"
+   "stockSepColon": "Due punti ( : )",
+   "einvoiceStuck": "Tentativo di fattura elettronica interrotto",
+   "einvoiceStuckHint": "Per quanto tempo una fattura elettronica può restare preparata, senza che l’invio sia iniziato, prima che il titolare sia avvisato che il tentativo si è fermato. Si imposta nelle impostazioni dell’app."
   },
   "feature": {
    "calendarTab": [

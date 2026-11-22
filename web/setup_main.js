@@ -106,7 +106,10 @@ const DEFAULTS={
  federation:{retentionHours:'24',answerWait:'120'},
  // #4217 — how long after its first sending a checkout may be sent again under
  // its original request, per provider (platform settings payments.resend_window_*_minutes).
- paymentResend:{mollie:'50',paypal:'330',stripe:'1380'},quotes:{defaultValidity:'30',maxValidity:'365'},
+ paymentResend:{mollie:'50',paypal:'330',stripe:'1380'},
+ // #4325 — how long a prepared e-invoice waits for its dispatch before the owner is told
+ // (platform setting einvoice.stuck_attempt_minutes).
+ einvoiceStuck:{minutes:'60'},quotes:{defaultValidity:'30',maxValidity:'365'},
  // #2556 — the inbox's page per source, read at the personal home and at
  // each workspace server (platform setting messaging.inbox_page_size).
  inbox:{pageSize:'50'},

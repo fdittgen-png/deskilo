@@ -1,0 +1,10 @@
+{
+  "settingLabelEinvoiceStuckAttemptMinutes": "E-invoice attempt left half-way",
+  "@settingLabelEinvoiceStuckAttemptMinutes": {
+    "description": "#4325 settings: Setting label."
+  },
+  "settingHintEinvoiceStuckAttemptMinutes": "How many minutes an e-invoice may stay prepared, with no dispatch started, before the owner is told that its attempt stopped. A dispatch that was started and has no outcome is told as soon as its own time is up.",
+  "@settingHintEinvoiceStuckAttemptMinutes": {
+    "description": "#4325 settings: Setting hint."
+  }
+}

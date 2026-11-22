@@ -10160,6 +10160,17 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get eventEinvoiceNoticeEnded => 'Erledigt';
+
+  @override
+  String get eventEinvoiceOutcomeUncertain =>
+      'Das Ergebnis einer E-Rechnung ist unbekannt: Ihr Versand blieb stehen, bevor eine Antwort erfasst wurde. Sie wird nicht erneut gesendet. Prüfen Sie den Eintrag der Plattform und regeln Sie es von Hand.';
+
+  @override
+  String get eventEinvoiceStuckPrepared =>
+      'Eine E-Rechnung wurde vorbereitet und nie gesendet. Senden Sie sie erneut über ihre Rechnung oder lassen Sie sie liegen.';
+
+  @override
   String eventExpenseDeviation(Object reason, Object scheduled) {
     return 'validiert $scheduled — $reason';
   }
@@ -10436,6 +10447,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get eventTypeCredentialChange => 'Änderung der Zugangsdaten';
+
+  @override
+  String get eventTypeEinvoiceOutcomeUnknown =>
+      'E-Rechnungsversand unterbrochen';
 
   @override
   String get eventTypeExpense => 'Ausgabe';
@@ -31734,6 +31749,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Tage nach der Ausstellung, bis eine erste Mahnung vorgeschlagen wird und bis eine Rechnung ohne Zahlungsfrist fällig wird.';
 
   @override
+  String get settingHintEinvoiceStuckAttemptMinutes =>
+      'Wie viele Minuten eine E-Rechnung vorbereitet bleiben darf, ohne dass ein Versand begonnen hat, bevor die Inhaberin oder der Inhaber erfährt, dass der Versuch stehen geblieben ist. Ein begonnener Versand ohne Ergebnis wird gemeldet, sobald seine eigene Frist abgelaufen ist.';
+
+  @override
   String get settingHintFederationAnswerWaitSeconds =>
       'Sekunden, die ein Server auf die Antwort auf eine signierte Nachricht an einen anderen Server wartet, bevor er dieselbe Nachricht erneut sendet. Mindestens 30; unter der Statusgültigkeit halten.';
 
@@ -32060,6 +32079,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingLabelDunningFirstAfterDays => 'Tage bis zur ersten Mahnung';
+
+  @override
+  String get settingLabelEinvoiceStuckAttemptMinutes =>
+      'Unterbrochener E-Rechnungsversuch';
 
   @override
   String get settingLabelFederationAnswerWaitSeconds =>
