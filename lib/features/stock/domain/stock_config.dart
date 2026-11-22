@@ -120,7 +120,10 @@ class StockPlaceConfig {
     required this.parentId,
     required this.active,
     required this.virtual,
-  });
+    this.receivesFromSuppliers = true,
+    this.pickRole,
+    String? addressPath,
+  }) : addressPath = addressPath ?? code;
 
   final String id;
   final int revision;
@@ -134,6 +137,16 @@ class StockPlaceConfig {
   /// A virtual place (supplier, customer, loss, opening) is the server's.
   final bool virtual;
 
+  /// A site only: whether goods are put away here from a supplier (false: by transfer only).
+  final bool receivesFromSuppliers;
+
+  /// A place below a site: `picking` (front of house) or `reserve` (overstock); null: not said.
+  final String? pickRole;
+
+  /// The codes of the place and of everything above it, joined by [stockAddressJoint]: the
+  /// server's composed address. The person reads it through [stockAddress].
+  final String addressPath;
+
   factory StockPlaceConfig.fromJson(Object? json) {
     final r = JsonReader.of(json, context: 'stock_locations');
     return StockPlaceConfig(
@@ -146,9 +159,20 @@ class StockPlaceConfig {
       parentId: r.stringOrNull('parent_id'),
       active: r.boolOr('active', fallback: true),
       virtual: r.boolOr('virtual', fallback: false),
+      receivesFromSuppliers: r.boolOr('receives_from_suppliers', fallback: true),
+      pickRole: r.stringOrNull('pick_role'),
+      addressPath: r.stringOrNull('address_path'),
     );
   }
 }
+
+/// What the server joins the codes of an address with (the unit separator); never shown.
+const String stockAddressJoint = '\u001f';
+
+/// The address of [place] as the person reads it: its codes from the site down, joined with
+/// [separator] (the workspace setting `stock.address_separator`).
+String stockAddress(StockPlaceConfig place, String separator) =>
+    place.addressPath.split(stockAddressJoint).join(separator);
 
 /// What a save of a place says: the place and its new revision.
 typedef StockSaved = ({String id, int revision, bool replayed});

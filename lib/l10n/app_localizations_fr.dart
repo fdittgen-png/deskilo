@@ -31990,6 +31990,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Jours pendant lesquels une invitation personnelle peut être utilisée après sa création. Les invitations déjà envoyées gardent leur date. Peut seulement être raccourcie.';
 
   @override
+  String get settingHintStockAddressSeparator =>
+      'Le caractère entre les niveaux d\'une adresse d\'emplacement (site, zone, allée, travée, étagère) : MAG1-SALES-A03-B02-S4 avec un tiret, MAG1.SALES.A03.B02.S4 avec un point. Seule l\'écriture de l\'adresse change.';
+
+  @override
   String get settingHintStockAllowNegative =>
       'Désactivé : un mouvement qui laisserait moins que rien à un endroit est refusé. Activé : il est enregistré, et l\'endroit affiche une quantité négative jusqu\'à l\'arrivée de marchandises.';
 
@@ -32311,6 +32315,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingLabelSecurityInvitationExpiryDays =>
       'Validité d\'une invitation';
+
+  @override
+  String get settingLabelStockAddressSeparator =>
+      'Séparateur dans l\'adresse d\'un emplacement';
 
   @override
   String get settingLabelStockAllowNegative => 'Le stock peut passer sous zéro';
@@ -35374,10 +35382,19 @@ class AppLocalizationsFr extends AppLocalizations {
   String get stockPlaceKind => 'Type d’emplacement';
 
   @override
+  String get stockPlaceKindAisle => 'Allée';
+
+  @override
+  String get stockPlaceKindBay => 'Travée';
+
+  @override
   String get stockPlaceKindBin => 'Bac';
 
   @override
   String get stockPlaceKindShelf => 'Étagère';
+
+  @override
+  String get stockPlaceKindSite => 'Site';
 
   @override
   String get stockPlaceKindWarehouse => 'Entrepôt';
@@ -35395,10 +35412,39 @@ class AppLocalizationsFr extends AppLocalizations {
   String get stockPlaceParent => 'Dans';
 
   @override
+  String get stockPlaceReceives => 'Reçoit des fournisseurs';
+
+  @override
+  String get stockPlaceReceivesHelp =>
+      'Désactivé : les marchandises n\'arrivent ici que par transfert depuis un autre site.';
+
+  @override
+  String get stockPlaceReceivesNo => 'transferts seulement';
+
+  @override
+  String get stockPlaceReceivesYes => 'reçoit des fournisseurs';
+
+  @override
+  String get stockPlaceRole => 'Usage';
+
+  @override
+  String get stockPlaceRoleNone => 'Non précisé';
+
+  @override
+  String get stockPlaceRolePicking => 'Prélèvement (en rayon)';
+
+  @override
+  String get stockPlaceRoleReserve => 'Réserve (surstock)';
+
+  @override
   String get stockPlaceVirtual => 'Tenu par le système';
 
   @override
   String get stockPlacesAdd => 'Ajouter un emplacement';
+
+  @override
+  String get stockPlacesSearch =>
+      'Trouver un emplacement par adresse, nom ou code-barres';
 
   @override
   String get stockPlacesTitle => 'Emplacements';
@@ -35548,6 +35594,18 @@ class AppLocalizationsFr extends AppLocalizations {
   String get stockReasonKindUnknown => 'Ce type n’est pas connu.';
 
   @override
+  String get stockReasonLevelChildrenWrong =>
+      'Cet emplacement en contient d\'autres qui ont besoin de son niveau ; déplacez-les d\'abord.';
+
+  @override
+  String get stockReasonLevelParentMissing =>
+      'Seul un site se tient seul ; tout autre niveau se place sous le niveau au-dessus.';
+
+  @override
+  String get stockReasonLevelParentWrong =>
+      'Un emplacement de ce niveau se place seulement sous le niveau juste au-dessus.';
+
+  @override
   String get stockReasonLineConflict =>
       'La ligne est désignée deux fois et les deux désignations diffèrent.';
 
@@ -35626,6 +35684,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get stockReasonParentInactive =>
       'L’emplacement qui le contient n’est plus utilisé.';
+
+  @override
+  String get stockReasonPickRoleUnknown =>
+      'L\'usage doit être prélèvement ou réserve.';
 
   @override
   String get stockReasonPriceInvalid => 'Un prix est nul ou positif.';

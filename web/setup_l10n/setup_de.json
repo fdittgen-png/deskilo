@@ -792,5 +792,11 @@
  "resendPaypal": "Wiederholungsfenster, PayPal",
  "resendPaypalHint": "Wie lange nach dem ersten Senden einer Zahlung an PayPal dieselbe Zahlung unter ihrer ursprünglichen Anfrage erneut gesendet werden darf. Unter der Dauer halten, für die PayPal eine Anfrage behält (6 Stunden). Wird in den Einstellungen der App festgelegt.",
  "resendStripe": "Wiederholungsfenster, Stripe",
- "resendStripeHint": "Wie lange nach dem ersten Senden einer Zahlung an Stripe dieselbe Zahlung unter ihrer ursprünglichen Anfrage erneut gesendet werden darf. Unter der Dauer halten, für die Stripe eine Anfrage behält (24 Stunden). Wird in den Einstellungen der App festgelegt."
+ "resendStripeHint": "Wie lange nach dem ersten Senden einer Zahlung an Stripe dieselbe Zahlung unter ihrer ursprünglichen Anfrage erneut gesendet werden darf. Unter der Dauer halten, für die Stripe eine Anfrage behält (24 Stunden). Wird in den Einstellungen der App festgelegt.",
+ "stockAddressSeparator": "Trennzeichen in einer Lagerort-Adresse",
+ "stockAddressSeparatorHint": "Das Zeichen zwischen den Ebenen einer Lagerort-Adresse (Standort, Zone, Gang, Regalfeld, Fach): MAG1-SALES-A03-B02-S4 mit Bindestrich, MAG1.SALES.A03.B02.S4 mit Punkt. Nur die Schreibweise ändert sich.",
+ "stockSepDash": "Bindestrich ( - )",
+ "stockSepDot": "Punkt ( . )",
+ "stockSepSlash": "Schrägstrich ( / )",
+ "stockSepColon": "Doppelpunkt ( : )"
 }

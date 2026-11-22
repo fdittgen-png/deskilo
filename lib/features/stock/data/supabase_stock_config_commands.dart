@@ -66,7 +66,9 @@ class SupabaseStockConfigCommands implements StockConfigCommands {
     };
     final rows = await _client
         .from('stock_locations')
-        .select('id, revision, kind, code, name, barcode, parent_id, active')
+        .select(
+          'id, revision, kind, code, name, barcode, parent_id, active, receives_from_suppliers, pick_role, address_path',
+        )
         .eq('workspace_id', workspaceId)
         .order('code');
     return [

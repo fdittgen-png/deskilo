@@ -792,5 +792,11 @@
  "resendPaypal": "Resend window, PayPal",
  "resendPaypalHint": "How long after a checkout was first sent to PayPal the same checkout may be sent again under its original request. Keep it below how long PayPal remembers a request (6 hours). Set in the app's settings.",
  "resendStripe": "Resend window, Stripe",
- "resendStripeHint": "How long after a checkout was first sent to Stripe the same checkout may be sent again under its original request. Keep it below how long Stripe remembers a request (24 hours). Set in the app's settings."
+ "resendStripeHint": "How long after a checkout was first sent to Stripe the same checkout may be sent again under its original request. Keep it below how long Stripe remembers a request (24 hours). Set in the app's settings.",
+ "stockAddressSeparator": "Separator in a place address",
+ "stockAddressSeparatorHint": "The character between the levels of a place address (site, zone, aisle, bay, shelf): MAG1-SALES-A03-B02-S4 with a dash, MAG1.SALES.A03.B02.S4 with a dot. Only how an address is written changes.",
+ "stockSepDash": "Dash ( - )",
+ "stockSepDot": "Dot ( . )",
+ "stockSepSlash": "Slash ( / )",
+ "stockSepColon": "Colon ( : )"
 }

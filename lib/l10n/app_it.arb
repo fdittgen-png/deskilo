@@ -18977,6 +18977,7 @@
   "@settingHintSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting hint."
   },
+  "settingHintStockAddressSeparator": "Il carattere tra i livelli dell'indirizzo di un’ubicazione (sede, zona, corsia, campata, scaffale): MAG1-SALES-A03-B02-S4 con il trattino, MAG1.SALES.A03.B02.S4 con il punto. Cambia solo come si scrive l'indirizzo.",
   "settingHintStockAllowNegative": "Disattivato: un movimento che lascerebbe meno di niente in un luogo è rifiutato. Attivato: viene registrato e il luogo mostra una quantità negativa finché arriva merce.",
   "settingHintVatViesEvidenceDays": "Giorni in cui un controllo valido della partita IVA resta abbastanza recente da fungere da prova su una nuova fattura. Un valore più breve richiede prima un nuovo controllo; non prova che un’operazione sia valida.",
   "@settingHintVatViesEvidenceDays": {
@@ -19192,6 +19193,7 @@
   "@settingLabelSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting label."
   },
+  "settingLabelStockAddressSeparator": "Separatore nell'indirizzo di un’ubicazione",
   "settingLabelStockAllowNegative": "Le scorte possono scendere sotto zero",
   "settingLabelVatViesEvidenceDays": "Validità del controllo della partita IVA",
   "@settingLabelVatViesEvidenceDays": {
@@ -20830,6 +20832,8 @@
   "@stockPlaceKind": {
     "description": "#4169 the stock editors: a label or message"
   },
+  "stockPlaceKindAisle": "Corsia",
+  "stockPlaceKindBay": "Campata",
   "stockPlaceKindBin": "Cassetto",
   "@stockPlaceKindBin": {
     "description": "#4169 the stock editors: a label or message"
@@ -20838,6 +20842,7 @@
   "@stockPlaceKindShelf": {
     "description": "#4169 the stock editors: a label or message"
   },
+  "stockPlaceKindSite": "Sede",
   "stockPlaceKindWarehouse": "Magazzino",
   "@stockPlaceKindWarehouse": {
     "description": "#4169 the stock editors: a label or message"
@@ -20858,6 +20863,14 @@
   "@stockPlaceParent": {
     "description": "#4169 the stock editors: a label or message"
   },
+  "stockPlaceReceives": "Riceve dai fornitori",
+  "stockPlaceReceivesHelp": "Disattivato: la merce arriva qui solo per trasferimento da un'altra sede.",
+  "stockPlaceReceivesNo": "solo trasferimenti",
+  "stockPlaceReceivesYes": "riceve dai fornitori",
+  "stockPlaceRole": "Uso",
+  "stockPlaceRoleNone": "Non indicato",
+  "stockPlaceRolePicking": "Prelievo (area di vendita)",
+  "stockPlaceRoleReserve": "Riserva (scorta)",
   "stockPlaceVirtual": "Gestita dal sistema",
   "@stockPlaceVirtual": {
     "description": "#4169 the stock editors: a label or message"
@@ -20866,6 +20879,7 @@
   "@stockPlacesAdd": {
     "description": "#4169 the stock editors: a label or message"
   },
+  "stockPlacesSearch": "Cerchi un’ubicazione per indirizzo, nome o codice a barre",
   "stockPlacesTitle": "Ubicazioni",
   "@stockPlacesTitle": {
     "description": "#4169 the stock editors: a label or message"
@@ -21051,6 +21065,9 @@
   "@stockReasonKindUnknown": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonLevelChildrenWrong": "Questa ubicazione ne contiene altre che richiedono il suo livello; le sposti prima.",
+  "stockReasonLevelParentMissing": "Solo una sede sta da sola; ogni altro livello sta sotto il livello superiore.",
+  "stockReasonLevelParentWrong": "Un’ubicazione di questo livello sta solo sotto il livello immediatamente superiore.",
   "stockReasonLineConflict": "La riga è indicata due volte e le indicazioni non coincidono.",
   "@stockReasonLineConflict": {
     "description": "#4171 receiving into stock: a text under a field the server refused"
@@ -21135,6 +21152,7 @@
   "@stockReasonParentInactive": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonPickRoleUnknown": "L'uso deve essere prelievo o riserva.",
   "stockReasonPriceInvalid": "Un prezzo è zero o più.",
   "@stockReasonPriceInvalid": {
     "description": "#4169 the stock editors: a text under a field the server refused"
