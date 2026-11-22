@@ -1,7 +1,7 @@
 {
   "@@locale": "es",
-  "featureStockManagementTitle": "Gestión de existencias",
-  "featureStockManagementDesc": "Seguir las mercancías: dónde están, en qué unidad, de qué lote, y cada movimiento entre dos lugares. Desactivado: un artículo del catálogo conserva su simple recuento en estantería.",
+  "featureStockManagementTitle": "Existencias: artículos, ubicaciones, entregas, movimientos",
+  "featureStockManagementDesc": "Lleve las mercancías que vende o almacena: qué artículos, en qué ubicaciones, las entregas que recibe, los movimientos entre ubicaciones y las salidas. Activarlo añade un menú Existencias con sus páginas; las demás funciones (lotes, recepción, salida, puntos de reposición) son interruptores debajo. Desactivado: un artículo del catálogo conserva su único recuento de estantería.",
   "permViewStock": "Ver las existencias",
   "permManageStock": "Entrar y sacar mercancías del almacén",
   "permApproveStockAdjustments": "Aprobar ajustes de existencias",

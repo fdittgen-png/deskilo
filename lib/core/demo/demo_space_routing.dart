@@ -48,6 +48,7 @@ import '../storage/resume_place_store.dart';
 import '../time/clock.dart';
 import 'data/bank_statement_repository.dart';
 import 'data/demo_booking_prices.dart';
+import 'data/demo_stock_candidates.dart';
 import 'data/demo_stock_config_commands.dart';
 import 'data/demo_stock_ledger.dart';
 import 'data/demo_stock_operations.dart';
@@ -293,7 +294,7 @@ List<Override> _moneyPortOverrides(FakeMoneyRepository Function(Ref ref) money) 
   ),
   // #4169 — and edits its units, codes and places in memory.
   stockConfigCommandsProvider.overrideWith(
-    (ref) => DemoStockConfigCommands(demoFirstSpaceId),
+    (ref) => DemoStockConfigCommands(demoFirstSpaceId, candidates: ref.watch(_demoStockCandidatesProvider)),
   ),
   // #4294 — and keeps reorder points: two shop items are below theirs, read from that same stock.
   stockReorderProvider.overrideWith(
@@ -348,7 +349,16 @@ final _demoStockLedgerProvider = Provider<DemoStockLedger>(
     demoFirstSpaceId,
     ref.watch(stockConfigCommandsProvider) as DemoStockConfigCommands,
     ref.watch(clockProvider).now,
+    ref.watch(_demoStockCandidatesProvider),
   ),
+);
+
+/// #4350 — the services the owner may start keeping in stock, and the ones kept in this session.
+final _demoStockCandidatesProvider = Provider<DemoStockCandidates>(
+  (ref) => DemoStockCandidates(() async => [
+    for (final s in await ref.read(moneyRepositoryProvider).fetchServices(demoFirstSpaceId))
+      if (s.active) (id: s.id, name: s.name),
+  ]),
 );
 
 /// #2470 — the HMRC port is the Demo's: nothing leaves the process, so the

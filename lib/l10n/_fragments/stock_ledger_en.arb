@@ -1,10 +1,10 @@
 {
   "@@locale": "en",
-  "featureStockManagementTitle": "Stock management",
+  "featureStockManagementTitle": "Stock: items, places, deliveries, moves",
   "@featureStockManagementTitle": {
     "description": "the feature's name (#3824)"
   },
-  "featureStockManagementDesc": "Keep track of goods: where they are, in which unit, from which lot, and every movement between two places. Off: a catalogue item keeps its single shelf count.",
+  "featureStockManagementDesc": "Keep the goods you sell or store: which items, in which places, the deliveries you receive, the moves between places and the stock you take out. Switching it on adds a Stock menu with its pages; the other stock functions (lots, receiving, take-out, reorder points) are switches under it. Off: a catalogue item keeps its single shelf count.",
   "@featureStockManagementDesc": {
     "description": "the feature's description on the Features screen (#3824)"
   },

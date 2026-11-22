@@ -12570,10 +12570,11 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get featureStockManagementDesc =>
-      'Waren verfolgen: wo sie sind, in welcher Einheit, aus welcher Charge, und jede Bewegung zwischen zwei Orten. Aus: ein Katalogartikel behält seinen einfachen Regalbestand.';
+      'Führen Sie die Ware, die Sie verkaufen oder lagern: welche Artikel, an welchen Orten, die Lieferungen, die Sie annehmen, die Bewegungen zwischen Orten und die Entnahmen. Das Einschalten fügt ein Menü Lager mit seinen Seiten hinzu; die übrigen Lagerfunktionen (Chargen, Wareneingang, Entnahme, Meldebestände) sind Schalter darunter. Aus: Ein Katalogartikel behält seinen einzelnen Regalbestand.';
 
   @override
-  String get featureStockManagementTitle => 'Lagerverwaltung';
+  String get featureStockManagementTitle =>
+      'Lager: Artikel, Orte, Lieferungen, Bewegungen';
 
   @override
   String get featureStockReceivingDesc =>
@@ -35461,6 +35462,23 @@ class AppLocalizationsDe extends AppLocalizations {
   String get stockEnteredLabel => 'Erfasst';
 
   @override
+  String get stockFirstRunBody =>
+      'Beginnen Sie mit einem Ort, an dem Ware liegt, dann mit den Artikeln, die Sie führen. Danach nehmen Sie eine Lieferung an oder bewegen Ware ein.';
+
+  @override
+  String get stockFirstRunItem => 'Ersten Artikel hinzufügen';
+
+  @override
+  String get stockFirstRunNext =>
+      'Nehmen Sie dann eine Lieferung einer Bestellung an oder bewegen Sie Ware über Bewegungen ein.';
+
+  @override
+  String get stockFirstRunPlace => 'Ersten Ort hinzufügen';
+
+  @override
+  String get stockFirstRunTitle => 'Ihr Lager ist leer';
+
+  @override
   String get stockGoodsMore => 'Mehr anzeigen';
 
   @override
@@ -35479,8 +35497,58 @@ class AppLocalizationsDe extends AppLocalizations {
   String get stockGoodsUnavailable => 'Die Ware wird Ihnen nicht angezeigt.';
 
   @override
+  String get stockItemAddButton => 'Artikel hinzufügen';
+
+  @override
+  String get stockItemAddIntro =>
+      'Oder führen Sie eine vorhandene Leistung im Lager: Wählen Sie eine, und ihre Lagereinstellungen öffnen sich mit eingeschalteter Einstellung.';
+
+  @override
+  String get stockItemAddNone =>
+      'Jede Leistung wird bereits im Lager geführt, oder es gibt noch keine. Legen Sie zuerst eine Leistung an und kommen Sie dann zurück.';
+
+  @override
+  String get stockItemAddOpenServices => 'Leistungen öffnen';
+
+  @override
+  String get stockItemAddTitle => 'Artikel hinzufügen';
+
+  @override
+  String get stockItemNewBarcode => 'Barcode (optional)';
+
+  @override
+  String get stockItemNewHome => 'Heimatort (optional)';
+
+  @override
+  String get stockItemNewName => 'Name';
+
+  @override
+  String get stockItemNewNameRequired => 'Geben Sie dem Artikel einen Namen.';
+
+  @override
+  String get stockItemNewNoHome => 'Noch keiner';
+
+  @override
+  String get stockItemNewOption => 'Neuen Artikel anlegen';
+
+  @override
+  String stockItemNewPrice(String currency) {
+    return 'Preis ($currency)';
+  }
+
+  @override
+  String get stockItemNewPriceInvalid =>
+      'Geben Sie einen Preis ein oder lassen Sie das Feld leer.';
+
+  @override
+  String get stockItemNewTitle => 'Neuer Artikel';
+
+  @override
+  String get stockItemNewUnit => 'Gezählt in';
+
+  @override
   String get stockItemsEmpty =>
-      'Noch keine Artikel. Ein Artikel entsteht, wenn eine Leistung oder ein Lieferantenartikel im Lager geführt wird.';
+      'Noch keine Artikel. Ein Artikel ist eine Leistung, die Sie im Lager führen: Wählen Sie Artikel hinzufügen.';
 
   @override
   String get stockItemsIntro =>

@@ -762,6 +762,31 @@ Ajoutez ensuite seulement ce qui vous concerne :
 
 **Voir aussi :** [Argent et facturation](#argent-et-fiscalité) · [Partir d’un modèle ou de rien](#partir-dun-modèle-ou-de-rien)
 
+<!-- anchor: setup.features.goods -->
+### Vendre ou stocker des marchandises
+
+**Public:** Propriétaire
+
+Vous vendez des marchandises ou tenez un stock, et voulez savoir où mettre articles, emplacements, livraisons et mouvements. Tout commence par un interrupteur, puis quelques autres, dans cet ordre.
+
+| # | À faire | Où le trouver ensuite |
+|---|---|---|
+| 1 | Activez **Stock : articles, emplacements, livraisons, mouvements** (sous **Services**). | Un menu **Stock** apparaît : Stock, Mouvements, Transferts, Articles, Emplacements, Réglages du stock. |
+| 2 | Ajoutez votre premier emplacement : **Stock → Emplacements → Ajouter un emplacement** (par exemple le magasin principal, puis les étagères qu’il contient). | **Stock → Emplacements** |
+| 3 | Ajoutez votre premier article : **Stock → Articles → Ajouter un article**. Un article est un service que vous tenez en stock : choisissez-le et ses réglages de stock s’ouvrent avec le réglage déjà activé (son unité, ses unités de conditionnement, ses codes). Ajoutez d’abord le service sous **Services** s’il n’existe pas. | **Stock → Articles** |
+| 4 | Activez **Achats** et **Commander aux fournisseurs** pour commander des marchandises, puis **Réception en stock** pour ranger une livraison depuis sa commande. | **Achats et fournisseurs → Commandes**, puis **Enregistrer la livraison** |
+| 5 | Activez **Sorties de marchandises** pour ce qui part (vendu, utilisé, perdu), **Lots et péremption** pour les marchandises avec lots ou date limite, et **Seuils de réapprovisionnement** pour savoir ce qui manque. | **Stock → Mouvements** (sortie), **Stock → Réapprovisionnement** |
+
+Recevez ensuite une livraison, déplacez des marchandises vers une étagère et sortez-en une : la page Stock montre chaque opération aussitôt.
+
+**Bon à savoir**
+
+- Une entreprise qui a activé le stock mais n’a encore ni emplacement ni article voit **Ajouter votre premier emplacement** et **Ajouter votre premier article** sur la page Stock.
+- Désactiver une fonction ne supprime rien : ce qui a été enregistré reste et peut être relu.
+- Essayez d’abord dans la démo, où la boutique tient déjà un stock. Voir [Désactiver ne supprime rien](#désactiver-ne-supprime-rien).
+
+**Voir aussi :** [L’ordre pour activer les fonctions](#lordre-dactivation) · [Des fonctions qui en demandent d’autres](#les-fonctionnalités-qui-en-nécessitent-dautres)
+
 <!-- anchor: setup.features.order -->
 ### L’ordre d’activation
 

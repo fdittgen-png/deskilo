@@ -12458,10 +12458,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get featureStockManagementDesc =>
-      'Keep track of goods: where they are, in which unit, from which lot, and every movement between two places. Off: a catalogue item keeps its single shelf count.';
+      'Keep the goods you sell or store: which items, in which places, the deliveries you receive, the moves between places and the stock you take out. Switching it on adds a Stock menu with its pages; the other stock functions (lots, receiving, take-out, reorder points) are switches under it. Off: a catalogue item keeps its single shelf count.';
 
   @override
-  String get featureStockManagementTitle => 'Stock management';
+  String get featureStockManagementTitle =>
+      'Stock: items, places, deliveries, moves';
 
   @override
   String get featureStockReceivingDesc =>
@@ -35077,6 +35078,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockEnteredLabel => 'Entered';
 
   @override
+  String get stockFirstRunBody =>
+      'Start with a place where goods are kept, then the items you keep. After that, receive a delivery or move goods in.';
+
+  @override
+  String get stockFirstRunItem => 'Add your first item';
+
+  @override
+  String get stockFirstRunNext =>
+      'Then receive a delivery from a purchase order, or move goods in from Movements.';
+
+  @override
+  String get stockFirstRunPlace => 'Add your first place';
+
+  @override
+  String get stockFirstRunTitle => 'Your stock is empty';
+
+  @override
   String get stockGoodsMore => 'Show more';
 
   @override
@@ -35095,8 +35113,57 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockGoodsUnavailable => 'The goods are not shown to you.';
 
   @override
+  String get stockItemAddButton => 'Add an item';
+
+  @override
+  String get stockItemAddIntro =>
+      'Or keep a service you already have in stock: choose one and its stock settings open with the setting already on.';
+
+  @override
+  String get stockItemAddNone =>
+      'Every service is already kept in stock, or there is none yet. Add a service first, then come back.';
+
+  @override
+  String get stockItemAddOpenServices => 'Open services';
+
+  @override
+  String get stockItemAddTitle => 'Add an item';
+
+  @override
+  String get stockItemNewBarcode => 'Barcode (optional)';
+
+  @override
+  String get stockItemNewHome => 'Home place (optional)';
+
+  @override
+  String get stockItemNewName => 'Name';
+
+  @override
+  String get stockItemNewNameRequired => 'Name the item.';
+
+  @override
+  String get stockItemNewNoHome => 'None yet';
+
+  @override
+  String get stockItemNewOption => 'Create a new item';
+
+  @override
+  String stockItemNewPrice(String currency) {
+    return 'Price ($currency)';
+  }
+
+  @override
+  String get stockItemNewPriceInvalid => 'Enter a price, or leave it empty.';
+
+  @override
+  String get stockItemNewTitle => 'New item';
+
+  @override
+  String get stockItemNewUnit => 'Counted in';
+
+  @override
   String get stockItemsEmpty =>
-      'No items yet. Items are added when a service or a supplier article is kept in stock.';
+      'No items yet. An item is a service you keep in stock: choose Add an item.';
 
   @override
   String get stockItemsIntro =>

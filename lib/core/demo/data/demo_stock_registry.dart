@@ -65,7 +65,7 @@ class DemoStockRegistry implements StockRegistry {
     final scope = placeId == null ? null : _within(places, placeId);
     final onHand = await _ledger.onHand();
     final rows = <StockRegistryRow>[];
-    for (final item in DemoStockLedger.items) {
+    for (final item in _ledger.itemList) {
       final entry = catalogue[item.id];
       final home = byId[_homes[item.id]];
       if (noHome && home != null) continue;

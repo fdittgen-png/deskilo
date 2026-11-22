@@ -27,7 +27,7 @@ Future<bool> showStockItemEditor(
   required String workspaceId,
   required String itemId,
   required String itemName,
-  bool lotsOn = false,
+  ({bool lots, bool keep}) options = (lots: false, keep: false),
 }) async {
   final l10n = context.l10n;
   final StockItemConfig? config;
@@ -39,7 +39,7 @@ Future<bool> showStockItemEditor(
     return false;
   }
   if (config == null || !context.mounted) return false;
-  final editor = _ItemDraft(config, lotsOn: lotsOn);
+  final editor = _ItemDraft(config, lotsOn: options.lots, keepInStock: options.keep);
   return showAppFormSheet(
     context,
     AppFormSheet(
@@ -96,10 +96,10 @@ class _CodeRow {
 }
 
 class _ItemDraft {
-  _ItemDraft(this.config, {required this.lotsOn})
+  _ItemDraft(this.config, {required this.lotsOn, bool keepInStock = false})
     : tracking = config.tracking,
       shelfLife = TextEditingController(text: config.shelfLifeDays?.toString() ?? ''),
-      stockable = config.stockable,
+      stockable = keepInStock || config.stockable,
       purchasable = config.purchasable,
       sellable = config.sellable,
       units = [for (final u in config.units) _UnitRow(u)],

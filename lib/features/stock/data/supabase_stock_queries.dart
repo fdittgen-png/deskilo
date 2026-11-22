@@ -78,6 +78,18 @@ class SupabaseStockQueries implements StockQueries {
     return [for (final row in rows) StockItem.fromJson(row)];
   }
 
+  @override
+  Future<List<StockItem>> unstocked(String workspaceId) async {
+    final rows = await _client
+        .from('services')
+        .select('id, name, inventory_unit')
+        .eq('workspace_id', workspaceId)
+        .eq('stockable', false)
+        .eq('active', true)
+        .order('name');
+    return [for (final row in rows) StockItem.fromJson(row)];
+  }
+
   Map<String, Object?> _params(
     String workspaceId,
     String? itemId,

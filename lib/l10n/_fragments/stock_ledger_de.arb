@@ -1,7 +1,7 @@
 {
   "@@locale": "de",
-  "featureStockManagementTitle": "Lagerverwaltung",
-  "featureStockManagementDesc": "Waren verfolgen: wo sie sind, in welcher Einheit, aus welcher Charge, und jede Bewegung zwischen zwei Orten. Aus: ein Katalogartikel behält seinen einfachen Regalbestand.",
+  "featureStockManagementTitle": "Lager: Artikel, Orte, Lieferungen, Bewegungen",
+  "featureStockManagementDesc": "Führen Sie die Ware, die Sie verkaufen oder lagern: welche Artikel, an welchen Orten, die Lieferungen, die Sie annehmen, die Bewegungen zwischen Orten und die Entnahmen. Das Einschalten fügt ein Menü Lager mit seinen Seiten hinzu; die übrigen Lagerfunktionen (Chargen, Wareneingang, Entnahme, Meldebestände) sind Schalter darunter. Aus: Ein Katalogartikel behält seinen einzelnen Regalbestand.",
   "permViewStock": "Lager einsehen",
   "permManageStock": "Waren ein- und auslagern",
   "permApproveStockAdjustments": "Bestandskorrekturen genehmigen",

@@ -23,6 +23,7 @@ import '../domain/stock_receiving.dart';
 import '../domain/stock_registry.dart';
 import '../domain/stock_reorder.dart';
 import '../domain/stock_reversals.dart';
+import '../domain/stock_service_creator.dart';
 import '../domain/stock_trace.dart';
 
 /// #4161 -- the stock reads of the selected business. The Demo and the tests
@@ -208,3 +209,7 @@ final stockCountsProvider = FutureProvider.autoDispose
       (ref, workspaceId) => ref.watch(stockReversalsProvider).counts(workspaceId),
       retry: (_, _) => null,
     );
+
+/// #4350 -- the creation of a new service from the Stock page, wired by the app (the stock never imports
+/// the money feature); null where nothing is wired, which offers no "new item".
+final stockServiceCreatorProvider = Provider<StockServiceCreator?>((ref) => null);

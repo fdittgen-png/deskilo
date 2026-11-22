@@ -20287,13 +20287,13 @@ abstract class AppLocalizations {
   /// the feature's description on the Features screen (#3824)
   ///
   /// In en, this message translates to:
-  /// **'Keep track of goods: where they are, in which unit, from which lot, and every movement between two places. Off: a catalogue item keeps its single shelf count.'**
+  /// **'Keep the goods you sell or store: which items, in which places, the deliveries you receive, the moves between places and the stock you take out. Switching it on adds a Stock menu with its pages; the other stock functions (lots, receiving, take-out, reorder points) are switches under it. Off: a catalogue item keeps its single shelf count.'**
   String get featureStockManagementDesc;
 
   /// the feature's name (#3824)
   ///
   /// In en, this message translates to:
-  /// **'Stock management'**
+  /// **'Stock: items, places, deliveries, moves'**
   String get featureStockManagementTitle;
 
   /// #4171 what the receiving into stock feature does, and what off means
@@ -56324,6 +56324,36 @@ abstract class AppLocalizations {
   /// **'Entered'**
   String get stockEnteredLabel;
 
+  /// #4350 adding an item, and the first-run stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Start with a place where goods are kept, then the items you keep. After that, receive a delivery or move goods in.'**
+  String get stockFirstRunBody;
+
+  /// #4350 adding an item, and the first-run stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Add your first item'**
+  String get stockFirstRunItem;
+
+  /// #4350 adding an item, and the first-run stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Then receive a delivery from a purchase order, or move goods in from Movements.'**
+  String get stockFirstRunNext;
+
+  /// #4350 adding an item, and the first-run stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Add your first place'**
+  String get stockFirstRunPlace;
+
+  /// #4350 adding an item, and the first-run stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Your stock is empty'**
+  String get stockFirstRunTitle;
+
   /// #4173 the goods put away against a document
   ///
   /// In en, this message translates to:
@@ -56354,10 +56384,100 @@ abstract class AppLocalizations {
   /// **'The goods are not shown to you.'**
   String get stockGoodsUnavailable;
 
+  /// #4350 adding an item, and the first-run stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Add an item'**
+  String get stockItemAddButton;
+
+  /// #4350 adding an item, and the first-run stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Or keep a service you already have in stock: choose one and its stock settings open with the setting already on.'**
+  String get stockItemAddIntro;
+
+  /// #4350 adding an item, and the first-run stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Every service is already kept in stock, or there is none yet. Add a service first, then come back.'**
+  String get stockItemAddNone;
+
+  /// #4350 adding an item, and the first-run stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Open services'**
+  String get stockItemAddOpenServices;
+
+  /// #4350 adding an item, and the first-run stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Add an item'**
+  String get stockItemAddTitle;
+
+  /// #4350 a new item from the Stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Barcode (optional)'**
+  String get stockItemNewBarcode;
+
+  /// #4350 a new item from the Stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Home place (optional)'**
+  String get stockItemNewHome;
+
+  /// #4350 a new item from the Stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get stockItemNewName;
+
+  /// #4350 a new item from the Stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Name the item.'**
+  String get stockItemNewNameRequired;
+
+  /// #4350 a new item from the Stock page
+  ///
+  /// In en, this message translates to:
+  /// **'None yet'**
+  String get stockItemNewNoHome;
+
+  /// #4350 a new item from the Stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Create a new item'**
+  String get stockItemNewOption;
+
+  /// #4350 a new item from the Stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Price ({currency})'**
+  String stockItemNewPrice(String currency);
+
+  /// #4350 a new item from the Stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a price, or leave it empty.'**
+  String get stockItemNewPriceInvalid;
+
+  /// #4350 a new item from the Stock page
+  ///
+  /// In en, this message translates to:
+  /// **'New item'**
+  String get stockItemNewTitle;
+
+  /// #4350 a new item from the Stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Counted in'**
+  String get stockItemNewUnit;
+
   /// the stock pages and group (#4299)
   ///
   /// In en, this message translates to:
-  /// **'No items yet. Items are added when a service or a supplier article is kept in stock.'**
+  /// **'No items yet. An item is a service you keep in stock: choose Add an item.'**
   String get stockItemsEmpty;
 
   /// the stock pages and group (#4299)

@@ -1442,8 +1442,8 @@ window.SETUP_L10N={
     "Ctrl+K (⌘K on a Mac) or the bar's search button finds a page, an action or a record — a member, a customer, an invoice by its number, a supplier — among what the person may open; recent items come first. ? lists the keys of the page. Off: no search button and no keys of the app; a page's own keys stay."
    ],
    "stockManagement": [
-    "Stock management",
-    "Keep track of goods: where they are, in which unit, from which lot, and every movement between two places. Off: a catalogue item keeps its single shelf count."
+    "Stock: items, places, deliveries, moves",
+    "Keep the goods you sell or store: which items, in which places, the deliveries you receive, the moves between places and the stock you take out. Switching it on adds a Stock menu with its pages; the other stock functions (lots, receiving, take-out, reorder points) are switches under it. Off: a catalogue item keeps its single shelf count."
    ],
    "organisation": [
     "Organisation of businesses",
@@ -3331,8 +3331,8 @@ window.SETUP_L10N={
     "Ctrl+K (⌘K sur un Mac) ou le bouton de recherche de la barre trouve une page, une action ou une fiche — un membre, un client, une facture par son numéro, un fournisseur — parmi ce que la personne peut ouvrir ; les éléments récents d'abord. ? liste les touches de la page. Désactivé : ni bouton de recherche ni touches de l'application ; les touches propres d'une page restent."
    ],
    "stockManagement": [
-    "Gestion des stocks",
-    "Suivre les marchandises : où elles sont, dans quelle unité, de quel lot, et chaque mouvement d'un endroit à un autre. Désactivé : un article du catalogue garde son simple compte en rayon."
+    "Stock : articles, emplacements, livraisons, mouvements",
+    "Tenez les marchandises que vous vendez ou stockez : quels articles, dans quels emplacements, les livraisons que vous recevez, les mouvements entre emplacements et les sorties. L’activer ajoute un menu Stock avec ses pages ; les autres fonctions de stock (lots, réception, sortie, seuils de réapprovisionnement) sont des interrupteurs en dessous. Désactivé : un article du catalogue garde son seul compte de rayon."
    ],
    "organisation": [
     "Organisation d’entreprises",
@@ -5220,8 +5220,8 @@ window.SETUP_L10N={
     "Strg+K (⌘K auf einem Mac) oder die Suchschaltfläche der Leiste findet eine Seite, eine Aktion oder einen Eintrag — ein Mitglied, einen Kunden, eine Rechnung über ihre Nummer, einen Lieferanten — unter dem, was die Person öffnen darf; zuletzt Geöffnetes zuerst. ? zeigt die Tasten der Seite. Aus: keine Suchschaltfläche und keine Tasten der App; die eigenen Tasten einer Seite bleiben."
    ],
    "stockManagement": [
-    "Lagerverwaltung",
-    "Waren verfolgen: wo sie sind, in welcher Einheit, aus welcher Charge, und jede Bewegung zwischen zwei Orten. Aus: ein Katalogartikel behält seinen einfachen Regalbestand."
+    "Lager: Artikel, Orte, Lieferungen, Bewegungen",
+    "Führen Sie die Ware, die Sie verkaufen oder lagern: welche Artikel, an welchen Orten, die Lieferungen, die Sie annehmen, die Bewegungen zwischen Orten und die Entnahmen. Das Einschalten fügt ein Menü Lager mit seinen Seiten hinzu; die übrigen Lagerfunktionen (Chargen, Wareneingang, Entnahme, Meldebestände) sind Schalter darunter. Aus: Ein Katalogartikel behält seinen einzelnen Regalbestand."
    ],
    "organisation": [
     "Organisation von Unternehmen",
@@ -7109,8 +7109,8 @@ window.SETUP_L10N={
     "Ctrl+K (⌘K en un Mac) o el botón de búsqueda de la barra encuentra una página, una acción o un registro — un miembro, un cliente, una factura por su número, un proveedor — entre lo que la persona puede abrir; lo reciente primero. ? muestra las teclas de la página. Desactivado: sin botón de búsqueda ni teclas de la aplicación; las teclas propias de una página se mantienen."
    ],
    "stockManagement": [
-    "Gestión de existencias",
-    "Seguir las mercancías: dónde están, en qué unidad, de qué lote, y cada movimiento entre dos lugares. Desactivado: un artículo del catálogo conserva su simple recuento en estantería."
+    "Existencias: artículos, ubicaciones, entregas, movimientos",
+    "Lleve las mercancías que vende o almacena: qué artículos, en qué ubicaciones, las entregas que recibe, los movimientos entre ubicaciones y las salidas. Activarlo añade un menú Existencias con sus páginas; las demás funciones (lotes, recepción, salida, puntos de reposición) son interruptores debajo. Desactivado: un artículo del catálogo conserva su único recuento de estantería."
    ],
    "organisation": [
     "Organización de empresas",
@@ -8998,8 +8998,8 @@ window.SETUP_L10N={
     "Ctrl+K (⌘K su un Mac) o il pulsante di ricerca della barra trova una pagina, un'azione o una scheda — un membro, un cliente, una fattura dal suo numero, un fornitore — tra ciò che la persona può aprire; prima gli elementi recenti. ? elenca i tasti della pagina. Disattivato: nessun pulsante di ricerca e nessun tasto dell'app; restano i tasti propri di una pagina."
    ],
    "stockManagement": [
-    "Gestione delle scorte",
-    "Seguire la merce: dove si trova, in quale unità, da quale lotto, e ogni movimento tra due luoghi. Disattivato: un articolo del catalogo mantiene il suo semplice conteggio a scaffale."
+    "Magazzino: articoli, posizioni, consegne, movimenti",
+    "Tenga la merce che vende o immagazzina: quali articoli, in quali posizioni, le consegne che riceve, gli spostamenti tra posizioni e le uscite. Attivarlo aggiunge un menu Magazzino con le sue pagine; le altre funzioni (lotti, ricezione, uscita, punti di riordino) sono interruttori sotto di esso. Disattivato: un articolo del catalogo mantiene il suo unico conteggio a scaffale."
    ],
    "organisation": [
     "Organizzazione di aziende",

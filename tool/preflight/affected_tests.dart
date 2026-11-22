@@ -110,6 +110,21 @@ List<String> affectedTests(
   return out.toList()..sort();
 }
 
+/// The tests the table's rows name for [changed], without the importers:
+/// the guards a branch runs even when the whole list is too long to run
+/// locally (22 Nov 2026: three reds on one PR came from row-named guards
+/// skipped with the long tail).
+List<String> guardTests(Iterable<String> changed, List<TestMapRow> table) {
+  final out = <String>{};
+  for (final row in table) {
+    final matchers = row.patterns.map(patternRegExp).toList();
+    if (changed.any((p) => matchers.any((m) => m.hasMatch(p)))) {
+      out.addAll(row.tests);
+    }
+  }
+  return out.toList()..sort();
+}
+
 /// The index of the brace that closes the one at [open] in [s], or -1.
 int _closing(String s, int open) {
   var depth = 0;
