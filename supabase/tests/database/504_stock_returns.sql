@@ -8,7 +8,7 @@
 -- movement, a wrong kind of source, a virtual place, a member without the right, an assistant and the
 -- feature off are refused; no money is touched; a reversal is immutable. Rolled back.
 begin;
-select plan(34);
+select plan(39);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -162,6 +162,28 @@ select is(pg_temp.ret(1, 933, 823, 'correction', '[' || pg_temp.line(723, curren
   'and bounded by it');
 select is((select source_movement_id from public.stock_reversals where return_line_id = pg_temp.u(722)), current_setting('rt.corr')::uuid,
   'the chain is explicit: the correction names the correction');
+
+-- ── review fixes: the take-out's own feature, the clock, a missing kind, a date before the source ──
+select pg_temp.mv(970, 301, '1', pg_temp.loc('MAIN'), pg_temp.place('loss'), 'loss');
+select set_config('rt.loss', pg_temp.mvid(970)::text, false);
+update public.workspaces set feature_flags = feature_flags || '{"stockTakeOut": false}' where id = pg_temp.u(101);
+select is(pg_temp.ret(1, 971, 870, 'correction', '[' || pg_temp.line(770, current_setting('rt.loss')::uuid, '1') || ']'), 'ERR DKG01',
+  'with taking goods out off, a loss is not reversed by a correction either');
+update public.workspaces set feature_flags = feature_flags || '{"stockTakeOut": true}' where id = pg_temp.u(101);
+select is(pg_temp.nlines(pg_temp.ret(1, 972, 870, 'correction', '[' || pg_temp.line(770, current_setting('rt.loss')::uuid, '1') || ']')), 1,
+  'with it on, the correction is made');
+select is(pg_temp.ret(1, 973, 871, null, '[' || pg_temp.line(771, current_setting('rt.sale')::uuid, '1', pg_temp.loc('MAIN')) || ']'), 'ERR DKG07',
+  'a return with no kind is refused as malformed');
+select is(pg_temp.run_as(pg_temp.u(1), format($q$select public.stock_return_v1(%L, %L, %L, 'correction', %L::jsonb, %L)::text$q$, pg_temp.u(101), pg_temp.u(974), pg_temp.u(872),
+  '[' || pg_temp.line(772, current_setting('rt.recv2')::uuid, '1') || ']', (now() - interval '10 years')::text)), 'ERR DKG07',
+  'a reversal dated before the movement it reverses is refused');
+select set_config('TimeZone', 'UTC', true);
+select set_config('rt.tz1', pg_temp.run_as(pg_temp.u(1), format($q$select public.stock_return_v1(%L, %L, %L, 'correction', %L::jsonb, '2026-06-01 10:00:00+00')::text$q$, pg_temp.u(101), pg_temp.u(975), pg_temp.u(873),
+  '[' || pg_temp.line(773, current_setting('rt.recv2')::uuid, '1') || ']')), false);
+select set_config('TimeZone', 'Asia/Tokyo', true);
+select is(pg_temp.run_as(pg_temp.u(1), format($q$select public.stock_return_v1(%L, %L, %L, 'correction', %L::jsonb, '2026-06-01 10:00:00+00')::text$q$, pg_temp.u(101), pg_temp.u(976), pg_temp.u(873),
+  '[' || pg_temp.line(773, current_setting('rt.recv2')::uuid, '1') || ']')), current_setting('rt.tz1'),
+  'the same replay under another time zone is the same return, not a changed one');
 
 -- ── the rights, the business and the feature ──
 select is(pg_temp.ret(2, 940, 830, 'customer', '[' || pg_temp.line(730, current_setting('rt.sale')::uuid, '1', pg_temp.loc('MAIN')) || ']'), 'ERR DKN01',

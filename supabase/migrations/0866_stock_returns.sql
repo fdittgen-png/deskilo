@@ -241,7 +241,7 @@ begin
     raise exception 'returns are off in this business' using errcode = 'DKG01';
   end if;
   perform public.stock_command_args(p_request_id, p_lines);
-  if p_return_id is null or p_kind not in ('customer', 'supplier', 'correction') then
+  if p_return_id is null or p_kind is null or p_kind not in ('customer', 'supplier', 'correction') then
     raise exception 'a return has an identity and a kind: customer, supplier or correction' using errcode = 'DKG07';
   end if;
   if v_at > now() + interval '5 minutes' then raise exception 'a command is not in the future' using errcode = 'DKG07'; end if;
@@ -270,7 +270,7 @@ begin
   end loop;
 
   -- the same transport request answers what it answered; the same logical return answers what it recorded
-  v_digest := md5(jsonb_build_array(p_kind, p_return_id, p_occurred_at, (
+  v_digest := md5(jsonb_build_array(p_kind, p_return_id, extract(epoch from p_occurred_at), (
     select jsonb_agg(l order by l ->> 'return_line_id') from jsonb_array_elements(p_lines) l))::text);
   v_done := public.purchase_request_begin(p_workspace_id, p_request_id, 'stock_return', v_digest);
   if v_done is not null then return v_done; end if;
@@ -304,6 +304,9 @@ begin
      where id = (e ->> 'source_movement_id')::uuid and workspace_id = p_workspace_id;
     v_qty := (e ->> 'quantity')::numeric;
     v_line := (e ->> 'return_line_id')::uuid;
+    if v_at < v_src.occurred_at then
+      raise exception 'line %: a reversal is not dated before the movement it reverses', v_no using errcode = 'DKG07';
+    end if;
     select inventory_unit into v_unit from public.services where id = v_src.item_id;
     -- what was reversed on this movement before, the source row being locked
     select coalesce(sum(r.quantity), 0) into v_prior from public.stock_reversals r
@@ -339,6 +342,10 @@ begin
       if v_src.reason = 'opening'
          or v_src.from_location_id = v_transit or v_src.to_location_id = v_transit then
         raise exception 'line %: this movement is not corrected here', v_no using errcode = 'DKG18';
+      end if;
+      -- reversing a take-out is taking goods back in: the take-out's own feature stays the condition
+      if v_src.reason in ('consumption', 'loss') and not public.feature_effective(p_workspace_id, 'stockTakeOut') then
+        raise exception 'line %: taking goods out is off in this business, and so is reversing it', v_no using errcode = 'DKG01';
       end if;
       if v_src.reason = 'adjustment' and not public.has_permission(p_workspace_id, 'approveStockAdjustments') then
         raise exception 'line %: reversing an adjustment is approving one', v_no using errcode = 'DKN01';
