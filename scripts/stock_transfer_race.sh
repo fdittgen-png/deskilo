@@ -164,6 +164,8 @@ select id as ev2 from public.events where workspace_id = :'ws' and type = 'servi
 SQL
 )
 read -r ws x y z main shelf loss customer w inv ev1 ev2 supplier p r rcpt q sale c cnt plan e1 e2 plan2 <<<"$fixture"
+# section (B) reuses the name c for a request id: the counted item keeps its own name
+count_item=$c
 for v in "$ws" "$x" "$y" "$z" "$main" "$shelf" "$loss" "$customer" "$w" "$inv" "$ev1" "$ev2" "$supplier" "$p" "$r" "$rcpt" "$q" "$sale" "$c" "$cnt" "$plan" "$e1" "$e2" "$plan2"; do
   [[ "$v" =~ ^[0-9a-f-]{36}$ ]] || { echo "::error::fixture incomplete: '$fixture'" >&2; exit 1; }
 done
@@ -415,8 +417,8 @@ wait "$holder8" || { echo "::error::the first apply failed: $(tr '\n' ' ' < "$sc
 wait "$contender8" || { echo "::error::the second apply failed: $(tr '\n' ' ' < "$scratch/contender8")" >&2; exit 1; }
 grep -qx "decided applied" "$scratch/holder8" || { echo "::error::the first apply did not apply: $(tr '\n' ' ' < "$scratch/holder8")" >&2; exit 1; }
 grep -qx "decided applied" "$scratch/contender8" || { echo "::error::the second apply did not answer the same result: $(tr '\n' ' ' < "$scratch/contender8")" >&2; exit 1; }
-expect "(G) one adjustment of 3 exists" "$(q "select count(*) || '/' || coalesce(sum(quantity), 0)::int from public.stock_movements where item_id = '$c' and reason = 'adjustment'")" "1/3"
-expect "(G) 10 - 3 = 7 of the item on hand" "$(q "select coalesce(sum(quantity), 0)::int from public.stock_balances where item_id = '$c' and location_id = '$main'")" "7"
+expect "(G) one adjustment of 3 exists" "$(q "select count(*) || '/' || coalesce(sum(quantity), 0)::int from public.stock_movements where item_id = '$count_item' and reason = 'adjustment'")" "1/3"
+expect "(G) 10 - 3 = 7 of the item on hand" "$(q "select coalesce(sum(quantity), 0)::int from public.stock_balances where item_id = '$count_item' and location_id = '$main'")" "7"
 
 # (H) two runs of the cycle count job at once for a plan that is due: the second skips the plan the first holds
 psql "$url" -X -qAt -v ON_ERROR_STOP=1 >"$scratch/holder9" 2>&1 <<SQL &
