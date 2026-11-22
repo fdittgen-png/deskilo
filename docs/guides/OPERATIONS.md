@@ -153,6 +153,8 @@ doctor's "Schema is behind" alarm is for.
 
 ## Version compatibility
 
+The decision record is [ADR 0053](../decisions/0053-compatibility-of-app-installation-and-features.md): three numbers, what a person sees per installation, the rules of change. The table below is what is supported today; the app's compatibility number and the installation's floor do not exist yet.
+
 | | |
 |---|---|
 | App ← schema | an older app on a newer schema: **supported**, it ignores what it does not know |

@@ -35530,6 +35530,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get stockReasonGtinLength => 'Ein Barcode hat 8 bis 14 Ziffern.';
 
   @override
+  String get stockReasonHomeInvalid =>
+      'Wählen Sie einen Lagerort dieses Unternehmens, der in Gebrauch ist und kein Lieferanten-, Kunden-, Verlust- oder Transitort ist.';
+
+  @override
   String get stockReasonItemForeign =>
       'Dieser Artikel gehört nicht zu diesem Betrieb.';
 
@@ -35744,6 +35748,66 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get stockReasonWrongSite =>
       'Ware wird auf einem Platz des Zielstandorts empfangen.';
+
+  @override
+  String get stockRegistryAllPlaces => 'Alle Lagerorte';
+
+  @override
+  String stockRegistryCost(String amount) {
+    return 'Kosten $amount';
+  }
+
+  @override
+  String get stockRegistryCostHidden => 'Kosten nicht angezeigt';
+
+  @override
+  String get stockRegistryCostUnknown => 'Kosten unbekannt';
+
+  @override
+  String stockRegistryHome(String address) {
+    return 'Lagerort $address';
+  }
+
+  @override
+  String get stockRegistryHomeHelp =>
+      'Wohin dieser Artikel gehört, damit Wareneingang, Zählung und Kommissionierung wissen, wohin er kommt. Es ist ein Hinweis: Bestand kann anderswo liegen, und eine Änderung bewegt nichts.';
+
+  @override
+  String get stockRegistryHomeNone => 'Kein fester Lagerort';
+
+  @override
+  String get stockRegistryHomePlace => 'Fester Lagerort';
+
+  @override
+  String stockRegistryHomeTitle(String item) {
+    return 'Fester Lagerort von $item';
+  }
+
+  @override
+  String get stockRegistryMore => 'Mehr anzeigen';
+
+  @override
+  String get stockRegistryNoHome => 'kein fester Lagerort';
+
+  @override
+  String get stockRegistryNoHomeFilter => 'Nur Artikel ohne festen Lagerort';
+
+  @override
+  String stockRegistryOnHand(String quantity) {
+    return '$quantity vorrätig';
+  }
+
+  @override
+  String get stockRegistryPlaceFilter => 'Lagerort';
+
+  @override
+  String stockRegistryPrice(String amount) {
+    return 'Preis $amount';
+  }
+
+  @override
+  String get stockRegistrySearch =>
+      'Artikel nach Name, Barcode oder Adresse suchen';
 
   @override
   String get stockReorderCreateDraft => 'Bestellentwurf erstellen';

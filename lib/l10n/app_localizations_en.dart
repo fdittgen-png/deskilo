@@ -35146,6 +35146,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockReasonGtinLength => 'A barcode has 8 to 14 digits.';
 
   @override
+  String get stockReasonHomeInvalid =>
+      'Choose a place of this business that is in use and is not a supplier, customer, loss or transit place.';
+
+  @override
   String get stockReasonItemForeign => 'This item is not one of this business.';
 
   @override
@@ -35351,6 +35355,65 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get stockReasonWrongSite =>
       'Goods are received onto a place of the destination site.';
+
+  @override
+  String get stockRegistryAllPlaces => 'All places';
+
+  @override
+  String stockRegistryCost(String amount) {
+    return 'cost $amount';
+  }
+
+  @override
+  String get stockRegistryCostHidden => 'cost not shown';
+
+  @override
+  String get stockRegistryCostUnknown => 'cost unknown';
+
+  @override
+  String stockRegistryHome(String address) {
+    return 'home $address';
+  }
+
+  @override
+  String get stockRegistryHomeHelp =>
+      'Where this item belongs, so receiving, counting and picking know where it goes. It is advice: stock may sit elsewhere, and changing it moves nothing.';
+
+  @override
+  String get stockRegistryHomeNone => 'No home place';
+
+  @override
+  String get stockRegistryHomePlace => 'Home place';
+
+  @override
+  String stockRegistryHomeTitle(String item) {
+    return 'Home place of $item';
+  }
+
+  @override
+  String get stockRegistryMore => 'Show more';
+
+  @override
+  String get stockRegistryNoHome => 'no home place';
+
+  @override
+  String get stockRegistryNoHomeFilter => 'Only items with no home place';
+
+  @override
+  String stockRegistryOnHand(String quantity) {
+    return '$quantity on hand';
+  }
+
+  @override
+  String get stockRegistryPlaceFilter => 'Home place';
+
+  @override
+  String stockRegistryPrice(String amount) {
+    return 'price $amount';
+  }
+
+  @override
+  String get stockRegistrySearch => 'Find an item by name, barcode or address';
 
   @override
   String get stockReorderCreateDraft => 'Create draft order';

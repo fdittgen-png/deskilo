@@ -35590,6 +35590,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Un code-barres compte de 8 à 14 chiffres.';
 
   @override
+  String get stockReasonHomeInvalid =>
+      'Choisissez un emplacement de cette entreprise en service, qui ne soit ni un fournisseur, ni un client, ni une perte, ni un transit.';
+
+  @override
   String get stockReasonItemForeign =>
       'Cet article n’est pas un article de cette entreprise.';
 
@@ -35800,6 +35804,67 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get stockReasonWrongSite =>
       'Les marchandises sont réceptionnées sur un emplacement du site de destination.';
+
+  @override
+  String get stockRegistryAllPlaces => 'Tous les emplacements';
+
+  @override
+  String stockRegistryCost(String amount) {
+    return 'coût $amount';
+  }
+
+  @override
+  String get stockRegistryCostHidden => 'coût non affiché';
+
+  @override
+  String get stockRegistryCostUnknown => 'coût inconnu';
+
+  @override
+  String stockRegistryHome(String address) {
+    return 'rangé en $address';
+  }
+
+  @override
+  String get stockRegistryHomeHelp =>
+      'Où cet article est rangé, pour que la réception, l’inventaire et le prélèvement sachent où il va. C’est un conseil : le stock peut être ailleurs, et le changer ne déplace rien.';
+
+  @override
+  String get stockRegistryHomeNone => 'Pas d’emplacement de rangement';
+
+  @override
+  String get stockRegistryHomePlace => 'Emplacement de rangement';
+
+  @override
+  String stockRegistryHomeTitle(String item) {
+    return 'Emplacement de rangement de $item';
+  }
+
+  @override
+  String get stockRegistryMore => 'Afficher plus';
+
+  @override
+  String get stockRegistryNoHome => 'pas d’emplacement de rangement';
+
+  @override
+  String get stockRegistryNoHomeFilter =>
+      'Seulement les articles sans emplacement de rangement';
+
+  @override
+  String stockRegistryOnHand(String quantity) {
+    return '$quantity en stock';
+  }
+
+  @override
+  String get stockRegistryPlaceFilter => 'Emplacement de rangement';
+
+  @override
+  String stockRegistryPrice(String amount) {
+    return 'prix $amount';
+  }
+
+  @override
+  String get stockRegistrySearch =>
+      'Trouver un article par nom, code-barres ou adresse';
 
   @override
   String get stockReorderCreateDraft => 'Créer un brouillon de commande';

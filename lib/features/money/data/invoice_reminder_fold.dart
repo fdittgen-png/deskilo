@@ -9,7 +9,7 @@ Map<String, ({int count, DateTime last})> foldInvoiceReminders(
   final result = <String, ({int count, DateTime last})>{};
   for (final row in rows) {
     final id = row['invoice_id'] as String;
-    final at = DateTime.parse(row['sent_at'] as String).toLocal();
+    final at = DateTime.parse(row['sent_at'] as String);
     final prev = result[id];
     result[id] = (
       count: (prev?.count ?? 0) + 1,

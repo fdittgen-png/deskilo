@@ -3073,6 +3073,19 @@ Apra **Magazzino → Riordino** (la funzione *Punti di riordino* deve essere att
 - **Cosa ordinare** raggruppa ciò che è basso per fornitore il cui articolo è indicato come **preferito**, nell’unità d’acquisto di quell’articolo, arrotondata a unità intere. Un articolo senza articolo del fornitore preferito compare sotto **Nessun fornitore scelto**: ne indichi uno negli articoli del fornitore dell’articolo.
 
 **Crea bozza d’ordine** crea una bozza d’ordine d’acquisto da un gruppo. È solo una bozza: nulla viene ordinato, valorizzato o inviato finché non la conferma negli ordini d’acquisto. Serve il diritto di gestire gli acquisti; chiedere due volte la stessa bozza la crea una sola volta.
+<!-- anchor: user.money.stock.registry -->
+### Il registro degli articoli
+
+**Destinatari:** Amministratore · Proprietario
+
+Lei vuole un’unica lista che dica, per ogni articolo e variante, che cos’è, quanto costa e a quanto si vende, dove va e quanto ce n’è.
+
+Apra **Magazzino → Articoli**. Ogni riga mostra il **codice a barre**, l’**unità**, il **prezzo** (il prezzo di vendita del catalogo), l’**ultimo costo noto**, l’**ubicazione abituale** e ciò che è **disponibile**. Il costo compare solo se il suo ruolo può vedere le finanze o gestire gli acquisti; altrimenti la riga dice *costo non mostrato*. Un costo che nessuna consegna ha ancora dato resta *costo sconosciuto*, mai zero.
+
+- **Ubicazione abituale**: tocchi l’icona di ubicazione di una riga per dire dove va l’articolo: la sua corsia, scaffale o cassetto. Una variante senza ubicazione propria ha quella del suo articolo. È un’indicazione per sistemare, contare e prelevare: la merce può stare altrove e cambiarla non sposta nulla né riscrive alcuna storia.
+- **Filtri** per un’ubicazione per vedere ciò che vi è sistemato e nelle ubicazioni sottostanti, oppure attivi *Solo articoli senza ubicazione abituale* per vedere ciò che ne ha ancora bisogno.
+- **Cerchi** per nome, codice a barre o indirizzo. Digitare o scansionare un codice a barre nella ricerca e confermare apre quell’articolo.
+- Le liste lunghe si caricano a pagine: scelga *Mostra altri*.
 
 <!-- anchor: user.money.amounts -->
 ### Come sono mostrati gli importi

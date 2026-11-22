@@ -685,6 +685,19 @@ Sie möchten sehen, was bald ausgeht, und es bestellen, ohne die Regale durchzug
 - **Was zu bestellen ist** gruppiert, was knapp ist, nach dem Lieferanten, dessen Artikel als **bevorzugt** markiert ist, in der Einkaufseinheit dieses Artikels, auf ganze Einheiten aufgerundet. Ein Artikel ohne bevorzugten Lieferantenartikel steht unter **Kein Lieferant gewählt**: Markieren Sie einen in den Lieferantenartikeln des Artikels.
 
 **Bestellentwurf erstellen** erstellt aus einer Gruppe einen Einkaufsbestellungs-Entwurf. Es ist nur ein Entwurf: Nichts wird bestellt, bepreist oder gesendet, bis Sie ihn in den Einkaufsbestellungen bestätigen. Dafür brauchen Sie das Recht, Einkäufe zu verwalten; derselbe Entwurf, zweimal angefordert, entsteht nur einmal.
+<!-- anchor: user.money.stock.registry -->
+### Das Artikelregister
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie möchten eine Liste, die für jeden Artikel und jede Variante sagt, was es ist, was es kostet und einbringt, wohin es gehört und wie viel es gibt.
+
+Öffnen Sie **Lager → Artikel**. Jede Zeile zeigt **Barcode**, **Einheit**, **Preis** (den Verkaufspreis aus dem Katalog), **zuletzt bekannte Kosten**, **festen Lagerort** und den **Bestand**. Die Kosten erscheinen nur, wenn Ihre Rolle Finanzen sehen oder Einkäufe verwalten darf; sonst steht in der Zeile *Kosten nicht angezeigt*. Kosten, die noch keine Lieferung geliefert hat, bleiben *Kosten unbekannt*, nie null.
+
+- **Fester Lagerort**: Tippen Sie auf das Orts-Symbol einer Zeile, um zu sagen, wohin der Artikel gehört: Gang, Fach oder Behälter. Eine Variante ohne eigenen festen Lagerort hat den ihres Artikels. Es ist ein Hinweis für Einlagerung, Zählung und Kommissionierung: Bestand kann anderswo liegen, und eine Änderung bewegt nichts und schreibt keine Historie um.
+- **Filtern** Sie nach einem Lagerort, um zu sehen, was dort und darunter eingelagert ist, oder schalten Sie *Nur Artikel ohne festen Lagerort* ein, um zu sehen, was noch einen braucht.
+- **Suchen** Sie nach Name, Barcode oder Adresse. Einen Barcode in die Suche eingeben oder scannen und bestätigen öffnet diesen Artikel.
+- Lange Listen werden seitenweise geladen: Wählen Sie *Mehr anzeigen*.
 
 <!-- anchor: user.money.amounts -->
 ### Wie Beträge angezeigt werden

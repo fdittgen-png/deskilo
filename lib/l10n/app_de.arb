@@ -21061,6 +21061,7 @@
   "@stockReasonGtinLength": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonHomeInvalid": "Wählen Sie einen Lagerort dieses Unternehmens, der in Gebrauch ist und kein Lieferanten-, Kunden-, Verlust- oder Transitort ist.",
   "stockReasonItemForeign": "Dieser Artikel gehört nicht zu diesem Betrieb.",
   "@stockReasonItemForeign": {
     "description": "#4169 the stock editors: a text under a field the server refused"
@@ -21270,6 +21271,22 @@
   "@stockReasonWrongSite": {
     "description": "#4170 transfers and take-out: a label or message"
   },
+  "stockRegistryAllPlaces": "Alle Lagerorte",
+  "stockRegistryCost": "Kosten {amount}",
+  "stockRegistryCostHidden": "Kosten nicht angezeigt",
+  "stockRegistryCostUnknown": "Kosten unbekannt",
+  "stockRegistryHome": "Lagerort {address}",
+  "stockRegistryHomeHelp": "Wohin dieser Artikel gehört, damit Wareneingang, Zählung und Kommissionierung wissen, wohin er kommt. Es ist ein Hinweis: Bestand kann anderswo liegen, und eine Änderung bewegt nichts.",
+  "stockRegistryHomeNone": "Kein fester Lagerort",
+  "stockRegistryHomePlace": "Fester Lagerort",
+  "stockRegistryHomeTitle": "Fester Lagerort von {item}",
+  "stockRegistryMore": "Mehr anzeigen",
+  "stockRegistryNoHome": "kein fester Lagerort",
+  "stockRegistryNoHomeFilter": "Nur Artikel ohne festen Lagerort",
+  "stockRegistryOnHand": "{quantity} vorrätig",
+  "stockRegistryPlaceFilter": "Lagerort",
+  "stockRegistryPrice": "Preis {amount}",
+  "stockRegistrySearch": "Artikel nach Name, Barcode oder Adresse suchen",
   "stockReorderCreateDraft": "Bestellentwurf erstellen",
   "stockReorderDraftCreated": "Bestellentwurf {number} erstellt. Nichts wurde bestellt oder gesendet.",
   "stockReorderDraftHelp": "Es wird ein Bestellentwurf erstellt: Nichts wird bestellt, bepreist oder gesendet, bis Sie ihn bestätigen.",

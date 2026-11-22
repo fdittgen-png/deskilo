@@ -3073,6 +3073,19 @@ Open **Stock → Reorder** (the feature *Reorder points* must be on). The page h
 - **What to order** groups what is low by the supplier whose article is marked **preferred** for it, in that article's purchase unit, rounded up to whole units. An item with no preferred supplier article is listed under **No supplier chosen**: mark one in the item's supplier articles.
 
 **Create draft order** makes a draft purchase order from a group. It is only a draft: nothing is ordered, priced or sent until you confirm it in the purchase orders. It needs the right to manage purchases; asking twice for the same draft makes it once.
+<!-- anchor: user.money.stock.registry -->
+### The item registry
+
+**Audience:** Administrator · Owner
+
+You want one list that says, for every item and variant, what it is, what it costs and sells for, where it belongs and how much there is.
+
+Open **Stock → Items**. Each line shows the **barcode**, the **unit**, the **price** (the catalogue sale price), the **last known cost**, the **home place** and what is **on hand**. The cost appears only if your role may see finances or manage purchases; otherwise the line says *cost not shown*. A cost that no delivery has given yet stays *cost unknown*, never zero.
+
+- **Home place**: tap the place icon on a line to say where the item belongs: its aisle, shelf or bin. A variant without its own home place has its item's. It is advice for putting away, counting and picking: stock may sit elsewhere, and changing it moves nothing and rewrites no history.
+- **Filter** by a place to see what is homed in it and in the places below it, or switch on *Only items with no home place* to see what still needs one.
+- **Search** by name, barcode or address. Typing or scanning a barcode into the search and confirming opens that item.
+- Long lists load by pages: choose *Show more*.
 
 <!-- anchor: user.money.amounts -->
 ### How amounts are shown

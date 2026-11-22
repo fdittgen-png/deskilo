@@ -3073,6 +3073,19 @@ Ouvrez **Stock → Réapprovisionnement** (la fonction *Seuils de réapprovision
 - **Que commander** regroupe ce qui est bas par fournisseur dont l’article est marqué **préféré**, dans l’unité d’achat de cet article, arrondi à l’unité entière supérieure. Un article sans article fournisseur préféré figure sous **Aucun fournisseur choisi** : marquez-en un dans les articles fournisseur de l’article.
 
 **Créer un brouillon de commande** crée un brouillon de commande d’achat à partir d’un groupe. Ce n’est qu’un brouillon : rien n’est commandé, chiffré ni envoyé tant que vous ne le confirmez pas dans les commandes d’achat. Il faut le droit de gérer les achats ; demander deux fois le même brouillon ne le crée qu’une fois.
+<!-- anchor: user.money.stock.registry -->
+### Le registre des articles
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous voulez une seule liste qui dise, pour chaque article et chaque variante, ce que c’est, ce que cela coûte et se vend, où c’est rangé et combien il y en a.
+
+Ouvrez **Stock → Articles**. Chaque ligne montre le **code-barres**, l’**unité**, le **prix** (le prix de vente du catalogue), le **dernier coût connu**, l’**emplacement de rangement** et ce qui est **en stock**. Le coût n’apparaît que si votre rôle peut voir les finances ou gérer les achats ; sinon la ligne indique *coût non affiché*. Un coût qu’aucune livraison n’a encore donné reste *coût inconnu*, jamais zéro.
+
+- **Emplacement de rangement** : touchez l’icône d’emplacement d’une ligne pour dire où l’article est rangé : son allée, son étagère ou son bac. Une variante sans emplacement propre prend celui de son article. C’est un conseil pour le rangement, l’inventaire et le prélèvement : le stock peut être ailleurs, et le changer ne déplace rien et ne réécrit aucun historique.
+- **Filtrez** par un emplacement pour voir ce qui y est rangé et dans les emplacements en dessous, ou activez *Seulement les articles sans emplacement de rangement* pour voir ce qui en attend encore un.
+- **Recherchez** par nom, code-barres ou adresse. Saisir ou scanner un code-barres dans la recherche et valider ouvre cet article.
+- Les longues listes se chargent par pages : choisissez *Afficher plus*.
 
 <!-- anchor: user.money.amounts -->
 ### Comment les montants sont affichés

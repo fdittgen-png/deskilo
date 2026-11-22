@@ -9,6 +9,7 @@ import 'package:deskilo/features/stock/domain/stock_config.dart';
 import 'package:deskilo/features/stock/domain/stock_config_commands.dart';
 import 'package:deskilo/features/stock/domain/stock_page.dart';
 import 'package:deskilo/features/stock/domain/stock_queries.dart';
+import 'package:deskilo/features/stock/domain/stock_registry.dart';
 import 'package:deskilo/features/stock/domain/stock_variants.dart';
 import 'package:deskilo/features/stock/presentation/stock_items_screen.dart';
 import 'package:deskilo/features/stock/presentation/stock_places_screen.dart';
@@ -17,6 +18,7 @@ import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo/l10n/app_localizations_en.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -42,6 +44,43 @@ class _Queries implements StockQueries {
 
   @override
   Future<List<StockItem>> items(String workspaceId) async => const [StockItem(id: 'i-Wine', name: 'Wine', unit: 'l')];
+}
+
+/// The registry as the server answers it: Wine has its home shelf and a known cost, Tea has none.
+class _Registry implements StockRegistry {
+  _Registry({this.costVisible = true});
+
+  final bool costVisible;
+  final homes = <({String item, String? variant, String? place})>[];
+  final filters = <({String? place, bool noHome})>[];
+  StockConfigFailure? failWith;
+  int pages = 0;
+
+  List<StockRegistryRow> get _all => [
+    StockRegistryRow(
+      itemId: 'i-Wine', itemName: 'Wine', unit: 'l', barcode: '3017620422003', priceCents: 1250,
+      cost: '700', costVisible: costVisible, homeLocationId: 'p-S4', homeCode: 'S4',
+      homeAddressPath: 'MAIN\u001fSALES\u001fA03\u001fB02\u001fS4', onHand: ExactQuantity.parse('12'),
+    ),
+    StockRegistryRow(
+      itemId: 'i-Tea', itemName: 'Tea', unit: 'piece', barcode: '4006381333931', priceCents: 300,
+      costVisible: costVisible, onHand: ExactQuantity.parse('0'),
+    ),
+  ];
+
+  @override
+  Future<StockPage<StockRegistryRow>> page(String workspaceId, {String? placeId, bool noHome = false, int limit = 50, StockCursor? after}) async {
+    filters.add((place: placeId, noHome: noHome));
+    pages++;
+    final rows = _all.where((r) => !noHome || r.homeLocationId == null).toList();
+    return StockPage(rows: rows, complete: true);
+  }
+
+  @override
+  Future<void> setHome(String workspaceId, {required String itemId, required String? variantId, required String? placeId, required String requestId}) async {
+    if (failWith case final StockConfigFailure e) throw e;
+    homes.add((item: itemId, variant: variantId, place: placeId));
+  }
 }
 
 class _Config implements StockConfigCommands {
@@ -106,6 +145,7 @@ Future<void> _open(
   required Set<WorkspacePermission> held,
   bool lots = false,
   String? separator,
+  _Registry? registry,
   Widget screen = const StockItemsScreen(),
 }) async {
   await pumpApp(
@@ -116,6 +156,7 @@ Future<void> _open(
       ...standardTestOverrides(),
       stockQueriesProvider.overrideWithValue(_Queries()),
       stockConfigCommandsProvider.overrideWithValue(config),
+      stockRegistryProvider.overrideWithValue(registry ?? _Registry()),
       myPermissionsProvider.overrideWithValue(held),
       if (separator != null) stockAddressSeparatorProvider.overrideWithValue(separator),
       if (lots) enabledFeaturesSyncProvider.overrideWithValue({WorkspaceFeature.stockManagement, WorkspaceFeature.stockLots}),
@@ -137,6 +178,72 @@ const _manage = {WorkspacePermission.viewStock, WorkspacePermission.manageStock}
 void main() {
   for (final (name, size) in [('phone', const Size(390, 844)), ('desk', const Size(1440, 900))]) {
     group('on a $name', () {
+      testWidgets('the registry shows barcode, unit, price, cost, home address and what is on hand', (tester) async {
+        await _open(tester, _Config(), size, held: _manage);
+        final wine = tester.widget<ListTile>(find.byKey(const ValueKey('stock-item-i-Wine')));
+        final text = (wine.subtitle! as Text).data!;
+        for (final part in ['3017620422003', 'l', 'MAIN-SALES-A03-B02-S4', _en.stockQuantityWithUnit('12', 'l'), _en.stockRegistryCostUnknown]) {
+          if (part == _en.stockRegistryCostUnknown) {
+            expect(text.contains(part), false, reason: 'a known cost is shown, not "unknown"');
+          } else {
+            expect(text.contains(part), true, reason: part);
+          }
+        }
+        final tea = tester.widget<ListTile>(find.byKey(const ValueKey('stock-item-i-Tea')));
+        expect((tea.subtitle! as Text).data!.contains(_en.stockRegistryNoHome), true, reason: 'an item with no home place says so');
+      });
+
+      testWidgets('a reader who may not see finances sees "cost not shown", never a figure or a zero', (tester) async {
+        await _open(tester, _Config(), size, held: {WorkspacePermission.viewStock}, registry: _Registry(costVisible: false));
+        final wine = tester.widget<ListTile>(find.byKey(const ValueKey('stock-item-i-Wine')));
+        expect((wine.subtitle! as Text).data!.contains(_en.stockRegistryCostHidden), true);
+        expect(find.byKey(const ValueKey('stock-home-i-Wine')), findsNothing, reason: 'and may not set a home place');
+      });
+
+      testWidgets('"no home place" keeps what has none, and the filter is sent to the server', (tester) async {
+        final registry = _Registry();
+        await _open(tester, _Config(), size, held: _manage, registry: registry);
+        await tester.tap(find.byKey(const ValueKey('stock-registry-no-home')));
+        await _settle(tester);
+        expect(registry.filters.last, (place: null, noHome: true));
+        expect(find.byKey(const ValueKey('stock-item-i-Tea')), findsOneWidget);
+        expect(find.byKey(const ValueKey('stock-item-i-Wine')), findsNothing);
+      });
+
+      testWidgets('a barcode typed into the search opens its item', (tester) async {
+        await _open(tester, _Config(), size, held: _manage);
+        await tester.enterText(find.byKey(const ValueKey('stock-registry-search')), '4006381333931');
+        await tester.testTextInput.receiveAction(TextInputAction.done);
+        await _settle(tester);
+        expect(find.byKey(const ValueKey('stock-item-save')), findsOneWidget, reason: 'the item editor of Tea opened');
+      });
+
+      testWidgets('a home place is chosen from the places and sent with its request', (tester) async {
+        final registry = _Registry();
+        await _open(tester, _Config(), size, held: _manage, registry: registry);
+        await tester.tap(find.byKey(const ValueKey('stock-home-i-Tea')));
+        await _settle(tester);
+        await tester.tap(find.byKey(const ValueKey('stock-home-place')));
+        await _settle(tester);
+        await tester.tap(find.text('MAIN-SALES-A03-B02-S4').last);
+        await _settle(tester);
+        await tester.tap(find.byKey(const ValueKey('stock-home-save')));
+        await _settle(tester);
+        expect(registry.homes.single, (item: 'i-Tea', variant: null, place: 'p-S4'));
+        expect(registry.pages, 2, reason: 'the registry is read again after a save');
+      });
+
+      testWidgets('a refused home place says why and keeps the sheet', (tester) async {
+        final registry = _Registry()..failWith = const StockConfigRefused('home_location_id', 'home_invalid');
+        await _open(tester, _Config(), size, held: _manage, registry: registry);
+        await tester.tap(find.byKey(const ValueKey('stock-home-i-Tea')));
+        await _settle(tester);
+        await tester.tap(find.byKey(const ValueKey('stock-home-save')));
+        await _settle(tester);
+        expect(find.text(_en.stockReasonHomeInvalid), findsOneWidget);
+        expect(find.byKey(const ValueKey('stock-home-save')), findsOneWidget);
+      });
+
       testWidgets('a person who may only look sees no editor', (tester) async {
         await _open(tester, _Config(), size, held: {WorkspacePermission.viewStock});
         expect(find.byKey(const ValueKey('stock-edit-item-i-Wine')), findsNothing);

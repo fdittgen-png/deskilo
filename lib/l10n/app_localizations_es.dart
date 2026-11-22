@@ -35437,6 +35437,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Un código de barras tiene de 8 a 14 dígitos.';
 
   @override
+  String get stockReasonHomeInvalid =>
+      'Elija una ubicación de esta empresa en uso que no sea de proveedor, cliente, pérdida ni tránsito.';
+
+  @override
   String get stockReasonItemForeign => 'Este artículo no es de este negocio.';
 
   @override
@@ -35644,6 +35648,67 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get stockReasonWrongSite =>
       'La mercancía se recibe en un lugar de la sede de destino.';
+
+  @override
+  String get stockRegistryAllPlaces => 'Todas las ubicaciones';
+
+  @override
+  String stockRegistryCost(String amount) {
+    return 'coste $amount';
+  }
+
+  @override
+  String get stockRegistryCostHidden => 'coste no mostrado';
+
+  @override
+  String get stockRegistryCostUnknown => 'coste desconocido';
+
+  @override
+  String stockRegistryHome(String address) {
+    return 'ubicación $address';
+  }
+
+  @override
+  String get stockRegistryHomeHelp =>
+      'Dónde va este artículo, para que la recepción, el recuento y la preparación sepan adónde ir. Es una indicación: el stock puede estar en otro sitio y cambiarla no mueve nada.';
+
+  @override
+  String get stockRegistryHomeNone => 'Sin ubicación habitual';
+
+  @override
+  String get stockRegistryHomePlace => 'Ubicación habitual';
+
+  @override
+  String stockRegistryHomeTitle(String item) {
+    return 'Ubicación habitual de $item';
+  }
+
+  @override
+  String get stockRegistryMore => 'Mostrar más';
+
+  @override
+  String get stockRegistryNoHome => 'sin ubicación habitual';
+
+  @override
+  String get stockRegistryNoHomeFilter =>
+      'Solo artículos sin ubicación habitual';
+
+  @override
+  String stockRegistryOnHand(String quantity) {
+    return '$quantity disponibles';
+  }
+
+  @override
+  String get stockRegistryPlaceFilter => 'Ubicación habitual';
+
+  @override
+  String stockRegistryPrice(String amount) {
+    return 'precio $amount';
+  }
+
+  @override
+  String get stockRegistrySearch =>
+      'Buscar un artículo por nombre, código de barras o dirección';
 
   @override
   String get stockReorderCreateDraft => 'Crear borrador de pedido';
