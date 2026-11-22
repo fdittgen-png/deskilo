@@ -5145,6 +5145,7 @@ Map<String, _Getter> _part12() => {
   'refSortAmountLow': (l) => l.refSortAmountLow,
   'refSortNewest': (l) => l.refSortNewest,
   'refusalBankMatchUndoLaterFirst': (l) => l.refusalBankMatchUndoLaterFirst,
+  'refusalStockCountSelf': (l) => l.refusalStockCountSelf,
   'refusalStockLocation': (l) => l.refusalStockLocation,
   'refusalStockVariant': (l) => l.refusalStockVariant,
   'reminderPdfTitleFriendly': (l) => l.reminderPdfTitleFriendly,

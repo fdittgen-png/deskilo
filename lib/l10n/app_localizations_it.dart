@@ -28689,6 +28689,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questo conteggio è già stato deciso ed è definitivo. Conti di nuovo se la cifra è ancora sbagliata.';
 
   @override
+  String get refusalStockCountSelf =>
+      'Un’altra persona che può approvare le rettifiche deve applicare questo conteggio: chi ha contato non approva il proprio conteggio.';
+
+  @override
   String get refusalStockCountStale =>
       'La giacenza si è mossa dopo il conteggio, quindi non viene applicato. Conti di nuovo.';
 

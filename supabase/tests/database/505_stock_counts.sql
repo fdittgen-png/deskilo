@@ -7,7 +7,7 @@
 -- the generic move cannot make an adjustment without the right to approve; the rights, the business, an
 -- assistant and the feature off are refused; a variant and a lot are part of the scope. Rolled back.
 begin;
-select plan(39);
+select plan(47);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -141,6 +141,33 @@ select is(pg_temp.f(pg_temp.rec(1, 954, 713, pg_temp.scope(303, pg_temp.loc('MAI
 select is(pg_temp.f(pg_temp.rec(1, 955, 714, pg_temp.scope(303, pg_temp.loc('MAIN'), null, pg_temp.u(312)::text), '0'), 'baseline'), '0.000000', 'the blue ones at the same place have their own baseline');
 select is(pg_temp.rec(1, 952, 708, pg_temp.scope(302, pg_temp.loc('MAIN')), '3'), 'ERR DKG06', 'a lot-tracked item is counted per lot');
 select is(pg_temp.rec(1, 953, 709, pg_temp.scope(301, pg_temp.place('loss')), '3'), 'ERR DKG05', 'a count is taken at a real place');
+
+-- ── an item counted as a whole holds a cost lot ──
+insert into public.services (id, workspace_id, name, price_cents, active, inventory_unit, tracking, stockable) values
+  (pg_temp.u(305), pg_temp.u(101), 'Plates', 200, true, 'piece', 'none', true);
+select pg_temp.run_as(pg_temp.u(1), format($q$select public.stock_move_v1(%L, %L, %L::jsonb, 'receipt')::text$q$, pg_temp.u(101), pg_temp.u(980),
+  format('[{"item_id": "%s", "quantity": "10", "from": "%s", "to": "%s", "new_lot": {"code": "C1", "total_cost_minor": 1000}}]', pg_temp.u(305), pg_temp.place('supplier'), pg_temp.loc('MAIN'))));
+select is(pg_temp.f(pg_temp.rec(1, 981, 720, pg_temp.scope(305, pg_temp.loc('MAIN')), '10'), 'baseline'), '10.000000',
+  'plates received as a cost lot are counted as a whole: the baseline holds the lot');
+select is(pg_temp.f(pg_temp.dec(1, 982, 720, 'apply'), 'state'), 'applied', 'a count that matches applies');
+select is(pg_temp.onhand(305, pg_temp.loc('MAIN')), 10::numeric, 'and the shelf still shows 10, not 20');
+select pg_temp.rec(1, 983, 721, pg_temp.scope(305, pg_temp.loc('MAIN')), '8');
+select pg_temp.dec(1, 984, 721, 'apply');
+select is(pg_temp.onhand(305, pg_temp.loc('MAIN')), 8::numeric, 'a count of 8 takes 2 across its lots');
+select pg_temp.rec(1, 985, 722, pg_temp.scope(305, pg_temp.loc('MAIN')), '11');
+select pg_temp.dec(1, 986, 722, 'apply');
+select is(pg_temp.onhand(305, pg_temp.loc('MAIN')), 11::numeric, 'a count of 11 puts 3 back');
+
+-- ── whoever counted does not approve their own count while someone else may ──
+insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
+values (pg_temp.u(5), '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', 'cnt-5@deskilo.test', '', now(), now(), now())
+on conflict (id) do nothing;
+insert into public.members (id, workspace_id, user_id, is_owner, is_admin, status) values (pg_temp.u(205), pg_temp.u(101), pg_temp.u(5), true, true, 'active');
+select pg_temp.rec(1, 990, 730, pg_temp.scope(301, pg_temp.loc('MAIN')), '4');
+select is(pg_temp.dec(1, 991, 730, 'apply'), 'ERR DKG21', 'with another approver in the business, the owner who counted cannot apply their own count');
+select is(pg_temp.f(pg_temp.dec(5, 992, 730, 'apply'), 'state'), 'applied', 'a different approver applies it');
+select pg_temp.rec(5, 993, 731, pg_temp.scope(301, pg_temp.loc('MAIN')), '3');
+select is(pg_temp.f(pg_temp.dec(1, 994, 731, 'apply'), 'state'), 'applied', 'and applies a count the other one made');
 
 -- ── the rights, the business, the feature ──
 select is(pg_temp.rec(2, 960, 710, pg_temp.scope(301, pg_temp.loc('MAIN')), '5'), 'ERR DKN01', 'a member who only views the stock cannot record');

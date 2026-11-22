@@ -28655,6 +28655,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Este recuento ya está decidido y es definitivo. Cuente de nuevo si la cifra sigue siendo incorrecta.';
 
   @override
+  String get refusalStockCountSelf =>
+      'Otra persona que pueda aprobar ajustes debe aplicar este recuento: quien contó no aprueba su propio recuento.';
+
+  @override
   String get refusalStockCountStale =>
       'El stock se movió desde el recuento, por lo que no se aplica. Cuente de nuevo.';
 

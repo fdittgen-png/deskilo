@@ -12892,6 +12892,7 @@ const Set<String> uiLabelKeys = {
   'refusalSession',
   'refusalStockConfig',
   'refusalStockCountDecided',
+  'refusalStockCountSelf',
   'refusalStockCountStale',
   'refusalStockHistory',
   'refusalStockItem',

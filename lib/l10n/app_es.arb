@@ -16477,6 +16477,10 @@
   "@refusalStockCountDecided": {
     "description": "#4172 refusal"
   },
+  "refusalStockCountSelf": "Otra persona que pueda aprobar ajustes debe aplicar este recuento: quien contó no aprueba su propio recuento.",
+  "@refusalStockCountSelf": {
+    "description": "#4172 refusal"
+  },
   "refusalStockCountStale": "El stock se movió desde el recuento, por lo que no se aplica. Cuente de nuevo.",
   "@refusalStockCountStale": {
     "description": "#4172 refusal"
