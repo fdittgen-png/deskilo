@@ -42,6 +42,19 @@ begin$b$),
       -- the line's own link
       ($a$    v_tv := public.stock_place_is_virtual(v_to.id);$a$,
        $b$    v_tv := public.stock_place_is_virtual(v_to.id);
+    -- what only put-away says about a line (its receipt line, its lot group, a lot's cost state and
+    -- whole quantity) is never taken from a client's line: the generic door refuses it, and in
+    -- put-away's own mode a receipt line must be one of this business's
+    if p_mode <> 'put_away'
+       and (e ? 'receipt_line_id' or e ? 'lot_group'
+            or (jsonb_typeof(e -> 'new_lot') = 'object' and (e -> 'new_lot') ?| array['cost_state', 'cost_source', 'quantity_received'])) then
+      perform public.stock_config_refuse(format('lines[%s]', v_no - 1), 'malformed');
+    end if;
+    if p_mode = 'put_away' and nullif(e ->> 'receipt_line_id', '') is not null
+       and not exists (select 1 from public.purchase_order_receipt_lines rl
+                        where rl.id = (e ->> 'receipt_line_id')::uuid and rl.workspace_id = p_workspace_id) then
+      perform public.stock_config_refuse(format('lines[%s]', v_no - 1), 'malformed');
+    end if;
     v_links := p_links || case when nullif(e ->> 'receipt_line_id', '') is not null
                                then jsonb_build_object('receipt_line_id', e ->> 'receipt_line_id') else '{}'::jsonb end;$b$),
       -- a lot may be made by put-away, with an unknown cost
