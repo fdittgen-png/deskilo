@@ -93,6 +93,14 @@ begin
   update public.invoice_transmissions
     set phase = p_outcome, resolved_by = p_actor,$n$);
   if v_next is null then raise exception '0859: the anchor of resolve_einvoice_manually_v1 is not found' using errcode = 'P0001'; end if;
+  -- the write itself holds the same condition: the row moves only when its claim has ended
+  v_next := pg_temp.anchor_replace(v_next,
+    $o$    where id = p_id and phase = 'uncertain'
+    returning * into v_row;$o$,
+    $n$    where id = p_id and phase = 'uncertain'
+      and not (p_outcome = 'failed' and deadline is not null and deadline > now())
+    returning * into v_row;$n$);
+  if v_next is null then raise exception '0859: the write anchor of resolve_einvoice_manually_v1 is not found' using errcode = 'P0001'; end if;
   execute v_next;
 end
 $patch$;
