@@ -3010,6 +3010,21 @@ Wie lange ein neues Angebot gültig bleibt, wenn Sie kein Enddatum angeben, und 
 
 Bei einem gesendeten Angebot öffnet **PDF teilen** das Angebot als Dokument: ein Angebot mit eigener Referenz und Gültigkeit, dem Kunden, den Positionen und dem, was sie ergeben, so wie beim Senden festgeschrieben (netto, Umsatzsteuer je Satz und Gesamtbetrag). Es ist nie eine Rechnung und trägt keine Rechnungsnummer. Sie können es ansehen, speichern oder teilen.
 
+<!-- anchor: user.money.stock -->
+### Lager
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Öffnen Sie **Lager** im Menü, direkt unter **Einkäufe und Lieferanten**. Alles zu Artikeln und Beständen erreichen Sie dort, und nur dort wird es eingerichtet.
+
+- **Lager** zeigt, was nach Artikel, Variante, Charge und Lagerort vorrätig ist, mit der genauen Menge.
+- **Bewegungen** ist das Protokoll jeder Bewegung; öffnen Sie eine, um zu sehen, was sich bewegt hat, wie gespeichert und wie eingegeben.
+- **Artikel** ist das Artikelregister: die Lagereinstellungen jedes Artikels, seine Varianten und seine Lieferantenartikel.
+- **Lagerorte** enthält die Standorte, Zonen, Regale und Fächer mit ihren Adressen.
+- **Lagereinstellungen** hält jeden Lagerparameter auf einer Seite: die Lagerfunktionen mit ihren Schaltern und die Lagerregeln. Eine Lagereinstellung, die Sie anderswo finden, verweist hierher.
+
+Ein Eintrag erscheint nur, wenn seine Funktion eingeschaltet ist und Ihre Rolle die Seite erlaubt: Wer nur ansehen darf, sieht die Seiten, nicht die Einstellungen. Der Einkauf behält, was eingekauft wird; der Verkauf, was verkauft wird.
+
 <!-- anchor: user.money.amounts -->
 ### Wie Beträge angezeigt werden
 

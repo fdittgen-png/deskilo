@@ -32,7 +32,7 @@ class NavGroup {
 }
 
 /// The groups after the destinations, in menu order: reporting, people,
-/// sales, purchases, finance (with accounting and VAT inside), workspace.
+/// sales, purchases, stock, finance (with accounting and VAT inside), workspace.
 /// Each holds only the entries [entries] offers this person; a financial
 /// permission does not depend on an unrelated administration door.
 List<NavGroup> navGroupsOf(
@@ -95,10 +95,17 @@ List<NavGroup> navGroupsOf(
         'drawer-purchase-orders',
         'drawer-purchase-approvals',
         'drawer-purchases-to-pay',
-        // #4161 — the goods ledger's records sit with what is bought.
-        'drawer-stock',
       },
     ),
+    // #4299 — every item, stock, warehouse and logistics page and setting, in
+    // one group directly below Purchases, and only there.
+    pick('stock', labels.permModuleStock, Icons.inventory_2_outlined, all, {
+      'drawer-stock',
+      'drawer-stock-movements',
+      'drawer-stock-items',
+      'drawer-stock-places',
+      'drawer-stock-settings',
+    }),
     pick(
       'finance',
       labels.uxNavFinance,

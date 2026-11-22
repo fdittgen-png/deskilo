@@ -1,0 +1,35 @@
+{
+  "@@locale": "de",
+  "stockItemsTitle": "Artikel",
+  "stockItemsIntro": "Die Artikel, die das Unternehmen führt und verkauft: Einstellungen, Varianten und Lieferantenartikel je Artikel.",
+  "stockItemsEmpty": "Noch keine Artikel. Ein Artikel entsteht, wenn eine Leistung oder ein Lieferantenartikel im Lager geführt wird.",
+  "stockSettingsTitle": "Lagereinstellungen",
+  "stockSettingsFeatures": "Lagerfunktionen",
+  "stockSettingsValues": "Lagerregeln",
+  "stockSettingsElsewhere": "Die Lagereinstellungen werden auf der Seite Lagereinstellungen geführt.",
+  "stockSettingsOpen": "Lagereinstellungen öffnen",
+  "@stockItemsTitle": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "@stockItemsIntro": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "@stockItemsEmpty": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "@stockSettingsTitle": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "@stockSettingsFeatures": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "@stockSettingsValues": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "@stockSettingsElsewhere": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "@stockSettingsOpen": {
+    "description": "the stock pages and group (#4299)"
+  }
+}

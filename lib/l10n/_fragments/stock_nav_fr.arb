@@ -1,0 +1,35 @@
+{
+  "@@locale": "fr",
+  "stockItemsTitle": "Articles",
+  "stockItemsIntro": "Les articles que l'entreprise tient et vend : les réglages, les variantes et les articles fournisseur de chacun.",
+  "stockItemsEmpty": "Aucun article pour l'instant. Un article apparaît lorsqu'un service ou un article fournisseur est tenu en stock.",
+  "stockSettingsTitle": "Réglages du stock",
+  "stockSettingsFeatures": "Fonctions du stock",
+  "stockSettingsValues": "Règles du stock",
+  "stockSettingsElsewhere": "Les réglages du stock se tiennent sur la page Réglages du stock.",
+  "stockSettingsOpen": "Ouvrir les réglages du stock",
+  "@stockItemsTitle": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "@stockItemsIntro": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "@stockItemsEmpty": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "@stockSettingsTitle": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "@stockSettingsFeatures": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "@stockSettingsValues": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "@stockSettingsElsewhere": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "@stockSettingsOpen": {
+    "description": "the stock pages and group (#4299)"
+  }
+}

@@ -5,18 +5,19 @@
 // kind, code, name, barcode, the place it is inside and whether it is in use.
 // A save names the revision it read; a refusal says why under the place.
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/trace_logger.dart';
-import '../../../core/ui/app_sheet.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/stock_config.dart';
 import '../domain/stock_config_check.dart';
 import '../domain/stock_config_commands.dart';
+import '../providers/stock_providers.dart';
 import 'stock_config_text.dart';
 
 String _kindLabel(AppLocalizations l10n, String kind) => switch (kind) {
@@ -29,40 +30,36 @@ String _kindLabel(AppLocalizations l10n, String kind) => switch (kind) {
 
 String _placeTitle(StockPlaceConfig p) => p.name.isEmpty ? p.code : '${p.code} · ${p.name}';
 
-/// The places of [workspaceId], each opening its editor; a place is added
-/// from the button.
-Future<void> showStockPlaces(
-  BuildContext context,
-  StockConfigCommands commands, {
-  required String workspaceId,
-  required VoidCallback onChanged,
-}) => showAppSheet<void>(
-  context: context,
-  isScrollControlled: true,
-  // recorder-key-exempt: a data callback, not a control
-  builder: (_) => _PlacesSheet(commands: commands, workspaceId: workspaceId, onChanged: onChanged),
-);
+/// The places of [workspaceId] as the body of the Places page, each opening
+/// its editor; a place is added from the button.
+class StockPlacesBody extends ConsumerStatefulWidget {
+  const StockPlacesBody({
+    super.key,
+    required this.workspaceId,
+    required this.onChanged,
+    this.canEdit = true,
+  });
 
-class _PlacesSheet extends StatefulWidget {
-  const _PlacesSheet({required this.commands, required this.workspaceId, required this.onChanged});
-
-  final StockConfigCommands commands;
   final String workspaceId;
   final VoidCallback onChanged;
 
+  /// Whether the person may add and edit places (the server asks the same).
+  final bool canEdit;
+
   @override
-  State<_PlacesSheet> createState() => _PlacesSheetState();
+  ConsumerState<StockPlacesBody> createState() => _PlacesSheetState();
 }
 
-class _PlacesSheetState extends State<_PlacesSheet> {
+class _PlacesSheetState extends ConsumerState<StockPlacesBody> {
   late Future<List<StockPlaceConfig>> _places = _read();
 
-  Future<List<StockPlaceConfig>> _read() => widget.commands.places(widget.workspaceId);
+  // read at the time, so a read that cannot be made is the page's own failure
+  Future<List<StockPlaceConfig>> _read() async => ref.read(stockConfigCommandsProvider).places(widget.workspaceId);
 
   Future<void> _edit(List<StockPlaceConfig> all, StockPlaceConfig? place) async {
     final saved = await _showStockPlaceEditor(
       context,
-      widget.commands,
+      ref.read(stockConfigCommandsProvider),
       workspaceId: widget.workspaceId,
       place: place,
       all: all,
@@ -78,8 +75,7 @@ class _PlacesSheetState extends State<_PlacesSheet> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    return SafeArea(
-      child: Padding(
+    return Padding(
         padding: const EdgeInsets.all(AppSpacing.md),
         child: FutureBuilder<List<StockPlaceConfig>>(
           future: _places,
@@ -103,13 +99,10 @@ class _PlacesSheetState extends State<_PlacesSheet> {
             final all = snapshot.data;
             if (all == null) return const LoadingView();
             return Column(
-              mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(l10n.stockPlacesTitle, style: Theme.of(context).textTheme.titleMedium),
-                Flexible(
+                Expanded(
                   child: ListView(
-                    shrinkWrap: true,
                     children: [
                       for (final p in all)
                         ListTile(
@@ -121,12 +114,13 @@ class _PlacesSheetState extends State<_PlacesSheet> {
                           subtitle: Text(
                             p.virtual ? l10n.stockPlaceVirtual : _kindLabel(l10n, p.kind),
                           ),
-                          onTap: p.virtual ? null : () => _edit(all, p),
+                          onTap: p.virtual || !widget.canEdit ? null : () => _edit(all, p),
                         ),
                     ],
                   ),
                 ),
-                TextButton.icon(
+                if (widget.canEdit)
+                  TextButton.icon(
                   key: const ValueKey('stock-place-add'),
                   icon: const Icon(Icons.add),
                   label: Text(l10n.stockPlacesAdd),
@@ -136,7 +130,6 @@ class _PlacesSheetState extends State<_PlacesSheet> {
             );
           },
         ),
-      ),
     );
   }
 }

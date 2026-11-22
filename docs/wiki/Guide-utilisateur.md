@@ -3010,6 +3010,21 @@ La durée pendant laquelle un nouveau devis reste valable quand vous n’indique
 
 Sur un devis envoyé, **Partager le PDF** ouvre l’offre comme un document : un devis, avec sa propre référence et sa durée de validité, le client, les lignes et ce qu’elles représentent telles qu’elles ont été figées à l’envoi (le net, la TVA par taux et le total). Ce n’est jamais une facture et il ne porte aucun numéro de facture. Vous pouvez le consulter, l’enregistrer ou le partager.
 
+<!-- anchor: user.money.stock -->
+### Stock
+
+**Public:** Administrateur·rice · Propriétaire
+
+Ouvrez **Stock** dans le menu, juste sous **Achats et fournisseurs**. Tout ce qui touche aux articles et au stock s'y trouve, et ne se règle que là.
+
+- **Stock** montre ce qui est en stock par article, variante, lot et emplacement, avec la quantité exacte.
+- **Mouvements** est le journal de chaque mouvement ; ouvrez-en un pour voir ce qui a bougé, tel que stocké et tel que saisi.
+- **Articles** est le registre des articles : les réglages de stock de chacun, ses variantes et ses articles fournisseur.
+- **Emplacements** réunit les sites, zones, étagères et bacs avec leurs adresses.
+- **Réglages du stock** garde tous les paramètres du stock sur une page : les fonctions du stock avec leurs interrupteurs, et les règles du stock. Un réglage du stock trouvé ailleurs renvoie ici.
+
+Une entrée n'apparaît que lorsque sa fonction est activée et que votre rôle autorise sa page : qui peut seulement consulter voit les pages, pas les réglages. Les achats gardent ce qui s'achète ; les ventes, ce qui se vend.
+
 <!-- anchor: user.money.amounts -->
 ### Comment les montants sont affichés
 
