@@ -53,7 +53,7 @@ create table public.service_fulfilments (
     check (state in ('ordered', 'started', 'done', 'cancelled')),
   revision integer not null default 1 check (revision >= 1),
   foreign key (workspace_id, subject_member_id)
-    references public.members (workspace_id, id) on delete restrict,
+    references public.members (workspace_id, id) on delete cascade,
   unique (workspace_id, id),
   unique (workspace_id, source_kind, source_id, source_line_id),
   -- a direct engagement is its own commitment
@@ -81,7 +81,7 @@ create table public.service_fulfilment_transitions (
   foreign key (workspace_id, fulfilment_id)
     references public.service_fulfilments (workspace_id, id) on delete cascade,
   foreign key (workspace_id, actor_member_id)
-    references public.members (workspace_id, id) on delete restrict,
+    references public.members (workspace_id, id) on delete cascade,
   -- two steps never share a revision, and one request is one step
   unique (fulfilment_id, revision),
   unique (workspace_id, request_id),
@@ -100,7 +100,7 @@ create table public.service_fulfilment_invoice_links (
   foreign key (workspace_id, fulfilment_id)
     references public.service_fulfilments (workspace_id, id) on delete cascade,
   foreign key (workspace_id, linked_by_member_id)
-    references public.members (workspace_id, id) on delete restrict,
+    references public.members (workspace_id, id) on delete cascade,
   -- an invoice line answers for at most one engagement
   unique (workspace_id, invoice_id, line_id)
 );
@@ -142,6 +142,10 @@ create policy mcp_delegated_deny on public.service_fulfilment_invoice_links as r
   using (not public.mcp_is_delegated()) with check (not public.mcp_is_delegated());
 
 -- ── 3. what never changes ────────────────────────────────────────────────
+-- A member's rows cascade here only to meet the guards below: a member who still has an
+-- engagement, a step or a link cannot be deleted (the guard refuses the cascaded delete
+-- while the business exists), and the business's own deletion works in whatever order the
+-- rows are reached.
 -- A step and a link are never changed or deleted; an engagement is never deleted
 -- and only its state and revision move (the commands below). Every delete is
 -- allowed once the business itself is gone, so the business can be erased.
