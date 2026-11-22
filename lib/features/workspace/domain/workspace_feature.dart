@@ -426,14 +426,12 @@ enum WorkspaceFeature {
   /// #4165 — a standalone customer invoice, with no member-month behind it.
   standaloneInvoicing,
 
-  /// #4164 — the business's billing customers: the people and businesses it
-  /// invoices, with or without an account, each with a billing identity of
-  /// its own. Asked for, under invoicing. Off: nothing changes.
+  /// #4164 — the business's billing customers, each with a billing identity
+  /// of its own. Asked for, under invoicing. Off: nothing changes.
   billingCustomers,
 
-  /// #4166 — customer quotes: an offer to a billing customer, sent and
-  /// decided, whose accepted revision becomes the customer's first invoice.
-  /// Asked for, under invoicing. Off: nothing changes.
+  /// #4166 — customer quotes, sent and decided; an accepted one becomes the
+  /// customer's first invoice. Asked for, under invoicing. Off: nothing changes.
   customerQuotes,
 
   /// #4169 — lots and expiry on goods (feature_manifest_stock.dart).
@@ -445,12 +443,10 @@ enum WorkspaceFeature {
   /// #4170 — goods taken out for use or as a loss (feature_manifest_stock.dart).
   stockTakeOut,
   serviceFulfilment,
-
   /// #4294 — reorder points and low-stock alerts (feature_manifest_stock.dart).
   stockReorder,
 
-  /// #4172 — bounded returns and corrections of stock movements
-  /// (feature_manifest_stock.dart).
+  /// #4172 — returns and corrections of stock (feature_manifest_stock.dart).
   stockReturns;
 
   /// The key of this feature inside `workspaces.feature_flags`.
