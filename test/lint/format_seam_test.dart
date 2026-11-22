@@ -74,7 +74,7 @@ const _allowed = <String, (int, String)>{
     "a document: the printed analytics in the document's locale",
   ),
   'lib/features/workspace/presentation/config_pdf_lines.dart': (
-    4,
+    2,
     "a document: the configuration PDF prints in the document's locale",
   ),
   'lib/features/workspace/presentation/screens/workspace_settings_backup.dart': (
@@ -210,4 +210,87 @@ void main() {
       );
     });
   }
+
+  // #4322 -- the seam did not look below presentation, where the device's zone still decided what a
+  // person saw (the year of an invoice, a credit's printed date). A model factory keeps an instant
+  // as an instant; the zone is chosen where the value is shown or printed (AppFormat) or where a
+  // calendar date is read (`businessDateOf`, `WorkspaceCalendar.dateOf`). The `.toLocal()` calls
+  // left below presentation are pinned with their reason, and the count only falls.
+  const belowPresentation = <String, (int, String)>{
+    'lib/features/money/domain/company_lookup.dart': (
+      1,
+      'an instant stamp (lookedUpAt): shown through AppFormat, read by no calendar rule',
+    ),
+    'lib/features/money/domain/einvoice_gateway.dart': (
+      2,
+      'transmission stamps (sentAt, receiptAt): shown through AppFormat, read by no calendar rule',
+    ),
+    'lib/features/money/domain/invoice_match_row.dart': (
+      1,
+      "the tax point date of an instalment: a calendar date that needs the business's zone, which the row does not carry yet (follow-up of #4322); never shown",
+    ),
+    'lib/features/money/domain/vies_check.dart': (
+      1,
+      'an instant stamp (checkedAt): shown through AppFormat, read by no calendar rule',
+    ),
+    'lib/features/profile/domain/rights_request.dart': (
+      1,
+      'an instant stamp (receivedAt): shown through AppFormat, read by no calendar rule',
+    ),
+    'lib/features/reservations/domain/my_reservations_composition.dart': (
+      2,
+      "the documented fallback to the device's zone for a booking whose business names none",
+    ),
+    'lib/features/workspace/providers/business_date_provider.dart': (
+      1,
+      "the documented fallback to the device's day while the workspace has no calendar yet",
+    ),
+  };
+
+  test('.toLocal() below presentation is pinned with its reason and only falls (#4322)', () {
+    final below = filesUnder(['lib/features']).where(
+      (f) =>
+          (f.path.contains('/domain/') ||
+              f.path.contains('/data/') ||
+              f.path.contains('/application/') ||
+              f.path.contains('/providers/')) &&
+          !f.path.endsWith('.g.dart') &&
+          !f.path.endsWith('.freezed.dart'),
+    );
+    final toLocal = RegExp(r'\.toLocal\(\)');
+    final seen = <String, int>{};
+    for (final f in below) {
+      final n = codeLines(f).where(toLocal.hasMatch).length;
+      if (n > 0) seen[f.path] = n;
+    }
+    final expected = {for (final e in belowPresentation.entries) e.key: e.value.$1};
+    expect(seen, expected,
+        reason: 'a new `.toLocal()` below presentation reads the DEVICE zone: keep the instant, and '
+            "choose the zone where it is shown (AppFormat) or read its date on the business's "
+            'calendar (businessDateOf). A removed one lowers the pin.');
+    for (final MapEntry(key: path, value: (_, why)) in belowPresentation.entries) {
+      expect(why.trim(), isNotEmpty, reason: path);
+    }
+  });
+
+  test('the constructor forms DateFormat( and NumberFormat( in presentation only fall (#4322)', () {
+    final ctor = RegExp(r'\b(DateFormat|NumberFormat)\(');
+    final all = filesUnder(['lib/features']).where(
+      (f) => f.path.contains('/presentation/') && !f.path.endsWith('.g.dart') && !f.path.endsWith('.freezed.dart'),
+    );
+    final perFile = <String, int>{};
+    for (final f in all) {
+      final n = codeLines(f).where(ctor.hasMatch).length;
+      if (n > 0) perFile[f.path] = n;
+    }
+    expect(
+      perFile.values.fold(0, (a, b) => a + b),
+      _constructorFormsCeiling,
+      reason: 'a raw DateFormat( or NumberFormat( knows the member\'s locale and zone only if it goes '
+          'through AppFormat; the count only falls:\n${perFile.entries.map((e) => '${e.key}: ${e.value}').join('\n')}',
+    );
+  });
 }
+
+/// The raw constructor forms left in presentation (#4322): the named ones are at 0 since #3484.
+const _constructorFormsCeiling = 5;

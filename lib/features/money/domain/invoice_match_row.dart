@@ -12,9 +12,9 @@ InvoiceMatch invoiceMatchOf(JsonReader row) => InvoiceMatch(
   note: row.stringOr('note'),
   status: row.stringOr('status', 'confirmed'),
   paymentLedgerId: row.stringOrNull('payment_ledger_id'),
-  matchedAt: row.dateTime('matched_at').toLocal(),
+  matchedAt: row.dateTime('matched_at'),
   byName: row.stringOr('by_name'),
-  writeoffAt: row.dateTimeOrNull('writeoff_at')?.toLocal(),
+  writeoffAt: row.dateTimeOrNull('writeoff_at'),
   // #841 — who released it, reachable from the document.
   eventId: row.stringOrNull('event_id'),
   // #2380 — the reconciled statement line's facts, present only on the
@@ -32,6 +32,10 @@ DateTime? _day(String? iso) => iso == null ? null : DateTime.parse(iso);
 ) => (
   invoiceId: row.string('invoice_id'),
   payment: TaxPointPayment(
+    // The tax point is a CALENDAR date (`isoDay` of this instant in the e-reporting): it needs the
+    // business's zone, which this row does not carry. Read as UTC it would date a payment of the
+    // first hours of a day, in a business east of UTC, to the day before; until the zone reaches
+    // here the reading stays the device's, as before (#4322, follow-up).
     row.dateTime('matched_at').toLocal(),
     row.integer('amount_cents'),
   ),
