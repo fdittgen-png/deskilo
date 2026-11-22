@@ -5,7 +5,7 @@
 -- suppliers, a place below it is picking or reserve, and a place made before the levels stays
 -- editable. Rolled back.
 begin;
-select plan(24);
+select plan(25);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -55,6 +55,8 @@ create or replace function pg_temp.mk(p_req int, p_parent text, p_kind text, p_c
   select pg_temp.save_place(1, null, null, p_req, format('{"kind": "%s", "code": "%s"%s%s}', p_kind, p_code,
     case when p_parent is null then '' else format(', "parent_id": "%s"', pg_temp.kid(p_parent)) end, p_extra))
 $f$;
+create or replace function pg_temp.try(p_sql text) returns text language plpgsql as $f$
+begin execute p_sql; return 'ok'; exception when others then return sqlstate; end $f$;
 grant execute on all functions in schema pg_temp to authenticated, anon;
 
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
@@ -115,6 +117,10 @@ select is(pg_temp.mk(719, 'MAG1/FLOOR/A03', 'bay', 'B08', ', "pick_role": "shelf
 select is(pg_temp.save_place(1, pg_temp.kid('MAIN/OLD'), 1, 720, '{"name": "Old shelf, renamed"}')::jsonb ->> 'revision', '2', 'a shelf made under a warehouse before the levels is still renamed');
 select is(pg_temp.save_place(1, pg_temp.kid('MAIN/OLD'), 2, 721, format('{"parent_id": "%s"}', pg_temp.kid('MAG1/FLOOR'))),
   'ERR DKG11 {"field": "parent_id", "reason": "level_parent_wrong"}', 'but moved under a zone it is refused: a shelf sits under a bay');
+
+-- the default warehouse stays one: a second warehouse cannot take the name MAIN, whatever its parent
+select is(pg_temp.try(format($s$insert into public.stock_locations (workspace_id, parent_id, kind, code, name) values (%L, %L, 'warehouse', 'MAIN', 'Second')$s$,
+  pg_temp.u(101), pg_temp.kid('MAG1/FLOOR'))), '23505', 'a second warehouse called MAIN is refused');
 
 -- barcodes of places stay unique per business
 select pg_temp.save_place(1, pg_temp.kid('MAG1/FLOOR/A03/B03/S4'), 1, 722, '{"barcode": "PLACE-1"}');

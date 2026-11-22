@@ -11,9 +11,13 @@
 --     refuses it, when the place is made or its kind or parent changes - a place made before the
 --     levels stays editable).
 --   * a code is unique among the places under one parent (it was unique per business, so every
---     existing code stays valid); the whole address is unique per business (`address_path`, the
---     codes joined by the unit separator, kept by a trigger for the place and everything below
---     it; the separator the person sees is the workspace setting `stock.address_separator`).
+--     existing code stays valid); the INTERNAL path is unique per business (`address_path`, the
+--     codes joined by the unit separator chr(31), kept by a trigger for the place and everything
+--     below it). The address a person reads joins the codes with the workspace setting
+--     `stock.address_separator`; a code that itself holds that character is not refused, so the
+--     displayed address is not guaranteed unique - the path is.
+--   * the default warehouse (code MAIN, found by `stock_place(ws, 'warehouse')`) stays one per
+--     business: a second warehouse cannot be called MAIN, whatever its parent.
 --   * a site carries `receives_from_suppliers`; a place below it is `picking` or `reserve`.
 -- The barcode of a place stays unique per business.
 
@@ -43,6 +47,8 @@ alter table public.stock_locations drop constraint stock_locations_workspace_id_
 create unique index stock_locations_sibling_code on public.stock_locations
   (workspace_id, coalesce(parent_id, '00000000-0000-0000-0000-000000000000'::uuid), code);
 create unique index stock_locations_address on public.stock_locations (workspace_id, address_path);
+create unique index stock_locations_one_main_warehouse on public.stock_locations (workspace_id)
+  where kind = 'warehouse' and code = 'MAIN';
 
 -- The address of a place is its parent's address and its own code; when it changes, everything
 -- below it follows (each child is touched, its own trigger recomposes it and passes it on).
@@ -152,7 +158,10 @@ $n$);
       if v_level <> 1 then perform public.stock_config_refuse('parent_id', 'level_parent_missing'); end if;
     else
       select k.level into v_plevel from public.stock_locations l
-        join public.stock_location_kinds k on k.key = l.kind where l.id = v_parent;
+        join public.stock_location_kinds k on k.key = l.kind where l.id = v_parent
+       for share of l;
+      -- (the parent is read under a share lock: a concurrent change of its kind holds it for
+      -- update, so a child made meanwhile waits and reads the new kind)
       if v_plevel is distinct from v_level - 1 then
         perform public.stock_config_refuse('parent_id', 'level_parent_wrong');
       end if;
