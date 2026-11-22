@@ -178,7 +178,7 @@ class SupabaseEInvoiceTransmissions implements EInvoiceTransmissions {
     return _submissionOf(data, conflict: data['error'] == 'binding_changed');
   }
 
-  EInvoiceSubmission _submissionOf(Map<String, dynamic> data, {bool conflict = false}) =>
+  EInvoiceSubmission _submissionOf(Map<String, Object?> data, {bool conflict = false}) =>
       EInvoiceSubmission(
         status: EInvoiceSubmissionStatus.fromWire(
           phase: data['phase'] as String?,
