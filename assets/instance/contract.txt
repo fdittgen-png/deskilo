@@ -2901,6 +2901,7 @@ routine public.einvoice_secret_name(p_workspace_id uuid, p_key text) -> text | f
 routine public.einvoice_status(p_workspace_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:c4dc793a01e2
 routine public.einvoice_store_secret(p_workspace_id uuid, p_key text, p_value text) -> jsonb | function | definer | volatile | exec:service_role | body:2634c7338831
 routine public.einvoice_test_pending(p_phase text, p_verdict jsonb) -> boolean | function | invoker | immutable | exec:service_role | body:a10c00592fd7
+routine public.einvoice_transmission_handling_v1(p_workspace_id uuid, p_invoice_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:006f3f8b22cc
 routine public.end_tax_exemption_certificate(p_id uuid, p_on date) -> void | function | definer | volatile | exec:authenticated,service_role | body:78807893a3d2
 routine public.enforce_booking_rules(p_workspace_id uuid, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone, p_walk_up boolean) -> void | function | definer | stable | exec:service_role | body:7e6d1de2b0ae
 routine public.enforce_booking_rules(p_workspace_id uuid, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone, p_walk_up boolean, p_seat_id uuid) -> void | function | definer | stable | exec:service_role | body:1fec2279936b
@@ -3761,7 +3762,7 @@ routine public.reservations_resource_gate() -> trigger | function | definer | vo
 routine public.reset_work_hours(p_workspace_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:3c50f5957c58
 routine public.reset_workspace(p_workspace_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:ee827edb08ad
 routine public.reset_workspace_public_page(p_workspace uuid, p_fields text[]) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:0ebe84a74fa9
-routine public.resolve_einvoice_manually_v1(p_id uuid, p_actor uuid, p_outcome text, p_reason text, p_evidence text, p_verdict jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:afba90b99e6f
+routine public.resolve_einvoice_manually_v1(p_id uuid, p_actor uuid, p_outcome text, p_reason text, p_evidence text, p_verdict jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:90eff498cf6e
 routine public.resolve_invoice_email_v1(p_workspace_id uuid, p_attempt_id uuid, p_delivered boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:fecd50a7096e
 routine public.resolve_purchase_order_send_v1(p_workspace_id uuid, p_attempt_id uuid, p_delivered boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:07d7b126e546
 routine public.resolve_reminder_email_v1(p_workspace_id uuid, p_attempt_id uuid, p_delivered boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:303fb8b6fa70
