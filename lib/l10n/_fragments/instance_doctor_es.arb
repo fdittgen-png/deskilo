@@ -52,5 +52,8 @@
   "instanceDoctorAppUrlMissingTitle": "Las funciones que enlazan de vuelta a la app no tienen dirección de la app",
   "instanceDoctorAppUrlMissingDetail": "{functions}\n        Solución: dart run tool/instance.dart auth --ref <ref> --site-url <dirección web de la app>",
   "instanceDoctorAppUrlForeignTitle": "La dirección de la app de las funciones no es la dirección web de esta instancia",
-  "instanceDoctorAppUrlForeignDetail": "{functions}\n        Solución: dart run tool/instance.dart auth --ref <ref> --site-url <dirección web de la app>"
+  "instanceDoctorAppUrlForeignDetail": "{functions}\n        Solución: dart run tool/instance.dart auth --ref <ref> --site-url <dirección web de la app>",
+  "instanceDoctorProbeFactDelivery": "Envío de hechos de pertenencia",
+  "instanceDoctorFactBacklogTitle": "Hay hechos de pertenencia que esperan más de un periodo de actualización",
+  "instanceDoctorFactBacklogDetail": "{overdue} de {waiting} hechos en espera tienen más de un periodo de actualización; hay {live} relaciones vivas y un periodo entrega {capacity}.\n        Solución: suba federation.fact_drain_batch (o alargue el periodo de actualización) para que lote x periodo / 60 supere las relaciones vivas."
 }

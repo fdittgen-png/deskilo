@@ -158,6 +158,7 @@ String _probe(AppLocalizations l10n, DoctorProbe probe) => switch (probe) {
   DoctorProbe.roles => l10n.instanceDoctorProbeRoles,
   DoctorProbe.push => l10n.instanceDoctorProbePush,
   DoctorProbe.appUrl => l10n.instanceDoctorProbeAppUrl,
+  DoctorProbe.factDelivery => l10n.instanceDoctorProbeFactDelivery,
 };
 
 /// A finding's title in the member's language: the catalogue's wording where
@@ -183,8 +184,9 @@ String _title(AppLocalizations l10n, DoctorFinding f) {
     DoctorWords.guardPublicBucket => l10n.instanceDoctorGuardPublicBucketTitle,
     DoctorWords.rolesUndeclared => l10n.instanceDoctorRolesUndeclaredTitle,
     DoctorWords.rolesUnknown => l10n.instanceDoctorRolesUnknownTitle,
-    DoctorWords.pushOwn => l10n.instanceDoctorPushOwnTitle,
-    DoctorWords.pushForeign => l10n.instanceDoctorPushForeignTitle,
+    DoctorWords.factBacklog ||
+    DoctorWords.pushOwn ||
+    DoctorWords.pushForeign => _hostTitle(l10n, f.words!),
     DoctorWords.appUrlMissing ||
     DoctorWords.appUrlForeign => _appUrlTitle(l10n, f.words!),
     DoctorWords.authBaseline => l10n.instanceDoctorAuthBaselineTitle,
@@ -194,6 +196,13 @@ String _title(AppLocalizations l10n, DoctorFinding f) {
     DoctorWords.authReauthOff => l10n.instanceDoctorAuthReauthOffTitle,
   };
 }
+
+/// The title of a finding about what this host sends: its push calls, its membership facts.
+String _hostTitle(AppLocalizations l10n, DoctorWords words) => switch (words) {
+  DoctorWords.factBacklog => l10n.instanceDoctorFactBacklogTitle,
+  DoctorWords.pushForeign => l10n.instanceDoctorPushForeignTitle,
+  _ => l10n.instanceDoctorPushOwnTitle,
+};
 
 /// #3916 -- the title of a finding about the app address of the functions.
 String _appUrlTitle(AppLocalizations l10n, DoctorWords words) =>
@@ -244,6 +253,7 @@ String _detail(AppLocalizations l10n, DoctorFinding f) {
     ),
     DoctorWords.rolesUnknown =>
       l10n.instanceDoctorRolesUnknownDetail('${facts[0]}'),
+    DoctorWords.factBacklog => l10n.instanceDoctorFactBacklogDetail('${facts[0]}', '${facts[1]}', '${facts[2]}', '${facts[3]}'),
     DoctorWords.pushOwn => l10n.instanceDoctorPushOwnDetail('${facts[0]}'),
     DoctorWords.pushForeign =>
       l10n.instanceDoctorPushForeignDetail('${facts[0]}'),

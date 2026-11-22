@@ -355,3 +355,28 @@ List<DoctorFinding> _checkPersonalHome(
     _ => [DoctorFinding(DoctorLevel.ok, title, kind)],
   };
 }
+
+/// #4327 -- the delivery of membership facts, in one text cell 'overdue|waiting|live|capacity'
+/// (`membership_fact_backlog()`, 0876): null where the schema predates it. `query_to_xml`
+/// keeps the call from failing the probe when the function does not exist yet.
+const String factDeliverySql = '''
+select case when to_regprocedure('public.membership_fact_backlog()') is null then null
+       else (xpath('/row/b/text()', query_to_xml('select public.membership_fact_backlog() as b', false, true, '')))[1]::text
+       end as backlog;
+''';
+
+/// A drain that does not keep up: events older than one refresh period still wait. Nothing is said
+/// of a healthy drain, of a schema before the reader, or of an installation with no live facts.
+List<DoctorFinding> checkFactDelivery(List<Map<String, Object?>> rows) {
+  final cell = rows.isEmpty ? null : rows.first['backlog'];
+  if (cell == null) return const [];
+  final parts = '$cell'.split('|').map((p) => int.tryParse(p) ?? 0).toList();
+  if (parts.length != 4 || parts[0] == 0) return const [];
+  return [
+    DoctorFinding.typed(
+      parts[2] > parts[3] ? DoctorLevel.alarm : DoctorLevel.warn,
+      DoctorWords.factBacklog,
+      facts: parts,
+    ),
+  ];
+}

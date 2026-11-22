@@ -24752,6 +24752,23 @@ abstract class AppLocalizations {
   /// **'A password change does not ask to sign in again'**
   String get instanceDoctorAuthReauthOffTitle;
 
+  /// #4327 Detail: {overdue} waiting longer than a period, {waiting} waiting, {live} live relationships, {capacity} delivered per period; the setting name stays as written.
+  ///
+  /// In en, this message translates to:
+  /// **'{overdue} of {waiting} waiting facts are older than one refresh period; {live} relationships are live and one period delivers {capacity}.\n        Fix: raise federation.fact_drain_batch (or lengthen the refresh period) so that batch x period / 60 exceeds the live relationships.'**
+  String instanceDoctorFactBacklogDetail(
+    String overdue,
+    String waiting,
+    String live,
+    String capacity,
+  );
+
+  /// #4327 Doctor finding: membership facts wait longer than a refresh period.
+  ///
+  /// In en, this message translates to:
+  /// **'Membership facts wait longer than a refresh period'**
+  String get instanceDoctorFactBacklogTitle;
+
   /// #3489 Detail of the alarm: a view readable by anon runs as its owner; {names} lists the objects.
   ///
   /// In en, this message translates to:
@@ -24871,6 +24888,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Auth configuration'**
   String get instanceDoctorProbeAuth;
+
+  /// #4327 Doctor probe name: the delivery of membership facts.
+  ///
+  /// In en, this message translates to:
+  /// **'Membership fact delivery'**
+  String get instanceDoctorProbeFactDelivery;
 
   /// #3489 Detail of a failed probe. The number is not a count: it is an HTTP status code. [not a count: status]
   ///
@@ -50499,6 +50522,12 @@ abstract class AppLocalizations {
   /// **'Seconds a server waits for the answer to a signed message it sent to another server before it sends the same message again. At least 30; keep it below the status lifetime.'**
   String get settingHintFederationAnswerWaitSeconds;
 
+  /// #4327 fact drain batch: settingHintFederationFactDrainBatch
+  ///
+  /// In en, this message translates to:
+  /// **'The most membership facts a workspace server sends to its personal home in one minute. A server renews each live relationship once per identity status refresh, so it keeps up with this number times the refresh seconds divided by 60 relationships (500 and 300 seconds: 2,500). Raise it when the instance doctor reports a delivery backlog.'**
+  String get settingHintFederationFactDrainBatch;
+
   /// #2563 C2 retention: settingHintFederationRetentionHours
   ///
   /// In en, this message translates to:
@@ -51026,6 +51055,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Backchannel answer wait'**
   String get settingLabelFederationAnswerWaitSeconds;
+
+  /// #4327 fact drain batch: settingLabelFederationFactDrainBatch
+  ///
+  /// In en, this message translates to:
+  /// **'Membership facts sent per minute'**
+  String get settingLabelFederationFactDrainBatch;
 
   /// #2563 C2 retention: settingLabelFederationRetentionHours
   ///
