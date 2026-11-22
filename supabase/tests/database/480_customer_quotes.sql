@@ -7,10 +7,16 @@
 -- whatever the request id; a changed invoice context needs its reviewed digest; and
 -- nothing financial exists until the invoice is issued by #4165's issuer.
 begin;
-select plan(82);
+select plan(86);
 
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00004166' || lpad(n::text, 4, '0'))::uuid;
+$$;
+-- The business's own day, by the server's own rule: every date a test gives a quote or an
+-- invoice is compared with it, never with the database clock's UTC date, so the verdict is
+-- the same at any hour of the day (#4307).
+create function pg_temp.today() returns date language sql stable security definer as $$
+  select public.workspace_today(pg_temp.u(101))
 $$;
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
 select pg_temp.u(n), '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',
@@ -172,13 +178,13 @@ select is((select reference from public.customer_quotes where id = (current_sett
   current_setting('s.a')::jsonb ->> 'reference', 'the quote keeps its one reference across revisions');
 
 -- ── a decision: what the issuer recorded ──
-select is(pg_temp.as_user(1, format($s$select public.record_customer_quote_decision_v1(%L, %L, 1, 'accepted', current_date, 'email', 'mail')::text$s$,
+select is(pg_temp.as_user(1, format($s$select public.record_customer_quote_decision_v1(%L, %L, 1, 'accepted', pg_temp.today(), 'email', 'mail')::text$s$,
   pg_temp.u(101), (current_setting('q.a')::jsonb ->> 'quote_id'))), 'ERR DKQ03', 'a superseded revision is not accepted');
-select is(pg_temp.as_user(1, format($s$select public.record_customer_quote_decision_v1(%L, %L, 2, 'accepted', current_date + 1, 'email', 'mail')::text$s$,
+select is(pg_temp.as_user(1, format($s$select public.record_customer_quote_decision_v1(%L, %L, 2, 'accepted', pg_temp.today() + 1, 'email', 'mail')::text$s$,
   pg_temp.u(101), (current_setting('q.a')::jsonb ->> 'quote_id'))), 'ERR DKQ06', 'a decision cannot be dated in the future');
-select is(pg_temp.as_user(2, format($s$select public.record_customer_quote_decision_v1(%L, %L, 2, 'accepted', current_date, 'email', 'mail')::text$s$,
+select is(pg_temp.as_user(2, format($s$select public.record_customer_quote_decision_v1(%L, %L, 2, 'accepted', pg_temp.today(), 'email', 'mail')::text$s$,
   pg_temp.u(101), (current_setting('q.a')::jsonb ->> 'quote_id'))), 'ERR P0001', 'a finance reader records no decision');
-select is(pg_temp.as_user(1, format($s$select (public.record_customer_quote_decision_v1(%L, %L, 2, 'accepted', current_date, 'received_outside_app', 'signed mail of the day')::jsonb)->>'recorded_by_issuer'$s$,
+select is(pg_temp.as_user(1, format($s$select (public.record_customer_quote_decision_v1(%L, %L, 2, 'accepted', pg_temp.today(), 'received_outside_app', 'signed mail of the day')::jsonb)->>'recorded_by_issuer'$s$,
   pg_temp.u(101), (current_setting('q.a')::jsonb ->> 'quote_id'))), 'true', 'revision 2 is accepted, and the record says the issuer recorded it');
 select is((select status from public.customer_quotes where id = (current_setting('q.a')::jsonb ->> 'quote_id')::uuid), 'accepted', 'the quote is accepted');
 select is(pg_temp.err(format($s$update public.customer_quote_decisions set decision = 'declined' where quote_id = %L$s$,
@@ -195,22 +201,22 @@ insert into public.customer_quotes (id, workspace_id, subject_member_id, referen
 select quote_id, pg_temp.u(101), current_setting('t.customer')::uuid, 'QUO-LATE', 'sent' from late;
 insert into public.customer_quote_revisions (id, quote_id, workspace_id, revision, status, issued_on, valid_until, lines,
                                               frozen, content_digest, sent_at, sent_by_member_id)
-select rev_id, quote_id, pg_temp.u(101), 1, 'sent', current_date - 20, current_date - 3,
+select rev_id, quote_id, pg_temp.u(101), 1, 'sent', pg_temp.today() - 20, pg_temp.today() - 3,
        jsonb_build_array(pg_temp.line('1', '10', gen_random_uuid())), '{"totals": {"total_cents": 1200}}'::jsonb, 'x', now(), pg_temp.u(201)
   from late;
-select is(pg_temp.as_user(1, format($s$select public.record_customer_quote_decision_v1(%L, %L, 1, 'accepted', current_date, 'verbal', '')::text$s$,
+select is(pg_temp.as_user(1, format($s$select public.record_customer_quote_decision_v1(%L, %L, 1, 'accepted', pg_temp.today(), 'verbal', '')::text$s$,
   pg_temp.u(101), (select quote_id from late))), 'ERR DKQ04', 'an offer past its validity is not accepted late');
 select ok((pg_temp.as_user(1, format($s$select (public.customer_quote_v1(%L, %L)->>'expired')$s$, pg_temp.u(101), (select quote_id from late)))) = 'true',
   'its expiry is derived from the validity and the business clock');
 -- ── the conversion ──
-select set_config('c.a', pg_temp.as_user(1, format($s$select public.prepare_quote_conversion_v1(%L, %L, current_date, current_date + 30)::text$s$,
+select set_config('c.a', pg_temp.as_user(1, format($s$select public.prepare_quote_conversion_v1(%L, %L, pg_temp.today(), pg_temp.today() + 30)::text$s$,
   pg_temp.u(101), (current_setting('q.a')::jsonb ->> 'quote_id'))), false);
 select is(current_setting('c.a')::jsonb #> '{preview,missing}', '[]'::jsonb, 'the real preview finds nothing missing');
 select is(current_setting('c.a')::jsonb #>> '{preview,preview,total_cents}', '19200', '2 h at 80.00 net, 20 %: the invoice would be 192.00');
 select is(current_setting('c.a')::jsonb ->> 'context_changed', 'false', 'and it equals what was accepted');
 select is(pg_temp.books(), current_setting('t.books'), 'preparing the conversion issues nothing');
 -- a draft that came from a quote changes only through the quote (fix 1, 2)
-select is(pg_temp.as_user(1, format($s$select public.save_standalone_invoice_draft_v1(%L, %L, %s, %L, current_date, current_date + 30, '', '', %L::jsonb)::text$s$,
+select is(pg_temp.as_user(1, format($s$select public.save_standalone_invoice_draft_v1(%L, %L, %s, %L, pg_temp.today(), pg_temp.today() + 30, '', '', %L::jsonb)::text$s$,
   pg_temp.u(101), current_setting('c.a')::jsonb ->> 'draft_id', current_setting('c.a')::jsonb ->> 'draft_revision',
   current_setting('t.customer'), jsonb_build_array(pg_temp.line('99', '99'))::text)), 'ERR DKQ09',
   'the invoice draft of a quote cannot be edited in the invoice editor');
@@ -220,7 +226,7 @@ select is(pg_temp.as_user(1, format($s$select public.issue_standalone_invoice_v1
 select is(pg_temp.err(format($s$update public.standalone_invoice_drafts set lines = '[]'::jsonb where id = %L$s$,
   current_setting('c.a')::jsonb ->> 'draft_id')), 'DKQ09', 'nor changed by any other write');
 select is(pg_temp.books(), current_setting('t.books'), 'and nothing was issued by those attempts');
-select is(pg_temp.as_user(2, format($s$select public.prepare_quote_conversion_v1(%L, %L, current_date, current_date + 30)::text$s$,
+select is(pg_temp.as_user(2, format($s$select public.prepare_quote_conversion_v1(%L, %L, pg_temp.today(), pg_temp.today() + 30)::text$s$,
   pg_temp.u(101), (current_setting('q.a')::jsonb ->> 'quote_id'))) <> 'ok', true, 'a finance reader does not convert');
 select set_config('c.i', pg_temp.as_user(1, format(
   $s$select public.convert_customer_quote_v1(%L, %L, %s, '00000000-0000-4000-8000-000000041661'::uuid)::text$s$,
@@ -240,16 +246,16 @@ select is(pg_temp.err(format($s$insert into public.customer_quote_conversions (q
    select quote_id, workspace_id, revision_id, gen_random_uuid(), (select id from public.invoices limit 1), converted_by_member_id
      from public.customer_quote_conversions where quote_id = %L$s$, (current_setting('q.a')::jsonb ->> 'quote_id'))), '23505',
   'a second conversion of the quote is impossible in the database, whatever the request');
-select is(pg_temp.as_user(1, format($s$select public.prepare_quote_conversion_v1(%L, %L, current_date, current_date + 30)::text$s$,
+select is(pg_temp.as_user(1, format($s$select public.prepare_quote_conversion_v1(%L, %L, pg_temp.today(), pg_temp.today() + 30)::text$s$,
   pg_temp.u(101), (current_setting('q.a')::jsonb ->> 'quote_id'))), 'ERR DKQ03', 'a converted quote is not prepared again');
 
 
 -- accepted in time, invoiced after the offer's date: expiry does not undo an agreement; and
 -- an invoice whose context differs from the frozen one needs its reviewed digest
 insert into public.customer_quote_decisions (quote_id, workspace_id, revision_id, decision, decided_on, source, recorded_by_member_id)
-select quote_id, pg_temp.u(101), rev_id, 'accepted', current_date - 8, 'verbal', pg_temp.u(201) from late;
+select quote_id, pg_temp.u(101), rev_id, 'accepted', pg_temp.today() - 8, 'verbal', pg_temp.u(201) from late;
 update public.customer_quotes set status = 'accepted' where id = (select quote_id from late);
-select set_config('c.l', pg_temp.as_user(1, format($s$select public.prepare_quote_conversion_v1(%L, %L, current_date, current_date + 30)::text$s$,
+select set_config('c.l', pg_temp.as_user(1, format($s$select public.prepare_quote_conversion_v1(%L, %L, pg_temp.today(), pg_temp.today() + 30)::text$s$,
   pg_temp.u(101), (select quote_id from late))), false);
 select is(current_setting('c.l')::jsonb ->> 'context_changed', 'true',
   'an invoice that differs from the frozen offer says so: the difference is the preview''s');
@@ -266,7 +272,7 @@ select is((select count(*) from public.invoices where workspace_id = pg_temp.u(1
 create temp table gone as select gen_random_uuid() as quote_id;
 insert into public.customer_quotes (id, workspace_id, subject_member_id, reference, status)
 select quote_id, pg_temp.u(101), current_setting('t.customer')::uuid, 'QUO-GONE', 'cancelled' from gone;
-select is(pg_temp.as_user(1, format($s$select public.prepare_quote_conversion_v1(%L, %L, current_date, current_date + 30)::text$s$,
+select is(pg_temp.as_user(1, format($s$select public.prepare_quote_conversion_v1(%L, %L, pg_temp.today(), pg_temp.today() + 30)::text$s$,
   pg_temp.u(101), (select quote_id from gone))), 'ERR DKQ03', 'a cancelled quote is not converted');
 
 -- ── what the review found ──
@@ -276,14 +282,14 @@ insert into public.customer_quotes (id, workspace_id, subject_member_id, referen
 select quote_id, pg_temp.u(101), current_setting('t.customer')::uuid, 'QUO-LATE2', 'sent' from late2;
 insert into public.customer_quote_revisions (id, quote_id, workspace_id, revision, status, issued_on, valid_until, lines,
                                               frozen, content_digest, sent_at, sent_by_member_id)
-select rev_id, quote_id, pg_temp.u(101), 1, 'sent', current_date - 20, current_date - 3,
+select rev_id, quote_id, pg_temp.u(101), 1, 'sent', pg_temp.today() - 20, pg_temp.today() - 3,
        jsonb_build_array(pg_temp.line('1', '10', gen_random_uuid())), '{"totals": {"total_cents": 1200}}'::jsonb, 'x', now(), pg_temp.u(201)
   from late2;
 -- an acceptance dated inside the validity but recorded after it ended is refused: expiry is
 -- read on the business's clock when the issuer records it, not only on the typed date
-select is(pg_temp.as_user(1, format($s$select public.record_customer_quote_decision_v1(%L, %L, 1, 'accepted', current_date - 5, 'verbal', '')::text$s$,
+select is(pg_temp.as_user(1, format($s$select public.record_customer_quote_decision_v1(%L, %L, 1, 'accepted', pg_temp.today() - 5, 'verbal', '')::text$s$,
   pg_temp.u(101), (select quote_id from late2))), 'ERR DKQ04', 'a late recording of an acceptance dated in time is refused');
-select is(pg_temp.as_user(1, format($s$select public.record_customer_quote_decision_v1(%L, %L, 1, 'declined', current_date - 5, 'carrier pigeon', '')::text$s$,
+select is(pg_temp.as_user(1, format($s$select public.record_customer_quote_decision_v1(%L, %L, 1, 'declined', pg_temp.today() - 5, 'carrier pigeon', '')::text$s$,
   pg_temp.u(101), (select quote_id from late2))), 'ERR DKQ06', 'the source of a decision is checked first, with a code of its own');
 
 -- a quote whose invoice draft was issued before the guard existed is not left stuck: prepare refuses the
@@ -292,16 +298,16 @@ select set_config('q.s', pg_temp.as_user(1, format(
   $s$select public.save_customer_quote_draft_v1(%L, null, null, %L, null, null, '', '', 'Stuck', %L::jsonb)::text$s$,
   pg_temp.u(101), current_setting('t.customer'), jsonb_build_array(pg_temp.line('1', '50'))::text)), false);
 select pg_temp.as_user(1, format($s$select public.send_customer_quote_v1(%L, %L, 1, 1)::text$s$, pg_temp.u(101), current_setting('q.s')::jsonb ->> 'quote_id'));
-select pg_temp.as_user(1, format($s$select public.record_customer_quote_decision_v1(%L, %L, 1, 'accepted', current_date, 'email', '')::text$s$,
+select pg_temp.as_user(1, format($s$select public.record_customer_quote_decision_v1(%L, %L, 1, 'accepted', pg_temp.today(), 'email', '')::text$s$,
   pg_temp.u(101), current_setting('q.s')::jsonb ->> 'quote_id'));
-select set_config('c.s', pg_temp.as_user(1, format($s$select public.prepare_quote_conversion_v1(%L, %L, current_date, current_date + 30)::text$s$,
+select set_config('c.s', pg_temp.as_user(1, format($s$select public.prepare_quote_conversion_v1(%L, %L, pg_temp.today(), pg_temp.today() + 30)::text$s$,
   pg_temp.u(101), current_setting('q.s')::jsonb ->> 'quote_id')), false);
 -- (the old way: the draft issued by the invoice issuer itself, as the guard now forbids)
 select set_config('deskilo.quote_conversion', current_setting('c.s')::jsonb ->> 'draft_id', true);
 select set_config('i.s', pg_temp.as_user(1, format($s$select (public.issue_standalone_invoice_v1(%L, %L, %s, '00000000-0000-4000-8000-000000041664'::uuid))->>'invoice_id'$s$,
   pg_temp.u(101), current_setting('c.s')::jsonb ->> 'draft_id', current_setting('c.s')::jsonb ->> 'draft_revision')), false);
 select set_config('deskilo.quote_conversion', '', true);
-select is(pg_temp.as_user(1, format($s$select public.prepare_quote_conversion_v1(%L, %L, current_date, current_date + 30)::text$s$,
+select is(pg_temp.as_user(1, format($s$select public.prepare_quote_conversion_v1(%L, %L, pg_temp.today(), pg_temp.today() + 30)::text$s$,
   pg_temp.u(101), current_setting('q.s')::jsonb ->> 'quote_id')), 'ERR DKQ03', 'a quote whose draft was already issued is not prepared again');
 select is(pg_temp.as_user(1, format($s$select (public.convert_customer_quote_v1(%L, %L, %s, '00000000-0000-4000-8000-000000041665'::uuid))->>'invoice_id'$s$,
   pg_temp.u(101), current_setting('q.s')::jsonb ->> 'quote_id', current_setting('c.s')::jsonb ->> 'draft_revision')),
@@ -311,7 +317,7 @@ select is((select count(*) from public.invoices where workspace_id = pg_temp.u(1
 
 -- quotes are a feature: switched off, no one reads or writes them
 update public.workspaces set feature_flags = feature_flags || '{"customerQuotes": false}'::jsonb where id = pg_temp.u(101);
-select is(pg_temp.as_user(1, format($s$select public.prepare_quote_conversion_v1(%L, %L, current_date, current_date + 30)::text$s$,
+select is(pg_temp.as_user(1, format($s$select public.prepare_quote_conversion_v1(%L, %L, pg_temp.today(), pg_temp.today() + 30)::text$s$,
   pg_temp.u(101), (current_setting('q.a')::jsonb ->> 'quote_id'))), 'ERR DKQ10', 'with the feature off the issuer cannot act on a quote');
 select is(pg_temp.as_user(1, $s$select count(*)::text from public.customer_quotes$s$), '0', 'and the raw tables show nothing');
 update public.workspaces set feature_flags = feature_flags || '{"customerQuotes": true}'::jsonb where id = pg_temp.u(101);
@@ -330,14 +336,14 @@ insert into public.customer_quotes (id, workspace_id, subject_member_id, referen
 values (pg_temp.u(401), pg_temp.u(103), pg_temp.u(206), 'QUO-GONE', 'accepted');
 insert into public.customer_quote_revisions (id, quote_id, workspace_id, revision, status, issued_on, valid_until, lines,
                                               frozen, content_digest, sent_at, sent_by_member_id)
-values (pg_temp.u(402), pg_temp.u(401), pg_temp.u(103), 1, 'sent', current_date - 5, current_date + 20, '[]'::jsonb,
+values (pg_temp.u(402), pg_temp.u(401), pg_temp.u(103), 1, 'sent', pg_temp.today() - 5, pg_temp.today() + 20, '[]'::jsonb,
         '{"totals": {"total_cents": 100}}'::jsonb, 'x', now(), pg_temp.u(206));
 insert into public.customer_quote_decisions (quote_id, workspace_id, revision_id, decision, decided_on, source, recorded_by_member_id)
-values (pg_temp.u(401), pg_temp.u(103), pg_temp.u(402), 'accepted', current_date, 'verbal', pg_temp.u(206));
+values (pg_temp.u(401), pg_temp.u(103), pg_temp.u(402), 'accepted', pg_temp.today(), 'verbal', pg_temp.u(206));
 insert into public.standalone_invoice_drafts
 select * from jsonb_populate_record(null::public.standalone_invoice_drafts, jsonb_build_object(
   'id', pg_temp.u(403), 'workspace_id', pg_temp.u(103), 'subject_member_id', pg_temp.u(206), 'revision', 1, 'status', 'draft',
-  'service_date', current_date, 'due_on', current_date + 30, 'buyer_reference', '', 'purchase_order', '',
+  'service_date', pg_temp.today(), 'due_on', pg_temp.today() + 30, 'buyer_reference', '', 'purchase_order', '',
   'lines', '[]'::jsonb, 'origin_quote_id', pg_temp.u(401)));
 select throws_ok(format($s$delete from public.customer_quotes where id = %L$s$, pg_temp.u(401)), 'DKQ05', null,
   'a sent quote is still never deleted on its own');
@@ -356,6 +362,27 @@ select is((select (select count(*) from public.customer_quotes where workspace_i
   'its quotes, revisions, decision and draft went with it');
 select ok(exists (select 1 from public.customer_quotes where workspace_id = pg_temp.u(101)),
   'another business keeps its quotes');
+
+-- ── the business's day is not the database clock's (#4307) ──
+-- Put the business in a zone whose date differs from the clock's UTC date at THIS moment (the
+-- pinned case at any hour: UTC+14 when it is 10:00 UTC or later, UTC-12 before), so what is
+-- "today" for the business is never the UTC date the tests used to build their dates from.
+update public.workspaces set timezone = case when extract(hour from now() at time zone 'UTC') >= 10
+  then 'Etc/GMT-14' else 'Etc/GMT+12' end where id = pg_temp.u(101);
+select isnt(pg_temp.today(), (now() at time zone 'UTC')::date,
+  'the business''s today is not the UTC date of the database clock');
+select set_config('z.q', pg_temp.as_user(1, format(
+  $s$select public.save_customer_quote_draft_v1(%L, null, null, %L, null, null, '', '', 'Pinned', %L::jsonb)::text$s$,
+  pg_temp.u(101), current_setting('t.customer'), jsonb_build_array(pg_temp.line('1', '10'))::text)), false);
+select set_config('z.id', current_setting('z.q')::jsonb ->> 'quote_id', false);
+select ok(pg_temp.as_user(1, format($s$select public.send_customer_quote_v1(%L, %L, 1, 1)::text$s$,
+  pg_temp.u(101), current_setting('z.id'))) like '%reference%', 'a quote is sent on the business''s own day');
+select is(pg_temp.as_user(1, format($s$select public.record_customer_quote_decision_v1(%L, %L, 1, 'accepted', %L::date, 'email', 'mail')::text$s$,
+  pg_temp.u(101), current_setting('z.id'), (pg_temp.today() + 1)::text)), 'ERR DKQ06',
+  'a decision dated the business''s tomorrow is refused: it is in the future');
+select ok(pg_temp.as_user(1, format($s$select public.record_customer_quote_decision_v1(%L, %L, 1, 'accepted', %L::date, 'email', 'mail')::text$s$,
+  pg_temp.u(101), current_setting('z.id'), pg_temp.today()::text)) like '%recorded_by_issuer%',
+  'a decision dated the business''s today is accepted, whatever hour the database clock reads');
 
 select * from finish();
 rollback;
