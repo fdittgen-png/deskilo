@@ -6,7 +6,7 @@
 -- finances, and an unknown cost stays null; it is filtered by place and by no home place and is
 -- read in bounded pages. Rolled back.
 begin;
-select plan(22);
+select plan(24);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -55,6 +55,16 @@ create or replace function pg_temp.row_of(p_page jsonb, p_name text, p_variant u
   select r from jsonb_array_elements(p_page -> 'rows') r
    where r ->> 'item_name' = p_name and (r ->> 'variant_id') is not distinct from p_variant::text limit 1
 $f$;
+-- a write straight to the table as a given person (the role stays the test's own: the trigger
+-- is what is asked)
+create or replace function pg_temp.table_write_as(p_user int, p_sql text) returns text language plpgsql as $f$
+declare v text;
+begin
+  perform set_config('request.jwt.claims', jsonb_build_object('sub', pg_temp.u(p_user), 'role', 'authenticated')::text, true);
+  begin execute p_sql; v := 'ok'; exception when others then v := sqlstate; end;
+  perform set_config('request.jwt.claims', '', true);
+  return v;
+end $f$;
 grant execute on all functions in schema pg_temp to authenticated, anon;
 
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
@@ -101,6 +111,12 @@ select is(pg_temp.sethome(1, 301, null, pg_temp.loc('SUPPLIER'), 803), 'ERR DKG1
 select is(pg_temp.sethome(1, 303, null, pg_temp.loc('S1'), 804) like 'ERR DKG04%', true, 'a service that is not stock has no home');
 select is(pg_temp.sethome(2, 301, null, pg_temp.loc('S1'), 805) like 'ERR DKN01%', true, 'a reader of the stock does not set it');
 select is(pg_temp.sethome(1, 301, null, pg_temp.loc('S1'), 806, true) like 'ERR DKN01%', true, 'nor an assistant');
+
+-- the rule holds for a write straight to the table too
+select is(pg_temp.table_write_as(2, format($s$update public.services set home_location_id = %L where id = %L$s$, pg_temp.loc('S1'), pg_temp.u(302))), 'DKN01',
+  'a reader of the stock cannot set a home place by writing to the table');
+select is(pg_temp.table_write_as(1, format($s$update public.item_variants set home_location_id = %L where id = %L$s$, pg_temp.loc('S1'), pg_temp.u(401))), 'ok',
+  'a stock manager can, the same rules applying');
 
 -- it is advice: nothing moves
 select is((select count(*) from public.stock_movements where workspace_id = pg_temp.u(101)), 0::bigint, 'no movement was written');

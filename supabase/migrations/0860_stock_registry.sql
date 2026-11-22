@@ -9,7 +9,8 @@
 --     put-away, counting and picking, never a balance: stock may sit elsewhere, and changing it
 --     moves nothing and rewrites no history. A variant without a home of its own has its
 --     item's.
---   * `set_stock_home_v1`: one command to set or clear it, at `manageStock`, once per request.
+--   * `set_stock_home_v1`: one command to set or clear it, at `manageStock`, once per request;
+--     the trigger asks the same of a direct write to either table.
 --   * `stock_registry_page_v1`: the registry, one row per item (per variant when it has any) with
 --     its barcode, unit, retail price, last known cost (only for whoever may see finances or
 --     manage purchases; an unknown cost stays null, never 0), home address and on-hand
@@ -27,12 +28,18 @@ alter table public.item_variants
 create or replace function public.stock_home_check() returns trigger
 language plpgsql set search_path = public as $fn$
 begin
-  if new.home_location_id is not null
-     and (tg_op = 'INSERT' or new.home_location_id is distinct from old.home_location_id) then
-    if not exists (select 1 from public.stock_locations l
-                    join public.stock_location_kinds k on k.key = l.kind
-                   where l.id = new.home_location_id and l.workspace_id = new.workspace_id
-                     and l.active and not k.virtual and l.kind <> 'in_transit') then
+  if (tg_op = 'INSERT' and new.home_location_id is not null)
+     or (tg_op = 'UPDATE' and new.home_location_id is distinct from old.home_location_id) then
+    -- Whoever writes the home place, by this command or straight to the table, may manage the
+    -- stock (a call with no signed-in person is the system's own: a migration, an import).
+    if auth.uid() is not null and not public.has_permission(new.workspace_id, 'manageStock') then
+      raise exception 'not allowed to configure the stock' using errcode = 'DKN01';
+    end if;
+    if new.home_location_id is not null and not exists (
+         select 1 from public.stock_locations l
+           join public.stock_location_kinds k on k.key = l.kind
+          where l.id = new.home_location_id and l.workspace_id = new.workspace_id
+            and l.active and not k.virtual and l.kind <> 'in_transit') then
       raise exception 'not a place an item can be kept at' using errcode = 'DKG11',
         detail = jsonb_build_object('field', 'home_location_id', 'reason', 'home_invalid')::text;
     end if;
