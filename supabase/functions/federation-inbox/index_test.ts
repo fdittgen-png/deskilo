@@ -70,6 +70,7 @@ for (
     ["reconciled", 200],
     ["duplicate", 200],
     ["superseded", 200],
+    ["held", 200],
     ["unauthorized", 401],
     ["bad_digest", 400],
     ["event_conflict", 409],

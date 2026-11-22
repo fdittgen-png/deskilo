@@ -42,6 +42,7 @@ const STATUS: Record<string, number> = {
   reconciled: 200,
   duplicate: 200,
   superseded: 200,
+  held: 200,
   malformed: 400,
   bad_digest: 400,
   unauthorized: 401,
