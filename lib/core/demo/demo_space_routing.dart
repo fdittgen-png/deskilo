@@ -354,7 +354,9 @@ class _DemoStocks {
   final Map<DemoSpaceKey, _DemoStock> _kits = {};
 
   _DemoStock of(Ref ref) {
-    final key = demoOpenSpace(ref);
+    // the reference business and the shop keep stock; every other business answers as the reference one does for
+    // an id that is not its own: nothing (a business that keeps no stock reads as empty)
+    final key = demoOpenSpace(ref) == DemoSpaceKey.shop ? DemoSpaceKey.shop : DemoSpaceKey.home;
     return _kits.putIfAbsent(key, () => _DemoStock(_fixture, key, ref.watch(clockProvider).now));
   }
 }
