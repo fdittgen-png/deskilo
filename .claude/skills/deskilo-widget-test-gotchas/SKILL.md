@@ -60,3 +60,4 @@ use `deskilo-forms` §4 and the repository's existing test helpers.
 
 Quick-view keys: `member-doc-quick` / `-download` / `-share` (one prefix
 for every member letter), `vat-report-*`, `proforma-*`.
+| the SECOND walk in one test file (phone, then desk) fails where the same walk alone passes: a sheet never opens, a flag is already changed | the Demo keeps state within one process (its stores, the settings, the flags the first walk saved) | one walk per file per width: the walk in a kit file (`test/core/demo/shop_kind_walk_kit.dart`), a tiny `*_test.dart` per width that calls it (as the freelancer's walks do); the coverage row names both files (#4365) |
