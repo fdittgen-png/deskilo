@@ -135,6 +135,7 @@
   "user.money.stock.registry": "The item registry",
   "user.money.stock.value": "Stock value and where goods came from",
   "user.money.stock.reversals": "Returns, corrections and counts",
+  "user.money.stock.cycle": "Cycle counts",
   "user.money.amounts": "How amounts are shown",
   "user.money.finances": "Your finances across spaces",
   "user.money.businesses": "Your businesses at a glance",
