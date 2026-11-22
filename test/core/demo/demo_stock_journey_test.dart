@@ -147,10 +147,11 @@ void main() {
     expect(find.text('12.5 kg'), findsNothing);
   });
 
-  testWidgets('a Demo business that keeps no stock reads as empty, not refused', (tester) async {
+  testWidgets('a Demo business that keeps no stock reads as empty and says where to start, not refused', (tester) async {
     final (_, container) = await _open(tester, persona: DemoPersona.owner, to: '/stock', space: 'london');
     expect(_path(container), '/stock');
-    expect(find.text(_en.stockEmpty), findsOneWidget);
+    expect(find.byKey(const ValueKey('stock-first-run')), findsOneWidget, reason: 'no place and no item: the page says where to start (#4350)');
+    expect(find.text(_en.stockFirstRunPlace), findsOneWidget);
   });
 
   testWidgets('a business that keeps the stock feature off has no door: the address turns even the owner away', (tester) async {

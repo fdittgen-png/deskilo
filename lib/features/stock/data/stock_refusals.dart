@@ -24,6 +24,8 @@ Never throwStockFailure(PostgrestException e, StackTrace stack) {
       Error.throwWithStackTrace(StockNotEnough(e.message), stack);
     case 'DKG11':
       Error.throwWithStackTrace(_refused(e.details), stack);
+    case 'DKG22' || 'DKG23' || 'DKG24' || 'DKG04':
+      Error.throwWithStackTrace(StockTagRefused(e.code!, _detail(e.details)), stack);
     default:
       Error.throwWithStackTrace(e, stack);
   }
@@ -37,5 +39,16 @@ StockConfigRefused _refused(Object? details) {
   } on Object catch (error, stack) {
     TraceLogger.instance.warn('stock', 'a stock refusal detail was not JSON: $error\n$stack');
     return const StockConfigRefused('request', 'malformed');
+  }
+}
+
+/// The JSON object the server wrote in a refusal's detail; empty when it is not one.
+Map<String, Object?> _detail(Object? details) {
+  try {
+    final decoded = details is String ? jsonDecode(details) : details;
+    return decoded is Map ? Map<String, Object?>.from(decoded) : const {};
+  } on Object catch (error, stack) {
+    TraceLogger.instance.warn('stock', 'a stock refusal detail was not JSON: $error\n$stack');
+    return const {};
   }
 }

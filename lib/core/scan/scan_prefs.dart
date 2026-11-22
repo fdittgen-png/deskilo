@@ -5,6 +5,7 @@
 // on the device with a UI point in Stock settings; whether scanning is used at all is the business's feature.
 import 'dart:convert';
 
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show JsonReader;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../storage/prefs_stores.dart';
@@ -31,12 +32,12 @@ class ScanPrefs {
 
   Map<String, Object?> toJson() => {'interval_ms': intervalMs, 'terminator': terminator.wire};
 
-  static ScanPrefs fromJson(Object? json) {
-    if (json is! Map) return const ScanPrefs();
-    final ms = json['interval_ms'];
+  static ScanPrefs fromJson(Object? decoded) {
+    if (decoded is! Map) return const ScanPrefs();
+    final r = JsonReader.of(decoded, context: 'scan_prefs');
     return const ScanPrefs().copyWith(
-      intervalMs: ms is int ? ms : null,
-      terminator: ScanTerminator.fromWire(json['terminator'] as String?),
+      intervalMs: r.intOrNull('interval_ms'),
+      terminator: ScanTerminator.fromWire(r.stringOrNull('terminator')),
     );
   }
 }
@@ -49,8 +50,8 @@ abstract interface class ScanPrefsStore {
 }
 
 /// The preferences in the device's storage.
-class SharedScanPrefsStore implements ScanPrefsStore {
-  const SharedScanPrefsStore();
+class _SharedScanPrefsStore implements ScanPrefsStore {
+  const _SharedScanPrefsStore();
 
   static const _store = PrefsStringStore('scan_prefs');
 
@@ -60,7 +61,8 @@ class SharedScanPrefsStore implements ScanPrefsStore {
     if (raw == null) return const ScanPrefs();
     try {
       return ScanPrefs.fromJson(jsonDecode(raw));
-    } on FormatException {
+    } on Object {
+      // trace-exempt: a stored value that cannot be read is the defaults, never a failure the person must fix
       return const ScanPrefs();
     }
   }
@@ -69,24 +71,13 @@ class SharedScanPrefsStore implements ScanPrefsStore {
   Future<void> write(ScanPrefs prefs) => _store.write(jsonEncode(prefs.toJson()));
 }
 
-/// The preferences in memory: the Demo and the tests.
-class InMemoryScanPrefsStore implements ScanPrefsStore {
-  ScanPrefs _prefs = const ScanPrefs();
-
-  @override
-  Future<ScanPrefs> read() async => _prefs;
-
-  @override
-  Future<void> write(ScanPrefs prefs) async => _prefs = prefs;
-}
-
 /// The store; the app uses the device's, the Demo and the tests replace it.
-final scanPrefsStoreProvider = Provider<ScanPrefsStore>((ref) => const SharedScanPrefsStore());
+final scanPrefsStoreProvider = Provider<ScanPrefsStore>((ref) => const _SharedScanPrefsStore());
 
 /// The device's scanner preferences, read once and changed through [ScanPrefsController].
-final scanPrefsProvider = AsyncNotifierProvider<ScanPrefsController, ScanPrefs>(ScanPrefsController.new, retry: (_, _) => null);
+final scanPrefsProvider = AsyncNotifierProvider<_ScanPrefsController, ScanPrefs>(_ScanPrefsController.new, retry: (_, _) => null);
 
-class ScanPrefsController extends AsyncNotifier<ScanPrefs> {
+class _ScanPrefsController extends AsyncNotifier<ScanPrefs> {
   @override
   Future<ScanPrefs> build() => ref.watch(scanPrefsStoreProvider).read();
 

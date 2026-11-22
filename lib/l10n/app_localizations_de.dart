@@ -12545,10 +12545,11 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get featureStockManagementDesc =>
-      'Waren verfolgen: wo sie sind, in welcher Einheit, aus welcher Charge, und jede Bewegung zwischen zwei Orten. Aus: ein Katalogartikel behält seinen einfachen Regalbestand.';
+      'Führen Sie die Ware, die Sie verkaufen oder lagern: welche Artikel, an welchen Orten, die Lieferungen, die Sie annehmen, die Bewegungen zwischen Orten und die Entnahmen. Das Einschalten fügt ein Menü Lager mit seinen Seiten hinzu; die übrigen Lagerfunktionen (Chargen, Wareneingang, Entnahme, Meldebestände) sind Schalter darunter. Aus: Ein Katalogartikel behält seinen einzelnen Regalbestand.';
 
   @override
-  String get featureStockManagementTitle => 'Lagerverwaltung';
+  String get featureStockManagementTitle =>
+      'Lager: Artikel, Orte, Lieferungen, Bewegungen';
 
   @override
   String get featureStockReceivingDesc =>
@@ -35320,6 +35321,23 @@ class AppLocalizationsDe extends AppLocalizations {
   String get stockEnteredLabel => 'Erfasst';
 
   @override
+  String get stockFirstRunBody =>
+      'Beginnen Sie mit einem Ort, an dem Ware liegt, dann mit den Artikeln, die Sie führen. Danach nehmen Sie eine Lieferung an oder bewegen Ware ein.';
+
+  @override
+  String get stockFirstRunItem => 'Ersten Artikel hinzufügen';
+
+  @override
+  String get stockFirstRunNext =>
+      'Nehmen Sie dann eine Lieferung einer Bestellung an oder bewegen Sie Ware über Bewegungen ein.';
+
+  @override
+  String get stockFirstRunPlace => 'Ersten Ort hinzufügen';
+
+  @override
+  String get stockFirstRunTitle => 'Ihr Lager ist leer';
+
+  @override
   String get stockGoodsMore => 'Mehr anzeigen';
 
   @override
@@ -35338,8 +35356,58 @@ class AppLocalizationsDe extends AppLocalizations {
   String get stockGoodsUnavailable => 'Die Ware wird Ihnen nicht angezeigt.';
 
   @override
+  String get stockItemAddButton => 'Artikel hinzufügen';
+
+  @override
+  String get stockItemAddIntro =>
+      'Oder führen Sie eine vorhandene Leistung im Lager: Wählen Sie eine, und ihre Lagereinstellungen öffnen sich mit eingeschalteter Einstellung.';
+
+  @override
+  String get stockItemAddNone =>
+      'Jede Leistung wird bereits im Lager geführt, oder es gibt noch keine. Legen Sie zuerst eine Leistung an und kommen Sie dann zurück.';
+
+  @override
+  String get stockItemAddOpenServices => 'Leistungen öffnen';
+
+  @override
+  String get stockItemAddTitle => 'Artikel hinzufügen';
+
+  @override
+  String get stockItemNewBarcode => 'Barcode (optional)';
+
+  @override
+  String get stockItemNewHome => 'Heimatort (optional)';
+
+  @override
+  String get stockItemNewName => 'Name';
+
+  @override
+  String get stockItemNewNameRequired => 'Geben Sie dem Artikel einen Namen.';
+
+  @override
+  String get stockItemNewNoHome => 'Noch keiner';
+
+  @override
+  String get stockItemNewOption => 'Neuen Artikel anlegen';
+
+  @override
+  String stockItemNewPrice(String currency) {
+    return 'Preis ($currency)';
+  }
+
+  @override
+  String get stockItemNewPriceInvalid =>
+      'Geben Sie einen Preis ein oder lassen Sie das Feld leer.';
+
+  @override
+  String get stockItemNewTitle => 'Neuer Artikel';
+
+  @override
+  String get stockItemNewUnit => 'Gezählt in';
+
+  @override
   String get stockItemsEmpty =>
-      'Noch keine Artikel. Ein Artikel entsteht, wenn eine Leistung oder ein Lieferantenartikel im Lager geführt wird.';
+      'Noch keine Artikel. Ein Artikel ist eine Leistung, die Sie im Lager führen: Wählen Sie Artikel hinzufügen.';
 
   @override
   String get stockItemsIntro =>
@@ -36054,6 +36122,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get stockReorderToOrderTitle => 'Was zu bestellen ist';
 
   @override
+  String stockScanAlreadyRead(String code) {
+    return 'Der Tag $code wurde bereits gelesen.';
+  }
+
+  @override
   String get stockScanFailed =>
       'Der gescannte Code konnte nicht gelesen werden. Prüfen Sie die Verbindung und scannen Sie erneut.';
 
@@ -36061,18 +36134,32 @@ class AppLocalizationsDe extends AppLocalizations {
   String get stockScanHelp => 'Mit einem Scanner arbeiten';
 
   @override
+  String get stockScanHint =>
+      'Sie verwenden einen Barcode-Scanner? Schalten Sie „Scannen“ ein';
+
+  @override
   String get stockScanInterval =>
       'Längste Lücke zwischen zwei Tasten eines Scans (Millisekunden)';
 
   @override
-  String stockScanIntervalInvalid(int min, int max) {
-    return 'Geben Sie eine ganze Zahl von Millisekunden zwischen $min und $max ein.';
-  }
+  String get stockScanIntervalInvalid =>
+      'Geben Sie eine ganze Zahl von Millisekunden im erlaubten Bereich ein.';
 
   @override
   String stockScanLast(String item, String quantity, String unit) {
     return '$item: $quantity $unit';
   }
+
+  @override
+  String get stockScanNfc => 'Tag lesen';
+
+  @override
+  String get stockScanNfcFailed =>
+      'Das Telefon konnte das Lesen nicht starten. Prüfen Sie, ob NFC eingeschaltet ist.';
+
+  @override
+  String get stockScanNfcReading =>
+      'Halten Sie den Tag an die Rückseite des Telefons …';
 
   @override
   String stockScanPlacing(String place) {
@@ -36120,6 +36207,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get stockScanUnknownAdd => 'Artikel öffnen';
 
   @override
+  String stockScanUnknownTag(String code) {
+    return 'Unbekannter Tag $code';
+  }
+
+  @override
   String get stockSettingsElsewhere =>
       'Die Lagereinstellungen werden auf der Seite Lagereinstellungen geführt.';
 
@@ -36143,6 +36235,93 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get stockTabOnHand => 'Bestand';
+
+  @override
+  String stockTagBoundElsewhere(String owner) {
+    return 'Dieser Tag ist schon $owner zugeordnet.';
+  }
+
+  @override
+  String get stockTagKindNfc => 'NFC-Chip';
+
+  @override
+  String get stockTagKindUhf => 'UHF-Etikett';
+
+  @override
+  String get stockTagMalformed => 'Das ist kein gültiger Tag-Code.';
+
+  @override
+  String get stockTagModeNone => 'Dieser Artikel verwendet keine Tags.';
+
+  @override
+  String get stockTagNotInForce => 'Das ist hier kein gültiger Tag.';
+
+  @override
+  String get stockTagOnPiece =>
+      'Dieser Tag sitzt an einem Stück, das noch auf Lager ist.';
+
+  @override
+  String get stockTagOwnerUnknown =>
+      'Dieser Artikel oder Lagerplatz ist nicht bekannt.';
+
+  @override
+  String get stockTagPerUnit =>
+      'Dieser Artikel wird stückweise getaggt: Taggen Sie die Stücke beim Wareneingang.';
+
+  @override
+  String get stockTagReasonDamaged => 'Beschädigt';
+
+  @override
+  String get stockTagReasonLost => 'Verloren';
+
+  @override
+  String get stockTagReasonReplaced => 'Ersetzt';
+
+  @override
+  String get stockTagRetiredLately =>
+      'Dieser Tag wurde kürzlich außer Betrieb genommen; er kann nach der in den Lagereinstellungen festgelegten Wartezeit wieder zugeordnet werden.';
+
+  @override
+  String stockTagsAlready(String code) {
+    return 'Tag $code war hier schon zugeordnet.';
+  }
+
+  @override
+  String stockTagsBound(String code) {
+    return 'Tag $code zugeordnet.';
+  }
+
+  @override
+  String get stockTagsClose => 'Schließen';
+
+  @override
+  String get stockTagsFailed => 'Die Tags konnten nicht gelesen werden.';
+
+  @override
+  String get stockTagsNone => 'Noch kein Tag zugeordnet.';
+
+  @override
+  String get stockTagsOpen => 'Tags';
+
+  @override
+  String get stockTagsRetire => 'Außer Betrieb nehmen';
+
+  @override
+  String get stockTagsRetireWhy => 'Warum wird er außer Betrieb genommen?';
+
+  @override
+  String stockTagsRetired(String code) {
+    return 'Tag $code außer Betrieb genommen.';
+  }
+
+  @override
+  String stockTagsTitle(String name) {
+    return 'Tags: $name';
+  }
+
+  @override
+  String get stockTagsUhfOnly =>
+      'Dieser Artikel verwendet UHF-Tags – nutzen Sie das RFID-Lesegerät.';
 
   @override
   String get stockTakeOutLoss => 'Verloren oder abgeschrieben';

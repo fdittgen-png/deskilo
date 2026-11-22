@@ -48,6 +48,7 @@ import '../storage/resume_place_store.dart';
 import '../time/clock.dart';
 import 'data/bank_statement_repository.dart';
 import 'data/demo_booking_prices.dart';
+import 'data/demo_stock_candidates.dart';
 import 'data/demo_stock_code_resolver.dart';
 import 'data/demo_stock_config_commands.dart';
 import 'data/demo_stock_ledger.dart';
@@ -56,6 +57,7 @@ import 'data/demo_stock_queries.dart';
 import 'data/demo_stock_receiving_commands.dart';
 import 'data/demo_stock_registry.dart';
 import 'data/demo_stock_reorder.dart';
+import 'data/demo_stock_tags.dart';
 import 'data/demo_stock_trace.dart';
 import 'data/finance_kpi_repository.dart';
 import 'data/money/demo_credit_moves.dart';
@@ -293,7 +295,7 @@ List<Override> _moneyPortOverrides(FakeMoneyRepository Function(Ref ref) money) 
   ),
   // #4169 — and edits its units, codes and places in memory.
   stockConfigCommandsProvider.overrideWith(
-    (ref) => DemoStockConfigCommands(demoFirstSpaceId),
+    (ref) => DemoStockConfigCommands(demoFirstSpaceId, candidates: ref.watch(_demoStockCandidatesProvider)),
   ),
   // #4294 — and keeps reorder points: two shop items are below theirs, read from that same stock.
   stockReorderProvider.overrideWith(
@@ -317,8 +319,11 @@ List<Override> _moneyPortOverrides(FakeMoneyRepository Function(Ref ref) money) 
       demoFirstSpaceId,
       ref.watch(stockConfigCommandsProvider),
       ref.watch(stockRegistryProvider),
+      ref.watch(stockTagsStoreProvider) as DemoStockTags,
     ),
   ),
+  // #4363 — and keeps tags (an NFC chip on a shelf and on the mugs) in memory.
+  stockTagsStoreProvider.overrideWith((ref) => DemoStockTags()),
   // #4171 — and receives the deliveries of its orders into that stock.
   stockReceivingCommandsProvider.overrideWith(
     (ref) => DemoStockReceivingCommands(
@@ -354,7 +359,16 @@ final _demoStockLedgerProvider = Provider<DemoStockLedger>(
     demoFirstSpaceId,
     ref.watch(stockConfigCommandsProvider) as DemoStockConfigCommands,
     ref.watch(clockProvider).now,
+    ref.watch(_demoStockCandidatesProvider),
   ),
+);
+
+/// #4350 — the services the owner may start keeping in stock, and the ones kept in this session.
+final _demoStockCandidatesProvider = Provider<DemoStockCandidates>(
+  (ref) => DemoStockCandidates(() async => [
+    for (final s in await ref.read(moneyRepositoryProvider).fetchServices(demoFirstSpaceId))
+      if (s.active) (id: s.id, name: s.name),
+  ]),
 );
 
 /// #2470 — the HMRC port is the Demo's: nothing leaves the process, so the

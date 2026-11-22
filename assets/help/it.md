@@ -2954,6 +2954,34 @@ Apra **Magazzino → Articoli**. Ogni riga mostra il **codice a barre**, l’**u
 - **Cerchi** per nome, codice a barre o indirizzo. Digitare o scansionare un codice a barre nella ricerca e confermare apre quell’articolo.
 - Le liste lunghe si caricano a pagine: scelga *Mostra altri*.
 
+### Lavorare con uno scanner
+
+**Destinatari:** Amministratore · Proprietario
+
+Vuole ricevere, spostare e scaricare merce scansionando, senza toccare un campo.
+
+Uno scanner di codici a barre in modalità tastiera (digita il codice e preme Invio) funziona nei fogli di spostamento e di prelievo, nello stoccaggio di una consegna e in **Magazzino → Articoli** e **Magazzino → Posizioni**. Non serve toccare prima un campo. Un campo di testo con il focus mantiene la propria digitazione: ciò che scrive non viene mai scambiato per una scansione.
+
+- **Scansioni la posizione, poi gli articoli.** Un codice di posizione imposta la posizione corrente; resta finché non ne scansiona un’altra ed è mostrata in alto (*Sistemazione in …*). In uno spostamento la prima posizione è l’origine e la seconda la destinazione. Un codice di articolo, variante o confezione indica l’articolo e lo conta: un codice di cartone aggiunge la quantità esatta del cartone (ad esempio 12 pezzi) e un’etichetta di lotto imposta il lotto.
+- **Una scansione ripetuta** ne aggiunge una in più oppure, se la sua attività l’ha scelto nelle impostazioni del magazzino (*Scansione ripetuta*), la porta sul campo della quantità.
+- **Un codice che non indica nulla** dice *Codice … sconosciuto: aggiungerlo a un articolo?*; chi può gestire il magazzino apre gli articoli e lo assegna a uno. Una posizione che non può ricevere merce, o un articolo non tenuto a magazzino, viene rifiutato a parole e non si compila nulla.
+- **Una scansione non invia nulla.** Compila solo il modulo; il pulsante che preme esegue lo stesso comando, con gli stessi diritti, che senza scanner.
+- **Impostazioni.** L’uso dello scanner dipende dalla funzione *Scanner* dell’attività, sotto la gestione del magazzino. L’intervallo massimo tra due tasti di una scansione (una persona scrive più lentamente di uno scanner) e ciò che termina un codice (Invio, Tab o entrambi) sono del dispositivo, in **Magazzino → Impostazioni del magazzino → Scanner**.
+
+### Tag con l’NFC del telefono
+
+**Destinatari:** Amministratore · Proprietario
+
+Vuole associare un chip NFC a un articolo o a una posizione e leggere chip mentre lavora, con il telefono che ha già.
+
+Con la funzione *Tag* attiva e un telefono che legge l’NFC, **Magazzino → Articoli** e **Magazzino → Posizioni** mostrano un pulsante dei tag su ogni riga, e la barra di scansione di un foglio di merce mostra **Leggi un tag**. Il pulsante manca su un dispositivo senza NFC (un computer, la maggior parte dei tablet, un telefono con l’NFC spento): lì usi uno scanner o un lettore portatile.
+
+- **Associare un tag.** Apra i tag di un articolo o di una posizione, tocchi **Leggi un tag** e avvicini il chip al retro del telefono. Una lettura associa un tag. Rileggere lo stesso chip dice che era già associato qui e non associa nulla di nuovo; un chip associato a qualcos’altro viene rifiutato e dice a cosa. Un proprietario può avere più tag. Il server accetta il codice in maiuscolo o minuscolo, con spazi, due punti o trattini.
+- **Ritirare un tag** perso, danneggiato o sostituito: scelga il motivo. Un tag ritirato da poco non può essere associato di nuovo subito (l’attesa è un’impostazione del magazzino) e un tag su un pezzo ancora a magazzino non può essere ritirato.
+- **Leggere in un foglio di merce.** Un chip si legge come un codice scansionato: un tag di posizione imposta la posizione corrente, uno di articolo conta l’articolo. Un chip letto due volte in un foglio viene ignorato (*già letto*); un chip che non indica nulla dice *Tag sconosciuto*.
+- **Le etichette UHF** non sono leggibili da un telefono. Un articolo che ha solo quelle dice *usi il lettore RFID*.
+- Associare richiede il diritto di gestire il magazzino; leggere, quello di vederlo.
+
 ### Valore del magazzino e origine della merce
 
 **Destinatari:** Amministratore · Proprietario
@@ -7578,6 +7606,30 @@ Poi aggiunga solo ciò che la riguarda:
 - Attivi queste funzionalità una alla volta ed emetta prima una fattura di prova in uno spazio di prova. Veda [L’ordine in cui attivare le cose](help:setup.features.order).
 
 **Vedi anche:** [Denaro e fatturazione](help:setup.money.overview) · [Partire da un modello o da zero](help:setup.before.template)
+
+### Vendere o immagazzinare merce
+
+**Destinatari:** Proprietario
+
+Vende merce o tiene un magazzino e vuole sapere dove trovare articoli, posizioni, consegne e spostamenti. Tutto inizia con un interruttore, poi alcuni altri, in quest’ordine.
+
+| # | Faccia questo | Dove si trova dopo |
+|---|---|---|
+| 1 | Attivi **Magazzino: articoli, posizioni, consegne, spostamenti** (sotto **Servizi**). | Compare un menu **Magazzino**: Magazzino, Movimenti, Trasferimenti, Articoli, Posizioni, Impostazioni del magazzino. |
+| 2 | Aggiunga la sua prima posizione: **Magazzino → Posizioni → Aggiungi una posizione** (per esempio il magazzino principale, poi gli scaffali al suo interno). | **Magazzino → Posizioni** |
+| 3 | Aggiunga il suo primo articolo: **Magazzino → Articoli → Aggiungi un articolo**. Un articolo è un servizio che tiene in magazzino: lo scelga e le sue impostazioni di magazzino si aprono con l’impostazione già attiva (unità, unità di confezione, codici). Aggiunga prima il servizio in **Servizi** se non esiste. | **Magazzino → Articoli** |
+| 4 | Attivi **Acquisti** e **Ordinare ai fornitori** per ordinare merce, poi **Ricezione a magazzino** per sistemare una consegna dal suo ordine. | **Acquisti e fornitori → Ordini**, poi **Registra la consegna** |
+| 5 | Attivi **Uscita di merce** per ciò che esce (venduto, usato, perso), **Lotti e scadenza** per merce con lotti o data di scadenza e **Punti di riordino** per sapere che cosa è basso. | **Magazzino → Movimenti** (uscita), **Magazzino → Riordino** |
+
+Poi riceva una consegna, sposti merce su uno scaffale e ne faccia uscire una: la pagina Magazzino mostra subito ogni operazione.
+
+**Da sapere**
+
+- Un’azienda che ha attivato il magazzino ma non ha ancora né posizione né articolo vede **Aggiungi la sua prima posizione** e **Aggiungi il suo primo articolo** nella pagina Magazzino.
+- Disattivare una funzione non cancella nulla: ciò che è stato registrato resta e si può rileggere.
+- Provi prima nella demo, dove il negozio tiene già un magazzino. Veda [Disattivare non cancella nulla](help:setup.features.off).
+
+**Vedi anche:** [L’ordine in cui attivare le funzioni](help:setup.features.order) · [Funzioni che ne richiedono altre](help:setup.features.dependencies)
 
 ### L’ordine in cui attivare le cose
 

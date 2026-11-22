@@ -15,6 +15,7 @@ import '../../../core/scan/scan_prefs.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../core/ui/form_kit.dart';
+import 'stock_scan_hint.dart';
 
 class StockScanSettings extends ConsumerStatefulWidget {
   const StockScanSettings({super.key});
@@ -39,7 +40,7 @@ class _StockScanSettingsState extends ConsumerState<StockScanSettings> {
     final l10n = context.l10n;
     final ms = int.tryParse(_interval.text.trim());
     if (ms == null || ms < ScanPrefs.minIntervalMs || ms > ScanPrefs.maxIntervalMs) {
-      setState(() => _error = l10n.stockScanIntervalInvalid(ScanPrefs.minIntervalMs, ScanPrefs.maxIntervalMs));
+      setState(() => _error = l10n.stockScanIntervalInvalid);
       return;
     }
     setState(() => _error = null);
@@ -73,6 +74,7 @@ class _StockScanSettingsState extends ConsumerState<StockScanSettings> {
         ),
         const SizedBox(height: AppSpacing.xs),
         Text(l10n.stockScanSettingsHint, style: Theme.of(context).textTheme.bodySmall),
+        const StockScanHint(),
         const FormGap(),
         AppTextField(
           key: const ValueKey('stock-scan-interval'),

@@ -12516,10 +12516,11 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get featureStockManagementDesc =>
-      'Seguir las mercancías: dónde están, en qué unidad, de qué lote, y cada movimiento entre dos lugares. Desactivado: un artículo del catálogo conserva su simple recuento en estantería.';
+      'Lleve las mercancías que vende o almacena: qué artículos, en qué ubicaciones, las entregas que recibe, los movimientos entre ubicaciones y las salidas. Activarlo añade un menú Existencias con sus páginas; las demás funciones (lotes, recepción, salida, puntos de reposición) son interruptores debajo. Desactivado: un artículo del catálogo conserva su único recuento de estantería.';
 
   @override
-  String get featureStockManagementTitle => 'Gestión de existencias';
+  String get featureStockManagementTitle =>
+      'Existencias: artículos, ubicaciones, entregas, movimientos';
 
   @override
   String get featureStockReceivingDesc =>
@@ -35224,6 +35225,23 @@ class AppLocalizationsEs extends AppLocalizations {
   String get stockEnteredLabel => 'Introducido';
 
   @override
+  String get stockFirstRunBody =>
+      'Empiece por una ubicación donde se guarda la mercancía, luego los artículos que mantiene. Después, reciba una entrega o mueva mercancía.';
+
+  @override
+  String get stockFirstRunItem => 'Añadir su primer artículo';
+
+  @override
+  String get stockFirstRunNext =>
+      'Después reciba una entrega de un pedido, o mueva mercancía desde Movimientos.';
+
+  @override
+  String get stockFirstRunPlace => 'Añadir su primera ubicación';
+
+  @override
+  String get stockFirstRunTitle => 'Sus existencias están vacías';
+
+  @override
   String get stockGoodsMore => 'Mostrar más';
 
   @override
@@ -35242,8 +35260,57 @@ class AppLocalizationsEs extends AppLocalizations {
   String get stockGoodsUnavailable => 'No se le muestran las mercancías.';
 
   @override
+  String get stockItemAddButton => 'Añadir un artículo';
+
+  @override
+  String get stockItemAddIntro =>
+      'O mantenga en existencias un servicio que ya tiene: elija uno y sus ajustes de existencias se abren con el ajuste ya activado.';
+
+  @override
+  String get stockItemAddNone =>
+      'Todos los servicios ya se mantienen en existencias, o todavía no hay ninguno. Añada primero un servicio y vuelva.';
+
+  @override
+  String get stockItemAddOpenServices => 'Abrir servicios';
+
+  @override
+  String get stockItemAddTitle => 'Añadir un artículo';
+
+  @override
+  String get stockItemNewBarcode => 'Código de barras (opcional)';
+
+  @override
+  String get stockItemNewHome => 'Ubicación habitual (opcional)';
+
+  @override
+  String get stockItemNewName => 'Nombre';
+
+  @override
+  String get stockItemNewNameRequired => 'Dé un nombre al artículo.';
+
+  @override
+  String get stockItemNewNoHome => 'Ninguna todavía';
+
+  @override
+  String get stockItemNewOption => 'Crear un artículo nuevo';
+
+  @override
+  String stockItemNewPrice(String currency) {
+    return 'Precio ($currency)';
+  }
+
+  @override
+  String get stockItemNewPriceInvalid => 'Introduzca un precio o déjelo vacío.';
+
+  @override
+  String get stockItemNewTitle => 'Nuevo artículo';
+
+  @override
+  String get stockItemNewUnit => 'Contado en';
+
+  @override
   String get stockItemsEmpty =>
-      'Todavía no hay artículos. Un artículo aparece cuando un servicio o un artículo de proveedor se mantiene en existencias.';
+      'Todavía no hay artículos. Un artículo es un servicio que mantiene en existencias: elija Añadir un artículo.';
 
   @override
   String get stockItemsIntro =>
@@ -35954,6 +36021,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get stockReorderToOrderTitle => 'Qué pedir';
 
   @override
+  String stockScanAlreadyRead(String code) {
+    return 'La etiqueta $code ya se leyó.';
+  }
+
+  @override
   String get stockScanFailed =>
       'No se pudo leer el código escaneado. Compruebe la conexión y vuelva a escanearlo.';
 
@@ -35961,18 +36033,32 @@ class AppLocalizationsEs extends AppLocalizations {
   String get stockScanHelp => 'Trabajar con un escáner';
 
   @override
+  String get stockScanHint =>
+      '¿Usa un escáner de códigos de barras? Active «Escaneo»';
+
+  @override
   String get stockScanInterval =>
       'Intervalo máximo entre dos teclas de un escaneo (milisegundos)';
 
   @override
-  String stockScanIntervalInvalid(int min, int max) {
-    return 'Introduzca un número entero de milisegundos entre $min y $max.';
-  }
+  String get stockScanIntervalInvalid =>
+      'Introduzca un número entero de milisegundos dentro del intervalo permitido.';
 
   @override
   String stockScanLast(String item, String quantity, String unit) {
     return '$item: $quantity $unit';
   }
+
+  @override
+  String get stockScanNfc => 'Leer una etiqueta';
+
+  @override
+  String get stockScanNfcFailed =>
+      'El teléfono no pudo iniciar la lectura. Compruebe que el NFC esté activado.';
+
+  @override
+  String get stockScanNfcReading =>
+      'Acerque la etiqueta a la parte trasera del teléfono…';
 
   @override
   String stockScanPlacing(String place) {
@@ -36020,6 +36106,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get stockScanUnknownAdd => 'Abrir los artículos';
 
   @override
+  String stockScanUnknownTag(String code) {
+    return 'Etiqueta $code desconocida';
+  }
+
+  @override
   String get stockSettingsElsewhere =>
       'Los ajustes de existencias se mantienen en la página Ajustes de existencias.';
 
@@ -36043,6 +36134,92 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get stockTabOnHand => 'En existencias';
+
+  @override
+  String stockTagBoundElsewhere(String owner) {
+    return 'Esta etiqueta ya está asociada a $owner.';
+  }
+
+  @override
+  String get stockTagKindNfc => 'Chip NFC';
+
+  @override
+  String get stockTagKindUhf => 'Etiqueta UHF';
+
+  @override
+  String get stockTagMalformed => 'Ese no es un código de etiqueta válido.';
+
+  @override
+  String get stockTagModeNone => 'Este artículo no usa etiquetas.';
+
+  @override
+  String get stockTagNotInForce => 'Esta no es una etiqueta en uso aquí.';
+
+  @override
+  String get stockTagOnPiece =>
+      'Esta etiqueta está en una pieza que sigue en stock.';
+
+  @override
+  String get stockTagOwnerUnknown => 'Este artículo o ubicación no se conoce.';
+
+  @override
+  String get stockTagPerUnit =>
+      'Este artículo se etiqueta pieza a pieza: etiquete sus piezas al recibirlas.';
+
+  @override
+  String get stockTagReasonDamaged => 'Dañada';
+
+  @override
+  String get stockTagReasonLost => 'Perdida';
+
+  @override
+  String get stockTagReasonReplaced => 'Sustituida';
+
+  @override
+  String get stockTagRetiredLately =>
+      'Esta etiqueta se retiró hace poco; podrá asociarse de nuevo tras la espera fijada en los ajustes del stock.';
+
+  @override
+  String stockTagsAlready(String code) {
+    return 'La etiqueta $code ya estaba asociada aquí.';
+  }
+
+  @override
+  String stockTagsBound(String code) {
+    return 'Etiqueta $code asociada.';
+  }
+
+  @override
+  String get stockTagsClose => 'Cerrar';
+
+  @override
+  String get stockTagsFailed => 'No se pudieron leer las etiquetas.';
+
+  @override
+  String get stockTagsNone => 'Aún no hay ninguna etiqueta asociada.';
+
+  @override
+  String get stockTagsOpen => 'Etiquetas';
+
+  @override
+  String get stockTagsRetire => 'Retirar';
+
+  @override
+  String get stockTagsRetireWhy => '¿Por qué se retira?';
+
+  @override
+  String stockTagsRetired(String code) {
+    return 'Etiqueta $code retirada.';
+  }
+
+  @override
+  String stockTagsTitle(String name) {
+    return 'Etiquetas: $name';
+  }
+
+  @override
+  String get stockTagsUhfOnly =>
+      'Este artículo usa etiquetas UHF: use el lector RFID.';
 
   @override
   String get stockTakeOutLoss => 'Perdido o dado de baja';

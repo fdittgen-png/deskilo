@@ -20,6 +20,9 @@ enum ScanOutcome {
 
   /// It names something this sheet cannot use (a lot or a tag of no item, a place that takes no goods).
   refused,
+
+  /// A tag read a second time in this sheet: ignored.
+  alreadyRead,
 }
 
 /// A counted line: an item (and variant) with an exact quantity in its inventory unit, as a fraction.
@@ -88,7 +91,7 @@ class ScanLine {
 
 /// The result of one scan, for the sheet to show.
 class ScanResult {
-  const ScanResult(this.outcome, {this.line, this.place, this.code, this.asksQuantity = false});
+  const ScanResult(this.outcome, {this.line, this.place, this.code, this.asksQuantity = false, this.fromTag = false});
 
   final ScanOutcome outcome;
   final ScanLine? line;
@@ -98,6 +101,9 @@ class ScanResult {
   /// The business asks for the quantity of a repeated scan (`stock.repeated_scan` = ask_quantity): the line was
   /// not counted again, the sheet puts the person on its quantity field.
   final bool asksQuantity;
+
+  /// The code was read from a tag by NFC, not typed by a scanner (the words differ: "Unknown tag").
+  final bool fromTag;
 }
 
 /// A run of scans in one sheet.
@@ -117,20 +123,25 @@ class StockScanSession {
     StockCodeResolution resolution, {
     bool Function(ScannedPlace place)? placeAllowed,
     bool Function(ScannedItem item)? itemAllowed,
+    bool fromTag = false,
   }) {
+    // a tag bound to a place names that place, like its barcode does
+    final place = resolution.place;
+    final namesPlace = resolution.kind == ScannedKind.place || (resolution.kind == ScannedKind.tag && resolution.item == null);
+    if (namesPlace && place != null) {
+      if (placeAllowed != null && !placeAllowed(place)) {
+        return ScanResult(ScanOutcome.refused, place: place, code: resolution.code, fromTag: fromTag);
+      }
+      current = place;
+      return ScanResult(ScanOutcome.place, place: place, code: resolution.code, fromTag: fromTag);
+    }
     switch (resolution.kind) {
-      case ScannedKind.unknown:
-        return ScanResult(ScanOutcome.unknown, code: resolution.code);
-      case ScannedKind.place:
-        final place = resolution.place;
-        if (place == null) return ScanResult(ScanOutcome.unknown, code: resolution.code);
-        if (placeAllowed != null && !placeAllowed(place)) return ScanResult(ScanOutcome.refused, place: place, code: resolution.code);
-        current = place;
-        return ScanResult(ScanOutcome.place, place: place, code: resolution.code);
+      case ScannedKind.unknown || ScannedKind.place:
+        return ScanResult(ScanOutcome.unknown, code: resolution.code, fromTag: fromTag);
       case ScannedKind.item || ScannedKind.variant || ScannedKind.lot || ScannedKind.tag:
         final item = resolution.item;
         if (item == null || item.id.isEmpty || (itemAllowed != null && !itemAllowed(item))) {
-          return ScanResult(ScanOutcome.refused, code: resolution.code);
+          return ScanResult(ScanOutcome.refused, code: resolution.code, fromTag: fromTag);
         }
         final candidate = ScanLine(
           itemId: item.id,
@@ -141,12 +152,14 @@ class StockScanSession {
           lotCode: resolution.lotCode,
         );
         final existing = lines.where(candidate.same).firstOrNull;
-        if (existing != null && !addsOne) return ScanResult(ScanOutcome.line, line: existing, code: resolution.code, asksQuantity: true);
+        if (existing != null && !addsOne) {
+          return ScanResult(ScanOutcome.line, line: existing, code: resolution.code, asksQuantity: true, fromTag: fromTag);
+        }
         final line = existing ?? candidate;
         if (existing == null) lines.add(line);
         final unit = resolution.unit;
         line.add(unit?.factorNum ?? 1, unit?.factorDen ?? 1);
-        return ScanResult(ScanOutcome.line, line: line, code: resolution.code);
+        return ScanResult(ScanOutcome.line, line: line, code: resolution.code, fromTag: fromTag);
     }
   }
 }

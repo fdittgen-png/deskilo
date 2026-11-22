@@ -20245,13 +20245,13 @@ abstract class AppLocalizations {
   /// the feature's description on the Features screen (#3824)
   ///
   /// In en, this message translates to:
-  /// **'Keep track of goods: where they are, in which unit, from which lot, and every movement between two places. Off: a catalogue item keeps its single shelf count.'**
+  /// **'Keep the goods you sell or store: which items, in which places, the deliveries you receive, the moves between places and the stock you take out. Switching it on adds a Stock menu with its pages; the other stock functions (lots, receiving, take-out, reorder points) are switches under it. Off: a catalogue item keeps its single shelf count.'**
   String get featureStockManagementDesc;
 
   /// the feature's name (#3824)
   ///
   /// In en, this message translates to:
-  /// **'Stock management'**
+  /// **'Stock: items, places, deliveries, moves'**
   String get featureStockManagementTitle;
 
   /// #4171 what the receiving into stock feature does, and what off means
@@ -56090,6 +56090,36 @@ abstract class AppLocalizations {
   /// **'Entered'**
   String get stockEnteredLabel;
 
+  /// #4350 adding an item, and the first-run stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Start with a place where goods are kept, then the items you keep. After that, receive a delivery or move goods in.'**
+  String get stockFirstRunBody;
+
+  /// #4350 adding an item, and the first-run stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Add your first item'**
+  String get stockFirstRunItem;
+
+  /// #4350 adding an item, and the first-run stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Then receive a delivery from a purchase order, or move goods in from Movements.'**
+  String get stockFirstRunNext;
+
+  /// #4350 adding an item, and the first-run stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Add your first place'**
+  String get stockFirstRunPlace;
+
+  /// #4350 adding an item, and the first-run stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Your stock is empty'**
+  String get stockFirstRunTitle;
+
   /// #4173 the goods put away against a document
   ///
   /// In en, this message translates to:
@@ -56120,10 +56150,100 @@ abstract class AppLocalizations {
   /// **'The goods are not shown to you.'**
   String get stockGoodsUnavailable;
 
+  /// #4350 adding an item, and the first-run stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Add an item'**
+  String get stockItemAddButton;
+
+  /// #4350 adding an item, and the first-run stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Or keep a service you already have in stock: choose one and its stock settings open with the setting already on.'**
+  String get stockItemAddIntro;
+
+  /// #4350 adding an item, and the first-run stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Every service is already kept in stock, or there is none yet. Add a service first, then come back.'**
+  String get stockItemAddNone;
+
+  /// #4350 adding an item, and the first-run stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Open services'**
+  String get stockItemAddOpenServices;
+
+  /// #4350 adding an item, and the first-run stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Add an item'**
+  String get stockItemAddTitle;
+
+  /// #4350 a new item from the Stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Barcode (optional)'**
+  String get stockItemNewBarcode;
+
+  /// #4350 a new item from the Stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Home place (optional)'**
+  String get stockItemNewHome;
+
+  /// #4350 a new item from the Stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get stockItemNewName;
+
+  /// #4350 a new item from the Stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Name the item.'**
+  String get stockItemNewNameRequired;
+
+  /// #4350 a new item from the Stock page
+  ///
+  /// In en, this message translates to:
+  /// **'None yet'**
+  String get stockItemNewNoHome;
+
+  /// #4350 a new item from the Stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Create a new item'**
+  String get stockItemNewOption;
+
+  /// #4350 a new item from the Stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Price ({currency})'**
+  String stockItemNewPrice(String currency);
+
+  /// #4350 a new item from the Stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a price, or leave it empty.'**
+  String get stockItemNewPriceInvalid;
+
+  /// #4350 a new item from the Stock page
+  ///
+  /// In en, this message translates to:
+  /// **'New item'**
+  String get stockItemNewTitle;
+
+  /// #4350 a new item from the Stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Counted in'**
+  String get stockItemNewUnit;
+
   /// the stock pages and group (#4299)
   ///
   /// In en, this message translates to:
-  /// **'No items yet. Items are added when a service or a supplier article is kept in stock.'**
+  /// **'No items yet. An item is a service you keep in stock: choose Add an item.'**
   String get stockItemsEmpty;
 
   /// the stock pages and group (#4299)
@@ -57302,6 +57422,12 @@ abstract class AppLocalizations {
   /// **'What to order'**
   String get stockReorderToOrderTitle;
 
+  /// #4363 G14: stockScanAlreadyRead
+  ///
+  /// In en, this message translates to:
+  /// **'Tag {code} was already read.'**
+  String stockScanAlreadyRead(String code);
+
   /// #4359 G10 scanner: stockScanFailed
   ///
   /// In en, this message translates to:
@@ -57314,23 +57440,47 @@ abstract class AppLocalizations {
   /// **'Working with a scanner'**
   String get stockScanHelp;
 
+  /// #4359 G10: the line that sends a business using a scanner to the Scanning feature
+  ///
+  /// In en, this message translates to:
+  /// **'Using a barcode scanner? Turn on Scanning'**
+  String get stockScanHint;
+
   /// #4359 G10 scanner: stockScanInterval
   ///
   /// In en, this message translates to:
   /// **'Longest gap between two keys of a scan (milliseconds)'**
   String get stockScanInterval;
 
-  /// #4359 G10 scanner: stockScanIntervalInvalid
+  /// #4359 G10: the interval is not within the range
   ///
   /// In en, this message translates to:
-  /// **'Enter a whole number of milliseconds between {min} and {max}.'**
-  String stockScanIntervalInvalid(int min, int max);
+  /// **'Enter a whole number of milliseconds within the allowed range.'**
+  String get stockScanIntervalInvalid;
 
   /// #4359 G10 scanner: stockScanLast
   ///
   /// In en, this message translates to:
   /// **'{item}: {quantity} {unit}'**
   String stockScanLast(String item, String quantity, String unit);
+
+  /// #4363 G14: stockScanNfc
+  ///
+  /// In en, this message translates to:
+  /// **'Read a tag'**
+  String get stockScanNfc;
+
+  /// #4363 G14: stockScanNfcFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The phone could not start reading. Check that NFC is on.'**
+  String get stockScanNfcFailed;
+
+  /// #4363 G14: stockScanNfcReading
+  ///
+  /// In en, this message translates to:
+  /// **'Hold the tag to the back of the phone…'**
+  String get stockScanNfcReading;
 
   /// #4359 G10 scanner: stockScanPlacing
   ///
@@ -57404,6 +57554,12 @@ abstract class AppLocalizations {
   /// **'Open the items'**
   String get stockScanUnknownAdd;
 
+  /// #4363 G14: stockScanUnknownTag
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown tag {code}'**
+  String stockScanUnknownTag(String code);
+
   /// the stock pages and group (#4299)
   ///
   /// In en, this message translates to:
@@ -57451,6 +57607,150 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'On hand'**
   String get stockTabOnHand;
+
+  /// #4363 G14 tags: stockTagBoundElsewhere
+  ///
+  /// In en, this message translates to:
+  /// **'This tag is already bound to {owner}.'**
+  String stockTagBoundElsewhere(String owner);
+
+  /// #4363 G14 tags: stockTagKindNfc
+  ///
+  /// In en, this message translates to:
+  /// **'NFC chip'**
+  String get stockTagKindNfc;
+
+  /// #4363 G14 tags: stockTagKindUhf
+  ///
+  /// In en, this message translates to:
+  /// **'UHF label'**
+  String get stockTagKindUhf;
+
+  /// #4363 G14 tags: stockTagMalformed
+  ///
+  /// In en, this message translates to:
+  /// **'That is not a valid tag code.'**
+  String get stockTagMalformed;
+
+  /// #4363 G14 tags: stockTagModeNone
+  ///
+  /// In en, this message translates to:
+  /// **'This item does not use tags.'**
+  String get stockTagModeNone;
+
+  /// #4363 G14 tags: stockTagNotInForce
+  ///
+  /// In en, this message translates to:
+  /// **'This is not a tag in force here.'**
+  String get stockTagNotInForce;
+
+  /// #4363 G14 tags: stockTagOnPiece
+  ///
+  /// In en, this message translates to:
+  /// **'This tag is on a piece that is still in stock.'**
+  String get stockTagOnPiece;
+
+  /// #4363 G14 tags: stockTagOwnerUnknown
+  ///
+  /// In en, this message translates to:
+  /// **'This item or place is not known.'**
+  String get stockTagOwnerUnknown;
+
+  /// #4363 G14 tags: stockTagPerUnit
+  ///
+  /// In en, this message translates to:
+  /// **'This item is tagged piece by piece: tag its pieces when they are received.'**
+  String get stockTagPerUnit;
+
+  /// #4363 G14 tags: stockTagReasonDamaged
+  ///
+  /// In en, this message translates to:
+  /// **'Damaged'**
+  String get stockTagReasonDamaged;
+
+  /// #4363 G14 tags: stockTagReasonLost
+  ///
+  /// In en, this message translates to:
+  /// **'Lost'**
+  String get stockTagReasonLost;
+
+  /// #4363 G14 tags: stockTagReasonReplaced
+  ///
+  /// In en, this message translates to:
+  /// **'Replaced'**
+  String get stockTagReasonReplaced;
+
+  /// #4363 G14 tags: stockTagRetiredLately
+  ///
+  /// In en, this message translates to:
+  /// **'This tag was retired recently; it can be bound again after the waiting time set in the stock settings.'**
+  String get stockTagRetiredLately;
+
+  /// #4363 G14 tags: stockTagsAlready
+  ///
+  /// In en, this message translates to:
+  /// **'Tag {code} was already bound here.'**
+  String stockTagsAlready(String code);
+
+  /// #4363 G14 tags: stockTagsBound
+  ///
+  /// In en, this message translates to:
+  /// **'Tag {code} bound.'**
+  String stockTagsBound(String code);
+
+  /// #4363 G14 tags: stockTagsClose
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get stockTagsClose;
+
+  /// #4363 G14 tags: stockTagsFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The tags could not be read.'**
+  String get stockTagsFailed;
+
+  /// #4363 G14 tags: stockTagsNone
+  ///
+  /// In en, this message translates to:
+  /// **'No tag is bound yet.'**
+  String get stockTagsNone;
+
+  /// #4363 G14 tags: stockTagsOpen
+  ///
+  /// In en, this message translates to:
+  /// **'Tags'**
+  String get stockTagsOpen;
+
+  /// #4363 G14 tags: stockTagsRetire
+  ///
+  /// In en, this message translates to:
+  /// **'Retire'**
+  String get stockTagsRetire;
+
+  /// #4363 G14 tags: stockTagsRetireWhy
+  ///
+  /// In en, this message translates to:
+  /// **'Why is it retired?'**
+  String get stockTagsRetireWhy;
+
+  /// #4363 G14 tags: stockTagsRetired
+  ///
+  /// In en, this message translates to:
+  /// **'Tag {code} retired.'**
+  String stockTagsRetired(String code);
+
+  /// #4363 G14 tags: stockTagsTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Tags: {name}'**
+  String stockTagsTitle(String name);
+
+  /// #4363 G14 tags: stockTagsUhfOnly
+  ///
+  /// In en, this message translates to:
+  /// **'This item uses UHF tags — use the RFID reader.'**
+  String get stockTagsUhfOnly;
 
   /// #4170 transfers and take-out: a label or message
   ///

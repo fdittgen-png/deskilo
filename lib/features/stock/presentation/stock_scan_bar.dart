@@ -15,6 +15,7 @@ import '../../../core/theme/app_spacing.dart';
 import '../../workspace/domain/workspace_permission.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/stock_scan_session.dart';
+import 'stock_nfc_button.dart';
 import 'stock_scan_feed.dart';
 
 class StockScanBar extends ConsumerWidget {
@@ -48,6 +49,7 @@ class StockScanBar extends ConsumerWidget {
                     HelpDot(l10n.stockScanHelp, anchor: HelpAnchor.moneyStockScanning),
                   ],
                 ),
+              StockNfcButton(onUid: feed.readTag),
               if (feed.problem != null)
                 Text(l10n.stockScanFailed, key: const ValueKey('stock-scan-failed'), style: TextStyle(color: Theme.of(context).colorScheme.error)),
               if (last != null && last.outcome == ScanOutcome.line && last.line != null)
@@ -60,10 +62,12 @@ class StockScanBar extends ConsumerWidget {
                 Row(
                   key: const ValueKey('stock-scan-unknown'),
                   children: [
-                    Expanded(child: Text(l10n.stockScanUnknown(last.code ?? ''))),
-                    if (mayManage) TextButton(onPressed: onOpenItems, child: Text(l10n.stockScanUnknownAdd)),
+                    Expanded(child: Text(last.fromTag ? l10n.stockScanUnknownTag(last.code ?? '') : l10n.stockScanUnknown(last.code ?? ''))),
+                    if (mayManage && !last.fromTag) TextButton(key: const ValueKey('stock-scan-open-items'), onPressed: onOpenItems, child: Text(l10n.stockScanUnknownAdd)),
                   ],
                 ),
+              if (last != null && last.outcome == ScanOutcome.alreadyRead)
+                Text(l10n.stockScanAlreadyRead(last.code ?? ''), key: const ValueKey('stock-scan-already-read')),
               if (last != null && last.outcome == ScanOutcome.refused)
                 Text(
                   last.place == null ? l10n.stockScanRefusedCode(last.code ?? '') : l10n.stockScanRefusedPlace(last.place!.name),

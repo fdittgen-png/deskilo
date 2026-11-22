@@ -10,10 +10,16 @@
   "stockScanSettingsTitle": "Scanner",
   "stockScanSettingsHint": "Ein Scanner im Tastaturmodus tippt den Code und drückt die Eingabetaste. Diese beiden Einstellungen gelten für dieses Gerät: Ein Code, der schneller als die Lücke unten getippt wird, gilt als Scan.",
   "stockScanInterval": "Längste Lücke zwischen zwei Tasten eines Scans (Millisekunden)",
-  "stockScanIntervalInvalid": "Geben Sie eine ganze Zahl von Millisekunden zwischen {min} und {max} ein.",
+  "stockScanIntervalInvalid": "Geben Sie eine ganze Zahl von Millisekunden im erlaubten Bereich ein.",
   "stockScanTerminator": "Was einen gescannten Code beendet",
   "stockScanTerminatorEither": "Eingabe oder Tab",
   "stockScanTerminatorEnter": "Eingabe",
   "stockScanTerminatorTab": "Tab",
-  "stockScanSave": "Scanner-Einstellungen speichern"
+  "stockScanSave": "Scanner-Einstellungen speichern",
+  "stockScanHint": "Sie verwenden einen Barcode-Scanner? Schalten Sie „Scannen“ ein",
+  "stockScanNfc": "Tag lesen",
+  "stockScanNfcReading": "Halten Sie den Tag an die Rückseite des Telefons …",
+  "stockScanNfcFailed": "Das Telefon konnte das Lesen nicht starten. Prüfen Sie, ob NFC eingeschaltet ist.",
+  "stockScanAlreadyRead": "Der Tag {code} wurde bereits gelesen.",
+  "stockScanUnknownTag": "Unbekannter Tag {code}"
 }

@@ -9,11 +9,17 @@
 import 'package:deskilo/features/stock/domain/stock_config.dart';
 import 'package:deskilo/features/stock/domain/stock_config_check.dart';
 import 'package:deskilo/features/stock/domain/stock_config_commands.dart';
+import 'package:deskilo/features/stock/domain/stock_page.dart';
 import 'package:deskilo/features/stock/domain/stock_variants.dart';
+
+import 'demo_stock_candidates.dart';
 
 /// The in-memory configuration of the reference business.
 class DemoStockConfigCommands implements StockConfigCommands {
-  DemoStockConfigCommands(this.workspaceId);
+  DemoStockConfigCommands(this.workspaceId, {this.candidates});
+
+  /// #4350 -- the services that may start being kept in stock, and the ones that have.
+  final DemoStockCandidates? candidates;
 
   final String workspaceId;
 
@@ -122,8 +128,18 @@ class DemoStockConfigCommands implements StockConfigCommands {
   bool _mine(String id) => id == workspaceId;
 
   @override
-  Future<StockItemConfig?> item(String workspaceId, String itemId) async =>
-      _mine(workspaceId) ? _items[itemId] : null;
+  Future<StockItemConfig?> item(String workspaceId, String itemId) async {
+    if (!_mine(workspaceId)) return null;
+    if (_items[itemId] case final known?) return known;
+    // a service that is not an item yet: its settings as they stand, the stock one off
+    final candidate = (await candidates?.unstocked() ?? const []).where((c) => c.id == itemId).firstOrNull;
+    return candidate == null
+        ? null
+        : StockItemConfig(
+            itemId: itemId, revision: 1, stockable: false, purchasable: true, sellable: true,
+            inventoryUnit: candidate.unit, tracking: 'none', shelfLifeDays: null, units: const [], codes: const [],
+          );
+  }
 
   @override
   Future<List<StockPlaceConfig>> places(String workspaceId) async =>
@@ -131,7 +147,7 @@ class DemoStockConfigCommands implements StockConfigCommands {
 
   @override
   Future<StockSaved> saveItem(String workspaceId, StockItemConfig config, String requestId) async {
-    final old = _mine(workspaceId) ? _items[config.itemId] : null;
+    final old = _mine(workspaceId) ? await item(workspaceId, config.itemId) : null;
     if (old == null) throw const StockConfigRefused('item_id', 'item_foreign');
     if (old.revision != config.revision) throw const StockConfigStale();
     // The first movement fixed the tracking of the shop's goods.
@@ -142,12 +158,21 @@ class DemoStockConfigCommands implements StockConfigCommands {
       throw StockConfigRefused(first.key, first.value);
     }
     final revision = old.revision + 1;
+    // the unit is fixed by the first movement; a service that has none yet takes the one chosen
+    final turnsOn = config.stockable && !old.stockable;
+    final unit = turnsOn ? config.inventoryUnit : old.inventoryUnit;
     _items[config.itemId] = StockItemConfig(
       itemId: config.itemId, revision: revision, stockable: config.stockable,
       purchasable: config.purchasable, sellable: config.sellable,
-      inventoryUnit: old.inventoryUnit, tracking: config.tracking, shelfLifeDays: config.shelfLifeDays,
+      inventoryUnit: unit, tracking: config.tracking, shelfLifeDays: config.shelfLifeDays,
       units: config.units, codes: config.codes,
     );
+    // a service turned into an item joins the goods ledger the other pages read
+    final turnedOn = candidates;
+    if (turnedOn != null && turnsOn && !turnedOn.added.any((a) => a.id == config.itemId)) {
+      final named = (await turnedOn.unstocked()).where((c) => c.id == config.itemId).firstOrNull;
+      if (named != null) turnedOn.added.add(StockItem(id: named.id, name: named.name, unit: unit));
+    }
     return (id: config.itemId, revision: revision, replayed: false);
   }
 

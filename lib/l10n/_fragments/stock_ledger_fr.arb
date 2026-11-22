@@ -1,7 +1,7 @@
 {
   "@@locale": "fr",
-  "featureStockManagementTitle": "Gestion des stocks",
-  "featureStockManagementDesc": "Suivre les marchandises : où elles sont, dans quelle unité, de quel lot, et chaque mouvement d'un endroit à un autre. Désactivé : un article du catalogue garde son simple compte en rayon.",
+  "featureStockManagementTitle": "Stock : articles, emplacements, livraisons, mouvements",
+  "featureStockManagementDesc": "Tenez les marchandises que vous vendez ou stockez : quels articles, dans quels emplacements, les livraisons que vous recevez, les mouvements entre emplacements et les sorties. L’activer ajoute un menu Stock avec ses pages ; les autres fonctions de stock (lots, réception, sortie, seuils de réapprovisionnement) sont des interrupteurs en dessous. Désactivé : un article du catalogue garde son seul compte de rayon.",
   "permViewStock": "Voir les stocks",
   "permManageStock": "Entrer et sortir des marchandises du stock",
   "permApproveStockAdjustments": "Approuver les ajustements de stock",

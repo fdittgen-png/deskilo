@@ -718,6 +718,21 @@ Un scanner de codes-barres en mode clavier (il saisit le code puis appuie sur En
 - **Un scan n’envoie rien.** Il remplit seulement le formulaire ; le bouton que vous pressez exécute la même commande, avec les mêmes droits, que sans scanner.
 - **Réglages.** L’usage du scanner dépend de la fonction *Scanner* de l’entreprise, sous la gestion du stock. Le plus long intervalle entre deux touches d’un scan (une personne tape moins vite qu’un scanner) et ce qui termine un code (Entrée, Tab ou les deux) sont propres à l’appareil, sous **Stock → Réglages du stock → Scanner**.
 
+<!-- anchor: user.money.stock.nfc -->
+### Puces avec le NFC du téléphone
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous voulez associer une puce NFC à un article ou à un emplacement, et lire des puces en travaillant, avec le téléphone que vous avez déjà.
+
+Avec la fonction *Puces* activée et un téléphone qui lit le NFC, **Stock → Articles** et **Stock → Emplacements** affichent un bouton de puces sur chaque ligne, et la barre de scan d’une feuille de marchandises affiche **Lire une puce**. Le bouton est absent sur un appareil sans NFC (un ordinateur, la plupart des tablettes, un téléphone dont le NFC est coupé) : utilisez-y un scanner ou un lecteur portable.
+
+- **Associer une puce.** Ouvrez les puces d’un article ou d’un emplacement, touchez **Lire une puce** et approchez la puce du dos du téléphone. Une lecture associe une puce. Relire la même puce indique qu’elle était déjà associée ici et n’associe rien de nouveau ; une puce associée à autre chose est refusée et dit à quoi. Un propriétaire peut porter plusieurs puces. Le serveur accepte le code en majuscules ou minuscules, avec espaces, deux-points ou tirets.
+- **Retirer une puce** perdue, abîmée ou remplacée : choisissez le motif. Une puce retirée récemment ne peut pas être associée de nouveau tout de suite (le délai est un réglage du stock), et une puce sur une pièce encore en stock ne peut pas être retirée.
+- **Lire dans une feuille de marchandises.** Une puce se lit comme un code scanné : une puce d’emplacement fixe l’emplacement courant, une puce d’article compte l’article. Une puce lue deux fois dans une feuille est ignorée (*déjà lue*) ; une puce qui ne désigne rien dit *Puce inconnue*.
+- **Les étiquettes UHF** ne sont pas lisibles par un téléphone. Un article qui n’en a que de telles dit *utilisez le lecteur RFID*.
+- Associer demande le droit de gérer le stock ; lire, celui de le voir.
+
 <!-- anchor: user.money.stock.value -->
 ### Valeur du stock et origine des marchandises
 

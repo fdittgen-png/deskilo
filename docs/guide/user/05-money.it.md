@@ -718,6 +718,21 @@ Uno scanner di codici a barre in modalità tastiera (digita il codice e preme In
 - **Una scansione non invia nulla.** Compila solo il modulo; il pulsante che preme esegue lo stesso comando, con gli stessi diritti, che senza scanner.
 - **Impostazioni.** L’uso dello scanner dipende dalla funzione *Scanner* dell’attività, sotto la gestione del magazzino. L’intervallo massimo tra due tasti di una scansione (una persona scrive più lentamente di uno scanner) e ciò che termina un codice (Invio, Tab o entrambi) sono del dispositivo, in **Magazzino → Impostazioni del magazzino → Scanner**.
 
+<!-- anchor: user.money.stock.nfc -->
+### Tag con l’NFC del telefono
+
+**Destinatari:** Amministratore · Proprietario
+
+Vuole associare un chip NFC a un articolo o a una posizione e leggere chip mentre lavora, con il telefono che ha già.
+
+Con la funzione *Tag* attiva e un telefono che legge l’NFC, **Magazzino → Articoli** e **Magazzino → Posizioni** mostrano un pulsante dei tag su ogni riga, e la barra di scansione di un foglio di merce mostra **Leggi un tag**. Il pulsante manca su un dispositivo senza NFC (un computer, la maggior parte dei tablet, un telefono con l’NFC spento): lì usi uno scanner o un lettore portatile.
+
+- **Associare un tag.** Apra i tag di un articolo o di una posizione, tocchi **Leggi un tag** e avvicini il chip al retro del telefono. Una lettura associa un tag. Rileggere lo stesso chip dice che era già associato qui e non associa nulla di nuovo; un chip associato a qualcos’altro viene rifiutato e dice a cosa. Un proprietario può avere più tag. Il server accetta il codice in maiuscolo o minuscolo, con spazi, due punti o trattini.
+- **Ritirare un tag** perso, danneggiato o sostituito: scelga il motivo. Un tag ritirato da poco non può essere associato di nuovo subito (l’attesa è un’impostazione del magazzino) e un tag su un pezzo ancora a magazzino non può essere ritirato.
+- **Leggere in un foglio di merce.** Un chip si legge come un codice scansionato: un tag di posizione imposta la posizione corrente, uno di articolo conta l’articolo. Un chip letto due volte in un foglio viene ignorato (*già letto*); un chip che non indica nulla dice *Tag sconosciuto*.
+- **Le etichette UHF** non sono leggibili da un telefono. Un articolo che ha solo quelle dice *usi il lettore RFID*.
+- Associare richiede il diritto di gestire il magazzino; leggere, quello di vederlo.
+
 <!-- anchor: user.money.stock.value -->
 ### Valore del magazzino e origine della merce
 

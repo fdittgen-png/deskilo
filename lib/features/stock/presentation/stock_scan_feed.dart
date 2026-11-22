@@ -13,6 +13,17 @@ import '../../../core/trace/trace_logger.dart';
 import '../domain/stock_code_resolver.dart';
 import '../domain/stock_scan_session.dart';
 
+/// The resolver of the selected workspace, read when a code is scanned (not when the sheet opens: a sheet opened
+/// where no server is reachable still opens).
+class LazyStockCodeResolver implements StockCodeResolver {
+  const LazyStockCodeResolver(this._read);
+
+  final StockCodeResolver Function() _read;
+
+  @override
+  Future<StockCodeResolution> resolve(String workspaceId, String code) => _read().resolve(workspaceId, code);
+}
+
 class StockScanFeed extends ChangeNotifier {
   StockScanFeed({
     required this.resolver,
@@ -57,6 +68,24 @@ class StockScanFeed extends ChangeNotifier {
     unawaited(_drain());
   }
 
+  final Set<String> _tags = {};
+
+  /// A tag was read by NFC ([uid] as the tag's upper-case hex): the same resolution as a scan, but a tag read a
+  /// second time in this sheet is ignored and said so.
+  void readTag(String uid) {
+    final code = uid.toUpperCase();
+    if (!_tags.add(code)) {
+      last = ScanResult(ScanOutcome.alreadyRead, code: code, fromTag: true);
+      notifyListeners();
+      return;
+    }
+    _queue.add(code);
+    _fromTag.add(code);
+    unawaited(_drain());
+  }
+
+  final Set<String> _fromTag = {};
+
   @override
   void dispose() {
     _closed = true;
@@ -73,7 +102,7 @@ class StockScanFeed extends ChangeNotifier {
           final answer = await resolver.resolve(workspaceId, code);
           if (_closed) return;
           problem = null;
-          last = session.apply(answer, placeAllowed: placeAllowed, itemAllowed: itemAllowed);
+          last = session.apply(answer, placeAllowed: placeAllowed, itemAllowed: itemAllowed, fromTag: _fromTag.remove(code));
           onResult(last!);
         } on Object catch (e, st) {
           TraceLogger.instance.warn('stock', 'a scanned code could not be resolved: $e', stackTrace: st);

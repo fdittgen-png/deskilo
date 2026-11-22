@@ -718,6 +718,21 @@ Un escáner de códigos de barras en modo teclado (escribe el código y pulsa In
 - **Un escaneo no envía nada.** Solo rellena el formulario; el botón que pulsa ejecuta el mismo comando, con los mismos derechos, que sin escáner.
 - **Ajustes.** El uso del escáner depende de la función *Escáner* del negocio, bajo la gestión del stock. El intervalo máximo entre dos teclas de un escaneo (una persona escribe más despacio que un escáner) y lo que termina un código (Intro, Tab o ambos) son del dispositivo, en **Stock → Ajustes del stock → Escáner**.
 
+<!-- anchor: user.money.stock.nfc -->
+### Etiquetas con el NFC del teléfono
+
+**Público:** Administrador/a · Propietario
+
+Quiere asociar un chip NFC a un artículo o a una ubicación y leer chips mientras trabaja, con el teléfono que ya tiene.
+
+Con la función *Etiquetas* activada y un teléfono que lee NFC, **Stock → Artículos** y **Stock → Ubicaciones** muestran un botón de etiquetas en cada línea, y la barra de escaneo de una hoja de mercancías muestra **Leer una etiqueta**. El botón no aparece en un dispositivo sin NFC (un ordenador, la mayoría de las tabletas, un teléfono con el NFC desactivado): use allí un escáner o un lector portátil.
+
+- **Asociar una etiqueta.** Abra las etiquetas de un artículo o de una ubicación, toque **Leer una etiqueta** y acerque el chip a la parte trasera del teléfono. Una lectura asocia una etiqueta. Leer el mismo chip otra vez dice que ya estaba asociado aquí y no asocia nada nuevo; un chip asociado a otra cosa se rechaza y dice a cuál. Un propietario puede llevar varias etiquetas. El servidor acepta el código en mayúsculas o minúsculas, con espacios, dos puntos o guiones.
+- **Retirar una etiqueta** perdida, dañada o sustituida: elija el motivo. Una etiqueta retirada hace poco no puede asociarse de nuevo enseguida (la espera es un ajuste del stock), y una etiqueta en una pieza que sigue en stock no puede retirarse.
+- **Leer en una hoja de mercancías.** Un chip se lee como un código escaneado: una etiqueta de ubicación fija la ubicación actual, una de artículo cuenta el artículo. Un chip leído dos veces en una hoja se ignora (*ya leído*); un chip que no designa nada dice *Etiqueta desconocida*.
+- **Las etiquetas UHF** no las puede leer un teléfono. Un artículo que solo las tiene dice *use el lector RFID*.
+- Asociar requiere el derecho de gestionar el stock; leer, el de verlo.
+
 <!-- anchor: user.money.stock.value -->
 ### Valor de las existencias y origen de la mercancía
 

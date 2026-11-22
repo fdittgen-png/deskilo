@@ -35,6 +35,7 @@ import '../providers/stock_providers.dart';
 import 'stock_config_text.dart';
 import 'stock_scan_bar.dart';
 import 'stock_scan_feed.dart';
+import 'stock_scan_hint.dart';
 
 /// What the put-away asks of the stock and of the business, read from the
 /// providers by the pane and handed over whole.
@@ -201,6 +202,33 @@ class PutAwayDraft {
   StockScanFeed? scanner;
   VoidCallback? _refresh;
 
+  /// Records the put-away; scans wait while it is in flight. Null when done, else what to say.
+  Future<String?> submit(AppLocalizations l10n, PutAwayServices services, {required String workspaceId, required String receiptId}) async {
+    try {
+      scanner?.pause();
+      await services.commands.putAway(workspaceId, receiptId, toAllocations(), requestId);
+      return null;
+    } on Object catch (e, st) {
+      TraceLogger.instance.warn('stock', 'a put-away was not recorded: $e', stackTrace: st);
+      return stockSaveProblem(l10n, e);
+    } finally {
+      scanner?.resume();
+    }
+  }
+
+  /// Starts listening to a scanner when the business uses one (#4359).
+  void listen(ProviderContainer container, {required String workspaceId, required List<StockPlace> places}) {
+    if (!container.read(stockScanningProvider)) return;
+    scanner = StockScanFeed(
+      resolver: LazyStockCodeResolver(() => container.read(stockCodeResolverProvider)),
+      workspaceId: workspaceId,
+      session: StockScanSession(addsOne: container.read(stockScanAddsOneProvider)),
+      onResult: scanned,
+      placeAllowed: (p) => places.any((x) => x.id == p.id),
+      itemAllowed: carries,
+    );
+  }
+
   /// Whether a scanned item is on this delivery.
   bool carries(ScannedItem item) => _parts.any((p) => context.items[p.line.lineNo]?.itemId == item.id);
 
@@ -277,7 +305,7 @@ class PutAwayDraft {
     final l10n = context.l10n;
     _refresh = refresh;
     return [
-      if (scanner != null) StockScanBar(feed: scanner!, onOpenItems: () => _openItems(context)),
+      if (scanner != null) StockScanBar(feed: scanner!, onOpenItems: () => _openItems(context)) else const StockScanHint(insideSheet: true),
       for (final l in _lines)
         if (!this.context.items.containsKey(l.lineNo))
           Padding(
@@ -419,17 +447,7 @@ Future<bool> showPutAwaySheet(
     AppSnack.info(context, l10n.stockPutAwayNothing);
     return false;
   }
-  final container = ProviderScope.containerOf(context);
-  if (container.read(stockScanningProvider)) {
-    draft.scanner = StockScanFeed(
-      resolver: container.read(stockCodeResolverProvider),
-      workspaceId: workspaceId,
-      session: StockScanSession(addsOne: container.read(stockScanAddsOneProvider)),
-      onResult: draft.scanned,
-      placeAllowed: (p) => loaded.places.any((x) => x.id == p.id),
-      itemAllowed: draft.carries,
-    );
-  }
+  draft.listen(ProviderScope.containerOf(context), workspaceId: workspaceId, places: loaded.places);
   final saved = await showAppFormSheet(
     context,
     AppFormSheet(
@@ -438,18 +456,7 @@ Future<bool> showPutAwaySheet(
       submitKey: const ValueKey('putaway-confirm'),
       onDispose: draft.dispose,
       validate: () => draft.validate(l10n),
-      onSubmit: () async {
-        try {
-          draft.scanner?.pause();
-          await services.commands.putAway(workspaceId, receipt.id, draft.toAllocations(), draft.requestId);
-          return null;
-        } on Object catch (e, st) {
-          TraceLogger.instance.warn('stock', 'a put-away was not recorded: $e', stackTrace: st);
-          return stockSaveProblem(l10n, e);
-        } finally {
-          draft.scanner?.resume();
-        }
-      },
+      onSubmit: () => draft.submit(l10n, services, workspaceId: workspaceId, receiptId: receipt.id),
       builder: draft.build,
     ),
   );

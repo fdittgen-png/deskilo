@@ -34,6 +34,7 @@ abstract final class HelpAnchor {
   static const moneyStockValue = 'user.money.stock.value';
   static const moneyStockRegistry = 'user.money.stock.registry';
   static const moneyStockScanning = 'user.money.stock.scanning';
+  static const moneyStockNfc = 'user.money.stock.nfc';
 
   /// #3527 — the Sales, Purchases and Cash pages.
   static const moneySales = 'user.money.sales';

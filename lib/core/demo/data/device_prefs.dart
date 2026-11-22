@@ -26,6 +26,7 @@
 import 'package:deskilo/app/shell/shell_bar_visibility.dart';
 import 'package:deskilo/core/locale/locale_controller.dart';
 import 'package:deskilo/core/navigation/navigation_style.dart';
+import 'package:deskilo/core/scan/scan_prefs.dart';
 import 'package:deskilo/core/storage/booking_intent_store.dart';
 import 'package:deskilo/core/storage/entry_intent_store.dart';
 import 'package:deskilo/core/storage/help_hint_store.dart';
@@ -64,6 +65,17 @@ class InMemoryLocaleStore implements LocaleStore {
   void adopt(String? shown) {
     if (shown != null && languageCode == null) languageCode = shown;
   }
+}
+
+/// #4359 -- the scanner's timing and terminator, kept in the demonstration's own memory.
+class InMemoryScanPrefsStore implements ScanPrefsStore {
+  ScanPrefs _prefs = const ScanPrefs();
+
+  @override
+  Future<ScanPrefs> read() async => _prefs;
+
+  @override
+  Future<void> write(ScanPrefs prefs) async => _prefs = prefs;
 }
 
 /// In-memory [ThemeStore] (#160).
@@ -161,6 +173,9 @@ class DemoDevicePrefs {
   /// #3603 — the desk's sidebar starts with its labels.
   final InMemoryShellFlagStore deskRailCollapsed = InMemoryShellFlagStore();
   final InMemoryPaneWidthStore paneWidths = InMemoryPaneWidthStore();
+
+  /// #4359 — the scanner's device settings.
+  final InMemoryScanPrefsStore scanPrefs = InMemoryScanPrefsStore();
 
   /// #1914 — push opt-out, kept in the demonstration's own memory.
   final InMemoryPushOptOutStore pushOptOut = InMemoryPushOptOutStore();

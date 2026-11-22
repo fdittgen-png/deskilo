@@ -2954,6 +2954,34 @@ Sie möchten eine Liste, die für jeden Artikel und jede Variante sagt, was es i
 - **Suchen** Sie nach Name, Barcode oder Adresse. Einen Barcode in die Suche eingeben oder scannen und bestätigen öffnet diesen Artikel.
 - Lange Listen werden seitenweise geladen: Wählen Sie *Mehr anzeigen*.
 
+### Mit einem Scanner arbeiten
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie möchten Ware per Scan annehmen, umlagern und ausbuchen, ohne ein Feld anzutippen.
+
+Ein Barcode-Scanner im Tastaturmodus (er tippt den Code und drückt die Eingabetaste) funktioniert in den Blättern zum Umlagern und Ausbuchen, beim Einlagern einer Lieferung sowie unter **Lager → Artikel** und **Lager → Lagerplätze**. Sie müssen kein Feld vorher antippen. Ein Textfeld mit Fokus behält seine eigene Eingabe: Was Sie tippen, wird nie für einen Scan gehalten.
+
+- **Erst den Lagerplatz scannen, dann die Artikel.** Ein Platzcode setzt den aktuellen Platz; er bleibt, bis Sie einen anderen scannen, und steht oben (*Einlagern in …*). Beim Umlagern ist der erste Platz die Quelle und der zweite das Ziel. Ein Artikel-, Varianten- oder Verpackungscode bezeichnet den Artikel und zählt ihn: Ein Kartoncode addiert die genaue Menge des Kartons (zum Beispiel 12 Stück), ein Chargenetikett setzt die Charge.
+- **Ein wiederholter Scan** addiert eins, oder – wenn Ihr Betrieb es in den Lagereinstellungen so gewählt hat (*Wiederholter Scan*) – führt Sie ins Mengenfeld.
+- **Ein Code, der nichts bezeichnet,** meldet *Unbekannter Code … — einem Artikel zuordnen?*; wer das Lager verwalten darf, kann die Artikel öffnen und ihn einem zuordnen. Ein Platz, der keine Ware aufnehmen kann, oder ein Artikel, der nicht auf Lager geführt wird, wird in Worten abgelehnt, und nichts wird ausgefüllt.
+- **Ein Scan sendet nichts.** Er füllt nur das Formular; die Taste, die Sie drücken, führt denselben Befehl mit denselben Rechten aus wie ohne Scanner.
+- **Einstellungen.** Ob gescannt wird, bestimmt die Funktion *Scanner* des Betriebs unter der Lagerverwaltung. Die längste Lücke zwischen zwei Tasten eines Scans (ein Mensch tippt langsamer als ein Scanner) und was einen Code beendet (Eingabe, Tab oder beides) gehören dem Gerät, unter **Lager → Lagereinstellungen → Scanner**.
+
+### Tags mit dem NFC des Telefons
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie möchten einen NFC-Chip einem Artikel oder Lagerplatz zuordnen und Chips bei der Arbeit lesen – mit dem Telefon, das Sie ohnehin haben.
+
+Ist die Funktion *Tags* eingeschaltet und liest Ihr Telefon NFC, zeigen **Lager → Artikel** und **Lager → Lagerplätze** an jeder Zeile eine Tag-Taste, und die Scan-Leiste eines Warenblatts zeigt **Tag lesen**. Auf einem Gerät ohne NFC (ein Desktop, die meisten Tablets, ein Telefon mit ausgeschaltetem NFC) fehlt die Taste: Nutzen Sie dort einen Scanner oder ein Handlesegerät.
+
+- **Tag zuordnen.** Öffnen Sie die Tags eines Artikels oder Lagerplatzes, tippen Sie auf **Tag lesen** und halten Sie den Chip an die Rückseite des Telefons. Ein Lesevorgang ordnet einen Tag zu. Liest man denselben Chip nochmals, heißt es, er sei hier schon zugeordnet, und nichts Neues entsteht; ein Chip, der etwas anderem zugeordnet ist, wird abgelehnt und nennt, welchem. Ein Eigentümer kann mehrere Tags tragen. Der Server nimmt den Code in jeder Schreibweise und mit Leerzeichen, Doppelpunkten oder Bindestrichen.
+- **Tag außer Betrieb nehmen**, der verloren, beschädigt oder ersetzt ist: Wählen Sie den Grund. Ein kürzlich außer Betrieb genommener Tag kann nicht sofort wieder zugeordnet werden (die Wartezeit ist eine Lagereinstellung), und ein Tag an einem Stück, das noch auf Lager ist, kann nicht außer Betrieb genommen werden.
+- **Lesen in einem Warenblatt.** Ein Chip wird wie ein gescannter Code gelesen: Ein Platz-Tag setzt den aktuellen Platz, ein Artikel-Tag zählt den Artikel. Ein Chip, der in einem Blatt zweimal gelesen wird, wird ignoriert (*bereits gelesen*); ein Chip, der nichts bezeichnet, meldet *Unbekannter Tag*.
+- **UHF-Etiketten** kann ein Telefon nicht lesen. Ein Artikel, der nur solche hat, sagt *nutzen Sie das RFID-Lesegerät*.
+- Zuordnen braucht das Recht, das Lager zu verwalten; Lesen das Recht, es einzusehen.
+
 ### Lagerwert und Herkunft der Ware
 
 **Zielgruppe:** Administrator:in · Inhaber
@@ -7578,6 +7606,30 @@ Fügen Sie dann nur hinzu, was auf Sie zutrifft:
 - Schalten Sie diese einzeln ein und stellen Sie zuerst in einem Test-Space eine Testrechnung aus. Siehe [Die Reihenfolge beim Einschalten](help:setup.features.order).
 
 **Siehe auch:** [Geld und Rechnungen](help:setup.money.overview) · [Mit einer Vorlage oder bei null beginnen](help:setup.before.template)
+
+### Waren verkaufen oder lagern
+
+**Zielgruppe:** Inhaber
+
+Sie verkaufen Waren oder führen ein Lager und möchten wissen, wo Artikel, Orte, Lieferungen und Bewegungen zu finden sind. Alles beginnt mit einem Schalter, dann folgen einige weitere, in dieser Reihenfolge.
+
+| # | Tun Sie das | Wo es danach zu finden ist |
+|---|---|---|
+| 1 | Schalten Sie **Lager: Artikel, Orte, Lieferungen, Bewegungen** ein (unter **Leistungen**). | Ein Menü **Lager** erscheint: Lager, Bewegungen, Umlagerungen, Artikel, Orte, Lagereinstellungen. |
+| 2 | Legen Sie Ihren ersten Ort an: **Lager → Orte → Ort hinzufügen** (zum Beispiel das Hauptlager, dann die Regale darin). | **Lager → Orte** |
+| 3 | Legen Sie Ihren ersten Artikel an: **Lager → Artikel → Artikel hinzufügen**. Ein Artikel ist eine Leistung, die Sie im Lager führen: Wählen Sie sie, und ihre Lagereinstellungen öffnen sich mit eingeschalteter Einstellung (Einheit, Verpackungseinheiten, Codes). Legen Sie die Leistung zuerst unter **Leistungen** an, falls sie fehlt. | **Lager → Artikel** |
+| 4 | Schalten Sie **Einkäufe** und **Bei Lieferanten bestellen** ein, um Ware zu bestellen, dann **Wareneingang ins Lager**, um eine Lieferung aus ihrer Bestellung einzulagern. | **Einkauf & Lieferanten → Bestellungen**, dann **Lieferung erfassen** |
+| 5 | Schalten Sie **Ware entnehmen** ein für das, was das Lager verlässt (verkauft, verbraucht, verloren), **Chargen und Verfall** für Ware mit Chargen oder Mindesthaltbarkeit und **Meldebestände**, um zu erfahren, was knapp ist. | **Lager → Bewegungen** (Entnahme), **Lager → Nachbestellen** |
+
+Nehmen Sie dann eine Lieferung an, bewegen Sie Ware auf ein Regal und entnehmen Sie eine: Die Lagerseite zeigt jeden Vorgang sofort.
+
+**Gut zu wissen**
+
+- Ein Unternehmen, das das Lager eingeschaltet hat, aber noch keinen Ort und keinen Artikel besitzt, sieht auf der Lagerseite **Ersten Ort hinzufügen** und **Ersten Artikel hinzufügen**.
+- Das Ausschalten einer Funktion löscht nichts: Was erfasst wurde, bleibt und ist wieder lesbar.
+- Probieren Sie es zuerst in der Demo aus, wo der Laden schon ein Lager führt. Siehe [Ausschalten löscht nichts](help:setup.features.off).
+
+**Siehe auch:** [Die Reihenfolge beim Einschalten](help:setup.features.order) · [Funktionen, die andere brauchen](help:setup.features.dependencies)
 
 ### Die Reihenfolge beim Einschalten
 

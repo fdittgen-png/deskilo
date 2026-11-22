@@ -12433,10 +12433,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get featureStockManagementDesc =>
-      'Keep track of goods: where they are, in which unit, from which lot, and every movement between two places. Off: a catalogue item keeps its single shelf count.';
+      'Keep the goods you sell or store: which items, in which places, the deliveries you receive, the moves between places and the stock you take out. Switching it on adds a Stock menu with its pages; the other stock functions (lots, receiving, take-out, reorder points) are switches under it. Off: a catalogue item keeps its single shelf count.';
 
   @override
-  String get featureStockManagementTitle => 'Stock management';
+  String get featureStockManagementTitle =>
+      'Stock: items, places, deliveries, moves';
 
   @override
   String get featureStockReceivingDesc =>
@@ -34936,6 +34937,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockEnteredLabel => 'Entered';
 
   @override
+  String get stockFirstRunBody =>
+      'Start with a place where goods are kept, then the items you keep. After that, receive a delivery or move goods in.';
+
+  @override
+  String get stockFirstRunItem => 'Add your first item';
+
+  @override
+  String get stockFirstRunNext =>
+      'Then receive a delivery from a purchase order, or move goods in from Movements.';
+
+  @override
+  String get stockFirstRunPlace => 'Add your first place';
+
+  @override
+  String get stockFirstRunTitle => 'Your stock is empty';
+
+  @override
   String get stockGoodsMore => 'Show more';
 
   @override
@@ -34954,8 +34972,57 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockGoodsUnavailable => 'The goods are not shown to you.';
 
   @override
+  String get stockItemAddButton => 'Add an item';
+
+  @override
+  String get stockItemAddIntro =>
+      'Or keep a service you already have in stock: choose one and its stock settings open with the setting already on.';
+
+  @override
+  String get stockItemAddNone =>
+      'Every service is already kept in stock, or there is none yet. Add a service first, then come back.';
+
+  @override
+  String get stockItemAddOpenServices => 'Open services';
+
+  @override
+  String get stockItemAddTitle => 'Add an item';
+
+  @override
+  String get stockItemNewBarcode => 'Barcode (optional)';
+
+  @override
+  String get stockItemNewHome => 'Home place (optional)';
+
+  @override
+  String get stockItemNewName => 'Name';
+
+  @override
+  String get stockItemNewNameRequired => 'Name the item.';
+
+  @override
+  String get stockItemNewNoHome => 'None yet';
+
+  @override
+  String get stockItemNewOption => 'Create a new item';
+
+  @override
+  String stockItemNewPrice(String currency) {
+    return 'Price ($currency)';
+  }
+
+  @override
+  String get stockItemNewPriceInvalid => 'Enter a price, or leave it empty.';
+
+  @override
+  String get stockItemNewTitle => 'New item';
+
+  @override
+  String get stockItemNewUnit => 'Counted in';
+
+  @override
   String get stockItemsEmpty =>
-      'No items yet. Items are added when a service or a supplier article is kept in stock.';
+      'No items yet. An item is a service you keep in stock: choose Add an item.';
 
   @override
   String get stockItemsIntro =>
@@ -35657,6 +35724,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockReorderToOrderTitle => 'What to order';
 
   @override
+  String stockScanAlreadyRead(String code) {
+    return 'Tag $code was already read.';
+  }
+
+  @override
   String get stockScanFailed =>
       'The scanned code could not be read. Check the connection and scan it again.';
 
@@ -35664,18 +35736,30 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockScanHelp => 'Working with a scanner';
 
   @override
+  String get stockScanHint => 'Using a barcode scanner? Turn on Scanning';
+
+  @override
   String get stockScanInterval =>
       'Longest gap between two keys of a scan (milliseconds)';
 
   @override
-  String stockScanIntervalInvalid(int min, int max) {
-    return 'Enter a whole number of milliseconds between $min and $max.';
-  }
+  String get stockScanIntervalInvalid =>
+      'Enter a whole number of milliseconds within the allowed range.';
 
   @override
   String stockScanLast(String item, String quantity, String unit) {
     return '$item: $quantity $unit';
   }
+
+  @override
+  String get stockScanNfc => 'Read a tag';
+
+  @override
+  String get stockScanNfcFailed =>
+      'The phone could not start reading. Check that NFC is on.';
+
+  @override
+  String get stockScanNfcReading => 'Hold the tag to the back of the phone…';
 
   @override
   String stockScanPlacing(String place) {
@@ -35723,6 +35807,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockScanUnknownAdd => 'Open the items';
 
   @override
+  String stockScanUnknownTag(String code) {
+    return 'Unknown tag $code';
+  }
+
+  @override
   String get stockSettingsElsewhere =>
       'Stock settings are kept on the Stock settings page.';
 
@@ -35746,6 +35835,92 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get stockTabOnHand => 'On hand';
+
+  @override
+  String stockTagBoundElsewhere(String owner) {
+    return 'This tag is already bound to $owner.';
+  }
+
+  @override
+  String get stockTagKindNfc => 'NFC chip';
+
+  @override
+  String get stockTagKindUhf => 'UHF label';
+
+  @override
+  String get stockTagMalformed => 'That is not a valid tag code.';
+
+  @override
+  String get stockTagModeNone => 'This item does not use tags.';
+
+  @override
+  String get stockTagNotInForce => 'This is not a tag in force here.';
+
+  @override
+  String get stockTagOnPiece =>
+      'This tag is on a piece that is still in stock.';
+
+  @override
+  String get stockTagOwnerUnknown => 'This item or place is not known.';
+
+  @override
+  String get stockTagPerUnit =>
+      'This item is tagged piece by piece: tag its pieces when they are received.';
+
+  @override
+  String get stockTagReasonDamaged => 'Damaged';
+
+  @override
+  String get stockTagReasonLost => 'Lost';
+
+  @override
+  String get stockTagReasonReplaced => 'Replaced';
+
+  @override
+  String get stockTagRetiredLately =>
+      'This tag was retired recently; it can be bound again after the waiting time set in the stock settings.';
+
+  @override
+  String stockTagsAlready(String code) {
+    return 'Tag $code was already bound here.';
+  }
+
+  @override
+  String stockTagsBound(String code) {
+    return 'Tag $code bound.';
+  }
+
+  @override
+  String get stockTagsClose => 'Close';
+
+  @override
+  String get stockTagsFailed => 'The tags could not be read.';
+
+  @override
+  String get stockTagsNone => 'No tag is bound yet.';
+
+  @override
+  String get stockTagsOpen => 'Tags';
+
+  @override
+  String get stockTagsRetire => 'Retire';
+
+  @override
+  String get stockTagsRetireWhy => 'Why is it retired?';
+
+  @override
+  String stockTagsRetired(String code) {
+    return 'Tag $code retired.';
+  }
+
+  @override
+  String stockTagsTitle(String name) {
+    return 'Tags: $name';
+  }
+
+  @override
+  String get stockTagsUhfOnly =>
+      'This item uses UHF tags — use the RFID reader.';
 
   @override
   String get stockTakeOutLoss => 'Lost or written off';

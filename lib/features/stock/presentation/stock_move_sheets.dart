@@ -28,6 +28,7 @@ import 'stock_config_text.dart';
 import 'stock_place_text.dart';
 import 'stock_scan_bar.dart';
 import 'stock_scan_feed.dart';
+import 'stock_scan_hint.dart';
 
 
 /// Moves goods ([takeOut] false) or takes them out ([takeOut] true); true when
@@ -51,7 +52,7 @@ Future<bool> showStockMoveSheet(
   );
   if (container.read(stockScanningProvider)) {
     draft.scanner = StockScanFeed(
-      resolver: container.read(stockCodeResolverProvider),
+      resolver: LazyStockCodeResolver(() => container.read(stockCodeResolverProvider)),
       workspaceId: workspaceId,
       session: StockScanSession(addsOne: container.read(stockScanAddsOneProvider)),
       onResult: draft.scanned,
@@ -172,7 +173,7 @@ class _MoveDraft {
     final options = [for (final p in places) (p.id, stockPlaceTitle(p, separator))];
     _refresh = refresh;
     return [
-      if (scanner != null) StockScanBar(feed: scanner!, onOpenItems: () => _openItems(context)),
+      if (scanner != null) StockScanBar(feed: scanner!, onOpenItems: () => _openItems(context)) else const StockScanHint(insideSheet: true),
       if (takeOut) ...[
         SegmentedButton<StockTakeOutReason>(
           key: const ValueKey('stock-takeout-reason'),

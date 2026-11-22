@@ -27,9 +27,11 @@ import '../domain/place_labels_pdf.dart';
 import '../domain/stock_config.dart';
 import '../domain/stock_config_check.dart';
 import '../domain/stock_config_commands.dart';
+import '../domain/stock_tags.dart';
 import '../providers/stock_providers.dart';
 import 'stock_config_text.dart';
 import 'stock_screen_scan.dart';
+import 'stock_tags_dialog.dart';
 
 String _kindLabel(AppLocalizations l10n, String kind) => switch (kind) {
   'site' => l10n.stockPlaceKindSite,
@@ -49,7 +51,7 @@ String _roleLabel(AppLocalizations l10n, String role) =>
 
 /// One place of the list: its address (as the person reads it), then its kind, name, whether
 /// a site receives from suppliers, and its use.
-Widget _placeTile(AppLocalizations l10n, StockPlaceConfig p, String separator, VoidCallback? onTap) {
+Widget _placeTile(AppLocalizations l10n, StockPlaceConfig p, String separator, VoidCallback? onTap, {VoidCallback? onTags}) {
   final site = stockKindLevel(p.kind) == 1;
   return ListTile(
     key: ValueKey('stock-place-${p.id}'),
@@ -69,6 +71,9 @@ Widget _placeTile(AppLocalizations l10n, StockPlaceConfig p, String separator, V
             ].join(' · '),
     ),
     onTap: onTap,
+    trailing: onTags == null
+        ? null
+        : IconButton(key: ValueKey('stock-place-tags-${p.id}'), icon: const Icon(Icons.nfc), tooltip: l10n.stockTagsOpen, onPressed: onTags),
   );
 }
 
@@ -89,6 +94,7 @@ class StockPlacesBody extends ConsumerStatefulWidget {
     required this.workspaceId,
     required this.onChanged,
     this.canEdit = true,
+    this.addFirst = false,
   });
 
   final String workspaceId;
@@ -96,6 +102,9 @@ class StockPlacesBody extends ConsumerStatefulWidget {
 
   /// Whether the person may add and edit places (the server asks the same).
   final bool canEdit;
+
+  /// #4350 -- the first-run link: the editor of a new place opens once the places are read.
+  final bool addFirst;
 
   @override
   ConsumerState<StockPlacesBody> createState() => _PlacesSheetState();
@@ -105,6 +114,17 @@ class _PlacesSheetState extends ConsumerState<StockPlacesBody> {
   late Future<List<StockPlaceConfig>> _places = _read();
   String _query = '';
   final _search = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.addFirst && widget.canEdit) {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        final all = await _places;
+        if (mounted) await _edit(all, null);
+      });
+    }
+  }
 
   @override
   void dispose() {
@@ -232,6 +252,14 @@ class _PlacesSheetState extends ConsumerState<StockPlacesBody> {
                           p,
                           separator,
                           p.virtual || !widget.canEdit ? null : () => _edit(all, p),
+                          onTags: p.virtual || !widget.canEdit || !ref.watch(stockTagsProvider)
+                              ? null
+                              : () => showStockTagsDialog(
+                                  context,
+                                  workspaceId: widget.workspaceId,
+                                  owner: TagOwner.place(p.id),
+                                  name: _placeTitle(p),
+                                ),
                         ),
                     ],
                   ),

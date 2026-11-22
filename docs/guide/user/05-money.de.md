@@ -718,6 +718,21 @@ Ein Barcode-Scanner im Tastaturmodus (er tippt den Code und drückt die Eingabet
 - **Ein Scan sendet nichts.** Er füllt nur das Formular; die Taste, die Sie drücken, führt denselben Befehl mit denselben Rechten aus wie ohne Scanner.
 - **Einstellungen.** Ob gescannt wird, bestimmt die Funktion *Scanner* des Betriebs unter der Lagerverwaltung. Die längste Lücke zwischen zwei Tasten eines Scans (ein Mensch tippt langsamer als ein Scanner) und was einen Code beendet (Eingabe, Tab oder beides) gehören dem Gerät, unter **Lager → Lagereinstellungen → Scanner**.
 
+<!-- anchor: user.money.stock.nfc -->
+### Tags mit dem NFC des Telefons
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie möchten einen NFC-Chip einem Artikel oder Lagerplatz zuordnen und Chips bei der Arbeit lesen – mit dem Telefon, das Sie ohnehin haben.
+
+Ist die Funktion *Tags* eingeschaltet und liest Ihr Telefon NFC, zeigen **Lager → Artikel** und **Lager → Lagerplätze** an jeder Zeile eine Tag-Taste, und die Scan-Leiste eines Warenblatts zeigt **Tag lesen**. Auf einem Gerät ohne NFC (ein Desktop, die meisten Tablets, ein Telefon mit ausgeschaltetem NFC) fehlt die Taste: Nutzen Sie dort einen Scanner oder ein Handlesegerät.
+
+- **Tag zuordnen.** Öffnen Sie die Tags eines Artikels oder Lagerplatzes, tippen Sie auf **Tag lesen** und halten Sie den Chip an die Rückseite des Telefons. Ein Lesevorgang ordnet einen Tag zu. Liest man denselben Chip nochmals, heißt es, er sei hier schon zugeordnet, und nichts Neues entsteht; ein Chip, der etwas anderem zugeordnet ist, wird abgelehnt und nennt, welchem. Ein Eigentümer kann mehrere Tags tragen. Der Server nimmt den Code in jeder Schreibweise und mit Leerzeichen, Doppelpunkten oder Bindestrichen.
+- **Tag außer Betrieb nehmen**, der verloren, beschädigt oder ersetzt ist: Wählen Sie den Grund. Ein kürzlich außer Betrieb genommener Tag kann nicht sofort wieder zugeordnet werden (die Wartezeit ist eine Lagereinstellung), und ein Tag an einem Stück, das noch auf Lager ist, kann nicht außer Betrieb genommen werden.
+- **Lesen in einem Warenblatt.** Ein Chip wird wie ein gescannter Code gelesen: Ein Platz-Tag setzt den aktuellen Platz, ein Artikel-Tag zählt den Artikel. Ein Chip, der in einem Blatt zweimal gelesen wird, wird ignoriert (*bereits gelesen*); ein Chip, der nichts bezeichnet, meldet *Unbekannter Tag*.
+- **UHF-Etiketten** kann ein Telefon nicht lesen. Ein Artikel, der nur solche hat, sagt *nutzen Sie das RFID-Lesegerät*.
+- Zuordnen braucht das Recht, das Lager zu verwalten; Lesen das Recht, es einzusehen.
+
 <!-- anchor: user.money.stock.value -->
 ### Lagerwert und Herkunft der Ware
 

@@ -74,17 +74,9 @@
   "@stockScanInterval": {
     "description": "#4359 G10 scanner: stockScanInterval"
   },
-  "stockScanIntervalInvalid": "Enter a whole number of milliseconds between {min} and {max}.",
+  "stockScanIntervalInvalid": "Enter a whole number of milliseconds within the allowed range.",
   "@stockScanIntervalInvalid": {
-    "description": "#4359 G10 scanner: stockScanIntervalInvalid",
-    "placeholders": {
-      "min": {
-        "type": "int"
-      },
-      "max": {
-        "type": "int"
-      }
-    }
+    "description": "#4359 G10: the interval is not within the range"
   },
   "stockScanTerminator": "What ends a scanned code",
   "@stockScanTerminator": {
@@ -105,5 +97,39 @@
   "stockScanSave": "Save the scanner settings",
   "@stockScanSave": {
     "description": "#4359 G10 scanner: stockScanSave"
+  },
+  "stockScanHint": "Using a barcode scanner? Turn on Scanning",
+  "@stockScanHint": {
+    "description": "#4359 G10: the line that sends a business using a scanner to the Scanning feature"
+  },
+  "stockScanNfc": "Read a tag",
+  "@stockScanNfc": {
+    "description": "#4363 G14: stockScanNfc"
+  },
+  "stockScanNfcReading": "Hold the tag to the back of the phone…",
+  "@stockScanNfcReading": {
+    "description": "#4363 G14: stockScanNfcReading"
+  },
+  "stockScanNfcFailed": "The phone could not start reading. Check that NFC is on.",
+  "@stockScanNfcFailed": {
+    "description": "#4363 G14: stockScanNfcFailed"
+  },
+  "stockScanAlreadyRead": "Tag {code} was already read.",
+  "@stockScanAlreadyRead": {
+    "description": "#4363 G14: stockScanAlreadyRead",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "stockScanUnknownTag": "Unknown tag {code}",
+  "@stockScanUnknownTag": {
+    "description": "#4363 G14: stockScanUnknownTag",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
   }
 }

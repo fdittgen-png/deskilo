@@ -10,10 +10,16 @@
   "stockScanSettingsTitle": "Scanner",
   "stockScanSettingsHint": "Uno scanner in modalità tastiera digita il codice e preme Invio. Queste due impostazioni sono di questo dispositivo: un codice digitato più in fretta dell’intervallo qui sotto è considerato una scansione.",
   "stockScanInterval": "Intervallo massimo tra due tasti di una scansione (millisecondi)",
-  "stockScanIntervalInvalid": "Inserisca un numero intero di millisecondi tra {min} e {max}.",
+  "stockScanIntervalInvalid": "Inserisca un numero intero di millisecondi nell’intervallo consentito.",
   "stockScanTerminator": "Cosa termina un codice scansionato",
   "stockScanTerminatorEither": "Invio o Tab",
   "stockScanTerminatorEnter": "Invio",
   "stockScanTerminatorTab": "Tab",
-  "stockScanSave": "Salva le impostazioni dello scanner"
+  "stockScanSave": "Salva le impostazioni dello scanner",
+  "stockScanHint": "Usa uno scanner di codici a barre? Attivi «Scansione»",
+  "stockScanNfc": "Leggi un tag",
+  "stockScanNfcReading": "Avvicini il tag al retro del telefono…",
+  "stockScanNfcFailed": "Il telefono non è riuscito ad avviare la lettura. Controlli che l’NFC sia attivo.",
+  "stockScanAlreadyRead": "Il tag {code} è già stato letto.",
+  "stockScanUnknownTag": "Tag {code} sconosciuto"
 }

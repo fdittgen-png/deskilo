@@ -70,7 +70,7 @@ class _ScanScopeState extends ConsumerState<ScanScope> {
 
   @override
   Widget build(BuildContext context) {
-    final prefs = ref.watch(scanPrefsProvider).value ?? const ScanPrefs();
+    final prefs = ref.watch(scanPrefsProvider).value ?? const ScanPrefs(); // empty-ok: the device's defaults until its own are read
     if (prefs.interval != _detector.maxInterval) _detector = ScanDetector(maxInterval: prefs.interval);
     _terminator = prefs.terminator;
     return widget.child;
