@@ -2128,14 +2128,15 @@ constraint stock_balances.stock_balances_workspace_id_lot_id_fkey FOREIGN KEY (w
 constraint stock_balances.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint stock_balances.system_company_present CHECK ((company_id IS NOT NULL))
 constraint stock_location_kinds.stock_location_kinds_key_check CHECK ((key ~ '^[a-z_]{1,20}$'::text))
+constraint stock_location_kinds.stock_location_kinds_level_check CHECK (((level >= 1) AND (level <= 5)))
 constraint stock_location_kinds.stock_location_kinds_pkey PRIMARY KEY (key)
 constraint stock_location_kinds.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint stock_locations.stock_locations_barcode_check CHECK (((barcode IS NULL) OR (barcode ~ '^[0-9A-Za-z._/-]{1,64}$'::text)))
 constraint stock_locations.stock_locations_code_check CHECK ((code ~ '^[0-9A-Za-z._/-]{1,40}$'::text))
 constraint stock_locations.stock_locations_kind_fkey FOREIGN KEY (kind) REFERENCES stock_location_kinds(key)
 constraint stock_locations.stock_locations_name_check CHECK ((char_length(name) <= 120))
+constraint stock_locations.stock_locations_pick_role_check CHECK ((pick_role = ANY (ARRAY['picking'::text, 'reserve'::text])))
 constraint stock_locations.stock_locations_pkey PRIMARY KEY (id)
-constraint stock_locations.stock_locations_workspace_id_code_key UNIQUE (workspace_id, code)
 constraint stock_locations.stock_locations_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint stock_locations.stock_locations_workspace_id_id_key UNIQUE (workspace_id, id)
 constraint stock_locations.stock_locations_workspace_id_parent_id_fkey FOREIGN KEY (workspace_id, parent_id) REFERENCES stock_locations(workspace_id, id)
@@ -3833,7 +3834,7 @@ routine public.save_setup_journey(p_workspace_id uuid, p_answers jsonb, p_levels
 routine public.save_setup_step_draft(p_workspace_id uuid, p_step text, p_payload jsonb, p_expected_version integer, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:fdb127d50874
 routine public.save_standalone_invoice_draft_v1(p_workspace_id uuid, p_draft_id uuid, p_expected_revision integer, p_subject uuid, p_service_date date, p_due_on date, p_buyer_reference text, p_purchase_order text, p_lines jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:469627be70ed
 routine public.save_stock_item_v1(p_workspace_id uuid, p_item_id uuid, p_expected_revision integer, p_request_id uuid, p_item jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:ee5d95488817
-routine public.save_stock_location_v1(p_workspace_id uuid, p_place_id uuid, p_expected_revision integer, p_request_id uuid, p_place jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:cc63bb848e5a
+routine public.save_stock_location_v1(p_workspace_id uuid, p_place_id uuid, p_expected_revision integer, p_request_id uuid, p_place jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:7caa3b8e9970
 routine public.save_supplier(p_workspace_id uuid, p_supplier_id uuid, p_name text, p_tax_id text, p_tax_id_kind text, p_street text, p_postal_code text, p_city text, p_country_code text, p_contact text, p_number text, p_subdivision text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:527806d558d6
 routine public.save_supplier_item_mapping_v1(p_workspace_id uuid, p_mapping_id uuid, p_expected_revision integer, p_request_id uuid, p_mapping jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:8d4b026fb03b
 routine public.save_vat_declaration(p_workspace_id uuid, p_period_start date, p_period_end date, p_lines jsonb, p_total_net_cents integer, p_total_vat_cents integer, p_currency text, p_invoice_count integer) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:0729051c79e0
@@ -4010,6 +4011,8 @@ routine public.stock_count_actor(p_workspace_id uuid) -> uuid | function | defin
 routine public.stock_fefo_proposal_v1(p_workspace_id uuid, p_item_id uuid, p_variant_id uuid, p_location_id uuid, p_quantity numeric) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:f11900768530
 routine public.stock_gtin_valid(p_code text) -> boolean | function | invoker | immutable | exec:service_role | body:f1fa32962018
 routine public.stock_initialized(p_workspace_id uuid) -> boolean | function | definer | stable | exec:service_role | body:1c264a71eaa3
+routine public.stock_locations_address() -> trigger | function | invoker | volatile | exec:service_role | body:431f5aea467c
+routine public.stock_locations_address_follow() -> trigger | function | invoker | volatile | exec:service_role | body:af7484d9fbf7
 routine public.stock_locations_keep_history() -> trigger | function | invoker | volatile | exec:service_role | body:1826d91a77de
 routine public.stock_loss_v1(p_workspace_id uuid, p_request_id uuid, p_lines jsonb, p_occurred_at timestamp with time zone) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f0cc69109af4
 routine public.stock_lot_expired(p_lot_id uuid, p_today date) -> boolean | function | definer | stable | exec:service_role | body:055f120d07b7
@@ -4650,6 +4653,8 @@ trigger standalone_invoice_drafts.quote_draft_guard CREATE TRIGGER quote_draft_g
 trigger standalone_invoice_drafts.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.standalone_invoice_drafts FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger stock_balances.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.stock_balances FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger stock_location_kinds.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.stock_location_kinds FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger stock_locations.stock_locations_address CREATE TRIGGER stock_locations_address BEFORE INSERT OR UPDATE OF code, parent_id ON public.stock_locations FOR EACH ROW EXECUTE FUNCTION stock_locations_address()
+trigger stock_locations.stock_locations_address_follow CREATE TRIGGER stock_locations_address_follow AFTER UPDATE ON public.stock_locations FOR EACH ROW WHEN ((old.address_path IS DISTINCT FROM new.address_path)) EXECUTE FUNCTION stock_locations_address_follow()
 trigger stock_locations.stock_locations_keep_history CREATE TRIGGER stock_locations_keep_history BEFORE DELETE ON public.stock_locations FOR EACH ROW EXECUTE FUNCTION stock_locations_keep_history()
 trigger stock_locations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.stock_locations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger stock_lots.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.stock_lots FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()

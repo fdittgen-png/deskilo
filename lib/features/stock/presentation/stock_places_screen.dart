@@ -25,7 +25,7 @@ class StockPlacesScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: PageTitle(context.l10n.stockPlacesTitle),
-        actions: [HelpDot(context.l10n.permModuleStock, anchor: HelpAnchor.moneyStock)],
+        actions: [HelpDot(context.l10n.permModuleStock, anchor: HelpAnchor.moneyStockPlaces)],
       ),
       body: workspaceId == null
           ? const LoadingView()

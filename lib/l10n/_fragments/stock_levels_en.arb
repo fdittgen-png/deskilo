@@ -1,0 +1,74 @@
+{
+  "stockPlaceKindSite": "Site",
+  "@stockPlaceKindSite": {
+    "description": "#4293 the places of the stock: a label, a message or a setting"
+  },
+  "stockPlaceKindAisle": "Aisle",
+  "@stockPlaceKindAisle": {
+    "description": "#4293 the places of the stock: a label, a message or a setting"
+  },
+  "stockPlaceKindBay": "Bay",
+  "@stockPlaceKindBay": {
+    "description": "#4293 the places of the stock: a label, a message or a setting"
+  },
+  "stockPlacesSearch": "Find a place by address, name or barcode",
+  "@stockPlacesSearch": {
+    "description": "#4293 the places of the stock: a label, a message or a setting"
+  },
+  "stockPlaceReceives": "Receives from suppliers",
+  "@stockPlaceReceives": {
+    "description": "#4293 the places of the stock: a label, a message or a setting"
+  },
+  "stockPlaceReceivesHelp": "Off: goods arrive here only by transfer from another site.",
+  "@stockPlaceReceivesHelp": {
+    "description": "#4293 the places of the stock: a label, a message or a setting"
+  },
+  "stockPlaceReceivesYes": "receives from suppliers",
+  "@stockPlaceReceivesYes": {
+    "description": "#4293 the places of the stock: a label, a message or a setting"
+  },
+  "stockPlaceReceivesNo": "transfers only",
+  "@stockPlaceReceivesNo": {
+    "description": "#4293 the places of the stock: a label, a message or a setting"
+  },
+  "stockPlaceRole": "Use",
+  "@stockPlaceRole": {
+    "description": "#4293 the places of the stock: a label, a message or a setting"
+  },
+  "stockPlaceRoleNone": "Not said",
+  "@stockPlaceRoleNone": {
+    "description": "#4293 the places of the stock: a label, a message or a setting"
+  },
+  "stockPlaceRolePicking": "Picking (front of house)",
+  "@stockPlaceRolePicking": {
+    "description": "#4293 the places of the stock: a label, a message or a setting"
+  },
+  "stockPlaceRoleReserve": "Reserve (overstock)",
+  "@stockPlaceRoleReserve": {
+    "description": "#4293 the places of the stock: a label, a message or a setting"
+  },
+  "stockReasonLevelParentWrong": "A place of this level sits only under the level directly above it.",
+  "@stockReasonLevelParentWrong": {
+    "description": "#4293 the places of the stock: a label, a message or a setting"
+  },
+  "stockReasonLevelParentMissing": "Only a site stands on its own; every other level sits under the level above it.",
+  "@stockReasonLevelParentMissing": {
+    "description": "#4293 the places of the stock: a label, a message or a setting"
+  },
+  "stockReasonLevelChildrenWrong": "This place has places inside it that need its level; move them first.",
+  "@stockReasonLevelChildrenWrong": {
+    "description": "#4293 the places of the stock: a label, a message or a setting"
+  },
+  "stockReasonPickRoleUnknown": "The use must be picking or reserve.",
+  "@stockReasonPickRoleUnknown": {
+    "description": "#4293 the places of the stock: a label, a message or a setting"
+  },
+  "settingLabelStockAddressSeparator": "Separator in a place address",
+  "@settingLabelStockAddressSeparator": {
+    "description": "#4293 the places of the stock: a label, a message or a setting"
+  },
+  "settingHintStockAddressSeparator": "The character between the levels of a place address (site, zone, aisle, bay, shelf): MAG1-SALES-A03-B02-S4 with a dash, MAG1.SALES.A03.B02.S4 with a dot. Only how an address is written changes.",
+  "@settingHintStockAddressSeparator": {
+    "description": "#4293 the places of the stock: a label, a message or a setting"
+  }
+}

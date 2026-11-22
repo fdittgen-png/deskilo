@@ -5,8 +5,31 @@
 // server decides; a refusal it gives is shown under the same field.
 import 'stock_config.dart';
 
-/// The location kinds a person can create (the server's non-virtual ones).
-const List<String> stockPlaceKinds = ['warehouse', 'zone', 'shelf', 'bin'];
+/// The location kinds a person can create, from the broadest level to the narrowest. The
+/// legacy `warehouse` is a site made before the levels: it is kept, not offered.
+const List<String> stockPlaceKinds = ['site', 'zone', 'aisle', 'bay', 'shelf', 'bin'];
+
+/// The level of a kind in the address (`site` 1 ... `shelf` and `bin` 5); null for a place
+/// that is placed freely (a counter, a kitchen, a vehicle, a machine, a slot). The server's
+/// `stock_location_kinds.level`.
+int? stockKindLevel(String kind) => switch (kind) {
+  'site' || 'warehouse' => 1,
+  'zone' => 2,
+  'aisle' => 3,
+  'bay' => 4,
+  'shelf' || 'bin' => 5,
+  _ => null,
+};
+
+/// The places [kind] may sit directly under: those of the level above; none for a site, which
+/// is a root. A place of no level may sit under any real place.
+List<StockPlaceConfig> stockParentChoices(String kind, List<StockPlaceConfig> places) {
+  final level = stockKindLevel(kind);
+  return [
+    for (final p in places)
+      if (!p.virtual && (level == null || stockKindLevel(p.kind) == level - 1)) p,
+  ];
+}
 
 /// Field keys as the server names them (`units[0].factor_den`).
 String stockUnitField(int index, String part) => 'units[$index].$part';

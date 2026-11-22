@@ -18977,6 +18977,7 @@
   "@settingHintSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting hint."
   },
+  "settingHintStockAddressSeparator": "Das Zeichen zwischen den Ebenen einer Lagerort-Adresse (Standort, Zone, Gang, Regalfeld, Fach): MAG1-SALES-A03-B02-S4 mit Bindestrich, MAG1.SALES.A03.B02.S4 mit Punkt. Nur die Schreibweise ändert sich.",
   "settingHintStockAllowNegative": "Aus: eine Bewegung, die an einem Ort weniger als nichts übrig ließe, wird abgelehnt. An: sie wird gebucht, und der Ort zeigt eine negative Menge, bis Ware eintrifft.",
   "settingHintVatViesEvidenceDays": "Tage, die eine gültige Prüfung der USt-IdNr. aktuell genug bleibt, um auf einer neuen Rechnung als Nachweis zu dienen. Ein kürzerer Wert verlangt früher eine neue Prüfung; er beweist nicht, dass ein Geschäft gültig ist.",
   "@settingHintVatViesEvidenceDays": {
@@ -19192,6 +19193,7 @@
   "@settingLabelSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting label."
   },
+  "settingLabelStockAddressSeparator": "Trennzeichen in einer Lagerort-Adresse",
   "settingLabelStockAllowNegative": "Bestand darf unter null fallen",
   "settingLabelVatViesEvidenceDays": "Aktualität der USt-IdNr.-Prüfung",
   "@settingLabelVatViesEvidenceDays": {
@@ -20830,6 +20832,8 @@
   "@stockPlaceKind": {
     "description": "#4169 the stock editors: a label or message"
   },
+  "stockPlaceKindAisle": "Gang",
+  "stockPlaceKindBay": "Regalfeld",
   "stockPlaceKindBin": "Fach",
   "@stockPlaceKindBin": {
     "description": "#4169 the stock editors: a label or message"
@@ -20838,6 +20842,7 @@
   "@stockPlaceKindShelf": {
     "description": "#4169 the stock editors: a label or message"
   },
+  "stockPlaceKindSite": "Standort",
   "stockPlaceKindWarehouse": "Lager",
   "@stockPlaceKindWarehouse": {
     "description": "#4169 the stock editors: a label or message"
@@ -20858,6 +20863,14 @@
   "@stockPlaceParent": {
     "description": "#4169 the stock editors: a label or message"
   },
+  "stockPlaceReceives": "Nimmt Lieferungen von Lieferanten an",
+  "stockPlaceReceivesHelp": "Aus: Ware kommt nur per Umlagerung von einem anderen Standort.",
+  "stockPlaceReceivesNo": "nur Umlagerungen",
+  "stockPlaceReceivesYes": "nimmt Lieferungen an",
+  "stockPlaceRole": "Verwendung",
+  "stockPlaceRoleNone": "Nicht angegeben",
+  "stockPlaceRolePicking": "Kommissionierung (Verkaufsfläche)",
+  "stockPlaceRoleReserve": "Reserve (Lagerbestand)",
   "stockPlaceVirtual": "Vom System geführt",
   "@stockPlaceVirtual": {
     "description": "#4169 the stock editors: a label or message"
@@ -20866,6 +20879,7 @@
   "@stockPlacesAdd": {
     "description": "#4169 the stock editors: a label or message"
   },
+  "stockPlacesSearch": "Lagerort nach Adresse, Name oder Barcode suchen",
   "stockPlacesTitle": "Lagerorte",
   "@stockPlacesTitle": {
     "description": "#4169 the stock editors: a label or message"
@@ -21051,6 +21065,9 @@
   "@stockReasonKindUnknown": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonLevelChildrenWrong": "In diesem Lagerort liegen Lagerorte, die seine Ebene brauchen; verschieben Sie diese zuerst.",
+  "stockReasonLevelParentMissing": "Nur ein Standort steht für sich; jede andere Ebene liegt unter der darüberliegenden.",
+  "stockReasonLevelParentWrong": "Ein Lagerort dieser Ebene liegt nur direkt unter der darüberliegenden Ebene.",
   "stockReasonLineConflict": "Die Zeile ist doppelt benannt und die Angaben widersprechen sich.",
   "@stockReasonLineConflict": {
     "description": "#4171 receiving into stock: a text under a field the server refused"
@@ -21135,6 +21152,7 @@
   "@stockReasonParentInactive": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonPickRoleUnknown": "Die Verwendung muss Kommissionierung oder Reserve sein.",
   "stockReasonPriceInvalid": "Ein Preis ist null oder größer.",
   "@stockReasonPriceInvalid": {
     "description": "#4169 the stock editors: a text under a field the server refused"

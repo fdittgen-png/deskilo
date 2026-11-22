@@ -656,6 +656,22 @@ Una venta que no puede confirmarse porque el almacén principal tiene menos de l
 
 Una entrada aparece solo cuando su función está activada y su rol permite su página: quien solo puede mirar ve las páginas, no los ajustes. Compras conserva lo que se compra; Ventas, lo que se vende.
 
+<!-- anchor: user.money.stock.places -->
+### Ubicaciones y direcciones
+
+**Público:** Administrador/a · Propietario
+
+Quiere decir dónde se guarda cada cosa, para que la recepción, el recuento y la preparación sepan adónde ir.
+
+Abra **Existencias → Ubicaciones**. Una ubicación tiene un nivel: **Sede** (una sucursal o un depósito central), **Zona** (sala de ventas, trastienda, patio), **Pasillo**, **Módulo** y **Estante** o **Cajón**. Una ubicación va solo bajo el nivel inmediatamente superior: una zona bajo una sede, un pasillo bajo una zona, un módulo bajo un pasillo, un estante bajo un módulo. Un mostrador, una cocina, un vehículo, una máquina o una casilla se coloca donde sea. Un almacén creado antes de los niveles cuenta como sede.
+
+Cada ubicación tiene una **dirección**, escrita con los códigos de sus superiores: `MAIN-SALES-A03-B02-S4` es la tienda principal, la sala de ventas, el pasillo 3, el módulo 2, el estante 4. El código de una ubicación solo debe diferir de sus vecinos bajo la misma superior, así que cada módulo puede tener su estante `S4`. Si cambia el nombre de una ubicación, las direcciones de debajo lo siguen. Escriba parte de una dirección, un nombre o un código de barras en la búsqueda para encontrar una ubicación.
+
+**Conviene saber**
+- Una sede indica si **recibe de proveedores**; desactivado, la mercancía llega solo por traslado desde otra sede.
+- Una ubicación bajo una sede es **picking** (zona de venta) o **reserva** (excedente); es una indicación, nunca una cantidad.
+- El carácter entre los niveles es el ajuste de la empresa **Separador en la dirección de una ubicación** (guion, punto, barra o dos puntos); solo cambia cómo se escribe la dirección. Se fija en **Ajustes de existencias**.
+
 <!-- anchor: user.money.amounts -->
 ### Cómo se muestran los importes
 

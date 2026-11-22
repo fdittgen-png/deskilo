@@ -1,0 +1,20 @@
+{
+  "stockPlaceKindSite": "Standort",
+  "stockPlaceKindAisle": "Gang",
+  "stockPlaceKindBay": "Regalfeld",
+  "stockPlacesSearch": "Lagerort nach Adresse, Name oder Barcode suchen",
+  "stockPlaceReceives": "Nimmt Lieferungen von Lieferanten an",
+  "stockPlaceReceivesHelp": "Aus: Ware kommt nur per Umlagerung von einem anderen Standort.",
+  "stockPlaceReceivesYes": "nimmt Lieferungen an",
+  "stockPlaceReceivesNo": "nur Umlagerungen",
+  "stockPlaceRole": "Verwendung",
+  "stockPlaceRoleNone": "Nicht angegeben",
+  "stockPlaceRolePicking": "Kommissionierung (Verkaufsfläche)",
+  "stockPlaceRoleReserve": "Reserve (Lagerbestand)",
+  "stockReasonLevelParentWrong": "Ein Lagerort dieser Ebene liegt nur direkt unter der darüberliegenden Ebene.",
+  "stockReasonLevelParentMissing": "Nur ein Standort steht für sich; jede andere Ebene liegt unter der darüberliegenden.",
+  "stockReasonLevelChildrenWrong": "In diesem Lagerort liegen Lagerorte, die seine Ebene brauchen; verschieben Sie diese zuerst.",
+  "stockReasonPickRoleUnknown": "Die Verwendung muss Kommissionierung oder Reserve sein.",
+  "settingLabelStockAddressSeparator": "Trennzeichen in einer Lagerort-Adresse",
+  "settingHintStockAddressSeparator": "Das Zeichen zwischen den Ebenen einer Lagerort-Adresse (Standort, Zone, Gang, Regalfeld, Fach): MAG1-SALES-A03-B02-S4 mit Bindestrich, MAG1.SALES.A03.B02.S4 mit Punkt. Nur die Schreibweise ändert sich."
+}
