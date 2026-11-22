@@ -65,6 +65,15 @@ class PurchaseOrderReceiptActions extends ConsumerWidget {
             workspaceId: workspaceId,
             order: order,
           ),
+        // #4173 -- the goods put away against this order, each opening its movement.
+        if (shown)
+          ?ref.watch(purchaseOrderStockSeamProvider)?.goodsOfDocument(
+            context,
+            ref,
+            workspaceId: workspaceId,
+            kind: 'order',
+            id: order.id,
+          ),
         if (canWrite && order.receivable)
           OutlinedButton.icon(
             key: ValueKey('purchase-order-receive-${order.reference}'),

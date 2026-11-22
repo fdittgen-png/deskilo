@@ -17,7 +17,10 @@ import '../providers/stock_providers.dart';
 import 'stock_place_editor.dart';
 
 class StockPlacesScreen extends ConsumerWidget {
-  const StockPlacesScreen({super.key});
+  const StockPlacesScreen({super.key, this.addFirst = false});
+
+  /// #4350 -- the first-run link: the page opens with the editor of a new place.
+  final bool addFirst;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -34,6 +37,7 @@ class StockPlacesScreen extends ConsumerWidget {
                 constraints: const BoxConstraints(maxWidth: 720),
                 child: StockPlacesBody(
                   workspaceId: workspaceId,
+                  addFirst: addFirst,
                   canEdit: ref
                       .watch(myPermissionsProvider)
                       .contains(WorkspacePermission.manageStock),

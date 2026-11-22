@@ -703,6 +703,36 @@ Abra **Existencias → Artículos**. Cada línea muestra el **código de barras*
 - **Busque** por nombre, código de barras o dirección. Escribir o escanear un código de barras en la búsqueda y confirmar abre ese artículo.
 - Las listas largas se cargan por páginas: elija *Mostrar más*.
 
+<!-- anchor: user.money.stock.value -->
+### Valor de las existencias y origen de la mercancía
+
+**Público:** Administrador/a · Propietario
+
+Quiere ver cuánto valen las existencias, de dónde vino una entrega y si se pagó.
+
+Abra **Existencias → Valor de las existencias** (requiere el derecho de gestionar las compras o de leer las finanzas). La página muestra el **coste conocido** de lo que hay, a una fecha, con el momento del cálculo y el número de movimientos. Es un *valor operativo*: los movimientos registrados al coste registrado de cada lote. No es un saldo contabilizado de existencias ni indica coste de ventas.
+
+Las mercancías de coste **desconocido** (un lote recibido sin coste, o sin lote) se listan por cantidad y **no** están en el total; la página dice *Incompleto* mientras existan, y un coste conocido de cero es una línea valorada, no desconocida. Un movimiento registrado después con una fecha anterior cambia un cálculo posterior, nunca los hechos registrados antes.
+
+Abra un movimiento (**Existencias → Movimientos**) y lea **De dónde viene**: la recepción, el pedido, las facturas de proveedor vinculadas a ese pedido, lo que debe cada una y los pagos y reversiones que la liquidan. Solo se muestra lo registrado; nada se empareja por un nombre, una fecha o un importe. Una parte que no puede ver dice *no se le muestra* (no es lo mismo que sin pagar); una parte sin nada registrado dice *sin vincular*; una lista recortada lo dice. Vincular una factura nunca cambia lo que cuesta la mercancía. Abrirlo no cambia nada.
+
+<!-- anchor: user.money.stock.reversals -->
+### Devoluciones, correcciones y recuentos
+
+**Público:** Administrador/a · Propietario
+
+Quiere recuperar mercancías, deshacer un movimiento o corregir una cifra errónea en la estantería, sin reescribir la historia.
+
+Abra un movimiento en **Existencias → Movimientos**. Donde la función *Devoluciones y correcciones* esté activa y su rol pueda mover existencias, la página dice cuánto de ese movimiento se puede aún revertir y ofrece: **Devolución del cliente** (para una venta), **Devolución al proveedor** (para una entrega) o **Corregir este movimiento** (para los demás). El formulario muestra lo que se movió y lo que queda antes de confirmar. Una devolución al proveedor sale del lugar donde están ahora las mercancías; las que vuelven de un cliente regresan al lugar que elija. Una corrección es un movimiento inverso, y una corrección puede corregirse a su vez.
+
+**Recuentos.** Donde la función *Recuentos de stock* esté activa, **Existencias → Recuentos de stock** lista lo contado frente a lo que el registro tenía. **Contar** registra un artículo en un lugar y no mueve nada: el recuento espera a alguien que pueda aprobar ajustes, y lo dice. La aprobación aplica exactamente la diferencia, y solo si el stock no se ha movido desde el recuento; si no, dice que hay que volver a contar. Quien contó no aprueba su propio recuento mientras otra persona pueda; el propietario de un negocio de una sola persona hace ambas cosas.
+
+**Conviene saber**
+
+- Una devolución o corrección nunca supera lo que permite el movimiento que revierte, cuantas veces se envíe.
+- No hace ningún pago, reembolso ni abono: si hay dinero de por medio, corríjalo en la factura o en el pago al proveedor.
+- Enviar el mismo formulario otra vez tras una respuesta perdida lo registra una sola vez.
+
 <!-- anchor: user.money.amounts -->
 ### Cómo se muestran los importes
 

@@ -8,6 +8,7 @@
 import 'package:go_router/go_router.dart';
 
 import '../../features/stock/application/stock_view.dart';
+import '../../features/stock/presentation/stock_counts_screen.dart';
 import '../../features/stock/presentation/stock_entry.dart';
 import '../../features/stock/presentation/stock_items_screen.dart';
 import '../../features/stock/presentation/stock_movement_screen.dart';
@@ -16,6 +17,7 @@ import '../../features/stock/presentation/stock_reorder_screen.dart';
 import '../../features/stock/presentation/stock_screen.dart';
 import '../../features/stock/presentation/stock_settings_screen.dart';
 import '../../features/stock/presentation/stock_transfers_screen.dart';
+import '../../features/stock/presentation/stock_value_screen.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../route_access.dart';
 import '../route_env.dart';
@@ -24,6 +26,10 @@ import '../route_env.dart';
 List<RouteBase> stockRoutes(RouteEnv env) {
   const access = RouteAccess(
     features: [WorkspaceFeature.stockManagement],
+    to: '/reserve',
+  );
+  const countsAccess = RouteAccess(
+    features: [WorkspaceFeature.stockManagement, WorkspaceFeature.stockCounts],
     to: '/reserve',
   );
   const reorderAccess = RouteAccess(
@@ -45,12 +51,12 @@ List<RouteBase> stockRoutes(RouteEnv env) {
         GoRoute(
           path: 'items',
           redirect: env.guard(access),
-          builder: (context, state) => const StockItemsScreen(),
+          builder: (context, state) => StockItemsScreen(addFirst: state.uri.queryParameters['add'] == '1'),
         ),
         GoRoute(
           path: 'places',
           redirect: env.guard(access),
-          builder: (context, state) => const StockPlacesScreen(),
+          builder: (context, state) => StockPlacesScreen(addFirst: state.uri.queryParameters['add'] == '1'),
         ),
         GoRoute(
           path: 'settings',
@@ -63,10 +69,22 @@ List<RouteBase> stockRoutes(RouteEnv env) {
           redirect: env.guard(reorderAccess),
           builder: (context, state) => const StockReorderScreen(),
         ),
+        // #4173 — the operational value of what is on hand, for who may see what goods cost.
+        GoRoute(
+          path: 'value',
+          redirect: env.guard(access),
+          builder: (context, state) => const StockValueScreen(),
+        ),
         GoRoute(
           path: 'transfers',
           redirect: env.guard(access),
           builder: (context, state) => const StockTransfersScreen(),
+        ),
+        // #4172 — the counts and their approval, where the feature is on.
+        GoRoute(
+          path: 'counts',
+          redirect: env.guard(countsAccess),
+          builder: (context, state) => const StockCountsScreen(),
         ),
         GoRoute(
           path: 'movements/:id',

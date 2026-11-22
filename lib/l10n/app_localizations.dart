@@ -16516,6 +16516,18 @@ abstract class AppLocalizations {
   /// **'No purchase document was filed for this request, or you may not see it.'**
   String get eventSourceNotFound;
 
+  /// #4295 the notice of a cycle count task open past its due day.
+  ///
+  /// In en, this message translates to:
+  /// **'The cycle count \"{plan}\" is still open past its due day.'**
+  String eventStockCountOverdue(String plan);
+
+  /// #4295 suffix of a notice whose task is complete.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get eventStockCountOverdueEnded;
+
   /// #4294 the low-stock notice in the inbox
   ///
   /// In en, this message translates to:
@@ -16743,6 +16755,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Whole-space reservations'**
   String get eventTypeSpaceReservation;
+
+  /// #4295 the type name in the feed and the validation settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Cycle count overdue'**
+  String get eventTypeStockCountOverdue;
 
   /// #4294 the low-stock notice in the inbox
   ///
@@ -20230,6 +20248,30 @@ abstract class AppLocalizations {
   /// **'Standalone invoices'**
   String get featureStandaloneInvoicingTitle;
 
+  /// #4172 feature description
+  ///
+  /// In en, this message translates to:
+  /// **'Count an item at a place. The count waits for someone who may approve adjustments, and it is applied only if the stock has not moved since it was counted. Off: no count is recorded; the ledger is unaffected.'**
+  String get featureStockCountsDesc;
+
+  /// #4172 feature name
+  ///
+  /// In en, this message translates to:
+  /// **'Stock counts'**
+  String get featureStockCountsTitle;
+
+  /// #4295 feature description
+  ///
+  /// In en, this message translates to:
+  /// **'Plan spot checks of chosen places, items or high-value goods. A due plan makes a count task the counter does without seeing the expected quantities; each difference is approved like any count. Off: no plan runs and no task is made; the ledger is unaffected.'**
+  String get featureStockCycleCountsDesc;
+
+  /// #4295 feature name
+  ///
+  /// In en, this message translates to:
+  /// **'Cycle counts'**
+  String get featureStockCycleCountsTitle;
+
   /// #4169 what the lots and expiry feature does, and what off means
   ///
   /// In en, this message translates to:
@@ -20245,13 +20287,13 @@ abstract class AppLocalizations {
   /// the feature's description on the Features screen (#3824)
   ///
   /// In en, this message translates to:
-  /// **'Keep track of goods: where they are, in which unit, from which lot, and every movement between two places. Off: a catalogue item keeps its single shelf count.'**
+  /// **'Keep the goods you sell or store: which items, in which places, the deliveries you receive, the moves between places and the stock you take out. Switching it on adds a Stock menu with its pages; the other stock functions (lots, receiving, take-out, reorder points) are switches under it. Off: a catalogue item keeps its single shelf count.'**
   String get featureStockManagementDesc;
 
   /// the feature's name (#3824)
   ///
   /// In en, this message translates to:
-  /// **'Stock management'**
+  /// **'Stock: items, places, deliveries, moves'**
   String get featureStockManagementTitle;
 
   /// #4171 what the receiving into stock feature does, and what off means
@@ -20277,6 +20319,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reorder points'**
   String get featureStockReorderTitle;
+
+  /// #4172 feature description
+  ///
+  /// In en, this message translates to:
+  /// **'Return goods against the sale or the delivery they came from, or correct a movement. Each return or correction is bounded by the movement it reverses, so the same goods are never returned twice. Off: no return and no correction is offered; the ledger is unaffected.'**
+  String get featureStockReturnsDesc;
+
+  /// #4172 feature name
+  ///
+  /// In en, this message translates to:
+  /// **'Stock returns and corrections'**
+  String get featureStockReturnsTitle;
 
   /// #4170 what the taking goods out feature does, and what off means
   ///
@@ -39472,6 +39526,12 @@ abstract class AppLocalizations {
   /// **'Approve the adjustment a stock count proposes.'**
   String get permAllowsApproveStockAdjustments;
 
+  /// #4295 permission description
+  ///
+  /// In en, this message translates to:
+  /// **'Count the lines of a cycle count task without seeing what the ledger holds: the tasks and the count of each line, and nothing else.'**
+  String get permAllowsCountStock;
+
   /// #3628 roles at the desk: one line of what the permission allows
   ///
   /// In en, this message translates to:
@@ -39699,6 +39759,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Approve stock adjustments'**
   String get permApproveStockAdjustments;
+
+  /// #4295 permission name
+  ///
+  /// In en, this message translates to:
+  /// **'Count stock, blind'**
+  String get permCountStock;
 
   /// #987/#989 environment pairs: permDeployToDev
   ///
@@ -45728,6 +45794,24 @@ abstract class AppLocalizations {
   /// **'This stock configuration is not valid: the field it names says why.'**
   String get refusalStockConfig;
 
+  /// #4172 refusal
+  ///
+  /// In en, this message translates to:
+  /// **'This count was already decided and is final. Count again if the figure is still wrong.'**
+  String get refusalStockCountDecided;
+
+  /// #4172 refusal
+  ///
+  /// In en, this message translates to:
+  /// **'Someone else who may approve adjustments has to apply this count: whoever counted does not approve their own count.'**
+  String get refusalStockCountSelf;
+
+  /// #4172 refusal
+  ///
+  /// In en, this message translates to:
+  /// **'The stock moved since it was counted, so the count is not applied. Count again.'**
+  String get refusalStockCountStale;
+
   /// refusal DKG08 (#3824): deleting an item or a movement the ledger keeps
   ///
   /// In en, this message translates to:
@@ -45787,6 +45871,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This page request is not valid: ask for 1 to 200 rows, and continue only from the position a page gave.'**
   String get refusalStockPage;
+
+  /// #4172 refusal
+  ///
+  /// In en, this message translates to:
+  /// **'More than this movement held cannot be returned: part of it was already returned or corrected.'**
+  String get refusalStockReturnBeyond;
+
+  /// #4172 refusal
+  ///
+  /// In en, this message translates to:
+  /// **'This return was already recorded with other content. Check the earlier return before sending a new one.'**
+  String get refusalStockReturnChanged;
+
+  /// #4172 refusal
+  ///
+  /// In en, this message translates to:
+  /// **'A return follows the sale or the delivery it comes from; this movement is not one, or is not corrected here.'**
+  String get refusalStockReturnSource;
 
   /// #4169 (0836) DKG10: a stock configuration save of a revision that is no longer current.
   ///
@@ -50912,6 +51014,18 @@ abstract class AppLocalizations {
   /// **'Off: a move that would leave less than nothing at a place is refused. On: it is recorded, and the place shows a negative quantity until goods arrive.'**
   String get settingHintStockAllowNegative;
 
+  /// #4295 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'The value, in minor units of the business currency, from which what a place holds of an item counts as high value for a cycle count plan that has no threshold of its own.'**
+  String get settingHintStockCycleCountHighValueMinor;
+
+  /// #4295 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'How many days a cycle count task may stay open past its due date before the inbox says it is overdue.'**
+  String get settingHintStockCycleCountOverdueDays;
+
   /// #2487 retention settings
   ///
   /// In en, this message translates to:
@@ -51445,6 +51559,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Stock may go below zero'**
   String get settingLabelStockAllowNegative;
+
+  /// #4295 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Cycle count: high-value threshold'**
+  String get settingLabelStockCycleCountHighValueMinor;
+
+  /// #4295 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Cycle count: overdue after'**
+  String get settingLabelStockCycleCountOverdueDays;
 
   /// #2487 retention settings
   ///
@@ -55879,6 +56005,114 @@ abstract class AppLocalizations {
   /// **'Cost not recorded'**
   String get stockCostUnknown;
 
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get stockCountsApply;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel the count'**
+  String get stockCountsCancel;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'No count yet.'**
+  String get stockCountsEmpty;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Item to count'**
+  String get stockCountsItem;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'{item} at {place}: counted {observed} against {baseline} ({difference})'**
+  String stockCountsLine(
+    String item,
+    String place,
+    String observed,
+    String baseline,
+    String difference,
+  );
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Counted ({unit})'**
+  String stockCountsObserved(String unit);
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Count'**
+  String get stockCountsOpen;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Place'**
+  String get stockCountsPlace;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Reason (optional)'**
+  String get stockCountsReason;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Reject'**
+  String get stockCountsReject;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'The stock moved since this was counted: count it again.'**
+  String get stockCountsStale;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Applied'**
+  String get stockCountsStateApplied;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get stockCountsStateCancelled;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for approval'**
+  String get stockCountsStateRecorded;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected'**
+  String get stockCountsStateRejected;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Record the count'**
+  String get stockCountsSubmit;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Stock counts'**
+  String get stockCountsTitle;
+
   /// #4169 the stock editors: a label or message
   ///
   /// In en, this message translates to:
@@ -56125,10 +56359,160 @@ abstract class AppLocalizations {
   /// **'Entered'**
   String get stockEnteredLabel;
 
+  /// #4350 adding an item, and the first-run stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Start with a place where goods are kept, then the items you keep. After that, receive a delivery or move goods in.'**
+  String get stockFirstRunBody;
+
+  /// #4350 adding an item, and the first-run stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Add your first item'**
+  String get stockFirstRunItem;
+
+  /// #4350 adding an item, and the first-run stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Then receive a delivery from a purchase order, or move goods in from Movements.'**
+  String get stockFirstRunNext;
+
+  /// #4350 adding an item, and the first-run stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Add your first place'**
+  String get stockFirstRunPlace;
+
+  /// #4350 adding an item, and the first-run stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Your stock is empty'**
+  String get stockFirstRunTitle;
+
+  /// #4173 the goods put away against a document
+  ///
+  /// In en, this message translates to:
+  /// **'Show more'**
+  String get stockGoodsMore;
+
+  /// #4173 the goods put away against a document
+  ///
+  /// In en, this message translates to:
+  /// **'No goods are linked to it (nothing is recorded, which is not the same as none).'**
+  String get stockGoodsNone;
+
+  /// #4173 the goods put away against a document
+  ///
+  /// In en, this message translates to:
+  /// **'{item}: {entered} ({stored})'**
+  String stockGoodsRow(String item, String entered, String stored);
+
+  /// #4173 the goods put away against a document
+  ///
+  /// In en, this message translates to:
+  /// **'Goods put away'**
+  String get stockGoodsTitle;
+
+  /// #4173 the goods put away against a document
+  ///
+  /// In en, this message translates to:
+  /// **'The goods are not shown to you.'**
+  String get stockGoodsUnavailable;
+
+  /// #4350 adding an item, and the first-run stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Add an item'**
+  String get stockItemAddButton;
+
+  /// #4350 adding an item, and the first-run stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Or keep a service you already have in stock: choose one and its stock settings open with the setting already on.'**
+  String get stockItemAddIntro;
+
+  /// #4350 adding an item, and the first-run stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Every service is already kept in stock, or there is none yet. Add a service first, then come back.'**
+  String get stockItemAddNone;
+
+  /// #4350 adding an item, and the first-run stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Open services'**
+  String get stockItemAddOpenServices;
+
+  /// #4350 adding an item, and the first-run stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Add an item'**
+  String get stockItemAddTitle;
+
+  /// #4350 a new item from the Stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Barcode (optional)'**
+  String get stockItemNewBarcode;
+
+  /// #4350 a new item from the Stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Home place (optional)'**
+  String get stockItemNewHome;
+
+  /// #4350 a new item from the Stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get stockItemNewName;
+
+  /// #4350 a new item from the Stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Name the item.'**
+  String get stockItemNewNameRequired;
+
+  /// #4350 a new item from the Stock page
+  ///
+  /// In en, this message translates to:
+  /// **'None yet'**
+  String get stockItemNewNoHome;
+
+  /// #4350 a new item from the Stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Create a new item'**
+  String get stockItemNewOption;
+
+  /// #4350 a new item from the Stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Price ({currency})'**
+  String stockItemNewPrice(String currency);
+
+  /// #4350 a new item from the Stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a price, or leave it empty.'**
+  String get stockItemNewPriceInvalid;
+
+  /// #4350 a new item from the Stock page
+  ///
+  /// In en, this message translates to:
+  /// **'New item'**
+  String get stockItemNewTitle;
+
+  /// #4350 a new item from the Stock page
+  ///
+  /// In en, this message translates to:
+  /// **'Counted in'**
+  String get stockItemNewUnit;
+
   /// the stock pages and group (#4299)
   ///
   /// In en, this message translates to:
-  /// **'No items yet. Items are added when a service or a supplier article is kept in stock.'**
+  /// **'No items yet. An item is a service you keep in stock: choose Add an item.'**
   String get stockItemsEmpty;
 
   /// the stock pages and group (#4299)
@@ -57307,6 +57691,144 @@ abstract class AppLocalizations {
   /// **'What to order'**
   String get stockReorderToOrderTitle;
 
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Goods come back to'**
+  String get stockReversalBackTo;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Correct this movement'**
+  String get stockReversalCorrectionOpen;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Correct a movement'**
+  String get stockReversalCorrectionTitle;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Return from the customer'**
+  String get stockReversalCustomerOpen;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Return from the customer'**
+  String get stockReversalCustomerTitle;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'{kind}: {quantity} {unit}'**
+  String stockReversalEntry(String kind, String quantity, String unit);
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'This movement is fully reversed.'**
+  String get stockReversalFully;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Corrected'**
+  String get stockReversalKindCorrection;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Returned by the customer'**
+  String get stockReversalKindCustomer;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Returned to the supplier'**
+  String get stockReversalKindSupplier;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Goods leave from'**
+  String get stockReversalLeavesFrom;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'This movement follows an invoice: any refund or credit note is made in the invoice itself.'**
+  String get stockReversalMoneyInvoice;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Whether a credit exists for this movement is not shown here: the money is corrected apart.'**
+  String get stockReversalMoneyUnavailable;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'At most {quantity} {unit} can still be reversed.'**
+  String stockReversalMoreThanRemains(String quantity, String unit);
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'No payment, refund or credit is made by this. If money is involved, correct it in the invoice or the supplier payment, apart.'**
+  String get stockReversalNoMoney;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Note (optional)'**
+  String get stockReversalNote;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Can still be reversed: {quantity} {unit} · already reversed: {reversed}'**
+  String stockReversalRemaining(String quantity, String unit, String reversed);
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Returns and corrections'**
+  String get stockReversalSection;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'{item}: {quantity} {unit}, {from} → {to}'**
+  String stockReversalSource(
+    String item,
+    String quantity,
+    String unit,
+    String from,
+    String to,
+  );
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Record'**
+  String get stockReversalSubmit;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Return to the supplier'**
+  String get stockReversalSupplierOpen;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Return to the supplier'**
+  String get stockReversalSupplierTitle;
+
   /// the stock pages and group (#4299)
   ///
   /// In en, this message translates to:
@@ -57378,6 +57900,102 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Used by the business'**
   String get stockTakeOutUsed;
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'Bill {reference}'**
+  String stockTraceBill(String reference);
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'The bills are not shown to you.'**
+  String get stockTraceBillsUnavailable;
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'Lot cost: {amount}'**
+  String stockTraceLotCostKnown(String amount);
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'More exist than are listed here.'**
+  String get stockTraceMore;
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'No bill is linked to this order yet.'**
+  String get stockTraceNoBill;
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'No payment is recorded for it.'**
+  String get stockTraceNoPayment;
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'No purchase is recorded for this movement.'**
+  String get stockTraceNoPurchase;
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'Only what is recorded is shown: nothing is matched on a name, a date or an amount. Linking a bill never changes what the goods cost.'**
+  String get stockTraceNote;
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'Order {reference} · {supplier}'**
+  String stockTraceOrder(String reference, String supplier);
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'Owed: {amount}'**
+  String stockTraceOwed(String amount);
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'Paid {amount} on {date}'**
+  String stockTracePaid(String amount, String date);
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'Payments are not shown to you (that is not the same as unpaid).'**
+  String get stockTracePaymentsUnavailable;
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'The purchase side is not shown to you.'**
+  String get stockTracePurchaseUnavailable;
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'Received on {date}'**
+  String stockTraceReceived(String date);
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'Reversed {amount} on {date}'**
+  String stockTraceReversed(String amount, String date);
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'Where this came from'**
+  String get stockTraceTitle;
 
   /// #4170 transfers and take-out: a label or message
   ///
@@ -57455,6 +58073,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Transfers'**
   String get stockTransfersTitle;
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'An operational value from the recorded movements at their recorded lot costs. It is not a posted stock-book balance and states no cost of goods.'**
+  String get stockValueBasis;
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'Every item on hand has a known cost.'**
+  String get stockValueComplete;
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'As of {at}, calculated {calculated} from {count, plural, one{one movement} other{{count} movements}}.'**
+  String stockValueCutoff(String at, String calculated, int count);
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'Not complete: goods whose cost is unknown are not in this total.'**
+  String get stockValueIncomplete;
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'Known cost: {amount}'**
+  String stockValueKnownTotal(String amount);
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'{quantity} · {amount}'**
+  String stockValueLine(String quantity, String amount);
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'Priced goods'**
+  String get stockValueLinesTitle;
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'A movement recorded later with an earlier date changes a later calculation, never the facts recorded before.'**
+  String get stockValueMovesLater;
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'Seeing what goods cost needs the right to manage purchases or to read the finances.'**
+  String get stockValueNeedsRight;
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'Stock value'**
+  String get stockValueTitle;
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'the lot has no cost'**
+  String get stockValueUncostedNoCost;
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'no lot'**
+  String get stockValueUncostedNoLot;
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'Cost unknown'**
+  String get stockValueUncostedTitle;
 
   /// #4169 the stock editors: a label or message
   ///

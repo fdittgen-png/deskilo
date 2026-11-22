@@ -21,7 +21,7 @@ class DemoStockRegistry implements StockRegistry {
   final StockConfigCommands _config;
 
   /// Item id -> (barcode, price in cents, cost in minor units of one inventory unit).
-  static const _catalogue = <String, (String, int, String?)>{
+  static const catalogue = <String, (String, int, String?)>{
     'demo-item-beans': ('3017620422003', 2400, '1650'),
     'demo-item-milk': ('3256540000032', 210, '120'),
     'demo-item-mugs': ('4006381333931', 890, null),
@@ -65,8 +65,8 @@ class DemoStockRegistry implements StockRegistry {
     final scope = placeId == null ? null : _within(places, placeId);
     final onHand = await _ledger.onHand();
     final rows = <StockRegistryRow>[];
-    for (final item in DemoStockLedger.items) {
-      final entry = _catalogue[item.id];
+    for (final item in _ledger.itemList) {
+      final entry = catalogue[item.id];
       final home = byId[_homes[item.id]];
       if (noHome && home != null) continue;
       if (scope != null && (home == null || !scope.contains(home.id))) continue;
@@ -105,7 +105,7 @@ class DemoStockRegistry implements StockRegistry {
     required String? placeId,
     required String requestId,
   }) async {
-    if (workspaceId != _workspaceId || !_catalogue.containsKey(itemId)) {
+    if (workspaceId != _workspaceId || !catalogue.containsKey(itemId)) {
       throw const StockConfigRefused('item', 'not_an_item');
     }
     if (placeId != null) {

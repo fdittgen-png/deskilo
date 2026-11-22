@@ -670,6 +670,18 @@ window.SETUP_REGISTRY={
   [
    "stockReorder",
    false
+  ],
+  [
+   "stockReturns",
+   false
+  ],
+  [
+   "stockCounts",
+   false
+  ],
+  [
+   "stockCycleCounts",
+   false
   ]
  ],
  "requires": {
@@ -786,7 +798,10 @@ window.SETUP_REGISTRY={
   "stockReceiving": "stockManagement",
   "stockTakeOut": "stockManagement",
   "serviceFulfilment": "billingCustomers",
-  "stockReorder": "stockManagement"
+  "stockReorder": "stockManagement",
+  "stockReturns": "stockManagement",
+  "stockCounts": "stockManagement",
+  "stockCycleCounts": "stockCounts"
  },
  "availableIn": {
   "recapitulativeStatement": [
@@ -835,7 +850,8 @@ window.SETUP_REGISTRY={
   "viewStock",
   "manageStock",
   "approveStockAdjustments",
-  "manageBillingCustomers"
+  "manageBillingCustomers",
+  "countStock"
  ],
  "defaultMatrix": {
   "co_owner": [
@@ -877,7 +893,8 @@ window.SETUP_REGISTRY={
    "viewStock",
    "manageStock",
    "approveStockAdjustments",
-   "manageBillingCustomers"
+   "manageBillingCustomers",
+   "countStock"
   ],
   "admin": [
    "manageMembers",
@@ -1505,7 +1522,10 @@ window.SETUP_PROCESSES=[
      "stockLots",
      "stockReceiving",
      "stockTakeOut",
-     "stockReorder"
+     "stockReorder",
+     "stockReturns",
+     "stockCounts",
+     "stockCycleCounts"
     ]
    }
   ]
@@ -1994,7 +2014,10 @@ window.SETUP_LEVELS={
       "stockLots",
       "stockReceiving",
       "stockTakeOut",
-      "stockReorder"
+      "stockReorder",
+      "stockReturns",
+      "stockCounts",
+      "stockCycleCounts"
      ],
      "needs": {
       "money": "invoices"

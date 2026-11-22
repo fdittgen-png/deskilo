@@ -1,0 +1,18 @@
+{
+  "settingLabelStockCycleCountHighValueMinor": "Cycle count: high-value threshold",
+  "@settingLabelStockCycleCountHighValueMinor": {
+    "description": "#4295 settings: Setting label."
+  },
+  "settingHintStockCycleCountHighValueMinor": "The value, in minor units of the business currency, from which what a place holds of an item counts as high value for a cycle count plan that has no threshold of its own.",
+  "@settingHintStockCycleCountHighValueMinor": {
+    "description": "#4295 settings: Setting hint."
+  },
+  "settingLabelStockCycleCountOverdueDays": "Cycle count: overdue after",
+  "@settingLabelStockCycleCountOverdueDays": {
+    "description": "#4295 settings: Setting label."
+  },
+  "settingHintStockCycleCountOverdueDays": "How many days a cycle count task may stay open past its due date before the inbox says it is overdue.",
+  "@settingHintStockCycleCountOverdueDays": {
+    "description": "#4295 settings: Setting hint."
+  }
+}

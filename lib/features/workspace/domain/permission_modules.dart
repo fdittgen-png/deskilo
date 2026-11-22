@@ -50,6 +50,7 @@ PermissionModule _moduleOf(WorkspacePermission permission) =>
       WorkspacePermission.viewStock ||
       WorkspacePermission.manageStock ||
       WorkspacePermission.approveStockAdjustments => PermissionModule.stock,
+      WorkspacePermission.countStock => PermissionModule.stock,
       WorkspacePermission.manageDocuments ||
       WorkspacePermission.designDocuments ||
       WorkspacePermission.exportData ||

@@ -2954,6 +2954,34 @@ Abra **Existencias → Artículos**. Cada línea muestra el **código de barras*
 - **Busque** por nombre, código de barras o dirección. Escribir o escanear un código de barras en la búsqueda y confirmar abre ese artículo.
 - Las listas largas se cargan por páginas: elija *Mostrar más*.
 
+### Valor de las existencias y origen de la mercancía
+
+**Público:** Administrador/a · Propietario
+
+Quiere ver cuánto valen las existencias, de dónde vino una entrega y si se pagó.
+
+Abra **Existencias → Valor de las existencias** (requiere el derecho de gestionar las compras o de leer las finanzas). La página muestra el **coste conocido** de lo que hay, a una fecha, con el momento del cálculo y el número de movimientos. Es un *valor operativo*: los movimientos registrados al coste registrado de cada lote. No es un saldo contabilizado de existencias ni indica coste de ventas.
+
+Las mercancías de coste **desconocido** (un lote recibido sin coste, o sin lote) se listan por cantidad y **no** están en el total; la página dice *Incompleto* mientras existan, y un coste conocido de cero es una línea valorada, no desconocida. Un movimiento registrado después con una fecha anterior cambia un cálculo posterior, nunca los hechos registrados antes.
+
+Abra un movimiento (**Existencias → Movimientos**) y lea **De dónde viene**: la recepción, el pedido, las facturas de proveedor vinculadas a ese pedido, lo que debe cada una y los pagos y reversiones que la liquidan. Solo se muestra lo registrado; nada se empareja por un nombre, una fecha o un importe. Una parte que no puede ver dice *no se le muestra* (no es lo mismo que sin pagar); una parte sin nada registrado dice *sin vincular*; una lista recortada lo dice. Vincular una factura nunca cambia lo que cuesta la mercancía. Abrirlo no cambia nada.
+
+### Devoluciones, correcciones y recuentos
+
+**Público:** Administrador/a · Propietario
+
+Quiere recuperar mercancías, deshacer un movimiento o corregir una cifra errónea en la estantería, sin reescribir la historia.
+
+Abra un movimiento en **Existencias → Movimientos**. Donde la función *Devoluciones y correcciones* esté activa y su rol pueda mover existencias, la página dice cuánto de ese movimiento se puede aún revertir y ofrece: **Devolución del cliente** (para una venta), **Devolución al proveedor** (para una entrega) o **Corregir este movimiento** (para los demás). El formulario muestra lo que se movió y lo que queda antes de confirmar. Una devolución al proveedor sale del lugar donde están ahora las mercancías; las que vuelven de un cliente regresan al lugar que elija. Una corrección es un movimiento inverso, y una corrección puede corregirse a su vez.
+
+**Recuentos.** Donde la función *Recuentos de stock* esté activa, **Existencias → Recuentos de stock** lista lo contado frente a lo que el registro tenía. **Contar** registra un artículo en un lugar y no mueve nada: el recuento espera a alguien que pueda aprobar ajustes, y lo dice. La aprobación aplica exactamente la diferencia, y solo si el stock no se ha movido desde el recuento; si no, dice que hay que volver a contar. Quien contó no aprueba su propio recuento mientras otra persona pueda; el propietario de un negocio de una sola persona hace ambas cosas.
+
+**Conviene saber**
+
+- Una devolución o corrección nunca supera lo que permite el movimiento que revierte, cuantas veces se envíe.
+- No hace ningún pago, reembolso ni abono: si hay dinero de por medio, corríjalo en la factura o en el pago al proveedor.
+- Enviar el mismo formulario otra vez tras una respuesta perdida lo registra una sola vez.
+
 ### Cómo se muestran los importes
 
 **Público:** Todos
@@ -7566,6 +7594,30 @@ Después añada solo lo que le corresponda:
 - Active estas funciones de una en una y emita antes una factura de prueba en un espacio de prueba. Véase [El orden para activar las cosas](help:setup.features.order).
 
 **Véase también:** [Dinero y facturación](help:setup.money.overview) · [Partir de una plantilla o de cero](help:setup.before.template)
+
+### Vender o almacenar mercancías
+
+**Público:** Propietario
+
+Vende mercancías o lleva existencias y quiere saber dónde están los artículos, ubicaciones, entregas y movimientos. Todo empieza con un interruptor, luego unos cuantos más, en este orden.
+
+| # | Haga esto | Dónde está después |
+|---|---|---|
+| 1 | Active **Existencias: artículos, ubicaciones, entregas, movimientos** (bajo **Servicios**). | Aparece un menú **Existencias**: Existencias, Movimientos, Traspasos, Artículos, Ubicaciones, Ajustes de existencias. |
+| 2 | Añada su primera ubicación: **Existencias → Ubicaciones → Añadir una ubicación** (por ejemplo el almacén principal, luego las estanterías dentro). | **Existencias → Ubicaciones** |
+| 3 | Añada su primer artículo: **Existencias → Artículos → Añadir un artículo**. Un artículo es un servicio que mantiene en existencias: elíjalo y sus ajustes de existencias se abren con el ajuste ya activado (su unidad, unidades de embalaje, códigos). Añada antes el servicio en **Servicios** si no existe. | **Existencias → Artículos** |
+| 4 | Active **Compras** y **Pedir a proveedores** para pedir mercancías, luego **Recepción en existencias** para guardar una entrega desde su pedido. | **Compras y proveedores → Pedidos**, luego **Registrar la entrega** |
+| 5 | Active **Salida de mercancías** para lo que sale (vendido, usado, perdido), **Lotes y caducidad** para mercancías con lotes o fecha de caducidad y **Puntos de reposición** para saber qué está bajo. | **Existencias → Movimientos** (salida), **Existencias → Reposición** |
+
+Después reciba una entrega, mueva mercancías a una estantería y saque una: la página Existencias muestra cada operación al instante.
+
+**Conviene saber**
+
+- Una empresa que ha activado las existencias pero aún no tiene ubicación ni artículo ve **Añadir su primera ubicación** y **Añadir su primer artículo** en la página Existencias.
+- Desactivar una función no borra nada: lo registrado se conserva y se puede leer de nuevo.
+- Pruébelo primero en la demostración, donde la tienda ya lleva existencias. Vea [Desactivar no borra nada](help:setup.features.off).
+
+**Véase también:** [El orden para activar las funciones](help:setup.features.order) · [Funciones que necesitan otras](help:setup.features.dependencies)
 
 ### El orden para activar las cosas
 

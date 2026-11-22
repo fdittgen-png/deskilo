@@ -1,0 +1,227 @@
+{
+  "stockReversalSection": "Returns and corrections",
+  "@stockReversalSection": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalFully": "This movement is fully reversed.",
+  "@stockReversalFully": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalRemaining": "Can still be reversed: {quantity} {unit} · already reversed: {reversed}",
+  "@stockReversalRemaining": {
+    "description": "#4172 stock returns and counts screens",
+    "placeholders": {
+      "quantity": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      },
+      "reversed": {
+        "type": "String"
+      }
+    }
+  },
+  "stockReversalEntry": "{kind}: {quantity} {unit}",
+  "@stockReversalEntry": {
+    "description": "#4172 stock returns and counts screens",
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "stockReversalKindCustomer": "Returned by the customer",
+  "@stockReversalKindCustomer": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalKindSupplier": "Returned to the supplier",
+  "@stockReversalKindSupplier": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalKindCorrection": "Corrected",
+  "@stockReversalKindCorrection": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalCustomerOpen": "Return from the customer",
+  "@stockReversalCustomerOpen": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalSupplierOpen": "Return to the supplier",
+  "@stockReversalSupplierOpen": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalCorrectionOpen": "Correct this movement",
+  "@stockReversalCorrectionOpen": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalCustomerTitle": "Return from the customer",
+  "@stockReversalCustomerTitle": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalSupplierTitle": "Return to the supplier",
+  "@stockReversalSupplierTitle": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalCorrectionTitle": "Correct a movement",
+  "@stockReversalCorrectionTitle": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalSubmit": "Record",
+  "@stockReversalSubmit": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalSource": "{item}: {quantity} {unit}, {from} → {to}",
+  "@stockReversalSource": {
+    "description": "#4172 stock returns and counts screens",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "stockReversalBackTo": "Goods come back to",
+  "@stockReversalBackTo": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalLeavesFrom": "Goods leave from",
+  "@stockReversalLeavesFrom": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalNote": "Note (optional)",
+  "@stockReversalNote": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalMoreThanRemains": "At most {quantity} {unit} can still be reversed.",
+  "@stockReversalMoreThanRemains": {
+    "description": "#4172 stock returns and counts screens",
+    "placeholders": {
+      "quantity": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "stockReversalNoMoney": "No payment, refund or credit is made by this. If money is involved, correct it in the invoice or the supplier payment, apart.",
+  "@stockReversalNoMoney": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalMoneyInvoice": "This movement follows an invoice: any refund or credit note is made in the invoice itself.",
+  "@stockReversalMoneyInvoice": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalMoneyUnavailable": "Whether a credit exists for this movement is not shown here: the money is corrected apart.",
+  "@stockReversalMoneyUnavailable": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockCountsTitle": "Stock counts",
+  "@stockCountsTitle": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockCountsEmpty": "No count yet.",
+  "@stockCountsEmpty": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockCountsOpen": "Count",
+  "@stockCountsOpen": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockCountsSubmit": "Record the count",
+  "@stockCountsSubmit": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockCountsItem": "Item to count",
+  "@stockCountsItem": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockCountsPlace": "Place",
+  "@stockCountsPlace": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockCountsObserved": "Counted ({unit})",
+  "@stockCountsObserved": {
+    "description": "#4172 stock returns and counts screens",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "stockCountsReason": "Reason (optional)",
+  "@stockCountsReason": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockCountsLine": "{item} at {place}: counted {observed} against {baseline} ({difference})",
+  "@stockCountsLine": {
+    "description": "#4172 stock returns and counts screens",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      },
+      "place": {
+        "type": "String"
+      },
+      "observed": {
+        "type": "String"
+      },
+      "baseline": {
+        "type": "String"
+      },
+      "difference": {
+        "type": "String"
+      }
+    }
+  },
+  "stockCountsStateRecorded": "Waiting for approval",
+  "@stockCountsStateRecorded": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockCountsStateApplied": "Applied",
+  "@stockCountsStateApplied": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockCountsStateRejected": "Rejected",
+  "@stockCountsStateRejected": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockCountsStateCancelled": "Cancelled",
+  "@stockCountsStateCancelled": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockCountsStale": "The stock moved since this was counted: count it again.",
+  "@stockCountsStale": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockCountsApply": "Apply",
+  "@stockCountsApply": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockCountsReject": "Reject",
+  "@stockCountsReject": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockCountsCancel": "Cancel the count",
+  "@stockCountsCancel": {
+    "description": "#4172 stock returns and counts screens"
+  }
+}

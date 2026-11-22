@@ -13710,6 +13710,19 @@
   "@eventSourceNotFound": {
     "description": "#2573 open the purchase an expense request was filed as"
   },
+  "eventStockCountOverdue": "The cycle count \"{plan}\" is still open past its due day.",
+  "@eventStockCountOverdue": {
+    "description": "#4295 the notice of a cycle count task open past its due day.",
+    "placeholders": {
+      "plan": {
+        "type": "String"
+      }
+    }
+  },
+  "eventStockCountOverdueEnded": "Done",
+  "@eventStockCountOverdueEnded": {
+    "description": "#4295 suffix of a notice whose task is complete."
+  },
   "eventStockLow": "{item} is low at {site}: {onHand} on hand, reorder point {point}",
   "@eventStockLow": {
     "description": "#4294 the low-stock notice in the inbox",
@@ -13875,6 +13888,10 @@
   "eventTypeSpaceReservation": "Whole-space reservations",
   "@eventTypeSpaceReservation": {
     "description": "Event/validation domain: whole desk/office/level reservations (0059)"
+  },
+  "eventTypeStockCountOverdue": "Cycle count overdue",
+  "@eventTypeStockCountOverdue": {
+    "description": "#4295 the type name in the feed and the validation settings."
   },
   "eventTypeStockLow": "Low stock",
   "@eventTypeStockLow": {
@@ -16336,6 +16353,22 @@
   "@featureStandaloneInvoicingTitle": {
     "description": "#4165 feature switch: featureStandaloneInvoicingTitle"
   },
+  "featureStockCountsDesc": "Count an item at a place. The count waits for someone who may approve adjustments, and it is applied only if the stock has not moved since it was counted. Off: no count is recorded; the ledger is unaffected.",
+  "@featureStockCountsDesc": {
+    "description": "#4172 feature description"
+  },
+  "featureStockCountsTitle": "Stock counts",
+  "@featureStockCountsTitle": {
+    "description": "#4172 feature name"
+  },
+  "featureStockCycleCountsDesc": "Plan spot checks of chosen places, items or high-value goods. A due plan makes a count task the counter does without seeing the expected quantities; each difference is approved like any count. Off: no plan runs and no task is made; the ledger is unaffected.",
+  "@featureStockCycleCountsDesc": {
+    "description": "#4295 feature description"
+  },
+  "featureStockCycleCountsTitle": "Cycle counts",
+  "@featureStockCycleCountsTitle": {
+    "description": "#4295 feature name"
+  },
   "featureStockLotsDesc": "Track goods by lot or by expiry date, with a shelf life. Off: no item is tracked by lot, and what was recorded is kept as it is.",
   "@featureStockLotsDesc": {
     "description": "#4169 what the lots and expiry feature does, and what off means"
@@ -16344,11 +16377,11 @@
   "@featureStockLotsTitle": {
     "description": "#4169 the name of the lots and expiry feature"
   },
-  "featureStockManagementDesc": "Keep track of goods: where they are, in which unit, from which lot, and every movement between two places. Off: a catalogue item keeps its single shelf count.",
+  "featureStockManagementDesc": "Keep the goods you sell or store: which items, in which places, the deliveries you receive, the moves between places and the stock you take out. Switching it on adds a Stock menu with its pages; the other stock functions (lots, receiving, take-out, reorder points) are switches under it. Off: a catalogue item keeps its single shelf count.",
   "@featureStockManagementDesc": {
     "description": "the feature's description on the Features screen (#3824)"
   },
-  "featureStockManagementTitle": "Stock management",
+  "featureStockManagementTitle": "Stock: items, places, deliveries, moves",
   "@featureStockManagementTitle": {
     "description": "the feature's name (#3824)"
   },
@@ -16367,6 +16400,14 @@
   "featureStockReorderTitle": "Reorder points",
   "@featureStockReorderTitle": {
     "description": "#4294 feature name"
+  },
+  "featureStockReturnsDesc": "Return goods against the sale or the delivery they came from, or correct a movement. Each return or correction is bounded by the movement it reverses, so the same goods are never returned twice. Off: no return and no correction is offered; the ledger is unaffected.",
+  "@featureStockReturnsDesc": {
+    "description": "#4172 feature description"
+  },
+  "featureStockReturnsTitle": "Stock returns and corrections",
+  "@featureStockReturnsTitle": {
+    "description": "#4172 feature name"
   },
   "featureStockTakeOutDesc": "Take goods out of stock for use or as a loss, with the reason and the lot. Off: no consumption or loss is offered; transfers and receiving are unaffected.",
   "@featureStockTakeOutDesc": {
@@ -32541,6 +32582,10 @@
   "@permAllowsApproveStockAdjustments": {
     "description": "#3628 roles at the desk: one line of what the permission allows"
   },
+  "permAllowsCountStock": "Count the lines of a cycle count task without seeing what the ledger holds: the tasks and the count of each line, and nothing else.",
+  "@permAllowsCountStock": {
+    "description": "#4295 permission description"
+  },
   "permAllowsDeployToDev": "Refresh the development space from production.",
   "@permAllowsDeployToDev": {
     "description": "#3628 roles at the desk: one line of what the permission allows"
@@ -32692,6 +32737,10 @@
   "permApproveStockAdjustments": "Approve stock adjustments",
   "@permApproveStockAdjustments": {
     "description": "a permission in the role matrix (#3824)"
+  },
+  "permCountStock": "Count stock, blind",
+  "@permCountStock": {
+    "description": "#4295 permission name"
   },
   "permDeployToDev": "Deploy to development",
   "@permDeployToDev": {
@@ -37443,6 +37492,18 @@
   "@refusalStockConfig": {
     "description": "#4169 (0836) DKG11: a stock configuration that is not valid, the field and reason in the detail."
   },
+  "refusalStockCountDecided": "This count was already decided and is final. Count again if the figure is still wrong.",
+  "@refusalStockCountDecided": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockCountSelf": "Someone else who may approve adjustments has to apply this count: whoever counted does not approve their own count.",
+  "@refusalStockCountSelf": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockCountStale": "The stock moved since it was counted, so the count is not applied. Count again.",
+  "@refusalStockCountStale": {
+    "description": "#4172 refusal"
+  },
   "refusalStockHistory": "This item has stock movements, which are kept: it cannot be deleted, and its stock unit and tracking stay as they are. Deactivate it, or create a new item.",
   "@refusalStockHistory": {
     "description": "refusal DKG08 (#3824): deleting an item or a movement the ledger keeps"
@@ -37482,6 +37543,18 @@
   "refusalStockPage": "This page request is not valid: ask for 1 to 200 rows, and continue only from the position a page gave.",
   "@refusalStockPage": {
     "description": "#4161 (0833) DKG09: a stock page request that is not valid (size outside 1..200, or a cursor that is not one)."
+  },
+  "refusalStockReturnBeyond": "More than this movement held cannot be returned: part of it was already returned or corrected.",
+  "@refusalStockReturnBeyond": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockReturnChanged": "This return was already recorded with other content. Check the earlier return before sending a new one.",
+  "@refusalStockReturnChanged": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockReturnSource": "A return follows the sale or the delivery it comes from; this movement is not one, or is not corrected here.",
+  "@refusalStockReturnSource": {
+    "description": "#4172 refusal"
   },
   "refusalStockStale": "This was changed by someone else since you opened it. Read it again, then make your change again.",
   "@refusalStockStale": {
@@ -41397,6 +41470,14 @@
   "@settingHintStockAllowNegative": {
     "description": "a workspace setting's hint (#3824)"
   },
+  "settingHintStockCycleCountHighValueMinor": "The value, in minor units of the business currency, from which what a place holds of an item counts as high value for a cycle count plan that has no threshold of its own.",
+  "@settingHintStockCycleCountHighValueMinor": {
+    "description": "#4295 settings: Setting hint."
+  },
+  "settingHintStockCycleCountOverdueDays": "How many days a cycle count task may stay open past its due date before the inbox says it is overdue.",
+  "@settingHintStockCycleCountOverdueDays": {
+    "description": "#4295 settings: Setting hint."
+  },
   "settingHintVatViesEvidenceDays": "Days a valid VAT-number check stays recent enough to stand as evidence on a new invoice. A shorter value asks for a fresh check sooner; it is not proof that a transaction is valid.",
   "@settingHintVatViesEvidenceDays": {
     "description": "#2487 retention settings"
@@ -41752,6 +41833,14 @@
   "settingLabelStockAllowNegative": "Stock may go below zero",
   "@settingLabelStockAllowNegative": {
     "description": "a workspace setting's label (#3824)"
+  },
+  "settingLabelStockCycleCountHighValueMinor": "Cycle count: high-value threshold",
+  "@settingLabelStockCycleCountHighValueMinor": {
+    "description": "#4295 settings: Setting label."
+  },
+  "settingLabelStockCycleCountOverdueDays": "Cycle count: overdue after",
+  "@settingLabelStockCycleCountOverdueDays": {
+    "description": "#4295 settings: Setting label."
   },
   "settingLabelVatViesEvidenceDays": "VAT-number check freshness",
   "@settingLabelVatViesEvidenceDays": {
@@ -45304,6 +45393,96 @@
   "@stockCostUnknown": {
     "description": "#4161 the cost of this movement was never recorded (not zero)"
   },
+  "stockCountsApply": "Apply",
+  "@stockCountsApply": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockCountsCancel": "Cancel the count",
+  "@stockCountsCancel": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockCountsEmpty": "No count yet.",
+  "@stockCountsEmpty": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockCountsItem": "Item to count",
+  "@stockCountsItem": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockCountsLine": "{item} at {place}: counted {observed} against {baseline} ({difference})",
+  "@stockCountsLine": {
+    "description": "#4172 stock returns and counts screens",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      },
+      "place": {
+        "type": "String"
+      },
+      "observed": {
+        "type": "String"
+      },
+      "baseline": {
+        "type": "String"
+      },
+      "difference": {
+        "type": "String"
+      }
+    }
+  },
+  "stockCountsObserved": "Counted ({unit})",
+  "@stockCountsObserved": {
+    "description": "#4172 stock returns and counts screens",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "stockCountsOpen": "Count",
+  "@stockCountsOpen": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockCountsPlace": "Place",
+  "@stockCountsPlace": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockCountsReason": "Reason (optional)",
+  "@stockCountsReason": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockCountsReject": "Reject",
+  "@stockCountsReject": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockCountsStale": "The stock moved since this was counted: count it again.",
+  "@stockCountsStale": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockCountsStateApplied": "Applied",
+  "@stockCountsStateApplied": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockCountsStateCancelled": "Cancelled",
+  "@stockCountsStateCancelled": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockCountsStateRecorded": "Waiting for approval",
+  "@stockCountsStateRecorded": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockCountsStateRejected": "Rejected",
+  "@stockCountsStateRejected": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockCountsSubmit": "Record the count",
+  "@stockCountsSubmit": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockCountsTitle": "Stock counts",
+  "@stockCountsTitle": {
+    "description": "#4172 stock returns and counts screens"
+  },
   "stockDimensionAdd": "Add a dimension",
   "@stockDimensionAdd": {
     "description": "#4169 the stock editors: a label or message"
@@ -45473,7 +45652,123 @@
   "@stockEnteredLabel": {
     "description": "#4161 the quantity and unit as entered"
   },
-  "stockItemsEmpty": "No items yet. Items are added when a service or a supplier article is kept in stock.",
+  "stockFirstRunBody": "Start with a place where goods are kept, then the items you keep. After that, receive a delivery or move goods in.",
+  "@stockFirstRunBody": {
+    "description": "#4350 adding an item, and the first-run stock page"
+  },
+  "stockFirstRunItem": "Add your first item",
+  "@stockFirstRunItem": {
+    "description": "#4350 adding an item, and the first-run stock page"
+  },
+  "stockFirstRunNext": "Then receive a delivery from a purchase order, or move goods in from Movements.",
+  "@stockFirstRunNext": {
+    "description": "#4350 adding an item, and the first-run stock page"
+  },
+  "stockFirstRunPlace": "Add your first place",
+  "@stockFirstRunPlace": {
+    "description": "#4350 adding an item, and the first-run stock page"
+  },
+  "stockFirstRunTitle": "Your stock is empty",
+  "@stockFirstRunTitle": {
+    "description": "#4350 adding an item, and the first-run stock page"
+  },
+  "stockGoodsMore": "Show more",
+  "@stockGoodsMore": {
+    "description": "#4173 the goods put away against a document"
+  },
+  "stockGoodsNone": "No goods are linked to it (nothing is recorded, which is not the same as none).",
+  "@stockGoodsNone": {
+    "description": "#4173 the goods put away against a document"
+  },
+  "stockGoodsRow": "{item}: {entered} ({stored})",
+  "@stockGoodsRow": {
+    "description": "#4173 the goods put away against a document",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      },
+      "entered": {
+        "type": "String"
+      },
+      "stored": {
+        "type": "String"
+      }
+    }
+  },
+  "stockGoodsTitle": "Goods put away",
+  "@stockGoodsTitle": {
+    "description": "#4173 the goods put away against a document"
+  },
+  "stockGoodsUnavailable": "The goods are not shown to you.",
+  "@stockGoodsUnavailable": {
+    "description": "#4173 the goods put away against a document"
+  },
+  "stockItemAddButton": "Add an item",
+  "@stockItemAddButton": {
+    "description": "#4350 adding an item, and the first-run stock page"
+  },
+  "stockItemAddIntro": "Or keep a service you already have in stock: choose one and its stock settings open with the setting already on.",
+  "@stockItemAddIntro": {
+    "description": "#4350 adding an item, and the first-run stock page"
+  },
+  "stockItemAddNone": "Every service is already kept in stock, or there is none yet. Add a service first, then come back.",
+  "@stockItemAddNone": {
+    "description": "#4350 adding an item, and the first-run stock page"
+  },
+  "stockItemAddOpenServices": "Open services",
+  "@stockItemAddOpenServices": {
+    "description": "#4350 adding an item, and the first-run stock page"
+  },
+  "stockItemAddTitle": "Add an item",
+  "@stockItemAddTitle": {
+    "description": "#4350 adding an item, and the first-run stock page"
+  },
+  "stockItemNewBarcode": "Barcode (optional)",
+  "@stockItemNewBarcode": {
+    "description": "#4350 a new item from the Stock page"
+  },
+  "stockItemNewHome": "Home place (optional)",
+  "@stockItemNewHome": {
+    "description": "#4350 a new item from the Stock page"
+  },
+  "stockItemNewName": "Name",
+  "@stockItemNewName": {
+    "description": "#4350 a new item from the Stock page"
+  },
+  "stockItemNewNameRequired": "Name the item.",
+  "@stockItemNewNameRequired": {
+    "description": "#4350 a new item from the Stock page"
+  },
+  "stockItemNewNoHome": "None yet",
+  "@stockItemNewNoHome": {
+    "description": "#4350 a new item from the Stock page"
+  },
+  "stockItemNewOption": "Create a new item",
+  "@stockItemNewOption": {
+    "description": "#4350 a new item from the Stock page"
+  },
+  "stockItemNewPrice": "Price ({currency})",
+  "@stockItemNewPrice": {
+    "description": "#4350 a new item from the Stock page",
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "stockItemNewPriceInvalid": "Enter a price, or leave it empty.",
+  "@stockItemNewPriceInvalid": {
+    "description": "#4350 a new item from the Stock page"
+  },
+  "stockItemNewTitle": "New item",
+  "@stockItemNewTitle": {
+    "description": "#4350 a new item from the Stock page"
+  },
+  "stockItemNewUnit": "Counted in",
+  "@stockItemNewUnit": {
+    "description": "#4350 a new item from the Stock page"
+  },
+  "stockItemsEmpty": "No items yet. An item is a service you keep in stock: choose Add an item.",
   "@stockItemsEmpty": {
     "description": "the stock pages and group (#4299)"
   },
@@ -46401,6 +46696,141 @@
   "@stockReorderToOrderTitle": {
     "description": "#4294 reorder: a label or a message"
   },
+  "stockReversalBackTo": "Goods come back to",
+  "@stockReversalBackTo": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalCorrectionOpen": "Correct this movement",
+  "@stockReversalCorrectionOpen": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalCorrectionTitle": "Correct a movement",
+  "@stockReversalCorrectionTitle": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalCustomerOpen": "Return from the customer",
+  "@stockReversalCustomerOpen": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalCustomerTitle": "Return from the customer",
+  "@stockReversalCustomerTitle": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalEntry": "{kind}: {quantity} {unit}",
+  "@stockReversalEntry": {
+    "description": "#4172 stock returns and counts screens",
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "stockReversalFully": "This movement is fully reversed.",
+  "@stockReversalFully": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalKindCorrection": "Corrected",
+  "@stockReversalKindCorrection": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalKindCustomer": "Returned by the customer",
+  "@stockReversalKindCustomer": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalKindSupplier": "Returned to the supplier",
+  "@stockReversalKindSupplier": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalLeavesFrom": "Goods leave from",
+  "@stockReversalLeavesFrom": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalMoneyInvoice": "This movement follows an invoice: any refund or credit note is made in the invoice itself.",
+  "@stockReversalMoneyInvoice": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalMoneyUnavailable": "Whether a credit exists for this movement is not shown here: the money is corrected apart.",
+  "@stockReversalMoneyUnavailable": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalMoreThanRemains": "At most {quantity} {unit} can still be reversed.",
+  "@stockReversalMoreThanRemains": {
+    "description": "#4172 stock returns and counts screens",
+    "placeholders": {
+      "quantity": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "stockReversalNoMoney": "No payment, refund or credit is made by this. If money is involved, correct it in the invoice or the supplier payment, apart.",
+  "@stockReversalNoMoney": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalNote": "Note (optional)",
+  "@stockReversalNote": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalRemaining": "Can still be reversed: {quantity} {unit} · already reversed: {reversed}",
+  "@stockReversalRemaining": {
+    "description": "#4172 stock returns and counts screens",
+    "placeholders": {
+      "quantity": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      },
+      "reversed": {
+        "type": "String"
+      }
+    }
+  },
+  "stockReversalSection": "Returns and corrections",
+  "@stockReversalSection": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalSource": "{item}: {quantity} {unit}, {from} → {to}",
+  "@stockReversalSource": {
+    "description": "#4172 stock returns and counts screens",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "stockReversalSubmit": "Record",
+  "@stockReversalSubmit": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalSupplierOpen": "Return to the supplier",
+  "@stockReversalSupplierOpen": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalSupplierTitle": "Return to the supplier",
+  "@stockReversalSupplierTitle": {
+    "description": "#4172 stock returns and counts screens"
+  },
   "stockSettingsElsewhere": "Stock settings are kept on the Stock settings page.",
   "@stockSettingsElsewhere": {
     "description": "the stock pages and group (#4299)"
@@ -46448,6 +46878,114 @@
   "stockTakeOutUsed": "Used by the business",
   "@stockTakeOutUsed": {
     "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockTraceBill": "Bill {reference}",
+  "@stockTraceBill": {
+    "description": "#4173 the goods trace and the stock value",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTraceBillsUnavailable": "The bills are not shown to you.",
+  "@stockTraceBillsUnavailable": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockTraceLotCostKnown": "Lot cost: {amount}",
+  "@stockTraceLotCostKnown": {
+    "description": "#4173 the goods trace and the stock value",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTraceMore": "More exist than are listed here.",
+  "@stockTraceMore": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockTraceNoBill": "No bill is linked to this order yet.",
+  "@stockTraceNoBill": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockTraceNoPayment": "No payment is recorded for it.",
+  "@stockTraceNoPayment": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockTraceNoPurchase": "No purchase is recorded for this movement.",
+  "@stockTraceNoPurchase": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockTraceNote": "Only what is recorded is shown: nothing is matched on a name, a date or an amount. Linking a bill never changes what the goods cost.",
+  "@stockTraceNote": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockTraceOrder": "Order {reference} · {supplier}",
+  "@stockTraceOrder": {
+    "description": "#4173 the goods trace and the stock value",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      },
+      "supplier": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTraceOwed": "Owed: {amount}",
+  "@stockTraceOwed": {
+    "description": "#4173 the goods trace and the stock value",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTracePaid": "Paid {amount} on {date}",
+  "@stockTracePaid": {
+    "description": "#4173 the goods trace and the stock value",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTracePaymentsUnavailable": "Payments are not shown to you (that is not the same as unpaid).",
+  "@stockTracePaymentsUnavailable": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockTracePurchaseUnavailable": "The purchase side is not shown to you.",
+  "@stockTracePurchaseUnavailable": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockTraceReceived": "Received on {date}",
+  "@stockTraceReceived": {
+    "description": "#4173 the goods trace and the stock value",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTraceReversed": "Reversed {amount} on {date}",
+  "@stockTraceReversed": {
+    "description": "#4173 the goods trace and the stock value",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTraceTitle": "Where this came from",
+  "@stockTraceTitle": {
+    "description": "#4173 the goods trace and the stock value"
   },
   "stockTransferLine": "{item}: {left} {unit} on the way of {loaded}",
   "@stockTransferLine": {
@@ -46531,6 +47069,82 @@
   "stockTransfersTitle": "Transfers",
   "@stockTransfersTitle": {
     "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockValueBasis": "An operational value from the recorded movements at their recorded lot costs. It is not a posted stock-book balance and states no cost of goods.",
+  "@stockValueBasis": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockValueComplete": "Every item on hand has a known cost.",
+  "@stockValueComplete": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockValueCutoff": "As of {at}, calculated {calculated} from {count, plural, one{one movement} other{{count} movements}}.",
+  "@stockValueCutoff": {
+    "description": "#4173 the goods trace and the stock value",
+    "placeholders": {
+      "at": {
+        "type": "String"
+      },
+      "calculated": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "stockValueIncomplete": "Not complete: goods whose cost is unknown are not in this total.",
+  "@stockValueIncomplete": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockValueKnownTotal": "Known cost: {amount}",
+  "@stockValueKnownTotal": {
+    "description": "#4173 the goods trace and the stock value",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "stockValueLine": "{quantity} · {amount}",
+  "@stockValueLine": {
+    "description": "#4173 the goods trace and the stock value",
+    "placeholders": {
+      "quantity": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "stockValueLinesTitle": "Priced goods",
+  "@stockValueLinesTitle": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockValueMovesLater": "A movement recorded later with an earlier date changes a later calculation, never the facts recorded before.",
+  "@stockValueMovesLater": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockValueNeedsRight": "Seeing what goods cost needs the right to manage purchases or to read the finances.",
+  "@stockValueNeedsRight": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockValueTitle": "Stock value",
+  "@stockValueTitle": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockValueUncostedNoCost": "the lot has no cost",
+  "@stockValueUncostedNoCost": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockValueUncostedNoLot": "no lot",
+  "@stockValueUncostedNoLot": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockValueUncostedTitle": "Cost unknown",
+  "@stockValueUncostedTitle": {
+    "description": "#4173 the goods trace and the stock value"
   },
   "stockVariantPrice": "Own price (minor units, optional)",
   "@stockVariantPrice": {

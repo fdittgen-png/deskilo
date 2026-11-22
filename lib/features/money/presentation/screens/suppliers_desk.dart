@@ -9,7 +9,6 @@ import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.da
     show Supplier;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
@@ -241,7 +240,7 @@ class SupplierRecord extends ConsumerWidget {
               supplierId: supplierId,
               canPay: held.contains(purchasePayPermission),
               canOffset: held.contains(purchaseOffsetPermission),
-              onOpen: (id) async => context.push('$purchaseDocPath/$id'),
+              onOpen: (id) async => openRecordFrom(context, '$purchaseDocPath/$id'),
             ),
     );
   }

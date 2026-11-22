@@ -105,7 +105,6 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
     unawaited(ref.read(updatesSeenProvider(scope).notifier).markOpened(categories: categories, newVisit: newVisit));
   }
 
-
   String _line(
     AppLocalizations l10n,
     WorkspaceEvent event,
@@ -207,6 +206,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
       EventType.paymentInstructionsChange: Icons.account_balance_outlined,
       EventType.credentialChange: Icons.key_outlined,
       EventType.paymentAttemptUnreadable: Icons.sync_problem_outlined,
+      EventType.stockCountOverdue: Icons.fact_check_outlined,
       EventType.stockLow: Icons.inventory_2_outlined,
       EventType.einvoiceOutcomeUnknown: Icons.mark_email_unread_outlined,
       EventType.unknown: Icons.info_outline,

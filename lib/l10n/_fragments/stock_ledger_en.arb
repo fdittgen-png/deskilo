@@ -1,10 +1,10 @@
 {
   "@@locale": "en",
-  "featureStockManagementTitle": "Stock management",
+  "featureStockManagementTitle": "Stock: items, places, deliveries, moves",
   "@featureStockManagementTitle": {
     "description": "the feature's name (#3824)"
   },
-  "featureStockManagementDesc": "Keep track of goods: where they are, in which unit, from which lot, and every movement between two places. Off: a catalogue item keeps its single shelf count.",
+  "featureStockManagementDesc": "Keep the goods you sell or store: which items, in which places, the deliveries you receive, the moves between places and the stock you take out. Switching it on adds a Stock menu with its pages; the other stock functions (lots, receiving, take-out, reorder points) are switches under it. Off: a catalogue item keeps its single shelf count.",
   "@featureStockManagementDesc": {
     "description": "the feature's description on the Features screen (#3824)"
   },
@@ -83,5 +83,33 @@
   "refusalStockOnlyExpired": "What is left in the main store is past its date and is never sold. The confirmation was refused; nothing was taken.",
   "@refusalStockOnlyExpired": {
     "description": "#4170 (0847) DKG15: only expired stock is left for a sale."
+  },
+  "refusalStockReturnChanged": "This return was already recorded with other content. Check the earlier return before sending a new one.",
+  "@refusalStockReturnChanged": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockReturnBeyond": "More than this movement held cannot be returned: part of it was already returned or corrected.",
+  "@refusalStockReturnBeyond": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockReturnSource": "A return follows the sale or the delivery it comes from; this movement is not one, or is not corrected here.",
+  "@refusalStockReturnSource": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockCountDecided": "This count was already decided and is final. Count again if the figure is still wrong.",
+  "@refusalStockCountDecided": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockCountStale": "The stock moved since it was counted, so the count is not applied. Count again.",
+  "@refusalStockCountStale": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockCountSelf": "Someone else who may approve adjustments has to apply this count: whoever counted does not approve their own count.",
+  "@refusalStockCountSelf": {
+    "description": "#4172 refusal"
+  },
+  "permCountStock": "Count stock, blind",
+  "@permCountStock": {
+    "description": "#4295 permission name"
   }
 }

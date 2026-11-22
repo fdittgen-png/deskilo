@@ -2954,6 +2954,34 @@ Ouvrez **Stock → Articles**. Chaque ligne montre le **code-barres**, l’**uni
 - **Recherchez** par nom, code-barres ou adresse. Saisir ou scanner un code-barres dans la recherche et valider ouvre cet article.
 - Les longues listes se chargent par pages : choisissez *Afficher plus*.
 
+### Valeur du stock et origine des marchandises
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous voulez voir ce que vaut le stock en main, et d’où vient une livraison et si elle a été payée.
+
+Ouvrez **Stock → Valeur du stock** (il faut le droit de gérer les achats ou de lire les finances). La page montre le **coût connu** de ce qui est en stock, à une date, avec le moment du calcul et le nombre de mouvements. C’est une *valeur opérationnelle* : les mouvements enregistrés au coût enregistré de chaque lot. Ce n’est pas un solde comptabilisé du stock et elle n’indique aucun coût des marchandises.
+
+Les marchandises au coût **inconnu** (un lot reçu sans coût, ou sans lot) sont listées par quantité et ne sont **pas** dans le total ; la page indique *Incomplet* tant qu’il en existe, et un coût connu de zéro est une ligne valorisée, pas un coût inconnu. Un mouvement enregistré plus tard avec une date antérieure change un calcul ultérieur, jamais les faits enregistrés avant.
+
+Ouvrez un mouvement (**Stock → Mouvements**) et lisez **D’où cela vient** : la réception, la commande, les factures fournisseur liées à cette commande, ce que doit chacune et les paiements et annulations qui la règlent. Seul ce qui est enregistré est montré ; rien n’est rapproché par un nom, une date ou un montant. Une partie que vous ne pouvez pas voir indique *ne vous est pas montré* (ce n’est pas la même chose que impayé) ; une partie sans rien d’enregistré indique *non lié* ; une liste tronquée le dit. Lier une facture ne change jamais le coût de la marchandise. L’ouvrir ne change rien.
+
+### Retours, corrections et comptages
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous voulez reprendre des marchandises, annuler un mouvement ou corriger un chiffre faux sur l’étagère, sans réécrire l’historique.
+
+Ouvrez un mouvement dans **Stock → Mouvements**. Là où la fonction *Retours et corrections* est activée et où votre rôle peut déplacer du stock, la page dit combien de ce mouvement peut encore être annulé et propose : **Retour du client** (pour une vente), **Retour au fournisseur** (pour une livraison) ou **Corriger ce mouvement** (pour les autres). Le formulaire montre ce qui a bougé et ce qui reste avant de confirmer. Un retour au fournisseur part du lieu où se trouvent les marchandises ; celles qui reviennent d’un client rentrent au lieu que vous choisissez. Une correction est un mouvement inverse, et une correction peut elle-même être corrigée.
+
+**Comptages.** Là où la fonction *Comptages de stock* est activée, **Stock → Comptages de stock** liste ce qui a été compté face à ce que le registre contenait. **Compter** enregistre un article à un endroit et ne déplace rien : le comptage attend quelqu’un qui peut approuver les ajustements, et l’indique. L’approbation applique exactement l’écart, et seulement si le stock n’a pas bougé depuis le comptage ; sinon elle dit qu’il faut recompter. Celui qui a compté n’approuve pas son propre comptage tant qu’un autre peut le faire ; le propriétaire d’une entreprise d’une seule personne fait les deux.
+
+**Bon à savoir**
+
+- Un retour ou une correction ne dépasse jamais ce que permet le mouvement qu’il annule, quel que soit le nombre d’envois.
+- Aucun paiement, remboursement ni avoir n’est fait : si de l’argent est en jeu, corrigez-le dans la facture ou le paiement du fournisseur.
+- Renvoyer le même formulaire après une réponse perdue ne l’enregistre qu’une fois.
+
 ### Comment les montants sont affichés
 
 **Public:** Tout le monde
@@ -7566,6 +7594,30 @@ Ajoutez ensuite seulement ce qui vous concerne :
 - Activez-les une par une et émettez d’abord une facture d’essai dans un espace de test. Voir [L’ordre d’activation](help:setup.features.order).
 
 **Voir aussi :** [Argent et facturation](help:setup.money.overview) · [Partir d’un modèle ou de rien](help:setup.before.template)
+
+### Vendre ou stocker des marchandises
+
+**Public:** Propriétaire
+
+Vous vendez des marchandises ou tenez un stock, et voulez savoir où mettre articles, emplacements, livraisons et mouvements. Tout commence par un interrupteur, puis quelques autres, dans cet ordre.
+
+| # | À faire | Où le trouver ensuite |
+|---|---|---|
+| 1 | Activez **Stock : articles, emplacements, livraisons, mouvements** (sous **Services**). | Un menu **Stock** apparaît : Stock, Mouvements, Transferts, Articles, Emplacements, Réglages du stock. |
+| 2 | Ajoutez votre premier emplacement : **Stock → Emplacements → Ajouter un emplacement** (par exemple le magasin principal, puis les étagères qu’il contient). | **Stock → Emplacements** |
+| 3 | Ajoutez votre premier article : **Stock → Articles → Ajouter un article**. Un article est un service que vous tenez en stock : choisissez-le et ses réglages de stock s’ouvrent avec le réglage déjà activé (son unité, ses unités de conditionnement, ses codes). Ajoutez d’abord le service sous **Services** s’il n’existe pas. | **Stock → Articles** |
+| 4 | Activez **Achats** et **Commander aux fournisseurs** pour commander des marchandises, puis **Réception en stock** pour ranger une livraison depuis sa commande. | **Achats et fournisseurs → Commandes**, puis **Enregistrer la livraison** |
+| 5 | Activez **Sorties de marchandises** pour ce qui part (vendu, utilisé, perdu), **Lots et péremption** pour les marchandises avec lots ou date limite, et **Seuils de réapprovisionnement** pour savoir ce qui manque. | **Stock → Mouvements** (sortie), **Stock → Réapprovisionnement** |
+
+Recevez ensuite une livraison, déplacez des marchandises vers une étagère et sortez-en une : la page Stock montre chaque opération aussitôt.
+
+**Bon à savoir**
+
+- Une entreprise qui a activé le stock mais n’a encore ni emplacement ni article voit **Ajouter votre premier emplacement** et **Ajouter votre premier article** sur la page Stock.
+- Désactiver une fonction ne supprime rien : ce qui a été enregistré reste et peut être relu.
+- Essayez d’abord dans la démo, où la boutique tient déjà un stock. Voir [Désactiver ne supprime rien](help:setup.features.off).
+
+**Voir aussi :** [L’ordre pour activer les fonctions](help:setup.features.order) · [Des fonctions qui en demandent d’autres](help:setup.features.dependencies)
 
 ### L’ordre d’activation
 

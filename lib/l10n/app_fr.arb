@@ -6677,6 +6677,8 @@
   "eventServiceChargeTitle": "{name} ×{quantity} — {amount}",
   "eventSettlementReview": "{settlement} : {reason, select, costs_changed{le prestataire a modifié ses frais après son enregistrement} amount_changed{le prestataire a modifié son montant après son enregistrement} currency_mismatch{un frais est dans une autre devise que le versement} other{le relevé diffère de ce qui a été enregistré}}. Rien n'en a été comptabilisé ; il attend une vérification.",
   "eventSourceNotFound": "Aucun document d'achat n'a été classé pour cette demande, ou vous ne pouvez pas le voir.",
+  "eventStockCountOverdue": "L’inventaire tournant « {plan} » est toujours ouvert après son échéance.",
+  "eventStockCountOverdueEnded": "Terminé",
   "eventStockLow": "{item} est bas à {site} : {onHand} en stock, seuil {point}",
   "eventStockLowEnded": "de nouveau au-dessus du seuil",
   "eventStockLowItemFallback": "Un article",
@@ -6745,6 +6747,7 @@
   "eventTypeServiceCharge": "Service",
   "eventTypeSettlementReview": "Versement à vérifier",
   "eventTypeSpaceReservation": "Réservations d'espaces entiers",
+  "eventTypeStockCountOverdue": "Inventaire tournant en retard",
   "eventTypeStockLow": "Stock bas",
   "eventTypeSubscriptionChange": "Changement d'abonnement",
   "@eventTypeSubscriptionChange": {
@@ -7771,6 +7774,22 @@
   "@featureStandaloneInvoicingTitle": {
     "description": "#4165 feature switch: featureStandaloneInvoicingTitle"
   },
+  "featureStockCountsDesc": "Comptez un article à un endroit. Le comptage attend quelqu’un qui peut approuver les ajustements, et il n’est appliqué que si le stock n’a pas bougé depuis. Désactivé : aucun comptage n’est enregistré ; le registre n’est pas touché.",
+  "@featureStockCountsDesc": {
+    "description": "#4172 feature description"
+  },
+  "featureStockCountsTitle": "Inventaires de stock",
+  "@featureStockCountsTitle": {
+    "description": "#4172 feature name"
+  },
+  "featureStockCycleCountsDesc": "Planifiez des contrôles ponctuels de lieux, d’articles ou de marchandises de valeur. Un plan échu crée une tâche de comptage que le compteur fait sans voir les quantités attendues ; chaque écart est approuvé comme tout comptage. Désactivé : aucun plan ne s’exécute et aucune tâche n’est créée ; le registre n’est pas touché.",
+  "@featureStockCycleCountsDesc": {
+    "description": "#4295 feature description"
+  },
+  "featureStockCycleCountsTitle": "Inventaires tournants",
+  "@featureStockCycleCountsTitle": {
+    "description": "#4295 feature name"
+  },
   "featureStockLotsDesc": "Suivre les marchandises par lot ou par date de péremption, avec une durée de conservation. Désactivé : aucun article n’est suivi par lot, et ce qui a été enregistré est conservé tel quel.",
   "@featureStockLotsDesc": {
     "description": "#4169 what the lots and expiry feature does, and what off means"
@@ -7779,8 +7798,8 @@
   "@featureStockLotsTitle": {
     "description": "#4169 the name of the lots and expiry feature"
   },
-  "featureStockManagementDesc": "Suivre les marchandises : où elles sont, dans quelle unité, de quel lot, et chaque mouvement d'un endroit à un autre. Désactivé : un article du catalogue garde son simple compte en rayon.",
-  "featureStockManagementTitle": "Gestion des stocks",
+  "featureStockManagementDesc": "Tenez les marchandises que vous vendez ou stockez : quels articles, dans quels emplacements, les livraisons que vous recevez, les mouvements entre emplacements et les sorties. L’activer ajoute un menu Stock avec ses pages ; les autres fonctions de stock (lots, réception, sortie, seuils de réapprovisionnement) sont des interrupteurs en dessous. Désactivé : un article du catalogue garde son seul compte de rayon.",
+  "featureStockManagementTitle": "Stock : articles, emplacements, livraisons, mouvements",
   "featureStockReceivingDesc": "Ranger les marchandises d’une livraison de commande fournisseur dans des emplacements et de nouveaux lots, une seule fois, avec leur origine conservée. Désactivé : une livraison est enregistrée comme avant et aucun stock ne bouge.",
   "@featureStockReceivingDesc": {
     "description": "#4171 what the receiving into stock feature does, and what off means"
@@ -7796,6 +7815,14 @@
   "featureStockReorderTitle": "Seuils de réapprovisionnement",
   "@featureStockReorderTitle": {
     "description": "#4294 feature name"
+  },
+  "featureStockReturnsDesc": "Retournez des marchandises contre la vente ou la livraison dont elles viennent, ou corrigez un mouvement. Chaque retour ou correction est borné par le mouvement qu’il annule : les mêmes marchandises ne sont jamais retournées deux fois. Désactivé : aucun retour ni correction n’est proposé ; le registre n’est pas touché.",
+  "@featureStockReturnsDesc": {
+    "description": "#4172 feature description"
+  },
+  "featureStockReturnsTitle": "Retours et corrections de stock",
+  "@featureStockReturnsTitle": {
+    "description": "#4172 feature name"
   },
   "featureStockTakeOutDesc": "Sortir des marchandises du stock pour usage ou comme perte, avec le motif et le lot. Désactivé : ni consommation ni perte n’est proposée ; les transferts et la réception ne changent pas.",
   "@featureStockTakeOutDesc": {
@@ -14312,6 +14339,7 @@
   "permAllowsAccessProd": "Entrer dans la production d'une paire développement et production.",
   "permAllowsApproveExpenses": "Approuver les dépenses soumises par les membres.",
   "permAllowsApproveStockAdjustments": "Approuver l'ajustement proposé par un inventaire.",
+  "permAllowsCountStock": "Compter les lignes d’une tâche d’inventaire tournant sans voir ce que le registre contient : les tâches et le comptage de chaque ligne, rien d’autre.",
   "permAllowsDeployToDev": "Rafraîchir l'espace de développement depuis la production.",
   "permAllowsDeployToProd": "Pousser la configuration et les données de base du développement vers la production.",
   "permAllowsDesignDocuments": "Concevoir les modèles, textes et mises en page des documents.",
@@ -14353,6 +14381,7 @@
     "description": "Permission label (#513)"
   },
   "permApproveStockAdjustments": "Approuver les ajustements de stock",
+  "permCountStock": "Compter le stock, à l’aveugle",
   "permDeployToDev": "Déployer en développement",
   "@permDeployToDev": {
     "description": "#987/#989 environment pairs: permDeployToDev"
@@ -16466,6 +16495,18 @@
   },
   "refusalSession": "Votre session a expiré. Reconnectez-vous, puis réessayez.",
   "refusalStockConfig": "Cette configuration de stock n’est pas valide : le champ nommé en donne la raison.",
+  "refusalStockCountDecided": "Ce comptage est déjà décidé et reste définitif. Comptez à nouveau si le chiffre est toujours faux.",
+  "@refusalStockCountDecided": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockCountSelf": "Une autre personne pouvant approuver les ajustements doit appliquer ce comptage : celui qui a compté n’approuve pas son propre comptage.",
+  "@refusalStockCountSelf": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockCountStale": "Le stock a bougé depuis le comptage : il n’est pas appliqué. Comptez à nouveau.",
+  "@refusalStockCountStale": {
+    "description": "#4172 refusal"
+  },
   "refusalStockHistory": "Cet article a des mouvements de stock, qui sont conservés : il ne peut pas être supprimé, et son unité de stock et son suivi restent tels quels. Désactivez-le, ou créez un nouvel article.",
   "refusalStockItem": "Ce n'est pas un article que cette entreprise garde en stock. Rien n'a été déplacé.",
   "refusalStockLedgerKept": "Le stock de cette entreprise est tenu par son registre : utilisez une opération de stock (transfert, sortie, réception), pas le compteur. Rien n’a été modifié.",
@@ -16482,6 +16523,18 @@
     "description": "#4170 (0847) DKG15: only expired stock is left for a sale."
   },
   "refusalStockPage": "Cette demande de page n’est pas valide : demandez de 1 à 200 lignes, et ne poursuivez qu’à partir de la position donnée par une page.",
+  "refusalStockReturnBeyond": "On ne peut pas retourner plus que ce mouvement ne contenait : une partie a déjà été retournée ou corrigée.",
+  "@refusalStockReturnBeyond": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockReturnChanged": "Ce retour a déjà été enregistré avec un autre contenu. Vérifiez le retour précédent avant d’en envoyer un nouveau.",
+  "@refusalStockReturnChanged": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockReturnSource": "Un retour suit la vente ou la livraison dont il provient ; ce mouvement n’en est pas une, ou ne se corrige pas ici.",
+  "@refusalStockReturnSource": {
+    "description": "#4172 refusal"
+  },
   "refusalStockStale": "Quelqu’un d’autre l’a modifié depuis que vous l’avez ouvert. Relisez-le, puis refaites votre modification.",
   "refusalStockUnit": "Cet article n'a pas cette unité. Ajoutez l'unité à l'article, ou saisissez la quantité dans une unité qu'il connaît.",
   "refusalStockVariant": "Cet article a des variantes : indiquez laquelle (couleur, taille) déplacer, vendre ou compter. Rien n’a été modifié.",
@@ -19009,6 +19062,8 @@
   },
   "settingHintStockAddressSeparator": "Le caractère entre les niveaux d'une adresse d'emplacement (site, zone, allée, travée, étagère) : MAG1-SALES-A03-B02-S4 avec un tiret, MAG1.SALES.A03.B02.S4 avec un point. Seule l'écriture de l'adresse change.",
   "settingHintStockAllowNegative": "Désactivé : un mouvement qui laisserait moins que rien à un endroit est refusé. Activé : il est enregistré, et l'endroit affiche une quantité négative jusqu'à l'arrivée de marchandises.",
+  "settingHintStockCycleCountHighValueMinor": "La valeur, en unités mineures de la devise de l’entreprise, à partir de laquelle ce qu’un lieu contient d’un article est de forte valeur pour un plan d’inventaire tournant sans seuil propre.",
+  "settingHintStockCycleCountOverdueDays": "Combien de jours une tâche d’inventaire tournant peut rester ouverte après son échéance avant que la boîte de réception la dise en retard.",
   "settingHintVatViesEvidenceDays": "Jours pendant lesquels un contrôle valide du numéro de TVA reste assez récent pour servir de preuve sur une nouvelle facture. Une valeur plus courte demande un nouveau contrôle plus tôt ; ce n’est pas la preuve qu’une opération est valable.",
   "@settingHintVatViesEvidenceDays": {
     "description": "#2487 retention settings"
@@ -19227,6 +19282,8 @@
   },
   "settingLabelStockAddressSeparator": "Séparateur dans l'adresse d'un emplacement",
   "settingLabelStockAllowNegative": "Le stock peut passer sous zéro",
+  "settingLabelStockCycleCountHighValueMinor": "Inventaire tournant : seuil de forte valeur",
+  "settingLabelStockCycleCountOverdueDays": "Inventaire tournant : en retard après",
   "settingLabelVatViesEvidenceDays": "Fraîcheur du contrôle du numéro de TVA",
   "@settingLabelVatViesEvidenceDays": {
     "description": "#2487 retention settings"
@@ -20596,6 +20653,23 @@
   "stockCostLabel": "Coût par unité",
   "stockCostNotShown": "Coût non affiché",
   "stockCostUnknown": "Coût non enregistré",
+  "stockCountsApply": "Appliquer",
+  "stockCountsCancel": "Annuler le comptage",
+  "stockCountsEmpty": "Aucun comptage pour l’instant.",
+  "stockCountsItem": "Article à compter",
+  "stockCountsLine": "{item} à {place} : compté {observed} contre {baseline} ({difference})",
+  "stockCountsObserved": "Compté ({unit})",
+  "stockCountsOpen": "Compter",
+  "stockCountsPlace": "Lieu",
+  "stockCountsReason": "Motif (facultatif)",
+  "stockCountsReject": "Rejeter",
+  "stockCountsStale": "Le stock a bougé depuis ce comptage : comptez à nouveau.",
+  "stockCountsStateApplied": "Appliqué",
+  "stockCountsStateCancelled": "Annulé",
+  "stockCountsStateRecorded": "En attente d’approbation",
+  "stockCountsStateRejected": "Rejeté",
+  "stockCountsSubmit": "Enregistrer le comptage",
+  "stockCountsTitle": "Comptages de stock",
   "stockDimensionAdd": "Ajouter une dimension",
   "@stockDimensionAdd": {
     "description": "#4169 the stock editors: a label or message"
@@ -20756,7 +20830,32 @@
   "stockEmpty": "Rien n’est encore en stock.",
   "stockEmptyFiltered": "Rien ne correspond à ces filtres.",
   "stockEnteredLabel": "Saisi",
-  "stockItemsEmpty": "Aucun article pour l'instant. Un article apparaît lorsqu'un service ou un article fournisseur est tenu en stock.",
+  "stockFirstRunBody": "Commencez par un emplacement où se trouvent les marchandises, puis les articles que vous tenez. Ensuite, recevez une livraison ou déplacez des marchandises.",
+  "stockFirstRunItem": "Ajouter votre premier article",
+  "stockFirstRunNext": "Recevez ensuite une livraison d’une commande, ou déplacez des marchandises depuis Mouvements.",
+  "stockFirstRunPlace": "Ajouter votre premier emplacement",
+  "stockFirstRunTitle": "Votre stock est vide",
+  "stockGoodsMore": "Afficher plus",
+  "stockGoodsNone": "Aucune marchandise n’y est liée (rien d’enregistré n’est pas la même chose que aucune).",
+  "stockGoodsRow": "{item} : {entered} ({stored})",
+  "stockGoodsTitle": "Marchandises mises en stock",
+  "stockGoodsUnavailable": "Les marchandises ne vous sont pas montrées.",
+  "stockItemAddButton": "Ajouter un article",
+  "stockItemAddIntro": "Ou tenez en stock un service que vous avez déjà : choisissez-en un et ses réglages de stock s’ouvrent avec le réglage déjà activé.",
+  "stockItemAddNone": "Tous les services sont déjà tenus en stock, ou il n’y en a pas encore. Ajoutez d’abord un service, puis revenez.",
+  "stockItemAddOpenServices": "Ouvrir les services",
+  "stockItemAddTitle": "Ajouter un article",
+  "stockItemNewBarcode": "Code-barres (facultatif)",
+  "stockItemNewHome": "Emplacement d’origine (facultatif)",
+  "stockItemNewName": "Nom",
+  "stockItemNewNameRequired": "Donnez un nom à l’article.",
+  "stockItemNewNoHome": "Aucun pour l’instant",
+  "stockItemNewOption": "Créer un nouvel article",
+  "stockItemNewPrice": "Prix ({currency})",
+  "stockItemNewPriceInvalid": "Saisissez un prix, ou laissez vide.",
+  "stockItemNewTitle": "Nouvel article",
+  "stockItemNewUnit": "Compté en",
+  "stockItemsEmpty": "Aucun article pour l’instant. Un article est un service que vous tenez en stock : choisissez Ajouter un article.",
   "@stockItemsEmpty": {
     "description": "the stock pages and group (#4299)"
   },
@@ -21348,6 +21447,28 @@
   "stockReorderTitle": "Réapprovisionnement",
   "stockReorderToOrderEmpty": "Il n’y a rien à commander.",
   "stockReorderToOrderTitle": "Que commander",
+  "stockReversalBackTo": "Les marchandises reviennent à",
+  "stockReversalCorrectionOpen": "Corriger ce mouvement",
+  "stockReversalCorrectionTitle": "Corriger un mouvement",
+  "stockReversalCustomerOpen": "Retour du client",
+  "stockReversalCustomerTitle": "Retour du client",
+  "stockReversalEntry": "{kind} : {quantity} {unit}",
+  "stockReversalFully": "Ce mouvement est entièrement annulé.",
+  "stockReversalKindCorrection": "Corrigé",
+  "stockReversalKindCustomer": "Retourné par le client",
+  "stockReversalKindSupplier": "Retourné au fournisseur",
+  "stockReversalLeavesFrom": "Les marchandises partent de",
+  "stockReversalMoneyInvoice": "Ce mouvement suit une facture : tout remboursement ou avoir se fait dans la facture elle-même.",
+  "stockReversalMoneyUnavailable": "Savoir s’il existe un avoir pour ce mouvement n’est pas montré ici : l’argent se corrige à part.",
+  "stockReversalMoreThanRemains": "Au plus {quantity} {unit} peuvent encore être annulés.",
+  "stockReversalNoMoney": "Cela ne fait ni paiement, ni remboursement, ni avoir. Si de l’argent est en jeu, corrigez-le à part, dans la facture ou le paiement du fournisseur.",
+  "stockReversalNote": "Note (facultative)",
+  "stockReversalRemaining": "Peut encore être annulé : {quantity} {unit} · déjà annulé : {reversed}",
+  "stockReversalSection": "Retours et corrections",
+  "stockReversalSource": "{item} : {quantity} {unit}, {from} → {to}",
+  "stockReversalSubmit": "Enregistrer",
+  "stockReversalSupplierOpen": "Retour au fournisseur",
+  "stockReversalSupplierTitle": "Retour au fournisseur",
   "stockSettingsElsewhere": "Les réglages du stock se tiennent sur la page Réglages du stock.",
   "@stockSettingsElsewhere": {
     "description": "the stock pages and group (#4299)"
@@ -21387,6 +21508,22 @@
   "@stockTakeOutUsed": {
     "description": "#4170 transfers and take-out: a label or message"
   },
+  "stockTraceBill": "Facture {reference}",
+  "stockTraceBillsUnavailable": "Les factures ne vous sont pas montrées.",
+  "stockTraceLotCostKnown": "Coût du lot : {amount}",
+  "stockTraceMore": "Il en existe plus que ce qui est listé ici.",
+  "stockTraceNoBill": "Aucune facture n’est encore liée à cette commande.",
+  "stockTraceNoPayment": "Aucun paiement n’y est enregistré.",
+  "stockTraceNoPurchase": "Aucun achat n’est enregistré pour ce mouvement.",
+  "stockTraceNote": "Seul ce qui est enregistré est montré : rien n’est rapproché par un nom, une date ou un montant. Lier une facture ne change jamais le coût de la marchandise.",
+  "stockTraceOrder": "Commande {reference} · {supplier}",
+  "stockTraceOwed": "Dû : {amount}",
+  "stockTracePaid": "{amount} payés le {date}",
+  "stockTracePaymentsUnavailable": "Les paiements ne vous sont pas montrés (ce n’est pas la même chose que « impayé »).",
+  "stockTracePurchaseUnavailable": "Le côté achats ne vous est pas montré.",
+  "stockTraceReceived": "Reçu le {date}",
+  "stockTraceReversed": "{amount} annulés le {date}",
+  "stockTraceTitle": "D’où cela vient",
   "stockTransferLine": "{item} : {left} {unit} en route sur {loaded}",
   "@stockTransferLine": {
     "description": "#4170 transfers and take-out: a label or message",
@@ -21470,6 +21607,19 @@
   "@stockTransfersTitle": {
     "description": "#4170 transfers and take-out: a label or message"
   },
+  "stockValueBasis": "Une valeur opérationnelle des mouvements enregistrés à leur coût de lot enregistré. Ce n’est pas un solde comptabilisé du stock et elle n’indique aucun coût des marchandises.",
+  "stockValueComplete": "Chaque article en stock a un coût connu.",
+  "stockValueCutoff": "Au {at}, calculé {calculated} à partir de {count, plural, one{{count} mouvement} other{{count} mouvements}}.",
+  "stockValueIncomplete": "Incomplet : les marchandises au coût inconnu ne sont pas dans ce total.",
+  "stockValueKnownTotal": "Coût connu : {amount}",
+  "stockValueLine": "{quantity} · {amount}",
+  "stockValueLinesTitle": "Marchandises valorisées",
+  "stockValueMovesLater": "Un mouvement enregistré plus tard avec une date antérieure change un calcul ultérieur, jamais les faits enregistrés avant.",
+  "stockValueNeedsRight": "Voir ce que coûtent les marchandises demande le droit de gérer les achats ou de lire les finances.",
+  "stockValueTitle": "Valeur du stock",
+  "stockValueUncostedNoCost": "le lot n’a pas de coût",
+  "stockValueUncostedNoLot": "sans lot",
+  "stockValueUncostedTitle": "Coût inconnu",
   "stockVariantPrice": "Prix propre (unités mineures, facultatif)",
   "@stockVariantPrice": {
     "description": "#4169 the stock editors: a label or message"

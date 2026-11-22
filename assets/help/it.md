@@ -2954,6 +2954,34 @@ Apra **Magazzino → Articoli**. Ogni riga mostra il **codice a barre**, l’**u
 - **Cerchi** per nome, codice a barre o indirizzo. Digitare o scansionare un codice a barre nella ricerca e confermare apre quell’articolo.
 - Le liste lunghe si caricano a pagine: scelga *Mostra altri*.
 
+### Valore del magazzino e origine della merce
+
+**Destinatari:** Amministratore · Proprietario
+
+Vuole vedere quanto vale il magazzino, da dove viene una consegna e se è stata pagata.
+
+Apra **Magazzino → Valore del magazzino** (serve il diritto di gestire gli acquisti o di leggere le finanze). La pagina mostra il **costo noto** di ciò che è disponibile, a una data, con il momento del calcolo e il numero di movimenti. È un *valore operativo*: i movimenti registrati al costo registrato di ogni lotto. Non è un saldo contabilizzato del magazzino e non indica un costo del venduto.
+
+La merce dal costo **ignoto** (un lotto ricevuto senza costo, o senza lotto) è elencata per quantità e **non** è nel totale; la pagina dice *Non completo* finché ne esiste, e un costo noto di zero è una riga valorizzata, non ignota. Un movimento registrato dopo con data anteriore cambia un calcolo successivo, mai i fatti registrati prima.
+
+Apra un movimento (**Magazzino → Movimenti**) e legga **Da dove viene**: la ricezione, l’ordine, le fatture fornitore collegate a quell’ordine, quanto deve ciascuna e i pagamenti e gli storni che la regolano. Si mostra solo ciò che è registrato; nulla viene abbinato per nome, data o importo. Una parte che non può vedere dice *non le viene mostrato* (non equivale a non pagato); una parte senza nulla di registrato dice *non collegato*; un elenco troncato lo dice. Collegare una fattura non cambia mai quanto costa la merce. Aprirla non cambia nulla.
+
+### Resi, correzioni e conteggi
+
+**Destinatari:** Amministratore · Proprietario
+
+Vuole riprendere della merce, annullare un movimento o correggere una cifra sbagliata sullo scaffale, senza riscrivere la storia.
+
+Apra un movimento in **Magazzino → Movimenti**. Dove la funzione *Resi e correzioni* è attiva e il suo ruolo può muovere il magazzino, la pagina dice quanto di quel movimento si può ancora annullare e propone: **Reso dal cliente** (per una vendita), **Reso al fornitore** (per una consegna) o **Correggi questo movimento** (per gli altri). Il modulo mostra, prima di confermare, ciò che si è mosso e ciò che resta. Un reso al fornitore parte dal luogo in cui la merce si trova ora; quella che torna da un cliente rientra nel luogo che sceglie. Una correzione è un movimento inverso, e una correzione può a sua volta essere corretta.
+
+**Conteggi.** Dove la funzione *Conteggi di magazzino* è attiva, **Magazzino → Conteggi di magazzino** elenca ciò che è stato contato rispetto a ciò che il registro conteneva. **Conta** registra un articolo in un luogo e non muove nulla: il conteggio attende qualcuno che possa approvare le rettifiche, e lo dice. L’approvazione applica esattamente la differenza, e solo se la giacenza non si è mossa dal conteggio; altrimenti dice che bisogna contare di nuovo. Chi ha contato non approva il proprio conteggio finché un altro può farlo; il titolare di un’attività di una sola persona fa entrambe le cose.
+
+**Da sapere**
+
+- Un reso o una correzione non supera mai ciò che consente il movimento che annulla, quante volte sia inviato.
+- Non fa alcun pagamento, rimborso o nota di credito: se c’è di mezzo del denaro, lo corregga nella fattura o nel pagamento al fornitore.
+- Inviare di nuovo lo stesso modulo dopo una risposta persa lo registra una sola volta.
+
 ### Come sono mostrati gli importi
 
 **Destinatari:** Tutti
@@ -7566,6 +7594,30 @@ Poi aggiunga solo ciò che la riguarda:
 - Attivi queste funzionalità una alla volta ed emetta prima una fattura di prova in uno spazio di prova. Veda [L’ordine in cui attivare le cose](help:setup.features.order).
 
 **Vedi anche:** [Denaro e fatturazione](help:setup.money.overview) · [Partire da un modello o da zero](help:setup.before.template)
+
+### Vendere o immagazzinare merce
+
+**Destinatari:** Proprietario
+
+Vende merce o tiene un magazzino e vuole sapere dove trovare articoli, posizioni, consegne e spostamenti. Tutto inizia con un interruttore, poi alcuni altri, in quest’ordine.
+
+| # | Faccia questo | Dove si trova dopo |
+|---|---|---|
+| 1 | Attivi **Magazzino: articoli, posizioni, consegne, spostamenti** (sotto **Servizi**). | Compare un menu **Magazzino**: Magazzino, Movimenti, Trasferimenti, Articoli, Posizioni, Impostazioni del magazzino. |
+| 2 | Aggiunga la sua prima posizione: **Magazzino → Posizioni → Aggiungi una posizione** (per esempio il magazzino principale, poi gli scaffali al suo interno). | **Magazzino → Posizioni** |
+| 3 | Aggiunga il suo primo articolo: **Magazzino → Articoli → Aggiungi un articolo**. Un articolo è un servizio che tiene in magazzino: lo scelga e le sue impostazioni di magazzino si aprono con l’impostazione già attiva (unità, unità di confezione, codici). Aggiunga prima il servizio in **Servizi** se non esiste. | **Magazzino → Articoli** |
+| 4 | Attivi **Acquisti** e **Ordinare ai fornitori** per ordinare merce, poi **Ricezione a magazzino** per sistemare una consegna dal suo ordine. | **Acquisti e fornitori → Ordini**, poi **Registra la consegna** |
+| 5 | Attivi **Uscita di merce** per ciò che esce (venduto, usato, perso), **Lotti e scadenza** per merce con lotti o data di scadenza e **Punti di riordino** per sapere che cosa è basso. | **Magazzino → Movimenti** (uscita), **Magazzino → Riordino** |
+
+Poi riceva una consegna, sposti merce su uno scaffale e ne faccia uscire una: la pagina Magazzino mostra subito ogni operazione.
+
+**Da sapere**
+
+- Un’azienda che ha attivato il magazzino ma non ha ancora né posizione né articolo vede **Aggiungi la sua prima posizione** e **Aggiungi il suo primo articolo** nella pagina Magazzino.
+- Disattivare una funzione non cancella nulla: ciò che è stato registrato resta e si può rileggere.
+- Provi prima nella demo, dove il negozio tiene già un magazzino. Veda [Disattivare non cancella nulla](help:setup.features.off).
+
+**Vedi anche:** [L’ordine in cui attivare le funzioni](help:setup.features.order) · [Funzioni che ne richiedono altre](help:setup.features.dependencies)
 
 ### L’ordine in cui attivare le cose
 

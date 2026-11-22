@@ -9,6 +9,7 @@
 import 'package:deskilo/features/stock/application/stock_view.dart';
 import 'package:deskilo/features/stock/domain/stock_page.dart';
 import 'package:deskilo/features/stock/domain/stock_queries.dart';
+import 'package:deskilo/features/stock/domain/stock_trace.dart';
 import 'package:deskilo/features/stock/presentation/stock_movement_screen.dart';
 import 'package:deskilo/features/stock/presentation/stock_screen.dart';
 import 'package:deskilo/features/stock/providers/stock_providers.dart';
@@ -109,6 +110,33 @@ class _Stock implements StockQueries {
   Future<List<StockItem>> items(String workspaceId) async => const [
     StockItem(id: 'i-Wine', name: 'Wine', unit: 'l'),
   ];
+
+  @override
+  Future<List<StockItem>> unstocked(String workspaceId) async => const [];
+}
+
+/// The trace of a movement with no purchase behind it (the movement page also reads its trace).
+class _NoPurchase implements StockTraceReader {
+  @override
+  Future<StockTraceAnswer> trace(String workspaceId, String movementId) async => StockTraceAnswer(
+    truncated: false,
+    traces: [
+      StockTrace(
+        movementId: movementId,
+        quantity: ExactQuantity.zero,
+        reason: 'receipt',
+        cost: null,
+        purchase: const TracePurchase(state: TraceState.notLinked, billsState: TraceState.notLinked, bills: [], billsTruncated: false),
+      ),
+    ],
+  );
+
+  @override
+  Future<DocumentGoods> documentGoods(String workspaceId, String kind, String id, {int limit = 50, Map<String, Object?>? after}) async =>
+      const DocumentGoods(state: TraceState.notLinked, rows: [], more: false);
+
+  @override
+  Future<StockValuation> valuation(String workspaceId, {DateTime? at}) => throw UnimplementedError();
 }
 
 Future<void> _open(WidgetTester tester, _Stock stock, Size size, {Widget? home, Set<WorkspacePermission>? held}) async {
@@ -119,6 +147,7 @@ Future<void> _open(WidgetTester tester, _Stock stock, Size size, {Widget? home, 
     overrides: [
       ...standardTestOverrides(),
       stockQueriesProvider.overrideWithValue(stock),
+      stockTraceReaderProvider.overrideWithValue(_NoPurchase()),
       if (held != null) myPermissionsProvider.overrideWithValue(held),
     ],
   );

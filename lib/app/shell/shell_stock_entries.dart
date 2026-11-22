@@ -33,6 +33,14 @@ extension StockEntries on DrawerEntries {
           () => go('/stock/transfers'),
           route: '/stock/transfers',
         ),
+        if (features.contains(WorkspaceFeature.stockCounts))
+          DrawerEntry(
+            'drawer-stock-counts',
+            Icons.fact_check_outlined,
+            l10n.stockCountsTitle,
+            () => go('/stock/counts'),
+            route: '/stock/counts',
+          ),
         DrawerEntry('drawer-stock-items', Icons.category_outlined, l10n.stockItemsTitle, () => go('/stock/items'), route: '/stock/items'),
         DrawerEntry('drawer-stock-places', Icons.place_outlined, l10n.stockPlacesTitle, () => go('/stock/places'), route: '/stock/places'),
       ],
@@ -45,6 +53,9 @@ extension StockEntries on DrawerEntries {
           () => go('/stock/reorder'),
           route: '/stock/reorder',
         ),
+      // #4173 — what the goods on hand cost: for who reads the stock AND may see what goods cost.
+      if (reads && (may(WorkspacePermission.viewFinances) || may(WorkspacePermission.managePurchases)))
+        DrawerEntry('drawer-stock-value', Icons.savings_outlined, l10n.stockValueTitle, () => go('/stock/value'), route: '/stock/value'),
       if (may(WorkspacePermission.manageStock) || may(WorkspacePermission.manageConfiguration))
         DrawerEntry(
           'drawer-stock-settings',

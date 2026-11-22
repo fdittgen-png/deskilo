@@ -2954,6 +2954,34 @@ Sie möchten eine Liste, die für jeden Artikel und jede Variante sagt, was es i
 - **Suchen** Sie nach Name, Barcode oder Adresse. Einen Barcode in die Suche eingeben oder scannen und bestätigen öffnet diesen Artikel.
 - Lange Listen werden seitenweise geladen: Wählen Sie *Mehr anzeigen*.
 
+### Lagerwert und Herkunft der Ware
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie möchten sehen, was der Lagerbestand wert ist, woher eine Lieferung kam und ob sie bezahlt wurde.
+
+Öffnen Sie **Lager → Lagerwert** (dafür braucht es das Recht, den Einkauf zu verwalten oder die Finanzen einzusehen). Die Seite zeigt die **bekannten Kosten** des Bestands zu einem Stichtag, mit dem Zeitpunkt der Berechnung und der Zahl der Bewegungen. Es ist ein *operativer Wert*: die erfassten Bewegungen zu den erfassten Chargenkosten. Er ist kein gebuchter Lagerbuchsaldo und nennt keinen Wareneinsatz.
+
+Ware mit **unbekannten** Kosten (eine Charge ohne Kosten oder Ware ohne Charge) steht nach Menge in einer Liste und ist **nicht** in der Summe; die Seite sagt *Nicht vollständig*, solange es sie gibt, und bekannte Kosten von null sind eine bewertete Zeile, keine unbekannten. Eine später erfasste Bewegung mit früherem Datum ändert eine spätere Berechnung, nie die zuvor erfassten Tatsachen.
+
+Öffnen Sie eine Bewegung (**Lager → Bewegungen**) und lesen Sie **Woher es kam**: den Wareneingang, die Bestellung, die mit ihr verknüpften Lieferantenrechnungen, was jede schuldet und die Zahlungen und Stornos, die sie ausgleichen. Gezeigt wird nur, was erfasst ist; nichts wird über Name, Datum oder Betrag zugeordnet. Ein Teil, den Sie nicht sehen dürfen, sagt *wird Ihnen nicht angezeigt* (das heißt nicht „unbezahlt“); ein Teil ohne Erfassung sagt *nicht verknüpft*; eine gekürzte Liste sagt es. Eine Rechnung zu verknüpfen ändert nie, was die Ware kostet. Sie zu öffnen ändert nichts.
+
+### Rückgaben, Korrekturen und Zählungen
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie wollen Ware zurücknehmen, eine Bewegung rückgängig machen oder eine falsche Zahl im Regal berichtigen, ohne die Geschichte zu ändern.
+
+Öffnen Sie eine Bewegung unter **Lager → Bewegungen**. Wo die Funktion *Rückgaben und Korrekturen* an ist und Ihre Rolle Ware bewegen darf, sagt die Seite, wie viel dieser Bewegung noch rückgängig gemacht werden kann, und bietet an: **Rückgabe vom Kunden** (bei einem Verkauf), **Rückgabe an den Lieferanten** (bei einer Lieferung) oder **Diese Bewegung korrigieren** (bei den übrigen). Das Formular zeigt vor der Bestätigung, was bewegt wurde und was bleibt. Eine Rückgabe an den Lieferanten verlässt den Ort, an dem die Ware jetzt liegt; Ware vom Kunden kommt an den Ort zurück, den Sie wählen. Eine Korrektur ist eine Gegenbewegung, und eine Korrektur kann selbst korrigiert werden.
+
+**Zählungen.** Wo die Funktion *Bestandszählungen* an ist, listet **Lager → Bestandszählungen** auf, was gegen das Buch gezählt wurde. **Zählen** erfasst einen Artikel an einem Ort und bewegt nichts: Die Zählung wartet auf jemanden, der Anpassungen genehmigen darf, und sagt das. Die Genehmigung wendet genau die Differenz an, und nur wenn sich der Bestand seit der Zählung nicht bewegt hat; sonst verlangt sie eine neue Zählung. Wer gezählt hat, genehmigt die eigene Zählung nicht, solange es jemand anderen gibt; der Inhaber eines Ein-Personen-Unternehmens tut beides.
+
+**Gut zu wissen**
+
+- Eine Rückgabe oder Korrektur übersteigt nie, was die rückgängig gemachte Bewegung erlaubt, wie oft sie auch gesendet wird.
+- Dadurch wird nichts bezahlt, erstattet oder gutgeschrieben: Geht es um Geld, korrigieren Sie es in der Rechnung oder der Lieferantenzahlung.
+- Dasselbe Formular nach einer verlorenen Antwort erneut zu senden, erfasst es nur einmal.
+
 ### Wie Beträge angezeigt werden
 
 **Zielgruppe:** Alle
@@ -7566,6 +7594,30 @@ Fügen Sie dann nur hinzu, was auf Sie zutrifft:
 - Schalten Sie diese einzeln ein und stellen Sie zuerst in einem Test-Space eine Testrechnung aus. Siehe [Die Reihenfolge beim Einschalten](help:setup.features.order).
 
 **Siehe auch:** [Geld und Rechnungen](help:setup.money.overview) · [Mit einer Vorlage oder bei null beginnen](help:setup.before.template)
+
+### Waren verkaufen oder lagern
+
+**Zielgruppe:** Inhaber
+
+Sie verkaufen Waren oder führen ein Lager und möchten wissen, wo Artikel, Orte, Lieferungen und Bewegungen zu finden sind. Alles beginnt mit einem Schalter, dann folgen einige weitere, in dieser Reihenfolge.
+
+| # | Tun Sie das | Wo es danach zu finden ist |
+|---|---|---|
+| 1 | Schalten Sie **Lager: Artikel, Orte, Lieferungen, Bewegungen** ein (unter **Leistungen**). | Ein Menü **Lager** erscheint: Lager, Bewegungen, Umlagerungen, Artikel, Orte, Lagereinstellungen. |
+| 2 | Legen Sie Ihren ersten Ort an: **Lager → Orte → Ort hinzufügen** (zum Beispiel das Hauptlager, dann die Regale darin). | **Lager → Orte** |
+| 3 | Legen Sie Ihren ersten Artikel an: **Lager → Artikel → Artikel hinzufügen**. Ein Artikel ist eine Leistung, die Sie im Lager führen: Wählen Sie sie, und ihre Lagereinstellungen öffnen sich mit eingeschalteter Einstellung (Einheit, Verpackungseinheiten, Codes). Legen Sie die Leistung zuerst unter **Leistungen** an, falls sie fehlt. | **Lager → Artikel** |
+| 4 | Schalten Sie **Einkäufe** und **Bei Lieferanten bestellen** ein, um Ware zu bestellen, dann **Wareneingang ins Lager**, um eine Lieferung aus ihrer Bestellung einzulagern. | **Einkauf & Lieferanten → Bestellungen**, dann **Lieferung erfassen** |
+| 5 | Schalten Sie **Ware entnehmen** ein für das, was das Lager verlässt (verkauft, verbraucht, verloren), **Chargen und Verfall** für Ware mit Chargen oder Mindesthaltbarkeit und **Meldebestände**, um zu erfahren, was knapp ist. | **Lager → Bewegungen** (Entnahme), **Lager → Nachbestellen** |
+
+Nehmen Sie dann eine Lieferung an, bewegen Sie Ware auf ein Regal und entnehmen Sie eine: Die Lagerseite zeigt jeden Vorgang sofort.
+
+**Gut zu wissen**
+
+- Ein Unternehmen, das das Lager eingeschaltet hat, aber noch keinen Ort und keinen Artikel besitzt, sieht auf der Lagerseite **Ersten Ort hinzufügen** und **Ersten Artikel hinzufügen**.
+- Das Ausschalten einer Funktion löscht nichts: Was erfasst wurde, bleibt und ist wieder lesbar.
+- Probieren Sie es zuerst in der Demo aus, wo der Laden schon ein Lager führt. Siehe [Ausschalten löscht nichts](help:setup.features.off).
+
+**Siehe auch:** [Die Reihenfolge beim Einschalten](help:setup.features.order) · [Funktionen, die andere brauchen](help:setup.features.dependencies)
 
 ### Die Reihenfolge beim Einschalten
 
