@@ -20651,7 +20651,7 @@
   "stockCountsApply": "Applica",
   "stockCountsCancel": "Annulla il conteggio",
   "stockCountsEmpty": "Nessun conteggio per ora.",
-  "stockCountsItem": "Articolo",
+  "stockCountsItem": "Articolo da contare",
   "stockCountsLine": "{item} in {place}: contato {observed} contro {baseline} ({difference})",
   "stockCountsObserved": "Contato ({unit})",
   "stockCountsOpen": "Conta",

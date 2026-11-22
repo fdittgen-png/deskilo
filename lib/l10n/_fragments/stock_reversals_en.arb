@@ -150,7 +150,7 @@
   "@stockCountsSubmit": {
     "description": "#4172 stock returns and counts screens"
   },
-  "stockCountsItem": "Item",
+  "stockCountsItem": "Item to count",
   "@stockCountsItem": {
     "description": "#4172 stock returns and counts screens"
   },

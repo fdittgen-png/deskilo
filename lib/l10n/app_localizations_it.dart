@@ -35221,7 +35221,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get stockCountsEmpty => 'Nessun conteggio per ora.';
 
   @override
-  String get stockCountsItem => 'Articolo';
+  String get stockCountsItem => 'Articolo da contare';
 
   @override
   String stockCountsLine(

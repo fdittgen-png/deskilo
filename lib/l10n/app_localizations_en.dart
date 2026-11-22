@@ -34895,7 +34895,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockCountsEmpty => 'No count yet.';
 
   @override
-  String get stockCountsItem => 'Item';
+  String get stockCountsItem => 'Item to count';
 
   @override
   String stockCountsLine(

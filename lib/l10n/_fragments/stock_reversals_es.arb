@@ -25,7 +25,7 @@
   "stockCountsEmpty": "Todavía no hay recuentos.",
   "stockCountsOpen": "Contar",
   "stockCountsSubmit": "Registrar el recuento",
-  "stockCountsItem": "Artículo",
+  "stockCountsItem": "Artículo a contar",
   "stockCountsPlace": "Lugar",
   "stockCountsObserved": "Contado ({unit})",
   "stockCountsReason": "Motivo (opcional)",

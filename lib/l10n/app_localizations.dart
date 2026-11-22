@@ -55991,7 +55991,7 @@ abstract class AppLocalizations {
   /// #4172 stock returns and counts screens
   ///
   /// In en, this message translates to:
-  /// **'Item'**
+  /// **'Item to count'**
   String get stockCountsItem;
 
   /// #4172 stock returns and counts screens

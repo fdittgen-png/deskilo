@@ -25,7 +25,7 @@
   "stockCountsEmpty": "Nessun conteggio per ora.",
   "stockCountsOpen": "Conta",
   "stockCountsSubmit": "Registra il conteggio",
-  "stockCountsItem": "Articolo",
+  "stockCountsItem": "Articolo da contare",
   "stockCountsPlace": "Luogo",
   "stockCountsObserved": "Contato ({unit})",
   "stockCountsReason": "Motivo (facoltativo)",

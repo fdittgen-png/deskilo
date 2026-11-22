@@ -25,7 +25,7 @@
   "stockCountsEmpty": "Noch keine Zählung.",
   "stockCountsOpen": "Zählen",
   "stockCountsSubmit": "Zählung erfassen",
-  "stockCountsItem": "Artikel",
+  "stockCountsItem": "Zu zählender Artikel",
   "stockCountsPlace": "Ort",
   "stockCountsObserved": "Gezählt ({unit})",
   "stockCountsReason": "Grund (optional)",

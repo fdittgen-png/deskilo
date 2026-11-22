@@ -35278,7 +35278,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get stockCountsEmpty => 'Noch keine Zählung.';
 
   @override
-  String get stockCountsItem => 'Artikel';
+  String get stockCountsItem => 'Zu zählender Artikel';
 
   @override
   String stockCountsLine(

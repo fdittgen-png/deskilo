@@ -25,7 +25,7 @@
   "stockCountsEmpty": "Aucun comptage pour l’instant.",
   "stockCountsOpen": "Compter",
   "stockCountsSubmit": "Enregistrer le comptage",
-  "stockCountsItem": "Article",
+  "stockCountsItem": "Article à compter",
   "stockCountsPlace": "Lieu",
   "stockCountsObserved": "Compté ({unit})",
   "stockCountsReason": "Motif (facultatif)",

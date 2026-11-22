@@ -20651,7 +20651,7 @@
   "stockCountsApply": "Anwenden",
   "stockCountsCancel": "Zählung abbrechen",
   "stockCountsEmpty": "Noch keine Zählung.",
-  "stockCountsItem": "Artikel",
+  "stockCountsItem": "Zu zählender Artikel",
   "stockCountsLine": "{item} an {place}: gezählt {observed} gegen {baseline} ({difference})",
   "stockCountsObserved": "Gezählt ({unit})",
   "stockCountsOpen": "Zählen",

@@ -35183,7 +35183,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get stockCountsEmpty => 'Todavía no hay recuentos.';
 
   @override
-  String get stockCountsItem => 'Artículo';
+  String get stockCountsItem => 'Artículo a contar';
 
   @override
   String stockCountsLine(
