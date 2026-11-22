@@ -1,0 +1,5 @@
+{
+  "eventTypeStockCountOverdue": "Recuento cíclico vencido",
+  "eventStockCountOverdue": "El recuento cíclico «{plan}» sigue abierto después de su fecha.",
+  "eventStockCountOverdueEnded": "Hecho"
+}

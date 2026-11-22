@@ -38,5 +38,6 @@
   "permAllowsViewStock": "Voir le stock : quoi est où, ses lots et ses mouvements.",
   "permAllowsManageStock": "Faire entrer, déplacer et sortir des marchandises.",
   "permAllowsApproveStockAdjustments": "Approuver l'ajustement proposé par un inventaire.",
-  "rolesFilterPermissions": "Filtrer les permissions"
+  "rolesFilterPermissions": "Filtrer les permissions",
+  "permAllowsCountStock": "Compter les lignes d’une tâche d’inventaire tournant sans voir ce que le registre contient : les tâches et le comptage de chaque ligne, rien d’autre."
 }

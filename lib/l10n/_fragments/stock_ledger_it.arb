@@ -29,5 +29,30 @@
   "refusalStockOnlyExpired": "Ciò che resta nel magazzino principale è scaduto e non viene mai venduto. La conferma è stata rifiutata; nulla è stato prelevato.",
   "@refusalStockOnlyExpired": {
     "description": "#4170 (0847) DKG15: only expired stock is left for a sale."
-  }
+  },
+  "refusalStockReturnChanged": "Questo reso è già stato registrato con un altro contenuto. Controlli il reso precedente prima di inviarne uno nuovo.",
+  "@refusalStockReturnChanged": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockReturnBeyond": "Non si può restituire più di quanto questo movimento conteneva: una parte è già stata restituita o corretta.",
+  "@refusalStockReturnBeyond": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockReturnSource": "Un reso segue la vendita o la consegna da cui proviene; questo movimento non lo è, o non si corregge qui.",
+  "@refusalStockReturnSource": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockCountDecided": "Questo conteggio è già stato deciso ed è definitivo. Conti di nuovo se la cifra è ancora sbagliata.",
+  "@refusalStockCountDecided": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockCountStale": "La giacenza si è mossa dopo il conteggio, quindi non viene applicato. Conti di nuovo.",
+  "@refusalStockCountStale": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockCountSelf": "Un’altra persona che può approvare le rettifiche deve applicare questo conteggio: chi ha contato non approva il proprio conteggio.",
+  "@refusalStockCountSelf": {
+    "description": "#4172 refusal"
+  },
+  "permCountStock": "Contare il magazzino alla cieca"
 }

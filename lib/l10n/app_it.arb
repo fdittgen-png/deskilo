@@ -6677,6 +6677,8 @@
   "eventServiceChargeTitle": "{name} ×{quantity} — {amount}",
   "eventSettlementReview": "{settlement}: {reason, select, costs_changed{il fornitore ha modificato i costi dopo la registrazione} amount_changed{il fornitore ha modificato l'importo dopo la registrazione} currency_mismatch{un costo è in una valuta diversa da quella della liquidazione} other{il resoconto differisce da quanto registrato}}. Nulla è stato contabilizzato; attende una verifica.",
   "eventSourceNotFound": "Nessun documento di acquisto è stato archiviato per questa richiesta, oppure non può vederlo.",
+  "eventStockCountOverdue": "L’inventario ciclico «{plan}» è ancora aperto dopo la scadenza.",
+  "eventStockCountOverdueEnded": "Fatto",
   "eventStockLow": "{item} è basso in {site}: {onHand} disponibili, punto di riordino {point}",
   "eventStockLowEnded": "di nuovo sopra il punto",
   "eventStockLowItemFallback": "Un articolo",
@@ -6745,6 +6747,7 @@
   "eventTypeServiceCharge": "Servizio",
   "eventTypeSettlementReview": "Liquidazione da verificare",
   "eventTypeSpaceReservation": "Prenotazioni di spazi interi",
+  "eventTypeStockCountOverdue": "Inventario ciclico in ritardo",
   "eventTypeStockLow": "Scorta bassa",
   "eventTypeSubscriptionChange": "Cambio di abbonamento",
   "@eventTypeSubscriptionChange": {
@@ -7771,6 +7774,22 @@
   "@featureStandaloneInvoicingTitle": {
     "description": "#4165 feature switch: featureStandaloneInvoicingTitle"
   },
+  "featureStockCountsDesc": "Conti un articolo in un luogo. Il conteggio attende qualcuno che possa approvare le rettifiche e viene applicato solo se la giacenza non si è mossa da allora. Disattivato: nessun conteggio viene registrato; il registro non cambia.",
+  "@featureStockCountsDesc": {
+    "description": "#4172 feature description"
+  },
+  "featureStockCountsTitle": "Conteggi di magazzino",
+  "@featureStockCountsTitle": {
+    "description": "#4172 feature name"
+  },
+  "featureStockCycleCountsDesc": "Pianifichi controlli a campione di luoghi, articoli o merci di alto valore. Un piano scaduto crea un compito di conteggio che si esegue senza vedere le quantità attese; ogni differenza è approvata come ogni conteggio. Disattivato: nessun piano parte e nessun compito viene creato; il registro non cambia.",
+  "@featureStockCycleCountsDesc": {
+    "description": "#4295 feature description"
+  },
+  "featureStockCycleCountsTitle": "Inventari ciclici",
+  "@featureStockCycleCountsTitle": {
+    "description": "#4295 feature name"
+  },
   "featureStockLotsDesc": "Seguire le merci per lotto o per data di scadenza, con una durata di conservazione. Disattivato: nessun articolo è seguito per lotto e ciò che è stato registrato resta invariato.",
   "@featureStockLotsDesc": {
     "description": "#4169 what the lots and expiry feature does, and what off means"
@@ -7796,6 +7815,14 @@
   "featureStockReorderTitle": "Punti di riordino",
   "@featureStockReorderTitle": {
     "description": "#4294 feature name"
+  },
+  "featureStockReturnsDesc": "Restituisca la merce rispetto alla vendita o alla consegna da cui proviene, oppure corregga un movimento. Ogni reso o correzione è limitato dal movimento che annulla: la stessa merce non viene mai restituita due volte. Disattivato: non viene offerto alcun reso né correzione; il registro non cambia.",
+  "@featureStockReturnsDesc": {
+    "description": "#4172 feature description"
+  },
+  "featureStockReturnsTitle": "Resi e correzioni di magazzino",
+  "@featureStockReturnsTitle": {
+    "description": "#4172 feature name"
   },
   "featureStockTakeOutDesc": "Prelevare merci dal magazzino per uso o come perdita, con motivo e lotto. Disattivato: non sono offerti consumo né perdita; i trasferimenti e la ricezione restano invariati.",
   "@featureStockTakeOutDesc": {
@@ -14309,6 +14336,7 @@
   "permAllowsAccessProd": "Entrare nella produzione di una coppia sviluppo e produzione.",
   "permAllowsApproveExpenses": "Approvare le spese presentate dai membri.",
   "permAllowsApproveStockAdjustments": "Approvare la rettifica proposta da un inventario.",
+  "permAllowsCountStock": "Contare le righe di un compito di inventario ciclico senza vedere ciò che il registro contiene: i compiti e il conteggio di ogni riga, nient’altro.",
   "permAllowsDeployToDev": "Aggiornare lo spazio di sviluppo dalla produzione.",
   "permAllowsDeployToProd": "Portare configurazione e dati anagrafici dallo sviluppo alla produzione.",
   "permAllowsDesignDocuments": "Progettare modelli, testi e impaginazione dei documenti.",
@@ -14350,6 +14378,7 @@
     "description": "Permission label (#513)"
   },
   "permApproveStockAdjustments": "Approvare le rettifiche di magazzino",
+  "permCountStock": "Contare il magazzino alla cieca",
   "permDeployToDev": "Distribuire in sviluppo",
   "@permDeployToDev": {
     "description": "#987/#989 environment pairs: permDeployToDev"
@@ -16463,6 +16492,18 @@
   },
   "refusalSession": "La sua sessione è scaduta. Acceda di nuovo, poi riprovi.",
   "refusalStockConfig": "Questa configurazione di magazzino non è valida: il campo indicato ne spiega il motivo.",
+  "refusalStockCountDecided": "Questo conteggio è già stato deciso ed è definitivo. Conti di nuovo se la cifra è ancora sbagliata.",
+  "@refusalStockCountDecided": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockCountSelf": "Un’altra persona che può approvare le rettifiche deve applicare questo conteggio: chi ha contato non approva il proprio conteggio.",
+  "@refusalStockCountSelf": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockCountStale": "La giacenza si è mossa dopo il conteggio, quindi non viene applicato. Conti di nuovo.",
+  "@refusalStockCountStale": {
+    "description": "#4172 refusal"
+  },
   "refusalStockHistory": "Questo articolo ha movimenti di magazzino, che vengono conservati: non può essere eliminato, e la sua unità di magazzino e la sua tracciabilità restano invariate. Disattivalo o crea un nuovo articolo.",
   "refusalStockItem": "Non è un articolo che questa attività tiene a magazzino. Non è stato spostato nulla.",
   "refusalStockLedgerKept": "La giacenza di questa attività è tenuta dal suo registro: usare un’operazione di magazzino (trasferimento, prelievo, ricezione), non il contatore. Nulla è stato modificato.",
@@ -16479,6 +16520,18 @@
     "description": "#4170 (0847) DKG15: only expired stock is left for a sale."
   },
   "refusalStockPage": "Questa richiesta di pagina non è valida: richiedere da 1 a 200 righe e proseguire solo dalla posizione indicata da una pagina.",
+  "refusalStockReturnBeyond": "Non si può restituire più di quanto questo movimento conteneva: una parte è già stata restituita o corretta.",
+  "@refusalStockReturnBeyond": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockReturnChanged": "Questo reso è già stato registrato con un altro contenuto. Controlli il reso precedente prima di inviarne uno nuovo.",
+  "@refusalStockReturnChanged": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockReturnSource": "Un reso segue la vendita o la consegna da cui proviene; questo movimento non lo è, o non si corregge qui.",
+  "@refusalStockReturnSource": {
+    "description": "#4172 refusal"
+  },
   "refusalStockStale": "Qualcun altro lo ha modificato da quando lo ha aperto. Lo rilegga e rifaccia la sua modifica.",
   "refusalStockUnit": "Questo articolo non ha questa unità. Aggiungi l'unità all'articolo o inserisci la quantità in un'unità che ha.",
   "refusalStockVariant": "Questo articolo ha delle varianti: indicare quale (colore, taglia) spostare, vendere o contare. Nulla è stato modificato.",
@@ -19005,6 +19058,8 @@
   },
   "settingHintStockAddressSeparator": "Il carattere tra i livelli dell'indirizzo di un’ubicazione (sede, zona, corsia, campata, scaffale): MAG1-SALES-A03-B02-S4 con il trattino, MAG1.SALES.A03.B02.S4 con il punto. Cambia solo come si scrive l'indirizzo.",
   "settingHintStockAllowNegative": "Disattivato: un movimento che lascerebbe meno di niente in un luogo è rifiutato. Attivato: viene registrato e il luogo mostra una quantità negativa finché arriva merce.",
+  "settingHintStockCycleCountHighValueMinor": "Il valore, in unità minori della valuta dell’azienda, da cui ciò che un luogo contiene di un articolo conta come di alto valore per un piano di inventario ciclico senza soglia propria.",
+  "settingHintStockCycleCountOverdueDays": "Quanti giorni un compito di inventario ciclico può restare aperto dopo la scadenza prima che la posta lo dichiari in ritardo.",
   "settingHintVatViesEvidenceDays": "Giorni in cui un controllo valido della partita IVA resta abbastanza recente da fungere da prova su una nuova fattura. Un valore più breve richiede prima un nuovo controllo; non prova che un’operazione sia valida.",
   "@settingHintVatViesEvidenceDays": {
     "description": "#2487 retention settings"
@@ -19222,6 +19277,8 @@
   },
   "settingLabelStockAddressSeparator": "Separatore nell'indirizzo di un’ubicazione",
   "settingLabelStockAllowNegative": "Le scorte possono scendere sotto zero",
+  "settingLabelStockCycleCountHighValueMinor": "Inventario ciclico: soglia di alto valore",
+  "settingLabelStockCycleCountOverdueDays": "Inventario ciclico: in ritardo dopo",
   "settingLabelVatViesEvidenceDays": "Validità del controllo della partita IVA",
   "@settingLabelVatViesEvidenceDays": {
     "description": "#2487 retention settings"
@@ -20591,6 +20648,23 @@
   "stockCostLabel": "Costo per unità",
   "stockCostNotShown": "Costo non mostrato",
   "stockCostUnknown": "Costo non registrato",
+  "stockCountsApply": "Applica",
+  "stockCountsCancel": "Annulla il conteggio",
+  "stockCountsEmpty": "Nessun conteggio per ora.",
+  "stockCountsItem": "Articolo da contare",
+  "stockCountsLine": "{item} in {place}: contato {observed} contro {baseline} ({difference})",
+  "stockCountsObserved": "Contato ({unit})",
+  "stockCountsOpen": "Conta",
+  "stockCountsPlace": "Luogo",
+  "stockCountsReason": "Motivo (facoltativo)",
+  "stockCountsReject": "Rifiuta",
+  "stockCountsStale": "La giacenza si è mossa da questo conteggio: conti di nuovo.",
+  "stockCountsStateApplied": "Applicato",
+  "stockCountsStateCancelled": "Annullato",
+  "stockCountsStateRecorded": "In attesa di approvazione",
+  "stockCountsStateRejected": "Rifiutato",
+  "stockCountsSubmit": "Registra il conteggio",
+  "stockCountsTitle": "Conteggi di magazzino",
   "stockDimensionAdd": "Aggiungere una dimensione",
   "@stockDimensionAdd": {
     "description": "#4169 the stock editors: a label or message"
@@ -21368,6 +21442,28 @@
   "stockReorderTitle": "Riordino",
   "stockReorderToOrderEmpty": "Non c’è nulla da ordinare.",
   "stockReorderToOrderTitle": "Cosa ordinare",
+  "stockReversalBackTo": "La merce torna a",
+  "stockReversalCorrectionOpen": "Correggi questo movimento",
+  "stockReversalCorrectionTitle": "Correggere un movimento",
+  "stockReversalCustomerOpen": "Reso dal cliente",
+  "stockReversalCustomerTitle": "Reso dal cliente",
+  "stockReversalEntry": "{kind}: {quantity} {unit}",
+  "stockReversalFully": "Questo movimento è completamente annullato.",
+  "stockReversalKindCorrection": "Corretto",
+  "stockReversalKindCustomer": "Reso dal cliente",
+  "stockReversalKindSupplier": "Reso al fornitore",
+  "stockReversalLeavesFrom": "La merce parte da",
+  "stockReversalMoneyInvoice": "Questo movimento segue una fattura: ogni rimborso o nota di credito si fa nella fattura stessa.",
+  "stockReversalMoneyUnavailable": "Se esista una nota di credito per questo movimento non è mostrato qui: il denaro si corregge a parte.",
+  "stockReversalMoreThanRemains": "Si possono ancora annullare al massimo {quantity} {unit}.",
+  "stockReversalNoMoney": "Questo non fa alcun pagamento, rimborso o nota di credito. Se c’è di mezzo del denaro, lo corregga a parte, nella fattura o nel pagamento al fornitore.",
+  "stockReversalNote": "Nota (facoltativa)",
+  "stockReversalRemaining": "Si può ancora annullare: {quantity} {unit} · già annullato: {reversed}",
+  "stockReversalSection": "Resi e correzioni",
+  "stockReversalSource": "{item}: {quantity} {unit}, {from} → {to}",
+  "stockReversalSubmit": "Registra",
+  "stockReversalSupplierOpen": "Reso al fornitore",
+  "stockReversalSupplierTitle": "Reso al fornitore",
   "stockSettingsElsewhere": "Le impostazioni del magazzino si tengono nella pagina Impostazioni del magazzino.",
   "@stockSettingsElsewhere": {
     "description": "the stock pages and group (#4299)"

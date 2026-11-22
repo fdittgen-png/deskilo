@@ -800,5 +800,10 @@
  "stockSepSlash": "Slash ( / )",
  "stockSepColon": "Colon ( : )",
  "einvoiceStuck": "E-invoice attempt left half-way",
- "einvoiceStuckHint": "How long an e-invoice may stay prepared, with no dispatch started, before the owner is told that its attempt stopped. Set in the app's settings."
+ "einvoiceStuckHint": "How long an e-invoice may stay prepared, with no dispatch started, before the owner is told that its attempt stopped. Set in the app's settings.",
+ "stockCycleHighValue": "Cycle count: high-value threshold",
+ "stockCycleHighValueHint": "The value, in minor units of the business currency, from which what a place holds of an item counts as high value for a cycle count plan that has no threshold of its own. Set in the app's settings.",
+ "stockCycleOverdue": "Cycle count: overdue after",
+ "stockCycleOverdueHint": "How many days a cycle count task may stay open past its due date before the inbox says it is overdue. Set in the app's settings.",
+ "optMinorUnits": "{n} (minor units)"
 }

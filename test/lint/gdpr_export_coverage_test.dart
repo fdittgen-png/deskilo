@@ -117,6 +117,9 @@ const Map<String, String> _notExported = {
   'purchase_order_receipts':
       '#3307 — a delivery of an order of the space, with who recorded it: a '
           'workspace record, in the workspace export',
+  'stock_returns':
+      '#4172 — a return or a correction of the space\'s goods, with who made '
+          'it: a workspace record, in the workspace export',
   'stock_movements':
       '#3824 — goods moved between two places of the space, with who moved '
           'them: a workspace record, in the workspace export',

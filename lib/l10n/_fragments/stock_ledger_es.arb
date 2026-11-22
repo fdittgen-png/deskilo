@@ -29,5 +29,30 @@
   "refusalStockOnlyExpired": "Lo que queda en el almacén principal ha caducado y nunca se vende. Se rechazó la confirmación; no se retiró nada.",
   "@refusalStockOnlyExpired": {
     "description": "#4170 (0847) DKG15: only expired stock is left for a sale."
-  }
+  },
+  "refusalStockReturnChanged": "Esta devolución ya se registró con otro contenido. Revise la devolución anterior antes de enviar una nueva.",
+  "@refusalStockReturnChanged": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockReturnBeyond": "No se puede devolver más de lo que contenía este movimiento: una parte ya se devolvió o se corrigió.",
+  "@refusalStockReturnBeyond": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockReturnSource": "Una devolución sigue a la venta o a la entrega de la que procede; este movimiento no es una, o no se corrige aquí.",
+  "@refusalStockReturnSource": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockCountDecided": "Este recuento ya está decidido y es definitivo. Cuente de nuevo si la cifra sigue siendo incorrecta.",
+  "@refusalStockCountDecided": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockCountStale": "El stock se movió desde el recuento, por lo que no se aplica. Cuente de nuevo.",
+  "@refusalStockCountStale": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockCountSelf": "Otra persona que pueda aprobar ajustes debe aplicar este recuento: quien contó no aprueba su propio recuento.",
+  "@refusalStockCountSelf": {
+    "description": "#4172 refusal"
+  },
+  "permCountStock": "Contar el stock a ciegas"
 }

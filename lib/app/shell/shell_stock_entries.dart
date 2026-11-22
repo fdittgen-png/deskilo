@@ -33,6 +33,14 @@ extension StockEntries on DrawerEntries {
           () => go('/stock/transfers'),
           route: '/stock/transfers',
         ),
+        if (features.contains(WorkspaceFeature.stockCounts))
+          DrawerEntry(
+            'drawer-stock-counts',
+            Icons.fact_check_outlined,
+            l10n.stockCountsTitle,
+            () => go('/stock/counts'),
+            route: '/stock/counts',
+          ),
         DrawerEntry('drawer-stock-items', Icons.category_outlined, l10n.stockItemsTitle, () => go('/stock/items'), route: '/stock/items'),
         DrawerEntry('drawer-stock-places', Icons.place_outlined, l10n.stockPlacesTitle, () => go('/stock/places'), route: '/stock/places'),
       ],

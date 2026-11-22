@@ -716,6 +716,23 @@ Les marchandises au coût **inconnu** (un lot reçu sans coût, ou sans lot) son
 
 Ouvrez un mouvement (**Stock → Mouvements**) et lisez **D’où cela vient** : la réception, la commande, les factures fournisseur liées à cette commande, ce que doit chacune et les paiements et annulations qui la règlent. Seul ce qui est enregistré est montré ; rien n’est rapproché par un nom, une date ou un montant. Une partie que vous ne pouvez pas voir indique *ne vous est pas montré* (ce n’est pas la même chose que impayé) ; une partie sans rien d’enregistré indique *non lié* ; une liste tronquée le dit. Lier une facture ne change jamais le coût de la marchandise. L’ouvrir ne change rien.
 
+<!-- anchor: user.money.stock.reversals -->
+### Retours, corrections et comptages
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous voulez reprendre des marchandises, annuler un mouvement ou corriger un chiffre faux sur l’étagère, sans réécrire l’historique.
+
+Ouvrez un mouvement dans **Stock → Mouvements**. Là où la fonction *Retours et corrections* est activée et où votre rôle peut déplacer du stock, la page dit combien de ce mouvement peut encore être annulé et propose : **Retour du client** (pour une vente), **Retour au fournisseur** (pour une livraison) ou **Corriger ce mouvement** (pour les autres). Le formulaire montre ce qui a bougé et ce qui reste avant de confirmer. Un retour au fournisseur part du lieu où se trouvent les marchandises ; celles qui reviennent d’un client rentrent au lieu que vous choisissez. Une correction est un mouvement inverse, et une correction peut elle-même être corrigée.
+
+**Comptages.** Là où la fonction *Comptages de stock* est activée, **Stock → Comptages de stock** liste ce qui a été compté face à ce que le registre contenait. **Compter** enregistre un article à un endroit et ne déplace rien : le comptage attend quelqu’un qui peut approuver les ajustements, et l’indique. L’approbation applique exactement l’écart, et seulement si le stock n’a pas bougé depuis le comptage ; sinon elle dit qu’il faut recompter. Celui qui a compté n’approuve pas son propre comptage tant qu’un autre peut le faire ; le propriétaire d’une entreprise d’une seule personne fait les deux.
+
+**Bon à savoir**
+
+- Un retour ou une correction ne dépasse jamais ce que permet le mouvement qu’il annule, quel que soit le nombre d’envois.
+- Aucun paiement, remboursement ni avoir n’est fait : si de l’argent est en jeu, corrigez-le dans la facture ou le paiement du fournisseur.
+- Renvoyer le même formulaire après une réponse perdue ne l’enregistre qu’une fois.
+
 <!-- anchor: user.money.amounts -->
 ### Comment les montants sont affichés
 

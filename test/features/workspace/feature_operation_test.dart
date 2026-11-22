@@ -202,7 +202,7 @@ void main() {
       Map<String, dynamic> flags = const {},
       SchemaCompatibility compatibility = SchemaCompatibility.current,
     }) async {
-      tester.view.physicalSize = const Size(800, 24000);
+      tester.view.physicalSize = const Size(800, 30000);
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.reset);
       final workspace = FakeWorkspaceRepository.withWorkspace(

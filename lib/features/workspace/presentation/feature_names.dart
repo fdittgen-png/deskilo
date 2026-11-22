@@ -323,5 +323,8 @@ String _stockName(AppLocalizations l10n, WorkspaceFeature feature) =>
       WorkspaceFeature.stockReceiving => l10n.featureStockReceivingTitle,
       WorkspaceFeature.stockTakeOut => l10n.featureStockTakeOutTitle,
       WorkspaceFeature.stockReorder => l10n.featureStockReorderTitle,
+      WorkspaceFeature.stockReturns => l10n.featureStockReturnsTitle,
+      WorkspaceFeature.stockCounts => l10n.featureStockCountsTitle,
+      WorkspaceFeature.stockCycleCounts => l10n.featureStockCycleCountsTitle,
       _ => feature.name,
     };

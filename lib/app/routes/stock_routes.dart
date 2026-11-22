@@ -8,6 +8,7 @@
 import 'package:go_router/go_router.dart';
 
 import '../../features/stock/application/stock_view.dart';
+import '../../features/stock/presentation/stock_counts_screen.dart';
 import '../../features/stock/presentation/stock_entry.dart';
 import '../../features/stock/presentation/stock_items_screen.dart';
 import '../../features/stock/presentation/stock_movement_screen.dart';
@@ -25,6 +26,10 @@ import '../route_env.dart';
 List<RouteBase> stockRoutes(RouteEnv env) {
   const access = RouteAccess(
     features: [WorkspaceFeature.stockManagement],
+    to: '/reserve',
+  );
+  const countsAccess = RouteAccess(
+    features: [WorkspaceFeature.stockManagement, WorkspaceFeature.stockCounts],
     to: '/reserve',
   );
   const reorderAccess = RouteAccess(
@@ -74,6 +79,12 @@ List<RouteBase> stockRoutes(RouteEnv env) {
           path: 'transfers',
           redirect: env.guard(access),
           builder: (context, state) => const StockTransfersScreen(),
+        ),
+        // #4172 — the counts and their approval, where the feature is on.
+        GoRoute(
+          path: 'counts',
+          redirect: env.guard(countsAccess),
+          builder: (context, state) => const StockCountsScreen(),
         ),
         GoRoute(
           path: 'movements/:id',

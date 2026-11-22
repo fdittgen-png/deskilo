@@ -805,7 +805,12 @@ window.SETUP_L10N={
    "stockSepSlash": "Slash ( / )",
    "stockSepColon": "Colon ( : )",
    "einvoiceStuck": "E-invoice attempt left half-way",
-   "einvoiceStuckHint": "How long an e-invoice may stay prepared, with no dispatch started, before the owner is told that its attempt stopped. Set in the app's settings."
+   "einvoiceStuckHint": "How long an e-invoice may stay prepared, with no dispatch started, before the owner is told that its attempt stopped. Set in the app's settings.",
+   "stockCycleHighValue": "Cycle count: high-value threshold",
+   "stockCycleHighValueHint": "The value, in minor units of the business currency, from which what a place holds of an item counts as high value for a cycle count plan that has no threshold of its own. Set in the app's settings.",
+   "stockCycleOverdue": "Cycle count: overdue after",
+   "stockCycleOverdueHint": "How many days a cycle count task may stay open past its due date before the inbox says it is overdue. Set in the app's settings.",
+   "optMinorUnits": "{n} (minor units)"
   },
   "feature": {
    "calendarTab": [
@@ -1475,6 +1480,18 @@ window.SETUP_L10N={
    "stockReorder": [
     "Reorder points",
     "Set a minimum per item and site: the inbox says when stock falls to it, and a replenishment list proposes what to order. Off: no point is set, no alert is raised and no list is offered; the ledger is unaffected."
+   ],
+   "stockReturns": [
+    "Stock returns and corrections",
+    "Return goods against the sale or the delivery they came from, or correct a movement. Each return or correction is bounded by the movement it reverses, so the same goods are never returned twice. Off: no return and no correction is offered; the ledger is unaffected."
+   ],
+   "stockCounts": [
+    "Stock counts",
+    "Count an item at a place. The count waits for someone who may approve adjustments, and it is applied only if the stock has not moved since it was counted. Off: no count is recorded; the ledger is unaffected."
+   ],
+   "stockCycleCounts": [
+    "Cycle counts",
+    "Plan spot checks of chosen places, items or high-value goods. A due plan makes a count task the counter does without seeing the expected quantities; each difference is approved like any count. Off: no plan runs and no task is made; the ledger is unaffected."
    ]
   },
   "process": {
@@ -1644,7 +1661,8 @@ window.SETUP_L10N={
    "viewStock": "See the stock",
    "manageStock": "Move goods in and out of stock",
    "approveStockAdjustments": "Approve stock adjustments",
-   "manageBillingCustomers": "Manage billing customers"
+   "manageBillingCustomers": "Manage billing customers",
+   "countStock": "Count stock, blind"
   },
   "domain": {
    "payment": "Payment",
@@ -2676,7 +2694,12 @@ window.SETUP_L10N={
    "stockSepSlash": "Barre oblique ( / )",
    "stockSepColon": "Deux-points ( : )",
    "einvoiceStuck": "Tentative de facture électronique interrompue",
-   "einvoiceStuckHint": "Combien de temps une facture électronique peut rester préparée, sans envoi commencé, avant que le propriétaire soit prévenu que sa tentative s’est arrêtée. Réglé dans les paramètres de l’application."
+   "einvoiceStuckHint": "Combien de temps une facture électronique peut rester préparée, sans envoi commencé, avant que le propriétaire soit prévenu que sa tentative s’est arrêtée. Réglé dans les paramètres de l’application.",
+   "stockCycleHighValue": "Inventaire tournant : seuil de forte valeur",
+   "stockCycleHighValueHint": "La valeur, en unités mineures de la devise de l’entreprise, à partir de laquelle ce qu’un lieu contient d’un article est de forte valeur pour un plan sans seuil propre. Réglé dans les paramètres de l’application.",
+   "stockCycleOverdue": "Inventaire tournant : en retard après",
+   "stockCycleOverdueHint": "Combien de jours une tâche d’inventaire tournant peut rester ouverte après son échéance avant d’être dite en retard. Réglé dans les paramètres de l’application.",
+   "optMinorUnits": "{n} (unités mineures)"
   },
   "feature": {
    "calendarTab": [
@@ -3346,6 +3369,18 @@ window.SETUP_L10N={
    "stockReorder": [
     "Seuils de réapprovisionnement",
     "Fixez un minimum par article et par site : la boîte de réception signale quand le stock l’atteint, et une liste de réapprovisionnement propose quoi commander. Désactivé : aucun seuil, aucune alerte, aucune liste ; le registre n’est pas touché."
+   ],
+   "stockReturns": [
+    "Retours et corrections de stock",
+    "Retournez des marchandises contre la vente ou la livraison dont elles viennent, ou corrigez un mouvement. Chaque retour ou correction est borné par le mouvement qu’il annule : les mêmes marchandises ne sont jamais retournées deux fois. Désactivé : aucun retour ni correction n’est proposé ; le registre n’est pas touché."
+   ],
+   "stockCounts": [
+    "Inventaires de stock",
+    "Comptez un article à un endroit. Le comptage attend quelqu’un qui peut approuver les ajustements, et il n’est appliqué que si le stock n’a pas bougé depuis. Désactivé : aucun comptage n’est enregistré ; le registre n’est pas touché."
+   ],
+   "stockCycleCounts": [
+    "Inventaires tournants",
+    "Planifiez des contrôles ponctuels de lieux, d’articles ou de marchandises de valeur. Un plan échu crée une tâche de comptage que le compteur fait sans voir les quantités attendues ; chaque écart est approuvé comme tout comptage. Désactivé : aucun plan ne s’exécute et aucune tâche n’est créée ; le registre n’est pas touché."
    ]
   },
   "process": {
@@ -3515,7 +3550,8 @@ window.SETUP_L10N={
    "viewStock": "Voir les stocks",
    "manageStock": "Entrer et sortir des marchandises du stock",
    "approveStockAdjustments": "Approuver les ajustements de stock",
-   "manageBillingCustomers": "Gérer les clients facturés"
+   "manageBillingCustomers": "Gérer les clients facturés",
+   "countStock": "Compter le stock, à l’aveugle"
   },
   "domain": {
    "payment": "Paiement",
@@ -4547,7 +4583,12 @@ window.SETUP_L10N={
    "stockSepSlash": "Schrägstrich ( / )",
    "stockSepColon": "Doppelpunkt ( : )",
    "einvoiceStuck": "Unterbrochener E-Rechnungsversuch",
-   "einvoiceStuckHint": "Wie lange eine E-Rechnung vorbereitet bleiben darf, ohne dass ein Versand begonnen hat, bevor die Inhaberin oder der Inhaber erfährt, dass der Versuch stehen geblieben ist. Einstellbar in den Einstellungen der App."
+   "einvoiceStuckHint": "Wie lange eine E-Rechnung vorbereitet bleiben darf, ohne dass ein Versand begonnen hat, bevor die Inhaberin oder der Inhaber erfährt, dass der Versuch stehen geblieben ist. Einstellbar in den Einstellungen der App.",
+   "stockCycleHighValue": "Permanente Inventur: Schwelle für hohen Wert",
+   "stockCycleHighValueHint": "Der Wert in der kleinsten Einheit der Währung des Unternehmens, ab dem das, was ein Ort von einem Artikel hält, für einen Plan ohne eigene Schwelle als hochwertig gilt. Einstellbar in den Einstellungen der App.",
+   "stockCycleOverdue": "Permanente Inventur: überfällig nach",
+   "stockCycleOverdueHint": "Wie viele Tage eine Inventuraufgabe nach ihrem Fälligkeitstag offen bleiben darf, bevor sie als überfällig gemeldet wird. Einstellbar in den Einstellungen der App.",
+   "optMinorUnits": "{n} (kleinste Einheit)"
   },
   "feature": {
    "calendarTab": [
@@ -5217,6 +5258,18 @@ window.SETUP_L10N={
    "stockReorder": [
     "Meldebestände",
     "Legen Sie je Artikel und Standort einen Mindestbestand fest: Der Posteingang meldet, wenn der Bestand ihn erreicht, und eine Nachschubliste schlägt vor, was zu bestellen ist. Aus: kein Meldebestand, kein Alarm, keine Liste; das Lagerbuch bleibt unberührt."
+   ],
+   "stockReturns": [
+    "Lagerrückgaben und Korrekturen",
+    "Geben Sie Ware gegen den Verkauf oder die Lieferung zurück, aus der sie stammt, oder korrigieren Sie eine Bewegung. Jede Rückgabe oder Korrektur ist durch die Bewegung begrenzt, die sie rückgängig macht: dieselbe Ware wird nie zweimal zurückgegeben. Aus: keine Rückgabe und keine Korrektur wird angeboten; das Buch bleibt unberührt."
+   ],
+   "stockCounts": [
+    "Bestandszählungen",
+    "Zählen Sie einen Artikel an einem Ort. Die Zählung wartet auf jemanden, der Anpassungen genehmigen darf, und wird nur angewendet, wenn sich der Bestand seit der Zählung nicht bewegt hat. Aus: keine Zählung wird erfasst; das Buch bleibt unberührt."
+   ],
+   "stockCycleCounts": [
+    "Permanente Inventur",
+    "Planen Sie Stichproben für ausgewählte Orte, Artikel oder hochwertige Ware. Ein fälliger Plan erzeugt eine Zählaufgabe, die ohne die erwarteten Mengen erledigt wird; jede Differenz wird wie jede Zählung genehmigt. Aus: kein Plan läuft und keine Aufgabe entsteht; das Buch bleibt unberührt."
    ]
   },
   "process": {
@@ -5386,7 +5439,8 @@ window.SETUP_L10N={
    "viewStock": "Lager einsehen",
    "manageStock": "Waren ein- und auslagern",
    "approveStockAdjustments": "Bestandskorrekturen genehmigen",
-   "manageBillingCustomers": "Rechnungskunden verwalten"
+   "manageBillingCustomers": "Rechnungskunden verwalten",
+   "countStock": "Bestand blind zählen"
   },
   "domain": {
    "payment": "Zahlung",
@@ -6418,7 +6472,12 @@ window.SETUP_L10N={
    "stockSepSlash": "Barra ( / )",
    "stockSepColon": "Dos puntos ( : )",
    "einvoiceStuck": "Intento de factura electrónica interrumpido",
-   "einvoiceStuckHint": "Cuánto tiempo puede quedar preparada una factura electrónica, sin que se haya iniciado el envío, antes de avisar al propietario de que el intento se detuvo. Se ajusta en los ajustes de la aplicación."
+   "einvoiceStuckHint": "Cuánto tiempo puede quedar preparada una factura electrónica, sin que se haya iniciado el envío, antes de avisar al propietario de que el intento se detuvo. Se ajusta en los ajustes de la aplicación.",
+   "stockCycleHighValue": "Recuento cíclico: umbral de alto valor",
+   "stockCycleHighValueHint": "El valor, en unidades menores de la moneda de la empresa, a partir del cual lo que un lugar contiene de un artículo es de alto valor para un plan sin umbral propio. Se ajusta en los ajustes de la aplicación.",
+   "stockCycleOverdue": "Recuento cíclico: vencido tras",
+   "stockCycleOverdueHint": "Cuántos días puede seguir abierta una tarea de recuento cíclico después de su fecha antes de declararse vencida. Se ajusta en los ajustes de la aplicación.",
+   "optMinorUnits": "{n} (unidades menores)"
   },
   "feature": {
    "calendarTab": [
@@ -7088,6 +7147,18 @@ window.SETUP_L10N={
    "stockReorder": [
     "Puntos de reposición",
     "Fije un mínimo por artículo y sede: la bandeja avisa cuando las existencias lo alcanzan y una lista de reposición propone qué pedir. Desactivado: ningún punto, ninguna alerta ni lista; el libro no se ve afectado."
+   ],
+   "stockReturns": [
+    "Devoluciones y correcciones de stock",
+    "Devuelva mercancías contra la venta o la entrega de la que proceden, o corrija un movimiento. Cada devolución o corrección está limitada por el movimiento que revierte: las mismas mercancías nunca se devuelven dos veces. Desactivado: no se ofrece ninguna devolución ni corrección; el registro no cambia."
+   ],
+   "stockCounts": [
+    "Recuentos de stock",
+    "Cuente un artículo en un lugar. El recuento espera a alguien que pueda aprobar ajustes y solo se aplica si el stock no se ha movido desde entonces. Desactivado: no se registra ningún recuento; el registro no cambia."
+   ],
+   "stockCycleCounts": [
+    "Recuentos cíclicos",
+    "Planifique controles puntuales de lugares, artículos o mercancías de alto valor. Un plan vencido crea una tarea de recuento que se hace sin ver las cantidades esperadas; cada diferencia se aprueba como cualquier recuento. Desactivado: ningún plan se ejecuta ni se crea tarea; el registro no cambia."
    ]
   },
   "process": {
@@ -7257,7 +7328,8 @@ window.SETUP_L10N={
    "viewStock": "Ver las existencias",
    "manageStock": "Entrar y sacar mercancías del almacén",
    "approveStockAdjustments": "Aprobar ajustes de existencias",
-   "manageBillingCustomers": "Gestionar clientes facturados"
+   "manageBillingCustomers": "Gestionar clientes facturados",
+   "countStock": "Contar el stock a ciegas"
   },
   "domain": {
    "payment": "Pago",
@@ -8289,7 +8361,12 @@ window.SETUP_L10N={
    "stockSepSlash": "Barra ( / )",
    "stockSepColon": "Due punti ( : )",
    "einvoiceStuck": "Tentativo di fattura elettronica interrotto",
-   "einvoiceStuckHint": "Per quanto tempo una fattura elettronica può restare preparata, senza che l’invio sia iniziato, prima che il titolare sia avvisato che il tentativo si è fermato. Si imposta nelle impostazioni dell’app."
+   "einvoiceStuckHint": "Per quanto tempo una fattura elettronica può restare preparata, senza che l’invio sia iniziato, prima che il titolare sia avvisato che il tentativo si è fermato. Si imposta nelle impostazioni dell’app.",
+   "stockCycleHighValue": "Inventario ciclico: soglia di alto valore",
+   "stockCycleHighValueHint": "Il valore, in unità minori della valuta dell’azienda, da cui ciò che un luogo contiene di un articolo è di alto valore per un piano senza soglia propria. Si imposta nelle impostazioni dell’app.",
+   "stockCycleOverdue": "Inventario ciclico: in ritardo dopo",
+   "stockCycleOverdueHint": "Quanti giorni un compito di inventario ciclico può restare aperto dopo la scadenza prima di essere dichiarato in ritardo. Si imposta nelle impostazioni dell’app.",
+   "optMinorUnits": "{n} (unità minori)"
   },
   "feature": {
    "calendarTab": [
@@ -8959,6 +9036,18 @@ window.SETUP_L10N={
    "stockReorder": [
     "Punti di riordino",
     "Impostate un minimo per articolo e sede: la casella segnala quando la giacenza lo raggiunge e un elenco di riordino propone cosa ordinare. Disattivato: nessun punto, nessun avviso, nessun elenco; il registro non cambia."
+   ],
+   "stockReturns": [
+    "Resi e correzioni di magazzino",
+    "Restituisca la merce rispetto alla vendita o alla consegna da cui proviene, oppure corregga un movimento. Ogni reso o correzione è limitato dal movimento che annulla: la stessa merce non viene mai restituita due volte. Disattivato: non viene offerto alcun reso né correzione; il registro non cambia."
+   ],
+   "stockCounts": [
+    "Conteggi di magazzino",
+    "Conti un articolo in un luogo. Il conteggio attende qualcuno che possa approvare le rettifiche e viene applicato solo se la giacenza non si è mossa da allora. Disattivato: nessun conteggio viene registrato; il registro non cambia."
+   ],
+   "stockCycleCounts": [
+    "Inventari ciclici",
+    "Pianifichi controlli a campione di luoghi, articoli o merci di alto valore. Un piano scaduto crea un compito di conteggio che si esegue senza vedere le quantità attese; ogni differenza è approvata come ogni conteggio. Disattivato: nessun piano parte e nessun compito viene creato; il registro non cambia."
    ]
   },
   "process": {
@@ -9128,7 +9217,8 @@ window.SETUP_L10N={
    "viewStock": "Vedere le scorte",
    "manageStock": "Movimentare la merce in entrata e in uscita",
    "approveStockAdjustments": "Approvare le rettifiche di magazzino",
-   "manageBillingCustomers": "Gestire i clienti fatturati"
+   "manageBillingCustomers": "Gestire i clienti fatturati",
+   "countStock": "Contare il magazzino alla cieca"
   },
   "domain": {
    "payment": "Pagamento",

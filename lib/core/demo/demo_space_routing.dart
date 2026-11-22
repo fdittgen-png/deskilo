@@ -56,6 +56,7 @@ import 'data/demo_stock_queries.dart';
 import 'data/demo_stock_receiving_commands.dart';
 import 'data/demo_stock_registry.dart';
 import 'data/demo_stock_reorder.dart';
+import 'data/demo_stock_reversals.dart';
 import 'data/demo_stock_trace.dart';
 import 'data/finance_kpi_repository.dart';
 import 'data/money/demo_credit_moves.dart';
@@ -337,6 +338,8 @@ List<Override> _moneyPortOverrides(FakeMoneyRepository Function(Ref ref) money) 
       ref.watch(stockConfigCommandsProvider) as DemoStockConfigCommands,
     ),
   ),
+  // #4172 — and returns, corrects and counts on that same stock.
+  stockReversalsProvider.overrideWith((ref) => DemoStockReversals(ref.watch(_demoStockLedgerProvider))),
 ];
 
 /// #4170 — the Demo's ONE goods ledger: the Stock screen's reads, a delivery
