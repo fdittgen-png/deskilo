@@ -35,6 +35,7 @@ import 'routes/money_routes.dart';
 import 'routes/plan_routes.dart';
 import 'routes/profile_routes.dart';
 import 'routes/reservations_routes.dart';
+import 'routes/service_fulfilment_routes.dart';
 import 'routes/stock_routes.dart';
 import 'routes/task_recorder_routes.dart';
 import 'routes/workspace_routes.dart';
@@ -126,6 +127,7 @@ GoRouter router(Ref ref) {
       ...billingCustomerRoutes(env),
       ...stockRoutes(env),
       ...customerQuoteRoutes(env),
+      ...serviceFulfilmentRoutes(env),
     ],
   );
   ref.onDispose(router.dispose);

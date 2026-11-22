@@ -423,6 +423,11 @@ const List<ExportSource> workspaceExportSources = [
   ExportSource.everyColumn('customer_quote_revisions'),
   ExportSource.everyColumn('customer_quote_decisions'),
   ExportSource.everyColumn('customer_quote_conversions'),
+  // #4178 — the engagements of the services ordered, their steps and the invoice
+  // lines that billed a direct commitment.
+  ExportSource.everyColumn('service_fulfilments'),
+  ExportSource.everyColumn('service_fulfilment_transitions'),
+  ExportSource.everyColumn('service_fulfilment_invoice_links'),
   ExportSource.everyColumn('purchase_documents'),
   ExportSource.everyColumn('purchase_lines'),
   ExportSource.everyColumn('purchase_obligations'),

@@ -49,7 +49,7 @@ Future<void> walkKessler(WidgetTester tester, Size size) async {
   );
   final entries = find.byKey(const ValueKey('business-entries'));
   expect(entries, findsOneWidget);
-  for (final key in ['quotes', 'customers', 'invoices', 'new-invoice', 'me']) {
+  for (final key in ['quotes', 'engagements', 'customers', 'invoices', 'new-invoice', 'me']) {
     expect(
       find.byKey(ValueKey('business-entry-$key')),
       findsOneWidget,
@@ -75,6 +75,14 @@ Future<void> walkKessler(WidgetTester tester, Size size) async {
   for (final name in ['Domaine des Aires', 'Chiara', 'Lindner Beratung']) {
     expect(_text(name), isTrue, reason: name);
   }
+  // the training engagement: done before its invoice, its history whole
+  await open('engagements', '/money/engagements');
+  expect(_text('3 day · Training day') || _text('Training day'), isTrue);
+  expect(_text('Done'), isTrue);
+  await tester.tap(find.textContaining('Training day').first);
+  await _settle(tester);
+  expect(find.byKey(const ValueKey('engagement-step-row-3')), findsOneWidget, reason: 'ordered, started, done');
+  expect(find.byKey(const ValueKey('engagement-no-invoice')), findsOneWidget, reason: 'nothing was invoiced yet');
   await open('invoices', '/invoices');
   // the EUR 60.00 invoice is open under its customer, the EUR 108.00 one was
   // received, both in the business's own euros

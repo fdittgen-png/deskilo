@@ -1,0 +1,11 @@
+{
+  "@@locale": "en",
+  "featureServiceFulfilmentTitle": "Service fulfilment",
+  "featureServiceFulfilmentDesc": "Follow an ordered service as an engagement of its own: ordered, started, done, or cancelled with a reason, with every step kept. The quote, the invoice and the payments stay as they are beside it. Nothing is invoiced or paid by it. Asked for, under billing customers.",
+  "@featureServiceFulfilmentTitle": {
+    "description": "a feature in the Features list (#4178)"
+  },
+  "@featureServiceFulfilmentDesc": {
+    "description": "a feature in the Features list (#4178)"
+  }
+}

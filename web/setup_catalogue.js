@@ -662,6 +662,10 @@ window.SETUP_REGISTRY={
   [
    "stockTakeOut",
    false
+  ],
+  [
+   "serviceFulfilment",
+   false
   ]
  ],
  "requires": {
@@ -776,7 +780,8 @@ window.SETUP_REGISTRY={
   "customerQuotes": "invoicing",
   "stockLots": "stockManagement",
   "stockReceiving": "stockManagement",
-  "stockTakeOut": "stockManagement"
+  "stockTakeOut": "stockManagement",
+  "serviceFulfilment": "billingCustomers"
  },
  "availableIn": {
   "recapitulativeStatement": [
@@ -1524,7 +1529,8 @@ window.SETUP_PROCESSES=[
      "numberSequences",
      "standaloneInvoicing",
      "billingCustomers",
-     "customerQuotes"
+     "customerQuotes",
+     "serviceFulfilment"
     ]
    },
    {
@@ -1880,7 +1886,8 @@ window.SETUP_LEVELS={
       "invoiceEmail",
       "standaloneInvoicing",
       "billingCustomers",
-      "customerQuotes"
+      "customerQuotes",
+      "serviceFulfilment"
      ],
      "needs": {}
     }

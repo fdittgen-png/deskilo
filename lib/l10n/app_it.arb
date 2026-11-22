@@ -6019,6 +6019,161 @@
   "@emblemTooHeavy": {
     "description": "#1289 emblem: still too heavy after re-encoding"
   },
+  "engagementBilledOn": "Fatturato su",
+  "@engagementBilledOn": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementCancel": "Annullare il servizio",
+  "@engagementCancel": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementCancelReason": "Perché viene annullato",
+  "@engagementCancelReason": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementCorrectedBy": "Corretto da {number}",
+  "@engagementCorrectedBy": {
+    "description": "service engagements (#4178)",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "engagementDirect": "Concordato direttamente",
+  "@engagementDirect": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementDirectTitle": "Nuovo servizio",
+  "@engagementDirectTitle": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementFieldDescription": "Cosa è stato ordinato",
+  "@engagementFieldDescription": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementFinish": "Segnare come concluso",
+  "@engagementFinish": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementFromInvoice": "Dalla fattura {number}",
+  "@engagementFromInvoice": {
+    "description": "service engagements (#4178)",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "engagementFromQuote": "Dal preventivo {reference}",
+  "@engagementFromQuote": {
+    "description": "service engagements (#4178)",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
+  "engagementNoInvoice": "Non ancora fatturato. Seguire il lavoro non cambia nulla nei conti.",
+  "@engagementNoInvoice": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementOpenExisting": "Aprire il suo avanzamento",
+  "@engagementOpenExisting": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementOpenFromLine": "Seguire questo servizio",
+  "@engagementOpenFromLine": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementPaidOf": "{paid} di {total} pagati",
+  "@engagementPaidOf": {
+    "description": "service engagements (#4178)",
+    "placeholders": {
+      "paid": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "engagementRefusedDenied": "Il suo ruolo non lo consente.",
+  "@engagementRefusedDenied": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementRefusedIncomplete": "Manca qualcosa o è fuori intervallo: controllate i dati.",
+  "@engagementRefusedIncomplete": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementRefusedOff": "L'avanzamento dei servizi è disattivato in questa azienda.",
+  "@engagementRefusedOff": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementRefusedReused": "Quella richiesta è già stata usata per altro. Ricominciate.",
+  "@engagementRefusedReused": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementRefusedStale": "Il servizio è cambiato nel frattempo. È stato riletto: controllate e riprovate.",
+  "@engagementRefusedStale": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementRefusedState": "Quel passaggio non è possibile nello stato attuale del servizio.",
+  "@engagementRefusedState": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementRefusedUnknown": "Quel servizio, preventivo, fattura o cliente non è stato trovato.",
+  "@engagementRefusedUnknown": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementSave": "Concordare",
+  "@engagementSave": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementStart": "Avviare",
+  "@engagementStart": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementStateCancelled": "Annullato",
+  "@engagementStateCancelled": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementStateDone": "Concluso",
+  "@engagementStateDone": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementStateOrdered": "Ordinato",
+  "@engagementStateOrdered": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementStateStarted": "Avviato",
+  "@engagementStateStarted": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementUnreached": "Non è arrivata risposta, quindi non si afferma nulla. Riprovate: la stessa richiesta viene soddisfatta una volta sola.",
+  "@engagementUnreached": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementsEmpty": "Nessun servizio per ora. Apritene uno da un preventivo accettato o aggiungetene uno direttamente.",
+  "@engagementsEmpty": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementsIntro": "Seguite ogni servizio ordinato: ordinato, avviato, concluso. Il preventivo, la fattura e i pagamenti restano invariati accanto.",
+  "@engagementsIntro": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementsLoadFailed": "Non è stato possibile leggere i servizi. Non è un elenco vuoto.",
+  "@engagementsLoadFailed": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementsNew": "Nuovo servizio",
+  "@engagementsNew": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementsTitle": "Servizi in corso",
+  "@engagementsTitle": {
+    "description": "service engagements (#4178)"
+  },
   "entitlementBlockedFull": "Ha usato tutti i suoi giorni questo mese. Ne chieda altri a un amministratore o richieda mezze giornate extra.",
   "entitlementDaysLeft": "{left} giorni rimasti",
   "entitlementDaysUsed": "{used} di {total} giorni usati",
@@ -7563,6 +7718,14 @@
   },
   "featureSeriesBooking": "Prenotazione in serie",
   "featureSeriesBookingDesc": "Ripeta una prenotazione ogni giorno, ogni settimana o nei giorni feriali.",
+  "featureServiceFulfilmentDesc": "Seguite un servizio ordinato come un impegno a sé: ordinato, avviato, concluso o annullato con un motivo, conservando ogni passaggio. Il preventivo, la fattura e i pagamenti restano invariati accanto. Nulla viene fatturato o pagato da questo. Su richiesta, sotto i clienti fatturati.",
+  "@featureServiceFulfilmentDesc": {
+    "description": "a feature in the Features list (#4178)"
+  },
+  "featureServiceFulfilmentTitle": "Avanzamento dei servizi",
+  "@featureServiceFulfilmentTitle": {
+    "description": "a feature in the Features list (#4178)"
+  },
   "featureServices": "Servizi",
   "featureServicesDesc": "Catalogo dei servizi e registrazione dei consumi.",
   "featureSettlementFoldDesc": "Le fatture raggruppate in una scompaiono dalle liste come pari e si annidano sotto la fattura di raggruppamento, che porta tutte le loro righe. Su una fattura raggruppata ogni operazione è disattivata; resta solo il suo PDF, timbrato con il numero in cui è stata raggruppata. Disattivato: le fatture raggruppate restano elencate accanto a quella di raggruppamento.",

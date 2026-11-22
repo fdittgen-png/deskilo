@@ -622,6 +622,18 @@ How long a new quote stays valid when you state no end date, and the longest val
 
 On a sent quote, **Share the PDF** opens the offer as a document: a quote, with its own reference and how long it is valid, the customer, the lines and what they come to as they were frozen when it was sent (the net, the VAT per rate and the total). It is never an invoice and carries no invoice number. You can view it, save it or share it.
 
+<!-- anchor: user.money.engagements -->
+### Service engagements
+
+**Audience:** Administrator · Owner
+
+Open **Sales & collections** and then **Service engagements**. This is where you follow each service you were ordered, from the order to the work being done.
+
+Open the engagement of an accepted quote's line with **Follow this service** on the quote, or choose **New engagement** to commit one directly, before any quote or invoice: the customer, what is ordered and how much. An engagement is **Ordered**, then **Started**, then **Done**; before it is done you may **Cancel the engagement**, and you give the reason. Every step stays in its history.
+
+The quote, the invoice and the payments stay exactly as they are beside it: the engagement shows the invoices it is billed on, what was paid and any correction, but following the work never invoices, collects or changes anything. One engagement exists for each ordered line, however you reach it: from the quote, or from the invoice that billed it.
+
+If a step is refused because the engagement moved on meanwhile, it is read again and you try once more; if no answer came, the same request is tried again and the server answers it only once.
 <!-- anchor: user.money.stock -->
 ### Stock
 

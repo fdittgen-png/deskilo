@@ -622,6 +622,18 @@ El tiempo que un presupuesto nuevo permanece válido cuando no indica fecha de f
 
 En un presupuesto enviado, **Compartir el PDF** abre la oferta como documento: un presupuesto, con su propia referencia y su plazo de validez, el cliente, las líneas y lo que suman tal como se fijaron al enviarlo (el neto, el IVA por tipo y el total). Nunca es una factura y no lleva número de factura. Puede verlo, guardarlo o compartirlo.
 
+<!-- anchor: user.money.engagements -->
+### Servicios en curso
+
+**Público:** Administrador/a · Propietario
+
+Abra **Ventas y cobros** y luego **Servicios en curso**. Aquí sigue cada servicio que le han pedido, desde el pedido hasta el trabajo terminado.
+
+Abra el seguimiento de una línea de un presupuesto aceptado con **Seguir este servicio** en el presupuesto, o elija **Nuevo servicio** para acordar uno directamente, antes de cualquier presupuesto o factura: el cliente, lo que se pide y cuánto. Un servicio está **Pedido**, luego **Iniciado**, luego **Terminado**; antes de que termine puede **Cancelar el servicio** indicando el motivo. Cada paso queda en su historial.
+
+El presupuesto, la factura y los pagos quedan exactamente como están: el servicio muestra las facturas en las que se factura, lo pagado y cualquier corrección, pero seguir el trabajo no factura, no cobra y no cambia nada. Existe un solo servicio por línea pedida, llegue como llegue: desde el presupuesto o desde la factura que lo facturó.
+
+Si un paso se rechaza porque el servicio ha cambiado entretanto, se vuelve a leer y lo intenta de nuevo; si no llegó respuesta, se reenvía la misma solicitud y el servidor la atiende una sola vez.
 <!-- anchor: user.money.stock -->
 ### Existencias
 

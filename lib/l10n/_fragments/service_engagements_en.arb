@@ -1,0 +1,158 @@
+{
+  "@@locale": "en",
+  "engagementsTitle": "Service engagements",
+  "engagementsIntro": "Follow each service you were ordered: ordered, started, done. The quote, the invoice and the payments stay as they are beside it.",
+  "engagementsNew": "New engagement",
+  "engagementsEmpty": "No engagement yet. Open one from an accepted quote, or add one directly.",
+  "engagementsLoadFailed": "The engagements could not be read. This is not an empty list.",
+  "engagementStateOrdered": "Ordered",
+  "engagementStateStarted": "Started",
+  "engagementStateDone": "Done",
+  "engagementStateCancelled": "Cancelled",
+  "engagementStart": "Start",
+  "engagementFinish": "Mark done",
+  "engagementCancel": "Cancel the engagement",
+  "engagementCancelReason": "Why it is cancelled",
+  "engagementFromQuote": "From quote {reference}",
+  "engagementFromInvoice": "From invoice {number}",
+  "engagementDirect": "Committed directly",
+  "engagementBilledOn": "Billed on",
+  "engagementPaidOf": "{paid} of {total} paid",
+  "engagementCorrectedBy": "Corrected by {number}",
+  "engagementNoInvoice": "Not invoiced yet. Following the work changes nothing in the books.",
+  "engagementOpenFromLine": "Follow this service",
+  "engagementOpenExisting": "Open its engagement",
+  "engagementDirectTitle": "New engagement",
+  "engagementFieldDescription": "What is ordered",
+  "engagementSave": "Commit",
+  "engagementRefusedStale": "The engagement moved on meanwhile. It was read again: check it and retry.",
+  "engagementRefusedState": "That step is not possible from where the engagement stands.",
+  "engagementRefusedReused": "That request was already used for something else. Start again.",
+  "engagementRefusedIncomplete": "Something is missing or out of range: check the details.",
+  "engagementRefusedUnknown": "That engagement, quote, invoice or customer was not found.",
+  "engagementRefusedOff": "Service fulfilment is switched off in this business.",
+  "engagementRefusedDenied": "Your role does not allow this.",
+  "engagementUnreached": "No answer came, so nothing is claimed. Try again: the same request is answered only once.",
+  "@engagementsTitle": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementsIntro": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementsNew": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementsEmpty": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementsLoadFailed": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementStateOrdered": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementStateStarted": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementStateDone": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementStateCancelled": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementStart": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementFinish": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementCancel": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementCancelReason": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementFromQuote": {
+    "description": "service engagements (#4178)",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
+  "@engagementFromInvoice": {
+    "description": "service engagements (#4178)",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "@engagementDirect": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementBilledOn": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementPaidOf": {
+    "description": "service engagements (#4178)",
+    "placeholders": {
+      "paid": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "@engagementCorrectedBy": {
+    "description": "service engagements (#4178)",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "@engagementNoInvoice": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementOpenFromLine": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementOpenExisting": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementDirectTitle": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementFieldDescription": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementSave": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementRefusedStale": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementRefusedState": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementRefusedReused": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementRefusedIncomplete": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementRefusedUnknown": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementRefusedOff": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementRefusedDenied": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementUnreached": {
+    "description": "service engagements (#4178)"
+  }
+}

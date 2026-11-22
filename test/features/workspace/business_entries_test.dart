@@ -37,6 +37,32 @@ void main() {
       ]);
     });
 
+    test(
+      'service fulfilment adds the engagements after the quotes, for who reads',
+      () {
+        final following = {..._selling, WorkspaceFeature.serviceFulfilment};
+
+        expect(businessEntriesFor(following, _issuer), [
+          BusinessEntry.newInvoice,
+          BusinessEntry.quotes,
+          BusinessEntry.engagements,
+          BusinessEntry.customers,
+          BusinessEntry.invoices,
+        ]);
+        expect(
+          businessEntriesFor(following, {
+            WorkspacePermission.manageBillingCustomers,
+          }),
+          [BusinessEntry.customers],
+          reason: 'a customer manager who does not read the finances has no engagements',
+        );
+        expect(
+          businessEntriesFor(_selling, _issuer),
+          isNot(contains(BusinessEntry.engagements)),
+        );
+      },
+    );
+
     test('a feature that is off offers no entry for it', () {
       final without = {..._selling}..remove(WorkspaceFeature.customerQuotes);
 
@@ -88,6 +114,7 @@ void main() {
           ),
           for (final path in [
             '/money/quotes',
+            '/money/engagements',
             '/money/customers',
             '/invoices',
             '/me',
@@ -110,6 +137,22 @@ void main() {
       await tester.pumpAndSettle();
       return router;
     }
+
+    testWidgets(
+      'the engagements entry goes to its page when service fulfilment is on',
+      (tester) async {
+        await open(
+          tester,
+          features: {..._selling, WorkspaceFeature.serviceFulfilment},
+        );
+
+        await tester.tap(
+          find.byKey(const ValueKey('business-entry-engagements')),
+        );
+        await tester.pumpAndSettle();
+        expect(find.text('page:/money/engagements'), findsOneWidget);
+      },
+    );
 
     testWidgets('a business without places opens on its entries, each one '
         'going to its page', (tester) async {

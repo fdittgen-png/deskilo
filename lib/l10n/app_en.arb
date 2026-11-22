@@ -12575,6 +12575,161 @@
   "@emblemTooHeavy": {
     "description": "#1289 emblem: still too heavy after re-encoding"
   },
+  "engagementBilledOn": "Billed on",
+  "@engagementBilledOn": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementCancel": "Cancel the engagement",
+  "@engagementCancel": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementCancelReason": "Why it is cancelled",
+  "@engagementCancelReason": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementCorrectedBy": "Corrected by {number}",
+  "@engagementCorrectedBy": {
+    "description": "service engagements (#4178)",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "engagementDirect": "Committed directly",
+  "@engagementDirect": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementDirectTitle": "New engagement",
+  "@engagementDirectTitle": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementFieldDescription": "What is ordered",
+  "@engagementFieldDescription": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementFinish": "Mark done",
+  "@engagementFinish": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementFromInvoice": "From invoice {number}",
+  "@engagementFromInvoice": {
+    "description": "service engagements (#4178)",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "engagementFromQuote": "From quote {reference}",
+  "@engagementFromQuote": {
+    "description": "service engagements (#4178)",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
+  "engagementNoInvoice": "Not invoiced yet. Following the work changes nothing in the books.",
+  "@engagementNoInvoice": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementOpenExisting": "Open its engagement",
+  "@engagementOpenExisting": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementOpenFromLine": "Follow this service",
+  "@engagementOpenFromLine": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementPaidOf": "{paid} of {total} paid",
+  "@engagementPaidOf": {
+    "description": "service engagements (#4178)",
+    "placeholders": {
+      "paid": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "engagementRefusedDenied": "Your role does not allow this.",
+  "@engagementRefusedDenied": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementRefusedIncomplete": "Something is missing or out of range: check the details.",
+  "@engagementRefusedIncomplete": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementRefusedOff": "Service fulfilment is switched off in this business.",
+  "@engagementRefusedOff": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementRefusedReused": "That request was already used for something else. Start again.",
+  "@engagementRefusedReused": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementRefusedStale": "The engagement moved on meanwhile. It was read again: check it and retry.",
+  "@engagementRefusedStale": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementRefusedState": "That step is not possible from where the engagement stands.",
+  "@engagementRefusedState": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementRefusedUnknown": "That engagement, quote, invoice or customer was not found.",
+  "@engagementRefusedUnknown": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementSave": "Commit",
+  "@engagementSave": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementStart": "Start",
+  "@engagementStart": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementStateCancelled": "Cancelled",
+  "@engagementStateCancelled": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementStateDone": "Done",
+  "@engagementStateDone": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementStateOrdered": "Ordered",
+  "@engagementStateOrdered": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementStateStarted": "Started",
+  "@engagementStateStarted": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementUnreached": "No answer came, so nothing is claimed. Try again: the same request is answered only once.",
+  "@engagementUnreached": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementsEmpty": "No engagement yet. Open one from an accepted quote, or add one directly.",
+  "@engagementsEmpty": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementsIntro": "Follow each service you were ordered: ordered, started, done. The quote, the invoice and the payments stay as they are beside it.",
+  "@engagementsIntro": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementsLoadFailed": "The engagements could not be read. This is not an empty list.",
+  "@engagementsLoadFailed": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementsNew": "New engagement",
+  "@engagementsNew": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementsTitle": "Service engagements",
+  "@engagementsTitle": {
+    "description": "service engagements (#4178)"
+  },
   "entitlementBlockedFull": "You've used all your days this month. Ask an admin for more or request extra half-days.",
   "@entitlementBlockedFull": {
     "description": "Footer of the usage card for a blocked member who has used their whole cap"
@@ -16050,6 +16205,14 @@
   "featureSeriesBookingDesc": "Repeat a reservation daily, weekly or on weekdays.",
   "@featureSeriesBookingDesc": {
     "description": "One-line description under the series booking switch"
+  },
+  "featureServiceFulfilmentDesc": "Follow an ordered service as an engagement of its own: ordered, started, done, or cancelled with a reason, with every step kept. The quote, the invoice and the payments stay as they are beside it. Nothing is invoiced or paid by it. Asked for, under billing customers.",
+  "@featureServiceFulfilmentDesc": {
+    "description": "a feature in the Features list (#4178)"
+  },
+  "featureServiceFulfilmentTitle": "Service fulfilment",
+  "@featureServiceFulfilmentTitle": {
+    "description": "a feature in the Features list (#4178)"
   },
   "featureServices": "Services",
   "@featureServices": {

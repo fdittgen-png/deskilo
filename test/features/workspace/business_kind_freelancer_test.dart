@@ -82,7 +82,7 @@ void main() {
     );
     expect(
       demoFreelancerProfile.keys,
-      containsAll(['invoicing', 'billingCustomers', 'customerQuotes', 'purchases']),
+      containsAll(['invoicing', 'billingCustomers', 'customerQuotes', 'serviceFulfilment', 'purchases']),
     );
   });
 

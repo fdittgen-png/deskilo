@@ -9676,6 +9676,124 @@ class AppLocalizationsEs extends AppLocalizations {
       'Esa imagen es demasiado pesada para una marca que se muestra a 28 píxeles.';
 
   @override
+  String get engagementBilledOn => 'Facturado en';
+
+  @override
+  String get engagementCancel => 'Cancelar el servicio';
+
+  @override
+  String get engagementCancelReason => 'Por qué se cancela';
+
+  @override
+  String engagementCorrectedBy(String number) {
+    return 'Corregido por $number';
+  }
+
+  @override
+  String get engagementDirect => 'Acordado directamente';
+
+  @override
+  String get engagementDirectTitle => 'Nuevo servicio';
+
+  @override
+  String get engagementFieldDescription => 'Qué se ha pedido';
+
+  @override
+  String get engagementFinish => 'Marcar como terminado';
+
+  @override
+  String engagementFromInvoice(String number) {
+    return 'De la factura $number';
+  }
+
+  @override
+  String engagementFromQuote(String reference) {
+    return 'Del presupuesto $reference';
+  }
+
+  @override
+  String get engagementNoInvoice =>
+      'Aún sin facturar. Seguir el trabajo no cambia nada en los libros.';
+
+  @override
+  String get engagementOpenExisting => 'Abrir su seguimiento';
+
+  @override
+  String get engagementOpenFromLine => 'Seguir este servicio';
+
+  @override
+  String engagementPaidOf(String paid, String total) {
+    return '$paid de $total pagados';
+  }
+
+  @override
+  String get engagementRefusedDenied => 'Su rol no lo permite.';
+
+  @override
+  String get engagementRefusedIncomplete =>
+      'Falta algo o está fuera de rango: compruebe los datos.';
+
+  @override
+  String get engagementRefusedOff =>
+      'El seguimiento de servicios está desactivado en esta empresa.';
+
+  @override
+  String get engagementRefusedReused =>
+      'Esa solicitud ya se usó para otra cosa. Empiece de nuevo.';
+
+  @override
+  String get engagementRefusedStale =>
+      'El servicio ha cambiado entretanto. Se ha vuelto a leer: compruébelo y reintente.';
+
+  @override
+  String get engagementRefusedState =>
+      'Ese paso no es posible en el estado actual del servicio.';
+
+  @override
+  String get engagementRefusedUnknown =>
+      'No se encontró ese servicio, presupuesto, factura o cliente.';
+
+  @override
+  String get engagementSave => 'Acordar';
+
+  @override
+  String get engagementStart => 'Iniciar';
+
+  @override
+  String get engagementStateCancelled => 'Cancelado';
+
+  @override
+  String get engagementStateDone => 'Terminado';
+
+  @override
+  String get engagementStateOrdered => 'Pedido';
+
+  @override
+  String get engagementStateStarted => 'Iniciado';
+
+  @override
+  String get engagementUnreached =>
+      'No llegó respuesta, así que no se afirma nada. Reintente: la misma solicitud se atiende una sola vez.';
+
+  @override
+  String get engagementsEmpty =>
+      'Todavía no hay servicios. Abra uno desde un presupuesto aceptado o añada uno directamente.';
+
+  @override
+  String get engagementsIntro =>
+      'Siga cada servicio pedido: pedido, iniciado, terminado. El presupuesto, la factura y los pagos quedan como están.';
+
+  @override
+  String get engagementsLoadFailed =>
+      'No se pudieron leer los servicios. Esto no es una lista vacía.';
+
+  @override
+  String get engagementsNew => 'Nuevo servicio';
+
+  @override
+  String get engagementsTitle => 'Servicios en curso';
+
+  @override
   String get entitlementBlockedFull =>
       'Ha usado todos sus días este mes. Pida más a un administrador o solicite medias jornadas extra.';
 
@@ -12286,6 +12404,13 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get featureSeriesBookingDesc =>
       'Repetir una reserva a diario, semanalmente o en días laborables.';
+
+  @override
+  String get featureServiceFulfilmentDesc =>
+      'Siga un servicio pedido como un compromiso propio: pedido, iniciado, terminado o cancelado con un motivo, conservando cada paso. El presupuesto, la factura y los pagos quedan como están. Nada se factura ni se paga con él. A petición, bajo los clientes facturados.';
+
+  @override
+  String get featureServiceFulfilmentTitle => 'Seguimiento de servicios';
 
   @override
   String get featureServices => 'Servicios';

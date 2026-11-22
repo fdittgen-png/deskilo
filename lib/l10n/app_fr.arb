@@ -6019,6 +6019,161 @@
   "@emblemTooHeavy": {
     "description": "#1289 emblem: still too heavy after re-encoding"
   },
+  "engagementBilledOn": "Facturée sur",
+  "@engagementBilledOn": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementCancel": "Annuler la prestation",
+  "@engagementCancel": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementCancelReason": "Pourquoi elle est annulée",
+  "@engagementCancelReason": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementCorrectedBy": "Corrigée par {number}",
+  "@engagementCorrectedBy": {
+    "description": "service engagements (#4178)",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "engagementDirect": "Engagée directement",
+  "@engagementDirect": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementDirectTitle": "Nouvelle prestation",
+  "@engagementDirectTitle": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementFieldDescription": "Ce qui est commandé",
+  "@engagementFieldDescription": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementFinish": "Marquer terminée",
+  "@engagementFinish": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementFromInvoice": "De la facture {number}",
+  "@engagementFromInvoice": {
+    "description": "service engagements (#4178)",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "engagementFromQuote": "Du devis {reference}",
+  "@engagementFromQuote": {
+    "description": "service engagements (#4178)",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
+  "engagementNoInvoice": "Pas encore facturée. Suivre le travail ne change rien aux comptes.",
+  "@engagementNoInvoice": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementOpenExisting": "Ouvrir son suivi",
+  "@engagementOpenExisting": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementOpenFromLine": "Suivre cette prestation",
+  "@engagementOpenFromLine": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementPaidOf": "{paid} payés sur {total}",
+  "@engagementPaidOf": {
+    "description": "service engagements (#4178)",
+    "placeholders": {
+      "paid": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "engagementRefusedDenied": "Votre rôle ne le permet pas.",
+  "@engagementRefusedDenied": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementRefusedIncomplete": "Il manque quelque chose ou une valeur est hors limites : vérifiez les détails.",
+  "@engagementRefusedIncomplete": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementRefusedOff": "Le suivi des prestations est désactivé dans cette entreprise.",
+  "@engagementRefusedOff": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementRefusedReused": "Cette demande a déjà servi à autre chose. Recommencez.",
+  "@engagementRefusedReused": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementRefusedStale": "La prestation a évolué entre-temps. Elle a été relue : vérifiez et réessayez.",
+  "@engagementRefusedStale": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementRefusedState": "Cette étape n'est pas possible dans l'état actuel de la prestation.",
+  "@engagementRefusedState": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementRefusedUnknown": "Cette prestation, ce devis, cette facture ou ce client est introuvable.",
+  "@engagementRefusedUnknown": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementSave": "Engager",
+  "@engagementSave": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementStart": "Commencer",
+  "@engagementStart": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementStateCancelled": "Annulée",
+  "@engagementStateCancelled": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementStateDone": "Terminée",
+  "@engagementStateDone": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementStateOrdered": "Commandée",
+  "@engagementStateOrdered": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementStateStarted": "Commencée",
+  "@engagementStateStarted": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementUnreached": "Aucune réponse n'est arrivée, rien n'est affirmé. Réessayez : la même demande n'est traitée qu'une fois.",
+  "@engagementUnreached": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementsEmpty": "Aucune prestation pour l'instant. Ouvrez-en une depuis un devis accepté, ou ajoutez-en une directement.",
+  "@engagementsEmpty": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementsIntro": "Suivez chaque prestation commandée : commandée, commencée, terminée. Le devis, la facture et les paiements restent tels quels à côté.",
+  "@engagementsIntro": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementsLoadFailed": "Les prestations n'ont pas pu être lues. Ce n'est pas une liste vide.",
+  "@engagementsLoadFailed": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementsNew": "Nouvelle prestation",
+  "@engagementsNew": {
+    "description": "service engagements (#4178)"
+  },
+  "engagementsTitle": "Prestations suivies",
+  "@engagementsTitle": {
+    "description": "service engagements (#4178)"
+  },
   "entitlementBlockedFull": "Vous avez utilisé tous vos jours ce mois-ci. Demandez-en plus à un administrateur ou demandez des demi-journées supplémentaires.",
   "entitlementDaysLeft": "{left} jours restants",
   "entitlementDaysUsed": "{used} sur {total} jours utilisés",
@@ -7563,6 +7718,14 @@
   },
   "featureSeriesBooking": "Réservation en série",
   "featureSeriesBookingDesc": "Répéter une réservation chaque jour, chaque semaine ou en semaine.",
+  "featureServiceFulfilmentDesc": "Suivez une prestation commandée comme un engagement à part : commandée, commencée, terminée ou annulée avec un motif, chaque étape étant conservée. Le devis, la facture et les paiements restent tels quels à côté. Rien n'est facturé ni payé par ce suivi. Sur demande, sous les clients facturés.",
+  "@featureServiceFulfilmentDesc": {
+    "description": "a feature in the Features list (#4178)"
+  },
+  "featureServiceFulfilmentTitle": "Suivi des prestations",
+  "@featureServiceFulfilmentTitle": {
+    "description": "a feature in the Features list (#4178)"
+  },
   "featureServices": "Services",
   "featureServicesDesc": "Catalogue de services et suivi des consommations.",
   "featureSettlementFoldDesc": "Les factures regroupées en une seule disparaissent des listes et se rangent sous la facture de regroupement, qui porte toutes leurs lignes. Sur une facture regroupée, toute opération est désactivée ; il ne reste que son PDF, tamponné du numéro dans lequel elle a été regroupée. Désactivé : les factures regroupées restent listées à côté de la facture de regroupement.",

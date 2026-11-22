@@ -15,6 +15,7 @@ import 'package:deskilo/core/demo/data/fake_business_receivables.dart';
 import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/core/demo/demo_persona.dart';
 import 'package:deskilo/core/demo/demo_scope.dart';
+import 'package:deskilo/core/demo/demo_space_fulfilments.dart';
 import 'package:deskilo/core/demo/demo_space_ids.dart';
 import 'package:deskilo/core/demo/demo_space_stores.dart';
 import 'package:deskilo/core/demo/demo_spaces.dart';
@@ -23,6 +24,7 @@ import 'package:deskilo/features/money/application/receivables_answers.dart';
 import 'package:deskilo/features/money/domain/business_receivables.dart';
 import 'package:deskilo/features/money/domain/customer_quote.dart';
 import 'package:deskilo/features/money/domain/dunning.dart';
+import 'package:deskilo/features/money/domain/service_fulfilment.dart';
 import 'package:deskilo/features/money/presentation/invoice_journey.dart';
 import 'package:deskilo/features/money/presentation/invoicing/receivables_adapter.dart';
 import 'package:deskilo/features/money/providers/business_receivables_providers.dart';
@@ -147,6 +149,70 @@ void main() {
     expect(invoices.single.totalCents, 64200);
     expect(invoices.single.memberName, 'Domaine des Aires');
     expect((await theQuote()).status, QuoteStatus.converted);
+  });
+
+  test('the training engagement is done before its invoice, and the invoice, '
+      'the payment and a credit are read beside it and add nothing to it', () async {
+    final before = (await demoServiceFulfilments(fixture, DemoSpaceKey.freelancer).fulfilments(demoFreelancerSpaceId)).single;
+    expect(before.scope.description, 'Training day');
+    expect(before.state, FulfilmentState.done);
+    expect(before.history.map((h) => h.to), [FulfilmentState.ordered, FulfilmentState.started, FulfilmentState.done]);
+    expect(before.invoices, isEmpty, reason: 'nothing was invoiced when the work was done');
+
+    final quote = await theQuote();
+    final prep = await commands.prepareConversion(
+      demoFreelancerSpaceId,
+      quote.id,
+      serviceDate: today,
+      dueOn: today.add(const Duration(days: 30)),
+    );
+    final ready = (prep as QuoteDone<QuoteConversionPrep>).value;
+    final issued =
+        ((await commands.convert(
+                  demoFreelancerSpaceId,
+                  quote.id,
+                  draftRevision: ready.draftRevision,
+                  requestId: 'request-engagement',
+                ))
+                as QuoteDone<QuoteConverted>)
+            .value;
+    space.money.ledger.add(
+      LedgerEntry(
+        id: 'ledger-engagement-300',
+        memberId: quote.subjectId,
+        kind: LedgerKind.credit,
+        category: LedgerCategory.payment,
+        amountCents: 30000,
+        description: 'Bank transfer',
+        period: '2026-05',
+        createdAt: today,
+        occurredOn: today,
+      ),
+    );
+    await space.money.matchInvoice(
+      invoiceId: issued.invoiceId,
+      paymentLedgerId: 'ledger-engagement-300',
+      resolution: 'under_accepted',
+      note: 'first instalment',
+      amountCents: 30000,
+    );
+
+    final after = (await demoServiceFulfilments(fixture, DemoSpaceKey.freelancer).fulfilments(demoFreelancerSpaceId)).single;
+    expect(after.id, before.id, reason: 'the invoice made no second engagement');
+    expect(after.history, hasLength(3), reason: 'neither the invoice nor the payment added a step');
+    expect(after.state, FulfilmentState.done);
+    expect(after.invoices.single.invoiceId, issued.invoiceId);
+    expect(after.invoices.single.paidCents, 30000);
+    expect(after.quote?.status, 'converted');
+    final fromInvoice = await demoServiceFulfilments(fixture, DemoSpaceKey.freelancer).openFromLine(
+      demoFreelancerSpaceId,
+      requestId: 'open-from-invoice',
+      kind: 'invoice',
+      id: issued.invoiceId,
+      lineId: after.source.lineId,
+    );
+    expect(fromInvoice.fulfilment.id, before.id, reason: 'the invoice resolves to the same engagement');
+    expect(fromInvoice.created, isFalse);
   });
 
   test('a quote that is not accepted is refused, and an interrupted answer '

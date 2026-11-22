@@ -60,6 +60,9 @@ const Map<String, Set<WorkspacePermission>> routePermissions = {
   '/money/quotes': {_P.issueInvoices, _P.viewFinances},
   '/money/quotes/:id': {_P.issueInvoices, _P.viewFinances},
   '/money/quotes/:id/edit': {_P.issueInvoices},
+  // #4178 — the engagements read under the right to issue or the finances.
+  '/money/engagements': {_P.issueInvoices, _P.viewFinances},
+  '/money/engagements/:id': {_P.issueInvoices, _P.viewFinances},
   // #3615 — a supplier's payables: who reads the finances or the purchases.
   '/money/suppliers/:id': {_P.viewFinances, _P.managePurchases},
   '/money/purchase-orders': {_P.viewFinances, _P.managePurchases},

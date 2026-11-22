@@ -198,6 +198,8 @@ const Map<SetupProcess, List<SetupLevel>> setupLevels = {
         WorkspaceFeature.billingCustomers,
         // #4166 — the offers made to them before an invoice.
         WorkspaceFeature.customerQuotes,
+        // #4178 — and the engagement a service becomes once it is ordered.
+        WorkspaceFeature.serviceFulfilment,
       },
     ),
   ],

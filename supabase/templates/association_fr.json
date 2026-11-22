@@ -196,6 +196,7 @@
         "scheduledExpenses": false,
         "seatDayTimeline": true,
         "seriesBooking": true,
+        "serviceFulfilment": false,
         "services": true,
         "settlementFold": false,
         "setupGuide": true,

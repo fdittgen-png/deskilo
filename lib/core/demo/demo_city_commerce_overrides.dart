@@ -14,6 +14,7 @@ import '../../features/money/providers/customer_quote_providers.dart';
 import '../../features/money/providers/einvoice_inbox_providers.dart';
 import '../../features/money/providers/premises_lease_providers.dart';
 import '../../features/money/providers/room_rental_providers.dart';
+import '../../features/money/providers/service_fulfilment_providers.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
 import '../../features/workspace/providers/customer_kpi_providers.dart';
@@ -35,6 +36,7 @@ import 'demo_analysis_overrides.dart';
 import 'demo_fixture.dart';
 import 'demo_purchase_order_overrides.dart';
 import 'demo_purchasing_overrides.dart';
+import 'demo_space_fulfilments.dart';
 import 'demo_space_pick.dart';
 import 'demo_space_routing.dart' show kDemoInstallationId;
 import 'seed/demo_purchase_seed.dart';
@@ -96,6 +98,10 @@ List<Override> demoCityCommerceOverrides(DemoFixture fixture) {
         demoMapSpaces(stores, (s) => s.customerQuotes),
       )..validity = () => QuoteValidity.fromSettings(ref.read(activeSettingsProvider));
     }),
+    // #4178 — each space reads its own engagements.
+    serviceFulfilmentRepositoryProvider.overrideWith(
+      (ref) => demoServiceFulfilments(fixture, demoOpenSpace(ref)),
+    ),
     // #3307 — the orders to their suppliers.
     ...demoPurchaseOrderOverrides(orderSpaces),
     // #3866 — every space reads its own books and accounting connection.

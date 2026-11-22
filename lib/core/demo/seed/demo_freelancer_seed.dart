@@ -19,6 +19,7 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show isoDay, yea
 import '../../../features/events/domain/workspace_event.dart';
 import '../../../features/money/domain/billing_customer.dart';
 import '../../../features/money/domain/purchase.dart';
+import '../../../features/money/domain/service_fulfilment.dart';
 import '../../../features/money/domain/standalone_invoice.dart';
 import '../../../features/workspace/domain/business_kind_proposal.dart';
 import '../../../features/workspace/domain/member.dart';
@@ -28,6 +29,7 @@ import '../../../features/workspace/domain/workspace_permission.dart';
 import '../data/business_kind_repository.dart';
 import '../data/fake_billing_customers.dart';
 import '../data/fake_customer_quotes.dart';
+import '../data/fake_service_fulfilments.dart';
 import '../data/money_repository.dart';
 import '../data/purchase_repository.dart';
 import '../data/workspace_repository.dart';
@@ -346,4 +348,32 @@ void seedFreelancerPurchases(FakePurchaseRepository purchases, DateTime today) {
     ),
     'kessler-supplier-printer',
   );
+}
+
+/// The engagement of the training Kessler Conseil was ordered: opened from the
+/// accepted quote's training line, started and done before any invoice exists.
+/// Its invoice and payments come later and are read beside it, never in it.
+Future<void> seedFreelancerEngagement(
+  FakeServiceFulfilmentRepository engagements,
+  FakeCustomerQuoteRepository quotes,
+) async {
+  final quote = (await quotes.quotes(demoFreelancerSpaceId)).single;
+  final training = quote.revisions.last.lines.firstWhere((l) => l.description == _training.description);
+  final opened = await engagements.openFromLine(
+    demoFreelancerSpaceId,
+    requestId: 'kessler-engagement-open',
+    kind: 'quote',
+    id: quote.id,
+    lineId: training.lineId!,
+  );
+  var state = opened.fulfilment;
+  for (final to in [FulfilmentState.started, FulfilmentState.done]) {
+    state = await engagements.transition(
+      demoFreelancerSpaceId,
+      state.id,
+      expectedRevision: state.revision,
+      to: to,
+      requestId: 'kessler-engagement-${to.wire}',
+    );
+  }
 }
