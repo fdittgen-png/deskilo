@@ -346,6 +346,7 @@
   },
   "invoiceSendRejected": "La plataforma la rechazó.",
   "invoiceSendRejectedDetail": "La plataforma la rechazó. {detail}",
+  "invoiceSendBindingChanged": "Esta factura ya se envió a este destino con otro contenido. No se vuelve a enviar; el primer envío sigue vigente.",
   "invoiceSentOn": "Enviada el {date} · {status}",
   "@invoiceSentOn": {
     "placeholders": {

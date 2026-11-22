@@ -10611,6 +10611,7 @@
     }
   },
   "invoiceSendAction": "Invia alla piattaforma governativa",
+  "invoiceSendBindingChanged": "Questa fattura è già stata trasmessa a questa destinazione con un altro contenuto. Non viene inviata di nuovo; la prima trasmissione resta valida.",
   "invoiceSendCustomerAccepted": "Inviata — il servizio del cliente l’ha accettata.",
   "@invoiceSendCustomerAccepted": {
     "description": "Snackbar: the customer's service took the document (#568)"

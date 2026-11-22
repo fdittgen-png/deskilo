@@ -182,6 +182,7 @@ class SupabaseEInvoiceTransmissions implements EInvoiceTransmissions {
       ),
       externalId: data['external_id'] as String? ?? '',
       detail: data['detail'] as String? ?? data['error'] as String? ?? '',
+      conflict: data['error'] == 'binding_changed',
     );
   }
 

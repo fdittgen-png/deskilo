@@ -17704,6 +17704,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoiceSendAction => 'Send to the government platform';
 
   @override
+  String get invoiceSendBindingChanged =>
+      'This invoice was already submitted to this destination with other content. It is not sent again; its first submission stands.';
+
+  @override
   String get invoiceSendCustomerAccepted =>
       'Sent — the customer\'s service accepted it.';
 

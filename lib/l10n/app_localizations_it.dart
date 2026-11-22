@@ -17844,6 +17844,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get invoiceSendAction => 'Invia alla piattaforma governativa';
 
   @override
+  String get invoiceSendBindingChanged =>
+      'Questa fattura è già stata trasmessa a questa destinazione con un altro contenuto. Non viene inviata di nuovo; la prima trasmissione resta valida.';
+
+  @override
   String get invoiceSendCustomerAccepted =>
       'Inviata — il servizio del cliente l’ha accettata.';
 

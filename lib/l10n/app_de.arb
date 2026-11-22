@@ -10611,6 +10611,7 @@
     }
   },
   "invoiceSendAction": "An die staatliche Plattform senden",
+  "invoiceSendBindingChanged": "Diese Rechnung wurde bereits mit anderem Inhalt an dieses Ziel übermittelt. Sie wird nicht erneut gesendet; die erste Übermittlung bleibt bestehen.",
   "invoiceSendCustomerAccepted": "Gesendet — der Dienst des Kunden hat sie angenommen.",
   "@invoiceSendCustomerAccepted": {
     "description": "Snackbar: the customer's service took the document (#568)"

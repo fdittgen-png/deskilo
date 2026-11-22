@@ -17879,6 +17879,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoiceSendAction => 'An die staatliche Plattform senden';
 
   @override
+  String get invoiceSendBindingChanged =>
+      'Diese Rechnung wurde bereits mit anderem Inhalt an dieses Ziel übermittelt. Sie wird nicht erneut gesendet; die erste Übermittlung bleibt bestehen.';
+
+  @override
   String get invoiceSendCustomerAccepted =>
       'Gesendet — der Dienst des Kunden hat sie angenommen.';
 

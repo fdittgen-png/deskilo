@@ -27,6 +27,7 @@ import {
   acceptedFormats,
   takesTestDocument,
 } from "./connectors.ts";
+import { redact, safeError } from "./connectors/common.ts";
 import { clientDetail, safeFetch } from "./connectors/safe_fetch.ts";
 import type { Phase, TransmissionStore } from "./store.ts";
 
@@ -211,7 +212,7 @@ export async function handle(req: Request, deps: Deps): Promise<Response> {
   try {
     payload = await req.json();
   } catch (error) {
-    console.warn("send-e-invoice: invalid body", error);
+    console.warn("send-e-invoice: invalid body", safeError(error));
     return json({ error: "invalid body" }, 400);
   }
   const workspaceId = payload.workspace_id ?? "";
@@ -316,7 +317,7 @@ export async function handle(req: Request, deps: Deps): Promise<Response> {
   try {
     await store.expire(workspaceId);
   } catch (error) {
-    console.error("send-e-invoice: expiry sweep failed", error);
+    console.error("send-e-invoice: expiry sweep failed", safeError(error));
   }
 
   // ── #3883: a sandbox test document of the national channel ─────────
@@ -432,7 +433,7 @@ export async function handle(req: Request, deps: Deps): Promise<Response> {
         "",
       );
     } else {
-      console.error("send-e-invoice: status query failed", asked.detail);
+      console.error("send-e-invoice: status query failed", redact(asked.detail));
       await store.lookup(
         sent.id,
         null,
@@ -482,7 +483,7 @@ export async function handle(req: Request, deps: Deps): Promise<Response> {
       if (code === "22023") {
         return json({ error: "a reason and the evidence are required" }, 400);
       }
-      console.error("send-e-invoice: resolve failed", error);
+      console.error("send-e-invoice: resolve failed", safeError(error));
       return json({ error: "resolve_failed" }, 500);
     }
   }
@@ -537,7 +538,7 @@ export async function handle(req: Request, deps: Deps): Promise<Response> {
       declared: clipDeclared(payload.declared),
     });
   } catch (error) {
-    console.error("send-e-invoice: prepare failed", error);
+    console.error("send-e-invoice: prepare failed", safeError(error));
     return json({ error: "prepare_failed" }, 500);
   }
   if (prepared.outcome === "unknown_invoice" || !prepared.id) {
@@ -623,7 +624,7 @@ async function dispatchPrepared(
   try {
     artifact = await store.artifact(id);
   } catch (error) {
-    console.error("send-e-invoice: artifact read failed", error);
+    console.error("send-e-invoice: artifact read failed", safeError(error));
     return json({ error: "artifact_unavailable" }, 500);
   }
   if (
@@ -637,10 +638,21 @@ async function dispatchPrepared(
   const owner = crypto.randomUUID();
   let claim;
   try {
-    claim = await store.claim(id, owner, DISPATCH_WINDOW_SECONDS);
+    claim = await store.claim(id, owner, DISPATCH_WINDOW_SECONDS, hash);
   } catch (error) {
-    console.error("send-e-invoice: claim failed", error);
+    console.error("send-e-invoice: claim failed", safeError(error));
     return json({ error: "claim_failed" }, 500);
+  }
+  if (!claim.claimed && claim.detail === "binding_changed") {
+    // the document was replaced after it was verified: this request holds
+    // the old one and sends nothing
+    return json({
+      error: "binding_changed",
+      phase: claim.phase,
+      transmission_id: id,
+      detail: "This invoice was prepared again with other content; this " +
+        "request sent nothing.",
+    }, 409);
   }
   if (!claim.claimed || claim.generation === undefined) {
     return answer(
@@ -673,7 +685,7 @@ async function dispatchPrepared(
   if (outcome.status !== "accepted") {
     console.error(
       `send-e-invoice: transmission ${outcome.status}`,
-      outcome.detail,
+      redact(outcome.detail),
     );
   }
 
@@ -695,7 +707,7 @@ async function dispatchPrepared(
       outcome.receipt,
     );
   } catch (error) {
-    console.error("send-e-invoice: outcome write failed", error);
+    console.error("send-e-invoice: outcome write failed", safeError(error));
   }
   if (!recorded) {
     return answer(
@@ -720,7 +732,7 @@ async function dispatchPrepared(
         "",
       );
     } catch (error) {
-      console.error("send-e-invoice: verdict write failed", error);
+      console.error("send-e-invoice: verdict write failed", safeError(error));
     }
   }
   return answer(
@@ -831,7 +843,7 @@ async function sendTestDocument(
       declared: clipDeclared(payload.declared),
     });
   } catch (error) {
-    console.error("send-e-invoice: test prepare failed", error);
+    console.error("send-e-invoice: test prepare failed", safeError(error));
     return json({ error: "prepare_failed" }, 500);
   }
   if (prepared.outcome === "test_pending" || !prepared.id) {

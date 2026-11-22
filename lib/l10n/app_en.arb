@@ -23153,6 +23153,10 @@
   "@invoiceSendAction": {
     "description": "E-invoice sheet: post the document to the platform (0073)"
   },
+  "invoiceSendBindingChanged": "This invoice was already submitted to this destination with other content. It is not sent again; its first submission stands.",
+  "@invoiceSendBindingChanged": {
+    "description": "#4324 Snackbar: the invoice already has a submission to this destination with other content (binding_changed); nothing is sent again"
+  },
   "invoiceSendCustomerAccepted": "Sent — the customer's service accepted it.",
   "@invoiceSendCustomerAccepted": {
     "description": "Snackbar: the customer's service took the document (#568)"

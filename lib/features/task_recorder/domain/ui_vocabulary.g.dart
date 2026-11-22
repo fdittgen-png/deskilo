@@ -10436,6 +10436,7 @@ const Set<String> uiLabelKeys = {
   'invoiceRunningMonth',
   'invoiceSendAccepted',
   'invoiceSendAction',
+  'invoiceSendBindingChanged',
   'invoiceSendCustomerAccepted',
   'invoiceSendCustomerAction',
   'invoiceSendRejected',

@@ -17911,6 +17911,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get invoiceSendAction => 'Envoyer à la plateforme gouvernementale';
 
   @override
+  String get invoiceSendBindingChanged =>
+      'Cette facture a déjà été transmise à cette destination avec un autre contenu. Elle n’est pas renvoyée ; la première transmission reste valable.';
+
+  @override
   String get invoiceSendCustomerAccepted =>
       'Envoyée — le service du client l’a acceptée.';
 

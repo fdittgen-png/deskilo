@@ -28232,6 +28232,12 @@ abstract class AppLocalizations {
   /// **'Send to the government platform'**
   String get invoiceSendAction;
 
+  /// #4324 Snackbar: the invoice already has a submission to this destination with other content (binding_changed); nothing is sent again
+  ///
+  /// In en, this message translates to:
+  /// **'This invoice was already submitted to this destination with other content. It is not sent again; its first submission stands.'**
+  String get invoiceSendBindingChanged;
+
   /// Snackbar: the customer's service took the document (#568)
   ///
   /// In en, this message translates to:

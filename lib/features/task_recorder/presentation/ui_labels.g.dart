@@ -597,6 +597,7 @@ Map<String, _Getter> _part1() => {
   'invoicePageDecisionRecorded': (l) => l.invoicePageDecisionRecorded,
   'invoicePageMoreReminders': (l) => l.invoicePageMoreReminders,
   'invoicePageRefund': (l) => l.invoicePageRefund,
+  'invoiceSendBindingChanged': (l) => l.invoiceSendBindingChanged,
   'invoiceTabToInvoice': (l) => l.invoiceTabToInvoice,
   'invoiceTemplateDocStatement': (l) => l.invoiceTemplateDocStatement,
   'invoiceTemplateShare': (l) => l.invoiceTemplateShare,
