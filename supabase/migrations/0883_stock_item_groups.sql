@@ -193,7 +193,7 @@ create trigger item_group_history_append_only before update or delete on public.
 alter table public.item_groups enable row level security;
 alter table public.item_group_history enable row level security;
 revoke all on public.item_groups, public.item_group_history from public, anon, authenticated;
-grant select on public.item_group_history to authenticated;
+-- the history is read through item_group_history_v1, which keeps the finance values to those who read the finances
 -- the margin and the rounding are read through the functions, with the finances
 do $grant$
 declare
@@ -1232,11 +1232,17 @@ grant execute on function public.item_groups_v1(uuid) to authenticated;
 create or replace function public.item_group_history_v1(
   p_workspace_id uuid, p_group_id uuid default null, p_item_id uuid default null, p_limit int default 50)
 returns jsonb language plpgsql stable security definer set search_path = public as $fn$
+declare
+  v_finance boolean;
 begin
   perform public.item_group_actor(p_workspace_id);
+  v_finance := public.has_permission(p_workspace_id, 'viewFinances');
   return coalesce((
     select jsonb_agg(jsonb_build_object('at', h.created_datetime, 'group_id', h.group_id, 'item_id', h.item_id,
-             'parameter', h.parameter, 'old', h.old_value, 'new', h.new_value, 'affected', h.affected,
+             'parameter', h.parameter,
+             'old', case when public.item_group_param_finance(h.parameter) and not v_finance then null else h.old_value end,
+             'new', case when public.item_group_param_finance(h.parameter) and not v_finance then null else h.new_value end,
+             'affected', h.affected,
              'kept_own', h.kept_own, 'skipped', h.skipped, 'by', h.changed_by_member_id) order by h.created_datetime desc, h.id)
       from (select * from public.item_group_history x
              where x.workspace_id = p_workspace_id

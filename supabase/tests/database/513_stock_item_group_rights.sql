@@ -6,7 +6,7 @@
 -- a later change of its group; a per-unit tag mode on an item not tracked by piece, a proposal as an override and
 -- an unknown unit are refused in words; the feature off refuses. Rolled back.
 begin;
-select plan(41);
+select plan(45);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -150,6 +150,15 @@ select is(pg_temp.run_as(pg_temp.u(3), format('select public.item_effective_sett
   'nor an item''s margin');
 select is(pg_temp.run_as(pg_temp.u(1), 'select count(*)::text from (select target_margin_bps from public.item_groups limit 1) x'), 'ERR 42501',
   'the columns are closed to a direct read');
+
+-- ── the history keeps the finance values to those who read the finances ──
+select is(pg_temp.run_as(pg_temp.u(3), format('select (public.item_group_history_v1(%L, %L) -> 0 ->> ''parameter'') || ''|'' || coalesce((select string_agg(e ->> ''new'', '','') from jsonb_array_elements(public.item_group_history_v1(%L, %L)) e where e ->> ''parameter'' = ''vat_rate_id''), ''-'')',
+  pg_temp.u(101), pg_temp.u(501), pg_temp.u(101), pg_temp.u(501))) like '%|%', true, 'a clerk reads the history');
+select is(pg_temp.run_as(pg_temp.u(3), format('select count(*)::text from jsonb_array_elements(public.item_group_history_v1(%L, %L)) e where e ->> ''parameter'' in (''vat_rate_id'', ''price_rounding'', ''target_margin_bps'') and e -> ''new'' <> ''null''::jsonb', pg_temp.u(101), pg_temp.u(501))), '0',
+  'but not the VAT, the rounding or the margin it changed');
+select is(pg_temp.run_as(pg_temp.u(1), format('select (count(*) filter (where e -> ''new'' <> ''null''::jsonb))::text from jsonb_array_elements(public.item_group_history_v1(%L, %L)) e where e ->> ''parameter'' in (''vat_rate_id'', ''price_rounding'')', pg_temp.u(101), pg_temp.u(501))) <> '0', true,
+  'whoever reads the finances reads them');
+select is(pg_temp.run_as(pg_temp.u(1), 'select count(*)::text from public.item_group_history'), 'ERR 42501', 'and the table is closed to a direct read');
 
 -- ── refusals in words ──
 select is(pg_temp.ovr(1, 960, 301, pg_temp.rev(301), 'tag_mode', 'set', '"per_unit"'), 'ERR DKG11', 'a per-unit tag mode on an item not tracked by piece is refused');
