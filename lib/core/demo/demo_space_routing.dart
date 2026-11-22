@@ -134,6 +134,7 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
     );
   });
   final myReservations = _myReservations(fixture);
+  final stocks = _DemoStocks(fixture);
   // #3865 — each space's last bank statement lives on the fixture.
   final banks = demoMapSpaces(fixture.stores, (s) => s.bank);
   // #3853 — the stored originals, one store for the Demo's invoices.
@@ -215,7 +216,7 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
     invoiceIssueDraftsProvider.overrideWith(
       (ref) => DemoInvoiceIssueDrafts(ref.watch(invoiceQueriesProvider)),
     ),
-    ..._moneyPortOverrides(money),
+    ..._moneyPortOverrides(money, stocks),
     // #2585
     invoiceActionCommandsProvider.overrideWith(
       (ref) => demoPickSpace(ref, actions),
@@ -256,7 +257,7 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
 
 /// The money ports of the space the scope is looking at: each has its own
 /// demo adapter over that space's one in-memory store (#2591).
-List<Override> _moneyPortOverrides(FakeMoneyRepository Function(Ref ref) money) => [
+List<Override> _moneyPortOverrides(FakeMoneyRepository Function(Ref ref) money, _DemoStocks stocks) => [
   memberAccountQueriesProvider.overrideWith(
     (ref) => money(ref).accountQueries,
   ),
@@ -291,105 +292,102 @@ List<Override> _moneyPortOverrides(FakeMoneyRepository Function(Ref ref) money) 
   accountingSourceQueriesProvider.overrideWith(
     (ref) => money(ref).accountingSource,
   ),
-  // #4161 — the reference business keeps a small shop stock; no other Demo
-  // business keeps one.
-  stockQueriesProvider.overrideWith(
-    (ref) => DemoStockQueries(ref.watch(_demoStockLedgerProvider)),
-  ),
+  // #4161 — the reference business keeps a small shop stock, and so does the shop (#4365): each business its
+  // own goods ledger in memory, made when it is first read and kept for the session. The reference business's
+  // purchase orders, deliveries and cycle counts stay its own.
+  stockQueriesProvider.overrideWith((ref) => DemoStockQueries(stocks.of(ref).ledger)),
   // #4169 — and edits its units, codes and places in memory.
-  stockConfigCommandsProvider.overrideWith(
-    (ref) => DemoStockConfigCommands(demoFirstSpaceId, candidates: ref.watch(_demoStockCandidatesProvider)),
-  ),
+  stockConfigCommandsProvider.overrideWith((ref) => stocks.of(ref).config),
   // #4294 — and keeps reorder points: two shop items are below theirs, read from that same stock.
-  stockReorderProvider.overrideWith(
-    (ref) => DemoStockReorder(
-      demoFirstSpaceId,
-      ref.watch(_demoStockLedgerProvider),
-      ref.watch(stockConfigCommandsProvider),
-    ),
-  ),
+  stockReorderProvider.overrideWith((ref) => stocks.of(ref).reorder),
   // #4293 — and keeps a registry of those items: barcode, price, cost, a home address.
-  stockRegistryProvider.overrideWith(
-    (ref) => DemoStockRegistry(
-      demoFirstSpaceId,
-      ref.watch(_demoStockLedgerProvider),
-      ref.watch(stockConfigCommandsProvider),
-    ),
-  ),
+  stockRegistryProvider.overrideWith((ref) => stocks.of(ref).registry),
   // #4359 — and resolves a scanned code (a place, an item, a carton) from its own registry and units.
-  stockCodeResolverProvider.overrideWith(
-    (ref) => DemoStockCodeResolver(
-      demoFirstSpaceId,
-      ref.watch(stockConfigCommandsProvider),
-      ref.watch(stockRegistryProvider),
-      ref.watch(stockTagsStoreProvider) as DemoStockTags,
-    ),
-  ),
+  stockCodeResolverProvider.overrideWith((ref) => stocks.of(ref).codeResolver),
   // #4363 — and keeps tags (an NFC chip on a shelf and on the mugs) in memory.
-  stockTagsStoreProvider.overrideWith((ref) => DemoStockTags()),
+  stockTagsStoreProvider.overrideWith((ref) => stocks.of(ref).tags),
   // #4171 — and receives the deliveries of its orders into that stock.
   stockReceivingCommandsProvider.overrideWith(
     (ref) => DemoStockReceivingCommands(
       demoFirstSpaceId,
       ref.watch(purchaseOrderRepositoryProvider) as FakePurchaseOrderRepository,
-      ref.watch(stockConfigCommandsProvider) as DemoStockConfigCommands,
-      ref.watch(_demoStockLedgerProvider),
+      stocks.of(ref).config,
+      stocks.of(ref).ledger,
     ),
   ),
   // #4173 — and traces its goods to the orders they were put away from, and values them.
   stockTraceReaderProvider.overrideWith(
     (ref) => DemoStockTrace(
       demoFirstSpaceId,
-      ref.watch(_demoStockLedgerProvider),
+      stocks.of(ref).ledger,
       ref.watch(purchaseOrderRepositoryProvider) as FakePurchaseOrderRepository,
       ref.watch(stockReceivingCommandsProvider) as DemoStockReceivingCommands,
       ref.watch(purchaseRepositoryProvider) as FakePurchaseRepository,
     ),
   ),
   // #4170 — and moves, transfers between its sites and takes out of that same stock.
-  stockOperationsProvider.overrideWith(
-    (ref) => DemoStockOperations(
-      ref.watch(_demoStockLedgerProvider),
-      ref.watch(stockConfigCommandsProvider) as DemoStockConfigCommands,
-    ),
-  ),
+  stockOperationsProvider.overrideWith((ref) => stocks.of(ref).operations),
   // #4172 — and returns, corrects and counts on that same stock.
-  stockReversalsProvider.overrideWith((ref) => DemoStockReversals(ref.watch(_demoStockLedgerProvider))),
+  stockReversalsProvider.overrideWith((ref) => stocks.of(ref).reversals),
   // #4361 — and keeps item groups: drinks (with hot drinks beneath) and homeware, the syrup keeping its own shelf life.
-  itemGroupsProvider.overrideWith(
-    (ref) => DemoItemGroups(demoFirstSpaceId, ref.watch(stockConfigCommandsProvider), ref.watch(clockProvider).now),
-  ),
+  itemGroupsProvider.overrideWith((ref) => stocks.of(ref).itemGroups),
   // #4295 — and keeps a cycle count plan for its high-value shelf, whose task counts into those same counts.
   stockCycleCountsProvider.overrideWith(
     (ref) => DemoStockCycleCounts(
       demoFirstSpaceId,
-      ref.watch(_demoStockLedgerProvider),
-      ref.watch(stockReversalsProvider),
-      ref.watch(stockRegistryProvider),
+      stocks.of(ref).ledger,
+      stocks.of(ref).reversals,
+      stocks.of(ref).registry,
       () => ref.read(myPermissionsProvider),
       (ref.watch(purchaseOrderRepositoryProvider) as FakePurchaseOrderRepository).now,
     ),
   ),
 ];
 
-/// #4170 — the Demo's ONE goods ledger: the Stock screen's reads, a delivery
-/// put away and every stock command share it, so what one does the others show.
-final _demoStockLedgerProvider = Provider<DemoStockLedger>(
-  (ref) => DemoStockLedger(
-    demoFirstSpaceId,
-    ref.watch(stockConfigCommandsProvider) as DemoStockConfigCommands,
-    ref.watch(clockProvider).now,
-    ref.watch(_demoStockCandidatesProvider),
-  ),
-);
+/// #4170 / #4365 -- one goods ledger per business: the Stock screen's reads, a delivery put away and every stock
+/// command of a business share its own, so what one does the others show. Each is made when its business is first
+/// read (the reference business mirrors into the shop: the same four items and places, the same movements).
+class _DemoStocks {
+  _DemoStocks(this._fixture);
 
-/// #4350 — the services the owner may start keeping in stock, and the ones kept in this session.
-final _demoStockCandidatesProvider = Provider<DemoStockCandidates>(
-  (ref) => DemoStockCandidates(() async => [
-    for (final s in await ref.read(moneyRepositoryProvider).fetchServices(demoFirstSpaceId))
-      if (s.active) (id: s.id, name: s.name),
-  ]),
-);
+  final DemoFixture _fixture;
+  final Map<DemoSpaceKey, _DemoStock> _kits = {};
+
+  _DemoStock of(Ref ref) {
+    final key = demoOpenSpace(ref);
+    return _kits.putIfAbsent(key, () => _DemoStock(_fixture, key, ref.watch(clockProvider).now));
+  }
+}
+
+class _DemoStock {
+  _DemoStock(DemoFixture fixture, DemoSpaceKey key, DateTime Function() now) {
+    final id = key.id;
+    final money = fixture.space(key).money;
+    final candidates = DemoStockCandidates(() async => [
+      for (final s in await money.fetchServices(id))
+        if (s.active) (id: s.id, name: s.name),
+    ]);
+    config = DemoStockConfigCommands(id, candidates: candidates);
+    ledger = DemoStockLedger(id, config, () => fixture.seededAt, candidates);
+    registry = DemoStockRegistry(id, ledger, config);
+    reorder = DemoStockReorder(id, ledger, config);
+    operations = DemoStockOperations(ledger, config);
+    reversals = DemoStockReversals(ledger);
+    itemGroups = DemoItemGroups(id, config, now);
+    tags = DemoStockTags();
+    codeResolver = DemoStockCodeResolver(id, config, registry, tags);
+  }
+
+  late final DemoStockConfigCommands config;
+  late final DemoStockLedger ledger;
+  late final DemoStockRegistry registry;
+  late final DemoStockReorder reorder;
+  late final DemoStockOperations operations;
+  late final DemoStockReversals reversals;
+  late final DemoItemGroups itemGroups;
+  late final DemoStockTags tags;
+  late final DemoStockCodeResolver codeResolver;
+}
 
 /// #2470 — the HMRC port is the Demo's: nothing leaves the process, so the
 /// browser's fraud-prevention values are synthetic too and the journey is the
