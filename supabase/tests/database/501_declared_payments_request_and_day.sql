@@ -137,9 +137,9 @@ select is((select count(*)::int from public.events where type = 'payment' and pa
 -- the digest of a request tells apart what a joined string cannot
 select set_config('dp.r3', gen_random_uuid()::text, false);
 select pg_temp.run_as(current_setting('dp.ua')::uuid, format(
-  $q$select public.record_payment(%L, %L, 910, 'a|b', '', null, null, null, %L)::text$q$, current_setting('dp.ws'), current_setting('dp.m_a'), current_setting('dp.r3')));
+  $q$select public.record_payment(%L, %L, 910, 'a|b', 'c', null, null, null, %L)::text$q$, current_setting('dp.ws'), current_setting('dp.m_a'), current_setting('dp.r3')));
 select is(pg_temp.run_as(current_setting('dp.ua')::uuid, format(
-  $q$select public.record_payment(%L, %L, 910, 'a', 'b', null, null, null, %L)::text$q$, current_setting('dp.ws'), current_setting('dp.m_a'), current_setting('dp.r3'))),
+  $q$select public.record_payment(%L, %L, 910, 'a', 'b|c', null, null, null, %L)::text$q$, current_setting('dp.ws'), current_setting('dp.m_a'), current_setting('dp.r3'))),
   'ERR DKC15', 'a note holding the separator is not the note and method it resembles');
 select set_config('dp.r4', gen_random_uuid()::text, false);
 select pg_temp.run_as(current_setting('dp.ua')::uuid, format(
