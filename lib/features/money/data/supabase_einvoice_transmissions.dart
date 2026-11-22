@@ -95,7 +95,12 @@ class SupabaseEInvoiceTransmissions implements EInvoiceTransmissions {
       table: 'invoice_transmissions',
       build: () => _client
           .from('invoice_transmissions')
-          .select()
+          // the columns a client holds a privilege on: how the business handled a transmission is
+          // the issuers' (einvoice_transmission_handling_v1)
+          .select(
+            'id, workspace_id, invoice_id, provider, status, external_id, document_hash, detail, '
+            'sent_at, by_name, environment, destination, format, receipt, receipt_at, phase, verdict, kind',
+          )
           .eq('workspace_id', workspaceId)
           .order('sent_at', ascending: false)
           .order('id', ascending: true),

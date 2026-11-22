@@ -89,6 +89,8 @@ it.
 |---|---|
 | a transmission never points into another workspace | the tenant foreign key on `invoice_id` (`supabase/migrations/0242_tenant_reference_integrity.sql`) and `invoice_transmission_artifacts_same_workspace` (0689) |
 | a client cannot claim an invoice was sent or read its bytes | `invoice_transmissions` has a select policy only; the artifacts table has no client policy and no client grant; the prepare, claim, outcome, lookup and resolve functions are granted to the service role only (0689, 0694) |
+| how a transmission was handled is read by issuers only | the authenticated role holds a column privilege on the columns that say what happened (phase, status, provider, external id, document hash, detail, receipt, verdict) and none on the business key, binding, dispatch owner, generation, deadline, last query error, requester, resolver, reason and evidence of a resolution; issuers read those through `einvoice_transmission_handling_v1` (0859) |
+| a manual `failed` never re-opens a dispatch that may still be running | `resolve_einvoice_manually_v1` answers `claim_live` while the claim's deadline has not passed (0859); `accepted` and `rejected` stay admitted |
 | a development workspace sends nothing to anyone | the handler refuses a non-production workspace before any credential is used (#917) |
 | a delegated token never transmits an invoice | `refuseDelegated` at the top of `handle` (#1614) |
 | the customer leg never falls back to the government credentials, nor a sandbox key to the production one | `configForDestination` and `configFor` in `handler.ts`; destination and environment are part of the business key |
