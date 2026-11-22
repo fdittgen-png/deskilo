@@ -20674,7 +20674,6 @@
   "stockCycleCountTitle": "Compter cette ligne",
   "stockCycleCounted": "Compté.",
   "stockCycleCountedDifference": "Compté. Écart avec le stock enregistré : {difference}",
-  "stockCycleDueButton": "Jour d’échéance : {date}",
   "stockCycleEveryDays": "Tous les combien de jours",
   "stockCycleHistoryAccuracy": "{count, plural, one{{count} comptage} other{{count} comptages}}, {percent} % exacts",
   "stockCycleHistoryEmpty": "Rien n’a encore été compté.",

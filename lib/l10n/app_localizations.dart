@@ -56132,12 +56132,6 @@ abstract class AppLocalizations {
   /// **'Counted. Difference from the ledger: {difference}'**
   String stockCycleCountedDifference(String difference);
 
-  /// #4295 the button that sets a plan's due day
-  ///
-  /// In en, this message translates to:
-  /// **'Due day: {date}'**
-  String stockCycleDueButton(String date);
-
   /// #4295 cycle counts
   ///
   /// In en, this message translates to:

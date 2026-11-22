@@ -45495,15 +45495,6 @@
       }
     }
   },
-  "stockCycleDueButton": "Due day: {date}",
-  "@stockCycleDueButton": {
-    "description": "#4295 the button that sets a plan's due day",
-    "placeholders": {
-      "date": {
-        "type": "String"
-      }
-    }
-  },
   "stockCycleEveryDays": "Every how many days",
   "@stockCycleEveryDays": {
     "description": "#4295 cycle counts"

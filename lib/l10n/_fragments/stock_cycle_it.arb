@@ -54,6 +54,5 @@
   "stockCyclePlanNameRequired": "Dia un nome al piano.",
   "stockCyclePlanScopeRequired": "Scelga che cosa conta.",
   "stockCycleIntervalInvalid": "Inserisca un numero intero di giorni, da 1 a 366.",
-  "stockCycleThresholdInvalid": "Inserisca un importo o lasci vuoto.",
-  "stockCycleDueButton": "Giorno di scadenza: {date}"
+  "stockCycleThresholdInvalid": "Inserisca un importo o lasci vuoto."
 }

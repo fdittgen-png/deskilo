@@ -304,14 +304,5 @@
   "stockCycleThresholdInvalid": "Enter an amount, or leave it empty.",
   "@stockCycleThresholdInvalid": {
     "description": "#4295 a mistake under a plan field"
-  },
-  "stockCycleDueButton": "Due day: {date}",
-  "@stockCycleDueButton": {
-    "description": "#4295 the button that sets a plan's due day",
-    "placeholders": {
-      "date": {
-        "type": "String"
-      }
-    }
   }
 }

@@ -35307,11 +35307,6 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String stockCycleDueButton(String date) {
-    return 'Giorno di scadenza: $date';
-  }
-
-  @override
   String get stockCycleEveryDays => 'Ogni quanti giorni';
 
   @override

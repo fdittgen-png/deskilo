@@ -34981,11 +34981,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String stockCycleDueButton(String date) {
-    return 'Due day: $date';
-  }
-
-  @override
   String get stockCycleEveryDays => 'Every how many days';
 
   @override

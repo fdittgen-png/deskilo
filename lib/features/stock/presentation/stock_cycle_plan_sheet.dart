@@ -13,7 +13,6 @@ import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/trace/trace_logger.dart';
-import '../../../core/ui/app_date_picker.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/stock_config.dart';
@@ -130,20 +129,6 @@ class _PlanDraft {
       TraceLogger.instance.warn('stock', 'a count plan was not saved: $e', stackTrace: st);
       return stockSaveProblem(l10n, e);
     }
-  }
-
-  Future<void> _pickDay(BuildContext context, VoidCallback refresh) async {
-    // the due day is always a business day in `YYYY-MM-DD` (the sheet starts from the business's today)
-    final now = DateTime.parse(due);
-    final day = await showAppDatePicker(
-      context: context,
-      initialDate: now,
-      firstDate: DateTime(now.year - 1),
-      lastDate: DateTime(now.year + 5),
-    );
-    if (day == null) return;
-    due = day.toIso8601String().substring(0, 10);
-    refresh();
   }
 
   List<Widget> build(BuildContext context, VoidCallback refresh) {
@@ -266,11 +251,18 @@ class _PlanDraft {
       ),
     ],
     const FormGap.small(),
-    OutlinedButton.icon(
+    // the due day is always a business day in `YYYY-MM-DD` (the sheet starts from the business's today)
+    AppDateField(
       key: const ValueKey('stock-plan-due'),
-      icon: const Icon(Icons.event_outlined),
-      label: Text(l10n.stockCycleDueButton(MaterialLocalizations.of(context).formatMediumDate(DateTime.parse(due)))),
-      onPressed: () => _pickDay(context, refresh),
+      fieldKey: 'due',
+      label: l10n.purchasesDueDate,
+      value: DateTime.parse(due),
+      first: DateTime.parse(due).subtract(const Duration(days: 366)),
+      last: DateTime.parse(due).add(const Duration(days: 366 * 5)),
+      onChanged: (read) {
+        final day = read.date;
+        if (day != null) due = day.toIso8601String().substring(0, 10);
+      },
     ),
   ];
 }

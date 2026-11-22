@@ -20674,7 +20674,6 @@
   "stockCycleCountTitle": "Diese Zeile zählen",
   "stockCycleCounted": "Gezählt.",
   "stockCycleCountedDifference": "Gezählt. Abweichung vom Buchbestand: {difference}",
-  "stockCycleDueButton": "Fälligkeitstag: {date}",
   "stockCycleEveryDays": "Alle wie viele Tage",
   "stockCycleHistoryAccuracy": "{count, plural, one{1 Zählung} other{{count} Zählungen}}, {percent} % exakt",
   "stockCycleHistoryEmpty": "Es wurde noch nichts gezählt.",

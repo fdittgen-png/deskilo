@@ -54,6 +54,5 @@
   "stockCyclePlanNameRequired": "Geben Sie dem Plan einen Namen.",
   "stockCyclePlanScopeRequired": "Wählen Sie, was gezählt wird.",
   "stockCycleIntervalInvalid": "Geben Sie eine ganze Zahl von Tagen ein, von 1 bis 366.",
-  "stockCycleThresholdInvalid": "Geben Sie einen Betrag ein oder lassen Sie das Feld leer.",
-  "stockCycleDueButton": "Fälligkeitstag: {date}"
+  "stockCycleThresholdInvalid": "Geben Sie einen Betrag ein oder lassen Sie das Feld leer."
 }
