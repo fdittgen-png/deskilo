@@ -3605,10 +3605,11 @@ routine public.public_identity_authority() -> jsonb | function | invoker | stabl
 routine public.public_network_descriptor() -> jsonb | function | invoker | stable | exec:anon,authenticated,service_role | body:dc26a8b81da2
 routine public.public_network_require(p_operation text) -> void | function | invoker | stable | exec:service_role | body:fee911e507ab
 routine public.public_opening_hours(p_rules jsonb, p_timezone text, p_note text, p_place boolean) -> jsonb | function | invoker | immutable | exec:service_role | body:29aeabd667c9
+routine public.public_page_service_limit() -> integer | function | invoker | immutable | exec:anon,authenticated,service_role | body:3a4311fad1da
 routine public.public_person_card_sync() -> trigger | function | definer | volatile | exec:service_role | body:542c705cbafa
 routine public.public_profile_facets_catalogue() -> jsonb | function | invoker | immutable | exec:service_role | body:89ecba154ea4
 routine public.public_workspace_document(p_workspace uuid) -> jsonb | function | definer | stable | exec:service_role | body:74f2586dfd0b
-routine public.public_workspace_offer(p_workspace uuid) -> jsonb | function | definer | stable | exec:service_role | body:1701cc9184e5
+routine public.public_workspace_offer(p_workspace uuid) -> jsonb | function | definer | stable | exec:service_role | body:9202b20eb4d0
 routine public.public_workspace_setting_text(p_workspace uuid, p_key text) -> text | function | definer | stable | exec:service_role | body:e429ee221f9d
 routine public.public_workspace_tax_treatment(p_workspace uuid) -> text | function | definer | stable | exec:service_role | body:abbcb49cec6a
 routine public.publish_privacy_notice(p_workspace_id uuid, p_version text, p_manifest jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:fc12cf39df7d

@@ -16,5 +16,8 @@
   "servicesPublic": "Auf unserer öffentlichen Seite zeigen",
   "servicesOtherCategory": "Weitere Leistungen",
   "servicesDurationShort": "{minutes, plural, one{1 Min.} other{{minutes} Min.}}",
-  "servicesSaveFailed": "Die Leistung konnte nicht gespeichert werden. Versuchen Sie es erneut."
+  "servicesSaveFailed": "Die Leistung konnte nicht gespeichert werden. Versuchen Sie es erneut.",
+  "servicesPublicPageNotice": "{count, plural, one{{count} Leistung ist öffentlich} other{{count} Leistungen sind öffentlich}}. Die öffentliche Seite zeigt {limit, plural, one{die erste {limit}} other{die ersten {limit}}}, in der Reihenfolge dieser Liste.",
+  "servicesPublicPageHidden": "{count, plural, one{{count} öffentliche Leistung wird dort nicht gezeigt.} other{{count} öffentliche Leistungen werden dort nicht gezeigt.}}",
+  "servicesNotOnPublicPage": "Nicht auf der öffentlichen Seite"
 }

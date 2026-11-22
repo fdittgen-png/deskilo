@@ -16,5 +16,8 @@
   "servicesPublic": "Afficher sur notre page publique",
   "servicesOtherCategory": "Autres prestations",
   "servicesDurationShort": "{minutes, plural, one{{minutes} min} other{{minutes} min}}",
-  "servicesSaveFailed": "La prestation n'a pas pu être enregistrée. Réessayez."
+  "servicesSaveFailed": "La prestation n'a pas pu être enregistrée. Réessayez.",
+  "servicesPublicPageNotice": "{count, plural, one{{count} service est public} other{{count} services sont publics}}. La page publique affiche {limit, plural, one{le premier ({limit})} other{les {limit} premiers}}, dans l’ordre de cette liste.",
+  "servicesPublicPageHidden": "{count, plural, one{{count} service public n’y est pas affiché.} other{{count} services publics n’y sont pas affichés.}}",
+  "servicesNotOnPublicPage": "Pas sur la page publique"
 }

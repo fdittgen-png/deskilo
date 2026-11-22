@@ -4691,6 +4691,7 @@ Vende qualcosa che non è un posto: un armadietto, la stampa, il caffè. Lo elen
 - Un servizio non viene mai eliminato, solo disattivato, perché le fatture vi fanno riferimento.
 - Un servizio che proviene da una scorta mostra quanti ne restano, oppure **Esaurito**.
 - Per registrarne uno per un membro, usi **Aggiungi un servizio** sulla sua pagina.
+- **Mostra sulla nostra pagina pubblica**: la pagina pubblica, la sua scheda in Scopri e la ricerca per servizio riportano i primi 12 servizi pubblici, nell'ordine dell'elenco dei servizi (categoria, poi nome). L'elenco indica quanti servizi sono pubblici e segnala quelli che la pagina non mostra.
 
 **Vedi anche:** [Accessori](help:user.money.accessories) · [La pagina del membro](help:user.members.page)
 
