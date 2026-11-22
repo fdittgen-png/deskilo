@@ -41,7 +41,7 @@ t('no network, no inline or foreign script', () => {
 t('entry links only open the app itself, relative to the page', () => {
   const hrefs = [...html.matchAll(/href="([^"]+)"/g)].map((m) => m[1]);
   for (const h of hrefs) {
-    assert.ok(h === './#/auth' || h === 'https://github.com/fdittgen-png/deskilo', h);
+    assert.ok(h === './#/auth' || h === 'https://github.com/fdittgen-png/deskilo' || h === 'https://github.com/fdittgen-png/deskilo/blob/master/docs/guides/OPERATIONS.md', h);
   }
   for (const id of ['go-demo', 'go-signin', 'go-join']) {
     assert.match(html, new RegExp(`id="${id}" [^>]*href="\\./#/auth"`), id);
@@ -82,6 +82,31 @@ t('a blank field makes the month "at least", naming what is missing', () => {
   const lines = describePlan(plan, 'en');
   assert.equal(lines[1], 'Each month: €25.00 (at least — some values are still unknown)');
   assert.ok(lines.includes('  Not counted: Backup and monitoring — left blank'));
+});
+
+// #4207 — the two illustrative scenarios of docs/guides/service-examples.md.
+t('the service examples: hand-calculated, and a blank admin is never zero', () => {
+  const base = { currency: 'EUR', storage_price: '0.125', pay_percent: '1.5', pay_fixed: '0.25', assistant_funding: 'user', hourly_value: '40' };
+  const solo = { ...base, setup_hours: '8', backend_plan: '25', storage_used: '4', storage_free: '8', backup: '10', pay_count: '20', pay_average: '50', admin_hours: '2' };
+  const multi = { ...base, setup_hours: '20', backend_plan: '25', storage_used: '15', storage_free: '8', backup: '10', pay_count: '150', pay_average: '45', admin_hours: '6' };
+  const a = planCost(scenarioFromFields(solo));
+  assert.equal(a.one_time.known_minor, 32000);
+  assert.equal(a.recurring.known_minor, 2500 + 1000 + 2000 + 8000);
+  const b = planCost(scenarioFromFields(multi));
+  assert.equal(b.one_time.known_minor, 80000);
+  assert.equal(b.recurring.known_minor, 41463);
+  const blank = planCost(scenarioFromFields({ ...solo, admin_hours: '' }));
+  assert.equal(blank.recurring.known_minor, 5500);
+  assert.equal(blank.recurring.complete, false);
+  assert.ok(describePlan(blank, 'en').includes('  Not counted: Admin hours — left blank'));
+});
+
+t('the services table has a cell for each of three modes in every row, and says "to be agreed" for what is unchosen', () => {
+  const rows = [...html.matchAll(/<tr><th scope="row" data-i18n="(svcRow\w+)"><\/th>((?:<td data-i18n="\w+"><\/td>){3})<\/tr>/g)];
+  assert.equal(rows.length, 6);
+  for (const l of LOCALES) assert.ok(TEXT[l].svcIntro.length > 0 && TEXT[l].svcNoteNoContract.length > 0, l);
+  assert.match(TEXT.en.svcIncidentsEngaged, /to be agreed/);
+  assert.match(TEXT.en.svcIncidentsHosted, /No support contract/);
 });
 
 t('a funded assistant is billed per started million tokens', () => {
