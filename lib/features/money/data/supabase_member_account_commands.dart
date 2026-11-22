@@ -22,10 +22,13 @@ class SupabaseMemberAccountCommands implements MemberAccountCommands {
   /// of the same words is a new payment.
   final Map<String, String> _attempts = {};
 
-  Future<String> _declared(String key, Future<Object?> Function(String id) send) async {
+  Future<String> _declared(String key, Map<String, Object?> params) async {
     final id = _attempts.putIfAbsent(key, newRequestId);
     try {
-      final result = await send(id);
+      final result = await _client.rpc<Object?>(
+        'record_payment',
+        params: {...params, 'p_request_id': id},
+      );
       _attempts.remove(key);
       return result! as String;
     } on PostgrestException {
@@ -46,25 +49,19 @@ class SupabaseMemberAccountCommands implements MemberAccountCommands {
     DateTime? paidOn,
     String? period,
   }) async {
+    // 0070 — a date, not a timestamp: what matters is the DAY the money
+    // moved, in the payer's own calendar.
     final day = paidOn == null ? null : isoDay(paidOn);
-    return _declared(
-      [workspaceId, memberId, amountCents, note, method?.wireName, day, period].join('|'),
-      (id) => _client.rpc<dynamic>(
-        'record_payment',
-        params: {
-          'p_workspace_id': workspaceId,
-          'p_member_id': memberId,
-          'p_amount_cents': amountCents,
-          'p_note': note,
-          'p_method': method?.wireName ?? '',
-          // 0070 — a date, not a timestamp: what matters is the DAY the money
-          // moved, in the payer's own calendar.
-          'p_paid_on': day,
-          'p_period': period,
-          'p_request_id': id,
-        },
-      ),
-    );
+    final params = {
+      'p_workspace_id': workspaceId,
+      'p_member_id': memberId,
+      'p_amount_cents': amountCents,
+      'p_note': note,
+      'p_method': method?.wireName ?? '',
+      'p_paid_on': day,
+      'p_period': period,
+    };
+    return _declared(params.values.join('|'), params);
   }
 
   @override
@@ -77,20 +74,16 @@ class SupabaseMemberAccountCommands implements MemberAccountCommands {
     return _claimed(
       () => _declared(
         [workspaceId, memberId, claim.amountCents, claim.period, ...ids].join('|'),
-        (id) => _client.rpc<Object?>(
-          'record_payment',
-          params: {
-            'p_workspace_id': workspaceId,
-            'p_member_id': memberId,
-            'p_amount_cents': claim.amountCents,
-            'p_note': '',
-            'p_method': '',
-            'p_paid_on': null,
-            'p_period': claim.period,
-            'p_invoice_ids': claim.invoiceIds,
-            'p_request_id': id,
-          },
-        ),
+        {
+          'p_workspace_id': workspaceId,
+          'p_member_id': memberId,
+          'p_amount_cents': claim.amountCents,
+          'p_note': '',
+          'p_method': '',
+          'p_paid_on': null,
+          'p_period': claim.period,
+          'p_invoice_ids': claim.invoiceIds,
+        },
       ),
     );
   }
