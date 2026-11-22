@@ -303,10 +303,17 @@ String _latestDescription(AppLocalizations l10n, WorkspaceFeature feature) =>
       WorkspaceFeature.billingCustomers => l10n.featureBillingCustomersDesc,
       WorkspaceFeature.customerQuotes => l10n.featureCustomerQuotesDesc,
       WorkspaceFeature.serviceFulfilment => l10n.featureServiceFulfilmentDesc,
+      _ => _stockDescription(l10n, feature),
+    };
+
+/// The goods ledger's features (#3824, #4294).
+String _stockDescription(AppLocalizations l10n, WorkspaceFeature feature) =>
+    switch (feature) {
       WorkspaceFeature.stockManagement => l10n.featureStockManagementDesc,
       WorkspaceFeature.stockLots => l10n.featureStockLotsDesc,
       WorkspaceFeature.stockReceiving => l10n.featureStockReceivingDesc,
       WorkspaceFeature.stockTakeOut => l10n.featureStockTakeOutDesc,
+      WorkspaceFeature.stockReorder => l10n.featureStockReorderDesc,
       _ => feature.name,
     };
 

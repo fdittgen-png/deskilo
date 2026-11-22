@@ -12548,6 +12548,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get featureStockReceivingTitle => 'Réception en stock';
 
   @override
+  String get featureStockReorderDesc =>
+      'Fixez un minimum par article et par site : la boîte de réception signale quand le stock l’atteint, et une liste de réapprovisionnement propose quoi commander. Désactivé : aucun seuil, aucune alerte, aucune liste ; le registre n’est pas touché.';
+
+  @override
+  String get featureStockReorderTitle => 'Seuils de réapprovisionnement';
+
+  @override
   String get featureStockTakeOutDesc =>
       'Sortir des marchandises du stock pour usage ou comme perte, avec le motif et le lot. Désactivé : ni consommation ni perte n’est proposée ; les transferts et la réception ne changent pas.';
 

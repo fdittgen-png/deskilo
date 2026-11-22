@@ -2296,6 +2296,12 @@
       "capabilities": []
     },
     {
+      "key": "stockReorder",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "stockTakeOut",
       "maturity": "beta",
       "lifecycle": "active",

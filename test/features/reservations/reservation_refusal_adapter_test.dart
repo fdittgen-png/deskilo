@@ -74,8 +74,100 @@ Future<Object?> _create(SupabaseClient client) => _caught(
   ),
 );
 
+/// A booking confirmed through the recovery, the server answering with [handle]: the intent
+/// ledger and what the caller was told, so a lost outcome is told from a refusal.
+Future<({Object? told, List<BookingIntent> open, List<String> ids})> _booked(
+  Future<http.Response> Function(http.Request) handle,
+) async {
+  final ids = <String>[];
+  final recovery = BookingRecovery(
+    reservations: SupabaseReservationRepository(
+      _client((request) async {
+        final params = jsonDecode(request.body) as Map<String, dynamic>;
+        ids.add(params['p_client_request_id'] as String);
+        return handle(request);
+      }),
+      InMemoryCacheStore(),
+    ),
+    store: InMemoryBookingIntentStore(),
+    scope: _scope,
+    clock: FixedClock(_now),
+    schemaVersion: 377,
+  );
+  Object? told;
+  try {
+    await recovery.book((
+      workspaceId: 'ws-1',
+      seatId: 'seat-1',
+      start: _start,
+      end: _end,
+      checkIn: false,
+      forMemberId: null,
+      pattern: null,
+      until: null,
+    ));
+  } on Object catch (e) {
+    told = e;
+  }
+  return (told: told, open: await recovery.unresolved(), ids: ids);
+}
+
+Future<Object?> _identify(SupabaseClient client) => _caught(
+  () => SupabaseReservationRepository(client, InMemoryCacheStore()).kioskIdentify(
+    workspaceId: 'ws-1',
+    badgeToken: 'unknown-badge',
+  ),
+);
+
 void main() {
   final en = AppLocalizationsEn();
+
+  // #4316 — the kiosk's first and most frequent refusal reaches the screen typed.
+  test('an unknown badge at kiosk_identify is the kiosk\'s own refusal, never the transport\'s '
+      'error', () async {
+    final error = await _identify(
+      _client((r) async => _postgrestError(r, code: 'P0001', message: 'badge not recognized')),
+    );
+    expect(error, isA<ReservationRefused>());
+    expect((error! as ReservationRefused).refusal.kind, ReservationRefusalKind.badgeRejected);
+  });
+
+  test('a transport fault at kiosk_identify is not a refusal', () async {
+    final error = await _identify(
+      _client((r) async => throw http.ClientException('connection closed before the answer')),
+    );
+    expect(error, isNot(isA<ReservationRefused>()));
+    expect(error, isNotNull);
+  });
+
+  // #4317 — an answer that is not a PostgREST refusal leaves the outcome unknown.
+  group('a booking whose answer is not PostgREST\'s is an unknown outcome, never a refusal', () {
+    final answers = <String, Future<http.Response> Function(http.Request)>{
+      'a 504 with an HTML body after the commit': (r) async =>
+          http.Response('<html><body>504 Gateway Time-out</body></html>', 504, request: r),
+      'a 503 before the commit': (r) async => http.Response('upstream unavailable', 503, request: r),
+      'a 200 with a truncated body': (r) async =>
+          http.Response('{"id": "res-', 200, request: r, headers: {'content-type': 'application/json'}),
+    };
+    for (final entry in answers.entries) {
+      test(entry.key, () async {
+        final out = await _booked(entry.value);
+        expect(out.told, isA<BookingOutcomeUnknown>(), reason: 'told: ${out.told}');
+        expect(out.open, hasLength(1), reason: 'the intent stays for the recovery');
+        expect(out.ids.toSet(), hasLength(1), reason: 'one request id');
+        expect(out.open.single.requestId, out.ids.first);
+      });
+    }
+
+    test('a refusal the database raised stays definitive, with no intent left', () async {
+      final out = await _booked(
+        (r) async => _postgrestError(r, code: 'DKK19', message: 'you already have a reservation in that period'),
+      );
+      expect(out.told, isA<ReservationRefused>());
+      expect(out.open, isEmpty);
+    });
+  });
+
 
   test('a raw PostgREST refusal becomes the typed refusal, its values '
       'read, its error kept as the cause', () async {
