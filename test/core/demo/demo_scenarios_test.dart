@@ -1399,9 +1399,9 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
       final config = DemoStockConfigCommands(demoFirstSpaceId);
       final ledger = DemoStockLedger(demoFirstSpaceId, config);
       final reversals = DemoStockReversals(ledger);
-      await reversals.recordCount(demoFirstSpaceId, 'count-1', itemId: 'demo-item-beans', locationId: 'demo-place-main', observed: '10', requestId: 'req-1');
+      await reversals.recordCount(demoFirstSpaceId, (countId: 'count-1', itemId: 'demo-item-beans', locationId: 'demo-place-main', observed: '10', requestId: 'req-1', variantId: null, lotId: null, reason: ''));
       await reversals.decideCount(demoFirstSpaceId, 'count-1', StockCountDecision.apply, 'req-2');
-      await reversals.recordCount(demoFirstSpaceId, 'count-2', itemId: 'demo-item-beans', locationId: 'demo-place-main', observed: '9', requestId: 'req-3');
+      await reversals.recordCount(demoFirstSpaceId, (countId: 'count-2', itemId: 'demo-item-beans', locationId: 'demo-place-main', observed: '9', requestId: 'req-3', variantId: null, lotId: null, reason: ''));
       await ledger.post(
         DemoStockPost(item: ledger.itemOf('demo-item-beans')!, quantity: ExactQuantity.parse('1'), from: 'demo-place-main', to: 'demo-place-shelf', reason: 'transfer'),
       );

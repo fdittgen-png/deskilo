@@ -3074,6 +3074,23 @@ Abra **Existencias → Artículos**. Cada línea muestra el **código de barras*
 - **Busque** por nombre, código de barras o dirección. Escribir o escanear un código de barras en la búsqueda y confirmar abre ese artículo.
 - Las listas largas se cargan por páginas: elija *Mostrar más*.
 
+<!-- anchor: user.money.stock.reversals -->
+### Devoluciones, correcciones y recuentos
+
+**Público:** Administrador/a · Propietario
+
+Quiere recuperar mercancías, deshacer un movimiento o corregir una cifra errónea en la estantería, sin reescribir la historia.
+
+Abra un movimiento en **Existencias → Movimientos**. Donde la función *Devoluciones y correcciones* esté activa y su rol pueda mover existencias, la página dice cuánto de ese movimiento se puede aún revertir y ofrece: **Devolución del cliente** (para una venta), **Devolución al proveedor** (para una entrega) o **Corregir este movimiento** (para los demás). El formulario muestra lo que se movió y lo que queda antes de confirmar. Una devolución al proveedor sale del lugar donde están ahora las mercancías; las que vuelven de un cliente regresan al lugar que elija. Una corrección es un movimiento inverso, y una corrección puede corregirse a su vez.
+
+**Recuentos.** Donde la función *Recuentos de stock* esté activa, **Existencias → Recuentos de stock** lista lo contado frente a lo que el registro tenía. **Contar** registra un artículo en un lugar y no mueve nada: el recuento espera a alguien que pueda aprobar ajustes, y lo dice. La aprobación aplica exactamente la diferencia, y solo si el stock no se ha movido desde el recuento; si no, dice que hay que volver a contar. Quien contó no aprueba su propio recuento mientras otra persona pueda; el propietario de un negocio de una sola persona hace ambas cosas.
+
+**Conviene saber**
+
+- Una devolución o corrección nunca supera lo que permite el movimiento que revierte, cuantas veces se envíe.
+- No hace ningún pago, reembolso ni abono: si hay dinero de por medio, corríjalo en la factura o en el pago al proveedor.
+- Enviar el mismo formulario otra vez tras una respuesta perdida lo registra una sola vez.
+
 <!-- anchor: user.money.amounts -->
 ### Cómo se muestran los importes
 

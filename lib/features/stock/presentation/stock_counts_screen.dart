@@ -14,6 +14,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/format/decimal_input.dart';
+import '../../../core/help/help_anchors.dart';
+import '../../../core/help/help_dot.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
@@ -47,6 +49,7 @@ class StockCountsScreen extends ConsumerWidget {
       appBar: AppBar(
         title: PageTitle(l10n.stockCountsTitle),
         actions: [
+          HelpDot(l10n.permModuleStock, anchor: HelpAnchor.moneyStockReversals),
           if (workspaceId != null)
             IconButton(
               key: const ValueKey('stock-counts-reload'),
@@ -302,15 +305,16 @@ class _CountDraft {
 
   Future<String?> submit(AppLocalizations l10n, StockReversals reversals, String workspaceId) async {
     try {
-      await reversals.recordCount(
-        workspaceId,
-        countId,
+      await reversals.recordCount(workspaceId, (
+        countId: countId,
         itemId: item!,
         locationId: place!,
         observed: observed!.text,
         requestId: requestId,
+        variantId: null,
+        lotId: null,
         reason: fields.text('reason').trim(),
-      );
+      ));
       return null;
     } on Object catch (e, st) {
       TraceLogger.instance.warn('stock', 'a count was not recorded: $e', stackTrace: st);

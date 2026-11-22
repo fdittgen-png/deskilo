@@ -118,29 +118,19 @@ class SupabaseStockReversals implements StockReversals {
   );
 
   @override
-  Future<void> recordCount(
-    String workspaceId,
-    String countId, {
-    required String itemId,
-    required String locationId,
-    required String observed,
-    required String requestId,
-    String? variantId,
-    String? lotId,
-    String reason = '',
-  }) async {
+  Future<void> recordCount(String workspaceId, StockCountDraft draft) async {
     await _call('stock_count_record_v1', {
       'p_workspace_id': workspaceId,
-      'p_request_id': requestId,
-      'p_count_id': countId,
+      'p_request_id': draft.requestId,
+      'p_count_id': draft.countId,
       'p_scope': {
-        'item_id': itemId,
-        'location_id': locationId,
-        'variant_id': ?variantId,
-        'lot_id': ?lotId,
+        'item_id': draft.itemId,
+        'location_id': draft.locationId,
+        'variant_id': ?draft.variantId,
+        'lot_id': ?draft.lotId,
       },
-      'p_observed': observed,
-      'p_reason': reason,
+      'p_observed': draft.observed,
+      'p_reason': draft.reason,
     });
   }
 

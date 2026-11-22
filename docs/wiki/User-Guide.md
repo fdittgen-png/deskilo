@@ -3074,6 +3074,23 @@ Open **Stock → Items**. Each line shows the **barcode**, the **unit**, the **p
 - **Search** by name, barcode or address. Typing or scanning a barcode into the search and confirming opens that item.
 - Long lists load by pages: choose *Show more*.
 
+<!-- anchor: user.money.stock.reversals -->
+### Returns, corrections and counts
+
+**Audience:** Administrator · Owner
+
+You want to take goods back, undo a movement, or put right a figure that is wrong on the shelf, without editing history.
+
+Open a movement in **Stock → Movements**. Where the feature *Returns and corrections* is on and your role may move stock, the page says how much of that movement can still be reversed and offers: **Return from the customer** (for a sale), **Return to the supplier** (for a delivery) or **Correct this movement** (for the others). The form shows what moved and what remains before you confirm. A return of goods to the supplier leaves from the place the goods are in now; goods back from a customer return to the place you choose. A correction is a movement back, and a correction can itself be corrected.
+
+**Counts.** Where the feature *Stock counts* is on, **Stock → Stock counts** lists what was counted against what the ledger held. **Count** records an item at a place and moves nothing: the count waits for someone who may approve adjustments, and says so. The approval applies exactly the difference, and only if the stock has not moved since the count; otherwise it says the count must be done again. Whoever counted does not approve their own count while someone else may; the owner of a one-person business does both.
+
+**Good to know**
+
+- A return or a correction never exceeds what the movement it reverses allows, however many times it is sent.
+- No payment, refund or credit is made by it: if money is involved, correct it in the invoice or the supplier payment.
+- Sending the same form again, after a lost answer, records it once.
+
 <!-- anchor: user.money.amounts -->
 ### How amounts are shown
 

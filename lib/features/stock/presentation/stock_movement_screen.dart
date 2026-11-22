@@ -10,6 +10,8 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show exponentOf;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/help/help_anchors.dart';
+import '../../../core/help/help_dot.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/trace_logger.dart';
@@ -65,7 +67,10 @@ class StockMovementScreen extends ConsumerWidget {
     final seesCost = held.contains(WorkspacePermission.viewFinances) ||
         held.contains(WorkspacePermission.managePurchases);
     return Scaffold(
-      appBar: AppBar(title: PageTitle(l10n.stockMovementTitle)),
+      appBar: AppBar(
+        title: PageTitle(l10n.stockMovementTitle),
+        actions: [HelpDot(l10n.permModuleStock, anchor: HelpAnchor.moneyStockReversals)],
+      ),
       body: switch (movement) {
         null => const LoadingView(),
         AsyncLoading() => const LoadingView(),
@@ -187,6 +192,7 @@ class _Reversals extends ConsumerWidget {
             key: const ValueKey('stock-reversals-failed'),
             title: Text(l10n.stockReadFailed),
             trailing: TextButton(
+              key: const ValueKey('stock-reversals-retry'),
               onPressed: () => ref.invalidate(stockReversibleProvider(key)),
               child: Text(l10n.identityConnectRetry),
             ),
@@ -250,7 +256,6 @@ class _Reversals extends ConsumerWidget {
       final done = await showStockReversalSheet(
         context,
         ref.read(stockReversalsProvider),
-        workspaceId: movement.workspaceId,
         source: movement,
         allows: allows,
         kind: kind,

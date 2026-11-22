@@ -3074,6 +3074,23 @@ Sie möchten eine Liste, die für jeden Artikel und jede Variante sagt, was es i
 - **Suchen** Sie nach Name, Barcode oder Adresse. Einen Barcode in die Suche eingeben oder scannen und bestätigen öffnet diesen Artikel.
 - Lange Listen werden seitenweise geladen: Wählen Sie *Mehr anzeigen*.
 
+<!-- anchor: user.money.stock.reversals -->
+### Rückgaben, Korrekturen und Zählungen
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie wollen Ware zurücknehmen, eine Bewegung rückgängig machen oder eine falsche Zahl im Regal berichtigen, ohne die Geschichte zu ändern.
+
+Öffnen Sie eine Bewegung unter **Lager → Bewegungen**. Wo die Funktion *Rückgaben und Korrekturen* an ist und Ihre Rolle Ware bewegen darf, sagt die Seite, wie viel dieser Bewegung noch rückgängig gemacht werden kann, und bietet an: **Rückgabe vom Kunden** (bei einem Verkauf), **Rückgabe an den Lieferanten** (bei einer Lieferung) oder **Diese Bewegung korrigieren** (bei den übrigen). Das Formular zeigt vor der Bestätigung, was bewegt wurde und was bleibt. Eine Rückgabe an den Lieferanten verlässt den Ort, an dem die Ware jetzt liegt; Ware vom Kunden kommt an den Ort zurück, den Sie wählen. Eine Korrektur ist eine Gegenbewegung, und eine Korrektur kann selbst korrigiert werden.
+
+**Zählungen.** Wo die Funktion *Bestandszählungen* an ist, listet **Lager → Bestandszählungen** auf, was gegen das Buch gezählt wurde. **Zählen** erfasst einen Artikel an einem Ort und bewegt nichts: Die Zählung wartet auf jemanden, der Anpassungen genehmigen darf, und sagt das. Die Genehmigung wendet genau die Differenz an, und nur wenn sich der Bestand seit der Zählung nicht bewegt hat; sonst verlangt sie eine neue Zählung. Wer gezählt hat, genehmigt die eigene Zählung nicht, solange es jemand anderen gibt; der Inhaber eines Ein-Personen-Unternehmens tut beides.
+
+**Gut zu wissen**
+
+- Eine Rückgabe oder Korrektur übersteigt nie, was die rückgängig gemachte Bewegung erlaubt, wie oft sie auch gesendet wird.
+- Dadurch wird nichts bezahlt, erstattet oder gutgeschrieben: Geht es um Geld, korrigieren Sie es in der Rechnung oder der Lieferantenzahlung.
+- Dasselbe Formular nach einer verlorenen Antwort erneut zu senden, erfasst es nur einmal.
+
 <!-- anchor: user.money.amounts -->
 ### Wie Beträge angezeigt werden
 

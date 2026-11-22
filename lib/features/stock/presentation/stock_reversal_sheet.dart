@@ -43,7 +43,6 @@ StockReturnKind? stockReturnKindOf(StockMovementRow source) => switch (source.re
 Future<bool> showStockReversalSheet(
   BuildContext context,
   StockReversals reversals, {
-  required String workspaceId,
   required StockMovementRow source,
   required StockReversible allows,
   required StockReturnKind kind,
@@ -69,7 +68,7 @@ Future<bool> showStockReversalSheet(
       submitKey: const ValueKey('stock-reversal-submit'),
       onDispose: draft.fields.dispose,
       validate: () => draft.validate(l10n),
-      onSubmit: () => draft.submit(l10n, reversals, workspaceId),
+      onSubmit: () => draft.submit(l10n, reversals, source.workspaceId),
       builder: draft.build,
     ),
   );

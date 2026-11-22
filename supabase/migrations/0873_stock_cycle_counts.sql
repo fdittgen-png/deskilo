@@ -131,8 +131,12 @@ create policy mcp_delegated_deny on public.stock_count_task_lines as restrictive
 create or replace function public.stock_cycle_actor(p_workspace_id uuid)
 returns uuid language plpgsql stable security definer set search_path = public as $fn$
 declare
-  v_me uuid := public.stock_ops_actor(p_workspace_id);
+  v_me uuid;
 begin
+  if auth.uid() is null then
+    raise exception 'not allowed to manage the cycle counts' using errcode = 'DKN01';
+  end if;
+  v_me := public.stock_ops_actor(p_workspace_id);
   if not public.feature_effective(p_workspace_id, 'stockCycleCounts') then
     raise exception 'cycle counts are off in this business' using errcode = 'DKG01';
   end if;

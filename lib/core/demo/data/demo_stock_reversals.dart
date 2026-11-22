@@ -20,6 +20,8 @@ const _owner = 'demo-member-owner';
 
 PostgrestException _refused(String code, String message) => PostgrestException(message: message, code: code);
 
+typedef _Planned = ({StockMovementRow source, ExactQuantity quantity, StockReturnLineDraft line});
+
 /// The in-memory returns and counts of the reference business.
 class DemoStockReversals implements StockReversals {
   DemoStockReversals(this._ledger);
@@ -72,33 +74,7 @@ class DemoStockReversals implements StockReversals {
       return _answers[requestId] = known.result;
     }
     // everything is checked before anything moves: a refusal moves nothing
-    final planned = <({StockMovementRow source, ExactQuantity quantity, StockReturnLineDraft line})>[];
-    final taken = <String, ExactQuantity>{};
-    for (final l in lines) {
-      final source = _movement(l.sourceMovementId);
-      if (source == null) throw _refused('DKG04', 'a line names a movement of another business or none');
-      final ExactQuantity quantity;
-      try {
-        quantity = ExactQuantity.parse(l.quantity);
-      } on ExactQuantityException {
-        throw _refused('DKG07', 'a quantity above zero');
-      }
-      if (quantity <= ExactQuantity.zero) throw _refused('DKG07', 'a quantity above zero');
-      switch (kind) {
-        case StockReturnKind.customer:
-          throw _refused('DKG18', 'a customer return follows a sale');
-        case StockReturnKind.supplier:
-          if (source.reason != 'receipt') throw _refused('DKG18', 'a supplier return follows a receipt');
-          if (l.locationId == null) throw _refused('DKG05', 'the goods leave from a real place');
-        case StockReturnKind.correction:
-          if (source.reason == 'opening') throw _refused('DKG18', 'this movement is not corrected here');
-      }
-      final already = taken[source.id] ?? ExactQuantity.zero;
-      final left = source.quantity - _reversed(source.id) - already;
-      if (quantity > left) throw _refused('DKG17', 'only ${left.text} can still be reversed on this movement');
-      taken[source.id] = already + quantity;
-      planned.add((source: source, quantity: quantity, line: l));
-    }
+    final planned = _plan(kind, lines);
     final movementIds = <String>[];
     var remaining = ExactQuantity.zero;
     final item = _ledger.itemOf(planned.first.source.itemId);
@@ -129,6 +105,47 @@ class DemoStockReversals implements StockReversals {
     return _answers[requestId] = result;
   }
 
+  /// Checks every line against its source before anything moves.
+  List<_Planned> _plan(StockReturnKind kind, List<StockReturnLineDraft> lines) {
+    final planned = <_Planned>[];
+    final taken = <String, ExactQuantity>{};
+    for (final l in lines) {
+      final source = _movement(l.sourceMovementId);
+      if (source == null) throw _refused('DKG04', 'a line names a movement of another business or none');
+      final quantity = _quantity(l.quantity);
+      _kindAllows(kind, source, l);
+      final already = taken[source.id] ?? ExactQuantity.zero;
+      final left = source.quantity - _reversed(source.id) - already;
+      if (quantity > left) throw _refused('DKG17', 'only ${left.text} can still be reversed on this movement');
+      taken[source.id] = already + quantity;
+      planned.add((source: source, quantity: quantity, line: l));
+    }
+    return planned;
+  }
+
+  ExactQuantity _quantity(String text) {
+    final ExactQuantity quantity;
+    try {
+      quantity = ExactQuantity.parse(text);
+    } on ExactQuantityException {
+      throw _refused('DKG07', 'a quantity above zero');
+    }
+    if (quantity <= ExactQuantity.zero) throw _refused('DKG07', 'a quantity above zero');
+    return quantity;
+  }
+
+  void _kindAllows(StockReturnKind kind, StockMovementRow source, StockReturnLineDraft l) {
+    switch (kind) {
+      case StockReturnKind.customer:
+        throw _refused('DKG18', 'a customer return follows a sale');
+      case StockReturnKind.supplier:
+        if (source.reason != 'receipt') throw _refused('DKG18', 'a supplier return follows a receipt');
+        if (l.locationId == null) throw _refused('DKG05', 'the goods leave from a real place');
+      case StockReturnKind.correction:
+        if (source.reason == 'opening') throw _refused('DKG18', 'this movement is not corrected here');
+    }
+  }
+
   int _moves(String itemId, String place) =>
       _ledger.movements.where((m) => m.itemId == itemId && (m.fromLocationId == place || m.toLocationId == place)).length;
 
@@ -138,43 +155,33 @@ class DemoStockReversals implements StockReversals {
   ];
 
   @override
-  Future<void> recordCount(
-    String workspaceId,
-    String countId, {
-    required String itemId,
-    required String locationId,
-    required String observed,
-    required String requestId,
-    String? variantId,
-    String? lotId,
-    String reason = '',
-  }) async {
+  Future<void> recordCount(String workspaceId, StockCountDraft draft) async {
     if (!_ledger.mine(workspaceId)) throw _refused('DKG07', 'a count has an identity and a scope');
-    final ExactQuantity observedQuantity;
+    final ExactQuantity observed;
     try {
-      observedQuantity = ExactQuantity.parse(observed);
+      observed = ExactQuantity.parse(draft.observed);
     } on ExactQuantityException {
       throw _refused('DKG07', 'a count has a quantity');
     }
-    if (observedQuantity < ExactQuantity.zero || _ledger.itemOf(itemId) == null) {
+    if (observed < ExactQuantity.zero || _ledger.itemOf(draft.itemId) == null) {
       throw _refused('DKG07', 'a count has an identity and a scope');
     }
-    final known = _counts.where((c) => c.countId == countId).firstOrNull;
+    final known = _counts.where((c) => c.countId == draft.countId).firstOrNull;
     if (known != null) {
-      if (known.itemId != itemId || known.locationId != locationId || known.observed != observedQuantity) {
+      if (known.itemId != draft.itemId || known.locationId != draft.locationId || known.observed != observed) {
         throw _refused('DKG16', 'this count was already recorded with other content');
       }
       return;
     }
     _counts.add(
       _Count(
-        countId: countId,
-        itemId: itemId,
-        locationId: locationId,
-        observed: observedQuantity,
-        baseline: _ledger.balance(itemId, locationId, lotId: lotId),
-        baselineMoves: _moves(itemId, locationId),
-        reason: reason,
+        countId: draft.countId,
+        itemId: draft.itemId,
+        locationId: draft.locationId,
+        observed: observed,
+        baseline: _ledger.balance(draft.itemId, draft.locationId, lotId: draft.lotId),
+        baselineMoves: _moves(draft.itemId, draft.locationId),
+        reason: draft.reason,
       ),
     );
   }

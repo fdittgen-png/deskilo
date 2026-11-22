@@ -82,6 +82,17 @@ Future<void> _recordCount(WidgetTester tester, String observed) async {
   await _settle(tester);
 }
 
+StockCountDraft _draft(String observed, String request) => (
+  countId: 'c-1',
+  itemId: 'demo-item-beans',
+  locationId: 'demo-place-main',
+  observed: observed,
+  requestId: request,
+  variantId: null,
+  lotId: null,
+  reason: '',
+);
+
 void main() {
   for (final (name, size) in [('phone', const Size(390, 844)), ('desk', const Size(1440, 900))]) {
     group('on a $name', () {
@@ -166,9 +177,9 @@ void main() {
 
   test('a count of another content under its identity is refused', () async {
     final w = _World();
-    await w.reversals.recordCount('ws-1', 'c-1', itemId: 'demo-item-beans', locationId: 'demo-place-main', observed: '10', requestId: 'r-1');
+    await w.reversals.recordCount('ws-1', _draft('10', 'r-1'));
     await expectLater(
-      w.reversals.recordCount('ws-1', 'c-1', itemId: 'demo-item-beans', locationId: 'demo-place-main', observed: '9', requestId: 'r-2'),
+      w.reversals.recordCount('ws-1', _draft('9', 'r-2')),
       throwsA(isA<Object>()),
     );
     expect((await w.reversals.counts('ws-1')).single.state, StockCountState.recorded);

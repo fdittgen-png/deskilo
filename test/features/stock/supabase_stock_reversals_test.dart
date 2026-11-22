@@ -125,7 +125,7 @@ void main() {
 
   test('a count and a decision carry their request id and identity', () async {
     final h = _with((r) => _json(200, {'state': 'recorded'}));
-    await h.port.recordCount(_ws, 'c-1', itemId: 'i-1', locationId: 'p-1', observed: '8', requestId: 'req-2', lotId: 'lot-1');
+    await h.port.recordCount(_ws, (countId: 'c-1', itemId: 'i-1', locationId: 'p-1', observed: '8', requestId: 'req-2', variantId: null, lotId: 'lot-1', reason: ''));
     await h.port.decideCount(_ws, 'c-1', StockCountDecision.apply, 'req-3', note: 'ok');
     expect(h.sent, hasLength(2));
     final record = _body(h.sent.first);

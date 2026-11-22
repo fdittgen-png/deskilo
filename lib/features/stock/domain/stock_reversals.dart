@@ -141,6 +141,18 @@ class StockCountRow {
 }
 
 /// The returns and corrections of stock, and its counts.
+/// What a count says: its identity, the scope counted, what was seen.
+typedef StockCountDraft = ({
+  String countId,
+  String itemId,
+  String locationId,
+  String observed,
+  String requestId,
+  String? variantId,
+  String? lotId,
+  String reason,
+});
+
 abstract interface class StockReversals {
   /// What each movement allows to be reversed.
   Future<Map<String, StockReversible>> reversible(String workspaceId, List<String> movementIds);
@@ -159,17 +171,7 @@ abstract interface class StockReversals {
 
   /// Records a count of [itemId] at [locationId] (and its variant and lot);
   /// nothing moves.
-  Future<void> recordCount(
-    String workspaceId,
-    String countId, {
-    required String itemId,
-    required String locationId,
-    required String observed,
-    required String requestId,
-    String? variantId,
-    String? lotId,
-    String reason = '',
-  });
+  Future<void> recordCount(String workspaceId, StockCountDraft draft);
 
   /// Applies, rejects or cancels a count.
   Future<void> decideCount(
