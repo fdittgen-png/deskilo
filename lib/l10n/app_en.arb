@@ -16270,6 +16270,14 @@
   "@featureStandaloneInvoicingTitle": {
     "description": "#4165 feature switch: featureStandaloneInvoicingTitle"
   },
+  "featureStockCountsDesc": "Count an item at a place. The count waits for someone who may approve adjustments, and it is applied only if the stock has not moved since it was counted. Off: no count is recorded; the ledger is unaffected.",
+  "@featureStockCountsDesc": {
+    "description": "#4172 feature description"
+  },
+  "featureStockCountsTitle": "Stock counts",
+  "@featureStockCountsTitle": {
+    "description": "#4172 feature name"
+  },
   "featureStockLotsDesc": "Track goods by lot or by expiry date, with a shelf life. Off: no item is tracked by lot, and what was recorded is kept as it is.",
   "@featureStockLotsDesc": {
     "description": "#4169 what the lots and expiry feature does, and what off means"
@@ -37354,6 +37362,14 @@
   "refusalStockConfig": "This stock configuration is not valid: the field it names says why.",
   "@refusalStockConfig": {
     "description": "#4169 (0836) DKG11: a stock configuration that is not valid, the field and reason in the detail."
+  },
+  "refusalStockCountDecided": "This count was already decided and is final. Count again if the figure is still wrong.",
+  "@refusalStockCountDecided": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockCountStale": "The stock moved since it was counted, so the count is not applied. Count again.",
+  "@refusalStockCountStale": {
+    "description": "#4172 refusal"
   },
   "refusalStockHistory": "This item has stock movements, which are kept: it cannot be deleted, and its stock unit and tracking stay as they are. Deactivate it, or create a new item.",
   "@refusalStockHistory": {

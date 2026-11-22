@@ -68,4 +68,14 @@ const Map<WorkspaceFeature, FeatureManifestEntry> stockFeatureManifest = {
     requires: WorkspaceFeature.stockManagement,
     defaultOn: false,
   ),
+  // #4172 — a count of an item at a place, recorded by whoever manages the stock and applied
+  // by whoever approves adjustments, only while the stock has not moved since. Asked for,
+  // under the goods ledger. Off: no count is recorded; the ledger is unaffected.
+  WorkspaceFeature.stockCounts: FeatureManifestEntry(
+    feature: WorkspaceFeature.stockCounts,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.stockManagement,
+    defaultOn: false,
+  ),
 };

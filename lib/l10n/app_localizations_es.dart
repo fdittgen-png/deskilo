@@ -12463,6 +12463,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get featureStandaloneInvoicingTitle => 'Facturas independientes';
 
   @override
+  String get featureStockCountsDesc =>
+      'Cuente un artículo en un lugar. El recuento espera a alguien que pueda aprobar ajustes y solo se aplica si el stock no se ha movido desde entonces. Desactivado: no se registra ningún recuento; el registro no cambia.';
+
+  @override
+  String get featureStockCountsTitle => 'Recuentos de stock';
+
+  @override
   String get featureStockLotsDesc =>
       'Seguir las mercancías por lote o por fecha de caducidad, con una vida útil. Desactivado: ningún artículo se sigue por lote y lo registrado se conserva tal cual.';
 
@@ -28635,6 +28642,14 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get refusalStockConfig =>
       'Esta configuración de existencias no es válida: el campo indicado explica el motivo.';
+
+  @override
+  String get refusalStockCountDecided =>
+      'Este recuento ya está decidido y es definitivo. Cuente de nuevo si la cifra sigue siendo incorrecta.';
+
+  @override
+  String get refusalStockCountStale =>
+      'El stock se movió desde el recuento, por lo que no se aplica. Cuente de nuevo.';
 
   @override
   String get refusalStockHistory =>

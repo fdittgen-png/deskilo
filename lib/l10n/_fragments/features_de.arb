@@ -321,5 +321,13 @@
   "featureStockReturnsDesc": "Geben Sie Ware gegen den Verkauf oder die Lieferung zurück, aus der sie stammt, oder korrigieren Sie eine Bewegung. Jede Rückgabe oder Korrektur ist durch die Bewegung begrenzt, die sie rückgängig macht: dieselbe Ware wird nie zweimal zurückgegeben. Aus: keine Rückgabe und keine Korrektur wird angeboten; das Buch bleibt unberührt.",
   "@featureStockReturnsDesc": {
     "description": "#4172 feature description"
+  },
+  "featureStockCountsTitle": "Bestandszählungen",
+  "@featureStockCountsTitle": {
+    "description": "#4172 feature name"
+  },
+  "featureStockCountsDesc": "Zählen Sie einen Artikel an einem Ort. Die Zählung wartet auf jemanden, der Anpassungen genehmigen darf, und wird nur angewendet, wenn sich der Bestand seit der Zählung nicht bewegt hat. Aus: keine Zählung wird erfasst; das Buch bleibt unberührt.",
+  "@featureStockCountsDesc": {
+    "description": "#4172 feature description"
   }
 }

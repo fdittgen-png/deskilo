@@ -321,5 +321,13 @@
   "featureStockReturnsDesc": "Restituisca la merce rispetto alla vendita o alla consegna da cui proviene, oppure corregga un movimento. Ogni reso o correzione è limitato dal movimento che annulla: la stessa merce non viene mai restituita due volte. Disattivato: non viene offerto alcun reso né correzione; il registro non cambia.",
   "@featureStockReturnsDesc": {
     "description": "#4172 feature description"
+  },
+  "featureStockCountsTitle": "Conteggi di magazzino",
+  "@featureStockCountsTitle": {
+    "description": "#4172 feature name"
+  },
+  "featureStockCountsDesc": "Conti un articolo in un luogo. Il conteggio attende qualcuno che possa approvare le rettifiche e viene applicato solo se la giacenza non si è mossa da allora. Disattivato: nessun conteggio viene registrato; il registro non cambia.",
+  "@featureStockCountsDesc": {
+    "description": "#4172 feature description"
   }
 }

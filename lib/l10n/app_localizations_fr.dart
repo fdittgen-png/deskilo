@@ -12527,6 +12527,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get featureStandaloneInvoicingTitle => 'Factures ponctuelles';
 
   @override
+  String get featureStockCountsDesc =>
+      'Comptez un article à un endroit. Le comptage attend quelqu’un qui peut approuver les ajustements, et il n’est appliqué que si le stock n’a pas bougé depuis. Désactivé : aucun comptage n’est enregistré ; le registre n’est pas touché.';
+
+  @override
+  String get featureStockCountsTitle => 'Inventaires de stock';
+
+  @override
   String get featureStockLotsDesc =>
       'Suivre les marchandises par lot ou par date de péremption, avec une durée de conservation. Désactivé : aucun article n’est suivi par lot, et ce qui a été enregistré est conservé tel quel.';
 
@@ -28756,6 +28763,14 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get refusalStockConfig =>
       'Cette configuration de stock n’est pas valide : le champ nommé en donne la raison.';
+
+  @override
+  String get refusalStockCountDecided =>
+      'Ce comptage est déjà décidé et reste définitif. Comptez à nouveau si le chiffre est toujours faux.';
+
+  @override
+  String get refusalStockCountStale =>
+      'Le stock a bougé depuis le comptage : il n’est pas appliqué. Comptez à nouveau.';
 
   @override
   String get refusalStockHistory =>

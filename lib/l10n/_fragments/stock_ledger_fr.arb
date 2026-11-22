@@ -41,5 +41,13 @@
   "refusalStockReturnSource": "Un retour suit la vente ou la livraison dont il provient ; ce mouvement n’en est pas une, ou ne se corrige pas ici.",
   "@refusalStockReturnSource": {
     "description": "#4172 refusal"
+  },
+  "refusalStockCountDecided": "Ce comptage est déjà décidé et reste définitif. Comptez à nouveau si le chiffre est toujours faux.",
+  "@refusalStockCountDecided": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockCountStale": "Le stock a bougé depuis le comptage : il n’est pas appliqué. Comptez à nouveau.",
+  "@refusalStockCountStale": {
+    "description": "#4172 refusal"
   }
 }

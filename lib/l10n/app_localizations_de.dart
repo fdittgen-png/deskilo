@@ -12492,6 +12492,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get featureStandaloneInvoicingTitle => 'Einzelrechnungen';
 
   @override
+  String get featureStockCountsDesc =>
+      'Zählen Sie einen Artikel an einem Ort. Die Zählung wartet auf jemanden, der Anpassungen genehmigen darf, und wird nur angewendet, wenn sich der Bestand seit der Zählung nicht bewegt hat. Aus: keine Zählung wird erfasst; das Buch bleibt unberührt.';
+
+  @override
+  String get featureStockCountsTitle => 'Bestandszählungen';
+
+  @override
   String get featureStockLotsDesc =>
       'Waren nach Charge oder Verfallsdatum verfolgen, mit einer Haltbarkeit. Aus: kein Artikel wird nach Charge verfolgt, und Erfasstes bleibt unverändert.';
 
@@ -28718,6 +28725,14 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get refusalStockConfig =>
       'Diese Bestandskonfiguration ist ungültig: Das genannte Feld nennt den Grund.';
+
+  @override
+  String get refusalStockCountDecided =>
+      'Diese Zählung ist bereits entschieden und endgültig. Zählen Sie erneut, wenn die Zahl noch falsch ist.';
+
+  @override
+  String get refusalStockCountStale =>
+      'Der Bestand hat sich seit der Zählung bewegt, die Zählung wird nicht angewendet. Zählen Sie erneut.';
 
   @override
   String get refusalStockHistory =>

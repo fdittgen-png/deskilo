@@ -54,6 +54,8 @@ const _switches = <WorkspaceFeature>{
   WorkspaceFeature.stockReorder,
   // #4172 — returns and corrections are asked for on the stock screens, not in the setup guide.
   WorkspaceFeature.stockReturns,
+  // #4172 — counts are asked for on the stock screens, not in the setup guide.
+  WorkspaceFeature.stockCounts,
   // Booking and the plan read what is already set up.
   WorkspaceFeature.seriesBooking,
   WorkspaceFeature.seatDayTimeline,

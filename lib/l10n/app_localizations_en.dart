@@ -12381,6 +12381,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureStandaloneInvoicingTitle => 'Standalone invoices';
 
   @override
+  String get featureStockCountsDesc =>
+      'Count an item at a place. The count waits for someone who may approve adjustments, and it is applied only if the stock has not moved since it was counted. Off: no count is recorded; the ledger is unaffected.';
+
+  @override
+  String get featureStockCountsTitle => 'Stock counts';
+
+  @override
   String get featureStockLotsDesc =>
       'Track goods by lot or by expiry date, with a shelf life. Off: no item is tracked by lot, and what was recorded is kept as it is.';
 
@@ -28431,6 +28438,14 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get refusalStockConfig =>
       'This stock configuration is not valid: the field it names says why.';
+
+  @override
+  String get refusalStockCountDecided =>
+      'This count was already decided and is final. Count again if the figure is still wrong.';
+
+  @override
+  String get refusalStockCountStale =>
+      'The stock moved since it was counted, so the count is not applied. Count again.';
 
   @override
   String get refusalStockHistory =>

@@ -436,10 +436,8 @@ enum WorkspaceFeature {
 
   /// #4169 — lots and expiry on goods (feature_manifest_stock.dart).
   stockLots,
-
   /// #4171 — a delivery put away into stock once (feature_manifest_stock.dart).
   stockReceiving,
-
   /// #4170 — goods taken out for use or as a loss (feature_manifest_stock.dart).
   stockTakeOut,
   serviceFulfilment,
@@ -447,7 +445,9 @@ enum WorkspaceFeature {
   stockReorder,
 
   /// #4172 — returns and corrections of stock (feature_manifest_stock.dart).
-  stockReturns;
+  stockReturns,
+  /// #4172 — counts of stock, approved before they move it (feature_manifest_stock.dart).
+  stockCounts;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;

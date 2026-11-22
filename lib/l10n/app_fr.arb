@@ -7758,6 +7758,14 @@
   "@featureStandaloneInvoicingTitle": {
     "description": "#4165 feature switch: featureStandaloneInvoicingTitle"
   },
+  "featureStockCountsDesc": "Comptez un article à un endroit. Le comptage attend quelqu’un qui peut approuver les ajustements, et il n’est appliqué que si le stock n’a pas bougé depuis. Désactivé : aucun comptage n’est enregistré ; le registre n’est pas touché.",
+  "@featureStockCountsDesc": {
+    "description": "#4172 feature description"
+  },
+  "featureStockCountsTitle": "Inventaires de stock",
+  "@featureStockCountsTitle": {
+    "description": "#4172 feature name"
+  },
   "featureStockLotsDesc": "Suivre les marchandises par lot ou par date de péremption, avec une durée de conservation. Désactivé : aucun article n’est suivi par lot, et ce qui a été enregistré est conservé tel quel.",
   "@featureStockLotsDesc": {
     "description": "#4169 what the lots and expiry feature does, and what off means"
@@ -16457,6 +16465,14 @@
   },
   "refusalSession": "Votre session a expiré. Reconnectez-vous, puis réessayez.",
   "refusalStockConfig": "Cette configuration de stock n’est pas valide : le champ nommé en donne la raison.",
+  "refusalStockCountDecided": "Ce comptage est déjà décidé et reste définitif. Comptez à nouveau si le chiffre est toujours faux.",
+  "@refusalStockCountDecided": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockCountStale": "Le stock a bougé depuis le comptage : il n’est pas appliqué. Comptez à nouveau.",
+  "@refusalStockCountStale": {
+    "description": "#4172 refusal"
+  },
   "refusalStockHistory": "Cet article a des mouvements de stock, qui sont conservés : il ne peut pas être supprimé, et son unité de stock et son suivi restent tels quels. Désactivez-le, ou créez un nouvel article.",
   "refusalStockItem": "Ce n'est pas un article que cette entreprise garde en stock. Rien n'a été déplacé.",
   "refusalStockLedgerKept": "Le stock de cette entreprise est tenu par son registre : utilisez une opération de stock (transfert, sortie, réception), pas le compteur. Rien n’a été modifié.",

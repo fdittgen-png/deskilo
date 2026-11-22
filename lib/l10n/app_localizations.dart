@@ -20152,6 +20152,18 @@ abstract class AppLocalizations {
   /// **'Standalone invoices'**
   String get featureStandaloneInvoicingTitle;
 
+  /// #4172 feature description
+  ///
+  /// In en, this message translates to:
+  /// **'Count an item at a place. The count waits for someone who may approve adjustments, and it is applied only if the stock has not moved since it was counted. Off: no count is recorded; the ledger is unaffected.'**
+  String get featureStockCountsDesc;
+
+  /// #4172 feature name
+  ///
+  /// In en, this message translates to:
+  /// **'Stock counts'**
+  String get featureStockCountsTitle;
+
   /// #4169 what the lots and expiry feature does, and what off means
   ///
   /// In en, this message translates to:
@@ -45632,6 +45644,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This stock configuration is not valid: the field it names says why.'**
   String get refusalStockConfig;
+
+  /// #4172 refusal
+  ///
+  /// In en, this message translates to:
+  /// **'This count was already decided and is final. Count again if the figure is still wrong.'**
+  String get refusalStockCountDecided;
+
+  /// #4172 refusal
+  ///
+  /// In en, this message translates to:
+  /// **'The stock moved since it was counted, so the count is not applied. Count again.'**
+  String get refusalStockCountStale;
 
   /// refusal DKG08 (#3824): deleting an item or a movement the ledger keeps
   ///

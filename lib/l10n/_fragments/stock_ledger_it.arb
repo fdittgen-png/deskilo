@@ -41,5 +41,13 @@
   "refusalStockReturnSource": "Un reso segue la vendita o la consegna da cui proviene; questo movimento non lo è, o non si corregge qui.",
   "@refusalStockReturnSource": {
     "description": "#4172 refusal"
+  },
+  "refusalStockCountDecided": "Questo conteggio è già stato deciso ed è definitivo. Conti di nuovo se la cifra è ancora sbagliata.",
+  "@refusalStockCountDecided": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockCountStale": "La giacenza si è mossa dopo il conteggio, quindi non viene applicato. Conti di nuovo.",
+  "@refusalStockCountStale": {
+    "description": "#4172 refusal"
   }
 }

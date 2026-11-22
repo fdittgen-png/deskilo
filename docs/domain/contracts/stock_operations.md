@@ -127,6 +127,22 @@ Behind `stockReturns` (under `stockManagement`, off by default). Made with `mana
 
 Evidence: `supabase/tests/database/504_stock_returns.sql` (a return of 3, repeated under a new request id; a changed quantity under the finalized identity; a line id of another return; a distinct return of the remaining 7; beyond the sale refused; a return that re-enters the original lot at its frozen cost; the wrong kind of source and a virtual place; a supplier return that lowers the on-hand once and is bounded by the receipt; a correction and a correction of a correction; the rights, an assistant, another business, the feature off; immutability) and `scripts/stock_transfer_race.sh` section F (two distinct returns of 6 of a sale of 10: the second waits and is refused, 6 returned once).
 
+## Stock counts
+
+Behind `stockCounts` (under `stockManagement`, off by default). Recorded with `manageStock`, decided with `approveStockAdjustments`; an assistant session does none of it.
+
+| question | answer |
+|---|---|
+| What is a count? | `stock_counts`: the scope (item, variant, lot, real place), the observed quantity, the ledger's quantity there when it was counted (`baseline_quantity`), how many movements had touched the scope (`baseline_moves`; the ledger is append-only, so only a growing number says it moved), the author and a reason. It has a stable `count_id` per business, apart from the transport request id |
+| What does recording do? | nothing moves. The same count sent again, under the same request id or a new one, answers what was recorded; other content under the same `count_id` is refused (DKG16). A scope names a variant where the item has variants (DKG12) and a lot where it is tracked by lot (DKG06) |
+| How is a count decided? | `apply`, `reject` or `cancel` (`stock_count_decide_v1`). Apply and reject need `approveStockAdjustments`; a count is cancelled by its author or by whoever may approve. A decided count is final (DKG19); the same decision sent again answers the same result and posts nothing more |
+| What does apply post? | exactly one adjustment movement of the difference, to or from the loss place, in the scope's lot and variant, and only if no movement has touched the scope since the count (otherwise DKG20: the stock moved, count again; nothing is overwritten, whoever approves). A difference of zero applies with no movement. Reject and cancel post nothing |
+| What about a one-person business? | whoever holds both rights records and applies the count themselves; the author and the approver are both kept |
+| Can the generic move make an adjustment? | only for whoever may approve adjustments: `stock_move_v1` with the reason `adjustment` needs `approveStockAdjustments` on top of `manageStock`. The shelf count of an item is already refused once the ledger exists (DKG13) |
+| What is read? | `stock_counts_v1`: each count with whether it is stale (recorded, and its scope has moved) |
+
+Evidence: `supabase/tests/database/505_stock_counts.sql` (a clerk records and applies nothing; the owner applies exactly the difference; the same decision again answers the same; a decided count is final; a stale count refused even for the same person, then a fresh one applied; reject, cancel and a zero difference move nothing; a variant and a lot are part of the scope; the generic adjustment needs the right to approve; rights, another business, an assistant, the feature off; immutability) and `scripts/stock_transfer_race.sh` section G (two applies of one count: one adjustment).
+
 ## States and transitions
 
 Declared states: `start`, `open`, `complete`.

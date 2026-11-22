@@ -209,6 +209,7 @@
         "stockReceiving": false,
         "stockReorder": false,
         "stockReturns": false,
+        "stockCounts": false,
         "stockTakeOut": false,
         "subscriptionInvoices": false,
         "supplyClassification": false,

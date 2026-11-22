@@ -41,5 +41,13 @@
   "refusalStockReturnSource": "Eine Rückgabe folgt dem Verkauf oder der Lieferung, aus der sie stammt; diese Bewegung ist keine, oder wird hier nicht korrigiert.",
   "@refusalStockReturnSource": {
     "description": "#4172 refusal"
+  },
+  "refusalStockCountDecided": "Diese Zählung ist bereits entschieden und endgültig. Zählen Sie erneut, wenn die Zahl noch falsch ist.",
+  "@refusalStockCountDecided": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockCountStale": "Der Bestand hat sich seit der Zählung bewegt, die Zählung wird nicht angewendet. Zählen Sie erneut.",
+  "@refusalStockCountStale": {
+    "description": "#4172 refusal"
   }
 }

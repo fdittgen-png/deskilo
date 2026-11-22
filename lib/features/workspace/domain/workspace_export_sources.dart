@@ -451,6 +451,8 @@ const List<ExportSource> workspaceExportSources = [
   // #4172 — the returns, and what each line reversed.
   ExportSource.everyColumn('stock_returns'),
   ExportSource.everyColumn('stock_reversals'),
+  // #4172 — the counts of stock and their decisions.
+  ExportSource.everyColumn('stock_counts'),
   // #4170 — the transfers between sites and what each loaded.
   ExportSource.everyColumn('stock_transfers'),
   ExportSource.everyColumn('stock_transfer_lines'),

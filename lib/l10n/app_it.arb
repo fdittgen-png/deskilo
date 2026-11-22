@@ -7758,6 +7758,14 @@
   "@featureStandaloneInvoicingTitle": {
     "description": "#4165 feature switch: featureStandaloneInvoicingTitle"
   },
+  "featureStockCountsDesc": "Conti un articolo in un luogo. Il conteggio attende qualcuno che possa approvare le rettifiche e viene applicato solo se la giacenza non si è mossa da allora. Disattivato: nessun conteggio viene registrato; il registro non cambia.",
+  "@featureStockCountsDesc": {
+    "description": "#4172 feature description"
+  },
+  "featureStockCountsTitle": "Conteggi di magazzino",
+  "@featureStockCountsTitle": {
+    "description": "#4172 feature name"
+  },
   "featureStockLotsDesc": "Seguire le merci per lotto o per data di scadenza, con una durata di conservazione. Disattivato: nessun articolo è seguito per lotto e ciò che è stato registrato resta invariato.",
   "@featureStockLotsDesc": {
     "description": "#4169 what the lots and expiry feature does, and what off means"
@@ -16457,6 +16465,14 @@
   },
   "refusalSession": "La sua sessione è scaduta. Acceda di nuovo, poi riprovi.",
   "refusalStockConfig": "Questa configurazione di magazzino non è valida: il campo indicato ne spiega il motivo.",
+  "refusalStockCountDecided": "Questo conteggio è già stato deciso ed è definitivo. Conti di nuovo se la cifra è ancora sbagliata.",
+  "@refusalStockCountDecided": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockCountStale": "La giacenza si è mossa dopo il conteggio, quindi non viene applicato. Conti di nuovo.",
+  "@refusalStockCountStale": {
+    "description": "#4172 refusal"
+  },
   "refusalStockHistory": "Questo articolo ha movimenti di magazzino, che vengono conservati: non può essere eliminato, e la sua unità di magazzino e la sua tracciabilità restano invariate. Disattivalo o crea un nuovo articolo.",
   "refusalStockItem": "Non è un articolo che questa attività tiene a magazzino. Non è stato spostato nulla.",
   "refusalStockLedgerKept": "La giacenza di questa attività è tenuta dal suo registro: usare un’operazione di magazzino (trasferimento, prelievo, ricezione), non il contatore. Nulla è stato modificato.",

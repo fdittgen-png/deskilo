@@ -277,6 +277,8 @@ const Map<SetupProcess, List<SetupLevel>> setupLevels = {
         WorkspaceFeature.stockReorder,
         // #4172 — bounded returns and corrections of stock movements.
         WorkspaceFeature.stockReturns,
+        // #4172 — counts of stock, approved before they move it.
+        WorkspaceFeature.stockCounts,
       },
     ),
   ],

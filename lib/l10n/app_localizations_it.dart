@@ -12474,6 +12474,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featureStandaloneInvoicingTitle => 'Fatture singole';
 
   @override
+  String get featureStockCountsDesc =>
+      'Conti un articolo in un luogo. Il conteggio attende qualcuno che possa approvare le rettifiche e viene applicato solo se la giacenza non si è mossa da allora. Disattivato: nessun conteggio viene registrato; il registro non cambia.';
+
+  @override
+  String get featureStockCountsTitle => 'Conteggi di magazzino';
+
+  @override
   String get featureStockLotsDesc =>
       'Seguire le merci per lotto o per data di scadenza, con una durata di conservazione. Disattivato: nessun articolo è seguito per lotto e ciò che è stato registrato resta invariato.';
 
@@ -28669,6 +28676,14 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get refusalStockConfig =>
       'Questa configurazione di magazzino non è valida: il campo indicato ne spiega il motivo.';
+
+  @override
+  String get refusalStockCountDecided =>
+      'Questo conteggio è già stato deciso ed è definitivo. Conti di nuovo se la cifra è ancora sbagliata.';
+
+  @override
+  String get refusalStockCountStale =>
+      'La giacenza si è mossa dopo il conteggio, quindi non viene applicato. Conti di nuovo.';
 
   @override
   String get refusalStockHistory =>

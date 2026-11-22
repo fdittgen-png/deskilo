@@ -126,6 +126,11 @@ enum KnownRefusal {
   stockReturnBeyond,
   stockReturnSource,
 
+  /// #4172 (0869) — DKG19: a count that was already decided; DKG20: the stock
+  /// moved since it was counted, so it is counted again.
+  stockCountDecided,
+  stockCountStale,
+
   /// #4008 (0782) — DKM01: a member who left comes back as a new member,
   /// never by changing their old row (for instance to paused).
   memberReturnsAsNew,
@@ -195,6 +200,8 @@ const Map<String, KnownRefusal> _codedRefusals = {
   'DKG16': KnownRefusal.stockReturnChanged,
   'DKG17': KnownRefusal.stockReturnBeyond,
   'DKG18': KnownRefusal.stockReturnSource,
+  'DKG19': KnownRefusal.stockCountDecided,
+  'DKG20': KnownRefusal.stockCountStale,
   // #4008 — a member who left (0782).
   'DKM01': KnownRefusal.memberReturnsAsNew,
 };
@@ -293,6 +300,8 @@ String? _stockRefusalText(AppLocalizations l10n, KnownRefusal refusal) =>
       KnownRefusal.stockReturnChanged => l10n.refusalStockReturnChanged,
       KnownRefusal.stockReturnBeyond => l10n.refusalStockReturnBeyond,
       KnownRefusal.stockReturnSource => l10n.refusalStockReturnSource,
+      KnownRefusal.stockCountDecided => l10n.refusalStockCountDecided,
+      KnownRefusal.stockCountStale => l10n.refusalStockCountStale,
       KnownRefusal.memberReturnsAsNew => l10n.refusalMemberReturnsAsNew,
       _ => null,
     };

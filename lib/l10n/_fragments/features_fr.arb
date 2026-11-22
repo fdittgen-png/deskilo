@@ -321,5 +321,13 @@
   "featureStockReturnsDesc": "Retournez des marchandises contre la vente ou la livraison dont elles viennent, ou corrigez un mouvement. Chaque retour ou correction est borné par le mouvement qu’il annule : les mêmes marchandises ne sont jamais retournées deux fois. Désactivé : aucun retour ni correction n’est proposé ; le registre n’est pas touché.",
   "@featureStockReturnsDesc": {
     "description": "#4172 feature description"
+  },
+  "featureStockCountsTitle": "Inventaires de stock",
+  "@featureStockCountsTitle": {
+    "description": "#4172 feature name"
+  },
+  "featureStockCountsDesc": "Comptez un article à un endroit. Le comptage attend quelqu’un qui peut approuver les ajustements, et il n’est appliqué que si le stock n’a pas bougé depuis. Désactivé : aucun comptage n’est enregistré ; le registre n’est pas touché.",
+  "@featureStockCountsDesc": {
+    "description": "#4172 feature description"
   }
 }

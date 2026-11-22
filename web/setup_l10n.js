@@ -1477,6 +1477,10 @@ window.SETUP_L10N={
    "stockReturns": [
     "Stock returns and corrections",
     "Return goods against the sale or the delivery they came from, or correct a movement. Each return or correction is bounded by the movement it reverses, so the same goods are never returned twice. Off: no return and no correction is offered; the ledger is unaffected."
+   ],
+   "stockCounts": [
+    "Stock counts",
+    "Count an item at a place. The count waits for someone who may approve adjustments, and it is applied only if the stock has not moved since it was counted. Off: no count is recorded; the ledger is unaffected."
    ]
   },
   "process": {
@@ -3350,6 +3354,10 @@ window.SETUP_L10N={
    "stockReturns": [
     "Retours et corrections de stock",
     "Retournez des marchandises contre la vente ou la livraison dont elles viennent, ou corrigez un mouvement. Chaque retour ou correction est borné par le mouvement qu’il annule : les mêmes marchandises ne sont jamais retournées deux fois. Désactivé : aucun retour ni correction n’est proposé ; le registre n’est pas touché."
+   ],
+   "stockCounts": [
+    "Inventaires de stock",
+    "Comptez un article à un endroit. Le comptage attend quelqu’un qui peut approuver les ajustements, et il n’est appliqué que si le stock n’a pas bougé depuis. Désactivé : aucun comptage n’est enregistré ; le registre n’est pas touché."
    ]
   },
   "process": {
@@ -5223,6 +5231,10 @@ window.SETUP_L10N={
    "stockReturns": [
     "Lagerrückgaben und Korrekturen",
     "Geben Sie Ware gegen den Verkauf oder die Lieferung zurück, aus der sie stammt, oder korrigieren Sie eine Bewegung. Jede Rückgabe oder Korrektur ist durch die Bewegung begrenzt, die sie rückgängig macht: dieselbe Ware wird nie zweimal zurückgegeben. Aus: keine Rückgabe und keine Korrektur wird angeboten; das Buch bleibt unberührt."
+   ],
+   "stockCounts": [
+    "Bestandszählungen",
+    "Zählen Sie einen Artikel an einem Ort. Die Zählung wartet auf jemanden, der Anpassungen genehmigen darf, und wird nur angewendet, wenn sich der Bestand seit der Zählung nicht bewegt hat. Aus: keine Zählung wird erfasst; das Buch bleibt unberührt."
    ]
   },
   "process": {
@@ -7096,6 +7108,10 @@ window.SETUP_L10N={
    "stockReturns": [
     "Devoluciones y correcciones de stock",
     "Devuelva mercancías contra la venta o la entrega de la que proceden, o corrija un movimiento. Cada devolución o corrección está limitada por el movimiento que revierte: las mismas mercancías nunca se devuelven dos veces. Desactivado: no se ofrece ninguna devolución ni corrección; el registro no cambia."
+   ],
+   "stockCounts": [
+    "Recuentos de stock",
+    "Cuente un artículo en un lugar. El recuento espera a alguien que pueda aprobar ajustes y solo se aplica si el stock no se ha movido desde entonces. Desactivado: no se registra ningún recuento; el registro no cambia."
    ]
   },
   "process": {
@@ -8969,6 +8985,10 @@ window.SETUP_L10N={
    "stockReturns": [
     "Resi e correzioni di magazzino",
     "Restituisca la merce rispetto alla vendita o alla consegna da cui proviene, oppure corregga un movimento. Ogni reso o correzione è limitato dal movimento che annulla: la stessa merce non viene mai restituita due volte. Disattivato: non viene offerto alcun reso né correzione; il registro non cambia."
+   ],
+   "stockCounts": [
+    "Conteggi di magazzino",
+    "Conti un articolo in un luogo. Il conteggio attende qualcuno che possa approvare le rettifiche e viene applicato solo se la giacenza non si è mossa da allora. Disattivato: nessun conteggio viene registrato; il registro non cambia."
    ]
   },
   "process": {

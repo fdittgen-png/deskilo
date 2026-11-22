@@ -321,5 +321,13 @@
   "featureStockReturnsDesc": "Devuelva mercancías contra la venta o la entrega de la que proceden, o corrija un movimiento. Cada devolución o corrección está limitada por el movimiento que revierte: las mismas mercancías nunca se devuelven dos veces. Desactivado: no se ofrece ninguna devolución ni corrección; el registro no cambia.",
   "@featureStockReturnsDesc": {
     "description": "#4172 feature description"
+  },
+  "featureStockCountsTitle": "Recuentos de stock",
+  "@featureStockCountsTitle": {
+    "description": "#4172 feature name"
+  },
+  "featureStockCountsDesc": "Cuente un artículo en un lugar. El recuento espera a alguien que pueda aprobar ajustes y solo se aplica si el stock no se ha movido desde entonces. Desactivado: no se registra ningún recuento; el registro no cambia.",
+  "@featureStockCountsDesc": {
+    "description": "#4172 feature description"
   }
 }

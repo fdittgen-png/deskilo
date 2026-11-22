@@ -7758,6 +7758,14 @@
   "@featureStandaloneInvoicingTitle": {
     "description": "#4165 feature switch: featureStandaloneInvoicingTitle"
   },
+  "featureStockCountsDesc": "Zählen Sie einen Artikel an einem Ort. Die Zählung wartet auf jemanden, der Anpassungen genehmigen darf, und wird nur angewendet, wenn sich der Bestand seit der Zählung nicht bewegt hat. Aus: keine Zählung wird erfasst; das Buch bleibt unberührt.",
+  "@featureStockCountsDesc": {
+    "description": "#4172 feature description"
+  },
+  "featureStockCountsTitle": "Bestandszählungen",
+  "@featureStockCountsTitle": {
+    "description": "#4172 feature name"
+  },
   "featureStockLotsDesc": "Waren nach Charge oder Verfallsdatum verfolgen, mit einer Haltbarkeit. Aus: kein Artikel wird nach Charge verfolgt, und Erfasstes bleibt unverändert.",
   "@featureStockLotsDesc": {
     "description": "#4169 what the lots and expiry feature does, and what off means"
@@ -16457,6 +16465,14 @@
   },
   "refusalSession": "Ihre Sitzung ist abgelaufen. Melden Sie sich erneut an und versuchen Sie es dann noch einmal.",
   "refusalStockConfig": "Diese Bestandskonfiguration ist ungültig: Das genannte Feld nennt den Grund.",
+  "refusalStockCountDecided": "Diese Zählung ist bereits entschieden und endgültig. Zählen Sie erneut, wenn die Zahl noch falsch ist.",
+  "@refusalStockCountDecided": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockCountStale": "Der Bestand hat sich seit der Zählung bewegt, die Zählung wird nicht angewendet. Zählen Sie erneut.",
+  "@refusalStockCountStale": {
+    "description": "#4172 refusal"
+  },
   "refusalStockHistory": "Dieser Artikel hat Lagerbewegungen, die erhalten bleiben: Er kann nicht gelöscht werden, und seine Lagereinheit und Nachverfolgung bleiben unverändert. Deaktivieren Sie ihn oder legen Sie einen neuen Artikel an.",
   "refusalStockItem": "Dies ist kein Artikel, den dieses Unternehmen auf Lager führt. Nichts wurde bewegt.",
   "refusalStockLedgerKept": "Der Bestand dieses Betriebs wird vom Lagerbuch geführt: nutzen Sie einen Lagervorgang (Umlagerung, Entnahme, Wareneingang), nicht den Zähler. Nichts wurde geändert.",

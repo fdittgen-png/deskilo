@@ -95,5 +95,13 @@
   "refusalStockReturnSource": "A return follows the sale or the delivery it comes from; this movement is not one, or is not corrected here.",
   "@refusalStockReturnSource": {
     "description": "#4172 refusal"
+  },
+  "refusalStockCountDecided": "This count was already decided and is final. Count again if the figure is still wrong.",
+  "@refusalStockCountDecided": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockCountStale": "The stock moved since it was counted, so the count is not applied. Count again.",
+  "@refusalStockCountStale": {
+    "description": "#4172 refusal"
   }
 }

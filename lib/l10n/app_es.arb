@@ -7758,6 +7758,14 @@
   "@featureStandaloneInvoicingTitle": {
     "description": "#4165 feature switch: featureStandaloneInvoicingTitle"
   },
+  "featureStockCountsDesc": "Cuente un artículo en un lugar. El recuento espera a alguien que pueda aprobar ajustes y solo se aplica si el stock no se ha movido desde entonces. Desactivado: no se registra ningún recuento; el registro no cambia.",
+  "@featureStockCountsDesc": {
+    "description": "#4172 feature description"
+  },
+  "featureStockCountsTitle": "Recuentos de stock",
+  "@featureStockCountsTitle": {
+    "description": "#4172 feature name"
+  },
   "featureStockLotsDesc": "Seguir las mercancías por lote o por fecha de caducidad, con una vida útil. Desactivado: ningún artículo se sigue por lote y lo registrado se conserva tal cual.",
   "@featureStockLotsDesc": {
     "description": "#4169 what the lots and expiry feature does, and what off means"
@@ -16457,6 +16465,14 @@
   },
   "refusalSession": "Su sesión ha terminado. Vuelva a iniciar sesión e inténtelo de nuevo.",
   "refusalStockConfig": "Esta configuración de existencias no es válida: el campo indicado explica el motivo.",
+  "refusalStockCountDecided": "Este recuento ya está decidido y es definitivo. Cuente de nuevo si la cifra sigue siendo incorrecta.",
+  "@refusalStockCountDecided": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockCountStale": "El stock se movió desde el recuento, por lo que no se aplica. Cuente de nuevo.",
+  "@refusalStockCountStale": {
+    "description": "#4172 refusal"
+  },
   "refusalStockHistory": "Este artículo tiene movimientos de existencias, que se conservan: no se puede eliminar, y su unidad de existencias y su seguimiento quedan como están. Desactívelo o cree un artículo nuevo.",
   "refusalStockItem": "No es un artículo que este negocio tenga en existencias. No se ha movido nada.",
   "refusalStockLedgerKept": "Las existencias de este negocio las lleva su libro: use una operación de existencias (traslado, salida, recepción), no el contador. No se cambió nada.",
