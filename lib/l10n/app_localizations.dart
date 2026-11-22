@@ -56714,11 +56714,29 @@ abstract class AppLocalizations {
   /// **'The use must be picking or reserve.'**
   String get stockReasonPickRoleUnknown;
 
+  /// #4294 reorder points: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'The item, variant and site of a reorder point cannot be changed: make another.'**
+  String get stockReasonPointFixed;
+
+  /// #4294 reorder points: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'This item already has a reorder point at this site.'**
+  String get stockReasonPointTwice;
+
   /// #4169 the stock editors: a text under a field the server refused
   ///
   /// In en, this message translates to:
   /// **'A price is zero or more.'**
   String get stockReasonPriceInvalid;
+
+  /// #4294 reorder points: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'Name a quantity to order or a level to order up to, not both.'**
+  String get stockReasonQuantityAndTarget;
 
   /// #4171 receiving into stock: a text under a field the server refused
   ///
@@ -56756,6 +56774,12 @@ abstract class AppLocalizations {
   /// **'Both places are in one site: move the goods in one step instead.'**
   String get stockReasonSameSite;
 
+  /// #4294 reorder points: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a site of this business.'**
+  String get stockReasonSiteUnknown;
+
   /// #4169 the stock editors: a text under a field the server refused
   ///
   /// In en, this message translates to:
@@ -56773,6 +56797,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This supplier is not one of this business.'**
   String get stockReasonSupplierForeign;
+
+  /// #4294 reorder points: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'The level to order up to must be above the reorder point.'**
+  String get stockReasonTargetBelowPoint;
 
   /// #4169 the stock editors: a text under a field the server refused
   ///
@@ -57037,6 +57067,102 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No supplier chosen'**
   String get stockReorderNoSupplierTitle;
+
+  /// #4294 reorder points: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'In use'**
+  String get stockReorderPointActive;
+
+  /// #4294 reorder points: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'Add a reorder point'**
+  String get stockReorderPointAdd;
+
+  /// #4294 reorder points: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'not in use'**
+  String get stockReorderPointInactive;
+
+  /// #4294 reorder points: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'Reorder point ({unit})'**
+  String stockReorderPointLevel(String unit);
+
+  /// #4294 reorder points: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'Order a quantity'**
+  String get stockReorderPointModeQuantity;
+
+  /// #4294 reorder points: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'Order up to'**
+  String get stockReorderPointModeTarget;
+
+  /// #4294 reorder points: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'{site} · reorder point {point} · {rule}'**
+  String stockReorderPointRow(String site, String point, String rule);
+
+  /// #4294 reorder points: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'Site'**
+  String get stockReorderPointSite;
+
+  /// #4294 reorder points: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'Reorder point'**
+  String get stockReorderPointTitle;
+
+  /// #4294 reorder points: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity (empty: only flag)'**
+  String get stockReorderPointValue;
+
+  /// #4294 reorder points: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'The item as a whole'**
+  String get stockReorderPointWhole;
+
+  /// #4294 reorder points: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'No reorder point is set: nothing is ever flagged as low.'**
+  String get stockReorderPointsEmpty;
+
+  /// #4294 reorder points: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'Reorder points'**
+  String get stockReorderPointsTitle;
+
+  /// #4294 reorder points: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'flag only'**
+  String get stockReorderRuleNone;
+
+  /// #4294 reorder points: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'order {quantity}'**
+  String stockReorderRuleQuantity(String quantity);
+
+  /// #4294 reorder points: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'order up to {quantity}'**
+  String stockReorderRuleTarget(String quantity);
 
   /// #4294 reorder: a label or a message
   ///

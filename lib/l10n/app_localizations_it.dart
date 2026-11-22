@@ -35609,7 +35609,19 @@ class AppLocalizationsIt extends AppLocalizations {
       'L\'uso deve essere prelievo o riserva.';
 
   @override
+  String get stockReasonPointFixed =>
+      'Articolo, variante e sede di un punto di riordino non si cambiano: ne crei un altro.';
+
+  @override
+  String get stockReasonPointTwice =>
+      'Questo articolo ha già un punto di riordino in questa sede.';
+
+  @override
   String get stockReasonPriceInvalid => 'Un prezzo è zero o più.';
+
+  @override
+  String get stockReasonQuantityAndTarget =>
+      'Indichi una quantità da ordinare o un livello fino a cui ordinare, non entrambi.';
 
   @override
   String get stockReasonQuantityInvalid =>
@@ -35636,6 +35648,9 @@ class AppLocalizationsIt extends AppLocalizations {
       'I due luoghi sono nella stessa sede: spostare invece la merce in un solo passaggio.';
 
   @override
+  String get stockReasonSiteUnknown => 'Scelga una sede di questa azienda.';
+
+  @override
   String get stockReasonStockOnHand => 'C’è giacenza: prima scaricarla.';
 
   @override
@@ -35645,6 +35660,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get stockReasonSupplierForeign =>
       'Questo fornitore non appartiene a questa attività.';
+
+  @override
+  String get stockReasonTargetBelowPoint =>
+      'Il livello fino a cui ordinare deve essere sopra il punto di riordino.';
 
   @override
   String get stockReasonTooLong => 'Questo testo è troppo lungo.';
@@ -35814,6 +35833,63 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get stockReorderNoSupplierTitle => 'Nessun fornitore scelto';
+
+  @override
+  String get stockReorderPointActive => 'In uso';
+
+  @override
+  String get stockReorderPointAdd => 'Aggiungi un punto di riordino';
+
+  @override
+  String get stockReorderPointInactive => 'non in uso';
+
+  @override
+  String stockReorderPointLevel(String unit) {
+    return 'Punto di riordino ($unit)';
+  }
+
+  @override
+  String get stockReorderPointModeQuantity => 'Ordinare una quantità';
+
+  @override
+  String get stockReorderPointModeTarget => 'Ordinare fino a';
+
+  @override
+  String stockReorderPointRow(String site, String point, String rule) {
+    return '$site · punto di riordino $point · $rule';
+  }
+
+  @override
+  String get stockReorderPointSite => 'Sede';
+
+  @override
+  String get stockReorderPointTitle => 'Punto di riordino';
+
+  @override
+  String get stockReorderPointValue => 'Quantità (vuoto: solo segnalare)';
+
+  @override
+  String get stockReorderPointWhole => 'L’articolo nel suo insieme';
+
+  @override
+  String get stockReorderPointsEmpty =>
+      'Nessun punto di riordino è impostato: nulla viene mai segnalato come basso.';
+
+  @override
+  String get stockReorderPointsTitle => 'Punti di riordino';
+
+  @override
+  String get stockReorderRuleNone => 'solo segnalare';
+
+  @override
+  String stockReorderRuleQuantity(String quantity) {
+    return 'ordinare $quantity';
+  }
+
+  @override
+  String stockReorderRuleTarget(String quantity) {
+    return 'ordinare fino a $quantity';
+  }
 
   @override
   String get stockReorderTitle => 'Riordino';

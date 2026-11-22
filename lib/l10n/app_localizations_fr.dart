@@ -35725,7 +35725,19 @@ class AppLocalizationsFr extends AppLocalizations {
       'L\'usage doit être prélèvement ou réserve.';
 
   @override
+  String get stockReasonPointFixed =>
+      'L’article, la variante et le site d’un seuil ne se changent pas : créez-en un autre.';
+
+  @override
+  String get stockReasonPointTwice =>
+      'Cet article a déjà un seuil sur ce site.';
+
+  @override
   String get stockReasonPriceInvalid => 'Un prix est nul ou positif.';
+
+  @override
+  String get stockReasonQuantityAndTarget =>
+      'Indiquez une quantité à commander ou un niveau à atteindre, pas les deux.';
 
   @override
   String get stockReasonQuantityInvalid =>
@@ -35752,6 +35764,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les deux emplacements sont dans un même site : déplacez plutôt les marchandises en une seule étape.';
 
   @override
+  String get stockReasonSiteUnknown =>
+      'Choisissez un site de cette entreprise.';
+
+  @override
   String get stockReasonStockOnHand => 'Il y a du stock : sortez-le d’abord.';
 
   @override
@@ -35761,6 +35777,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get stockReasonSupplierForeign =>
       'Ce fournisseur n’est pas un fournisseur de cette entreprise.';
+
+  @override
+  String get stockReasonTargetBelowPoint =>
+      'Le niveau à atteindre doit être au-dessus du seuil.';
 
   @override
   String get stockReasonTooLong => 'Ce texte est trop long.';
@@ -35930,6 +35950,63 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get stockReorderNoSupplierTitle => 'Aucun fournisseur choisi';
+
+  @override
+  String get stockReorderPointActive => 'Utilisé';
+
+  @override
+  String get stockReorderPointAdd => 'Ajouter un seuil';
+
+  @override
+  String get stockReorderPointInactive => 'inutilisé';
+
+  @override
+  String stockReorderPointLevel(String unit) {
+    return 'Seuil ($unit)';
+  }
+
+  @override
+  String get stockReorderPointModeQuantity => 'Commander une quantité';
+
+  @override
+  String get stockReorderPointModeTarget => 'Commander jusqu’à';
+
+  @override
+  String stockReorderPointRow(String site, String point, String rule) {
+    return '$site · seuil $point · $rule';
+  }
+
+  @override
+  String get stockReorderPointSite => 'Site';
+
+  @override
+  String get stockReorderPointTitle => 'Seuil de réapprovisionnement';
+
+  @override
+  String get stockReorderPointValue => 'Quantité (vide : signaler seulement)';
+
+  @override
+  String get stockReorderPointWhole => 'L’article dans son ensemble';
+
+  @override
+  String get stockReorderPointsEmpty =>
+      'Aucun seuil n’est défini : rien n’est jamais signalé comme bas.';
+
+  @override
+  String get stockReorderPointsTitle => 'Seuils de réapprovisionnement';
+
+  @override
+  String get stockReorderRuleNone => 'signaler seulement';
+
+  @override
+  String stockReorderRuleQuantity(String quantity) {
+    return 'commander $quantity';
+  }
+
+  @override
+  String stockReorderRuleTarget(String quantity) {
+    return 'commander jusqu’à $quantity';
+  }
 
   @override
   String get stockReorderTitle => 'Réapprovisionnement';

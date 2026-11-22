@@ -21,9 +21,11 @@ import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../workspace/domain/workspace_permission.dart';
 import '../../workspace/providers/workspace_providers.dart';
+import '../domain/stock_config.dart' show StockPlaceConfig, stockAddress;
 import '../domain/stock_reorder.dart';
 import '../providers/stock_providers.dart';
 import 'stock_config_text.dart';
+import 'stock_reorder_point_sheet.dart';
 
 class StockReorderScreen extends ConsumerWidget {
   const StockReorderScreen({super.key});
@@ -67,6 +69,10 @@ class StockReorderScreen extends ConsumerWidget {
                     Text(l10n.stockReorderToOrderTitle, style: Theme.of(context).textTheme.titleMedium),
                     const SizedBox(height: AppSpacing.sm),
                     _ToOrder(workspaceId: workspaceId),
+                    const SizedBox(height: AppSpacing.lg),
+                    Text(l10n.stockReorderPointsTitle, style: Theme.of(context).textTheme.titleMedium),
+                    const SizedBox(height: AppSpacing.sm),
+                    _PointsList(workspaceId: workspaceId),
                   ],
                 ),
               ),
@@ -182,6 +188,100 @@ class _ToOrder extends ConsumerWidget {
                     ],
                   ],
                 ),
+        );
+  }
+}
+
+/// The reorder points: each opens its sheet for whoever may manage the stock; a point is added from
+/// the button. A list that could not be read says so, never "no point is set".
+class _PointsList extends ConsumerWidget {
+  const _PointsList({required this.workspaceId});
+
+  final String workspaceId;
+
+  Future<void> _edit(BuildContext context, WidgetRef ref, StockReorderPoint? point) async {
+    try {
+      final items = await ref.read(stockItemsProvider(workspaceId).future);
+      final places = await ref.read(stockPlaceConfigsProvider(workspaceId).future);
+      if (!context.mounted) return;
+      final saved = await showStockReorderPointSheet(
+        context,
+        ref.read(stockReorderProvider),
+        ref.read(stockConfigCommandsProvider),
+        workspaceId: workspaceId,
+        choices: (items: [for (final i in items) i], places: places, separator: ref.read(stockAddressSeparatorProvider)),
+        point: point,
+      );
+      if (saved) {
+        ref
+          ..invalidate(stockReorderPointsProvider(workspaceId))
+          ..invalidate(stockLowProvider(workspaceId))
+          ..invalidate(stockReplenishmentProvider(workspaceId));
+      }
+    } on Object catch (e, st) {
+      TraceLogger.instance.warn('stock', 'the reorder point sheet could not read what it needs: $e', stackTrace: st);
+      if (context.mounted) AppSnack.error(context, context.l10n.stockReadFailed);
+    }
+  }
+
+  String _rule(AppLocalizations l10n, StockReorderPoint p, String unit) {
+    if (p.targetQuantity != null) return l10n.stockReorderRuleTarget(l10n.stockQuantityWithUnit(p.targetQuantity!.text, unit));
+    if (p.reorderQuantity != null) return l10n.stockReorderRuleQuantity(l10n.stockQuantityWithUnit(p.reorderQuantity!.text, unit));
+    return l10n.stockReorderRuleNone;
+  }
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
+    final mayManage = ref.watch(myPermissionsProvider).contains(WorkspacePermission.manageStock);
+    final items = ref.watch(stockItemsProvider(workspaceId)).value ?? const []; // empty-ok: a name falls back to its id
+    final places = ref.watch(stockPlaceConfigsProvider(workspaceId)).value ?? const <StockPlaceConfig>[]; // empty-ok: a site falls back to its id
+    final separator = ref.watch(stockAddressSeparatorProvider);
+    return ref
+        .watch(stockReorderPointsProvider(workspaceId))
+        .when(
+          loading: () => const LoadingView(),
+          error: (_, _) => _ReadFailed(
+            keyName: 'stock-reorder-points',
+            onRetry: () => ref.invalidate(stockReorderPointsProvider(workspaceId)),
+          ),
+          data: (points) => Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (points.isEmpty)
+                Text(l10n.stockReorderPointsEmpty, key: const ValueKey('stock-reorder-points-empty'))
+              else
+                for (final p in points)
+                  () {
+                    final item = items.where((i) => i.id == p.itemId).firstOrNull;
+                    final site = places.where((s) => s.id == p.siteId).firstOrNull;
+                    final unit = item?.unit ?? '';
+                    return ListTile(
+                      key: ValueKey('stock-point-${p.id}'),
+                      contentPadding: EdgeInsets.zero,
+                      title: Text(item?.name ?? p.itemId),
+                      subtitle: Text(
+                        [
+                          l10n.stockReorderPointRow(
+                            site == null ? p.siteId : stockAddress(site, separator),
+                            l10n.stockQuantityWithUnit(p.reorderPoint.text, unit),
+                            _rule(l10n, p, unit),
+                          ),
+                          if (!p.active) l10n.stockReorderPointInactive,
+                        ].join(' · '),
+                      ),
+                      onTap: mayManage ? () => _edit(context, ref, p) : null,
+                    );
+                  }(),
+              if (mayManage)
+                TextButton.icon(
+                  key: const ValueKey('stock-point-add'),
+                  icon: const Icon(Icons.add),
+                  label: Text(l10n.stockReorderPointAdd),
+                  onPressed: () => _edit(context, ref, null),
+                ),
+            ],
+          ),
         );
   }
 }

@@ -2937,6 +2937,8 @@ Abra **Existencias → Reposición** (la función *Puntos de reposición* debe e
 
 **Crear borrador de pedido** crea un borrador de pedido de compra a partir de un grupo. Es solo un borrador: nada se pide, valora ni envía hasta que lo confirme en los pedidos de compra. Requiere el derecho de gestionar compras; pedir dos veces el mismo borrador lo crea una sola vez.
 
+Los **puntos de reposición** (bajo las dos listas) hacen que un artículo esté bajo. Cada uno muestra el artículo, la sede, el nivel y qué pedir entonces: una cantidad, *hasta* un nivel, o nada (solo avisa). Quien puede gestionar las existencias añade uno con **Añadir un punto de reposición** o abre uno para cambiarlo. El nivel y la cantidad son números exactos (la coma decimal vale); un nivel hasta el que pedir debe estar por encima del punto, un punto indica una cantidad o un nivel, no ambos, y un artículo tiene un punto por sede (y variante). El artículo, la variante y la sede de un punto no se cambian después: cree otro. Un punto desactivado se conserva y no avisa de nada.
+
 ### El registro de artículos
 
 **Público:** Administrador/a · Propietario

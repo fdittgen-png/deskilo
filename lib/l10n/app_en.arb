@@ -45882,9 +45882,21 @@
   "@stockReasonPickRoleUnknown": {
     "description": "#4293 the places of the stock: a label, a message or a setting"
   },
+  "stockReasonPointFixed": "The item, variant and site of a reorder point cannot be changed: make another.",
+  "@stockReasonPointFixed": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReasonPointTwice": "This item already has a reorder point at this site.",
+  "@stockReasonPointTwice": {
+    "description": "#4294 reorder points: a label or a message"
+  },
   "stockReasonPriceInvalid": "A price is zero or more.",
   "@stockReasonPriceInvalid": {
     "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonQuantityAndTarget": "Name a quantity to order or a level to order up to, not both.",
+  "@stockReasonQuantityAndTarget": {
+    "description": "#4294 reorder points: a label or a message"
   },
   "stockReasonQuantityInvalid": "A quantity is a number above zero with at most six decimals.",
   "@stockReasonQuantityInvalid": {
@@ -45910,6 +45922,10 @@
   "@stockReasonSameSite": {
     "description": "#4170 transfers and take-out: a label or message"
   },
+  "stockReasonSiteUnknown": "Choose a site of this business.",
+  "@stockReasonSiteUnknown": {
+    "description": "#4294 reorder points: a label or a message"
+  },
   "stockReasonStockOnHand": "There is stock on hand: take it out first.",
   "@stockReasonStockOnHand": {
     "description": "#4169 the stock editors: a text under a field the server refused"
@@ -45921,6 +45937,10 @@
   "stockReasonSupplierForeign": "This supplier is not one of this business.",
   "@stockReasonSupplierForeign": {
     "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonTargetBelowPoint": "The level to order up to must be above the reorder point.",
+  "@stockReasonTargetBelowPoint": {
+    "description": "#4294 reorder points: a label or a message"
   },
   "stockReasonTooLong": "This text is too long.",
   "@stockReasonTooLong": {
@@ -46157,6 +46177,96 @@
   "stockReorderNoSupplierTitle": "No supplier chosen",
   "@stockReorderNoSupplierTitle": {
     "description": "#4294 reorder: a label or a message"
+  },
+  "stockReorderPointActive": "In use",
+  "@stockReorderPointActive": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReorderPointAdd": "Add a reorder point",
+  "@stockReorderPointAdd": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReorderPointInactive": "not in use",
+  "@stockReorderPointInactive": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReorderPointLevel": "Reorder point ({unit})",
+  "@stockReorderPointLevel": {
+    "description": "#4294 reorder points: a label or a message",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "stockReorderPointModeQuantity": "Order a quantity",
+  "@stockReorderPointModeQuantity": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReorderPointModeTarget": "Order up to",
+  "@stockReorderPointModeTarget": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReorderPointRow": "{site} · reorder point {point} · {rule}",
+  "@stockReorderPointRow": {
+    "description": "#4294 reorder points: a label or a message",
+    "placeholders": {
+      "site": {
+        "type": "String"
+      },
+      "point": {
+        "type": "String"
+      },
+      "rule": {
+        "type": "String"
+      }
+    }
+  },
+  "stockReorderPointSite": "Site",
+  "@stockReorderPointSite": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReorderPointTitle": "Reorder point",
+  "@stockReorderPointTitle": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReorderPointValue": "Quantity (empty: only flag)",
+  "@stockReorderPointValue": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReorderPointWhole": "The item as a whole",
+  "@stockReorderPointWhole": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReorderPointsEmpty": "No reorder point is set: nothing is ever flagged as low.",
+  "@stockReorderPointsEmpty": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReorderPointsTitle": "Reorder points",
+  "@stockReorderPointsTitle": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReorderRuleNone": "flag only",
+  "@stockReorderRuleNone": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReorderRuleQuantity": "order {quantity}",
+  "@stockReorderRuleQuantity": {
+    "description": "#4294 reorder points: a label or a message",
+    "placeholders": {
+      "quantity": {
+        "type": "String"
+      }
+    }
+  },
+  "stockReorderRuleTarget": "order up to {quantity}",
+  "@stockReorderRuleTarget": {
+    "description": "#4294 reorder points: a label or a message",
+    "placeholders": {
+      "quantity": {
+        "type": "String"
+      }
+    }
   },
   "stockReorderTitle": "Reorder",
   "@stockReorderTitle": {
