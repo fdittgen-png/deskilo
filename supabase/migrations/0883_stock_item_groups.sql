@@ -69,7 +69,7 @@ create table public.item_groups (
   quick_key_colour text check (quick_key_colour ~ '^#[0-9a-fA-F]{6}$'),
   min_age int check (min_age between 1 and 120),
   sold_by_weight boolean,
-  weight_price_basis text check (weight_price_basis in ('kg', '100g')),
+  weight_basis text check (weight_basis in ('kg', '100g')),
   deposit_item_id uuid,
   deposit_minor bigint check (deposit_minor >= 0),
   label_template text check (char_length(btrim(label_template)) between 1 and 60),
@@ -119,7 +119,7 @@ alter table public.services
   add column if not exists quick_key_colour text check (quick_key_colour ~ '^#[0-9a-fA-F]{6}$'),
   add column if not exists min_age int check (min_age between 1 and 120),
   add column if not exists sold_by_weight boolean,
-  add column if not exists weight_price_basis text check (weight_price_basis in ('kg', '100g')),
+  add column if not exists weight_basis text check (weight_basis in ('kg', '100g')),
   add column if not exists deposit_item_id uuid,
   add column if not exists deposit_minor bigint check (deposit_minor >= 0),
   add column if not exists label_template text check (char_length(btrim(label_template)) between 1 and 60);
@@ -329,7 +329,7 @@ returns text language sql immutable set search_path = public as $fn$
   select case
     when p_param in ('tracking', 'shelf_life_days', 'inventory_unit', 'vat_rate_id', 'supply_class') then 'stored'
     when p_param in ('tag_mode', 'count_every_days', 'till_category', 'quick_key_colour', 'min_age', 'sold_by_weight',
-                     'weight_price_basis', 'deposit_item_id', 'deposit_minor', 'label_template') then 'item'
+                     'weight_basis', 'deposit_item_id', 'deposit_minor', 'label_template') then 'item'
     when p_param in ('default_purchase_unit', 'default_purchase_factor_num', 'default_purchase_factor_den',
                      'price_rounding', 'target_margin_bps', 'reorder_point_default', 'reorder_quantity_default',
                      'home_zone_id') then 'proposal'
@@ -341,7 +341,7 @@ create or replace function public.item_group_params()
 returns text[] language sql immutable set search_path = public as $fn$
   select array['tracking', 'shelf_life_days', 'inventory_unit', 'vat_rate_id', 'supply_class',
                'tag_mode', 'count_every_days', 'till_category', 'quick_key_colour', 'min_age', 'sold_by_weight',
-               'weight_price_basis', 'deposit_item_id', 'deposit_minor', 'label_template',
+               'weight_basis', 'deposit_item_id', 'deposit_minor', 'label_template',
                'default_purchase_unit', 'default_purchase_factor_num', 'default_purchase_factor_den',
                'price_rounding', 'target_margin_bps', 'reorder_point_default', 'reorder_quantity_default',
                'home_zone_id'];
@@ -817,13 +817,13 @@ begin
       insert into public.item_groups (id, workspace_id, parent_id, name, revision, tracking, shelf_life_days, tag_mode,
         inventory_unit, default_purchase_unit, default_purchase_factor_num, default_purchase_factor_den, vat_rate_id,
         supply_class, price_rounding, target_margin_bps, reorder_point_default, reorder_quantity_default, home_zone_id,
-        count_every_days, till_category, quick_key_colour, min_age, sold_by_weight, weight_price_basis,
+        count_every_days, till_category, quick_key_colour, min_age, sold_by_weight, weight_basis,
         deposit_item_id, deposit_minor, label_template)
       values (v_new.id, v_new.workspace_id, v_new.parent_id, btrim(v_new.name), 1, v_new.tracking, v_new.shelf_life_days, v_new.tag_mode,
         v_new.inventory_unit, v_new.default_purchase_unit, v_new.default_purchase_factor_num, v_new.default_purchase_factor_den,
         v_new.vat_rate_id, v_new.supply_class, v_new.price_rounding, v_new.target_margin_bps, v_new.reorder_point_default,
         v_new.reorder_quantity_default, v_new.home_zone_id, v_new.count_every_days, v_new.till_category,
-        v_new.quick_key_colour, v_new.min_age, v_new.sold_by_weight, v_new.weight_price_basis, v_new.deposit_item_id,
+        v_new.quick_key_colour, v_new.min_age, v_new.sold_by_weight, v_new.weight_basis, v_new.deposit_item_id,
         v_new.deposit_minor, v_new.label_template);
       v_new.revision := 1;
     else
@@ -835,7 +835,7 @@ begin
         target_margin_bps = v_new.target_margin_bps, reorder_point_default = v_new.reorder_point_default,
         reorder_quantity_default = v_new.reorder_quantity_default, home_zone_id = v_new.home_zone_id,
         count_every_days = v_new.count_every_days, till_category = v_new.till_category, quick_key_colour = v_new.quick_key_colour,
-        min_age = v_new.min_age, sold_by_weight = v_new.sold_by_weight, weight_price_basis = v_new.weight_price_basis,
+        min_age = v_new.min_age, sold_by_weight = v_new.sold_by_weight, weight_basis = v_new.weight_basis,
         deposit_item_id = v_new.deposit_item_id, deposit_minor = v_new.deposit_minor, label_template = v_new.label_template
        where id = v_new.id;
     end if;

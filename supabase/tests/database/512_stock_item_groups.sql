@@ -90,7 +90,7 @@ select is(pg_temp.f(pg_temp.sv(1, 910, 501, 0,
   format('{"name": "Dairy", "parameters": {"tracking": "expiry", "shelf_life_days": 7, "vat_rate_id": "%s", "count_every_days": 14}}', pg_temp.u(401))), 'revision'),
   '1', 'a group is created with its parameters');
 select is(pg_temp.f(pg_temp.sv(1, 911, 502, 0,
-  format('{"name": "Cheese", "parent_id": "%s", "parameters": {"sold_by_weight": true, "weight_price_basis": "kg"}}', pg_temp.u(501))), 'created'),
+  format('{"name": "Cheese", "parent_id": "%s", "parameters": {"sold_by_weight": true, "weight_basis": "kg"}}', pg_temp.u(501))), 'created'),
   'true', 'a sub-group is created under it');
 select is(pg_temp.sv(1, 912, 503, 0, format('{"name": "Hard", "parent_id": "%s"}', pg_temp.u(502))), 'ERR DKG11',
   'a sub-group cannot have sub-groups');
