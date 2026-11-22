@@ -79,5 +79,9 @@ class DemoStockQueries implements StockQueries {
 
   @override
   Future<List<StockItem>> items(String workspaceId) async =>
-      _mine(workspaceId) ? DemoStockLedger.items : const [];
+      _mine(workspaceId) ? _ledger.itemList : const [];
+
+  @override
+  Future<List<StockItem>> unstocked(String workspaceId) async =>
+      _mine(workspaceId) ? await _ledger.candidates?.unstocked() ?? const [] : const [];
 }

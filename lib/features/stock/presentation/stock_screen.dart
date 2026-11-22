@@ -20,6 +20,7 @@ import '../application/stock_walk.dart';
 import '../domain/stock_page.dart';
 import '../providers/stock_providers.dart';
 import 'stock_day.dart';
+import 'stock_first_run.dart';
 import 'stock_place_text.dart';
 
 class StockScreen extends ConsumerWidget {
@@ -175,6 +176,7 @@ class _OnHandList extends ConsumerWidget {
     return _Walk<StockOnHandRow>(
       walk: walk,
       emptyText: view.filtered ? l10n.stockEmptyFiltered : l10n.stockEmpty,
+      empty: view.filtered ? null : StockFirstRun(workspaceId: workspaceId),
       onRetry: () => ref.read(provider.notifier).loadMore(first: walk.rows.isEmpty),
       onMore: () => ref.read(provider.notifier).loadMore(),
       tile: (row) => ListTile(
@@ -235,12 +237,16 @@ class _Walk<T> extends StatelessWidget {
     required this.walk,
     required this.emptyText,
     required this.tile,
+    this.empty,
     required this.onRetry,
     required this.onMore,
   });
 
   final StockWalkState<T> walk;
   final String emptyText;
+
+  /// #4350 -- what an empty list shows instead of [emptyText] (the first-run page).
+  final Widget? empty;
   final Widget Function(T row) tile;
   final VoidCallback onRetry;
   final VoidCallback onMore;
@@ -264,10 +270,7 @@ class _Walk<T> extends StatelessWidget {
       );
     }
     if (walk.rows.isEmpty && walk.complete) {
-      return Center(
-        key: const ValueKey('stock-empty'),
-        child: Text(emptyText),
-      );
+      return empty ?? Center(key: const ValueKey('stock-empty'), child: Text(emptyText));
     }
     return ListView(
       children: [

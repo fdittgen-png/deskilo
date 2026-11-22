@@ -12516,10 +12516,11 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get featureStockManagementDesc =>
-      'Seguir las mercancías: dónde están, en qué unidad, de qué lote, y cada movimiento entre dos lugares. Desactivado: un artículo del catálogo conserva su simple recuento en estantería.';
+      'Lleve las mercancías que vende o almacena: qué artículos, en qué ubicaciones, las entregas que recibe, los movimientos entre ubicaciones y las salidas. Activarlo añade un menú Existencias con sus páginas; las demás funciones (lotes, recepción, salida, puntos de reposición) son interruptores debajo. Desactivado: un artículo del catálogo conserva su único recuento de estantería.';
 
   @override
-  String get featureStockManagementTitle => 'Gestión de existencias';
+  String get featureStockManagementTitle =>
+      'Existencias: artículos, ubicaciones, entregas, movimientos';
 
   @override
   String get featureStockReceivingDesc =>
@@ -35224,6 +35225,23 @@ class AppLocalizationsEs extends AppLocalizations {
   String get stockEnteredLabel => 'Introducido';
 
   @override
+  String get stockFirstRunBody =>
+      'Empiece por una ubicación donde se guarda la mercancía, luego los artículos que mantiene. Después, reciba una entrega o mueva mercancía.';
+
+  @override
+  String get stockFirstRunItem => 'Añadir su primer artículo';
+
+  @override
+  String get stockFirstRunNext =>
+      'Después reciba una entrega de un pedido, o mueva mercancía desde Movimientos.';
+
+  @override
+  String get stockFirstRunPlace => 'Añadir su primera ubicación';
+
+  @override
+  String get stockFirstRunTitle => 'Sus existencias están vacías';
+
+  @override
   String get stockGoodsMore => 'Mostrar más';
 
   @override
@@ -35242,8 +35260,57 @@ class AppLocalizationsEs extends AppLocalizations {
   String get stockGoodsUnavailable => 'No se le muestran las mercancías.';
 
   @override
+  String get stockItemAddButton => 'Añadir un artículo';
+
+  @override
+  String get stockItemAddIntro =>
+      'O mantenga en existencias un servicio que ya tiene: elija uno y sus ajustes de existencias se abren con el ajuste ya activado.';
+
+  @override
+  String get stockItemAddNone =>
+      'Todos los servicios ya se mantienen en existencias, o todavía no hay ninguno. Añada primero un servicio y vuelva.';
+
+  @override
+  String get stockItemAddOpenServices => 'Abrir servicios';
+
+  @override
+  String get stockItemAddTitle => 'Añadir un artículo';
+
+  @override
+  String get stockItemNewBarcode => 'Código de barras (opcional)';
+
+  @override
+  String get stockItemNewHome => 'Ubicación habitual (opcional)';
+
+  @override
+  String get stockItemNewName => 'Nombre';
+
+  @override
+  String get stockItemNewNameRequired => 'Dé un nombre al artículo.';
+
+  @override
+  String get stockItemNewNoHome => 'Ninguna todavía';
+
+  @override
+  String get stockItemNewOption => 'Crear un artículo nuevo';
+
+  @override
+  String stockItemNewPrice(String currency) {
+    return 'Precio ($currency)';
+  }
+
+  @override
+  String get stockItemNewPriceInvalid => 'Introduzca un precio o déjelo vacío.';
+
+  @override
+  String get stockItemNewTitle => 'Nuevo artículo';
+
+  @override
+  String get stockItemNewUnit => 'Contado en';
+
+  @override
   String get stockItemsEmpty =>
-      'Todavía no hay artículos. Un artículo aparece cuando un servicio o un artículo de proveedor se mantiene en existencias.';
+      'Todavía no hay artículos. Un artículo es un servicio que mantiene en existencias: elija Añadir un artículo.';
 
   @override
   String get stockItemsIntro =>

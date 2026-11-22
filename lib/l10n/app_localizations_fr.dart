@@ -12580,10 +12580,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get featureStockManagementDesc =>
-      'Suivre les marchandises : où elles sont, dans quelle unité, de quel lot, et chaque mouvement d\'un endroit à un autre. Désactivé : un article du catalogue garde son simple compte en rayon.';
+      'Tenez les marchandises que vous vendez ou stockez : quels articles, dans quels emplacements, les livraisons que vous recevez, les mouvements entre emplacements et les sorties. L’activer ajoute un menu Stock avec ses pages ; les autres fonctions de stock (lots, réception, sortie, seuils de réapprovisionnement) sont des interrupteurs en dessous. Désactivé : un article du catalogue garde son seul compte de rayon.';
 
   @override
-  String get featureStockManagementTitle => 'Gestion des stocks';
+  String get featureStockManagementTitle =>
+      'Stock : articles, emplacements, livraisons, mouvements';
 
   @override
   String get featureStockReceivingDesc =>
@@ -35378,6 +35379,23 @@ class AppLocalizationsFr extends AppLocalizations {
   String get stockEnteredLabel => 'Saisi';
 
   @override
+  String get stockFirstRunBody =>
+      'Commencez par un emplacement où se trouvent les marchandises, puis les articles que vous tenez. Ensuite, recevez une livraison ou déplacez des marchandises.';
+
+  @override
+  String get stockFirstRunItem => 'Ajouter votre premier article';
+
+  @override
+  String get stockFirstRunNext =>
+      'Recevez ensuite une livraison d’une commande, ou déplacez des marchandises depuis Mouvements.';
+
+  @override
+  String get stockFirstRunPlace => 'Ajouter votre premier emplacement';
+
+  @override
+  String get stockFirstRunTitle => 'Votre stock est vide';
+
+  @override
   String get stockGoodsMore => 'Afficher plus';
 
   @override
@@ -35397,8 +35415,57 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les marchandises ne vous sont pas montrées.';
 
   @override
+  String get stockItemAddButton => 'Ajouter un article';
+
+  @override
+  String get stockItemAddIntro =>
+      'Ou tenez en stock un service que vous avez déjà : choisissez-en un et ses réglages de stock s’ouvrent avec le réglage déjà activé.';
+
+  @override
+  String get stockItemAddNone =>
+      'Tous les services sont déjà tenus en stock, ou il n’y en a pas encore. Ajoutez d’abord un service, puis revenez.';
+
+  @override
+  String get stockItemAddOpenServices => 'Ouvrir les services';
+
+  @override
+  String get stockItemAddTitle => 'Ajouter un article';
+
+  @override
+  String get stockItemNewBarcode => 'Code-barres (facultatif)';
+
+  @override
+  String get stockItemNewHome => 'Emplacement d’origine (facultatif)';
+
+  @override
+  String get stockItemNewName => 'Nom';
+
+  @override
+  String get stockItemNewNameRequired => 'Donnez un nom à l’article.';
+
+  @override
+  String get stockItemNewNoHome => 'Aucun pour l’instant';
+
+  @override
+  String get stockItemNewOption => 'Créer un nouvel article';
+
+  @override
+  String stockItemNewPrice(String currency) {
+    return 'Prix ($currency)';
+  }
+
+  @override
+  String get stockItemNewPriceInvalid => 'Saisissez un prix, ou laissez vide.';
+
+  @override
+  String get stockItemNewTitle => 'Nouvel article';
+
+  @override
+  String get stockItemNewUnit => 'Compté en';
+
+  @override
   String get stockItemsEmpty =>
-      'Aucun article pour l\'instant. Un article apparaît lorsqu\'un service ou un article fournisseur est tenu en stock.';
+      'Aucun article pour l’instant. Un article est un service que vous tenez en stock : choisissez Ajouter un article.';
 
   @override
   String get stockItemsIntro =>

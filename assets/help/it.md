@@ -7579,6 +7579,30 @@ Poi aggiunga solo ciò che la riguarda:
 
 **Vedi anche:** [Denaro e fatturazione](help:setup.money.overview) · [Partire da un modello o da zero](help:setup.before.template)
 
+### Vendere o immagazzinare merce
+
+**Destinatari:** Proprietario
+
+Vende merce o tiene un magazzino e vuole sapere dove trovare articoli, posizioni, consegne e spostamenti. Tutto inizia con un interruttore, poi alcuni altri, in quest’ordine.
+
+| # | Faccia questo | Dove si trova dopo |
+|---|---|---|
+| 1 | Attivi **Magazzino: articoli, posizioni, consegne, spostamenti** (sotto **Servizi**). | Compare un menu **Magazzino**: Magazzino, Movimenti, Trasferimenti, Articoli, Posizioni, Impostazioni del magazzino. |
+| 2 | Aggiunga la sua prima posizione: **Magazzino → Posizioni → Aggiungi una posizione** (per esempio il magazzino principale, poi gli scaffali al suo interno). | **Magazzino → Posizioni** |
+| 3 | Aggiunga il suo primo articolo: **Magazzino → Articoli → Aggiungi un articolo**. Un articolo è un servizio che tiene in magazzino: lo scelga e le sue impostazioni di magazzino si aprono con l’impostazione già attiva (unità, unità di confezione, codici). Aggiunga prima il servizio in **Servizi** se non esiste. | **Magazzino → Articoli** |
+| 4 | Attivi **Acquisti** e **Ordinare ai fornitori** per ordinare merce, poi **Ricezione a magazzino** per sistemare una consegna dal suo ordine. | **Acquisti e fornitori → Ordini**, poi **Registra la consegna** |
+| 5 | Attivi **Uscita di merce** per ciò che esce (venduto, usato, perso), **Lotti e scadenza** per merce con lotti o data di scadenza e **Punti di riordino** per sapere che cosa è basso. | **Magazzino → Movimenti** (uscita), **Magazzino → Riordino** |
+
+Poi riceva una consegna, sposti merce su uno scaffale e ne faccia uscire una: la pagina Magazzino mostra subito ogni operazione.
+
+**Da sapere**
+
+- Un’azienda che ha attivato il magazzino ma non ha ancora né posizione né articolo vede **Aggiungi la sua prima posizione** e **Aggiungi il suo primo articolo** nella pagina Magazzino.
+- Disattivare una funzione non cancella nulla: ciò che è stato registrato resta e si può rileggere.
+- Provi prima nella demo, dove il negozio tiene già un magazzino. Veda [Disattivare non cancella nulla](help:setup.features.off).
+
+**Vedi anche:** [L’ordine in cui attivare le funzioni](help:setup.features.order) · [Funzioni che ne richiedono altre](help:setup.features.dependencies)
+
 ### L’ordine in cui attivare le cose
 
 **Destinatari:** Proprietario · Comproprietario

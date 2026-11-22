@@ -1,7 +1,7 @@
 {
   "@@locale": "it",
-  "featureStockManagementTitle": "Gestione delle scorte",
-  "featureStockManagementDesc": "Seguire la merce: dove si trova, in quale unità, da quale lotto, e ogni movimento tra due luoghi. Disattivato: un articolo del catalogo mantiene il suo semplice conteggio a scaffale.",
+  "featureStockManagementTitle": "Magazzino: articoli, posizioni, consegne, movimenti",
+  "featureStockManagementDesc": "Tenga la merce che vende o immagazzina: quali articoli, in quali posizioni, le consegne che riceve, gli spostamenti tra posizioni e le uscite. Attivarlo aggiunge un menu Magazzino con le sue pagine; le altre funzioni (lotti, ricezione, uscita, punti di riordino) sono interruttori sotto di esso. Disattivato: un articolo del catalogo mantiene il suo unico conteggio a scaffale.",
   "permViewStock": "Vedere le scorte",
   "permManageStock": "Movimentare la merce in entrata e in uscita",
   "permApproveStockAdjustments": "Approvare le rettifiche di magazzino",

@@ -16344,11 +16344,11 @@
   "@featureStockLotsTitle": {
     "description": "#4169 the name of the lots and expiry feature"
   },
-  "featureStockManagementDesc": "Keep track of goods: where they are, in which unit, from which lot, and every movement between two places. Off: a catalogue item keeps its single shelf count.",
+  "featureStockManagementDesc": "Keep the goods you sell or store: which items, in which places, the deliveries you receive, the moves between places and the stock you take out. Switching it on adds a Stock menu with its pages; the other stock functions (lots, receiving, take-out, reorder points) are switches under it. Off: a catalogue item keeps its single shelf count.",
   "@featureStockManagementDesc": {
     "description": "the feature's description on the Features screen (#3824)"
   },
-  "featureStockManagementTitle": "Stock management",
+  "featureStockManagementTitle": "Stock: items, places, deliveries, moves",
   "@featureStockManagementTitle": {
     "description": "the feature's name (#3824)"
   },
@@ -45439,6 +45439,26 @@
   "@stockEnteredLabel": {
     "description": "#4161 the quantity and unit as entered"
   },
+  "stockFirstRunBody": "Start with a place where goods are kept, then the items you keep. After that, receive a delivery or move goods in.",
+  "@stockFirstRunBody": {
+    "description": "#4350 adding an item, and the first-run stock page"
+  },
+  "stockFirstRunItem": "Add your first item",
+  "@stockFirstRunItem": {
+    "description": "#4350 adding an item, and the first-run stock page"
+  },
+  "stockFirstRunNext": "Then receive a delivery from a purchase order, or move goods in from Movements.",
+  "@stockFirstRunNext": {
+    "description": "#4350 adding an item, and the first-run stock page"
+  },
+  "stockFirstRunPlace": "Add your first place",
+  "@stockFirstRunPlace": {
+    "description": "#4350 adding an item, and the first-run stock page"
+  },
+  "stockFirstRunTitle": "Your stock is empty",
+  "@stockFirstRunTitle": {
+    "description": "#4350 adding an item, and the first-run stock page"
+  },
   "stockGoodsMore": "Show more",
   "@stockGoodsMore": {
     "description": "#4173 the goods put away against a document"
@@ -45470,7 +45490,72 @@
   "@stockGoodsUnavailable": {
     "description": "#4173 the goods put away against a document"
   },
-  "stockItemsEmpty": "No items yet. Items are added when a service or a supplier article is kept in stock.",
+  "stockItemAddButton": "Add an item",
+  "@stockItemAddButton": {
+    "description": "#4350 adding an item, and the first-run stock page"
+  },
+  "stockItemAddIntro": "Or keep a service you already have in stock: choose one and its stock settings open with the setting already on.",
+  "@stockItemAddIntro": {
+    "description": "#4350 adding an item, and the first-run stock page"
+  },
+  "stockItemAddNone": "Every service is already kept in stock, or there is none yet. Add a service first, then come back.",
+  "@stockItemAddNone": {
+    "description": "#4350 adding an item, and the first-run stock page"
+  },
+  "stockItemAddOpenServices": "Open services",
+  "@stockItemAddOpenServices": {
+    "description": "#4350 adding an item, and the first-run stock page"
+  },
+  "stockItemAddTitle": "Add an item",
+  "@stockItemAddTitle": {
+    "description": "#4350 adding an item, and the first-run stock page"
+  },
+  "stockItemNewBarcode": "Barcode (optional)",
+  "@stockItemNewBarcode": {
+    "description": "#4350 a new item from the Stock page"
+  },
+  "stockItemNewHome": "Home place (optional)",
+  "@stockItemNewHome": {
+    "description": "#4350 a new item from the Stock page"
+  },
+  "stockItemNewName": "Name",
+  "@stockItemNewName": {
+    "description": "#4350 a new item from the Stock page"
+  },
+  "stockItemNewNameRequired": "Name the item.",
+  "@stockItemNewNameRequired": {
+    "description": "#4350 a new item from the Stock page"
+  },
+  "stockItemNewNoHome": "None yet",
+  "@stockItemNewNoHome": {
+    "description": "#4350 a new item from the Stock page"
+  },
+  "stockItemNewOption": "Create a new item",
+  "@stockItemNewOption": {
+    "description": "#4350 a new item from the Stock page"
+  },
+  "stockItemNewPrice": "Price ({currency})",
+  "@stockItemNewPrice": {
+    "description": "#4350 a new item from the Stock page",
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "stockItemNewPriceInvalid": "Enter a price, or leave it empty.",
+  "@stockItemNewPriceInvalid": {
+    "description": "#4350 a new item from the Stock page"
+  },
+  "stockItemNewTitle": "New item",
+  "@stockItemNewTitle": {
+    "description": "#4350 a new item from the Stock page"
+  },
+  "stockItemNewUnit": "Counted in",
+  "@stockItemNewUnit": {
+    "description": "#4350 a new item from the Stock page"
+  },
+  "stockItemsEmpty": "No items yet. An item is a service you keep in stock: choose Add an item.",
   "@stockItemsEmpty": {
     "description": "the stock pages and group (#4299)"
   },

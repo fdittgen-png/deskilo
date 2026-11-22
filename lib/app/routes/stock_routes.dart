@@ -46,12 +46,12 @@ List<RouteBase> stockRoutes(RouteEnv env) {
         GoRoute(
           path: 'items',
           redirect: env.guard(access),
-          builder: (context, state) => const StockItemsScreen(),
+          builder: (context, state) => StockItemsScreen(addFirst: state.uri.queryParameters['add'] == '1'),
         ),
         GoRoute(
           path: 'places',
           redirect: env.guard(access),
-          builder: (context, state) => const StockPlacesScreen(),
+          builder: (context, state) => StockPlacesScreen(addFirst: state.uri.queryParameters['add'] == '1'),
         ),
         GoRoute(
           path: 'settings',

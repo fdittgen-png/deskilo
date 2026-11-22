@@ -1,0 +1,22 @@
+{
+  "stockItemAddButton": "Aggiungi un articolo",
+  "stockItemAddTitle": "Aggiungi un articolo",
+  "stockItemAddIntro": "Oppure tenga in magazzino un servizio che ha già: ne scelga uno e le sue impostazioni di magazzino si aprono con l’impostazione già attiva.",
+  "stockItemAddNone": "Tutti i servizi sono già tenuti in magazzino, oppure non ce n’è ancora nessuno. Aggiunga prima un servizio, poi torni.",
+  "stockItemAddOpenServices": "Apri servizi",
+  "stockFirstRunTitle": "Il suo magazzino è vuoto",
+  "stockFirstRunBody": "Cominci da una posizione dove si tiene la merce, poi dagli articoli che tiene. Dopo, riceva una consegna o sposti merce.",
+  "stockFirstRunPlace": "Aggiungi la sua prima posizione",
+  "stockFirstRunItem": "Aggiungi il suo primo articolo",
+  "stockFirstRunNext": "Poi riceva una consegna da un ordine, o sposti merce da Movimenti.",
+  "stockItemNewTitle": "Nuovo articolo",
+  "stockItemNewOption": "Crea un nuovo articolo",
+  "stockItemNewName": "Nome",
+  "stockItemNewPrice": "Prezzo ({currency})",
+  "stockItemNewUnit": "Contato in",
+  "stockItemNewBarcode": "Codice a barre (facoltativo)",
+  "stockItemNewHome": "Posizione abituale (facoltativa)",
+  "stockItemNewNoHome": "Nessuna per ora",
+  "stockItemNewNameRequired": "Dia un nome all’articolo.",
+  "stockItemNewPriceInvalid": "Inserisca un prezzo o lasci vuoto."
+}

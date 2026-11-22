@@ -2,7 +2,7 @@
   "@@locale": "en",
   "stockItemsTitle": "Items",
   "stockItemsIntro": "The items the business keeps and sells: each one's settings, variants and supplier articles.",
-  "stockItemsEmpty": "No items yet. Items are added when a service or a supplier article is kept in stock.",
+  "stockItemsEmpty": "No items yet. An item is a service you keep in stock: choose Add an item.",
   "stockSettingsTitle": "Stock settings",
   "stockSettingsFeatures": "Stock features",
   "stockSettingsValues": "Stock rules",

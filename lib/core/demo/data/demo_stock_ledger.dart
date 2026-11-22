@@ -16,6 +16,7 @@ import 'package:deskilo/features/stock/domain/stock_operations.dart';
 import 'package:deskilo/features/stock/domain/stock_page.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
+import 'demo_stock_candidates.dart';
 import 'demo_stock_config_commands.dart';
 
 const _beans = StockItem(id: 'demo-item-beans', name: 'Coffee beans', unit: 'kg');
@@ -102,7 +103,7 @@ class DemoStockPost {
 
 /// The in-memory goods ledger of the reference business.
 class DemoStockLedger {
-  DemoStockLedger(this.workspaceId, this._config, [DateTime Function()? now]) : _now = now ?? (() => _anchor) {
+  DemoStockLedger(this.workspaceId, this._config, [DateTime Function()? now, this.candidates]) : _now = now ?? (() => _anchor) {
     for (final s in _stories.reversed) {
       _book(
         DemoStockPost(
@@ -152,6 +153,12 @@ class DemoStockLedger {
 
   static const items = [_beans, _milk, _mugs, _syrup, _shirt];
 
+  /// #4350 -- the services turned into items in this session.
+  final DemoStockCandidates? candidates;
+
+  /// The shop's items and the ones its owner has started keeping since.
+  List<StockItem> get itemList => [...items, ...?candidates?.added];
+
   final Map<String, ExactQuantity> _balances = {};
   final Map<String, ({StockItem item, String place, String? lotId, String? lotCode})> _keys = {};
   final List<StockMovementRow> _movements = [];
@@ -169,7 +176,7 @@ class DemoStockLedger {
   /// The movements, newest first.
   List<StockMovementRow> get movements => List.unmodifiable(_movements);
 
-  StockItem? itemOf(String id) => items.where((i) => i.id == id).firstOrNull;
+  StockItem? itemOf(String id) => itemList.where((i) => i.id == id).firstOrNull;
 
   /// What an item holds at one place (and lot), exactly.
   ExactQuantity balance(String itemId, String place, {String? lotId}) =>
