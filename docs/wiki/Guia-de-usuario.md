@@ -3060,6 +3060,20 @@ Cada ubicación tiene una **dirección**, escrita con los códigos de sus superi
 - Una ubicación bajo una sede es **picking** (zona de venta) o **reserva** (excedente); es una indicación, nunca una cantidad.
 - El carácter entre los niveles es el ajuste de la empresa **Separador en la dirección de una ubicación** (guion, punto, barra o dos puntos); solo cambia cómo se escribe la dirección. Se fija en **Ajustes de existencias**.
 
+<!-- anchor: user.money.stock.registry -->
+### El registro de artículos
+
+**Público:** Administrador/a · Propietario
+
+Quiere una sola lista que diga, de cada artículo y variante, qué es, cuánto cuesta y se vende, dónde va y cuánto hay.
+
+Abra **Existencias → Artículos**. Cada línea muestra el **código de barras**, la **unidad**, el **precio** (el precio de venta del catálogo), el **último coste conocido**, la **ubicación habitual** y lo que hay **disponible**. El coste aparece solo si su rol puede ver las finanzas o gestionar las compras; si no, la línea dice *coste no mostrado*. Un coste que ninguna entrega ha dado aún sigue como *coste desconocido*, nunca cero.
+
+- **Ubicación habitual**: toque el icono de ubicación de una línea para decir dónde va el artículo: su pasillo, estante o cajón. Una variante sin ubicación propia tiene la de su artículo. Es una indicación para colocar, contar y preparar: el stock puede estar en otro sitio, y cambiarla no mueve nada ni reescribe ningún historial.
+- **Filtre** por una ubicación para ver lo que tiene allí y en las ubicaciones de debajo, o active *Solo artículos sin ubicación habitual* para ver lo que aún la necesita.
+- **Busque** por nombre, código de barras o dirección. Escribir o escanear un código de barras en la búsqueda y confirmar abre ese artículo.
+- Las listas largas se cargan por páginas: elija *Mostrar más*.
+
 <!-- anchor: user.money.amounts -->
 ### Cómo se muestran los importes
 

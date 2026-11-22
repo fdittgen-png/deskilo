@@ -21061,6 +21061,7 @@
   "@stockReasonGtinLength": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonHomeInvalid": "Elija una ubicación de esta empresa en uso que no sea de proveedor, cliente, pérdida ni tránsito.",
   "stockReasonItemForeign": "Este artículo no es de este negocio.",
   "@stockReasonItemForeign": {
     "description": "#4169 the stock editors: a text under a field the server refused"
@@ -21269,6 +21270,22 @@
   "@stockReasonWrongSite": {
     "description": "#4170 transfers and take-out: a label or message"
   },
+  "stockRegistryAllPlaces": "Todas las ubicaciones",
+  "stockRegistryCost": "coste {amount}",
+  "stockRegistryCostHidden": "coste no mostrado",
+  "stockRegistryCostUnknown": "coste desconocido",
+  "stockRegistryHome": "ubicación {address}",
+  "stockRegistryHomeHelp": "Dónde va este artículo, para que la recepción, el recuento y la preparación sepan adónde ir. Es una indicación: el stock puede estar en otro sitio y cambiarla no mueve nada.",
+  "stockRegistryHomeNone": "Sin ubicación habitual",
+  "stockRegistryHomePlace": "Ubicación habitual",
+  "stockRegistryHomeTitle": "Ubicación habitual de {item}",
+  "stockRegistryMore": "Mostrar más",
+  "stockRegistryNoHome": "sin ubicación habitual",
+  "stockRegistryNoHomeFilter": "Solo artículos sin ubicación habitual",
+  "stockRegistryOnHand": "{quantity} disponibles",
+  "stockRegistryPlaceFilter": "Ubicación habitual",
+  "stockRegistryPrice": "precio {amount}",
+  "stockRegistrySearch": "Buscar un artículo por nombre, código de barras o dirección",
   "stockSettingsElsewhere": "Los ajustes de existencias se mantienen en la página Ajustes de existencias.",
   "@stockSettingsElsewhere": {
     "description": "the stock pages and group (#4299)"
