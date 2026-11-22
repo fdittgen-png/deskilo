@@ -118,7 +118,7 @@ Future<(_Kinds, FakeWorkspaceRepository)> _open(
     overrides: [
       ...standardTestOverrides(workspace: workspace),
       businessKindRepositoryProvider.overrideWithValue(kinds),
-      if (settings != null) settingsRepositoryProvider.overrideWithValue(settings),
+      settingsRepositoryProvider.overrideWithValue(settings ?? FakeSettingsRepository(const [])),
       businessProfileProvider.overrideWith(
         (ref) async => const BusinessProfile(kind: 'coworking'),
       ),
@@ -258,6 +258,8 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('Bakery').last);
     await tester.pumpAndSettle();
+    // the stock asks for consent: the owner ticks it, and it is written
+    await _tap(tester, 'business-kind-consent-stockManagement');
     await _tap(tester, 'business-kind-save');
     expect(kinds.writes.single.$1, 'shop');
     expect(workspace.flagWrites.last['stockManagement'], isTrue, reason: 'the shop proposes the stock');

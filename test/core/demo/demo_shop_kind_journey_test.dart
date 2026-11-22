@@ -48,6 +48,10 @@ void main() {
       await _tap(tester, find.byKey(const ValueKey('business-kind-shop-type')));
       await tester.tap(find.text(_en.shopTypeBakery).last);
       await _frames(tester);
+      // the stock asks for consent: the owner reads it among the proposals and ticks it
+      final consent = find.byKey(const ValueKey('business-kind-consent-stockManagement'));
+      await tester.scrollUntilVisible(consent, 200, scrollable: find.byType(Scrollable).last);
+      await _tap(tester, consent);
       await _tap(tester, find.byKey(const ValueKey('business-kind-save')));
 
       final workspace = journey.root.read(currentWorkspaceProvider).value;

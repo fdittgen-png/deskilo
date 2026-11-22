@@ -445,6 +445,8 @@ void main() {
       };
       expect(dest, {
         'businessKind': 'app',
+        // #4365 -- the type of shop is set in the app, with the kind.
+        'business': 'app',
         'name': 'app',
         'environment': 'app',
         'network': 'app',
