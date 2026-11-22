@@ -2,6 +2,8 @@
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
+import '../../../core/time/business_day.dart';
+
 /// One `invoice_matches` row as the app holds it. The same reading for the
 /// invoice list's matches and for the matches of the one fiscal source of an
 /// export (#2365), so the two can never disagree on what a row means.
@@ -25,18 +27,17 @@ InvoiceMatch invoiceMatchOf(JsonReader row) => InvoiceMatch(
 
 DateTime? _day(String? iso) => iso == null ? null : DateTime.parse(iso);
 
-/// One `invoice_match_payments` row (#2355): an instalment of [invoiceId],
-/// dated when it was matched.
+/// One `invoice_match_payments` row (#2355): an instalment of [invoiceId], dated on the CALENDAR of
+/// the business ([timezone], its IANA zone) the day it was matched - the tax point is a calendar
+/// date, so a payment of the first hours of a day east of UTC is that day's, whichever device reads
+/// it (#4322). When the zone is not known the UTC date is read, never the device's.
 ({String invoiceId, TaxPointPayment payment}) invoiceInstalmentOf(
-  JsonReader row,
-) => (
+  JsonReader row, {
+  String? timezone,
+}) => (
   invoiceId: row.string('invoice_id'),
   payment: TaxPointPayment(
-    // The tax point is a CALENDAR date (`isoDay` of this instant in the e-reporting): it needs the
-    // business's zone, which this row does not carry. Read as UTC it would date a payment of the
-    // first hours of a day, in a business east of UTC, to the day before; until the zone reaches
-    // here the reading stays the device's, as before (#4322, follow-up).
-    row.dateTime('matched_at').toLocal(),
+    businessDateOf(row.dateTime('matched_at'), timezone),
     row.integer('amount_cents'),
   ),
 );

@@ -3,6 +3,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../domain/accounting_source_queries.dart';
 import '../domain/accounting_source_snapshot.dart';
+import 'workspace_timezone_read.dart';
 
 /// #2365 — `accounting_source_snapshot_v1` behind the port.
 class SupabaseAccountingSourceQueries implements AccountingSourceQueries {
@@ -32,6 +33,7 @@ class SupabaseAccountingSourceQueries implements AccountingSourceQueries {
     }
     return AccountingSourceSnapshot.fromRpc(
       answer,
+      timezone: await workspaceTimezone(_client, workspaceId),
       workspaceId: workspaceId,
       from: from,
       to: to,

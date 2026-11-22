@@ -71,7 +71,6 @@ const _exempt = <String, String>{
 const _deviceDayFiles = <String, int>{
   'lib/features/money/domain/company_lookup.dart': 1,
   'lib/features/money/domain/einvoice_gateway.dart': 2,
-  'lib/features/money/domain/invoice_match_row.dart': 1,
   'lib/features/money/domain/vies_check.dart': 1,
   'lib/features/profile/domain/rights_request.dart': 1,
   'lib/features/reservations/domain/my_reservations_composition.dart': 2,

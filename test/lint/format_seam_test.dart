@@ -225,10 +225,6 @@ void main() {
       2,
       'transmission stamps (sentAt, receiptAt): shown through AppFormat, read by no calendar rule',
     ),
-    'lib/features/money/domain/invoice_match_row.dart': (
-      1,
-      "the tax point date of an instalment: a calendar date that needs the business's zone, which the row does not carry yet (follow-up of #4322); never shown",
-    ),
     'lib/features/money/domain/vies_check.dart': (
       1,
       'an instant stamp (checkedAt): shown through AppFormat, read by no calendar rule',

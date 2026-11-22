@@ -145,8 +145,9 @@ Map<String, Object?> _answer() => {
       },
     };
 
-AccountingSourceSnapshot _parse(Object? raw) => AccountingSourceSnapshot.fromRpc(
+AccountingSourceSnapshot _parse(Object? raw, {String? timezone}) => AccountingSourceSnapshot.fromRpc(
       raw,
+      timezone: timezone,
       workspaceId: _ws,
       from: '2026-01-01',
       to: '2026-12-31',
@@ -295,9 +296,9 @@ void main() {
     final s = _parse(_answer());
     expect(s.matches.keys, ['i-a']);
     expect(s.matches['i-a']!.paidCents, 12000);
-    expect(s.matches['i-a']!.matchedAt, DateTime.utc(2026, 4, 2, 9).toLocal());
+    expect(s.matches['i-a']!.matchedAt, DateTime.utc(2026, 4, 2, 9), reason: 'an instant stays an instant');
     expect(s.instalments['i-a']!.map((p) => p.cents), [7000, 5000]);
-    expect(s.instalments['i-a']!.first.on, DateTime.utc(2026, 3, 12, 9).toLocal());
+    expect(s.instalments['i-a']!.first.on, DateTime(2026, 3, 12), reason: 'no zone known: the UTC date, never the device\'s');
     // An older producer sends no instalments: never read as "none".
     _refused(_answer()..remove('instalments'), AccountingSourceFailure.inconsistent);
     final a = _answer();
@@ -425,5 +426,20 @@ void main() {
       SeededExportYear.invoices.first.copyWith(id: 'i-a', number: 'A', totalCents: 12000),
     ];
     expect(exportYearBooks(source, _ws, 2026, loaded, loaded: loaded), completion(isNull));
+  });
+
+  // #4322 -- the tax point is a CALENDAR date: a payment matched just after midnight east of UTC is
+  // that day's on the business's calendar, whichever device reads it (and not the day before, which
+  // is the UTC date); a business west of UTC reads the same instant as the day before.
+  test('an instalment is dated on the business\'s calendar, a payment just after midnight east of UTC '
+      'included', () {
+    final answer = _answer();
+    final rows = answer['instalments']! as List;
+    (rows.first as Map<String, Object?>)['matched_at'] = '2026-12-31T23:30:00+00:00';
+    DateTime first(String? zone) => _parse(answer, timezone: zone).instalments['i-a']!.first.on;
+    expect(first('Asia/Tokyo'), DateTime(2027), reason: '08:30 on 1 January in Tokyo');
+    expect(first('Europe/Paris'), DateTime(2027), reason: '00:30 on 1 January in Paris');
+    expect(first('America/New_York'), DateTime(2026, 12, 31), reason: '18:30 on 31 December in New York');
+    expect(first(null), DateTime(2026, 12, 31), reason: 'no zone known: the UTC date');
   });
 }
