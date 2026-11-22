@@ -3060,6 +3060,19 @@ Jeder Lagerort hat eine **Adresse** aus den Codes seiner übergeordneten Lageror
 - Ein Lagerort unter einem Standort ist **Kommissionierung** (Verkaufsfläche) oder **Reserve** (Lagerbestand); das ist ein Hinweis, nie eine Menge.
 - Das Zeichen zwischen den Ebenen ist die Einstellung des Unternehmens **Trennzeichen in einer Lagerort-Adresse** (Bindestrich, Punkt, Schrägstrich oder Doppelpunkt); nur die Schreibweise der Adresse ändert sich. Sie steht in den **Lagereinstellungen**.
 
+<!-- anchor: user.money.stock.reorder -->
+### Nachbestellen: was knapp ist und was zu bestellen ist
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie möchten sehen, was bald ausgeht, und es bestellen, ohne die Regale durchzugehen.
+
+Öffnen Sie **Lager → Nachbestellen** (die Funktion *Meldebestände* muss aktiv sein). Die Seite hat zwei Listen.
+
+- **Niedriger Bestand** listet jeden Artikel oder jede Variante auf oder unter ihrem Meldebestand, je Standort, mit dem Bestand und dem Meldebestand. Gelesen wird aus dem Lagerbuch, exakt, in der Einheit des Artikels; ein Artikel ohne Meldebestand wird nie gelistet. Ein Lagerort im Transit zählt nicht als vorrätig.
+- **Was zu bestellen ist** gruppiert, was knapp ist, nach dem Lieferanten, dessen Artikel als **bevorzugt** markiert ist, in der Einkaufseinheit dieses Artikels, auf ganze Einheiten aufgerundet. Ein Artikel ohne bevorzugten Lieferantenartikel steht unter **Kein Lieferant gewählt**: Markieren Sie einen in den Lieferantenartikeln des Artikels.
+
+**Bestellentwurf erstellen** erstellt aus einer Gruppe einen Einkaufsbestellungs-Entwurf. Es ist nur ein Entwurf: Nichts wird bestellt, bepreist oder gesendet, bis Sie ihn in den Einkaufsbestellungen bestätigen. Dafür brauchen Sie das Recht, Einkäufe zu verwalten; derselbe Entwurf, zweimal angefordert, entsteht nur einmal.
 <!-- anchor: user.money.stock.registry -->
 ### Das Artikelregister
 

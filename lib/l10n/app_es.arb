@@ -3931,6 +3931,7 @@
   "claimRefusedNothingToFree": "Este pago ya se retiró.",
   "claimRefusedOther": "El negocio rechazó estas facturas para este pago. Actualice y vuelva a intentarlo.",
   "claimRefusedOtherMonth": "Estas facturas son de otro mes que este pago. No se ha cobrado nada.",
+  "claimRefusedRequestChanged": "Este pago ya se envió con otros datos. Compruebe los pagos declarados y vuelva a intentarlo.",
   "claimRefusedWithdrawn": "Retiró este pago. Vuelva a seleccionar las facturas para pagarlas.",
   "coOwnerAction": "Copropiedad",
   "coOwnerActivate": "Promover a propietario ahora",
@@ -21138,6 +21139,7 @@
   "@stockReasonMappingDuplicate": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonMappingUnknown": "Ningún artículo de proveedor está marcado como preferido para una de estas líneas.",
   "stockReasonNameDuplicate": "Este nombre ya se usa.",
   "@stockReasonNameDuplicate": {
     "description": "#4169 the stock editors: a text under a field the server refused"
@@ -21291,6 +21293,20 @@
   "stockRegistryPlaceFilter": "Ubicación habitual",
   "stockRegistryPrice": "precio {amount}",
   "stockRegistrySearch": "Buscar un artículo por nombre, código de barras o dirección",
+  "stockReorderCreateDraft": "Crear borrador de pedido",
+  "stockReorderDraftCreated": "Borrador de pedido {number} creado. No se pidió ni se envió nada.",
+  "stockReorderDraftHelp": "Se crea un borrador de pedido: nada se pide, valora ni envía hasta que lo confirme.",
+  "stockReorderGapRow": "{site} · {quantity} propuestos",
+  "stockReorderGroupLine": "{item}: {quantity} para {site}",
+  "stockReorderIntro": "Lo que está en su punto de reposición o por debajo, por sede, y qué pedir a quién. Aquí no se pide nada: un borrador espera su confirmación.",
+  "stockReorderLowEmpty": "Nada está en su punto de reposición ni por debajo.",
+  "stockReorderLowRow": "{site} · {onHand} disponibles · punto de reposición {point}",
+  "stockReorderLowTitle": "Stock bajo",
+  "stockReorderNoSupplierHelp": "Estos están bajos, pero ningún artículo de proveedor está marcado como preferido: elija uno en los artículos de proveedor del artículo.",
+  "stockReorderNoSupplierTitle": "Ningún proveedor elegido",
+  "stockReorderTitle": "Reposición",
+  "stockReorderToOrderEmpty": "No hay nada que pedir.",
+  "stockReorderToOrderTitle": "Qué pedir",
   "stockSettingsElsewhere": "Los ajustes de existencias se mantienen en la página Ajustes de existencias.",
   "@stockSettingsElsewhere": {
     "description": "the stock pages and group (#4299)"

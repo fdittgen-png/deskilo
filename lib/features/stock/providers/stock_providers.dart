@@ -11,6 +11,7 @@ import '../data/supabase_stock_operations.dart';
 import '../data/supabase_stock_queries.dart';
 import '../data/supabase_stock_receiving_commands.dart';
 import '../data/supabase_stock_registry.dart';
+import '../data/supabase_stock_reorder.dart';
 import '../domain/stock_config.dart';
 import '../domain/stock_config_commands.dart';
 import '../domain/stock_operations.dart';
@@ -18,6 +19,7 @@ import '../domain/stock_page.dart';
 import '../domain/stock_queries.dart';
 import '../domain/stock_receiving.dart';
 import '../domain/stock_registry.dart';
+import '../domain/stock_reorder.dart';
 
 /// #4161 -- the stock reads of the selected business. The Demo and the tests
 /// replace it.
@@ -100,6 +102,24 @@ final stockConfigCommandsProvider = Provider<StockConfigCommands>(
 /// replace it.
 final stockRegistryProvider = Provider<StockRegistry>(
   (ref) => SupabaseStockRegistry(ref.watch(selectedWorkspaceClientProvider)),
+);
+
+/// #4294 -- what is low and what to order, for the selected business. The Demo and the tests
+/// replace it.
+final stockReorderProvider = Provider<StockReorder>(
+  (ref) => SupabaseStockReorder(ref.watch(selectedWorkspaceClientProvider)),
+);
+
+/// #4294 -- what is low, for the list; read again on a refresh or after a draft was made.
+final stockLowProvider = FutureProvider.autoDispose.family<List<StockLowRow>, String>(
+  (ref, workspaceId) => ref.watch(stockReorderProvider).low(workspaceId),
+  retry: (_, _) => null,
+);
+
+/// #4294 -- what to order, by supplier.
+final stockReplenishmentProvider = FutureProvider.autoDispose.family<ReplenishmentList, String>(
+  (ref, workspaceId) => ref.watch(stockReorderProvider).replenishment(workspaceId),
+  retry: (_, _) => null,
 );
 
 /// #4171 -- receiving a delivery into stock: the put-away commands of the

@@ -10427,6 +10427,12 @@ abstract class AppLocalizations {
   /// **'These invoices are of another month than this payment. Nothing was charged.'**
   String get claimRefusedOtherMonth;
 
+  /// #4321 — a declaration sent again under the request id of another payment (DKC15)
+  ///
+  /// In en, this message translates to:
+  /// **'This payment was already sent as another one. Check the declared payments, then try again.'**
+  String get claimRefusedRequestChanged;
+
   /// #3556 Refusal: retrying a payment whose invoices were withdrawn
   ///
   /// In en, this message translates to:
@@ -56654,6 +56660,12 @@ abstract class AppLocalizations {
   /// **'This supplier article is already mapped.'**
   String get stockReasonMappingDuplicate;
 
+  /// #4294 reorder: a refusal of the server
+  ///
+  /// In en, this message translates to:
+  /// **'No supplier article is preferred for one of these lines.'**
+  String get stockReasonMappingUnknown;
+
   /// #4169 the stock editors: a text under a field the server refused
   ///
   /// In en, this message translates to:
@@ -56959,6 +56971,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Find an item by name, barcode or address'**
   String get stockRegistrySearch;
+
+  /// #4294 reorder: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'Create draft order'**
+  String get stockReorderCreateDraft;
+
+  /// #4294 reorder: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'Draft order {number} created. Nothing was ordered or sent.'**
+  String stockReorderDraftCreated(String number);
+
+  /// #4294 reorder: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'A draft order is made: nothing is ordered, priced or sent until you confirm it.'**
+  String get stockReorderDraftHelp;
+
+  /// #4294 reorder: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'{site} · {quantity} proposed'**
+  String stockReorderGapRow(String site, String quantity);
+
+  /// #4294 reorder: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'{item}: {quantity} for {site}'**
+  String stockReorderGroupLine(String item, String quantity, String site);
+
+  /// #4294 reorder: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'What is at or below its reorder point, per site, and what to order from whom. Nothing is ordered here: a draft order waits for your confirmation.'**
+  String get stockReorderIntro;
+
+  /// #4294 reorder: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing is at or below its reorder point.'**
+  String get stockReorderLowEmpty;
+
+  /// #4294 reorder: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'{site} · {onHand} on hand · reorder point {point}'**
+  String stockReorderLowRow(String site, String onHand, String point);
+
+  /// #4294 reorder: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'Low stock'**
+  String get stockReorderLowTitle;
+
+  /// #4294 reorder: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'These are low, but no supplier article is marked as preferred for them: choose one in the item\'s supplier articles.'**
+  String get stockReorderNoSupplierHelp;
+
+  /// #4294 reorder: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'No supplier chosen'**
+  String get stockReorderNoSupplierTitle;
+
+  /// #4294 reorder: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'Reorder'**
+  String get stockReorderTitle;
+
+  /// #4294 reorder: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'There is nothing to order.'**
+  String get stockReorderToOrderEmpty;
+
+  /// #4294 reorder: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'What to order'**
+  String get stockReorderToOrderTitle;
 
   /// the stock pages and group (#4299)
   ///

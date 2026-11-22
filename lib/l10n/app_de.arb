@@ -3931,6 +3931,7 @@
   "claimRefusedNothingToFree": "Diese Zahlung wurde bereits zurückgezogen.",
   "claimRefusedOther": "Der Betrieb hat diese Rechnungen für diese Zahlung abgelehnt. Aktualisieren Sie und versuchen Sie es erneut.",
   "claimRefusedOtherMonth": "Diese Rechnungen gehören zu einem anderen Monat als diese Zahlung. Es wurde nichts belastet.",
+  "claimRefusedRequestChanged": "Diese Zahlung wurde bereits anders gemeldet. Prüfen Sie die gemeldeten Zahlungen und versuchen Sie es erneut.",
   "claimRefusedWithdrawn": "Sie haben diese Zahlung zurückgezogen. Wählen Sie die Rechnungen erneut aus, um sie zu bezahlen.",
   "coOwnerAction": "Mit-Inhaberschaft",
   "coOwnerActivate": "Jetzt zum Inhaber machen",
@@ -21138,6 +21139,7 @@
   "@stockReasonMappingDuplicate": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonMappingUnknown": "Für eine dieser Zeilen ist kein Lieferantenartikel bevorzugt.",
   "stockReasonNameDuplicate": "Dieser Name wird schon verwendet.",
   "@stockReasonNameDuplicate": {
     "description": "#4169 the stock editors: a text under a field the server refused"
@@ -21291,6 +21293,20 @@
   "stockRegistryPlaceFilter": "Lagerort",
   "stockRegistryPrice": "Preis {amount}",
   "stockRegistrySearch": "Artikel nach Name, Barcode oder Adresse suchen",
+  "stockReorderCreateDraft": "Bestellentwurf erstellen",
+  "stockReorderDraftCreated": "Bestellentwurf {number} erstellt. Nichts wurde bestellt oder gesendet.",
+  "stockReorderDraftHelp": "Es wird ein Bestellentwurf erstellt: Nichts wird bestellt, bepreist oder gesendet, bis Sie ihn bestätigen.",
+  "stockReorderGapRow": "{site} · {quantity} vorgeschlagen",
+  "stockReorderGroupLine": "{item}: {quantity} für {site}",
+  "stockReorderIntro": "Was auf oder unter seinem Meldebestand liegt, je Standort, und was bei wem zu bestellen ist. Hier wird nichts bestellt: Ein Entwurf wartet auf Ihre Bestätigung.",
+  "stockReorderLowEmpty": "Nichts liegt auf oder unter dem Meldebestand.",
+  "stockReorderLowRow": "{site} · {onHand} vorrätig · Meldebestand {point}",
+  "stockReorderLowTitle": "Niedriger Bestand",
+  "stockReorderNoSupplierHelp": "Diese sind knapp, aber für sie ist kein Lieferantenartikel als bevorzugt markiert: Wählen Sie einen bei den Lieferantenartikeln des Artikels.",
+  "stockReorderNoSupplierTitle": "Kein Lieferant gewählt",
+  "stockReorderTitle": "Nachbestellen",
+  "stockReorderToOrderEmpty": "Es gibt nichts zu bestellen.",
+  "stockReorderToOrderTitle": "Was zu bestellen ist",
   "stockSettingsElsewhere": "Die Lagereinstellungen werden auf der Seite Lagereinstellungen geführt.",
   "@stockSettingsElsewhere": {
     "description": "the stock pages and group (#4299)"

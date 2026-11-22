@@ -6672,6 +6672,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Diese Rechnungen gehören zu einem anderen Monat als diese Zahlung. Es wurde nichts belastet.';
 
   @override
+  String get claimRefusedRequestChanged =>
+      'Diese Zahlung wurde bereits anders gemeldet. Prüfen Sie die gemeldeten Zahlungen und versuchen Sie es erneut.';
+
+  @override
   String get claimRefusedWithdrawn =>
       'Sie haben diese Zahlung zurückgezogen. Wählen Sie die Rechnungen erneut aus, um sie zu bezahlen.';
 
@@ -35628,6 +35632,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Dieser Lieferantenartikel ist schon zugeordnet.';
 
   @override
+  String get stockReasonMappingUnknown =>
+      'Für eine dieser Zeilen ist kein Lieferantenartikel bevorzugt.';
+
+  @override
   String get stockReasonNameDuplicate => 'Dieser Name wird schon verwendet.';
 
   @override
@@ -35820,6 +35828,60 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get stockRegistrySearch =>
       'Artikel nach Name, Barcode oder Adresse suchen';
+
+  @override
+  String get stockReorderCreateDraft => 'Bestellentwurf erstellen';
+
+  @override
+  String stockReorderDraftCreated(String number) {
+    return 'Bestellentwurf $number erstellt. Nichts wurde bestellt oder gesendet.';
+  }
+
+  @override
+  String get stockReorderDraftHelp =>
+      'Es wird ein Bestellentwurf erstellt: Nichts wird bestellt, bepreist oder gesendet, bis Sie ihn bestätigen.';
+
+  @override
+  String stockReorderGapRow(String site, String quantity) {
+    return '$site · $quantity vorgeschlagen';
+  }
+
+  @override
+  String stockReorderGroupLine(String item, String quantity, String site) {
+    return '$item: $quantity für $site';
+  }
+
+  @override
+  String get stockReorderIntro =>
+      'Was auf oder unter seinem Meldebestand liegt, je Standort, und was bei wem zu bestellen ist. Hier wird nichts bestellt: Ein Entwurf wartet auf Ihre Bestätigung.';
+
+  @override
+  String get stockReorderLowEmpty =>
+      'Nichts liegt auf oder unter dem Meldebestand.';
+
+  @override
+  String stockReorderLowRow(String site, String onHand, String point) {
+    return '$site · $onHand vorrätig · Meldebestand $point';
+  }
+
+  @override
+  String get stockReorderLowTitle => 'Niedriger Bestand';
+
+  @override
+  String get stockReorderNoSupplierHelp =>
+      'Diese sind knapp, aber für sie ist kein Lieferantenartikel als bevorzugt markiert: Wählen Sie einen bei den Lieferantenartikeln des Artikels.';
+
+  @override
+  String get stockReorderNoSupplierTitle => 'Kein Lieferant gewählt';
+
+  @override
+  String get stockReorderTitle => 'Nachbestellen';
+
+  @override
+  String get stockReorderToOrderEmpty => 'Es gibt nichts zu bestellen.';
+
+  @override
+  String get stockReorderToOrderTitle => 'Was zu bestellen ist';
 
   @override
   String get stockSettingsElsewhere =>

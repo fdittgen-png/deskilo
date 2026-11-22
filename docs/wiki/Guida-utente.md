@@ -3060,6 +3060,19 @@ Ogni ubicazione ha un **indirizzo**, scritto con i codici dei suoi livelli super
 - Un’ubicazione sotto una sede è **prelievo** (area di vendita) o **riserva** (scorta); è un’indicazione, mai una quantità.
 - Il carattere tra i livelli è l’impostazione dell’azienda **Separatore nell’indirizzo di un’ubicazione** (trattino, punto, barra o due punti); cambia solo come si scrive l’indirizzo. Si imposta in **Impostazioni del magazzino**.
 
+<!-- anchor: user.money.stock.reorder -->
+### Riordino: cosa è basso e cosa ordinare
+
+**Destinatari:** Amministratore · Proprietario
+
+Lei vuole vedere cosa sta per finire e ordinarlo senza scorrere gli scaffali.
+
+Apra **Magazzino → Riordino** (la funzione *Punti di riordino* deve essere attiva). La pagina ha due elenchi.
+
+- **Scorta bassa** elenca ogni articolo o variante al suo punto di riordino o sotto, per sede, con la giacenza e il punto. Viene letta dal registro del magazzino, esatta, nell’unità dell’articolo; un articolo senza punto di riordino non compare mai. Un’ubicazione in transito non conta come giacenza.
+- **Cosa ordinare** raggruppa ciò che è basso per fornitore il cui articolo è indicato come **preferito**, nell’unità d’acquisto di quell’articolo, arrotondata a unità intere. Un articolo senza articolo del fornitore preferito compare sotto **Nessun fornitore scelto**: ne indichi uno negli articoli del fornitore dell’articolo.
+
+**Crea bozza d’ordine** crea una bozza d’ordine d’acquisto da un gruppo. È solo una bozza: nulla viene ordinato, valorizzato o inviato finché non la conferma negli ordini d’acquisto. Serve il diritto di gestire gli acquisti; chiedere due volte la stessa bozza la crea una sola volta.
 <!-- anchor: user.money.stock.registry -->
 ### Il registro degli articoli
 

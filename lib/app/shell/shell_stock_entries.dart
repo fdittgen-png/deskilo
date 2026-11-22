@@ -36,6 +36,15 @@ extension StockEntries on DrawerEntries {
         DrawerEntry('drawer-stock-items', Icons.category_outlined, l10n.stockItemsTitle, () => go('/stock/items'), route: '/stock/items'),
         DrawerEntry('drawer-stock-places', Icons.place_outlined, l10n.stockPlacesTitle, () => go('/stock/places'), route: '/stock/places'),
       ],
+      if (features.contains(WorkspaceFeature.stockReorder) &&
+          (reads || may(WorkspacePermission.managePurchases)))
+        DrawerEntry(
+          'drawer-stock-reorder',
+          Icons.trending_down_outlined,
+          l10n.stockReorderTitle,
+          () => go('/stock/reorder'),
+          route: '/stock/reorder',
+        ),
       if (may(WorkspacePermission.manageStock) || may(WorkspacePermission.manageConfiguration))
         DrawerEntry(
           'drawer-stock-settings',

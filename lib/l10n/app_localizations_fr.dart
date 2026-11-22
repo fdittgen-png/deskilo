@@ -6689,6 +6689,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Ces factures sont d’un autre mois que ce paiement. Rien n’a été débité.';
 
   @override
+  String get claimRefusedRequestChanged =>
+      'Ce paiement a déjà été envoyé sous une autre forme. Vérifiez les paiements déclarés, puis réessayez.';
+
+  @override
   String get claimRefusedWithdrawn =>
       'Vous avez retiré ce paiement. Sélectionnez à nouveau les factures pour les payer.';
 
@@ -35689,6 +35693,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Cet article fournisseur est déjà associé.';
 
   @override
+  String get stockReasonMappingUnknown =>
+      'Aucun article fournisseur n’est préféré pour l’une de ces lignes.';
+
+  @override
   String get stockReasonNameDuplicate => 'Ce nom est déjà utilisé.';
 
   @override
@@ -35877,6 +35885,60 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get stockRegistrySearch =>
       'Trouver un article par nom, code-barres ou adresse';
+
+  @override
+  String get stockReorderCreateDraft => 'Créer un brouillon de commande';
+
+  @override
+  String stockReorderDraftCreated(String number) {
+    return 'Brouillon de commande $number créé. Rien n’a été commandé ni envoyé.';
+  }
+
+  @override
+  String get stockReorderDraftHelp =>
+      'Un brouillon de commande est créé : rien n’est commandé, chiffré ni envoyé tant que vous ne le confirmez pas.';
+
+  @override
+  String stockReorderGapRow(String site, String quantity) {
+    return '$site · $quantity proposé';
+  }
+
+  @override
+  String stockReorderGroupLine(String item, String quantity, String site) {
+    return '$item : $quantity pour $site';
+  }
+
+  @override
+  String get stockReorderIntro =>
+      'Ce qui est au niveau de son seuil de réapprovisionnement ou en dessous, par site, et ce qu’il faut commander à qui. Rien n’est commandé ici : un brouillon attend votre confirmation.';
+
+  @override
+  String get stockReorderLowEmpty =>
+      'Rien n’est au niveau de son seuil ou en dessous.';
+
+  @override
+  String stockReorderLowRow(String site, String onHand, String point) {
+    return '$site · $onHand en stock · seuil $point';
+  }
+
+  @override
+  String get stockReorderLowTitle => 'Stock bas';
+
+  @override
+  String get stockReorderNoSupplierHelp =>
+      'Ces articles sont bas, mais aucun article fournisseur n’est marqué comme préféré : choisissez-en un dans les articles fournisseur de l’article.';
+
+  @override
+  String get stockReorderNoSupplierTitle => 'Aucun fournisseur choisi';
+
+  @override
+  String get stockReorderTitle => 'Réapprovisionnement';
+
+  @override
+  String get stockReorderToOrderEmpty => 'Il n’y a rien à commander.';
+
+  @override
+  String get stockReorderToOrderTitle => 'Que commander';
 
   @override
   String get stockSettingsElsewhere =>
