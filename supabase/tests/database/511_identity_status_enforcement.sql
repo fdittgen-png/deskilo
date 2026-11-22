@@ -6,7 +6,7 @@
 -- re-asserts a status that is not active once per refresh period and goes on to the installations
 -- that have not acknowledged an erasure.
 begin;
-select plan(28);
+select plan(37);
 
 create function pg_temp.u(p_n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-0000002562b' || p_n)::uuid $$;
@@ -61,8 +61,12 @@ update auth.users set banned_until = null where id = pg_temp.u(1);
 update public.identity_status_outbox set issued_at = now() - interval '10 minutes' where subject = pg_temp.u(1)::text;
 select is(public.identity_status_reissue(), 0, 'a lifted suspension is asserted active, and not re-asserted');
 update auth.users set deleted_at = now() where id = pg_temp.u(1);
-update public.identity_status_outbox set issued_at = now() - interval '10 minutes' where subject = pg_temp.u(1)::text;
+update public.identity_status_outbox set issued_at = now() - interval '10 minutes', valid_until = now() - interval '1 minute' where subject = pg_temp.u(1)::text;
 select is(public.identity_status_reissue(), 1, 'an erasure that no installation acknowledged goes on');
+update public.identity_status_outbox set issued_at = now() - interval '10 minutes' where subject = pg_temp.u(1)::text;
+select is(public.identity_status_reissue(), 0, 'an issue that still waits is not repeated');
+update public.identity_status_outbox set state = 'refused', outcome = 'unlinked_subject' where subject = pg_temp.u(1)::text and status = 'erased' and state = 'pending';
+select is(public.identity_status_reissue(), 0, 'nor one the installation refused for good');
 update public.identity_status_outbox set state = 'delivered', delivered_at = now() where subject = pg_temp.u(1)::text and status = 'erased';
 update public.identity_status_outbox set issued_at = now() - interval '10 minutes' where subject = pg_temp.u(1)::text;
 select is(public.identity_status_reissue(), 0, 'one that was acknowledged does not');
@@ -81,9 +85,9 @@ select public.operator_set_federation_key(pg_temp.p(), 'inbound', 'identity_stat
 
 create function pg_temp.b(p_event int, p_subject text, p_rev int, p_status text,
   p_issued timestamptz default now(), p_until timestamptz default now() + interval '900 seconds',
-  p_issuer text default pg_temp.iss()) returns jsonb language sql as $$
+  p_issuer text default pg_temp.iss(), p_src uuid default pg_temp.p()) returns jsonb language sql as $$
   select jsonb_build_object('protocol', 1, 'kind', 'identity_status',
-    'event_id', ('00000000-0000-4000-8000-000000256' || lpad(p_event::text, 3, '0'))::uuid, 'source_installation_id', pg_temp.p(),
+    'event_id', ('00000000-0000-4000-8000-000000256' || lpad(p_event::text, 3, '0'))::uuid, 'source_installation_id', p_src,
     'target_installation_id', public.installation_id(), 'issuer', p_issuer, 'subject', p_subject,
     'revision', p_rev, 'status', p_status, 'issued_at', p_issued, 'valid_until', p_until) $$;
 grant execute on all functions in schema pg_temp to authenticated, anon;
@@ -108,6 +112,11 @@ grant execute on all functions in schema pg_temp to authenticated, anon;
 
 
 -- ── W: enforcement ────────────────────────────────────────────────────
+select public.operator_set_personal_home('unset');
+select public.operator_set_installation_roles(array['workspace_host']);
+select public.operator_set_personal_home('endpoint', 'https://p.test', 'sb_publishable_p_key_123');
+select public.operator_set_federation_key(pg_temp.p(), 'outbound', 'membership_fact', 'k1', repeat('m', 40));
+select public.operator_set_federation_key(pg_temp.u(8), 'inbound', 'identity_status', 'k1', repeat('z', 40));
 insert into public.identity_bindings (installation_id, local_user_id, issuer, subject, verified_via, status, revoked_at)
 values (public.installation_id(), pg_temp.u(2), pg_temp.iss(), 'sm', 'oidc_identity', 'active', null);
 create temp table _o as select count(*)::int n from public.identity_status_outbox;
@@ -137,11 +146,31 @@ select is(pg_temp.tx(pg_temp.b(26, 'sa', 33, 'active')), 'superseded', 'nothing 
 -- a status for a subject not bound yet
 select is(pg_temp.tx(pg_temp.b(27, 'later', 1, 'suspended')) || ' ' || pg_temp.tx(pg_temp.b(28, 'never', 1, 'active')),
   'held unlinked_subject', 'a suspension for a subject not bound yet is kept; an active one is refused');
+select is(pg_temp.tx(pg_temp.b(30, 'other', 1, 'suspended', p_src => pg_temp.u(8)), p_source => pg_temp.u(8), p_secret => repeat('z', 40)), 'unlinked_subject',
+  'one for a subject not bound yet from an installation that is not the home is refused');
 select is(pg_temp.tx(pg_temp.b(29, 'gone', 1, 'erased')), 'held', 'so is an erasure');
 insert into public.identity_bindings (installation_id, local_user_id, issuer, subject, verified_via, status, revoked_at)
 values (public.installation_id(), pg_temp.u(4), pg_temp.iss(), 'later', 'oidc_identity', 'active', null);
 select is((select (banned_until is not null and banned_until > now())::text from auth.users where id = pg_temp.u(4)), 'true',
   'the binding enforces what was kept');
+-- a ban in force is not taken over, whatever its length
+update auth.users set banned_until = now() + interval '10 minutes' where id = pg_temp.u(2);
+select is(pg_temp.tx(pg_temp.b(31, 'sm', 3, 'suspended')) || ' ' || pg_temp.tx(pg_temp.b(32, 'sm', 4, 'active')), 'applied applied',
+  'a suspension and its lifting for an account banned another way, for a short time');
+select is((select (banned_until > now() + interval '9 minutes' and banned_until < now() + interval '11 minutes')::text from auth.users where id = pg_temp.u(2)),
+  'true', 'neither extend nor lift that ban');
+-- the enforcement writes on a change of state, not on each re-assertion
+update auth.users set banned_until = null where id = pg_temp.u(2);
+select is(pg_temp.tx(pg_temp.b(33, 'sm', 5, 'suspended')), 'applied', 'a suspension for an account with no ban');
+create temp table _ban as select banned_until b, (select count(*)::int from public.database_authority_audit
+  where action = 'identity_status_enforced' and target_user_id = pg_temp.u(2)) n from auth.users where id = pg_temp.u(2);
+select is(pg_temp.tx(pg_temp.b(34, 'sm', 6, 'suspended')), 'applied', 'asserted again');
+select is((select (u.banned_until = _ban.b and (select count(*)::int from public.database_authority_audit
+              where action = 'identity_status_enforced' and target_user_id = pg_temp.u(2)) = _ban.n)::text
+             from auth.users u, _ban where u.id = pg_temp.u(2)), 'true', 'changes neither the ban nor the audit');
+-- revoking the binding lifts the ban the enforcement set
+update public.identity_bindings set status = 'revoked', revoked_at = now() where subject = 'sm' and status = 'active';
+select is((select (banned_until is null)::text from auth.users where id = pg_temp.u(2)), 'true', 'a binding revoked while the ban holds lifts it');
 -- a suspension lapses with its deadline
 alter table public.identity_status_assertions disable trigger protect_federation_history;
 update public.identity_status_assertions set valid_until = now() - interval '1 hour', asserted_at = now() - interval '2 hours' where subject = 'later';

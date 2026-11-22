@@ -11,13 +11,16 @@
 --     An `active` assertion lifts the ban this enforcement set, and only that one: a ban set any other
 --     way is left as it is. The ban is the account's own `banned_until`, so every way in (sign-in,
 --     refresh, the API) refuses with it.
---   * `identity_status_enforce` is the only writer. It touches `banned_until` of the accounts
+--   * `identity_status_enforce` is the only writer. It takes an account only when it has no ban in
+--     force or holds the one it set, and touches `banned_until` of the accounts
 --     actively bound to the subject, nothing else of the account, records each change in
 --     `database_authority_audit` (`identity_status_enforced`, `identity_status_lifted`) and is
 --     reachable by no API role.
 --   * An assertion that arrives for a subject not bound yet is kept when it is `suspended` or
---     `erased`, answered `held`, and enforced when the binding is made. An `active` one for an
---     unbound subject is refused as before.
+--     `erased` and comes from the installation registered as this host's personal home, answered
+--     `held`, and enforced when the binding is made. An `active` one, or one from any other
+--     installation, for an unbound subject is refused as before. Revoking a binding lifts the ban this
+--     enforcement set on its account.
 --   * Behaviour when the home falls silent: a suspension is enforced for the lifetime the home
 --     gave it (plus the clock skew) and lapses with it, so a host never holds a person out on the
 --     strength of a home it no longer hears; the home re-asserts every non-active status each
@@ -54,16 +57,24 @@ $f$;
 revoke execute on function pg_temp.occurrences(text, text) from public, anon, authenticated;
 
 -- Enforces the status held for a subject on the accounts bound to it. The ban fields only.
+-- A ban is taken over only when the account has none, when it has expired, or when it is the one
+-- this enforcement set; a ban set any other way is neither extended nor lifted. The account and the
+-- audit are written on a change of state, and a ban this enforcement holds is extended only when
+-- less than one refresh period of it remains.
 create or replace function public.identity_status_enforce(p_issuer text, p_subject text)
 returns int language plpgsql volatile security definer set search_path = public as $fn$
 declare
   v_skew interval := make_interval(secs =>
     (public.setting_value(null, 'identity.clock_skew_seconds') #>> '{}')::int);
+  v_every interval := make_interval(secs =>
+    (public.setting_value(null, 'identity.status_reconcile_seconds') #>> '{}')::int);
   v_row public.identity_status_assertions;
   v_user uuid;
   v_until timestamptz;
   v_changed int := 0;
   v_ban timestamptz;
+  v_ours boolean;
+  v_record timestamptz;
 begin
   select * into v_row from public.identity_status_assertions
    where issuer = p_issuer and subject = p_subject for update;
@@ -78,30 +89,46 @@ begin
   if v_until is not null and v_until <= now() then
     v_until := null;
   end if;
+  v_record := v_row.enforced_until;
   for v_user in select b.local_user_id from public.identity_bindings b
                  where b.installation_id = public.installation_id()
                    and b.issuer = p_issuer and b.subject = p_subject and b.status = 'active' loop
-    select u.banned_until into v_ban from auth.users u where u.id = v_user;
+    select u.banned_until into v_ban from auth.users u where u.id = v_user for update;
+    v_ours := v_row.enforced_until is not null and v_ban is not distinct from v_row.enforced_until;
     if v_until is not null then
-      -- never shorten a ban that is longer, whoever set it
-      if v_ban is null or v_ban < v_until then
+      if v_ban is null or v_ban <= now() then
+        -- no ban in force: this enforcement takes the account
         update auth.users set banned_until = v_until where id = v_user;
         insert into public.database_authority_audit (installation_id, action, actor, target_user_id, detail)
         values (public.installation_id(), 'identity_status_enforced', 'system', v_user,
                 jsonb_build_object('status', v_row.status, 'until', v_until));
+        v_record := v_until;
         v_changed := v_changed + 1;
+      elsif v_ours then
+        -- its own ban: extended only when less than one refresh period of it remains
+        if v_ban < v_until and v_ban < now() + v_every + v_skew then
+          update auth.users set banned_until = v_until where id = v_user;
+          v_record := v_until;
+          v_changed := v_changed + 1;
+        end if;
+      else
+        -- a ban set another way stays as it is, and is not this enforcement's
+        v_record := null;
       end if;
-    elsif v_row.enforced_until is not null and v_ban is not distinct from v_row.enforced_until then
-      -- the ban is the one this enforcement set: lift it
+    elsif v_ours then
+      -- the status no longer holds an account out: lift the ban this enforcement set
       update auth.users set banned_until = null where id = v_user;
       insert into public.database_authority_audit (installation_id, action, actor, target_user_id, detail)
       values (public.installation_id(), 'identity_status_lifted', 'system', v_user,
               jsonb_build_object('status', v_row.status));
+      v_record := null;
       v_changed := v_changed + 1;
+    else
+      v_record := null;
     end if;
   end loop;
-  update public.identity_status_assertions set enforced_until = v_until
-   where issuer = p_issuer and subject = p_subject and enforced_until is distinct from v_until;
+  update public.identity_status_assertions set enforced_until = v_record
+   where issuer = p_issuer and subject = p_subject and enforced_until is distinct from v_record;
   return v_changed;
 end;
 $fn$;
@@ -117,7 +144,9 @@ begin
   v_next := pg_temp.anchor_replace(v_def, $o$                    and (b.status = 'active' or v_status <> 'active')) then
     return 'unlinked_subject';
   end if;$o$, $n$                    and (b.status = 'active' or v_status <> 'active')) then
-    if v_status = 'active' then
+    -- a status for a subject not bound yet is kept only when the home says it
+    if v_status = 'active'
+       or p_source is distinct from (select h.home_installation_id from public.membership_fact_home() h) then
       return 'unlinked_subject';
     end if;
     v_held := true;
@@ -167,18 +196,30 @@ $fn$;
 revoke execute on function public.federation_outcome_refused(text)
   from public, anon, authenticated, service_role;
 
--- The binding is made: what the home asserted before it is enforced now.
+-- The binding is made: what the home asserted before it is enforced now. The binding is revoked:
+-- the ban this enforcement set on its account is lifted.
 create or replace function public.identity_status_on_binding()
 returns trigger language plpgsql security definer set search_path = public as $fn$
+declare
+  v_row public.identity_status_assertions;
+  v_ban timestamptz;
 begin
   if new.status = 'active' then
-    begin
-      perform public.identity_status_enforce(new.issuer, new.subject);
-    exception when others then
-      insert into public.database_authority_audit (installation_id, action, actor, target_user_id, detail)
-      values (public.installation_id(), 'identity_status_unenforced', 'system', new.local_user_id,
-              jsonb_build_object('sqlstate', sqlstate));
-    end;
+    perform public.identity_status_enforce(new.issuer, new.subject);
+  elsif tg_op = 'UPDATE' and old.status = 'active' then
+    select * into v_row from public.identity_status_assertions
+     where issuer = new.issuer and subject = new.subject for update;
+    if v_row.enforced_until is not null then
+      select u.banned_until into v_ban from auth.users u where u.id = new.local_user_id for update;
+      if v_ban is not distinct from v_row.enforced_until then
+        update auth.users set banned_until = null where id = new.local_user_id;
+        insert into public.database_authority_audit (installation_id, action, actor, target_user_id, detail)
+        values (public.installation_id(), 'identity_status_lifted', 'system', new.local_user_id,
+                jsonb_build_object('status', v_row.status, 'reason', 'binding_revoked'));
+      end if;
+      update public.identity_status_assertions set enforced_until = null
+       where issuer = new.issuer and subject = new.subject;
+    end if;
   end if;
   return null;
 end;
@@ -186,7 +227,7 @@ $fn$;
 revoke execute on function public.identity_status_on_binding() from public, anon, authenticated, service_role;
 drop trigger if exists identity_status_on_binding on public.identity_bindings;
 create trigger identity_status_on_binding
-  after insert on public.identity_bindings
+  after insert or update of status on public.identity_bindings
   for each row execute function public.identity_status_on_binding();
 
 notify pgrst, 'reload schema';

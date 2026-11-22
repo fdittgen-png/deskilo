@@ -41,6 +41,9 @@ end;
 $fn$;
 revoke execute on function public.identity_status_issue_one(text, text, uuid) from public, anon, authenticated, service_role;
 
+create index if not exists identity_status_outbox_subject_revision
+  on public.identity_status_outbox (subject, revision desc);
+
 create or replace function public.identity_status_reissue()
 returns int language plpgsql volatile security definer set search_path = public as $fn$
 declare
@@ -59,20 +62,28 @@ begin
   loop
     if v_row.status = 'suspended' then
       -- while the person is still suspended, to every installation they are linked to
-      if exists (select 1 from auth.users u
-                  where u.id::text = v_row.subject and u.deleted_at is null and u.banned_until > now()) then
-        for v_target in select t from public.identity_status_linked_targets(v_row.subject::uuid) t loop
+      perform 1 from auth.users u
+       where u.id = v_row.subject::uuid and u.deleted_at is null and u.banned_until > now() for share;
+      if found then
+        for v_target in select t from public.identity_status_linked_targets(v_row.subject::uuid) t
+                         where not exists (select 1 from public.identity_status_outbox w
+                                            where w.subject = v_row.subject and w.target_installation_id = t
+                                              and w.state in ('pending', 'sent') and w.valid_until > now()) loop
           v_count := v_count + public.identity_status_issue_one(v_row.subject, 'suspended', v_target);
         end loop;
       end if;
     else
-      -- an erasure goes on to each installation that has not acknowledged it (the person's consents
-      -- went with the account: the installations are the ones it was issued to)
+      -- an erasure goes on to each installation that is enrolled, has not acknowledged it or
+      -- refused it for good, and has no issue still waiting
       for v_target in select distinct o.target_installation_id from public.identity_status_outbox o
                        where o.subject = v_row.subject and o.status = 'erased'
+                         and exists (select 1 from public.enrolled_installations e
+                                      where e.installation_id = o.target_installation_id and e.enabled)
                          and not exists (select 1 from public.identity_status_outbox d
-                                          where d.subject = o.subject and d.status = 'erased' and d.state = 'delivered'
-                                            and d.target_installation_id = o.target_installation_id) loop
+                                          where d.subject = o.subject and d.status = 'erased'
+                                            and d.target_installation_id = o.target_installation_id
+                                            and (d.state in ('delivered', 'refused')
+                                                 or (d.state in ('pending', 'sent') and d.valid_until > now()))) loop
         v_count := v_count + public.identity_status_issue_one(v_row.subject, 'erased', v_target);
       end loop;
     end if;

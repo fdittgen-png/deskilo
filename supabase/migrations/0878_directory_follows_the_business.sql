@@ -155,6 +155,9 @@ create or replace function public.membership_fact_directory_changed()
 returns trigger language plpgsql security definer set search_path = public as $fn$
 begin
   if new.network_id is not null then
+    -- what waits to be sent says the old value: it is withdrawn and asserted again
+    update public.membership_fact_outbox set state = 'expired'
+     where network_id = new.network_id and state = 'pending' and status <> 'tombstone';
     update public.membership_fact_state set last_asserted_at = null
      where network_id = new.network_id and status <> 'tombstone';
   end if;

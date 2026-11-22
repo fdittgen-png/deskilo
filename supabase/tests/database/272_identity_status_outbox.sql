@@ -178,8 +178,8 @@ select is(pg_temp.tx(pg_temp.b(8, 'sa', 13, 'suspended')), 'applied', 'a suspens
 select is(pg_temp.tx(pg_temp.b(9, 'sa', 12, 'active')), 'superseded', 'a late active cannot undo it');
 select is(pg_temp.tx(pg_temp.b(10, 'sa', 14, 'erased')), 'applied', 'an erasure applies');
 select is(pg_temp.tx(pg_temp.b(11, 'sa', 15, 'active')), 'superseded', 'and is final');
-select is(pg_temp.tx(pg_temp.b(12, 'nobody', 1, 'suspended')), 'held',
-  'a suspension for a subject not bound yet is held');
+select is(pg_temp.tx(pg_temp.b(12, 'nobody', 1, 'suspended')), 'unlinked_subject',
+  'an unbound subject is refused unless the home says it');
 select is(pg_temp.tx(pg_temp.b(13, 'sr', 1, 'active')) || ' ' ||
           pg_temp.tx(pg_temp.b(14, 'sr', 2, 'suspended')), 'unlinked_subject applied',
   'a revoked binding: no active, but a suspension');
