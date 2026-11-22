@@ -12,6 +12,7 @@ import '../domain/reminder_evidence.dart';
 import 'command_receipt_decoder.dart';
 import 'invoice_preview_decoder.dart';
 import 'invoice_reminder_fold.dart';
+import 'workspace_timezone_read.dart';
 
 /// #2591 C1 — the invoice reads, with their own client. The bodies are the
 /// ones that lived in the money repository's part files.
@@ -133,9 +134,10 @@ class SupabaseInvoiceQueries implements InvoiceQueries {
           .eq('workspace_id', workspaceId)
           .order('id', ascending: true),
     );
+    final timezone = await workspaceTimezone(_client, workspaceId);
     return instalmentsByInvoice([
       for (final row in rows)
-        invoiceInstalmentOf(JsonReader(row, context: 'invoice_match_payments')),
+        invoiceInstalmentOf(JsonReader(row, context: 'invoice_match_payments'), timezone: timezone),
     ]);
   }
 

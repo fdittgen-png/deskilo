@@ -26,9 +26,9 @@ List<String> configClosures(String? locale, List<ClosureDay> closures) {
   return [
     for (final c in closures)
       if (c.reason.trim().isEmpty)
-        format.format(c.day.toLocal())
+        format.format(c.day)
       else
-        '${format.format(c.day.toLocal())} — ${c.reason}',
+        '${format.format(c.day)} — ${c.reason}',
   ];
 }
 

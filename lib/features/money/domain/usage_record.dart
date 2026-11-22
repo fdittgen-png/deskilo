@@ -90,14 +90,14 @@ class UsageRecord implements SystemStamped {
         memberId: json['member_id'] as String,
         reservationId: json['reservation_id'] as String?,
         period: json['period'] as String? ?? '',
-        reservedFrom: DateTime.parse(json['reserved_from'] as String).toLocal(),
-        reservedTo: DateTime.parse(json['reserved_to'] as String).toLocal(),
+        reservedFrom: DateTime.parse(json['reserved_from'] as String),
+        reservedTo: DateTime.parse(json['reserved_to'] as String),
         checkedInAt: json['checked_in_at'] == null
             ? null
-            : DateTime.parse(json['checked_in_at'] as String).toLocal(),
+            : DateTime.parse(json['checked_in_at'] as String),
         checkedOutAt: json['checked_out_at'] == null
             ? null
-            : DateTime.parse(json['checked_out_at'] as String).toLocal(),
+            : DateTime.parse(json['checked_out_at'] as String),
         countedMinutes: (json['counted_minutes'] as num?)?.toInt() ?? 0,
         reservedMinutes: (json['reserved_minutes'] as num?)?.toInt() ?? 0,
         actualMinutes: (json['actual_minutes'] as num?)?.toInt(),
@@ -106,7 +106,7 @@ class UsageRecord implements SystemStamped {
             (json['corrected_from_minutes'] as num?)?.toInt(),
         correctedAt: json['corrected_at'] == null
             ? null
-            : DateTime.parse(json['corrected_at'] as String).toLocal(),
+            : DateTime.parse(json['corrected_at'] as String),
         spaceLabel: json['space_label'] as String? ?? '',
       );
 }
