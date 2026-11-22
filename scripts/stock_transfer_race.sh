@@ -436,7 +436,8 @@ select 'made ' || public.stock_cycle_counts_due('$ws');
 commit;
 SQL
 wait "$holder9" || { echo "::error::the first run failed: $(tr '\n' ' ' < "$scratch/holder9")" >&2; exit 1; }
-grep -qx "made 1" "$scratch/holder9" || { echo "::error::the first run did not make the task: $(tr '\n' ' ' < "$scratch/holder9")" >&2; exit 1; }
+# both plans of the fixture business are due: the first run makes their two tasks, the second skips both
+grep -qx "made 2" "$scratch/holder9" || { echo "::error::the first run did not make the two tasks: $(tr '\n' ' ' < "$scratch/holder9")" >&2; exit 1; }
 grep -qx "made 0" "$scratch/contender9" || { echo "::error::the second run did not skip the plan: $(tr '\n' ' ' < "$scratch/contender9")" >&2; exit 1; }
 expect "(H) one task with its lines exists for the plan" "$(q "select count(*) || '/' || (select count(*) from public.stock_count_task_lines x join public.stock_count_tasks t2 on t2.id = x.task_id where t2.plan_id = '$plan') from public.stock_count_tasks where plan_id = '$plan'")" "1/1"
 
