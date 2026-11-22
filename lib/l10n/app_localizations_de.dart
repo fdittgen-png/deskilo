@@ -10436,6 +10436,20 @@ class AppLocalizationsDe extends AppLocalizations {
       'Zu dieser Anfrage wurde kein Einkaufsbeleg abgelegt, oder Sie dürfen ihn nicht sehen.';
 
   @override
+  String eventStockLow(String item, String site, String onHand, String point) {
+    return '$item ist knapp bei $site: $onHand vorrätig, Meldebestand $point';
+  }
+
+  @override
+  String get eventStockLowEnded => 'wieder über dem Meldebestand';
+
+  @override
+  String get eventStockLowItemFallback => 'Ein Artikel';
+
+  @override
+  String get eventStockLowSiteFallback => 'einem Standort';
+
+  @override
   String get eventSystemDecider => 'System';
 
   @override
@@ -10534,6 +10548,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get eventTypeSpaceReservation => 'Ganzraum-Reservierungen';
+
+  @override
+  String get eventTypeStockLow => 'Lagerbestand knapp';
 
   @override
   String get eventTypeSubscriptionChange => 'Abonnementänderung';

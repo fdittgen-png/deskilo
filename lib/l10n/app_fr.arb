@@ -6674,6 +6674,10 @@
   "eventServiceChargeTitle": "{name} ×{quantity} — {amount}",
   "eventSettlementReview": "{settlement} : {reason, select, costs_changed{le prestataire a modifié ses frais après son enregistrement} amount_changed{le prestataire a modifié son montant après son enregistrement} currency_mismatch{un frais est dans une autre devise que le versement} other{le relevé diffère de ce qui a été enregistré}}. Rien n'en a été comptabilisé ; il attend une vérification.",
   "eventSourceNotFound": "Aucun document d'achat n'a été classé pour cette demande, ou vous ne pouvez pas le voir.",
+  "eventStockLow": "{item} est bas à {site} : {onHand} en stock, seuil {point}",
+  "eventStockLowEnded": "de nouveau au-dessus du seuil",
+  "eventStockLowItemFallback": "Un article",
+  "eventStockLowSiteFallback": "un site",
   "eventSystemDecider": "Système",
   "eventTypeAdjustment": "Ajustement",
   "eventTypeBadgeSecurityAlert": "Protection de la connexion par badge",
@@ -6737,6 +6741,7 @@
   "eventTypeServiceCharge": "Service",
   "eventTypeSettlementReview": "Versement à vérifier",
   "eventTypeSpaceReservation": "Réservations d'espaces entiers",
+  "eventTypeStockLow": "Stock bas",
   "eventTypeSubscriptionChange": "Changement d'abonnement",
   "@eventTypeSubscriptionChange": {
     "description": "#982 validation domains: eventTypeSubscriptionChange"

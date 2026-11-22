@@ -11,6 +11,7 @@ import '../domain/event_decision.dart';
 import '../domain/validation_policy.dart';
 import '../domain/workspace_event.dart';
 import 'event_labels.dart';
+import 'event_stock_low_line.dart';
 
 // #1306 — the sentences a pending decision is shown with, shared by the
 // events face and the calendar, which carries the decisions when the
@@ -275,7 +276,8 @@ bool _appendsSubject(WorkspaceEvent event) {
       event.type == EventType.settlementReview ||
       event.type == EventType.kioskDevice ||
       event.type == EventType.credentialChange ||
-      event.type == EventType.paymentAttemptUnreadable) {
+      event.type == EventType.paymentAttemptUnreadable ||
+      event.type == EventType.stockLow) {
     return false;
   }
   return !event.actorIsSubject || event.type == EventType.serviceCharge;
@@ -289,9 +291,11 @@ String _otherLine(
   String actor,
   Map<String, String> names,
   MoneyFormat currency,
-) => event.type == EventType.paymentAttemptUnreadable
-    ? _paymentAttemptUnreadableLine(l10n, event, names, currency)
-    : _noticeOrFallbackLine(l10n, event, actor);
+) => switch (event.type) {
+  EventType.paymentAttemptUnreadable => _paymentAttemptUnreadableLine(l10n, event, names, currency),
+  EventType.stockLow => stockLowLine(l10n, event, names),
+  _ => _noticeOrFallbackLine(l10n, event, actor),
+};
 
 /// The lines of the notices that are not about a booking or money in motion:
 /// the badge sign-in alert, and (#3132) the owners' notice that an assistant

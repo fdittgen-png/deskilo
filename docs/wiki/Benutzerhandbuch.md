@@ -3067,6 +3067,8 @@ Jeder Lagerort hat eine **Adresse** aus den Codes seiner übergeordneten Lageror
 
 Sie möchten sehen, was bald ausgeht, und es bestellen, ohne die Regale durchzugehen.
 
+Fällt ein Artikel auf seinen Meldebestand, erhält, wer den Lagerbestand oder den Einkauf verwalten darf, **eine Meldung** im Posteingang (unter Geld): Artikel, Standort, vorrätige Menge und Meldebestand. Sie kommt einmal, solange der Bestand knapp bleibt, und sagt es, wenn er wieder über den Meldebestand steigt. Ein Tipp darauf öffnet diese Seite.
+
 Öffnen Sie **Lager → Nachbestellen** (die Funktion *Meldebestände* muss aktiv sein). Die Seite hat zwei Listen.
 
 - **Niedriger Bestand** listet jeden Artikel oder jede Variante auf oder unter ihrem Meldebestand, je Standort, mit dem Bestand und dem Meldebestand. Gelesen wird aus dem Lagerbuch, exakt, in der Einheit des Artikels; ein Artikel ohne Meldebestand wird nie gelistet. Ein Lagerort im Transit zählt nicht als vorrätig.

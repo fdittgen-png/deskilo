@@ -13,5 +13,10 @@
   "stockReorderNoSupplierTitle": "Kein Lieferant gewählt",
   "stockReorderNoSupplierHelp": "Diese sind knapp, aber für sie ist kein Lieferantenartikel als bevorzugt markiert: Wählen Sie einen bei den Lieferantenartikeln des Artikels.",
   "stockReorderGapRow": "{site} · {quantity} vorgeschlagen",
-  "stockReasonMappingUnknown": "Für eine dieser Zeilen ist kein Lieferantenartikel bevorzugt."
+  "stockReasonMappingUnknown": "Für eine dieser Zeilen ist kein Lieferantenartikel bevorzugt.",
+  "eventTypeStockLow": "Lagerbestand knapp",
+  "eventStockLow": "{item} ist knapp bei {site}: {onHand} vorrätig, Meldebestand {point}",
+  "eventStockLowEnded": "wieder über dem Meldebestand",
+  "eventStockLowItemFallback": "Ein Artikel",
+  "eventStockLowSiteFallback": "einem Standort"
 }

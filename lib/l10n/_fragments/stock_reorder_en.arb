@@ -93,5 +93,39 @@
   "stockReasonMappingUnknown": "No supplier article is preferred for one of these lines.",
   "@stockReasonMappingUnknown": {
     "description": "#4294 reorder: a refusal of the server"
+  },
+  "eventTypeStockLow": "Low stock",
+  "@eventTypeStockLow": {
+    "description": "#4294 the low-stock notice in the inbox"
+  },
+  "eventStockLow": "{item} is low at {site}: {onHand} on hand, reorder point {point}",
+  "@eventStockLow": {
+    "description": "#4294 the low-stock notice in the inbox",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      },
+      "site": {
+        "type": "String"
+      },
+      "onHand": {
+        "type": "String"
+      },
+      "point": {
+        "type": "String"
+      }
+    }
+  },
+  "eventStockLowEnded": "back above its point",
+  "@eventStockLowEnded": {
+    "description": "#4294 the low-stock notice in the inbox"
+  },
+  "eventStockLowItemFallback": "An item",
+  "@eventStockLowItemFallback": {
+    "description": "#4294 the low-stock notice in the inbox"
+  },
+  "eventStockLowSiteFallback": "a site",
+  "@eventStockLowSiteFallback": {
+    "description": "#4294 the low-stock notice in the inbox"
   }
 }

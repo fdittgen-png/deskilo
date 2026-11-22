@@ -6674,6 +6674,10 @@
   "eventServiceChargeTitle": "{name} ×{quantity} — {amount}",
   "eventSettlementReview": "{settlement}: {reason, select, costs_changed{el proveedor cambió sus costes después de registrarse} amount_changed{el proveedor cambió su importe después de registrarse} currency_mismatch{un coste está en otra moneda que la liquidación} other{el informe difiere de lo registrado}}. No se contabilizó nada; espera revisión.",
   "eventSourceNotFound": "No se archivó ningún documento de compra para esta solicitud, o no puede verlo.",
+  "eventStockLow": "{item} está bajo en {site}: {onHand} en existencias, punto de reposición {point}",
+  "eventStockLowEnded": "de nuevo por encima del punto",
+  "eventStockLowItemFallback": "Un artículo",
+  "eventStockLowSiteFallback": "una sede",
   "eventSystemDecider": "Sistema",
   "eventTypeAdjustment": "Ajuste",
   "eventTypeBadgeSecurityAlert": "Protección del acceso con tarjeta",
@@ -6737,6 +6741,7 @@
   "eventTypeServiceCharge": "Servicio",
   "eventTypeSettlementReview": "Liquidación por revisar",
   "eventTypeSpaceReservation": "Reservas de espacios enteros",
+  "eventTypeStockLow": "Existencias bajas",
   "eventTypeSubscriptionChange": "Cambio de suscripción",
   "@eventTypeSubscriptionChange": {
     "description": "#982 validation domains: eventTypeSubscriptionChange"

@@ -3067,6 +3067,8 @@ Each place has an **address**, written from its parents' codes: `MAIN-SALES-A03-
 
 You want to see what is about to run out and order it without going through the shelves.
 
+When an item falls to its reorder point, whoever may manage the stock or the purchases gets **one notice** in the inbox (under Money): the item, the site, what is on hand and the point. It is told once while the stock stays low, and says so when the stock rises above the point again. Tapping it opens this page.
+
 Open **Stock → Reorder** (the feature *Reorder points* must be on). The page has two lists.
 
 - **Low stock** lists every item or variant at or below its reorder point, per site, with what is on hand and the point. It is read from the stock ledger, exactly, in the item's unit; an item with no reorder point is never listed. A place that is in transit does not count as stock on hand.

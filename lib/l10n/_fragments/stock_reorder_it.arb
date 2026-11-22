@@ -13,5 +13,10 @@
   "stockReorderNoSupplierTitle": "Nessun fornitore scelto",
   "stockReorderNoSupplierHelp": "Questi sono bassi, ma nessun articolo del fornitore è indicato come preferito: ne scelga uno negli articoli del fornitore dell’articolo.",
   "stockReorderGapRow": "{site} · {quantity} proposti",
-  "stockReasonMappingUnknown": "Per una di queste righe nessun articolo del fornitore è indicato come preferito."
+  "stockReasonMappingUnknown": "Per una di queste righe nessun articolo del fornitore è indicato come preferito.",
+  "eventTypeStockLow": "Scorta bassa",
+  "eventStockLow": "{item} è basso in {site}: {onHand} disponibili, punto di riordino {point}",
+  "eventStockLowEnded": "di nuovo sopra il punto",
+  "eventStockLowItemFallback": "Un articolo",
+  "eventStockLowSiteFallback": "una sede"
 }
