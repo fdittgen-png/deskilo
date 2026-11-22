@@ -17,8 +17,8 @@
 --     decided count is final (DKG19), and the same decision sent again answers the same result. A person
 --     who holds both rights, the owner of a one-person business, records and applies it themselves, and
 --     both are kept (`author_member_id`, `decided_by_member_id`).
---   * The generic move can no longer be an adjustment without that right: `stock_move_v1` with the reason
---     `adjustment` needs `approveStockAdjustments` on top of `manageStock`. The shelf count of an item
+--   * The generic move can no longer be an adjustment or an opening without that right: `stock_move_v1` with
+--     the reason `adjustment` or `opening` needs `approveStockAdjustments` on top of `manageStock`. The shelf count of an item
 --     (`services.stock`) is already refused once the ledger exists (0847, DKG13).
 --   * `stock_counts_v1` reads the counts, each with whether it is stale.
 
@@ -54,9 +54,10 @@ begin
     $n$  if v_me is null or not public.has_permission(p_workspace_id, 'manageStock') then
     raise exception 'not allowed to move stock' using errcode = 'DKN01';
   end if;
-  -- an adjustment is approved: by whoever holds the right to approve adjustments, however it is made
-  if p_reason = 'adjustment' and not public.has_permission(p_workspace_id, 'approveStockAdjustments') then
-    raise exception 'an adjustment is made by someone who may approve adjustments' using errcode = 'DKN01';
+  -- stock made from nothing, with no document behind it, is approved: by whoever holds the right to approve
+  -- adjustments, however it is made (an adjustment, or an opening count)
+  if p_reason in ('adjustment', 'opening') and not public.has_permission(p_workspace_id, 'approveStockAdjustments') then
+    raise exception 'an adjustment or an opening is made by someone who may approve adjustments' using errcode = 'DKN01';
   end if;$n$);
   if v_next is null then raise exception '0869: the anchor of stock_move_v1 is not found' using errcode = 'P0001'; end if;
   execute v_next;

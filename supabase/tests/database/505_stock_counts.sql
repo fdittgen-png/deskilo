@@ -7,7 +7,7 @@
 -- the generic move cannot make an adjustment without the right to approve; the rights, the business, an
 -- assistant and the feature off are refused; a variant and a lot are part of the scope. Rolled back.
 begin;
-select plan(38);
+select plan(39);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -86,6 +86,8 @@ select pg_temp.mv(1, 900, 301, '10', pg_temp.place('supplier'), pg_temp.loc('MAI
 select is(pg_temp.onhand(301, pg_temp.loc('MAIN')), 10::numeric, 'fixture: 10 mugs on hand');
 select is(pg_temp.mv(3, 901, 301, '1', pg_temp.place('loss'), pg_temp.loc('MAIN'), 'adjustment'), 'ERR DKN01',
   'a clerk who manages the stock cannot make an adjustment through the generic move');
+select is(pg_temp.mv(3, 904, 301, '1', pg_temp.place('opening'), pg_temp.loc('MAIN'), 'opening'), 'ERR DKN01',
+  'nor can she make stock from an opening count through it');
 select is(pg_temp.mv(1, 902, 301, '1', pg_temp.loc('MAIN'), pg_temp.place('loss'), 'adjustment') like 'ERR%', false,
   'whoever may approve adjustments can');
 select pg_temp.mv(1, 903, 301, '1', pg_temp.place('loss'), pg_temp.loc('MAIN'), 'adjustment');
