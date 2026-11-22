@@ -146,6 +146,8 @@ const workspaceProcesses = <WorkspaceProcess>[
       WorkspaceFeature.stockReceiving,
       // #4170 — goods taken out for use or as a loss.
       WorkspaceFeature.stockTakeOut,
+      // #4294 — reorder points, low-stock alerts and the replenishment list.
+      WorkspaceFeature.stockReorder,
     ]),
   ]),
   WorkspaceProcess('billingPayments', [

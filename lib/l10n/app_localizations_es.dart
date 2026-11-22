@@ -12484,6 +12484,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get featureStockReceivingTitle => 'Recepción en existencias';
 
   @override
+  String get featureStockReorderDesc =>
+      'Fije un mínimo por artículo y sede: la bandeja avisa cuando las existencias lo alcanzan y una lista de reposición propone qué pedir. Desactivado: ningún punto, ninguna alerta ni lista; el libro no se ve afectado.';
+
+  @override
+  String get featureStockReorderTitle => 'Puntos de reposición';
+
+  @override
   String get featureStockTakeOutDesc =>
       'Sacar mercancías de las existencias para uso o como pérdida, con el motivo y el lote. Desactivado: no se ofrece consumo ni pérdida; las transferencias y la recepción no cambian.';
 
