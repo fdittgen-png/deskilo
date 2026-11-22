@@ -20887,6 +20887,8 @@
   "@stockPlacesAdd": {
     "description": "#4169 the stock editors: a label or message"
   },
+  "stockPlacesLabelsNone": "Non c’è nessuna ubicazione per cui stampare un’etichetta.",
+  "stockPlacesPrintLabels": "Stampa le etichette",
   "stockPlacesSearch": "Cerchi un’ubicazione per indirizzo, nome o codice a barre",
   "stockPlacesTitle": "Ubicazioni",
   "@stockPlacesTitle": {

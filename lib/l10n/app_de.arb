@@ -20887,6 +20887,8 @@
   "@stockPlacesAdd": {
     "description": "#4169 the stock editors: a label or message"
   },
+  "stockPlacesLabelsNone": "Es gibt keinen Lagerort, für den ein Etikett gedruckt werden kann.",
+  "stockPlacesPrintLabels": "Etiketten drucken",
   "stockPlacesSearch": "Lagerort nach Adresse, Name oder Barcode suchen",
   "stockPlacesTitle": "Lagerorte",
   "@stockPlacesTitle": {

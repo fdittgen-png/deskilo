@@ -35008,6 +35008,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockPlacesAdd => 'Add a place';
 
   @override
+  String get stockPlacesLabelsNone => 'There is no place to print a label for.';
+
+  @override
+  String get stockPlacesPrintLabels => 'Print labels';
+
+  @override
   String get stockPlacesSearch => 'Find a place by address, name or barcode';
 
   @override

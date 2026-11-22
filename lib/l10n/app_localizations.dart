@@ -56273,6 +56273,18 @@ abstract class AppLocalizations {
   /// #4293 the places of the stock: a label, a message or a setting
   ///
   /// In en, this message translates to:
+  /// **'There is no place to print a label for.'**
+  String get stockPlacesLabelsNone;
+
+  /// #4293 the places of the stock: a label, a message or a setting
+  ///
+  /// In en, this message translates to:
+  /// **'Print labels'**
+  String get stockPlacesPrintLabels;
+
+  /// #4293 the places of the stock: a label, a message or a setting
+  ///
+  /// In en, this message translates to:
   /// **'Find a place by address, name or barcode'**
   String get stockPlacesSearch;
 

@@ -35450,6 +35450,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get stockPlacesAdd => 'Ajouter un emplacement';
 
   @override
+  String get stockPlacesLabelsNone =>
+      'Il n’y a aucun emplacement pour lequel imprimer une étiquette.';
+
+  @override
+  String get stockPlacesPrintLabels => 'Imprimer les étiquettes';
+
+  @override
   String get stockPlacesSearch =>
       'Trouver un emplacement par adresse, nom ou code-barres';
 

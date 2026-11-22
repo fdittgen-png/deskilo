@@ -35296,6 +35296,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get stockPlacesAdd => 'Añadir una ubicación';
 
   @override
+  String get stockPlacesLabelsNone =>
+      'No hay ninguna ubicación para la que imprimir una etiqueta.';
+
+  @override
+  String get stockPlacesPrintLabels => 'Imprimir etiquetas';
+
+  @override
   String get stockPlacesSearch =>
       'Buscar una ubicación por dirección, nombre o código de barras';
 
