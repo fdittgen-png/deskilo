@@ -28593,12 +28593,25 @@ class AppLocalizationsEs extends AppLocalizations {
       'Esto ha cambiado mientras tanto. Vuelva a abrirlo para ver cómo está.';
 
   @override
+  String refusalMainStoreExpired(String held, String asked) {
+    return 'El almacén principal solo tiene $held de los $asked que pide esta venta aptos para vender: el resto ha caducado. No se retiró nada y la venta no se confirmó.';
+  }
+
+  @override
+  String refusalMainStoreShort(String held, String asked) {
+    return 'El almacén principal tiene $held de los $asked que pide esta venta. No se retiró nada y la venta no se confirmó.';
+  }
+
+  @override
   String get refusalMemberReturnsAsNew =>
       'Un miembro que se fue vuelve como miembro nuevo: actívelo para darle de nuevo la bienvenida.';
 
   @override
   String get refusalMoneyLocaleLocked =>
       'La moneda y el país quedan fijados en cuanto el espacio ha emitido un documento o registrado dinero. No se ha guardado nada.';
+
+  @override
+  String get refusalOpenStock => 'Abrir las existencias';
 
   @override
   String get refusalPermission =>
@@ -35164,6 +35177,28 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get stockMoveFrom => 'Tomar de';
+
+  @override
+  String get stockMoveOpen => 'Mover mercancía';
+
+  @override
+  String get stockMoveOtherSite =>
+      'Los lugares están en sedes distintas: la mercancía está en camino hasta que la otra sede la reciba.';
+
+  @override
+  String stockMoveQuantity(String unit) {
+    return 'Cantidad ($unit)';
+  }
+
+  @override
+  String get stockMoveSameSite =>
+      'Ambos lugares están en una misma sede: la mercancía se mueve de inmediato.';
+
+  @override
+  String get stockMoveSubmit => 'Mover';
+
+  @override
   String get stockMovementNotFound =>
       'Este movimiento no existe, o no tiene permiso para verlo.';
 
@@ -35405,6 +35440,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Este artículo se sigue por lote: indique el código del lote (64 caracteres como máximo).';
 
   @override
+  String get stockReasonLotExpired =>
+      'Este lote ha caducado: retirarlo requiere una confirmación explícita.';
+
+  @override
   String get stockReasonLotGroupConflict =>
       'Las partes de un lote deben coincidir en su código, fecha y coste.';
 
@@ -35421,6 +35460,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get stockReasonNameMalformed =>
       'Un nombre tiene de 1 a 60 caracteres.';
+
+  @override
+  String get stockReasonOneSource =>
+      'Un traslado tiene un solo lugar de origen.';
 
   @override
   String get stockReasonOther => 'Esto no es válido.';
@@ -35444,11 +35487,23 @@ class AppLocalizationsEs extends AppLocalizations {
       'Una cantidad es un número mayor que cero con seis decimales como máximo.';
 
   @override
+  String get stockReasonReasonPlaces =>
+      'Estos lugares no sirven para este tipo de movimiento.';
+
+  @override
   String get stockReasonReceiptUnknown => 'Esta entrega no es de este negocio.';
+
+  @override
+  String get stockReasonReceiveOver =>
+      'No se puede recibir más de lo que sigue en camino.';
 
   @override
   String get stockReasonRegistryUnit =>
       'Esta unidad es del sistema y no se puede redefinir.';
+
+  @override
+  String get stockReasonSameSite =>
+      'Ambos lugares están en una misma sede: mueva la mercancía en un solo paso.';
 
   @override
   String get stockReasonStockOnHand => 'Hay existencias: sáquelas primero.';
@@ -35467,6 +35522,18 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get stockReasonTrackingUnsupported =>
       'Este seguimiento no está disponible.';
+
+  @override
+  String get stockReasonTransferNeedsTransit =>
+      'Entre dos sedes la mercancía se carga primero y se recibe al otro lado.';
+
+  @override
+  String get stockReasonTransferUnknown =>
+      'Este traslado no es de este negocio.';
+
+  @override
+  String get stockReasonTransitIsSystem =>
+      'El lugar «en camino» pertenece a los traslados entre sedes.';
 
   @override
   String get stockReasonUnitDuplicate => 'Esta unidad aparece dos veces.';
@@ -35510,6 +35577,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Esta variante no es de este artículo.';
 
   @override
+  String get stockReasonWrongSite =>
+      'La mercancía se recibe en un lugar de la sede de destino.';
+
+  @override
   String get stockSettingsElsewhere =>
       'Los ajustes de existencias se mantienen en la página Ajustes de existencias.';
 
@@ -35533,6 +35604,68 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get stockTabOnHand => 'En existencias';
+
+  @override
+  String get stockTakeOutLoss => 'Perdido o dado de baja';
+
+  @override
+  String get stockTakeOutOpen => 'Retirar mercancía';
+
+  @override
+  String get stockTakeOutSubmit => 'Retirar';
+
+  @override
+  String get stockTakeOutUsed => 'Consumido por el negocio';
+
+  @override
+  String stockTransferLine(
+    String item,
+    String left,
+    String unit,
+    String loaded,
+  ) {
+    return '$item: $left $unit en camino de $loaded';
+  }
+
+  @override
+  String stockTransferLoadedOn(String date) {
+    return 'Cargado el $date';
+  }
+
+  @override
+  String get stockTransferReceive => 'Recibir';
+
+  @override
+  String get stockTransferReceiveHint =>
+      'Lo que deje fuera sigue en camino y sigue visible.';
+
+  @override
+  String stockTransferReceiveQuantity(String item, String unit) {
+    return '$item: recibido ($unit)';
+  }
+
+  @override
+  String get stockTransferReceiveTitle => 'Recibir mercancía';
+
+  @override
+  String get stockTransferReceiveTo => 'Colocar en';
+
+  @override
+  String stockTransferRoute(String from, String to) {
+    return '$from → $to';
+  }
+
+  @override
+  String get stockTransferStatusPartly => 'Recibido en parte';
+
+  @override
+  String get stockTransfersEmpty => 'No hay nada en camino entre sus sedes.';
+
+  @override
+  String get stockTransfersOnTheWay => 'En camino';
+
+  @override
+  String get stockTransfersTitle => 'Traslados';
 
   @override
   String get stockVariantPrice => 'Precio propio (unidades menores, opcional)';

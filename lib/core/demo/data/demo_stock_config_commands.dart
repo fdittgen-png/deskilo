@@ -52,6 +52,19 @@ class DemoStockConfigCommands implements StockConfigCommands {
       id: 'demo-place-shelf', revision: 1, kind: 'shelf', code: 'SHELF-A', name: 'Shelf A',
       barcode: null, parentId: 'demo-place-main', active: true, virtual: false,
     ),
+    // #4170 -- a second site, and the places the server keeps for the goods on their way and the goods written off.
+    'demo-place-branch': const StockPlaceConfig(
+      id: 'demo-place-branch', revision: 1, kind: 'warehouse', code: 'BRANCH', name: 'Branch shop',
+      barcode: null, parentId: null, active: true, virtual: false,
+    ),
+    'demo-place-transit': const StockPlaceConfig(
+      id: 'demo-place-transit', revision: 1, kind: 'in_transit', code: 'TRANSIT', name: '',
+      barcode: null, parentId: null, active: true, virtual: true,
+    ),
+    'demo-place-loss': const StockPlaceConfig(
+      id: 'demo-place-loss', revision: 1, kind: 'loss', code: 'LOSS', name: '',
+      barcode: null, parentId: null, active: true, virtual: true,
+    ),
     'demo-place-supplier': const StockPlaceConfig(
       id: 'demo-place-supplier', revision: 1, kind: 'supplier', code: 'SUPPLIER', name: '',
       barcode: null, parentId: null, active: true, virtual: true,

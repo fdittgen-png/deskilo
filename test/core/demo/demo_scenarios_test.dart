@@ -22,6 +22,8 @@ import 'package:deskilo/core/demo/data/book_period_repository.dart';
 import 'package:deskilo/core/demo/data/book_profile_repository.dart';
 import 'package:deskilo/core/demo/data/demo_kiosk_devices.dart';
 import 'package:deskilo/core/demo/data/demo_stock_config_commands.dart';
+import 'package:deskilo/core/demo/data/demo_stock_ledger.dart';
+import 'package:deskilo/core/demo/data/demo_stock_operations.dart';
 import 'package:deskilo/core/demo/data/demo_stock_queries.dart';
 import 'package:deskilo/core/demo/data/demo_stock_receiving_commands.dart';
 import 'package:deskilo/core/demo/data/fake_organisation_repository.dart';
@@ -68,6 +70,7 @@ import 'package:deskilo/features/money/domain/workspace_asset.dart';
 import 'package:deskilo/features/plan/domain/seat.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/stock/domain/stock_config.dart';
+import 'package:deskilo/features/stock/domain/stock_operations.dart';
 import 'package:deskilo/features/stock/domain/stock_receiving.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/member_badge.dart';
@@ -1257,7 +1260,9 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
     'Ada reads the shop stock and finds the syrup received in thirds of a '
     'litre at exactly 0.999999 l',
     (w) async {
-      const stock = DemoStockQueries(demoFirstSpaceId);
+      final stock = DemoStockQueries(
+        DemoStockLedger(demoFirstSpaceId, DemoStockConfigCommands(demoFirstSpaceId)),
+      );
       final onHand = await stock.onHandPage(demoFirstSpaceId);
       final moves = await stock.movementsPage(demoFirstSpaceId);
       return onHand.rows.any(
@@ -1316,7 +1321,8 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
       );
       seedDemoPurchaseOrders(orders, w.now);
       final config = DemoStockConfigCommands(demoFirstSpaceId);
-      final receiving = DemoStockReceivingCommands(demoFirstSpaceId, orders, config);
+      final ledger = DemoStockLedger(demoFirstSpaceId, config);
+      final receiving = DemoStockReceivingCommands(demoFirstSpaceId, orders, config, ledger);
       final place = (await config.places(demoFirstSpaceId)).firstWhere((p) => p.code == 'MAIN').id;
       await receiving.putAway(demoFirstSpaceId, 'demo-receipt-3', [
         PutAwayAllocation(lineNo: 1, quantity: '20', locationId: place),
@@ -1329,6 +1335,30 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
       } on StockConfigRefused catch (e) {
         final rows = await receiving.allocationsOfOrder(demoFirstSpaceId, 'demo-order-${w.now.year}-5');
         return e.reason == 'over_allocated' && rows.map((a) => a.enteredQuantity.text).toList().join() == '20';
+      }
+    },
+  ),
+  // #4170 — goods taken out of the stock, on the Demo's one ledger: a broken
+  // mug is written off, and a take-out of more than is held moves nothing.
+  WorkspaceFeature.stockTakeOut: _action(
+    _owner,
+    'Ada writes off a broken mug from the main store, and is told she cannot '
+    'take out more mugs than the store holds',
+    (w) async {
+      final config = DemoStockConfigCommands(demoFirstSpaceId);
+      final ledger = DemoStockLedger(demoFirstSpaceId, config);
+      final operations = DemoStockOperations(ledger, config);
+      final main = (await config.places(demoFirstSpaceId)).firstWhere((p) => p.code == 'MAIN').id;
+      await operations.takeOut(demoFirstSpaceId, StockTakeOutReason.loss, [
+        StockLineDraft(itemId: 'demo-item-mugs', quantity: '1', fromLocationId: main),
+      ], 'req-loss');
+      try {
+        await operations.takeOut(demoFirstSpaceId, StockTakeOutReason.loss, [
+          StockLineDraft(itemId: 'demo-item-mugs', quantity: '500', fromLocationId: main),
+        ], 'req-too-many');
+        return false;
+      } on StockNotEnough {
+        return ledger.balance('demo-item-mugs', main).text == '35' && ledger.movements.first.reason == 'loss';
       }
     },
   ),

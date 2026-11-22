@@ -45567,6 +45567,18 @@ abstract class AppLocalizations {
   /// **'This changed in the meantime. Reopen it to see where it stands.'**
   String get refusalChangedMeanwhile;
 
+  /// #4170 a sale refused for what the main store holds
+  ///
+  /// In en, this message translates to:
+  /// **'The main store holds only {held} of the {asked} this sale asks for that is fit to sell: the rest is past its date. Nothing was taken and the sale was not confirmed.'**
+  String refusalMainStoreExpired(String held, String asked);
+
+  /// #4170 a sale refused for what the main store holds
+  ///
+  /// In en, this message translates to:
+  /// **'The main store holds {held} of the {asked} this sale asks for. Nothing was taken and the sale was not confirmed.'**
+  String refusalMainStoreShort(String held, String asked);
+
   /// #4008 Refusal DKM01: a member who left cannot be paused or otherwise changed back; setting them active brings them back as a new member
   ///
   /// In en, this message translates to:
@@ -45578,6 +45590,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The currency and the country are fixed once this space has issued a document or recorded money. Nothing was saved.'**
   String get refusalMoneyLocaleLocked;
+
+  /// #4170 a sale refused for what the main store holds
+  ///
+  /// In en, this message translates to:
+  /// **'Open the stock'**
+  String get refusalOpenStock;
 
   /// #1305 Shown when the server refuses an action for lack of a permission
   ///
@@ -56030,6 +56048,42 @@ abstract class AppLocalizations {
   /// **'Supplier articles of {item}'**
   String stockMappingsTitle(String item);
 
+  /// #4170 transfers and take-out: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Take from'**
+  String get stockMoveFrom;
+
+  /// #4170 transfers and take-out: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Move goods'**
+  String get stockMoveOpen;
+
+  /// #4170 transfers and take-out: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'The places are in different sites: the goods are on their way until the other site receives them.'**
+  String get stockMoveOtherSite;
+
+  /// #4170 transfers and take-out: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity ({unit})'**
+  String stockMoveQuantity(String unit);
+
+  /// #4170 transfers and take-out: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Both places are in one site: the goods move at once.'**
+  String get stockMoveSameSite;
+
+  /// #4170 transfers and take-out: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Move'**
+  String get stockMoveSubmit;
+
   /// #4161 a movement address that reads as none
   ///
   /// In en, this message translates to:
@@ -56438,6 +56492,12 @@ abstract class AppLocalizations {
   /// **'This item is tracked by lot: give the lot code (up to 64 characters).'**
   String get stockReasonLotCodeRequired;
 
+  /// #4170 transfers and take-out: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'This lot is past its date: taking it needs an explicit confirmation.'**
+  String get stockReasonLotExpired;
+
   /// #4171 receiving into stock: a text under a field the server refused
   ///
   /// In en, this message translates to:
@@ -56467,6 +56527,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'A name has 1 to 60 characters.'**
   String get stockReasonNameMalformed;
+
+  /// #4170 transfers and take-out: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'One transfer has one place to take from.'**
+  String get stockReasonOneSource;
 
   /// #4169 the stock editors: a text under a field the server refused
   ///
@@ -56504,17 +56570,35 @@ abstract class AppLocalizations {
   /// **'A quantity is a number above zero with at most six decimals.'**
   String get stockReasonQuantityInvalid;
 
+  /// #4170 transfers and take-out: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'These places do not fit this kind of movement.'**
+  String get stockReasonReasonPlaces;
+
   /// #4171 receiving into stock: a text under a field the server refused
   ///
   /// In en, this message translates to:
   /// **'This delivery is not one of this business.'**
   String get stockReasonReceiptUnknown;
 
+  /// #4170 transfers and take-out: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'More than what is still on the way cannot be received.'**
+  String get stockReasonReceiveOver;
+
   /// #4169 the stock editors: a text under a field the server refused
   ///
   /// In en, this message translates to:
   /// **'This unit belongs to the system and cannot be redefined.'**
   String get stockReasonRegistryUnit;
+
+  /// #4170 transfers and take-out: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Both places are in one site: move the goods in one step instead.'**
+  String get stockReasonSameSite;
 
   /// #4169 the stock editors: a text under a field the server refused
   ///
@@ -56545,6 +56629,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This tracking is not available.'**
   String get stockReasonTrackingUnsupported;
+
+  /// #4170 transfers and take-out: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Between two sites the goods are loaded first and received on the other side.'**
+  String get stockReasonTransferNeedsTransit;
+
+  /// #4170 transfers and take-out: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'This transfer is not one of this business.'**
+  String get stockReasonTransferUnknown;
+
+  /// #4170 transfers and take-out: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'The in-transit place belongs to the transfers between sites.'**
+  String get stockReasonTransitIsSystem;
 
   /// #4169 the stock editors: a text under a field the server refused
   ///
@@ -56612,6 +56714,12 @@ abstract class AppLocalizations {
   /// **'This variant is not one of this item.'**
   String get stockReasonVariantUnknown;
 
+  /// #4170 transfers and take-out: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Goods are received onto a place of the destination site.'**
+  String get stockReasonWrongSite;
+
   /// the stock pages and group (#4299)
   ///
   /// In en, this message translates to:
@@ -56659,6 +56767,107 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'On hand'**
   String get stockTabOnHand;
+
+  /// #4170 transfers and take-out: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Lost or written off'**
+  String get stockTakeOutLoss;
+
+  /// #4170 transfers and take-out: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Take out goods'**
+  String get stockTakeOutOpen;
+
+  /// #4170 transfers and take-out: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Take out'**
+  String get stockTakeOutSubmit;
+
+  /// #4170 transfers and take-out: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Used by the business'**
+  String get stockTakeOutUsed;
+
+  /// #4170 transfers and take-out: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'{item}: {left} {unit} on the way of {loaded}'**
+  String stockTransferLine(
+    String item,
+    String left,
+    String unit,
+    String loaded,
+  );
+
+  /// #4170 transfers and take-out: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Loaded on {date}'**
+  String stockTransferLoadedOn(String date);
+
+  /// #4170 transfers and take-out: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Receive'**
+  String get stockTransferReceive;
+
+  /// #4170 transfers and take-out: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'What you leave out stays on the way and stays visible.'**
+  String get stockTransferReceiveHint;
+
+  /// #4170 transfers and take-out: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'{item}: received ({unit})'**
+  String stockTransferReceiveQuantity(String item, String unit);
+
+  /// #4170 transfers and take-out: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Receive goods'**
+  String get stockTransferReceiveTitle;
+
+  /// #4170 transfers and take-out: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Put on'**
+  String get stockTransferReceiveTo;
+
+  /// #4170 transfers and take-out: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'{from} → {to}'**
+  String stockTransferRoute(String from, String to);
+
+  /// #4170 transfers and take-out: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Partly received'**
+  String get stockTransferStatusPartly;
+
+  /// #4170 transfers and take-out: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing is on its way between your sites.'**
+  String get stockTransfersEmpty;
+
+  /// #4170 transfers and take-out: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'On the way'**
+  String get stockTransfersOnTheWay;
+
+  /// #4170 transfers and take-out: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Transfers'**
+  String get stockTransfersTitle;
 
   /// #4169 the stock editors: a label or message
   ///
