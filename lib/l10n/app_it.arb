@@ -1265,6 +1265,8 @@
   },
   "biBookingBasis": "La capacità prenotata misura le prenotazioni, non la presenza effettiva.",
   "biCards": "Analisi mostrate",
+  "biCardsDragHandle": "Trascini per riordinare",
+  "biCardsStandard": "Torna allo standard",
   "biCardsUnavailable": "{count, plural, one{1 analisi di questa vista non è disponibile per Lei e viene omessa.} other{{count} analisi di questa vista non sono disponibili per Lei e vengono omesse.}}",
   "biCashNotBankBalance": "Pagamenti registrati, non un saldo bancario riconciliato.",
   "@biCashNotBankBalance": {
@@ -1428,6 +1430,7 @@
   "biDataPartial": "Dati parziali",
   "biDataStale": "Dati non aggiornati",
   "biDataUnavailable": "Non disponibile",
+  "biDefaultViewName": "Le mie analisi",
   "biDeltaNone": "Nessun confronto per ora",
   "@biDeltaNone": {
     "description": "Business analytics dashboard: biDeltaNone"

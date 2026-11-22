@@ -6526,6 +6526,8 @@ You look at how the workspace performs.
 3. Read the analyses by area, such as **Finance** (**Invoiced**, **Collected**) and **Space and capacity**.
 4. Save a view under **Views**, or tap **Export as PDF**.
 
+**Analyses shown** chooses which analyses the page shows and in what order: tick the ones you want and drag the handle of a row to move it (the arrows beside it do the same from the keyboard). Your choice is remembered for you in this workspace, on any device, and opens again next time; an address that names analyses, or a view you open, wins for that visit. **Back to the standard** clears it.
+
 **Good to know**
 
 - You only see analyses you are allowed to read.

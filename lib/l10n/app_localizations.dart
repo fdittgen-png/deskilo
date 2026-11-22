@@ -4579,6 +4579,18 @@ abstract class AppLocalizations {
   /// **'Analyses shown'**
   String get biCards;
 
+  /// #4340 the analyses page: a label
+  ///
+  /// In en, this message translates to:
+  /// **'Drag to reorder'**
+  String get biCardsDragHandle;
+
+  /// #4340 the analyses page: a label
+  ///
+  /// In en, this message translates to:
+  /// **'Back to the standard'**
+  String get biCardsStandard;
+
   /// #1923 C Web-BI saved views
   ///
   /// In en, this message translates to:
@@ -5061,6 +5073,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Unavailable'**
   String get biDataUnavailable;
+
+  /// #4340 the analyses page: a label
+  ///
+  /// In en, this message translates to:
+  /// **'My analyses'**
+  String get biDefaultViewName;
 
   /// Business analytics dashboard: biDeltaNone
   ///

@@ -1458,6 +1458,8 @@ Guarda come funziona lo spazio.
 3. Legga le analisi per area, come **Finanze** (**Fatturato**, **Incassato**) e **Spazi e capacità**.
 4. Salvi una vista sotto **Viste**, oppure tocchi **Esporta in PDF**.
 
+**Analisi mostrate** sceglie quali analisi mostra la pagina e in che ordine: spunti quelle che vuole e trascini la maniglia di una riga per spostarla (le frecce accanto fanno lo stesso da tastiera). La Sua scelta viene ricordata per Lei in questo spazio, su qualsiasi dispositivo, e si riapre la volta successiva; un indirizzo che nomina analisi, o una vista che apre, prevale per quella visita. **Torna allo standard** la cancella.
+
 **Da sapere**
 
 - Vede solo le analisi che ha il permesso di leggere.

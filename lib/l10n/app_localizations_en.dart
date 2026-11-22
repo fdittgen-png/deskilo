@@ -2845,6 +2845,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get biCards => 'Analyses shown';
 
   @override
+  String get biCardsDragHandle => 'Drag to reorder';
+
+  @override
+  String get biCardsStandard => 'Back to the standard';
+
+  @override
   String biCardsUnavailable(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -3189,6 +3195,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get biDataUnavailable => 'Unavailable';
+
+  @override
+  String get biDefaultViewName => 'My analyses';
 
   @override
   String get biDeltaNone => 'No comparison yet';

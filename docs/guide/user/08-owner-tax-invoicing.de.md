@@ -1458,6 +1458,8 @@ Sie sehen sich an, wie der Workspace abschneidet.
 3. Lesen Sie die Analysen nach Bereich, etwa **Finanzen** (**Fakturiert**, **Eingenommen**) und **Flächen und Kapazität**.
 4. Speichern Sie unter **Ansichten** eine Ansicht oder tippen Sie auf **Als PDF exportieren**.
 
+**Angezeigte Analysen** wählt, welche Analysen die Seite zeigt und in welcher Reihenfolge: Haken Sie die gewünschten an und ziehen Sie den Griff einer Zeile, um sie zu verschieben (die Pfeile daneben tun dasselbe über die Tastatur). Ihre Auswahl wird für Sie in diesem Arbeitsbereich auf jedem Gerät gemerkt und beim nächsten Mal wieder geöffnet; eine Adresse, die Analysen nennt, oder eine geöffnete Ansicht hat für diesen Besuch Vorrang. **Zurück zum Standard** löscht sie.
+
 **Gut zu wissen**
 
 - Sie sehen nur Analysen, die Sie lesen dürfen.
