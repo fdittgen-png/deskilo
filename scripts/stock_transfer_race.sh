@@ -325,10 +325,10 @@ commit;
 SQL
 contender5=$!
 wait_lock "transfer-race-putaway"
-wait "$holder5" || { echo "::error::the first put-away failed: $(tr '\\n' ' ' < "$scratch/holder5")" >&2; exit 1; }
+wait "$holder5" || { echo "::error::the first put-away failed: $(tr '\n' ' ' < "$scratch/holder5")" >&2; exit 1; }
 wait "$contender5" || true
-grep -qx putaway "$scratch/holder5" || { echo "::error::the first put-away did not complete: $(tr '\\n' ' ' < "$scratch/holder5")" >&2; exit 1; }
-grep -q "over_allocated" "$scratch/contender5" || { echo "::error::the second put-away was not refused as over_allocated: $(tr '\\n' ' ' < "$scratch/contender5")" >&2; exit 1; }
+grep -qx putaway "$scratch/holder5" || { echo "::error::the first put-away did not complete: $(tr '\n' ' ' < "$scratch/holder5")" >&2; exit 1; }
+grep -q "over_allocated" "$scratch/contender5" || { echo "::error::the second put-away was not refused as over_allocated: $(tr '\n' ' ' < "$scratch/contender5")" >&2; exit 1; }
 expect "(D) one allocation of 4 exists" "$(q "select count(*) || '/' || coalesce(sum(inventory_quantity), 0)::int from public.stock_receipt_allocations where receipt_id = '$rcpt'")" "1/4"
 expect "(D) 4 of the item are in stock" "$(q "select coalesce(sum(quantity), 0)::int from public.stock_balances where item_id = '$p' and location_id = '$main'")" "4"
 
@@ -354,9 +354,9 @@ commit;
 SQL
 contender6=$!
 wait_lock "transfer-race-reorder"
-wait "$holder6" || { echo "::error::the first take failed: $(tr '\\n' ' ' < "$scratch/holder6")" >&2; exit 1; }
-wait "$contender6" || { echo "::error::the second take failed: $(tr '\\n' ' ' < "$scratch/contender6")" >&2; exit 1; }
-grep -qx taken "$scratch/contender6" || { echo "::error::the second take did not complete: $(tr '\\n' ' ' < "$scratch/contender6")" >&2; exit 1; }
+wait "$holder6" || { echo "::error::the first take failed: $(tr '\n' ' ' < "$scratch/holder6")" >&2; exit 1; }
+wait "$contender6" || { echo "::error::the second take failed: $(tr '\n' ' ' < "$scratch/contender6")" >&2; exit 1; }
+grep -qx taken "$scratch/contender6" || { echo "::error::the second take did not complete: $(tr '\n' ' ' < "$scratch/contender6")" >&2; exit 1; }
 expect "(E) 10 - 2 - 2 = 6 of the item on hand" "$(q "select coalesce(sum(quantity), 0)::int from public.stock_balances where item_id = '$r' and location_id = '$main'")" "6"
 expect "(E) the point was crossed by both and raised exactly one open alert" "$(q "select count(*) from public.events where workspace_id = '$ws' and type = 'stock_low' and payload ->> 'item_id' = '$r' and not (payload ? 'ended')")" "1"
 # (F) two sessions each return 6 of the sale of 10, under distinct return ids
@@ -375,16 +375,17 @@ SQL
 holder7=$!
 wait_marker "$scratch/ready7" "$scratch/holder7"
 PGAPPNAME="transfer-race-reversal" psql "$url" -X -qAt -v ON_ERROR_STOP=1 >"$scratch/contender7" 2>&1 <<SQL &
+\\set VERBOSITY verbose
 begin;
 $(return_q "$rb2" "$rlb")
 commit;
 SQL
 contender7=$!
 wait_lock "transfer-race-reversal"
-wait "$holder7" || { echo "::error::the first return failed: $(tr '\\n' ' ' < "$scratch/holder7")" >&2; exit 1; }
+wait "$holder7" || { echo "::error::the first return failed: $(tr '\n' ' ' < "$scratch/holder7")" >&2; exit 1; }
 wait "$contender7" || true
-grep -qx returned "$scratch/holder7" || { echo "::error::the first return did not complete: $(tr '\\n' ' ' < "$scratch/holder7")" >&2; exit 1; }
-grep -q "DKG17" "$scratch/contender7" || { echo "::error::the second return was not refused as beyond the sale: $(tr '\\n' ' ' < "$scratch/contender7")" >&2; exit 1; }
+grep -qx returned "$scratch/holder7" || { echo "::error::the first return did not complete: $(tr '\n' ' ' < "$scratch/holder7")" >&2; exit 1; }
+grep -q "DKG17" "$scratch/contender7" || { echo "::error::the second return was not refused as beyond the sale: $(tr '\n' ' ' < "$scratch/contender7")" >&2; exit 1; }
 expect "(F) 6 of the sale were reversed, by one return" "$(q "select count(*) || '/' || coalesce(sum(quantity), 0)::int from public.stock_reversals where source_movement_id = '$sale'")" "1/6"
 expect "(F) 20 - 10 + 6 = 16 of the item on hand" "$(q "select coalesce(sum(quantity), 0)::int from public.stock_balances where item_id = '$q' and location_id = '$main'")" "16"
 
@@ -410,10 +411,10 @@ commit;
 SQL
 contender8=$!
 wait_lock "transfer-race-count"
-wait "$holder8" || { echo "::error::the first apply failed: $(tr '\\n' ' ' < "$scratch/holder8")" >&2; exit 1; }
-wait "$contender8" || { echo "::error::the second apply failed: $(tr '\\n' ' ' < "$scratch/contender8")" >&2; exit 1; }
-grep -qx "decided applied" "$scratch/holder8" || { echo "::error::the first apply did not apply: $(tr '\\n' ' ' < "$scratch/holder8")" >&2; exit 1; }
-grep -qx "decided applied" "$scratch/contender8" || { echo "::error::the second apply did not answer the same result: $(tr '\\n' ' ' < "$scratch/contender8")" >&2; exit 1; }
+wait "$holder8" || { echo "::error::the first apply failed: $(tr '\n' ' ' < "$scratch/holder8")" >&2; exit 1; }
+wait "$contender8" || { echo "::error::the second apply failed: $(tr '\n' ' ' < "$scratch/contender8")" >&2; exit 1; }
+grep -qx "decided applied" "$scratch/holder8" || { echo "::error::the first apply did not apply: $(tr '\n' ' ' < "$scratch/holder8")" >&2; exit 1; }
+grep -qx "decided applied" "$scratch/contender8" || { echo "::error::the second apply did not answer the same result: $(tr '\n' ' ' < "$scratch/contender8")" >&2; exit 1; }
 expect "(G) one adjustment of 3 exists" "$(q "select count(*) || '/' || coalesce(sum(quantity), 0)::int from public.stock_movements where item_id = '$c' and reason = 'adjustment'")" "1/3"
 expect "(G) 10 - 3 = 7 of the item on hand" "$(q "select coalesce(sum(quantity), 0)::int from public.stock_balances where item_id = '$c' and location_id = '$main'")" "7"
 
@@ -432,9 +433,9 @@ begin;
 select 'made ' || public.stock_cycle_counts_due('$ws');
 commit;
 SQL
-wait "$holder9" || { echo "::error::the first run failed: $(tr '\\n' ' ' < "$scratch/holder9")" >&2; exit 1; }
-grep -qx "made 1" "$scratch/holder9" || { echo "::error::the first run did not make the task: $(tr '\\n' ' ' < "$scratch/holder9")" >&2; exit 1; }
-grep -qx "made 0" "$scratch/contender9" || { echo "::error::the second run did not skip the plan: $(tr '\\n' ' ' < "$scratch/contender9")" >&2; exit 1; }
+wait "$holder9" || { echo "::error::the first run failed: $(tr '\n' ' ' < "$scratch/holder9")" >&2; exit 1; }
+grep -qx "made 1" "$scratch/holder9" || { echo "::error::the first run did not make the task: $(tr '\n' ' ' < "$scratch/holder9")" >&2; exit 1; }
+grep -qx "made 0" "$scratch/contender9" || { echo "::error::the second run did not skip the plan: $(tr '\n' ' ' < "$scratch/contender9")" >&2; exit 1; }
 expect "(H) one task with its lines exists for the plan" "$(q "select count(*) || '/' || (select count(*) from public.stock_count_task_lines x join public.stock_count_tasks t2 on t2.id = x.task_id where t2.plan_id = '$plan') from public.stock_count_tasks where plan_id = '$plan'")" "1/1"
 
 # (H2) the two lines of the second plan's task, counted at once
@@ -465,8 +466,8 @@ commit;
 SQL
 contender10=$!
 wait_lock "transfer-race-taskclose"
-wait "$holder10" || { echo "::error::the first count failed: $(tr '\\n' ' ' < "$scratch/holder10")" >&2; exit 1; }
-wait "$contender10" || { echo "::error::the second count failed: $(tr '\\n' ' ' < "$scratch/contender10")" >&2; exit 1; }
+wait "$holder10" || { echo "::error::the first count failed: $(tr '\n' ' ' < "$scratch/holder10")" >&2; exit 1; }
+wait "$contender10" || { echo "::error::the second count failed: $(tr '\n' ' ' < "$scratch/contender10")" >&2; exit 1; }
 expect "(H2) the task is complete, with nothing pending" "$(q "select t.state || '/' || (select count(*) from public.stock_count_task_lines x where x.task_id = t.id and x.state = 'pending') from public.stock_count_tasks t where t.plan_id = '$plan2'")" "complete/0"
 
 echo "stock transfer race: opposing transfers never deadlock and keep every total; the last stock is taken once; a booking confirmation and a customer return of one item serialise in both orders; two put-aways cannot over-allocate a line; two sessions crossing a reorder point raise one alert"
