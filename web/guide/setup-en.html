@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self'; script-src 'self'; base-uri 'none'; form-action 'none'">
 <title>Setup guide · DesKilo</title>
-<meta name="description" content="DesKilo — build your space, step by step. For the person who is about to create a coworking space, an association's room or a shared office, and wants to know what is possible, what is necessary and in which order.">
+<meta name="description" content="DesKilo — build your space, step by step. For the person who is about to set up a business with places to book (a coworking space, an association's room, a shared office) or without places (a practice, a studio, a salon, a freelancer, another service business), and wants to know what is possible, what is necessary and in which order.">
 <link rel="icon" href="../favicon.png">
 <link rel="stylesheet" href="guide.css">
 </head>
@@ -21,12 +21,12 @@
   <nav class="toc" aria-label="Contents">
     <div class="books books-m"><a class="book" href="en.html">User guide</a><a class="book cur" href="setup-en.html" aria-current="page">Setup guide</a></div>
     <div class="langs"><a class="chip-btn lang cur" href="setup-en.html" hreflang="en" lang="en" aria-current="true">EN</a><a class="chip-btn lang" href="setup-fr.html" hreflang="fr" lang="fr">FR</a><a class="chip-btn lang" href="setup-de.html" hreflang="de" lang="de">DE</a><a class="chip-btn lang" href="setup-es.html" hreflang="es" lang="es">ES</a><a class="chip-btn lang" href="setup-it.html" hreflang="it" lang="it">IT</a></div>
-    <ol><li data-id="setup.guide.how-to-read"><a class="chap" href="#setup.guide.how-to-read">How to use this guide</a></li><li data-id="setup.before.overview"><a class="chap" href="#setup.before.overview">Before you start</a><ol><li data-id="setup.before.what"><a href="#setup.before.what">What DesKilo can do</a></li><li data-id="setup.before.necessary"><a href="#setup.before.necessary">What is necessary and what is optional</a></li><li data-id="setup.before.environment"><a href="#setup.before.environment">A test space or a real one</a></li><li data-id="setup.before.template"><a href="#setup.before.template">Start from a template or from nothing</a></li><li data-id="setup.before.prepare"><a href="#setup.before.prepare">What to prepare</a></li><li data-id="setup.before.permanent"><a href="#setup.before.permanent">Decisions that are hard to undo</a></li><li data-id="setup.before.who"><a href="#setup.before.who">Who does what</a></li></ol></li><li data-id="setup.place.overview"><a class="chap" href="#setup.place.overview">Build the place</a><ol><li data-id="setup.place.where"><a href="#setup.place.where">Country, currency, time zone and language</a></li><li data-id="setup.place.plan"><a href="#setup.place.plan">The floor plan</a></li><li data-id="setup.place.times"><a href="#setup.place.times">Opening times and booking rules</a></li><li data-id="setup.place.closure"><a href="#setup.place.closure">Closing days and public holidays</a></li><li data-id="setup.place.check"><a href="#setup.place.check">Check your space</a></li></ol></li><li data-id="setup.features.overview"><a class="chap" href="#setup.features.overview">Choose what your space offers</a><ol><li data-id="setup.features.what"><a href="#setup.features.what">Features and processes</a></li><li data-id="setup.features.tiers"><a href="#setup.features.tiers">Core and Platform: what a new space has</a></li><li data-id="setup.features.dependencies"><a href="#setup.features.dependencies">Features that need other features</a></li><li data-id="setup.features.off"><a href="#setup.features.off">Switching off deletes nothing</a></li><li data-id="setup.features.maturity"><a href="#setup.features.maturity">Beta, Unreviewed and the question before you switch on</a></li><li data-id="setup.features.profiles"><a href="#setup.features.profiles">Three starting points</a></li><li data-id="setup.features.profile-tiny"><a href="#setup.features.profile-tiny">A few shared places</a></li><li data-id="setup.features.profile-association"><a href="#setup.features.profile-association">An association with a room</a></li><li data-id="setup.features.profile-invoicing"><a href="#setup.features.profile-invoicing">A coworking that invoices</a></li><li data-id="setup.features.order"><a href="#setup.features.order">The order to switch things on</a></li><li data-id="setup.features.safely"><a href="#setup.features.safely">Switch a feature on safely</a></li><li data-id="setup.features.consistency"><a href="#setup.features.consistency">Avoid features that contradict each other</a></li><li data-id="setup.features.map"><a href="#setup.features.map">The feature map</a></li></ol></li><li data-id="setup.people.overview"><a class="chap" href="#setup.people.overview">People, roles and decisions</a><ol><li data-id="setup.people.organisation"><a href="#setup.people.organisation">Who does what in a real organisation</a></li><li data-id="setup.people.matrix"><a href="#setup.people.matrix">The role matrix: least privilege</a></li><li data-id="setup.people.coowner"><a href="#setup.people.coowner">Co-owners: more than one person who can act</a></li><li data-id="setup.people.join"><a href="#setup.people.join">How people join</a></li><li data-id="setup.people.invitation"><a href="#setup.people.invitation">The invitation message, language by language</a></li><li data-id="setup.people.managed"><a href="#setup.people.managed">Managed profiles</a></li><li data-id="setup.people.validation"><a href="#setup.people.validation">Validation: what a rule is made of</a></li><li data-id="setup.people.presets"><a href="#setup.people.presets">Three presets to copy</a></li><li data-id="setup.people.stuck"><a href="#setup.people.stuck">Avoid requests that wait for ever</a></li><li data-id="setup.people.first-week"><a href="#setup.people.first-week">The first week of your members</a></li></ol></li><li data-id="setup.money.overview"><a class="chap" href="#setup.money.overview">Money and tax</a><ol><li data-id="setup.money.decide"><a href="#setup.money.decide">Decide first: do members pay, and who issues the invoices</a></li><li data-id="setup.money.tariff"><a href="#setup.money.tariff">Design a tariff</a></li><li data-id="setup.money.example"><a href="#setup.money.example">A worked example</a></li><li data-id="setup.money.negotiation"><a href="#setup.money.negotiation">Price negotiation</a></li><li data-id="setup.money.pay"><a href="#setup.money.pay">How members pay you</a></li><li data-id="setup.money.identity"><a href="#setup.money.identity">Your legal identity, and what to ask your accountant</a></li><li data-id="setup.money.invoicing"><a href="#setup.money.invoicing">Invoice by hand or automatically</a></li><li data-id="setup.money.reminders"><a href="#setup.money.reminders">Payment reminders</a></li><li data-id="setup.money.vat"><a href="#setup.money.vat">VAT in outline</a></li><li data-id="setup.money.permanent"><a href="#setup.money.permanent">What cannot be undone</a></li><li data-id="setup.money.dry-run"><a href="#setup.money.dry-run">A safe dry run in a test space</a></li></ol></li><li data-id="setup.notify.overview"><a class="chap" href="#setup.notify.overview">Tell people</a><ol><li data-id="setup.notify.channels"><a href="#setup.notify.channels">The channels, in plain words</a></li><li data-id="setup.notify.table"><a href="#setup.notify.table">Who is told what</a></li><li data-id="setup.notify.configure"><a href="#setup.notify.configure">What you configure</a></li><li data-id="setup.notify.operator"><a href="#setup.notify.operator">The operator's part: making push work</a></li><li data-id="setup.notify.members"><a href="#setup.notify.members">What members control</a></li><li data-id="setup.notify.test"><a href="#setup.notify.test">A test plan: send yourself one of each</a></li><li data-id="setup.notify.silence"><a href="#setup.notify.silence">Avoid overload, and avoid silence</a></li></ol></li><li data-id="setup.reports.overview"><a class="chap" href="#setup.reports.overview">Documents and reports</a><ol><li data-id="setup.reports.documents"><a href="#setup.reports.documents">The documents the app produces</a></li><li data-id="setup.reports.designer"><a href="#setup.reports.designer">The designer, in owner terms</a></li><li data-id="setup.reports.sequence"><a href="#setup.reports.sequence">The sequence to follow</a></li><li data-id="setup.reports.accountant"><a href="#setup.reports.accountant">What you hand your accountant</a></li><li data-id="setup.reports.analytics"><a href="#setup.reports.analytics">Business analytics in outline</a></li><li data-id="setup.reports.ai"><a href="#setup.reports.ai">Help from an AI assistant</a></li><li data-id="setup.reports.developer"><a href="#setup.reports.developer">Working with a developer: the design file and the report tool</a></li></ol></li><li data-id="setup.consistent.overview"><a class="chap" href="#setup.consistent.overview">Keep it consistent</a><ol><li data-id="setup.consistent.guards"><a href="#setup.consistent.guards">The guards the app gives you</a></li><li data-id="setup.consistent.gaps"><a href="#setup.consistent.gaps">The mistakes the guards do not catch</a></li><li data-id="setup.consistent.audit"><a href="#setup.consistent.audit">The pre-launch audit</a></li><li data-id="setup.consistent.monthly"><a href="#setup.consistent.monthly">The monthly routine</a></li><li data-id="setup.consistent.wrong"><a href="#setup.consistent.wrong">When something looks wrong</a></li><li data-id="setup.consistent.irreversible"><a href="#setup.consistent.irreversible">What cannot be undone</a></li></ol></li><li data-id="setup.training.overview"><a class="chap" href="#setup.training.overview">Learn it in four weeks</a><ol><li data-id="setup.training.week0"><a href="#setup.training.week0">Week 0: look around the demo</a></li><li data-id="setup.training.week1"><a href="#setup.training.week1">Week 1: Open</a></li><li data-id="setup.training.week2"><a href="#setup.training.week2">Week 2: Run</a></li><li data-id="setup.training.week3"><a href="#setup.training.week3">Week 3: Grow</a></li><li data-id="setup.training.week4"><a href="#setup.training.week4">Week 4: go live</a></li><li data-id="setup.training.glossary"><a href="#setup.training.glossary">Twenty words of the setup</a></li><li data-id="setup.training.help"><a href="#setup.training.help">Where to ask for help</a></li><li data-id="setup.training.cheatsheet"><a href="#setup.training.cheatsheet">The cheat sheet</a></li></ol></li></ol>
+    <ol><li data-id="setup.guide.how-to-read"><a class="chap" href="#setup.guide.how-to-read">How to use this guide</a></li><li data-id="setup.kind.overview"><a class="chap" href="#setup.kind.overview">Start with the kind of business</a><ol><li data-id="setup.kind.choose"><a href="#setup.kind.choose">What kind of business is it?</a></li><li data-id="setup.kind.without-places"><a href="#setup.kind.without-places">What a business without places does not get</a></li><li data-id="setup.kind.example"><a href="#setup.kind.example">A worked example: a practice without places</a></li></ol></li><li data-id="setup.before.overview"><a class="chap" href="#setup.before.overview">Before you start</a><ol><li data-id="setup.before.what"><a href="#setup.before.what">What DesKilo can do</a></li><li data-id="setup.before.necessary"><a href="#setup.before.necessary">What is necessary and what is optional</a></li><li data-id="setup.before.environment"><a href="#setup.before.environment">A test space or a real one</a></li><li data-id="setup.before.template"><a href="#setup.before.template">Start from a template or from nothing</a></li><li data-id="setup.before.prepare"><a href="#setup.before.prepare">What to prepare</a></li><li data-id="setup.before.permanent"><a href="#setup.before.permanent">Decisions that are hard to undo</a></li><li data-id="setup.before.who"><a href="#setup.before.who">Who does what</a></li></ol></li><li data-id="setup.place.overview"><a class="chap" href="#setup.place.overview">Build the place</a><ol><li data-id="setup.place.where"><a href="#setup.place.where">Country, currency, time zone and language</a></li><li data-id="setup.place.plan"><a href="#setup.place.plan">The floor plan</a></li><li data-id="setup.place.times"><a href="#setup.place.times">Opening times and booking rules</a></li><li data-id="setup.place.closure"><a href="#setup.place.closure">Closing days and public holidays</a></li><li data-id="setup.place.check"><a href="#setup.place.check">Check your space</a></li></ol></li><li data-id="setup.features.overview"><a class="chap" href="#setup.features.overview">Choose what your space offers</a><ol><li data-id="setup.features.what"><a href="#setup.features.what">Features and processes</a></li><li data-id="setup.features.tiers"><a href="#setup.features.tiers">Core and Platform: what a new space has</a></li><li data-id="setup.features.dependencies"><a href="#setup.features.dependencies">Features that need other features</a></li><li data-id="setup.features.off"><a href="#setup.features.off">Switching off deletes nothing</a></li><li data-id="setup.features.maturity"><a href="#setup.features.maturity">Beta, Unreviewed and the question before you switch on</a></li><li data-id="setup.features.profiles"><a href="#setup.features.profiles">Three starting points</a></li><li data-id="setup.features.profile-tiny"><a href="#setup.features.profile-tiny">A few shared places</a></li><li data-id="setup.features.profile-association"><a href="#setup.features.profile-association">An association with a room</a></li><li data-id="setup.features.profile-invoicing"><a href="#setup.features.profile-invoicing">A coworking that invoices</a></li><li data-id="setup.features.order"><a href="#setup.features.order">The order to switch things on</a></li><li data-id="setup.features.safely"><a href="#setup.features.safely">Switch a feature on safely</a></li><li data-id="setup.features.consistency"><a href="#setup.features.consistency">Avoid features that contradict each other</a></li><li data-id="setup.features.map"><a href="#setup.features.map">The feature map</a></li></ol></li><li data-id="setup.people.overview"><a class="chap" href="#setup.people.overview">People, roles and decisions</a><ol><li data-id="setup.people.organisation"><a href="#setup.people.organisation">Who does what in a real organisation</a></li><li data-id="setup.people.matrix"><a href="#setup.people.matrix">The role matrix: least privilege</a></li><li data-id="setup.people.coowner"><a href="#setup.people.coowner">Co-owners: more than one person who can act</a></li><li data-id="setup.people.join"><a href="#setup.people.join">How people join</a></li><li data-id="setup.people.invitation"><a href="#setup.people.invitation">The invitation message, language by language</a></li><li data-id="setup.people.managed"><a href="#setup.people.managed">Managed profiles</a></li><li data-id="setup.people.validation"><a href="#setup.people.validation">Validation: what a rule is made of</a></li><li data-id="setup.people.presets"><a href="#setup.people.presets">Three presets to copy</a></li><li data-id="setup.people.stuck"><a href="#setup.people.stuck">Avoid requests that wait for ever</a></li><li data-id="setup.people.first-week"><a href="#setup.people.first-week">The first week of your members</a></li></ol></li><li data-id="setup.money.overview"><a class="chap" href="#setup.money.overview">Money and tax</a><ol><li data-id="setup.money.decide"><a href="#setup.money.decide">Decide first: do members pay, and who issues the invoices</a></li><li data-id="setup.money.tariff"><a href="#setup.money.tariff">Design a tariff</a></li><li data-id="setup.money.example"><a href="#setup.money.example">A worked example</a></li><li data-id="setup.money.negotiation"><a href="#setup.money.negotiation">Price negotiation</a></li><li data-id="setup.money.pay"><a href="#setup.money.pay">How members pay you</a></li><li data-id="setup.money.identity"><a href="#setup.money.identity">Your legal identity, and what to ask your accountant</a></li><li data-id="setup.money.invoicing"><a href="#setup.money.invoicing">Invoice by hand or automatically</a></li><li data-id="setup.money.reminders"><a href="#setup.money.reminders">Payment reminders</a></li><li data-id="setup.money.vat"><a href="#setup.money.vat">VAT in outline</a></li><li data-id="setup.money.permanent"><a href="#setup.money.permanent">What cannot be undone</a></li><li data-id="setup.money.dry-run"><a href="#setup.money.dry-run">A safe dry run in a test space</a></li></ol></li><li data-id="setup.notify.overview"><a class="chap" href="#setup.notify.overview">Tell people</a><ol><li data-id="setup.notify.channels"><a href="#setup.notify.channels">The channels, in plain words</a></li><li data-id="setup.notify.table"><a href="#setup.notify.table">Who is told what</a></li><li data-id="setup.notify.configure"><a href="#setup.notify.configure">What you configure</a></li><li data-id="setup.notify.operator"><a href="#setup.notify.operator">The operator's part: making push work</a></li><li data-id="setup.notify.members"><a href="#setup.notify.members">What members control</a></li><li data-id="setup.notify.test"><a href="#setup.notify.test">A test plan: send yourself one of each</a></li><li data-id="setup.notify.silence"><a href="#setup.notify.silence">Avoid overload, and avoid silence</a></li></ol></li><li data-id="setup.reports.overview"><a class="chap" href="#setup.reports.overview">Documents and reports</a><ol><li data-id="setup.reports.documents"><a href="#setup.reports.documents">The documents the app produces</a></li><li data-id="setup.reports.designer"><a href="#setup.reports.designer">The designer, in owner terms</a></li><li data-id="setup.reports.sequence"><a href="#setup.reports.sequence">The sequence to follow</a></li><li data-id="setup.reports.accountant"><a href="#setup.reports.accountant">What you hand your accountant</a></li><li data-id="setup.reports.analytics"><a href="#setup.reports.analytics">Business analytics in outline</a></li><li data-id="setup.reports.ai"><a href="#setup.reports.ai">Help from an AI assistant</a></li><li data-id="setup.reports.developer"><a href="#setup.reports.developer">Working with a developer: the design file and the report tool</a></li></ol></li><li data-id="setup.consistent.overview"><a class="chap" href="#setup.consistent.overview">Keep it consistent</a><ol><li data-id="setup.consistent.guards"><a href="#setup.consistent.guards">The guards the app gives you</a></li><li data-id="setup.consistent.gaps"><a href="#setup.consistent.gaps">The mistakes the guards do not catch</a></li><li data-id="setup.consistent.audit"><a href="#setup.consistent.audit">The pre-launch audit</a></li><li data-id="setup.consistent.monthly"><a href="#setup.consistent.monthly">The monthly routine</a></li><li data-id="setup.consistent.wrong"><a href="#setup.consistent.wrong">When something looks wrong</a></li><li data-id="setup.consistent.irreversible"><a href="#setup.consistent.irreversible">What cannot be undone</a></li></ol></li><li data-id="setup.training.overview"><a class="chap" href="#setup.training.overview">Learn it in four weeks</a><ol><li data-id="setup.training.week0"><a href="#setup.training.week0">Week 0: look around the demo</a></li><li data-id="setup.training.week1"><a href="#setup.training.week1">Week 1: Open</a></li><li data-id="setup.training.week2"><a href="#setup.training.week2">Week 2: Run</a></li><li data-id="setup.training.week3"><a href="#setup.training.week3">Week 3: Grow</a></li><li data-id="setup.training.week4"><a href="#setup.training.week4">Week 4: go live</a></li><li data-id="setup.training.glossary"><a href="#setup.training.glossary">Twenty words of the setup</a></li><li data-id="setup.training.help"><a href="#setup.training.help">Where to ask for help</a></li><li data-id="setup.training.cheatsheet"><a href="#setup.training.cheatsheet">The cheat sheet</a></li></ol></li></ol>
   </nav>
   <main>
     <div class="hero">
       <h1>Setup Guide</h1>
-      <p><strong>DesKilo — build your space, step by step.</strong> For the person who is about to create a coworking space, an association's room or a shared office, and wants to know what is possible, what is necessary and in which order.</p>
+      <p><strong>DesKilo — build your space, step by step.</strong> For the person who is about to set up a business with places to book (a coworking space, an association's room, a shared office) or without places (a practice, a studio, a salon, a freelancer, another service business), and wants to know what is possible, what is necessary and in which order.</p>
 
       <div class="filters" role="group" aria-label="I am"><span class="lbl">I am</span><button class="chip-btn" type="button" data-level="member" aria-pressed="false">Member</button><button class="chip-btn" type="button" data-level="admin" aria-pressed="false">Administrator</button><button class="chip-btn" type="button" data-level="owner" aria-pressed="false">Owner</button><button class="chip-btn" type="button" data-level="operator" aria-pressed="false">Server operator</button><button class="chip-btn" type="button" data-level="everything" aria-pressed="false">Everything</button><span class="count" data-template="{n} sections"></span></div>
       <p><a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/">Open DesKilo</a></p>
@@ -69,6 +69,10 @@
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>To know which steps your kind of business gets, with or without places</td>
+<td><a href="#setup.kind.overview">What kind of business is it?</a></td>
+</tr>
 <tr>
 <td>To know what DesKilo can do and what to prepare</td>
 <td><a href="#setup.before.overview">Before you start</a></td>
@@ -117,7 +121,127 @@
 <li>A block that starts with <strong>Careful</strong> marks a decision that becomes hard to undo, and says when.</li>
 <li>This guide never certifies anything legal or fiscal: it says what the app does and what to confirm with an accountant.</li>
 </ul>
-</div><div class="media"><figure class="shot"><div class="screen" tabindex="0"><img loading="lazy" src="../assets/assets/help/images/setup-guide-wizard.en.b8fa17aa9.jpg" alt="How to use this guide"></div><button class="zoom" type="button" aria-label="Enlarge the screenshot: How to use this guide">⤢</button></figure></div></article><section class="chapter" id="setup.before.overview"><header><span class="no">Chapter 01</span><h2>Before you start</h2><div class="intro"><p>A little preparation saves you the two things that cost most later: retyping, and decisions you cannot take back. This chapter shows what DesKilo does, what you really need to open, and what to have at hand.</p>
+</div><div class="media"><figure class="shot"><div class="screen" tabindex="0"><img loading="lazy" src="../assets/assets/help/images/setup-guide-wizard.en.b8fa17aa9.jpg" alt="How to use this guide"></div><button class="zoom" type="button" aria-label="Enlarge the screenshot: How to use this guide">⤢</button></figure></div></article><section class="chapter" id="setup.kind.overview"><header><span class="no">Chapter 01</span><h2>Start with the kind of business</h2><div class="intro"><p>The first question of the setup is not about floors or tariffs: it is <strong>What kind of business is it?</strong> The answer decides which steps you meet. A coworking space, an association's room or a shared office has places to book and goes through every step. A practice, a studio, a salon, a freelancer or another service business has no places and does not meet the steps about them. This chapter shows the question, what a business without places does not get, and one example from the kind step to the first invoice.</p>
+<p>In this chapter:</p>
+<ul>
+<li><a href="#setup.kind.choose">What kind of business is it?</a></li>
+<li><a href="#setup.kind.without-places">What a business without places does not get</a></li>
+<li><a href="#setup.kind.example">A worked example: a practice without places</a></li>
+</ul>
+</div></header><article class="section no-media" id="setup.kind.choose" data-roles="owner coowner"><header><h3>What kind of business is it? <a class="permalink" href="#setup.kind.choose" aria-label="link">#</a></h3><div class="roles"><span class="role role-owner">Owner</span><span class="role role-coowner">Co-owner</span></div></header><div class="body"><p>You want the app to match your business before you set anything up. The first step of the in-app guide, <strong>Name, country and time zone</strong>, opens with this question.</p>
+<!-- image: setup-kind-choose -->
+<p><em>The kinds</em></p>
+<table>
+<thead>
+<tr>
+<th>Kind</th>
+<th>What it is</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Coworking space</strong></td>
+<td>Members book seats, desks and rooms on a floor plan.</td>
+</tr>
+<tr>
+<td><strong>Studio</strong></td>
+<td>Classes and courses: yoga, dance, music, art.</td>
+</tr>
+<tr>
+<td><strong>Practice</strong></td>
+<td>Appointments: massage, therapy, coaching, consulting.</td>
+</tr>
+<tr>
+<td><strong>Salon</strong></td>
+<td>Beauty, hair, nails, tattoo.</td>
+</tr>
+<tr>
+<td><strong>Freelancer</strong></td>
+<td>One person selling and invoicing their own services: customers, quotes and invoices, no premises.</td>
+</tr>
+<tr>
+<td><strong>Service business</strong></td>
+<td>Any other business that sells its services.</td>
+</tr>
+</tbody>
+</table>
+<h4 class="lbl lbl-steps">Steps</h4>
+<ol>
+<li>Open <a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/workspace-settings">Workspace</a>, or take the first step of the setup guide.</li>
+<li>Tap <strong>What kind of business is it?</strong> and choose a kind. If the business is several things, tick further kinds under <strong>It is also… (optional)</strong>.</li>
+<li>Read what it <strong>Switches on</strong> and <strong>Switches off</strong>, then tap <strong>Save</strong>. <strong>Show all</strong> lists every feature.</li>
+</ol>
+<h4 class="lbl lbl-know">Good to know</h4>
+<ul>
+<li>Nothing changes until <strong>Save</strong>. Choosing a kind later proposes again and never switches anything silently.</li>
+<li><strong>Coworking space</strong> proposes nothing: the space keeps everything as it was.</li>
+<li>A feature not yet reviewed as stable is switched on only if you tick it; otherwise switch it on later in <strong>Features</strong>.</li>
+<li>Booking of classes and appointments is not part of this version. Today a business without places gets its services with prices, invoices, online payment, messages and its public page.</li>
+</ul>
+<p class="see-also"><strong>See also:</strong> <a href="en.html#user.workspace.settings.business-kind">What kind of business is it? (User Guide)</a> · <a href="en.html#user.features.processes">Switch features on and off</a></p>
+</div></article><article class="section no-media" id="setup.kind.without-places" data-roles="owner coowner"><header><h3>What a business without places does not get <a class="permalink" href="#setup.kind.without-places" aria-label="link">#</a></h3><div class="roles"><span class="role role-owner">Owner</span><span class="role role-coowner">Co-owner</span></div></header><div class="body"><p>You run a practice, a studio, a salon, a freelancer's business or another service business, and want to know which steps are not for you. A kind without places switches off everything about places: seats, floor plan, kiosk, rooms.</p>
+<p><em>Steps a business without places is not offered</em></p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Why it is not there</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Places on the plan</strong></td>
+<td>There are no rooms, desks or seats to draw.</td>
+</tr>
+<tr>
+<td><strong>Prices and plans</strong></td>
+<td>They price presence in a place, so they need the places as well as billing.</td>
+</tr>
+<tr>
+<td><strong>Booking limits</strong></td>
+<td>They bound how far ahead, how long and how many places at once members book.</td>
+</tr>
+<tr>
+<td><strong>Kiosk and badges</strong></td>
+<td>A tablet at the door and member badges belong to a place.</td>
+</tr>
+<tr>
+<td><strong>A first booking</strong></td>
+<td>There is no place to book.</td>
+</tr>
+</tbody>
+</table>
+<p><em>Steps that are not about places stay, for instance</em></p>
+<ul>
+<li><strong>Name, country and time zone</strong>, <strong>Opening hours</strong> and <strong>What members may do</strong>.</li>
+<li><strong>Invite members</strong>, <strong>Services</strong>, <strong>How members pay</strong> and <strong>Online payments</strong>.</li>
+<li>The invoicing steps: <strong>Legal identity</strong>, <strong>VAT</strong>, <strong>Invoice numbering</strong>, <strong>Invoice look</strong>, <strong>E-invoicing</strong>, <strong>Accounting</strong> and <strong>Payment reminders</strong>.</li>
+</ul>
+<h4 class="lbl lbl-know">Good to know</h4>
+<ul>
+<li>The steps come back when the business is of a kind that has places, or when places are switched on again. Nothing is deleted: the floor plan and the bookings are back with them.</li>
+<li>The rest of this guide is written around <em>Atelier du Marché</em>, which has places. Where a section is about the floor plan, seats, the kiosk or booking rules, a business without places skips it.</li>
+</ul>
+<p class="see-also"><strong>See also:</strong> <a href="#setup.place.check">Check your space</a> · <a href="en.html#user.features.processes">Switch features on and off</a></p>
+</div></article><article class="section no-media" id="setup.kind.example" data-roles="owner coowner"><header><h3>A worked example: a practice without places <a class="permalink" href="#setup.kind.example" aria-label="link">#</a></h3><div class="roles"><span class="role role-owner">Owner</span><span class="role role-coowner">Co-owner</span></div></header><div class="body"><p>You want to see a whole setup for a business without places, from the kind to the first invoice. The example is the practice of the demo workspace, <em>Lindner Beratung</em>, a consulting practice in Berlin. Its people and figures are invented; open it in <a href="en.html#user.advanced.demo">The demo workspace</a> to follow along.</p>
+<h4 class="lbl lbl-steps">Steps</h4>
+<ol>
+<li><strong>What kind of business is it?</strong> Choose <strong>Practice</strong>. The proposal switches places off and keeps invoicing, online payment, messages and the public page on. Tap <strong>Save</strong>.</li>
+<li><strong>Name, country and time zone.</strong> Name it <em>Lindner Beratung</em>, country Germany, currency EUR, time zone Europe/Berlin (see <a href="#setup.place.where">Country, currency, time zone and language</a>).</li>
+<li><strong>Opening hours</strong> and <strong>What members may do.</strong> The practice's clients are its members: set the days it is open and what a client may see of their own account. There is no <strong>Places on the plan</strong> step.</li>
+<li><strong>Services.</strong> List what the practice sells, each with a name, a price and the VAT rate (see <a href="en.html#user.money.services.overview">A service</a>). There is no <strong>Prices and plans</strong> step: a service has its own price.</li>
+<li><strong>Legal identity.</strong> Choose the VAT regime <strong>VAT-registered (charges VAT)</strong>, enter the registration number and the address, Kastanienallee 12, 10435 Berlin (see <a href="#setup.money.identity">Your legal identity, and what to ask your accountant</a>).</li>
+<li><strong>VAT</strong> and <strong>Invoice numbering.</strong> The practice charges German VAT of 19 % and keeps the invoice numbers the app proposes (see <a href="#setup.money.vat">VAT in outline</a>).</li>
+<li><strong>The first invoice.</strong> Open <a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/invoices">Invoicing</a>, tap <strong>New</strong>, pick the client and the month, then tap <strong>Issue invoice</strong> (see <a href="en.html#user.invoicing.new-invoice">Issue an invoice</a>).</li>
+</ol>
+<h4 class="lbl lbl-know">Good to know</h4>
+<ul>
+<li>The demo practice shows the result: three years of monthly invoices for its own services, in euros with German VAT, and an empty floor plan.</li>
+<li>Issuing invoices inside DesKilo works for France and Germany only today, and the practice is in Germany.</li>
+<li>No step of this list waits for a place: the practice can invoice on its first day.</li>
+</ul>
+<p class="see-also"><strong>See also:</strong> <a href="#setup.money.overview">Money and tax</a> · <a href="#setup.money.invoicing">Invoice by hand or automatically</a></p>
+</div></article></section><section class="chapter" id="setup.before.overview"><header><span class="no">Chapter 02</span><h2>Before you start</h2><div class="intro"><p>A little preparation saves you the two things that cost most later: retyping, and decisions you cannot take back. This chapter shows what DesKilo does, what you really need to open, and what to have at hand.</p>
 <p>In this chapter:</p>
 <ul>
 <li><a href="#setup.before.what">What DesKilo can do</a></li>
@@ -381,7 +505,7 @@
 <li>If a section says <strong>The server operator</strong>, the app cannot do it from your screen.</li>
 </ul>
 <p class="see-also"><strong>See also:</strong> <a href="en.html#user.roles.matrix">Decide who may do what</a> · <a href="en.html#user.advanced.deploy-permissions">Deploy permissions</a></p>
-</div></article></section><section class="chapter" id="setup.place.overview"><header><span class="no">Chapter 02</span><h2>Build the place</h2><div class="intro"><p>This chapter makes the first level, <strong>Open</strong>: where the space is, what it looks like, when it is open and what the rules of booking are. In about twenty minutes the space can be booked. The example is <em>Atelier du Marché</em>, an association in Pézenas with two floors and a room.</p>
+</div></article></section><section class="chapter" id="setup.place.overview"><header><span class="no">Chapter 03</span><h2>Build the place</h2><div class="intro"><p>This chapter makes the first level, <strong>Open</strong>: where the space is, what it looks like, when it is open and what the rules of booking are. In about twenty minutes the space can be booked. The example is <em>Atelier du Marché</em>, an association in Pézenas with two floors and a room.</p>
 <p>In this chapter:</p>
 <ul>
 <li><a href="#setup.place.where">Country, currency, time zone and language</a></li>
@@ -539,7 +663,7 @@
 </ul>
 <p><strong>Result</strong> A space that members can book. Next: invite the first people, then the roles and tariffs of the second level.</p>
 <p class="see-also"><strong>See also:</strong> <a href="en.html#user.start.get-started">The Get started card and the tips</a> · <a href="en.html#user.workspace.code">Invite people with the workspace ID</a> · <a href="en.html#user.roles.matrix">Roles</a></p>
-</div><div class="media"><figure class="shot"><div class="screen" tabindex="0"><img loading="lazy" src="../assets/assets/help/images/setup-place-get-started--card.en.b8fa17aa9.jpg" alt="Check your space"></div><button class="zoom" type="button" aria-label="Enlarge the screenshot: Check your space">⤢</button></figure></div></article></section><section class="chapter" id="setup.features.overview"><header><span class="no">Chapter 03</span><h2>Choose what your space offers</h2><div class="intro"><p>A space is not one product with a hundred settings. It is a handful of things you decide to offer, one at a time. This chapter explains how DesKilo groups what it can do, what a new space already has, how the pieces depend on each other, and in which order to switch them on so that you never offer something you cannot yet run.</p>
+</div><div class="media"><figure class="shot"><div class="screen" tabindex="0"><img loading="lazy" src="../assets/assets/help/images/setup-place-get-started--card.en.b8fa17aa9.jpg" alt="Check your space"></div><button class="zoom" type="button" aria-label="Enlarge the screenshot: Check your space">⤢</button></figure></div></article></section><section class="chapter" id="setup.features.overview"><header><span class="no">Chapter 04</span><h2>Choose what your space offers</h2><div class="intro"><p>A space is not one product with a hundred settings. It is a handful of things you decide to offer, one at a time. This chapter explains how DesKilo groups what it can do, what a new space already has, how the pieces depend on each other, and in which order to switch them on so that you never offer something you cannot yet run.</p>
 <p>In this chapter:</p>
 <ul>
 <li><a href="#setup.features.what">Features and processes</a></li>
@@ -1710,7 +1834,7 @@
 <li>A few features are not listed here. Features of comfort (help hints, animations, navigation style, regional formats) have no table row: they work the moment they are on.</li>
 </ul>
 <p class="see-also"><strong>See also:</strong> <a href="#setup.before.who">Who does what</a> · <a href="en.html#user.features.processes">Switch features on and off</a></p>
-</div></article></section><section class="chapter" id="setup.people.overview"><header><span class="no">Chapter 04</span><h2>People, roles and decisions</h2><div class="intro"><p>A space is its people. Before you invite the first of them, decide three things: who may do what, how someone gets in, and which acts need a second person to say yes. They are quick to set and awkward to repair once forty people rely on them.</p>
+</div></article></section><section class="chapter" id="setup.people.overview"><header><span class="no">Chapter 05</span><h2>People, roles and decisions</h2><div class="intro"><p>A space is its people. Before you invite the first of them, decide three things: who may do what, how someone gets in, and which acts need a second person to say yes. They are quick to set and awkward to repair once forty people rely on them.</p>
 <p>In this chapter:</p>
 <ul>
 <li><a href="#setup.people.organisation">Who does what in a real organisation</a></li>
@@ -2188,7 +2312,7 @@
 </ul>
 <p><strong>Result</strong> People who know how to book, how to check in and whom to ask.</p>
 <p class="see-also"><strong>See also:</strong> <a href="#setup.training.overview">Week 0 to week 4</a> · <a href="#setup.notify.members">How members are told</a></p>
-</div></article></section><section class="chapter" id="setup.money.overview"><header><span class="no">Chapter 05</span><h2>Money and tax</h2><div class="intro"><p>For owners and billing administrators who are about to decide how a space is paid for. This chapter is about the decisions and their order; the clicks are in the user guide, and every section links to them.</p>
+</div></article></section><section class="chapter" id="setup.money.overview"><header><span class="no">Chapter 06</span><h2>Money and tax</h2><div class="intro"><p>For owners and billing administrators who are about to decide how a space is paid for. This chapter is about the decisions and their order; the clicks are in the user guide, and every section links to them.</p>
 <blockquote class="warn"><p><strong>Careful</strong> DesKilo records, calculates and prints what you declare, and it checks that the required details are present. It does not certify your invoices, your VAT treatment or your books. Wherever this chapter says &quot;ask your accountant&quot;, please do.</p>
 </blockquote>
 <p>In this chapter:</p>
@@ -2515,7 +2639,7 @@
 <h4 class="lbl lbl-result">Result</h4>
 <p>A first month you have already seen, and a list of questions answered before they cost anything.</p>
 <p class="see-also"><strong>See also:</strong> <a href="en.html#user.advanced.environments">The two environments</a> · <a href="en.html#user.invoicing.accounting-export">Accounting exports</a></p>
-</div></article></section><section class="chapter" id="setup.notify.overview"><header><span class="no">Chapter 06</span><h2>Tell people</h2><div class="intro"><p>For owners who want members and administrators to hear about what matters, and only that. This chapter describes what DesKilo really sends, who receives it, what you configure and what you leave to the operator of the installation.</p>
+</div></article></section><section class="chapter" id="setup.notify.overview"><header><span class="no">Chapter 07</span><h2>Tell people</h2><div class="intro"><p>For owners who want members and administrators to hear about what matters, and only that. This chapter describes what DesKilo really sends, who receives it, what you configure and what you leave to the operator of the installation.</p>
 <p>In this chapter:</p>
 <ul>
 <li>The channels, in plain words</li>
@@ -2740,7 +2864,7 @@
 <li>Automatic payment reminders are not a substitute for looking at the open invoices from time to time.</li>
 </ul>
 <p class="see-also"><strong>See also:</strong> <a href="en.html#user.validation.who-may">Who may validate</a> · <a href="en.html#user.validation.required-count">Required validations</a></p>
-</div></article></section><section class="chapter" id="setup.reports.overview"><header><span class="no">Chapter 07</span><h2>Documents and reports</h2><div class="intro"><p>Everything DesKilo prints or exports comes from one engine and one place to design it. This chapter tells you which documents exist, the order in which to prepare them, what you may hand to your accountant, and where an AI assistant can help you and where it must not. The clicks are in the user guide; here you get the reasons and the order.</p>
+</div></article></section><section class="chapter" id="setup.reports.overview"><header><span class="no">Chapter 08</span><h2>Documents and reports</h2><div class="intro"><p>Everything DesKilo prints or exports comes from one engine and one place to design it. This chapter tells you which documents exist, the order in which to prepare them, what you may hand to your accountant, and where an AI assistant can help you and where it must not. The clicks are in the user guide; here you get the reasons and the order.</p>
 <p>The running example is the demo space <em>Atelier du Marché</em>.</p>
 </div></header><article class="section" id="setup.reports.documents" data-roles="owner billing"><header><h3>The documents the app produces <a class="permalink" href="#setup.reports.documents" aria-label="link">#</a></h3><div class="roles"><span class="role role-owner">Owner</span><span class="role role-billing">Billing administrator</span></div></header><div class="body"><p>You want to know what exists before you design anything, and who receives each document.</p>
 
@@ -3021,7 +3145,7 @@
 <li>The tool needs the source code of the app; it is for the person who runs your installation, not for daily use.</li>
 </ul>
 <p class="see-also"><strong>See also:</strong> <a href="en.html#user.money.reports.editor">The report editor</a> · <a href="en.html#user.money.reports.invoice-template">The invoice PDF template</a></p>
-</div></article></section><section class="chapter" id="setup.consistent.overview"><header><span class="no">Chapter 08</span><h2>Keep it consistent</h2><div class="intro"><p>A space can be wrong in two ways: a setting that is missing, and two settings that contradict each other. DesKilo catches some of both, and says so on screen. This chapter lists what it catches and where you see it, says plainly what it does not catch, and gives you an audit to run before the doors open and a short routine to run every month.</p>
+</div></article></section><section class="chapter" id="setup.consistent.overview"><header><span class="no">Chapter 09</span><h2>Keep it consistent</h2><div class="intro"><p>A space can be wrong in two ways: a setting that is missing, and two settings that contradict each other. DesKilo catches some of both, and says so on screen. This chapter lists what it catches and where you see it, says plainly what it does not catch, and gives you an audit to run before the doors open and a short routine to run every month.</p>
 <p>In this chapter:</p>
 <ul>
 <li><a href="#setup.consistent.guards">The guards the app gives you</a></li>
@@ -3587,7 +3711,7 @@
 </ul>
 <p><strong>Result</strong> You know which lines to read twice.</p>
 <p class="see-also"><strong>See also:</strong> <a href="#setup.before.overview">Before you start</a></p>
-</div></article></section><section class="chapter" id="setup.training.overview"><header><span class="no">Chapter 09</span><h2>Learn it in four weeks</h2><div class="intro"><p>You do not have to understand DesKilo before you start. You have to understand it in the right order, and to practise each step where a mistake costs nothing. This chapter is a four-week path of about half an hour a day, with a week of looking around first. Each week ends with a checklist: when every box is ticked, go on.</p>
+</div></article></section><section class="chapter" id="setup.training.overview"><header><span class="no">Chapter 10</span><h2>Learn it in four weeks</h2><div class="intro"><p>You do not have to understand DesKilo before you start. You have to understand it in the right order, and to practise each step where a mistake costs nothing. This chapter is a four-week path of about half an hour a day, with a week of looking around first. Each week ends with a checklist: when every box is ticked, go on.</p>
 <p>The rule of the whole path: <em>learn on the demo, build on a test space, and only then touch the real space.</em></p>
 </div></header><article class="section no-media" id="setup.training.week0" data-roles="owner"><header><h3>Week 0: look around the demo <a class="permalink" href="#setup.training.week0" aria-label="link">#</a></h3><div class="roles"><span class="role role-owner">Owner</span></div></header><div class="body"><p>You want to see the finished product before you make decisions. The demo workspace <em>Atelier du Marché</em> is invented, open to anybody and changes nothing real.</p>
 <h4 class="lbl lbl-steps">Steps</h4>
