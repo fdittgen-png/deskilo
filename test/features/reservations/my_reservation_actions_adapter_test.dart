@@ -18,6 +18,7 @@ import 'package:deskilo/features/reservations/data/host_my_reservation_actions.d
 import 'package:deskilo/features/reservations/data/host_my_reservations_repository.dart';
 import 'package:deskilo/features/reservations/domain/my_reservations.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
+import 'package:deskilo/features/reservations/domain/reservation_refusal.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
@@ -57,7 +58,10 @@ Map<String, Object?> _wire(String id, {String status = 'reserved'}) => {
 /// One host: what it was asked, and what it answers.
 class _Host {
   final List<(String, Map<String, dynamic>)> received = [];
-  ({int status, String code, String message})? refusal;
+  ({int status, String code, String message, Object? details})? refusal;
+
+  /// An answer that is not PostgREST's: a gateway's error page, a body that cannot be read.
+  ({int status, String body})? raw;
   List<Map<String, Object?>> items = [_wire('r-b1', status: 'cancelled')];
 
   late final SupabaseClient client = SupabaseClient(
@@ -81,8 +85,12 @@ class _Host {
     final name = request.url.pathSegments.last;
     received.add((name, jsonDecode(request.body) as Map<String, dynamic>));
     final r = refusal;
+    final w = raw;
+    if (w != null && name != 'my_reservations_page_v1') {
+      return http.Response(w.body, w.status, request: request, headers: {'content-type': 'text/html'});
+    }
     if (r != null && name != 'my_reservations_page_v1') {
-      return _json({'code': r.code, 'message': r.message, 'details': null, 'hint': null}, r.status, request);
+      return _json({'code': r.code, 'message': r.message, 'details': r.details, 'hint': null}, r.status, request);
     }
     if (name == 'my_reservations_page_v1') {
       return _json({'schema_version': 1, 'items': items, 'has_more': false, 'next': null}, 200, request);
@@ -162,19 +170,54 @@ void main() {
     );
   });
 
-  test('a host without the command is unsupported; its own refusal comes through unchanged', () async {
-    b.refusal = (status: 404, code: 'PGRST202', message: 'Could not find the function');
+  test('a host without the command is unsupported', () async {
+    b.refusal = (status: 404, code: 'PGRST202', message: 'Could not find the function', details: null);
     await expectLater(
       actions().cancel(_row, _item),
       throwsA(isA<MyReservationsRefused>()
           .having((e) => e.failure, 'failure', MyReservationsFailure.unsupported)),
     );
-    b.refusal = (status: 400, code: 'P0001', message: 'not cancellable');
+    expect(a.received, isEmpty);
+  });
+
+  // #4315 — the host's own refusal reaches the card as the typed refusal, through the one
+  // conversion of the booking writes, with its values read; never as the transport's error.
+  test('a coded refusal of check-in or cancel is the typed refusal, its detail value read', () async {
+    b.refusal = (status: 400, code: 'DKK17', message: 'check-in is not open yet', details: '{"minutes": 45}');
+    for (final run in [() => actions().checkIn(_row, _item), () => actions().cancel(_row, _item)]) {
+      await expectLater(
+        run(),
+        throwsA(isA<ReservationRefused>()
+            .having((e) => e.refusal.kind, 'kind', ReservationRefusalKind.coded)
+            .having((e) => e.refusal.code, 'code', 'DKK17')
+            .having((e) => e.refusal.minutes, 'minutes', 45)),
+      );
+    }
+    b.refusal = (status: 400, code: 'DKK18', message: 'x', details: null);
+    await expectLater(
+      actions().checkIn(_row, _item),
+      throwsA(isA<ReservationRefused>().having((e) => e.refusal.code, 'code', 'DKK18')),
+    );
+  });
+
+  test('a code of no meaning keeps nothing of the host: an unknown refusal, still typed', () async {
+    b.refusal = (status: 400, code: 'P0001', message: 'not cancellable', details: null);
     await expectLater(
       actions().cancel(_row, _item),
-      throwsA(isA<PostgrestException>().having((e) => e.message, 'message', 'not cancellable')),
+      throwsA(isA<ReservationRefused>()
+          .having((e) => e.refusal.kind, 'kind', ReservationRefusalKind.unknown)),
     );
-    expect(a.received, isEmpty);
+  });
+
+  test('a gateway answer or a body that cannot be read is NOT a refusal: it stays the transport\'s error', () async {
+    for (final answer in [(status: 502, body: '<html>bad gateway</html>'), (status: 200, body: '{"truncated"')]) {
+      b.raw = answer;
+      await expectLater(
+        actions().checkIn(_row, _item),
+        throwsA(isA<PostgrestException>().having((e) => e, 'not typed', isNot(isA<ReservationRefused>()))),
+        reason: '${answer.status}',
+      );
+    }
   });
 
   test('View reads the booking again on its host, narrowed to its workspace and start', () async {

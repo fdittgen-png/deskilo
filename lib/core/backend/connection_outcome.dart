@@ -79,6 +79,17 @@ class ConnectionFailure extends StateError {
       'ConnectionFailure(${reason.name}${afterSend ? ', after send' : ''})';
 }
 
+/// #4317 -- whether a write ended without an ANSWER of the server's: a timeout, a lost or dropped
+/// connection, or a reply that is not a PostgREST refusal (a gateway's error page, a 2xx whose body
+/// cannot be read). The SDK reports the last two as a [PostgrestException] whose code is the HTTP
+/// status (three digits); a refusal the database raised carries an SQLSTATE or a `PGRST` code.
+/// The server may have committed the write, so it is an unknown outcome, never a refusal.
+bool leftOutcomeUnknown(Object? error) {
+  if (error is TimeoutException || isTransientNetworkFailure(error)) return true;
+  if (error is PostgrestException) return RegExp(r'^\d{3}$').hasMatch(error.code ?? '');
+  return false;
+}
+
 /// Which typed outcome [error] is, for [source]. Pure: reads the SDK's
 /// types and status codes, never a localized sentence. Unknown errors are
 /// [ConnectionFailureReason.malformed] — never "supported" or "authorized".
