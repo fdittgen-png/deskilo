@@ -81,11 +81,11 @@ reset role;
 commit;
 select id as ev1 from public.events where workspace_id = :'ws' and type = 'service_charge' and (payload ->> 'quantity')::int = 2 \gset
 select id as ev2 from public.events where workspace_id = :'ws' and type = 'service_charge' and (payload ->> 'quantity')::int = 1 \gset
-\echo :ws :x :y :z :main :shelf :loss :customer :w :inv :ev1 :ev2
+\echo :ws :x :y :z :main :shelf :loss :customer :w :inv :ev1 :ev2 :supplier
 SQL
 )
-read -r ws x y z main shelf loss customer w inv ev1 ev2 <<<"$fixture"
-for v in "$ws" "$x" "$y" "$z" "$main" "$shelf" "$loss" "$customer" "$w" "$inv" "$ev1" "$ev2"; do
+read -r ws x y z main shelf loss customer w inv ev1 ev2 supplier <<<"$fixture"
+for v in "$ws" "$x" "$y" "$z" "$main" "$shelf" "$loss" "$customer" "$w" "$inv" "$ev1" "$ev2" "$supplier"; do
   [[ "$v" =~ ^[0-9a-f-]{36}$ ]] || { echo "::error::fixture incomplete: '$fixture'" >&2; exit 1; }
 done
 expect() { [[ "$2" == "$3" ]] || { echo "::error::$1: expected '$3', got '$2'" >&2; exit 1; }; }
