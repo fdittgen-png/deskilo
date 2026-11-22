@@ -31455,15 +31455,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get servicesPublic => 'Mostrar en nuestra página pública';
 
   @override
-  String get servicesPublicPageColumn => 'Página pública';
-
-  @override
   String servicesPublicPageHidden(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
       other: '$count servicios públicos no se muestran allí.',
-      one: '1 servicio público no se muestra allí.',
+      one: '$count servicio público no se muestra allí.',
     );
     return '$_temp0';
   }
@@ -31474,9 +31471,15 @@ class AppLocalizationsEs extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count servicios son públicos',
-      one: '1 servicio es público',
+      one: '$count servicio es público',
     );
-    return '$_temp0. La página pública muestra los $limit primeros, en el orden de esta lista.';
+    String _temp1 = intl.Intl.pluralLogic(
+      limit,
+      locale: localeName,
+      other: 'los $limit primeros',
+      one: 'el primero ($limit)',
+    );
+    return '$_temp0. La página pública muestra $_temp1, en el orden de esta lista.';
   }
 
   @override

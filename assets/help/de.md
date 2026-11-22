@@ -4649,6 +4649,7 @@ Sie verkaufen etwas, das kein Sitzplatz ist: ein Schließfach, Drucken, Kaffee. 
 - Eine Leistung wird nie gelöscht, nur deaktiviert, weil Rechnungen auf sie verweisen.
 - Eine Leistung, die aus einem Bestand stammt, zeigt, wie viele noch übrig sind, oder **Ausverkauft**.
 - Um eine für ein Mitglied zu erfassen, nutzen Sie **Leistung hinzufügen** auf seiner Seite.
+- **Auf unserer öffentlichen Seite zeigen**: Die öffentliche Seite, ihre Karte in Entdecken und die Suche nach Leistungen zeigen die ersten 12 öffentlichen Leistungen, in der Reihenfolge der Leistungsliste (Kategorie, dann Name). Die Liste nennt, wie viele Leistungen öffentlich sind, und markiert die, die die Seite nicht zeigt.
 
 **Siehe auch:** [Zubehör](help:user.money.accessories) · [Die Mitgliederseite](help:user.members.page)
 

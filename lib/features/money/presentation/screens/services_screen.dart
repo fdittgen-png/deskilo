@@ -241,7 +241,7 @@ class ServicesScreen extends ConsumerWidget {
       // #4318 — whether the public page shows the service.
       RecordColumn(
         id: 'public',
-        label: l10n.servicesPublicPageColumn,
+        label: l10n.setupStepTitlePublicPage,
         flex: 2,
         cell: (_, s) => !s.active || !s.isPublic
             ? const SizedBox.shrink()

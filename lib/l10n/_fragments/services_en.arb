@@ -81,7 +81,7 @@
   "@servicesSaveFailed": {
     "description": "#3552 the service editor: saving a service failed."
   },
-  "servicesPublicPageNotice": "{count, plural, =1{1 service is public} other{{count} services are public}}. The public page shows the first {limit}, in the order of this list.",
+  "servicesPublicPageNotice": "{count, plural, one{{count} service is public} other{{count} services are public}}. The public page shows {limit, plural, one{the first {limit}} other{the first {limit}}}, in the order of this list.",
   "@servicesPublicPageNotice": {
     "description": "#4318 the services list: how many services are public and how many the public page shows",
     "placeholders": {
@@ -93,7 +93,7 @@
       }
     }
   },
-  "servicesPublicPageHidden": "{count, plural, =1{1 public service is not shown there.} other{{count} public services are not shown there.}}",
+  "servicesPublicPageHidden": "{count, plural, one{{count} public service is not shown there.} other{{count} public services are not shown there.}}",
   "@servicesPublicPageHidden": {
     "description": "#4318 the services list: how many public services the public page does not show",
     "placeholders": {
@@ -105,9 +105,5 @@
   "servicesNotOnPublicPage": "Not on the public page",
   "@servicesNotOnPublicPage": {
     "description": "#4318 the services list: a public service beyond the ones the public page shows"
-  },
-  "servicesPublicPageColumn": "Public page",
-  "@servicesPublicPageColumn": {
-    "description": "#4318 the services table: the column saying whether the public page shows the service"
   }
 }

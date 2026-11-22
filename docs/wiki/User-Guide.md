@@ -4881,6 +4881,7 @@ You sell something that is not a seat: a locker, printing, coffee. You list it o
 - A service is never deleted, only deactivated, because invoices refer to it.
 - A service that comes from a stock shows how many are left, or **Out of stock**.
 - To record one for a member, use **Add a service** on their page.
+- **Show on our public page**: the public page, its card in Discover and the search by service carry the first 12 public services, in the order of the services list (category, then name). The list says how many services are public and marks the ones the page does not show.
 
 **See also:** [Accessories](#accessories) · [The member page](#the-member-page)
 

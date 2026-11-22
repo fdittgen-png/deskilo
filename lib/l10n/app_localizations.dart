@@ -50133,22 +50133,16 @@ abstract class AppLocalizations {
   /// **'Show on our public page'**
   String get servicesPublic;
 
-  /// #4318 the services table: the column saying whether the public page shows the service
-  ///
-  /// In en, this message translates to:
-  /// **'Public page'**
-  String get servicesPublicPageColumn;
-
   /// #4318 the services list: how many public services the public page does not show
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 public service is not shown there.} other{{count} public services are not shown there.}}'**
+  /// **'{count, plural, one{{count} public service is not shown there.} other{{count} public services are not shown there.}}'**
   String servicesPublicPageHidden(int count);
 
   /// #4318 the services list: how many services are public and how many the public page shows
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 service is public} other{{count} services are public}}. The public page shows the first {limit}, in the order of this list.'**
+  /// **'{count, plural, one{{count} service is public} other{{count} services are public}}. The public page shows {limit, plural, one{the first {limit}} other{the first {limit}}}, in the order of this list.'**
   String servicesPublicPageNotice(int count, int limit);
 
   /// #3552 the service editor: saving a service failed.
