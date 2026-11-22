@@ -20,6 +20,15 @@ per-case subtransactions, results in the aborting RAISE) is the user-level
 
 Idioms, pgTAP probe mechanics and incidents: [reference.md](reference.md).
 
+**Effect on apps (ADR 0053, #3728).** Before the file is final: a function keeps its
+meaning for a caller that does not send a new parameter (default reproduces the old
+behaviour; a changed signature is a new function); no second meaning for a column or a
+status; an object the app writes whole is merged, never replaced; remove or narrow
+nothing until the installation's floor allows it (it does not exist yet: remove
+nothing). From the next migration the line after `-- risk:` is
+`-- apps: additive | needs app at least N | breaks apps below N` (checked by a reviewer
+until the K4 lint, #3731, exists). Rules: AGENT_RULES, "Every migration ends with its version".
+
 ## 1. The number
 - Dev project `zwzbynivewivvjmripeb` (never the tankstellen project). Files are
   `supabase/migrations/NNNN_name.sql`; pgTAP files `supabase/tests/database/NN_name.sql`.
