@@ -9,7 +9,7 @@
 -- in the business's own zone; Pacific/Pago_Pago (UTC-11) and Pacific/Kiritimati (UTC+14) are never both
 -- on the UTC date. Rolled back.
 begin;
-select plan(31);
+select plan(30);
 
 create or replace function pg_temp.run_as(p_user uuid, p_sql text)
 returns text language plpgsql as $f$
