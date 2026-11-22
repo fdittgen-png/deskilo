@@ -4912,6 +4912,7 @@ Vende algo que no es un puesto: una taquilla, impresión, café. Lo da de alta u
 - Un servicio nunca se elimina, solo se desactiva, porque hay facturas que lo mencionan.
 - Un servicio que procede de un stock muestra cuántas unidades quedan, o **Agotado**.
 - Para registrar uno a un miembro, use **Añadir un servicio** en su ficha.
+- **Mostrar en nuestra página pública**: la página pública, su ficha en Descubrir y la búsqueda por servicio recogen los 12 primeros servicios públicos, en el orden de la lista de servicios (categoría y luego nombre). La lista indica cuántos servicios son públicos y señala los que la página no muestra.
 
 **Véase también:** [Accesorios](#accesorios) · [La ficha del miembro](#la-ficha-del-miembro)
 

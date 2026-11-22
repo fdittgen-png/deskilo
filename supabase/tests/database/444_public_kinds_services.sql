@@ -9,7 +9,7 @@
 -- A service, a kind, the VAT regime changing refreshes the card in the same
 -- transaction, without saving the page.
 begin;
-select plan(28);
+select plan(30);
 
 insert into auth.users(id,instance_id,aud,role,email,encrypted_password,email_confirmed_at,created_at,updated_at)
 values ('00000000-0000-4000-8000-0000003553a1','00000000-0000-0000-0000-000000000000',
@@ -119,13 +119,20 @@ select is((select document->'kinds'->>0 from public.public_workspace_cards where
  'salon','still carries its kinds');
 select set_config('request.jwt.claims','{}',true);
 
--- Twelve at most, in the business's own order.
+-- #4318: N at most (one source: public_page_service_limit()), in the services list's order:
+-- category (uncategorised last), then sort order, then name.
+select is(public.public_page_service_limit(), 12, 'the public page carries twelve public services');
 insert into public.services(workspace_id,name,price_cents,active,is_public,sort_order)
 select '00000000-0000-4000-8000-0000003553b2','Extra '||lpad(n::text,2,'0'),100,true,true,n+1 from generate_series(1,14) n;
 select is((select jsonb_array_length(document->'services') from public.public_workspace_cards where workspace_id='00000000-0000-4000-8000-0000003553b2'),
- 12,'twelve services at most');
+ public.public_page_service_limit(),'N services at most');
 select ok((select search_text not like '%Extra 14%' from public.public_workspace_cards where workspace_id='00000000-0000-4000-8000-0000003553b2'),
- 'the search covers the published twelve only');
+ 'the search covers the published N only');
+-- A categorised service comes before the uncategorised ones, whatever its sort order.
+insert into public.services(workspace_id,name,price_cents,active,is_public,sort_order,category)
+values ('00000000-0000-4000-8000-0000003553b2','Aroma',100,true,true,99,'Aaa');
+select is((select document->'services'->0->>'name' from public.public_workspace_cards where workspace_id='00000000-0000-4000-8000-0000003553b2'),
+ 'Aroma','the first category comes first, as in the services list');
 
 select * from finish();
 rollback;

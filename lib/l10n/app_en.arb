@@ -40886,6 +40886,10 @@
   "@servicesNew": {
     "description": "FAB tooltip and sheet title when creating a service"
   },
+  "servicesNotOnPublicPage": "Not on the public page",
+  "@servicesNotOnPublicPage": {
+    "description": "#4318 the services list: a public service beyond the ones the public page shows"
+  },
   "servicesOtherCategory": "Other services",
   "@servicesOtherCategory": {
     "description": "#3552 the services list: the heading of services without a category"
@@ -40897,6 +40901,27 @@
   "servicesPublic": "Show on our public page",
   "@servicesPublic": {
     "description": "#3552 the service editor: whether the service is shown on the public page"
+  },
+  "servicesPublicPageHidden": "{count, plural, one{{count} public service is not shown there.} other{{count} public services are not shown there.}}",
+  "@servicesPublicPageHidden": {
+    "description": "#4318 the services list: how many public services the public page does not show",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "servicesPublicPageNotice": "{count, plural, one{{count} service is public} other{{count} services are public}}. The public page shows {limit, plural, one{the first {limit}} other{the first {limit}}}, in the order of this list.",
+  "@servicesPublicPageNotice": {
+    "description": "#4318 the services list: how many services are public and how many the public page shows",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "limit": {
+        "type": "int"
+      }
+    }
   },
   "servicesSaveFailed": "The service could not be saved. Try again.",
   "@servicesSaveFailed": {

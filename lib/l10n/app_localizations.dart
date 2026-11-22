@@ -50205,6 +50205,12 @@ abstract class AppLocalizations {
   /// **'New service'**
   String get servicesNew;
 
+  /// #4318 the services list: a public service beyond the ones the public page shows
+  ///
+  /// In en, this message translates to:
+  /// **'Not on the public page'**
+  String get servicesNotOnPublicPage;
+
   /// #3552 the services list: the heading of services without a category
   ///
   /// In en, this message translates to:
@@ -50222,6 +50228,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Show on our public page'**
   String get servicesPublic;
+
+  /// #4318 the services list: how many public services the public page does not show
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{{count} public service is not shown there.} other{{count} public services are not shown there.}}'**
+  String servicesPublicPageHidden(int count);
+
+  /// #4318 the services list: how many services are public and how many the public page shows
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{{count} service is public} other{{count} services are public}}. The public page shows {limit, plural, one{the first {limit}} other{the first {limit}}}, in the order of this list.'**
+  String servicesPublicPageNotice(int count, int limit);
 
   /// #3552 the service editor: saving a service failed.
   ///

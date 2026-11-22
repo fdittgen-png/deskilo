@@ -31589,6 +31589,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get servicesNew => 'Neue Leistung';
 
   @override
+  String get servicesNotOnPublicPage => 'Nicht auf der öffentlichen Seite';
+
+  @override
   String get servicesOtherCategory => 'Weitere Leistungen';
 
   @override
@@ -31596,6 +31599,34 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get servicesPublic => 'Auf unserer öffentlichen Seite zeigen';
+
+  @override
+  String servicesPublicPageHidden(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count öffentliche Leistungen werden dort nicht gezeigt.',
+      one: '$count öffentliche Leistung wird dort nicht gezeigt.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String servicesPublicPageNotice(int count, int limit) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Leistungen sind öffentlich',
+      one: '$count Leistung ist öffentlich',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      limit,
+      locale: localeName,
+      other: 'die ersten $limit',
+      one: 'die erste $limit',
+    );
+    return '$_temp0. Die öffentliche Seite zeigt $_temp1, in der Reihenfolge dieser Liste.';
+  }
 
   @override
   String get servicesSaveFailed =>

@@ -3,6 +3,8 @@ import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/help/help_anchors.dart';
+import '../../../../core/help/help_dot.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
@@ -16,6 +18,7 @@ import '../../../../core/ui/kit/records_table.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../domain/public_page.dart';
 import '../../domain/service_item.dart';
 import '../../providers/money_providers.dart';
 import '../vat_price_label.dart';
@@ -56,6 +59,10 @@ class ServicesScreen extends ConsumerWidget {
     final vatRates = ref.watch(vatRatesProvider).value ?? const <VatRate>[]; // empty-ok: an unread rate names no VAT suffix, never a wrong one
     final currency = appFormatOf(context).moneyIn(ref.watch(currentWorkspaceProvider).value?.currencyCode);
     final inactiveColor = Theme.of(context).disabledColor;
+    // #4318 — the public services the public page does not carry.
+    final beyondPage = publicPageReach(
+      servicesAsync.value ?? const <ServiceItem>[], // empty-ok: an unread list marks none
+    ).beyondPage;
     final look = (
       chargesVat: chargesVat,
       vatRates: vatRates,
@@ -90,6 +97,7 @@ class ServicesScreen extends ConsumerWidget {
             when WindowClass.of(context) == WindowClass.compact =>
           ListView(
             children: [
+              _PublicPageNotice(services: services),
               for (final group in groupServicesByCategory(services))
                 FormSection(
                   title: group.category.isEmpty
@@ -107,6 +115,7 @@ class ServicesScreen extends ConsumerWidget {
                           vatRates: vatRates,
                           currency: currency,
                           inactiveColor: inactiveColor,
+                          beyondPublicPage: beyondPage.contains(service.id),
                         ),
                       ),
                   ],
@@ -115,7 +124,12 @@ class ServicesScreen extends ConsumerWidget {
           ),
         // #3614 — a records table from a medium window; a service opens
         // in a side panel beside it.
-        AsyncData(value: final services) => RecordsTable<ServiceItem>(
+        AsyncData(value: final services) => Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _PublicPageNotice(services: services),
+            Expanded(
+              child: RecordsTable<ServiceItem>(
               tableId: 'services',
               rows: services,
               keyOf: (s) => s.id,
@@ -135,7 +149,11 @@ class ServicesScreen extends ConsumerWidget {
                   keeps: (s) => !s.active,
                 ),
               ],
-              columns: _columns(context, look),
+              columns: _columns(
+                context,
+                look,
+                beyondPage,
+              ),
               cardBuilder: (context, s) => _ServiceTile(
                 key: ValueKey('services-tile-${s.id}'),
                 service: s,
@@ -143,8 +161,12 @@ class ServicesScreen extends ConsumerWidget {
                 vatRates: vatRates,
                 currency: currency,
                 inactiveColor: inactiveColor,
+                beyondPublicPage: beyondPage.contains(s.id),
+              ),
               ),
             ),
+          ],
+        ),
         AsyncError() => Center(
             child: Text(
               l10n.workspaceGenericError,
@@ -157,7 +179,11 @@ class ServicesScreen extends ConsumerWidget {
   }
 
   /// The table's columns: service, kind, unit, price, VAT and active.
-  List<RecordColumn<ServiceItem>> _columns(BuildContext context, _Look look) {
+  List<RecordColumn<ServiceItem>> _columns(
+    BuildContext context,
+    _Look look,
+    Set<String> beyondPublicPage,
+  ) {
     final l10n = context.l10n;
     Text muted(ServiceItem s, String text) => Text(
       text,
@@ -212,6 +238,21 @@ class ServicesScreen extends ConsumerWidget {
           return muted(s, rate == null ? '' : l10n.priceVatIncluded(rate));
         },
       ),
+      // #4318 — whether the public page shows the service.
+      RecordColumn(
+        id: 'public',
+        label: l10n.setupStepTitlePublicPage,
+        flex: 2,
+        cell: (_, s) => !s.active || !s.isPublic
+            ? const SizedBox.shrink()
+            : beyondPublicPage.contains(s.id)
+            ? Text(
+                l10n.servicesNotOnPublicPage,
+                key: ValueKey('services-not-public-page-${s.id}'),
+                overflow: TextOverflow.ellipsis,
+              )
+            : const Icon(Icons.public, size: 18),
+      ),
       RecordColumn(
         id: 'active',
         label: l10n.servicesActive,
@@ -257,9 +298,12 @@ class _ServiceTile extends StatelessWidget {
     required this.vatRates,
     required this.currency,
     required this.inactiveColor,
+    this.beyondPublicPage = false,
   });
 
   final ServiceItem service;
+  /// #4318 — public, but beyond what the public page carries.
+  final bool beyondPublicPage;
   final bool chargesVat;
   final List<VatRate> vatRates;
   final MoneyFormat currency;
@@ -300,9 +344,50 @@ class _ServiceTile extends StatelessWidget {
           if (rate != null) l10n.priceVatIncluded(rate),
           if (minutes != null) l10n.servicesDurationShort(minutes),
           ?stock,
+          if (beyondPublicPage) l10n.servicesNotOnPublicPage,
         ].join(' · '),
       ),
       trailing: service.active ? null : Text(l10n.servicesInactive),
+    );
+  }
+}
+
+/// #4318 — how many services are public and how many of them the public
+/// page shows; nothing when no service is public.
+class _PublicPageNotice extends StatelessWidget {
+  const _PublicPageNotice({required this.services});
+
+  final List<ServiceItem> services;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final reach = publicPageReach(services);
+    if (reach.publicCount == 0) return const SizedBox.shrink();
+    return Padding(
+      key: const ValueKey('services-public-page-notice'),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.md,
+        vertical: AppSpacing.sm,
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Text(
+              [
+                l10n.servicesPublicPageNotice(
+                  reach.publicCount,
+                  publicPageServiceLimit,
+                ),
+                if (reach.beyondPage.isNotEmpty)
+                  l10n.servicesPublicPageHidden(reach.beyondPage.length),
+              ].join(' '),
+            ),
+          ),
+          HelpDot(l10n.servicesTitle, anchor: HelpAnchor.serviceOverview),
+        ],
+      ),
     );
   }
 }

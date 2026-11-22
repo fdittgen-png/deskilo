@@ -4679,6 +4679,7 @@ Vous vendez autre chose qu'une place : un casier, de l'impression, du café. Vou
 - Un service n'est jamais supprimé, seulement désactivé, car des factures s'y réfèrent.
 - Un service issu d'un stock indique combien il en reste, ou **Épuisé**.
 - Pour en enregistrer un pour un membre, utilisez **Ajouter un service** sur sa page.
+- **Afficher sur notre page publique** : la page publique, sa fiche dans Découvrir et la recherche par service reprennent les 12 premiers services publics, dans l'ordre de la liste des services (catégorie, puis nom). La liste indique combien de services sont publics et signale ceux que la page n'affiche pas.
 
 **Voir aussi:** [Accessoires](help:user.money.accessories) · [La page du membre](help:user.members.page)
 
