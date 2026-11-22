@@ -256,6 +256,10 @@ begin
     if v_line is null then
       raise exception 'unknown line of the invoice' using errcode = 'DKF01', detail = 'line';
     end if;
+    -- A correction invoice cannot fork the engagement: a standalone invoice (the only kind
+    -- whose lines carry a commercial line id, and the only kind a quote converts to) is
+    -- refused by create_invoice as a replacement (0820), and a monthly replacement's lines
+    -- have no commercial line id, so opening from one answers DKF01 above.
     -- billed from a quote: that quote's line is the source
     select * into v_conv from public.customer_quote_conversions c
      where c.invoice_id = v_inv.id and c.workspace_id = p_workspace;
@@ -425,6 +429,13 @@ begin
     exception when others then
       raise exception 'the source is not understood' using errcode = 'DKF06', detail = 'source';
     end;
+    -- An invoice line is resolved and its engagement inserted under the invoice's row
+    -- lock, the same lock `link_service_fulfilment_invoice_v1` takes: a link and an open
+    -- of one line cannot both commit, each answers the other's engagement. (A key-share
+    -- reference to the invoice, a payment match, still goes through.)
+    if v_kind = 'invoice' then
+      perform 1 from public.invoices i where i.id = v_id and i.workspace_id = p_workspace_id for no key update;
+    end if;
     v_src := public.service_fulfilment_source(p_workspace_id, v_kind, v_id, v_line);
   else
     raise exception 'unknown kind of source' using errcode = 'DKF06', detail = 'kind';
@@ -434,23 +445,36 @@ begin
    where f.workspace_id = p_workspace_id and f.source_kind = v_src ->> 'kind'
      and f.source_id = (v_src ->> 'id')::uuid and f.source_line_id = (v_src ->> 'line_id')::uuid;
   if v_f.id is null then
-    insert into public.service_fulfilments
-      (id, workspace_id, subject_member_id, source_kind, source_id, source_revision, source_line_id,
-       item_id, variant_id, scope)
-    values (case when v_src ->> 'kind' = 'direct' then (v_src ->> 'id')::uuid else gen_random_uuid() end,
-            p_workspace_id, (v_src ->> 'subject_id')::uuid, v_src ->> 'kind', (v_src ->> 'id')::uuid,
-            nullif(v_src ->> 'revision', '')::integer, (v_src ->> 'line_id')::uuid,
-            (v_direct ->> 'item_id')::uuid, (v_direct ->> 'variant_id')::uuid, v_src -> 'scope')
-    on conflict (workspace_id, source_kind, source_id, source_line_id) do nothing
-    returning * into v_f;
-    if v_f.id is not null then
-      insert into public.service_fulfilment_transitions
-        (workspace_id, fulfilment_id, revision, from_state, to_state, actor_member_id, reason,
-         request_id, request_digest)
-      values (p_workspace_id, v_f.id, 1, null, 'ordered', v_actor.id, '', p_request_id, v_digest);
+    begin
+      insert into public.service_fulfilments
+        (id, workspace_id, subject_member_id, source_kind, source_id, source_revision, source_line_id,
+         item_id, variant_id, scope)
+      values (case when v_src ->> 'kind' = 'direct' then (v_src ->> 'id')::uuid else gen_random_uuid() end,
+              p_workspace_id, (v_src ->> 'subject_id')::uuid, v_src ->> 'kind', (v_src ->> 'id')::uuid,
+              nullif(v_src ->> 'revision', '')::integer, (v_src ->> 'line_id')::uuid,
+              (v_direct ->> 'item_id')::uuid, (v_direct ->> 'variant_id')::uuid, v_src -> 'scope')
+      on conflict (workspace_id, source_kind, source_id, source_line_id) do nothing
+      returning * into v_f;
+      if v_f.id is not null then
+        insert into public.service_fulfilment_transitions
+          (workspace_id, fulfilment_id, revision, from_state, to_state, actor_member_id, reason,
+           request_id, request_digest)
+        values (p_workspace_id, v_f.id, 1, null, 'ordered', v_actor.id, '', p_request_id, v_digest);
+        return jsonb_build_object('fulfilment', public.service_fulfilment_json(v_f),
+                                  'created', true, 'replayed', false);
+      end if;
+    exception when unique_violation then
+      -- the same request committed first, in another session: its answer, never an error
+      select * into v_prior from public.service_fulfilment_transitions t
+       where t.workspace_id = p_workspace_id and t.request_id = p_request_id;
+      if v_prior.id is null then raise; end if;
+      if v_prior.revision <> 1 or v_prior.request_digest <> v_digest then
+        raise exception 'this request was used for something else' using errcode = 'DKF05', detail = 'request';
+      end if;
+      select * into v_f from public.service_fulfilments where id = v_prior.fulfilment_id;
       return jsonb_build_object('fulfilment', public.service_fulfilment_json(v_f),
-                                'created', true, 'replayed', false);
-    end if;
+                                'created', false, 'replayed', true);
+    end;
     -- a concurrent open of the same line won: it is that engagement
     select * into v_f from public.service_fulfilments f
      where f.workspace_id = p_workspace_id and f.source_kind = v_src ->> 'kind'
@@ -536,6 +560,8 @@ declare
   v_link public.service_fulfilment_invoice_links;
 begin
   v_actor := public.service_fulfilment_actor(p_workspace_id);
+  -- the invoice first, then the engagement: the order `open_service_fulfilment_v1` takes
+  perform 1 from public.invoices i where i.id = p_invoice_id and i.workspace_id = p_workspace_id for no key update;
   select * into v_f from public.service_fulfilments f
    where f.id = p_fulfilment_id and f.workspace_id = p_workspace_id for update;
   if v_f.id is null then raise exception 'unknown engagement' using errcode = 'DKF01', detail = 'fulfilment'; end if;
