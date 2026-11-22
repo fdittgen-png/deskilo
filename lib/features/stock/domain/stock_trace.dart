@@ -359,13 +359,46 @@ class StockValuation {
   }
 }
 
+/// One movement that put goods away against a document.
+class DocumentGoodsRow {
+  const DocumentGoodsRow({
+    required this.movementId,
+    required this.itemId,
+    required this.quantity,
+    required this.enteredQuantity,
+    required this.enteredUnit,
+    required this.occurredAt,
+    this.variantId,
+  });
+
+  final String movementId;
+  final String itemId;
+  final String? variantId;
+
+  /// In the item's inventory unit.
+  final ExactQuantity quantity;
+  final ExactQuantity enteredQuantity;
+  final String enteredUnit;
+  final DateTime occurredAt;
+
+  factory DocumentGoodsRow.fromJson(JsonReader r) => DocumentGoodsRow(
+    movementId: r.string('movement_id'),
+    itemId: r.string('item_id'),
+    variantId: r.stringOrNull('variant_id'),
+    quantity: ExactQuantity.parse(r.string('quantity')),
+    enteredQuantity: ExactQuantity.parse(r.string('entered_quantity')),
+    enteredUnit: r.stringOr('entered_unit'),
+    occurredAt: r.dateTime('occurred_at'),
+  );
+}
+
 /// A page of the goods put away against a document, a keyset page at a time.
 class DocumentGoods {
-  const DocumentGoods({required this.state, required this.movementIds, required this.more, this.next});
+  const DocumentGoods({required this.state, required this.rows, required this.more, this.next});
 
   /// `listed`, `notLinked` (no recorded link reaches goods) or `unavailable`.
   final TraceState state;
-  final List<String> movementIds;
+  final List<DocumentGoodsRow> rows;
   final bool more;
 
   /// The cursor to send back unchanged for the next page.
@@ -375,7 +408,7 @@ class DocumentGoods {
     final r = JsonReader.of(json, context: 'stock_document_goods_v1');
     return DocumentGoods(
       state: TraceState.of(r.stringOrNull('state')),
-      movementIds: [for (final g in r.objects('goods', (g) => g.string('movement_id'))) g],
+      rows: r.objects('goods', DocumentGoodsRow.fromJson),
       more: r.isTrue('more'),
       next: r.objectOrNull('next')?.json,
     );

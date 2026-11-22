@@ -20736,6 +20736,11 @@
   "stockEmpty": "Todavía no hay nada en existencias.",
   "stockEmptyFiltered": "Nada coincide con estos filtros.",
   "stockEnteredLabel": "Introducido",
+  "stockGoodsMore": "Mostrar más",
+  "stockGoodsNone": "No hay mercancías vinculadas (nada registrado no es lo mismo que ninguna).",
+  "stockGoodsRow": "{item}: {entered} ({stored})",
+  "stockGoodsTitle": "Mercancías almacenadas",
+  "stockGoodsUnavailable": "No se le muestran las mercancías.",
   "stockItemsEmpty": "Todavía no hay artículos. Un artículo aparece cuando un servicio o un artículo de proveedor se mantiene en existencias.",
   "@stockItemsEmpty": {
     "description": "the stock pages and group (#4299)"

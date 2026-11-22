@@ -20736,6 +20736,11 @@
   "stockEmpty": "Non c’è ancora nulla in magazzino.",
   "stockEmptyFiltered": "Nulla corrisponde a questi filtri.",
   "stockEnteredLabel": "Inserito",
+  "stockGoodsMore": "Mostra altro",
+  "stockGoodsNone": "Nessuna merce è collegata (nulla di registrato non equivale a nessuna).",
+  "stockGoodsRow": "{item}: {entered} ({stored})",
+  "stockGoodsTitle": "Merce messa a magazzino",
+  "stockGoodsUnavailable": "La merce non le viene mostrata.",
   "stockItemsEmpty": "Nessun articolo per ora. Un articolo compare quando un servizio o un articolo del fornitore è tenuto in magazzino.",
   "@stockItemsEmpty": {
     "description": "the stock pages and group (#4299)"

@@ -15,15 +15,17 @@ import 'demo_stock_queries.dart';
 import 'demo_stock_receiving_commands.dart';
 import 'demo_stock_registry.dart';
 import 'purchase_order_repository.dart';
+import 'purchase_repository.dart';
 
 /// The in-memory trace of the reference business.
 class DemoStockTrace implements StockTraceReader {
-  DemoStockTrace(this._workspaceId, this._ledger, this._orders, this._receiving);
+  DemoStockTrace(this._workspaceId, this._ledger, this._orders, this._receiving, this._purchases);
 
   final String _workspaceId;
   final DemoStockLedger _ledger;
   final FakePurchaseOrderRepository _orders;
   final DemoStockReceivingCommands _receiving;
+  final FakePurchaseRepository _purchases;
 
   String get _currency => _orders.currency;
 
@@ -47,27 +49,59 @@ class DemoStockTrace implements StockTraceReader {
     return null;
   }
 
+  /// The bills linked to [orderId] in the Demo's order records, as the purchase records hold them:
+  /// each bill's obligation and the payments recorded against it.
+  Future<List<TraceBill>> _billsOf(String orderId) async {
+    final bills = <TraceBill>[];
+    for (final e in _orders.billOrders.entries) {
+      if (e.value != orderId) continue;
+      final d = await _purchases.fetchDetail(_workspaceId, e.key);
+      bills.add(
+        TraceBill(
+          id: d.summary.id,
+          kind: 'bill',
+          state: d.summary.state.name,
+          reference: d.summary.reference,
+          currency: d.summary.currency,
+          dueOn: d.dueOn?.toIso8601String().substring(0, 10),
+          obligationsTruncated: false,
+          obligations: [
+            for (final o in d.obligations)
+              TraceObligation(
+                id: o.id,
+                state: o.state.name,
+                amountCents: o.amountCents,
+                currency: o.currency,
+                settlementState: TraceState.listed,
+                settlementTruncated: false,
+                settlement: [
+                  for (final a in o.allocations)
+                    TraceAllocation(
+                      id: a.id,
+                      reversal: a.isReversal,
+                      amountCents: a.amountCents,
+                      paymentId: a.id,
+                      paymentState: 'reported',
+                      method: a.method,
+                      currency: o.currency,
+                      reportedPaidOn: a.paidOn?.toIso8601String().substring(0, 10),
+                    ),
+                ],
+              ),
+          ],
+        ),
+      );
+    }
+    return bills;
+  }
+
   @override
   Future<StockTraceAnswer> trace(String workspaceId, String movementId) async {
     if (!_mine(workspaceId)) throw const StockConfigRefused('movement', 'malformed');
     final m = await DemoStockQueries(_ledger).movement(workspaceId, movementId);
     if (m == null) throw const StockConfigRefused('movement', 'malformed');
     final link = await _orderOf(movementId);
-    final bills = link == null
-        ? const <TraceBill>[]
-        : [
-            for (final e in _orders.billOrders.entries)
-              if (e.value == link.orderId)
-                TraceBill(
-                  id: e.key,
-                  kind: 'bill',
-                  state: 'pending',
-                  reference: e.key,
-                  currency: _currency,
-                  obligations: const [],
-                  obligationsTruncated: false,
-                ),
-          ];
+    final bills = link == null ? const <TraceBill>[] : await _billsOf(link.orderId);
     return StockTraceAnswer(
       truncated: false,
       traces: [
@@ -96,6 +130,8 @@ class DemoStockTrace implements StockTraceReader {
     );
   }
 
+  static int _skip(Map<String, Object?>? after) => (after?['offset'] as int?) ?? 0;
+
   @override
   Future<DocumentGoods> documentGoods(
     String workspaceId,
@@ -110,9 +146,31 @@ class DemoStockTrace implements StockTraceReader {
       'bill' => _orders.billOrders[id],
       _ => null,
     };
-    if (orderId == null) return const DocumentGoods(state: TraceState.notLinked, movementIds: [], more: false);
-    final rows = await _receiving.allocationsOfOrder(workspaceId, orderId);
-    return DocumentGoods(state: TraceState.listed, movementIds: [for (final r in rows.take(limit)) r.movementId], more: rows.length > limit);
+    if (orderId == null) return const DocumentGoods(state: TraceState.notLinked, rows: [], more: false);
+    final allocations = await _receiving.allocationsOfOrder(workspaceId, orderId);
+    final queries = DemoStockQueries(_ledger);
+    final rows = <DocumentGoodsRow>[];
+    for (final a in allocations.skip(_skip(after)).take(limit)) {
+      final m = await queries.movement(workspaceId, a.movementId);
+      if (m == null) continue;
+      rows.add(
+        DocumentGoodsRow(
+          movementId: m.id,
+          itemId: m.itemId,
+          quantity: m.quantity,
+          enteredQuantity: m.enteredQuantity,
+          enteredUnit: m.enteredUnit,
+          occurredAt: m.occurredAt,
+        ),
+      );
+    }
+    final consumed = _skip(after) + limit;
+    return DocumentGoods(
+      state: TraceState.listed,
+      rows: rows,
+      more: allocations.length > consumed,
+      next: allocations.length > consumed ? {'offset': consumed} : null,
+    );
   }
 
   @override

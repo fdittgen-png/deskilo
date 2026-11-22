@@ -20736,6 +20736,11 @@
   "stockEmpty": "Rien n’est encore en stock.",
   "stockEmptyFiltered": "Rien ne correspond à ces filtres.",
   "stockEnteredLabel": "Saisi",
+  "stockGoodsMore": "Afficher plus",
+  "stockGoodsNone": "Aucune marchandise n’y est liée (rien d’enregistré n’est pas la même chose que aucune).",
+  "stockGoodsRow": "{item} : {entered} ({stored})",
+  "stockGoodsTitle": "Marchandises mises en stock",
+  "stockGoodsUnavailable": "Les marchandises ne vous sont pas montrées.",
   "stockItemsEmpty": "Aucun article pour l'instant. Un article apparaît lorsqu'un service ou un article fournisseur est tenu en stock.",
   "@stockItemsEmpty": {
     "description": "the stock pages and group (#4299)"

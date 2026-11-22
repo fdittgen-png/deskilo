@@ -35149,6 +35149,24 @@ class AppLocalizationsEs extends AppLocalizations {
   String get stockEnteredLabel => 'Introducido';
 
   @override
+  String get stockGoodsMore => 'Mostrar más';
+
+  @override
+  String get stockGoodsNone =>
+      'No hay mercancías vinculadas (nada registrado no es lo mismo que ninguna).';
+
+  @override
+  String stockGoodsRow(String item, String entered, String stored) {
+    return '$item: $entered ($stored)';
+  }
+
+  @override
+  String get stockGoodsTitle => 'Mercancías almacenadas';
+
+  @override
+  String get stockGoodsUnavailable => 'No se le muestran las mercancías.';
+
+  @override
   String get stockItemsEmpty =>
       'Todavía no hay artículos. Un artículo aparece cuando un servicio o un artículo de proveedor se mantiene en existencias.';
 

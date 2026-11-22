@@ -27,5 +27,10 @@
   "stockValueLine": "{quantity} · {amount}",
   "stockValueCutoff": "Au {at}, calculé {calculated} à partir de {count, plural, one{{count} mouvement} other{{count} mouvements}}.",
   "stockValueMovesLater": "Un mouvement enregistré plus tard avec une date antérieure change un calcul ultérieur, jamais les faits enregistrés avant.",
-  "stockValueNeedsRight": "Voir ce que coûtent les marchandises demande le droit de gérer les achats ou de lire les finances."
+  "stockValueNeedsRight": "Voir ce que coûtent les marchandises demande le droit de gérer les achats ou de lire les finances.",
+  "stockGoodsTitle": "Marchandises mises en stock",
+  "stockGoodsUnavailable": "Les marchandises ne vous sont pas montrées.",
+  "stockGoodsNone": "Aucune marchandise n’y est liée (rien d’enregistré n’est pas la même chose que aucune).",
+  "stockGoodsRow": "{item} : {entered} ({stored})",
+  "stockGoodsMore": "Afficher plus"
 }

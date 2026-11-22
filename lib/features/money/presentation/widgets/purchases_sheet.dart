@@ -14,6 +14,7 @@ import '../../domain/purchase.dart';
 import '../../domain/purchase_approval_reads.dart';
 import '../../providers/purchase_approval_provider.dart';
 import '../../providers/purchase_providers.dart';
+import '../purchase_order_stock_seam.dart';
 import 'purchase_claims.dart';
 import 'purchase_decision_bar.dart';
 import 'purchase_dialogs.dart';
@@ -378,16 +379,8 @@ class _PurchaseDetailView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
-    final detail =
-        approval?.detail ??
-        ref
-            .watch(
-              purchaseDetailProvider((
-                workspaceId: workspaceId,
-                purchaseId: purchaseId,
-              )),
-            )
-            .value;
+    final detail = approval?.detail ??
+        ref.watch(purchaseDetailProvider((workspaceId: workspaceId, purchaseId: purchaseId))).value;
     if (detail == null) {
       return SheetShell(
         title: l10n.purchasesTitle,
@@ -417,6 +410,8 @@ class _PurchaseDetailView extends ConsumerWidget {
           ApprovalExchangeRateTile(fx: scoped.fx),
         ],
         _decisionBar(detail),
+        // #4173 — the goods put away against this bill's order, each opening its movement.
+        ?ref.watch(purchaseOrderStockSeamProvider)?.goodsOfDocument(context, ref, workspaceId: workspaceId, kind: 'bill', id: purchaseId),
         const SizedBox(height: AppSpacing.sm),
         Text(l10n.labelWithValue(l10n.purchasesSupplier, supplier)),
         if (s.reference.isNotEmpty)

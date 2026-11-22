@@ -130,7 +130,7 @@ class _NoPurchase implements StockTraceReader {
 
   @override
   Future<DocumentGoods> documentGoods(String workspaceId, String kind, String id, {int limit = 50, Map<String, Object?>? after}) async =>
-      const DocumentGoods(state: TraceState.notLinked, movementIds: [], more: false);
+      const DocumentGoods(state: TraceState.notLinked, rows: [], more: false);
 
   @override
   Future<StockValuation> valuation(String workspaceId, {DateTime? at}) => throw UnimplementedError();

@@ -182,5 +182,36 @@
   "stockValueNeedsRight": "Seeing what goods cost needs the right to manage purchases or to read the finances.",
   "@stockValueNeedsRight": {
     "description": "#4173 the goods trace and the stock value"
+  },
+  "stockGoodsTitle": "Goods put away",
+  "@stockGoodsTitle": {
+    "description": "#4173 the goods put away against a document"
+  },
+  "stockGoodsUnavailable": "The goods are not shown to you.",
+  "@stockGoodsUnavailable": {
+    "description": "#4173 the goods put away against a document"
+  },
+  "stockGoodsNone": "No goods are linked to it (nothing is recorded, which is not the same as none).",
+  "@stockGoodsNone": {
+    "description": "#4173 the goods put away against a document"
+  },
+  "stockGoodsRow": "{item}: {entered} ({stored})",
+  "@stockGoodsRow": {
+    "description": "#4173 the goods put away against a document",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      },
+      "entered": {
+        "type": "String"
+      },
+      "stored": {
+        "type": "String"
+      }
+    }
+  },
+  "stockGoodsMore": "Show more",
+  "@stockGoodsMore": {
+    "description": "#4173 the goods put away against a document"
   }
 }

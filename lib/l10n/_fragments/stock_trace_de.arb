@@ -27,5 +27,10 @@
   "stockValueLine": "{quantity} · {amount}",
   "stockValueCutoff": "Stand {at}, berechnet {calculated} aus {count, plural, one{einer Bewegung} other{{count} Bewegungen}}.",
   "stockValueMovesLater": "Eine später erfasste Bewegung mit früherem Datum ändert eine spätere Berechnung, nie die zuvor erfassten Tatsachen.",
-  "stockValueNeedsRight": "Um zu sehen, was Ware kostet, braucht es das Recht, den Einkauf zu verwalten oder die Finanzen einzusehen."
+  "stockValueNeedsRight": "Um zu sehen, was Ware kostet, braucht es das Recht, den Einkauf zu verwalten oder die Finanzen einzusehen.",
+  "stockGoodsTitle": "Eingelagerte Ware",
+  "stockGoodsUnavailable": "Die Ware wird Ihnen nicht angezeigt.",
+  "stockGoodsNone": "Es ist keine Ware damit verknüpft (nichts erfasst heißt nicht „keine“).",
+  "stockGoodsRow": "{item}: {entered} ({stored})",
+  "stockGoodsMore": "Mehr anzeigen"
 }

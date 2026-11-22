@@ -35187,6 +35187,24 @@ class AppLocalizationsIt extends AppLocalizations {
   String get stockEnteredLabel => 'Inserito';
 
   @override
+  String get stockGoodsMore => 'Mostra altro';
+
+  @override
+  String get stockGoodsNone =>
+      'Nessuna merce è collegata (nulla di registrato non equivale a nessuna).';
+
+  @override
+  String stockGoodsRow(String item, String entered, String stored) {
+    return '$item: $entered ($stored)';
+  }
+
+  @override
+  String get stockGoodsTitle => 'Merce messa a magazzino';
+
+  @override
+  String get stockGoodsUnavailable => 'La merce non le viene mostrata.';
+
+  @override
   String get stockItemsEmpty =>
       'Nessun articolo per ora. Un articolo compare quando un servizio o un articolo del fornitore è tenuto in magazzino.';
 

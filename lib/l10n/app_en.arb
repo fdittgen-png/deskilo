@@ -45352,6 +45352,37 @@
   "@stockEnteredLabel": {
     "description": "#4161 the quantity and unit as entered"
   },
+  "stockGoodsMore": "Show more",
+  "@stockGoodsMore": {
+    "description": "#4173 the goods put away against a document"
+  },
+  "stockGoodsNone": "No goods are linked to it (nothing is recorded, which is not the same as none).",
+  "@stockGoodsNone": {
+    "description": "#4173 the goods put away against a document"
+  },
+  "stockGoodsRow": "{item}: {entered} ({stored})",
+  "@stockGoodsRow": {
+    "description": "#4173 the goods put away against a document",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      },
+      "entered": {
+        "type": "String"
+      },
+      "stored": {
+        "type": "String"
+      }
+    }
+  },
+  "stockGoodsTitle": "Goods put away",
+  "@stockGoodsTitle": {
+    "description": "#4173 the goods put away against a document"
+  },
+  "stockGoodsUnavailable": "The goods are not shown to you.",
+  "@stockGoodsUnavailable": {
+    "description": "#4173 the goods put away against a document"
+  },
   "stockItemsEmpty": "No items yet. Items are added when a service or a supplier article is kept in stock.",
   "@stockItemsEmpty": {
     "description": "the stock pages and group (#4299)"

@@ -10,6 +10,7 @@
 import 'package:deskilo/features/stock/domain/stock_page.dart';
 import 'package:deskilo/features/stock/domain/stock_queries.dart';
 import 'package:deskilo/features/stock/domain/stock_trace.dart';
+import 'package:deskilo/features/stock/presentation/stock_document_goods_block.dart';
 import 'package:deskilo/features/stock/presentation/stock_movement_screen.dart';
 import 'package:deskilo/features/stock/presentation/stock_value_screen.dart';
 import 'package:deskilo/features/stock/providers/stock_providers.dart';
@@ -106,7 +107,12 @@ TracePurchase _purchase({
 );
 
 class _Trace implements StockTraceReader {
-  _Trace({this.purchase, this.fail = false, this.valuationAnswer, this.valuationFail = false});
+  _Trace({this.purchase, this.fail = false, this.valuationAnswer, this.valuationFail = false, this.pages = const [], this.docFail = false});
+
+  /// The pages of goods a document answers, in order; the cursor is the page index.
+  final List<DocumentGoods> pages;
+  bool docFail;
+  final asked = <Map<String, Object?>?>[];
 
   final TracePurchase? purchase;
   bool fail;
@@ -137,8 +143,15 @@ class _Trace implements StockTraceReader {
   }
 
   @override
-  Future<DocumentGoods> documentGoods(String workspaceId, String kind, String id, {int limit = 50, Map<String, Object?>? after}) async =>
-      const DocumentGoods(state: TraceState.notLinked, movementIds: [], more: false);
+  Future<DocumentGoods> documentGoods(String workspaceId, String kind, String id, {int limit = 50, Map<String, Object?>? after}) async {
+    asked.add(after);
+    if (docFail) {
+      docFail = false;
+      throw StateError('unreachable');
+    }
+    if (pages.isEmpty) return const DocumentGoods(state: TraceState.notLinked, rows: [], more: false);
+    return pages[(after?['page'] as int?) ?? 0];
+  }
 
   @override
   Future<StockValuation> valuation(String workspaceId, {DateTime? at}) async {
@@ -159,6 +172,15 @@ StockValuation _valuation({bool complete = false, bool truncated = false}) => St
   complete: complete,
   lines: [ValuationLine(itemId: 'i-Water', lotId: 'l-1', quantity: ExactQuantity.parse('20'), valueMinor: 2000)],
   uncosted: complete ? const [] : [UncostedGroup(itemId: 'i-Biscuits', quantity: ExactQuantity.parse('24'), noLot: false)],
+);
+
+DocumentGoodsRow _row(String id, String entered) => DocumentGoodsRow(
+  movementId: id,
+  itemId: 'i-Water',
+  quantity: ExactQuantity.parse('24'),
+  enteredQuantity: ExactQuantity.parse(entered),
+  enteredUnit: 'carton',
+  occurredAt: DateTime.utc(2026, 3, 3, 9),
 );
 
 const _phone = Size(390, 844);
@@ -271,6 +293,46 @@ void main() {
         await _open(tester, const StockValueScreen(), trace, size, held: {WorkspacePermission.viewStock});
         expect(find.byKey(const ValueKey('stock-value-needs-right')), findsOneWidget);
         expect(trace.valuationCalls, 0);
+      });
+
+      testWidgets('an order or bill lists the goods put away against it, a keyset page at a time', (tester) async {
+        final trace = _Trace(pages: [
+          DocumentGoods(state: TraceState.listed, rows: [_row('m-1', '1')], more: true, next: const {'page': 1}),
+          DocumentGoods(state: TraceState.listed, rows: [_row('m-2', '1')], more: false),
+        ]);
+        await _open(tester, const Scaffold(body: StockDocumentGoodsBlock(workspaceId: 'w', kind: 'order', id: 'o-1')), trace, size);
+        expect(find.byKey(const ValueKey('stock-goods-m-1')), findsOneWidget);
+        expect(find.text(_en.stockGoodsRow('Water', _en.stockQuantityWithUnit('1', 'carton'), _en.stockQuantityWithUnit('24', 'piece'))), findsOneWidget);
+        expect(find.byKey(const ValueKey('stock-goods-m-2')), findsNothing);
+        await tester.tap(find.byKey(const ValueKey('stock-goods-more')));
+        await tester.pumpAndSettle();
+        expect(find.byKey(const ValueKey('stock-goods-m-2')), findsOneWidget);
+        expect(trace.asked.last, {'page': 1}, reason: 'the cursor is sent back unchanged');
+        expect(find.byKey(const ValueKey('stock-goods-more')), findsNothing);
+      });
+
+      testWidgets('goods the reader may not see are unavailable; a document with no recorded link says so', (tester) async {
+        await _open(
+          tester,
+          const Scaffold(body: StockDocumentGoodsBlock(workspaceId: 'w', kind: 'bill', id: 'b-1')),
+          _Trace(pages: [const DocumentGoods(state: TraceState.unavailable, rows: [], more: false)]),
+          size,
+        );
+        expect(find.byKey(const ValueKey('stock-goods-unavailable')), findsOneWidget);
+        expect(find.byKey(const ValueKey('stock-goods-none')), findsNothing);
+        await _open(tester, const Scaffold(body: StockDocumentGoodsBlock(key: ValueKey('another'), workspaceId: 'w', kind: 'bill', id: 'b-2')), _Trace(), size);
+        expect(find.byKey(const ValueKey('stock-goods-none')), findsOneWidget);
+        expect(find.byKey(const ValueKey('stock-goods-unavailable')), findsNothing);
+      });
+
+      testWidgets('a failed goods read says so and asks again; it is never "no goods"', (tester) async {
+        final trace = _Trace(docFail: true, pages: [DocumentGoods(state: TraceState.listed, rows: [_row('m-1', '1')], more: false)]);
+        await _open(tester, const Scaffold(body: StockDocumentGoodsBlock(workspaceId: 'w', kind: 'order', id: 'o-1')), trace, size);
+        expect(find.byKey(const ValueKey('stock-goods-failed')), findsOneWidget);
+        expect(find.byKey(const ValueKey('stock-goods-none')), findsNothing);
+        await tester.tap(find.byKey(const ValueKey('stock-goods-retry')));
+        await tester.pumpAndSettle();
+        expect(find.byKey(const ValueKey('stock-goods-m-1')), findsOneWidget);
       });
 
       testWidgets('a failed value read says so and can be asked again', (tester) async {

@@ -56000,6 +56000,36 @@ abstract class AppLocalizations {
   /// **'Entered'**
   String get stockEnteredLabel;
 
+  /// #4173 the goods put away against a document
+  ///
+  /// In en, this message translates to:
+  /// **'Show more'**
+  String get stockGoodsMore;
+
+  /// #4173 the goods put away against a document
+  ///
+  /// In en, this message translates to:
+  /// **'No goods are linked to it (nothing is recorded, which is not the same as none).'**
+  String get stockGoodsNone;
+
+  /// #4173 the goods put away against a document
+  ///
+  /// In en, this message translates to:
+  /// **'{item}: {entered} ({stored})'**
+  String stockGoodsRow(String item, String entered, String stored);
+
+  /// #4173 the goods put away against a document
+  ///
+  /// In en, this message translates to:
+  /// **'Goods put away'**
+  String get stockGoodsTitle;
+
+  /// #4173 the goods put away against a document
+  ///
+  /// In en, this message translates to:
+  /// **'The goods are not shown to you.'**
+  String get stockGoodsUnavailable;
+
   /// the stock pages and group (#4299)
   ///
   /// In en, this message translates to:
