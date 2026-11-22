@@ -1,16 +1,16 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #4161 (B) -- what the Stock screen is looking at: the tab and the filters.
+// #4161 (B), #4299 -- what the Stock screen is looking at: the filters (the tab
+// is the page: `/stock` or `/stock/movements`).
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// The two lists of the Stock screen.
+/// The two pages of the Stock screen: the balances and the movement log.
 enum StockTab { onHand, movements }
 
-/// The tab and the item and place filters chosen.
+/// The item and place filters chosen.
 class StockView {
-  const StockView({this.tab = StockTab.onHand, this.itemId, this.locationId});
+  const StockView({this.itemId, this.locationId});
 
-  final StockTab tab;
   final String? itemId;
   final String? locationId;
 
@@ -22,11 +22,8 @@ class _StockViewNotifier extends Notifier<StockView> {
   @override
   StockView build() => const StockView();
 
-  void showTab(StockTab tab) =>
-      state = StockView(tab: tab, itemId: state.itemId, locationId: state.locationId);
-
   void filter({String? itemId, String? locationId}) =>
-      state = StockView(tab: state.tab, itemId: itemId, locationId: locationId);
+      state = StockView(itemId: itemId, locationId: locationId);
 }
 
 final stockViewProvider =

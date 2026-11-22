@@ -80,6 +80,7 @@ class FeatureTile extends ConsumerWidget {
     required this.onChanged,
     this.assessment,
     this.unavailableNote,
+    this.roomyTargets = false,
   });
 
   final FeatureManifestEntry entry;
@@ -105,6 +106,10 @@ class FeatureTile extends ConsumerWidget {
   /// ("Available in the European Union"); null when it is available. The
   /// owner's switch is kept and shown, but nothing happens.
   final String? unavailableNote;
+
+  /// A page that is walked at the desk (the Stock settings) gives the More /
+  /// Less control the full 48 dp target; the Features screen keeps it inline.
+  final bool roomyTargets;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -181,6 +186,7 @@ class FeatureTile extends ConsumerWidget {
               _MoreAbout(
                 key: ValueKey('feature-more-${entry.feature.name}'),
                 text: split.rest,
+                roomy: roomyTargets,
               ),
             for (final note in notes)
               Padding(
@@ -205,9 +211,12 @@ class FeatureTile extends ConsumerWidget {
 
 /// The detail behind a feature's lead sentence, folded away (#1221).
 class _MoreAbout extends StatefulWidget {
-  const _MoreAbout({super.key, required this.text});
+  const _MoreAbout({super.key, required this.text, required this.roomy});
 
   final String text;
+
+  /// The More / Less control gets the full 48 dp target.
+  final bool roomy;
 
   @override
   State<_MoreAbout> createState() => _MoreAboutState();
@@ -239,7 +248,9 @@ class _MoreAboutState extends State<_MoreAbout> {
           key: const ValueKey('feature-tile-less'),
           onTap: () => setState(() => _open = !_open),
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 2),
+            padding: widget.roomy
+                ? const EdgeInsets.symmetric(vertical: 16, horizontal: 12)
+                : const EdgeInsets.symmetric(vertical: 2),
             child: Text(
               _open
                   ? (l10n.featureLess)

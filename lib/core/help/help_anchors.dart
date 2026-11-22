@@ -27,6 +27,7 @@ abstract final class HelpAnchor {
   /// #4166 — the customer quotes: an offer to a billing customer, sent and
   /// amended as revisions.
   static const moneyQuotes = 'user.money.quotes';
+  static const moneyStock = 'user.money.stock';
 
   /// #3527 — the Sales, Purchases and Cash pages.
   static const moneySales = 'user.money.sales';

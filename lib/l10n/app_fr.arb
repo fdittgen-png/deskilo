@@ -20531,6 +20531,18 @@
   "stockEmpty": "Rien n’est encore en stock.",
   "stockEmptyFiltered": "Rien ne correspond à ces filtres.",
   "stockEnteredLabel": "Saisi",
+  "stockItemsEmpty": "Aucun article pour l'instant. Un article apparaît lorsqu'un service ou un article fournisseur est tenu en stock.",
+  "@stockItemsEmpty": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "stockItemsIntro": "Les articles que l'entreprise tient et vend : les réglages, les variantes et les articles fournisseur de chacun.",
+  "@stockItemsIntro": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "stockItemsTitle": "Articles",
+  "@stockItemsTitle": {
+    "description": "the stock pages and group (#4299)"
+  },
   "stockLotLabel": "Lot {code}",
   "stockLotTitle": "Lot",
   "stockMappingAdd": "Ajouter un article fournisseur",
@@ -20974,6 +20986,26 @@
   "stockReasonVariantUnknown": "Cette variante n’est pas une variante de cet article.",
   "@stockReasonVariantUnknown": {
     "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockSettingsElsewhere": "Les réglages du stock se tiennent sur la page Réglages du stock.",
+  "@stockSettingsElsewhere": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "stockSettingsFeatures": "Fonctions du stock",
+  "@stockSettingsFeatures": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "stockSettingsOpen": "Ouvrir les réglages du stock",
+  "@stockSettingsOpen": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "stockSettingsTitle": "Réglages du stock",
+  "@stockSettingsTitle": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "stockSettingsValues": "Règles du stock",
+  "@stockSettingsValues": {
+    "description": "the stock pages and group (#4299)"
   },
   "stockStoredLabel": "Enregistré",
   "stockTabMovements": "Mouvements",

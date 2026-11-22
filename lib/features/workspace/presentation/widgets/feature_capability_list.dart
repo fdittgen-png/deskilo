@@ -35,6 +35,8 @@ class FeatureCapabilityList extends StatelessWidget {
     required this.onChanged,
     this.assessments = featureAssessments,
     this.country,
+    this.shrinkWrap = false,
+    this.roomyTargets = false,
   });
 
   /// The rows that survived the screen's filter, in registry order.
@@ -57,6 +59,12 @@ class FeatureCapabilityList extends StatelessWidget {
   /// #2454 — the workspace's country; a feature not available in it says why.
   final String? country;
 
+  /// Sized to its rows, inside a page that scrolls itself (the Stock settings).
+  final bool shrinkWrap;
+
+  /// The rows' More / Less controls get the full 48 dp target.
+  final bool roomyTargets;
+
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
@@ -70,6 +78,8 @@ class FeatureCapabilityList extends StatelessWidget {
     }
 
     return ListView(
+      shrinkWrap: shrinkWrap,
+      physics: shrinkWrap ? const NeverScrollableScrollPhysics() : null,
       children: [
         // #606 — contextual how-to; gated inside the widget.
         if (showHint) const HelpHint(HelpHintId.features),
@@ -99,6 +109,7 @@ class FeatureCapabilityList extends StatelessWidget {
     final available = featureAvailableIn(entry.availableIn, country);
     return FeatureTile(
       key: ValueKey('feature-tile-${entry.feature.name}'),
+      roomyTargets: roomyTargets,
       entry: entry,
       assessment:
           featureAssessmentOf(entry.feature, assessments: assessments),
