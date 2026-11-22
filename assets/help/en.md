@@ -7579,6 +7579,30 @@ Then add only what applies to you:
 
 **See also:** [Money and invoicing](help:setup.money.overview) · [Start from a template or from nothing](help:setup.before.template)
 
+### Selling or storing goods
+
+**Audience:** Owner
+
+You sell goods or keep stock, and want to find where to put items, places, deliveries and moves. Everything starts with one switch, then a few more, in this order.
+
+| # | Do this | Where it is afterwards |
+|---|---|---|
+| 1 | Switch on **Stock: items, places, deliveries, moves** (under **Services**). | A **Stock** menu appears: Stock, Movements, Transfers, Items, Places, Stock settings. |
+| 2 | Add your first place: **Stock → Places → Add a place** (for example the main store, then the shelves inside it). | **Stock → Places** |
+| 3 | Add your first item: **Stock → Items → Add an item**. An item is a service you keep in stock: choose it and its stock settings open with the setting already on (its unit, package units, codes). Add the service first under **Services** if it does not exist. | **Stock → Items** |
+| 4 | Switch on **Purchases** and **Order from suppliers** to order goods, then **Receiving into stock** to put a delivery away from its order. | **Purchases & suppliers → Purchase orders**, then **Record delivery** |
+| 5 | Switch on **Taking goods out** for what leaves (sold, used, lost), **Lots and expiry** for goods with lots or a best-before date, and **Reorder points** to be told what is low. | **Stock → Movements** (take out), **Stock → Reorder** |
+
+Then receive a delivery, move goods to a shelf, and take one out: the Stock page shows each one at once.
+
+**Good to know**
+
+- A business that has switched the goods ledger on but has no place or item yet is shown **Add your first place** and **Add your first item** on the Stock page.
+- Switching a function off deletes nothing: what was recorded stays and can be read again.
+- Try it first in the Demo, where the shop keeps stock already. See [Switching off deletes nothing](help:setup.features.off).
+
+**See also:** [The order to switch things on](help:setup.features.order) · [Features that need other features](help:setup.features.dependencies)
+
 ### The order to switch things on
 
 **Audience:** Owner · Co-owner

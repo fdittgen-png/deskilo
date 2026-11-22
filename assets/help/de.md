@@ -7579,6 +7579,30 @@ Fügen Sie dann nur hinzu, was auf Sie zutrifft:
 
 **Siehe auch:** [Geld und Rechnungen](help:setup.money.overview) · [Mit einer Vorlage oder bei null beginnen](help:setup.before.template)
 
+### Waren verkaufen oder lagern
+
+**Zielgruppe:** Inhaber
+
+Sie verkaufen Waren oder führen ein Lager und möchten wissen, wo Artikel, Orte, Lieferungen und Bewegungen zu finden sind. Alles beginnt mit einem Schalter, dann folgen einige weitere, in dieser Reihenfolge.
+
+| # | Tun Sie das | Wo es danach zu finden ist |
+|---|---|---|
+| 1 | Schalten Sie **Lager: Artikel, Orte, Lieferungen, Bewegungen** ein (unter **Leistungen**). | Ein Menü **Lager** erscheint: Lager, Bewegungen, Umlagerungen, Artikel, Orte, Lagereinstellungen. |
+| 2 | Legen Sie Ihren ersten Ort an: **Lager → Orte → Ort hinzufügen** (zum Beispiel das Hauptlager, dann die Regale darin). | **Lager → Orte** |
+| 3 | Legen Sie Ihren ersten Artikel an: **Lager → Artikel → Artikel hinzufügen**. Ein Artikel ist eine Leistung, die Sie im Lager führen: Wählen Sie sie, und ihre Lagereinstellungen öffnen sich mit eingeschalteter Einstellung (Einheit, Verpackungseinheiten, Codes). Legen Sie die Leistung zuerst unter **Leistungen** an, falls sie fehlt. | **Lager → Artikel** |
+| 4 | Schalten Sie **Einkäufe** und **Bei Lieferanten bestellen** ein, um Ware zu bestellen, dann **Wareneingang ins Lager**, um eine Lieferung aus ihrer Bestellung einzulagern. | **Einkauf & Lieferanten → Bestellungen**, dann **Lieferung erfassen** |
+| 5 | Schalten Sie **Ware entnehmen** ein für das, was das Lager verlässt (verkauft, verbraucht, verloren), **Chargen und Verfall** für Ware mit Chargen oder Mindesthaltbarkeit und **Meldebestände**, um zu erfahren, was knapp ist. | **Lager → Bewegungen** (Entnahme), **Lager → Nachbestellen** |
+
+Nehmen Sie dann eine Lieferung an, bewegen Sie Ware auf ein Regal und entnehmen Sie eine: Die Lagerseite zeigt jeden Vorgang sofort.
+
+**Gut zu wissen**
+
+- Ein Unternehmen, das das Lager eingeschaltet hat, aber noch keinen Ort und keinen Artikel besitzt, sieht auf der Lagerseite **Ersten Ort hinzufügen** und **Ersten Artikel hinzufügen**.
+- Das Ausschalten einer Funktion löscht nichts: Was erfasst wurde, bleibt und ist wieder lesbar.
+- Probieren Sie es zuerst in der Demo aus, wo der Laden schon ein Lager führt. Siehe [Ausschalten löscht nichts](help:setup.features.off).
+
+**Siehe auch:** [Die Reihenfolge beim Einschalten](help:setup.features.order) · [Funktionen, die andere brauchen](help:setup.features.dependencies)
+
 ### Die Reihenfolge beim Einschalten
 
 **Zielgruppe:** Inhaber · Mitinhaber

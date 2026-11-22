@@ -110,6 +110,9 @@ class _Stock implements StockQueries {
   Future<List<StockItem>> items(String workspaceId) async => const [
     StockItem(id: 'i-Wine', name: 'Wine', unit: 'l'),
   ];
+
+  @override
+  Future<List<StockItem>> unstocked(String workspaceId) async => const [];
 }
 
 /// The trace of a movement with no purchase behind it (the movement page also reads its trace).

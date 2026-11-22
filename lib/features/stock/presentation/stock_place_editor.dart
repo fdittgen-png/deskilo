@@ -87,6 +87,7 @@ class StockPlacesBody extends ConsumerStatefulWidget {
     required this.workspaceId,
     required this.onChanged,
     this.canEdit = true,
+    this.addFirst = false,
   });
 
   final String workspaceId;
@@ -94,6 +95,9 @@ class StockPlacesBody extends ConsumerStatefulWidget {
 
   /// Whether the person may add and edit places (the server asks the same).
   final bool canEdit;
+
+  /// #4350 -- the first-run link: the editor of a new place opens once the places are read.
+  final bool addFirst;
 
   @override
   ConsumerState<StockPlacesBody> createState() => _PlacesSheetState();
@@ -103,6 +107,17 @@ class _PlacesSheetState extends ConsumerState<StockPlacesBody> {
   late Future<List<StockPlaceConfig>> _places = _read();
   String _query = '';
   final _search = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.addFirst && widget.canEdit) {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        final all = await _places;
+        if (mounted) await _edit(all, null);
+      });
+    }
+  }
 
   @override
   void dispose() {

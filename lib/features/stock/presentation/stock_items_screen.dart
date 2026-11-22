@@ -31,12 +31,16 @@ import '../domain/stock_page.dart';
 import '../domain/stock_registry.dart';
 import '../providers/stock_providers.dart';
 import 'stock_home_sheet.dart';
+import 'stock_item_add.dart';
 import 'stock_item_editor.dart';
 import 'stock_mapping_editor.dart';
 import 'stock_variants_editor.dart';
 
 class StockItemsScreen extends ConsumerWidget {
-  const StockItemsScreen({super.key});
+  const StockItemsScreen({super.key, this.addFirst = false});
+
+  /// #4350 -- the first-run link: the page opens with "Add an item" already asked.
+  final bool addFirst;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -58,7 +62,7 @@ class StockItemsScreen extends ConsumerWidget {
                       padding: const EdgeInsets.all(AppSpacing.md),
                       child: Text(l10n.stockItemsIntro, style: Theme.of(context).textTheme.bodyMedium),
                     ),
-                    Expanded(child: _Items(workspaceId: workspaceId)),
+                    Expanded(child: _Items(workspaceId: workspaceId, addFirst: addFirst)),
                   ],
                 ),
               ),
@@ -68,9 +72,10 @@ class StockItemsScreen extends ConsumerWidget {
 }
 
 class _Items extends ConsumerStatefulWidget {
-  const _Items({required this.workspaceId});
+  const _Items({required this.workspaceId, this.addFirst = false});
 
   final String workspaceId;
+  final bool addFirst;
 
   @override
   ConsumerState<_Items> createState() => _ItemsState();
@@ -91,6 +96,13 @@ class _ItemsState extends ConsumerState<_Items> {
   void initState() {
     super.initState();
     unawaited(_load(reset: true));
+    if (widget.addFirst) WidgetsBinding.instance.addPostFrameCallback((_) => unawaited(_add()));
+  }
+
+  /// Chooses a service to keep in stock; the list is read again when an item was made.
+  Future<void> _add() async {
+    if (!mounted) return;
+    if (await StockItemAdd(ref).run(context, widget.workspaceId)) unawaited(_load(reset: true));
   }
 
   @override
@@ -152,7 +164,7 @@ class _ItemsState extends ConsumerState<_Items> {
         workspaceId: widget.workspaceId,
         itemId: hit.itemId,
         itemName: hit.itemName,
-        lotsOn: lotsOn,
+        options: (lots: lotsOn, keep: false),
       ),
     );
   }
@@ -187,6 +199,17 @@ class _ItemsState extends ConsumerState<_Items> {
           padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
           child: Column(
             children: [
+              if (mayManage)
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: FilledButton.icon(
+                    key: const ValueKey('stock-item-add'),
+                    icon: const Icon(Icons.add),
+                    label: Text(l10n.stockItemAddButton),
+                    onPressed: () => unawaited(_add()),
+                  ),
+                ),
+              const FormGap.small(),
               AppTextField(
                 key: const ValueKey('stock-registry-search'),
                 controller: _search,
@@ -340,7 +363,7 @@ class _RegistryRow extends ConsumerWidget {
                       workspaceId: workspaceId,
                       itemId: row.itemId,
                       itemName: row.itemName,
-                      lotsOn: lotsOn,
+                      options: (lots: lotsOn, keep: false),
                     ),
                   ),
                   IconButton(

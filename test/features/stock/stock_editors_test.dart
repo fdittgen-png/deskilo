@@ -44,6 +44,9 @@ class _Queries implements StockQueries {
 
   @override
   Future<List<StockItem>> items(String workspaceId) async => const [StockItem(id: 'i-Wine', name: 'Wine', unit: 'l')];
+
+  @override
+  Future<List<StockItem>> unstocked(String workspaceId) async => const [];
 }
 
 /// The registry as the server answers it: Wine has its home shelf and a known cost, Tea has none.

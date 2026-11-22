@@ -12527,10 +12527,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get featureStockManagementDesc =>
-      'Seguire la merce: dove si trova, in quale unità, da quale lotto, e ogni movimento tra due luoghi. Disattivato: un articolo del catalogo mantiene il suo semplice conteggio a scaffale.';
+      'Tenga la merce che vende o immagazzina: quali articoli, in quali posizioni, le consegne che riceve, gli spostamenti tra posizioni e le uscite. Attivarlo aggiunge un menu Magazzino con le sue pagine; le altre funzioni (lotti, ricezione, uscita, punti di riordino) sono interruttori sotto di esso. Disattivato: un articolo del catalogo mantiene il suo unico conteggio a scaffale.';
 
   @override
-  String get featureStockManagementTitle => 'Gestione delle scorte';
+  String get featureStockManagementTitle =>
+      'Magazzino: articoli, posizioni, consegne, movimenti';
 
   @override
   String get featureStockReceivingDesc =>
@@ -35262,6 +35263,23 @@ class AppLocalizationsIt extends AppLocalizations {
   String get stockEnteredLabel => 'Inserito';
 
   @override
+  String get stockFirstRunBody =>
+      'Cominci da una posizione dove si tiene la merce, poi dagli articoli che tiene. Dopo, riceva una consegna o sposti merce.';
+
+  @override
+  String get stockFirstRunItem => 'Aggiungi il suo primo articolo';
+
+  @override
+  String get stockFirstRunNext =>
+      'Poi riceva una consegna da un ordine, o sposti merce da Movimenti.';
+
+  @override
+  String get stockFirstRunPlace => 'Aggiungi la sua prima posizione';
+
+  @override
+  String get stockFirstRunTitle => 'Il suo magazzino è vuoto';
+
+  @override
   String get stockGoodsMore => 'Mostra altro';
 
   @override
@@ -35280,8 +35298,57 @@ class AppLocalizationsIt extends AppLocalizations {
   String get stockGoodsUnavailable => 'La merce non le viene mostrata.';
 
   @override
+  String get stockItemAddButton => 'Aggiungi un articolo';
+
+  @override
+  String get stockItemAddIntro =>
+      'Oppure tenga in magazzino un servizio che ha già: ne scelga uno e le sue impostazioni di magazzino si aprono con l’impostazione già attiva.';
+
+  @override
+  String get stockItemAddNone =>
+      'Tutti i servizi sono già tenuti in magazzino, oppure non ce n’è ancora nessuno. Aggiunga prima un servizio, poi torni.';
+
+  @override
+  String get stockItemAddOpenServices => 'Apri servizi';
+
+  @override
+  String get stockItemAddTitle => 'Aggiungi un articolo';
+
+  @override
+  String get stockItemNewBarcode => 'Codice a barre (facoltativo)';
+
+  @override
+  String get stockItemNewHome => 'Posizione abituale (facoltativa)';
+
+  @override
+  String get stockItemNewName => 'Nome';
+
+  @override
+  String get stockItemNewNameRequired => 'Dia un nome all’articolo.';
+
+  @override
+  String get stockItemNewNoHome => 'Nessuna per ora';
+
+  @override
+  String get stockItemNewOption => 'Crea un nuovo articolo';
+
+  @override
+  String stockItemNewPrice(String currency) {
+    return 'Prezzo ($currency)';
+  }
+
+  @override
+  String get stockItemNewPriceInvalid => 'Inserisca un prezzo o lasci vuoto.';
+
+  @override
+  String get stockItemNewTitle => 'Nuovo articolo';
+
+  @override
+  String get stockItemNewUnit => 'Contato in';
+
+  @override
   String get stockItemsEmpty =>
-      'Nessun articolo per ora. Un articolo compare quando un servizio o un articolo del fornitore è tenuto in magazzino.';
+      'Nessun articolo per ora. Un articolo è un servizio che tiene in magazzino: scelga Aggiungi un articolo.';
 
   @override
   String get stockItemsIntro =>
