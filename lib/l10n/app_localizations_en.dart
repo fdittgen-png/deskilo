@@ -35238,6 +35238,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'This supplier article is already mapped.';
 
   @override
+  String get stockReasonMappingUnknown =>
+      'No supplier article is preferred for one of these lines.';
+
+  @override
   String get stockReasonNameDuplicate => 'This name is already used.';
 
   @override
@@ -35425,6 +35429,60 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get stockRegistrySearch => 'Find an item by name, barcode or address';
+
+  @override
+  String get stockReorderCreateDraft => 'Create draft order';
+
+  @override
+  String stockReorderDraftCreated(String number) {
+    return 'Draft order $number created. Nothing was ordered or sent.';
+  }
+
+  @override
+  String get stockReorderDraftHelp =>
+      'A draft order is made: nothing is ordered, priced or sent until you confirm it.';
+
+  @override
+  String stockReorderGapRow(String site, String quantity) {
+    return '$site · $quantity proposed';
+  }
+
+  @override
+  String stockReorderGroupLine(String item, String quantity, String site) {
+    return '$item: $quantity for $site';
+  }
+
+  @override
+  String get stockReorderIntro =>
+      'What is at or below its reorder point, per site, and what to order from whom. Nothing is ordered here: a draft order waits for your confirmation.';
+
+  @override
+  String get stockReorderLowEmpty =>
+      'Nothing is at or below its reorder point.';
+
+  @override
+  String stockReorderLowRow(String site, String onHand, String point) {
+    return '$site · $onHand on hand · reorder point $point';
+  }
+
+  @override
+  String get stockReorderLowTitle => 'Low stock';
+
+  @override
+  String get stockReorderNoSupplierHelp =>
+      'These are low, but no supplier article is marked as preferred for them: choose one in the item\'s supplier articles.';
+
+  @override
+  String get stockReorderNoSupplierTitle => 'No supplier chosen';
+
+  @override
+  String get stockReorderTitle => 'Reorder';
+
+  @override
+  String get stockReorderToOrderEmpty => 'There is nothing to order.';
+
+  @override
+  String get stockReorderToOrderTitle => 'What to order';
 
   @override
   String get stockSettingsElsewhere =>

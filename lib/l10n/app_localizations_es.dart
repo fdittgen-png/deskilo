@@ -35533,6 +35533,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Este artículo del proveedor ya está asociado.';
 
   @override
+  String get stockReasonMappingUnknown =>
+      'Ningún artículo de proveedor está marcado como preferido para una de estas líneas.';
+
+  @override
   String get stockReasonNameDuplicate => 'Este nombre ya se usa.';
 
   @override
@@ -35721,6 +35725,60 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get stockRegistrySearch =>
       'Buscar un artículo por nombre, código de barras o dirección';
+
+  @override
+  String get stockReorderCreateDraft => 'Crear borrador de pedido';
+
+  @override
+  String stockReorderDraftCreated(String number) {
+    return 'Borrador de pedido $number creado. No se pidió ni se envió nada.';
+  }
+
+  @override
+  String get stockReorderDraftHelp =>
+      'Se crea un borrador de pedido: nada se pide, valora ni envía hasta que lo confirme.';
+
+  @override
+  String stockReorderGapRow(String site, String quantity) {
+    return '$site · $quantity propuestos';
+  }
+
+  @override
+  String stockReorderGroupLine(String item, String quantity, String site) {
+    return '$item: $quantity para $site';
+  }
+
+  @override
+  String get stockReorderIntro =>
+      'Lo que está en su punto de reposición o por debajo, por sede, y qué pedir a quién. Aquí no se pide nada: un borrador espera su confirmación.';
+
+  @override
+  String get stockReorderLowEmpty =>
+      'Nada está en su punto de reposición ni por debajo.';
+
+  @override
+  String stockReorderLowRow(String site, String onHand, String point) {
+    return '$site · $onHand disponibles · punto de reposición $point';
+  }
+
+  @override
+  String get stockReorderLowTitle => 'Stock bajo';
+
+  @override
+  String get stockReorderNoSupplierHelp =>
+      'Estos están bajos, pero ningún artículo de proveedor está marcado como preferido: elija uno en los artículos de proveedor del artículo.';
+
+  @override
+  String get stockReorderNoSupplierTitle => 'Ningún proveedor elegido';
+
+  @override
+  String get stockReorderTitle => 'Reposición';
+
+  @override
+  String get stockReorderToOrderEmpty => 'No hay nada que pedir.';
+
+  @override
+  String get stockReorderToOrderTitle => 'Qué pedir';
 
   @override
   String get stockSettingsElsewhere =>

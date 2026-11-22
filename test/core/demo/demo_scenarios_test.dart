@@ -26,6 +26,7 @@ import 'package:deskilo/core/demo/data/demo_stock_ledger.dart';
 import 'package:deskilo/core/demo/data/demo_stock_operations.dart';
 import 'package:deskilo/core/demo/data/demo_stock_queries.dart';
 import 'package:deskilo/core/demo/data/demo_stock_receiving_commands.dart';
+import 'package:deskilo/core/demo/data/demo_stock_reorder.dart';
 import 'package:deskilo/core/demo/data/fake_organisation_repository.dart';
 import 'package:deskilo/core/demo/data/kpi_repositories.dart';
 import 'package:deskilo/core/demo/data/lease_commitment_repository.dart';
@@ -1360,6 +1361,29 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
       } on StockNotEnough {
         return ledger.balance('demo-item-mugs', main).text == '35' && ledger.movements.first.reason == 'loss';
       }
+    },
+  ),
+  // #4294 — reorder points: two shop items are below theirs, the beans are ordered from their
+  // preferred supplier as a draft (once per request), the syrup has no supplier chosen.
+  WorkspaceFeature.stockReorder: _action(
+    _owner,
+    'Ada sees the beans and the syrup below their reorder point, makes a draft order of the beans '
+    'from Café Import, and the syrup stays "no supplier chosen"',
+    (w) async {
+      final config = DemoStockConfigCommands(demoFirstSpaceId);
+      final ledger = DemoStockLedger(demoFirstSpaceId, config);
+      final reorder = DemoStockReorder(demoFirstSpaceId, ledger, config);
+      final low = await reorder.low(demoFirstSpaceId);
+      final list = await reorder.replenishment(demoFirstSpaceId);
+      final group = list.groups.single;
+      final draft = await reorder.createDraft(demoFirstSpaceId, supplierId: group.supplierId, lines: group.lines, requestId: 'req-draft');
+      final again = await reorder.createDraft(demoFirstSpaceId, supplierId: group.supplierId, lines: group.lines, requestId: 'req-draft');
+      return low.map((r) => r.itemId).toSet().containsAll({'demo-item-beans', 'demo-item-syrup'}) &&
+          low.length == 2 &&
+          group.supplierName == 'Café Import' &&
+          list.noSupplier.single.itemId == 'demo-item-syrup' &&
+          draft.number != null &&
+          again.number == draft.number;
     },
   ),
   // #4164 — the owner keeps a customer with no account: a business is added
