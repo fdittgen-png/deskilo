@@ -114,7 +114,7 @@ begin
   v_level int;
   v_plevel int;
   v_walk uuid;$n$);
-  if v_next is null then raise exception '0854: anchor 1 of save_stock_location_v1 was not found' using errcode = 'P0001'; end if;
+  if v_next is null then raise exception '0855: anchor 1 of save_stock_location_v1 was not found' using errcode = 'P0001'; end if;
   v_next := pg_temp.anchor_replace(v_next,
     $o$  v_active := public.stock_config_bool(p_place, 'active', 'active', coalesce(v_old.active, true));
 $o$,
@@ -127,7 +127,7 @@ $o$,
     perform public.stock_config_refuse('pick_role', 'pick_role_unknown');
   end if;
 $n$);
-  if v_next is null then raise exception '0854: anchor 2 of save_stock_location_v1 was not found' using errcode = 'P0001'; end if;
+  if v_next is null then raise exception '0855: anchor 2 of save_stock_location_v1 was not found' using errcode = 'P0001'; end if;
   v_next := pg_temp.anchor_replace(v_next,
     $o$  if exists (select 1 from public.stock_locations l where l.workspace_id = p_workspace_id and l.code = v_code
               and l.id is distinct from p_place_id) then
@@ -138,7 +138,7 @@ $n$);
               and l.parent_id is not distinct from v_parent and l.id is distinct from p_place_id) then
     perform public.stock_config_refuse('code', 'code_duplicate');
   end if;$n$);
-  if v_next is null then raise exception '0854: anchor 3 of save_stock_location_v1 was not found' using errcode = 'P0001'; end if;
+  if v_next is null then raise exception '0855: anchor 3 of save_stock_location_v1 was not found' using errcode = 'P0001'; end if;
   v_next := pg_temp.anchor_replace(v_next,
     $o$  if p_place_id is not null
      and p_place_id = public.stock_place(p_workspace_id, 'warehouse')$o$,
@@ -168,19 +168,19 @@ $n$);
   if v_level = 1 then v_pick := null; end if;
   if p_place_id is not null
      and p_place_id = public.stock_place(p_workspace_id, 'warehouse')$n$);
-  if v_next is null then raise exception '0854: anchor 4 of save_stock_location_v1 was not found' using errcode = 'P0001'; end if;
+  if v_next is null then raise exception '0855: anchor 4 of save_stock_location_v1 was not found' using errcode = 'P0001'; end if;
   v_next := pg_temp.anchor_replace(v_next,
     $o$insert into public.stock_locations (workspace_id, parent_id, kind, code, name, barcode, active)
     values (p_workspace_id, v_parent, v_kind, v_code, v_name, v_barcode, v_active)$o$,
     $n$insert into public.stock_locations (workspace_id, parent_id, kind, code, name, barcode, active,
                                         receives_from_suppliers, pick_role)
     values (p_workspace_id, v_parent, v_kind, v_code, v_name, v_barcode, v_active, v_receives, v_pick)$n$);
-  if v_next is null then raise exception '0854: anchor 5 of save_stock_location_v1 was not found' using errcode = 'P0001'; end if;
+  if v_next is null then raise exception '0855: anchor 5 of save_stock_location_v1 was not found' using errcode = 'P0001'; end if;
   v_next := pg_temp.anchor_replace(v_next,
     $o$active = v_active, revision = revision + 1$o$,
     $n$active = v_active, receives_from_suppliers = v_receives, pick_role = v_pick,
            revision = revision + 1$n$);
-  if v_next is null then raise exception '0854: anchor 6 of save_stock_location_v1 was not found' using errcode = 'P0001'; end if;
+  if v_next is null then raise exception '0855: anchor 6 of save_stock_location_v1 was not found' using errcode = 'P0001'; end if;
   execute v_next;
 end
 $levels$;
@@ -195,4 +195,4 @@ values
 on conflict (key) do nothing;
 -- END GENERATED SEED
 
-select public.set_deskilo_schema_version(854);
+select public.set_deskilo_schema_version(855);

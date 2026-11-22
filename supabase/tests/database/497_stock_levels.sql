@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #4293 (0854, G7 cut A): the places form levels - site, zone, aisle, bay, shelf or bin - a level
+-- #4293 (0855, G7 cut A): the places form levels - site, zone, aisle, bay, shelf or bin - a level
 -- sits only under the level directly above it, a code is unique among siblings, the address is
 -- composed from the parents' codes and follows a rename, a site says whether it receives from
 -- suppliers, a place below it is picking or reserve, and a place made before the levels stays
