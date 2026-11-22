@@ -1,0 +1,4 @@
+{
+  "settingLabelEinvoiceStuckAttemptMinutes": "Unterbrochener E-Rechnungsversuch",
+  "settingHintEinvoiceStuckAttemptMinutes": "Wie viele Minuten eine E-Rechnung vorbereitet bleiben darf, ohne dass ein Versand begonnen hat, bevor die Inhaberin oder der Inhaber erfährt, dass der Versuch stehen geblieben ist. Ein begonnener Versand ohne Ergebnis wird gemeldet, sobald seine eigene Frist abgelaufen ist."
+}

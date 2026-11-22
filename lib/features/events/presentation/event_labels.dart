@@ -15,6 +15,8 @@ String eventTypeLabel(AppLocalizations l10n, EventType type) {
     EventType.kioskDevice: l10n.eventTypeKioskDevice,
     EventType.credentialChange: l10n.eventTypeCredentialChange,
     EventType.paymentAttemptUnreadable: l10n.eventTypePaymentAttemptUnreadable,
+    EventType.stockLow: l10n.eventTypeStockLow,
+    EventType.einvoiceOutcomeUnknown: l10n.eventTypeEinvoiceOutcomeUnknown,
     EventType.paymentInstructionsChange:
         l10n.eventTypePaymentInstructionsChange,
     EventType.reservation: l10n.eventTypeReservation,

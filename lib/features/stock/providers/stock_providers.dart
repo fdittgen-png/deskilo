@@ -118,6 +118,12 @@ final stockLowProvider = FutureProvider.autoDispose.family<List<StockLowRow>, St
   retry: (_, _) => null,
 );
 
+/// #4294 -- the reorder points of the business, for the points list.
+final stockReorderPointsProvider = FutureProvider.autoDispose.family<List<StockReorderPoint>, String>(
+  (ref, workspaceId) => ref.watch(stockReorderProvider).points(workspaceId),
+  retry: (_, _) => null,
+);
+
 /// #4294 -- what to order, by supplier.
 final stockReplenishmentProvider = FutureProvider.autoDispose.family<ReplenishmentList, String>(
   (ref, workspaceId) => ref.watch(stockReorderProvider).replenishment(workspaceId),

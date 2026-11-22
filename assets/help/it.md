@@ -2930,12 +2930,16 @@ Ogni ubicazione ha un **indirizzo**, scritto con i codici dei suoi livelli super
 
 Lei vuole vedere cosa sta per finire e ordinarlo senza scorrere gli scaffali.
 
+Quando un articolo scende al suo punto di riordino, chi può gestire il magazzino o gli acquisti riceve **un avviso** nella posta in arrivo (sotto Denaro): l’articolo, la sede, la disponibilità e il punto. Viene dato una sola volta finché la scorta resta bassa, e lo dice quando la scorta risale sopra il punto. Toccandolo si apre questa pagina.
+
 Apra **Magazzino → Riordino** (la funzione *Punti di riordino* deve essere attiva). La pagina ha due elenchi.
 
 - **Scorta bassa** elenca ogni articolo o variante al suo punto di riordino o sotto, per sede, con la giacenza e il punto. Viene letta dal registro del magazzino, esatta, nell’unità dell’articolo; un articolo senza punto di riordino non compare mai. Un’ubicazione in transito non conta come giacenza.
 - **Cosa ordinare** raggruppa ciò che è basso per fornitore il cui articolo è indicato come **preferito**, nell’unità d’acquisto di quell’articolo, arrotondata a unità intere. Un articolo senza articolo del fornitore preferito compare sotto **Nessun fornitore scelto**: ne indichi uno negli articoli del fornitore dell’articolo.
 
 **Crea bozza d’ordine** crea una bozza d’ordine d’acquisto da un gruppo. È solo una bozza: nulla viene ordinato, valorizzato o inviato finché non la conferma negli ordini d’acquisto. Serve il diritto di gestire gli acquisti; chiedere due volte la stessa bozza la crea una sola volta.
+
+I **punti di riordino** (sotto le due liste) rendono basso un articolo. Ognuno mostra l’articolo, la sede, il livello e che cosa ordinare allora: una quantità, *fino a* un livello, o niente (segnala soltanto). Chi può gestire il magazzino ne aggiunge uno con **Aggiungi un punto di riordino** o ne apre uno per modificarlo. Il livello e la quantità sono numeri esatti (la virgola decimale va bene); un livello fino a cui ordinare deve essere sopra il punto, un punto indica una quantità o un livello, non entrambi, e un articolo ha un punto per sede (e variante). L’articolo, la variante e la sede di un punto non si cambiano dopo: ne crei un altro. Un punto disattivato viene conservato e non segnala nulla.
 
 ### Il registro degli articoli
 

@@ -6486,6 +6486,9 @@
   "eventCredentialCleared": "{actor} borró las credenciales de {provider} ({area}): {keys}.",
   "eventCredentialReplaced": "{actor} sustituyó las credenciales de {provider} ({area}): {keys}.",
   "eventCredentialSet": "{actor} registró las credenciales de {provider} ({area}): {keys}.",
+  "eventEinvoiceNoticeEnded": "Resuelto",
+  "eventEinvoiceOutcomeUncertain": "Se desconoce el resultado de una factura electrónica: su envío se detuvo antes de registrar una respuesta. No se vuelve a enviar. Compruebe el registro de la plataforma y resuélvalo a mano.",
+  "eventEinvoiceStuckPrepared": "Una factura electrónica se preparó y nunca se envió. Envíela de nuevo desde su factura, o déjela.",
   "eventExpenseDeviation": "validado {scheduled} — {reason}",
   "eventExpenseRepartitionLine": "{count, plural, one{{actor} reparte «{title}»: {amount} entre 1 socio} other{{actor} reparte «{title}»: {amount} entre {count} socios}}",
   "@eventExpenseRepartitionLine": {
@@ -6674,11 +6677,16 @@
   "eventServiceChargeTitle": "{name} ×{quantity} — {amount}",
   "eventSettlementReview": "{settlement}: {reason, select, costs_changed{el proveedor cambió sus costes después de registrarse} amount_changed{el proveedor cambió su importe después de registrarse} currency_mismatch{un coste está en otra moneda que la liquidación} other{el informe difiere de lo registrado}}. No se contabilizó nada; espera revisión.",
   "eventSourceNotFound": "No se archivó ningún documento de compra para esta solicitud, o no puede verlo.",
+  "eventStockLow": "{item} está bajo en {site}: {onHand} en existencias, punto de reposición {point}",
+  "eventStockLowEnded": "de nuevo por encima del punto",
+  "eventStockLowItemFallback": "Un artículo",
+  "eventStockLowSiteFallback": "una sede",
   "eventSystemDecider": "Sistema",
   "eventTypeAdjustment": "Ajuste",
   "eventTypeBadgeSecurityAlert": "Protección del acceso con tarjeta",
   "eventTypeCommitmentVariance": "Diferencia de alquiler",
   "eventTypeCredentialChange": "Cambio de credenciales",
+  "eventTypeEinvoiceOutcomeUnknown": "Envío de factura electrónica interrumpido",
   "eventTypeExpense": "Gasto",
   "eventTypeExpenseRepartition": "Gasto compartido",
   "eventTypeExpenseSchedule": "Gasto programado",
@@ -6737,6 +6745,7 @@
   "eventTypeServiceCharge": "Servicio",
   "eventTypeSettlementReview": "Liquidación por revisar",
   "eventTypeSpaceReservation": "Reservas de espacios enteros",
+  "eventTypeStockLow": "Existencias bajas",
   "eventTypeSubscriptionChange": "Cambio de suscripción",
   "@eventTypeSubscriptionChange": {
     "description": "#982 validation domains: eventTypeSubscriptionChange"
@@ -10615,6 +10624,7 @@
     }
   },
   "invoiceSendAction": "Enviar a la plataforma gubernamental",
+  "invoiceSendBindingChanged": "Esta factura ya se envió a este destino con otro contenido. No se vuelve a enviar; el primer envío sigue vigente.",
   "invoiceSendCustomerAccepted": "Enviada — el servicio del cliente la aceptó.",
   "@invoiceSendCustomerAccepted": {
     "description": "Snackbar: the customer's service took the document (#568)"
@@ -18859,6 +18869,7 @@
   "@settingHintDunningFirstAfterDays": {
     "description": "#2484 settings: Setting hint."
   },
+  "settingHintEinvoiceStuckAttemptMinutes": "Cuántos minutos puede quedar preparada una factura electrónica, sin que se haya iniciado el envío, antes de avisar al propietario de que el intento se detuvo. Un envío iniciado sin resultado se avisa en cuanto vence su propio plazo.",
   "settingHintFederationAnswerWaitSeconds": "Segundos que un servidor espera la respuesta a un mensaje firmado enviado a otro servidor antes de volver a enviar el mismo mensaje. Al menos 30; manténgala por debajo de la validez del estado.",
   "settingHintFederationRetentionHours": "Horas que un servidor guarda los acuses de recibo de los mensajes firmados entre servidores, y un hogar personal las huellas de las membresías terminadas, antes de que la limpieza horaria los elimine. Nunca menos que la validez de estado más larga más dos veces el desfase de reloj.",
   "settingHintIdentityClockSkewSeconds": "Segundos de desfase de reloj entre el hogar personal y un servidor de espacios que aún se aceptan, de 0 a 30.",
@@ -19075,6 +19086,7 @@
   "@settingLabelDunningFirstAfterDays": {
     "description": "#2484 settings: Setting label."
   },
+  "settingLabelEinvoiceStuckAttemptMinutes": "Intento de factura electrónica interrumpido",
   "settingLabelFederationAnswerWaitSeconds": "Espera de respuesta entre servidores",
   "settingLabelFederationRetentionHours": "Conservación de los intercambios entre servidores",
   "settingLabelIdentityClockSkewSeconds": "Desfase de reloj permitido",
@@ -21174,10 +21186,13 @@
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
   "stockReasonPickRoleUnknown": "El uso debe ser picking o reserva.",
+  "stockReasonPointFixed": "El artículo, la variante y la sede de un punto de reposición no se cambian: cree otro.",
+  "stockReasonPointTwice": "Este artículo ya tiene un punto de reposición en esta sede.",
   "stockReasonPriceInvalid": "Un precio es cero o más.",
   "@stockReasonPriceInvalid": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonQuantityAndTarget": "Indique una cantidad a pedir o un nivel hasta el que pedir, no ambos.",
   "stockReasonQuantityInvalid": "Una cantidad es un número mayor que cero con seis decimales como máximo.",
   "@stockReasonQuantityInvalid": {
     "description": "#4171 receiving into stock: a text under a field the server refused"
@@ -21202,6 +21217,7 @@
   "@stockReasonSameSite": {
     "description": "#4170 transfers and take-out: a label or message"
   },
+  "stockReasonSiteUnknown": "Elija una sede de esta empresa.",
   "stockReasonStockOnHand": "Hay existencias: sáquelas primero.",
   "@stockReasonStockOnHand": {
     "description": "#4169 the stock editors: a text under a field the server refused"
@@ -21214,6 +21230,7 @@
   "@stockReasonSupplierForeign": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonTargetBelowPoint": "El nivel hasta el que pedir debe estar por encima del punto de reposición.",
   "stockReasonTooLong": "Este texto es demasiado largo.",
   "@stockReasonTooLong": {
     "description": "#4169 the stock editors: a text under a field the server refused"
@@ -21309,6 +21326,22 @@
   "stockReorderLowTitle": "Stock bajo",
   "stockReorderNoSupplierHelp": "Estos están bajos, pero ningún artículo de proveedor está marcado como preferido: elija uno en los artículos de proveedor del artículo.",
   "stockReorderNoSupplierTitle": "Ningún proveedor elegido",
+  "stockReorderPointActive": "En uso",
+  "stockReorderPointAdd": "Añadir un punto de reposición",
+  "stockReorderPointInactive": "sin uso",
+  "stockReorderPointLevel": "Punto de reposición ({unit})",
+  "stockReorderPointModeQuantity": "Pedir una cantidad",
+  "stockReorderPointModeTarget": "Pedir hasta",
+  "stockReorderPointRow": "{site} · punto de reposición {point} · {rule}",
+  "stockReorderPointSite": "Sede",
+  "stockReorderPointTitle": "Punto de reposición",
+  "stockReorderPointValue": "Cantidad (vacío: solo avisar)",
+  "stockReorderPointWhole": "El artículo en conjunto",
+  "stockReorderPointsEmpty": "No hay ningún punto de reposición: nada se marca nunca como bajo.",
+  "stockReorderPointsTitle": "Puntos de reposición",
+  "stockReorderRuleNone": "solo avisar",
+  "stockReorderRuleQuantity": "pedir {quantity}",
+  "stockReorderRuleTarget": "pedir hasta {quantity}",
   "stockReorderTitle": "Reposición",
   "stockReorderToOrderEmpty": "No hay nada que pedir.",
   "stockReorderToOrderTitle": "Qué pedir",

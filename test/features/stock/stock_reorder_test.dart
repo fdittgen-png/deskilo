@@ -4,8 +4,11 @@
 // low, per site; what to order from whom, in the purchase unit; the items with no supplier chosen;
 // a DRAFT order made once per request, only by whoever may manage purchases; and a list that could
 // not be read says so, never "nothing is low".
-import 'package:deskilo/features/stock/domain/stock_config.dart';
-import 'package:deskilo/features/stock/domain/stock_config.dart' show StockConfigFailure, StockConfigRefused;
+import 'package:deskilo/core/demo/data/demo_stock_config_commands.dart';
+import 'package:deskilo/core/demo/data/demo_stock_ledger.dart';
+import 'package:deskilo/core/demo/data/demo_stock_queries.dart';
+import 'package:deskilo/core/ui/dropdown_field.dart';
+import 'package:deskilo/features/stock/domain/stock_config.dart' show StockConfigFailure, StockConfigRefused, StockSaved;
 import 'package:deskilo/features/stock/domain/stock_reorder.dart';
 import 'package:deskilo/features/stock/presentation/stock_reorder_screen.dart';
 import 'package:deskilo/features/stock/providers/stock_providers.dart';
@@ -22,6 +25,38 @@ import '../../helpers/pump_app.dart';
 final _en = AppLocalizationsEn();
 
 class _Reorder implements StockReorder {
+  final saved = <({Map<String, Object?> point, String? id, int? rev, String request})>[];
+  StockConfigFailure? failSave;
+  final points_ = <StockReorderPoint>[
+    StockReorderPoint(
+      id: 'pt-beans', revision: 3, itemId: 'demo-item-beans', siteId: 'demo-place-main', active: true,
+      reorderPoint: ExactQuantity.parse('20'), reorderQuantity: ExactQuantity.parse('25'),
+    ),
+    StockReorderPoint(
+      id: 'pt-syrup', revision: 1, itemId: 'demo-item-syrup', siteId: 'demo-place-main', active: false,
+      reorderPoint: ExactQuantity.parse('5'), targetQuantity: ExactQuantity.parse('20'),
+    ),
+  ];
+
+  @override
+  Future<List<StockReorderPoint>> points(String workspaceId) async {
+    if (failReads) throw StateError('unreachable');
+    return points_;
+  }
+
+  @override
+  Future<StockSaved> savePoint(
+    String workspaceId, {
+    required Map<String, Object?> point,
+    required String requestId,
+    String? pointId,
+    int? expectedRevision,
+  }) async {
+    if (failSave case final StockConfigFailure e) throw e;
+    saved.add((point: point, id: pointId, rev: expectedRevision, request: requestId));
+    return (id: pointId ?? 'pt-new', revision: (expectedRevision ?? 0) + 1, replayed: false);
+  }
+
   bool failReads = false;
   StockConfigFailure? failDraft;
   final drafts = <({String supplier, List<String> items, String request})>[];
@@ -79,6 +114,7 @@ class _Reorder implements StockReorder {
 }
 
 Future<void> _open(WidgetTester tester, _Reorder reorder, Size size, {Set<WorkspacePermission>? held}) async {
+  final config = DemoStockConfigCommands('ws-1');
   await pumpApp(
     tester,
     const StockReorderScreen(),
@@ -86,12 +122,20 @@ Future<void> _open(WidgetTester tester, _Reorder reorder, Size size, {Set<Worksp
     overrides: [
       ...standardTestOverrides(),
       stockReorderProvider.overrideWithValue(reorder),
+      stockConfigCommandsProvider.overrideWithValue(config),
+      stockQueriesProvider.overrideWithValue(DemoStockQueries(DemoStockLedger('ws-1', config))),
       myPermissionsProvider.overrideWithValue(
-        held ?? {WorkspacePermission.viewStock, WorkspacePermission.managePurchases},
+        held ?? {WorkspacePermission.viewStock, WorkspacePermission.managePurchases, WorkspacePermission.manageStock},
       ),
     ],
   );
   await _settle(tester);
+}
+
+/// The page is a lazy list: scroll until [target] is built and on screen.
+Future<void> _reveal(WidgetTester tester, Finder target) async {
+  await tester.scrollUntilVisible(target, 300, scrollable: find.byType(Scrollable).first);
+  await tester.pump();
 }
 
 Future<void> _settle(WidgetTester tester) async {
@@ -166,6 +210,75 @@ void main() {
         await _settle(tester);
         expect(reorder.drafts, isEmpty);
         expect(find.text(_en.stockReasonMappingUnknown), findsOneWidget);
+      });
+
+      testWidgets('the reorder points are listed with their rule; a reader who may not manage the stock cannot add or edit', (tester) async {
+        await _open(tester, _Reorder(), size, held: {WorkspacePermission.viewStock});
+        await _reveal(tester, find.byKey(const ValueKey('stock-point-pt-beans')));
+        expect(find.byKey(const ValueKey('stock-point-pt-beans')), findsOneWidget);
+        final syrup = tester.widget<ListTile>(find.byKey(const ValueKey('stock-point-pt-syrup')));
+        expect((syrup.subtitle! as Text).data, contains(_en.stockReorderRuleTarget(_en.stockQuantityWithUnit('20', 'l'))));
+        expect((syrup.subtitle! as Text).data, contains(_en.stockReorderPointInactive));
+        expect(find.byKey(const ValueKey('stock-point-add')), findsNothing);
+      });
+
+      testWidgets('a point is changed at the revision read; its item and site are fixed', (tester) async {
+        final reorder = _Reorder();
+        await _open(tester, reorder, size);
+        await _reveal(tester, find.byKey(const ValueKey('stock-point-pt-beans')));
+        await tester.tap(find.byKey(const ValueKey('stock-point-pt-beans')));
+        await _settle(tester);
+        expect(tester.widget<AppDropdownField<String>>(find.byKey(const ValueKey('stock-point-item'))).onChanged, isNull,
+            reason: 'the item is fixed once the point exists');
+        await tester.enterText(find.byKey(const ValueKey('stock-point-level')), '15,5');
+        await tester.tap(find.byKey(const ValueKey('stock-point-save')));
+        await _settle(tester);
+        final save = reorder.saved.single;
+        expect((save.id, save.rev), ('pt-beans', 3), reason: 'the revision that was read');
+        expect(save.point['reorder_point'], '15.5', reason: 'a decimal comma is read as the server reads it');
+        expect(save.point['reorder_quantity'], '25');
+        expect(save.point.containsKey('item_id'), isFalse);
+      });
+
+      testWidgets('a new point names its item and site; a mistake is said under its field and nothing is sent', (tester) async {
+        final reorder = _Reorder();
+        await _open(tester, reorder, size);
+        await _reveal(tester, find.byKey(const ValueKey('stock-point-add')));
+        await tester.tap(find.byKey(const ValueKey('stock-point-add')));
+        await _settle(tester);
+        await tester.tap(find.byKey(const ValueKey('stock-point-save')));
+        await _settle(tester);
+        expect(reorder.saved, isEmpty, reason: 'no item, no site, no level: nothing is sent');
+        expect(find.text(_en.stockReasonItemForeign), findsOneWidget);
+        expect(find.text(_en.stockReasonSiteUnknown), findsOneWidget);
+        expect(find.text(_en.stockReasonQuantityInvalid), findsOneWidget);
+      });
+
+      testWidgets('a level to order up to that is not above the point is refused before it is sent', (tester) async {
+        final reorder = _Reorder();
+        await _open(tester, reorder, size);
+        await _reveal(tester, find.byKey(const ValueKey('stock-point-pt-beans')));
+        await tester.tap(find.byKey(const ValueKey('stock-point-pt-beans')));
+        await _settle(tester);
+        await tester.tap(find.text(_en.stockReorderPointModeTarget));
+        await _settle(tester);
+        await tester.enterText(find.byKey(const ValueKey('stock-point-value')), '10');
+        await tester.tap(find.byKey(const ValueKey('stock-point-save')));
+        await _settle(tester);
+        expect(reorder.saved, isEmpty);
+        expect(find.text(_en.stockReasonTargetBelowPoint), findsOneWidget);
+      });
+
+      testWidgets('a refusal of the server is said under the sheet and the sheet stays', (tester) async {
+        final reorder = _Reorder()..failSave = const StockConfigRefused('item_id', 'point_twice');
+        await _open(tester, reorder, size);
+        await _reveal(tester, find.byKey(const ValueKey('stock-point-pt-beans')));
+        await tester.tap(find.byKey(const ValueKey('stock-point-pt-beans')));
+        await _settle(tester);
+        await tester.tap(find.byKey(const ValueKey('stock-point-save')));
+        await _settle(tester);
+        expect(find.text(_en.stockReasonPointTwice), findsOneWidget);
+        expect(find.byKey(const ValueKey('stock-point-save')), findsOneWidget);
       });
 
       testWidgets('a reader who may not buy sees the lists and no draft button', (tester) async {

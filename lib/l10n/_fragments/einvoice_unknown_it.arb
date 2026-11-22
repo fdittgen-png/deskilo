@@ -1,0 +1,6 @@
+{
+  "eventTypeEinvoiceOutcomeUnknown": "Invio di fattura elettronica interrotto",
+  "eventEinvoiceOutcomeUncertain": "L’esito di una fattura elettronica è sconosciuto: il suo invio si è fermato prima che fosse registrata una risposta. Non viene inviata di nuovo. Controlli il registro della piattaforma, poi la regoli a mano.",
+  "eventEinvoiceStuckPrepared": "Una fattura elettronica è stata preparata e mai inviata. La invii di nuovo dalla sua fattura, oppure la lasci.",
+  "eventEinvoiceNoticeEnded": "Regolata"
+}

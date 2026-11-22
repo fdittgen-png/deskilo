@@ -59,7 +59,15 @@ transmission is claimed again directly, on the same row and artifact.
 |---|---|---|---|---|
 | (none) | prepare | the invoice exists in the workspace; no row with this business key and no accepted legacy row | `prepared` | `prepare_einvoice_v1` inserts the row and its artifact in one function call and writes the transmission envelope; nothing has left |
 | (none) | prepare, matching replay | the business key exists and the binding matches | *(that row's phase)* | the existing row is returned; no second row, artifact or upload |
-| (none) | prepare, changed binding | the business key exists and the binding differs | *(that row's phase)* | answer `binding_changed`; nothing changes, whatever the request id |
+| `prepared` | prepare, changed binding | the business key exists, the binding differs, nothing left the system | `prepared` | under the row's lock the stored artifact and the binding are replaced, the refusal and the receipt are cleared and the row is claimable again (0862); the first attempt's envelope stays and the new attempt has its own, naming the transmission and its number |
+| `failed` | prepare, changed binding | the business key exists, the binding differs, nothing left the system | `prepared` | under the row's lock the stored artifact and the binding are replaced, the refusal and the receipt are cleared and the row is claimable again (0862); the first attempt's envelope stays and the new attempt has its own, naming the transmission and its number |
+| `sent` | prepare, changed binding | the business key exists and the binding differs | *(that row's phase)* | answer `binding_changed`; nothing changes, whatever the request id |
+| `uncertain` | prepare, changed binding | the business key exists and the binding differs | *(that row's phase)* | answer `binding_changed`; nothing changes, whatever the request id |
+| `accepted` | prepare, changed binding | the business key exists and the binding differs | *(that row's phase)* | answer `binding_changed`; nothing changes, whatever the request id |
+| `rejected` | prepare, changed binding | the business key exists and the binding differs | *(that row's phase)* | answer `binding_changed`; nothing changes, whatever the request id |
+| `sent` | the sweep | the dispatch's deadline passed with no outcome | `uncertain` | `einvoice_sweep()` runs every five minutes for every business, with no request (0863); a late outcome is still recorded against the owner and generation |
+| `uncertain` | the sweep | the transmission has no open notice | `uncertain` | one inbox event `einvoice_outcome_unknown` for those who may issue invoices, while the transmission keeps the phase; it ends, with the new phase, when the phase changes. The sweep sends nothing and calls no provider |
+| `prepared` | the sweep | waiting longer than `einvoice.stuck_attempt_minutes` | `prepared` | the same notice; the transmission stays claimable and nothing is sent |
 | `prepared` | claim | the handler verified the stored artifact; `claim_einvoice_dispatch_v1` wins | `sent` | `owner_id`, `generation + 1` and `deadline` are committed before the post |
 | `failed` | claim | the same atomic claim | `sent` | the same row and stored artifact; `generation + 1` |
 | `sent` | provider accepted the upload | the outcome is recorded by the current owner and generation (`record_einvoice_outcome_v1`) | `accepted` | `external_id`, `receipt`, `receipt_at` |
@@ -96,7 +104,7 @@ it.
 | the customer leg never falls back to the government credentials, nor a sandbox key to the production one | `configForDestination` and `configFor` in `handler.ts`; destination and environment are part of the business key |
 | every dispatch has a durable record before it leaves | the handler order: `prepare_einvoice_v1` (row and artifact in one call), artifact read and digest check, then the claim, then the post |
 | one logical transmission has at most one record | the unique index `invoice_transmissions_business_key_uq` with `on conflict do nothing` in `prepare_einvoice_v1` |
-| a changed document, format or receiver cannot bypass an existing submission | `binding_hash` compared in `prepare_einvoice_v1`; answer `binding_changed` |
+| a changed document, format or receiver cannot bypass a submission that left, or may have left | `binding_hash` compared in `prepare_einvoice_v1`; answer `binding_changed` unless the row is `prepared` or `failed` (0862); the app shows it in its own sentence |
 | at most one dispatch owner at a time | the single update in `claim_einvoice_dispatch_v1`, which moves only `prepared` or `failed` rows to `sent` |
 | an `uncertain` row is never resent automatically | the claim admits only `prepared` and `failed`; the handler answers any other existing phase as it stands |
 | a late or stale writer changes nothing | `record_einvoice_outcome_v1` matches `generation` and `owner_id` |

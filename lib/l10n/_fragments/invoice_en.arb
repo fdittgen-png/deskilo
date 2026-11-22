@@ -804,6 +804,10 @@
       }
     }
   },
+  "invoiceSendBindingChanged": "This invoice was already submitted to this destination with other content. It is not sent again; its first submission stands.",
+  "@invoiceSendBindingChanged": {
+    "description": "#4324 Snackbar: the invoice already has a submission to this destination with other content (binding_changed); nothing is sent again"
+  },
   "invoiceSentOn": "Sent {date} · {status}",
   "@invoiceSentOn": {
     "description": "Detail sheet: when it left and what came back",

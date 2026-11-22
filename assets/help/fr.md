@@ -2930,12 +2930,16 @@ Chaque emplacement a une **adresse**, écrite avec les codes de ses parents : `M
 
 Vous voulez voir ce qui va manquer et le commander sans passer en revue les rayons.
 
+Quand un article tombe à son seuil, qui peut gérer le stock ou les achats reçoit **un avis** dans la boîte de réception (sous Argent) : l’article, le site, ce qui est en stock et le seuil. Il n’est donné qu’une fois tant que le stock reste bas, et dit quand le stock repasse au-dessus du seuil. Le toucher ouvre cette page.
+
 Ouvrez **Stock → Réapprovisionnement** (la fonction *Seuils de réapprovisionnement* doit être activée). La page a deux listes.
 
 - **Stock bas** liste chaque article ou variante au niveau de son seuil ou en dessous, par site, avec ce qui est en stock et le seuil. Elle est lue dans le registre du stock, exactement, dans l’unité de l’article ; un article sans seuil n’est jamais listé. Un emplacement en transit ne compte pas comme stock disponible.
 - **Que commander** regroupe ce qui est bas par fournisseur dont l’article est marqué **préféré**, dans l’unité d’achat de cet article, arrondi à l’unité entière supérieure. Un article sans article fournisseur préféré figure sous **Aucun fournisseur choisi** : marquez-en un dans les articles fournisseur de l’article.
 
 **Créer un brouillon de commande** crée un brouillon de commande d’achat à partir d’un groupe. Ce n’est qu’un brouillon : rien n’est commandé, chiffré ni envoyé tant que vous ne le confirmez pas dans les commandes d’achat. Il faut le droit de gérer les achats ; demander deux fois le même brouillon ne le crée qu’une fois.
+
+Les **seuils de réapprovisionnement** (sous les deux listes) font qu’un article est bas. Chacun montre l’article, le site, le seuil et ce qu’il faut commander alors : une quantité, *jusqu’à* un niveau, ou rien (il signale seulement). Qui peut gérer le stock en ajoute un avec **Ajouter un seuil** ou ouvre un seuil pour le modifier. Le seuil et la quantité sont des nombres exacts (la virgule décimale convient) ; un niveau à atteindre doit être au-dessus du seuil, un seuil donne une quantité ou un niveau, pas les deux, et un article a un seuil par site (et par variante). L’article, la variante et le site d’un seuil ne se changent pas ensuite : créez-en un autre. Un seuil désactivé est conservé et ne signale rien.
 
 ### Le registre des articles
 

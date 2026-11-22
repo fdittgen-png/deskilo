@@ -2930,12 +2930,16 @@ Cada ubicación tiene una **dirección**, escrita con los códigos de sus superi
 
 Quiere ver lo que está a punto de agotarse y pedirlo sin recorrer los estantes.
 
+Cuando un artículo llega a su punto de reposición, quien puede gestionar las existencias o las compras recibe **un aviso** en la bandeja (en Dinero): el artículo, la sede, lo disponible y el punto. Se da una sola vez mientras el stock sigue bajo, y avisa cuando vuelve a superar el punto. Al tocarlo se abre esta página.
+
 Abra **Existencias → Reposición** (la función *Puntos de reposición* debe estar activada). La página tiene dos listas.
 
 - **Stock bajo** lista cada artículo o variante en su punto de reposición o por debajo, por sede, con lo disponible y el punto. Se lee del libro de existencias, exacto, en la unidad del artículo; un artículo sin punto de reposición nunca aparece. Una ubicación en tránsito no cuenta como existencias disponibles.
 - **Qué pedir** agrupa lo que está bajo por el proveedor cuyo artículo está marcado como **preferido**, en la unidad de compra de ese artículo, redondeado a unidades enteras. Un artículo sin artículo de proveedor preferido aparece en **Ningún proveedor elegido**: marque uno en los artículos de proveedor del artículo.
 
 **Crear borrador de pedido** crea un borrador de pedido de compra a partir de un grupo. Es solo un borrador: nada se pide, valora ni envía hasta que lo confirme en los pedidos de compra. Requiere el derecho de gestionar compras; pedir dos veces el mismo borrador lo crea una sola vez.
+
+Los **puntos de reposición** (bajo las dos listas) hacen que un artículo esté bajo. Cada uno muestra el artículo, la sede, el nivel y qué pedir entonces: una cantidad, *hasta* un nivel, o nada (solo avisa). Quien puede gestionar las existencias añade uno con **Añadir un punto de reposición** o abre uno para cambiarlo. El nivel y la cantidad son números exactos (la coma decimal vale); un nivel hasta el que pedir debe estar por encima del punto, un punto indica una cantidad o un nivel, no ambos, y un artículo tiene un punto por sede (y variante). El artículo, la variante y la sede de un punto no se cambian después: cree otro. Un punto desactivado se conserva y no avisa de nada.
 
 ### El registro de artículos
 

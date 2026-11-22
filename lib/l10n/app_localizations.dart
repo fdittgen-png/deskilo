@@ -16194,6 +16194,24 @@ abstract class AppLocalizations {
     String keys,
   );
 
+  /// #4325 suffix of a notice whose transmission moved on.
+  ///
+  /// In en, this message translates to:
+  /// **'Settled'**
+  String get eventEinvoiceNoticeEnded;
+
+  /// #4325 the notice of an e-invoice whose outcome is unknown (an uncertain dispatch).
+  ///
+  /// In en, this message translates to:
+  /// **'The outcome of an e-invoice is unknown: its sending stopped before an answer was recorded. It is not sent again. Check the platform\'s record, then settle it by hand.'**
+  String get eventEinvoiceOutcomeUncertain;
+
+  /// #4325 the notice of an e-invoice prepared and never sent.
+  ///
+  /// In en, this message translates to:
+  /// **'An e-invoice was prepared and never sent. Send it again from its invoice, or leave it.'**
+  String get eventEinvoiceStuckPrepared;
+
   /// Shown as a text in event lines (events).
   ///
   /// In en, this message translates to:
@@ -16498,6 +16516,30 @@ abstract class AppLocalizations {
   /// **'No purchase document was filed for this request, or you may not see it.'**
   String get eventSourceNotFound;
 
+  /// #4294 the low-stock notice in the inbox
+  ///
+  /// In en, this message translates to:
+  /// **'{item} is low at {site}: {onHand} on hand, reorder point {point}'**
+  String eventStockLow(String item, String site, String onHand, String point);
+
+  /// #4294 the low-stock notice in the inbox
+  ///
+  /// In en, this message translates to:
+  /// **'back above its point'**
+  String get eventStockLowEnded;
+
+  /// #4294 the low-stock notice in the inbox
+  ///
+  /// In en, this message translates to:
+  /// **'An item'**
+  String get eventStockLowItemFallback;
+
+  /// #4294 the low-stock notice in the inbox
+  ///
+  /// In en, this message translates to:
+  /// **'a site'**
+  String get eventStockLowSiteFallback;
+
   /// Validator name shown when the timeout sweep decided, not a member
   ///
   /// In en, this message translates to:
@@ -16527,6 +16569,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Credentials change'**
   String get eventTypeCredentialChange;
+
+  /// #4325 the type name in the feed and the validation settings.
+  ///
+  /// In en, this message translates to:
+  /// **'E-invoice attempt stopped'**
+  String get eventTypeEinvoiceOutcomeUnknown;
 
   /// Event type label / filter chip
   ///
@@ -16695,6 +16743,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Whole-space reservations'**
   String get eventTypeSpaceReservation;
+
+  /// #4294 the low-stock notice in the inbox
+  ///
+  /// In en, this message translates to:
+  /// **'Low stock'**
+  String get eventTypeStockLow;
 
   /// #982 validation domains: eventTypeSubscriptionChange
   ///
@@ -28255,6 +28309,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Send to the government platform'**
   String get invoiceSendAction;
+
+  /// #4324 Snackbar: the invoice already has a submission to this destination with other content (binding_changed); nothing is sent again
+  ///
+  /// In en, this message translates to:
+  /// **'This invoice was already submitted to this destination with other content. It is not sent again; its first submission stands.'**
+  String get invoiceSendBindingChanged;
 
   /// Snackbar: the customer's service took the document (#568)
   ///
@@ -50457,6 +50517,12 @@ abstract class AppLocalizations {
   /// **'Days after issue before a first reminder is suggested, and before an invoice falls due when no payment term was set.'**
   String get settingHintDunningFirstAfterDays;
 
+  /// #4325 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'How many minutes an e-invoice may stay prepared, with no dispatch started, before the owner is told that its attempt stopped. A dispatch that was started and has no outcome is told as soon as its own time is up.'**
+  String get settingHintEinvoiceStuckAttemptMinutes;
+
   /// #2563 C2 answer wait: settingHintFederationAnswerWaitSeconds
   ///
   /// In en, this message translates to:
@@ -50978,6 +51044,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Days before a first reminder'**
   String get settingLabelDunningFirstAfterDays;
+
+  /// #4325 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'E-invoice attempt left half-way'**
+  String get settingLabelEinvoiceStuckAttemptMinutes;
 
   /// #2563 C2 answer wait: settingLabelFederationAnswerWaitSeconds
   ///
@@ -56744,11 +56816,29 @@ abstract class AppLocalizations {
   /// **'The use must be picking or reserve.'**
   String get stockReasonPickRoleUnknown;
 
+  /// #4294 reorder points: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'The item, variant and site of a reorder point cannot be changed: make another.'**
+  String get stockReasonPointFixed;
+
+  /// #4294 reorder points: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'This item already has a reorder point at this site.'**
+  String get stockReasonPointTwice;
+
   /// #4169 the stock editors: a text under a field the server refused
   ///
   /// In en, this message translates to:
   /// **'A price is zero or more.'**
   String get stockReasonPriceInvalid;
+
+  /// #4294 reorder points: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'Name a quantity to order or a level to order up to, not both.'**
+  String get stockReasonQuantityAndTarget;
 
   /// #4171 receiving into stock: a text under a field the server refused
   ///
@@ -56786,6 +56876,12 @@ abstract class AppLocalizations {
   /// **'Both places are in one site: move the goods in one step instead.'**
   String get stockReasonSameSite;
 
+  /// #4294 reorder points: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a site of this business.'**
+  String get stockReasonSiteUnknown;
+
   /// #4169 the stock editors: a text under a field the server refused
   ///
   /// In en, this message translates to:
@@ -56803,6 +56899,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This supplier is not one of this business.'**
   String get stockReasonSupplierForeign;
+
+  /// #4294 reorder points: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'The level to order up to must be above the reorder point.'**
+  String get stockReasonTargetBelowPoint;
 
   /// #4169 the stock editors: a text under a field the server refused
   ///
@@ -57067,6 +57169,102 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No supplier chosen'**
   String get stockReorderNoSupplierTitle;
+
+  /// #4294 reorder points: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'In use'**
+  String get stockReorderPointActive;
+
+  /// #4294 reorder points: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'Add a reorder point'**
+  String get stockReorderPointAdd;
+
+  /// #4294 reorder points: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'not in use'**
+  String get stockReorderPointInactive;
+
+  /// #4294 reorder points: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'Reorder point ({unit})'**
+  String stockReorderPointLevel(String unit);
+
+  /// #4294 reorder points: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'Order a quantity'**
+  String get stockReorderPointModeQuantity;
+
+  /// #4294 reorder points: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'Order up to'**
+  String get stockReorderPointModeTarget;
+
+  /// #4294 reorder points: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'{site} · reorder point {point} · {rule}'**
+  String stockReorderPointRow(String site, String point, String rule);
+
+  /// #4294 reorder points: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'Site'**
+  String get stockReorderPointSite;
+
+  /// #4294 reorder points: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'Reorder point'**
+  String get stockReorderPointTitle;
+
+  /// #4294 reorder points: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity (empty: only flag)'**
+  String get stockReorderPointValue;
+
+  /// #4294 reorder points: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'The item as a whole'**
+  String get stockReorderPointWhole;
+
+  /// #4294 reorder points: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'No reorder point is set: nothing is ever flagged as low.'**
+  String get stockReorderPointsEmpty;
+
+  /// #4294 reorder points: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'Reorder points'**
+  String get stockReorderPointsTitle;
+
+  /// #4294 reorder points: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'flag only'**
+  String get stockReorderRuleNone;
+
+  /// #4294 reorder points: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'order {quantity}'**
+  String stockReorderRuleQuantity(String quantity);
+
+  /// #4294 reorder points: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'order up to {quantity}'**
+  String stockReorderRuleTarget(String quantity);
 
   /// #4294 reorder: a label or a message
   ///

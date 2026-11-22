@@ -679,12 +679,16 @@ Each place has an **address**, written from its parents' codes: `MAIN-SALES-A03-
 
 You want to see what is about to run out and order it without going through the shelves.
 
+When an item falls to its reorder point, whoever may manage the stock or the purchases gets **one notice** in the inbox (under Money): the item, the site, what is on hand and the point. It is told once while the stock stays low, and says so when the stock rises above the point again. Tapping it opens this page.
+
 Open **Stock → Reorder** (the feature *Reorder points* must be on). The page has two lists.
 
 - **Low stock** lists every item or variant at or below its reorder point, per site, with what is on hand and the point. It is read from the stock ledger, exactly, in the item's unit; an item with no reorder point is never listed. A place that is in transit does not count as stock on hand.
 - **What to order** groups what is low by the supplier whose article is marked **preferred** for it, in that article's purchase unit, rounded up to whole units. An item with no preferred supplier article is listed under **No supplier chosen**: mark one in the item's supplier articles.
 
 **Create draft order** makes a draft purchase order from a group. It is only a draft: nothing is ordered, priced or sent until you confirm it in the purchase orders. It needs the right to manage purchases; asking twice for the same draft makes it once.
+
+**Reorder points** (below the two lists) are what makes an item low. Each shows the item, the site, the level and what to order then: a quantity, *up to* a level, or nothing (it only flags). Whoever may manage the stock adds one with **Add a reorder point** or opens one to change it. The level and the quantity are exact numbers (a decimal comma is fine); a level to order up to must be above the point, a point names a quantity or a level, not both, and an item has one point per site (and variant). The item, variant and site of a point cannot be changed afterwards: make another. A point switched off is kept and flags nothing.
 <!-- anchor: user.money.stock.registry -->
 ### The item registry
 
