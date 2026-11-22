@@ -79,6 +79,14 @@ String _biReportSettingLabel(AppLocalizations l10n, String key) => switch (key) 
       'bi.report_max_visuals' => l10n.settingLabelBiReportMaxVisuals,
       'bi.report_max_bytes' => l10n.settingLabelBiReportMaxBytes,
       'bi.detail_page_size' => l10n.settingLabelBiDetailPageSize,
+      _ => _itemGroupSettingLabel(l10n, key),
+    };
+
+/// #4361 -- the defaults an item group falls back to.
+String _itemGroupSettingLabel(AppLocalizations l10n, String key) => switch (key) {
+      'stock.group_default_tag_mode' => l10n.settingLabelStockGroupDefaultTagMode,
+      'stock.group_default_count_days' => l10n.settingLabelStockGroupDefaultCountDays,
+      'stock.price_rounding' => l10n.settingLabelStockPriceRounding,
       _ => _bankSettingLabel(l10n, key),
     };
 
@@ -111,9 +119,6 @@ String _recordsSettingLabel(AppLocalizations l10n, String key) => switch (key) {
       'security.badge_signin_where' => l10n.settingLabelSecurityBadgeSigninWhere,
       'stock.allow_negative' => l10n.settingLabelStockAllowNegative,
       'stock.address_separator' => l10n.settingLabelStockAddressSeparator,
-      'stock.group_default_tag_mode' => l10n.settingLabelStockGroupDefaultTagMode,
-      'stock.group_default_count_days' => l10n.settingLabelStockGroupDefaultCountDays,
-      'stock.price_rounding' => l10n.settingLabelStockPriceRounding,
       'stock.cycle_count_high_value_minor' => l10n.settingLabelStockCycleCountHighValueMinor,
       'stock.cycle_count_overdue_days' => l10n.settingLabelStockCycleCountOverdueDays,
       'security.badge_identify_per_tag_limit' => l10n.settingLabelSecurityBadgeIdentifyPerTagLimit,
@@ -212,6 +217,14 @@ String? _biReportSettingHint(AppLocalizations l10n, String key) => switch (key) 
       'bi.report_max_visuals' => l10n.settingHintBiReportMaxVisuals,
       'bi.report_max_bytes' => l10n.settingHintBiReportMaxBytes,
       'bi.detail_page_size' => l10n.settingHintBiDetailPageSize,
+      _ => _itemGroupSettingHint(l10n, key),
+    };
+
+/// #4361 -- the defaults an item group falls back to.
+String? _itemGroupSettingHint(AppLocalizations l10n, String key) => switch (key) {
+      'stock.group_default_tag_mode' => l10n.settingHintStockGroupDefaultTagMode,
+      'stock.group_default_count_days' => l10n.settingHintStockGroupDefaultCountDays,
+      'stock.price_rounding' => l10n.settingHintStockPriceRounding,
       _ => _bankSettingHint(l10n, key),
     };
 
@@ -231,9 +244,6 @@ String? _bankSettingHint(AppLocalizations l10n, String key) => switch (key) {
       'security.badge_signin_where' => l10n.settingHintSecurityBadgeSigninWhere,
       'stock.allow_negative' => l10n.settingHintStockAllowNegative,
       'stock.address_separator' => l10n.settingHintStockAddressSeparator,
-      'stock.group_default_tag_mode' => l10n.settingHintStockGroupDefaultTagMode,
-      'stock.group_default_count_days' => l10n.settingHintStockGroupDefaultCountDays,
-      'stock.price_rounding' => l10n.settingHintStockPriceRounding,
       'stock.cycle_count_high_value_minor' => l10n.settingHintStockCycleCountHighValueMinor,
       'stock.cycle_count_overdue_days' => l10n.settingHintStockCycleCountOverdueDays,
       'security.badge_identify_per_tag_limit' => l10n.settingHintSecurityBadgeIdentifyPerTagLimit,

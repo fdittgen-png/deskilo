@@ -615,6 +615,14 @@ const Map<String, Set<String>> _notExportedColumns = {
     // configuration transfer are made again on import, so the id means nothing there; the home
     // is advice that moves no stock, set again from the registry.
     'home_location_id',
+    // #4361 — the group an item belongs to and the parameters it keeps of its own
+    // (tag mode, count cycle, weight, age, label, till category and colour, deposit).
+    // The group is this installation's own row and the parameters are read through it
+    // (item_effective_core); a configuration transfer carries the groups' own sheet and
+    // sets the items' parameters again from it, as it sets the home above.
+    'group_id', 'group_overrides', 'tag_mode', 'count_every_days',
+    'sold_by_weight', 'weight_basis', 'min_age', 'label_template',
+    'till_category', 'quick_key_colour', 'deposit_item_id', 'deposit_minor',
   },
   'reservations': {
     // #4216 — whether a removed place was a hidden one: the reading rule of a
