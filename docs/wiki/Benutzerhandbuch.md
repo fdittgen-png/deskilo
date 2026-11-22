@@ -3019,9 +3019,16 @@ Bei einem gesendeten Angebot öffnet **PDF teilen** das Angebot als Dokument: ei
 
 - **Lager** zeigt, was nach Artikel, Variante, Charge und Lagerort vorrätig ist, mit der genauen Menge.
 - **Bewegungen** ist das Protokoll jeder Bewegung; öffnen Sie eine, um zu sehen, was sich bewegt hat, wie gespeichert und wie eingegeben.
+- **Umlagerungen** zeigt die Ware, die zwischen zwei Standorten unterwegs ist; hier lagern Sie Ware um, empfangen, was angekommen ist, und entnehmen Ware.
 - **Artikel** ist das Artikelregister: die Lagereinstellungen jedes Artikels, seine Varianten und seine Lieferantenartikel.
 - **Lagerorte** enthält die Standorte, Zonen, Regale und Fächer mit ihren Adressen.
 - **Lagereinstellungen** hält jeden Lagerparameter auf einer Seite: die Lagerfunktionen mit ihren Schaltern und die Lagerregeln. Eine Lagereinstellung, die Sie anderswo finden, verweist hierher.
+
+**Ware umlagern.** Unter **Umlagerungen** nimmt **Ware umlagern** einen Artikel von einem Platz und legt ihn auf einen anderen. Zwei Plätze desselben Standorts bewegen die Ware sofort; Plätze verschiedener Standorte verladen sie auf den Weg, und sie bleibt dort, sichtbar unter **Umlagerungen**, bis der andere Standort sie empfängt. **Empfangen** bei einer Ladung nimmt alles oder einen Teil davon auf einen Platz des Zielstandorts; was Sie auslassen, bleibt unterwegs. Eine Menge gilt genau so, wie Sie sie eingeben, und eine Anfrage über mehr als vorrätig ist, wird ganz abgelehnt: nichts bewegt sich.
+
+**Ware entnehmen.** Ist die Funktion *Ware entnehmen* eingeschaltet und darf Ihre Rolle Bestände bewegen, erfasst **Ware entnehmen**, was der Betrieb verbraucht hat oder was verloren ging; es verlässt den Bestand endgültig.
+
+Ein Verkauf, der nicht bestätigt werden kann, weil das Hauptlager weniger enthält als verlangt, nennt, was das Lager enthält, und bietet **Lager öffnen** für diesen Artikel an.
 
 Ein Eintrag erscheint nur, wenn seine Funktion eingeschaltet ist und Ihre Rolle die Seite erlaubt: Wer nur ansehen darf, sieht die Seiten, nicht die Einstellungen. Der Einkauf behält, was eingekauft wird; der Verkauf, was verkauft wird.
 

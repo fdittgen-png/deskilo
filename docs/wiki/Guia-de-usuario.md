@@ -3019,9 +3019,16 @@ Abra **Existencias** en el menú, justo debajo de **Compras y proveedores**. Tod
 
 - **Existencias** muestra lo que hay por artículo, variante, lote y ubicación, con la cantidad exacta.
 - **Movimientos** es el registro de cada movimiento; abra uno para ver qué se movió, tal como se guardó y tal como se introdujo.
+- **Traslados** muestra la mercancía que está en camino entre dos sedes; desde allí mueve mercancía, recibe lo que llegó y retira mercancía.
 - **Artículos** es el registro de artículos: los ajustes de existencias de cada uno, sus variantes y sus artículos de proveedor.
 - **Ubicaciones** reúne los sitios, zonas, estantes y cajones con sus direcciones.
 - **Ajustes de existencias** guarda cada parámetro de existencias en una página: las funciones de existencias con sus interruptores y las reglas de existencias. Un ajuste de existencias que encuentre en otro lugar enlaza aquí.
+
+**Mover mercancía.** En **Traslados**, **Mover mercancía** lleva un artículo de un lugar a otro. Dos lugares de una misma sede mueven la mercancía de inmediato; lugares de sedes distintas la cargan «en camino», y allí queda, visible en **Traslados**, hasta que la otra sede la reciba. **Recibir** en una carga toma todo o parte en un lugar de la sede de destino; lo que deje fuera sigue en camino. Una cantidad es exacta tal como la escribe, y una solicitud de más de lo disponible se rechaza entera: nada se mueve.
+
+**Retirar mercancía.** Cuando la función *Retirar mercancía* está activada y su rol puede mover existencias, **Retirar mercancía** registra lo que el negocio consumió o perdió, y sale de las existencias de forma definitiva.
+
+Una venta que no puede confirmarse porque el almacén principal tiene menos de lo que pide indica lo que tiene el almacén y ofrece **Abrir las existencias** de ese artículo.
 
 Una entrada aparece solo cuando su función está activada y su rol permite su página: quien solo puede mirar ve las páginas, no los ajustes. Compras conserva lo que se compra; Ventas, lo que se vende.
 

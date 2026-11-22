@@ -3019,9 +3019,16 @@ Ouvrez **Stock** dans le menu, juste sous **Achats et fournisseurs**. Tout ce qu
 
 - **Stock** montre ce qui est en stock par article, variante, lot et emplacement, avec la quantité exacte.
 - **Mouvements** est le journal de chaque mouvement ; ouvrez-en un pour voir ce qui a bougé, tel que stocké et tel que saisi.
+- **Transferts** montre les marchandises en route entre deux sites ; c'est là que vous déplacez des marchandises, réceptionnez ce qui est arrivé et sortez des marchandises.
 - **Articles** est le registre des articles : les réglages de stock de chacun, ses variantes et ses articles fournisseur.
 - **Emplacements** réunit les sites, zones, étagères et bacs avec leurs adresses.
 - **Réglages du stock** garde tous les paramètres du stock sur une page : les fonctions du stock avec leurs interrupteurs, et les règles du stock. Un réglage du stock trouvé ailleurs renvoie ici.
+
+**Déplacer des marchandises.** Sur **Transferts**, **Déplacer des marchandises** prend un article d'un emplacement pour le mettre sur un autre. Deux emplacements d'un même site déplacent les marchandises immédiatement ; des emplacements de sites différents les chargent « en route », et elles y restent, visibles sur **Transferts**, jusqu'à leur réception par l'autre site. **Réceptionner** sur un chargement en prend tout ou partie sur un emplacement du site de destination ; ce que vous laissez de côté reste en route. Une quantité est exacte telle que vous la saisissez, et une demande de plus que le stock disponible est refusée en entier : rien ne bouge.
+
+**Sortir des marchandises.** Lorsque la fonction *Sortir des marchandises* est activée et que votre rôle peut déplacer le stock, **Sortir des marchandises** enregistre ce que l'entreprise a utilisé ou perdu, et cela quitte le stock définitivement.
+
+Une vente qui ne peut pas être confirmée parce que le magasin principal contient moins que demandé indique ce que contient le magasin et propose **Ouvrir le stock** pour cet article.
 
 Une entrée n'apparaît que lorsque sa fonction est activée et que votre rôle autorise sa page : qui peut seulement consulter voit les pages, pas les réglages. Les achats gardent ce qui s'achète ; les ventes, ce qui se vend.
 
