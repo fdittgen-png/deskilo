@@ -165,5 +165,5 @@ stockLots | everywhere | y y y y y y y y y y
 stockReceiving | everywhere | y y y y y y y y y y
 stockTakeOut | everywhere | y y y y y y y y y y
 serviceFulfilment | everywhere | y y y y y y y y y y
-stockItemGroups | everywhere | y y y y y y y y y y
 stockReorder | everywhere | y y y y y y y y y y
+stockItemGroups | everywhere | y y y y y y y y y y
