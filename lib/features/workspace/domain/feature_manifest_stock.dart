@@ -58,8 +58,37 @@ const Map<WorkspaceFeature, FeatureManifestEntry> stockFeatureManifest = {
     requires: WorkspaceFeature.stockManagement,
     defaultOn: false,
   ),
-  // #4361 — item groups: shared settings that items inherit and may override, with history.
-  // Asked for, under the goods ledger. Off: items keep their own values exactly as before.
+  // #4172 — a customer return, a supplier return and a correction of a movement, each
+  // bounded by the movement it reverses. Asked for, under the goods ledger. Off: no
+  // return and no correction is offered; the ledger is unaffected.
+  WorkspaceFeature.stockReturns: FeatureManifestEntry(
+    feature: WorkspaceFeature.stockReturns,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.stockManagement,
+    defaultOn: false,
+  ),
+  // #4172 — a count of an item at a place, recorded by whoever manages the stock and applied
+  // by whoever approves adjustments, only while the stock has not moved since. Asked for,
+  // under the goods ledger. Off: no count is recorded; the ledger is unaffected.
+  WorkspaceFeature.stockCounts: FeatureManifestEntry(
+    feature: WorkspaceFeature.stockCounts,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.stockManagement,
+    defaultOn: false,
+  ),
+  // #4295 — scheduled cycle counts of chosen places, items or high-value goods while the shop
+  // stays open; each counted line is a count of #4172, approved there. Asked for, under the
+  // counts. Off: no plan runs and no task is made; the ledger is unaffected.
+  WorkspaceFeature.stockCycleCounts: FeatureManifestEntry(
+    feature: WorkspaceFeature.stockCycleCounts,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.stockCounts,
+    defaultOn: false,
+  ),
+  // #4361 — item groups: shared settings that items inherit and may override, with history. Asked for, under the goods ledger. Off: items keep their own values exactly as before.
   WorkspaceFeature.stockItemGroups: FeatureManifestEntry(
     feature: WorkspaceFeature.stockItemGroups,
     surface: FeatureSurface.money,

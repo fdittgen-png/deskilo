@@ -716,6 +716,23 @@ Ware mit **unbekannten** Kosten (eine Charge ohne Kosten oder Ware ohne Charge) 
 
 Öffnen Sie eine Bewegung (**Lager → Bewegungen**) und lesen Sie **Woher es kam**: den Wareneingang, die Bestellung, die mit ihr verknüpften Lieferantenrechnungen, was jede schuldet und die Zahlungen und Stornos, die sie ausgleichen. Gezeigt wird nur, was erfasst ist; nichts wird über Name, Datum oder Betrag zugeordnet. Ein Teil, den Sie nicht sehen dürfen, sagt *wird Ihnen nicht angezeigt* (das heißt nicht „unbezahlt“); ein Teil ohne Erfassung sagt *nicht verknüpft*; eine gekürzte Liste sagt es. Eine Rechnung zu verknüpfen ändert nie, was die Ware kostet. Sie zu öffnen ändert nichts.
 
+<!-- anchor: user.money.stock.reversals -->
+### Rückgaben, Korrekturen und Zählungen
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie wollen Ware zurücknehmen, eine Bewegung rückgängig machen oder eine falsche Zahl im Regal berichtigen, ohne die Geschichte zu ändern.
+
+Öffnen Sie eine Bewegung unter **Lager → Bewegungen**. Wo die Funktion *Rückgaben und Korrekturen* an ist und Ihre Rolle Ware bewegen darf, sagt die Seite, wie viel dieser Bewegung noch rückgängig gemacht werden kann, und bietet an: **Rückgabe vom Kunden** (bei einem Verkauf), **Rückgabe an den Lieferanten** (bei einer Lieferung) oder **Diese Bewegung korrigieren** (bei den übrigen). Das Formular zeigt vor der Bestätigung, was bewegt wurde und was bleibt. Eine Rückgabe an den Lieferanten verlässt den Ort, an dem die Ware jetzt liegt; Ware vom Kunden kommt an den Ort zurück, den Sie wählen. Eine Korrektur ist eine Gegenbewegung, und eine Korrektur kann selbst korrigiert werden.
+
+**Zählungen.** Wo die Funktion *Bestandszählungen* an ist, listet **Lager → Bestandszählungen** auf, was gegen das Buch gezählt wurde. **Zählen** erfasst einen Artikel an einem Ort und bewegt nichts: Die Zählung wartet auf jemanden, der Anpassungen genehmigen darf, und sagt das. Die Genehmigung wendet genau die Differenz an, und nur wenn sich der Bestand seit der Zählung nicht bewegt hat; sonst verlangt sie eine neue Zählung. Wer gezählt hat, genehmigt die eigene Zählung nicht, solange es jemand anderen gibt; der Inhaber eines Ein-Personen-Unternehmens tut beides.
+
+**Gut zu wissen**
+
+- Eine Rückgabe oder Korrektur übersteigt nie, was die rückgängig gemachte Bewegung erlaubt, wie oft sie auch gesendet wird.
+- Dadurch wird nichts bezahlt, erstattet oder gutgeschrieben: Geht es um Geld, korrigieren Sie es in der Rechnung oder der Lieferantenzahlung.
+- Dasselbe Formular nach einer verlorenen Antwort erneut zu senden, erfasst es nur einmal.
+
 <!-- anchor: user.money.amounts -->
 ### Wie Beträge angezeigt werden
 

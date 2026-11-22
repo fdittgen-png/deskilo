@@ -88,8 +88,8 @@ void main() {
     // #4178 — serviceFulfilment: following an ordered service is asked for.
     // #4170 — stockTakeOut: taking goods out is asked for.
     // #4294 — stockReorder: reorder points are asked for.
-    // #4361 — stockItemGroups: item groups are asked for.
-    expect(onCount, featureManifest.length - 65);
+    // #4172 — stockReturns: returns and corrections are asked for; stockCounts: counts; stockCycleCounts: cycle counts.
+    expect(onCount, featureManifest.length - 68);
   });
 
   testWidgets(

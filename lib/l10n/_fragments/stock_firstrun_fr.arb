@@ -1,0 +1,22 @@
+{
+  "stockItemAddButton": "Ajouter un article",
+  "stockItemAddTitle": "Ajouter un article",
+  "stockItemAddIntro": "Ou tenez en stock un service que vous avez déjà : choisissez-en un et ses réglages de stock s’ouvrent avec le réglage déjà activé.",
+  "stockItemAddNone": "Tous les services sont déjà tenus en stock, ou il n’y en a pas encore. Ajoutez d’abord un service, puis revenez.",
+  "stockItemAddOpenServices": "Ouvrir les services",
+  "stockFirstRunTitle": "Votre stock est vide",
+  "stockFirstRunBody": "Commencez par un emplacement où se trouvent les marchandises, puis les articles que vous tenez. Ensuite, recevez une livraison ou déplacez des marchandises.",
+  "stockFirstRunPlace": "Ajouter votre premier emplacement",
+  "stockFirstRunItem": "Ajouter votre premier article",
+  "stockFirstRunNext": "Recevez ensuite une livraison d’une commande, ou déplacez des marchandises depuis Mouvements.",
+  "stockItemNewTitle": "Nouvel article",
+  "stockItemNewOption": "Créer un nouvel article",
+  "stockItemNewName": "Nom",
+  "stockItemNewPrice": "Prix ({currency})",
+  "stockItemNewUnit": "Compté en",
+  "stockItemNewBarcode": "Code-barres (facultatif)",
+  "stockItemNewHome": "Emplacement d’origine (facultatif)",
+  "stockItemNewNoHome": "Aucun pour l’instant",
+  "stockItemNewNameRequired": "Donnez un nom à l’article.",
+  "stockItemNewPriceInvalid": "Saisissez un prix, ou laissez vide."
+}

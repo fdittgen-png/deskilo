@@ -269,6 +269,8 @@ const STEPS=[
   // #4293 — how a place address (site, zone, aisle, bay, shelf) is written.
   if(on('stockManagement'))k.push(selectEl(T('stockAddressSeparator'),'stock.addressSeparator',opts(STOCK_SEP),T('stockAddressSeparatorHint'),null,'services'));
   if(on('stockItemGroups'))k.push(selectEl(T('stockGroupTagMode'),'stock.tagMode',opts(STOCK_TAG),T('stockGroupTagModeHint'),null,'services'),selectEl(T('stockGroupCountDays'),'stock.countDays',opts(STOCK_COUNT_DAYS),T('stockGroupCountDaysHint'),null,'services'),selectEl(T('stockGroupRounding'),'stock.priceRounding',opts(STOCK_ROUNDING),T('stockGroupRoundingHint'),null,'services'));
+  // #4295 — cycle counts: when a place's holding is high value, and when an open task is overdue.
+  if(on('stockCycleCounts'))k.push(selectEl(T('stockCycleHighValue'),'stock.cycleHighValue',opts(STOCK_CYCLE_VALUE),T('stockCycleHighValueHint'),null,'services'),selectEl(T('stockCycleOverdue'),'stock.cycleOverdue',opts(STOCK_CYCLE_OVERDUE),T('stockCycleOverdueHint'),null,'services'));
   if(!vatCol&&on('services'))k.push(dep(registered()?T('servicesVatHiddenFeature',{feature:quoted(featureTitle('vatManagement'))}):T('servicesVatHiddenNotSubject'),registered()?'features':'legal'));
   return k},
  check(){const f=[];if(on('services')){const n=S.services.filter(s=>s.name.trim()).length;if(!n)f.push(F.warn(T('servicesErrNone'),'services'));else f.push(F.ok(T('servicesOk',{n})));S.services.filter(s=>s.name.trim()&&!(num(s.price)>=0)).forEach(s=>f.push(F.err(T('servicesErrNoPrice',{name:quoted(s.name)}),'services')))}

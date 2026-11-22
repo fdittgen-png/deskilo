@@ -258,6 +258,31 @@ Después añada solo lo que le corresponda:
 
 **Véase también:** [Dinero y facturación](help:setup.money.overview) · [Partir de una plantilla o de cero](help:setup.before.template)
 
+<!-- anchor: setup.features.goods -->
+### Vender o almacenar mercancías
+
+**Público:** Propietario
+
+Vende mercancías o lleva existencias y quiere saber dónde están los artículos, ubicaciones, entregas y movimientos. Todo empieza con un interruptor, luego unos cuantos más, en este orden.
+
+| # | Haga esto | Dónde está después |
+|---|---|---|
+| 1 | Active **Existencias: artículos, ubicaciones, entregas, movimientos** (bajo **Servicios**). | Aparece un menú **Existencias**: Existencias, Movimientos, Traspasos, Artículos, Ubicaciones, Ajustes de existencias. |
+| 2 | Añada su primera ubicación: **Existencias → Ubicaciones → Añadir una ubicación** (por ejemplo el almacén principal, luego las estanterías dentro). | **Existencias → Ubicaciones** |
+| 3 | Añada su primer artículo: **Existencias → Artículos → Añadir un artículo**. Un artículo es un servicio que mantiene en existencias: elíjalo y sus ajustes de existencias se abren con el ajuste ya activado (su unidad, unidades de embalaje, códigos). Añada antes el servicio en **Servicios** si no existe. | **Existencias → Artículos** |
+| 4 | Active **Compras** y **Pedir a proveedores** para pedir mercancías, luego **Recepción en existencias** para guardar una entrega desde su pedido. | **Compras y proveedores → Pedidos**, luego **Registrar la entrega** |
+| 5 | Active **Salida de mercancías** para lo que sale (vendido, usado, perdido), **Lotes y caducidad** para mercancías con lotes o fecha de caducidad y **Puntos de reposición** para saber qué está bajo. | **Existencias → Movimientos** (salida), **Existencias → Reposición** |
+
+Después reciba una entrega, mueva mercancías a una estantería y saque una: la página Existencias muestra cada operación al instante.
+
+**Conviene saber**
+
+- Una empresa que ha activado las existencias pero aún no tiene ubicación ni artículo ve **Añadir su primera ubicación** y **Añadir su primer artículo** en la página Existencias.
+- Desactivar una función no borra nada: lo registrado se conserva y se puede leer de nuevo.
+- Pruébelo primero en la demostración, donde la tienda ya lleva existencias. Vea [Desactivar no borra nada](help:setup.features.off).
+
+**Véase también:** [El orden para activar las funciones](help:setup.features.order) · [Funciones que necesitan otras](help:setup.features.dependencies)
+
 <!-- anchor: setup.features.order -->
 ### El orden para activar las cosas
 

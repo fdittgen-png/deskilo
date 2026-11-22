@@ -24,6 +24,14 @@ name: Tools · Database preview
 # stays the gate, and its database job is unchanged.
 on:
   workflow_dispatch:
+    inputs:
+      race:
+        description: >-
+          Race scripts to run as well, by file name in scripts/ (space separated,
+          e.g. "stock_transfer_race.sh"), or "all". Empty runs none. Lets a branch
+          prove a two-session script in minutes instead of a full quality round.
+        required: false
+        default: ''
 
 concurrency:
   group: db-preview-${{ github.ref }}
@@ -90,6 +98,25 @@ jobs:
           mkdir -p preview
           { echo "# source $GITHUB_SHA"; supabase test db 2>&1; } | tee preview/pgtap.log
           python3 -B scripts/workspace_alignment_check.py "$DB_URL" | tee preview/alignment.log
+
+      # 22 Nov 2026 — a race script's first real run used to be the full
+      # quality round (no local stack fits beside the test runs). On request,
+      # the preview runs the named scripts against the same replayed database.
+      - name: Race scripts on request
+        if: steps.migrations.outcome == 'success' && inputs.race != ''
+        env:
+          DB_URL: ${{ steps.migrations.outputs.db-url }}
+          RACE: ${{ inputs.race }}
+        run: |
+          set -o pipefail
+          if [ "$RACE" = all ]; then RACE=$(cd scripts && ls *_race.sh concurrency_check.sh 2>/dev/null); fi
+          rc=0
+          for f in $RACE; do
+            case "$f" in *[!A-Za-z0-9_.-]*|'') echo "::error::not a script name: $f"; rc=1; continue;; esac
+            [ -f "scripts/$f" ] || { echo "::error::no scripts/$f"; rc=1; continue; }
+            echo "::group::$f"; bash "scripts/$f" "$DB_URL" || rc=1; echo "::endgroup::"
+          done
+          exit $rc
 
       # The two committed files as the replay built them, each under the
       # header it has today: copy them over the committed ones.

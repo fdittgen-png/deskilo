@@ -1,0 +1,22 @@
+{
+  "stockItemAddButton": "Artikel hinzufügen",
+  "stockItemAddTitle": "Artikel hinzufügen",
+  "stockItemAddIntro": "Oder führen Sie eine vorhandene Leistung im Lager: Wählen Sie eine, und ihre Lagereinstellungen öffnen sich mit eingeschalteter Einstellung.",
+  "stockItemAddNone": "Jede Leistung wird bereits im Lager geführt, oder es gibt noch keine. Legen Sie zuerst eine Leistung an und kommen Sie dann zurück.",
+  "stockItemAddOpenServices": "Leistungen öffnen",
+  "stockFirstRunTitle": "Ihr Lager ist leer",
+  "stockFirstRunBody": "Beginnen Sie mit einem Ort, an dem Ware liegt, dann mit den Artikeln, die Sie führen. Danach nehmen Sie eine Lieferung an oder bewegen Ware ein.",
+  "stockFirstRunPlace": "Ersten Ort hinzufügen",
+  "stockFirstRunItem": "Ersten Artikel hinzufügen",
+  "stockFirstRunNext": "Nehmen Sie dann eine Lieferung einer Bestellung an oder bewegen Sie Ware über Bewegungen ein.",
+  "stockItemNewTitle": "Neuer Artikel",
+  "stockItemNewOption": "Neuen Artikel anlegen",
+  "stockItemNewName": "Name",
+  "stockItemNewPrice": "Preis ({currency})",
+  "stockItemNewUnit": "Gezählt in",
+  "stockItemNewBarcode": "Barcode (optional)",
+  "stockItemNewHome": "Heimatort (optional)",
+  "stockItemNewNoHome": "Noch keiner",
+  "stockItemNewNameRequired": "Geben Sie dem Artikel einen Namen.",
+  "stockItemNewPriceInvalid": "Geben Sie einen Preis ein oder lassen Sie das Feld leer."
+}

@@ -314,6 +314,30 @@
   "@featureStockReorderDesc": {
     "description": "#4294 feature description"
   },
+  "featureStockReturnsTitle": "Devoluciones y correcciones de stock",
+  "@featureStockReturnsTitle": {
+    "description": "#4172 feature name"
+  },
+  "featureStockReturnsDesc": "Devuelva mercancías contra la venta o la entrega de la que proceden, o corrija un movimiento. Cada devolución o corrección está limitada por el movimiento que revierte: las mismas mercancías nunca se devuelven dos veces. Desactivado: no se ofrece ninguna devolución ni corrección; el registro no cambia.",
+  "@featureStockReturnsDesc": {
+    "description": "#4172 feature description"
+  },
+  "featureStockCountsTitle": "Recuentos de stock",
+  "@featureStockCountsTitle": {
+    "description": "#4172 feature name"
+  },
+  "featureStockCountsDesc": "Cuente un artículo en un lugar. El recuento espera a alguien que pueda aprobar ajustes y solo se aplica si el stock no se ha movido desde entonces. Desactivado: no se registra ningún recuento; el registro no cambia.",
+  "@featureStockCountsDesc": {
+    "description": "#4172 feature description"
+  },
+  "featureStockCycleCountsTitle": "Recuentos cíclicos",
+  "@featureStockCycleCountsTitle": {
+    "description": "#4295 feature name"
+  },
+  "featureStockCycleCountsDesc": "Planifique controles puntuales de lugares, artículos o mercancías de alto valor. Un plan vencido crea una tarea de recuento que se hace sin ver las cantidades esperadas; cada diferencia se aprueba como cualquier recuento. Desactivado: ningún plan se ejecuta ni se crea tarea; el registro no cambia.",
+  "@featureStockCycleCountsDesc": {
+    "description": "#4295 feature description"
+  },
   "featureStockItemGroupsTitle": "Grupos de artículos",
   "featureStockItemGroupsDesc": "Agrupe artículos para compartir sus ajustes: seguimiento, caducidad, modo de etiqueta, unidades, IVA, caja y más. Un artículo hereda el valor de su grupo salvo que conserve el suyo; un cambio de grupo muestra a cuántos artículos llega antes de guardarse."
 }

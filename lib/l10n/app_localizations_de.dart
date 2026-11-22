@@ -10447,6 +10447,14 @@ class AppLocalizationsDe extends AppLocalizations {
       'Zu dieser Anfrage wurde kein Einkaufsbeleg abgelegt, oder Sie dürfen ihn nicht sehen.';
 
   @override
+  String eventStockCountOverdue(String plan) {
+    return 'Die Inventur „$plan“ ist nach ihrem Fälligkeitstag noch offen.';
+  }
+
+  @override
+  String get eventStockCountOverdueEnded => 'Erledigt';
+
+  @override
   String eventStockLow(String item, String site, String onHand, String point) {
     return '$item ist knapp bei $site: $onHand vorrätig, Meldebestand $point';
   }
@@ -10563,6 +10571,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get eventTypeSpaceReservation => 'Ganzraum-Reservierungen';
+
+  @override
+  String get eventTypeStockCountOverdue => 'Permanente Inventur überfällig';
 
   @override
   String get eventTypeStockLow => 'Lagerbestand knapp';
@@ -12537,6 +12548,20 @@ class AppLocalizationsDe extends AppLocalizations {
   String get featureStandaloneInvoicingTitle => 'Einzelrechnungen';
 
   @override
+  String get featureStockCountsDesc =>
+      'Zählen Sie einen Artikel an einem Ort. Die Zählung wartet auf jemanden, der Anpassungen genehmigen darf, und wird nur angewendet, wenn sich der Bestand seit der Zählung nicht bewegt hat. Aus: keine Zählung wird erfasst; das Buch bleibt unberührt.';
+
+  @override
+  String get featureStockCountsTitle => 'Bestandszählungen';
+
+  @override
+  String get featureStockCycleCountsDesc =>
+      'Planen Sie Stichproben für ausgewählte Orte, Artikel oder hochwertige Ware. Ein fälliger Plan erzeugt eine Zählaufgabe, die ohne die erwarteten Mengen erledigt wird; jede Differenz wird wie jede Zählung genehmigt. Aus: kein Plan läuft und keine Aufgabe entsteht; das Buch bleibt unberührt.';
+
+  @override
+  String get featureStockCycleCountsTitle => 'Permanente Inventur';
+
+  @override
   String get featureStockItemGroupsDesc =>
       'Artikel gruppieren, damit ihre Einstellungen geteilt werden: Nachverfolgung, Haltbarkeit, Etikettenmodus, Einheiten, Mehrwertsteuer, Kasse und mehr. Ein Artikel erbt den Wert seiner Gruppe, außer er behält seinen eigenen; eine Änderung an der Gruppe zeigt vor dem Speichern, wie viele Artikel sie erreicht.';
 
@@ -12552,10 +12577,11 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get featureStockManagementDesc =>
-      'Waren verfolgen: wo sie sind, in welcher Einheit, aus welcher Charge, und jede Bewegung zwischen zwei Orten. Aus: ein Katalogartikel behält seinen einfachen Regalbestand.';
+      'Führen Sie die Ware, die Sie verkaufen oder lagern: welche Artikel, an welchen Orten, die Lieferungen, die Sie annehmen, die Bewegungen zwischen Orten und die Entnahmen. Das Einschalten fügt ein Menü Lager mit seinen Seiten hinzu; die übrigen Lagerfunktionen (Chargen, Wareneingang, Entnahme, Meldebestände) sind Schalter darunter. Aus: Ein Katalogartikel behält seinen einzelnen Regalbestand.';
 
   @override
-  String get featureStockManagementTitle => 'Lagerverwaltung';
+  String get featureStockManagementTitle =>
+      'Lager: Artikel, Orte, Lieferungen, Bewegungen';
 
   @override
   String get featureStockReceivingDesc =>
@@ -12570,6 +12596,13 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get featureStockReorderTitle => 'Meldebestände';
+
+  @override
+  String get featureStockReturnsDesc =>
+      'Geben Sie Ware gegen den Verkauf oder die Lieferung zurück, aus der sie stammt, oder korrigieren Sie eine Bewegung. Jede Rückgabe oder Korrektur ist durch die Bewegung begrenzt, die sie rückgängig macht: dieselbe Ware wird nie zweimal zurückgegeben. Aus: keine Rückgabe und keine Korrektur wird angeboten; das Buch bleibt unberührt.';
+
+  @override
+  String get featureStockReturnsTitle => 'Lagerrückgaben und Korrekturen';
 
   @override
   String get featureStockTakeOutDesc =>
@@ -24924,6 +24957,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die von einer Inventur vorgeschlagene Korrektur genehmigen.';
 
   @override
+  String get permAllowsCountStock =>
+      'Die Zeilen einer Inventuraufgabe zählen, ohne zu sehen, was das Buch führt: die Aufgaben und das Zählen jeder Zeile, sonst nichts.';
+
+  @override
   String get permAllowsDeployToDev =>
       'Den Entwicklungs-Space aus der Produktion auffrischen.';
 
@@ -25070,6 +25107,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get permApproveStockAdjustments => 'Bestandskorrekturen genehmigen';
+
+  @override
+  String get permCountStock => 'Bestand blind zählen';
 
   @override
   String get permDeployToDev => 'In die Entwicklung ausrollen';
@@ -28769,6 +28809,18 @@ class AppLocalizationsDe extends AppLocalizations {
       'Diese Bestandskonfiguration ist ungültig: Das genannte Feld nennt den Grund.';
 
   @override
+  String get refusalStockCountDecided =>
+      'Diese Zählung ist bereits entschieden und endgültig. Zählen Sie erneut, wenn die Zahl noch falsch ist.';
+
+  @override
+  String get refusalStockCountSelf =>
+      'Dieses Zählergebnis muss jemand anderes anwenden, der Anpassungen genehmigen darf: Wer gezählt hat, genehmigt die eigene Zählung nicht.';
+
+  @override
+  String get refusalStockCountStale =>
+      'Der Bestand hat sich seit der Zählung bewegt, die Zählung wird nicht angewendet. Zählen Sie erneut.';
+
+  @override
   String get refusalStockHistory =>
       'Dieser Artikel hat Lagerbewegungen, die erhalten bleiben: Er kann nicht gelöscht werden, und seine Lagereinheit und Nachverfolgung bleiben unverändert. Deaktivieren Sie ihn oder legen Sie einen neuen Artikel an.';
 
@@ -28807,6 +28859,18 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get refusalStockPage =>
       'Diese Seitenanfrage ist ungültig: Fordern Sie 1 bis 200 Zeilen an und setzen Sie nur an der Position fort, die eine Seite geliefert hat.';
+
+  @override
+  String get refusalStockReturnBeyond =>
+      'Es kann nicht mehr zurückgegeben werden, als diese Bewegung enthielt: ein Teil wurde bereits zurückgegeben oder korrigiert.';
+
+  @override
+  String get refusalStockReturnChanged =>
+      'Diese Rückgabe wurde bereits mit anderem Inhalt erfasst. Prüfen Sie die frühere Rückgabe, bevor Sie eine neue senden.';
+
+  @override
+  String get refusalStockReturnSource =>
+      'Eine Rückgabe folgt dem Verkauf oder der Lieferung, aus der sie stammt; diese Bewegung ist keine, oder wird hier nicht korrigiert.';
 
   @override
   String get refusalStockStale =>
@@ -32049,6 +32113,14 @@ class AppLocalizationsDe extends AppLocalizations {
       'Aus: eine Bewegung, die an einem Ort weniger als nichts übrig ließe, wird abgelehnt. An: sie wird gebucht, und der Ort zeigt eine negative Menge, bis Ware eintrifft.';
 
   @override
+  String get settingHintStockCycleCountHighValueMinor =>
+      'Der Wert in der kleinsten Einheit der Währung des Unternehmens, ab dem das, was ein Ort von einem Artikel hält, für einen Inventurplan ohne eigene Schwelle als hochwertig gilt.';
+
+  @override
+  String get settingHintStockCycleCountOverdueDays =>
+      'Wie viele Tage eine Inventuraufgabe nach ihrem Fälligkeitstag offen bleiben darf, bevor der Posteingang sie als überfällig meldet.';
+
+  @override
   String get settingHintStockGroupDefaultCountDays =>
       'Nach wie vielen Tagen ein Artikel, den weder eine Gruppe noch eine eigene Einstellung betrifft, zur Zyklus-Zählung vorgeschlagen wird. 0 heißt nicht geplant.';
 
@@ -32379,6 +32451,14 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingLabelStockAllowNegative => 'Bestand darf unter null fallen';
+
+  @override
+  String get settingLabelStockCycleCountHighValueMinor =>
+      'Permanente Inventur: Schwelle für hohen Wert';
+
+  @override
+  String get settingLabelStockCycleCountOverdueDays =>
+      'Permanente Inventur: überfällig nach';
 
   @override
   String get settingLabelStockGroupDefaultCountDays =>
@@ -35220,6 +35300,68 @@ class AppLocalizationsDe extends AppLocalizations {
   String get stockCostUnknown => 'Kosten nicht erfasst';
 
   @override
+  String get stockCountsApply => 'Anwenden';
+
+  @override
+  String get stockCountsCancel => 'Zählung abbrechen';
+
+  @override
+  String get stockCountsEmpty => 'Noch keine Zählung.';
+
+  @override
+  String get stockCountsItem => 'Zu zählender Artikel';
+
+  @override
+  String stockCountsLine(
+    String item,
+    String place,
+    String observed,
+    String baseline,
+    String difference,
+  ) {
+    return '$item an $place: gezählt $observed gegen $baseline ($difference)';
+  }
+
+  @override
+  String stockCountsObserved(String unit) {
+    return 'Gezählt ($unit)';
+  }
+
+  @override
+  String get stockCountsOpen => 'Zählen';
+
+  @override
+  String get stockCountsPlace => 'Ort';
+
+  @override
+  String get stockCountsReason => 'Grund (optional)';
+
+  @override
+  String get stockCountsReject => 'Ablehnen';
+
+  @override
+  String get stockCountsStale =>
+      'Der Bestand hat sich seit dieser Zählung bewegt: zählen Sie erneut.';
+
+  @override
+  String get stockCountsStateApplied => 'Angewendet';
+
+  @override
+  String get stockCountsStateCancelled => 'Abgebrochen';
+
+  @override
+  String get stockCountsStateRecorded => 'Wartet auf Genehmigung';
+
+  @override
+  String get stockCountsStateRejected => 'Abgelehnt';
+
+  @override
+  String get stockCountsSubmit => 'Zählung erfassen';
+
+  @override
+  String get stockCountsTitle => 'Bestandszählungen';
+
+  @override
   String get stockDimensionAdd => 'Dimension hinzufügen';
 
   @override
@@ -35350,6 +35492,23 @@ class AppLocalizationsDe extends AppLocalizations {
   String get stockEnteredLabel => 'Erfasst';
 
   @override
+  String get stockFirstRunBody =>
+      'Beginnen Sie mit einem Ort, an dem Ware liegt, dann mit den Artikeln, die Sie führen. Danach nehmen Sie eine Lieferung an oder bewegen Ware ein.';
+
+  @override
+  String get stockFirstRunItem => 'Ersten Artikel hinzufügen';
+
+  @override
+  String get stockFirstRunNext =>
+      'Nehmen Sie dann eine Lieferung einer Bestellung an oder bewegen Sie Ware über Bewegungen ein.';
+
+  @override
+  String get stockFirstRunPlace => 'Ersten Ort hinzufügen';
+
+  @override
+  String get stockFirstRunTitle => 'Ihr Lager ist leer';
+
+  @override
   String get stockGoodsMore => 'Mehr anzeigen';
 
   @override
@@ -35368,8 +35527,58 @@ class AppLocalizationsDe extends AppLocalizations {
   String get stockGoodsUnavailable => 'Die Ware wird Ihnen nicht angezeigt.';
 
   @override
+  String get stockItemAddButton => 'Artikel hinzufügen';
+
+  @override
+  String get stockItemAddIntro =>
+      'Oder führen Sie eine vorhandene Leistung im Lager: Wählen Sie eine, und ihre Lagereinstellungen öffnen sich mit eingeschalteter Einstellung.';
+
+  @override
+  String get stockItemAddNone =>
+      'Jede Leistung wird bereits im Lager geführt, oder es gibt noch keine. Legen Sie zuerst eine Leistung an und kommen Sie dann zurück.';
+
+  @override
+  String get stockItemAddOpenServices => 'Leistungen öffnen';
+
+  @override
+  String get stockItemAddTitle => 'Artikel hinzufügen';
+
+  @override
+  String get stockItemNewBarcode => 'Barcode (optional)';
+
+  @override
+  String get stockItemNewHome => 'Heimatort (optional)';
+
+  @override
+  String get stockItemNewName => 'Name';
+
+  @override
+  String get stockItemNewNameRequired => 'Geben Sie dem Artikel einen Namen.';
+
+  @override
+  String get stockItemNewNoHome => 'Noch keiner';
+
+  @override
+  String get stockItemNewOption => 'Neuen Artikel anlegen';
+
+  @override
+  String stockItemNewPrice(String currency) {
+    return 'Preis ($currency)';
+  }
+
+  @override
+  String get stockItemNewPriceInvalid =>
+      'Geben Sie einen Preis ein oder lassen Sie das Feld leer.';
+
+  @override
+  String get stockItemNewTitle => 'Neuer Artikel';
+
+  @override
+  String get stockItemNewUnit => 'Gezählt in';
+
+  @override
   String get stockItemsEmpty =>
-      'Noch keine Artikel. Ein Artikel entsteht, wenn eine Leistung oder ein Lieferantenartikel im Lager geführt wird.';
+      'Noch keine Artikel. Ein Artikel ist eine Leistung, die Sie im Lager führen: Wählen Sie Artikel hinzufügen.';
 
   @override
   String get stockItemsIntro =>
@@ -36142,6 +36351,90 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get stockReorderToOrderTitle => 'Was zu bestellen ist';
+
+  @override
+  String get stockReversalBackTo => 'Die Ware kommt zurück nach';
+
+  @override
+  String get stockReversalCorrectionOpen => 'Diese Bewegung korrigieren';
+
+  @override
+  String get stockReversalCorrectionTitle => 'Eine Bewegung korrigieren';
+
+  @override
+  String get stockReversalCustomerOpen => 'Rückgabe vom Kunden';
+
+  @override
+  String get stockReversalCustomerTitle => 'Rückgabe vom Kunden';
+
+  @override
+  String stockReversalEntry(String kind, String quantity, String unit) {
+    return '$kind: $quantity $unit';
+  }
+
+  @override
+  String get stockReversalFully =>
+      'Diese Bewegung ist vollständig rückgängig gemacht.';
+
+  @override
+  String get stockReversalKindCorrection => 'Korrigiert';
+
+  @override
+  String get stockReversalKindCustomer => 'Vom Kunden zurückgegeben';
+
+  @override
+  String get stockReversalKindSupplier => 'An den Lieferanten zurückgegeben';
+
+  @override
+  String get stockReversalLeavesFrom => 'Die Ware verlässt';
+
+  @override
+  String get stockReversalMoneyInvoice =>
+      'Diese Bewegung folgt einer Rechnung: Erstattung oder Gutschrift erfolgen in der Rechnung selbst.';
+
+  @override
+  String get stockReversalMoneyUnavailable =>
+      'Ob es zu dieser Bewegung eine Gutschrift gibt, wird hier nicht gezeigt: das Geld wird gesondert korrigiert.';
+
+  @override
+  String stockReversalMoreThanRemains(String quantity, String unit) {
+    return 'Höchstens $quantity $unit können noch rückgängig gemacht werden.';
+  }
+
+  @override
+  String get stockReversalNoMoney =>
+      'Dadurch wird nichts bezahlt, erstattet oder gutgeschrieben. Geht es um Geld, korrigieren Sie es gesondert in der Rechnung oder der Lieferantenzahlung.';
+
+  @override
+  String get stockReversalNote => 'Notiz (optional)';
+
+  @override
+  String stockReversalRemaining(String quantity, String unit, String reversed) {
+    return 'Kann noch rückgängig gemacht werden: $quantity $unit · bereits rückgängig: $reversed';
+  }
+
+  @override
+  String get stockReversalSection => 'Rückgaben und Korrekturen';
+
+  @override
+  String stockReversalSource(
+    String item,
+    String quantity,
+    String unit,
+    String from,
+    String to,
+  ) {
+    return '$item: $quantity $unit, $from → $to';
+  }
+
+  @override
+  String get stockReversalSubmit => 'Erfassen';
+
+  @override
+  String get stockReversalSupplierOpen => 'Rückgabe an den Lieferanten';
+
+  @override
+  String get stockReversalSupplierTitle => 'Rückgabe an den Lieferanten';
 
   @override
   String get stockSettingsElsewhere =>

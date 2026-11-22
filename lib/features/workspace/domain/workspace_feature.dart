@@ -425,27 +425,27 @@ enum WorkspaceFeature {
   organisation,
   /// #4165 — a standalone customer invoice, with no member-month behind it.
   standaloneInvoicing,
-
   /// #4164 — billing customers: who the business invoices, account or not.
   billingCustomers,
-
   /// #4166 — customer quotes: an offer, sent and decided; the accepted one invoices.
   customerQuotes,
 
   /// #4169 — lots and expiry on goods (feature_manifest_stock.dart).
   stockLots,
-
   /// #4171 — a delivery put away into stock once (feature_manifest_stock.dart).
   stockReceiving,
-
   /// #4170 — goods taken out for use or as a loss (feature_manifest_stock.dart).
   stockTakeOut,
   serviceFulfilment,
-
   /// #4294 — reorder points and low-stock alerts (feature_manifest_stock.dart).
   stockReorder,
 
-  /// #4361 — item groups: shared settings that items inherit (feature_manifest_stock.dart).
+  /// #4172 — returns and corrections of stock (feature_manifest_stock.dart).
+  stockReturns,
+  /// #4172 — counts of stock, approved before they move it (feature_manifest_stock.dart).
+  stockCounts,
+  /// #4295 — scheduled cycle counts (feature_manifest_stock.dart).
+  stockCycleCounts,
   stockItemGroups;
 
   /// The key of this feature inside `workspaces.feature_flags`.

@@ -814,5 +814,10 @@
  "stockSepSlash": "Barra ( / )",
  "stockSepColon": "Due punti ( : )",
  "einvoiceStuck": "Tentativo di fattura elettronica interrotto",
- "einvoiceStuckHint": "Per quanto tempo una fattura elettronica può restare preparata, senza che l’invio sia iniziato, prima che il titolare sia avvisato che il tentativo si è fermato. Si imposta nelle impostazioni dell’app."
+ "einvoiceStuckHint": "Per quanto tempo una fattura elettronica può restare preparata, senza che l’invio sia iniziato, prima che il titolare sia avvisato che il tentativo si è fermato. Si imposta nelle impostazioni dell’app.",
+ "stockCycleHighValue": "Inventario ciclico: soglia di alto valore",
+ "stockCycleHighValueHint": "Il valore, in unità minori della valuta dell’azienda, da cui ciò che un luogo contiene di un articolo è di alto valore per un piano senza soglia propria. Si imposta nelle impostazioni dell’app.",
+ "stockCycleOverdue": "Inventario ciclico: in ritardo dopo",
+ "stockCycleOverdueHint": "Quanti giorni un compito di inventario ciclico può restare aperto dopo la scadenza prima di essere dichiarato in ritardo. Si imposta nelle impostazioni dell’app.",
+ "optMinorUnits": "{n} (unità minori)"
 }

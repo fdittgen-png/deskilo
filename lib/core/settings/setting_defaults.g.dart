@@ -176,6 +176,10 @@ abstract final class SettingDefaults {
   static const String stockAddressSeparator = '-';
   /// `stock.allow_negative`
   static const bool stockAllowNegative = false;
+  /// `stock.cycle_count_high_value_minor`
+  static const int stockCycleCountHighValueMinor = 50000;
+  /// `stock.cycle_count_overdue_days`
+  static const int stockCycleCountOverdueDays = 7;
   /// `stock.group_default_count_days`
   static const int stockGroupDefaultCountDays = 0;
   /// `stock.group_default_tag_mode`

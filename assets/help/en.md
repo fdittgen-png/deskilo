@@ -2966,6 +2966,22 @@ Goods whose cost is **unknown** (a lot received with no cost, or goods with no l
 
 Open any movement (**Stock → Movements**) and read **Where this came from**: the receipt, the order, the supplier bills linked to that order, what each bill owes and the payments and reversals that settle it. Only what is recorded is shown; nothing is matched on a name, a date or an amount. A part you may not see says *not shown to you* (that is not the same as unpaid); a part with nothing recorded says *not linked*; a list cut short says so. Linking a bill never changes what the goods cost. Opening it changes nothing.
 
+### Returns, corrections and counts
+
+**Audience:** Administrator · Owner
+
+You want to take goods back, undo a movement, or put right a figure that is wrong on the shelf, without editing history.
+
+Open a movement in **Stock → Movements**. Where the feature *Returns and corrections* is on and your role may move stock, the page says how much of that movement can still be reversed and offers: **Return from the customer** (for a sale), **Return to the supplier** (for a delivery) or **Correct this movement** (for the others). The form shows what moved and what remains before you confirm. A return of goods to the supplier leaves from the place the goods are in now; goods back from a customer return to the place you choose. A correction is a movement back, and a correction can itself be corrected.
+
+**Counts.** Where the feature *Stock counts* is on, **Stock → Stock counts** lists what was counted against what the ledger held. **Count** records an item at a place and moves nothing: the count waits for someone who may approve adjustments, and says so. The approval applies exactly the difference, and only if the stock has not moved since the count; otherwise it says the count must be done again. Whoever counted does not approve their own count while someone else may; the owner of a one-person business does both.
+
+**Good to know**
+
+- A return or a correction never exceeds what the movement it reverses allows, however many times it is sent.
+- No payment, refund or credit is made by it: if money is involved, correct it in the invoice or the supplier payment.
+- Sending the same form again, after a lost answer, records it once.
+
 ### How amounts are shown
 
 **Audience:** Everyone
@@ -7578,6 +7594,30 @@ Then add only what applies to you:
 - Switch these on one at a time and issue a test invoice in a test space first. See [The order to switch things on](help:setup.features.order).
 
 **See also:** [Money and invoicing](help:setup.money.overview) · [Start from a template or from nothing](help:setup.before.template)
+
+### Selling or storing goods
+
+**Audience:** Owner
+
+You sell goods or keep stock, and want to find where to put items, places, deliveries and moves. Everything starts with one switch, then a few more, in this order.
+
+| # | Do this | Where it is afterwards |
+|---|---|---|
+| 1 | Switch on **Stock: items, places, deliveries, moves** (under **Services**). | A **Stock** menu appears: Stock, Movements, Transfers, Items, Places, Stock settings. |
+| 2 | Add your first place: **Stock → Places → Add a place** (for example the main store, then the shelves inside it). | **Stock → Places** |
+| 3 | Add your first item: **Stock → Items → Add an item**. An item is a service you keep in stock: choose it and its stock settings open with the setting already on (its unit, package units, codes). Add the service first under **Services** if it does not exist. | **Stock → Items** |
+| 4 | Switch on **Purchases** and **Order from suppliers** to order goods, then **Receiving into stock** to put a delivery away from its order. | **Purchases & suppliers → Purchase orders**, then **Record delivery** |
+| 5 | Switch on **Taking goods out** for what leaves (sold, used, lost), **Lots and expiry** for goods with lots or a best-before date, and **Reorder points** to be told what is low. | **Stock → Movements** (take out), **Stock → Reorder** |
+
+Then receive a delivery, move goods to a shelf, and take one out: the Stock page shows each one at once.
+
+**Good to know**
+
+- A business that has switched the goods ledger on but has no place or item yet is shown **Add your first place** and **Add your first item** on the Stock page.
+- Switching a function off deletes nothing: what was recorded stays and can be read again.
+- Try it first in the Demo, where the shop keeps stock already. See [Switching off deletes nothing](help:setup.features.off).
+
+**See also:** [The order to switch things on](help:setup.features.order) · [Features that need other features](help:setup.features.dependencies)
 
 ### The order to switch things on
 

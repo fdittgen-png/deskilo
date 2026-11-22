@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/backend/schema_version.dart';
+import '../../../../core/help/help_dot.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../domain/feature_lifecycle.dart';
 import '../../domain/feature_operation.dart';
 import '../../domain/workspace_feature.dart';
+import '../feature_help.dart';
 import '../feature_surface_labels.dart';
 import 'feature_maturity_badge.dart';
 
@@ -158,6 +160,9 @@ class FeatureTile extends ConsumerWidget {
             Flexible(
               child: Text(name),
             ),
+            // #4350 — a feature whose pages an owner must be able to find carries the guide section
+            // that says what switching it on adds.
+            if (featureHelpAnchors[entry.feature] case final anchor?) HelpDot(name, anchor: anchor),
             // The tier the grouping used to be: a space that wants only
             // the basics can still see at a glance which rows are the
             // deliberate extras.

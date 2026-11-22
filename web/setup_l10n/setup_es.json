@@ -814,5 +814,10 @@
  "stockSepSlash": "Barra ( / )",
  "stockSepColon": "Dos puntos ( : )",
  "einvoiceStuck": "Intento de factura electrónica interrumpido",
- "einvoiceStuckHint": "Cuánto tiempo puede quedar preparada una factura electrónica, sin que se haya iniciado el envío, antes de avisar al propietario de que el intento se detuvo. Se ajusta en los ajustes de la aplicación."
+ "einvoiceStuckHint": "Cuánto tiempo puede quedar preparada una factura electrónica, sin que se haya iniciado el envío, antes de avisar al propietario de que el intento se detuvo. Se ajusta en los ajustes de la aplicación.",
+ "stockCycleHighValue": "Recuento cíclico: umbral de alto valor",
+ "stockCycleHighValueHint": "El valor, en unidades menores de la moneda de la empresa, a partir del cual lo que un lugar contiene de un artículo es de alto valor para un plan sin umbral propio. Se ajusta en los ajustes de la aplicación.",
+ "stockCycleOverdue": "Recuento cíclico: vencido tras",
+ "stockCycleOverdueHint": "Cuántos días puede seguir abierta una tarea de recuento cíclico después de su fecha antes de declararse vencida. Se ajusta en los ajustes de la aplicación.",
+ "optMinorUnits": "{n} (unidades menores)"
 }

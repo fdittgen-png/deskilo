@@ -814,5 +814,10 @@
  "stockSepSlash": "Schrägstrich ( / )",
  "stockSepColon": "Doppelpunkt ( : )",
  "einvoiceStuck": "Unterbrochener E-Rechnungsversuch",
- "einvoiceStuckHint": "Wie lange eine E-Rechnung vorbereitet bleiben darf, ohne dass ein Versand begonnen hat, bevor die Inhaberin oder der Inhaber erfährt, dass der Versuch stehen geblieben ist. Einstellbar in den Einstellungen der App."
+ "einvoiceStuckHint": "Wie lange eine E-Rechnung vorbereitet bleiben darf, ohne dass ein Versand begonnen hat, bevor die Inhaberin oder der Inhaber erfährt, dass der Versuch stehen geblieben ist. Einstellbar in den Einstellungen der App.",
+ "stockCycleHighValue": "Permanente Inventur: Schwelle für hohen Wert",
+ "stockCycleHighValueHint": "Der Wert in der kleinsten Einheit der Währung des Unternehmens, ab dem das, was ein Ort von einem Artikel hält, für einen Plan ohne eigene Schwelle als hochwertig gilt. Einstellbar in den Einstellungen der App.",
+ "stockCycleOverdue": "Permanente Inventur: überfällig nach",
+ "stockCycleOverdueHint": "Wie viele Tage eine Inventuraufgabe nach ihrem Fälligkeitstag offen bleiben darf, bevor sie als überfällig gemeldet wird. Einstellbar in den Einstellungen der App.",
+ "optMinorUnits": "{n} (kleinste Einheit)"
 }

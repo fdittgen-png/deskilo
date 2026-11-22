@@ -1,0 +1,6 @@
+{
+  "settingLabelStockCycleCountHighValueMinor": "Recuento cíclico: umbral de alto valor",
+  "settingHintStockCycleCountHighValueMinor": "El valor, en unidades menores de la moneda de la empresa, a partir del cual lo que un lugar contiene de un artículo se considera de alto valor para un plan de recuento sin umbral propio.",
+  "settingLabelStockCycleCountOverdueDays": "Recuento cíclico: vencido tras",
+  "settingHintStockCycleCountOverdueDays": "Cuántos días puede seguir abierta una tarea de recuento cíclico después de su fecha antes de que la bandeja la declare vencida."
+}

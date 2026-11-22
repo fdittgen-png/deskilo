@@ -130,7 +130,7 @@ class _MoveDraft {
         ),
         const FormGap(),
       ],
-      _PickField(
+      StockPickField(
         keyName: 'item',
         label: l10n.expenseSupplyItem,
         value: item,
@@ -141,7 +141,7 @@ class _MoveDraft {
         },
       ),
       const FormGap(),
-      _PickField(
+      StockPickField(
         keyName: 'from',
         label: l10n.stockMoveFrom,
         value: from,
@@ -153,7 +153,7 @@ class _MoveDraft {
       ),
       if (!takeOut) ...[
         const FormGap(),
-        _PickField(
+        StockPickField(
           keyName: 'to',
           label: l10n.stockTransferReceiveTo,
           value: to,
@@ -187,8 +187,9 @@ class _MoveDraft {
 
 /// One choice among [options] (id, text); the form's error for [keyName] is
 /// read below its scope, where it lives.
-class _PickField extends StatelessWidget {
-  const _PickField({
+class StockPickField extends StatelessWidget {
+  const StockPickField({
+    super.key,
     required this.keyName,
     required this.label,
     required this.value,

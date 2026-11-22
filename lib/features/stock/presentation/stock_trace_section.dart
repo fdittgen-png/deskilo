@@ -7,10 +7,10 @@
 // writes nothing. A failed read can be asked again and is never shown as an empty trace.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
+import '../../../core/navigation/list_detail_route.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/stock_trace.dart';
@@ -86,7 +86,7 @@ class _Purchase extends StatelessWidget {
             contentPadding: EdgeInsets.zero,
             title: Text(l10n.stockTraceOrder(purchase.orderReference ?? '', purchase.supplierName ?? '')),
             trailing: const Icon(Icons.chevron_right),
-            onTap: purchase.orderId == null ? null : () => context.push('/money/purchase-orders/order/${purchase.orderId}'),
+            onTap: purchase.orderId == null ? null : () => openRecordFrom(context, '/money/purchase-orders/order/${purchase.orderId}'),
           ),
           _Bills(purchase: purchase),
         ],
@@ -136,7 +136,7 @@ class _Bill extends StatelessWidget {
           contentPadding: EdgeInsets.zero,
           title: Text(l10n.stockTraceBill(bill.reference)),
           trailing: const Icon(Icons.chevron_right),
-          onTap: () => context.push('/money/purchases/doc/${bill.id}'),
+          onTap: () => openRecordFrom(context, '/money/purchases/doc/${bill.id}'),
         ),
         for (final o in bill.obligations)
           Padding(

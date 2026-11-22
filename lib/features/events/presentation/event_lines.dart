@@ -277,6 +277,7 @@ bool _appendsSubject(WorkspaceEvent event) {
       event.type == EventType.kioskDevice ||
       event.type == EventType.credentialChange ||
       event.type == EventType.paymentAttemptUnreadable ||
+      event.type == EventType.stockCountOverdue ||
       event.type == EventType.stockLow ||
       event.type == EventType.einvoiceOutcomeUnknown) {
     return false;
@@ -297,6 +298,7 @@ String _otherLine(
     _paymentAttemptUnreadableLine(l10n, event, names, currency),
   EventType.einvoiceOutcomeUnknown => _einvoiceOutcomeUnknownLine(l10n, event),
   EventType.stockLow => stockLowLine(l10n, event, names),
+  EventType.stockCountOverdue => _stockCountOverdueLine(l10n, event),
   _ => _noticeOrFallbackLine(l10n, event, actor),
 };
 
@@ -309,6 +311,15 @@ String _einvoiceOutcomeUnknownLine(AppLocalizations l10n, WorkspaceEvent event) 
   return event.payload['ended'] == null
       ? line
       : '$line · ${l10n.eventEinvoiceNoticeEnded}';
+}
+
+/// #4295 — a cycle count task still open past its due day; once the task is
+/// complete or cancelled, says so.
+String _stockCountOverdueLine(AppLocalizations l10n, WorkspaceEvent event) {
+  final line = l10n.eventStockCountOverdue('${event.payload['plan'] ?? ''}');
+  return event.payload['ended'] == null
+      ? line
+      : '$line · ${l10n.eventStockCountOverdueEnded}';
 }
 
 /// The lines of the notices that are not about a booking or money in motion:

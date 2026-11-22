@@ -52,7 +52,13 @@ const _switches = <WorkspaceFeature>{
   WorkspaceFeature.stockTakeOut,
   // #4294 — reorder points are asked for on the stock screens, not in the setup guide.
   WorkspaceFeature.stockReorder,
-  // #4361 — item groups are asked for on the stock screens, not in the setup guide.
+  // #4172 — returns and corrections are asked for on the stock screens, not in the setup guide.
+  WorkspaceFeature.stockReturns,
+  // #4172 — counts are asked for on the stock screens, not in the setup guide.
+  WorkspaceFeature.stockCounts,
+  // #4295 — cycle counts are asked for on the stock screens, not in the setup guide.
+  WorkspaceFeature.stockCycleCounts,
+  // #4361 — asked for on its own screens, not in the setup guide.
   WorkspaceFeature.stockItemGroups,
   // Booking and the plan read what is already set up.
   WorkspaceFeature.seriesBooking,

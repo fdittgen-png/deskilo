@@ -6677,6 +6677,8 @@
   "eventServiceChargeTitle": "{name} ×{quantity} — {amount}",
   "eventSettlementReview": "{settlement}: {reason, select, costs_changed{el proveedor cambió sus costes después de registrarse} amount_changed{el proveedor cambió su importe después de registrarse} currency_mismatch{un coste está en otra moneda que la liquidación} other{el informe difiere de lo registrado}}. No se contabilizó nada; espera revisión.",
   "eventSourceNotFound": "No se archivó ningún documento de compra para esta solicitud, o no puede verlo.",
+  "eventStockCountOverdue": "El recuento cíclico «{plan}» sigue abierto después de su fecha.",
+  "eventStockCountOverdueEnded": "Hecho",
   "eventStockLow": "{item} está bajo en {site}: {onHand} en existencias, punto de reposición {point}",
   "eventStockLowEnded": "de nuevo por encima del punto",
   "eventStockLowItemFallback": "Un artículo",
@@ -6745,6 +6747,7 @@
   "eventTypeServiceCharge": "Servicio",
   "eventTypeSettlementReview": "Liquidación por revisar",
   "eventTypeSpaceReservation": "Reservas de espacios enteros",
+  "eventTypeStockCountOverdue": "Recuento cíclico vencido",
   "eventTypeStockLow": "Existencias bajas",
   "eventTypeSubscriptionChange": "Cambio de suscripción",
   "@eventTypeSubscriptionChange": {
@@ -7771,6 +7774,22 @@
   "@featureStandaloneInvoicingTitle": {
     "description": "#4165 feature switch: featureStandaloneInvoicingTitle"
   },
+  "featureStockCountsDesc": "Cuente un artículo en un lugar. El recuento espera a alguien que pueda aprobar ajustes y solo se aplica si el stock no se ha movido desde entonces. Desactivado: no se registra ningún recuento; el registro no cambia.",
+  "@featureStockCountsDesc": {
+    "description": "#4172 feature description"
+  },
+  "featureStockCountsTitle": "Recuentos de stock",
+  "@featureStockCountsTitle": {
+    "description": "#4172 feature name"
+  },
+  "featureStockCycleCountsDesc": "Planifique controles puntuales de lugares, artículos o mercancías de alto valor. Un plan vencido crea una tarea de recuento que se hace sin ver las cantidades esperadas; cada diferencia se aprueba como cualquier recuento. Desactivado: ningún plan se ejecuta ni se crea tarea; el registro no cambia.",
+  "@featureStockCycleCountsDesc": {
+    "description": "#4295 feature description"
+  },
+  "featureStockCycleCountsTitle": "Recuentos cíclicos",
+  "@featureStockCycleCountsTitle": {
+    "description": "#4295 feature name"
+  },
   "featureStockItemGroupsDesc": "Agrupe artículos para compartir sus ajustes: seguimiento, caducidad, modo de etiqueta, unidades, IVA, caja y más. Un artículo hereda el valor de su grupo salvo que conserve el suyo; un cambio de grupo muestra a cuántos artículos llega antes de guardarse.",
   "featureStockItemGroupsTitle": "Grupos de artículos",
   "featureStockLotsDesc": "Seguir las mercancías por lote o por fecha de caducidad, con una vida útil. Desactivado: ningún artículo se sigue por lote y lo registrado se conserva tal cual.",
@@ -7781,8 +7800,8 @@
   "@featureStockLotsTitle": {
     "description": "#4169 the name of the lots and expiry feature"
   },
-  "featureStockManagementDesc": "Seguir las mercancías: dónde están, en qué unidad, de qué lote, y cada movimiento entre dos lugares. Desactivado: un artículo del catálogo conserva su simple recuento en estantería.",
-  "featureStockManagementTitle": "Gestión de existencias",
+  "featureStockManagementDesc": "Lleve las mercancías que vende o almacena: qué artículos, en qué ubicaciones, las entregas que recibe, los movimientos entre ubicaciones y las salidas. Activarlo añade un menú Existencias con sus páginas; las demás funciones (lotes, recepción, salida, puntos de reposición) son interruptores debajo. Desactivado: un artículo del catálogo conserva su único recuento de estantería.",
+  "featureStockManagementTitle": "Existencias: artículos, ubicaciones, entregas, movimientos",
   "featureStockReceivingDesc": "Colocar las mercancías de una entrega de pedido a proveedor en ubicaciones y nuevos lotes, una sola vez, conservando su origen. Desactivado: una entrega se registra como antes y no se mueven existencias.",
   "@featureStockReceivingDesc": {
     "description": "#4171 what the receiving into stock feature does, and what off means"
@@ -7798,6 +7817,14 @@
   "featureStockReorderTitle": "Puntos de reposición",
   "@featureStockReorderTitle": {
     "description": "#4294 feature name"
+  },
+  "featureStockReturnsDesc": "Devuelva mercancías contra la venta o la entrega de la que proceden, o corrija un movimiento. Cada devolución o corrección está limitada por el movimiento que revierte: las mismas mercancías nunca se devuelven dos veces. Desactivado: no se ofrece ninguna devolución ni corrección; el registro no cambia.",
+  "@featureStockReturnsDesc": {
+    "description": "#4172 feature description"
+  },
+  "featureStockReturnsTitle": "Devoluciones y correcciones de stock",
+  "@featureStockReturnsTitle": {
+    "description": "#4172 feature name"
   },
   "featureStockTakeOutDesc": "Sacar mercancías de las existencias para uso o como pérdida, con el motivo y el lote. Desactivado: no se ofrece consumo ni pérdida; las transferencias y la recepción no cambian.",
   "@featureStockTakeOutDesc": {
@@ -14311,6 +14338,7 @@
   "permAllowsAccessProd": "Entrar en la producción de un par de desarrollo y producción.",
   "permAllowsApproveExpenses": "Aprobar los gastos que presentan los miembros.",
   "permAllowsApproveStockAdjustments": "Aprobar el ajuste que propone un recuento.",
+  "permAllowsCountStock": "Contar las líneas de una tarea de recuento cíclico sin ver lo que contiene el registro: las tareas y el recuento de cada línea, nada más.",
   "permAllowsDeployToDev": "Actualizar el espacio de desarrollo desde producción.",
   "permAllowsDeployToProd": "Llevar la configuración y los datos maestros de desarrollo a producción.",
   "permAllowsDesignDocuments": "Diseñar las plantillas, textos y diseños de los documentos.",
@@ -14352,6 +14380,7 @@
     "description": "Permission label (#513)"
   },
   "permApproveStockAdjustments": "Aprobar ajustes de existencias",
+  "permCountStock": "Contar el stock a ciegas",
   "permDeployToDev": "Desplegar en desarrollo",
   "@permDeployToDev": {
     "description": "#987/#989 environment pairs: permDeployToDev"
@@ -16465,6 +16494,18 @@
   },
   "refusalSession": "Su sesión ha terminado. Vuelva a iniciar sesión e inténtelo de nuevo.",
   "refusalStockConfig": "Esta configuración de existencias no es válida: el campo indicado explica el motivo.",
+  "refusalStockCountDecided": "Este recuento ya está decidido y es definitivo. Cuente de nuevo si la cifra sigue siendo incorrecta.",
+  "@refusalStockCountDecided": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockCountSelf": "Otra persona que pueda aprobar ajustes debe aplicar este recuento: quien contó no aprueba su propio recuento.",
+  "@refusalStockCountSelf": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockCountStale": "El stock se movió desde el recuento, por lo que no se aplica. Cuente de nuevo.",
+  "@refusalStockCountStale": {
+    "description": "#4172 refusal"
+  },
   "refusalStockHistory": "Este artículo tiene movimientos de existencias, que se conservan: no se puede eliminar, y su unidad de existencias y su seguimiento quedan como están. Desactívelo o cree un artículo nuevo.",
   "refusalStockItem": "No es un artículo que este negocio tenga en existencias. No se ha movido nada.",
   "refusalStockLedgerKept": "Las existencias de este negocio las lleva su libro: use una operación de existencias (traslado, salida, recepción), no el contador. No se cambió nada.",
@@ -16481,6 +16522,18 @@
     "description": "#4170 (0847) DKG15: only expired stock is left for a sale."
   },
   "refusalStockPage": "Esta petición de página no es válida: pida de 1 a 200 filas y continúe solo desde la posición que dio una página.",
+  "refusalStockReturnBeyond": "No se puede devolver más de lo que contenía este movimiento: una parte ya se devolvió o se corrigió.",
+  "@refusalStockReturnBeyond": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockReturnChanged": "Esta devolución ya se registró con otro contenido. Revise la devolución anterior antes de enviar una nueva.",
+  "@refusalStockReturnChanged": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockReturnSource": "Una devolución sigue a la venta o a la entrega de la que procede; este movimiento no es una, o no se corrige aquí.",
+  "@refusalStockReturnSource": {
+    "description": "#4172 refusal"
+  },
   "refusalStockStale": "Otra persona lo ha modificado desde que lo abrió. Vuelva a leerlo y haga de nuevo su cambio.",
   "refusalStockUnit": "Este artículo no tiene esa unidad. Añada la unidad al artículo o indique la cantidad en una unidad que tenga.",
   "refusalStockVariant": "Este artículo tiene variantes: indique cuál (color, talla) mover, vender o contar. No se cambió nada.",
@@ -19007,6 +19060,8 @@
   },
   "settingHintStockAddressSeparator": "El carácter entre los niveles de una dirección de ubicación (sede, zona, pasillo, módulo, estante): MAG1-SALES-A03-B02-S4 con guion, MAG1.SALES.A03.B02.S4 con punto. Solo cambia cómo se escribe la dirección.",
   "settingHintStockAllowNegative": "Desactivado: se rechaza un movimiento que dejaría menos que nada en un lugar. Activado: se registra y el lugar muestra una cantidad negativa hasta que llegue mercancía.",
+  "settingHintStockCycleCountHighValueMinor": "El valor, en unidades menores de la moneda de la empresa, a partir del cual lo que un lugar contiene de un artículo se considera de alto valor para un plan de recuento sin umbral propio.",
+  "settingHintStockCycleCountOverdueDays": "Cuántos días puede seguir abierta una tarea de recuento cíclico después de su fecha antes de que la bandeja la declare vencida.",
   "settingHintStockGroupDefaultCountDays": "Cada cuántos días se propone para un recuento cíclico un artículo que ni un grupo ni un ajuste propio contempla. 0 significa sin programar.",
   "settingHintStockGroupDefaultTagMode": "Si un artículo que ni un grupo ni un ajuste propio contempla lleva una etiqueta RFID: ninguna, una etiqueta que nombra un lote o una etiqueta por unidad (que exige seguimiento por pieza).",
   "settingHintStockPriceRounding": "Cómo se redondea un precio de venta propuesto: al 0,05 o 0,10 más cercano, o a un precio que termina en 0,99. Solo sirve para proponer un precio.",
@@ -19227,6 +19282,8 @@
   },
   "settingLabelStockAddressSeparator": "Separador en la dirección de una ubicación",
   "settingLabelStockAllowNegative": "Las existencias pueden bajar de cero",
+  "settingLabelStockCycleCountHighValueMinor": "Recuento cíclico: umbral de alto valor",
+  "settingLabelStockCycleCountOverdueDays": "Recuento cíclico: vencido tras",
   "settingLabelStockGroupDefaultCountDays": "Ciclo de recuento por defecto (días)",
   "settingLabelStockGroupDefaultTagMode": "Modo de etiqueta por defecto de los artículos",
   "settingLabelStockPriceRounding": "Redondeo de precios",
@@ -20599,6 +20656,23 @@
   "stockCostLabel": "Coste por unidad",
   "stockCostNotShown": "Coste no mostrado",
   "stockCostUnknown": "Coste no registrado",
+  "stockCountsApply": "Aplicar",
+  "stockCountsCancel": "Cancelar el recuento",
+  "stockCountsEmpty": "Todavía no hay recuentos.",
+  "stockCountsItem": "Artículo a contar",
+  "stockCountsLine": "{item} en {place}: contado {observed} frente a {baseline} ({difference})",
+  "stockCountsObserved": "Contado ({unit})",
+  "stockCountsOpen": "Contar",
+  "stockCountsPlace": "Lugar",
+  "stockCountsReason": "Motivo (opcional)",
+  "stockCountsReject": "Rechazar",
+  "stockCountsStale": "El stock se movió desde este recuento: cuente de nuevo.",
+  "stockCountsStateApplied": "Aplicado",
+  "stockCountsStateCancelled": "Cancelado",
+  "stockCountsStateRecorded": "Pendiente de aprobación",
+  "stockCountsStateRejected": "Rechazado",
+  "stockCountsSubmit": "Registrar el recuento",
+  "stockCountsTitle": "Recuentos de stock",
   "stockDimensionAdd": "Añadir una dimensión",
   "@stockDimensionAdd": {
     "description": "#4169 the stock editors: a label or message"
@@ -20759,12 +20833,32 @@
   "stockEmpty": "Todavía no hay nada en existencias.",
   "stockEmptyFiltered": "Nada coincide con estos filtros.",
   "stockEnteredLabel": "Introducido",
+  "stockFirstRunBody": "Empiece por una ubicación donde se guarda la mercancía, luego los artículos que mantiene. Después, reciba una entrega o mueva mercancía.",
+  "stockFirstRunItem": "Añadir su primer artículo",
+  "stockFirstRunNext": "Después reciba una entrega de un pedido, o mueva mercancía desde Movimientos.",
+  "stockFirstRunPlace": "Añadir su primera ubicación",
+  "stockFirstRunTitle": "Sus existencias están vacías",
   "stockGoodsMore": "Mostrar más",
   "stockGoodsNone": "No hay mercancías vinculadas (nada registrado no es lo mismo que ninguna).",
   "stockGoodsRow": "{item}: {entered} ({stored})",
   "stockGoodsTitle": "Mercancías almacenadas",
   "stockGoodsUnavailable": "No se le muestran las mercancías.",
-  "stockItemsEmpty": "Todavía no hay artículos. Un artículo aparece cuando un servicio o un artículo de proveedor se mantiene en existencias.",
+  "stockItemAddButton": "Añadir un artículo",
+  "stockItemAddIntro": "O mantenga en existencias un servicio que ya tiene: elija uno y sus ajustes de existencias se abren con el ajuste ya activado.",
+  "stockItemAddNone": "Todos los servicios ya se mantienen en existencias, o todavía no hay ninguno. Añada primero un servicio y vuelva.",
+  "stockItemAddOpenServices": "Abrir servicios",
+  "stockItemAddTitle": "Añadir un artículo",
+  "stockItemNewBarcode": "Código de barras (opcional)",
+  "stockItemNewHome": "Ubicación habitual (opcional)",
+  "stockItemNewName": "Nombre",
+  "stockItemNewNameRequired": "Dé un nombre al artículo.",
+  "stockItemNewNoHome": "Ninguna todavía",
+  "stockItemNewOption": "Crear un artículo nuevo",
+  "stockItemNewPrice": "Precio ({currency})",
+  "stockItemNewPriceInvalid": "Introduzca un precio o déjelo vacío.",
+  "stockItemNewTitle": "Nuevo artículo",
+  "stockItemNewUnit": "Contado en",
+  "stockItemsEmpty": "Todavía no hay artículos. Un artículo es un servicio que mantiene en existencias: elija Añadir un artículo.",
   "@stockItemsEmpty": {
     "description": "the stock pages and group (#4299)"
   },
@@ -21371,6 +21465,28 @@
   "stockReorderTitle": "Reposición",
   "stockReorderToOrderEmpty": "No hay nada que pedir.",
   "stockReorderToOrderTitle": "Qué pedir",
+  "stockReversalBackTo": "Las mercancías vuelven a",
+  "stockReversalCorrectionOpen": "Corregir este movimiento",
+  "stockReversalCorrectionTitle": "Corregir un movimiento",
+  "stockReversalCustomerOpen": "Devolución del cliente",
+  "stockReversalCustomerTitle": "Devolución del cliente",
+  "stockReversalEntry": "{kind}: {quantity} {unit}",
+  "stockReversalFully": "Este movimiento está totalmente revertido.",
+  "stockReversalKindCorrection": "Corregido",
+  "stockReversalKindCustomer": "Devuelto por el cliente",
+  "stockReversalKindSupplier": "Devuelto al proveedor",
+  "stockReversalLeavesFrom": "Las mercancías salen de",
+  "stockReversalMoneyInvoice": "Este movimiento sigue a una factura: cualquier reembolso o abono se hace en la propia factura.",
+  "stockReversalMoneyUnavailable": "Aquí no se muestra si existe un abono para este movimiento: el dinero se corrige aparte.",
+  "stockReversalMoreThanRemains": "Como máximo se pueden revertir {quantity} {unit}.",
+  "stockReversalNoMoney": "Esto no hace ningún pago, reembolso ni abono. Si hay dinero de por medio, corríjalo aparte, en la factura o en el pago al proveedor.",
+  "stockReversalNote": "Nota (opcional)",
+  "stockReversalRemaining": "Aún se puede revertir: {quantity} {unit} · ya revertido: {reversed}",
+  "stockReversalSection": "Devoluciones y correcciones",
+  "stockReversalSource": "{item}: {quantity} {unit}, {from} → {to}",
+  "stockReversalSubmit": "Registrar",
+  "stockReversalSupplierOpen": "Devolución al proveedor",
+  "stockReversalSupplierTitle": "Devolución al proveedor",
   "stockSettingsElsewhere": "Los ajustes de existencias se mantienen en la página Ajustes de existencias.",
   "@stockSettingsElsewhere": {
     "description": "the stock pages and group (#4299)"

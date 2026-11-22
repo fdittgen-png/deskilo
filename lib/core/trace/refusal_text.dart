@@ -119,6 +119,22 @@ enum KnownRefusal {
   /// #4170 (0847) — DKG15: what is left in the main store is past its date.
   stockOnlyExpired,
 
+  /// #4172 (0866) — DKG16: a return sent again with other content than the one
+  /// recorded under its identity; DKG17: more returned than the movement held;
+  /// DKG18: a source that is not of the kind the return follows.
+  stockReturnChanged,
+  stockReturnBeyond,
+  stockReturnSource,
+
+  /// #4172 (0869) — DKG19: a count that was already decided; DKG20: the stock
+  /// moved since it was counted, so it is counted again.
+  stockCountDecided,
+  stockCountStale,
+
+  /// #4172 (0869) — DKG21: a count is approved by someone other than whoever
+  /// counted it, while there is someone else who may.
+  stockCountSelf,
+
   /// #4008 (0782) — DKM01: a member who left comes back as a new member,
   /// never by changing their old row (for instance to paused).
   memberReturnsAsNew,
@@ -185,6 +201,12 @@ const Map<String, KnownRefusal> _codedRefusals = {
   'DKG12': KnownRefusal.stockVariant,
   'DKG13': KnownRefusal.stockLedgerKept,
   'DKG15': KnownRefusal.stockOnlyExpired,
+  'DKG16': KnownRefusal.stockReturnChanged,
+  'DKG17': KnownRefusal.stockReturnBeyond,
+  'DKG18': KnownRefusal.stockReturnSource,
+  'DKG19': KnownRefusal.stockCountDecided,
+  'DKG20': KnownRefusal.stockCountStale,
+  'DKG21': KnownRefusal.stockCountSelf,
   // #4008 — a member who left (0782).
   'DKM01': KnownRefusal.memberReturnsAsNew,
 };
@@ -280,6 +302,12 @@ String? _stockRefusalText(AppLocalizations l10n, KnownRefusal refusal) =>
       KnownRefusal.stockVariant => l10n.refusalStockVariant,
       KnownRefusal.stockLedgerKept => l10n.refusalStockLedgerKept,
       KnownRefusal.stockOnlyExpired => l10n.refusalStockOnlyExpired,
+      KnownRefusal.stockReturnChanged => l10n.refusalStockReturnChanged,
+      KnownRefusal.stockReturnBeyond => l10n.refusalStockReturnBeyond,
+      KnownRefusal.stockReturnSource => l10n.refusalStockReturnSource,
+      KnownRefusal.stockCountDecided => l10n.refusalStockCountDecided,
+      KnownRefusal.stockCountStale => l10n.refusalStockCountStale,
+      KnownRefusal.stockCountSelf => l10n.refusalStockCountSelf,
       KnownRefusal.memberReturnsAsNew => l10n.refusalMemberReturnsAsNew,
       _ => null,
     };

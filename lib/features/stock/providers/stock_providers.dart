@@ -12,6 +12,7 @@ import '../data/supabase_stock_queries.dart';
 import '../data/supabase_stock_receiving_commands.dart';
 import '../data/supabase_stock_registry.dart';
 import '../data/supabase_stock_reorder.dart';
+import '../data/supabase_stock_reversals.dart';
 import '../data/supabase_stock_trace.dart';
 import '../domain/stock_config.dart';
 import '../domain/stock_config_commands.dart';
@@ -21,6 +22,8 @@ import '../domain/stock_queries.dart';
 import '../domain/stock_receiving.dart';
 import '../domain/stock_registry.dart';
 import '../domain/stock_reorder.dart';
+import '../domain/stock_reversals.dart';
+import '../domain/stock_service_creator.dart';
 import '../domain/stock_trace.dart';
 
 /// #4161 -- the stock reads of the selected business. The Demo and the tests
@@ -186,3 +189,27 @@ final stockPlaceConfigsProvider = FutureProvider.autoDispose
       (ref, workspaceId) => ref.watch(stockConfigCommandsProvider).places(workspaceId),
       retry: (_, _) => null,
     );
+
+/// #4172 -- the returns, corrections and counts of the selected business. The
+/// Demo and the tests replace it.
+final stockReversalsProvider = Provider<StockReversals>(
+  (ref) => SupabaseStockReversals(ref.watch(selectedWorkspaceClientProvider)),
+);
+
+/// What a movement still allows to be reversed (null while no movement is named).
+final stockReversibleProvider = FutureProvider.autoDispose
+    .family<StockReversible?, ({String workspaceId, String movementId})>(
+      (ref, key) async => (await ref.watch(stockReversalsProvider).reversible(key.workspaceId, [key.movementId]))[key.movementId],
+      retry: (_, _) => null,
+    );
+
+/// The counts of a business, newest first.
+final stockCountsProvider = FutureProvider.autoDispose
+    .family<List<StockCountRow>, String>(
+      (ref, workspaceId) => ref.watch(stockReversalsProvider).counts(workspaceId),
+      retry: (_, _) => null,
+    );
+
+/// #4350 -- the creation of a new service from the Stock page, wired by the app (the stock never imports
+/// the money feature); null where nothing is wired, which offers no "new item".
+final stockServiceCreatorProvider = Provider<StockServiceCreator?>((ref) => null);

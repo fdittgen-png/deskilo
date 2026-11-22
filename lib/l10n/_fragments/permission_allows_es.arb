@@ -38,5 +38,6 @@
   "permAllowsViewStock": "Ver las existencias: qué está dónde, sus lotes y sus movimientos.",
   "permAllowsManageStock": "Dar entrada, mover y dar salida a mercancías.",
   "permAllowsApproveStockAdjustments": "Aprobar el ajuste que propone un recuento.",
-  "rolesFilterPermissions": "Filtrar los permisos"
+  "rolesFilterPermissions": "Filtrar los permisos",
+  "permAllowsCountStock": "Contar las líneas de una tarea de recuento cíclico sin ver lo que contiene el registro: las tareas y el recuento de cada línea, nada más."
 }

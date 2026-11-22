@@ -76,6 +76,9 @@ const Set<WorkspaceFeature> defaultOffFeatures = {
   // #4170 — taking goods out is asked for.
   WorkspaceFeature.stockTakeOut,
   WorkspaceFeature.stockReorder,
+  WorkspaceFeature.stockReturns,
+  WorkspaceFeature.stockCounts,
+  WorkspaceFeature.stockCycleCounts,
   WorkspaceFeature.stockItemGroups,
   // #4165 — a customer invoice without a member-month is asked for.
   WorkspaceFeature.standaloneInvoicing,
@@ -257,6 +260,9 @@ void main() {
       'stockReceiving': true,
       'stockTakeOut': true,
       'stockReorder': true,
+      'stockReturns': true,
+      'stockCounts': true,
+      'stockCycleCounts': true,
       'stockItemGroups': true,
       'standaloneInvoicing': true,
       'billingCustomers': true,

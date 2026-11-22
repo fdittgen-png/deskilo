@@ -6677,6 +6677,8 @@
   "eventServiceChargeTitle": "{name} ×{quantity} — {amount}",
   "eventSettlementReview": "{settlement}: {reason, select, costs_changed{Der Anbieter hat die Kosten nach der Erfassung geändert} amount_changed{Der Anbieter hat den Betrag nach der Erfassung geändert} currency_mismatch{Ein Kostenposten ist in einer anderen Währung als die Abrechnung} other{Die Meldung weicht vom Erfassten ab}}. Nichts davon wurde gebucht; sie wartet auf Prüfung.",
   "eventSourceNotFound": "Zu dieser Anfrage wurde kein Einkaufsbeleg abgelegt, oder Sie dürfen ihn nicht sehen.",
+  "eventStockCountOverdue": "Die Inventur „{plan}“ ist nach ihrem Fälligkeitstag noch offen.",
+  "eventStockCountOverdueEnded": "Erledigt",
   "eventStockLow": "{item} ist knapp bei {site}: {onHand} vorrätig, Meldebestand {point}",
   "eventStockLowEnded": "wieder über dem Meldebestand",
   "eventStockLowItemFallback": "Ein Artikel",
@@ -6745,6 +6747,7 @@
   "eventTypeServiceCharge": "Leistung",
   "eventTypeSettlementReview": "Zu prüfende Abrechnung",
   "eventTypeSpaceReservation": "Ganzraum-Reservierungen",
+  "eventTypeStockCountOverdue": "Permanente Inventur überfällig",
   "eventTypeStockLow": "Lagerbestand knapp",
   "eventTypeSubscriptionChange": "Abonnementänderung",
   "@eventTypeSubscriptionChange": {
@@ -7771,6 +7774,22 @@
   "@featureStandaloneInvoicingTitle": {
     "description": "#4165 feature switch: featureStandaloneInvoicingTitle"
   },
+  "featureStockCountsDesc": "Zählen Sie einen Artikel an einem Ort. Die Zählung wartet auf jemanden, der Anpassungen genehmigen darf, und wird nur angewendet, wenn sich der Bestand seit der Zählung nicht bewegt hat. Aus: keine Zählung wird erfasst; das Buch bleibt unberührt.",
+  "@featureStockCountsDesc": {
+    "description": "#4172 feature description"
+  },
+  "featureStockCountsTitle": "Bestandszählungen",
+  "@featureStockCountsTitle": {
+    "description": "#4172 feature name"
+  },
+  "featureStockCycleCountsDesc": "Planen Sie Stichproben für ausgewählte Orte, Artikel oder hochwertige Ware. Ein fälliger Plan erzeugt eine Zählaufgabe, die ohne die erwarteten Mengen erledigt wird; jede Differenz wird wie jede Zählung genehmigt. Aus: kein Plan läuft und keine Aufgabe entsteht; das Buch bleibt unberührt.",
+  "@featureStockCycleCountsDesc": {
+    "description": "#4295 feature description"
+  },
+  "featureStockCycleCountsTitle": "Permanente Inventur",
+  "@featureStockCycleCountsTitle": {
+    "description": "#4295 feature name"
+  },
   "featureStockItemGroupsDesc": "Artikel gruppieren, damit ihre Einstellungen geteilt werden: Nachverfolgung, Haltbarkeit, Etikettenmodus, Einheiten, Mehrwertsteuer, Kasse und mehr. Ein Artikel erbt den Wert seiner Gruppe, außer er behält seinen eigenen; eine Änderung an der Gruppe zeigt vor dem Speichern, wie viele Artikel sie erreicht.",
   "featureStockItemGroupsTitle": "Artikelgruppen",
   "featureStockLotsDesc": "Waren nach Charge oder Verfallsdatum verfolgen, mit einer Haltbarkeit. Aus: kein Artikel wird nach Charge verfolgt, und Erfasstes bleibt unverändert.",
@@ -7781,8 +7800,8 @@
   "@featureStockLotsTitle": {
     "description": "#4169 the name of the lots and expiry feature"
   },
-  "featureStockManagementDesc": "Waren verfolgen: wo sie sind, in welcher Einheit, aus welcher Charge, und jede Bewegung zwischen zwei Orten. Aus: ein Katalogartikel behält seinen einfachen Regalbestand.",
-  "featureStockManagementTitle": "Lagerverwaltung",
+  "featureStockManagementDesc": "Führen Sie die Ware, die Sie verkaufen oder lagern: welche Artikel, an welchen Orten, die Lieferungen, die Sie annehmen, die Bewegungen zwischen Orten und die Entnahmen. Das Einschalten fügt ein Menü Lager mit seinen Seiten hinzu; die übrigen Lagerfunktionen (Chargen, Wareneingang, Entnahme, Meldebestände) sind Schalter darunter. Aus: Ein Katalogartikel behält seinen einzelnen Regalbestand.",
+  "featureStockManagementTitle": "Lager: Artikel, Orte, Lieferungen, Bewegungen",
   "featureStockReceivingDesc": "Die Waren einer Lieferung zu einer Lieferantenbestellung einmalig in Lagerorte und neue Chargen einlagern, mit erhaltener Herkunft. Aus: eine Lieferung wird wie bisher erfasst und kein Bestand bewegt sich.",
   "@featureStockReceivingDesc": {
     "description": "#4171 what the receiving into stock feature does, and what off means"
@@ -7798,6 +7817,14 @@
   "featureStockReorderTitle": "Meldebestände",
   "@featureStockReorderTitle": {
     "description": "#4294 feature name"
+  },
+  "featureStockReturnsDesc": "Geben Sie Ware gegen den Verkauf oder die Lieferung zurück, aus der sie stammt, oder korrigieren Sie eine Bewegung. Jede Rückgabe oder Korrektur ist durch die Bewegung begrenzt, die sie rückgängig macht: dieselbe Ware wird nie zweimal zurückgegeben. Aus: keine Rückgabe und keine Korrektur wird angeboten; das Buch bleibt unberührt.",
+  "@featureStockReturnsDesc": {
+    "description": "#4172 feature description"
+  },
+  "featureStockReturnsTitle": "Lagerrückgaben und Korrekturen",
+  "@featureStockReturnsTitle": {
+    "description": "#4172 feature name"
   },
   "featureStockTakeOutDesc": "Waren für den Verbrauch oder als Verlust aus dem Lager nehmen, mit Grund und Charge. Aus: weder Verbrauch noch Verlust werden angeboten; Umlagerungen und Wareneingang bleiben unberührt.",
   "@featureStockTakeOutDesc": {
@@ -14311,6 +14338,7 @@
   "permAllowsAccessProd": "Die Produktionsseite eines Entwicklungs- und Produktionspaars betreten.",
   "permAllowsApproveExpenses": "Von Mitgliedern eingereichte Ausgaben genehmigen.",
   "permAllowsApproveStockAdjustments": "Die von einer Inventur vorgeschlagene Korrektur genehmigen.",
+  "permAllowsCountStock": "Die Zeilen einer Inventuraufgabe zählen, ohne zu sehen, was das Buch führt: die Aufgaben und das Zählen jeder Zeile, sonst nichts.",
   "permAllowsDeployToDev": "Den Entwicklungs-Space aus der Produktion auffrischen.",
   "permAllowsDeployToProd": "Konfiguration und Stammdaten von der Entwicklung in die Produktion übertragen.",
   "permAllowsDesignDocuments": "Vorlagen, Texte und Layouts der Dokumente gestalten.",
@@ -14352,6 +14380,7 @@
     "description": "Permission label (#513)"
   },
   "permApproveStockAdjustments": "Bestandskorrekturen genehmigen",
+  "permCountStock": "Bestand blind zählen",
   "permDeployToDev": "In die Entwicklung ausrollen",
   "@permDeployToDev": {
     "description": "#987/#989 environment pairs: permDeployToDev"
@@ -16465,6 +16494,18 @@
   },
   "refusalSession": "Ihre Sitzung ist abgelaufen. Melden Sie sich erneut an und versuchen Sie es dann noch einmal.",
   "refusalStockConfig": "Diese Bestandskonfiguration ist ungültig: Das genannte Feld nennt den Grund.",
+  "refusalStockCountDecided": "Diese Zählung ist bereits entschieden und endgültig. Zählen Sie erneut, wenn die Zahl noch falsch ist.",
+  "@refusalStockCountDecided": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockCountSelf": "Dieses Zählergebnis muss jemand anderes anwenden, der Anpassungen genehmigen darf: Wer gezählt hat, genehmigt die eigene Zählung nicht.",
+  "@refusalStockCountSelf": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockCountStale": "Der Bestand hat sich seit der Zählung bewegt, die Zählung wird nicht angewendet. Zählen Sie erneut.",
+  "@refusalStockCountStale": {
+    "description": "#4172 refusal"
+  },
   "refusalStockHistory": "Dieser Artikel hat Lagerbewegungen, die erhalten bleiben: Er kann nicht gelöscht werden, und seine Lagereinheit und Nachverfolgung bleiben unverändert. Deaktivieren Sie ihn oder legen Sie einen neuen Artikel an.",
   "refusalStockItem": "Dies ist kein Artikel, den dieses Unternehmen auf Lager führt. Nichts wurde bewegt.",
   "refusalStockLedgerKept": "Der Bestand dieses Betriebs wird vom Lagerbuch geführt: nutzen Sie einen Lagervorgang (Umlagerung, Entnahme, Wareneingang), nicht den Zähler. Nichts wurde geändert.",
@@ -16481,6 +16522,18 @@
     "description": "#4170 (0847) DKG15: only expired stock is left for a sale."
   },
   "refusalStockPage": "Diese Seitenanfrage ist ungültig: Fordern Sie 1 bis 200 Zeilen an und setzen Sie nur an der Position fort, die eine Seite geliefert hat.",
+  "refusalStockReturnBeyond": "Es kann nicht mehr zurückgegeben werden, als diese Bewegung enthielt: ein Teil wurde bereits zurückgegeben oder korrigiert.",
+  "@refusalStockReturnBeyond": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockReturnChanged": "Diese Rückgabe wurde bereits mit anderem Inhalt erfasst. Prüfen Sie die frühere Rückgabe, bevor Sie eine neue senden.",
+  "@refusalStockReturnChanged": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockReturnSource": "Eine Rückgabe folgt dem Verkauf oder der Lieferung, aus der sie stammt; diese Bewegung ist keine, oder wird hier nicht korrigiert.",
+  "@refusalStockReturnSource": {
+    "description": "#4172 refusal"
+  },
   "refusalStockStale": "Jemand anderes hat dies geändert, seit Sie es geöffnet haben. Lesen Sie es erneut und nehmen Sie Ihre Änderung noch einmal vor.",
   "refusalStockUnit": "Dieser Artikel hat diese Einheit nicht. Fügen Sie die Einheit dem Artikel hinzu oder geben Sie die Menge in einer seiner Einheiten ein.",
   "refusalStockVariant": "Dieser Artikel hat Varianten: Geben Sie an, welche (Farbe, Größe) bewegt, verkauft oder gezählt wird. Nichts wurde geändert.",
@@ -19007,6 +19060,8 @@
   },
   "settingHintStockAddressSeparator": "Das Zeichen zwischen den Ebenen einer Lagerort-Adresse (Standort, Zone, Gang, Regalfeld, Fach): MAG1-SALES-A03-B02-S4 mit Bindestrich, MAG1.SALES.A03.B02.S4 mit Punkt. Nur die Schreibweise ändert sich.",
   "settingHintStockAllowNegative": "Aus: eine Bewegung, die an einem Ort weniger als nichts übrig ließe, wird abgelehnt. An: sie wird gebucht, und der Ort zeigt eine negative Menge, bis Ware eintrifft.",
+  "settingHintStockCycleCountHighValueMinor": "Der Wert in der kleinsten Einheit der Währung des Unternehmens, ab dem das, was ein Ort von einem Artikel hält, für einen Inventurplan ohne eigene Schwelle als hochwertig gilt.",
+  "settingHintStockCycleCountOverdueDays": "Wie viele Tage eine Inventuraufgabe nach ihrem Fälligkeitstag offen bleiben darf, bevor der Posteingang sie als überfällig meldet.",
   "settingHintStockGroupDefaultCountDays": "Nach wie vielen Tagen ein Artikel, den weder eine Gruppe noch eine eigene Einstellung betrifft, zur Zyklus-Zählung vorgeschlagen wird. 0 heißt nicht geplant.",
   "settingHintStockGroupDefaultTagMode": "Ob ein Artikel, den weder eine Gruppe noch eine eigene Einstellung betrifft, ein RFID-Etikett trägt: keines, ein Etikett für eine Charge oder ein Etikett je Stück (das eine Verfolgung je Stück braucht).",
   "settingHintStockPriceRounding": "Wie ein vorgeschlagener Verkaufspreis gerundet wird: auf 0,05 oder 0,10 oder auf einen Preis, der auf 0,99 endet. Sie dient nur dazu, einen Preis vorzuschlagen.",
@@ -19227,6 +19282,8 @@
   },
   "settingLabelStockAddressSeparator": "Trennzeichen in einer Lagerort-Adresse",
   "settingLabelStockAllowNegative": "Bestand darf unter null fallen",
+  "settingLabelStockCycleCountHighValueMinor": "Permanente Inventur: Schwelle für hohen Wert",
+  "settingLabelStockCycleCountOverdueDays": "Permanente Inventur: überfällig nach",
   "settingLabelStockGroupDefaultCountDays": "Standard-Zählzyklus (Tage)",
   "settingLabelStockGroupDefaultTagMode": "Standard-Etikettenmodus der Artikel",
   "settingLabelStockPriceRounding": "Preisrundung",
@@ -20599,6 +20656,23 @@
   "stockCostLabel": "Kosten je Einheit",
   "stockCostNotShown": "Kosten nicht angezeigt",
   "stockCostUnknown": "Kosten nicht erfasst",
+  "stockCountsApply": "Anwenden",
+  "stockCountsCancel": "Zählung abbrechen",
+  "stockCountsEmpty": "Noch keine Zählung.",
+  "stockCountsItem": "Zu zählender Artikel",
+  "stockCountsLine": "{item} an {place}: gezählt {observed} gegen {baseline} ({difference})",
+  "stockCountsObserved": "Gezählt ({unit})",
+  "stockCountsOpen": "Zählen",
+  "stockCountsPlace": "Ort",
+  "stockCountsReason": "Grund (optional)",
+  "stockCountsReject": "Ablehnen",
+  "stockCountsStale": "Der Bestand hat sich seit dieser Zählung bewegt: zählen Sie erneut.",
+  "stockCountsStateApplied": "Angewendet",
+  "stockCountsStateCancelled": "Abgebrochen",
+  "stockCountsStateRecorded": "Wartet auf Genehmigung",
+  "stockCountsStateRejected": "Abgelehnt",
+  "stockCountsSubmit": "Zählung erfassen",
+  "stockCountsTitle": "Bestandszählungen",
   "stockDimensionAdd": "Dimension hinzufügen",
   "@stockDimensionAdd": {
     "description": "#4169 the stock editors: a label or message"
@@ -20759,12 +20833,32 @@
   "stockEmpty": "Es ist noch nichts auf Lager.",
   "stockEmptyFiltered": "Zu diesen Filtern gibt es nichts.",
   "stockEnteredLabel": "Erfasst",
+  "stockFirstRunBody": "Beginnen Sie mit einem Ort, an dem Ware liegt, dann mit den Artikeln, die Sie führen. Danach nehmen Sie eine Lieferung an oder bewegen Ware ein.",
+  "stockFirstRunItem": "Ersten Artikel hinzufügen",
+  "stockFirstRunNext": "Nehmen Sie dann eine Lieferung einer Bestellung an oder bewegen Sie Ware über Bewegungen ein.",
+  "stockFirstRunPlace": "Ersten Ort hinzufügen",
+  "stockFirstRunTitle": "Ihr Lager ist leer",
   "stockGoodsMore": "Mehr anzeigen",
   "stockGoodsNone": "Es ist keine Ware damit verknüpft (nichts erfasst heißt nicht „keine“).",
   "stockGoodsRow": "{item}: {entered} ({stored})",
   "stockGoodsTitle": "Eingelagerte Ware",
   "stockGoodsUnavailable": "Die Ware wird Ihnen nicht angezeigt.",
-  "stockItemsEmpty": "Noch keine Artikel. Ein Artikel entsteht, wenn eine Leistung oder ein Lieferantenartikel im Lager geführt wird.",
+  "stockItemAddButton": "Artikel hinzufügen",
+  "stockItemAddIntro": "Oder führen Sie eine vorhandene Leistung im Lager: Wählen Sie eine, und ihre Lagereinstellungen öffnen sich mit eingeschalteter Einstellung.",
+  "stockItemAddNone": "Jede Leistung wird bereits im Lager geführt, oder es gibt noch keine. Legen Sie zuerst eine Leistung an und kommen Sie dann zurück.",
+  "stockItemAddOpenServices": "Leistungen öffnen",
+  "stockItemAddTitle": "Artikel hinzufügen",
+  "stockItemNewBarcode": "Barcode (optional)",
+  "stockItemNewHome": "Heimatort (optional)",
+  "stockItemNewName": "Name",
+  "stockItemNewNameRequired": "Geben Sie dem Artikel einen Namen.",
+  "stockItemNewNoHome": "Noch keiner",
+  "stockItemNewOption": "Neuen Artikel anlegen",
+  "stockItemNewPrice": "Preis ({currency})",
+  "stockItemNewPriceInvalid": "Geben Sie einen Preis ein oder lassen Sie das Feld leer.",
+  "stockItemNewTitle": "Neuer Artikel",
+  "stockItemNewUnit": "Gezählt in",
+  "stockItemsEmpty": "Noch keine Artikel. Ein Artikel ist eine Leistung, die Sie im Lager führen: Wählen Sie Artikel hinzufügen.",
   "@stockItemsEmpty": {
     "description": "the stock pages and group (#4299)"
   },
@@ -21371,6 +21465,28 @@
   "stockReorderTitle": "Nachbestellen",
   "stockReorderToOrderEmpty": "Es gibt nichts zu bestellen.",
   "stockReorderToOrderTitle": "Was zu bestellen ist",
+  "stockReversalBackTo": "Die Ware kommt zurück nach",
+  "stockReversalCorrectionOpen": "Diese Bewegung korrigieren",
+  "stockReversalCorrectionTitle": "Eine Bewegung korrigieren",
+  "stockReversalCustomerOpen": "Rückgabe vom Kunden",
+  "stockReversalCustomerTitle": "Rückgabe vom Kunden",
+  "stockReversalEntry": "{kind}: {quantity} {unit}",
+  "stockReversalFully": "Diese Bewegung ist vollständig rückgängig gemacht.",
+  "stockReversalKindCorrection": "Korrigiert",
+  "stockReversalKindCustomer": "Vom Kunden zurückgegeben",
+  "stockReversalKindSupplier": "An den Lieferanten zurückgegeben",
+  "stockReversalLeavesFrom": "Die Ware verlässt",
+  "stockReversalMoneyInvoice": "Diese Bewegung folgt einer Rechnung: Erstattung oder Gutschrift erfolgen in der Rechnung selbst.",
+  "stockReversalMoneyUnavailable": "Ob es zu dieser Bewegung eine Gutschrift gibt, wird hier nicht gezeigt: das Geld wird gesondert korrigiert.",
+  "stockReversalMoreThanRemains": "Höchstens {quantity} {unit} können noch rückgängig gemacht werden.",
+  "stockReversalNoMoney": "Dadurch wird nichts bezahlt, erstattet oder gutgeschrieben. Geht es um Geld, korrigieren Sie es gesondert in der Rechnung oder der Lieferantenzahlung.",
+  "stockReversalNote": "Notiz (optional)",
+  "stockReversalRemaining": "Kann noch rückgängig gemacht werden: {quantity} {unit} · bereits rückgängig: {reversed}",
+  "stockReversalSection": "Rückgaben und Korrekturen",
+  "stockReversalSource": "{item}: {quantity} {unit}, {from} → {to}",
+  "stockReversalSubmit": "Erfassen",
+  "stockReversalSupplierOpen": "Rückgabe an den Lieferanten",
+  "stockReversalSupplierTitle": "Rückgabe an den Lieferanten",
   "stockSettingsElsewhere": "Die Lagereinstellungen werden auf der Seite Lagereinstellungen geführt.",
   "@stockSettingsElsewhere": {
     "description": "the stock pages and group (#4299)"

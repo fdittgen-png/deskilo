@@ -2278,6 +2278,18 @@
       "capabilities": []
     },
     {
+      "key": "stockCounts",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "stockCycleCounts",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "stockItemGroups",
       "maturity": "beta",
       "lifecycle": "active",
@@ -2303,6 +2315,12 @@
     },
     {
       "key": "stockReorder",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "stockReturns",
       "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []

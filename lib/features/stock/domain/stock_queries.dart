@@ -30,6 +30,10 @@ abstract interface class StockQueries {
   /// The stock items of the business, for a filter.
   Future<List<StockItem>> items(String workspaceId);
 
+  /// #4350 -- the services of the business that are not kept in stock yet: what an owner may start
+  /// keeping as an item (a service is made an item by turning its stock setting on).
+  Future<List<StockItem>> unstocked(String workspaceId);
+
   /// One movement by its address, or null when there is none (an id of
   /// nothing or of another business).
   Future<StockMovementRow?> movement(String workspaceId, String movementId);

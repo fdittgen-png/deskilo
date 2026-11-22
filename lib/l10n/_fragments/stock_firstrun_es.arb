@@ -1,0 +1,22 @@
+{
+  "stockItemAddButton": "Añadir un artículo",
+  "stockItemAddTitle": "Añadir un artículo",
+  "stockItemAddIntro": "O mantenga en existencias un servicio que ya tiene: elija uno y sus ajustes de existencias se abren con el ajuste ya activado.",
+  "stockItemAddNone": "Todos los servicios ya se mantienen en existencias, o todavía no hay ninguno. Añada primero un servicio y vuelva.",
+  "stockItemAddOpenServices": "Abrir servicios",
+  "stockFirstRunTitle": "Sus existencias están vacías",
+  "stockFirstRunBody": "Empiece por una ubicación donde se guarda la mercancía, luego los artículos que mantiene. Después, reciba una entrega o mueva mercancía.",
+  "stockFirstRunPlace": "Añadir su primera ubicación",
+  "stockFirstRunItem": "Añadir su primer artículo",
+  "stockFirstRunNext": "Después reciba una entrega de un pedido, o mueva mercancía desde Movimientos.",
+  "stockItemNewTitle": "Nuevo artículo",
+  "stockItemNewOption": "Crear un artículo nuevo",
+  "stockItemNewName": "Nombre",
+  "stockItemNewPrice": "Precio ({currency})",
+  "stockItemNewUnit": "Contado en",
+  "stockItemNewBarcode": "Código de barras (opcional)",
+  "stockItemNewHome": "Ubicación habitual (opcional)",
+  "stockItemNewNoHome": "Ninguna todavía",
+  "stockItemNewNameRequired": "Dé un nombre al artículo.",
+  "stockItemNewPriceInvalid": "Introduzca un precio o déjelo vacío."
+}

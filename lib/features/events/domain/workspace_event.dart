@@ -130,6 +130,10 @@ enum EventType {
   /// who read the finances, ended when the attempt is read, paid or ended.
   paymentAttemptUnreadable('payment_attempt_unreadable'),
 
+  /// #4295 — a cycle count task still open past its due day: told once per task
+  /// to those who manage the stock, ended when the task is complete or cancelled.
+  /// Nobody decides it.
+  stockCountOverdue('stock_count_overdue'),
   /// #4294 — an item at or below its reorder point at a site: told once per point to those who
   /// manage the stock or the purchases, ended (with the time) when the stock rises above it.
   stockLow('stock_low'),

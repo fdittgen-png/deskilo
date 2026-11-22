@@ -99,7 +99,7 @@ Before every push run, and see green:
 dart analyze --fatal-infos            # exactly what CI runs (flutter analyze misses the riverpod_lint plugin)
 flutter test test/lint                # every lint and registry pin
 flutter test test/<the folders your change touches>
-dart run tool/preflight.dart --list   # which generators AND which tests (the lint folder included) this change implicates; run its printed `flutter test` line on the final head
+dart run tool/preflight.dart --list   # which generators AND which tests (the lint folder included) this change implicates; run its printed `flutter test` line on the final head; when that line is too long to run locally, run at least its printed guards line
 ```
 
 Programme selection (the next outcomes, slots and bounded exceptions) lives only in

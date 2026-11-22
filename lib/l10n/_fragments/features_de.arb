@@ -314,6 +314,30 @@
   "@featureStockReorderDesc": {
     "description": "#4294 feature description"
   },
+  "featureStockReturnsTitle": "Lagerrückgaben und Korrekturen",
+  "@featureStockReturnsTitle": {
+    "description": "#4172 feature name"
+  },
+  "featureStockReturnsDesc": "Geben Sie Ware gegen den Verkauf oder die Lieferung zurück, aus der sie stammt, oder korrigieren Sie eine Bewegung. Jede Rückgabe oder Korrektur ist durch die Bewegung begrenzt, die sie rückgängig macht: dieselbe Ware wird nie zweimal zurückgegeben. Aus: keine Rückgabe und keine Korrektur wird angeboten; das Buch bleibt unberührt.",
+  "@featureStockReturnsDesc": {
+    "description": "#4172 feature description"
+  },
+  "featureStockCountsTitle": "Bestandszählungen",
+  "@featureStockCountsTitle": {
+    "description": "#4172 feature name"
+  },
+  "featureStockCountsDesc": "Zählen Sie einen Artikel an einem Ort. Die Zählung wartet auf jemanden, der Anpassungen genehmigen darf, und wird nur angewendet, wenn sich der Bestand seit der Zählung nicht bewegt hat. Aus: keine Zählung wird erfasst; das Buch bleibt unberührt.",
+  "@featureStockCountsDesc": {
+    "description": "#4172 feature description"
+  },
+  "featureStockCycleCountsTitle": "Permanente Inventur",
+  "@featureStockCycleCountsTitle": {
+    "description": "#4295 feature name"
+  },
+  "featureStockCycleCountsDesc": "Planen Sie Stichproben für ausgewählte Orte, Artikel oder hochwertige Ware. Ein fälliger Plan erzeugt eine Zählaufgabe, die ohne die erwarteten Mengen erledigt wird; jede Differenz wird wie jede Zählung genehmigt. Aus: kein Plan läuft und keine Aufgabe entsteht; das Buch bleibt unberührt.",
+  "@featureStockCycleCountsDesc": {
+    "description": "#4295 feature description"
+  },
   "featureStockItemGroupsTitle": "Artikelgruppen",
   "featureStockItemGroupsDesc": "Artikel gruppieren, damit ihre Einstellungen geteilt werden: Nachverfolgung, Haltbarkeit, Etikettenmodus, Einheiten, Mehrwertsteuer, Kasse und mehr. Ein Artikel erbt den Wert seiner Gruppe, außer er behält seinen eigenen; eine Änderung an der Gruppe zeigt vor dem Speichern, wie viele Artikel sie erreicht."
 }

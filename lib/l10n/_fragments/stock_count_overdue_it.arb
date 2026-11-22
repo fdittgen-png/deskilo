@@ -1,0 +1,5 @@
+{
+  "eventTypeStockCountOverdue": "Inventario ciclico in ritardo",
+  "eventStockCountOverdue": "L’inventario ciclico «{plan}» è ancora aperto dopo la scadenza.",
+  "eventStockCountOverdueEnded": "Fatto"
+}
