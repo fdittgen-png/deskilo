@@ -40,6 +40,7 @@ String? _placeReason(AppLocalizations l10n, String reason) => switch (reason) {
   'level_parent_missing' => l10n.stockReasonLevelParentMissing,
   'level_children_wrong' => l10n.stockReasonLevelChildrenWrong,
   'pick_role_unknown' => l10n.stockReasonPickRoleUnknown,
+  'home_invalid' => l10n.stockReasonHomeInvalid,
   'location_parent_foreign' => l10n.stockReasonLocationParentForeign,
   'location_virtual' => l10n.stockReasonLocationVirtual,
   'parent_inactive' => l10n.stockReasonParentInactive,
