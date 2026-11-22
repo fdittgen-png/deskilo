@@ -20188,6 +20188,18 @@ abstract class AppLocalizations {
   /// **'Receiving into stock'**
   String get featureStockReceivingTitle;
 
+  /// #4294 feature description
+  ///
+  /// In en, this message translates to:
+  /// **'Set a minimum per item and site: the inbox says when stock falls to it, and a replenishment list proposes what to order. Off: no point is set, no alert is raised and no list is offered; the ledger is unaffected.'**
+  String get featureStockReorderDesc;
+
+  /// #4294 feature name
+  ///
+  /// In en, this message translates to:
+  /// **'Reorder points'**
+  String get featureStockReorderTitle;
+
   /// #4170 what the taking goods out feature does, and what off means
   ///
   /// In en, this message translates to:

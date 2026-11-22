@@ -1,6 +1,6 @@
 # Einrichtungsanleitung
 
-**DesKilo — bauen Sie Ihren Space, Schritt für Schritt.** Für alle, die einen Coworking-Space, einen Vereinsraum oder ein gemeinsames Büro aufbauen wollen und wissen möchten, was möglich ist, was nötig ist und in welcher Reihenfolge. *Andere Sprachen: [English](Setup-Guide) · [Français](Guide-de-demarrage) · [Español](Guia-de-puesta-en-marcha) · [Italiano](Guida-di-avvio).*
+**DesKilo — bauen Sie Ihren Space, Schritt für Schritt.** Für alle, die ein Unternehmen mit buchbaren Plätzen (einen Coworking-Space, einen Vereinsraum, ein gemeinsames Büro) oder ohne Plätze (eine Praxis, ein Studio, einen Salon, eine freiberufliche Tätigkeit, ein anderes Dienstleistungsunternehmen) aufbauen wollen und wissen möchten, was möglich ist, was nötig ist und in welcher Reihenfolge. *Andere Sprachen: [English](Setup-Guide) · [Français](Guide-de-demarrage) · [Español](Guia-de-puesta-en-marcha) · [Italiano](Guida-di-avvio).*
 
 <!-- anchor: setup.guide.how-to-read -->
 ## So nutzen Sie diese Anleitung
@@ -23,6 +23,7 @@ Nur die Stufe *Öffnen* ist zum Start nötig. Sie können nach jeder Stufe aufh�
 
 | Sie möchten … | Hier beginnen |
 |---|---|
+| Wissen, welche Schritte Ihre Art von Unternehmen hat, mit oder ohne Plätze | [Was für ein Unternehmen ist es?](help:setup.kind.overview) |
 | Wissen, was DesKilo kann und was Sie vorbereiten sollten | [Bevor Sie beginnen](help:setup.before.overview) |
 | Einen Ort, den Mitglieder noch heute buchen können | [Den Ort aufbauen](help:setup.place.overview) |
 | Festlegen, wer was darf und wer bestätigt | [Die Rollenmatrix](help:user.roles.matrix) |

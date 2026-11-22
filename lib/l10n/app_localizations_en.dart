@@ -12402,6 +12402,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureStockReceivingTitle => 'Receiving into stock';
 
   @override
+  String get featureStockReorderDesc =>
+      'Set a minimum per item and site: the inbox says when stock falls to it, and a replenishment list proposes what to order. Off: no point is set, no alert is raised and no list is offered; the ledger is unaffected.';
+
+  @override
+  String get featureStockReorderTitle => 'Reorder points';
+
+  @override
   String get featureStockTakeOutDesc =>
       'Take goods out of stock for use or as a loss, with the reason and the lot. Off: no consumption or loss is offered; transfers and receiving are unaffected.';
 
