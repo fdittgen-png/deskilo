@@ -15485,6 +15485,20 @@ class AppLocalizationsIt extends AppLocalizations {
       'Un cambio di password non chiede di accedere di nuovo';
 
   @override
+  String instanceDoctorFactBacklogDetail(
+    String overdue,
+    String waiting,
+    String live,
+    String capacity,
+  ) {
+    return '$overdue dei $waiting fatti in attesa hanno più di un periodo di aggiornamento; le relazioni attive sono $live e un periodo ne consegna $capacity.\n        Correzione: aumenti federation.fact_drain_batch (o allunghi il periodo di aggiornamento) in modo che lotto x periodo / 60 superi le relazioni attive.';
+  }
+
+  @override
+  String get instanceDoctorFactBacklogTitle =>
+      'Dei fatti di appartenenza attendono più di un periodo di aggiornamento';
+
+  @override
   String instanceDoctorGuardAnonViewDetail(String names) {
     return '$names\n        Senza security_invoker la vista legge con i diritti del proprietario e aggira le policy delle tabelle sottostanti.';
   }
@@ -15600,6 +15614,10 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get instanceDoctorProbeAuth => 'Configurazione dell\'autenticazione';
+
+  @override
+  String get instanceDoctorProbeFactDelivery =>
+      'Invio dei fatti di appartenenza';
 
   @override
   String instanceDoctorProbeFailedDetail(int status, String message) {
@@ -31766,6 +31784,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Secondi per cui un server attende la risposta a un messaggio firmato inviato a un altro server prima di inviare di nuovo lo stesso messaggio. Almeno 30; tenerla sotto la validità dello stato.';
 
   @override
+  String get settingHintFederationFactDrainBatch =>
+      'Il numero massimo di fatti di appartenenza che un server di spazi invia al proprio domicilio personale in un minuto. Un server rinnova ogni relazione attiva una volta per aggiornamento dello stato di identità: regge al massimo questo numero per i secondi di aggiornamento divisi per 60 relazioni (500 e 300 secondi: 2.500). Lo aumenti quando il medico dell\'istanza segnala un ritardo di invio.';
+
+  @override
   String get settingHintFederationRetentionHours =>
       'Ore per cui un server conserva le ricevute dei messaggi firmati tra server, e una casa personale le tracce delle iscrizioni terminate, prima che la pulizia oraria le rimuova. Mai meno della validità di stato più lunga più due volte lo scarto d\'orologio.';
 
@@ -32104,6 +32126,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settingLabelFederationAnswerWaitSeconds =>
       'Attesa della risposta tra server';
+
+  @override
+  String get settingLabelFederationFactDrainBatch =>
+      'Fatti di appartenenza inviati al minuto';
 
   @override
   String get settingLabelFederationRetentionHours =>

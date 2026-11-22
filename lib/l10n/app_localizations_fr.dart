@@ -15549,6 +15549,20 @@ class AppLocalizationsFr extends AppLocalizations {
       'Un changement de mot de passe ne demande pas de se reconnecter';
 
   @override
+  String instanceDoctorFactBacklogDetail(
+    String overdue,
+    String waiting,
+    String live,
+    String capacity,
+  ) {
+    return '$overdue des $waiting faits en attente ont plus d\'une période d\'actualisation ; $live relations sont vivantes et une période en envoie $capacity.\n        Correction : augmentez federation.fact_drain_batch (ou allongez la période d\'actualisation) pour que lot x période / 60 dépasse les relations vivantes.';
+  }
+
+  @override
+  String get instanceDoctorFactBacklogTitle =>
+      'Des faits d\'adhésion attendent plus longtemps qu\'une période d\'actualisation';
+
+  @override
   String instanceDoctorGuardAnonViewDetail(String names) {
     return '$names\n        Sans security_invoker, la vue lit avec les droits du propriétaire et contourne les politiques des tables sous-jacentes.';
   }
@@ -15665,6 +15679,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get instanceDoctorProbeAuth => 'Configuration de l\'authentification';
+
+  @override
+  String get instanceDoctorProbeFactDelivery => 'Envoi des faits d\'adhésion';
 
   @override
   String instanceDoctorProbeFailedDetail(int status, String message) {
@@ -31865,6 +31882,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Secondes pendant lesquelles un serveur attend la réponse à un message signé envoyé à un autre serveur avant de renvoyer le même message. Au moins 30 ; gardez-la sous la durée de validité du statut.';
 
   @override
+  String get settingHintFederationFactDrainBatch =>
+      'Le nombre maximal de faits d\'adhésion qu\'un serveur d\'espaces envoie à son domicile personnel en une minute. Un serveur renouvelle chaque relation vivante une fois par actualisation du statut d\'identité : il suit au plus ce nombre multiplié par les secondes d\'actualisation divisées par 60 relations (500 et 300 secondes : 2 500). Augmentez-le quand le médecin d\'instance signale un retard d\'envoi.';
+
+  @override
   String get settingHintFederationRetentionHours =>
       'Heures pendant lesquelles un serveur garde les accusés de réception des messages signés entre serveurs, et un domicile personnel les traces des adhésions terminées, avant le nettoyage horaire. Jamais moins que la plus longue validité de statut plus deux fois l\'écart d\'horloge.';
 
@@ -32203,6 +32224,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingLabelFederationAnswerWaitSeconds =>
       'Attente de réponse entre serveurs';
+
+  @override
+  String get settingLabelFederationFactDrainBatch =>
+      'Faits d\'adhésion envoyés par minute';
 
   @override
   String get settingLabelFederationRetentionHours =>

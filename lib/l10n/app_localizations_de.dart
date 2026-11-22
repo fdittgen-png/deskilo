@@ -15517,6 +15517,20 @@ class AppLocalizationsDe extends AppLocalizations {
       'Eine Passwortänderung verlangt kein erneutes Anmelden';
 
   @override
+  String instanceDoctorFactBacklogDetail(
+    String overdue,
+    String waiting,
+    String live,
+    String capacity,
+  ) {
+    return '$overdue von $waiting wartenden Fakten sind älter als eine Aktualisierungsperiode; $live Beziehungen sind lebendig und eine Periode liefert $capacity.\n        Behebung: erhöhen Sie federation.fact_drain_batch (oder verlängern Sie die Aktualisierungsperiode), sodass Batch x Periode / 60 die lebenden Beziehungen übersteigt.';
+  }
+
+  @override
+  String get instanceDoctorFactBacklogTitle =>
+      'Mitgliedschaftsfakten warten länger als eine Aktualisierungsperiode';
+
+  @override
   String instanceDoctorGuardAnonViewDetail(String names) {
     return '$names\n        Ohne security_invoker liest die View mit den Rechten des Eigentümers und umgeht die Richtlinien der darunterliegenden Tabellen.';
   }
@@ -15632,6 +15646,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get instanceDoctorProbeAuth => 'Auth-Konfiguration';
+
+  @override
+  String get instanceDoctorProbeFactDelivery =>
+      'Versand der Mitgliedschaftsfakten';
 
   @override
   String instanceDoctorProbeFailedDetail(int status, String message) {
@@ -31818,6 +31836,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Sekunden, die ein Server auf die Antwort auf eine signierte Nachricht an einen anderen Server wartet, bevor er dieselbe Nachricht erneut sendet. Mindestens 30; unter der Statusgültigkeit halten.';
 
   @override
+  String get settingHintFederationFactDrainBatch =>
+      'Die höchste Zahl an Mitgliedschaftsfakten, die ein Arbeitsbereichs-Server in einer Minute an sein persönliches Zuhause sendet. Ein Server erneuert jede lebende Beziehung einmal je Aktualisierung des Identitätsstatus; er schafft höchstens diese Zahl mal die Aktualisierungssekunden geteilt durch 60 Beziehungen (500 und 300 Sekunden: 2.500). Erhöhen Sie sie, wenn der Instanz-Doktor einen Sendestau meldet.';
+
+  @override
   String get settingHintFederationRetentionHours =>
       'Stunden, die ein Server die Empfangsbelege signierter Nachrichten zwischen Servern und ein persönliches Zuhause die Spuren beendeter Mitgliedschaften aufbewahrt, bevor die stündliche Bereinigung sie entfernt. Nie kürzer als die längste Statusgültigkeit plus die doppelte Uhrabweichung.';
 
@@ -32148,6 +32170,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get settingLabelFederationAnswerWaitSeconds =>
       'Wartezeit auf Antwort im Server-Austausch';
+
+  @override
+  String get settingLabelFederationFactDrainBatch =>
+      'Mitgliedschaftsfakten pro Minute';
 
   @override
   String get settingLabelFederationRetentionHours =>

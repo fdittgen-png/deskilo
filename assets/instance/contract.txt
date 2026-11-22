@@ -3388,13 +3388,15 @@ routine public.members_terms_by_command() -> trigger | function | invoker | vola
 routine public.members_vies_guard() -> trigger | function | definer | volatile | exec:service_role | body:9a473e9c6b36
 routine public.members_zero_subscription_guard() -> trigger | function | invoker | volatile | exec:service_role | body:c6c375c30e6f
 routine public.membership_fact_apply(p_body jsonb, p_source uuid, p_event uuid, p_request_ts bigint) -> text | function | definer | volatile | exec: | body:6b1ef02cd00c
-routine public.membership_fact_drain() -> jsonb | function | definer | volatile | exec: | body:6f6142ce935a
-routine public.membership_fact_enqueue(p_state membership_fact_state) -> integer | function | definer | volatile | exec: | body:26bd53f0c8a2
+routine public.membership_fact_backlog() -> text | function | definer | stable | exec: | body:0c0116bef6f6
+routine public.membership_fact_drain() -> jsonb | function | definer | volatile | exec: | body:0339442e17e8
+routine public.membership_fact_drain_batch() -> integer | function | definer | stable | exec: | body:7d97336f1ede
+routine public.membership_fact_enqueue(p_state membership_fact_state) -> integer | function | definer | volatile | exec: | body:c06ca0398d5d
 routine public.membership_fact_home() -> TABLE(home_installation_id uuid, home_origin text, home_key text) | function | definer | stable | exec: | body:4ddaaae4e1e7
 routine public.membership_fact_in_force(p_user uuid, p_ref text, p_statuses text[]) -> boolean | function | definer | stable | exec: | body:4731c1825176
 routine public.membership_fact_on_binding_change() -> trigger | function | definer | volatile | exec: | body:3d37fdd2d63b
 routine public.membership_fact_on_member_change() -> trigger | function | definer | volatile | exec: | body:865c3b9b8a98
-routine public.membership_fact_produce(p_workspace uuid, p_user uuid) -> integer | function | definer | volatile | exec: | body:ff593077a19e
+routine public.membership_fact_produce(p_workspace uuid, p_user uuid) -> integer | function | definer | volatile | exec: | body:4e50714a9b15
 routine public.membership_fact_reconcile() -> jsonb | function | definer | volatile | exec: | body:da94f0d744b4
 routine public.membership_snapshot_apply(p_body jsonb, p_source uuid, p_event uuid, p_request_ts bigint) -> text | function | definer | volatile | exec: | body:e9ae4b827a82
 routine public.membership_snapshot_digest(p_entries jsonb) -> text | function | invoker | stable | exec: | body:8611fd1e0d7c

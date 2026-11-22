@@ -20225,6 +20225,28 @@
   "@instanceDoctorAuthReauthOffTitle": {
     "description": "#3904 Doctor warning: changing a password does not ask the person to sign in again."
   },
+  "instanceDoctorFactBacklogDetail": "{overdue} of {waiting} waiting facts are older than one refresh period; {live} relationships are live and one period delivers {capacity}.\n        Fix: raise federation.fact_drain_batch (or lengthen the refresh period) so that batch x period / 60 exceeds the live relationships.",
+  "@instanceDoctorFactBacklogDetail": {
+    "description": "#4327 Detail: {overdue} waiting longer than a period, {waiting} waiting, {live} live relationships, {capacity} delivered per period; the setting name stays as written.",
+    "placeholders": {
+      "overdue": {
+        "type": "String"
+      },
+      "waiting": {
+        "type": "String"
+      },
+      "live": {
+        "type": "String"
+      },
+      "capacity": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceDoctorFactBacklogTitle": "Membership facts wait longer than a refresh period",
+  "@instanceDoctorFactBacklogTitle": {
+    "description": "#4327 Doctor finding: membership facts wait longer than a refresh period."
+  },
   "instanceDoctorGuardAnonViewDetail": "{names}\n        Without security_invoker the view reads with the owner rights and bypasses the policies of the tables under it.",
   "@instanceDoctorGuardAnonViewDetail": {
     "description": "#3489 Detail of the alarm: a view readable by anon runs as its owner; {names} lists the objects.",
@@ -20352,6 +20374,10 @@
   "instanceDoctorProbeAuth": "Auth configuration",
   "@instanceDoctorProbeAuth": {
     "description": "#3489 Doctor probe name: auth configuration."
+  },
+  "instanceDoctorProbeFactDelivery": "Membership fact delivery",
+  "@instanceDoctorProbeFactDelivery": {
+    "description": "#4327 Doctor probe name: the delivery of membership facts."
   },
   "instanceDoctorProbeFailedDetail": "Supabase answered {status}: {message}\n        The other checks ran without it.",
   "@instanceDoctorProbeFailedDetail": {
@@ -41143,6 +41169,10 @@
   "@settingHintFederationAnswerWaitSeconds": {
     "description": "#2563 C2 answer wait: settingHintFederationAnswerWaitSeconds"
   },
+  "settingHintFederationFactDrainBatch": "The most membership facts a workspace server sends to its personal home in one minute. A server renews each live relationship once per identity status refresh, so it keeps up with this number times the refresh seconds divided by 60 relationships (500 and 300 seconds: 2,500). Raise it when the instance doctor reports a delivery backlog.",
+  "@settingHintFederationFactDrainBatch": {
+    "description": "#4327 fact drain batch: settingHintFederationFactDrainBatch"
+  },
   "settingHintFederationRetentionHours": "Hours a server keeps the receipts of signed messages between servers, and a personal home the tombstones of ended memberships, before the hourly cleanup removes them. Never shorter than the longest status lifetime plus twice the clock difference.",
   "@settingHintFederationRetentionHours": {
     "description": "#2563 C2 retention: settingHintFederationRetentionHours"
@@ -41494,6 +41524,10 @@
   "settingLabelFederationAnswerWaitSeconds": "Backchannel answer wait",
   "@settingLabelFederationAnswerWaitSeconds": {
     "description": "#2563 C2 answer wait: settingLabelFederationAnswerWaitSeconds"
+  },
+  "settingLabelFederationFactDrainBatch": "Membership facts sent per minute",
+  "@settingLabelFederationFactDrainBatch": {
+    "description": "#4327 fact drain batch: settingLabelFederationFactDrainBatch"
   },
   "settingLabelFederationRetentionHours": "Backchannel retention",
   "@settingLabelFederationRetentionHours": {

@@ -3,5 +3,7 @@
   "settingLabelFederationRetentionHours": "Conservazione degli scambi tra server",
   "settingHintFederationRetentionHours": "Ore per cui un server conserva le ricevute dei messaggi firmati tra server, e una casa personale le tracce delle iscrizioni terminate, prima che la pulizia oraria le rimuova. Mai meno della validità di stato più lunga più due volte lo scarto d'orologio.",
   "settingLabelFederationAnswerWaitSeconds": "Attesa della risposta tra server",
-  "settingHintFederationAnswerWaitSeconds": "Secondi per cui un server attende la risposta a un messaggio firmato inviato a un altro server prima di inviare di nuovo lo stesso messaggio. Almeno 30; tenerla sotto la validità dello stato."
+  "settingHintFederationAnswerWaitSeconds": "Secondi per cui un server attende la risposta a un messaggio firmato inviato a un altro server prima di inviare di nuovo lo stesso messaggio. Almeno 30; tenerla sotto la validità dello stato.",
+  "settingLabelFederationFactDrainBatch": "Fatti di appartenenza inviati al minuto",
+  "settingHintFederationFactDrainBatch": "Il numero massimo di fatti di appartenenza che un server di spazi invia al proprio domicilio personale in un minuto. Un server rinnova ogni relazione attiva una volta per aggiornamento dello stato di identità: regge al massimo questo numero per i secondi di aggiornamento divisi per 60 relazioni (500 e 300 secondi: 2.500). Lo aumenti quando il medico dell'istanza segnala un ritardo di invio."
 }

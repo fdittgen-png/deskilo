@@ -3,5 +3,7 @@
   "settingLabelFederationRetentionHours": "Conservación de los intercambios entre servidores",
   "settingHintFederationRetentionHours": "Horas que un servidor guarda los acuses de recibo de los mensajes firmados entre servidores, y un hogar personal las huellas de las membresías terminadas, antes de que la limpieza horaria los elimine. Nunca menos que la validez de estado más larga más dos veces el desfase de reloj.",
   "settingLabelFederationAnswerWaitSeconds": "Espera de respuesta entre servidores",
-  "settingHintFederationAnswerWaitSeconds": "Segundos que un servidor espera la respuesta a un mensaje firmado enviado a otro servidor antes de volver a enviar el mismo mensaje. Al menos 30; manténgala por debajo de la validez del estado."
+  "settingHintFederationAnswerWaitSeconds": "Segundos que un servidor espera la respuesta a un mensaje firmado enviado a otro servidor antes de volver a enviar el mismo mensaje. Al menos 30; manténgala por debajo de la validez del estado.",
+  "settingLabelFederationFactDrainBatch": "Hechos de pertenencia enviados por minuto",
+  "settingHintFederationFactDrainBatch": "El máximo de hechos de pertenencia que un servidor de espacios envía a su hogar personal en un minuto. Un servidor renueva cada relación viva una vez por actualización del estado de identidad: soporta como mucho este número multiplicado por los segundos de actualización divididos entre 60 relaciones (500 y 300 segundos: 2.500). Súbalo cuando el doctor de la instancia avise de un atraso de envío."
 }
