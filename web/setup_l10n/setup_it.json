@@ -798,5 +798,7 @@
  "stockSepDash": "Trattino ( - )",
  "stockSepDot": "Punto ( . )",
  "stockSepSlash": "Barra ( / )",
- "stockSepColon": "Due punti ( : )"
+ "stockSepColon": "Due punti ( : )",
+ "einvoiceStuck": "Tentativo di fattura elettronica interrotto",
+ "einvoiceStuckHint": "Per quanto tempo una fattura elettronica può restare preparata, senza che l’invio sia iniziato, prima che il titolare sia avvisato che il tentativo si è fermato. Si imposta nelle impostazioni dell’app."
 }

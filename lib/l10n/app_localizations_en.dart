@@ -10065,6 +10065,17 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get eventEinvoiceNoticeEnded => 'Settled';
+
+  @override
+  String get eventEinvoiceOutcomeUncertain =>
+      'The outcome of an e-invoice is unknown: its sending stopped before an answer was recorded. It is not sent again. Check the platform\'s record, then settle it by hand.';
+
+  @override
+  String get eventEinvoiceStuckPrepared =>
+      'An e-invoice was prepared and never sent. Send it again from its invoice, or leave it.';
+
+  @override
   String eventExpenseDeviation(Object reason, Object scheduled) {
     return 'validated $scheduled — $reason';
   }
@@ -10338,6 +10349,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get eventTypeCredentialChange => 'Credentials change';
+
+  @override
+  String get eventTypeEinvoiceOutcomeUnknown => 'E-invoice attempt stopped';
 
   @override
   String get eventTypeExpense => 'Expense';
@@ -31404,6 +31418,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Days after issue before a first reminder is suggested, and before an invoice falls due when no payment term was set.';
 
   @override
+  String get settingHintEinvoiceStuckAttemptMinutes =>
+      'How many minutes an e-invoice may stay prepared, with no dispatch started, before the owner is told that its attempt stopped. A dispatch that was started and has no outcome is told as soon as its own time is up.';
+
+  @override
   String get settingHintFederationAnswerWaitSeconds =>
       'Seconds a server waits for the answer to a signed message it sent to another server before it sends the same message again. At least 30; keep it below the status lifetime.';
 
@@ -31728,6 +31746,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get settingLabelDunningFirstAfterDays =>
       'Days before a first reminder';
+
+  @override
+  String get settingLabelEinvoiceStuckAttemptMinutes =>
+      'E-invoice attempt left half-way';
 
   @override
   String get settingLabelFederationAnswerWaitSeconds =>

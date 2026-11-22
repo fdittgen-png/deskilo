@@ -60,6 +60,8 @@ abstract final class SettingDefaults {
   static const int directoryUpcomingWindowDays = 14;
   /// `dunning.first_after_days`
   static const int dunningFirstAfterDays = 14;
+  /// `einvoice.stuck_attempt_minutes`
+  static const int einvoiceStuckAttemptMinutes = 60;
   /// `federation.answer_wait_seconds`
   static const int federationAnswerWaitSeconds = 120;
   /// `federation.retention_hours`

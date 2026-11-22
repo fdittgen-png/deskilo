@@ -6482,6 +6482,9 @@
   "eventCredentialCleared": "{actor} a effacé les identifiants de {provider} ({area}) : {keys}.",
   "eventCredentialReplaced": "{actor} a remplacé les identifiants de {provider} ({area}) : {keys}.",
   "eventCredentialSet": "{actor} a enregistré les identifiants de {provider} ({area}) : {keys}.",
+  "eventEinvoiceNoticeEnded": "Réglé",
+  "eventEinvoiceOutcomeUncertain": "Le résultat d’une facture électronique est inconnu : son envoi s’est arrêté avant qu’une réponse soit enregistrée. Elle n’est pas renvoyée. Vérifiez le relevé de la plateforme, puis réglez-le à la main.",
+  "eventEinvoiceStuckPrepared": "Une facture électronique a été préparée et jamais envoyée. Renvoyez-la depuis sa facture, ou laissez-la.",
   "eventExpenseDeviation": "validé {scheduled} — {reason}",
   "eventExpenseRepartitionLine": "{count, plural, one{{actor} répartit « {title} » — {amount} entre {count} membre} other{{actor} répartit « {title} » — {amount} entre {count} membres}}",
   "@eventExpenseRepartitionLine": {
@@ -6675,6 +6678,7 @@
   "eventTypeBadgeSecurityAlert": "Protection de la connexion par badge",
   "eventTypeCommitmentVariance": "Écart de loyer",
   "eventTypeCredentialChange": "Modification d'identifiants",
+  "eventTypeEinvoiceOutcomeUnknown": "Envoi de facture électronique interrompu",
   "eventTypeExpense": "Dépense",
   "eventTypeExpenseRepartition": "Dépense partagée",
   "eventTypeExpenseSchedule": "Dépense programmée",
@@ -18855,6 +18859,7 @@
   "@settingHintDunningFirstAfterDays": {
     "description": "#2484 settings: Setting hint."
   },
+  "settingHintEinvoiceStuckAttemptMinutes": "Combien de minutes une facture électronique peut rester préparée, sans envoi commencé, avant que le propriétaire soit prévenu que sa tentative s’est arrêtée. Un envoi commencé sans résultat est signalé dès que son propre délai est écoulé.",
   "settingHintFederationAnswerWaitSeconds": "Secondes pendant lesquelles un serveur attend la réponse à un message signé envoyé à un autre serveur avant de renvoyer le même message. Au moins 30 ; gardez-la sous la durée de validité du statut.",
   "settingHintFederationRetentionHours": "Heures pendant lesquelles un serveur garde les accusés de réception des messages signés entre serveurs, et un domicile personnel les traces des adhésions terminées, avant le nettoyage horaire. Jamais moins que la plus longue validité de statut plus deux fois l'écart d'horloge.",
   "settingHintIdentityClockSkewSeconds": "Secondes d'écart d'horloge entre le domicile personnel et un serveur d'espaces encore acceptées, de 0 à 30.",
@@ -19071,6 +19076,7 @@
   "@settingLabelDunningFirstAfterDays": {
     "description": "#2484 settings: Setting label."
   },
+  "settingLabelEinvoiceStuckAttemptMinutes": "Tentative de facture électronique interrompue",
   "settingLabelFederationAnswerWaitSeconds": "Attente de réponse entre serveurs",
   "settingLabelFederationRetentionHours": "Conservation des échanges entre serveurs",
   "settingLabelIdentityClockSkewSeconds": "Écart d'horloge toléré",

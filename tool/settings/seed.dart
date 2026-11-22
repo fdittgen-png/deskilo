@@ -1657,6 +1657,25 @@ final List<({SettingSeed row, String since})> settingSeeds = [
       note: 'What the nightly maintenance does with an uploaded invoice PDF that no recorded original names, a day after its upload: report counts and names it in the maintenance record and removes nothing; remove deletes it from the store, which cannot be undone. A file a recorded original names is never touched.',
     ),
   ),
+  (
+    since: 'einvoice_sweep',
+    row: (
+      key: 'einvoice.stuck_attempt_minutes',
+      type: 'duration',
+      defaultValue: 60,
+      min: 5,
+      max: 10080,
+      unit: 'minutes',
+      group: 'billing',
+      scopes: ['platform'],
+      editPermission: 'manageBilling',
+      floor: null,
+      editable: true,
+      choices: null,
+      source: 'einvoice_sweep (0863)',
+      note: 'How long an e-invoice may stay prepared, with no dispatch claimed, before the owner is told that its attempt stopped half-way. A dispatch whose own deadline passed with no outcome is told as soon as the sweep runs.',
+    ),
+  ),
 ];
 
 String _q(String s) => "'${s.replaceAll("'", "''")}'";

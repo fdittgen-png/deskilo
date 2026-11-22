@@ -6482,6 +6482,9 @@
   "eventCredentialCleared": "{actor} ha cancellato le credenziali di {provider} ({area}): {keys}.",
   "eventCredentialReplaced": "{actor} ha sostituito le credenziali di {provider} ({area}): {keys}.",
   "eventCredentialSet": "{actor} ha impostato le credenziali di {provider} ({area}): {keys}.",
+  "eventEinvoiceNoticeEnded": "Regolata",
+  "eventEinvoiceOutcomeUncertain": "L’esito di una fattura elettronica è sconosciuto: il suo invio si è fermato prima che fosse registrata una risposta. Non viene inviata di nuovo. Controlli il registro della piattaforma, poi la regoli a mano.",
+  "eventEinvoiceStuckPrepared": "Una fattura elettronica è stata preparata e mai inviata. La invii di nuovo dalla sua fattura, oppure la lasci.",
   "eventExpenseDeviation": "validato {scheduled} — {reason}",
   "eventExpenseRepartitionLine": "{count, plural, one{{actor} ripartisce «{title}»: {amount} tra 1 membro} other{{actor} ripartisce «{title}»: {amount} tra {count} membri}}",
   "@eventExpenseRepartitionLine": {
@@ -6675,6 +6678,7 @@
   "eventTypeBadgeSecurityAlert": "Protezione dell’accesso con badge",
   "eventTypeCommitmentVariance": "Differenza di affitto",
   "eventTypeCredentialChange": "Modifica delle credenziali",
+  "eventTypeEinvoiceOutcomeUnknown": "Invio di fattura elettronica interrotto",
   "eventTypeExpense": "Spesa",
   "eventTypeExpenseRepartition": "Spesa condivisa",
   "eventTypeExpenseSchedule": "Spesa programmata",
@@ -18855,6 +18859,7 @@
   "@settingHintDunningFirstAfterDays": {
     "description": "#2484 settings: Setting hint."
   },
+  "settingHintEinvoiceStuckAttemptMinutes": "Quanti minuti una fattura elettronica può restare preparata, senza che l’invio sia iniziato, prima che il titolare sia avvisato che il tentativo si è fermato. Un invio iniziato e senza esito viene segnalato appena scade il suo termine.",
   "settingHintFederationAnswerWaitSeconds": "Secondi per cui un server attende la risposta a un messaggio firmato inviato a un altro server prima di inviare di nuovo lo stesso messaggio. Almeno 30; tenerla sotto la validità dello stato.",
   "settingHintFederationRetentionHours": "Ore per cui un server conserva le ricevute dei messaggi firmati tra server, e una casa personale le tracce delle iscrizioni terminate, prima che la pulizia oraria le rimuova. Mai meno della validità di stato più lunga più due volte lo scarto d'orologio.",
   "settingHintIdentityClockSkewSeconds": "Secondi di scarto d'orologio tra la casa personale e un server di spazi ancora accettati, da 0 a 30.",
@@ -19071,6 +19076,7 @@
   "@settingLabelDunningFirstAfterDays": {
     "description": "#2484 settings: Setting label."
   },
+  "settingLabelEinvoiceStuckAttemptMinutes": "Tentativo di fattura elettronica interrotto",
   "settingLabelFederationAnswerWaitSeconds": "Attesa della risposta tra server",
   "settingLabelFederationRetentionHours": "Conservazione degli scambi tra server",
   "settingLabelIdentityClockSkewSeconds": "Scarto d'orologio ammesso",

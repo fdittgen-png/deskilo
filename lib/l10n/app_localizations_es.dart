@@ -10131,6 +10131,17 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get eventEinvoiceNoticeEnded => 'Resuelto';
+
+  @override
+  String get eventEinvoiceOutcomeUncertain =>
+      'Se desconoce el resultado de una factura electrónica: su envío se detuvo antes de registrar una respuesta. No se vuelve a enviar. Compruebe el registro de la plataforma y resuélvalo a mano.';
+
+  @override
+  String get eventEinvoiceStuckPrepared =>
+      'Una factura electrónica se preparó y nunca se envió. Envíela de nuevo desde su factura, o déjela.';
+
+  @override
   String eventExpenseDeviation(Object reason, Object scheduled) {
     return 'validado $scheduled — $reason';
   }
@@ -10404,6 +10415,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get eventTypeCredentialChange => 'Cambio de credenciales';
+
+  @override
+  String get eventTypeEinvoiceOutcomeUnknown =>
+      'Envío de factura electrónica interrumpido';
 
   @override
   String get eventTypeExpense => 'Gasto';
@@ -31639,6 +31654,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Días tras la emisión antes de proponer un primer recordatorio y antes del vencimiento de una factura sin plazo de pago.';
 
   @override
+  String get settingHintEinvoiceStuckAttemptMinutes =>
+      'Cuántos minutos puede quedar preparada una factura electrónica, sin que se haya iniciado el envío, antes de avisar al propietario de que el intento se detuvo. Un envío iniciado sin resultado se avisa en cuanto vence su propio plazo.';
+
+  @override
   String get settingHintFederationAnswerWaitSeconds =>
       'Segundos que un servidor espera la respuesta a un mensaje firmado enviado a otro servidor antes de volver a enviar el mismo mensaje. Al menos 30; manténgala por debajo de la validez del estado.';
 
@@ -31974,6 +31993,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingLabelDunningFirstAfterDays =>
       'Días antes de un primer recordatorio';
+
+  @override
+  String get settingLabelEinvoiceStuckAttemptMinutes =>
+      'Intento de factura electrónica interrumpido';
 
   @override
   String get settingLabelFederationAnswerWaitSeconds =>

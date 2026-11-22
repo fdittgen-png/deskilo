@@ -16170,6 +16170,24 @@ abstract class AppLocalizations {
     String keys,
   );
 
+  /// #4325 suffix of a notice whose transmission moved on.
+  ///
+  /// In en, this message translates to:
+  /// **'Settled'**
+  String get eventEinvoiceNoticeEnded;
+
+  /// #4325 the notice of an e-invoice whose outcome is unknown (an uncertain dispatch).
+  ///
+  /// In en, this message translates to:
+  /// **'The outcome of an e-invoice is unknown: its sending stopped before an answer was recorded. It is not sent again. Check the platform\'s record, then settle it by hand.'**
+  String get eventEinvoiceOutcomeUncertain;
+
+  /// #4325 the notice of an e-invoice prepared and never sent.
+  ///
+  /// In en, this message translates to:
+  /// **'An e-invoice was prepared and never sent. Send it again from its invoice, or leave it.'**
+  String get eventEinvoiceStuckPrepared;
+
   /// Shown as a text in event lines (events).
   ///
   /// In en, this message translates to:
@@ -16503,6 +16521,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Credentials change'**
   String get eventTypeCredentialChange;
+
+  /// #4325 the type name in the feed and the validation settings.
+  ///
+  /// In en, this message translates to:
+  /// **'E-invoice attempt stopped'**
+  String get eventTypeEinvoiceOutcomeUnknown;
 
   /// Event type label / filter chip
   ///
@@ -50433,6 +50457,12 @@ abstract class AppLocalizations {
   /// **'Days after issue before a first reminder is suggested, and before an invoice falls due when no payment term was set.'**
   String get settingHintDunningFirstAfterDays;
 
+  /// #4325 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'How many minutes an e-invoice may stay prepared, with no dispatch started, before the owner is told that its attempt stopped. A dispatch that was started and has no outcome is told as soon as its own time is up.'**
+  String get settingHintEinvoiceStuckAttemptMinutes;
+
   /// #2563 C2 answer wait: settingHintFederationAnswerWaitSeconds
   ///
   /// In en, this message translates to:
@@ -50954,6 +50984,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Days before a first reminder'**
   String get settingLabelDunningFirstAfterDays;
+
+  /// #4325 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'E-invoice attempt left half-way'**
+  String get settingLabelEinvoiceStuckAttemptMinutes;
 
   /// #2563 C2 answer wait: settingLabelFederationAnswerWaitSeconds
   ///

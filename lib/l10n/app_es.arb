@@ -6482,6 +6482,9 @@
   "eventCredentialCleared": "{actor} borró las credenciales de {provider} ({area}): {keys}.",
   "eventCredentialReplaced": "{actor} sustituyó las credenciales de {provider} ({area}): {keys}.",
   "eventCredentialSet": "{actor} registró las credenciales de {provider} ({area}): {keys}.",
+  "eventEinvoiceNoticeEnded": "Resuelto",
+  "eventEinvoiceOutcomeUncertain": "Se desconoce el resultado de una factura electrónica: su envío se detuvo antes de registrar una respuesta. No se vuelve a enviar. Compruebe el registro de la plataforma y resuélvalo a mano.",
+  "eventEinvoiceStuckPrepared": "Una factura electrónica se preparó y nunca se envió. Envíela de nuevo desde su factura, o déjela.",
   "eventExpenseDeviation": "validado {scheduled} — {reason}",
   "eventExpenseRepartitionLine": "{count, plural, one{{actor} reparte «{title}»: {amount} entre 1 socio} other{{actor} reparte «{title}»: {amount} entre {count} socios}}",
   "@eventExpenseRepartitionLine": {
@@ -6675,6 +6678,7 @@
   "eventTypeBadgeSecurityAlert": "Protección del acceso con tarjeta",
   "eventTypeCommitmentVariance": "Diferencia de alquiler",
   "eventTypeCredentialChange": "Cambio de credenciales",
+  "eventTypeEinvoiceOutcomeUnknown": "Envío de factura electrónica interrumpido",
   "eventTypeExpense": "Gasto",
   "eventTypeExpenseRepartition": "Gasto compartido",
   "eventTypeExpenseSchedule": "Gasto programado",
@@ -18855,6 +18859,7 @@
   "@settingHintDunningFirstAfterDays": {
     "description": "#2484 settings: Setting hint."
   },
+  "settingHintEinvoiceStuckAttemptMinutes": "Cuántos minutos puede quedar preparada una factura electrónica, sin que se haya iniciado el envío, antes de avisar al propietario de que el intento se detuvo. Un envío iniciado sin resultado se avisa en cuanto vence su propio plazo.",
   "settingHintFederationAnswerWaitSeconds": "Segundos que un servidor espera la respuesta a un mensaje firmado enviado a otro servidor antes de volver a enviar el mismo mensaje. Al menos 30; manténgala por debajo de la validez del estado.",
   "settingHintFederationRetentionHours": "Horas que un servidor guarda los acuses de recibo de los mensajes firmados entre servidores, y un hogar personal las huellas de las membresías terminadas, antes de que la limpieza horaria los elimine. Nunca menos que la validez de estado más larga más dos veces el desfase de reloj.",
   "settingHintIdentityClockSkewSeconds": "Segundos de desfase de reloj entre el hogar personal y un servidor de espacios que aún se aceptan, de 0 a 30.",
@@ -19071,6 +19076,7 @@
   "@settingLabelDunningFirstAfterDays": {
     "description": "#2484 settings: Setting label."
   },
+  "settingLabelEinvoiceStuckAttemptMinutes": "Intento de factura electrónica interrumpido",
   "settingLabelFederationAnswerWaitSeconds": "Espera de respuesta entre servidores",
   "settingLabelFederationRetentionHours": "Conservación de los intercambios entre servidores",
   "settingLabelIdentityClockSkewSeconds": "Desfase de reloj permitido",

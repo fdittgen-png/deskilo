@@ -1,0 +1,4 @@
+{
+  "settingLabelEinvoiceStuckAttemptMinutes": "Intento de factura electrónica interrumpido",
+  "settingHintEinvoiceStuckAttemptMinutes": "Cuántos minutos puede quedar preparada una factura electrónica, sin que se haya iniciado el envío, antes de avisar al propietario de que el intento se detuvo. Un envío iniciado sin resultado se avisa en cuanto vence su propio plazo."
+}

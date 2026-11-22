@@ -60,6 +60,8 @@ transmission is claimed again directly, on the same row and artifact.
 | (none) | prepare | the invoice exists in the workspace; no row with this business key and no accepted legacy row | `prepared` | `prepare_einvoice_v1` inserts the row and its artifact in one function call and writes the transmission envelope; nothing has left |
 | (none) | prepare, matching replay | the business key exists and the binding matches | *(that row's phase)* | the existing row is returned; no second row, artifact or upload |
 | (none) | prepare, changed binding | the business key exists and the binding differs | *(that row's phase)* | answer `binding_changed`; nothing changes, whatever the request id |
+| `sent` | the sweep: the dispatch's deadline passed with no outcome | `uncertain` | `einvoice_sweep()` runs every five minutes for every business, with no request (0863); a late outcome is still recorded against the owner and generation |
+| `uncertain`, or `prepared` for longer than `einvoice.stuck_attempt_minutes` | the sweep | the same phase | one inbox event `einvoice_outcome_unknown` for those who may issue invoices, while the transmission keeps the phase; it ends, with the new phase, when the phase changes. The sweep sends nothing and calls no provider |
 | `prepared` | claim | the handler verified the stored artifact; `claim_einvoice_dispatch_v1` wins | `sent` | `owner_id`, `generation + 1` and `deadline` are committed before the post |
 | `failed` | claim | the same atomic claim | `sent` | the same row and stored artifact; `generation + 1` |
 | `sent` | provider accepted the upload | the outcome is recorded by the current owner and generation (`record_einvoice_outcome_v1`) | `accepted` | `external_id`, `receipt`, `receipt_at` |

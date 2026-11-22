@@ -10141,6 +10141,17 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get eventEinvoiceNoticeEnded => 'Regolata';
+
+  @override
+  String get eventEinvoiceOutcomeUncertain =>
+      'L’esito di una fattura elettronica è sconosciuto: il suo invio si è fermato prima che fosse registrata una risposta. Non viene inviata di nuovo. Controlli il registro della piattaforma, poi la regoli a mano.';
+
+  @override
+  String get eventEinvoiceStuckPrepared =>
+      'Una fattura elettronica è stata preparata e mai inviata. La invii di nuovo dalla sua fattura, oppure la lasci.';
+
+  @override
   String eventExpenseDeviation(Object reason, Object scheduled) {
     return 'validato $scheduled — $reason';
   }
@@ -10417,6 +10428,10 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get eventTypeCredentialChange => 'Modifica delle credenziali';
+
+  @override
+  String get eventTypeEinvoiceOutcomeUnknown =>
+      'Invio di fattura elettronica interrotto';
 
   @override
   String get eventTypeExpense => 'Spesa';
@@ -31678,6 +31693,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Giorni dopo l\'emissione prima che venga proposto un primo sollecito e prima della scadenza di una fattura senza termine di pagamento.';
 
   @override
+  String get settingHintEinvoiceStuckAttemptMinutes =>
+      'Quanti minuti una fattura elettronica può restare preparata, senza che l’invio sia iniziato, prima che il titolare sia avvisato che il tentativo si è fermato. Un invio iniziato e senza esito viene segnalato appena scade il suo termine.';
+
+  @override
   String get settingHintFederationAnswerWaitSeconds =>
       'Secondi per cui un server attende la risposta a un messaggio firmato inviato a un altro server prima di inviare di nuovo lo stesso messaggio. Almeno 30; tenerla sotto la validità dello stato.';
 
@@ -32012,6 +32031,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settingLabelDunningFirstAfterDays =>
       'Giorni prima di un primo sollecito';
+
+  @override
+  String get settingLabelEinvoiceStuckAttemptMinutes =>
+      'Tentativo di fattura elettronica interrotto';
 
   @override
   String get settingLabelFederationAnswerWaitSeconds =>
