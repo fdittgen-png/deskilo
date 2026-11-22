@@ -21,3 +21,6 @@ const demoHouseSpaceId = 'ws-9';
 
 /// #4168 -- Kessler Conseil, a freelancer's business: no places, owned by Bruno.
 const demoFreelancerSpaceId = 'ws-10';
+
+/// #4365 -- the Épicerie du Marché, a shop: no places to book, owned by Bruno, keeping stock.
+const demoShopSpaceId = 'ws-11';

@@ -134,6 +134,7 @@ DemoSpaceStores buildDemoSpaceStores(DemoFixture fixture, DemoSpaceKey key) =>
       DemoSpaceKey.practice => _practice(fixture),
       DemoSpaceKey.house => _house(fixture),
       DemoSpaceKey.freelancer => _freelancer(fixture),
+      DemoSpaceKey.shop => _shop(fixture),
       DemoSpaceKey.twin => _twin(fixture),
     };
 
@@ -221,6 +222,31 @@ DemoSpaceStores _freelancer(DemoFixture fixture) {
       ),
     ),
     fixture.space(DemoSpaceKey.freelancer).money,
+  );
+}
+
+/// #4365 — the Épicerie du Marché's purchases and books: none yet (its goods are its stock).
+DemoSpaceStores _shop(DemoFixture fixture) {
+  final buying = DemoPurchasing(
+    suppliers: FakeSupplierRepository(),
+    inbox: FakeEInvoiceInboxRepository(),
+    purchases: FakePurchaseRepository(
+      actor: () => fixture.activeMemberId,
+      workspaceId: demoShopSpaceId,
+    ),
+  );
+  return _empty(
+    fixture,
+    DemoSpaceKey.shop,
+    buying,
+    _emptyBooks(
+      fixture,
+      FakeBookProfileRepository(
+        money: fixture.space(DemoSpaceKey.shop).money,
+        purchases: buying.purchases,
+      ),
+    ),
+    fixture.space(DemoSpaceKey.shop).money,
   );
 }
 

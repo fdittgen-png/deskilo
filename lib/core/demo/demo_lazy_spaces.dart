@@ -13,6 +13,7 @@ import 'demo_new_york_space.dart';
 import 'demo_persona.dart';
 import 'demo_practice_space.dart';
 import 'demo_second_space.dart';
+import 'demo_shop_space.dart';
 import 'demo_space_listing.dart';
 import 'demo_space_stores.dart';
 import 'demo_spaces.dart';
@@ -30,6 +31,7 @@ typedef DemoListings = ({
   DemoSpaceListing practice,
   DemoSpaceListing house,
   DemoSpaceListing freelancer,
+  DemoSpaceListing shop,
 });
 
 class DemoLazySpaces {
@@ -121,6 +123,17 @@ class DemoLazySpaces {
     ),
   );
 
+  /// #4365 — the Épicerie du Marché: a shop, owned by Bruno.
+  late final DemoShopData shop = _space(
+    DemoSpaceKey.shop,
+    listings.shop,
+    () => DemoShopData.build(
+      listing: listings.shop,
+      actor: () => activeMemberId,
+      now: _home.seededAt,
+    ),
+  );
+
   /// #4005 — the house abroad the Demo adds: empty, dormant until added.
   late final DemoHouseData house = _space(
     DemoSpaceKey.house,
@@ -162,6 +175,7 @@ class DemoLazySpaces {
     DemoSpaceKey.practice => practice,
     DemoSpaceKey.house => house,
     DemoSpaceKey.freelancer => freelancer,
+    DemoSpaceKey.shop => shop,
     DemoSpaceKey.twin => twin,
   };
 
@@ -239,6 +253,7 @@ class DemoLazySpaces {
         DemoSpaceKey.practice => listings.practice,
         DemoSpaceKey.house => listings.house,
         DemoSpaceKey.freelancer => listings.freelancer,
+        DemoSpaceKey.shop => listings.shop,
         DemoSpaceKey.twin => _twinSource.listing,
       };
       return listing == null
@@ -260,6 +275,7 @@ class DemoLazySpaces {
     listings.practice,
     listings.house,
     listings.freelancer,
+    listings.shop,
     _twinSource.listing,
   ];
 }
