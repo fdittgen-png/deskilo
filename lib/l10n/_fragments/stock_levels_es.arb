@@ -16,5 +16,7 @@
   "stockReasonLevelChildrenWrong": "Esta ubicación contiene otras que necesitan su nivel; muévalas primero.",
   "stockReasonPickRoleUnknown": "El uso debe ser picking o reserva.",
   "settingLabelStockAddressSeparator": "Separador en la dirección de una ubicación",
-  "settingHintStockAddressSeparator": "El carácter entre los niveles de una dirección de ubicación (sede, zona, pasillo, módulo, estante): MAG1-SALES-A03-B02-S4 con guion, MAG1.SALES.A03.B02.S4 con punto. Solo cambia cómo se escribe la dirección."
+  "settingHintStockAddressSeparator": "El carácter entre los niveles de una dirección de ubicación (sede, zona, pasillo, módulo, estante): MAG1-SALES-A03-B02-S4 con guion, MAG1.SALES.A03.B02.S4 con punto. Solo cambia cómo se escribe la dirección.",
+  "stockPlacesPrintLabels": "Imprimir etiquetas",
+  "stockPlacesLabelsNone": "No hay ninguna ubicación para la que imprimir una etiqueta."
 }

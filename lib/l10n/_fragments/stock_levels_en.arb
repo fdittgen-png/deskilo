@@ -70,5 +70,13 @@
   "settingHintStockAddressSeparator": "The character between the levels of a place address (site, zone, aisle, bay, shelf): MAG1-SALES-A03-B02-S4 with a dash, MAG1.SALES.A03.B02.S4 with a dot. Only how an address is written changes.",
   "@settingHintStockAddressSeparator": {
     "description": "#4293 the places of the stock: a label, a message or a setting"
+  },
+  "stockPlacesPrintLabels": "Print labels",
+  "@stockPlacesPrintLabels": {
+    "description": "#4293 the places of the stock: a label, a message or a setting"
+  },
+  "stockPlacesLabelsNone": "There is no place to print a label for.",
+  "@stockPlacesLabelsNone": {
+    "description": "#4293 the places of the stock: a label, a message or a setting"
   }
 }
