@@ -16516,6 +16516,30 @@ abstract class AppLocalizations {
   /// **'No purchase document was filed for this request, or you may not see it.'**
   String get eventSourceNotFound;
 
+  /// #4294 the low-stock notice in the inbox
+  ///
+  /// In en, this message translates to:
+  /// **'{item} is low at {site}: {onHand} on hand, reorder point {point}'**
+  String eventStockLow(String item, String site, String onHand, String point);
+
+  /// #4294 the low-stock notice in the inbox
+  ///
+  /// In en, this message translates to:
+  /// **'back above its point'**
+  String get eventStockLowEnded;
+
+  /// #4294 the low-stock notice in the inbox
+  ///
+  /// In en, this message translates to:
+  /// **'An item'**
+  String get eventStockLowItemFallback;
+
+  /// #4294 the low-stock notice in the inbox
+  ///
+  /// In en, this message translates to:
+  /// **'a site'**
+  String get eventStockLowSiteFallback;
+
   /// Validator name shown when the timeout sweep decided, not a member
   ///
   /// In en, this message translates to:
@@ -16719,6 +16743,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Whole-space reservations'**
   String get eventTypeSpaceReservation;
+
+  /// #4294 the low-stock notice in the inbox
+  ///
+  /// In en, this message translates to:
+  /// **'Low stock'**
+  String get eventTypeStockLow;
 
   /// #982 validation domains: eventTypeSubscriptionChange
   ///

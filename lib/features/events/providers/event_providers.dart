@@ -8,6 +8,7 @@ import '../../../core/realtime/realtime_wiring.dart';
 import '../../../core/settings/active_settings.dart';
 import '../../../core/settings/setting_defaults.g.dart';
 import '../../../core/time/clock.dart';
+import '../../../core/trace/trace_logger.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../data/supabase_event_repository.dart';
 import '../domain/event_decision.dart';
@@ -154,3 +155,26 @@ void invalidateBookingData(WidgetRef ref) {
     }
   }
 }
+
+// #4294 -- what the lines of the feed name: the members (as before) and whatever the features that
+// raise their own notices add through a SEAM (the app wires it, as for the purchase orders' stock
+// actions): the low-stock notice names its item (and unit) and site under `item:<id>`, `unit:<id>` and
+// `place:<id>`, keys no member id can have. A source that cannot be read is left out and traced; the
+// line then says so in words, never a raw id.
+
+/// The sources of names the features add to the feed's map (each reads what it needs from the
+/// [Ref]), wired by the app; none until it does.
+final eventNameSourcesProvider = Provider<List<Future<Map<String, String>> Function(Ref ref)>>((ref) => const []);
+
+/// Member names, plus what the wired sources add.
+final eventNamesProvider = FutureProvider<Map<String, String>>((ref) async {
+  final names = {...await ref.watch(memberNamesProvider.future)};
+  for (final source in ref.watch(eventNameSourcesProvider)) {
+    try {
+      names.addAll(await source(ref));
+    } on Object catch (e, st) {
+      TraceLogger.instance.warn('events', 'names for the feed could not be read: $e', stackTrace: st);
+    }
+  }
+  return names;
+}, retry: (_, _) => null);

@@ -78,6 +78,7 @@ import 'seed/demo_resource_seed.dart';
 import 'seed/demo_room_seed.dart';
 import 'seed/demo_second_space_seed.dart';
 import 'seed/demo_space_seed.dart';
+import 'seed/demo_stock_low_seed.dart';
 import 'seed/demo_trade_city_seed.dart';
 import 'seed/demo_twin_seed.dart';
 import 'seed/demo_use_case_seeds.dart';
@@ -220,6 +221,7 @@ class DemoFixture implements DemoSpaceParts {
     seedDemoSites(workspaces, floorPlan);
     seedDemoEvents(events, today);
     seedDemoAttemptNotice(events, today); // #4136
+    seedDemoStockLow(events, today); // #4294
     seedDemoDecisions(events, today);
     seedDemoHistoryDecisions(events, today);
     seedDemoAccessories(accessories, floorPlan);

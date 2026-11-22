@@ -2930,6 +2930,8 @@ Ogni ubicazione ha un **indirizzo**, scritto con i codici dei suoi livelli super
 
 Lei vuole vedere cosa sta per finire e ordinarlo senza scorrere gli scaffali.
 
+Quando un articolo scende al suo punto di riordino, chi può gestire il magazzino o gli acquisti riceve **un avviso** nella posta in arrivo (sotto Denaro): l’articolo, la sede, la disponibilità e il punto. Viene dato una sola volta finché la scorta resta bassa, e lo dice quando la scorta risale sopra il punto. Toccandolo si apre questa pagina.
+
 Apra **Magazzino → Riordino** (la funzione *Punti di riordino* deve essere attiva). La pagina ha due elenchi.
 
 - **Scorta bassa** elenca ogni articolo o variante al suo punto di riordino o sotto, per sede, con la giacenza e il punto. Viene letta dal registro del magazzino, esatta, nell’unità dell’articolo; un articolo senza punto di riordino non compare mai. Un’ubicazione in transito non conta come giacenza.

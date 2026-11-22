@@ -141,6 +141,8 @@ const _moneyEvents = <EventType>{
   EventType.settlementReview,
   EventType.credentialChange,
   EventType.paymentAttemptUnreadable,
+  // #4294 — stock and purchases are the Money area
+  EventType.stockLow,
   EventType.einvoiceOutcomeUnknown,
 };
 

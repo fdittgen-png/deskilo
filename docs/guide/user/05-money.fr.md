@@ -679,6 +679,8 @@ Chaque emplacement a une **adresse**, écrite avec les codes de ses parents : `M
 
 Vous voulez voir ce qui va manquer et le commander sans passer en revue les rayons.
 
+Quand un article tombe à son seuil, qui peut gérer le stock ou les achats reçoit **un avis** dans la boîte de réception (sous Argent) : l’article, le site, ce qui est en stock et le seuil. Il n’est donné qu’une fois tant que le stock reste bas, et dit quand le stock repasse au-dessus du seuil. Le toucher ouvre cette page.
+
 Ouvrez **Stock → Réapprovisionnement** (la fonction *Seuils de réapprovisionnement* doit être activée). La page a deux listes.
 
 - **Stock bas** liste chaque article ou variante au niveau de son seuil ou en dessous, par site, avec ce qui est en stock et le seuil. Elle est lue dans le registre du stock, exactement, dans l’unité de l’article ; un article sans seuil n’est jamais listé. Un emplacement en transit ne compte pas comme stock disponible.

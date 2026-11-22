@@ -130,6 +130,9 @@ enum EventType {
   /// who read the finances, ended when the attempt is read, paid or ended.
   paymentAttemptUnreadable('payment_attempt_unreadable'),
 
+  /// #4294 — an item at or below its reorder point at a site: told once per point to those who
+  /// manage the stock or the purchases, ended (with the time) when the stock rises above it.
+  stockLow('stock_low'),
   /// #4325 — an e-invoice attempt that stopped half-way: its outcome is
   /// unknown (a dispatch with no outcome after its time) or it was prepared
   /// and never sent. Told once per transmission to those who may issue

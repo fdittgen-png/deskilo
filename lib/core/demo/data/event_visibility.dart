@@ -66,6 +66,8 @@ Set<WorkspacePermission> eventTypeViewPermissions(String type) {
     'settlement_review' || 'payment_attempt_unreadable' => const ['viewFinances'],
     'einvoice_outcome_unknown' => const ['issueInvoices'],
     'kiosk_device' => const ['workspaceSettings'],
+    // #4294 (0856)
+    'stock_low' => const ['manageStock', 'managePurchases'],
     _ => const ['manageConfiguration'],
   };
   return {

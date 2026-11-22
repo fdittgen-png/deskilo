@@ -34,5 +34,10 @@
   "stockReasonPointFixed": "Articolo, variante e sede di un punto di riordino non si cambiano: ne crei un altro.",
   "stockReasonQuantityAndTarget": "Indichi una quantità da ordinare o un livello fino a cui ordinare, non entrambi.",
   "stockReasonTargetBelowPoint": "Il livello fino a cui ordinare deve essere sopra il punto di riordino.",
-  "stockReasonPointTwice": "Questo articolo ha già un punto di riordino in questa sede."
+  "stockReasonPointTwice": "Questo articolo ha già un punto di riordino in questa sede.",
+  "eventTypeStockLow": "Scorta bassa",
+  "eventStockLow": "{item} è basso in {site}: {onHand} disponibili, punto di riordino {point}",
+  "eventStockLowEnded": "di nuovo sopra il punto",
+  "eventStockLowItemFallback": "Un articolo",
+  "eventStockLowSiteFallback": "una sede"
 }

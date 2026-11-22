@@ -679,6 +679,8 @@ Cada ubicación tiene una **dirección**, escrita con los códigos de sus superi
 
 Quiere ver lo que está a punto de agotarse y pedirlo sin recorrer los estantes.
 
+Cuando un artículo llega a su punto de reposición, quien puede gestionar las existencias o las compras recibe **un aviso** en la bandeja (en Dinero): el artículo, la sede, lo disponible y el punto. Se da una sola vez mientras el stock sigue bajo, y avisa cuando vuelve a superar el punto. Al tocarlo se abre esta página.
+
 Abra **Existencias → Reposición** (la función *Puntos de reposición* debe estar activada). La página tiene dos listas.
 
 - **Stock bajo** lista cada artículo o variante en su punto de reposición o por debajo, por sede, con lo disponible y el punto. Se lee del libro de existencias, exacto, en la unidad del artículo; un artículo sin punto de reposición nunca aparece. Una ubicación en tránsito no cuenta como existencias disponibles.

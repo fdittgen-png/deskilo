@@ -34,5 +34,10 @@
   "stockReasonPointFixed": "L’article, la variante et le site d’un seuil ne se changent pas : créez-en un autre.",
   "stockReasonQuantityAndTarget": "Indiquez une quantité à commander ou un niveau à atteindre, pas les deux.",
   "stockReasonTargetBelowPoint": "Le niveau à atteindre doit être au-dessus du seuil.",
-  "stockReasonPointTwice": "Cet article a déjà un seuil sur ce site."
+  "stockReasonPointTwice": "Cet article a déjà un seuil sur ce site.",
+  "eventTypeStockLow": "Stock bas",
+  "eventStockLow": "{item} est bas à {site} : {onHand} en stock, seuil {point}",
+  "eventStockLowEnded": "de nouveau au-dessus du seuil",
+  "eventStockLowItemFallback": "Un article",
+  "eventStockLowSiteFallback": "un site"
 }

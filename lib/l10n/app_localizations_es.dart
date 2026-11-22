@@ -10415,6 +10415,20 @@ class AppLocalizationsEs extends AppLocalizations {
       'No se archivó ningún documento de compra para esta solicitud, o no puede verlo.';
 
   @override
+  String eventStockLow(String item, String site, String onHand, String point) {
+    return '$item está bajo en $site: $onHand en existencias, punto de reposición $point';
+  }
+
+  @override
+  String get eventStockLowEnded => 'de nuevo por encima del punto';
+
+  @override
+  String get eventStockLowItemFallback => 'Un artículo';
+
+  @override
+  String get eventStockLowSiteFallback => 'una sede';
+
+  @override
   String get eventSystemDecider => 'Sistema';
 
   @override
@@ -10517,6 +10531,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get eventTypeSpaceReservation => 'Reservas de espacios enteros';
+
+  @override
+  String get eventTypeStockLow => 'Existencias bajas';
 
   @override
   String get eventTypeSubscriptionChange => 'Cambio de suscripción';

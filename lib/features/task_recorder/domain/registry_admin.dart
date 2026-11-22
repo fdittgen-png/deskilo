@@ -100,6 +100,7 @@ const Set<String> validationRuleKeys = {
   'payment_instructions_change',
   'credential_change',
   'payment_attempt_unreadable',
+  'stock_low',
   'einvoice_outcome_unknown',
 };
 
