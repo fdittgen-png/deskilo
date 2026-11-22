@@ -108,7 +108,7 @@ Behind `stockReorder` (under `stockManagement`, off by default). Set with `manag
 | What does the replenishment list say? | the low rows with what to order (the reorder quantity, or what is missing up to the target), grouped by the supplier whose article is `preferred` for the item (one per item and variant; a variant's own wins over the item's), in the article's purchase unit rounded up to whole units; rows with no preferred article are listed as "no supplier chosen" |
 | What is the draft order? | `create_replenishment_draft_v1`: a DRAFT purchase order for one supplier from lines that are that supplier's preferred article, priced at zero and never sent; the same request answers the same order |
 
-Evidence: `supabase/tests/database/497_stock_reorder.sql` (the point and its refusals; one alert while low, ended above, a new one when low again; two sites with their own levels; a second business sees nothing; the list in whole purchase units; the draft and its replay) and `scripts/stock_transfer_race.sh` (two sessions crossing one point give one alert).
+Evidence: `supabase/tests/database/498_stock_reorder.sql` (the point and its refusals; one alert while low, ended above, a new one when low again; two sites with their own levels; a second business sees nothing; the list in whole purchase units; the draft and its replay) and `scripts/stock_transfer_race.sh` (two sessions crossing one point give one alert).
 
 ## States and transitions
 

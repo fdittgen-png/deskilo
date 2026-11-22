@@ -84,7 +84,7 @@ begin
     ) t(o, n)
   loop
     if (length(v_def) - length(replace(v_def, v_old, ''))) / length(v_old) <> 1 then
-      raise exception '0855: an anchor of save_supplier_item_mapping_v1 is not found exactly once: %', left(v_old, 70) using errcode = 'P0001';
+      raise exception '0856: an anchor of save_supplier_item_mapping_v1 is not found exactly once: %', left(v_old, 70) using errcode = 'P0001';
     end if;
     v_def := replace(v_def, v_old, v_new);
   end loop;
@@ -135,7 +135,7 @@ begin
     select pg_get_constraintdef(oid) into v_def from pg_constraint
      where conrelid = ('public.' || r.table_name)::regclass and conname = r.constraint_name;
     if v_def is null or position('CHECK (' in v_def) <> 1 then
-      raise exception '0855: the event type constraint % is not there', r.constraint_name using errcode = 'P0001';
+      raise exception '0856: the event type constraint % is not there', r.constraint_name using errcode = 'P0001';
     end if;
     if position('stock_low' in v_def) = 0 then
       execute format('alter table public.%I drop constraint %I', r.table_name, r.constraint_name);
@@ -156,13 +156,13 @@ begin
   v_next := pg_temp.anchor_replace(v_def,
     $o$ else array['manageConfiguration']$o$,
     $n$ when p_type = 'stock_low' then array['manageStock', 'managePurchases'] else array['manageConfiguration']$n$);
-  if v_next is null then raise exception '0855: the anchor of event_type_view_permissions is not found' using errcode = 'P0001'; end if;
+  if v_next is null then raise exception '0856: the anchor of event_type_view_permissions is not found' using errcode = 'P0001'; end if;
   execute v_next;
 
   -- a notice nobody decides
   v_def := pg_get_functiondef('public.event_type_waits_for_decision(text)'::regprocedure);
   v_next := pg_temp.anchor_replace(v_def, $o$'settlement_review')$o$, $n$'settlement_review', 'stock_low')$n$);
-  if v_next is null then raise exception '0855: the anchor of event_type_waits_for_decision is not found' using errcode = 'P0001'; end if;
+  if v_next is null then raise exception '0856: the anchor of event_type_waits_for_decision is not found' using errcode = 'P0001'; end if;
   execute v_next;
 
   -- the owner is its actor and subject: it is not the owner's own data
@@ -170,7 +170,7 @@ begin
   v_next := pg_temp.anchor_replace(v_def,
     $o$and e.type <> 'payment_attempt_unreadable'$o$,
     $n$and e.type not in ('payment_attempt_unreadable', 'stock_low')$n$);
-  if v_next is null then raise exception '0855: the anchor of export_my_data is not found' using errcode = 'P0001'; end if;
+  if v_next is null then raise exception '0856: the anchor of export_my_data is not found' using errcode = 'P0001'; end if;
   execute v_next;
 end
 $patch$;
@@ -641,4 +641,4 @@ $fn$;
 revoke execute on function public.create_replenishment_draft_v1(uuid, uuid, uuid, jsonb) from public, anon;
 grant execute on function public.create_replenishment_draft_v1(uuid, uuid, uuid, jsonb) to authenticated;
 
-select public.set_deskilo_schema_version(855);
+select public.set_deskilo_schema_version(856);

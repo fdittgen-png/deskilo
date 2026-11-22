@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #4294 (0855-0857): reorder points per item and site, low-stock alerts, the replenishment list and the
+-- #4294 (0856-0858): reorder points per item and site, low-stock alerts, the replenishment list and the
 -- draft order. A point is set by one guarded command; low is read from the ledger per site; one alert
 -- per point while it stays low (a repeated movement changes nothing), ended when the stock rises above
 -- it; two sites with their own levels alert separately; a second business sees nothing; the list
