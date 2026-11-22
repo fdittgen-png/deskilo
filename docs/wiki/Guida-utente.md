@@ -3031,9 +3031,16 @@ Aprite **Magazzino** nel menu, subito sotto **Acquisti e fornitori**. Tutto ciò
 
 - **Magazzino** mostra ciò che è disponibile per articolo, variante, lotto e ubicazione, con la quantità esatta.
 - **Movimenti** è il registro di ogni movimento; apritene uno per vedere cosa si è mosso, come memorizzato e come inserito.
+- **Trasferimenti** mostra la merce in viaggio tra due sedi; da qui si sposta la merce, si riceve ciò che è arrivato e si preleva merce.
 - **Articoli** è il registro degli articoli: le impostazioni di magazzino di ciascuno, le sue varianti e i suoi articoli del fornitore.
 - **Ubicazioni** raccoglie i siti, le zone, gli scaffali e i contenitori con i loro indirizzi.
 - **Impostazioni del magazzino** tiene ogni parametro del magazzino in una pagina: le funzioni del magazzino con i loro interruttori e le regole del magazzino. Un'impostazione del magazzino trovata altrove rimanda qui.
+
+**Spostare merce.** In **Trasferimenti**, **Spostare merce** porta un articolo da un luogo a un altro. Due luoghi della stessa sede spostano la merce subito; luoghi di sedi diverse la caricano «in viaggio», dove resta, visibile in **Trasferimenti**, finché l'altra sede non la riceve. **Ricevere** su un carico ne prende tutto o una parte su un luogo della sede di destinazione; ciò che si lascia da parte resta in viaggio. Una quantità è esatta come la si digita, e una richiesta di più di quanto disponibile viene rifiutata per intero: nulla si sposta.
+
+**Prelevare merce.** Quando la funzione *Prelevare merce* è attiva e il vostro ruolo può muovere le giacenze, **Prelevare merce** registra ciò che l'attività ha consumato o perso, e che esce definitivamente dalle giacenze.
+
+Una vendita che non si può confermare perché il magazzino principale contiene meno del richiesto indica ciò che il magazzino contiene e propone **Aprire il magazzino** per quell'articolo.
 
 Una voce compare solo quando la sua funzione è attiva e il vostro ruolo consente la sua pagina: chi può solo guardare vede le pagine, non le impostazioni. Gli acquisti tengono ciò che si compra; le vendite, ciò che si vende.
 

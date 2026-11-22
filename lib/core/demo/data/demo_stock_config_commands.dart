@@ -89,6 +89,19 @@ class DemoStockConfigCommands implements StockConfigCommands {
       barcode: null, parentId: 'demo-place-bay', active: true, virtual: false, pickRole: 'picking',
       addressPath: 'MAIN${stockAddressJoint}SALES${stockAddressJoint}A03${stockAddressJoint}B02${stockAddressJoint}S4',
     ),
+    // #4170 -- a second site, and the places the server keeps for the goods on their way and the goods written off.
+    'demo-place-branch': const StockPlaceConfig(
+      id: 'demo-place-branch', revision: 1, kind: 'warehouse', code: 'BRANCH', name: 'Branch shop',
+      barcode: null, parentId: null, active: true, virtual: false,
+    ),
+    'demo-place-transit': const StockPlaceConfig(
+      id: 'demo-place-transit', revision: 1, kind: 'in_transit', code: 'TRANSIT', name: '',
+      barcode: null, parentId: null, active: true, virtual: true,
+    ),
+    'demo-place-loss': const StockPlaceConfig(
+      id: 'demo-place-loss', revision: 1, kind: 'loss', code: 'LOSS', name: '',
+      barcode: null, parentId: null, active: true, virtual: true,
+    ),
     'demo-place-supplier': const StockPlaceConfig(
       id: 'demo-place-supplier', revision: 1, kind: 'supplier', code: 'SUPPLIER', name: '',
       barcode: null, parentId: null, active: true, virtual: true,

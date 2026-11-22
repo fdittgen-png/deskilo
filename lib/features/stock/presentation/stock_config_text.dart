@@ -11,6 +11,7 @@ String stockReasonText(AppLocalizations l10n, String reason) =>
     _placeReason(l10n, reason) ??
     _variantReason(l10n, reason) ??
     _receivingReason(l10n, reason) ??
+    _operationReason(l10n, reason) ??
     l10n.stockReasonOther;
 
 String? _itemReason(AppLocalizations l10n, String reason) => switch (reason) {
@@ -88,11 +89,25 @@ String? _receivingReason(AppLocalizations l10n, String reason) => switch (reason
   _ => null,
 };
 
+String? _operationReason(AppLocalizations l10n, String reason) => switch (reason) {
+  'reason_places' => l10n.stockReasonReasonPlaces,
+  'transit_is_system' => l10n.stockReasonTransitIsSystem,
+  'transfer_needs_transit' => l10n.stockReasonTransferNeedsTransit,
+  'lot_expired' => l10n.stockReasonLotExpired,
+  'one_source' => l10n.stockReasonOneSource,
+  'receive_over' => l10n.stockReasonReceiveOver,
+  'wrong_site' => l10n.stockReasonWrongSite,
+  'same_site' => l10n.stockReasonSameSite,
+  'transfer_unknown' => l10n.stockReasonTransferUnknown,
+  _ => null,
+};
+
 /// What a failed save says: a stale read, a unit the first movement fixed, a
 /// refusal with its reason, or (anything else) that nothing was saved.
 String stockSaveProblem(AppLocalizations l10n, Object error) => switch (error) {
   StockConfigStale() => l10n.stockEditStale,
   StockConfigInUse() => l10n.stockEditInUse,
+  StockNotEnough() => l10n.refusalStockNotEnough,
   StockConfigRefused(:final reason) => stockReasonText(l10n, reason),
   _ => l10n.stockEditNotSaved,
 };

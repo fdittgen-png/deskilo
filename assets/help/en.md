@@ -2896,9 +2896,16 @@ Open **Stock** in the menu, directly below **Purchases & suppliers**. Everything
 
 - **Stock** shows what is on hand by item, variant, lot and place, with the exact quantity.
 - **Movements** is the log of every movement; open one to see what moved, as stored and as entered.
+- **Transfers** shows the goods that are on their way between two sites, and is where you move goods, receive what arrived and take goods out.
 - **Items** is the item registry: each item's stock settings, its variants and its supplier articles.
 - **Places** holds the sites, zones, shelves and bins with their addresses.
 - **Stock settings** keeps every stock parameter on one page: the stock features with their switches, and the stock rules. A stock setting you find elsewhere links here.
+
+**Moving goods.** On **Transfers**, **Move goods** takes an item from one place to another. Two places of the same site move the goods at once; places of different sites load them onto the way, and they stay on the way, visible on **Transfers**, until the other site receives them. **Receive** on a load takes all or part of it onto a place of the destination site; what you leave out stays on the way. A quantity is exact as you type it, and a request that asks for more than is on hand is refused whole: nothing moves.
+
+**Taking goods out.** When the feature *Take out goods* is on and your role may move stock, **Take out goods** records goods used by the business or lost, and they leave the stock for good.
+
+A sale that cannot be confirmed because the main store holds less than it asks for says what the store holds and offers **Open the stock** for that item.
 
 An entry appears only when its feature is on and your role allows its page: someone who may only look sees the pages, not the settings. Purchases keeps what is bought; Sales keeps what is sold.
 
