@@ -718,6 +718,17 @@ begin
   if v_old.parent_id is not null then
     select * into v_parent_old from public.item_groups where id = v_old.parent_id;
   end if;
+  -- moving a group in use under another parent changes the finance values its items inherit
+  if not v_creating and v_old.parent_id is distinct from v_new.parent_id
+     and exists (select 1 from public.services s where s.workspace_id = p_workspace_id
+                  and (s.group_id = p_group_id or s.group_id in (select g.id from public.item_groups g where g.parent_id = p_group_id))) then
+    foreach v_param in array array['vat_rate_id', 'supply_class', 'price_rounding', 'target_margin_bps'] loop
+      if public.item_chain_pick(array[to_jsonb(v_old), to_jsonb(v_parent_old)], v_param)
+         is distinct from public.item_chain_pick(array[to_jsonb(v_new), to_jsonb(v_parent_new)], v_param) then
+        perform public.item_group_finance_guard(p_workspace_id, array[v_param]);
+      end if;
+    end loop;
+  end if;
   -- a per-unit tag needs tracking by piece, here or above
   v_tracking := coalesce(v_new.tracking, v_parent_new.tracking);
   if v_new.tag_mode = 'per_unit' and v_tracking is distinct from 'serial' then
@@ -889,6 +900,8 @@ begin
     v_after := public.item_chain_pick(v_lv_after, v_param);
     if v_kind = 'stored' then
       if not (v_param = any (i.group_overrides)) and v_after is not null and to_jsonb(i) -> v_param is distinct from v_after then
+        -- a move that would write what an item sells for needs the finances, as setting it does
+        perform public.item_group_finance_guard(p_workspace_id, array[v_param]);
         v_reason := public.item_apply_stored(i.id, v_param, v_after);
         if v_reason is null then
           v_aff := v_aff + 1;

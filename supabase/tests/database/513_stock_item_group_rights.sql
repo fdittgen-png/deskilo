@@ -6,7 +6,7 @@
 -- a later change of its group; a per-unit tag mode on an item not tracked by piece, a proposal as an override and
 -- an unknown unit are refused in words; the feature off refuses. Rolled back.
 begin;
-select plan(29);
+select plan(33);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -116,6 +116,13 @@ select is(pg_temp.run_as(pg_temp.u(2), format('select (public.item_effective_set
 select is(pg_temp.run_as(pg_temp.u(2), format('select (public.item_effective_settings_v1(%L, %L))::text', pg_temp.u(101), pg_temp.u(306))), 'ERR DKG04',
   'but not another business''s item');
 
+-- ── moving what an item sells for needs the finances, whichever way it is written ──
+select is(pg_temp.asg(3, 990, 303, pg_temp.rev(303), 501), 'ERR DKN01', 'a clerk cannot move an item under a group whose VAT it would take');
+select is(pg_temp.f(pg_temp.sv(3, 991, 503, 0, format('{"name": "Soft", "parent_id": "%s"}', pg_temp.u(502))), 'created'), 'true', 'she can make a sub-group under a group with no finance values');
+select is(pg_temp.f(pg_temp.asg(3, 992, 303, pg_temp.rev(303), 503), 'item_id') is not null, true, 'and move an item into it');
+select is(pg_temp.sv(3, 993, 503, 1, format('{"parent_id": "%s"}', pg_temp.u(501))), 'ERR DKN01',
+  'but not move a group in use under one whose VAT its items would inherit');
+
 -- ── an item's own edit stays ──
 select is(pg_temp.run_as(pg_temp.u(1), format('select (public.save_stock_item_v1(%L, %L, %s, %L, %L::jsonb) ->> ''replayed'')',
   pg_temp.u(101), pg_temp.u(301), pg_temp.rev(301), pg_temp.u(950), '{"shelf_life_days": 30}')), 'false', 'the item''s own edit saves');
@@ -134,7 +141,8 @@ select is(pg_temp.eff(301, 'till_category'), 'Dairy|item', 'and shown as its own
 -- ── deleting ──
 select is(pg_temp.run_as(pg_temp.u(1), format('select public.item_group_delete_v1(%L, %L, %L, 3)::text', pg_temp.u(101), pg_temp.u(970), pg_temp.u(501))), 'ERR DKG11',
   'a group used by items is not deleted');
-select is(pg_temp.run_as(pg_temp.u(1), format('select (public.item_group_delete_v1(%L, %L, %L, 1))::jsonb ->> ''deleted''', pg_temp.u(101), pg_temp.u(971), pg_temp.u(502))), 'true',
+select pg_temp.sv(1, 972, 504, 0, '{"name": "Spare"}');
+select is(pg_temp.run_as(pg_temp.u(1), format('select public.item_group_delete_v1(%L, %L, %L, 1)::jsonb ->> ''deleted''', pg_temp.u(101), pg_temp.u(971), pg_temp.u(504))), 'true',
   'one nothing uses is');
 
 -- ── the feature off ──
