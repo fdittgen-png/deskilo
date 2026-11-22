@@ -8,6 +8,12 @@ select plan(12);
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00004176' || lpad(n::text, 4, '0'))::uuid;
 $$;
+-- The business's own day, by the server's own rule: every date a test gives a quote or an
+-- invoice is compared with it, never with the database clock's UTC date, so the verdict is
+-- the same at any hour of the day (#4307).
+create function pg_temp.today() returns date language sql stable security definer as $$
+  select public.workspace_today(pg_temp.u(101))
+$$;
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
 select pg_temp.u(n), '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',
        'sf' || n || '@example.test', '', now(), now(), now() from generate_series(1, 2) n;
@@ -37,14 +43,14 @@ grant execute on all functions in schema pg_temp to authenticated, anon;
 select ok((public.feature_registry() -> 'standaloneInvoicing' ->> 'parent') = 'invoicing'
       and (public.feature_registry() -> 'standaloneInvoicing' ->> 'default') = 'false',
   'the registry names the feature, under invoicing, off by default');
-select is(pg_temp.as_owner(format($$select public.save_standalone_invoice_draft_v1(%L, null, null, %L, current_date, current_date + 30, '', '', '[]'::jsonb)::text$$,
+select is(pg_temp.as_owner(format($$select public.save_standalone_invoice_draft_v1(%L, null, null, %L, pg_temp.today(), pg_temp.today() + 30, '', '', '[]'::jsonb)::text$$,
   pg_temp.u(101), pg_temp.u(202))), 'ERR DKI01', 'while it is off, a draft is not saved');
 select is(pg_temp.as_owner(format($$select public.preview_standalone_invoice_v1(%L, %L, 1)::text$$,
   pg_temp.u(101), pg_temp.u(202))), 'ERR DKI01', 'nor previewed');
 select is(pg_temp.as_owner(format($$select public.issue_standalone_invoice_v1(%L, %L, 1, %L)::text$$,
   pg_temp.u(101), pg_temp.u(202), pg_temp.u(301))), 'ERR DKI01', 'nor issued');
 update public.workspaces set feature_flags = '{"invoicing": true, "standaloneInvoicing": true}' where id = pg_temp.u(101);
-select set_config('d.a', (pg_temp.as_owner(format($$select (public.save_standalone_invoice_draft_v1(%L, null, null, %L, current_date, current_date + 30, '', '', '[]'::jsonb) ->> 'draft_id')$$,
+select set_config('d.a', (pg_temp.as_owner(format($$select (public.save_standalone_invoice_draft_v1(%L, null, null, %L, pg_temp.today(), pg_temp.today() + 30, '', '', '[]'::jsonb) ->> 'draft_id')$$,
   pg_temp.u(101), pg_temp.u(202)))), false);
 select ok(current_setting('d.a') ~ '^[0-9a-f-]{36}$', 'once it is on, a draft is saved');
 select is(pg_temp.as_owner(format($$select (public.preview_standalone_invoice_v1(%L, %L, 1) -> 'missing')::text$$,
@@ -63,7 +69,7 @@ insert into public.vat_rates (id, workspace_id, label, percent, category, is_def
 values (pg_temp.u(301), pg_temp.u(101), 'Normal 20 %', 20, 'S', true, true, '2000-01-01')
 on conflict do nothing;
 update public.workspaces set feature_flags = '{"invoicing": true, "standaloneInvoicing": true}' where id = pg_temp.u(101);
-select set_config('d.b', (pg_temp.as_owner(format($$select (public.save_standalone_invoice_draft_v1(%L, null, null, %L, current_date, current_date + 30, '', '',
+select set_config('d.b', (pg_temp.as_owner(format($$select (public.save_standalone_invoice_draft_v1(%L, null, null, %L, pg_temp.today(), pg_temp.today() + 30, '', '',
   '[{"description":"Consulting","quantity":"1","unit_price":"100","basis":"net","supply":"general","base_quantity":"1",
      "unit":{"code":"hour","label":"h","un_ece_code":"HUR"}}]'::jsonb) ->> 'draft_id')$$,
   pg_temp.u(101), pg_temp.u(202)))), false);

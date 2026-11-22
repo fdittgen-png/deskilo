@@ -11,6 +11,12 @@ select plan(15);
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00004262' || lpad(n::text, 4, '0'))::uuid;
 $$;
+-- The business's own day, by the server's own rule: every date a test gives a quote or an
+-- invoice is compared with it, never with the database clock's UTC date, so the verdict is
+-- the same at any hour of the day (#4307).
+create function pg_temp.today() returns date language sql stable security definer as $$
+  select public.workspace_today(pg_temp.u(101))
+$$;
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
 select pg_temp.u(n), '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',
        'ap' || n || '@example.test', '', now(), now(), now() from generate_series(1, 3) n;
@@ -90,7 +96,7 @@ declare v text;
 begin
   perform set_config('request.jwt.claims', json_build_object('sub', pg_temp.u(1), 'role', 'authenticated')::text, true);
   execute 'set local role authenticated';
-  v := public.save_standalone_invoice_draft_v1(pg_temp.u(101), null, null, pg_temp.u(203), current_date, current_date + 30, '', '',
+  v := public.save_standalone_invoice_draft_v1(pg_temp.u(101), null, null, pg_temp.u(203), pg_temp.today(), pg_temp.today() + 30, '', '',
          jsonb_build_array(jsonb_build_object('description', 'x', 'quantity', '1', 'unit_price', '10', 'basis', 'net',
            'supply', 'general', 'base_quantity', '1',
            'unit', jsonb_build_object('code', 'hour', 'label', 'h', 'un_ece_code', 'HUR')))) ->> 'draft_id';
