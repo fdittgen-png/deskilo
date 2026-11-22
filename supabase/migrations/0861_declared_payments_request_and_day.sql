@@ -56,15 +56,15 @@ begin
   end if;
   -- Free-form-but-bounded method tag; the app sends one of the
   -- PaymentMethod enum wire names ('' = not specified, old clients).
-  if length(p_method) > 32 then raise exception 'method too long' using errcode = 'P0001'; end if;
+  if p_method is not null and length(p_method) > 32 then raise exception 'method too long' using errcode = 'P0001'; end if;
   -- A request id names one confirmation: a repeat after a lost answer is the first declaration,
   -- answered before any other rule reads the invoices it names.
   if p_invoice_ids is not null then
     v_claim := array(select distinct x from unnest(p_invoice_ids) x where x is not null order by 1);
   end if;
   if p_request_id is not null then
-    v_digest := md5(concat_ws('|', p_member_id, p_amount_cents, p_note, p_method,
-      coalesce(p_paid_on::text, ''), coalesce(p_period, ''), coalesce(array_to_string(v_claim, ','), '')));
+    -- one JSON array: a NULL stays JSON null and a '|' is escaped, so no two different requests share a digest
+    v_digest := md5(jsonb_build_array(p_member_id, p_amount_cents, p_note, p_method, p_paid_on, p_period, v_claim)::text);
     perform pg_advisory_xact_lock(hashtextextended(p_workspace_id::text || ':' || v_actor.id::text || ':' || p_request_id::text, 0));
     select * into v_first from public.events e
      where e.workspace_id = p_workspace_id and e.type = 'payment' and e.actor_member_id = v_actor.id

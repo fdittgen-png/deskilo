@@ -134,6 +134,20 @@ select is(pg_temp.run_as(current_setting('dp.ua')::uuid, format(
   'ERR DKC15', 'and with another note');
 select is((select count(*)::int from public.events where type = 'payment' and payload ->> 'request_id' = current_setting('dp.r1')), 1, 'still one event');
 
+-- the digest of a request tells apart what a joined string cannot
+select set_config('dp.r3', gen_random_uuid()::text, false);
+select pg_temp.run_as(current_setting('dp.ua')::uuid, format(
+  $q$select public.record_payment(%L, %L, 910, 'a|b', '', null, null, null, %L)::text$q$, current_setting('dp.ws'), current_setting('dp.m_a'), current_setting('dp.r3')));
+select is(pg_temp.run_as(current_setting('dp.ua')::uuid, format(
+  $q$select public.record_payment(%L, %L, 910, 'a', 'b', null, null, null, %L)::text$q$, current_setting('dp.ws'), current_setting('dp.m_a'), current_setting('dp.r3'))),
+  'ERR DKC15', 'a note holding the separator is not the note and method it resembles');
+select set_config('dp.r4', gen_random_uuid()::text, false);
+select pg_temp.run_as(current_setting('dp.ua')::uuid, format(
+  $q$select public.record_payment(%L, %L, 920, 'cash', null, null, null, null, %L)::text$q$, current_setting('dp.ws'), current_setting('dp.m_a'), current_setting('dp.r4')));
+select is(pg_temp.run_as(current_setting('dp.ua')::uuid, format(
+  $q$select public.record_payment(%L, %L, 920, null, 'cash', null, null, null, %L)::text$q$, current_setting('dp.ws'), current_setting('dp.m_a'), current_setting('dp.r4'))),
+  'ERR DKC15', 'a NULL note and a NULL method are not each other');
+
 select set_config('dp.r2', gen_random_uuid()::text, false);
 select set_config('dp.d2', pg_temp.run_as(current_setting('dp.ua')::uuid, format(
   $q$select public.record_payment(%L, %L, 8000, '', '', null, null, array[%L, %L]::uuid[], %L)::text$q$, current_setting('dp.ws'), current_setting('dp.m_a'),
