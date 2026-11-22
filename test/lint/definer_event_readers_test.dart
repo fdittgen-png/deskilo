@@ -106,7 +106,7 @@ void main() {
 
   test('every reasoned exception of the database test is a definer routine of the contract', () {
     final listed = listedReaders(File(_listFile).readAsStringSync());
-    expect(listed, hasLength(39));
+    expect(listed, hasLength(40));
     expect(listed.every((l) => l.reason.trim().isNotEmpty), isTrue);
     final definers = contractDefiners(
       File('assets/instance/contract.txt').readAsStringSync(),
