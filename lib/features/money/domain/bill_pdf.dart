@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 import '../../../core/i18n/money_format.dart';
+import '../../../core/time/business_day.dart';
 import '../../events/domain/workspace_event.dart';
 import 'bill_sections.dart';
 import 'invoice_pdf.dart';
@@ -104,6 +105,7 @@ class BillDocument {
     required this.periodLabel,
     required this.strings,
     this.locale,
+    this.timezone,
     this.report,
     this.reportImages = const {},
   });
@@ -119,6 +121,10 @@ class BillDocument {
   /// #711 — the DOCUMENT locale, passed explicitly: a PDF is rendered
   /// for its reader, not for whoever pressed the button.
   final String? locale;
+
+  /// The business's IANA zone: a credit's date is the day on ITS calendar, whichever device
+  /// prints the bill (#4322); the UTC date when none is known.
+  final String? timezone;
 
   /// The owner's report bands already rendered for this bill, with their
   /// images; null = the built-in layout ([buildBillReport]).
@@ -258,7 +264,7 @@ class _BillRows {
           for (final entry in sections.creditEntries)
             ReportTableRow([
               '${entry.description.isEmpty ? _creditFallback(strings, entry) : entry.description} '
-                  '(${dateFormat.format(entry.on.toLocal())})',
+                  '(${dateFormat.format(businessDateOf(entry.on, bill.timezone))})',
               credit(entry.amountCents),
             ]),
         ],

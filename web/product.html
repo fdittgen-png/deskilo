@@ -32,6 +32,9 @@ input,select{font:inherit;padding:8px;border:1px solid var(--line);border-radius
 button{font:inherit;min-height:48px;padding:10px 16px;border-radius:8px;border:2px solid var(--accent);background:#fff;color:var(--accent);font-weight:600;cursor:pointer}
 fieldset{border:1px solid var(--line);border-radius:8px;margin:10px 0;padding:10px;min-width:0}
 legend{font-weight:600}
+table.svc th,table.svc td{font-size:.9rem}
+table.svc tbody th{width:20%}
+@media (max-width:40rem){table.svc,table.svc tbody,table.svc tr,table.svc td,table.svc tbody th{display:block;width:100%}table.svc thead{display:none}table.svc tr{border-bottom:2px solid var(--line);padding:6px 0}table.svc td::before{content:attr(data-col) ": ";font-weight:600}}
 #result{margin-top:12px}
 #result .unresolved{color:var(--warn)}
 a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #1a5fb4;outline-offset:2px}
@@ -118,6 +121,24 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
     <p class="note" data-i18n="supportNote">There is no support contract or guaranteed response time.</p>
   </section>
 
+  <section aria-labelledby="h-services">
+    <h2 id="h-services" data-i18n="svcTitle">Who provides what</h2>
+    <p class="note" data-i18n="svcIntro"></p>
+    <table class="svc">
+      <thead><tr><th scope="col"></th><th scope="col" data-i18n="svcColSelf"></th><th scope="col" data-i18n="svcColEngaged"></th><th scope="col" data-i18n="svcColHosted"></th></tr></thead>
+      <tbody>
+        <tr><th scope="row" data-i18n="svcRowBackend"></th><td data-i18n="svcBackendSelf"></td><td data-i18n="svcBackendEngaged"></td><td data-i18n="svcBackendHosted"></td></tr>
+        <tr><th scope="row" data-i18n="svcRowBackup"></th><td data-i18n="svcBackupSelf"></td><td data-i18n="svcBackupEngaged"></td><td data-i18n="svcBackupHosted"></td></tr>
+        <tr><th scope="row" data-i18n="svcRowIncidents"></th><td data-i18n="svcIncidentsSelf"></td><td data-i18n="svcIncidentsEngaged"></td><td data-i18n="svcIncidentsHosted"></td></tr>
+        <tr><th scope="row" data-i18n="svcRowRecurring"></th><td data-i18n="svcRecurringSelf"></td><td data-i18n="svcRecurringEngaged"></td><td data-i18n="svcRecurringHosted"></td></tr>
+        <tr><th scope="row" data-i18n="svcRowOneTime"></th><td data-i18n="svcOneTimeSelf"></td><td data-i18n="svcOneTimeEngaged"></td><td data-i18n="svcOneTimeHosted"></td></tr>
+        <tr><th scope="row" data-i18n="svcRowExit"></th><td data-i18n="svcExitSelf"></td><td data-i18n="svcExitEngaged"></td><td data-i18n="svcExitHosted"></td></tr>
+      </tbody>
+    </table>
+    <p data-i18n="svcNoteSelfService"></p>
+    <p class="note"><span data-i18n="svcNoteNoContract"></span> <a href="https://github.com/fdittgen-png/deskilo/blob/master/docs/guides/OPERATIONS.md" data-i18n="svcOpsLink"></a></p>
+  </section>
+
   <section aria-labelledby="h-planner">
     <h2 id="h-planner" data-i18n="plannerTitle">Plan your operating cost</h2>
     <p class="note" data-i18n="plannerNote">Every value is yours to enter; nothing is looked up. A blank field is unknown, not free. Taxes are not included.</p>
@@ -159,6 +180,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
       </div>
     </form>
     <div id="result" role="status" aria-live="polite"></div>
+    <p class="note" data-i18n="plannerSubtotalNote"></p>
   </section>
 
   <p class="note"><span data-i18n="licence">Free software under the GNU AGPL 3.0 or later; anyone using the code must credit its author.</span> <a href="https://github.com/fdittgen-png/deskilo">github.com/fdittgen-png/deskilo</a></p>

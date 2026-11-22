@@ -69,13 +69,8 @@ const _exempt = <String, String>{
 /// The files below held such reads when the rule came, with their count;
 /// a count may only fall, and a file leaves the list at zero.
 const _deviceDayFiles = <String, int>{
-  'lib/features/money/domain/bill_pdf.dart': 1,
   'lib/features/money/domain/company_lookup.dart': 1,
   'lib/features/money/domain/einvoice_gateway.dart': 2,
-  'lib/features/money/domain/finance_filter.dart': 2,
-  'lib/features/money/domain/invoice_match_row.dart': 3,
-  'lib/features/money/domain/reminder_evidence.dart': 2,
-  'lib/features/money/domain/usage_record.dart': 5,
   'lib/features/money/domain/vies_check.dart': 1,
   'lib/features/profile/domain/rights_request.dart': 1,
   'lib/features/reservations/domain/my_reservations_composition.dart': 2,

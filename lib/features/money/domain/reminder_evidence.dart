@@ -22,7 +22,7 @@ class ReminderAttempt {
       channel: r.stringOr('channel'),
       outcome: r.stringOr('outcome'),
       detail: r.stringOr('detail'),
-      at: r.dateTime('at').toLocal(),
+      at: r.dateTime('at'),
     );
   }
 
@@ -52,7 +52,7 @@ class ReminderEvidence {
       level: r.integer('level'),
       origin: r.stringOr('origin', 'legacy'),
       status: r.stringOr('status', 'legacy_unknown'),
-      preparedAt: r.dateTime('prepared_at').toLocal(),
+      preparedAt: r.dateTime('prepared_at'),
       collectibleCents: r.intOrNull('collectible_cents'),
       currency: r.stringOrNull('currency'),
       attempts:
