@@ -2939,6 +2939,8 @@ Open **Stock → Reorder** (the feature *Reorder points* must be on). The page h
 
 **Create draft order** makes a draft purchase order from a group. It is only a draft: nothing is ordered, priced or sent until you confirm it in the purchase orders. It needs the right to manage purchases; asking twice for the same draft makes it once.
 
+**Reorder points** (below the two lists) are what makes an item low. Each shows the item, the site, the level and what to order then: a quantity, *up to* a level, or nothing (it only flags). Whoever may manage the stock adds one with **Add a reorder point** or opens one to change it. The level and the quantity are exact numbers (a decimal comma is fine); a level to order up to must be above the point, a point names a quantity or a level, not both, and an item has one point per site (and variant). The item, variant and site of a point cannot be changed afterwards: make another. A point switched off is kept and flags nothing.
+
 ### The item registry
 
 **Audience:** Administrator · Owner

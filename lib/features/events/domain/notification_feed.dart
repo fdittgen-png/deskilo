@@ -143,6 +143,7 @@ const _moneyEvents = <EventType>{
   EventType.paymentAttemptUnreadable,
   // #4294 — stock and purchases are the Money area
   EventType.stockLow,
+  EventType.einvoiceOutcomeUnknown,
 };
 
 /// The category a workspace event belongs to. A check-in/check-out is a

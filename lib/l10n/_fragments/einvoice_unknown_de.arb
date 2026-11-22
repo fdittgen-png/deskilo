@@ -1,0 +1,6 @@
+{
+  "eventTypeEinvoiceOutcomeUnknown": "E-Rechnungsversand unterbrochen",
+  "eventEinvoiceOutcomeUncertain": "Das Ergebnis einer E-Rechnung ist unbekannt: Ihr Versand blieb stehen, bevor eine Antwort erfasst wurde. Sie wird nicht erneut gesendet. Prüfen Sie den Eintrag der Plattform und regeln Sie es von Hand.",
+  "eventEinvoiceStuckPrepared": "Eine E-Rechnung wurde vorbereitet und nie gesendet. Senden Sie sie erneut über ihre Rechnung oder lassen Sie sie liegen.",
+  "eventEinvoiceNoticeEnded": "Erledigt"
+}

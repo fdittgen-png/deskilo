@@ -277,7 +277,8 @@ bool _appendsSubject(WorkspaceEvent event) {
       event.type == EventType.kioskDevice ||
       event.type == EventType.credentialChange ||
       event.type == EventType.paymentAttemptUnreadable ||
-      event.type == EventType.stockLow) {
+      event.type == EventType.stockLow ||
+      event.type == EventType.einvoiceOutcomeUnknown) {
     return false;
   }
   return !event.actorIsSubject || event.type == EventType.serviceCharge;
@@ -292,10 +293,23 @@ String _otherLine(
   Map<String, String> names,
   MoneyFormat currency,
 ) => switch (event.type) {
-  EventType.paymentAttemptUnreadable => _paymentAttemptUnreadableLine(l10n, event, names, currency),
+  EventType.paymentAttemptUnreadable =>
+    _paymentAttemptUnreadableLine(l10n, event, names, currency),
+  EventType.einvoiceOutcomeUnknown => _einvoiceOutcomeUnknownLine(l10n, event),
   EventType.stockLow => stockLowLine(l10n, event, names),
   _ => _noticeOrFallbackLine(l10n, event, actor),
 };
+
+/// #4325 — an e-invoice attempt that stopped half-way: unknown outcome, or
+/// prepared and never sent; once the transmission moved on, says so.
+String _einvoiceOutcomeUnknownLine(AppLocalizations l10n, WorkspaceEvent event) {
+  final line = event.payload['phase'] == 'prepared'
+      ? l10n.eventEinvoiceStuckPrepared
+      : l10n.eventEinvoiceOutcomeUncertain;
+  return event.payload['ended'] == null
+      ? line
+      : '$line · ${l10n.eventEinvoiceNoticeEnded}';
+}
 
 /// The lines of the notices that are not about a booking or money in motion:
 /// the badge sign-in alert, and (#3132) the owners' notice that an assistant

@@ -346,6 +346,7 @@
   },
   "invoiceSendRejected": "La piattaforma l’ha rifiutata.",
   "invoiceSendRejectedDetail": "La piattaforma l’ha rifiutata. {detail}",
+  "invoiceSendBindingChanged": "Questa fattura è già stata trasmessa a questa destinazione con un altro contenuto. Non viene inviata di nuovo; la prima trasmissione resta valida.",
   "invoiceSentOn": "Inviata il {date} · {status}",
   "@invoiceSentOn": {
     "placeholders": {

@@ -798,5 +798,7 @@
  "stockSepDash": "Guion ( - )",
  "stockSepDot": "Punto ( . )",
  "stockSepSlash": "Barra ( / )",
- "stockSepColon": "Dos puntos ( : )"
+ "stockSepColon": "Dos puntos ( : )",
+ "einvoiceStuck": "Intento de factura electrónica interrumpido",
+ "einvoiceStuckHint": "Cuánto tiempo puede quedar preparada una factura electrónica, sin que se haya iniciado el envío, antes de avisar al propietario de que el intento se detuvo. Se ajusta en los ajustes de la aplicación."
 }
