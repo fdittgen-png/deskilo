@@ -90,6 +90,8 @@ create or replace function public.item_groups_depth()
 returns trigger language plpgsql set search_path = public as $fn$
 begin
   if new.parent_id is not null then
+    -- the parent is locked: a sub-group made and a parent moved at once do not both pass
+    perform 1 from public.item_groups p where p.id = new.parent_id for update;
     if exists (select 1 from public.item_groups p where p.id = new.parent_id and p.parent_id is not null) then
       raise exception 'a sub-group cannot have sub-groups' using errcode = 'DKG11',
         detail = jsonb_build_object('field', 'parent_id', 'reason', 'depth')::text;
@@ -126,6 +128,30 @@ alter table public.services
   add constraint services_deposit_item_fk foreign key (workspace_id, deposit_item_id) references public.services (workspace_id, id),
   add constraint services_group_overrides_known check (group_overrides <@ array['tracking', 'shelf_life_days', 'inventory_unit', 'vat_rate_id', 'supply_class']::text[]);
 create index services_group on public.services (workspace_id, group_id) where group_id is not null;
+
+-- An item's own value, written by any other path (the service editor writes the item directly), is its
+-- own: the parameter is marked as an override so a later change of the group does not take it back.
+-- The group functions write the columns themselves and say so (deskilo.item_groups_writing).
+create or replace function public.services_group_overrides()
+returns trigger language plpgsql set search_path = public as $fn$
+declare
+  v_param text;
+begin
+  if new.group_id is null or new.group_id is distinct from old.group_id
+     or coalesce(current_setting('deskilo.item_groups_writing', true), '') = 'on' then
+    return new;
+  end if;
+  foreach v_param in array array['tracking', 'shelf_life_days', 'inventory_unit', 'vat_rate_id', 'supply_class'] loop
+    if to_jsonb(new) -> v_param is distinct from to_jsonb(old) -> v_param and not (v_param = any (new.group_overrides)) then
+      new.group_overrides := new.group_overrides || v_param;
+    end if;
+  end loop;
+  return new;
+end;
+$fn$;
+revoke execute on function public.services_group_overrides() from public, anon, authenticated;
+create trigger services_group_overrides before update on public.services
+  for each row execute function public.services_group_overrides();
 comment on column public.services.group_overrides is
   '#4361: the parameters with a column of their own here (tracking, shelf_life_days, inventory_unit, vat_rate_id, supply_class) whose value the item keeps against its group.';
 
@@ -167,7 +193,18 @@ create trigger item_group_history_append_only before update or delete on public.
 alter table public.item_groups enable row level security;
 alter table public.item_group_history enable row level security;
 revoke all on public.item_groups, public.item_group_history from public, anon, authenticated;
-grant select on public.item_groups, public.item_group_history to authenticated;
+grant select on public.item_group_history to authenticated;
+-- the margin and the rounding are read through the functions, with the finances
+do $grant$
+declare
+  v_cols text;
+begin
+  select string_agg(quote_ident(column_name), ', ' order by ordinal_position) into v_cols
+    from information_schema.columns
+   where table_schema = 'public' and table_name = 'item_groups' and column_name not in ('target_margin_bps', 'price_rounding');
+  execute 'grant select (' || v_cols || ') on public.item_groups to authenticated';
+end
+$grant$;
 create policy item_groups_select on public.item_groups for select to authenticated
   using (workspace_id in (select public.workspaces_permitting(array['viewStock', 'manageStock']))
          and public.feature_effective(workspace_id, 'stockItemGroups'));
@@ -317,6 +354,27 @@ returns boolean language sql immutable set search_path = public as $fn$
   select p_param in ('vat_rate_id', 'supply_class', 'price_rounding', 'target_margin_bps');
 $fn$;
 revoke execute on function public.item_group_param_finance(text) from public, anon, authenticated;
+
+-- ── one order of locks: the groups (by id), then the items (by id) ─────
+-- A save takes its groups exclusively, a move or an override reads the chain for share; both before any
+-- item, so a move between groups and a save of a group cannot wait on each other.
+create or replace function public.item_group_lock(p_ids uuid[], p_exclusive boolean)
+returns void language plpgsql volatile security definer set search_path = public as $fn$
+begin
+  if p_exclusive then
+    perform 1 from public.item_groups g
+     where g.id in (select x from unnest(p_ids) x where x is not null
+                    union select g2.parent_id from public.item_groups g2 where g2.id = any (p_ids) and g2.parent_id is not null)
+     order by g.id for update;
+  else
+    perform 1 from public.item_groups g
+     where g.id in (select x from unnest(p_ids) x where x is not null
+                    union select g2.parent_id from public.item_groups g2 where g2.id = any (p_ids) and g2.parent_id is not null)
+     order by g.id for share;
+  end if;
+end;
+$fn$;
+revoke execute on function public.item_group_lock(uuid[], boolean) from public, anon, authenticated;
 
 -- ── who may ────────────────────────────────────────────────────────────
 create or replace function public.item_group_actor(p_workspace_id uuid)
@@ -489,6 +547,7 @@ create or replace function public.item_effective_settings_v1(p_workspace_id uuid
 returns jsonb language plpgsql stable security definer set search_path = public as $fn$
 declare
   v_ws uuid;
+  v_out jsonb;
 begin
   if auth.uid() is null or public.mcp_is_delegated() then
     raise exception 'not allowed to read the stock settings' using errcode = 'DKN01';
@@ -501,7 +560,13 @@ begin
   if v_ws is distinct from p_workspace_id then
     raise exception 'not an item of this business' using errcode = 'DKG04';
   end if;
-  return public.item_effective_core(p_item_id);
+  v_out := public.item_effective_core(p_item_id);
+  -- the margin and the rounding show what goods cost: they are read with the finances
+  if not public.has_permission(p_workspace_id, 'viewFinances') then
+    v_out := jsonb_set(jsonb_set(v_out, '{parameters,target_margin_bps}', jsonb_build_object('value', null, 'source', 'hidden')),
+                       '{parameters,price_rounding}', jsonb_build_object('value', null, 'source', 'hidden'));
+  end if;
+  return v_out;
 end;
 $fn$;
 revoke execute on function public.item_effective_settings_v1(uuid, uuid) from public, anon;
@@ -540,6 +605,7 @@ begin
     if public.item_effective_core(s.id) #>> '{parameters,tag_mode,value}' = 'per_unit' and v_text <> 'serial' then
       return 'per_unit_needs_serial';
     end if;
+    perform set_config('deskilo.item_groups_writing', 'on', true);
     update public.services set tracking = v_text, stock_revision = stock_revision + 1 where id = s.id;
   elsif p_param = 'inventory_unit' then
     if v_text = s.inventory_unit then return null; end if;
@@ -549,19 +615,24 @@ begin
       select dimension into v_dim_new from public.stock_units where code = v_text;
       if v_dim_old is distinct from v_dim_new then return 'dimension_mismatch'; end if;
     end if;
+    perform set_config('deskilo.item_groups_writing', 'on', true);
     update public.services set inventory_unit = v_text, stock_revision = stock_revision + 1 where id = s.id;
   elsif p_param = 'shelf_life_days' then
     if v_text::int is not distinct from s.shelf_life_days then return null; end if;
+    perform set_config('deskilo.item_groups_writing', 'on', true);
     update public.services set shelf_life_days = v_text::int, stock_revision = stock_revision + 1 where id = s.id;
   elsif p_param = 'vat_rate_id' then
     if v_text::uuid is not distinct from s.vat_rate_id then return null; end if;
+    perform set_config('deskilo.item_groups_writing', 'on', true);
     update public.services set vat_rate_id = v_text::uuid, stock_revision = stock_revision + 1 where id = s.id;
   elsif p_param = 'supply_class' then
     if v_text = s.supply_class then return null; end if;
+    perform set_config('deskilo.item_groups_writing', 'on', true);
     update public.services set supply_class = v_text, stock_revision = stock_revision + 1 where id = s.id;
   else
     return 'unknown_parameter';
   end if;
+  perform set_config('deskilo.item_groups_writing', 'off', true);
   return null;
 end;
 $fn$;
@@ -679,7 +750,14 @@ declare
   v_oldj jsonb;
   v_newj jsonb;
   v_parent_changed boolean;
+  v_pre_parent uuid;
 begin
+  begin
+    v_pre_parent := nullif(p_body ->> 'parent_id', '')::uuid;
+  exception when others then
+    perform public.stock_config_refuse('parent_id', 'malformed');
+  end;
+  perform public.item_group_lock(array[p_group_id, v_pre_parent], true);
   select * into v_old from public.item_groups where id = p_group_id and workspace_id = p_workspace_id for update;
   v_creating := v_old.id is null;
   if v_creating then
@@ -864,12 +942,15 @@ declare
   v_skip int := 0;
   v_skipped jsonb := '[]'::jsonb;
   v_result jsonb;
+  v_pre_group uuid;
 begin
+  select s.group_id into v_pre_group from public.services s where s.id = p_item_id and s.workspace_id = p_workspace_id;
+  perform public.item_group_lock(array[v_pre_group, p_group_id], false);
   select * into i from public.services where id = p_item_id and workspace_id = p_workspace_id for update;
   if i.id is null then
     raise exception 'not an item of this business' using errcode = 'DKG04';
   end if;
-  if i.stock_revision <> p_expected then
+  if i.stock_revision <> p_expected or i.group_id is distinct from v_pre_group then
     raise exception 'the stock configuration of this item changed since it was read' using errcode = 'DKG10';
   end if;
   if p_group_id is not null then
@@ -895,9 +976,15 @@ begin
   end if;
   foreach v_param in array public.item_group_params() loop
     v_kind := public.item_group_param_kind(v_param);
-    if v_kind = 'proposal' then continue; end if;
     v_before := public.item_chain_pick(v_lv_before, v_param);
     v_after := public.item_chain_pick(v_lv_after, v_param);
+    if v_kind = 'proposal' then
+      -- the margin and the rounding an item is proposed a price with are finance values too
+      if public.item_group_param_finance(v_param) and v_before is distinct from v_after then
+        perform public.item_group_finance_guard(p_workspace_id, array[v_param]);
+      end if;
+      continue;
+    end if;
     if v_kind = 'stored' then
       if not (v_param = any (i.group_overrides)) and v_after is not null and to_jsonb(i) -> v_param is distinct from v_after then
         -- a move that would write what an item sells for needs the finances, as setting it does
@@ -983,11 +1070,12 @@ declare
   v_reason text;
   v_type text;
   v_result jsonb;
+  v_pre_group uuid;
 begin
   v_me := public.item_group_actor(p_workspace_id);
   v_kind := public.item_group_param_kind(p_parameter);
   if p_request_id is null or p_item_id is null or p_expected_revision is null or v_kind is null
-     or p_mode not in ('set', 'inherit') then
+     or p_mode is null or p_mode not in ('set', 'inherit') then
     perform public.stock_config_refuse('request', 'malformed');
   end if;
   if v_kind = 'proposal' then
@@ -1003,11 +1091,13 @@ begin
   v_digest := md5(jsonb_build_array(p_item_id, p_expected_revision, p_parameter, p_mode, p_value)::text);
   v_done := public.purchase_request_begin(p_workspace_id, p_request_id, 'item_override_save', v_digest);
   if v_done is not null then return v_done; end if;
+  select s.group_id into v_pre_group from public.services s where s.id = p_item_id and s.workspace_id = p_workspace_id;
+  perform public.item_group_lock(array[v_pre_group], false);
   select * into i from public.services where id = p_item_id and workspace_id = p_workspace_id for update;
   if i.id is null then
     raise exception 'not an item of this business' using errcode = 'DKG04';
   end if;
-  if i.stock_revision <> p_expected_revision then
+  if i.stock_revision <> p_expected_revision or i.group_id is distinct from v_pre_group then
     raise exception 'the stock configuration of this item changed since it was read' using errcode = 'DKG10';
   end if;
   v_old := to_jsonb(i) -> p_parameter;
@@ -1129,7 +1219,8 @@ begin
   return coalesce((
     select jsonb_agg(case when v_assistant
         then jsonb_build_object('id', g.id, 'parent_id', g.parent_id, 'name', g.name)
-        else (to_jsonb(g) - public.system_column_names() - 'workspace_id')
+        else (to_jsonb(g) - public.system_column_names() - 'workspace_id'
+              - case when public.has_permission(p_workspace_id, 'viewFinances') then array[]::text[] else array['target_margin_bps', 'price_rounding'] end)
              || jsonb_build_object('items', (select count(*) from public.services s where s.group_id = g.id)) end
       order by coalesce((select p.name from public.item_groups p where p.id = g.parent_id), g.name), g.parent_id nulls first, g.name)
       from public.item_groups g where g.workspace_id = p_workspace_id), '[]'::jsonb);

@@ -6,7 +6,7 @@
 -- a later change of its group; a per-unit tag mode on an item not tracked by piece, a proposal as an override and
 -- an unknown unit are refused in words; the feature off refuses. Rolled back.
 begin;
-select plan(33);
+select plan(41);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -131,6 +131,26 @@ select pg_temp.sv(1, 951, 501, 2, '{"parameters": {"shelf_life_days": 9}}');
 select is((select shelf_life_days from public.services where id = pg_temp.u(301)) || '|' || (select shelf_life_days from public.services where id = pg_temp.u(302)),
   '30|9', 'a later change of the group leaves it');
 
+-- ── an item's own value, written by the service editor, survives a change of the group ──
+insert into public.vat_rates (id, workspace_id, label, percent) values (pg_temp.u(404), pg_temp.u(101), 'Intermediate', 10);
+update public.services set vat_rate_id = pg_temp.u(401) where id = pg_temp.u(302);
+select is((select group_overrides from public.services where id = pg_temp.u(302)), array['vat_rate_id']::text[], 'an item''s own VAT, written directly, is marked as its own');
+select pg_temp.sv(1, 994, 501, 3, format('{"parameters": {"vat_rate_id": "%s"}}', pg_temp.u(404)));
+select is((select (vat_rate_id = pg_temp.u(404))::text || '|' || (select (vat_rate_id = pg_temp.u(401))::text from public.services where id = pg_temp.u(302)) from public.services where id = pg_temp.u(301)),
+  'true|true', 'a change of the group''s VAT reaches the inheriting item and leaves the one with its own');
+
+-- ── the finance values an item is proposed a price with ──
+select pg_temp.sv(1, 995, 506, 0, '{"name": "Margin", "parameters": {"target_margin_bps": 4000}}');
+select is(pg_temp.asg(3, 996, 304, pg_temp.rev(304), 506), 'ERR DKN01', 'a clerk cannot move an item to where a margin would be proposed for it');
+select is(pg_temp.ovr(1, 997, 301, pg_temp.rev(301), 'shelf_life_days', null, '5'), 'ERR DKG11', 'a request with no mode is refused');
+select is(pg_temp.run_as(pg_temp.u(3), format('select (public.item_groups_v1(%L) -> 0 ? ''price_rounding'')::text', pg_temp.u(101))), 'false',
+  'the rounding is not read without the finances');
+select is(pg_temp.run_as(pg_temp.u(1), format('select (public.item_groups_v1(%L) -> 0 ? ''price_rounding'')::text', pg_temp.u(101))), 'true', 'and is with them');
+select is(pg_temp.run_as(pg_temp.u(3), format('select public.item_effective_settings_v1(%L, %L) #>> ''{parameters,target_margin_bps,source}''', pg_temp.u(101), pg_temp.u(301))), 'hidden',
+  'nor an item''s margin');
+select is(pg_temp.run_as(pg_temp.u(1), 'select count(*)::text from (select target_margin_bps from public.item_groups limit 1) x'), 'ERR 42501',
+  'the columns are closed to a direct read');
+
 -- ── refusals in words ──
 select is(pg_temp.ovr(1, 960, 301, pg_temp.rev(301), 'tag_mode', 'set', '"per_unit"'), 'ERR DKG11', 'a per-unit tag mode on an item not tracked by piece is refused');
 select is(pg_temp.ovr(1, 961, 301, pg_temp.rev(301), 'price_rounding', 'set', '"0.05"'), 'ERR DKG11', 'a proposal is not an override');
@@ -139,7 +159,7 @@ select is(pg_temp.f(pg_temp.ovr(1, 962, 301, pg_temp.rev(301), 'till_category', 
 select is(pg_temp.eff(301, 'till_category'), 'Dairy|item', 'and shown as its own');
 
 -- ── deleting ──
-select is(pg_temp.run_as(pg_temp.u(1), format('select public.item_group_delete_v1(%L, %L, %L, 3)::text', pg_temp.u(101), pg_temp.u(970), pg_temp.u(501))), 'ERR DKG11',
+select is(pg_temp.run_as(pg_temp.u(1), format('select public.item_group_delete_v1(%L, %L, %L, 4)::text', pg_temp.u(101), pg_temp.u(970), pg_temp.u(501))), 'ERR DKG11',
   'a group used by items is not deleted');
 select pg_temp.sv(1, 972, 504, 0, '{"name": "Spare"}');
 select is(pg_temp.run_as(pg_temp.u(1), format('select public.item_group_delete_v1(%L, %L, %L, 1)::jsonb ->> ''deleted''', pg_temp.u(101), pg_temp.u(971), pg_temp.u(504))), 'true',
