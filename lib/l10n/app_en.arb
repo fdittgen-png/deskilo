@@ -3643,6 +3643,14 @@
   "@biCards": {
     "description": "#1924 finance KPI / #1923 analyses picker"
   },
+  "biCardsDragHandle": "Drag to reorder",
+  "@biCardsDragHandle": {
+    "description": "#4340 the analyses page: a label"
+  },
+  "biCardsStandard": "Back to the standard",
+  "@biCardsStandard": {
+    "description": "#4340 the analyses page: a label"
+  },
   "biCardsUnavailable": "{count, plural, one{1 analysis of this view is not available to you and are left out.} other{{count} analyses of this view are not available to you and are left out.}}",
   "@biCardsUnavailable": {
     "description": "#1923 C Web-BI saved views",
@@ -4135,6 +4143,10 @@
   "biDataUnavailable": "Unavailable",
   "@biDataUnavailable": {
     "description": "Shown as a text in capacity evidence (workspace), and 1 other place."
+  },
+  "biDefaultViewName": "My analyses",
+  "@biDefaultViewName": {
+    "description": "#4340 the analyses page: a label"
   },
   "biDeltaNone": "No comparison yet",
   "@biDeltaNone": {

@@ -6526,6 +6526,8 @@ Observa cómo rinde el espacio.
 3. Lea los análisis por área, como **Finanzas** (**Facturado**, **Cobrado**) y **Espacios y capacidad**.
 4. Guarde una vista en **Vistas**, o pulse **Exportar a PDF**.
 
+**Análisis mostrados** elige qué análisis muestra la página y en qué orden: marque los que quiera y arrastre el asa de una fila para moverla (las flechas junto a ella hacen lo mismo con el teclado). Su elección se recuerda para usted en este espacio, en cualquier dispositivo, y se abre de nuevo la próxima vez; una dirección que nombra análisis, o una vista que abra, prevalece en esa visita. **Volver al estándar** la borra.
+
 **Conviene saber**
 
 - Solo ve los análisis que tiene permiso para leer.

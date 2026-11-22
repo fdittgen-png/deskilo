@@ -6,6 +6,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/ids/request_id.dart';
+import '../../../core/trace/trace_logger.dart';
 import '../domain/bi_saved_view.dart';
 import 'bi_providers.dart';
 
@@ -69,5 +70,67 @@ class BiViewActions {
     } finally {
       _ref.invalidate(biViewsProvider(workspaceId));
     }
+  }
+
+  /// #4340 -- the analyses a person last chose, and their order, kept as their OWN default view
+  /// ([name]; the same view is found again by any of [knownNames], the name in each language), so
+  /// the page opens on them next time on any device. Private to the person and the business; the
+  /// server's own default rule applies (a bare /bi opens it, an address or an opened view wins).
+  Future<void> rememberCards(
+    String workspaceId,
+    List<String> cards, {
+    required String name,
+    required Set<String> knownNames,
+  }) async {
+    final mine = await _myCardsView(workspaceId, knownNames);
+    final saved = await save(
+      workspaceId,
+      over: mine,
+      scope: BiViewScope.private,
+      name: mine?.name ?? name,
+      definition: BiViewDefinition(cards: cards),
+    );
+    await setDefault(workspaceId, BiViewScope.private, saved.id);
+  }
+
+  /// #4340 -- what a change of the analyses shown does to the person's own default: the choice is
+  /// remembered, the standard clears it, a change of anything else leaves it. True when the default
+  /// is in step; false when the server could not be asked (said by the caller, never silent).
+  Future<bool> keepCards(
+    String workspaceId, {
+    required List<String> before,
+    required List<String> after,
+    required String name,
+    required Set<String> knownNames,
+  }) async {
+    if (before.length == after.length && [for (var i = 0; i < after.length; i++) before[i] == after[i]].every((s) => s)) {
+      return true;
+    }
+    try {
+      if (after.isEmpty) {
+        await forgetCards(workspaceId, knownNames: knownNames);
+      } else {
+        await rememberCards(workspaceId, after, name: name, knownNames: knownNames);
+      }
+      return true;
+    } on Object catch (e, st) {
+      TraceLogger.instance.warn('bi', 'the analyses default was not kept: $e', stackTrace: st);
+      return false;
+    }
+  }
+
+  /// #4340 -- "Back to the standard": the person's own default is cleared, and the view that held it
+  /// (the one [rememberCards] made) goes with it.
+  Future<void> forgetCards(String workspaceId, {required Set<String> knownNames}) async {
+    final mine = await _myCardsView(workspaceId, knownNames);
+    await setDefault(workspaceId, BiViewScope.private, null);
+    if (mine != null) await delete(workspaceId, mine);
+  }
+
+  Future<BiSavedView?> _myCardsView(String workspaceId, Set<String> knownNames) async {
+    final views = await _repo.list(workspaceId);
+    return views
+        .where((v) => v.scope == BiViewScope.private && v.mine && knownNames.contains(v.name))
+        .firstOrNull;
   }
 }

@@ -1265,6 +1265,8 @@
   },
   "biBookingBasis": "Reservierte Kapazität misst Buchungen, nicht die tatsächliche Anwesenheit.",
   "biCards": "Angezeigte Analysen",
+  "biCardsDragHandle": "Zum Umsortieren ziehen",
+  "biCardsStandard": "Zurück zum Standard",
   "biCardsUnavailable": "{count, plural, one{1 Analyse dieser Ansicht ist für Sie nicht verfügbar und wird ausgelassen.} other{{count} Analysen dieser Ansicht sind für Sie nicht verfügbar und werden ausgelassen.}}",
   "biCashNotBankBalance": "Erfasste Zahlungen, kein abgestimmter Kontostand.",
   "@biCashNotBankBalance": {
@@ -1428,6 +1430,7 @@
   "biDataPartial": "Unvollständige Daten",
   "biDataStale": "Veraltete Daten",
   "biDataUnavailable": "Nicht verfügbar",
+  "biDefaultViewName": "Meine Analysen",
   "biDeltaNone": "Noch kein Vergleich",
   "@biDeltaNone": {
     "description": "Business analytics dashboard: biDeltaNone"

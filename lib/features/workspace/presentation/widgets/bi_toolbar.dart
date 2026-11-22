@@ -145,27 +145,32 @@ class BiToolbar extends StatelessWidget {
   }
 
   Future<void> _chooseCards(BuildContext context) async {
-        final chosen = await showDialog<List<String>>(
-          context: context,
-          builder: (_) => _CardsDialog(
-            modules: modules,
-            shown: query.cards.isEmpty
-                ? [for (final m in modules) m.id]
-                : [
-                    for (final c in query.cards)
-                      if (modules.any((m) => m.id == c)) c,
-                  ],
-            title: cardTitle,
-          ),
-        );
-        if (chosen == null || chosen.isEmpty) return;
-        final all = [for (final m in modules) m.id];
-        // Every analysis in the standard order is the standard.
-        final standard =
-            chosen.length == all.length &&
-            [for (var i = 0; i < all.length; i++) all[i] == chosen[i]]
-                .every((same) => same);
-        onChanged(query.copyWith(cards: standard ? const [] : chosen));
+    final chosen = await showDialog<({List<String> cards, bool standard})>(
+      context: context,
+      builder: (_) => _CardsDialog(
+        modules: modules,
+        shown: query.cards.isEmpty
+            ? [for (final m in modules) m.id]
+            : [
+                for (final c in query.cards)
+                  if (modules.any((m) => m.id == c)) c,
+              ],
+        title: cardTitle,
+      ),
+    );
+    if (chosen == null) return;
+    // "Back to the standard" (#4340): the standard order, the personal default cleared.
+    if (chosen.standard) {
+      onChanged(query.copyWith(cards: const []));
+      return;
+    }
+    if (chosen.cards.isEmpty) return;
+    final all = [for (final m in modules) m.id];
+    // Every analysis in the standard order is the standard.
+    final standard =
+        chosen.cards.length == all.length &&
+        [for (var i = 0; i < all.length; i++) all[i] == chosen.cards[i]].every((same) => same);
+    onChanged(query.copyWith(cards: standard ? const [] : chosen.cards));
   }
 
   /// Three labelled segments need about 420 dp; on a phone the labels broke
@@ -356,6 +361,12 @@ class _CardsDialogState extends State<_CardsDialog> {
     _order.insert(i + by, id);
   });
 
+  /// A drag ended: [from] now sits at [to] (already adjusted for the removed row).
+  void _reorder(int from, int to) => setState(() {
+    final id = _order.removeAt(from);
+    _order.insert(to, id);
+  });
+
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
@@ -364,42 +375,64 @@ class _CardsDialogState extends State<_CardsDialog> {
       title: Text(l10n.biCards),
       content: SizedBox(
         width: 360,
-        child: ListView(
+        // A bounded list: the rows drag inside it and the dialog itself does not scroll.
+        height: MediaQuery.sizeOf(context).height * 0.55,
+        child: ReorderableListView.builder(
+          key: const ValueKey('bi-cards-list'),
+          buildDefaultDragHandles: false,
           shrinkWrap: true,
-          children: [
-            for (final (i, id) in _order.indexed)
-              CheckboxListTile(
-                key: ValueKey('bi-card-$id'),
-                value: _on.contains(id),
-                controlAffinity: ListTileControlAffinity.leading,
-                contentPadding: EdgeInsets.zero,
-                title: Text(widget.title?.call(id) ?? id),
-                onChanged: (v) =>
-                    setState(() => v == true ? _on.add(id) : _on.remove(id)),
-                secondary: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    IconButton(
-                      key: ValueKey('bi-card-up-$id'),
-                      tooltip: l10n.spaceMoveUp,
-                      icon: const Icon(Icons.arrow_upward),
-                      onPressed: i == 0 ? null : () => _move(i, -1),
+          itemCount: _order.length,
+          onReorderItem: _reorder,
+          itemBuilder: (context, i) {
+            final id = _order[i];
+            return CheckboxListTile(
+              key: ValueKey('bi-card-$id'),
+              value: _on.contains(id),
+              controlAffinity: ListTileControlAffinity.leading,
+              contentPadding: EdgeInsets.zero,
+              title: Text(widget.title?.call(id) ?? id),
+              onChanged: (v) => setState(() => v == true ? _on.add(id) : _on.remove(id)),
+              secondary: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // the keyboard and screen-reader way to move a row
+                  IconButton(
+                    key: ValueKey('bi-card-up-$id'),
+                    tooltip: l10n.spaceMoveUp,
+                    icon: const Icon(Icons.arrow_upward),
+                    onPressed: i == 0 ? null : () => _move(i, -1),
+                  ),
+                  IconButton(
+                    key: ValueKey('bi-card-down-$id'),
+                    tooltip: l10n.spaceMoveDown,
+                    icon: const Icon(Icons.arrow_downward),
+                    onPressed: i == _order.length - 1 ? null : () => _move(i, 1),
+                  ),
+                  // the visible handle: a drag starts here, on a 48 dp target
+                  ReorderableDragStartListener(
+                    index: i,
+                    child: Semantics(
+                      label: l10n.biCardsDragHandle,
+                      child: SizedBox(
+                        key: ValueKey('bi-card-handle-$id'),
+                        width: 48,
+                        height: 48,
+                        child: const Icon(Icons.drag_handle),
+                      ),
                     ),
-                    IconButton(
-                      key: ValueKey('bi-card-down-$id'),
-                      tooltip: l10n.spaceMoveDown,
-                      icon: const Icon(Icons.arrow_downward),
-                      onPressed: i == _order.length - 1
-                          ? null
-                          : () => _move(i, 1),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-          ],
+            );
+          },
         ),
       ),
       actions: [
+        TextButton(
+          key: const ValueKey('bi-cards-standard'),
+          onPressed: () => Navigator.of(context).pop((cards: const <String>[], standard: true)),
+          child: Text(l10n.biCardsStandard),
+        ),
         TextButton(
           key: const ValueKey('bi-toolbar-dialog-cancel'),
           onPressed: () => Navigator.of(context).pop(),
@@ -410,10 +443,13 @@ class _CardsDialogState extends State<_CardsDialog> {
           // At least one analysis: an empty page is not a view.
           onPressed: _on.isEmpty
               ? null
-              : () => Navigator.of(context).pop([
-                  for (final id in _order)
-                    if (_on.contains(id)) id,
-                ]),
+              : () => Navigator.of(context).pop((
+                  cards: [
+                    for (final id in _order)
+                      if (_on.contains(id)) id,
+                  ],
+                  standard: false,
+                )),
           child: Text(material.okButtonLabel),
         ),
       ],

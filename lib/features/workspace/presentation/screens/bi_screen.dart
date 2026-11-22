@@ -7,6 +7,8 @@
 // #1923 B — one toolbar above every module, one context in the address
 // (so Back, Forward, Reload and a shared link restore it). An address
 // that does not parse is refused and nothing is read.
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -15,6 +17,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/time/workspace_time.dart';
+import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/kit/dashboard_grid.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -73,7 +76,11 @@ class BiScreen extends ConsumerWidget {
       );
     }
 
-    void ask(BiQueryContext next) => go(next, saved);
+    void ask(BiQueryContext next) {
+      go(next, saved);
+      // #4340 -- a change of the analyses shown is remembered as the person's own default
+      _AnalysesDefault.keep(context, ref, workspaceId, query?.cards, next.cards);
+    }
     final today = WorkspaceTime.dateOf(ref.watch(clockProvider).now());
     final visibleIds = {for (final m in modules) m.id};
 
@@ -92,12 +99,7 @@ class BiScreen extends ConsumerWidget {
       }
     }
     final cards = query?.cards ?? const <String>[];
-    final shown = cards.isEmpty
-        ? [
-            for (final area in BiArea.values)
-              ...modules.where((m) => m.area == area),
-          ]
-        : [for (final c in cards) ...modules.where((m) => m.id == c)];
+    final shown = _shownModules(cards, modules);
     final unavailable = cards.where((c) => !visibleIds.contains(c)).length;
     return Scaffold(
       appBar: AppBar(
@@ -178,6 +180,42 @@ class BiScreen extends ConsumerWidget {
   }
 }
 
+/// The analyses the page shows: the chosen ones in the chosen order, or every one by area.
+List<BiModule> _shownModules(List<String> cards, List<BiModule> modules) => cards.isEmpty
+    ? [
+        for (final area in BiArea.values) ...modules.where((m) => m.area == area),
+      ]
+    : [for (final c in cards) ...modules.where((m) => m.id == c)];
+
+/// #4340 -- the names the person's own default view goes by, in each language: found again whatever
+/// language it was made in.
+Set<String> _defaultNames() => {
+  for (final l in AppLocalizations.supportedLocales) lookupAppLocalizations(l).biDefaultViewName,
+};
+
+/// #4340 -- keeps the person's own default in step with the analyses they chose, and says when it
+/// could not (never silent).
+abstract final class _AnalysesDefault {
+  static void keep(BuildContext context, WidgetRef ref, String? workspaceId, List<String>? before, List<String> after) {
+    if (workspaceId == null) return;
+    final l10n = context.l10n;
+    unawaited(
+      ref
+          .read(biViewActionsProvider)
+          .keepCards(
+            workspaceId,
+            before: before ?? const [],
+            after: after,
+            name: l10n.biDefaultViewName,
+            knownNames: _defaultNames(),
+          )
+          .then((kept) {
+            if (!kept && context.mounted) AppSnack.error(context, l10n.commonSaveFailed);
+          }),
+    );
+  }
+}
+
 /// The analyses on the page's grid, under the heading of their area, after
 /// the count of the chosen ones the reader may not see.
 class _Analyses extends StatelessWidget {
@@ -209,7 +247,7 @@ class _Analyses extends StatelessWidget {
               key: const ValueKey('bi-cards-unavailable'),
             ),
           ),
-        for (final (area, inArea) in _byArea(shown)) ...[
+        for (final (area, inArea, run) in _byArea(shown)) ...[
           Padding(
             padding: const EdgeInsets.only(
               top: AppSpacing.md,
@@ -217,12 +255,12 @@ class _Analyses extends StatelessWidget {
             ),
             child: Text(
               _biAreaName(l10n, area),
-              key: ValueKey('bi-area-${area.name}'),
+              key: ValueKey(run == 1 ? 'bi-area-${area.name}' : 'bi-area-${area.name}-$run'),
               style: style,
             ),
           ),
           DashboardGrid(
-            key: ValueKey('bi-grid-${area.name}'),
+            key: ValueKey(run == 1 ? 'bi-grid-${area.name}' : 'bi-grid-${area.name}-$run'),
             minTileWidth: biAnalysisMinWidth,
             children: [
               for (final m in inArea)
@@ -238,15 +276,20 @@ class _Analyses extends StatelessWidget {
   }
 }
 
-/// [shown] cut into runs of one area, in the page's order: a chosen order
-/// that returns to an area starts a new run under its heading again.
-List<(BiArea, List<BiModule>)> _byArea(List<BiModule> shown) {
-  final runs = <(BiArea, List<BiModule>)>[];
+/// [shown] cut into runs of one area, in the page's order: a chosen order that returns to an area
+/// starts a new run under its heading again. Each run says which run of its area it is (1, 2, ...):
+/// the headings and the grids are keyed by it, so an order that comes back to an area (dragged
+/// between two others) never repeats a key.
+List<(BiArea, List<BiModule>, int)> _byArea(List<BiModule> shown) {
+  final runs = <(BiArea, List<BiModule>, int)>[];
+  final seen = <BiArea, int>{};
   for (final m in shown) {
     if (runs.isNotEmpty && runs.last.$1 == m.area) {
       runs.last.$2.add(m);
     } else {
-      runs.add((m.area, [m]));
+      final run = (seen[m.area] ?? 0) + 1;
+      seen[m.area] = run;
+      runs.add((m.area, [m], run));
     }
   }
   return runs;
