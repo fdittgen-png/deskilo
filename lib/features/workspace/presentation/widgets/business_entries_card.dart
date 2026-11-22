@@ -73,6 +73,12 @@ class BusinessEntriesCard extends StatelessWidget {
                       l10n.quotesTitle,
                       '/money/quotes',
                     ),
+                    BusinessEntry.engagements => entry(
+                      'business-entry-engagements',
+                      Icons.assignment_turned_in_outlined,
+                      l10n.engagementsTitle,
+                      '/money/engagements',
+                    ),
                     BusinessEntry.customers => entry(
                       'business-entry-customers',
                       Icons.groups_outlined,

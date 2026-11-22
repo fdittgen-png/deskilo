@@ -29,6 +29,7 @@ const demoFreelancerProfile = {
   'billingCustomers': true,
   'customerQuotes': true,
   'standaloneInvoicing': true,
+  'serviceFulfilment': true,
   'purchases': true,
 };
 

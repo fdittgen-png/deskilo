@@ -85,8 +85,9 @@ void main() {
     // #4166 — customerQuotes: quoting a billing customer is asked for.
     // #4169 — stockLots: lots and expiry are asked for.
     // #4171 — stockReceiving: receiving into stock is asked for.
+    // #4178 — serviceFulfilment: following an ordered service is asked for.
     // #4170 — stockTakeOut: taking goods out is asked for.
-    expect(onCount, featureManifest.length - 62);
+    expect(onCount, featureManifest.length - 63);
   });
 
   testWidgets(

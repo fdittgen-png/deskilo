@@ -1,0 +1,158 @@
+{
+  "@@locale": "es",
+  "engagementsTitle": "Servicios en curso",
+  "engagementsIntro": "Siga cada servicio pedido: pedido, iniciado, terminado. El presupuesto, la factura y los pagos quedan como están.",
+  "engagementsNew": "Nuevo servicio",
+  "engagementsEmpty": "Todavía no hay servicios. Abra uno desde un presupuesto aceptado o añada uno directamente.",
+  "engagementsLoadFailed": "No se pudieron leer los servicios. Esto no es una lista vacía.",
+  "engagementStateOrdered": "Pedido",
+  "engagementStateStarted": "Iniciado",
+  "engagementStateDone": "Terminado",
+  "engagementStateCancelled": "Cancelado",
+  "engagementStart": "Iniciar",
+  "engagementFinish": "Marcar como terminado",
+  "engagementCancel": "Cancelar el servicio",
+  "engagementCancelReason": "Por qué se cancela",
+  "engagementFromQuote": "Del presupuesto {reference}",
+  "engagementFromInvoice": "De la factura {number}",
+  "engagementDirect": "Acordado directamente",
+  "engagementBilledOn": "Facturado en",
+  "engagementPaidOf": "{paid} de {total} pagados",
+  "engagementCorrectedBy": "Corregido por {number}",
+  "engagementNoInvoice": "Aún sin facturar. Seguir el trabajo no cambia nada en los libros.",
+  "engagementOpenFromLine": "Seguir este servicio",
+  "engagementOpenExisting": "Abrir su seguimiento",
+  "engagementDirectTitle": "Nuevo servicio",
+  "engagementFieldDescription": "Qué se ha pedido",
+  "engagementSave": "Acordar",
+  "engagementRefusedStale": "El servicio ha cambiado entretanto. Se ha vuelto a leer: compruébelo y reintente.",
+  "engagementRefusedState": "Ese paso no es posible en el estado actual del servicio.",
+  "engagementRefusedReused": "Esa solicitud ya se usó para otra cosa. Empiece de nuevo.",
+  "engagementRefusedIncomplete": "Falta algo o está fuera de rango: compruebe los datos.",
+  "engagementRefusedUnknown": "No se encontró ese servicio, presupuesto, factura o cliente.",
+  "engagementRefusedOff": "El seguimiento de servicios está desactivado en esta empresa.",
+  "engagementRefusedDenied": "Su rol no lo permite.",
+  "engagementUnreached": "No llegó respuesta, así que no se afirma nada. Reintente: la misma solicitud se atiende una sola vez.",
+  "@engagementsTitle": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementsIntro": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementsNew": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementsEmpty": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementsLoadFailed": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementStateOrdered": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementStateStarted": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementStateDone": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementStateCancelled": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementStart": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementFinish": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementCancel": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementCancelReason": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementFromQuote": {
+    "description": "service engagements (#4178)",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
+  "@engagementFromInvoice": {
+    "description": "service engagements (#4178)",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "@engagementDirect": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementBilledOn": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementPaidOf": {
+    "description": "service engagements (#4178)",
+    "placeholders": {
+      "paid": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "@engagementCorrectedBy": {
+    "description": "service engagements (#4178)",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "@engagementNoInvoice": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementOpenFromLine": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementOpenExisting": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementDirectTitle": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementFieldDescription": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementSave": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementRefusedStale": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementRefusedState": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementRefusedReused": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementRefusedIncomplete": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementRefusedUnknown": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementRefusedOff": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementRefusedDenied": {
+    "description": "service engagements (#4178)"
+  },
+  "@engagementUnreached": {
+    "description": "service engagements (#4178)"
+  }
+}

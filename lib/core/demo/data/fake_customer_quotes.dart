@@ -77,9 +77,9 @@ class FakeCustomerQuoteRepository implements CustomerQuoteRepository {
     ({String notes, List<List<StandaloneLine>> amendments}) extras = (notes: '', amendments: const []),
   }) {
     final q = _Quote('quote-${_next++}', subjectId);
-    q.revisions.add(_Rev(1, issuedOn, validUntil, lines, notes: extras.notes));
+    q.revisions.add(_Rev(1, issuedOn, validUntil, _withIds(lines), notes: extras.notes));
     for (final later in extras.amendments) {
-      q.revisions.add(_Rev(q.revisions.length + 1, issuedOn, validUntil, later, notes: extras.notes));
+      q.revisions.add(_Rev(q.revisions.length + 1, issuedOn, validUntil, _withIds(later), notes: extras.notes));
     }
     for (final rev in q.revisions) {
       _freeze(rev);

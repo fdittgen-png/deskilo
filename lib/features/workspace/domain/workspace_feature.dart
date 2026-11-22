@@ -446,7 +446,8 @@ enum WorkspaceFeature {
   stockReceiving,
 
   /// #4170 — goods taken out for use or as a loss (feature_manifest_stock.dart).
-  stockTakeOut;
+  stockTakeOut,
+  serviceFulfilment;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;

@@ -135,6 +135,9 @@ class MoneyViewData {
 
   Statement? get statement => statementAsync.value;
 
+  /// #4178 — service fulfilment is on: an accepted quote line may be followed.
+  bool get serviceFulfilmentOn => features.contains(WorkspaceFeature.serviceFulfilment);
+
   /// #3308 — passes sold at the desk to guests.
   // #3550 — a pass books a place for its guest.
   bool get guestPassesOn =>

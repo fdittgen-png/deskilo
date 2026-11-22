@@ -287,6 +287,8 @@ const List<RouteRule> routeRules = [
   RouteRule('/money/quotes', RouteClass.workspace, namesRole: true, place: 'drawer-quotes', measure: PageMeasure.reading), // #4166
   RouteRule('/money/quotes/:id', RouteClass.workspace, namesRole: true, place: 'drawer-quotes', measure: PageMeasure.reading), // #4166
   RouteRule('/money/quotes/:id/edit', RouteClass.workspace, namesRole: true, place: 'drawer-quotes', measure: PageMeasure.reading), // #4166
+  RouteRule('/money/engagements', RouteClass.workspace, namesRole: true, place: 'drawer-engagements', measure: PageMeasure.reading), // #4178
+  RouteRule('/money/engagements/:id', RouteClass.workspace, namesRole: true, place: 'drawer-engagements', measure: PageMeasure.reading), // #4178
   RouteRule('/money/customers', RouteClass.workspace, namesRole: true, place: 'drawer-billing-customers', measure: PageMeasure.reading), // #4164
   RouteRule('/money/purchase-orders', RouteClass.workspace, namesRole: true, place: 'drawer-purchase-orders', measure: PageMeasure.work),
   // #3608 — the order's form, a long task: a page with its own columns.

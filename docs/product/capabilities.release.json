@@ -2221,6 +2221,12 @@
       ]
     },
     {
+      "key": "serviceFulfilment",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "services",
       "maturity": "beta",
       "lifecycle": "active",

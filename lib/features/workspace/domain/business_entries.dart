@@ -7,7 +7,7 @@
 import 'workspace_feature.dart';
 import 'workspace_permission.dart';
 
-enum BusinessEntry { newInvoice, quotes, customers, invoices }
+enum BusinessEntry { newInvoice, quotes, engagements, customers, invoices }
 
 /// The entries [features] and [permissions] offer, in the order they are read.
 List<BusinessEntry> businessEntriesFor(
@@ -24,6 +24,8 @@ List<BusinessEntry> businessEntriesFor(
         may(WorkspacePermission.issueInvoices))
       BusinessEntry.newInvoice,
     if (sales && features.contains(WorkspaceFeature.customerQuotes) && reads) BusinessEntry.quotes,
+    // #4178 — the services ordered, followed from the order to the work done.
+    if (sales && features.contains(WorkspaceFeature.serviceFulfilment) && reads) BusinessEntry.engagements,
     if (sales &&
         features.contains(WorkspaceFeature.billingCustomers) &&
         (may(WorkspacePermission.manageBillingCustomers) || reads))

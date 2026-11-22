@@ -1459,6 +1459,10 @@ window.SETUP_L10N={
    "stockTakeOut": [
     "Taking goods out",
     "Take goods out of stock for use or as a loss, with the reason and the lot. Off: no consumption or loss is offered; transfers and receiving are unaffected."
+   ],
+   "serviceFulfilment": [
+    "Service fulfilment",
+    "Follow an ordered service as an engagement of its own: ordered, started, done, or cancelled with a reason, with every step kept. The quote, the invoice and the payments stay as they are beside it. Nothing is invoiced or paid by it. Asked for, under billing customers."
    ]
   },
   "process": {
@@ -3314,6 +3318,10 @@ window.SETUP_L10N={
    "stockTakeOut": [
     "Sorties de stock",
     "Sortir des marchandises du stock pour usage ou comme perte, avec le motif et le lot. Désactivé : ni consommation ni perte n’est proposée ; les transferts et la réception ne changent pas."
+   ],
+   "serviceFulfilment": [
+    "Suivi des prestations",
+    "Suivez une prestation commandée comme un engagement à part : commandée, commencée, terminée ou annulée avec un motif, chaque étape étant conservée. Le devis, la facture et les paiements restent tels quels à côté. Rien n'est facturé ni payé par ce suivi. Sur demande, sous les clients facturés."
    ]
   },
   "process": {
@@ -5169,6 +5177,10 @@ window.SETUP_L10N={
    "stockTakeOut": [
     "Warenausgang",
     "Waren für den Verbrauch oder als Verlust aus dem Lager nehmen, mit Grund und Charge. Aus: weder Verbrauch noch Verlust werden angeboten; Umlagerungen und Wareneingang bleiben unberührt."
+   ],
+   "serviceFulfilment": [
+    "Leistungsverfolgung",
+    "Verfolgen Sie eine bestellte Leistung als eigenen Auftrag: bestellt, begonnen, erledigt oder mit Begründung storniert, jeder Schritt bleibt erhalten. Angebot, Rechnung und Zahlungen bleiben daneben unverändert. Dadurch wird nichts in Rechnung gestellt oder bezahlt. Auf Anfrage, unter den Rechnungskunden."
    ]
   },
   "process": {
@@ -7024,6 +7036,10 @@ window.SETUP_L10N={
    "stockTakeOut": [
     "Salidas de existencias",
     "Sacar mercancías de las existencias para uso o como pérdida, con el motivo y el lote. Desactivado: no se ofrece consumo ni pérdida; las transferencias y la recepción no cambian."
+   ],
+   "serviceFulfilment": [
+    "Seguimiento de servicios",
+    "Siga un servicio pedido como un compromiso propio: pedido, iniciado, terminado o cancelado con un motivo, conservando cada paso. El presupuesto, la factura y los pagos quedan como están. Nada se factura ni se paga con él. A petición, bajo los clientes facturados."
    ]
   },
   "process": {
@@ -8879,6 +8895,10 @@ window.SETUP_L10N={
    "stockTakeOut": [
     "Uscite di magazzino",
     "Prelevare merci dal magazzino per uso o come perdita, con motivo e lotto. Disattivato: non sono offerti consumo né perdita; i trasferimenti e la ricezione restano invariati."
+   ],
+   "serviceFulfilment": [
+    "Avanzamento dei servizi",
+    "Seguite un servizio ordinato come un impegno a sé: ordinato, avviato, concluso o annullato con un motivo, conservando ogni passaggio. Il preventivo, la fattura e i pagamenti restano invariati accanto. Nulla viene fatturato o pagato da questo. Su richiesta, sotto i clienti fatturati."
    ]
   },
   "process": {

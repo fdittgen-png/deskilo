@@ -1,0 +1,11 @@
+{
+  "@@locale": "es",
+  "featureServiceFulfilmentTitle": "Seguimiento de servicios",
+  "featureServiceFulfilmentDesc": "Siga un servicio pedido como un compromiso propio: pedido, iniciado, terminado o cancelado con un motivo, conservando cada paso. El presupuesto, la factura y los pagos quedan como están. Nada se factura ni se paga con él. A petición, bajo los clientes facturados.",
+  "@featureServiceFulfilmentTitle": {
+    "description": "a feature in the Features list (#4178)"
+  },
+  "@featureServiceFulfilmentDesc": {
+    "description": "a feature in the Features list (#4178)"
+  }
+}

@@ -15447,6 +15447,204 @@ abstract class AppLocalizations {
   /// **'That image is too heavy for a mark shown at 28 pixels.'**
   String get emblemTooHeavy;
 
+  /// service engagements (#4178)
+  ///
+  /// In en, this message translates to:
+  /// **'Billed on'**
+  String get engagementBilledOn;
+
+  /// service engagements (#4178)
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel the engagement'**
+  String get engagementCancel;
+
+  /// service engagements (#4178)
+  ///
+  /// In en, this message translates to:
+  /// **'Why it is cancelled'**
+  String get engagementCancelReason;
+
+  /// service engagements (#4178)
+  ///
+  /// In en, this message translates to:
+  /// **'Corrected by {number}'**
+  String engagementCorrectedBy(String number);
+
+  /// service engagements (#4178)
+  ///
+  /// In en, this message translates to:
+  /// **'Committed directly'**
+  String get engagementDirect;
+
+  /// service engagements (#4178)
+  ///
+  /// In en, this message translates to:
+  /// **'New engagement'**
+  String get engagementDirectTitle;
+
+  /// service engagements (#4178)
+  ///
+  /// In en, this message translates to:
+  /// **'What is ordered'**
+  String get engagementFieldDescription;
+
+  /// service engagements (#4178)
+  ///
+  /// In en, this message translates to:
+  /// **'Mark done'**
+  String get engagementFinish;
+
+  /// service engagements (#4178)
+  ///
+  /// In en, this message translates to:
+  /// **'From invoice {number}'**
+  String engagementFromInvoice(String number);
+
+  /// service engagements (#4178)
+  ///
+  /// In en, this message translates to:
+  /// **'From quote {reference}'**
+  String engagementFromQuote(String reference);
+
+  /// service engagements (#4178)
+  ///
+  /// In en, this message translates to:
+  /// **'Not invoiced yet. Following the work changes nothing in the books.'**
+  String get engagementNoInvoice;
+
+  /// service engagements (#4178)
+  ///
+  /// In en, this message translates to:
+  /// **'Open its engagement'**
+  String get engagementOpenExisting;
+
+  /// service engagements (#4178)
+  ///
+  /// In en, this message translates to:
+  /// **'Follow this service'**
+  String get engagementOpenFromLine;
+
+  /// service engagements (#4178)
+  ///
+  /// In en, this message translates to:
+  /// **'{paid} of {total} paid'**
+  String engagementPaidOf(String paid, String total);
+
+  /// service engagements (#4178)
+  ///
+  /// In en, this message translates to:
+  /// **'Your role does not allow this.'**
+  String get engagementRefusedDenied;
+
+  /// service engagements (#4178)
+  ///
+  /// In en, this message translates to:
+  /// **'Something is missing or out of range: check the details.'**
+  String get engagementRefusedIncomplete;
+
+  /// service engagements (#4178)
+  ///
+  /// In en, this message translates to:
+  /// **'Service fulfilment is switched off in this business.'**
+  String get engagementRefusedOff;
+
+  /// service engagements (#4178)
+  ///
+  /// In en, this message translates to:
+  /// **'That request was already used for something else. Start again.'**
+  String get engagementRefusedReused;
+
+  /// service engagements (#4178)
+  ///
+  /// In en, this message translates to:
+  /// **'The engagement moved on meanwhile. It was read again: check it and retry.'**
+  String get engagementRefusedStale;
+
+  /// service engagements (#4178)
+  ///
+  /// In en, this message translates to:
+  /// **'That step is not possible from where the engagement stands.'**
+  String get engagementRefusedState;
+
+  /// service engagements (#4178)
+  ///
+  /// In en, this message translates to:
+  /// **'That engagement, quote, invoice or customer was not found.'**
+  String get engagementRefusedUnknown;
+
+  /// service engagements (#4178)
+  ///
+  /// In en, this message translates to:
+  /// **'Commit'**
+  String get engagementSave;
+
+  /// service engagements (#4178)
+  ///
+  /// In en, this message translates to:
+  /// **'Start'**
+  String get engagementStart;
+
+  /// service engagements (#4178)
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get engagementStateCancelled;
+
+  /// service engagements (#4178)
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get engagementStateDone;
+
+  /// service engagements (#4178)
+  ///
+  /// In en, this message translates to:
+  /// **'Ordered'**
+  String get engagementStateOrdered;
+
+  /// service engagements (#4178)
+  ///
+  /// In en, this message translates to:
+  /// **'Started'**
+  String get engagementStateStarted;
+
+  /// service engagements (#4178)
+  ///
+  /// In en, this message translates to:
+  /// **'No answer came, so nothing is claimed. Try again: the same request is answered only once.'**
+  String get engagementUnreached;
+
+  /// service engagements (#4178)
+  ///
+  /// In en, this message translates to:
+  /// **'No engagement yet. Open one from an accepted quote, or add one directly.'**
+  String get engagementsEmpty;
+
+  /// service engagements (#4178)
+  ///
+  /// In en, this message translates to:
+  /// **'Follow each service you were ordered: ordered, started, done. The quote, the invoice and the payments stay as they are beside it.'**
+  String get engagementsIntro;
+
+  /// service engagements (#4178)
+  ///
+  /// In en, this message translates to:
+  /// **'The engagements could not be read. This is not an empty list.'**
+  String get engagementsLoadFailed;
+
+  /// service engagements (#4178)
+  ///
+  /// In en, this message translates to:
+  /// **'New engagement'**
+  String get engagementsNew;
+
+  /// service engagements (#4178)
+  ///
+  /// In en, this message translates to:
+  /// **'Service engagements'**
+  String get engagementsTitle;
+
   /// Footer of the usage card for a blocked member who has used their whole cap
   ///
   /// In en, this message translates to:
@@ -19857,6 +20055,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Repeat a reservation daily, weekly or on weekdays.'**
   String get featureSeriesBookingDesc;
+
+  /// a feature in the Features list (#4178)
+  ///
+  /// In en, this message translates to:
+  /// **'Follow an ordered service as an engagement of its own: ordered, started, done, or cancelled with a reason, with every step kept. The quote, the invoice and the payments stay as they are beside it. Nothing is invoiced or paid by it. Asked for, under billing customers.'**
+  String get featureServiceFulfilmentDesc;
+
+  /// a feature in the Features list (#4178)
+  ///
+  /// In en, this message translates to:
+  /// **'Service fulfilment'**
+  String get featureServiceFulfilmentTitle;
 
   /// Feature switch: service catalog + consumptions
   ///
