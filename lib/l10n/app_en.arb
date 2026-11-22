@@ -45392,6 +45392,15 @@
       }
     }
   },
+  "stockCycleDueButton": "Due day: {date}",
+  "@stockCycleDueButton": {
+    "description": "#4295 the button that sets a plan's due day",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "stockCycleEveryDays": "Every how many days",
   "@stockCycleEveryDays": {
     "description": "#4295 cycle counts"
@@ -45458,10 +45467,6 @@
       }
     }
   },
-  "stockCycleNextDue": "Due day",
-  "@stockCycleNextDue": {
-    "description": "#4295 cycle counts"
-  },
   "stockCycleNoPlans": "No plan yet: nothing is counted on a schedule.",
   "@stockCycleNoPlans": {
     "description": "#4295 cycle counts"
@@ -45482,10 +45487,6 @@
         "type": "int"
       }
     }
-  },
-  "stockCyclePlanItems": "Items",
-  "@stockCyclePlanItems": {
-    "description": "#4295 cycle counts"
   },
   "stockCyclePlanItemsCount": "{count, plural, one{1 item} other{{count} items}}",
   "@stockCyclePlanItemsCount": {
@@ -45578,10 +45579,6 @@
   },
   "stockCycleScopeHighValue": "High value",
   "@stockCycleScopeHighValue": {
-    "description": "#4295 cycle counts"
-  },
-  "stockCycleScopeItems": "Items",
-  "@stockCycleScopeItems": {
     "description": "#4295 cycle counts"
   },
   "stockCycleScopePlaces": "Places",

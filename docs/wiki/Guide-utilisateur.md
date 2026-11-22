@@ -3091,6 +3091,21 @@ Ouvrez un mouvement dans **Stock → Mouvements**. Là où la fonction *Retours 
 - Aucun paiement, remboursement ni avoir n’est fait : si de l’argent est en jeu, corrigez-le dans la facture ou le paiement du fournisseur.
 - Renvoyer le même formulaire après une réponse perdue ne l’enregistre qu’une fois.
 
+<!-- anchor: user.money.stock.cycle -->
+### Inventaires tournants
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous voulez contrôler des parties du stock selon un calendrier, boutique ouverte, sans inventaire complet.
+
+Ouvrez **Stock → Inventaires tournants** (les fonctions *Inventaires du stock* et *Inventaires tournants* doivent être actives). La page a jusqu’à trois onglets.
+
+- **À compter** liste les tâches. Toute personne qui a le droit de compter (ou qui gère le stock) ouvre une tâche et la compte **à l’aveugle** : chaque ligne dit quoi compter et où, jamais ce que le stock enregistré attend, pour que le chiffre n’influence pas le comptage. Scannez ou saisissez un code-barres pour trouver la ligne, puis **Compter** et saisissez ce que vous avez trouvé, ou **Passer** avec une raison. Qui ne peut que compter apprend que la ligne est comptée, rien de plus ; qui gère le stock apprend l’écart. La tâche est terminée quand chaque ligne est comptée ou passée.
+- **Plans** (pour qui gère le stock) disent quoi compter et quand : *Emplacements* (avec tout ce qu’ils contiennent), *Articles* ou *Forte valeur* (marchandises valant au moins un seuil, le vôtre ou celui de l’entreprise), une fois ou tous les n jours à partir d’un jour d’échéance. Quand un plan est dû, il crée une tâche listant ses lignes ; le même jour n’en crée jamais deux.
+- **Historique** dit, pour chaque article à chaque emplacement, quand il a été compté pour la dernière fois et combien de comptages étaient exacts.
+
+Une ligne comptée est un comptage des *Inventaires du stock* : il attend quelqu’un qui peut approuver les ajustements, et seul un comptage approuvé change un solde, en appliquant exactement son écart et seulement si le stock n’a pas bougé depuis. Une tâche encore ouverte après les jours de retard de l’entreprise déclenche un avis dans la boîte de réception, qui ouvre cette page ; il s’éteint quand la tâche est terminée.
+
 <!-- anchor: user.money.amounts -->
 ### Comment les montants sont affichés
 
