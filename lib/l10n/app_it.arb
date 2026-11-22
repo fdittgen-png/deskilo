@@ -21168,10 +21168,13 @@
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
   "stockReasonPickRoleUnknown": "L'uso deve essere prelievo o riserva.",
+  "stockReasonPointFixed": "Articolo, variante e sede di un punto di riordino non si cambiano: ne crei un altro.",
+  "stockReasonPointTwice": "Questo articolo ha già un punto di riordino in questa sede.",
   "stockReasonPriceInvalid": "Un prezzo è zero o più.",
   "@stockReasonPriceInvalid": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonQuantityAndTarget": "Indichi una quantità da ordinare o un livello fino a cui ordinare, non entrambi.",
   "stockReasonQuantityInvalid": "Una quantità è un numero maggiore di zero con al massimo sei decimali.",
   "@stockReasonQuantityInvalid": {
     "description": "#4171 receiving into stock: a text under a field the server refused"
@@ -21196,6 +21199,7 @@
   "@stockReasonSameSite": {
     "description": "#4170 transfers and take-out: a label or message"
   },
+  "stockReasonSiteUnknown": "Scelga una sede di questa azienda.",
   "stockReasonStockOnHand": "C’è giacenza: prima scaricarla.",
   "@stockReasonStockOnHand": {
     "description": "#4169 the stock editors: a text under a field the server refused"
@@ -21208,6 +21212,7 @@
   "@stockReasonSupplierForeign": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonTargetBelowPoint": "Il livello fino a cui ordinare deve essere sopra il punto di riordino.",
   "stockReasonTooLong": "Questo testo è troppo lungo.",
   "@stockReasonTooLong": {
     "description": "#4169 the stock editors: a text under a field the server refused"
@@ -21303,6 +21308,22 @@
   "stockReorderLowTitle": "Scorta bassa",
   "stockReorderNoSupplierHelp": "Questi sono bassi, ma nessun articolo del fornitore è indicato come preferito: ne scelga uno negli articoli del fornitore dell’articolo.",
   "stockReorderNoSupplierTitle": "Nessun fornitore scelto",
+  "stockReorderPointActive": "In uso",
+  "stockReorderPointAdd": "Aggiungi un punto di riordino",
+  "stockReorderPointInactive": "non in uso",
+  "stockReorderPointLevel": "Punto di riordino ({unit})",
+  "stockReorderPointModeQuantity": "Ordinare una quantità",
+  "stockReorderPointModeTarget": "Ordinare fino a",
+  "stockReorderPointRow": "{site} · punto di riordino {point} · {rule}",
+  "stockReorderPointSite": "Sede",
+  "stockReorderPointTitle": "Punto di riordino",
+  "stockReorderPointValue": "Quantità (vuoto: solo segnalare)",
+  "stockReorderPointWhole": "L’articolo nel suo insieme",
+  "stockReorderPointsEmpty": "Nessun punto di riordino è impostato: nulla viene mai segnalato come basso.",
+  "stockReorderPointsTitle": "Punti di riordino",
+  "stockReorderRuleNone": "solo segnalare",
+  "stockReorderRuleQuantity": "ordinare {quantity}",
+  "stockReorderRuleTarget": "ordinare fino a {quantity}",
   "stockReorderTitle": "Riordino",
   "stockReorderToOrderEmpty": "Non c’è nulla da ordinare.",
   "stockReorderToOrderTitle": "Cosa ordinare",

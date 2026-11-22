@@ -2937,6 +2937,8 @@ Apra **Magazzino → Riordino** (la funzione *Punti di riordino* deve essere att
 
 **Crea bozza d’ordine** crea una bozza d’ordine d’acquisto da un gruppo. È solo una bozza: nulla viene ordinato, valorizzato o inviato finché non la conferma negli ordini d’acquisto. Serve il diritto di gestire gli acquisti; chiedere due volte la stessa bozza la crea una sola volta.
 
+I **punti di riordino** (sotto le due liste) rendono basso un articolo. Ognuno mostra l’articolo, la sede, il livello e che cosa ordinare allora: una quantità, *fino a* un livello, o niente (segnala soltanto). Chi può gestire il magazzino ne aggiunge uno con **Aggiungi un punto di riordino** o ne apre uno per modificarlo. Il livello e la quantità sono numeri esatti (la virgola decimale va bene); un livello fino a cui ordinare deve essere sopra il punto, un punto indica una quantità o un livello, non entrambi, e un articolo ha un punto per sede (e variante). L’articolo, la variante e la sede di un punto non si cambiano dopo: ne crei un altro. Un punto disattivato viene conservato e non segnala nulla.
+
 ### Il registro degli articoli
 
 **Destinatari:** Amministratore · Proprietario

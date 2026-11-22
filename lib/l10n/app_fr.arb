@@ -21168,10 +21168,13 @@
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
   "stockReasonPickRoleUnknown": "L'usage doit être prélèvement ou réserve.",
+  "stockReasonPointFixed": "L’article, la variante et le site d’un seuil ne se changent pas : créez-en un autre.",
+  "stockReasonPointTwice": "Cet article a déjà un seuil sur ce site.",
   "stockReasonPriceInvalid": "Un prix est nul ou positif.",
   "@stockReasonPriceInvalid": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonQuantityAndTarget": "Indiquez une quantité à commander ou un niveau à atteindre, pas les deux.",
   "stockReasonQuantityInvalid": "Une quantité est un nombre supérieur à zéro avec six décimales au plus.",
   "@stockReasonQuantityInvalid": {
     "description": "#4171 receiving into stock: a text under a field the server refused"
@@ -21196,6 +21199,7 @@
   "@stockReasonSameSite": {
     "description": "#4170 transfers and take-out: a label or message"
   },
+  "stockReasonSiteUnknown": "Choisissez un site de cette entreprise.",
   "stockReasonStockOnHand": "Il y a du stock : sortez-le d’abord.",
   "@stockReasonStockOnHand": {
     "description": "#4169 the stock editors: a text under a field the server refused"
@@ -21208,6 +21212,7 @@
   "@stockReasonSupplierForeign": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonTargetBelowPoint": "Le niveau à atteindre doit être au-dessus du seuil.",
   "stockReasonTooLong": "Ce texte est trop long.",
   "@stockReasonTooLong": {
     "description": "#4169 the stock editors: a text under a field the server refused"
@@ -21303,6 +21308,22 @@
   "stockReorderLowTitle": "Stock bas",
   "stockReorderNoSupplierHelp": "Ces articles sont bas, mais aucun article fournisseur n’est marqué comme préféré : choisissez-en un dans les articles fournisseur de l’article.",
   "stockReorderNoSupplierTitle": "Aucun fournisseur choisi",
+  "stockReorderPointActive": "Utilisé",
+  "stockReorderPointAdd": "Ajouter un seuil",
+  "stockReorderPointInactive": "inutilisé",
+  "stockReorderPointLevel": "Seuil ({unit})",
+  "stockReorderPointModeQuantity": "Commander une quantité",
+  "stockReorderPointModeTarget": "Commander jusqu’à",
+  "stockReorderPointRow": "{site} · seuil {point} · {rule}",
+  "stockReorderPointSite": "Site",
+  "stockReorderPointTitle": "Seuil de réapprovisionnement",
+  "stockReorderPointValue": "Quantité (vide : signaler seulement)",
+  "stockReorderPointWhole": "L’article dans son ensemble",
+  "stockReorderPointsEmpty": "Aucun seuil n’est défini : rien n’est jamais signalé comme bas.",
+  "stockReorderPointsTitle": "Seuils de réapprovisionnement",
+  "stockReorderRuleNone": "signaler seulement",
+  "stockReorderRuleQuantity": "commander {quantity}",
+  "stockReorderRuleTarget": "commander jusqu’à {quantity}",
   "stockReorderTitle": "Réapprovisionnement",
   "stockReorderToOrderEmpty": "Il n’y a rien à commander.",
   "stockReorderToOrderTitle": "Que commander",

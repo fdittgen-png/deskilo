@@ -2937,6 +2937,8 @@ Sie möchten sehen, was bald ausgeht, und es bestellen, ohne die Regale durchzug
 
 **Bestellentwurf erstellen** erstellt aus einer Gruppe einen Einkaufsbestellungs-Entwurf. Es ist nur ein Entwurf: Nichts wird bestellt, bepreist oder gesendet, bis Sie ihn in den Einkaufsbestellungen bestätigen. Dafür brauchen Sie das Recht, Einkäufe zu verwalten; derselbe Entwurf, zweimal angefordert, entsteht nur einmal.
 
+Die **Meldebestände** (unter den beiden Listen) machen einen Artikel knapp. Jeder zeigt Artikel, Standort, die Schwelle und was dann zu bestellen ist: eine Menge, *bis* zu einem Niveau, oder nichts (er meldet nur). Wer den Lagerbestand verwalten darf, legt einen mit **Meldebestand hinzufügen** an oder öffnet einen zum Ändern. Schwelle und Menge sind exakte Zahlen (ein Dezimalkomma genügt); ein Auffüllniveau muss über dem Meldebestand liegen, ein Meldebestand nennt eine Menge oder ein Niveau, nicht beides, und ein Artikel hat einen Meldebestand je Standort (und Variante). Artikel, Variante und Standort lassen sich danach nicht ändern: Legen Sie einen neuen an. Ein abgeschalteter Meldebestand bleibt erhalten und meldet nichts.
+
 ### Das Artikelregister
 
 **Zielgruppe:** Administrator:in · Inhaber

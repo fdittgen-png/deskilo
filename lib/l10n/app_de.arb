@@ -21168,10 +21168,13 @@
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
   "stockReasonPickRoleUnknown": "Die Verwendung muss Kommissionierung oder Reserve sein.",
+  "stockReasonPointFixed": "Artikel, Variante und Standort eines Meldebestands lassen sich nicht ändern: Legen Sie einen neuen an.",
+  "stockReasonPointTwice": "Dieser Artikel hat an diesem Standort bereits einen Meldebestand.",
   "stockReasonPriceInvalid": "Ein Preis ist null oder größer.",
   "@stockReasonPriceInvalid": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonQuantityAndTarget": "Nennen Sie eine Bestellmenge oder ein Auffüllniveau, nicht beides.",
   "stockReasonQuantityInvalid": "Eine Menge ist eine Zahl über null mit höchstens sechs Dezimalstellen.",
   "@stockReasonQuantityInvalid": {
     "description": "#4171 receiving into stock: a text under a field the server refused"
@@ -21196,6 +21199,7 @@
   "@stockReasonSameSite": {
     "description": "#4170 transfers and take-out: a label or message"
   },
+  "stockReasonSiteUnknown": "Wählen Sie einen Standort dieses Unternehmens.",
   "stockReasonStockOnHand": "Es ist Bestand vorhanden: erst ausbuchen.",
   "@stockReasonStockOnHand": {
     "description": "#4169 the stock editors: a text under a field the server refused"
@@ -21208,6 +21212,7 @@
   "@stockReasonSupplierForeign": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonTargetBelowPoint": "Das Auffüllniveau muss über dem Meldebestand liegen.",
   "stockReasonTooLong": "Dieser Text ist zu lang.",
   "@stockReasonTooLong": {
     "description": "#4169 the stock editors: a text under a field the server refused"
@@ -21303,6 +21308,22 @@
   "stockReorderLowTitle": "Niedriger Bestand",
   "stockReorderNoSupplierHelp": "Diese sind knapp, aber für sie ist kein Lieferantenartikel als bevorzugt markiert: Wählen Sie einen bei den Lieferantenartikeln des Artikels.",
   "stockReorderNoSupplierTitle": "Kein Lieferant gewählt",
+  "stockReorderPointActive": "In Gebrauch",
+  "stockReorderPointAdd": "Meldebestand hinzufügen",
+  "stockReorderPointInactive": "nicht in Gebrauch",
+  "stockReorderPointLevel": "Meldebestand ({unit})",
+  "stockReorderPointModeQuantity": "Menge bestellen",
+  "stockReorderPointModeTarget": "Auffüllen bis",
+  "stockReorderPointRow": "{site} · Meldebestand {point} · {rule}",
+  "stockReorderPointSite": "Standort",
+  "stockReorderPointTitle": "Meldebestand",
+  "stockReorderPointValue": "Menge (leer: nur melden)",
+  "stockReorderPointWhole": "Der Artikel insgesamt",
+  "stockReorderPointsEmpty": "Kein Meldebestand ist gesetzt: Nichts wird je als knapp gemeldet.",
+  "stockReorderPointsTitle": "Meldebestände",
+  "stockReorderRuleNone": "nur melden",
+  "stockReorderRuleQuantity": "{quantity} bestellen",
+  "stockReorderRuleTarget": "bis {quantity} auffüllen",
   "stockReorderTitle": "Nachbestellen",
   "stockReorderToOrderEmpty": "Es gibt nichts zu bestellen.",
   "stockReorderToOrderTitle": "Was zu bestellen ist",

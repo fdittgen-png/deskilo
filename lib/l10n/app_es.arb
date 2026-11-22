@@ -21168,10 +21168,13 @@
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
   "stockReasonPickRoleUnknown": "El uso debe ser picking o reserva.",
+  "stockReasonPointFixed": "El artículo, la variante y la sede de un punto de reposición no se cambian: cree otro.",
+  "stockReasonPointTwice": "Este artículo ya tiene un punto de reposición en esta sede.",
   "stockReasonPriceInvalid": "Un precio es cero o más.",
   "@stockReasonPriceInvalid": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonQuantityAndTarget": "Indique una cantidad a pedir o un nivel hasta el que pedir, no ambos.",
   "stockReasonQuantityInvalid": "Una cantidad es un número mayor que cero con seis decimales como máximo.",
   "@stockReasonQuantityInvalid": {
     "description": "#4171 receiving into stock: a text under a field the server refused"
@@ -21196,6 +21199,7 @@
   "@stockReasonSameSite": {
     "description": "#4170 transfers and take-out: a label or message"
   },
+  "stockReasonSiteUnknown": "Elija una sede de esta empresa.",
   "stockReasonStockOnHand": "Hay existencias: sáquelas primero.",
   "@stockReasonStockOnHand": {
     "description": "#4169 the stock editors: a text under a field the server refused"
@@ -21208,6 +21212,7 @@
   "@stockReasonSupplierForeign": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonTargetBelowPoint": "El nivel hasta el que pedir debe estar por encima del punto de reposición.",
   "stockReasonTooLong": "Este texto es demasiado largo.",
   "@stockReasonTooLong": {
     "description": "#4169 the stock editors: a text under a field the server refused"
@@ -21303,6 +21308,22 @@
   "stockReorderLowTitle": "Stock bajo",
   "stockReorderNoSupplierHelp": "Estos están bajos, pero ningún artículo de proveedor está marcado como preferido: elija uno en los artículos de proveedor del artículo.",
   "stockReorderNoSupplierTitle": "Ningún proveedor elegido",
+  "stockReorderPointActive": "En uso",
+  "stockReorderPointAdd": "Añadir un punto de reposición",
+  "stockReorderPointInactive": "sin uso",
+  "stockReorderPointLevel": "Punto de reposición ({unit})",
+  "stockReorderPointModeQuantity": "Pedir una cantidad",
+  "stockReorderPointModeTarget": "Pedir hasta",
+  "stockReorderPointRow": "{site} · punto de reposición {point} · {rule}",
+  "stockReorderPointSite": "Sede",
+  "stockReorderPointTitle": "Punto de reposición",
+  "stockReorderPointValue": "Cantidad (vacío: solo avisar)",
+  "stockReorderPointWhole": "El artículo en conjunto",
+  "stockReorderPointsEmpty": "No hay ningún punto de reposición: nada se marca nunca como bajo.",
+  "stockReorderPointsTitle": "Puntos de reposición",
+  "stockReorderRuleNone": "solo avisar",
+  "stockReorderRuleQuantity": "pedir {quantity}",
+  "stockReorderRuleTarget": "pedir hasta {quantity}",
   "stockReorderTitle": "Reposición",
   "stockReorderToOrderEmpty": "No hay nada que pedir.",
   "stockReorderToOrderTitle": "Qué pedir",
