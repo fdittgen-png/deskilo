@@ -5,6 +5,7 @@
 import 'dart:async';
 
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/features/money/domain/public_page.dart';
 import 'package:deskilo/features/money/domain/service_item.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
@@ -47,6 +48,78 @@ void main() {
     expect(find.textContaining('0.20'), findsOneWidget);
     expect(find.text('Locker'), findsOneWidget);
     expect(find.text('Inactive'), findsOneWidget);
+  });
+
+  // #4318 — the public page carries the first N public services; the list
+  // says how many are public and marks the ones it does not show.
+  List<ServiceItem> publicServices(int n) => [
+        for (var i = 1; i <= n; i++)
+          ServiceItem(
+            id: 'pub-$i',
+            workspaceId: 'ws-1',
+            name: 'Treatment ${i.toString().padLeft(2, '0')}',
+            priceCents: 1000,
+            active: true,
+            isPublic: true,
+          ),
+      ];
+
+  testWidgets('N + 1 public services: the list says one is not shown (#4318)',
+      (tester) async {
+    // A phone, tall enough that the thirteenth row is built.
+    tester.view
+      ..physicalSize = const Size(400, 2400)
+      ..devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    await pumpServices(
+      tester,
+      money: FakeMoneyRepository()
+        ..services.clear()
+        ..services.addAll(publicServices(publicPageServiceLimit + 1)),
+    );
+
+    final notice = find.byKey(const ValueKey('services-public-page-notice'));
+    expect(notice, findsOneWidget);
+    expect(
+      find.descendant(
+        of: notice,
+        matching: find.textContaining(
+          '${publicPageServiceLimit + 1} services are public. The public '
+          'page shows the first $publicPageServiceLimit, in the order of '
+          'this list. 1 public service is not shown there.',
+        ),
+      ),
+      findsOneWidget,
+    );
+    // The last one in the list's order is the one the page leaves out.
+    expect(find.textContaining('Not on the public page'), findsOneWidget);
+    expect(
+      find.descendant(
+        of: find.ancestor(
+          of: find.text('Treatment ${publicPageServiceLimit + 1}'),
+          matching: find.byType(ListTile),
+        ),
+        matching: find.textContaining('Not on the public page'),
+      ),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('N public services: no service is marked (#4318)',
+      (tester) async {
+    await pumpServices(
+      tester,
+      money: FakeMoneyRepository()
+        ..services.clear()
+        ..services.addAll(publicServices(publicPageServiceLimit)),
+    );
+
+    expect(
+      find.byKey(const ValueKey('services-public-page-notice')),
+      findsOneWidget,
+    );
+    expect(find.textContaining('not shown there'), findsNothing);
+    expect(find.textContaining('Not on the public page'), findsNothing);
   });
 
   testWidgets('an empty catalog shows the empty state', (tester) async {

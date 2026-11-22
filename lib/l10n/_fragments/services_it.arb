@@ -16,5 +16,9 @@
   "servicesPublic": "Mostra sulla nostra pagina pubblica",
   "servicesOtherCategory": "Altri servizi",
   "servicesDurationShort": "{minutes, plural, one{1 min} other{{minutes} min}}",
-  "servicesSaveFailed": "Non è stato possibile salvare il servizio. Riprovi."
+  "servicesSaveFailed": "Non è stato possibile salvare il servizio. Riprovi.",
+  "servicesPublicPageNotice": "{count, plural, =1{1 servizio è pubblico} other{{count} servizi sono pubblici}}. La pagina pubblica mostra i primi {limit}, nell’ordine di questo elenco.",
+  "servicesPublicPageHidden": "{count, plural, =1{1 servizio pubblico non vi è mostrato.} other{{count} servizi pubblici non vi sono mostrati.}}",
+  "servicesNotOnPublicPage": "Non sulla pagina pubblica",
+  "servicesPublicPageColumn": "Pagina pubblica"
 }
