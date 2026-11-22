@@ -57,52 +57,59 @@ revoke execute on function public.einvoice_transmission_handling_v1(uuid, uuid) 
 grant execute on function public.einvoice_transmission_handling_v1(uuid, uuid) to authenticated;
 
 -- ── a manual `failed` waits for the end of the claim ───────────────────
-create or replace function pg_temp.anchor_replace(p_def text, p_old text, p_new text)
-returns text
-language plpgsql
-as $f$
+-- restates 0689 (the only earlier definition): the same function, with the claim condition added.
+create or replace function public.resolve_einvoice_manually_v1(
+  p_id uuid, p_actor uuid, p_outcome text, p_reason text, p_evidence text,
+  p_verdict jsonb default null
+) returns jsonb language plpgsql security definer set search_path = public
+as $fn$
 declare
-  v_pattern text;
-  v_out text;
+  v_ws uuid;
+  v_member public.members;
+  v_row public.invoice_transmissions;
 begin
-  if position(p_old in p_def) > 0 then
-    return replace(p_def, p_old, p_new);
+  if p_outcome not in ('accepted', 'rejected', 'failed') then
+    raise exception 'invalid resolution' using errcode = '22023';
   end if;
-  v_pattern := regexp_replace(btrim(p_old, E' \t\n'), '([.^$*+?()\[\]{}|\\])', '\\\1', 'g');
-  v_pattern := regexp_replace(v_pattern, '\s+', '\\s*', 'g');
-  v_out := regexp_replace(p_def, v_pattern, replace(btrim(p_new, E' \t\n'), '\', '\\'), 'g');
-  return case when v_out = p_def then null else v_out end;
-end
-$f$;
-revoke execute on function pg_temp.anchor_replace(text, text, text) from public;
-
-do $patch$
-declare
-  v_def text := pg_get_functiondef('public.resolve_einvoice_manually_v1(uuid, uuid, text, text, text, jsonb)'::regprocedure);
-  v_next text;
-begin
-  v_next := pg_temp.anchor_replace(v_def,
-    $o$  update public.invoice_transmissions
-    set phase = p_outcome, resolved_by = p_actor,$o$,
-    $n$  -- the claim of the dispatch is still live: it may be running, and `failed` would let the same
+  if coalesce(trim(p_reason), '') = '' or coalesce(trim(p_evidence), '') = ''
+  then
+    raise exception 'a reason and the evidence are required'
+      using errcode = '22023';
+  end if;
+  select workspace_id into v_ws from public.invoice_transmissions
+    where id = p_id;
+  if v_ws is null then
+    return jsonb_build_object('resolved', false, 'detail', 'unknown');
+  end if;
+  select * into v_member from public.members
+    where workspace_id = v_ws and user_id = p_actor and status = 'active';
+  if not found or not (v_member.is_admin or v_member.is_owner
+      or public.member_has_permission(v_member.id, 'issueInvoices')) then
+    raise exception 'not allowed to resolve this transmission'
+      using errcode = '42501';
+  end if;
+  -- the claim of the dispatch is still live: it may be running, and `failed` would let the same
   -- document be claimed and sent again
   if p_outcome = 'failed' and exists (select 1 from public.invoice_transmissions t
        where t.id = p_id and t.phase = 'uncertain' and t.deadline is not null and t.deadline > now()) then
     return jsonb_build_object('resolved', false, 'phase', 'uncertain', 'detail', 'claim_live');
   end if;
   update public.invoice_transmissions
-    set phase = p_outcome, resolved_by = p_actor,$n$);
-  if v_next is null then raise exception '0859: the anchor of resolve_einvoice_manually_v1 is not found' using errcode = 'P0001'; end if;
-  -- the write itself holds the same condition: the row moves only when its claim has ended
-  v_next := pg_temp.anchor_replace(v_next,
-    $o$    where id = p_id and phase = 'uncertain'
-    returning * into v_row;$o$,
-    $n$    where id = p_id and phase = 'uncertain'
+    set phase = p_outcome, resolved_by = p_actor,
+        resolved_reason = left(trim(p_reason), 300),
+        resolved_evidence = left(trim(p_evidence), 1000),
+        resolved_at = now(), detail = 'resolved_manually',
+        verdict = coalesce(p_verdict, verdict)
+    where id = p_id and phase = 'uncertain'
+      -- the write holds the same condition: the row moves only when its claim has ended
       and not (p_outcome = 'failed' and deadline is not null and deadline > now())
-    returning * into v_row;$n$);
-  if v_next is null then raise exception '0859: the write anchor of resolve_einvoice_manually_v1 is not found' using errcode = 'P0001'; end if;
-  execute v_next;
-end
-$patch$;
+    returning * into v_row;
+  if not found then
+    select * into v_row from public.invoice_transmissions where id = p_id;
+    return jsonb_build_object('resolved', false, 'phase', v_row.phase);
+  end if;
+  return jsonb_build_object('resolved', true, 'phase', v_row.phase);
+end;
+$fn$;
 
 select public.set_deskilo_schema_version(859);
