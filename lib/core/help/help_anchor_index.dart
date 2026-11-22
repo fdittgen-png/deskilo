@@ -23,6 +23,7 @@ const helpAnchorIndex = <String>{
   HelpAnchor.moneyStockReorder,
   HelpAnchor.moneyStockValue,
   HelpAnchor.moneyStockRegistry,
+  HelpAnchor.moneyStockGroups,
   HelpAnchor.moneyStockReversals,
   HelpAnchor.moneyStockCycleCounts,
   HelpAnchor.advancedDeploy,

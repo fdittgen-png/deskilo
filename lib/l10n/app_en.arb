@@ -24048,6 +24048,281 @@
   "@invoicingViewCustomers": {
     "description": "#3587 list view: one line per customer"
   },
+  "itemGroupAssignField": "Group",
+  "@itemGroupAssignField": {
+    "description": "#4361 G12 item groups: itemGroupAssignField"
+  },
+  "itemGroupAssignNone": "No group",
+  "@itemGroupAssignNone": {
+    "description": "#4361 G12 item groups: itemGroupAssignNone"
+  },
+  "itemGroupAssignOpen": "Group and inherited settings",
+  "@itemGroupAssignOpen": {
+    "description": "#4361 G12 item groups: itemGroupAssignOpen"
+  },
+  "itemGroupAssignTitle": "Group of {item}",
+  "@itemGroupAssignTitle": {
+    "description": "#4361 G12 item groups: itemGroupAssignTitle",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      }
+    }
+  },
+  "itemGroupClose": "Close",
+  "@itemGroupClose": {
+    "description": "#4361 G12 item groups: itemGroupClose"
+  },
+  "itemGroupConfirm": "Check what this reaches, then save again to apply it.",
+  "@itemGroupConfirm": {
+    "description": "#4361 G12 item groups: itemGroupConfirm"
+  },
+  "itemGroupCountEvery": "Count every (days)",
+  "@itemGroupCountEvery": {
+    "description": "#4361 G12 item groups: itemGroupCountEvery"
+  },
+  "itemGroupDelete": "Delete the group",
+  "@itemGroupDelete": {
+    "description": "#4361 G12 item groups: itemGroupDelete"
+  },
+  "itemGroupDeleted": "Group deleted.",
+  "@itemGroupDeleted": {
+    "description": "#4361 G12 item groups: itemGroupDeleted"
+  },
+  "itemGroupEditTitle": "Group",
+  "@itemGroupEditTitle": {
+    "description": "#4361 G12 item groups: itemGroupEditTitle"
+  },
+  "itemGroupFailed": "The item groups could not be read.",
+  "@itemGroupFailed": {
+    "description": "#4361 G12 item groups: itemGroupFailed"
+  },
+  "itemGroupFrom": "From {group}",
+  "@itemGroupFrom": {
+    "description": "#4361 G12 item groups: itemGroupFrom",
+    "placeholders": {
+      "group": {
+        "type": "String"
+      }
+    }
+  },
+  "itemGroupFromSince": "From {group} since {date}",
+  "@itemGroupFromSince": {
+    "description": "#4361 G12 item groups: itemGroupFromSince",
+    "placeholders": {
+      "group": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "itemGroupHistory": "History",
+  "@itemGroupHistory": {
+    "description": "#4361 G12 item groups: itemGroupHistory"
+  },
+  "itemGroupHistoryLine": "{parameter}: {from} → {to}, reached {affected}",
+  "@itemGroupHistoryLine": {
+    "description": "#4361 G12 item groups: itemGroupHistoryLine",
+    "placeholders": {
+      "parameter": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      },
+      "affected": {
+        "type": "int"
+      }
+    }
+  },
+  "itemGroupHistoryNone": "No change recorded yet.",
+  "@itemGroupHistoryNone": {
+    "description": "#4361 G12 item groups: itemGroupHistoryNone"
+  },
+  "itemGroupItemsCount": "{count, plural, one{1 item} other{{count} items}}",
+  "@itemGroupItemsCount": {
+    "description": "#4361 G12 item groups: itemGroupItemsCount",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "itemGroupMinAge": "Minimum age for a sale",
+  "@itemGroupMinAge": {
+    "description": "#4361 G12 item groups: itemGroupMinAge"
+  },
+  "itemGroupMove": "Move",
+  "@itemGroupMove": {
+    "description": "#4361 G12 item groups: itemGroupMove"
+  },
+  "itemGroupMoveReaches": "Moving it changes {count} settings.",
+  "@itemGroupMoveReaches": {
+    "description": "#4361 G12 item groups: itemGroupMoveReaches",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "itemGroupMoved": "The item is in its new group.",
+  "@itemGroupMoved": {
+    "description": "#4361 G12 item groups: itemGroupMoved"
+  },
+  "itemGroupName": "Name",
+  "@itemGroupName": {
+    "description": "#4361 G12 item groups: itemGroupName"
+  },
+  "itemGroupNewTitle": "New group",
+  "@itemGroupNewTitle": {
+    "description": "#4361 G12 item groups: itemGroupNewTitle"
+  },
+  "itemGroupNo": "No",
+  "@itemGroupNo": {
+    "description": "#4361 G12 item groups: itemGroupNo"
+  },
+  "itemGroupNoParent": "Top level",
+  "@itemGroupNoParent": {
+    "description": "#4361 G12 item groups: itemGroupNoParent"
+  },
+  "itemGroupNotSet": "Not set",
+  "@itemGroupNotSet": {
+    "description": "#4361 G12 item groups: itemGroupNotSet"
+  },
+  "itemGroupOwn": "Own value",
+  "@itemGroupOwn": {
+    "description": "#4361 G12 item groups: itemGroupOwn"
+  },
+  "itemGroupParent": "Inside group",
+  "@itemGroupParent": {
+    "description": "#4361 G12 item groups: itemGroupParent"
+  },
+  "itemGroupPreviewLine": "{parameter}: applies to {affected}, {kept} keep their own value, {skipped} cannot be reached",
+  "@itemGroupPreviewLine": {
+    "description": "#4361 G12 item groups: itemGroupPreviewLine",
+    "placeholders": {
+      "parameter": {
+        "type": "String"
+      },
+      "affected": {
+        "type": "int"
+      },
+      "kept": {
+        "type": "int"
+      },
+      "skipped": {
+        "type": "int"
+      }
+    }
+  },
+  "itemGroupPreviewNothing": "No item is reached.",
+  "@itemGroupPreviewNothing": {
+    "description": "#4361 G12 item groups: itemGroupPreviewNothing"
+  },
+  "itemGroupPreviewTitle": "What this change reaches",
+  "@itemGroupPreviewTitle": {
+    "description": "#4361 G12 item groups: itemGroupPreviewTitle"
+  },
+  "itemGroupReasonDepth": "A sub-group cannot have sub-groups.",
+  "@itemGroupReasonDepth": {
+    "description": "#4361 G12 item groups: itemGroupReasonDepth"
+  },
+  "itemGroupReasonGroupUnknown": "This group does not exist.",
+  "@itemGroupReasonGroupUnknown": {
+    "description": "#4361 G12 item groups: itemGroupReasonGroupUnknown"
+  },
+  "itemGroupReasonHasMovements": "it already has movements",
+  "@itemGroupReasonHasMovements": {
+    "description": "#4361 G12 item groups: itemGroupReasonHasMovements"
+  },
+  "itemGroupReasonHasSubgroups": "This group has sub-groups: delete them first.",
+  "@itemGroupReasonHasSubgroups": {
+    "description": "#4361 G12 item groups: itemGroupReasonHasSubgroups"
+  },
+  "itemGroupReasonInUse": "This group is used by items: move them first.",
+  "@itemGroupReasonInUse": {
+    "description": "#4361 G12 item groups: itemGroupReasonInUse"
+  },
+  "itemGroupReasonNameDuplicate": "Another group already has this name.",
+  "@itemGroupReasonNameDuplicate": {
+    "description": "#4361 G12 item groups: itemGroupReasonNameDuplicate"
+  },
+  "itemGroupReasonNeedsSerial": "Per-piece tags need tracking by piece.",
+  "@itemGroupReasonNeedsSerial": {
+    "description": "#4361 G12 item groups: itemGroupReasonNeedsSerial"
+  },
+  "itemGroupReasonNotOverridable": "This setting cannot be given its own value.",
+  "@itemGroupReasonNotOverridable": {
+    "description": "#4361 G12 item groups: itemGroupReasonNotOverridable"
+  },
+  "itemGroupSkippedLine": "{item}: {parameter} ({reason})",
+  "@itemGroupSkippedLine": {
+    "description": "#4361 G12 item groups: itemGroupSkippedLine",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      },
+      "parameter": {
+        "type": "String"
+      },
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "itemGroupSkippedTitle": "Not reached",
+  "@itemGroupSkippedTitle": {
+    "description": "#4361 G12 item groups: itemGroupSkippedTitle"
+  },
+  "itemGroupSoldByWeight": "Sold by weight",
+  "@itemGroupSoldByWeight": {
+    "description": "#4361 G12 item groups: itemGroupSoldByWeight"
+  },
+  "itemGroupTagBatch": "One tag per batch",
+  "@itemGroupTagBatch": {
+    "description": "#4361 G12 item groups: itemGroupTagBatch"
+  },
+  "itemGroupTagMode": "Tag mode",
+  "@itemGroupTagMode": {
+    "description": "#4361 G12 item groups: itemGroupTagMode"
+  },
+  "itemGroupTagNone": "No tags",
+  "@itemGroupTagNone": {
+    "description": "#4361 G12 item groups: itemGroupTagNone"
+  },
+  "itemGroupTagUnit": "One tag per piece",
+  "@itemGroupTagUnit": {
+    "description": "#4361 G12 item groups: itemGroupTagUnit"
+  },
+  "itemGroupTrackingSerial": "By piece (serial)",
+  "@itemGroupTrackingSerial": {
+    "description": "#4361 G12 item groups: itemGroupTrackingSerial"
+  },
+  "itemGroupUseGroup": "Use the group’s value",
+  "@itemGroupUseGroup": {
+    "description": "#4361 G12 item groups: itemGroupUseGroup"
+  },
+  "itemGroupYes": "Yes",
+  "@itemGroupYes": {
+    "description": "#4361 G12 item groups: itemGroupYes"
+  },
+  "itemGroupsAdd": "Add a group",
+  "@itemGroupsAdd": {
+    "description": "#4361 G12 item groups: itemGroupsAdd"
+  },
+  "itemGroupsEmpty": "No group yet. A group holds settings that its items share.",
+  "@itemGroupsEmpty": {
+    "description": "#4361 G12 item groups: itemGroupsEmpty"
+  },
+  "itemGroupsTitle": "Item groups",
+  "@itemGroupsTitle": {
+    "description": "#4361 G12 item groups: itemGroupsTitle"
+  },
   "journalBlocked": "Map these roles in the book chart first: {roles}",
   "@journalBlocked": {
     "description": "Journal export (#2370): roles the posting engine could not resolve",

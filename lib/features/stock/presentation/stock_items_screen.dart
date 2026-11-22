@@ -30,6 +30,7 @@ import '../domain/stock_config.dart';
 import '../domain/stock_page.dart';
 import '../domain/stock_registry.dart';
 import '../providers/stock_providers.dart';
+import 'item_group_assign_dialog.dart';
 import 'stock_home_sheet.dart';
 import 'stock_item_add.dart';
 import 'stock_item_editor.dart';
@@ -352,6 +353,13 @@ class _RegistryRow extends ConsumerWidget {
                     if (saved) onHomeChanged();
                   },
                 ),
+                if (ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.stockItemGroups))
+                  IconButton(
+                    key: ValueKey('stock-item-group-${row.itemId}'),
+                    icon: const Icon(Icons.folder_copy_outlined),
+                    tooltip: l10n.itemGroupAssignOpen,
+                    onPressed: () => showItemGroupAssign(context, workspaceId: workspaceId, itemId: row.itemId, itemName: row.itemName),
+                  ),
                 if (showTools) ...[
                   IconButton(
                     key: ValueKey('stock-edit-item-${row.itemId}'),

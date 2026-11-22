@@ -20,6 +20,7 @@ import 'package:deskilo/core/demo/data/asset_valuation_repository.dart';
 import 'package:deskilo/core/demo/data/bank_statement_demo_seed.dart';
 import 'package:deskilo/core/demo/data/book_period_repository.dart';
 import 'package:deskilo/core/demo/data/book_profile_repository.dart';
+import 'package:deskilo/core/demo/data/demo_item_groups.dart';
 import 'package:deskilo/core/demo/data/demo_kiosk_devices.dart';
 import 'package:deskilo/core/demo/data/demo_stock_config_commands.dart';
 import 'package:deskilo/core/demo/data/demo_stock_cycle_counts.dart';
@@ -1473,6 +1474,24 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
       }
       final done = (await cycle.task(demoFirstSpaceId, task.taskId)).state == CountTaskState.complete;
       return blind.difference == null && blind.baseline == null && done && (await reversals.counts(demoFirstSpaceId)).length == 1;
+    },
+  ),
+  // #4361 — the owner changes the shelf life of the drinks group: the preview says the milk follows, the syrup
+  // keeps its own and the beans have their sub-group's; only the second save applies it, and the history says so.
+  WorkspaceFeature.stockItemGroups: _action(
+    _owner,
+    'Ada changes the drinks group\'s shelf life, sees "applies to 1, 1 keeps its own", applies it and reads it in the history',
+    (w) async {
+      final groups = DemoItemGroups(demoFirstSpaceId, DemoStockConfigCommands(demoFirstSpaceId), () => DateTime(2026, 5, 13));
+      final drinks = (await groups.groups(demoFirstSpaceId)).firstWhere((g) => g.id == 'demo-group-drinks');
+      final body = {'parameters': {'shelf_life_days': 120}};
+      final preview = await groups.save(demoFirstSpaceId, requestId: 'preview', groupId: drinks.id, expectedRevision: drinks.revision, body: body, apply: false);
+      final impact = preview.impact['shelf_life_days'];
+      if (impact == null || impact.affected != 1 || impact.keptOwn != 1) return false;
+      await groups.save(demoFirstSpaceId, requestId: 'apply', groupId: drinks.id, expectedRevision: drinks.revision, body: body);
+      final milk = await groups.effective(demoFirstSpaceId, 'demo-item-milk');
+      final history = await groups.history(demoFirstSpaceId, groupId: drinks.id);
+      return milk.params['shelf_life_days']!.value == 120 && history.length == 1;
     },
   ),
   // #4164 — the owner keeps a customer with no account: a business is added
