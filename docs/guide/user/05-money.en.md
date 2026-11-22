@@ -703,6 +703,21 @@ Open **Stock → Items**. Each line shows the **barcode**, the **unit**, the **p
 - **Search** by name, barcode or address. Typing or scanning a barcode into the search and confirming opens that item.
 - Long lists load by pages: choose *Show more*.
 
+<!-- anchor: user.money.stock.scanning -->
+### Working with a scanner
+
+**Audience:** Administrator · Owner
+
+You want to receive, move and take out goods by scanning, without touching a field.
+
+A barcode scanner in keyboard mode (it types the code and presses Enter) works in the move and take-out sheets, in the put-away of a delivery, and on **Stock → Items** and **Stock → Places**. You do not tap a field first. A text field that has the focus keeps its own typing, so what you type is never taken for a scan.
+
+- **Scan the place, then the items.** A place code sets the current place; it stays until you scan another and is shown at the top (*Placing into …*). In a move, the first place is where the goods come from and the second where they go. An item, variant or package code names the item and counts it: a carton code adds the carton's exact quantity (for example 12 pieces), and a lot label sets the lot.
+- **A repeated scan** adds one more, or, when your business chose so in the stock settings (*Repeated scan*), puts you on the quantity field instead.
+- **A code that names nothing** says *Unknown code … — add it to an item?*; whoever may manage the stock can open the items and give it to one. A place that cannot take goods, or an item that is not kept in stock, is refused in words and nothing is filled.
+- **Nothing is sent by a scan.** It only fills the form; the button you press runs the same command, with the same rights, as without a scanner.
+- **Settings.** Whether scanning is used is the business's *Scanner* feature under stock management. The longest gap between two keys of one scan (a person types slower than a scanner) and what ends a code (Enter, Tab or either) belong to the device, in **Stock → Stock settings → Scanner**.
+
 <!-- anchor: user.money.stock.value -->
 ### Stock value and where goods came from
 

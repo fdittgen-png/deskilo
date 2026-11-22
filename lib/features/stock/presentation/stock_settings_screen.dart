@@ -21,6 +21,7 @@ import '../../workspace/domain/workspace_permission.dart';
 import '../../workspace/presentation/widgets/feature_switch_list.dart';
 import '../../workspace/presentation/widgets/settings_editor.dart';
 import '../../workspace/providers/workspace_providers.dart';
+import 'stock_scan_settings.dart';
 
 /// The stock features, parents first.
 const stockSettingsFeatures = [
@@ -65,6 +66,8 @@ class StockSettingsScreen extends ConsumerWidget {
                       keyPrefix: 'stock.',
                       canEdit: held.contains(WorkspacePermission.workspaceSettings),
                     ),
+                    const SizedBox(height: AppSpacing.md),
+                    const StockScanSettings(),
                   ],
                 ),
               ),

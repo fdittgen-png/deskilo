@@ -703,6 +703,21 @@ Sie möchten eine Liste, die für jeden Artikel und jede Variante sagt, was es i
 - **Suchen** Sie nach Name, Barcode oder Adresse. Einen Barcode in die Suche eingeben oder scannen und bestätigen öffnet diesen Artikel.
 - Lange Listen werden seitenweise geladen: Wählen Sie *Mehr anzeigen*.
 
+<!-- anchor: user.money.stock.scanning -->
+### Mit einem Scanner arbeiten
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie möchten Ware per Scan annehmen, umlagern und ausbuchen, ohne ein Feld anzutippen.
+
+Ein Barcode-Scanner im Tastaturmodus (er tippt den Code und drückt die Eingabetaste) funktioniert in den Blättern zum Umlagern und Ausbuchen, beim Einlagern einer Lieferung sowie unter **Lager → Artikel** und **Lager → Lagerplätze**. Sie müssen kein Feld vorher antippen. Ein Textfeld mit Fokus behält seine eigene Eingabe: Was Sie tippen, wird nie für einen Scan gehalten.
+
+- **Erst den Lagerplatz scannen, dann die Artikel.** Ein Platzcode setzt den aktuellen Platz; er bleibt, bis Sie einen anderen scannen, und steht oben (*Einlagern in …*). Beim Umlagern ist der erste Platz die Quelle und der zweite das Ziel. Ein Artikel-, Varianten- oder Verpackungscode bezeichnet den Artikel und zählt ihn: Ein Kartoncode addiert die genaue Menge des Kartons (zum Beispiel 12 Stück), ein Chargenetikett setzt die Charge.
+- **Ein wiederholter Scan** addiert eins, oder – wenn Ihr Betrieb es in den Lagereinstellungen so gewählt hat (*Wiederholter Scan*) – führt Sie ins Mengenfeld.
+- **Ein Code, der nichts bezeichnet,** meldet *Unbekannter Code … — einem Artikel zuordnen?*; wer das Lager verwalten darf, kann die Artikel öffnen und ihn einem zuordnen. Ein Platz, der keine Ware aufnehmen kann, oder ein Artikel, der nicht auf Lager geführt wird, wird in Worten abgelehnt, und nichts wird ausgefüllt.
+- **Ein Scan sendet nichts.** Er füllt nur das Formular; die Taste, die Sie drücken, führt denselben Befehl mit denselben Rechten aus wie ohne Scanner.
+- **Einstellungen.** Ob gescannt wird, bestimmt die Funktion *Scanner* des Betriebs unter der Lagerverwaltung. Die längste Lücke zwischen zwei Tasten eines Scans (ein Mensch tippt langsamer als ein Scanner) und was einen Code beendet (Eingabe, Tab oder beides) gehören dem Gerät, unter **Lager → Lagereinstellungen → Scanner**.
+
 <!-- anchor: user.money.stock.value -->
 ### Lagerwert und Herkunft der Ware
 

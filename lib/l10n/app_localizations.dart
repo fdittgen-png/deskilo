@@ -57302,6 +57302,108 @@ abstract class AppLocalizations {
   /// **'What to order'**
   String get stockReorderToOrderTitle;
 
+  /// #4359 G10 scanner: stockScanFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The scanned code could not be read. Check the connection and scan it again.'**
+  String get stockScanFailed;
+
+  /// #4359 G10 scanner: stockScanHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Working with a scanner'**
+  String get stockScanHelp;
+
+  /// #4359 G10 scanner: stockScanInterval
+  ///
+  /// In en, this message translates to:
+  /// **'Longest gap between two keys of a scan (milliseconds)'**
+  String get stockScanInterval;
+
+  /// #4359 G10 scanner: stockScanIntervalInvalid
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a whole number of milliseconds between {min} and {max}.'**
+  String stockScanIntervalInvalid(int min, int max);
+
+  /// #4359 G10 scanner: stockScanLast
+  ///
+  /// In en, this message translates to:
+  /// **'{item}: {quantity} {unit}'**
+  String stockScanLast(String item, String quantity, String unit);
+
+  /// #4359 G10 scanner: stockScanPlacing
+  ///
+  /// In en, this message translates to:
+  /// **'Placing into {place}'**
+  String stockScanPlacing(String place);
+
+  /// #4359 G10 scanner: stockScanRefusedCode
+  ///
+  /// In en, this message translates to:
+  /// **'The code {code} names nothing this form can use.'**
+  String stockScanRefusedCode(String code);
+
+  /// #4359 G10 scanner: stockScanRefusedPlace
+  ///
+  /// In en, this message translates to:
+  /// **'{place} cannot take goods.'**
+  String stockScanRefusedPlace(String place);
+
+  /// #4359 G10 scanner: stockScanSave
+  ///
+  /// In en, this message translates to:
+  /// **'Save the scanner settings'**
+  String get stockScanSave;
+
+  /// #4359 G10 scanner: stockScanSettingsHint
+  ///
+  /// In en, this message translates to:
+  /// **'A scanner in keyboard mode types the code and presses Enter. These two settings belong to this device: a code typed faster than the gap below is taken for a scan.'**
+  String get stockScanSettingsHint;
+
+  /// #4359 G10 scanner: stockScanSettingsTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Scanner'**
+  String get stockScanSettingsTitle;
+
+  /// #4359 G10 scanner: stockScanTerminator
+  ///
+  /// In en, this message translates to:
+  /// **'What ends a scanned code'**
+  String get stockScanTerminator;
+
+  /// #4359 G10 scanner: stockScanTerminatorEither
+  ///
+  /// In en, this message translates to:
+  /// **'Enter or Tab'**
+  String get stockScanTerminatorEither;
+
+  /// #4359 G10 scanner: stockScanTerminatorEnter
+  ///
+  /// In en, this message translates to:
+  /// **'Enter'**
+  String get stockScanTerminatorEnter;
+
+  /// #4359 G10 scanner: stockScanTerminatorTab
+  ///
+  /// In en, this message translates to:
+  /// **'Tab'**
+  String get stockScanTerminatorTab;
+
+  /// #4359 G10 scanner: stockScanUnknown
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown code {code} — add it to an item?'**
+  String stockScanUnknown(String code);
+
+  /// #4359 G10 scanner: stockScanUnknownAdd
+  ///
+  /// In en, this message translates to:
+  /// **'Open the items'**
+  String get stockScanUnknownAdd;
+
   /// the stock pages and group (#4299)
   ///
   /// In en, this message translates to:

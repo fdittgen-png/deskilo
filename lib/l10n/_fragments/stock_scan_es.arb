@@ -1,0 +1,19 @@
+{
+  "stockScanPlacing": "Colocando en {place}",
+  "stockScanLast": "{item}: {quantity} {unit}",
+  "stockScanUnknown": "Código {code} desconocido: ¿añadirlo a un artículo?",
+  "stockScanUnknownAdd": "Abrir los artículos",
+  "stockScanRefusedPlace": "{place} no puede recibir mercancías.",
+  "stockScanRefusedCode": "El código {code} no designa nada que este formulario pueda usar.",
+  "stockScanFailed": "No se pudo leer el código escaneado. Compruebe la conexión y vuelva a escanearlo.",
+  "stockScanHelp": "Trabajar con un escáner",
+  "stockScanSettingsTitle": "Escáner",
+  "stockScanSettingsHint": "Un escáner en modo teclado escribe el código y pulsa Intro. Estos dos ajustes son de este dispositivo: un código escrito más rápido que el intervalo de abajo se toma por un escaneo.",
+  "stockScanInterval": "Intervalo máximo entre dos teclas de un escaneo (milisegundos)",
+  "stockScanIntervalInvalid": "Introduzca un número entero de milisegundos entre {min} y {max}.",
+  "stockScanTerminator": "Qué termina un código escaneado",
+  "stockScanTerminatorEither": "Intro o Tab",
+  "stockScanTerminatorEnter": "Intro",
+  "stockScanTerminatorTab": "Tab",
+  "stockScanSave": "Guardar los ajustes del escáner"
+}

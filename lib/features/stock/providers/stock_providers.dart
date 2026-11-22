@@ -6,6 +6,7 @@ import '../../../core/settings/setting_defaults.g.dart';
 import '../../money/providers/purchase_order_providers.dart';
 import '../../workspace/providers/operation_context_providers.dart';
 import '../application/stock_walk.dart';
+import '../data/supabase_stock_code_resolver.dart';
 import '../data/supabase_stock_config_commands.dart';
 import '../data/supabase_stock_operations.dart';
 import '../data/supabase_stock_queries.dart';
@@ -13,6 +14,7 @@ import '../data/supabase_stock_receiving_commands.dart';
 import '../data/supabase_stock_registry.dart';
 import '../data/supabase_stock_reorder.dart';
 import '../data/supabase_stock_trace.dart';
+import '../domain/stock_code_resolver.dart';
 import '../domain/stock_config.dart';
 import '../domain/stock_config_commands.dart';
 import '../domain/stock_operations.dart';
@@ -129,6 +131,19 @@ final stockReplenishmentProvider = FutureProvider.autoDispose.family<Replenishme
   (ref, workspaceId) => ref.watch(stockReorderProvider).replenishment(workspaceId),
   retry: (_, _) => null,
 );
+
+/// #4359 -- what a scanned code names, for the selected workspace (the Demo answers from its own ledger).
+final stockCodeResolverProvider = Provider<StockCodeResolver>(
+  (ref) => SupabaseStockCodeResolver(ref.watch(selectedWorkspaceClientProvider)),
+);
+
+/// #4359 -- whether a goods sheet listens to a scanner in keyboard mode: the `stockScanning` feature of the
+/// business. The app wires it to the feature; a test or the Demo can switch it.
+final stockScanningProvider = Provider<bool>((ref) => true);
+
+/// #4359 -- whether a repeated scan adds one (the default) or asks for the quantity: the business's
+/// `stock.repeated_scan` setting (`add_one` | `ask_quantity`).
+final stockScanAddsOneProvider = Provider<bool>((ref) => true);
 
 /// #4173 -- the trace of goods to their documents and the operational value, for the selected
 /// business. The Demo and the tests replace it.

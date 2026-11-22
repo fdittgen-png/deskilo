@@ -703,6 +703,21 @@ Ouvrez **Stock → Articles**. Chaque ligne montre le **code-barres**, l’**uni
 - **Recherchez** par nom, code-barres ou adresse. Saisir ou scanner un code-barres dans la recherche et valider ouvre cet article.
 - Les longues listes se chargent par pages : choisissez *Afficher plus*.
 
+<!-- anchor: user.money.stock.scanning -->
+### Travailler avec un scanner
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous voulez recevoir, déplacer et sortir des marchandises en scannant, sans toucher un champ.
+
+Un scanner de codes-barres en mode clavier (il saisit le code puis appuie sur Entrée) fonctionne dans les feuilles de déplacement et de sortie, au rangement d’une livraison, et sous **Stock → Articles** et **Stock → Emplacements**. Il n’est pas nécessaire de toucher un champ d’abord. Un champ de texte qui a le focus garde sa propre saisie : ce que vous tapez n’est jamais pris pour un scan.
+
+- **Scannez l’emplacement, puis les articles.** Un code d’emplacement fixe l’emplacement courant ; il reste jusqu’à ce que vous en scanniez un autre et s’affiche en haut (*Rangement dans …*). Pour un déplacement, le premier emplacement est la source et le second la destination. Un code d’article, de variante ou de conditionnement désigne l’article et le compte : un code de carton ajoute la quantité exacte du carton (par exemple 12 pièces), une étiquette de lot fixe le lot.
+- **Un scan répété** en ajoute un de plus ou, si votre entreprise l’a choisi dans les réglages du stock (*Scan répété*), vous place sur le champ de quantité.
+- **Un code qui ne désigne rien** affiche *Code … inconnu — l’ajouter à un article ?* ; qui peut gérer le stock ouvre les articles et le donne à l’un d’eux. Un emplacement qui ne peut pas recevoir de marchandises, ou un article non tenu en stock, est refusé en toutes lettres et rien n’est rempli.
+- **Un scan n’envoie rien.** Il remplit seulement le formulaire ; le bouton que vous pressez exécute la même commande, avec les mêmes droits, que sans scanner.
+- **Réglages.** L’usage du scanner dépend de la fonction *Scanner* de l’entreprise, sous la gestion du stock. Le plus long intervalle entre deux touches d’un scan (une personne tape moins vite qu’un scanner) et ce qui termine un code (Entrée, Tab ou les deux) sont propres à l’appareil, sous **Stock → Réglages du stock → Scanner**.
+
 <!-- anchor: user.money.stock.value -->
 ### Valeur du stock et origine des marchandises
 

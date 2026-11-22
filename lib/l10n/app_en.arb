@@ -46398,6 +46398,113 @@
   "@stockReorderToOrderTitle": {
     "description": "#4294 reorder: a label or a message"
   },
+  "stockScanFailed": "The scanned code could not be read. Check the connection and scan it again.",
+  "@stockScanFailed": {
+    "description": "#4359 G10 scanner: stockScanFailed"
+  },
+  "stockScanHelp": "Working with a scanner",
+  "@stockScanHelp": {
+    "description": "#4359 G10 scanner: stockScanHelp"
+  },
+  "stockScanInterval": "Longest gap between two keys of a scan (milliseconds)",
+  "@stockScanInterval": {
+    "description": "#4359 G10 scanner: stockScanInterval"
+  },
+  "stockScanIntervalInvalid": "Enter a whole number of milliseconds between {min} and {max}.",
+  "@stockScanIntervalInvalid": {
+    "description": "#4359 G10 scanner: stockScanIntervalInvalid",
+    "placeholders": {
+      "min": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "stockScanLast": "{item}: {quantity} {unit}",
+  "@stockScanLast": {
+    "description": "#4359 G10 scanner: stockScanLast",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "stockScanPlacing": "Placing into {place}",
+  "@stockScanPlacing": {
+    "description": "#4359 G10 scanner: stockScanPlacing",
+    "placeholders": {
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "stockScanRefusedCode": "The code {code} names nothing this form can use.",
+  "@stockScanRefusedCode": {
+    "description": "#4359 G10 scanner: stockScanRefusedCode",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "stockScanRefusedPlace": "{place} cannot take goods.",
+  "@stockScanRefusedPlace": {
+    "description": "#4359 G10 scanner: stockScanRefusedPlace",
+    "placeholders": {
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "stockScanSave": "Save the scanner settings",
+  "@stockScanSave": {
+    "description": "#4359 G10 scanner: stockScanSave"
+  },
+  "stockScanSettingsHint": "A scanner in keyboard mode types the code and presses Enter. These two settings belong to this device: a code typed faster than the gap below is taken for a scan.",
+  "@stockScanSettingsHint": {
+    "description": "#4359 G10 scanner: stockScanSettingsHint"
+  },
+  "stockScanSettingsTitle": "Scanner",
+  "@stockScanSettingsTitle": {
+    "description": "#4359 G10 scanner: stockScanSettingsTitle"
+  },
+  "stockScanTerminator": "What ends a scanned code",
+  "@stockScanTerminator": {
+    "description": "#4359 G10 scanner: stockScanTerminator"
+  },
+  "stockScanTerminatorEither": "Enter or Tab",
+  "@stockScanTerminatorEither": {
+    "description": "#4359 G10 scanner: stockScanTerminatorEither"
+  },
+  "stockScanTerminatorEnter": "Enter",
+  "@stockScanTerminatorEnter": {
+    "description": "#4359 G10 scanner: stockScanTerminatorEnter"
+  },
+  "stockScanTerminatorTab": "Tab",
+  "@stockScanTerminatorTab": {
+    "description": "#4359 G10 scanner: stockScanTerminatorTab"
+  },
+  "stockScanUnknown": "Unknown code {code} — add it to an item?",
+  "@stockScanUnknown": {
+    "description": "#4359 G10 scanner: stockScanUnknown",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "stockScanUnknownAdd": "Open the items",
+  "@stockScanUnknownAdd": {
+    "description": "#4359 G10 scanner: stockScanUnknownAdd"
+  },
   "stockSettingsElsewhere": "Stock settings are kept on the Stock settings page.",
   "@stockSettingsElsewhere": {
     "description": "the stock pages and group (#4299)"

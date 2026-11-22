@@ -36112,6 +36112,72 @@ class AppLocalizationsFr extends AppLocalizations {
   String get stockReorderToOrderTitle => 'Que commander';
 
   @override
+  String get stockScanFailed =>
+      'Le code scanné n’a pas pu être lu. Vérifiez la connexion et scannez-le à nouveau.';
+
+  @override
+  String get stockScanHelp => 'Travailler avec un scanner';
+
+  @override
+  String get stockScanInterval =>
+      'Plus long intervalle entre deux touches d’un scan (millisecondes)';
+
+  @override
+  String stockScanIntervalInvalid(int min, int max) {
+    return 'Saisissez un nombre entier de millisecondes entre $min et $max.';
+  }
+
+  @override
+  String stockScanLast(String item, String quantity, String unit) {
+    return '$item : $quantity $unit';
+  }
+
+  @override
+  String stockScanPlacing(String place) {
+    return 'Rangement dans $place';
+  }
+
+  @override
+  String stockScanRefusedCode(String code) {
+    return 'Le code $code ne désigne rien que ce formulaire puisse utiliser.';
+  }
+
+  @override
+  String stockScanRefusedPlace(String place) {
+    return '$place ne peut pas recevoir de marchandises.';
+  }
+
+  @override
+  String get stockScanSave => 'Enregistrer les réglages du scanner';
+
+  @override
+  String get stockScanSettingsHint =>
+      'Un scanner en mode clavier saisit le code puis appuie sur Entrée. Ces deux réglages sont propres à cet appareil : un code saisi plus vite que l’intervalle ci-dessous est pris pour un scan.';
+
+  @override
+  String get stockScanSettingsTitle => 'Scanner';
+
+  @override
+  String get stockScanTerminator => 'Ce qui termine un code scanné';
+
+  @override
+  String get stockScanTerminatorEither => 'Entrée ou Tab';
+
+  @override
+  String get stockScanTerminatorEnter => 'Entrée';
+
+  @override
+  String get stockScanTerminatorTab => 'Tab';
+
+  @override
+  String stockScanUnknown(String code) {
+    return 'Code $code inconnu — l’ajouter à un article ?';
+  }
+
+  @override
+  String get stockScanUnknownAdd => 'Ouvrir les articles';
+
+  @override
   String get stockSettingsElsewhere =>
       'Les réglages du stock se tiennent sur la page Réglages du stock.';
 

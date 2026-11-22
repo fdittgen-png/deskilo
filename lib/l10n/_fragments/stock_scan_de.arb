@@ -1,0 +1,19 @@
+{
+  "stockScanPlacing": "Einlagern in {place}",
+  "stockScanLast": "{item}: {quantity} {unit}",
+  "stockScanUnknown": "Unbekannter Code {code} — einem Artikel zuordnen?",
+  "stockScanUnknownAdd": "Artikel öffnen",
+  "stockScanRefusedPlace": "{place} kann keine Ware aufnehmen.",
+  "stockScanRefusedCode": "Der Code {code} bezeichnet nichts, was dieses Formular verwenden kann.",
+  "stockScanFailed": "Der gescannte Code konnte nicht gelesen werden. Prüfen Sie die Verbindung und scannen Sie erneut.",
+  "stockScanHelp": "Mit einem Scanner arbeiten",
+  "stockScanSettingsTitle": "Scanner",
+  "stockScanSettingsHint": "Ein Scanner im Tastaturmodus tippt den Code und drückt die Eingabetaste. Diese beiden Einstellungen gelten für dieses Gerät: Ein Code, der schneller als die Lücke unten getippt wird, gilt als Scan.",
+  "stockScanInterval": "Längste Lücke zwischen zwei Tasten eines Scans (Millisekunden)",
+  "stockScanIntervalInvalid": "Geben Sie eine ganze Zahl von Millisekunden zwischen {min} und {max} ein.",
+  "stockScanTerminator": "Was einen gescannten Code beendet",
+  "stockScanTerminatorEither": "Eingabe oder Tab",
+  "stockScanTerminatorEnter": "Eingabe",
+  "stockScanTerminatorTab": "Tab",
+  "stockScanSave": "Scanner-Einstellungen speichern"
+}

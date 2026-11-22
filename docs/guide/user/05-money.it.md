@@ -703,6 +703,21 @@ Apra **Magazzino → Articoli**. Ogni riga mostra il **codice a barre**, l’**u
 - **Cerchi** per nome, codice a barre o indirizzo. Digitare o scansionare un codice a barre nella ricerca e confermare apre quell’articolo.
 - Le liste lunghe si caricano a pagine: scelga *Mostra altri*.
 
+<!-- anchor: user.money.stock.scanning -->
+### Lavorare con uno scanner
+
+**Destinatari:** Amministratore · Proprietario
+
+Vuole ricevere, spostare e scaricare merce scansionando, senza toccare un campo.
+
+Uno scanner di codici a barre in modalità tastiera (digita il codice e preme Invio) funziona nei fogli di spostamento e di prelievo, nello stoccaggio di una consegna e in **Magazzino → Articoli** e **Magazzino → Posizioni**. Non serve toccare prima un campo. Un campo di testo con il focus mantiene la propria digitazione: ciò che scrive non viene mai scambiato per una scansione.
+
+- **Scansioni la posizione, poi gli articoli.** Un codice di posizione imposta la posizione corrente; resta finché non ne scansiona un’altra ed è mostrata in alto (*Sistemazione in …*). In uno spostamento la prima posizione è l’origine e la seconda la destinazione. Un codice di articolo, variante o confezione indica l’articolo e lo conta: un codice di cartone aggiunge la quantità esatta del cartone (ad esempio 12 pezzi) e un’etichetta di lotto imposta il lotto.
+- **Una scansione ripetuta** ne aggiunge una in più oppure, se la sua attività l’ha scelto nelle impostazioni del magazzino (*Scansione ripetuta*), la porta sul campo della quantità.
+- **Un codice che non indica nulla** dice *Codice … sconosciuto: aggiungerlo a un articolo?*; chi può gestire il magazzino apre gli articoli e lo assegna a uno. Una posizione che non può ricevere merce, o un articolo non tenuto a magazzino, viene rifiutato a parole e non si compila nulla.
+- **Una scansione non invia nulla.** Compila solo il modulo; il pulsante che preme esegue lo stesso comando, con gli stessi diritti, che senza scanner.
+- **Impostazioni.** L’uso dello scanner dipende dalla funzione *Scanner* dell’attività, sotto la gestione del magazzino. L’intervallo massimo tra due tasti di una scansione (una persona scrive più lentamente di uno scanner) e ciò che termina un codice (Invio, Tab o entrambi) sono del dispositivo, in **Magazzino → Impostazioni del magazzino → Scanner**.
+
 <!-- anchor: user.money.stock.value -->
 ### Valore del magazzino e origine della merce
 

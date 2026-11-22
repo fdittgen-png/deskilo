@@ -35954,6 +35954,72 @@ class AppLocalizationsEs extends AppLocalizations {
   String get stockReorderToOrderTitle => 'Qué pedir';
 
   @override
+  String get stockScanFailed =>
+      'No se pudo leer el código escaneado. Compruebe la conexión y vuelva a escanearlo.';
+
+  @override
+  String get stockScanHelp => 'Trabajar con un escáner';
+
+  @override
+  String get stockScanInterval =>
+      'Intervalo máximo entre dos teclas de un escaneo (milisegundos)';
+
+  @override
+  String stockScanIntervalInvalid(int min, int max) {
+    return 'Introduzca un número entero de milisegundos entre $min y $max.';
+  }
+
+  @override
+  String stockScanLast(String item, String quantity, String unit) {
+    return '$item: $quantity $unit';
+  }
+
+  @override
+  String stockScanPlacing(String place) {
+    return 'Colocando en $place';
+  }
+
+  @override
+  String stockScanRefusedCode(String code) {
+    return 'El código $code no designa nada que este formulario pueda usar.';
+  }
+
+  @override
+  String stockScanRefusedPlace(String place) {
+    return '$place no puede recibir mercancías.';
+  }
+
+  @override
+  String get stockScanSave => 'Guardar los ajustes del escáner';
+
+  @override
+  String get stockScanSettingsHint =>
+      'Un escáner en modo teclado escribe el código y pulsa Intro. Estos dos ajustes son de este dispositivo: un código escrito más rápido que el intervalo de abajo se toma por un escaneo.';
+
+  @override
+  String get stockScanSettingsTitle => 'Escáner';
+
+  @override
+  String get stockScanTerminator => 'Qué termina un código escaneado';
+
+  @override
+  String get stockScanTerminatorEither => 'Intro o Tab';
+
+  @override
+  String get stockScanTerminatorEnter => 'Intro';
+
+  @override
+  String get stockScanTerminatorTab => 'Tab';
+
+  @override
+  String stockScanUnknown(String code) {
+    return 'Código $code desconocido: ¿añadirlo a un artículo?';
+  }
+
+  @override
+  String get stockScanUnknownAdd => 'Abrir los artículos';
+
+  @override
   String get stockSettingsElsewhere =>
       'Los ajustes de existencias se mantienen en la página Ajustes de existencias.';
 

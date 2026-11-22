@@ -703,6 +703,21 @@ Abra **Existencias → Artículos**. Cada línea muestra el **código de barras*
 - **Busque** por nombre, código de barras o dirección. Escribir o escanear un código de barras en la búsqueda y confirmar abre ese artículo.
 - Las listas largas se cargan por páginas: elija *Mostrar más*.
 
+<!-- anchor: user.money.stock.scanning -->
+### Trabajar con un escáner
+
+**Público:** Administrador/a · Propietario
+
+Quiere recibir, mover y dar de baja mercancías escaneando, sin tocar un campo.
+
+Un escáner de códigos de barras en modo teclado (escribe el código y pulsa Intro) funciona en las hojas de traslado y de salida, al ubicar una entrega, y en **Stock → Artículos** y **Stock → Ubicaciones**. No hace falta tocar un campo antes. Un campo de texto con el foco conserva su propia escritura: lo que usted escribe nunca se toma por un escaneo.
+
+- **Escanee la ubicación y luego los artículos.** Un código de ubicación fija la ubicación actual; se mantiene hasta que escanee otra y se muestra arriba (*Colocando en …*). En un traslado, la primera ubicación es el origen y la segunda el destino. Un código de artículo, de variante o de embalaje designa el artículo y lo cuenta: un código de caja añade la cantidad exacta de la caja (por ejemplo 12 piezas) y una etiqueta de lote fija el lote.
+- **Un escaneo repetido** añade uno más o, si su negocio lo eligió en los ajustes del stock (*Escaneo repetido*), le lleva al campo de cantidad.
+- **Un código que no designa nada** dice *Código … desconocido: ¿añadirlo a un artículo?*; quien puede gestionar el stock abre los artículos y se lo asigna a uno. Una ubicación que no puede recibir mercancías, o un artículo que no se lleva en stock, se rechaza con palabras y no se rellena nada.
+- **Un escaneo no envía nada.** Solo rellena el formulario; el botón que pulsa ejecuta el mismo comando, con los mismos derechos, que sin escáner.
+- **Ajustes.** El uso del escáner depende de la función *Escáner* del negocio, bajo la gestión del stock. El intervalo máximo entre dos teclas de un escaneo (una persona escribe más despacio que un escáner) y lo que termina un código (Intro, Tab o ambos) son del dispositivo, en **Stock → Ajustes del stock → Escáner**.
+
 <!-- anchor: user.money.stock.value -->
 ### Valor de las existencias y origen de la mercancía
 

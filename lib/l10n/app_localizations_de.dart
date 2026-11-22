@@ -36054,6 +36054,72 @@ class AppLocalizationsDe extends AppLocalizations {
   String get stockReorderToOrderTitle => 'Was zu bestellen ist';
 
   @override
+  String get stockScanFailed =>
+      'Der gescannte Code konnte nicht gelesen werden. Prüfen Sie die Verbindung und scannen Sie erneut.';
+
+  @override
+  String get stockScanHelp => 'Mit einem Scanner arbeiten';
+
+  @override
+  String get stockScanInterval =>
+      'Längste Lücke zwischen zwei Tasten eines Scans (Millisekunden)';
+
+  @override
+  String stockScanIntervalInvalid(int min, int max) {
+    return 'Geben Sie eine ganze Zahl von Millisekunden zwischen $min und $max ein.';
+  }
+
+  @override
+  String stockScanLast(String item, String quantity, String unit) {
+    return '$item: $quantity $unit';
+  }
+
+  @override
+  String stockScanPlacing(String place) {
+    return 'Einlagern in $place';
+  }
+
+  @override
+  String stockScanRefusedCode(String code) {
+    return 'Der Code $code bezeichnet nichts, was dieses Formular verwenden kann.';
+  }
+
+  @override
+  String stockScanRefusedPlace(String place) {
+    return '$place kann keine Ware aufnehmen.';
+  }
+
+  @override
+  String get stockScanSave => 'Scanner-Einstellungen speichern';
+
+  @override
+  String get stockScanSettingsHint =>
+      'Ein Scanner im Tastaturmodus tippt den Code und drückt die Eingabetaste. Diese beiden Einstellungen gelten für dieses Gerät: Ein Code, der schneller als die Lücke unten getippt wird, gilt als Scan.';
+
+  @override
+  String get stockScanSettingsTitle => 'Scanner';
+
+  @override
+  String get stockScanTerminator => 'Was einen gescannten Code beendet';
+
+  @override
+  String get stockScanTerminatorEither => 'Eingabe oder Tab';
+
+  @override
+  String get stockScanTerminatorEnter => 'Eingabe';
+
+  @override
+  String get stockScanTerminatorTab => 'Tab';
+
+  @override
+  String stockScanUnknown(String code) {
+    return 'Unbekannter Code $code — einem Artikel zuordnen?';
+  }
+
+  @override
+  String get stockScanUnknownAdd => 'Artikel öffnen';
+
+  @override
   String get stockSettingsElsewhere =>
       'Die Lagereinstellungen werden auf der Seite Lagereinstellungen geführt.';
 

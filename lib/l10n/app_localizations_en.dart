@@ -35657,6 +35657,72 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockReorderToOrderTitle => 'What to order';
 
   @override
+  String get stockScanFailed =>
+      'The scanned code could not be read. Check the connection and scan it again.';
+
+  @override
+  String get stockScanHelp => 'Working with a scanner';
+
+  @override
+  String get stockScanInterval =>
+      'Longest gap between two keys of a scan (milliseconds)';
+
+  @override
+  String stockScanIntervalInvalid(int min, int max) {
+    return 'Enter a whole number of milliseconds between $min and $max.';
+  }
+
+  @override
+  String stockScanLast(String item, String quantity, String unit) {
+    return '$item: $quantity $unit';
+  }
+
+  @override
+  String stockScanPlacing(String place) {
+    return 'Placing into $place';
+  }
+
+  @override
+  String stockScanRefusedCode(String code) {
+    return 'The code $code names nothing this form can use.';
+  }
+
+  @override
+  String stockScanRefusedPlace(String place) {
+    return '$place cannot take goods.';
+  }
+
+  @override
+  String get stockScanSave => 'Save the scanner settings';
+
+  @override
+  String get stockScanSettingsHint =>
+      'A scanner in keyboard mode types the code and presses Enter. These two settings belong to this device: a code typed faster than the gap below is taken for a scan.';
+
+  @override
+  String get stockScanSettingsTitle => 'Scanner';
+
+  @override
+  String get stockScanTerminator => 'What ends a scanned code';
+
+  @override
+  String get stockScanTerminatorEither => 'Enter or Tab';
+
+  @override
+  String get stockScanTerminatorEnter => 'Enter';
+
+  @override
+  String get stockScanTerminatorTab => 'Tab';
+
+  @override
+  String stockScanUnknown(String code) {
+    return 'Unknown code $code — add it to an item?';
+  }
+
+  @override
+  String get stockScanUnknownAdd => 'Open the items';
+
+  @override
   String get stockSettingsElsewhere =>
       'Stock settings are kept on the Stock settings page.';
 

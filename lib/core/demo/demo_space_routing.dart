@@ -48,6 +48,7 @@ import '../storage/resume_place_store.dart';
 import '../time/clock.dart';
 import 'data/bank_statement_repository.dart';
 import 'data/demo_booking_prices.dart';
+import 'data/demo_stock_code_resolver.dart';
 import 'data/demo_stock_config_commands.dart';
 import 'data/demo_stock_ledger.dart';
 import 'data/demo_stock_operations.dart';
@@ -308,6 +309,14 @@ List<Override> _moneyPortOverrides(FakeMoneyRepository Function(Ref ref) money) 
       demoFirstSpaceId,
       ref.watch(_demoStockLedgerProvider),
       ref.watch(stockConfigCommandsProvider),
+    ),
+  ),
+  // #4359 — and resolves a scanned code (a place, an item, a carton) from its own registry and units.
+  stockCodeResolverProvider.overrideWith(
+    (ref) => DemoStockCodeResolver(
+      demoFirstSpaceId,
+      ref.watch(stockConfigCommandsProvider),
+      ref.watch(stockRegistryProvider),
     ),
   ),
   // #4171 — and receives the deliveries of its orders into that stock.

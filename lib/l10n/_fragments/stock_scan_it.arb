@@ -1,0 +1,19 @@
+{
+  "stockScanPlacing": "Sistemazione in {place}",
+  "stockScanLast": "{item}: {quantity} {unit}",
+  "stockScanUnknown": "Codice {code} sconosciuto: aggiungerlo a un articolo?",
+  "stockScanUnknownAdd": "Apri gli articoli",
+  "stockScanRefusedPlace": "{place} non può ricevere merce.",
+  "stockScanRefusedCode": "Il codice {code} non indica nulla che questo modulo possa usare.",
+  "stockScanFailed": "Non è stato possibile leggere il codice scansionato. Controlli la connessione e lo scansioni di nuovo.",
+  "stockScanHelp": "Lavorare con uno scanner",
+  "stockScanSettingsTitle": "Scanner",
+  "stockScanSettingsHint": "Uno scanner in modalità tastiera digita il codice e preme Invio. Queste due impostazioni sono di questo dispositivo: un codice digitato più in fretta dell’intervallo qui sotto è considerato una scansione.",
+  "stockScanInterval": "Intervallo massimo tra due tasti di una scansione (millisecondi)",
+  "stockScanIntervalInvalid": "Inserisca un numero intero di millisecondi tra {min} e {max}.",
+  "stockScanTerminator": "Cosa termina un codice scansionato",
+  "stockScanTerminatorEither": "Invio o Tab",
+  "stockScanTerminatorEnter": "Invio",
+  "stockScanTerminatorTab": "Tab",
+  "stockScanSave": "Salva le impostazioni dello scanner"
+}
