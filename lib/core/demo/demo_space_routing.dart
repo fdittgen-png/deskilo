@@ -347,6 +347,7 @@ List<Override> _moneyPortOverrides(FakeMoneyRepository Function(Ref ref) money) 
       demoFirstSpaceId,
       ref.watch(_demoStockLedgerProvider),
       ref.watch(stockReversalsProvider),
+      ref.watch(stockRegistryProvider),
       () => ref.read(myPermissionsProvider),
       (ref.watch(purchaseOrderRepositoryProvider) as FakePurchaseOrderRepository).now,
     ),

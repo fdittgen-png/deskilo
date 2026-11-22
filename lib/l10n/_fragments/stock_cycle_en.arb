@@ -1,0 +1,320 @@
+{
+  "stockCycleTitle": "Cycle counts",
+  "@stockCycleTitle": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleTabTasks": "To count",
+  "@stockCycleTabTasks": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleTabPlans": "Plans",
+  "@stockCycleTabPlans": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleTabHistory": "History",
+  "@stockCycleTabHistory": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleNoTasks": "Nothing to count right now.",
+  "@stockCycleNoTasks": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleTaskRow": "{plan} · due {due}",
+  "@stockCycleTaskRow": {
+    "description": "#4295 cycle counts",
+    "placeholders": {
+      "plan": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      }
+    }
+  },
+  "stockCycleTaskProgress": "{left} of {total} still to count",
+  "@stockCycleTaskProgress": {
+    "description": "#4295 cycle counts",
+    "placeholders": {
+      "left": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "stockCycleTaskComplete": "Complete",
+  "@stockCycleTaskComplete": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleTaskCancelled": "Cancelled",
+  "@stockCycleTaskCancelled": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleNoPlans": "No plan yet: nothing is counted on a schedule.",
+  "@stockCycleNoPlans": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleAddPlan": "Add a plan",
+  "@stockCycleAddPlan": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCyclePlanTitle": "Cycle count plan",
+  "@stockCyclePlanTitle": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCyclePlanName": "Name",
+  "@stockCyclePlanName": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCyclePlanScope": "What to count",
+  "@stockCyclePlanScope": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleScopePlaces": "Places",
+  "@stockCycleScopePlaces": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleScopeItems": "Items",
+  "@stockCycleScopeItems": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleScopeHighValue": "High value",
+  "@stockCycleScopeHighValue": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCyclePlanPlaces": "Places (with everything inside them)",
+  "@stockCyclePlanPlaces": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCyclePlanItems": "Items",
+  "@stockCyclePlanItems": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCyclePlanThreshold": "Worth at least ({currency}); empty: the business’s limit",
+  "@stockCyclePlanThreshold": {
+    "description": "#4295 cycle counts",
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "stockCycleCadence": "How often",
+  "@stockCycleCadence": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleCadenceOnce": "Once",
+  "@stockCycleCadenceOnce": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleCadenceEvery": "Repeating",
+  "@stockCycleCadenceEvery": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleEveryDays": "Every how many days",
+  "@stockCycleEveryDays": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleNextDue": "Due day",
+  "@stockCycleNextDue": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCyclePlanActive": "In use",
+  "@stockCyclePlanActive": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCyclePlanOff": "not in use",
+  "@stockCyclePlanOff": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCyclePlanPlacesCount": "{count, plural, one{1 place} other{{count} places}}",
+  "@stockCyclePlanPlacesCount": {
+    "description": "#4295 cycle counts",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "stockCyclePlanItemsCount": "{count, plural, one{1 item} other{{count} items}}",
+  "@stockCyclePlanItemsCount": {
+    "description": "#4295 cycle counts",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "stockCyclePlanValue": "worth at least {amount}",
+  "@stockCyclePlanValue": {
+    "description": "#4295 cycle counts",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "stockCyclePlanValueSetting": "worth at least the business’s limit",
+  "@stockCyclePlanValueSetting": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCyclePlanEvery": "every {count, plural, one{day} other{{count} days}}",
+  "@stockCyclePlanEvery": {
+    "description": "#4295 cycle counts",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "stockCyclePlanOnce": "once",
+  "@stockCyclePlanOnce": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCyclePlanNext": "next {date}",
+  "@stockCyclePlanNext": {
+    "description": "#4295 cycle counts",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "stockCycleHistoryEmpty": "Nothing has been counted yet.",
+  "@stockCycleHistoryEmpty": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleHistoryRow": "{item} · {place}",
+  "@stockCycleHistoryRow": {
+    "description": "#4295 cycle counts",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      },
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "stockCycleHistoryLast": "Last counted {date}",
+  "@stockCycleHistoryLast": {
+    "description": "#4295 cycle counts",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "stockCycleHistoryAccuracy": "{count, plural, one{1 count} other{{count} counts}}, {percent} % exact",
+  "@stockCycleHistoryAccuracy": {
+    "description": "#4295 cycle counts",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "stockCycleTaskTitle": "Count",
+  "@stockCycleTaskTitle": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleScan": "Scan or type a barcode",
+  "@stockCycleScan": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleScanNone": "No line still to count has this code.",
+  "@stockCycleScanNone": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleBlind": "You count what you find: the system’s figure is not shown, so it cannot sway the count.",
+  "@stockCycleBlind": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleLineCount": "Count",
+  "@stockCycleLineCount": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleLineSkip": "Skip",
+  "@stockCycleLineSkip": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleLineCounted": "Counted",
+  "@stockCycleLineCounted": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleLineSkipped": "Skipped: {reason}",
+  "@stockCycleLineSkipped": {
+    "description": "#4295 cycle counts",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "stockCycleCountTitle": "Count this line",
+  "@stockCycleCountTitle": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleCountObserved": "What you counted ({unit})",
+  "@stockCycleCountObserved": {
+    "description": "#4295 cycle counts",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "stockCycleSkipTitle": "Skip this line",
+  "@stockCycleSkipTitle": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleSkipReason": "Why it is skipped",
+  "@stockCycleSkipReason": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleCounted": "Counted.",
+  "@stockCycleCounted": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleCountedDifference": "Counted. Difference from the ledger: {difference}",
+  "@stockCycleCountedDifference": {
+    "description": "#4295 cycle counts",
+    "placeholders": {
+      "difference": {
+        "type": "String"
+      }
+    }
+  },
+  "stockCycleSkipped": "Skipped.",
+  "@stockCycleSkipped": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleTaskDone": "Every line is counted or skipped: the task is complete.",
+  "@stockCycleTaskDone": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleTaskNoLines": "This task lists nothing to count.",
+  "@stockCycleTaskNoLines": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCyclePlanNameRequired": "Name the plan.",
+  "@stockCyclePlanNameRequired": {
+    "description": "#4295 a mistake under a plan field"
+  },
+  "stockCyclePlanScopeRequired": "Choose what it counts.",
+  "@stockCyclePlanScopeRequired": {
+    "description": "#4295 a mistake under a plan field"
+  },
+  "stockCycleIntervalInvalid": "Enter a whole number of days, from 1 to 366.",
+  "@stockCycleIntervalInvalid": {
+    "description": "#4295 a mistake under a plan field"
+  },
+  "stockCycleThresholdInvalid": "Enter an amount, or leave it empty.",
+  "@stockCycleThresholdInvalid": {
+    "description": "#4295 a mistake under a plan field"
+  }
+}
