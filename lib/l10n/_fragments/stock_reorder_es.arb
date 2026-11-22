@@ -1,0 +1,17 @@
+{
+  "stockReorderTitle": "Reposición",
+  "stockReorderIntro": "Lo que está en su punto de reposición o por debajo, por sede, y qué pedir a quién. Aquí no se pide nada: un borrador espera su confirmación.",
+  "stockReorderLowTitle": "Stock bajo",
+  "stockReorderLowEmpty": "Nada está en su punto de reposición ni por debajo.",
+  "stockReorderLowRow": "{site} · {onHand} disponibles · punto de reposición {point}",
+  "stockReorderToOrderTitle": "Qué pedir",
+  "stockReorderToOrderEmpty": "No hay nada que pedir.",
+  "stockReorderGroupLine": "{item}: {quantity} para {site}",
+  "stockReorderDraftHelp": "Se crea un borrador de pedido: nada se pide, valora ni envía hasta que lo confirme.",
+  "stockReorderCreateDraft": "Crear borrador de pedido",
+  "stockReorderDraftCreated": "Borrador de pedido {number} creado. No se pidió ni se envió nada.",
+  "stockReorderNoSupplierTitle": "Ningún proveedor elegido",
+  "stockReorderNoSupplierHelp": "Estos están bajos, pero ningún artículo de proveedor está marcado como preferido: elija uno en los artículos de proveedor del artículo.",
+  "stockReorderGapRow": "{site} · {quantity} propuestos",
+  "stockReasonMappingUnknown": "Ningún artículo de proveedor está marcado como preferido para una de estas líneas."
+}

@@ -1265,6 +1265,8 @@
   },
   "biBookingBasis": "La capacité réservée mesure les réservations, pas la présence réelle.",
   "biCards": "Analyses affichées",
+  "biCardsDragHandle": "Glisser pour réordonner",
+  "biCardsStandard": "Retour au standard",
   "biCardsUnavailable": "{count, plural, one{{count} analyse de cette vue ne vous est pas accessible et est omise.} other{{count} analyses de cette vue ne vous sont pas accessibles et sont omises.}}",
   "biCashNotBankBalance": "Des paiements enregistrés, pas un solde bancaire rapproché.",
   "@biCashNotBankBalance": {
@@ -1428,6 +1430,7 @@
   "biDataPartial": "Données partielles",
   "biDataStale": "Données anciennes",
   "biDataUnavailable": "Indisponible",
+  "biDefaultViewName": "Mes analyses",
   "biDeltaNone": "Pas encore de comparaison",
   "@biDeltaNone": {
     "description": "Business analytics dashboard: biDeltaNone"
@@ -3928,6 +3931,7 @@
   "claimRefusedNothingToFree": "Ce paiement a déjà été retiré.",
   "claimRefusedOther": "L’entreprise a refusé ces factures pour ce paiement. Actualisez et réessayez.",
   "claimRefusedOtherMonth": "Ces factures sont d’un autre mois que ce paiement. Rien n’a été débité.",
+  "claimRefusedRequestChanged": "Ce paiement a déjà été envoyé sous une autre forme. Vérifiez les paiements déclarés, puis réessayez.",
   "claimRefusedWithdrawn": "Vous avez retiré ce paiement. Sélectionnez à nouveau les factures pour les payer.",
   "coOwnerAction": "Copropriété",
   "coOwnerActivate": "Promouvoir propriétaire maintenant",
@@ -20894,6 +20898,8 @@
   "@stockPlacesAdd": {
     "description": "#4169 the stock editors: a label or message"
   },
+  "stockPlacesLabelsNone": "Il n’y a aucun emplacement pour lequel imprimer une étiquette.",
+  "stockPlacesPrintLabels": "Imprimer les étiquettes",
   "stockPlacesSearch": "Trouver un emplacement par adresse, nom ou code-barres",
   "stockPlacesTitle": "Emplacements",
   "@stockPlacesTitle": {
@@ -21140,6 +21146,7 @@
   "@stockReasonMappingDuplicate": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonMappingUnknown": "Aucun article fournisseur n’est préféré pour l’une de ces lignes.",
   "stockReasonNameDuplicate": "Ce nom est déjà utilisé.",
   "@stockReasonNameDuplicate": {
     "description": "#4169 the stock editors: a text under a field the server refused"
@@ -21293,6 +21300,20 @@
   "stockRegistryPlaceFilter": "Emplacement de rangement",
   "stockRegistryPrice": "prix {amount}",
   "stockRegistrySearch": "Trouver un article par nom, code-barres ou adresse",
+  "stockReorderCreateDraft": "Créer un brouillon de commande",
+  "stockReorderDraftCreated": "Brouillon de commande {number} créé. Rien n’a été commandé ni envoyé.",
+  "stockReorderDraftHelp": "Un brouillon de commande est créé : rien n’est commandé, chiffré ni envoyé tant que vous ne le confirmez pas.",
+  "stockReorderGapRow": "{site} · {quantity} proposé",
+  "stockReorderGroupLine": "{item} : {quantity} pour {site}",
+  "stockReorderIntro": "Ce qui est au niveau de son seuil de réapprovisionnement ou en dessous, par site, et ce qu’il faut commander à qui. Rien n’est commandé ici : un brouillon attend votre confirmation.",
+  "stockReorderLowEmpty": "Rien n’est au niveau de son seuil ou en dessous.",
+  "stockReorderLowRow": "{site} · {onHand} en stock · seuil {point}",
+  "stockReorderLowTitle": "Stock bas",
+  "stockReorderNoSupplierHelp": "Ces articles sont bas, mais aucun article fournisseur n’est marqué comme préféré : choisissez-en un dans les articles fournisseur de l’article.",
+  "stockReorderNoSupplierTitle": "Aucun fournisseur choisi",
+  "stockReorderTitle": "Réapprovisionnement",
+  "stockReorderToOrderEmpty": "Il n’y a rien à commander.",
+  "stockReorderToOrderTitle": "Que commander",
   "stockSettingsElsewhere": "Les réglages du stock se tiennent sur la page Réglages du stock.",
   "@stockSettingsElsewhere": {
     "description": "the stock pages and group (#4299)"

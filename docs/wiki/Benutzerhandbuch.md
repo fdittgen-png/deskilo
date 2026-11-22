@@ -3053,13 +3053,26 @@ Sie möchten festlegen, wo etwas lagert, damit Wareneingang, Zählung und Kommis
 
 Öffnen Sie **Lager → Lagerorte**. Ein Lagerort hat eine Ebene: **Standort** (eine Filiale oder ein Zentrallager), **Zone** (Verkaufsfläche, Lagerraum, Hof), **Gang**, **Regalfeld** und **Fach** oder **Behälter**. Ein Lagerort liegt nur direkt unter der darüberliegenden Ebene: eine Zone unter einem Standort, ein Gang unter einer Zone, ein Regalfeld unter einem Gang, ein Fach unter einem Regalfeld. Eine Theke, eine Küche, ein Fahrzeug, eine Maschine oder ein Fach-Slot lässt sich überall einordnen. Ein Lager, das vor den Ebenen angelegt wurde, gilt als Standort.
 
-Jeder Lagerort hat eine **Adresse** aus den Codes seiner übergeordneten Lagerorte: `MAIN-SALES-A03-B02-S4` ist das Hauptgeschäft, die Verkaufsfläche, Gang 3, Regalfeld 2, Fach 4. Der Code eines Lagerorts muss sich nur von den Nachbarn unter demselben übergeordneten Lagerort unterscheiden, daher kann jedes Regalfeld sein Fach `S4` haben. Benennen Sie einen Lagerort um, folgen die Adressen darunter. Geben Sie einen Teil einer Adresse, einen Namen oder einen Barcode in die Suche ein, um einen Lagerort zu finden.
+Jeder Lagerort hat eine **Adresse** aus den Codes seiner übergeordneten Lagerorte: `MAIN-SALES-A03-B02-S4` ist das Hauptgeschäft, die Verkaufsfläche, Gang 3, Regalfeld 2, Fach 4. Der Code eines Lagerorts muss sich nur von den Nachbarn unter demselben übergeordneten Lagerort unterscheiden, daher kann jedes Regalfeld sein Fach `S4` haben. Benennen Sie einen Lagerort um, folgen die Adressen darunter. Geben Sie einen Teil einer Adresse, einen Namen oder einen Barcode in die Suche ein, um einen Lagerort zu finden. Ein Lagerort wird überall, wo er erscheint, mit seiner Adresse gelesen: im Lager, in den Bewegungen, auf dem Weg einer Umlagerung und bei den Lagerorten, die eine Bewegung anbietet. **Etiketten drucken** erstellt ein PDF der angezeigten Lagerorte, je ein Etikett: die Adresse groß, darunter den Namen und einen Barcode (den des Lagerorts, sonst seine Adresse), den ein Scan wiederfindet.
 
 **Gut zu wissen**
 - Ein Standort legt fest, ob er **Lieferungen von Lieferanten annimmt**; ausgeschaltet kommt Ware nur per Umlagerung von einem anderen Standort an.
 - Ein Lagerort unter einem Standort ist **Kommissionierung** (Verkaufsfläche) oder **Reserve** (Lagerbestand); das ist ein Hinweis, nie eine Menge.
 - Das Zeichen zwischen den Ebenen ist die Einstellung des Unternehmens **Trennzeichen in einer Lagerort-Adresse** (Bindestrich, Punkt, Schrägstrich oder Doppelpunkt); nur die Schreibweise der Adresse ändert sich. Sie steht in den **Lagereinstellungen**.
 
+<!-- anchor: user.money.stock.reorder -->
+### Nachbestellen: was knapp ist und was zu bestellen ist
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie möchten sehen, was bald ausgeht, und es bestellen, ohne die Regale durchzugehen.
+
+Öffnen Sie **Lager → Nachbestellen** (die Funktion *Meldebestände* muss aktiv sein). Die Seite hat zwei Listen.
+
+- **Niedriger Bestand** listet jeden Artikel oder jede Variante auf oder unter ihrem Meldebestand, je Standort, mit dem Bestand und dem Meldebestand. Gelesen wird aus dem Lagerbuch, exakt, in der Einheit des Artikels; ein Artikel ohne Meldebestand wird nie gelistet. Ein Lagerort im Transit zählt nicht als vorrätig.
+- **Was zu bestellen ist** gruppiert, was knapp ist, nach dem Lieferanten, dessen Artikel als **bevorzugt** markiert ist, in der Einkaufseinheit dieses Artikels, auf ganze Einheiten aufgerundet. Ein Artikel ohne bevorzugten Lieferantenartikel steht unter **Kein Lieferant gewählt**: Markieren Sie einen in den Lieferantenartikeln des Artikels.
+
+**Bestellentwurf erstellen** erstellt aus einer Gruppe einen Einkaufsbestellungs-Entwurf. Es ist nur ein Entwurf: Nichts wird bestellt, bepreist oder gesendet, bis Sie ihn in den Einkaufsbestellungen bestätigen. Dafür brauchen Sie das Recht, Einkäufe zu verwalten; derselbe Entwurf, zweimal angefordert, entsteht nur einmal.
 <!-- anchor: user.money.stock.registry -->
 ### Das Artikelregister
 
@@ -6525,6 +6538,8 @@ Sie sehen sich an, wie der Workspace abschneidet.
 2. Wählen Sie die **Zeitraumlänge** (**Monat**, **Quartal**, **Jahr**), einen Vergleich und, wo angeboten, eine Gruppierung.
 3. Lesen Sie die Analysen nach Bereich, etwa **Finanzen** (**Fakturiert**, **Eingenommen**) und **Flächen und Kapazität**.
 4. Speichern Sie unter **Ansichten** eine Ansicht oder tippen Sie auf **Als PDF exportieren**.
+
+**Angezeigte Analysen** wählt, welche Analysen die Seite zeigt und in welcher Reihenfolge: Haken Sie die gewünschten an und ziehen Sie den Griff einer Zeile, um sie zu verschieben (die Pfeile daneben tun dasselbe über die Tastatur). Ihre Auswahl wird für Sie in diesem Arbeitsbereich auf jedem Gerät gemerkt und beim nächsten Mal wieder geöffnet; eine Adresse, die Analysen nennt, oder eine geöffnete Ansicht hat für diesen Besuch Vorrang. **Zurück zum Standard** löscht sie.
 
 **Gut zu wissen**
 

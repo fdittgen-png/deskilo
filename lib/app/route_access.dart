@@ -50,6 +50,9 @@ const Map<String, Set<WorkspacePermission>> routePermissions = {
   '/stock/movements/:id': {_P.viewStock, _P.manageStock},
   // #4170 — the goods on their way and the commands that move goods: seen with the stock, run with manageStock.
   '/stock/transfers': {_P.viewStock, _P.manageStock},
+  // #4294 — what is low and what to order: seen by who sees the stock or buys; the draft order itself
+  // needs managePurchases, which the screen and the server ask.
+  '/stock/reorder': {_P.viewStock, _P.manageStock, _P.managePurchases},
   // #4299 — the item registry and the places read like the stock; its settings
   // are for who manages the stock or the configuration.
   '/stock/items': {_P.viewStock, _P.manageStock},

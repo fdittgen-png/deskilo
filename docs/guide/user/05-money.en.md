@@ -665,13 +665,26 @@ You want to say where things are kept, so that receiving, counting and picking k
 
 Open **Stock → Places**. A place has a level: **Site** (a branch or a central depot), **Zone** (a sales floor, a back room, a yard), **Aisle**, **Bay** and **Shelf** or **Bin**. A place sits only under the level directly above it: a zone under a site, an aisle under a zone, a bay under an aisle, a shelf under a bay. A counter, a kitchen, a vehicle, a machine or a slot is placed anywhere. A warehouse made before the levels counts as a site.
 
-Each place has an **address**, written from its parents' codes: `MAIN-SALES-A03-B02-S4` is the main store, the sales floor, aisle 3, bay 2, shelf 4. The code of a place only has to differ from its neighbours under the same parent, so every bay can have its shelf `S4`. Rename a place and the addresses below it follow. Type any part of an address, a name or a barcode in the search to find a place.
+Each place has an **address**, written from its parents' codes: `MAIN-SALES-A03-B02-S4` is the main store, the sales floor, aisle 3, bay 2, shelf 4. The code of a place only has to differ from its neighbours under the same parent, so every bay can have its shelf `S4`. Rename a place and the addresses below it follow. Type any part of an address, a name or a barcode in the search to find a place. A place is read by its address wherever it appears: in the stock, the movements, a transfer's route and the places a move offers. **Print labels** makes a PDF of the places shown, one label each: the address in large type, the name beneath and a barcode (the place's own barcode, else its address) that a scan finds again.
 
 **Good to know**
 - A site says whether it **receives from suppliers**; switch it off and goods arrive there only by transfer from another site.
 - A place below a site is **picking** (front of house) or **reserve** (overstock); it is advice, never a quantity.
 - The character between the levels is the business's setting **Separator in a place address** (a dash, a dot, a slash or a colon); only how an address is written changes. It is set in **Stock settings**.
 
+<!-- anchor: user.money.stock.reorder -->
+### Reorder: what is low and what to order
+
+**Audience:** Administrator · Owner
+
+You want to see what is about to run out and order it without going through the shelves.
+
+Open **Stock → Reorder** (the feature *Reorder points* must be on). The page has two lists.
+
+- **Low stock** lists every item or variant at or below its reorder point, per site, with what is on hand and the point. It is read from the stock ledger, exactly, in the item's unit; an item with no reorder point is never listed. A place that is in transit does not count as stock on hand.
+- **What to order** groups what is low by the supplier whose article is marked **preferred** for it, in that article's purchase unit, rounded up to whole units. An item with no preferred supplier article is listed under **No supplier chosen**: mark one in the item's supplier articles.
+
+**Create draft order** makes a draft purchase order from a group. It is only a draft: nothing is ordered, priced or sent until you confirm it in the purchase orders. It needs the right to manage purchases; asking twice for the same draft makes it once.
 <!-- anchor: user.money.stock.registry -->
 ### The item registry
 

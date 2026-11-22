@@ -1265,6 +1265,8 @@
   },
   "biBookingBasis": "La capacità prenotata misura le prenotazioni, non la presenza effettiva.",
   "biCards": "Analisi mostrate",
+  "biCardsDragHandle": "Trascini per riordinare",
+  "biCardsStandard": "Torna allo standard",
   "biCardsUnavailable": "{count, plural, one{1 analisi di questa vista non è disponibile per Lei e viene omessa.} other{{count} analisi di questa vista non sono disponibili per Lei e vengono omesse.}}",
   "biCashNotBankBalance": "Pagamenti registrati, non un saldo bancario riconciliato.",
   "@biCashNotBankBalance": {
@@ -1428,6 +1430,7 @@
   "biDataPartial": "Dati parziali",
   "biDataStale": "Dati non aggiornati",
   "biDataUnavailable": "Non disponibile",
+  "biDefaultViewName": "Le mie analisi",
   "biDeltaNone": "Nessun confronto per ora",
   "@biDeltaNone": {
     "description": "Business analytics dashboard: biDeltaNone"
@@ -3928,6 +3931,7 @@
   "claimRefusedNothingToFree": "Questo pagamento è già stato ritirato.",
   "claimRefusedOther": "L’attività ha rifiutato queste fatture per questo pagamento. Aggiorni e riprovi.",
   "claimRefusedOtherMonth": "Queste fatture sono di un mese diverso da questo pagamento. Non è stato addebitato nulla.",
+  "claimRefusedRequestChanged": "Questo pagamento è già stato inviato con altri dati. Controlli i pagamenti dichiarati e riprovi.",
   "claimRefusedWithdrawn": "Ha ritirato questo pagamento. Selezioni di nuovo le fatture per pagarle.",
   "coOwnerAction": "Comproprietà",
   "coOwnerActivate": "Promuovi a proprietario ora",
@@ -20894,6 +20898,8 @@
   "@stockPlacesAdd": {
     "description": "#4169 the stock editors: a label or message"
   },
+  "stockPlacesLabelsNone": "Non c’è nessuna ubicazione per cui stampare un’etichetta.",
+  "stockPlacesPrintLabels": "Stampa le etichette",
   "stockPlacesSearch": "Cerchi un’ubicazione per indirizzo, nome o codice a barre",
   "stockPlacesTitle": "Ubicazioni",
   "@stockPlacesTitle": {
@@ -21140,6 +21146,7 @@
   "@stockReasonMappingDuplicate": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonMappingUnknown": "Per una di queste righe nessun articolo del fornitore è indicato come preferito.",
   "stockReasonNameDuplicate": "Questo nome è già in uso.",
   "@stockReasonNameDuplicate": {
     "description": "#4169 the stock editors: a text under a field the server refused"
@@ -21293,6 +21300,20 @@
   "stockRegistryPlaceFilter": "Ubicazione abituale",
   "stockRegistryPrice": "prezzo {amount}",
   "stockRegistrySearch": "Cerchi un articolo per nome, codice a barre o indirizzo",
+  "stockReorderCreateDraft": "Crea bozza d’ordine",
+  "stockReorderDraftCreated": "Bozza d’ordine {number} creata. Nulla è stato ordinato o inviato.",
+  "stockReorderDraftHelp": "Viene creata una bozza d’ordine: nulla viene ordinato, valorizzato o inviato finché non la conferma.",
+  "stockReorderGapRow": "{site} · {quantity} proposti",
+  "stockReorderGroupLine": "{item}: {quantity} per {site}",
+  "stockReorderIntro": "Ciò che è al suo punto di riordino o sotto, per sede, e cosa ordinare a chi. Qui non si ordina nulla: una bozza attende la Sua conferma.",
+  "stockReorderLowEmpty": "Nulla è al punto di riordino o sotto.",
+  "stockReorderLowRow": "{site} · {onHand} disponibili · punto di riordino {point}",
+  "stockReorderLowTitle": "Scorta bassa",
+  "stockReorderNoSupplierHelp": "Questi sono bassi, ma nessun articolo del fornitore è indicato come preferito: ne scelga uno negli articoli del fornitore dell’articolo.",
+  "stockReorderNoSupplierTitle": "Nessun fornitore scelto",
+  "stockReorderTitle": "Riordino",
+  "stockReorderToOrderEmpty": "Non c’è nulla da ordinare.",
+  "stockReorderToOrderTitle": "Cosa ordinare",
   "stockSettingsElsewhere": "Le impostazioni del magazzino si tengono nella pagina Impostazioni del magazzino.",
   "@stockSettingsElsewhere": {
     "description": "the stock pages and group (#4299)"

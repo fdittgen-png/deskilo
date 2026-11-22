@@ -2845,6 +2845,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get biCards => 'Analyses shown';
 
   @override
+  String get biCardsDragHandle => 'Drag to reorder';
+
+  @override
+  String get biCardsStandard => 'Back to the standard';
+
+  @override
   String biCardsUnavailable(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -3189,6 +3195,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get biDataUnavailable => 'Unavailable';
+
+  @override
+  String get biDefaultViewName => 'My analyses';
 
   @override
   String get biDeltaNone => 'No comparison yet';
@@ -6608,6 +6617,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get claimRefusedOtherMonth =>
       'These invoices are of another month than this payment. Nothing was charged.';
+
+  @override
+  String get claimRefusedRequestChanged =>
+      'This payment was already sent as another one. Check the declared payments, then try again.';
 
   @override
   String get claimRefusedWithdrawn =>
@@ -35034,6 +35047,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockPlacesAdd => 'Add a place';
 
   @override
+  String get stockPlacesLabelsNone => 'There is no place to print a label for.';
+
+  @override
+  String get stockPlacesPrintLabels => 'Print labels';
+
+  @override
   String get stockPlacesSearch => 'Find a place by address, name or barcode';
 
   @override
@@ -35249,6 +35268,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'This supplier article is already mapped.';
 
   @override
+  String get stockReasonMappingUnknown =>
+      'No supplier article is preferred for one of these lines.';
+
+  @override
   String get stockReasonNameDuplicate => 'This name is already used.';
 
   @override
@@ -35436,6 +35459,60 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get stockRegistrySearch => 'Find an item by name, barcode or address';
+
+  @override
+  String get stockReorderCreateDraft => 'Create draft order';
+
+  @override
+  String stockReorderDraftCreated(String number) {
+    return 'Draft order $number created. Nothing was ordered or sent.';
+  }
+
+  @override
+  String get stockReorderDraftHelp =>
+      'A draft order is made: nothing is ordered, priced or sent until you confirm it.';
+
+  @override
+  String stockReorderGapRow(String site, String quantity) {
+    return '$site · $quantity proposed';
+  }
+
+  @override
+  String stockReorderGroupLine(String item, String quantity, String site) {
+    return '$item: $quantity for $site';
+  }
+
+  @override
+  String get stockReorderIntro =>
+      'What is at or below its reorder point, per site, and what to order from whom. Nothing is ordered here: a draft order waits for your confirmation.';
+
+  @override
+  String get stockReorderLowEmpty =>
+      'Nothing is at or below its reorder point.';
+
+  @override
+  String stockReorderLowRow(String site, String onHand, String point) {
+    return '$site · $onHand on hand · reorder point $point';
+  }
+
+  @override
+  String get stockReorderLowTitle => 'Low stock';
+
+  @override
+  String get stockReorderNoSupplierHelp =>
+      'These are low, but no supplier article is marked as preferred for them: choose one in the item\'s supplier articles.';
+
+  @override
+  String get stockReorderNoSupplierTitle => 'No supplier chosen';
+
+  @override
+  String get stockReorderTitle => 'Reorder';
+
+  @override
+  String get stockReorderToOrderEmpty => 'There is nothing to order.';
+
+  @override
+  String get stockReorderToOrderTitle => 'What to order';
 
   @override
   String get stockSettingsElsewhere =>

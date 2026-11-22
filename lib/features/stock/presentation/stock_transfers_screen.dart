@@ -31,6 +31,7 @@ import '../providers/stock_providers.dart';
 import 'stock_config_text.dart';
 import 'stock_day.dart';
 import 'stock_move_sheets.dart';
+import 'stock_place_text.dart';
 
 class StockTransfersScreen extends ConsumerWidget {
   const StockTransfersScreen({super.key});
@@ -157,6 +158,7 @@ class _TransferCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final day = MaterialLocalizations.of(context).formatCompactDate(stockDayOf(ref, transfer.loadedAt));
+    final addresses = ref.watch(stockAddressesProvider(workspaceId));
     return Card(
       key: ValueKey('stock-transfer-${transfer.id}'),
       child: Padding(
@@ -168,7 +170,10 @@ class _TransferCard extends ConsumerWidget {
               children: [
                 Expanded(
                   child: Text(
-                    l10n.stockTransferRoute(transfer.fromCode, transfer.toCode),
+                    l10n.stockTransferRoute(
+                      addresses[transfer.fromLocationId] ?? transfer.fromCode,
+                      addresses[transfer.toLocationId] ?? transfer.toCode,
+                    ),
                     style: Theme.of(context).textTheme.titleSmall,
                   ),
                 ),
@@ -213,6 +218,7 @@ class _TransferCard extends ConsumerWidget {
         workspaceId: workspaceId,
         transfer: transfer,
         places: places,
+        separator: ref.read(stockAddressSeparatorProvider),
       );
       if (done) ref.invalidate(openTransfersProvider(workspaceId));
     } on Object catch (e, st) {
@@ -229,9 +235,10 @@ Future<bool> _showReceiveSheet(
   required String workspaceId,
   required StockTransfer transfer,
   required List<StockPlaceConfig> places,
+  required String separator,
 }) {
   final l10n = context.l10n;
-  final draft = _ReceiveDraft(transfer, places, Localizations.localeOf(context).toString());
+  final draft = _ReceiveDraft(transfer, places, Localizations.localeOf(context).toString(), separator);
   return showAppFormSheet(
     context,
     AppFormSheet(
@@ -247,7 +254,7 @@ Future<bool> _showReceiveSheet(
 }
 
 class _ReceiveDraft {
-  _ReceiveDraft(this.transfer, List<StockPlaceConfig> places, this.locale)
+  _ReceiveDraft(this.transfer, List<StockPlaceConfig> places, this.locale, this.separator)
     : lines = [for (final l in transfer.lines) if (!l.inTransit.isZero) l],
       targets = [
         for (final p in stockRealPlaces(places))
@@ -261,6 +268,7 @@ class _ReceiveDraft {
 
   final StockTransfer transfer;
   final String locale;
+  final String separator;
   final List<StockTransferLine> lines;
   final List<StockPlaceConfig> targets;
   final FormControllers fields;
@@ -314,7 +322,7 @@ class _ReceiveDraft {
         decoration: InputDecoration(labelText: l10n.stockTransferReceiveTo),
         items: [
           for (final p in targets)
-            DropdownMenuItem(value: p.id, child: Text(p.name.isEmpty ? p.code : '${p.code} · ${p.name}')),
+            DropdownMenuItem(value: p.id, child: Text(stockPlaceTitle(p, separator))),
         ],
         onChanged: (v) {
           to = v ?? to;

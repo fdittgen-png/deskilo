@@ -665,13 +665,26 @@ Quiere decir dónde se guarda cada cosa, para que la recepción, el recuento y l
 
 Abra **Existencias → Ubicaciones**. Una ubicación tiene un nivel: **Sede** (una sucursal o un depósito central), **Zona** (sala de ventas, trastienda, patio), **Pasillo**, **Módulo** y **Estante** o **Cajón**. Una ubicación va solo bajo el nivel inmediatamente superior: una zona bajo una sede, un pasillo bajo una zona, un módulo bajo un pasillo, un estante bajo un módulo. Un mostrador, una cocina, un vehículo, una máquina o una casilla se coloca donde sea. Un almacén creado antes de los niveles cuenta como sede.
 
-Cada ubicación tiene una **dirección**, escrita con los códigos de sus superiores: `MAIN-SALES-A03-B02-S4` es la tienda principal, la sala de ventas, el pasillo 3, el módulo 2, el estante 4. El código de una ubicación solo debe diferir de sus vecinos bajo la misma superior, así que cada módulo puede tener su estante `S4`. Si cambia el nombre de una ubicación, las direcciones de debajo lo siguen. Escriba parte de una dirección, un nombre o un código de barras en la búsqueda para encontrar una ubicación.
+Cada ubicación tiene una **dirección**, escrita con los códigos de sus superiores: `MAIN-SALES-A03-B02-S4` es la tienda principal, la sala de ventas, el pasillo 3, el módulo 2, el estante 4. El código de una ubicación solo debe diferir de sus vecinos bajo la misma superior, así que cada módulo puede tener su estante `S4`. Si cambia el nombre de una ubicación, las direcciones de debajo lo siguen. Escriba parte de una dirección, un nombre o un código de barras en la búsqueda para encontrar una ubicación. Una ubicación se lee por su dirección dondequiera que aparezca: en las existencias, los movimientos, el recorrido de un traslado y las ubicaciones que ofrece un movimiento. **Imprimir etiquetas** crea un PDF de las ubicaciones mostradas, una etiqueta cada una: la dirección en grande, el nombre debajo y un código de barras (el de la ubicación, si no su dirección) que un escaneo vuelve a encontrar.
 
 **Conviene saber**
 - Una sede indica si **recibe de proveedores**; desactivado, la mercancía llega solo por traslado desde otra sede.
 - Una ubicación bajo una sede es **picking** (zona de venta) o **reserva** (excedente); es una indicación, nunca una cantidad.
 - El carácter entre los niveles es el ajuste de la empresa **Separador en la dirección de una ubicación** (guion, punto, barra o dos puntos); solo cambia cómo se escribe la dirección. Se fija en **Ajustes de existencias**.
 
+<!-- anchor: user.money.stock.reorder -->
+### Reposición: lo que está bajo y lo que hay que pedir
+
+**Público:** Administrador/a · Propietario
+
+Quiere ver lo que está a punto de agotarse y pedirlo sin recorrer los estantes.
+
+Abra **Existencias → Reposición** (la función *Puntos de reposición* debe estar activada). La página tiene dos listas.
+
+- **Stock bajo** lista cada artículo o variante en su punto de reposición o por debajo, por sede, con lo disponible y el punto. Se lee del libro de existencias, exacto, en la unidad del artículo; un artículo sin punto de reposición nunca aparece. Una ubicación en tránsito no cuenta como existencias disponibles.
+- **Qué pedir** agrupa lo que está bajo por el proveedor cuyo artículo está marcado como **preferido**, en la unidad de compra de ese artículo, redondeado a unidades enteras. Un artículo sin artículo de proveedor preferido aparece en **Ningún proveedor elegido**: marque uno en los artículos de proveedor del artículo.
+
+**Crear borrador de pedido** crea un borrador de pedido de compra a partir de un grupo. Es solo un borrador: nada se pide, valora ni envía hasta que lo confirme en los pedidos de compra. Requiere el derecho de gestionar compras; pedir dos veces el mismo borrador lo crea una sola vez.
 <!-- anchor: user.money.stock.registry -->
 ### El registro de artículos
 

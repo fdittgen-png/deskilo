@@ -2867,6 +2867,12 @@ class AppLocalizationsIt extends AppLocalizations {
   String get biCards => 'Analisi mostrate';
 
   @override
+  String get biCardsDragHandle => 'Trascini per riordinare';
+
+  @override
+  String get biCardsStandard => 'Torna allo standard';
+
+  @override
   String biCardsUnavailable(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -3212,6 +3218,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get biDataUnavailable => 'Non disponibile';
+
+  @override
+  String get biDefaultViewName => 'Le mie analisi';
 
   @override
   String get biDeltaNone => 'Nessun confronto per ora';
@@ -6651,6 +6660,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get claimRefusedOtherMonth =>
       'Queste fatture sono di un mese diverso da questo pagamento. Non è stato addebitato nulla.';
+
+  @override
+  String get claimRefusedRequestChanged =>
+      'Questo pagamento è già stato inviato con altri dati. Controlli i pagamenti dichiarati e riprovi.';
 
   @override
   String get claimRefusedWithdrawn =>
@@ -35361,6 +35374,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get stockPlacesAdd => 'Aggiungere un’ubicazione';
 
   @override
+  String get stockPlacesLabelsNone =>
+      'Non c’è nessuna ubicazione per cui stampare un’etichetta.';
+
+  @override
+  String get stockPlacesPrintLabels => 'Stampa le etichette';
+
+  @override
   String get stockPlacesSearch =>
       'Cerchi un’ubicazione per indirizzo, nome o codice a barre';
 
@@ -35584,6 +35604,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questo articolo del fornitore è già associato.';
 
   @override
+  String get stockReasonMappingUnknown =>
+      'Per una di queste righe nessun articolo del fornitore è indicato come preferito.';
+
+  @override
   String get stockReasonNameDuplicate => 'Questo nome è già in uso.';
 
   @override
@@ -35773,6 +35797,59 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get stockRegistrySearch =>
       'Cerchi un articolo per nome, codice a barre o indirizzo';
+
+  @override
+  String get stockReorderCreateDraft => 'Crea bozza d’ordine';
+
+  @override
+  String stockReorderDraftCreated(String number) {
+    return 'Bozza d’ordine $number creata. Nulla è stato ordinato o inviato.';
+  }
+
+  @override
+  String get stockReorderDraftHelp =>
+      'Viene creata una bozza d’ordine: nulla viene ordinato, valorizzato o inviato finché non la conferma.';
+
+  @override
+  String stockReorderGapRow(String site, String quantity) {
+    return '$site · $quantity proposti';
+  }
+
+  @override
+  String stockReorderGroupLine(String item, String quantity, String site) {
+    return '$item: $quantity per $site';
+  }
+
+  @override
+  String get stockReorderIntro =>
+      'Ciò che è al suo punto di riordino o sotto, per sede, e cosa ordinare a chi. Qui non si ordina nulla: una bozza attende la Sua conferma.';
+
+  @override
+  String get stockReorderLowEmpty => 'Nulla è al punto di riordino o sotto.';
+
+  @override
+  String stockReorderLowRow(String site, String onHand, String point) {
+    return '$site · $onHand disponibili · punto di riordino $point';
+  }
+
+  @override
+  String get stockReorderLowTitle => 'Scorta bassa';
+
+  @override
+  String get stockReorderNoSupplierHelp =>
+      'Questi sono bassi, ma nessun articolo del fornitore è indicato come preferito: ne scelga uno negli articoli del fornitore dell’articolo.';
+
+  @override
+  String get stockReorderNoSupplierTitle => 'Nessun fornitore scelto';
+
+  @override
+  String get stockReorderTitle => 'Riordino';
+
+  @override
+  String get stockReorderToOrderEmpty => 'Non c’è nulla da ordinare.';
+
+  @override
+  String get stockReorderToOrderTitle => 'Cosa ordinare';
 
   @override
   String get stockSettingsElsewhere =>

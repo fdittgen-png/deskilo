@@ -1,0 +1,17 @@
+{
+  "stockReorderTitle": "Réapprovisionnement",
+  "stockReorderIntro": "Ce qui est au niveau de son seuil de réapprovisionnement ou en dessous, par site, et ce qu’il faut commander à qui. Rien n’est commandé ici : un brouillon attend votre confirmation.",
+  "stockReorderLowTitle": "Stock bas",
+  "stockReorderLowEmpty": "Rien n’est au niveau de son seuil ou en dessous.",
+  "stockReorderLowRow": "{site} · {onHand} en stock · seuil {point}",
+  "stockReorderToOrderTitle": "Que commander",
+  "stockReorderToOrderEmpty": "Il n’y a rien à commander.",
+  "stockReorderGroupLine": "{item} : {quantity} pour {site}",
+  "stockReorderDraftHelp": "Un brouillon de commande est créé : rien n’est commandé, chiffré ni envoyé tant que vous ne le confirmez pas.",
+  "stockReorderCreateDraft": "Créer un brouillon de commande",
+  "stockReorderDraftCreated": "Brouillon de commande {number} créé. Rien n’a été commandé ni envoyé.",
+  "stockReorderNoSupplierTitle": "Aucun fournisseur choisi",
+  "stockReorderNoSupplierHelp": "Ces articles sont bas, mais aucun article fournisseur n’est marqué comme préféré : choisissez-en un dans les articles fournisseur de l’article.",
+  "stockReorderGapRow": "{site} · {quantity} proposé",
+  "stockReasonMappingUnknown": "Aucun article fournisseur n’est préféré pour l’une de ces lignes."
+}

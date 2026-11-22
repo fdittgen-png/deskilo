@@ -2,7 +2,7 @@
 //
 // #3556 (1b) — a payment that names the invoices it pays (its claim, 0797)
 // can be refused by the business's server before anything is charged or
-// recorded: each refusal has its code (DKC01–DKC12) and the app answers
+// recorded: each refusal has its code (DKC01–DKC15) and the app answers
 // each by its own sentence, never as a failure of the app.
 
 /// Why a claim was refused, by the server's code.
@@ -46,6 +46,9 @@ enum ClaimRefusal {
 
   /// DKC13 — the business already decided this declaration.
   decided('DKC13'),
+
+  /// DKC15 — the request id of this payment was used for another one.
+  requestChanged('DKC15'),
 
   /// A claim's code this version does not know (a newer server's).
   other('');

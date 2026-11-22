@@ -12,6 +12,7 @@ import '../../features/stock/presentation/stock_entry.dart';
 import '../../features/stock/presentation/stock_items_screen.dart';
 import '../../features/stock/presentation/stock_movement_screen.dart';
 import '../../features/stock/presentation/stock_places_screen.dart';
+import '../../features/stock/presentation/stock_reorder_screen.dart';
 import '../../features/stock/presentation/stock_screen.dart';
 import '../../features/stock/presentation/stock_settings_screen.dart';
 import '../../features/stock/presentation/stock_transfers_screen.dart';
@@ -23,6 +24,10 @@ import '../route_env.dart';
 List<RouteBase> stockRoutes(RouteEnv env) {
   const access = RouteAccess(
     features: [WorkspaceFeature.stockManagement],
+    to: '/reserve',
+  );
+  const reorderAccess = RouteAccess(
+    features: [WorkspaceFeature.stockManagement, WorkspaceFeature.stockReorder],
     to: '/reserve',
   );
   return [
@@ -51,6 +56,12 @@ List<RouteBase> stockRoutes(RouteEnv env) {
           path: 'settings',
           redirect: env.guard(access),
           builder: (context, state) => const StockSettingsScreen(),
+        ),
+        // #4294 — what is low and what to order: the stock, and the reorder points on top.
+        GoRoute(
+          path: 'reorder',
+          redirect: env.guard(reorderAccess),
+          builder: (context, state) => const StockReorderScreen(),
         ),
         GoRoute(
           path: 'transfers',

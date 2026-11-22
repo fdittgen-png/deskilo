@@ -1,0 +1,265 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+//
+// #4294 (G8, client) -- Reorder: what is at or below its reorder point, per site, and what to
+// order from whom. "Low" is the server's reading of the ledger; the list of what to order groups it
+// by the supplier whose article is preferred, in that article's purchase unit. A group becomes a
+// DRAFT purchase order: nothing is ordered, priced or sent. A list that could not be read says so:
+// it is never shown as "nothing is low".
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../../core/help/help_anchors.dart';
+import '../../../core/help/help_dot.dart';
+import '../../../core/ids/request_id.dart';
+import '../../../core/l10n/context_l10n.dart';
+import '../../../core/theme/app_spacing.dart';
+import '../../../core/trace/trace_logger.dart';
+import '../../../core/ui/app_snack.dart';
+import '../../../core/ui/form_kit.dart';
+import '../../../core/ui/kit/page_title.dart';
+import '../../../core/ui/loading_view.dart';
+import '../../../l10n/app_localizations.dart';
+import '../../workspace/domain/workspace_permission.dart';
+import '../../workspace/providers/workspace_providers.dart';
+import '../domain/stock_reorder.dart';
+import '../providers/stock_providers.dart';
+import 'stock_config_text.dart';
+
+class StockReorderScreen extends ConsumerWidget {
+  const StockReorderScreen({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
+    final workspaceId = ref.watch(currentWorkspaceProvider).value?.id;
+    return Scaffold(
+      appBar: AppBar(
+        title: PageTitle(l10n.stockReorderTitle),
+        actions: [
+          HelpDot(l10n.permModuleStock, anchor: HelpAnchor.moneyStockReorder),
+          if (workspaceId != null)
+            IconButton(
+              key: const ValueKey('stock-reorder-reload'),
+              icon: const Icon(Icons.refresh),
+              tooltip: l10n.overviewLayoutReload,
+              onPressed: () {
+                ref
+                  ..invalidate(stockLowProvider(workspaceId))
+                  ..invalidate(stockReplenishmentProvider(workspaceId));
+              },
+            ),
+        ],
+      ),
+      body: workspaceId == null
+          ? const LoadingView()
+          : Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 720),
+                child: ListView(
+                  padding: const EdgeInsets.all(AppSpacing.md),
+                  children: [
+                    Text(l10n.stockReorderIntro, style: Theme.of(context).textTheme.bodyMedium),
+                    const SizedBox(height: AppSpacing.md),
+                    Text(l10n.stockReorderLowTitle, style: Theme.of(context).textTheme.titleMedium),
+                    const SizedBox(height: AppSpacing.sm),
+                    _LowList(workspaceId: workspaceId),
+                    const SizedBox(height: AppSpacing.lg),
+                    Text(l10n.stockReorderToOrderTitle, style: Theme.of(context).textTheme.titleMedium),
+                    const SizedBox(height: AppSpacing.sm),
+                    _ToOrder(workspaceId: workspaceId),
+                  ],
+                ),
+              ),
+            ),
+    );
+  }
+}
+
+/// A read that failed: said as such, with its retry; never an empty list.
+class _ReadFailed extends StatelessWidget {
+  const _ReadFailed({required this.keyName, required this.onRetry});
+
+  final String keyName;
+  final VoidCallback onRetry;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    return Column(
+      key: ValueKey('$keyName-failed'),
+      children: [
+        Text(l10n.stockReadFailed),
+        TextButton(
+          key: ValueKey('$keyName-retry'),
+          onPressed: onRetry,
+          child: Text(l10n.identityConnectRetry),
+        ),
+      ],
+    );
+  }
+}
+
+class _LowList extends ConsumerWidget {
+  const _LowList({required this.workspaceId});
+
+  final String workspaceId;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
+    return ref
+        .watch(stockLowProvider(workspaceId))
+        .when(
+          loading: () => const LoadingView(),
+          error: (_, _) => _ReadFailed(
+            keyName: 'stock-reorder-low',
+            onRetry: () => ref.invalidate(stockLowProvider(workspaceId)),
+          ),
+          data: (rows) => rows.isEmpty
+              ? Text(l10n.stockReorderLowEmpty, key: const ValueKey('stock-reorder-low-empty'))
+              : Column(
+                  children: [
+                    for (final r in rows)
+                      ListTile(
+                        key: ValueKey('stock-low-${r.pointId}'),
+                        contentPadding: EdgeInsets.zero,
+                        title: Text(r.itemName),
+                        subtitle: Text(
+                          l10n.stockReorderLowRow(
+                            r.siteCode,
+                            l10n.stockQuantityWithUnit(r.onHand.text, r.unit),
+                            l10n.stockQuantityWithUnit(r.reorderPoint.text, r.unit),
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+        );
+  }
+}
+
+class _ToOrder extends ConsumerWidget {
+  const _ToOrder({required this.workspaceId});
+
+  final String workspaceId;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
+    final mayBuy = ref.watch(myPermissionsProvider).contains(WorkspacePermission.managePurchases);
+    return ref
+        .watch(stockReplenishmentProvider(workspaceId))
+        .when(
+          loading: () => const LoadingView(),
+          error: (_, _) => _ReadFailed(
+            keyName: 'stock-reorder-order',
+            onRetry: () => ref.invalidate(stockReplenishmentProvider(workspaceId)),
+          ),
+          data: (list) => list.isEmpty
+              ? Text(l10n.stockReorderToOrderEmpty, key: const ValueKey('stock-reorder-order-empty'))
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    for (final g in list.groups)
+                      _GroupCard(workspaceId: workspaceId, group: g, mayBuy: mayBuy),
+                    if (list.noSupplier.isNotEmpty) ...[
+                      const SizedBox(height: AppSpacing.md),
+                      Text(
+                        l10n.stockReorderNoSupplierTitle,
+                        key: const ValueKey('stock-reorder-no-supplier'),
+                        style: Theme.of(context).textTheme.titleSmall,
+                      ),
+                      Text(l10n.stockReorderNoSupplierHelp, style: Theme.of(context).textTheme.bodySmall),
+                      for (final g in list.noSupplier)
+                        ListTile(
+                          key: ValueKey('stock-gap-${g.itemId}-${g.siteCode}'),
+                          contentPadding: EdgeInsets.zero,
+                          title: Text(g.itemName),
+                          subtitle: Text(
+                            l10n.stockReorderGapRow(g.siteCode, l10n.stockQuantityWithUnit(g.quantity.text, g.unit)),
+                          ),
+                        ),
+                    ],
+                  ],
+                ),
+        );
+  }
+}
+
+class _GroupCard extends ConsumerStatefulWidget {
+  const _GroupCard({required this.workspaceId, required this.group, required this.mayBuy});
+
+  final String workspaceId;
+  final ReplenishmentGroup group;
+  final bool mayBuy;
+
+  @override
+  ConsumerState<_GroupCard> createState() => _GroupCardState();
+}
+
+class _GroupCardState extends ConsumerState<_GroupCard> {
+  /// One per draft: a retry after a lost answer is the same request and answers once; it is renewed
+  /// when a draft was made, so asking again later makes another deliberately.
+  var _requestId = newRequestId();
+  bool _busy = false;
+
+  Future<void> _draft(AppLocalizations l10n) async {
+    setState(() => _busy = true);
+    try {
+      final draft = await ref.read(stockReorderProvider).createDraft(
+        widget.workspaceId,
+        supplierId: widget.group.supplierId,
+        lines: widget.group.lines,
+        requestId: _requestId,
+      );
+      _requestId = newRequestId();
+      if (!mounted) return;
+      AppSnack.success(context, l10n.stockReorderDraftCreated(draft.number ?? ''));
+      ref.invalidate(stockReplenishmentProvider(widget.workspaceId));
+    } on Object catch (e, st) {
+      TraceLogger.instance.warn('stock', 'a replenishment draft was not made: $e', stackTrace: st);
+      if (mounted) AppSnack.error(context, stockSaveProblem(l10n, e));
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final g = widget.group;
+    return Card(
+      key: ValueKey('stock-order-group-${g.supplierId}'),
+      child: Padding(
+        padding: const EdgeInsets.all(AppSpacing.md),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(g.supplierName, style: Theme.of(context).textTheme.titleSmall),
+            const FormGap.small(),
+            for (final line in g.lines)
+              Text(
+                l10n.stockReorderGroupLine(
+                  line.itemName,
+                  l10n.stockQuantityWithUnit(line.quantity.text, line.unit),
+                  line.siteCode,
+                ),
+                key: ValueKey('stock-order-line-${line.pointId}'),
+              ),
+            const FormGap.small(),
+            Text(l10n.stockReorderDraftHelp, style: Theme.of(context).textTheme.bodySmall),
+            if (widget.mayBuy)
+              Align(
+                alignment: Alignment.centerRight,
+                child: FilledButton(
+                  key: ValueKey('stock-order-draft-${g.supplierId}'),
+                  onPressed: _busy ? null : () => _draft(l10n),
+                  child: Text(l10n.stockReorderCreateDraft),
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}

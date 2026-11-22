@@ -3643,6 +3643,14 @@
   "@biCards": {
     "description": "#1924 finance KPI / #1923 analyses picker"
   },
+  "biCardsDragHandle": "Drag to reorder",
+  "@biCardsDragHandle": {
+    "description": "#4340 the analyses page: a label"
+  },
+  "biCardsStandard": "Back to the standard",
+  "@biCardsStandard": {
+    "description": "#4340 the analyses page: a label"
+  },
   "biCardsUnavailable": "{count, plural, one{1 analysis of this view is not available to you and are left out.} other{{count} analyses of this view are not available to you and are left out.}}",
   "@biCardsUnavailable": {
     "description": "#1923 C Web-BI saved views",
@@ -4135,6 +4143,10 @@
   "biDataUnavailable": "Unavailable",
   "@biDataUnavailable": {
     "description": "Shown as a text in capacity evidence (workspace), and 1 other place."
+  },
+  "biDefaultViewName": "My analyses",
+  "@biDefaultViewName": {
+    "description": "#4340 the analyses page: a label"
   },
   "biDeltaNone": "No comparison yet",
   "@biDeltaNone": {
@@ -8659,6 +8671,10 @@
   "claimRefusedOtherMonth": "These invoices are of another month than this payment. Nothing was charged.",
   "@claimRefusedOtherMonth": {
     "description": "#3556 Refusal: the payment's month is not the invoices'"
+  },
+  "claimRefusedRequestChanged": "This payment was already sent as another one. Check the declared payments, then try again.",
+  "@claimRefusedRequestChanged": {
+    "description": "#4321 — a declaration sent again under the request id of another payment (DKC15)"
   },
   "claimRefusedWithdrawn": "You withdrew this payment. Select the invoices again to pay them.",
   "@claimRefusedWithdrawn": {
@@ -45575,6 +45591,14 @@
   "@stockPlacesAdd": {
     "description": "#4169 the stock editors: a label or message"
   },
+  "stockPlacesLabelsNone": "There is no place to print a label for.",
+  "@stockPlacesLabelsNone": {
+    "description": "#4293 the places of the stock: a label, a message or a setting"
+  },
+  "stockPlacesPrintLabels": "Print labels",
+  "@stockPlacesPrintLabels": {
+    "description": "#4293 the places of the stock: a label, a message or a setting"
+  },
   "stockPlacesSearch": "Find a place by address, name or barcode",
   "@stockPlacesSearch": {
     "description": "#4293 the places of the stock: a label, a message or a setting"
@@ -45850,6 +45874,10 @@
   "@stockReasonMappingDuplicate": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonMappingUnknown": "No supplier article is preferred for one of these lines.",
+  "@stockReasonMappingUnknown": {
+    "description": "#4294 reorder: a refusal of the server"
+  },
   "stockReasonNameDuplicate": "This name is already used.",
   "@stockReasonNameDuplicate": {
     "description": "#4169 the stock editors: a text under a field the server refused"
@@ -46078,6 +46106,97 @@
   "stockRegistrySearch": "Find an item by name, barcode or address",
   "@stockRegistrySearch": {
     "description": "#4293 the registry of the stock: a label or a message"
+  },
+  "stockReorderCreateDraft": "Create draft order",
+  "@stockReorderCreateDraft": {
+    "description": "#4294 reorder: a label or a message"
+  },
+  "stockReorderDraftCreated": "Draft order {number} created. Nothing was ordered or sent.",
+  "@stockReorderDraftCreated": {
+    "description": "#4294 reorder: a label or a message",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "stockReorderDraftHelp": "A draft order is made: nothing is ordered, priced or sent until you confirm it.",
+  "@stockReorderDraftHelp": {
+    "description": "#4294 reorder: a label or a message"
+  },
+  "stockReorderGapRow": "{site} · {quantity} proposed",
+  "@stockReorderGapRow": {
+    "description": "#4294 reorder: a label or a message",
+    "placeholders": {
+      "site": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      }
+    }
+  },
+  "stockReorderGroupLine": "{item}: {quantity} for {site}",
+  "@stockReorderGroupLine": {
+    "description": "#4294 reorder: a label or a message",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      },
+      "site": {
+        "type": "String"
+      }
+    }
+  },
+  "stockReorderIntro": "What is at or below its reorder point, per site, and what to order from whom. Nothing is ordered here: a draft order waits for your confirmation.",
+  "@stockReorderIntro": {
+    "description": "#4294 reorder: a label or a message"
+  },
+  "stockReorderLowEmpty": "Nothing is at or below its reorder point.",
+  "@stockReorderLowEmpty": {
+    "description": "#4294 reorder: a label or a message"
+  },
+  "stockReorderLowRow": "{site} · {onHand} on hand · reorder point {point}",
+  "@stockReorderLowRow": {
+    "description": "#4294 reorder: a label or a message",
+    "placeholders": {
+      "site": {
+        "type": "String"
+      },
+      "onHand": {
+        "type": "String"
+      },
+      "point": {
+        "type": "String"
+      }
+    }
+  },
+  "stockReorderLowTitle": "Low stock",
+  "@stockReorderLowTitle": {
+    "description": "#4294 reorder: a label or a message"
+  },
+  "stockReorderNoSupplierHelp": "These are low, but no supplier article is marked as preferred for them: choose one in the item's supplier articles.",
+  "@stockReorderNoSupplierHelp": {
+    "description": "#4294 reorder: a label or a message"
+  },
+  "stockReorderNoSupplierTitle": "No supplier chosen",
+  "@stockReorderNoSupplierTitle": {
+    "description": "#4294 reorder: a label or a message"
+  },
+  "stockReorderTitle": "Reorder",
+  "@stockReorderTitle": {
+    "description": "#4294 reorder: a label or a message"
+  },
+  "stockReorderToOrderEmpty": "There is nothing to order.",
+  "@stockReorderToOrderEmpty": {
+    "description": "#4294 reorder: a label or a message"
+  },
+  "stockReorderToOrderTitle": "What to order",
+  "@stockReorderToOrderTitle": {
+    "description": "#4294 reorder: a label or a message"
   },
   "stockSettingsElsewhere": "Stock settings are kept on the Stock settings page.",
   "@stockSettingsElsewhere": {

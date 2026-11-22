@@ -665,13 +665,26 @@ Vous voulez dire où les choses sont rangées, pour que la réception, l’inven
 
 Ouvrez **Stock → Emplacements**. Un emplacement a un niveau : **Site** (une succursale ou un dépôt central), **Zone** (une surface de vente, une réserve, une cour), **Allée**, **Travée** et **Étagère** ou **Bac**. Un emplacement se place seulement sous le niveau juste au-dessus : une zone sous un site, une allée sous une zone, une travée sous une allée, une étagère sous une travée. Un comptoir, une cuisine, un véhicule, une machine ou un casier se place n’importe où. Un entrepôt créé avant les niveaux compte comme un site.
 
-Chaque emplacement a une **adresse**, écrite avec les codes de ses parents : `MAIN-SALES-A03-B02-S4` est le magasin principal, la surface de vente, l’allée 3, la travée 2, l’étagère 4. Le code d’un emplacement doit seulement différer de ses voisins sous le même parent : chaque travée peut avoir son étagère `S4`. Renommez un emplacement et les adresses en dessous suivent. Saisissez une partie d’une adresse, un nom ou un code-barres dans la recherche pour trouver un emplacement.
+Chaque emplacement a une **adresse**, écrite avec les codes de ses parents : `MAIN-SALES-A03-B02-S4` est le magasin principal, la surface de vente, l’allée 3, la travée 2, l’étagère 4. Le code d’un emplacement doit seulement différer de ses voisins sous le même parent : chaque travée peut avoir son étagère `S4`. Renommez un emplacement et les adresses en dessous suivent. Saisissez une partie d’une adresse, un nom ou un code-barres dans la recherche pour trouver un emplacement. Un emplacement est lu par son adresse partout où il apparaît : dans le stock, les mouvements, le trajet d’un transfert et les emplacements qu’un déplacement propose. **Imprimer les étiquettes** crée un PDF des emplacements affichés, une étiquette chacun : l’adresse en grand, le nom dessous et un code-barres (celui de l’emplacement, sinon son adresse) qu’un scan retrouve.
 
 **Bon à savoir**
 - Un site indique s’il **reçoit des fournisseurs** ; désactivé, les marchandises n’y arrivent que par transfert depuis un autre site.
 - Un emplacement sous un site est **prélèvement** (en rayon) ou **réserve** (surstock) ; c’est un conseil, jamais une quantité.
 - Le caractère entre les niveaux est le paramètre de l’entreprise **Séparateur dans l’adresse d’un emplacement** (un tiret, un point, une barre oblique ou deux-points) ; seule l’écriture de l’adresse change. Il se règle dans **Réglages du stock**.
 
+<!-- anchor: user.money.stock.reorder -->
+### Réapprovisionnement : ce qui est bas et ce qu'il faut commander
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous voulez voir ce qui va manquer et le commander sans passer en revue les rayons.
+
+Ouvrez **Stock → Réapprovisionnement** (la fonction *Seuils de réapprovisionnement* doit être activée). La page a deux listes.
+
+- **Stock bas** liste chaque article ou variante au niveau de son seuil ou en dessous, par site, avec ce qui est en stock et le seuil. Elle est lue dans le registre du stock, exactement, dans l’unité de l’article ; un article sans seuil n’est jamais listé. Un emplacement en transit ne compte pas comme stock disponible.
+- **Que commander** regroupe ce qui est bas par fournisseur dont l’article est marqué **préféré**, dans l’unité d’achat de cet article, arrondi à l’unité entière supérieure. Un article sans article fournisseur préféré figure sous **Aucun fournisseur choisi** : marquez-en un dans les articles fournisseur de l’article.
+
+**Créer un brouillon de commande** crée un brouillon de commande d’achat à partir d’un groupe. Ce n’est qu’un brouillon : rien n’est commandé, chiffré ni envoyé tant que vous ne le confirmez pas dans les commandes d’achat. Il faut le droit de gérer les achats ; demander deux fois le même brouillon ne le crée qu’une fois.
 <!-- anchor: user.money.stock.registry -->
 ### Le registre des articles
 
