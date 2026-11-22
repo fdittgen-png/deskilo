@@ -426,14 +426,10 @@ enum WorkspaceFeature {
   /// #4165 — a standalone customer invoice, with no member-month behind it.
   standaloneInvoicing,
 
-  /// #4164 — the business's billing customers: the people and businesses it
-  /// invoices, with or without an account, each with a billing identity of
-  /// its own. Asked for, under invoicing. Off: nothing changes.
+  /// #4164 — billing customers: who the business invoices, account or not.
   billingCustomers,
 
-  /// #4166 — customer quotes: an offer to a billing customer, sent and
-  /// decided, whose accepted revision becomes the customer's first invoice.
-  /// Asked for, under invoicing. Off: nothing changes.
+  /// #4166 — customer quotes: an offer, sent and decided; the accepted one invoices.
   customerQuotes,
 
   /// #4169 — lots and expiry on goods (feature_manifest_stock.dart).
@@ -447,7 +443,10 @@ enum WorkspaceFeature {
   serviceFulfilment,
 
   /// #4294 — reorder points and low-stock alerts (feature_manifest_stock.dart).
-  stockReorder;
+  stockReorder,
+
+  /// #4361 — item groups: shared settings that items inherit (feature_manifest_stock.dart).
+  stockItemGroups;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;

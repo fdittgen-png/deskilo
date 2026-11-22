@@ -313,5 +313,7 @@
   "featureStockReorderDesc": "Fixez un minimum par article et par site : la boîte de réception signale quand le stock l’atteint, et une liste de réapprovisionnement propose quoi commander. Désactivé : aucun seuil, aucune alerte, aucune liste ; le registre n’est pas touché.",
   "@featureStockReorderDesc": {
     "description": "#4294 feature description"
-  }
+  },
+  "featureStockItemGroupsTitle": "Groupes d'articles",
+  "featureStockItemGroupsDesc": "Regroupez les articles pour partager leurs réglages : suivi, durée de conservation, mode d'étiquette, unités, TVA, caisse et plus. Un article hérite de la valeur de son groupe sauf s'il garde la sienne ; un changement de groupe montre combien d'articles il touche avant d'être enregistré."
 }

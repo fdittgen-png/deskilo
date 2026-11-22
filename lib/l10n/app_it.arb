@@ -7771,6 +7771,8 @@
   "@featureStandaloneInvoicingTitle": {
     "description": "#4165 feature switch: featureStandaloneInvoicingTitle"
   },
+  "featureStockItemGroupsDesc": "Raggruppi gli articoli per condividerne le impostazioni: tracciabilità, scadenza, modalità etichetta, unità, IVA, cassa e altro. Un articolo eredita il valore del suo gruppo salvo che mantenga il proprio; una modifica al gruppo mostra quanti articoli raggiunge prima di essere salvata.",
+  "featureStockItemGroupsTitle": "Gruppi di articoli",
   "featureStockLotsDesc": "Seguire le merci per lotto o per data di scadenza, con una durata di conservazione. Disattivato: nessun articolo è seguito per lotto e ciò che è stato registrato resta invariato.",
   "@featureStockLotsDesc": {
     "description": "#4169 what the lots and expiry feature does, and what off means"
@@ -19005,6 +19007,9 @@
   },
   "settingHintStockAddressSeparator": "Il carattere tra i livelli dell'indirizzo di un’ubicazione (sede, zona, corsia, campata, scaffale): MAG1-SALES-A03-B02-S4 con il trattino, MAG1.SALES.A03.B02.S4 con il punto. Cambia solo come si scrive l'indirizzo.",
   "settingHintStockAllowNegative": "Disattivato: un movimento che lascerebbe meno di niente in un luogo è rifiutato. Attivato: viene registrato e il luogo mostra una quantità negativa finché arriva merce.",
+  "settingHintStockGroupDefaultCountDays": "Ogni quanti giorni un articolo che né un gruppo né un'impostazione propria riguarda è proposto per un conteggio ciclico. 0 significa non programmato.",
+  "settingHintStockGroupDefaultTagMode": "Se un articolo che né un gruppo né un'impostazione propria riguarda porta un'etichetta RFID: nessuna, una etichetta che indica un lotto o una etichetta per unità (che richiede la tracciabilità per pezzo).",
+  "settingHintStockPriceRounding": "Come si arrotonda un prezzo di vendita proposto: al 0,05 o 0,10 più vicino, o a un prezzo che finisce per 0,99. Serve solo a proporre un prezzo.",
   "settingHintVatViesEvidenceDays": "Giorni in cui un controllo valido della partita IVA resta abbastanza recente da fungere da prova su una nuova fattura. Un valore più breve richiede prima un nuovo controllo; non prova che un’operazione sia valida.",
   "@settingHintVatViesEvidenceDays": {
     "description": "#2487 retention settings"
@@ -19222,6 +19227,9 @@
   },
   "settingLabelStockAddressSeparator": "Separatore nell'indirizzo di un’ubicazione",
   "settingLabelStockAllowNegative": "Le scorte possono scendere sotto zero",
+  "settingLabelStockGroupDefaultCountDays": "Ciclo di conteggio predefinito (giorni)",
+  "settingLabelStockGroupDefaultTagMode": "Modalità etichetta predefinita degli articoli",
+  "settingLabelStockPriceRounding": "Arrotondamento dei prezzi",
   "settingLabelVatViesEvidenceDays": "Validità del controllo della partita IVA",
   "@settingLabelVatViesEvidenceDays": {
     "description": "#2487 retention settings"
@@ -21079,6 +21087,21 @@
   "@stockReasonFactorInvalid": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonGroupDepth": "Un sottogruppo non può avere sottogruppi.",
+  "stockReasonGroupHasMovements": "Questo articolo ha movimenti di magazzino: unità e tracciabilità restano come scritte.",
+  "stockReasonGroupHasSubgroups": "Questo gruppo ha sottogruppi: li sposti o li elimini prima.",
+  "stockReasonGroupInUse": "Questo gruppo è usato da articoli: li sposti prima.",
+  "stockReasonGroupItemUnknown": "Questo articolo non è di questa attività.",
+  "stockReasonGroupNameDuplicate": "Un gruppo di questo livello ha già questo nome.",
+  "stockReasonGroupNameLength": "Il nome di un gruppo ha da 1 a 80 caratteri.",
+  "stockReasonGroupNameRequired": "Un nuovo gruppo ha bisogno di un nome.",
+  "stockReasonGroupNeedsSerial": "Le etichette per unità richiedono la tracciabilità per pezzo.",
+  "stockReasonGroupNotOverridable": "È una proposta per i nuovi articoli e non si imposta per articolo.",
+  "stockReasonGroupPlaceUnknown": "Questo luogo non è di questa attività.",
+  "stockReasonGroupUnknown": "Questo gruppo non è di questa attività.",
+  "stockReasonGroupUnknownReference": "Un luogo, un articolo o un'aliquota qui indicati non sono di questa attività.",
+  "stockReasonGroupValueRequired": "Indichi un valore oppure usi quello del gruppo.",
+  "stockReasonGroupVatRateUnknown": "Questa aliquota IVA non è tra quelle attive di questa attività.",
   "stockReasonGtinCheck": "La cifra di controllo di questo codice a barre è errata.",
   "@stockReasonGtinCheck": {
     "description": "#4169 the stock editors: a text under a field the server refused"

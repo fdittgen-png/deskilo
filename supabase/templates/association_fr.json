@@ -204,6 +204,7 @@
         "spaceInquiries": true,
         "spaceQrCodes": true,
         "standaloneInvoicing": false,
+        "stockItemGroups": false,
         "stockLots": false,
         "stockManagement": false,
         "stockReceiving": false,

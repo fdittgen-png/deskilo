@@ -313,5 +313,7 @@
   "featureStockReorderDesc": "Impostate un minimo per articolo e sede: la casella segnala quando la giacenza lo raggiunge e un elenco di riordino propone cosa ordinare. Disattivato: nessun punto, nessun avviso, nessun elenco; il registro non cambia.",
   "@featureStockReorderDesc": {
     "description": "#4294 feature description"
-  }
+  },
+  "featureStockItemGroupsTitle": "Gruppi di articoli",
+  "featureStockItemGroupsDesc": "Raggruppi gli articoli per condividerne le impostazioni: tracciabilità, scadenza, modalità etichetta, unità, IVA, cassa e altro. Un articolo eredita il valore del suo gruppo salvo che mantenga il proprio; una modifica al gruppo mostra quanti articoli raggiunge prima di essere salvata."
 }

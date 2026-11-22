@@ -28,6 +28,10 @@ import '../../../features/workspace/domain/workspace_feature.dart';
 /// The features the demo's main space keeps off, and why.
 @visibleForTesting
 const Map<WorkspaceFeature, String> demoFeaturesLeftOff = {
+  WorkspaceFeature.stockItemGroups:
+      '#4361: the server side (groups, inheritance, the preview, the history) is '
+      "delivered first; the Demo's Dairy, Cheese, Drinks and Gift baskets arrive "
+      'with its screens, which turn the feature on and add their scenario',
   WorkspaceFeature.mtdSubmission:
       'UK only: off in the head, on in the London house (ws-3), where its '
       'scenario is performed (#4009); left off in the other houses',

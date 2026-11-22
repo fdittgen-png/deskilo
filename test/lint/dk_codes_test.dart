@@ -12,6 +12,9 @@ import 'lint_sources.dart';
 /// Codes the app does not read, each with its reason. A name here must be
 /// raised by some migration and read by no app file.
 const _notForTheApp = <String, String>{
+  'DKGZZ':
+      'a preview marker: the group and item-move functions raise it inside their own block to roll '
+      'a preview back, and catch it there (0883)',
   'DKC14':
       'a payment claim naming a standalone invoice: the app offers no payment '
       'of one until the payment part of #4165 (B), where its words are '

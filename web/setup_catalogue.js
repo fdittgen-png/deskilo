@@ -670,6 +670,10 @@ window.SETUP_REGISTRY={
   [
    "stockReorder",
    false
+  ],
+  [
+   "stockItemGroups",
+   false
   ]
  ],
  "requires": {
@@ -786,7 +790,8 @@ window.SETUP_REGISTRY={
   "stockReceiving": "stockManagement",
   "stockTakeOut": "stockManagement",
   "serviceFulfilment": "billingCustomers",
-  "stockReorder": "stockManagement"
+  "stockReorder": "stockManagement",
+  "stockItemGroups": "stockManagement"
  },
  "availableIn": {
   "recapitulativeStatement": [
@@ -1505,7 +1510,8 @@ window.SETUP_PROCESSES=[
      "stockLots",
      "stockReceiving",
      "stockTakeOut",
-     "stockReorder"
+     "stockReorder",
+     "stockItemGroups"
     ]
    }
   ]
@@ -1994,7 +2000,8 @@ window.SETUP_LEVELS={
       "stockLots",
       "stockReceiving",
       "stockTakeOut",
-      "stockReorder"
+      "stockReorder",
+      "stockItemGroups"
      ],
      "needs": {
       "money": "invoices"

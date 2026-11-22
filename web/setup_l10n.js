@@ -730,6 +730,20 @@ window.SETUP_L10N={
    "fedRetentionHint": "How long a server keeps the receipts of signed messages between servers, and a personal home the traces of ended memberships, before the hourly cleanup removes them. Never shorter than the identity status lifetime plus twice the clock difference. Set in the app's settings.",
    "fedAnswerWait": "Backchannel answer wait",
    "fedAnswerWaitHint": "How long a server waits for the answer to a signed message it sent to another server (an identity status, a membership) before it sends the same message again. At least 30 seconds; keep it below the identity status lifetime. Set in the app's settings.",
+   "stockGroupTagMode": "Default tag mode of items",
+   "stockGroupTagModeHint": "Whether an item that no group and no own setting speaks for carries an RFID tag: none, one tag naming a batch, or one tag per unit (which needs tracking by piece). Set in the app's settings.",
+   "stockGroupCountDays": "Default count cycle",
+   "stockGroupCountDaysHint": "Every how many days an item that no group and no own setting speaks for is proposed for a cycle count. Set in the app's settings.",
+   "stockGroupRounding": "Price rounding",
+   "stockGroupRoundingHint": "How a proposed sale price is rounded. It is used only to propose a price. Set in the app's settings.",
+   "optTagNone": "No tag",
+   "optTagPerBatch": "One tag per batch",
+   "optTagPerUnit": "One tag per unit",
+   "optNotScheduled": "Not scheduled",
+   "optRoundNone": "No rounding",
+   "optRound005": "To 0.05",
+   "optRound010": "To 0.10",
+   "optRound099": "Ending in 0.99",
    "supLookupWait": "Supplier lookup wait",
    "supLookupWaitHint": "How long the server waits for the company registry (VIES) when someone looks up a supplier's VAT number, before it says the registry did not answer. Set in the app's settings.",
    "supLookupRate": "Supplier lookups per minute",
@@ -1475,6 +1489,10 @@ window.SETUP_L10N={
    "stockReorder": [
     "Reorder points",
     "Set a minimum per item and site: the inbox says when stock falls to it, and a replenishment list proposes what to order. Off: no point is set, no alert is raised and no list is offered; the ledger is unaffected."
+   ],
+   "stockItemGroups": [
+    "Item groups",
+    "Group items so that their settings are shared: tracking, shelf life, tag mode, units, VAT, the till and more. An item inherits its group's value unless it keeps its own; a change to a group shows how many items it reaches before it is saved."
    ]
   },
   "process": {
@@ -2601,6 +2619,20 @@ window.SETUP_L10N={
    "fedRetentionHint": "Combien de temps un serveur garde les accusés de réception des messages signés entre serveurs, et un domicile personnel les traces des adhésions terminées, avant le nettoyage horaire. Jamais moins que la validité du statut d'identité plus deux fois l'écart d'horloge. Se règle dans les paramètres de l'app.",
    "fedAnswerWait": "Attente de réponse entre serveurs",
    "fedAnswerWaitHint": "Combien de temps un serveur attend la réponse à un message signé envoyé à un autre serveur (un statut d'identité, une adhésion) avant de renvoyer le même message. Au moins 30 secondes ; gardez-la sous la durée de validité du statut d'identité. Se règle dans les paramètres de l'app.",
+   "stockGroupTagMode": "Mode d'étiquette par défaut des articles",
+   "stockGroupTagModeHint": "Si un article que ni un groupe ni un réglage propre ne concerne porte une étiquette RFID : aucune, une étiquette qui désigne un lot, ou une étiquette par unité (ce qui exige un suivi à la pièce). Se règle dans les paramètres de l'app.",
+   "stockGroupCountDays": "Cycle de comptage par défaut",
+   "stockGroupCountDaysHint": "Tous les combien de jours un article que ni un groupe ni un réglage propre ne concerne est proposé pour un comptage tournant. Se règle dans les paramètres de l'app.",
+   "stockGroupRounding": "Arrondi des prix",
+   "stockGroupRoundingHint": "Comment un prix de vente proposé est arrondi. Il ne sert qu'à proposer un prix. Se règle dans les paramètres de l'app.",
+   "optTagNone": "Pas d'étiquette",
+   "optTagPerBatch": "Une étiquette par lot",
+   "optTagPerUnit": "Une étiquette par unité",
+   "optNotScheduled": "Non planifié",
+   "optRoundNone": "Pas d'arrondi",
+   "optRound005": "Au 0,05",
+   "optRound010": "Au 0,10",
+   "optRound099": "Finissant par 0,99",
    "supLookupWait": "Attente de la recherche fournisseur",
    "supLookupWaitHint": "Durée pendant laquelle le serveur attend le registre des sociétés (VIES) quand quelqu'un recherche le numéro de TVA d'un fournisseur, avant d'indiquer que le registre n'a pas répondu. Se règle dans les paramètres de l'app.",
    "supLookupRate": "Recherches fournisseur par minute",
@@ -3346,6 +3378,10 @@ window.SETUP_L10N={
    "stockReorder": [
     "Seuils de réapprovisionnement",
     "Fixez un minimum par article et par site : la boîte de réception signale quand le stock l’atteint, et une liste de réapprovisionnement propose quoi commander. Désactivé : aucun seuil, aucune alerte, aucune liste ; le registre n’est pas touché."
+   ],
+   "stockItemGroups": [
+    "Groupes d'articles",
+    "Regroupez les articles pour partager leurs réglages : suivi, durée de conservation, mode d'étiquette, unités, TVA, caisse et plus. Un article hérite de la valeur de son groupe sauf s'il garde la sienne ; un changement de groupe montre combien d'articles il touche avant d'être enregistré."
    ]
   },
   "process": {
@@ -4472,6 +4508,20 @@ window.SETUP_L10N={
    "fedRetentionHint": "Wie lange ein Server die Empfangsbelege signierter Nachrichten zwischen Servern und ein persönliches Zuhause die Spuren beendeter Mitgliedschaften aufbewahrt, bevor die stündliche Bereinigung sie entfernt. Nie kürzer als die Gültigkeit des Identitätsstatus plus die doppelte Uhrabweichung. Wird in den Einstellungen der App festgelegt.",
    "fedAnswerWait": "Wartezeit auf Antwort im Server-Austausch",
    "fedAnswerWaitHint": "Wie lange ein Server auf die Antwort auf eine signierte Nachricht an einen anderen Server (einen Identitätsstatus, eine Mitgliedschaft) wartet, bevor er dieselbe Nachricht erneut sendet. Mindestens 30 Sekunden; unter der Gültigkeit des Identitätsstatus halten. Wird in den Einstellungen der App festgelegt.",
+   "stockGroupTagMode": "Standard-Etikettenmodus der Artikel",
+   "stockGroupTagModeHint": "Ob ein Artikel, den weder eine Gruppe noch eine eigene Einstellung betrifft, ein RFID-Etikett trägt: keines, ein Etikett für eine Charge oder ein Etikett je Stück (das eine Verfolgung je Stück braucht). Einstellbar in den Einstellungen der App.",
+   "stockGroupCountDays": "Standard-Zählzyklus",
+   "stockGroupCountDaysHint": "Nach wie vielen Tagen ein Artikel, den weder eine Gruppe noch eine eigene Einstellung betrifft, zur Zyklus-Zählung vorgeschlagen wird. Einstellbar in den Einstellungen der App.",
+   "stockGroupRounding": "Preisrundung",
+   "stockGroupRoundingHint": "Wie ein vorgeschlagener Verkaufspreis gerundet wird. Sie dient nur dazu, einen Preis vorzuschlagen. Einstellbar in den Einstellungen der App.",
+   "optTagNone": "Kein Etikett",
+   "optTagPerBatch": "Ein Etikett je Charge",
+   "optTagPerUnit": "Ein Etikett je Stück",
+   "optNotScheduled": "Nicht geplant",
+   "optRoundNone": "Keine Rundung",
+   "optRound005": "Auf 0,05",
+   "optRound010": "Auf 0,10",
+   "optRound099": "Endend auf 0,99",
    "supLookupWait": "Wartezeit der Lieferantensuche",
    "supLookupWaitHint": "Wie lange der Server auf das Unternehmensregister (VIES) wartet, wenn jemand die USt-IdNr. eines Lieferanten sucht, bevor er meldet, dass das Register nicht geantwortet hat. Wird in den Einstellungen der App festgelegt.",
    "supLookupRate": "Lieferantensuchen pro Minute",
@@ -5217,6 +5267,10 @@ window.SETUP_L10N={
    "stockReorder": [
     "Meldebestände",
     "Legen Sie je Artikel und Standort einen Mindestbestand fest: Der Posteingang meldet, wenn der Bestand ihn erreicht, und eine Nachschubliste schlägt vor, was zu bestellen ist. Aus: kein Meldebestand, kein Alarm, keine Liste; das Lagerbuch bleibt unberührt."
+   ],
+   "stockItemGroups": [
+    "Artikelgruppen",
+    "Artikel gruppieren, damit ihre Einstellungen geteilt werden: Nachverfolgung, Haltbarkeit, Etikettenmodus, Einheiten, Mehrwertsteuer, Kasse und mehr. Ein Artikel erbt den Wert seiner Gruppe, außer er behält seinen eigenen; eine Änderung an der Gruppe zeigt vor dem Speichern, wie viele Artikel sie erreicht."
    ]
   },
   "process": {
@@ -6343,6 +6397,20 @@ window.SETUP_L10N={
    "fedRetentionHint": "Cuánto tiempo un servidor guarda los acuses de recibo de los mensajes firmados entre servidores, y un hogar personal las huellas de las membresías terminadas, antes de la limpieza horaria. Nunca menos que la validez del estado de identidad más dos veces el desfase de reloj. Se ajusta en la configuración de la app.",
    "fedAnswerWait": "Espera de respuesta entre servidores",
    "fedAnswerWaitHint": "Cuánto tiempo espera un servidor la respuesta a un mensaje firmado enviado a otro servidor (un estado de identidad, una membresía) antes de volver a enviar el mismo mensaje. Al menos 30 segundos; manténgala por debajo de la validez del estado de identidad. Se ajusta en la configuración de la app.",
+   "stockGroupTagMode": "Modo de etiqueta por defecto de los artículos",
+   "stockGroupTagModeHint": "Si un artículo que ni un grupo ni un ajuste propio contempla lleva una etiqueta RFID: ninguna, una etiqueta que nombra un lote o una etiqueta por unidad (que exige seguimiento por pieza). Se ajusta en los ajustes de la app.",
+   "stockGroupCountDays": "Ciclo de recuento por defecto",
+   "stockGroupCountDaysHint": "Cada cuántos días se propone para un recuento cíclico un artículo que ni un grupo ni un ajuste propio contempla. Se ajusta en los ajustes de la app.",
+   "stockGroupRounding": "Redondeo de precios",
+   "stockGroupRoundingHint": "Cómo se redondea un precio de venta propuesto. Solo sirve para proponer un precio. Se ajusta en los ajustes de la app.",
+   "optTagNone": "Sin etiqueta",
+   "optTagPerBatch": "Una etiqueta por lote",
+   "optTagPerUnit": "Una etiqueta por unidad",
+   "optNotScheduled": "Sin programar",
+   "optRoundNone": "Sin redondeo",
+   "optRound005": "A 0,05",
+   "optRound010": "A 0,10",
+   "optRound099": "Terminando en 0,99",
    "supLookupWait": "Espera de la búsqueda de proveedores",
    "supLookupWaitHint": "Cuánto espera el servidor al registro de empresas (VIES) cuando alguien busca el número de IVA de un proveedor, antes de indicar que el registro no respondió. Se ajusta en la configuración de la app.",
    "supLookupRate": "Búsquedas de proveedores por minuto",
@@ -7088,6 +7156,10 @@ window.SETUP_L10N={
    "stockReorder": [
     "Puntos de reposición",
     "Fije un mínimo por artículo y sede: la bandeja avisa cuando las existencias lo alcanzan y una lista de reposición propone qué pedir. Desactivado: ningún punto, ninguna alerta ni lista; el libro no se ve afectado."
+   ],
+   "stockItemGroups": [
+    "Grupos de artículos",
+    "Agrupe artículos para compartir sus ajustes: seguimiento, caducidad, modo de etiqueta, unidades, IVA, caja y más. Un artículo hereda el valor de su grupo salvo que conserve el suyo; un cambio de grupo muestra a cuántos artículos llega antes de guardarse."
    ]
   },
   "process": {
@@ -8214,6 +8286,20 @@ window.SETUP_L10N={
    "fedRetentionHint": "Per quanto tempo un server conserva le ricevute dei messaggi firmati tra server, e una casa personale le tracce delle iscrizioni terminate, prima della pulizia oraria. Mai meno della validità dello stato di identità più due volte lo scarto d'orologio. Si imposta nelle impostazioni dell'app.",
    "fedAnswerWait": "Attesa della risposta tra server",
    "fedAnswerWaitHint": "Per quanto tempo un server attende la risposta a un messaggio firmato inviato a un altro server (uno stato di identità, un'iscrizione) prima di inviare di nuovo lo stesso messaggio. Almeno 30 secondi; tenerla sotto la validità dello stato di identità. Si imposta nelle impostazioni dell'app.",
+   "stockGroupTagMode": "Modalità etichetta predefinita degli articoli",
+   "stockGroupTagModeHint": "Se un articolo che né un gruppo né un'impostazione propria riguarda porta un'etichetta RFID: nessuna, una etichetta che indica un lotto o una etichetta per unità (che richiede la tracciabilità per pezzo). Si imposta nelle impostazioni dell'app.",
+   "stockGroupCountDays": "Ciclo di conteggio predefinito",
+   "stockGroupCountDaysHint": "Ogni quanti giorni un articolo che né un gruppo né un'impostazione propria riguarda è proposto per un conteggio ciclico. Si imposta nelle impostazioni dell'app.",
+   "stockGroupRounding": "Arrotondamento dei prezzi",
+   "stockGroupRoundingHint": "Come si arrotonda un prezzo di vendita proposto. Serve solo a proporre un prezzo. Si imposta nelle impostazioni dell'app.",
+   "optTagNone": "Nessuna etichetta",
+   "optTagPerBatch": "Una etichetta per lotto",
+   "optTagPerUnit": "Una etichetta per unità",
+   "optNotScheduled": "Non programmato",
+   "optRoundNone": "Nessun arrotondamento",
+   "optRound005": "A 0,05",
+   "optRound010": "A 0,10",
+   "optRound099": "Che finisce per 0,99",
    "supLookupWait": "Attesa della ricerca fornitore",
    "supLookupWaitHint": "Quanto il server attende il registro delle imprese (VIES) quando qualcuno cerca la partita IVA di un fornitore, prima di indicare che il registro non ha risposto. Si imposta nelle impostazioni dell'app.",
    "supLookupRate": "Ricerche fornitore al minuto",
@@ -8959,6 +9045,10 @@ window.SETUP_L10N={
    "stockReorder": [
     "Punti di riordino",
     "Impostate un minimo per articolo e sede: la casella segnala quando la giacenza lo raggiunge e un elenco di riordino propone cosa ordinare. Disattivato: nessun punto, nessun avviso, nessun elenco; il registro non cambia."
+   ],
+   "stockItemGroups": [
+    "Gruppi di articoli",
+    "Raggruppi gli articoli per condividerne le impostazioni: tracciabilità, scadenza, modalità etichetta, unità, IVA, cassa e altro. Un articolo eredita il valore del suo gruppo salvo che mantenga il proprio; una modifica al gruppo mostra quanti articoli raggiunge prima di essere salvata."
    ]
   },
   "process": {

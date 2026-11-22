@@ -148,6 +148,8 @@ const workspaceProcesses = <WorkspaceProcess>[
       WorkspaceFeature.stockTakeOut,
       // #4294 — reorder points, low-stock alerts and the replenishment list.
       WorkspaceFeature.stockReorder,
+      // #4361 — item groups.
+      WorkspaceFeature.stockItemGroups,
     ]),
   ]),
   WorkspaceProcess('billingPayments', [

@@ -12,6 +12,7 @@ String stockReasonText(AppLocalizations l10n, String reason) =>
     _variantReason(l10n, reason) ??
     _receivingReason(l10n, reason) ??
     _operationReason(l10n, reason) ??
+    _groupReason(l10n, reason) ??
     l10n.stockReasonOther;
 
 String? _itemReason(AppLocalizations l10n, String reason) => switch (reason) {
@@ -117,4 +118,24 @@ String stockSaveProblem(AppLocalizations l10n, Object error) => switch (error) {
   StockNotEnough() => l10n.refusalStockNotEnough,
   StockConfigRefused(:final reason) => stockReasonText(l10n, reason),
   _ => l10n.stockEditNotSaved,
+};
+
+/// #4361 -- the reasons of the item groups.
+String? _groupReason(AppLocalizations l10n, String reason) => switch (reason) {
+  'depth' => l10n.stockReasonGroupDepth,
+  'needs_serial' || 'per_unit_needs_serial' => l10n.stockReasonGroupNeedsSerial,
+  'name_duplicate' => l10n.stockReasonGroupNameDuplicate,
+  'name_length' => l10n.stockReasonGroupNameLength,
+  'required' => l10n.stockReasonGroupNameRequired,
+  'group_unknown' => l10n.stockReasonGroupUnknown,
+  'unknown_reference' => l10n.stockReasonGroupUnknownReference,
+  'has_subgroups' => l10n.stockReasonGroupHasSubgroups,
+  'in_use' => l10n.stockReasonGroupInUse,
+  'not_overridable' => l10n.stockReasonGroupNotOverridable,
+  'value_required' => l10n.stockReasonGroupValueRequired,
+  'vat_rate_unknown' => l10n.stockReasonGroupVatRateUnknown,
+  'place_unknown' => l10n.stockReasonGroupPlaceUnknown,
+  'item_unknown' => l10n.stockReasonGroupItemUnknown,
+  'has_movements' => l10n.stockReasonGroupHasMovements,
+  _ => null,
 };
