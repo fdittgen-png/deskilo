@@ -56090,6 +56090,36 @@ abstract class AppLocalizations {
   /// **'Entered'**
   String get stockEnteredLabel;
 
+  /// #4173 the goods put away against a document
+  ///
+  /// In en, this message translates to:
+  /// **'Show more'**
+  String get stockGoodsMore;
+
+  /// #4173 the goods put away against a document
+  ///
+  /// In en, this message translates to:
+  /// **'No goods are linked to it (nothing is recorded, which is not the same as none).'**
+  String get stockGoodsNone;
+
+  /// #4173 the goods put away against a document
+  ///
+  /// In en, this message translates to:
+  /// **'{item}: {entered} ({stored})'**
+  String stockGoodsRow(String item, String entered, String stored);
+
+  /// #4173 the goods put away against a document
+  ///
+  /// In en, this message translates to:
+  /// **'Goods put away'**
+  String get stockGoodsTitle;
+
+  /// #4173 the goods put away against a document
+  ///
+  /// In en, this message translates to:
+  /// **'The goods are not shown to you.'**
+  String get stockGoodsUnavailable;
+
   /// the stock pages and group (#4299)
   ///
   /// In en, this message translates to:
@@ -57344,6 +57374,102 @@ abstract class AppLocalizations {
   /// **'Used by the business'**
   String get stockTakeOutUsed;
 
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'Bill {reference}'**
+  String stockTraceBill(String reference);
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'The bills are not shown to you.'**
+  String get stockTraceBillsUnavailable;
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'Lot cost: {amount}'**
+  String stockTraceLotCostKnown(String amount);
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'More exist than are listed here.'**
+  String get stockTraceMore;
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'No bill is linked to this order yet.'**
+  String get stockTraceNoBill;
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'No payment is recorded for it.'**
+  String get stockTraceNoPayment;
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'No purchase is recorded for this movement.'**
+  String get stockTraceNoPurchase;
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'Only what is recorded is shown: nothing is matched on a name, a date or an amount. Linking a bill never changes what the goods cost.'**
+  String get stockTraceNote;
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'Order {reference} · {supplier}'**
+  String stockTraceOrder(String reference, String supplier);
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'Owed: {amount}'**
+  String stockTraceOwed(String amount);
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'Paid {amount} on {date}'**
+  String stockTracePaid(String amount, String date);
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'Payments are not shown to you (that is not the same as unpaid).'**
+  String get stockTracePaymentsUnavailable;
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'The purchase side is not shown to you.'**
+  String get stockTracePurchaseUnavailable;
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'Received on {date}'**
+  String stockTraceReceived(String date);
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'Reversed {amount} on {date}'**
+  String stockTraceReversed(String amount, String date);
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'Where this came from'**
+  String get stockTraceTitle;
+
   /// #4170 transfers and take-out: a label or message
   ///
   /// In en, this message translates to:
@@ -57420,6 +57546,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Transfers'**
   String get stockTransfersTitle;
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'An operational value from the recorded movements at their recorded lot costs. It is not a posted stock-book balance and states no cost of goods.'**
+  String get stockValueBasis;
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'Every item on hand has a known cost.'**
+  String get stockValueComplete;
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'As of {at}, calculated {calculated} from {count, plural, one{one movement} other{{count} movements}}.'**
+  String stockValueCutoff(String at, String calculated, int count);
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'Not complete: goods whose cost is unknown are not in this total.'**
+  String get stockValueIncomplete;
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'Known cost: {amount}'**
+  String stockValueKnownTotal(String amount);
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'{quantity} · {amount}'**
+  String stockValueLine(String quantity, String amount);
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'Priced goods'**
+  String get stockValueLinesTitle;
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'A movement recorded later with an earlier date changes a later calculation, never the facts recorded before.'**
+  String get stockValueMovesLater;
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'Seeing what goods cost needs the right to manage purchases or to read the finances.'**
+  String get stockValueNeedsRight;
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'Stock value'**
+  String get stockValueTitle;
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'the lot has no cost'**
+  String get stockValueUncostedNoCost;
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'no lot'**
+  String get stockValueUncostedNoLot;
+
+  /// #4173 the goods trace and the stock value
+  ///
+  /// In en, this message translates to:
+  /// **'Cost unknown'**
+  String get stockValueUncostedTitle;
 
   /// #4169 the stock editors: a label or message
   ///

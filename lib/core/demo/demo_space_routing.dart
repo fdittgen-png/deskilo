@@ -29,6 +29,7 @@ import '../../features/money/providers/hmrc_providers.dart';
 import '../../features/money/providers/invoice_original_providers.dart';
 import '../../features/money/providers/money_providers.dart';
 import '../../features/money/providers/purchase_order_providers.dart';
+import '../../features/money/providers/purchase_providers.dart';
 import '../../features/money/providers/recorded_payments_providers.dart';
 import '../../features/money/providers/settlement_review_providers.dart';
 import '../../features/money/providers/standalone_invoice_providers.dart';
@@ -54,6 +55,7 @@ import 'data/demo_stock_queries.dart';
 import 'data/demo_stock_receiving_commands.dart';
 import 'data/demo_stock_registry.dart';
 import 'data/demo_stock_reorder.dart';
+import 'data/demo_stock_trace.dart';
 import 'data/finance_kpi_repository.dart';
 import 'data/money/demo_credit_moves.dart';
 import 'data/money/demo_invoice_issue_drafts.dart';
@@ -62,6 +64,7 @@ import 'data/money/demo_settlement_reviews.dart';
 import 'data/money_repository.dart';
 import 'data/my_reservations_repository.dart';
 import 'data/purchase_order_repository.dart';
+import 'data/purchase_repository.dart';
 import 'data/series_previewer.dart';
 import 'data/workspace_repository.dart' show FakeWorkspaceMembership;
 import 'demo_finance_commands.dart';
@@ -314,6 +317,16 @@ List<Override> _moneyPortOverrides(FakeMoneyRepository Function(Ref ref) money) 
       ref.watch(purchaseOrderRepositoryProvider) as FakePurchaseOrderRepository,
       ref.watch(stockConfigCommandsProvider) as DemoStockConfigCommands,
       ref.watch(_demoStockLedgerProvider),
+    ),
+  ),
+  // #4173 — and traces its goods to the orders they were put away from, and values them.
+  stockTraceReaderProvider.overrideWith(
+    (ref) => DemoStockTrace(
+      demoFirstSpaceId,
+      ref.watch(_demoStockLedgerProvider),
+      ref.watch(purchaseOrderRepositoryProvider) as FakePurchaseOrderRepository,
+      ref.watch(stockReceivingCommandsProvider) as DemoStockReceivingCommands,
+      ref.watch(purchaseRepositoryProvider) as FakePurchaseRepository,
     ),
   ),
   // #4170 — and moves, transfers between its sites and takes out of that same stock.

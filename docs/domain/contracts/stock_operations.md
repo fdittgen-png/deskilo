@@ -110,6 +110,28 @@ Behind `stockReorder` (under `stockManagement`, off by default). Set with `manag
 
 Evidence: `supabase/tests/database/498_stock_reorder.sql` (the point and its refusals; one alert while low, ended above, a new one when low again; two sites with their own levels; a second business sees nothing; the list in whole purchase units; the draft and its replay) and `scripts/stock_transfer_race.sh` (two sessions crossing one point give one alert).
 
+## Tracing goods to documents and payments, and the operational value
+
+Three reads (`supabase/migrations/0865_stock_goods_trace.sql`, #4173): `stock_goods_trace_v1` (from a movement, or from a lot), `stock_document_goods_v1` (from an order, a bill or a supplier payment) and `stock_valuation_v1`. They write nothing: opening a trace performs no receiving, issuing, settling or returning.
+
+| question | answer |
+|---|---|
+| What is followed? | only relations that are RECORDED: movement, receipt line, receipt, order (the put-away allocation freezes the order's reference and the supplier's name), the bills whose `purchase_order_id` names that order, each bill's obligations, each obligation's settlement allocations and reversals with their payments. Nothing is matched on a name, a date or an amount |
+| Cardinality? | an order lists ALL its bills (at most 50, `truncated` says more), a bill its obligations, an obligation its allocations AND reversals; one payment funding two bills shows on both. None is flattened into one field on the movement |
+| Who reads what? | each layer under its own domain's right, with its feature on: the goods (viewStock or manageStock; stockManagement), the order and receipt (managePurchases or viewFinances; purchaseOrders), the bill and obligation (the same; purchases), the payment and allocation (viewFinances or recordOutgoingPayments; purchases), the cost of goods (managePurchases or viewFinances). viewStock alone grants none of the others. Reaching goods FROM a bill needs the order right too, and FROM a payment the bill and order rights, because the walk passes through those layers: without them the answer is `unavailable` and no order or receipt id comes back |
+| What does a reader without the right see? | `{"state": "unavailable"}` for that layer, the same answer whether or not the target exists: an unavailable financial source is not unpaid, and a call for a document the reader may not read tells nothing about whether it exists. A document the caller MAY read but that is not in this business is refused (DKG07) |
+| States of a link? | `linked`, `not_linked` (nothing recorded: not refused, not "no goods"), `unavailable`, and `listed` for a list. A bill or payment that no recorded order link reaches is `not_linked` |
+| A delegated assistant session, another business? | refused (DKN01); this surface is closed to delegated sessions |
+| Bounds? | every list is bounded and says when it is cut short: a lot's trace 20 movements, a bill's list 50 bills with at most 20 obligations each, an obligation's settlement 50 allocations, the value 200 priced lines and 200 uncosted groups (`truncated`, `obligations_truncated`, `lines_truncated`, `uncosted_truncated`); the known total and `complete` always count everything |
+| Paging? | `stock_document_goods_v1` is a keyset page (1 to 200, default 50) by (occurred_at, movement id); the cursor is `next`, sent back unchanged; an invalid size, kind or cursor is DKG09 |
+| What is the operational value? | `stock_valuation_v1(workspace, cutoff)`: recorded movements up to the cutoff at recorded lot costs, in the business's currency, with the cutoff, the time it was calculated, the movements counted and the last time one was recorded. It is NOT a posted stock-book balance and claims no cost of goods, no stock-variation entry and no accounting completeness |
+| Known, zero, unknown? | a known zero is a priced line of value 0; an unknown cost (a lot with none, or no lot) is listed by quantity in `uncosted` and stays outside `known_total_minor`; `complete` is true only when nothing is uncosted. A mixed selection is never a complete total |
+| Currencies? | a lot received in another currency was converted at the rate recorded with it (`source_currency`, `source_rate`), shown on its line; nothing is converted at today's rate |
+| Backdating? | the recomputation follows the movements as recorded: a permitted backdated movement changes a LATER calculation (its `movements_counted` and `last_recorded_at` move); the original facts never change |
+| Does linking a bill change a lot's cost? | no: nothing here rewrites a cost; a lot received before its bill stays as qualified when it was put away |
+
+Evidence: `supabase/tests/database/504_stock_goods_trace.sql` (the whole chain with two bills, one payment over both and a reversed allocation; known, known-zero and unknown cost; a reader of the stock only gets the physical trace and nothing of the supplier leaks; the same unavailable answer for a real and an invented document; purchases off and back on; the three documents reaching the goods, a page and its cursor; the refusals; the value and a backdated movement; nothing written).
+
 ## States and transitions
 
 Declared states: `start`, `open`, `complete`.

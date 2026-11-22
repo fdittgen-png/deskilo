@@ -20751,6 +20751,11 @@
   "stockEmpty": "Todavía no hay nada en existencias.",
   "stockEmptyFiltered": "Nada coincide con estos filtros.",
   "stockEnteredLabel": "Introducido",
+  "stockGoodsMore": "Mostrar más",
+  "stockGoodsNone": "No hay mercancías vinculadas (nada registrado no es lo mismo que ninguna).",
+  "stockGoodsRow": "{item}: {entered} ({stored})",
+  "stockGoodsTitle": "Mercancías almacenadas",
+  "stockGoodsUnavailable": "No se le muestran las mercancías.",
   "stockItemsEmpty": "Todavía no hay artículos. Un artículo aparece cuando un servicio o un artículo de proveedor se mantiene en existencias.",
   "@stockItemsEmpty": {
     "description": "the stock pages and group (#4299)"
@@ -21382,6 +21387,22 @@
   "@stockTakeOutUsed": {
     "description": "#4170 transfers and take-out: a label or message"
   },
+  "stockTraceBill": "Factura {reference}",
+  "stockTraceBillsUnavailable": "No se le muestran las facturas.",
+  "stockTraceLotCostKnown": "Coste del lote: {amount}",
+  "stockTraceMore": "Existen más de los que se listan aquí.",
+  "stockTraceNoBill": "Todavía no hay ninguna factura vinculada a este pedido.",
+  "stockTraceNoPayment": "No hay ningún pago registrado.",
+  "stockTraceNoPurchase": "No hay ninguna compra registrada para este movimiento.",
+  "stockTraceNote": "Solo se muestra lo registrado: nada se empareja por un nombre, una fecha o un importe. Vincular una factura nunca cambia lo que cuesta la mercancía.",
+  "stockTraceOrder": "Pedido {reference} · {supplier}",
+  "stockTraceOwed": "Adeudado: {amount}",
+  "stockTracePaid": "{amount} pagados el {date}",
+  "stockTracePaymentsUnavailable": "No se le muestran los pagos (no es lo mismo que «sin pagar»).",
+  "stockTracePurchaseUnavailable": "No se le muestra el lado de compras.",
+  "stockTraceReceived": "Recibido el {date}",
+  "stockTraceReversed": "{amount} revertidos el {date}",
+  "stockTraceTitle": "De dónde viene",
   "stockTransferLine": "{item}: {left} {unit} en camino de {loaded}",
   "@stockTransferLine": {
     "description": "#4170 transfers and take-out: a label or message",
@@ -21465,6 +21486,19 @@
   "@stockTransfersTitle": {
     "description": "#4170 transfers and take-out: a label or message"
   },
+  "stockValueBasis": "Un valor operativo de los movimientos registrados a su coste de lote registrado. No es un saldo contabilizado de existencias ni indica coste de ventas.",
+  "stockValueComplete": "Cada artículo en existencias tiene un coste conocido.",
+  "stockValueCutoff": "A {at}, calculado {calculated} a partir de {count, plural, one{un movimiento} other{{count} movimientos}}.",
+  "stockValueIncomplete": "Incompleto: las mercancías de coste desconocido no están en este total.",
+  "stockValueKnownTotal": "Coste conocido: {amount}",
+  "stockValueLine": "{quantity} · {amount}",
+  "stockValueLinesTitle": "Mercancías valoradas",
+  "stockValueMovesLater": "Un movimiento registrado después con una fecha anterior cambia un cálculo posterior, nunca los hechos registrados antes.",
+  "stockValueNeedsRight": "Ver lo que cuestan las mercancías requiere el derecho de gestionar las compras o de leer las finanzas.",
+  "stockValueTitle": "Valor de las existencias",
+  "stockValueUncostedNoCost": "el lote no tiene coste",
+  "stockValueUncostedNoLot": "sin lote",
+  "stockValueUncostedTitle": "Coste desconocido",
   "stockVariantPrice": "Precio propio (unidades menores, opcional)",
   "@stockVariantPrice": {
     "description": "#4169 the stock editors: a label or message"

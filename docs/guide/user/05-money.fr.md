@@ -703,6 +703,19 @@ Ouvrez **Stock → Articles**. Chaque ligne montre le **code-barres**, l’**uni
 - **Recherchez** par nom, code-barres ou adresse. Saisir ou scanner un code-barres dans la recherche et valider ouvre cet article.
 - Les longues listes se chargent par pages : choisissez *Afficher plus*.
 
+<!-- anchor: user.money.stock.value -->
+### Valeur du stock et origine des marchandises
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous voulez voir ce que vaut le stock en main, et d’où vient une livraison et si elle a été payée.
+
+Ouvrez **Stock → Valeur du stock** (il faut le droit de gérer les achats ou de lire les finances). La page montre le **coût connu** de ce qui est en stock, à une date, avec le moment du calcul et le nombre de mouvements. C’est une *valeur opérationnelle* : les mouvements enregistrés au coût enregistré de chaque lot. Ce n’est pas un solde comptabilisé du stock et elle n’indique aucun coût des marchandises.
+
+Les marchandises au coût **inconnu** (un lot reçu sans coût, ou sans lot) sont listées par quantité et ne sont **pas** dans le total ; la page indique *Incomplet* tant qu’il en existe, et un coût connu de zéro est une ligne valorisée, pas un coût inconnu. Un mouvement enregistré plus tard avec une date antérieure change un calcul ultérieur, jamais les faits enregistrés avant.
+
+Ouvrez un mouvement (**Stock → Mouvements**) et lisez **D’où cela vient** : la réception, la commande, les factures fournisseur liées à cette commande, ce que doit chacune et les paiements et annulations qui la règlent. Seul ce qui est enregistré est montré ; rien n’est rapproché par un nom, une date ou un montant. Une partie que vous ne pouvez pas voir indique *ne vous est pas montré* (ce n’est pas la même chose que impayé) ; une partie sans rien d’enregistré indique *non lié* ; une liste tronquée le dit. Lier une facture ne change jamais le coût de la marchandise. L’ouvrir ne change rien.
+
 <!-- anchor: user.money.amounts -->
 ### Comment les montants sont affichés
 

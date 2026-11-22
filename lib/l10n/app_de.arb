@@ -20751,6 +20751,11 @@
   "stockEmpty": "Es ist noch nichts auf Lager.",
   "stockEmptyFiltered": "Zu diesen Filtern gibt es nichts.",
   "stockEnteredLabel": "Erfasst",
+  "stockGoodsMore": "Mehr anzeigen",
+  "stockGoodsNone": "Es ist keine Ware damit verknüpft (nichts erfasst heißt nicht „keine“).",
+  "stockGoodsRow": "{item}: {entered} ({stored})",
+  "stockGoodsTitle": "Eingelagerte Ware",
+  "stockGoodsUnavailable": "Die Ware wird Ihnen nicht angezeigt.",
   "stockItemsEmpty": "Noch keine Artikel. Ein Artikel entsteht, wenn eine Leistung oder ein Lieferantenartikel im Lager geführt wird.",
   "@stockItemsEmpty": {
     "description": "the stock pages and group (#4299)"
@@ -21382,6 +21387,22 @@
   "@stockTakeOutUsed": {
     "description": "#4170 transfers and take-out: a label or message"
   },
+  "stockTraceBill": "Rechnung {reference}",
+  "stockTraceBillsUnavailable": "Die Rechnungen werden Ihnen nicht angezeigt.",
+  "stockTraceLotCostKnown": "Chargenkosten: {amount}",
+  "stockTraceMore": "Es gibt mehr, als hier aufgelistet sind.",
+  "stockTraceNoBill": "Mit dieser Bestellung ist noch keine Rechnung verknüpft.",
+  "stockTraceNoPayment": "Dafür ist keine Zahlung erfasst.",
+  "stockTraceNoPurchase": "Für diese Bewegung ist kein Einkauf erfasst.",
+  "stockTraceNote": "Gezeigt wird nur, was erfasst ist: nichts wird über Name, Datum oder Betrag zugeordnet. Eine Rechnung zu verknüpfen ändert nie, was die Ware kostet.",
+  "stockTraceOrder": "Bestellung {reference} · {supplier}",
+  "stockTraceOwed": "Geschuldet: {amount}",
+  "stockTracePaid": "{amount} bezahlt am {date}",
+  "stockTracePaymentsUnavailable": "Zahlungen werden Ihnen nicht angezeigt (das heißt nicht „unbezahlt“).",
+  "stockTracePurchaseUnavailable": "Die Einkaufsseite wird Ihnen nicht angezeigt.",
+  "stockTraceReceived": "Eingegangen am {date}",
+  "stockTraceReversed": "{amount} storniert am {date}",
+  "stockTraceTitle": "Woher es kam",
   "stockTransferLine": "{item}: {left} {unit} unterwegs von {loaded}",
   "@stockTransferLine": {
     "description": "#4170 transfers and take-out: a label or message",
@@ -21465,6 +21486,19 @@
   "@stockTransfersTitle": {
     "description": "#4170 transfers and take-out: a label or message"
   },
+  "stockValueBasis": "Ein operativer Wert aus den erfassten Bewegungen zu den erfassten Chargenkosten. Er ist kein gebuchter Lagerbuchsaldo und nennt keinen Wareneinsatz.",
+  "stockValueComplete": "Jeder vorrätige Artikel hat bekannte Kosten.",
+  "stockValueCutoff": "Stand {at}, berechnet {calculated} aus {count, plural, one{einer Bewegung} other{{count} Bewegungen}}.",
+  "stockValueIncomplete": "Nicht vollständig: Ware mit unbekannten Kosten ist in dieser Summe nicht enthalten.",
+  "stockValueKnownTotal": "Bekannte Kosten: {amount}",
+  "stockValueLine": "{quantity} · {amount}",
+  "stockValueLinesTitle": "Bewertete Ware",
+  "stockValueMovesLater": "Eine später erfasste Bewegung mit früherem Datum ändert eine spätere Berechnung, nie die zuvor erfassten Tatsachen.",
+  "stockValueNeedsRight": "Um zu sehen, was Ware kostet, braucht es das Recht, den Einkauf zu verwalten oder die Finanzen einzusehen.",
+  "stockValueTitle": "Lagerwert",
+  "stockValueUncostedNoCost": "die Charge hat keine Kosten",
+  "stockValueUncostedNoLot": "keine Charge",
+  "stockValueUncostedTitle": "Kosten unbekannt",
   "stockVariantPrice": "Eigener Preis (Nebeneinheit, optional)",
   "@stockVariantPrice": {
     "description": "#4169 the stock editors: a label or message"

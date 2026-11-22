@@ -24,6 +24,16 @@ abstract interface class PurchaseOrderStockSeam {
     required PurchaseOrder order,
   });
 
+  /// #4173 -- the goods put away against a [kind] (`order` or `bill`) document [id], for a reader of
+  /// the stock; null when the goods ledger is off or the reader may not read the stock.
+  Widget? goodsOfDocument(
+    BuildContext context,
+    WidgetRef ref, {
+    required String workspaceId,
+    required String kind,
+    required String id,
+  });
+
   /// The "also put away" part of the delivery form, read before the form
   /// opens; null when it is not offered or the stock side could not be read.
   Future<ReceiptPutAway?> receiptPutAway(

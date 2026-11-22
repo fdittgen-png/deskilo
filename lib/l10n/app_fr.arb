@@ -20751,6 +20751,11 @@
   "stockEmpty": "Rien n’est encore en stock.",
   "stockEmptyFiltered": "Rien ne correspond à ces filtres.",
   "stockEnteredLabel": "Saisi",
+  "stockGoodsMore": "Afficher plus",
+  "stockGoodsNone": "Aucune marchandise n’y est liée (rien d’enregistré n’est pas la même chose que aucune).",
+  "stockGoodsRow": "{item} : {entered} ({stored})",
+  "stockGoodsTitle": "Marchandises mises en stock",
+  "stockGoodsUnavailable": "Les marchandises ne vous sont pas montrées.",
   "stockItemsEmpty": "Aucun article pour l'instant. Un article apparaît lorsqu'un service ou un article fournisseur est tenu en stock.",
   "@stockItemsEmpty": {
     "description": "the stock pages and group (#4299)"
@@ -21382,6 +21387,22 @@
   "@stockTakeOutUsed": {
     "description": "#4170 transfers and take-out: a label or message"
   },
+  "stockTraceBill": "Facture {reference}",
+  "stockTraceBillsUnavailable": "Les factures ne vous sont pas montrées.",
+  "stockTraceLotCostKnown": "Coût du lot : {amount}",
+  "stockTraceMore": "Il en existe plus que ce qui est listé ici.",
+  "stockTraceNoBill": "Aucune facture n’est encore liée à cette commande.",
+  "stockTraceNoPayment": "Aucun paiement n’y est enregistré.",
+  "stockTraceNoPurchase": "Aucun achat n’est enregistré pour ce mouvement.",
+  "stockTraceNote": "Seul ce qui est enregistré est montré : rien n’est rapproché par un nom, une date ou un montant. Lier une facture ne change jamais le coût de la marchandise.",
+  "stockTraceOrder": "Commande {reference} · {supplier}",
+  "stockTraceOwed": "Dû : {amount}",
+  "stockTracePaid": "{amount} payés le {date}",
+  "stockTracePaymentsUnavailable": "Les paiements ne vous sont pas montrés (ce n’est pas la même chose que « impayé »).",
+  "stockTracePurchaseUnavailable": "Le côté achats ne vous est pas montré.",
+  "stockTraceReceived": "Reçu le {date}",
+  "stockTraceReversed": "{amount} annulés le {date}",
+  "stockTraceTitle": "D’où cela vient",
   "stockTransferLine": "{item} : {left} {unit} en route sur {loaded}",
   "@stockTransferLine": {
     "description": "#4170 transfers and take-out: a label or message",
@@ -21465,6 +21486,19 @@
   "@stockTransfersTitle": {
     "description": "#4170 transfers and take-out: a label or message"
   },
+  "stockValueBasis": "Une valeur opérationnelle des mouvements enregistrés à leur coût de lot enregistré. Ce n’est pas un solde comptabilisé du stock et elle n’indique aucun coût des marchandises.",
+  "stockValueComplete": "Chaque article en stock a un coût connu.",
+  "stockValueCutoff": "Au {at}, calculé {calculated} à partir de {count, plural, one{{count} mouvement} other{{count} mouvements}}.",
+  "stockValueIncomplete": "Incomplet : les marchandises au coût inconnu ne sont pas dans ce total.",
+  "stockValueKnownTotal": "Coût connu : {amount}",
+  "stockValueLine": "{quantity} · {amount}",
+  "stockValueLinesTitle": "Marchandises valorisées",
+  "stockValueMovesLater": "Un mouvement enregistré plus tard avec une date antérieure change un calcul ultérieur, jamais les faits enregistrés avant.",
+  "stockValueNeedsRight": "Voir ce que coûtent les marchandises demande le droit de gérer les achats ou de lire les finances.",
+  "stockValueTitle": "Valeur du stock",
+  "stockValueUncostedNoCost": "le lot n’a pas de coût",
+  "stockValueUncostedNoLot": "sans lot",
+  "stockValueUncostedTitle": "Coût inconnu",
   "stockVariantPrice": "Prix propre (unités mineures, facultatif)",
   "@stockVariantPrice": {
     "description": "#4169 the stock editors: a label or message"

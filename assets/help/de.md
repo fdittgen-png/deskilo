@@ -2954,6 +2954,18 @@ Sie möchten eine Liste, die für jeden Artikel und jede Variante sagt, was es i
 - **Suchen** Sie nach Name, Barcode oder Adresse. Einen Barcode in die Suche eingeben oder scannen und bestätigen öffnet diesen Artikel.
 - Lange Listen werden seitenweise geladen: Wählen Sie *Mehr anzeigen*.
 
+### Lagerwert und Herkunft der Ware
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie möchten sehen, was der Lagerbestand wert ist, woher eine Lieferung kam und ob sie bezahlt wurde.
+
+Öffnen Sie **Lager → Lagerwert** (dafür braucht es das Recht, den Einkauf zu verwalten oder die Finanzen einzusehen). Die Seite zeigt die **bekannten Kosten** des Bestands zu einem Stichtag, mit dem Zeitpunkt der Berechnung und der Zahl der Bewegungen. Es ist ein *operativer Wert*: die erfassten Bewegungen zu den erfassten Chargenkosten. Er ist kein gebuchter Lagerbuchsaldo und nennt keinen Wareneinsatz.
+
+Ware mit **unbekannten** Kosten (eine Charge ohne Kosten oder Ware ohne Charge) steht nach Menge in einer Liste und ist **nicht** in der Summe; die Seite sagt *Nicht vollständig*, solange es sie gibt, und bekannte Kosten von null sind eine bewertete Zeile, keine unbekannten. Eine später erfasste Bewegung mit früherem Datum ändert eine spätere Berechnung, nie die zuvor erfassten Tatsachen.
+
+Öffnen Sie eine Bewegung (**Lager → Bewegungen**) und lesen Sie **Woher es kam**: den Wareneingang, die Bestellung, die mit ihr verknüpften Lieferantenrechnungen, was jede schuldet und die Zahlungen und Stornos, die sie ausgleichen. Gezeigt wird nur, was erfasst ist; nichts wird über Name, Datum oder Betrag zugeordnet. Ein Teil, den Sie nicht sehen dürfen, sagt *wird Ihnen nicht angezeigt* (das heißt nicht „unbezahlt“); ein Teil ohne Erfassung sagt *nicht verknüpft*; eine gekürzte Liste sagt es. Eine Rechnung zu verknüpfen ändert nie, was die Ware kostet. Sie zu öffnen ändert nichts.
+
 ### Wie Beträge angezeigt werden
 
 **Zielgruppe:** Alle

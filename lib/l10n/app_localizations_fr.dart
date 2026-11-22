@@ -35378,6 +35378,25 @@ class AppLocalizationsFr extends AppLocalizations {
   String get stockEnteredLabel => 'Saisi';
 
   @override
+  String get stockGoodsMore => 'Afficher plus';
+
+  @override
+  String get stockGoodsNone =>
+      'Aucune marchandise n’y est liée (rien d’enregistré n’est pas la même chose que aucune).';
+
+  @override
+  String stockGoodsRow(String item, String entered, String stored) {
+    return '$item : $entered ($stored)';
+  }
+
+  @override
+  String get stockGoodsTitle => 'Marchandises mises en stock';
+
+  @override
+  String get stockGoodsUnavailable =>
+      'Les marchandises ne vous sont pas montrées.';
+
+  @override
   String get stockItemsEmpty =>
       'Aucun article pour l\'instant. Un article apparaît lorsqu\'un service ou un article fournisseur est tenu en stock.';
 
@@ -36130,6 +36149,74 @@ class AppLocalizationsFr extends AppLocalizations {
   String get stockTakeOutUsed => 'Utilisé par l’entreprise';
 
   @override
+  String stockTraceBill(String reference) {
+    return 'Facture $reference';
+  }
+
+  @override
+  String get stockTraceBillsUnavailable =>
+      'Les factures ne vous sont pas montrées.';
+
+  @override
+  String stockTraceLotCostKnown(String amount) {
+    return 'Coût du lot : $amount';
+  }
+
+  @override
+  String get stockTraceMore => 'Il en existe plus que ce qui est listé ici.';
+
+  @override
+  String get stockTraceNoBill =>
+      'Aucune facture n’est encore liée à cette commande.';
+
+  @override
+  String get stockTraceNoPayment => 'Aucun paiement n’y est enregistré.';
+
+  @override
+  String get stockTraceNoPurchase =>
+      'Aucun achat n’est enregistré pour ce mouvement.';
+
+  @override
+  String get stockTraceNote =>
+      'Seul ce qui est enregistré est montré : rien n’est rapproché par un nom, une date ou un montant. Lier une facture ne change jamais le coût de la marchandise.';
+
+  @override
+  String stockTraceOrder(String reference, String supplier) {
+    return 'Commande $reference · $supplier';
+  }
+
+  @override
+  String stockTraceOwed(String amount) {
+    return 'Dû : $amount';
+  }
+
+  @override
+  String stockTracePaid(String amount, String date) {
+    return '$amount payés le $date';
+  }
+
+  @override
+  String get stockTracePaymentsUnavailable =>
+      'Les paiements ne vous sont pas montrés (ce n’est pas la même chose que « impayé »).';
+
+  @override
+  String get stockTracePurchaseUnavailable =>
+      'Le côté achats ne vous est pas montré.';
+
+  @override
+  String stockTraceReceived(String date) {
+    return 'Reçu le $date';
+  }
+
+  @override
+  String stockTraceReversed(String amount, String date) {
+    return '$amount annulés le $date';
+  }
+
+  @override
+  String get stockTraceTitle => 'D’où cela vient';
+
+  @override
   String stockTransferLine(
     String item,
     String left,
@@ -36178,6 +36265,61 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get stockTransfersTitle => 'Transferts';
+
+  @override
+  String get stockValueBasis =>
+      'Une valeur opérationnelle des mouvements enregistrés à leur coût de lot enregistré. Ce n’est pas un solde comptabilisé du stock et elle n’indique aucun coût des marchandises.';
+
+  @override
+  String get stockValueComplete => 'Chaque article en stock a un coût connu.';
+
+  @override
+  String stockValueCutoff(String at, String calculated, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count mouvements',
+      one: '$count mouvement',
+    );
+    return 'Au $at, calculé $calculated à partir de $_temp0.';
+  }
+
+  @override
+  String get stockValueIncomplete =>
+      'Incomplet : les marchandises au coût inconnu ne sont pas dans ce total.';
+
+  @override
+  String stockValueKnownTotal(String amount) {
+    return 'Coût connu : $amount';
+  }
+
+  @override
+  String stockValueLine(String quantity, String amount) {
+    return '$quantity · $amount';
+  }
+
+  @override
+  String get stockValueLinesTitle => 'Marchandises valorisées';
+
+  @override
+  String get stockValueMovesLater =>
+      'Un mouvement enregistré plus tard avec une date antérieure change un calcul ultérieur, jamais les faits enregistrés avant.';
+
+  @override
+  String get stockValueNeedsRight =>
+      'Voir ce que coûtent les marchandises demande le droit de gérer les achats ou de lire les finances.';
+
+  @override
+  String get stockValueTitle => 'Valeur du stock';
+
+  @override
+  String get stockValueUncostedNoCost => 'le lot n’a pas de coût';
+
+  @override
+  String get stockValueUncostedNoLot => 'sans lot';
+
+  @override
+  String get stockValueUncostedTitle => 'Coût inconnu';
 
   @override
   String get stockVariantPrice => 'Prix propre (unités mineures, facultatif)';

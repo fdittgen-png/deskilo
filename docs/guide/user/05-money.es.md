@@ -703,6 +703,19 @@ Abra **Existencias → Artículos**. Cada línea muestra el **código de barras*
 - **Busque** por nombre, código de barras o dirección. Escribir o escanear un código de barras en la búsqueda y confirmar abre ese artículo.
 - Las listas largas se cargan por páginas: elija *Mostrar más*.
 
+<!-- anchor: user.money.stock.value -->
+### Valor de las existencias y origen de la mercancía
+
+**Público:** Administrador/a · Propietario
+
+Quiere ver cuánto valen las existencias, de dónde vino una entrega y si se pagó.
+
+Abra **Existencias → Valor de las existencias** (requiere el derecho de gestionar las compras o de leer las finanzas). La página muestra el **coste conocido** de lo que hay, a una fecha, con el momento del cálculo y el número de movimientos. Es un *valor operativo*: los movimientos registrados al coste registrado de cada lote. No es un saldo contabilizado de existencias ni indica coste de ventas.
+
+Las mercancías de coste **desconocido** (un lote recibido sin coste, o sin lote) se listan por cantidad y **no** están en el total; la página dice *Incompleto* mientras existan, y un coste conocido de cero es una línea valorada, no desconocida. Un movimiento registrado después con una fecha anterior cambia un cálculo posterior, nunca los hechos registrados antes.
+
+Abra un movimiento (**Existencias → Movimientos**) y lea **De dónde viene**: la recepción, el pedido, las facturas de proveedor vinculadas a ese pedido, lo que debe cada una y los pagos y reversiones que la liquidan. Solo se muestra lo registrado; nada se empareja por un nombre, una fecha o un importe. Una parte que no puede ver dice *no se le muestra* (no es lo mismo que sin pagar); una parte sin nada registrado dice *sin vincular*; una lista recortada lo dice. Vincular una factura nunca cambia lo que cuesta la mercancía. Abrirlo no cambia nada.
+
 <!-- anchor: user.money.amounts -->
 ### Cómo se muestran los importes
 

@@ -45,6 +45,9 @@ extension StockEntries on DrawerEntries {
           () => go('/stock/reorder'),
           route: '/stock/reorder',
         ),
+      // #4173 — what the goods on hand cost: for who reads the stock AND may see what goods cost.
+      if (reads && (may(WorkspacePermission.viewFinances) || may(WorkspacePermission.managePurchases)))
+        DrawerEntry('drawer-stock-value', Icons.savings_outlined, l10n.stockValueTitle, () => go('/stock/value'), route: '/stock/value'),
       if (may(WorkspacePermission.manageStock) || may(WorkspacePermission.manageConfiguration))
         DrawerEntry(
           'drawer-stock-settings',
