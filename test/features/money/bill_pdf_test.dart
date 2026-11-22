@@ -202,4 +202,51 @@ void main() {
           reason: 'bad header for $locale');
     }
   });
+
+  // #4322 -- a credit's date on the printed bill is the day on the BUSINESS's calendar, whichever
+  // device prints it: 2026-12-31 20:00 UTC is 1 January 2027 in Auckland and still 31 December 2026
+  // in Los Angeles; the process's own zone decides neither.
+  group('a credit\'s date is read on the business\'s calendar', () {
+    final credit = LedgerEntry(
+      id: 'credit-1',
+      memberId: 'member-1',
+      kind: LedgerKind.credit,
+      category: LedgerCategory.payment,
+      amountCents: 5000,
+      description: 'Transfer',
+      period: _period,
+      createdAt: DateTime.utc(2027, 1, 3),
+      occurredOn: DateTime.utc(2026, 12, 31, 20),
+    );
+    String printed(String? timezone) {
+      final report = buildBillReport(BillDocument(
+        statement: _statement,
+        sections: BillSections(
+          serviceEntries: const [],
+          packageEntries: const [],
+          openPositions: const [],
+          creditEntries: [credit],
+        ),
+        currencyCode: 'EUR',
+        workspaceName: 'Space',
+        memberName: 'Member',
+        periodLabel: 'December',
+        strings: _strings,
+        locale: 'en',
+        timezone: timezone,
+      ));
+      return report.body.whereType<ReportTableRow>().expand((r) => r.cells).firstWhere((c) => c.startsWith('Transfer'));
+    }
+
+    test('Auckland prints 1 January 2027, Los Angeles 31 December 2026', () async {
+      await initializeDateFormatting('en');
+      expect(printed('Pacific/Auckland'), contains('Jan 1, 2027'));
+      expect(printed('America/Los_Angeles'), contains('Dec 31, 2026'));
+    });
+
+    test('a business with no zone known prints the UTC date, never the device\'s', () async {
+      await initializeDateFormatting('en');
+      expect(printed(null), contains('Dec 31, 2026'));
+    });
+  });
 }

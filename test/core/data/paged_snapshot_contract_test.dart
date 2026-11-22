@@ -169,7 +169,7 @@ void main() {
     expect(folded['inv-a']!.count, 1400);
     expect(folded['inv-b']!.count, 101);
     expect(folded['inv-b']!.last,
-        DateTime.utc(2026).add(const Duration(days: 1500)).toLocal());
+        DateTime.utc(2026).add(const Duration(days: 1500)));
     // a single capped request would have reported 100 and the wrong date
     expect(foldInvoiceReminders(rows.take(100).toList())['inv-a']!.count, 100);
   });
