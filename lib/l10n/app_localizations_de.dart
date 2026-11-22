@@ -28760,6 +28760,18 @@ class AppLocalizationsDe extends AppLocalizations {
       'Diese Seitenanfrage ist ungültig: Fordern Sie 1 bis 200 Zeilen an und setzen Sie nur an der Position fort, die eine Seite geliefert hat.';
 
   @override
+  String get refusalStockReturnBeyond =>
+      'Es kann nicht mehr zurückgegeben werden, als diese Bewegung enthielt: ein Teil wurde bereits zurückgegeben oder korrigiert.';
+
+  @override
+  String get refusalStockReturnChanged =>
+      'Diese Rückgabe wurde bereits mit anderem Inhalt erfasst. Prüfen Sie die frühere Rückgabe, bevor Sie eine neue senden.';
+
+  @override
+  String get refusalStockReturnSource =>
+      'Eine Rückgabe folgt dem Verkauf oder der Lieferung, aus der sie stammt; diese Bewegung ist keine, oder wird hier nicht korrigiert.';
+
+  @override
   String get refusalStockStale =>
       'Jemand anderes hat dies geändert, seit Sie es geöffnet haben. Lesen Sie es erneut und nehmen Sie Ihre Änderung noch einmal vor.';
 

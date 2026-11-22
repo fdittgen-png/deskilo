@@ -28711,6 +28711,18 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questa richiesta di pagina non è valida: richiedere da 1 a 200 righe e proseguire solo dalla posizione indicata da una pagina.';
 
   @override
+  String get refusalStockReturnBeyond =>
+      'Non si può restituire più di quanto questo movimento conteneva: una parte è già stata restituita o corretta.';
+
+  @override
+  String get refusalStockReturnChanged =>
+      'Questo reso è già stato registrato con un altro contenuto. Controlli il reso precedente prima di inviarne uno nuovo.';
+
+  @override
+  String get refusalStockReturnSource =>
+      'Un reso segue la vendita o la consegna da cui proviene; questo movimento non lo è, o non si corregge qui.';
+
+  @override
   String get refusalStockStale =>
       'Qualcun altro lo ha modificato da quando lo ha aperto. Lo rilegga e rifaccia la sua modifica.';
 

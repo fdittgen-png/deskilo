@@ -28798,6 +28798,18 @@ class AppLocalizationsFr extends AppLocalizations {
       'Cette demande de page n’est pas valide : demandez de 1 à 200 lignes, et ne poursuivez qu’à partir de la position donnée par une page.';
 
   @override
+  String get refusalStockReturnBeyond =>
+      'On ne peut pas retourner plus que ce mouvement ne contenait : une partie a déjà été retournée ou corrigée.';
+
+  @override
+  String get refusalStockReturnChanged =>
+      'Ce retour a déjà été enregistré avec un autre contenu. Vérifiez le retour précédent avant d’en envoyer un nouveau.';
+
+  @override
+  String get refusalStockReturnSource =>
+      'Un retour suit la vente ou la livraison dont il provient ; ce mouvement n’en est pas une, ou ne se corrige pas ici.';
+
+  @override
   String get refusalStockStale =>
       'Quelqu’un d’autre l’a modifié depuis que vous l’avez ouvert. Relisez-le, puis refaites votre modification.';
 

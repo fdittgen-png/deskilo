@@ -16473,6 +16473,18 @@
     "description": "#4170 (0847) DKG15: only expired stock is left for a sale."
   },
   "refusalStockPage": "Esta petición de página no es válida: pida de 1 a 200 filas y continúe solo desde la posición que dio una página.",
+  "refusalStockReturnBeyond": "No se puede devolver más de lo que contenía este movimiento: una parte ya se devolvió o se corrigió.",
+  "@refusalStockReturnBeyond": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockReturnChanged": "Esta devolución ya se registró con otro contenido. Revise la devolución anterior antes de enviar una nueva.",
+  "@refusalStockReturnChanged": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockReturnSource": "Una devolución sigue a la venta o a la entrega de la que procede; este movimiento no es una, o no se corrige aquí.",
+  "@refusalStockReturnSource": {
+    "description": "#4172 refusal"
+  },
   "refusalStockStale": "Otra persona lo ha modificado desde que lo abrió. Vuelva a leerlo y haga de nuevo su cambio.",
   "refusalStockUnit": "Este artículo no tiene esa unidad. Añada la unidad al artículo o indique la cantidad en una unidad que tenga.",
   "refusalStockVariant": "Este artículo tiene variantes: indique cuál (color, talla) mover, vender o contar. No se cambió nada.",

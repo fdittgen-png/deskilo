@@ -45693,6 +45693,24 @@ abstract class AppLocalizations {
   /// **'This page request is not valid: ask for 1 to 200 rows, and continue only from the position a page gave.'**
   String get refusalStockPage;
 
+  /// #4172 refusal
+  ///
+  /// In en, this message translates to:
+  /// **'More than this movement held cannot be returned: part of it was already returned or corrected.'**
+  String get refusalStockReturnBeyond;
+
+  /// #4172 refusal
+  ///
+  /// In en, this message translates to:
+  /// **'This return was already recorded with other content. Check the earlier return before sending a new one.'**
+  String get refusalStockReturnChanged;
+
+  /// #4172 refusal
+  ///
+  /// In en, this message translates to:
+  /// **'A return follows the sale or the delivery it comes from; this movement is not one, or is not corrected here.'**
+  String get refusalStockReturnSource;
+
   /// #4169 (0836) DKG10: a stock configuration save of a revision that is no longer current.
   ///
   /// In en, this message translates to:

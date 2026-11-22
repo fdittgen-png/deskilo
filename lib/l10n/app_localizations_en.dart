@@ -28473,6 +28473,18 @@ class AppLocalizationsEn extends AppLocalizations {
       'This page request is not valid: ask for 1 to 200 rows, and continue only from the position a page gave.';
 
   @override
+  String get refusalStockReturnBeyond =>
+      'More than this movement held cannot be returned: part of it was already returned or corrected.';
+
+  @override
+  String get refusalStockReturnChanged =>
+      'This return was already recorded with other content. Check the earlier return before sending a new one.';
+
+  @override
+  String get refusalStockReturnSource =>
+      'A return follows the sale or the delivery it comes from; this movement is not one, or is not corrected here.';
+
+  @override
   String get refusalStockStale =>
       'This was changed by someone else since you opened it. Read it again, then make your change again.';
 

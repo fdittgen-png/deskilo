@@ -37395,6 +37395,18 @@
   "@refusalStockPage": {
     "description": "#4161 (0833) DKG09: a stock page request that is not valid (size outside 1..200, or a cursor that is not one)."
   },
+  "refusalStockReturnBeyond": "More than this movement held cannot be returned: part of it was already returned or corrected.",
+  "@refusalStockReturnBeyond": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockReturnChanged": "This return was already recorded with other content. Check the earlier return before sending a new one.",
+  "@refusalStockReturnChanged": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockReturnSource": "A return follows the sale or the delivery it comes from; this movement is not one, or is not corrected here.",
+  "@refusalStockReturnSource": {
+    "description": "#4172 refusal"
+  },
   "refusalStockStale": "This was changed by someone else since you opened it. Read it again, then make your change again.",
   "@refusalStockStale": {
     "description": "#4169 (0836) DKG10: a stock configuration save of a revision that is no longer current."

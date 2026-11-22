@@ -28677,6 +28677,18 @@ class AppLocalizationsEs extends AppLocalizations {
       'Esta petición de página no es válida: pida de 1 a 200 filas y continúe solo desde la posición que dio una página.';
 
   @override
+  String get refusalStockReturnBeyond =>
+      'No se puede devolver más de lo que contenía este movimiento: una parte ya se devolvió o se corrigió.';
+
+  @override
+  String get refusalStockReturnChanged =>
+      'Esta devolución ya se registró con otro contenido. Revise la devolución anterior antes de enviar una nueva.';
+
+  @override
+  String get refusalStockReturnSource =>
+      'Una devolución sigue a la venta o a la entrega de la que procede; este movimiento no es una, o no se corrige aquí.';
+
+  @override
   String get refusalStockStale =>
       'Otra persona lo ha modificado desde que lo abrió. Vuelva a leerlo y haga de nuevo su cambio.';
 

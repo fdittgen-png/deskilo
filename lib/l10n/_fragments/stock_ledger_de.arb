@@ -29,5 +29,17 @@
   "refusalStockOnlyExpired": "Was im Hauptlager noch liegt, ist abgelaufen und wird nie verkauft. Die Bestätigung wurde abgelehnt; nichts wurde entnommen.",
   "@refusalStockOnlyExpired": {
     "description": "#4170 (0847) DKG15: only expired stock is left for a sale."
+  },
+  "refusalStockReturnChanged": "Diese Rückgabe wurde bereits mit anderem Inhalt erfasst. Prüfen Sie die frühere Rückgabe, bevor Sie eine neue senden.",
+  "@refusalStockReturnChanged": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockReturnBeyond": "Es kann nicht mehr zurückgegeben werden, als diese Bewegung enthielt: ein Teil wurde bereits zurückgegeben oder korrigiert.",
+  "@refusalStockReturnBeyond": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockReturnSource": "Eine Rückgabe folgt dem Verkauf oder der Lieferung, aus der sie stammt; diese Bewegung ist keine, oder wird hier nicht korrigiert.",
+  "@refusalStockReturnSource": {
+    "description": "#4172 refusal"
   }
 }

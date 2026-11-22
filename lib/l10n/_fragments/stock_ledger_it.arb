@@ -29,5 +29,17 @@
   "refusalStockOnlyExpired": "Ciò che resta nel magazzino principale è scaduto e non viene mai venduto. La conferma è stata rifiutata; nulla è stato prelevato.",
   "@refusalStockOnlyExpired": {
     "description": "#4170 (0847) DKG15: only expired stock is left for a sale."
+  },
+  "refusalStockReturnChanged": "Questo reso è già stato registrato con un altro contenuto. Controlli il reso precedente prima di inviarne uno nuovo.",
+  "@refusalStockReturnChanged": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockReturnBeyond": "Non si può restituire più di quanto questo movimento conteneva: una parte è già stata restituita o corretta.",
+  "@refusalStockReturnBeyond": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockReturnSource": "Un reso segue la vendita o la consegna da cui proviene; questo movimento non lo è, o non si corregge qui.",
+  "@refusalStockReturnSource": {
+    "description": "#4172 refusal"
   }
 }
