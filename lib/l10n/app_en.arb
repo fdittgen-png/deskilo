@@ -45551,6 +45551,14 @@
   "@stockPlacesAdd": {
     "description": "#4169 the stock editors: a label or message"
   },
+  "stockPlacesLabelsNone": "There is no place to print a label for.",
+  "@stockPlacesLabelsNone": {
+    "description": "#4293 the places of the stock: a label, a message or a setting"
+  },
+  "stockPlacesPrintLabels": "Print labels",
+  "@stockPlacesPrintLabels": {
+    "description": "#4293 the places of the stock: a label, a message or a setting"
+  },
   "stockPlacesSearch": "Find a place by address, name or barcode",
   "@stockPlacesSearch": {
     "description": "#4293 the places of the stock: a label, a message or a setting"

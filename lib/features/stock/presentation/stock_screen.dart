@@ -20,6 +20,7 @@ import '../application/stock_walk.dart';
 import '../domain/stock_page.dart';
 import '../providers/stock_providers.dart';
 import 'stock_day.dart';
+import 'stock_place_text.dart';
 
 class StockScreen extends ConsumerWidget {
   /// The balances (`/stock`) or the movement log (`/stock/movements`): the
@@ -113,6 +114,7 @@ class _Filters extends ConsumerWidget {
     // read everything.
     final items = ref.watch(stockItemsProvider(workspaceId)).value ?? const []; // empty-ok: no item filter is offered
     final places = ref.watch(stockPlacesProvider(workspaceId)).value ?? const []; // empty-ok: no place filter is offered
+    final addresses = ref.watch(stockAddressesProvider(workspaceId));
     final notifier = ref.read(stockViewProvider.notifier);
     Widget pick<T>(
       Key key,
@@ -150,7 +152,7 @@ class _Filters extends ConsumerWidget {
           const ValueKey('stock-filter-place'),
           l10n.calendarDeskColumnPlace,
           view.locationId,
-          [for (final p in places) (p.id, p.label)],
+          [for (final p in places) (p.id, addresses[p.id] ?? p.label)],
           (id) => notifier.filter(itemId: view.itemId, locationId: id),
         ),
       ],
@@ -168,6 +170,7 @@ class _OnHandList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final provider = stockOnHandWalkProvider(_filtersOf(workspaceId, view));
+    final addresses = ref.watch(stockAddressesProvider(workspaceId));
     final walk = ref.watch(provider);
     return _Walk<StockOnHandRow>(
       walk: walk,
@@ -178,7 +181,7 @@ class _OnHandList extends ConsumerWidget {
         key: ValueKey('stock-onhand-${row.itemId}-${row.locationId}-${row.lotId}'),
         title: Text(row.itemLabel),
         subtitle: Text(
-          '${row.locationLabel} · '
+          '${addresses[row.locationId] ?? row.locationLabel} · '
           '${row.lotCode == null ? l10n.stockNoLot : l10n.stockLotLabel(row.lotCode!)}',
         ),
         trailing: Text(
@@ -200,6 +203,7 @@ class _MovementsList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final provider = stockMovementsWalkProvider(_filtersOf(workspaceId, view));
+    final addresses = ref.watch(stockAddressesProvider(workspaceId));
     final walk = ref.watch(provider);
     final day = MaterialLocalizations.of(context);
     return _Walk<StockMovementRow>(
@@ -211,7 +215,7 @@ class _MovementsList extends ConsumerWidget {
         key: ValueKey('stock-movement-${m.id}'),
         title: Text(m.itemLabel),
         subtitle: Text(
-          '${m.fromLocationCode} → ${m.toLocationCode} · '
+          '${addresses[m.fromLocationId] ?? m.fromLocationCode} → ${addresses[m.toLocationId] ?? m.toLocationCode} · '
           '${day.formatCompactDate(stockDayOf(ref, m.occurredAt))}',
         ),
         trailing: Text(

@@ -16,5 +16,7 @@
   "stockReasonLevelChildrenWrong": "Questa ubicazione ne contiene altre che richiedono il suo livello; le sposti prima.",
   "stockReasonPickRoleUnknown": "L'uso deve essere prelievo o riserva.",
   "settingLabelStockAddressSeparator": "Separatore nell'indirizzo di un’ubicazione",
-  "settingHintStockAddressSeparator": "Il carattere tra i livelli dell'indirizzo di un’ubicazione (sede, zona, corsia, campata, scaffale): MAG1-SALES-A03-B02-S4 con il trattino, MAG1.SALES.A03.B02.S4 con il punto. Cambia solo come si scrive l'indirizzo."
+  "settingHintStockAddressSeparator": "Il carattere tra i livelli dell'indirizzo di un’ubicazione (sede, zona, corsia, campata, scaffale): MAG1-SALES-A03-B02-S4 con il trattino, MAG1.SALES.A03.B02.S4 con il punto. Cambia solo come si scrive l'indirizzo.",
+  "stockPlacesPrintLabels": "Stampa le etichette",
+  "stockPlacesLabelsNone": "Non c’è nessuna ubicazione per cui stampare un’etichetta."
 }

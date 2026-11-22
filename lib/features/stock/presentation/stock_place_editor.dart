@@ -4,17 +4,25 @@
 // system's own places shown, not editable) and one editor for a place: its
 // kind, code, name, barcode, the place it is inside and whether it is in use.
 // A save names the revision it read; a refusal says why under the place.
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'dart:async';
 
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pdf/widgets.dart' as pw;
+
+import '../../../core/files/file_delivery.dart';
+import '../../../core/files/file_delivery_notice.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/trace_logger.dart';
+import '../../../core/ui/app_snack.dart';
 import '../../../core/ui/dropdown_field.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
+import '../domain/place_labels_pdf.dart';
 import '../domain/stock_config.dart';
 import '../domain/stock_config_check.dart';
 import '../domain/stock_config_commands.dart';
@@ -102,6 +110,40 @@ class _PlacesSheetState extends ConsumerState<StockPlacesBody> {
     super.dispose();
   }
 
+  /// The labels of the places shown (the real ones, in use) as a PDF, handed to the file saver.
+  Future<void> _printLabels(List<StockPlaceConfig> shown, String separator) async {
+    final l10n = context.l10n;
+    final labels = [
+      for (final p in shown)
+        if (!p.virtual && p.active && p.kind != 'in_transit')
+          PlaceLabel(
+            address: stockAddress(p, separator),
+            barcode: p.barcode ?? stockAddress(p, separator),
+            name: p.name,
+          ),
+    ];
+    if (labels.isEmpty) {
+      AppSnack.info(context, l10n.stockPlacesLabelsNone);
+      return;
+    }
+    try {
+      final regular = await rootBundle.load('assets/fonts/Roboto-Regular.ttf');
+      final bold = await rootBundle.load('assets/fonts/Roboto-Bold.ttf');
+      final bytes = await buildPlaceLabelsPdf(
+        labels: labels,
+        baseFont: pw.Font.ttf(regular),
+        boldFont: pw.Font.ttf(bold),
+      );
+      if (!mounted) return;
+      final delivery = await deliverFile(context, ref, bytes: bytes, fileName: 'deskilo-place-labels.pdf');
+      if (!mounted) return;
+      announceFileDelivery(context, delivery, retry: () => unawaited(_printLabels(shown, separator)));
+    } on Object catch (e, st) {
+      TraceLogger.instance.warn('stock', 'the place labels were not made: $e', stackTrace: st);
+      if (mounted) AppSnack.error(context, l10n.commonSaveFailed);
+    }
+  }
+
   // read at the time, so a read that cannot be made is the page's own failure
   Future<List<StockPlaceConfig>> _read() async => ref.read(stockConfigCommandsProvider).places(widget.workspaceId);
 
@@ -175,6 +217,12 @@ class _PlacesSheetState extends ConsumerState<StockPlacesBody> {
                         ),
                     ],
                   ),
+                ),
+                TextButton.icon(
+                  key: const ValueKey('stock-places-print'),
+                  icon: const Icon(Icons.print_outlined),
+                  label: Text(l10n.stockPlacesPrintLabels),
+                  onPressed: () => _printLabels(shown, separator),
                 ),
                 if (widget.canEdit)
                   TextButton.icon(

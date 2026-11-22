@@ -20888,6 +20888,8 @@
   "@stockPlacesAdd": {
     "description": "#4169 the stock editors: a label or message"
   },
+  "stockPlacesLabelsNone": "Il n’y a aucun emplacement pour lequel imprimer une étiquette.",
+  "stockPlacesPrintLabels": "Imprimer les étiquettes",
   "stockPlacesSearch": "Trouver un emplacement par adresse, nom ou code-barres",
   "stockPlacesTitle": "Emplacements",
   "@stockPlacesTitle": {
