@@ -1,0 +1,20 @@
+{
+  "stockPlaceKindSite": "Sede",
+  "stockPlaceKindAisle": "Corsia",
+  "stockPlaceKindBay": "Campata",
+  "stockPlacesSearch": "Cerchi un’ubicazione per indirizzo, nome o codice a barre",
+  "stockPlaceReceives": "Riceve dai fornitori",
+  "stockPlaceReceivesHelp": "Disattivato: la merce arriva qui solo per trasferimento da un'altra sede.",
+  "stockPlaceReceivesYes": "riceve dai fornitori",
+  "stockPlaceReceivesNo": "solo trasferimenti",
+  "stockPlaceRole": "Uso",
+  "stockPlaceRoleNone": "Non indicato",
+  "stockPlaceRolePicking": "Prelievo (area di vendita)",
+  "stockPlaceRoleReserve": "Riserva (scorta)",
+  "stockReasonLevelParentWrong": "Un’ubicazione di questo livello sta solo sotto il livello immediatamente superiore.",
+  "stockReasonLevelParentMissing": "Solo una sede sta da sola; ogni altro livello sta sotto il livello superiore.",
+  "stockReasonLevelChildrenWrong": "Questa ubicazione ne contiene altre che richiedono il suo livello; le sposti prima.",
+  "stockReasonPickRoleUnknown": "L'uso deve essere prelievo o riserva.",
+  "settingLabelStockAddressSeparator": "Separatore nell'indirizzo di un’ubicazione",
+  "settingHintStockAddressSeparator": "Il carattere tra i livelli dell'indirizzo di un’ubicazione (sede, zona, corsia, campata, scaffale): MAG1-SALES-A03-B02-S4 con il trattino, MAG1.SALES.A03.B02.S4 con il punto. Cambia solo come si scrive l'indirizzo."
+}

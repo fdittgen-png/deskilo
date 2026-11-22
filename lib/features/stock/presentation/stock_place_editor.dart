@@ -11,6 +11,7 @@ import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/trace_logger.dart';
+import '../../../core/ui/dropdown_field.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
@@ -21,14 +22,54 @@ import '../providers/stock_providers.dart';
 import 'stock_config_text.dart';
 
 String _kindLabel(AppLocalizations l10n, String kind) => switch (kind) {
+  'site' => l10n.stockPlaceKindSite,
   'warehouse' => l10n.stockPlaceKindWarehouse,
   'zone' => l10n.stockPlaceKindZone,
+  'aisle' => l10n.stockPlaceKindAisle,
+  'bay' => l10n.stockPlaceKindBay,
   'shelf' => l10n.stockPlaceKindShelf,
   'bin' => l10n.stockPlaceKindBin,
   _ => kind,
 };
 
 String _placeTitle(StockPlaceConfig p) => p.name.isEmpty ? p.code : '${p.code} · ${p.name}';
+
+String _roleLabel(AppLocalizations l10n, String role) =>
+    role == 'reserve' ? l10n.stockPlaceRoleReserve : l10n.stockPlaceRolePicking;
+
+/// One place of the list: its address (as the person reads it), then its kind, name, whether
+/// a site receives from suppliers, and its use.
+Widget _placeTile(AppLocalizations l10n, StockPlaceConfig p, String separator, VoidCallback? onTap) {
+  final site = stockKindLevel(p.kind) == 1;
+  return ListTile(
+    key: ValueKey('stock-place-${p.id}'),
+    title: Text(
+      p.virtual ? _placeTitle(p) : stockAddress(p, separator),
+      style: p.active ? null : const TextStyle(decoration: TextDecoration.lineThrough),
+    ),
+    subtitle: Text(
+      p.virtual
+          ? l10n.stockPlaceVirtual
+          : [
+              _kindLabel(l10n, p.kind),
+              if (p.name.isNotEmpty) p.name,
+              if (site && p.receivesFromSuppliers) l10n.stockPlaceReceivesYes,
+              if (site && !p.receivesFromSuppliers) l10n.stockPlaceReceivesNo,
+              if (p.pickRole != null) _roleLabel(l10n, p.pickRole!),
+            ].join(' · '),
+    ),
+    onTap: onTap,
+  );
+}
+
+/// What a place is found by: its address (as the person reads it), name, code and barcode.
+bool _placeMatches(StockPlaceConfig p, String separator, String query) {
+  final q = query.trim().toLowerCase();
+  if (q.isEmpty) return true;
+  return stockAddress(p, separator).toLowerCase().contains(q) ||
+      p.name.toLowerCase().contains(q) ||
+      (p.barcode ?? '').toLowerCase().contains(q);
+}
 
 /// The places of [workspaceId] as the body of the Places page, each opening
 /// its editor; a place is added from the button.
@@ -52,6 +93,14 @@ class StockPlacesBody extends ConsumerStatefulWidget {
 
 class _PlacesSheetState extends ConsumerState<StockPlacesBody> {
   late Future<List<StockPlaceConfig>> _places = _read();
+  String _query = '';
+  final _search = TextEditingController();
+
+  @override
+  void dispose() {
+    _search.dispose();
+    super.dispose();
+  }
 
   // read at the time, so a read that cannot be made is the page's own failure
   Future<List<StockPlaceConfig>> _read() async => ref.read(stockConfigCommandsProvider).places(widget.workspaceId);
@@ -98,23 +147,31 @@ class _PlacesSheetState extends ConsumerState<StockPlacesBody> {
             }
             final all = snapshot.data;
             if (all == null) return const LoadingView();
+            final separator = ref.watch(stockAddressSeparatorProvider);
+            final shown = [
+              for (final p in all)
+                if (_placeMatches(p, separator, _query)) p,
+            ]..sort((a, b) => a.addressPath.compareTo(b.addressPath));
             return Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                AppTextField(
+                  key: const ValueKey('stock-places-search'),
+                  controller: _search,
+                  fieldKey: 'search',
+                  label: l10n.stockPlacesSearch,
+                  onChanged: (v) => setState(() => _query = v),
+                ),
+                const FormGap.small(),
                 Expanded(
                   child: ListView(
                     children: [
-                      for (final p in all)
-                        ListTile(
-                          key: ValueKey('stock-place-${p.id}'),
-                          title: Text(
-                            _placeTitle(p),
-                            style: p.active ? null : const TextStyle(decoration: TextDecoration.lineThrough),
-                          ),
-                          subtitle: Text(
-                            p.virtual ? l10n.stockPlaceVirtual : _kindLabel(l10n, p.kind),
-                          ),
-                          onTap: p.virtual || !widget.canEdit ? null : () => _edit(all, p),
+                      for (final p in shown)
+                        _placeTile(
+                          l10n,
+                          p,
+                          separator,
+                          p.virtual || !widget.canEdit ? null : () => _edit(all, p),
                         ),
                     ],
                   ),
@@ -168,20 +225,28 @@ class _PlaceDraft {
       kind = place?.kind ?? stockPlaceKinds.first,
       parent = place?.parentId,
       active = place?.active ?? true,
-      parents = [
+      receives = place?.receivesFromSuppliers ?? true,
+      role = place?.pickRole,
+      all = [
         for (final p in all)
           if (!p.virtual && p.id != place?.id) p,
       ];
 
   final StockPlaceConfig? place;
   final FormControllers fields;
-  final List<StockPlaceConfig> parents;
+  final List<StockPlaceConfig> all;
 
   /// One per editor: a retry of the same save answers once.
   final String requestId = newRequestId();
   String kind;
   String? parent;
   bool active;
+  bool receives;
+  String? role;
+
+  /// What the kind says: a site is a root, a place of a level sits under the level above it.
+  List<StockPlaceConfig> get parents => stockParentChoices(kind, all);
+  bool get isSite => stockKindLevel(kind) == 1;
 
   FieldErrors validate(AppLocalizations l10n) => {
     for (final e in checkStockPlace(
@@ -201,8 +266,10 @@ class _PlaceDraft {
           'code': fields.text('code'),
           'name': fields.text('name'),
           'barcode': fields.text('barcode').isEmpty ? null : fields.text('barcode'),
-          'parent_id': parent,
+          'parent_id': isSite ? null : parent,
           'active': active,
+          'receives_from_suppliers': !isSite || receives,
+          'pick_role': isSite ? null : role,
         },
         requestId: requestId,
         placeId: place?.id,
@@ -224,11 +291,13 @@ class _PlaceDraft {
         isExpanded: true,
         decoration: InputDecoration(labelText: l10n.stockPlaceKind),
         items: [
-          for (final k in stockPlaceKinds)
+          for (final k in {if (!stockPlaceKinds.contains(kind)) kind, ...stockPlaceKinds})
             DropdownMenuItem(value: k, child: Text(_kindLabel(l10n, k))),
         ],
         onChanged: (v) {
           kind = v ?? kind;
+          // the parent must be of the level above the new kind
+          if (parent != null && !parents.any((p) => p.id == parent)) parent = null;
           refresh();
         },
       ),
@@ -254,6 +323,7 @@ class _PlaceDraft {
         label: l10n.stockPlaceBarcode,
       ),
       const FormGap(),
+      if (!isSite)
       DropdownButtonFormField<String?>(
         key: const ValueKey('stock-place-parent'),
         initialValue: parent,
@@ -268,6 +338,33 @@ class _PlaceDraft {
           refresh();
         },
       ),
+      if (isSite)
+        SwitchListTile(
+          key: const ValueKey('stock-place-receives'),
+          contentPadding: EdgeInsets.zero,
+          title: Text(l10n.stockPlaceReceives),
+          subtitle: Text(l10n.stockPlaceReceivesHelp),
+          value: receives,
+          onChanged: (v) {
+            receives = v;
+            refresh();
+          },
+        )
+      else
+        AppDropdownField<String?>(
+          key: const ValueKey('stock-place-role'),
+          label: l10n.stockPlaceRole,
+          value: role,
+          items: [
+            (null, l10n.stockPlaceRoleNone),
+            ('picking', l10n.stockPlaceRolePicking),
+            ('reserve', l10n.stockPlaceRoleReserve),
+          ],
+          onChanged: (v) {
+            role = v;
+            refresh();
+          },
+        ),
       SwitchListTile(
         key: const ValueKey('stock-place-active'),
         contentPadding: EdgeInsets.zero,

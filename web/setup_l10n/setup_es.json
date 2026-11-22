@@ -792,5 +792,11 @@
  "resendPaypal": "Ventana de reenvío, PayPal",
  "resendPaypalHint": "Cuánto tiempo después del primer envío de un pago a PayPal puede reenviarse el mismo pago con su solicitud original. Manténgala por debajo del tiempo que PayPal conserva una solicitud (6 horas). Se define en los ajustes de la app.",
  "resendStripe": "Ventana de reenvío, Stripe",
- "resendStripeHint": "Cuánto tiempo después del primer envío de un pago a Stripe puede reenviarse el mismo pago con su solicitud original. Manténgala por debajo del tiempo que Stripe conserva una solicitud (24 horas). Se define en los ajustes de la app."
+ "resendStripeHint": "Cuánto tiempo después del primer envío de un pago a Stripe puede reenviarse el mismo pago con su solicitud original. Manténgala por debajo del tiempo que Stripe conserva una solicitud (24 horas). Se define en los ajustes de la app.",
+ "stockAddressSeparator": "Separador en la dirección de una ubicación",
+ "stockAddressSeparatorHint": "El carácter entre los niveles de una dirección de lugar (sede, zona, pasillo, módulo, estante): MAG1-SALES-A03-B02-S4 con guion, MAG1.SALES.A03.B02.S4 con punto. Solo cambia cómo se escribe la dirección.",
+ "stockSepDash": "Guion ( - )",
+ "stockSepDot": "Punto ( . )",
+ "stockSepSlash": "Barra ( / )",
+ "stockSepColon": "Dos puntos ( : )"
 }

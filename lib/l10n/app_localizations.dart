@@ -50763,6 +50763,12 @@ abstract class AppLocalizations {
   /// **'Days a personal invitation can be redeemed after it is created. Invitations already sent keep their date. Can only be shortened.'**
   String get settingHintSecurityInvitationExpiryDays;
 
+  /// #4293 the places of the stock: a label, a message or a setting
+  ///
+  /// In en, this message translates to:
+  /// **'The character between the levels of a place address (site, zone, aisle, bay, shelf): MAG1-SALES-A03-B02-S4 with a dash, MAG1.SALES.A03.B02.S4 with a dot. Only how an address is written changes.'**
+  String get settingHintStockAddressSeparator;
+
   /// a workspace setting's hint (#3824)
   ///
   /// In en, this message translates to:
@@ -51278,6 +51284,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Invitation validity'**
   String get settingLabelSecurityInvitationExpiryDays;
+
+  /// #4293 the places of the stock: a label, a message or a setting
+  ///
+  /// In en, this message translates to:
+  /// **'Separator in a place address'**
+  String get settingLabelStockAddressSeparator;
 
   /// a workspace setting's label (#3824)
   ///
@@ -56138,6 +56150,18 @@ abstract class AppLocalizations {
   /// **'Kind of place'**
   String get stockPlaceKind;
 
+  /// #4293 the places of the stock: a label, a message or a setting
+  ///
+  /// In en, this message translates to:
+  /// **'Aisle'**
+  String get stockPlaceKindAisle;
+
+  /// #4293 the places of the stock: a label, a message or a setting
+  ///
+  /// In en, this message translates to:
+  /// **'Bay'**
+  String get stockPlaceKindBay;
+
   /// #4169 the stock editors: a label or message
   ///
   /// In en, this message translates to:
@@ -56149,6 +56173,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Shelf'**
   String get stockPlaceKindShelf;
+
+  /// #4293 the places of the stock: a label, a message or a setting
+  ///
+  /// In en, this message translates to:
+  /// **'Site'**
+  String get stockPlaceKindSite;
 
   /// #4169 the stock editors: a label or message
   ///
@@ -56180,6 +56210,54 @@ abstract class AppLocalizations {
   /// **'Inside'**
   String get stockPlaceParent;
 
+  /// #4293 the places of the stock: a label, a message or a setting
+  ///
+  /// In en, this message translates to:
+  /// **'Receives from suppliers'**
+  String get stockPlaceReceives;
+
+  /// #4293 the places of the stock: a label, a message or a setting
+  ///
+  /// In en, this message translates to:
+  /// **'Off: goods arrive here only by transfer from another site.'**
+  String get stockPlaceReceivesHelp;
+
+  /// #4293 the places of the stock: a label, a message or a setting
+  ///
+  /// In en, this message translates to:
+  /// **'transfers only'**
+  String get stockPlaceReceivesNo;
+
+  /// #4293 the places of the stock: a label, a message or a setting
+  ///
+  /// In en, this message translates to:
+  /// **'receives from suppliers'**
+  String get stockPlaceReceivesYes;
+
+  /// #4293 the places of the stock: a label, a message or a setting
+  ///
+  /// In en, this message translates to:
+  /// **'Use'**
+  String get stockPlaceRole;
+
+  /// #4293 the places of the stock: a label, a message or a setting
+  ///
+  /// In en, this message translates to:
+  /// **'Not said'**
+  String get stockPlaceRoleNone;
+
+  /// #4293 the places of the stock: a label, a message or a setting
+  ///
+  /// In en, this message translates to:
+  /// **'Picking (front of house)'**
+  String get stockPlaceRolePicking;
+
+  /// #4293 the places of the stock: a label, a message or a setting
+  ///
+  /// In en, this message translates to:
+  /// **'Reserve (overstock)'**
+  String get stockPlaceRoleReserve;
+
   /// #4169 the stock editors: a label or message
   ///
   /// In en, this message translates to:
@@ -56191,6 +56269,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add a place'**
   String get stockPlacesAdd;
+
+  /// #4293 the places of the stock: a label, a message or a setting
+  ///
+  /// In en, this message translates to:
+  /// **'Find a place by address, name or barcode'**
+  String get stockPlacesSearch;
 
   /// #4169 the stock editors: a label or message
   ///
@@ -56432,6 +56516,24 @@ abstract class AppLocalizations {
   /// **'This kind is not known.'**
   String get stockReasonKindUnknown;
 
+  /// #4293 the places of the stock: a label, a message or a setting
+  ///
+  /// In en, this message translates to:
+  /// **'This place has places inside it that need its level; move them first.'**
+  String get stockReasonLevelChildrenWrong;
+
+  /// #4293 the places of the stock: a label, a message or a setting
+  ///
+  /// In en, this message translates to:
+  /// **'Only a site stands on its own; every other level sits under the level above it.'**
+  String get stockReasonLevelParentMissing;
+
+  /// #4293 the places of the stock: a label, a message or a setting
+  ///
+  /// In en, this message translates to:
+  /// **'A place of this level sits only under the level directly above it.'**
+  String get stockReasonLevelParentWrong;
+
   /// #4171 receiving into stock: a text under a field the server refused
   ///
   /// In en, this message translates to:
@@ -56557,6 +56659,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The place it is inside is no longer in use.'**
   String get stockReasonParentInactive;
+
+  /// #4293 the places of the stock: a label, a message or a setting
+  ///
+  /// In en, this message translates to:
+  /// **'The use must be picking or reserve.'**
+  String get stockReasonPickRoleUnknown;
 
   /// #4169 the stock editors: a text under a field the server refused
   ///

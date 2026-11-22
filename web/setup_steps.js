@@ -264,6 +264,8 @@ const STEPS=[
   if(on('accessorySupplements'))k.push(lbl(T('servicesAccessories'),'services','accessories'),h('p',{class:'hint'},T('servicesAccessoriesHint')),tableRows([T('colName'),T('servicesSupplement',{currency:S.currency})],'accessories',(a,ap)=>[cell(`${ap}.name`),cell(`${ap}.supp`,'number')],()=>({name:'',supp:'0'}),'+ '+T('servicesAddAccessory')));else k.push(needs('accessorySupplements'));
   // #3824 — the goods ledger's one rule a business decides before its first move.
   if(on('stockManagement'))k.push(checkbox(T('stockAllowNegative'),T('stockAllowNegativeHint'),S.stock.allowNegative,v=>set('stock.allowNegative',v)));
+  // #4293 — how a place address (site, zone, aisle, bay, shelf) is written.
+  if(on('stockManagement'))k.push(selectEl(T('stockAddressSeparator'),'stock.addressSeparator',opts(STOCK_SEP),T('stockAddressSeparatorHint'),null,'services'));
   if(!vatCol&&on('services'))k.push(dep(registered()?T('servicesVatHiddenFeature',{feature:quoted(featureTitle('vatManagement'))}):T('servicesVatHiddenNotSubject'),registered()?'features':'legal'));
   return k},
  check(){const f=[];if(on('services')){const n=S.services.filter(s=>s.name.trim()).length;if(!n)f.push(F.warn(T('servicesErrNone'),'services'));else f.push(F.ok(T('servicesOk',{n})));S.services.filter(s=>s.name.trim()&&!(num(s.price)>=0)).forEach(s=>f.push(F.err(T('servicesErrNoPrice',{name:quoted(s.name)}),'services')))}

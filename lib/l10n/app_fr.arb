@@ -18985,6 +18985,7 @@
   "@settingHintSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting hint."
   },
+  "settingHintStockAddressSeparator": "Le caractère entre les niveaux d'une adresse d'emplacement (site, zone, allée, travée, étagère) : MAG1-SALES-A03-B02-S4 avec un tiret, MAG1.SALES.A03.B02.S4 avec un point. Seule l'écriture de l'adresse change.",
   "settingHintStockAllowNegative": "Désactivé : un mouvement qui laisserait moins que rien à un endroit est refusé. Activé : il est enregistré, et l'endroit affiche une quantité négative jusqu'à l'arrivée de marchandises.",
   "settingHintVatViesEvidenceDays": "Jours pendant lesquels un contrôle valide du numéro de TVA reste assez récent pour servir de preuve sur une nouvelle facture. Une valeur plus courte demande un nouveau contrôle plus tôt ; ce n’est pas la preuve qu’une opération est valable.",
   "@settingHintVatViesEvidenceDays": {
@@ -19200,6 +19201,7 @@
   "@settingLabelSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting label."
   },
+  "settingLabelStockAddressSeparator": "Séparateur dans l'adresse d'un emplacement",
   "settingLabelStockAllowNegative": "Le stock peut passer sous zéro",
   "settingLabelVatViesEvidenceDays": "Fraîcheur du contrôle du numéro de TVA",
   "@settingLabelVatViesEvidenceDays": {
@@ -20838,6 +20840,8 @@
   "@stockPlaceKind": {
     "description": "#4169 the stock editors: a label or message"
   },
+  "stockPlaceKindAisle": "Allée",
+  "stockPlaceKindBay": "Travée",
   "stockPlaceKindBin": "Bac",
   "@stockPlaceKindBin": {
     "description": "#4169 the stock editors: a label or message"
@@ -20846,6 +20850,7 @@
   "@stockPlaceKindShelf": {
     "description": "#4169 the stock editors: a label or message"
   },
+  "stockPlaceKindSite": "Site",
   "stockPlaceKindWarehouse": "Entrepôt",
   "@stockPlaceKindWarehouse": {
     "description": "#4169 the stock editors: a label or message"
@@ -20866,6 +20871,14 @@
   "@stockPlaceParent": {
     "description": "#4169 the stock editors: a label or message"
   },
+  "stockPlaceReceives": "Reçoit des fournisseurs",
+  "stockPlaceReceivesHelp": "Désactivé : les marchandises n'arrivent ici que par transfert depuis un autre site.",
+  "stockPlaceReceivesNo": "transferts seulement",
+  "stockPlaceReceivesYes": "reçoit des fournisseurs",
+  "stockPlaceRole": "Usage",
+  "stockPlaceRoleNone": "Non précisé",
+  "stockPlaceRolePicking": "Prélèvement (en rayon)",
+  "stockPlaceRoleReserve": "Réserve (surstock)",
   "stockPlaceVirtual": "Tenu par le système",
   "@stockPlaceVirtual": {
     "description": "#4169 the stock editors: a label or message"
@@ -20874,6 +20887,7 @@
   "@stockPlacesAdd": {
     "description": "#4169 the stock editors: a label or message"
   },
+  "stockPlacesSearch": "Trouver un emplacement par adresse, nom ou code-barres",
   "stockPlacesTitle": "Emplacements",
   "@stockPlacesTitle": {
     "description": "#4169 the stock editors: a label or message"
@@ -21059,6 +21073,9 @@
   "@stockReasonKindUnknown": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonLevelChildrenWrong": "Cet emplacement en contient d'autres qui ont besoin de son niveau ; déplacez-les d'abord.",
+  "stockReasonLevelParentMissing": "Seul un site se tient seul ; tout autre niveau se place sous le niveau au-dessus.",
+  "stockReasonLevelParentWrong": "Un emplacement de ce niveau se place seulement sous le niveau juste au-dessus.",
   "stockReasonLineConflict": "La ligne est désignée deux fois et les deux désignations diffèrent.",
   "@stockReasonLineConflict": {
     "description": "#4171 receiving into stock: a text under a field the server refused"
@@ -21143,6 +21160,7 @@
   "@stockReasonParentInactive": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonPickRoleUnknown": "L'usage doit être prélèvement ou réserve.",
   "stockReasonPriceInvalid": "Un prix est nul ou positif.",
   "@stockReasonPriceInvalid": {
     "description": "#4169 the stock editors: a text under a field the server refused"

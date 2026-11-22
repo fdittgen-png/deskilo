@@ -29,6 +29,7 @@ abstract final class HelpAnchor {
   static const moneyQuotes = 'user.money.quotes';
   static const moneyEngagements = 'user.money.engagements';
   static const moneyStock = 'user.money.stock';
+  static const moneyStockPlaces = 'user.money.stock.places';
 
   /// #3527 — the Sales, Purchases and Cash pages.
   static const moneySales = 'user.money.sales';

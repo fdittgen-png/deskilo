@@ -62,6 +62,10 @@ class _Config implements StockConfigCommands {
   @override
   Future<List<StockPlaceConfig>> places(String workspaceId) async => const [
     StockPlaceConfig(id: 'p-MAIN', revision: 2, kind: 'warehouse', code: 'MAIN', name: 'Main', barcode: null, parentId: null, active: true, virtual: false),
+    StockPlaceConfig(id: 'p-SALES', revision: 1, kind: 'zone', code: 'SALES', name: '', barcode: null, parentId: 'p-MAIN', active: true, virtual: false, pickRole: 'picking', addressPath: 'MAIN\u001fSALES'),
+    StockPlaceConfig(id: 'p-A03', revision: 1, kind: 'aisle', code: 'A03', name: '', barcode: null, parentId: 'p-SALES', active: true, virtual: false, addressPath: 'MAIN\u001fSALES\u001fA03'),
+    StockPlaceConfig(id: 'p-B02', revision: 1, kind: 'bay', code: 'B02', name: '', barcode: null, parentId: 'p-A03', active: true, virtual: false, addressPath: 'MAIN\u001fSALES\u001fA03\u001fB02'),
+    StockPlaceConfig(id: 'p-S4', revision: 1, kind: 'shelf', code: 'S4', name: '', barcode: null, parentId: 'p-B02', active: true, virtual: false, pickRole: 'reserve', addressPath: 'MAIN\u001fSALES\u001fA03\u001fB02\u001fS4'),
     StockPlaceConfig(id: 'p-SUP', revision: 1, kind: 'supplier', code: 'SUPPLIER', name: '', barcode: null, parentId: null, active: true, virtual: true),
   ];
 
@@ -101,6 +105,7 @@ Future<void> _open(
   Size size, {
   required Set<WorkspacePermission> held,
   bool lots = false,
+  String? separator,
   Widget screen = const StockItemsScreen(),
 }) async {
   await pumpApp(
@@ -112,6 +117,7 @@ Future<void> _open(
       stockQueriesProvider.overrideWithValue(_Queries()),
       stockConfigCommandsProvider.overrideWithValue(config),
       myPermissionsProvider.overrideWithValue(held),
+      if (separator != null) stockAddressSeparatorProvider.overrideWithValue(separator),
       if (lots) enabledFeaturesSyncProvider.overrideWithValue({WorkspaceFeature.stockManagement, WorkspaceFeature.stockLots}),
     ],
   );
@@ -216,7 +222,7 @@ void main() {
         final config = _Config();
         await _open(tester, config, size, held: _manage, screen: const StockPlacesScreen());
         await _settle(tester);
-        expect(find.text('MAIN · Main'), findsOneWidget);
+        expect(find.text('MAIN'), findsOneWidget, reason: 'a root place is its code alone');
         expect(find.text(_en.stockPlaceVirtual), findsOneWidget);
         await tester.tap(find.byKey(const ValueKey('stock-place-add')));
         await _settle(tester);
@@ -224,7 +230,46 @@ void main() {
         await tester.tap(find.byKey(const ValueKey('stock-place-save')));
         await _settle(tester);
         final saved = config.savedPlaces.single;
-        expect((saved.place['code'], saved.place['kind'], saved.id), ('SHELF-B', 'warehouse', null));
+        expect((saved.place['code'], saved.place['kind'], saved.id), ('SHELF-B', 'site', null));
+        expect(saved.place['receives_from_suppliers'], true, reason: 'a site says whether it receives from suppliers');
+      });
+
+      testWidgets('a place is listed by its composed address, and found by it', (tester) async {
+        await _open(tester, _Config(), size, held: _manage, screen: const StockPlacesScreen());
+        await _settle(tester);
+        expect(find.text('MAIN-SALES-A03-B02-S4'), findsOneWidget, reason: 'site, zone, aisle, bay and shelf, joined');
+        await tester.enterText(find.byKey(const ValueKey('stock-places-search')), 'sales-a03-b02-s4');
+        await _settle(tester);
+        expect(find.byKey(const ValueKey('stock-place-p-S4')), findsOneWidget);
+        expect(find.byKey(const ValueKey('stock-place-p-MAIN')), findsNothing, reason: 'the others are filtered out');
+      });
+
+      testWidgets('the separator is the business\'s own setting', (tester) async {
+        await _open(tester, _Config(), size, held: _manage, screen: const StockPlacesScreen(), separator: '.');
+        await _settle(tester);
+        expect(find.text('MAIN.SALES.A03.B02.S4'), findsOneWidget);
+        await tester.enterText(find.byKey(const ValueKey('stock-places-search')), 'MAIN.SALES.A03');
+        await _settle(tester);
+        expect(find.byKey(const ValueKey('stock-place-p-B02')), findsOneWidget, reason: 'found by the address as it is written');
+      });
+
+      testWidgets('a shelf is offered only the bays as its parent, a site no parent but the choice to receive', (tester) async {
+        final config = _Config();
+        await _open(tester, config, size, held: _manage, screen: const StockPlacesScreen());
+        await _settle(tester);
+        await tester.tap(find.byKey(const ValueKey('stock-place-add')));
+        await _settle(tester);
+        expect(find.byKey(const ValueKey('stock-place-parent')), findsNothing, reason: 'a site is a root');
+        expect(find.byKey(const ValueKey('stock-place-receives')), findsOneWidget);
+        await tester.tap(find.byKey(const ValueKey('stock-place-kind')));
+        await _settle(tester);
+        await tester.tap(find.text(_en.stockPlaceKindShelf).last);
+        await _settle(tester);
+        await tester.tap(find.byKey(const ValueKey('stock-place-parent')));
+        await _settle(tester);
+        expect(find.text('B02').hitTestable(), findsWidgets, reason: 'the bay is offered');
+        expect(find.text('SALES').hitTestable(), findsNothing, reason: 'a zone is not the level above a shelf');
+        expect(find.byKey(const ValueKey('stock-place-role')), findsOneWidget, reason: 'a place below a site is picking or reserve');
       });
 
       testWidgets('a place refused for its code says why and keeps the sheet', (tester) async {

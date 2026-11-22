@@ -18985,6 +18985,7 @@
   "@settingHintSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting hint."
   },
+  "settingHintStockAddressSeparator": "El carácter entre los niveles de una dirección de ubicación (sede, zona, pasillo, módulo, estante): MAG1-SALES-A03-B02-S4 con guion, MAG1.SALES.A03.B02.S4 con punto. Solo cambia cómo se escribe la dirección.",
   "settingHintStockAllowNegative": "Desactivado: se rechaza un movimiento que dejaría menos que nada en un lugar. Activado: se registra y el lugar muestra una cantidad negativa hasta que llegue mercancía.",
   "settingHintVatViesEvidenceDays": "Días que una comprobación válida del NIF-IVA sigue siendo lo bastante reciente para servir de prueba en una nueva factura. Un valor más corto pide una nueva comprobación antes; no prueba que una operación sea válida.",
   "@settingHintVatViesEvidenceDays": {
@@ -19200,6 +19201,7 @@
   "@settingLabelSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting label."
   },
+  "settingLabelStockAddressSeparator": "Separador en la dirección de una ubicación",
   "settingLabelStockAllowNegative": "Las existencias pueden bajar de cero",
   "settingLabelVatViesEvidenceDays": "Vigencia de la comprobación del NIF-IVA",
   "@settingLabelVatViesEvidenceDays": {
@@ -20838,6 +20840,8 @@
   "@stockPlaceKind": {
     "description": "#4169 the stock editors: a label or message"
   },
+  "stockPlaceKindAisle": "Pasillo",
+  "stockPlaceKindBay": "Módulo",
   "stockPlaceKindBin": "Cajón",
   "@stockPlaceKindBin": {
     "description": "#4169 the stock editors: a label or message"
@@ -20846,6 +20850,7 @@
   "@stockPlaceKindShelf": {
     "description": "#4169 the stock editors: a label or message"
   },
+  "stockPlaceKindSite": "Sede",
   "stockPlaceKindWarehouse": "Almacén",
   "@stockPlaceKindWarehouse": {
     "description": "#4169 the stock editors: a label or message"
@@ -20866,6 +20871,14 @@
   "@stockPlaceParent": {
     "description": "#4169 the stock editors: a label or message"
   },
+  "stockPlaceReceives": "Recibe de proveedores",
+  "stockPlaceReceivesHelp": "Desactivado: la mercancía llega aquí solo por traslado desde otra sede.",
+  "stockPlaceReceivesNo": "solo traslados",
+  "stockPlaceReceivesYes": "recibe de proveedores",
+  "stockPlaceRole": "Uso",
+  "stockPlaceRoleNone": "Sin indicar",
+  "stockPlaceRolePicking": "Picking (zona de venta)",
+  "stockPlaceRoleReserve": "Reserva (excedente)",
   "stockPlaceVirtual": "Llevada por el sistema",
   "@stockPlaceVirtual": {
     "description": "#4169 the stock editors: a label or message"
@@ -20874,6 +20887,7 @@
   "@stockPlacesAdd": {
     "description": "#4169 the stock editors: a label or message"
   },
+  "stockPlacesSearch": "Buscar una ubicación por dirección, nombre o código de barras",
   "stockPlacesTitle": "Ubicaciones",
   "@stockPlacesTitle": {
     "description": "#4169 the stock editors: a label or message"
@@ -21059,6 +21073,9 @@
   "@stockReasonKindUnknown": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonLevelChildrenWrong": "Esta ubicación contiene otras que necesitan su nivel; muévalas primero.",
+  "stockReasonLevelParentMissing": "Solo una sede está sola; cada otro nivel va bajo el nivel superior.",
+  "stockReasonLevelParentWrong": "Una ubicación de este nivel va solo bajo el nivel inmediatamente superior.",
   "stockReasonLineConflict": "La línea se nombra dos veces y no coinciden.",
   "@stockReasonLineConflict": {
     "description": "#4171 receiving into stock: a text under a field the server refused"
@@ -21143,6 +21160,7 @@
   "@stockReasonParentInactive": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonPickRoleUnknown": "El uso debe ser picking o reserva.",
   "stockReasonPriceInvalid": "Un precio es cero o más.",
   "@stockReasonPriceInvalid": {
     "description": "#4169 the stock editors: a text under a field the server refused"

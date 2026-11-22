@@ -1,0 +1,20 @@
+{
+  "stockPlaceKindSite": "Sede",
+  "stockPlaceKindAisle": "Pasillo",
+  "stockPlaceKindBay": "Módulo",
+  "stockPlacesSearch": "Buscar una ubicación por dirección, nombre o código de barras",
+  "stockPlaceReceives": "Recibe de proveedores",
+  "stockPlaceReceivesHelp": "Desactivado: la mercancía llega aquí solo por traslado desde otra sede.",
+  "stockPlaceReceivesYes": "recibe de proveedores",
+  "stockPlaceReceivesNo": "solo traslados",
+  "stockPlaceRole": "Uso",
+  "stockPlaceRoleNone": "Sin indicar",
+  "stockPlaceRolePicking": "Picking (zona de venta)",
+  "stockPlaceRoleReserve": "Reserva (excedente)",
+  "stockReasonLevelParentWrong": "Una ubicación de este nivel va solo bajo el nivel inmediatamente superior.",
+  "stockReasonLevelParentMissing": "Solo una sede está sola; cada otro nivel va bajo el nivel superior.",
+  "stockReasonLevelChildrenWrong": "Esta ubicación contiene otras que necesitan su nivel; muévalas primero.",
+  "stockReasonPickRoleUnknown": "El uso debe ser picking o reserva.",
+  "settingLabelStockAddressSeparator": "Separador en la dirección de una ubicación",
+  "settingHintStockAddressSeparator": "El carácter entre los niveles de una dirección de ubicación (sede, zona, pasillo, módulo, estante): MAG1-SALES-A03-B02-S4 con guion, MAG1.SALES.A03.B02.S4 con punto. Solo cambia cómo se escribe la dirección."
+}

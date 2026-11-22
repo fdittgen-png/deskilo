@@ -792,5 +792,11 @@
  "resendPaypal": "Fenêtre de réémission, PayPal",
  "resendPaypalHint": "Combien de temps après le premier envoi d'un paiement à PayPal le même paiement peut être renvoyé sous sa requête d'origine. À garder sous la durée pendant laquelle PayPal retient une requête (6 heures). Se règle dans les paramètres de l'app.",
  "resendStripe": "Fenêtre de réémission, Stripe",
- "resendStripeHint": "Combien de temps après le premier envoi d'un paiement à Stripe le même paiement peut être renvoyé sous sa requête d'origine. À garder sous la durée pendant laquelle Stripe retient une requête (24 heures). Se règle dans les paramètres de l'app."
+ "resendStripeHint": "Combien de temps après le premier envoi d'un paiement à Stripe le même paiement peut être renvoyé sous sa requête d'origine. À garder sous la durée pendant laquelle Stripe retient une requête (24 heures). Se règle dans les paramètres de l'app.",
+ "stockAddressSeparator": "Séparateur dans l’adresse d’un emplacement",
+ "stockAddressSeparatorHint": "Le caractère entre les niveaux d’une adresse d’emplacement (site, zone, allée, travée, étagère) : MAG1-SALES-A03-B02-S4 avec un tiret, MAG1.SALES.A03.B02.S4 avec un point. Seule l’écriture de l’adresse change.",
+ "stockSepDash": "Tiret ( - )",
+ "stockSepDot": "Point ( . )",
+ "stockSepSlash": "Barre oblique ( / )",
+ "stockSepColon": "Deux-points ( : )"
 }

@@ -1620,6 +1620,25 @@ final List<({SettingSeed row, String since})> settingSeeds = [
     ),
   ),
   (
+    since: 'stock_levels',
+    row: (
+      key: 'stock.address_separator',
+      type: 'enum',
+      defaultValue: '-',
+      min: null,
+      max: null,
+      unit: '',
+      group: 'business',
+      scopes: ['workspace'],
+      editPermission: 'workspaceSettings',
+      floor: null,
+      editable: true,
+      choices: ['-', '.', '/', ':'],
+      source: 'stock places (#4293)',
+      note: 'The character shown between the levels of a place address (site, zone, aisle, bay, shelf): MAG1-SALES-A03-B02-S4 with a dash, MAG1.SALES.A03.B02.S4 with a dot. Only how an address is written changes; the places and their codes stay as they are.',
+    ),
+  ),
+  (
     since: 'invoice_originals_sweep',
     row: (
       key: 'records.invoice_originals_sweep',
