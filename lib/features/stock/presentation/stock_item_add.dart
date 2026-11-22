@@ -120,6 +120,7 @@ class StockItemAdd {
           places: places,
           separator: _ref.read(stockAddressSeparatorProvider),
           currency: _ref.read(currentWorkspaceProvider).value?.currencyCode ?? '',
+          unit: _ref.read(stockWeighedGoodsProvider) ? 'kg' : 'piece',
         ),
       );
     } on Object catch (e, st) {

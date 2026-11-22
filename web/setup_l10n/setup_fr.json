@@ -800,5 +800,15 @@
  "stockSepSlash": "Barre oblique ( / )",
  "stockSepColon": "Deux-points ( : )",
  "einvoiceStuck": "Tentative de facture électronique interrompue",
- "einvoiceStuckHint": "Combien de temps une facture électronique peut rester préparée, sans envoi commencé, avant que le propriétaire soit prévenu que sa tentative s’est arrêtée. Réglé dans les paramètres de l’application."
+ "einvoiceStuckHint": "Combien de temps une facture électronique peut rester préparée, sans envoi commencé, avant que le propriétaire soit prévenu que sa tentative s’est arrêtée. Réglé dans les paramètres de l’application.",
+ "businessKind_shop": "Commerce — achète, tient en stock et vend des marchandises",
+ "businessShopType": "Type de commerce",
+ "businessShopTypeHint": "Épicerie, boulangerie, boucherie, fleuriste ou supérette. Cela change les mots et les exemples, jamais ce que fait l’application.",
+ "shopTypeGrocery": "Épicerie",
+ "shopTypeBakery": "Boulangerie",
+ "shopTypeButcher": "Boucherie",
+ "shopTypeFlorist": "Fleuriste",
+ "shopTypeCornerShop": "Supérette",
+ "stockWeighedGoods": "Les marchandises se vendent au poids",
+ "stockWeighedGoodsHint": "Un nouvel article de stock est proposé en kilogrammes plutôt qu’en pièces (boucherie, boulangerie, comptoir d’épicerie)."
 }

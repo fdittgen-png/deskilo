@@ -1,0 +1,15 @@
+{
+  "@@locale": "fr",
+  "businessKindNameShop": "Commerce",
+  "businessKindDescShop": "Des marchandises achetées, tenues en stock et vendues : une épicerie, une boulangerie, une boucherie, un fleuriste ou une supérette.",
+  "discoveryKindShops": "Commerces",
+  "shopTypeGrocery": "Épicerie",
+  "shopTypeBakery": "Boulangerie",
+  "shopTypeButcher": "Boucherie",
+  "shopTypeFlorist": "Fleuriste",
+  "shopTypeCornerShop": "Supérette",
+  "settingLabelBusinessShopType": "Type de commerce",
+  "settingHintBusinessShopType": "Épicerie, boulangerie, boucherie, fleuriste ou supérette. Cela change les mots et les exemples de l’application, jamais ce qu’elle fait.",
+  "settingLabelStockWeighedGoods": "Les marchandises se vendent au poids",
+  "settingHintStockWeighedGoods": "Activé : un nouvel article de stock est proposé en kilogrammes plutôt qu’en pièces (boucherie, boulangerie, comptoir d’épicerie). Tout article peut garder une autre unité."
+}

@@ -800,5 +800,15 @@
  "stockSepSlash": "Slash ( / )",
  "stockSepColon": "Colon ( : )",
  "einvoiceStuck": "E-invoice attempt left half-way",
- "einvoiceStuckHint": "How long an e-invoice may stay prepared, with no dispatch started, before the owner is told that its attempt stopped. Set in the app's settings."
+ "einvoiceStuckHint": "How long an e-invoice may stay prepared, with no dispatch started, before the owner is told that its attempt stopped. Set in the app's settings.",
+ "businessKind_shop": "Shop — buys, keeps in stock and sells goods",
+ "businessShopType": "Type of shop",
+ "businessShopTypeHint": "Grocery, bakery, butcher, florist or corner shop. It changes the words and examples, never what the app does.",
+ "shopTypeGrocery": "Grocery",
+ "shopTypeBakery": "Bakery",
+ "shopTypeButcher": "Butcher",
+ "shopTypeFlorist": "Florist",
+ "shopTypeCornerShop": "Corner shop",
+ "stockWeighedGoods": "Goods are sold by weight",
+ "stockWeighedGoodsHint": "A new stock item is proposed in kilograms instead of pieces (butcher, bakery, grocery counter)."
 }

@@ -75,6 +75,7 @@ Vous voulez que l’application corresponde à votre activité avant de configur
 | **Cabinet** | Rendez-vous : massage, thérapie, coaching, conseil. |
 | **Salon** | Beauté, coiffure, ongles, tatouage. |
 | **Indépendant·e** | Une personne qui vend et facture ses propres services : clients, devis et factures, sans local. |
+| **Commerce** | Des marchandises achetées, tenues en stock et vendues : une épicerie, une boulangerie, une boucherie, un fleuriste ou une supérette. |
 | **Entreprise de services** | Toute autre entreprise qui vend ses services. |
 
 **Étapes**

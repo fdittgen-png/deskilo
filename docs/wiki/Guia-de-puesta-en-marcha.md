@@ -75,6 +75,7 @@ Quiere que la aplicación se ajuste a su negocio antes de configurar nada. El pr
 | **Consulta** | Citas: masaje, terapia, coaching, asesoría. |
 | **Salón** | Belleza, peluquería, uñas, tatuaje. |
 | **Profesional independiente** | Una persona que vende y factura sus propios servicios: clientes, presupuestos y facturas, sin local. |
+| **Tienda** | Mercancías compradas, guardadas en stock y vendidas: una tienda de comestibles, una panadería, una carnicería, una floristería o una tienda de barrio. |
 | **Empresa de servicios** | Cualquier otro negocio que vende sus servicios. |
 
 **Pasos**

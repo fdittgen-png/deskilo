@@ -12,6 +12,7 @@ String? businessKindLabel(AppLocalizations l10n, String code) => switch (code) {
   'practice' => l10n.businessKindNamePractice,
   'salon' => l10n.businessKindNameSalon,
   'freelancer' => l10n.businessKindNameFreelancer,
+  'shop' => l10n.businessKindNameShop,
   'service' => l10n.businessKindNameService,
   _ => null,
 };
@@ -25,6 +26,7 @@ const List<String> discoverableBusinessKinds = [
   'practice',
   'salon',
   'freelancer',
+  'shop',
   'service',
 ];
 
@@ -37,6 +39,16 @@ String? businessKindChipLabel(AppLocalizations l10n, String code) =>
       'practice' => l10n.discoveryKindPractices,
       'salon' => l10n.discoveryKindSalons,
       'freelancer' => l10n.discoveryKindFreelancers,
+      'shop' => l10n.discoveryKindShops,
       'service' => l10n.discoveryKindServices,
       _ => null,
     };
+
+/// #4365 -- the name of a type of shop (`grocery`, `bakery`, `butcher`, `florist`, `corner_shop`).
+String shopTypeLabel(AppLocalizations l10n, String type) => switch (type) {
+  'bakery' => l10n.shopTypeBakery,
+  'butcher' => l10n.shopTypeButcher,
+  'florist' => l10n.shopTypeFlorist,
+  'corner_shop' => l10n.shopTypeCornerShop,
+  _ => l10n.shopTypeGrocery,
+};

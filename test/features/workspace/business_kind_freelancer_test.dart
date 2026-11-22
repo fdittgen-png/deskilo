@@ -8,6 +8,7 @@
 // refused (nothing written) so it is reviewed again. A save whose flags moved
 // meanwhile keeps the kind and says the features were refused.
 import 'package:deskilo/core/demo/data/business_kind_repository.dart';
+import 'package:deskilo/core/demo/data/settings_repository.dart';
 import 'package:deskilo/features/workspace/application/business_kind_commands.dart';
 import 'package:deskilo/features/workspace/domain/business_kind.dart';
 import 'package:deskilo/features/workspace/domain/business_kind_proposal.dart';
@@ -93,6 +94,7 @@ void main() {
       'practice',
       'salon',
       'freelancer',
+      'shop',
       'service',
     ];
     expect(discoverableBusinessKinds, demo);
@@ -126,7 +128,7 @@ void main() {
       'after the review writes nothing and asks for a new review', () async {
     final workspace = FakeWorkspaceRepository.withWorkspace();
     final kinds = _Kinds([_freelancer()]);
-    final commands = BusinessKindCommands(kinds, workspace);
+    final commands = BusinessKindCommands(kinds, workspace, FakeSettingsRepository(const []));
     final reviewed = _freelancer();
     final outcome = await commands.save(
       'ws-1',
@@ -163,7 +165,7 @@ void main() {
       featureFlags: const {'invoicing': true},
     );
     final kinds = _Kinds([_freelancer()]);
-    final outcome = await BusinessKindCommands(kinds, workspace).save(
+    final outcome = await BusinessKindCommands(kinds, workspace, FakeSettingsRepository(const [])).save(
       'ws-1',
       kind: 'freelancer',
       moreKinds: const [],
@@ -182,7 +184,7 @@ void main() {
       'review and a refused features stage keeps the kind', () async {
     final workspace = FakeWorkspaceRepository.withWorkspace();
     final kinds = _Kinds([_freelancer(version: 2, digest: 'bb')]);
-    final commands = BusinessKindCommands(kinds, workspace);
+    final commands = BusinessKindCommands(kinds, workspace, FakeSettingsRepository(const []));
     Future<BusinessKindOutcome> save() => commands.save(
       'ws-1',
       kind: 'freelancer',

@@ -38,6 +38,7 @@ Future<BusinessProfile> businessProfile(Ref ref) async =>
 BusinessKindCommands businessKindCommands(Ref ref) => BusinessKindCommands(
   ref.watch(businessKindRepositoryProvider),
   ref.watch(workspaceRepositoryProvider),
+  ref.watch(settingsRepositoryProvider),
 );
 
 /// #4223 — whether the selected workspace's primary kind keeps places off.

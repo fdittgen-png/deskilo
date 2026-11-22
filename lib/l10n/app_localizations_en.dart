@@ -5857,6 +5857,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Any other business that sells its services.';
 
   @override
+  String get businessKindDescShop =>
+      'Goods bought, kept in stock and sold: an épicerie, a bakery, a butcher, a florist or a corner shop.';
+
+  @override
   String get businessKindDescStudio =>
       'Classes and courses: yoga, dance, music, art.';
 
@@ -5877,6 +5881,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get businessKindNameService => 'Service business';
+
+  @override
+  String get businessKindNameShop => 'Shop';
 
   @override
   String get businessKindNameStudio => 'Studio';
@@ -8559,6 +8566,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get discoveryKindServices => 'Other services';
+
+  @override
+  String get discoveryKindShops => 'Shops';
 
   @override
   String get discoveryKindStudios => 'Studios';
@@ -31464,6 +31474,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Further kinds the business also is, if any, besides the main one.';
 
   @override
+  String get settingHintBusinessShopType =>
+      'Grocery, bakery, butcher, florist or corner shop. It changes the words and examples the app shows, never what it does.';
+
+  @override
   String get settingHintCalendarRangeDays =>
       'Fixed by the platform: the longest range one calendar request may ask for. It bounds the query.';
 
@@ -31716,6 +31730,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Off: a move that would leave less than nothing at a place is refused. On: it is recorded, and the place shows a negative quantity until goods arrive.';
 
   @override
+  String get settingHintStockWeighedGoods =>
+      'On: a new stock item is proposed in kilograms instead of pieces (a butcher, a bakery, a grocery counter). Any item can still be given another unit.';
+
+  @override
   String get settingHintVatViesEvidenceDays =>
       'Days a valid VAT-number check stays recent enough to stand as evidence on a new invoice. A shorter value asks for a fresh check sooner; it is not proof that a transaction is valid.';
 
@@ -31796,6 +31814,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingLabelBusinessMoreKinds => 'Also a kind of business';
+
+  @override
+  String get settingLabelBusinessShopType => 'Type of shop';
 
   @override
   String get settingLabelCalendarRangeDays => 'Calendar range';
@@ -32019,6 +32040,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingLabelStockAllowNegative => 'Stock may go below zero';
+
+  @override
+  String get settingLabelStockWeighedGoods => 'Goods are sold by weight';
 
   @override
   String get settingLabelVatViesEvidenceDays => 'VAT-number check freshness';
@@ -34256,6 +34280,21 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get shellSwipeCoachMark =>
       'Swipe the bar down for a full-screen view. Swipe up, or long-press the Reserve button, to bring it back.';
+
+  @override
+  String get shopTypeBakery => 'Bakery';
+
+  @override
+  String get shopTypeButcher => 'Butcher';
+
+  @override
+  String get shopTypeCornerShop => 'Corner shop';
+
+  @override
+  String get shopTypeFlorist => 'Florist';
+
+  @override
+  String get shopTypeGrocery => 'Grocery';
 
   @override
   String get shortcutClose => 'Close';

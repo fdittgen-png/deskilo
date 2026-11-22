@@ -805,7 +805,17 @@ window.SETUP_L10N={
    "stockSepSlash": "Slash ( / )",
    "stockSepColon": "Colon ( : )",
    "einvoiceStuck": "E-invoice attempt left half-way",
-   "einvoiceStuckHint": "How long an e-invoice may stay prepared, with no dispatch started, before the owner is told that its attempt stopped. Set in the app's settings."
+   "einvoiceStuckHint": "How long an e-invoice may stay prepared, with no dispatch started, before the owner is told that its attempt stopped. Set in the app's settings.",
+   "businessKind_shop": "Shop — buys, keeps in stock and sells goods",
+   "businessShopType": "Type of shop",
+   "businessShopTypeHint": "Grocery, bakery, butcher, florist or corner shop. It changes the words and examples, never what the app does.",
+   "shopTypeGrocery": "Grocery",
+   "shopTypeBakery": "Bakery",
+   "shopTypeButcher": "Butcher",
+   "shopTypeFlorist": "Florist",
+   "shopTypeCornerShop": "Corner shop",
+   "stockWeighedGoods": "Goods are sold by weight",
+   "stockWeighedGoodsHint": "A new stock item is proposed in kilograms instead of pieces (butcher, bakery, grocery counter)."
   },
   "feature": {
    "calendarTab": [
@@ -2676,7 +2686,17 @@ window.SETUP_L10N={
    "stockSepSlash": "Barre oblique ( / )",
    "stockSepColon": "Deux-points ( : )",
    "einvoiceStuck": "Tentative de facture électronique interrompue",
-   "einvoiceStuckHint": "Combien de temps une facture électronique peut rester préparée, sans envoi commencé, avant que le propriétaire soit prévenu que sa tentative s’est arrêtée. Réglé dans les paramètres de l’application."
+   "einvoiceStuckHint": "Combien de temps une facture électronique peut rester préparée, sans envoi commencé, avant que le propriétaire soit prévenu que sa tentative s’est arrêtée. Réglé dans les paramètres de l’application.",
+   "businessKind_shop": "Commerce — achète, tient en stock et vend des marchandises",
+   "businessShopType": "Type de commerce",
+   "businessShopTypeHint": "Épicerie, boulangerie, boucherie, fleuriste ou supérette. Cela change les mots et les exemples, jamais ce que fait l’application.",
+   "shopTypeGrocery": "Épicerie",
+   "shopTypeBakery": "Boulangerie",
+   "shopTypeButcher": "Boucherie",
+   "shopTypeFlorist": "Fleuriste",
+   "shopTypeCornerShop": "Supérette",
+   "stockWeighedGoods": "Les marchandises se vendent au poids",
+   "stockWeighedGoodsHint": "Un nouvel article de stock est proposé en kilogrammes plutôt qu’en pièces (boucherie, boulangerie, comptoir d’épicerie)."
   },
   "feature": {
    "calendarTab": [
@@ -4547,7 +4567,17 @@ window.SETUP_L10N={
    "stockSepSlash": "Schrägstrich ( / )",
    "stockSepColon": "Doppelpunkt ( : )",
    "einvoiceStuck": "Unterbrochener E-Rechnungsversuch",
-   "einvoiceStuckHint": "Wie lange eine E-Rechnung vorbereitet bleiben darf, ohne dass ein Versand begonnen hat, bevor die Inhaberin oder der Inhaber erfährt, dass der Versuch stehen geblieben ist. Einstellbar in den Einstellungen der App."
+   "einvoiceStuckHint": "Wie lange eine E-Rechnung vorbereitet bleiben darf, ohne dass ein Versand begonnen hat, bevor die Inhaberin oder der Inhaber erfährt, dass der Versuch stehen geblieben ist. Einstellbar in den Einstellungen der App.",
+   "businessKind_shop": "Laden — kauft, lagert und verkauft Ware",
+   "businessShopType": "Art des Ladens",
+   "businessShopTypeHint": "Lebensmittelgeschäft, Bäckerei, Metzgerei, Blumenladen oder Späti. Es ändert die Wörter und Beispiele, nie das Verhalten der App.",
+   "shopTypeGrocery": "Lebensmittelgeschäft",
+   "shopTypeBakery": "Bäckerei",
+   "shopTypeButcher": "Metzgerei",
+   "shopTypeFlorist": "Blumenladen",
+   "shopTypeCornerShop": "Späti",
+   "stockWeighedGoods": "Ware wird nach Gewicht verkauft",
+   "stockWeighedGoodsHint": "Ein neuer Lagerartikel wird in Kilogramm statt in Stück vorgeschlagen (Metzgerei, Bäckerei, Theke)."
   },
   "feature": {
    "calendarTab": [
@@ -6418,7 +6448,17 @@ window.SETUP_L10N={
    "stockSepSlash": "Barra ( / )",
    "stockSepColon": "Dos puntos ( : )",
    "einvoiceStuck": "Intento de factura electrónica interrumpido",
-   "einvoiceStuckHint": "Cuánto tiempo puede quedar preparada una factura electrónica, sin que se haya iniciado el envío, antes de avisar al propietario de que el intento se detuvo. Se ajusta en los ajustes de la aplicación."
+   "einvoiceStuckHint": "Cuánto tiempo puede quedar preparada una factura electrónica, sin que se haya iniciado el envío, antes de avisar al propietario de que el intento se detuvo. Se ajusta en los ajustes de la aplicación.",
+   "businessKind_shop": "Tienda — compra, guarda en stock y vende mercancías",
+   "businessShopType": "Tipo de tienda",
+   "businessShopTypeHint": "Tienda de comestibles, panadería, carnicería, floristería o tienda de barrio. Cambia las palabras y los ejemplos, nunca lo que hace la aplicación.",
+   "shopTypeGrocery": "Tienda de comestibles",
+   "shopTypeBakery": "Panadería",
+   "shopTypeButcher": "Carnicería",
+   "shopTypeFlorist": "Floristería",
+   "shopTypeCornerShop": "Tienda de barrio",
+   "stockWeighedGoods": "Las mercancías se venden al peso",
+   "stockWeighedGoodsHint": "Un artículo de stock nuevo se propone en kilogramos en lugar de piezas (carnicería, panadería, mostrador)."
   },
   "feature": {
    "calendarTab": [
@@ -8289,7 +8329,17 @@ window.SETUP_L10N={
    "stockSepSlash": "Barra ( / )",
    "stockSepColon": "Due punti ( : )",
    "einvoiceStuck": "Tentativo di fattura elettronica interrotto",
-   "einvoiceStuckHint": "Per quanto tempo una fattura elettronica può restare preparata, senza che l’invio sia iniziato, prima che il titolare sia avvisato che il tentativo si è fermato. Si imposta nelle impostazioni dell’app."
+   "einvoiceStuckHint": "Per quanto tempo una fattura elettronica può restare preparata, senza che l’invio sia iniziato, prima che il titolare sia avvisato che il tentativo si è fermato. Si imposta nelle impostazioni dell’app.",
+   "businessKind_shop": "Negozio — acquista, tiene a magazzino e vende merce",
+   "businessShopType": "Tipo di negozio",
+   "businessShopTypeHint": "Alimentari, panificio, macelleria, fiorista o negozio di quartiere. Cambia le parole e gli esempi, mai ciò che fa l’app.",
+   "shopTypeGrocery": "Alimentari",
+   "shopTypeBakery": "Panificio",
+   "shopTypeButcher": "Macelleria",
+   "shopTypeFlorist": "Fiorista",
+   "shopTypeCornerShop": "Negozio di quartiere",
+   "stockWeighedGoods": "La merce si vende a peso",
+   "stockWeighedGoodsHint": "Un nuovo articolo di magazzino viene proposto in chilogrammi anziché in pezzi (macelleria, panificio, banco)."
   },
   "feature": {
    "calendarTab": [

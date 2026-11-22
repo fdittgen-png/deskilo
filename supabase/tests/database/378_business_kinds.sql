@@ -40,7 +40,7 @@ insert into public.members (workspace_id, user_id, is_owner, is_admin, joined_at
 
 -- the registry
 select is((select array_agg(code order by sort_order) from public.business_kinds),
-          array['coworking','studio','practice','salon','freelancer','service'], 'the six kinds are seeded in order (a freelancer between salon and service)');
+          array['coworking','studio','practice','salon','freelancer','shop','service'], 'the seven kinds are seeded in order (a freelancer and a shop between salon and service)');
 select is((select default_value #>> '{}' from public.setting_definitions where key = 'business.kind'),
           'coworking', 'every workspace reads coworking until it says otherwise');
 select is((select edit_permission from public.setting_definitions where key = 'business.more_kinds'),
@@ -68,7 +68,7 @@ select pg_temp.act_as('00000000-0000-4000-8000-0000003549a3');
 select is((select count(*)::int from public.setting_values
             where workspace_id = '00000000-0000-4000-8000-0000003549b1' and key like 'business.%'),
           0, 'another tenant reads none of its kind settings');
-select is((select count(*)::int from public.business_kinds), 6, 'everyone signed in reads the kinds');
+select is((select count(*)::int from public.business_kinds), 7, 'everyone signed in reads the kinds');
 
 select * from finish();
 rollback;

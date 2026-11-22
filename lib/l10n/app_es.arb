@@ -3479,6 +3479,7 @@
   "businessKindDescPractice": "Citas: masaje, terapia, coaching, asesoría.",
   "businessKindDescSalon": "Belleza, peluquería, uñas, tatuaje.",
   "businessKindDescService": "Cualquier otro negocio que vende sus servicios.",
+  "businessKindDescShop": "Mercancías compradas, guardadas en stock y vendidas: una tienda de comestibles, una panadería, una carnicería, una floristería o una tienda de barrio.",
   "businessKindDescStudio": "Clases y cursos: yoga, danza, música, arte.",
   "businessKindMoreTitle": "También es… (opcional)",
   "businessKindNameCoworking": "Espacio de coworking",
@@ -3486,6 +3487,7 @@
   "businessKindNamePractice": "Consulta",
   "businessKindNameSalon": "Salón",
   "businessKindNameService": "Empresa de servicios",
+  "businessKindNameShop": "Tienda",
   "businessKindNameStudio": "Estudio",
   "businessKindNoBookingYet": "La reserva de clases y citas no forma parte de esta versión. Hoy obtiene: sus servicios con precios, facturas, pago en línea, mensajes y su página pública.",
   "businessKindNoChange": "Las funciones se quedan como están.",
@@ -5203,6 +5205,7 @@
   "discoveryKindPractices": "Consultas",
   "discoveryKindSalons": "Salones",
   "discoveryKindServices": "Otros servicios",
+  "discoveryKindShops": "Tiendas",
   "discoveryKindStudios": "Estudios",
   "discoveryKindUncovered": "{count, plural, one{Un directorio no puede filtrar por tipo: no se le ha preguntado.} other{{count} directorios no pueden filtrar por tipo: no se les ha preguntado.}}",
   "discoveryLoadedCount": "Lugares cargados: {loaded} · mostrados: {shown} · directorios que respondieron: {answered} de {sources}",
@@ -18858,6 +18861,7 @@
   },
   "settingHintBusinessKind": "Qué es el negocio: un espacio de coworking, un estudio, una consulta, un salón u otro negocio de servicios. Propone las funciones y las palabras que necesita; un espacio de coworking lo conserva todo como estaba.",
   "settingHintBusinessMoreKinds": "Otros tipos que el negocio también es, si los hay, además del principal.",
+  "settingHintBusinessShopType": "Tienda de comestibles, panadería, carnicería, floristería o tienda de barrio. Cambia las palabras y los ejemplos de la aplicación, nunca lo que hace.",
   "settingHintCalendarRangeDays": "Fijado por la plataforma: el periodo más largo que puede pedir una consulta del calendario. Acota la consulta.",
   "@settingHintCalendarRangeDays": {
     "description": "#2487 settings: Setting hint."
@@ -19005,6 +19009,7 @@
   },
   "settingHintStockAddressSeparator": "El carácter entre los niveles de una dirección de ubicación (sede, zona, pasillo, módulo, estante): MAG1-SALES-A03-B02-S4 con guion, MAG1.SALES.A03.B02.S4 con punto. Solo cambia cómo se escribe la dirección.",
   "settingHintStockAllowNegative": "Desactivado: se rechaza un movimiento que dejaría menos que nada en un lugar. Activado: se registra y el lugar muestra una cantidad negativa hasta que llegue mercancía.",
+  "settingHintStockWeighedGoods": "Activado: un artículo de stock nuevo se propone en kilogramos en lugar de piezas (carnicería, panadería, mostrador). Cualquier artículo puede tener otra unidad.",
   "settingHintVatViesEvidenceDays": "Días que una comprobación válida del NIF-IVA sigue siendo lo bastante reciente para servir de prueba en una nueva factura. Un valor más corto pide una nueva comprobación antes; no prueba que una operación sea válida.",
   "@settingHintVatViesEvidenceDays": {
     "description": "#2487 retention settings"
@@ -19075,6 +19080,7 @@
   },
   "settingLabelBusinessKind": "Tipo de negocio",
   "settingLabelBusinessMoreKinds": "También un tipo de negocio",
+  "settingLabelBusinessShopType": "Tipo de tienda",
   "settingLabelCalendarRangeDays": "Periodo del calendario",
   "@settingLabelCalendarRangeDays": {
     "description": "#2487 settings: Setting label."
@@ -19222,6 +19228,7 @@
   },
   "settingLabelStockAddressSeparator": "Separador en la dirección de una ubicación",
   "settingLabelStockAllowNegative": "Las existencias pueden bajar de cero",
+  "settingLabelStockWeighedGoods": "Las mercancías se venden al peso",
   "settingLabelVatViesEvidenceDays": "Vigencia de la comprobación del NIF-IVA",
   "@settingLabelVatViesEvidenceDays": {
     "description": "#2487 retention settings"
@@ -20083,6 +20090,11 @@
   "shellPendingDecisions": "{count, plural, one{1 decisión le espera} other{{count} decisiones le esperan}}",
   "shellReserveButton": "Reservar",
   "shellSwipeCoachMark": "Deslice la barra hacia abajo para la vista de pantalla completa. Deslice hacia arriba, o mantenga pulsado el botón Reservar, para recuperarla.",
+  "shopTypeBakery": "Panadería",
+  "shopTypeButcher": "Carnicería",
+  "shopTypeCornerShop": "Tienda de barrio",
+  "shopTypeFlorist": "Floristería",
+  "shopTypeGrocery": "Tienda de comestibles",
   "shortcutClose": "Cerrar",
   "shortcutFilter": "Filtrar esta lista",
   "shortcutKeys": "Las teclas de esta página",

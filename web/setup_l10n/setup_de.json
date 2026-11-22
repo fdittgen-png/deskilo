@@ -800,5 +800,15 @@
  "stockSepSlash": "Schrägstrich ( / )",
  "stockSepColon": "Doppelpunkt ( : )",
  "einvoiceStuck": "Unterbrochener E-Rechnungsversuch",
- "einvoiceStuckHint": "Wie lange eine E-Rechnung vorbereitet bleiben darf, ohne dass ein Versand begonnen hat, bevor die Inhaberin oder der Inhaber erfährt, dass der Versuch stehen geblieben ist. Einstellbar in den Einstellungen der App."
+ "einvoiceStuckHint": "Wie lange eine E-Rechnung vorbereitet bleiben darf, ohne dass ein Versand begonnen hat, bevor die Inhaberin oder der Inhaber erfährt, dass der Versuch stehen geblieben ist. Einstellbar in den Einstellungen der App.",
+ "businessKind_shop": "Laden — kauft, lagert und verkauft Ware",
+ "businessShopType": "Art des Ladens",
+ "businessShopTypeHint": "Lebensmittelgeschäft, Bäckerei, Metzgerei, Blumenladen oder Späti. Es ändert die Wörter und Beispiele, nie das Verhalten der App.",
+ "shopTypeGrocery": "Lebensmittelgeschäft",
+ "shopTypeBakery": "Bäckerei",
+ "shopTypeButcher": "Metzgerei",
+ "shopTypeFlorist": "Blumenladen",
+ "shopTypeCornerShop": "Späti",
+ "stockWeighedGoods": "Ware wird nach Gewicht verkauft",
+ "stockWeighedGoodsHint": "Ein neuer Lagerartikel wird in Kilogramm statt in Stück vorgeschlagen (Metzgerei, Bäckerei, Theke)."
 }

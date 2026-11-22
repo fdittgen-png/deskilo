@@ -800,5 +800,15 @@
  "stockSepSlash": "Barra ( / )",
  "stockSepColon": "Dos puntos ( : )",
  "einvoiceStuck": "Intento de factura electrónica interrumpido",
- "einvoiceStuckHint": "Cuánto tiempo puede quedar preparada una factura electrónica, sin que se haya iniciado el envío, antes de avisar al propietario de que el intento se detuvo. Se ajusta en los ajustes de la aplicación."
+ "einvoiceStuckHint": "Cuánto tiempo puede quedar preparada una factura electrónica, sin que se haya iniciado el envío, antes de avisar al propietario de que el intento se detuvo. Se ajusta en los ajustes de la aplicación.",
+ "businessKind_shop": "Tienda — compra, guarda en stock y vende mercancías",
+ "businessShopType": "Tipo de tienda",
+ "businessShopTypeHint": "Tienda de comestibles, panadería, carnicería, floristería o tienda de barrio. Cambia las palabras y los ejemplos, nunca lo que hace la aplicación.",
+ "shopTypeGrocery": "Tienda de comestibles",
+ "shopTypeBakery": "Panadería",
+ "shopTypeButcher": "Carnicería",
+ "shopTypeFlorist": "Floristería",
+ "shopTypeCornerShop": "Tienda de barrio",
+ "stockWeighedGoods": "Las mercancías se venden al peso",
+ "stockWeighedGoodsHint": "Un artículo de stock nuevo se propone en kilogramos en lugar de piezas (carnicería, panadería, mostrador)."
 }

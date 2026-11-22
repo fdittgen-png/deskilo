@@ -800,5 +800,15 @@
  "stockSepSlash": "Barra ( / )",
  "stockSepColon": "Due punti ( : )",
  "einvoiceStuck": "Tentativo di fattura elettronica interrotto",
- "einvoiceStuckHint": "Per quanto tempo una fattura elettronica può restare preparata, senza che l’invio sia iniziato, prima che il titolare sia avvisato che il tentativo si è fermato. Si imposta nelle impostazioni dell’app."
+ "einvoiceStuckHint": "Per quanto tempo una fattura elettronica può restare preparata, senza che l’invio sia iniziato, prima che il titolare sia avvisato che il tentativo si è fermato. Si imposta nelle impostazioni dell’app.",
+ "businessKind_shop": "Negozio — acquista, tiene a magazzino e vende merce",
+ "businessShopType": "Tipo di negozio",
+ "businessShopTypeHint": "Alimentari, panificio, macelleria, fiorista o negozio di quartiere. Cambia le parole e gli esempi, mai ciò che fa l’app.",
+ "shopTypeGrocery": "Alimentari",
+ "shopTypeBakery": "Panificio",
+ "shopTypeButcher": "Macelleria",
+ "shopTypeFlorist": "Fiorista",
+ "shopTypeCornerShop": "Negozio di quartiere",
+ "stockWeighedGoods": "La merce si vende a peso",
+ "stockWeighedGoodsHint": "Un nuovo articolo di magazzino viene proposto in chilogrammi anziché in pezzi (macelleria, panificio, banco)."
 }

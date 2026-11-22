@@ -75,6 +75,7 @@ You want the app to match your business before you set anything up. The first st
 | **Practice** | Appointments: massage, therapy, coaching, consulting. |
 | **Salon** | Beauty, hair, nails, tattoo. |
 | **Freelancer** | One person selling and invoicing their own services: customers, quotes and invoices, no premises. |
+| **Shop** | Goods bought, kept in stock and sold: an épicerie, a bakery, a butcher, a florist or a corner shop. |
 | **Service business** | Any other business that sells its services. |
 
 **Steps**

@@ -1,0 +1,15 @@
+{
+  "@@locale": "it",
+  "businessKindNameShop": "Negozio",
+  "businessKindDescShop": "Merce acquistata, tenuta a magazzino e venduta: un alimentari, un panificio, una macelleria, un fiorista o un negozio di quartiere.",
+  "discoveryKindShops": "Negozi",
+  "shopTypeGrocery": "Alimentari",
+  "shopTypeBakery": "Panificio",
+  "shopTypeButcher": "Macelleria",
+  "shopTypeFlorist": "Fiorista",
+  "shopTypeCornerShop": "Negozio di quartiere",
+  "settingLabelBusinessShopType": "Tipo di negozio",
+  "settingHintBusinessShopType": "Alimentari, panificio, macelleria, fiorista o negozio di quartiere. Cambia le parole e gli esempi dell’app, mai ciò che fa.",
+  "settingLabelStockWeighedGoods": "La merce si vende a peso",
+  "settingHintStockWeighedGoods": "Attivo: un nuovo articolo di magazzino viene proposto in chilogrammi anziché in pezzi (macelleria, panificio, banco). Ogni articolo può avere un’altra unità."
+}
