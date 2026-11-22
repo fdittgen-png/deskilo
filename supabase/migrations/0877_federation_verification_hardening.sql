@@ -13,8 +13,11 @@
 --     whichever of the four it is; the inbox answers it with one status. A request whose signature
 --     verifies is also refused when its timestamp is older than the assertion lifetime plus the clock
 --     skew (`stale_request`), as it is when it is newer than the skew allows.
---   * Binding an identity from an OpenID provider requires the identity record to name the configured
---     issuer; a record that names none is refused as one that names another (`issuer_mismatch`).
+--   * Binding an identity from the configured sign-in provider requires the configured issuer: the
+--     one the identity record names or, when the record names none, the one the provider's own
+--     record in Auth names. Neither, or another one, is `issuer_mismatch`. Only the configured provider
+--     is read here; the built-in sign-in methods (email, Google, Apple) bind through the native
+--     authority, which reads no identity record.
 
 revoke execute on function public.operator_set_personal_home(text, text, text, uuid)
   from public, anon, authenticated, service_role;
@@ -78,6 +81,23 @@ begin
 end
 $patch$;
 
+-- The issuer the Auth record of a custom sign-in provider names (null when there is none).
+create or replace function public.identity_provider_issuer(p_provider text)
+returns text language plpgsql stable security definer set search_path = public, auth as $fn$
+declare
+  v_issuer text;
+begin
+  if p_provider is null or to_regclass('auth.custom_oauth_providers') is null then
+    return null;
+  end if;
+  execute 'select nullif(issuer, '''') from auth.custom_oauth_providers
+            where identifier in ($1, regexp_replace($1, ''^custom:'', '''')) limit 1'
+    into v_issuer using p_provider;
+  return v_issuer;
+end;
+$fn$;
+revoke execute on function public.identity_provider_issuer(text) from public, anon, authenticated, service_role;
+
 -- restates 0269
 do $patch$
 declare
@@ -88,7 +108,7 @@ begin
     raise exception '0877: the issuer check of finalize_identity_binding is not found exactly once' using errcode = 'P0001';
   end if;
   v_next := replace(v_def, 'v_identity ? ''iss'' and v_identity->>''iss'' <> v_authority.issuer',
-                    'v_identity->>''iss'' is distinct from v_authority.issuer');
+                    'coalesce(v_identity->>''iss'', public.identity_provider_issuer(v_authority.oidc_provider)) is distinct from v_authority.issuer');
   execute v_next;
 end
 $patch$;

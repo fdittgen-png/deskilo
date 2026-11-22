@@ -5,7 +5,7 @@
 -- issuer; the personal home lists the people and the business of another installation only while
 -- that business keeps its members directory on, and a business asserts whether it does.
 begin;
-select plan(22);
+select plan(25);
 
 create function pg_temp.id(p_tail text) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-' || p_tail)::uuid $$;
@@ -215,26 +215,43 @@ select is(pg_temp.tx(pg_temp.b(6, 'sa', 1, 'active'), p_ts => extract(epoch from
 select is(pg_temp.tx(pg_temp.b(7, 'sa', 1, 'active'), p_ts => extract(epoch from now())::bigint - 20), 'applied',
   'one within them is accepted');
 
--- ── an identity from a provider binds only when it names the issuer ───
-update public.identity_authority set kind = 'oidc', issuer = 'https://id.4328.test/realms/d', oidc_provider = 'kc4328';
+-- ── an identity from the configured provider binds only under the configured issuer ──
+update public.identity_authority set kind = 'oidc', issuer = 'https://id.4328.test/realms/d', oidc_provider = 'custom:kc4328';
 delete from public.identity_bindings where subject = 'sa';
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
 select pg_temp.u(n), '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',
-       'i' || n || '-4328@deskilo.test', '', now(), now(), now() from generate_series(5, 7) n
+       'i' || n || '-4328@deskilo.test', '', now(), now(), now() from generate_series(5, 10) n
 on conflict (id) do nothing;
 insert into auth.identities (id, provider_id, user_id, identity_data, provider, created_at, updated_at) values
- (gen_random_uuid(), 'kc-5', pg_temp.u(5), '{"sub":"kc-5","iss":"https://id.4328.test/realms/d"}', 'kc4328', now(), now()),
- (gen_random_uuid(), 'kc-6', pg_temp.u(6), '{"sub":"kc-6"}', 'kc4328', now(), now()),
- (gen_random_uuid(), 'kc-7', pg_temp.u(7), '{"sub":"kc-7","iss":"https://evil.test"}', 'kc4328', now(), now());
+ (gen_random_uuid(), 'kc-5', pg_temp.u(5), '{"sub":"kc-5","iss":"https://id.4328.test/realms/d"}', 'custom:kc4328', now(), now()),
+ (gen_random_uuid(), 'kc-6', pg_temp.u(6), '{"sub":"kc-6","email":"i6@x.test"}', 'custom:kc4328', now(), now()),
+ (gen_random_uuid(), 'kc-7', pg_temp.u(7), '{"sub":"kc-7","iss":"https://evil.test"}', 'custom:kc4328', now(), now()),
+ (gen_random_uuid(), 'kc-8', pg_temp.u(8), '{"sub":"kc-8"}', 'custom:kc4328', now(), now()),
+ (gen_random_uuid(), 'kc-9', pg_temp.u(9), '{"sub":"kc-9"}', 'custom:kc4328', now(), now()),
+ (gen_random_uuid(), 'em-10', pg_temp.u(10), '{"sub":"em-10","email":"i10@x.test","email_verified":true}', 'email', now(), now());
+insert into auth.custom_oauth_providers (provider_type, identifier, name, client_id, client_secret, issuer, discovery_url, enabled)
+values ('oidc', 'custom:kc4328', 'kc4328', 'c4328', 'secret', 'https://id.4328.test/realms/d',
+        'https://id.4328.test/realms/d/.well-known/openid-configuration', true);
 create function pg_temp.bind(p_n int) returns text language plpgsql as $$
+declare v jsonb;
 begin
   perform set_config('request.jwt.claims', jsonb_build_object('sub', pg_temp.u(p_n), 'role', 'authenticated')::text, true);
-  return coalesce(public.finalize_identity_binding()->>'reason', public.finalize_identity_binding()->>'status');
+  v := public.finalize_identity_binding();
+  return coalesce(v->>'reason', v->>'status');
 end $$;
 grant execute on all functions in schema pg_temp to authenticated, anon;
 select is(pg_temp.bind(5), 'verified', 'an identity that names the issuer binds');
-select is(pg_temp.bind(6), 'issuer_mismatch', 'one that names no issuer is refused');
-select is(pg_temp.bind(7), 'issuer_mismatch', 'one that names another is refused');
+select is(pg_temp.bind(6), 'verified', 'one that names none binds when the provider''s own record names the issuer');
+select is(pg_temp.bind(7), 'issuer_mismatch', 'one that names another issuer is refused');
+update auth.custom_oauth_providers set issuer = 'https://other.4328.test' where identifier = 'custom:kc4328';
+select is(pg_temp.bind(8), 'issuer_mismatch', 'one that names none is refused when the provider''s record names another');
+update auth.custom_oauth_providers set provider_type = 'oauth2', issuer = null, discovery_url = null,
+  authorization_url = 'https://id.4328.test/auth', token_url = 'https://id.4328.test/token', userinfo_url = 'https://id.4328.test/userinfo'
+ where identifier = 'custom:kc4328';
+select is(pg_temp.bind(9), 'issuer_mismatch', 'and when the provider is a plain OAuth2 one with no issuer');
+-- the built-in sign-in methods bind through the native authority, which reads no identity record
+update public.identity_authority set kind = 'native', oidc_provider = null;
+select is(pg_temp.bind(10), 'verified', 'an email sign-in binds under the native authority');
 
 select * from finish();
 rollback;
