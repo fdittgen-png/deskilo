@@ -59,18 +59,24 @@ returns boolean language sql stable security definer set search_path = public as
 $fn$;
 revoke execute on function public.stock_trace_may(uuid, text) from public, anon, authenticated;
 
--- The settlement of one obligation: its allocations and reversals, each with its payment.
+-- The settlement of one obligation: its allocations and reversals, each with its payment. At most
+-- 50 are listed (the oldest first); `truncated` says more exist.
 create or replace function public.stock_trace_settlement(p_workspace_id uuid, p_obligation_id uuid)
 returns jsonb language sql stable security definer set search_path = public as $fn$
-  select coalesce(jsonb_agg(jsonb_build_object(
-           'allocation_id', a.id, 'kind', a.kind, 'amount_cents', a.amount_cents,
-           'original_allocation_id', a.original_allocation_id,
-           'payment_id', a.payment_id, 'payment_state', p.state, 'method', p.method,
-           'reported_paid_on', p.reported_paid_on, 'currency', p.currency)
-           order by a.created_datetime, a.id), '[]'::jsonb)
-    from public.purchase_settlement_allocations a
-    join public.outgoing_payments p on p.workspace_id = a.workspace_id and p.id = a.payment_id
-   where a.workspace_id = p_workspace_id and a.obligation_id = p_obligation_id;
+  select jsonb_build_object('state', 'listed',
+           'items', coalesce(jsonb_agg(x.j order by x.ord, x.id) filter (where x.rn <= 50), '[]'::jsonb),
+           'truncated', coalesce(max(x.rn) > 50, false))
+    from (
+      select a.id, a.created_datetime as ord,
+             row_number() over (order by a.created_datetime, a.id) as rn,
+             jsonb_build_object(
+               'allocation_id', a.id, 'kind', a.kind, 'amount_cents', a.amount_cents,
+               'original_allocation_id', a.original_allocation_id,
+               'payment_id', a.payment_id, 'payment_state', p.state, 'method', p.method,
+               'reported_paid_on', p.reported_paid_on, 'currency', p.currency) as j
+        from public.purchase_settlement_allocations a
+        join public.outgoing_payments p on p.workspace_id = a.workspace_id and p.id = a.payment_id
+       where a.workspace_id = p_workspace_id and a.obligation_id = p_obligation_id) x;
 $fn$;
 revoke execute on function public.stock_trace_settlement(uuid, uuid) from public, anon, authenticated;
 
@@ -101,12 +107,14 @@ begin
                         'obligation_id', o.id, 'state', o.state, 'amount_cents', o.amount_cents,
                         'currency', o.currency, 'due_on', o.due_on,
                         'settlement', case when v_pay
-                          then jsonb_build_object('state', 'listed',
-                                 'items', public.stock_trace_settlement(p_workspace_id, o.id))
+                          then public.stock_trace_settlement(p_workspace_id, o.id)
                           else jsonb_build_object('state', 'unavailable', 'items', '[]'::jsonb) end)
                         order by o.created_datetime, o.id)
-                 from public.purchase_obligations o
-                where o.workspace_id = p_workspace_id and o.purchase_id = d.id), '[]'::jsonb)) as j
+                 from (select * from public.purchase_obligations oo
+                        where oo.workspace_id = p_workspace_id and oo.purchase_id = d.id
+                        order by oo.created_datetime, oo.id limit 20) o), '[]'::jsonb),
+             'obligations_truncated', (select count(*) > 20 from public.purchase_obligations oo
+                                        where oo.workspace_id = p_workspace_id and oo.purchase_id = d.id)) as j
       from public.purchase_documents d
      where d.workspace_id = p_workspace_id and d.purchase_order_id = p_order_id
      order by d.created_datetime, d.id
@@ -198,6 +206,7 @@ create or replace function public.stock_goods_trace_v1(
 ) returns jsonb language plpgsql stable security definer set search_path = public as $fn$
 declare
   v_ids uuid[];
+  v_truncated boolean := false;
 begin
   perform public.stock_trace_reader(p_workspace_id);
   if (p_movement_id is null) = (p_lot_id is null) then
@@ -216,11 +225,17 @@ begin
          and (x.receipt_line_id is not null
               or exists (select 1 from public.stock_receipt_allocations a where a.movement_id = x.id)
               or x.reason in ('receipt', 'opening'))
-       order by x.occurred_at, x.id limit 20) q;
+       order by x.occurred_at, x.id limit 21) q;
+    -- one more than the bound says more follow
+    if coalesce(array_length(v_ids, 1), 0) > 20 then
+      v_truncated := true;
+      v_ids := v_ids[1:20];
+    end if;
   end if;
   return jsonb_build_object(
     'traces', coalesce((select jsonb_agg(public.stock_trace_one(p_workspace_id, id) order by ord)
                           from unnest(v_ids) with ordinality t(id, ord)), '[]'::jsonb),
+    'truncated', v_truncated,
     'coverage', 'recorded relations only: nothing is matched on a name, a date or an amount');
 end;
 $fn$;
@@ -328,6 +343,7 @@ declare
   v_at timestamptz := coalesce(p_at, now());
   v_currency text;
   v_lines jsonb; v_uncosted jsonb;
+  v_lines_n int; v_uncosted_n int;
   v_known numeric; v_counted int; v_recorded timestamptz;
 begin
   perform public.stock_trace_reader(p_workspace_id);
@@ -363,17 +379,23 @@ begin
                 'value_minor', round(x.quantity * x.total_cost_minor / x.quantity_received),
                 'source_currency', x.source_currency, 'source_rate', x.source_rate::text)
                 order by x.item_id, x.variant_id nulls first, x.lot_id)
-                from j x where x.cost_state = 'known'), '[]'::jsonb),
+                from (select * from j y where y.cost_state = 'known'
+                       order by y.item_id, y.variant_id nulls first, y.lot_id limit 200) x), '[]'::jsonb),
+    (select count(*) from j y where y.cost_state = 'known'),
     coalesce((select jsonb_agg(jsonb_build_object(
                 'item_id', u.item_id, 'variant_id', u.variant_id, 'quantity', u.quantity::text,
                 'reason', u.reason) order by u.item_id, u.variant_id nulls first, u.reason)
-                from (select x.item_id, x.variant_id, sum(x.quantity) as quantity,
-                             case when x.lot_id is null then 'no_lot' else 'cost_unknown' end as reason
-                        from j x
-                       where x.lot_id is null or x.cost_state = 'unknown'
-                       group by x.item_id, x.variant_id,
-                                case when x.lot_id is null then 'no_lot' else 'cost_unknown' end) u), '[]'::jsonb)
-    into v_known, v_lines, v_uncosted;
+                from (select * from (
+                        select x.item_id, x.variant_id, sum(x.quantity) as quantity,
+                               case when x.lot_id is null then 'no_lot' else 'cost_unknown' end as reason
+                          from j x
+                         where x.lot_id is null or x.cost_state = 'unknown'
+                         group by x.item_id, x.variant_id,
+                                  case when x.lot_id is null then 'no_lot' else 'cost_unknown' end) g
+                       order by g.item_id, g.variant_id nulls first, g.reason limit 200) u), '[]'::jsonb),
+    (select count(*) from (select 1 from j x where x.lot_id is null or x.cost_state = 'unknown'
+                            group by x.item_id, x.variant_id, x.lot_id is null) g)
+    into v_known, v_lines, v_lines_n, v_uncosted, v_uncosted_n;
   return jsonb_build_object(
     'basis', 'operational: recorded movements at recorded lot costs; not a posted stock-book balance',
     'cutoff', v_at,
@@ -382,9 +404,12 @@ begin
     'movements_counted', v_counted,
     'last_recorded_at', v_recorded,
     'known_total_minor', v_known,
+    -- the lists are bounded (200 each, ordered by item): the total and `complete` count everything
     'lines', v_lines,
+    'lines_truncated', v_lines_n > 200,
     'uncosted', v_uncosted,
-    'complete', jsonb_array_length(v_uncosted) = 0,
+    'uncosted_truncated', v_uncosted_n > 200,
+    'complete', v_uncosted_n = 0,
     'coverage', 'movements dated up to the cutoff, as recorded when this was calculated; a later-recorded earlier-dated movement changes a later calculation');
 end;
 $fn$;

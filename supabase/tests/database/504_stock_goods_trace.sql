@@ -7,7 +7,7 @@
 -- value totals only known costs and lists the quantities whose cost is unknown. Nothing is written
 -- by a read. Rolled back.
 begin;
-select plan(58);
+select plan(63);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -217,6 +217,14 @@ update public.workspaces set feature_flags = feature_flags || '{"stockManagement
 select is(jsonb_array_length(pg_temp.docgoods(1, 'order', pg_temp.u(501))::jsonb -> 'goods'), 2, 'an order reaches the goods put away against it');
 select is(jsonb_array_length(pg_temp.docgoods(1, 'bill', pg_temp.u(801))::jsonb -> 'goods'), 2, 'a bill linked to that order reaches the same goods');
 select is(jsonb_array_length(pg_temp.docgoods(1, 'payment', pg_temp.u(901))::jsonb -> 'goods'), 2, 'a payment reaches the goods through its allocations, the obligations and the bills');
+select is(pg_temp.trace(1, current_setting('t.water')::uuid)::jsonb ->> 'truncated', 'false', 'a trace says when it is cut short: here it is not');
+select is(pg_temp.valuation(1)::jsonb ->> 'lines_truncated' || ' ' || (pg_temp.valuation(1)::jsonb ->> 'uncosted_truncated'), 'false false', 'the value says when a list is cut short: here neither is');
+select is(pg_temp.trace(1, current_setting('t.water')::uuid)::jsonb #>> '{traces,0,purchase,bills,items,0,obligations_truncated}', 'false', 'a bill says when its obligations are cut short');
+select is(pg_temp.trace(1, current_setting('t.water')::uuid)::jsonb #>> '{traces,0,purchase,bills,items,0,obligations,0,settlement,truncated}', 'false', 'an obligation says when its settlement is cut short');
+-- A payments clerk (and a bill-only reader) learn nothing of the orders and receipts the goods hang under.
+update public.workspaces set role_permissions = role_permissions || '{"admin": ["viewStock", "recordOutgoingPayments"]}' where id = pg_temp.u(101);
+select is(pg_temp.docgoods(2, 'payment', pg_temp.u(901))::jsonb ->> 'state', 'unavailable', 'a caller holding only the payment right reaches no goods (nor an order or receipt id)');
+update public.workspaces set role_permissions = role_permissions || '{"admin": ["viewStock"]}' where id = pg_temp.u(101);
 select is(pg_temp.docgoods(1, 'bill', pg_temp.u(803))::jsonb ->> 'state', 'not_linked', 'a bill that names no order is not linked: not "no goods"');
 select is(pg_temp.docgoods(1, 'payment', pg_temp.u(902))::jsonb ->> 'state', 'not_linked', 'a payment with no allocation is not linked');
 select is(pg_temp.docgoods(2, 'order', pg_temp.u(501)), pg_temp.docgoods(2, 'order', pg_temp.u(999)),
