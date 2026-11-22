@@ -65,7 +65,7 @@ void seedShopPeople(FakeWorkspaceRepository space) {
     ..memberEmails[owner.memberId] = owner.email
     // a regular customer with no account: a member row of the business with no user (a space is never one person)
     ..otherMembers.add(
-      Member(
+      const Member(
         id: 'marche-customer-faure',
         workspaceId: demoShopSpaceId,
         userId: '',
