@@ -112,4 +112,9 @@ begin
 end;
 $fn$;
 
+revoke execute on function public.resolve_einvoice_manually_v1(uuid, uuid, text, text, text, jsonb)
+  from public, anon, authenticated;
+grant execute on function public.resolve_einvoice_manually_v1(uuid, uuid, text, text, text, jsonb)
+  to service_role;
+
 select public.set_deskilo_schema_version(859);
