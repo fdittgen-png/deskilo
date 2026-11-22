@@ -4,17 +4,14 @@
 // source: the server's public_page_service_limit(). The app's mirror
 // (publicPageServiceLimit) is pinned to the latest definition, and no public
 // projection carries the services under a written-out limit.
-import 'dart:io';
 
 import 'package:deskilo/features/money/domain/public_page.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'lint_sources.dart';
+
 void main() {
-  final migrations = Directory('supabase/migrations')
-      .listSync()
-      .whereType<File>()
-      .where((f) => f.path.endsWith('.sql'))
-      .toList()
+  final migrations = sqlFiles('supabase/migrations')
     ..sort((a, b) => a.path.compareTo(b.path));
 
   test('the app mirrors the server function', () {
