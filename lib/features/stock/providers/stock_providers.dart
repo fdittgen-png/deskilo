@@ -7,6 +7,7 @@ import '../../money/providers/purchase_order_providers.dart';
 import '../../workspace/providers/operation_context_providers.dart';
 import '../application/stock_walk.dart';
 import '../data/supabase_stock_config_commands.dart';
+import '../data/supabase_stock_cycle_counts.dart';
 import '../data/supabase_stock_operations.dart';
 import '../data/supabase_stock_queries.dart';
 import '../data/supabase_stock_receiving_commands.dart';
@@ -16,6 +17,7 @@ import '../data/supabase_stock_reversals.dart';
 import '../data/supabase_stock_trace.dart';
 import '../domain/stock_config.dart';
 import '../domain/stock_config_commands.dart';
+import '../domain/stock_cycle_counts.dart';
 import '../domain/stock_operations.dart';
 import '../domain/stock_page.dart';
 import '../domain/stock_queries.dart';
@@ -202,6 +204,36 @@ final stockReversibleProvider = FutureProvider.autoDispose
       (ref, key) async => (await ref.watch(stockReversalsProvider).reversible(key.workspaceId, [key.movementId]))[key.movementId],
       retry: (_, _) => null,
     );
+
+/// #4295 -- the cycle counts of the selected business: its plans, tasks and history. The Demo and the
+/// tests replace it.
+final stockCycleCountsProvider = Provider<StockCycleCounts>(
+  (ref) => SupabaseStockCycleCounts(ref.watch(selectedWorkspaceClientProvider)),
+);
+
+/// The count plans of a business.
+final stockCountPlansProvider = FutureProvider.autoDispose.family<List<CountPlan>, String>(
+  (ref, workspaceId) => ref.watch(stockCycleCountsProvider).plans(workspaceId),
+  retry: (_, _) => null,
+);
+
+/// The count tasks of a business, newest due day first.
+final stockCountTasksProvider = FutureProvider.autoDispose.family<List<CountTaskSummary>, String>(
+  (ref, workspaceId) => ref.watch(stockCycleCountsProvider).tasks(workspaceId),
+  retry: (_, _) => null,
+);
+
+/// One task's lines (what to count and where; never what the ledger expects).
+final stockCountTaskProvider = FutureProvider.autoDispose.family<CountTask, ({String workspaceId, String taskId})>(
+  (ref, key) => ref.watch(stockCycleCountsProvider).task(key.workspaceId, key.taskId),
+  retry: (_, _) => null,
+);
+
+/// When each item at each place was last counted and how exact the counts were.
+final stockCountHistoryProvider = FutureProvider.autoDispose.family<List<CountHistoryRow>, String>(
+  (ref, workspaceId) => ref.watch(stockCycleCountsProvider).history(workspaceId),
+  retry: (_, _) => null,
+);
 
 /// The counts of a business, newest first.
 final stockCountsProvider = FutureProvider.autoDispose
