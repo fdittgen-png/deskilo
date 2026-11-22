@@ -37287,6 +37287,30 @@
   "@refusalChangedMeanwhile": {
     "description": "#1305 Shown when an invoice changed state before the action reached the server"
   },
+  "refusalMainStoreExpired": "The main store holds only {held} of the {asked} this sale asks for that is fit to sell: the rest is past its date. Nothing was taken and the sale was not confirmed.",
+  "@refusalMainStoreExpired": {
+    "description": "#4170 a sale refused for what the main store holds",
+    "placeholders": {
+      "held": {
+        "type": "String"
+      },
+      "asked": {
+        "type": "String"
+      }
+    }
+  },
+  "refusalMainStoreShort": "The main store holds {held} of the {asked} this sale asks for. Nothing was taken and the sale was not confirmed.",
+  "@refusalMainStoreShort": {
+    "description": "#4170 a sale refused for what the main store holds",
+    "placeholders": {
+      "held": {
+        "type": "String"
+      },
+      "asked": {
+        "type": "String"
+      }
+    }
+  },
   "refusalMemberReturnsAsNew": "A member who left comes back as a new member: set them active to welcome them back.",
   "@refusalMemberReturnsAsNew": {
     "description": "#4008 Refusal DKM01: a member who left cannot be paused or otherwise changed back; setting them active brings them back as a new member"
@@ -37294,6 +37318,10 @@
   "refusalMoneyLocaleLocked": "The currency and the country are fixed once this space has issued a document or recorded money. Nothing was saved.",
   "@refusalMoneyLocaleLocked": {
     "description": "#2332: refusalMoneyLocaleLocked"
+  },
+  "refusalOpenStock": "Open the stock",
+  "@refusalOpenStock": {
+    "description": "#4170 a sale refused for what the main store holds"
   },
   "refusalPermission": "You do not have the permission for this. An owner of the space can grant it in Role management.",
   "@refusalPermission": {
@@ -45358,6 +45386,35 @@
       }
     }
   },
+  "stockMoveFrom": "Take from",
+  "@stockMoveFrom": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockMoveOpen": "Move goods",
+  "@stockMoveOpen": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockMoveOtherSite": "The places are in different sites: the goods are on their way until the other site receives them.",
+  "@stockMoveOtherSite": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockMoveQuantity": "Quantity ({unit})",
+  "@stockMoveQuantity": {
+    "description": "#4170 transfers and take-out: a label or message",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "stockMoveSameSite": "Both places are in one site: the goods move at once.",
+  "@stockMoveSameSite": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockMoveSubmit": "Move",
+  "@stockMoveSubmit": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
   "stockMovementNotFound": "This movement does not exist, or it is not one you may see.",
   "@stockMovementNotFound": {
     "description": "#4161 a movement address that reads as none"
@@ -45669,6 +45726,10 @@
   "@stockReasonLotCodeRequired": {
     "description": "#4171 receiving into stock: a text under a field the server refused"
   },
+  "stockReasonLotExpired": "This lot is past its date: taking it needs an explicit confirmation.",
+  "@stockReasonLotExpired": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
   "stockReasonLotGroupConflict": "Parts of one lot must agree on its code, date and cost.",
   "@stockReasonLotGroupConflict": {
     "description": "#4171 receiving into stock: a text under a field the server refused"
@@ -45688,6 +45749,10 @@
   "stockReasonNameMalformed": "A name has 1 to 60 characters.",
   "@stockReasonNameMalformed": {
     "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonOneSource": "One transfer has one place to take from.",
+  "@stockReasonOneSource": {
+    "description": "#4170 transfers and take-out: a label or message"
   },
   "stockReasonOther": "This is not valid.",
   "@stockReasonOther": {
@@ -45713,13 +45778,25 @@
   "@stockReasonQuantityInvalid": {
     "description": "#4171 receiving into stock: a text under a field the server refused"
   },
+  "stockReasonReasonPlaces": "These places do not fit this kind of movement.",
+  "@stockReasonReasonPlaces": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
   "stockReasonReceiptUnknown": "This delivery is not one of this business.",
   "@stockReasonReceiptUnknown": {
     "description": "#4171 receiving into stock: a text under a field the server refused"
   },
+  "stockReasonReceiveOver": "More than what is still on the way cannot be received.",
+  "@stockReasonReceiveOver": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
   "stockReasonRegistryUnit": "This unit belongs to the system and cannot be redefined.",
   "@stockReasonRegistryUnit": {
     "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonSameSite": "Both places are in one site: move the goods in one step instead.",
+  "@stockReasonSameSite": {
+    "description": "#4170 transfers and take-out: a label or message"
   },
   "stockReasonStockOnHand": "There is stock on hand: take it out first.",
   "@stockReasonStockOnHand": {
@@ -45740,6 +45817,18 @@
   "stockReasonTrackingUnsupported": "This tracking is not available.",
   "@stockReasonTrackingUnsupported": {
     "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonTransferNeedsTransit": "Between two sites the goods are loaded first and received on the other side.",
+  "@stockReasonTransferNeedsTransit": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockReasonTransferUnknown": "This transfer is not one of this business.",
+  "@stockReasonTransferUnknown": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockReasonTransitIsSystem": "The in-transit place belongs to the transfers between sites.",
+  "@stockReasonTransitIsSystem": {
+    "description": "#4170 transfers and take-out: a label or message"
   },
   "stockReasonUnitDuplicate": "This unit is listed twice.",
   "@stockReasonUnitDuplicate": {
@@ -45785,6 +45874,10 @@
   "@stockReasonVariantUnknown": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonWrongSite": "Goods are received onto a place of the destination site.",
+  "@stockReasonWrongSite": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
   "stockSettingsElsewhere": "Stock settings are kept on the Stock settings page.",
   "@stockSettingsElsewhere": {
     "description": "the stock pages and group (#4299)"
@@ -45816,6 +45909,105 @@
   "stockTabOnHand": "On hand",
   "@stockTabOnHand": {
     "description": "#4161 the Stock screen: the tab of what is on hand"
+  },
+  "stockTakeOutLoss": "Lost or written off",
+  "@stockTakeOutLoss": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockTakeOutOpen": "Take out goods",
+  "@stockTakeOutOpen": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockTakeOutSubmit": "Take out",
+  "@stockTakeOutSubmit": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockTakeOutUsed": "Used by the business",
+  "@stockTakeOutUsed": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockTransferLine": "{item}: {left} {unit} on the way of {loaded}",
+  "@stockTransferLine": {
+    "description": "#4170 transfers and take-out: a label or message",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      },
+      "left": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      },
+      "loaded": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTransferLoadedOn": "Loaded on {date}",
+  "@stockTransferLoadedOn": {
+    "description": "#4170 transfers and take-out: a label or message",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTransferReceive": "Receive",
+  "@stockTransferReceive": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockTransferReceiveHint": "What you leave out stays on the way and stays visible.",
+  "@stockTransferReceiveHint": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockTransferReceiveQuantity": "{item}: received ({unit})",
+  "@stockTransferReceiveQuantity": {
+    "description": "#4170 transfers and take-out: a label or message",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTransferReceiveTitle": "Receive goods",
+  "@stockTransferReceiveTitle": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockTransferReceiveTo": "Put on",
+  "@stockTransferReceiveTo": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockTransferRoute": "{from} → {to}",
+  "@stockTransferRoute": {
+    "description": "#4170 transfers and take-out: a label or message",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTransferStatusPartly": "Partly received",
+  "@stockTransferStatusPartly": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockTransfersEmpty": "Nothing is on its way between your sites.",
+  "@stockTransfersEmpty": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockTransfersOnTheWay": "On the way",
+  "@stockTransfersOnTheWay": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockTransfersTitle": "Transfers",
+  "@stockTransfersTitle": {
+    "description": "#4170 transfers and take-out: a label or message"
   },
   "stockVariantPrice": "Own price (minor units, optional)",
   "@stockVariantPrice": {

@@ -179,3 +179,14 @@ final class StockConfigRefused extends StockConfigFailure {
 final class StockConfigInUse extends StockConfigFailure {
   const StockConfigInUse();
 }
+
+/// Less is held than was asked: nothing moved (DKG03). [detail] is what the
+/// server said it held, when it said.
+final class StockNotEnough extends StockConfigFailure {
+  const StockNotEnough([this.detail = '']);
+
+  final String detail;
+
+  @override
+  String toString() => 'StockNotEnough($detail)';
+}

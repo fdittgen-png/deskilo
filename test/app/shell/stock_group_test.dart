@@ -7,6 +7,7 @@
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/shell/shell_drawer.dart';
 import 'package:deskilo/core/demo/data/demo_stock_config_commands.dart';
+import 'package:deskilo/core/demo/data/demo_stock_ledger.dart';
 import 'package:deskilo/core/demo/data/demo_stock_queries.dart';
 import 'package:deskilo/features/stock/presentation/stock_items_screen.dart';
 import 'package:deskilo/features/stock/presentation/stock_places_screen.dart';
@@ -28,13 +29,14 @@ Future<void> _open(WidgetTester tester, Size size, {Set<WorkspacePermission>? he
     featureFlags: const {'stockManagement': true, 'purchases': true, 'supplyExpenses': true},
   );
   workspace.myMember = workspace.myMember.copyWith(isOwner: true, isAdmin: true);
+  final stockConfig = DemoStockConfigCommands('ws-1');
   await tester.pumpWidget(
     ProviderScope(
       overrides: [
         ...standardTestOverrides(workspace: workspace),
         webShellProvider.overrideWithValue(true),
-        stockQueriesProvider.overrideWithValue(const DemoStockQueries('ws-1')),
-        stockConfigCommandsProvider.overrideWithValue(DemoStockConfigCommands('ws-1')),
+        stockQueriesProvider.overrideWithValue(DemoStockQueries(DemoStockLedger('ws-1', stockConfig))),
+        stockConfigCommandsProvider.overrideWithValue(stockConfig),
         if (held != null) myPermissionsProvider.overrideWithValue(held),
       ],
       child: const DeskiloApp(),

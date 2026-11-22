@@ -1,0 +1,195 @@
+{
+  "@@locale": "es",
+  "stockTransfersTitle": "Traslados",
+  "@stockTransfersTitle": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockTransfersOnTheWay": "En camino",
+  "@stockTransfersOnTheWay": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockTransfersEmpty": "No hay nada en camino entre sus sedes.",
+  "@stockTransfersEmpty": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockTransferRoute": "{from} → {to}",
+  "@stockTransferRoute": {
+    "description": "#4170 transfers and take-out: a label or message",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTransferLoadedOn": "Cargado el {date}",
+  "@stockTransferLoadedOn": {
+    "description": "#4170 transfers and take-out: a label or message",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTransferStatusPartly": "Recibido en parte",
+  "@stockTransferStatusPartly": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockTransferLine": "{item}: {left} {unit} en camino de {loaded}",
+  "@stockTransferLine": {
+    "description": "#4170 transfers and take-out: a label or message",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      },
+      "left": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      },
+      "loaded": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTransferReceive": "Recibir",
+  "@stockTransferReceive": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockTransferReceiveTitle": "Recibir mercancía",
+  "@stockTransferReceiveTitle": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockTransferReceiveTo": "Colocar en",
+  "@stockTransferReceiveTo": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockTransferReceiveQuantity": "{item}: recibido ({unit})",
+  "@stockTransferReceiveQuantity": {
+    "description": "#4170 transfers and take-out: a label or message",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTransferReceiveHint": "Lo que deje fuera sigue en camino y sigue visible.",
+  "@stockTransferReceiveHint": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockMoveOpen": "Mover mercancía",
+  "@stockMoveOpen": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockMoveFrom": "Tomar de",
+  "@stockMoveFrom": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockMoveQuantity": "Cantidad ({unit})",
+  "@stockMoveQuantity": {
+    "description": "#4170 transfers and take-out: a label or message",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "stockMoveSameSite": "Ambos lugares están en una misma sede: la mercancía se mueve de inmediato.",
+  "@stockMoveSameSite": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockMoveOtherSite": "Los lugares están en sedes distintas: la mercancía está en camino hasta que la otra sede la reciba.",
+  "@stockMoveOtherSite": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockMoveSubmit": "Mover",
+  "@stockMoveSubmit": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockTakeOutOpen": "Retirar mercancía",
+  "@stockTakeOutOpen": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockTakeOutUsed": "Consumido por el negocio",
+  "@stockTakeOutUsed": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockTakeOutLoss": "Perdido o dado de baja",
+  "@stockTakeOutLoss": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockTakeOutSubmit": "Retirar",
+  "@stockTakeOutSubmit": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockReasonReasonPlaces": "Estos lugares no sirven para este tipo de movimiento.",
+  "@stockReasonReasonPlaces": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockReasonTransitIsSystem": "El lugar «en camino» pertenece a los traslados entre sedes.",
+  "@stockReasonTransitIsSystem": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockReasonTransferNeedsTransit": "Entre dos sedes la mercancía se carga primero y se recibe al otro lado.",
+  "@stockReasonTransferNeedsTransit": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockReasonLotExpired": "Este lote ha caducado: retirarlo requiere una confirmación explícita.",
+  "@stockReasonLotExpired": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockReasonOneSource": "Un traslado tiene un solo lugar de origen.",
+  "@stockReasonOneSource": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockReasonReceiveOver": "No se puede recibir más de lo que sigue en camino.",
+  "@stockReasonReceiveOver": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockReasonWrongSite": "La mercancía se recibe en un lugar de la sede de destino.",
+  "@stockReasonWrongSite": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockReasonSameSite": "Ambos lugares están en una misma sede: mueva la mercancía en un solo paso.",
+  "@stockReasonSameSite": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockReasonTransferUnknown": "Este traslado no es de este negocio.",
+  "@stockReasonTransferUnknown": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "refusalMainStoreShort": "El almacén principal tiene {held} de los {asked} que pide esta venta. No se retiró nada y la venta no se confirmó.",
+  "@refusalMainStoreShort": {
+    "description": "#4170 a sale refused for what the main store holds",
+    "placeholders": {
+      "held": {
+        "type": "String"
+      },
+      "asked": {
+        "type": "String"
+      }
+    }
+  },
+  "refusalMainStoreExpired": "El almacén principal solo tiene {held} de los {asked} que pide esta venta aptos para vender: el resto ha caducado. No se retiró nada y la venta no se confirmó.",
+  "@refusalMainStoreExpired": {
+    "description": "#4170 a sale refused for what the main store holds",
+    "placeholders": {
+      "held": {
+        "type": "String"
+      },
+      "asked": {
+        "type": "String"
+      }
+    }
+  },
+  "refusalOpenStock": "Abrir las existencias",
+  "@refusalOpenStock": {
+    "description": "#4170 a sale refused for what the main store holds"
+  }
+}

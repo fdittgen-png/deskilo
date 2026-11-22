@@ -10,6 +10,10 @@ import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/router.dart';
 import 'package:deskilo/core/demo/demo_link.dart';
 import 'package:deskilo/core/demo/demo_persona.dart';
+import 'package:deskilo/core/demo/demo_space_ids.dart';
+import 'package:deskilo/features/stock/domain/stock_operations.dart';
+import 'package:deskilo/features/stock/domain/stock_receiving.dart';
+import 'package:deskilo/features/stock/providers/stock_providers.dart';
 import 'package:deskilo/l10n/app_localizations_en.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -40,6 +44,14 @@ Future<(DemoJourney, ProviderContainer)> _open(
   return (journey, ProviderScope.containerOf(tester.element(find.byType(DeskiloApp))));
 }
 
+/// Two frames and a transition: what a page needs to arrive.
+Future<void> _settle(WidgetTester tester) async {
+  await tester.pump();
+  for (var i = 0; i < 12; i++) {
+    await tester.pump(const Duration(milliseconds: 100));
+  }
+}
+
 String _path(ProviderContainer c) =>
     c.read(routerProvider).routeInformationProvider.value.uri.path;
 
@@ -59,6 +71,57 @@ void main() {
     expect(find.text('0.333333 l'), findsOneWidget);
     expect(find.text('1 third'), findsOneWidget, reason: 'entered beside stored');
     expect(find.text(_en.stockCostUnknown), findsOneWidget, reason: 'the owner may see costs; this one was never recorded');
+  });
+
+  testWidgets('a delivery put away and a transfer are what the Stock screen reads: one ledger, in transit visible, received the next day', (tester) async {
+    final (_, container) = await _open(tester, persona: DemoPersona.owner, to: '/reserve');
+    final config = container.read(stockConfigCommandsProvider);
+    final places = {for (final p in await config.places(demoFirstSpaceId)) p.code: p.id};
+    // 20 kg of beans arrive and are put away into the main store
+    await container.read(stockReceivingCommandsProvider).putAway(demoFirstSpaceId, 'demo-receipt-3', [
+      PutAwayAllocation(lineNo: 1, quantity: '20', locationId: places['MAIN']!),
+    ], 'req-put-away');
+    // 6 mugs are moved from the main store to its shelf: one site, one step
+    final operations = container.read(stockOperationsProvider);
+    await operations.transfer(demoFirstSpaceId, [
+      StockLineDraft(
+        itemId: 'demo-item-mugs',
+        quantity: '6',
+        fromLocationId: places['MAIN']!,
+        toLocationId: places['SHELF-A'],
+      ),
+    ], 'req-transfer');
+    container.read(routerProvider).go('/stock');
+    await _settle(tester);
+    expect(find.text('32.5 kg'), findsOneWidget, reason: '12.5 kg and the 20 kg that were put away');
+    expect(find.text('30 piece'), findsOneWidget, reason: '36 mugs less the 6 that moved');
+    expect(find.text('18 piece'), findsOneWidget, reason: '12 on the shelf and the 6 that moved there');
+    expect(find.text('TRANSIT'), findsNothing, reason: 'the in-transit place is a place of its own, not a filter');
+    expect(find.textContaining('TRANSIT'), findsOneWidget, reason: 'the 6 mugs loaded for the branch are on the way, and the screen says where');
+    expect(find.text('6 piece'), findsOneWidget);
+
+    // the branch receives them: nothing is on the way any more, the branch holds 6
+    final transfer = (await operations.openTransfers(demoFirstSpaceId)).single;
+    await operations.receive(demoFirstSpaceId, transfer.id, [
+      (lineId: transfer.lines.single.id, quantity: '6', toLocationId: null),
+    ], 'req-receive');
+    container.read(routerProvider).go('/reserve');
+    await _settle(tester);
+    container.read(routerProvider).go('/stock');
+    await _settle(tester);
+    expect(find.textContaining('TRANSIT'), findsNothing);
+    expect(find.textContaining('BRANCH'), findsOneWidget);
+    expect(find.text('6 piece'), findsOneWidget);
+    expect(await operations.openTransfers(demoFirstSpaceId), isEmpty);
+  });
+
+  testWidgets('an address that names an item shows the stock of that item only', (tester) async {
+    final (_, container) = await _open(tester, persona: DemoPersona.owner, to: '/reserve');
+    container.read(routerProvider).go('/stock?item=demo-item-beans');
+    await _settle(tester);
+    expect(find.text('12.5 kg'), findsOneWidget);
+    expect(find.text('36 piece'), findsNothing, reason: 'the mugs are another item');
+    expect(find.text('24 l'), findsNothing, reason: 'and so is the milk');
   });
 
   testWidgets('a movement address opens directly, and an id of nothing says so', (tester) async {

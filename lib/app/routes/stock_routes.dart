@@ -8,11 +8,13 @@
 import 'package:go_router/go_router.dart';
 
 import '../../features/stock/application/stock_view.dart';
+import '../../features/stock/presentation/stock_entry.dart';
 import '../../features/stock/presentation/stock_items_screen.dart';
 import '../../features/stock/presentation/stock_movement_screen.dart';
 import '../../features/stock/presentation/stock_places_screen.dart';
 import '../../features/stock/presentation/stock_screen.dart';
 import '../../features/stock/presentation/stock_settings_screen.dart';
+import '../../features/stock/presentation/stock_transfers_screen.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../route_access.dart';
 import '../route_env.dart';
@@ -27,7 +29,7 @@ List<RouteBase> stockRoutes(RouteEnv env) {
     GoRoute(
       path: '/stock',
       redirect: env.guard(access),
-      builder: (context, state) => const StockScreen(),
+      builder: (context, state) => StockEntry(itemId: state.uri.queryParameters['item']),
       routes: [
         // #4299 — the pages of the Stock group, each at its own address.
         GoRoute(
@@ -49,6 +51,11 @@ List<RouteBase> stockRoutes(RouteEnv env) {
           path: 'settings',
           redirect: env.guard(access),
           builder: (context, state) => const StockSettingsScreen(),
+        ),
+        GoRoute(
+          path: 'transfers',
+          redirect: env.guard(access),
+          builder: (context, state) => const StockTransfersScreen(),
         ),
         GoRoute(
           path: 'movements/:id',
