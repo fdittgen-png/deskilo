@@ -201,6 +201,22 @@ $fn$;
 revoke execute on function public.export_workspace_records(uuid) from public, anon;
 grant execute on function public.export_workspace_records(uuid) to authenticated;
 
+-- The reason of the movement a chain of corrections started from: a correction of a correction of a loss
+-- is still the reversal of a loss.
+create or replace function public.stock_correction_root_reason(p_workspace_id uuid, p_movement_id uuid)
+returns text language sql stable security definer set search_path = public as $fn$
+  with recursive chain(id, reason, depth) as (
+    select m.id, m.reason, 0 from public.stock_movements m where m.id = p_movement_id and m.workspace_id = p_workspace_id
+    union all
+    select s.id, s.reason, c.depth + 1
+      from chain c
+      join public.stock_reversals r on r.movement_id = c.id and r.workspace_id = p_workspace_id
+      join public.stock_movements s on s.id = r.source_movement_id
+     where c.reason = 'correction' and c.depth < 100)
+  select reason from chain order by depth desc limit 1
+$fn$;
+revoke execute on function public.stock_correction_root_reason(uuid, uuid) from public, anon, authenticated;
+
 -- ── the command ────────────────────────────────────────────────────────
 -- Lines: [{return_line_id, source_movement_id, quantity, location?, note?}] with [location] the real
 -- place the goods go back to (customer) or leave from (supplier); a correction names none. [quantity]
@@ -230,6 +246,7 @@ declare
   v_from uuid;
   v_to uuid;
   v_reason text;
+  v_root text;
   v_links jsonb;
   v_mid uuid;
   v_transit uuid := public.stock_transit_place(p_workspace_id);
@@ -343,11 +360,14 @@ begin
          or v_src.from_location_id = v_transit or v_src.to_location_id = v_transit then
         raise exception 'line %: this movement is not corrected here', v_no using errcode = 'DKG18';
       end if;
-      -- reversing a take-out is taking goods back in: the take-out's own feature stays the condition
-      if v_src.reason in ('consumption', 'loss') and not public.feature_effective(p_workspace_id, 'stockTakeOut') then
+      -- what the chain of corrections started from decides, not the last link: reversing a take-out is
+      -- taking goods back in (the take-out's own feature stays the condition), reversing an adjustment is
+      -- approving one
+      v_root := public.stock_correction_root_reason(p_workspace_id, v_src.id);
+      if v_root in ('consumption', 'loss') and not public.feature_effective(p_workspace_id, 'stockTakeOut') then
         raise exception 'line %: taking goods out is off in this business, and so is reversing it', v_no using errcode = 'DKG01';
       end if;
-      if v_src.reason = 'adjustment' and not public.has_permission(p_workspace_id, 'approveStockAdjustments') then
+      if v_root = 'adjustment' and not public.has_permission(p_workspace_id, 'approveStockAdjustments') then
         raise exception 'line %: reversing an adjustment is approving one', v_no using errcode = 'DKN01';
       end if;
       v_from := v_src.to_location_id; v_to := v_src.from_location_id; v_reason := 'correction';

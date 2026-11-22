@@ -8,7 +8,7 @@
 -- movement, a wrong kind of source, a virtual place, a member without the right, an assistant and the
 -- feature off are refused; no money is touched; a reversal is immutable. Rolled back.
 begin;
-select plan(39);
+select plan(40);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -172,6 +172,12 @@ select is(pg_temp.ret(1, 971, 870, 'correction', '[' || pg_temp.line(770, curren
 update public.workspaces set feature_flags = feature_flags || '{"stockTakeOut": true}' where id = pg_temp.u(101);
 select is(pg_temp.nlines(pg_temp.ret(1, 972, 870, 'correction', '[' || pg_temp.line(770, current_setting('rt.loss')::uuid, '1') || ']')), 1,
   'with it on, the correction is made');
+-- a correction of that correction is still the reversal of a loss
+select set_config('rt.lcorr', (select movement_id::text from public.stock_reversals where return_line_id = pg_temp.u(770)), false);
+update public.workspaces set feature_flags = feature_flags || '{"stockTakeOut": false}' where id = pg_temp.u(101);
+select is(pg_temp.ret(1, 977, 874, 'correction', '[' || pg_temp.line(774, current_setting('rt.lcorr')::uuid, '1') || ']'), 'ERR DKG01',
+  'with taking goods out off, the correction of the correction of a loss is refused too');
+update public.workspaces set feature_flags = feature_flags || '{"stockTakeOut": true}' where id = pg_temp.u(101);
 select is(pg_temp.ret(1, 973, 871, null, '[' || pg_temp.line(771, current_setting('rt.sale')::uuid, '1', pg_temp.loc('MAIN')) || ']'), 'ERR DKG07',
   'a return with no kind is refused as malformed');
 select is(pg_temp.run_as(pg_temp.u(1), format($q$select public.stock_return_v1(%L, %L, %L, 'correction', %L::jsonb, %L)::text$q$, pg_temp.u(101), pg_temp.u(974), pg_temp.u(872),
