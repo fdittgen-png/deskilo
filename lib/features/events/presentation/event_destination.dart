@@ -13,6 +13,8 @@ String? eventDestination(WorkspaceEvent event) =>
       (EventType.paymentAttemptUnreadable, final String member)
           when member.isNotEmpty =>
         '/invoices/customer/${Uri.encodeComponent(member)}',
+      // #4295 — the overdue count notice opens the cycle counts, where the open task is.
+      (EventType.stockCountOverdue, _) => '/stock/cycle-counts',
       _ => null,
     };
 

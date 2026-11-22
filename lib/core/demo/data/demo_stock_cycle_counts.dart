@@ -9,13 +9,13 @@
 // every line is counted or skipped. Nothing leaves the process.
 import 'package:deskilo/features/stock/domain/stock_cycle_counts.dart';
 import 'package:deskilo/features/stock/domain/stock_page.dart';
+import 'package:deskilo/features/stock/domain/stock_registry.dart';
 import 'package:deskilo/features/stock/domain/stock_reversals.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'demo_stock_ledger.dart';
-import 'demo_stock_registry.dart';
 
 PostgrestException _refused(String code, String message) => PostgrestException(message: message, code: code);
 
@@ -25,11 +25,12 @@ String _day(DateTime at) => at.toIso8601String().substring(0, 10);
 
 /// The in-memory cycle counts of the reference business.
 class DemoStockCycleCounts implements StockCycleCounts {
-  DemoStockCycleCounts(this._workspaceId, this._ledger, this._reversals, this._held, this._now);
+  DemoStockCycleCounts(this._workspaceId, this._ledger, this._reversals, this._registry, this._held, this._now);
 
   final String _workspaceId;
   final DemoStockLedger _ledger;
   final StockReversals _reversals;
+  final StockRegistry _registry;
 
   /// What the person holds: a blind counter does not see what the ledger expects.
   final Set<WorkspacePermission> Function() _held;
@@ -47,8 +48,8 @@ class DemoStockCycleCounts implements StockCycleCounts {
   bool _mine(String id) => id == _workspaceId;
 
   /// What a place holds of an item is worth this many minor units at the registry's last known cost.
-  static int? _value(StockOnHandRow r) {
-    final cost = DemoStockRegistry.catalogue[r.itemId]?.$3;
+  static int? _value(StockOnHandRow r, Map<String, String?> costs) {
+    final cost = costs[r.itemId];
     if (cost == null) return null;
     final scaled = r.quantity.micro * BigInt.parse(cost);
     return ((scaled + BigInt.from(500000)) ~/ BigInt.from(1000000)).toInt();
@@ -70,9 +71,10 @@ class DemoStockCycleCounts implements StockCycleCounts {
       active: true,
     );
     final due = now.subtract(const Duration(days: 9));
+    final costs = {for (final r in (await _registry.page(_workspaceId, limit: 200)).rows) r.itemId: r.cost};
     final rows = [
       for (final r in await _ledger.onHand())
-        if ((_value(r) ?? 0) >= 2000) r,
+        if ((_value(r, costs) ?? 0) >= 2000) r,
     ];
     const taskId = 'demo-count-task-1';
     _tasks.add((taskId: taskId, planId: 'demo-count-plan-1', planName: 'High-value shelf', dueOn: _day(due)));

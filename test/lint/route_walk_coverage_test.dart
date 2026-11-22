@@ -28,6 +28,8 @@ const Map<String, String> _matrixRows = {
 /// (test/app/fixtures/route_outcomes.golden) says where each one lands.
 const Map<String, String> _noLayoutOfItsOwn = {
   '/stock/counts': '#4172 a list of cards and a sheet; its widget tests render it at phone and desk widths',
+  '/stock/cycle-counts': '#4295 tabs of lists and a sheet; its widget tests render it at phone and desk widths',
+  '/stock/cycle-counts/:taskId': '#4295 a list of lines and two sheets; its widget tests render it at phone and desk widths',
   '/stock/transfers': '#4170 a list of cards and three sheets; its widget tests render it at phone and desk widths',
   '/me/spaces/manage': 'forwards to /profiles, which the desk walk renders',
   '/invoicing/standalone/new': '#4165 composer behind its feature; its widget tests walk it at phone and desk',

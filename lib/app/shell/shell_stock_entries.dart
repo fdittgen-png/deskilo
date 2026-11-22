@@ -44,6 +44,17 @@ extension StockEntries on DrawerEntries {
         DrawerEntry('drawer-stock-items', Icons.category_outlined, l10n.stockItemsTitle, () => go('/stock/items'), route: '/stock/items'),
         DrawerEntry('drawer-stock-places', Icons.place_outlined, l10n.stockPlacesTitle, () => go('/stock/places'), route: '/stock/places'),
       ],
+      // #4295 — scheduled counts: for who counts (countStock implies nothing else) or manages the stock.
+      if (features.contains(WorkspaceFeature.stockCounts) &&
+          features.contains(WorkspaceFeature.stockCycleCounts) &&
+          (may(WorkspacePermission.countStock) || may(WorkspacePermission.manageStock)))
+        DrawerEntry(
+          'drawer-stock-cycle-counts',
+          Icons.event_repeat_outlined,
+          l10n.stockCycleTitle,
+          () => go('/stock/cycle-counts'),
+          route: '/stock/cycle-counts',
+        ),
       if (may(WorkspacePermission.manageStock) || may(WorkspacePermission.manageConfiguration))
         DrawerEntry(
           'drawer-stock-settings',

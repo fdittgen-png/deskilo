@@ -34861,6 +34861,241 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockCountsTitle => 'Stock counts';
 
   @override
+  String get stockCycleAddPlan => 'Add a plan';
+
+  @override
+  String get stockCycleBlind =>
+      'You count what you find: the system’s figure is not shown, so it cannot sway the count.';
+
+  @override
+  String get stockCycleCadence => 'How often';
+
+  @override
+  String get stockCycleCadenceEvery => 'Repeating';
+
+  @override
+  String get stockCycleCadenceOnce => 'Once';
+
+  @override
+  String stockCycleCountObserved(String unit) {
+    return 'What you counted ($unit)';
+  }
+
+  @override
+  String get stockCycleCountTitle => 'Count this line';
+
+  @override
+  String get stockCycleCounted => 'Counted.';
+
+  @override
+  String stockCycleCountedDifference(String difference) {
+    return 'Counted. Difference from the ledger: $difference';
+  }
+
+  @override
+  String get stockCycleEveryDays => 'Every how many days';
+
+  @override
+  String stockCycleHistoryAccuracy(int count, String percent) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count counts',
+      one: '1 count',
+    );
+    return '$_temp0, $percent % exact';
+  }
+
+  @override
+  String get stockCycleHistoryEmpty => 'Nothing has been counted yet.';
+
+  @override
+  String stockCycleHistoryLast(String date) {
+    return 'Last counted $date';
+  }
+
+  @override
+  String stockCycleHistoryRow(String item, String place) {
+    return '$item · $place';
+  }
+
+  @override
+  String get stockCycleIntervalInvalid =>
+      'Enter a whole number of days, from 1 to 366.';
+
+  @override
+  String get stockCycleLineCount => 'Count';
+
+  @override
+  String get stockCycleLineCounted => 'Counted';
+
+  @override
+  String get stockCycleLineSkip => 'Skip';
+
+  @override
+  String stockCycleLineSkipped(String reason) {
+    return 'Skipped: $reason';
+  }
+
+  @override
+  String get stockCycleNextDue => 'Due day';
+
+  @override
+  String get stockCycleNoPlans =>
+      'No plan yet: nothing is counted on a schedule.';
+
+  @override
+  String get stockCycleNoTasks => 'Nothing to count right now.';
+
+  @override
+  String get stockCyclePlanActive => 'In use';
+
+  @override
+  String stockCyclePlanEvery(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count days',
+      one: 'day',
+    );
+    return 'every $_temp0';
+  }
+
+  @override
+  String get stockCyclePlanItems => 'Items';
+
+  @override
+  String stockCyclePlanItemsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count items',
+      one: '1 item',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get stockCyclePlanName => 'Name';
+
+  @override
+  String get stockCyclePlanNameRequired => 'Name the plan.';
+
+  @override
+  String stockCyclePlanNext(String date) {
+    return 'next $date';
+  }
+
+  @override
+  String get stockCyclePlanOff => 'not in use';
+
+  @override
+  String get stockCyclePlanOnce => 'once';
+
+  @override
+  String get stockCyclePlanPlaces => 'Places (with everything inside them)';
+
+  @override
+  String stockCyclePlanPlacesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count places',
+      one: '1 place',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get stockCyclePlanScope => 'What to count';
+
+  @override
+  String get stockCyclePlanScopeRequired => 'Choose what it counts.';
+
+  @override
+  String stockCyclePlanThreshold(String currency) {
+    return 'Worth at least ($currency); empty: the business’s limit';
+  }
+
+  @override
+  String get stockCyclePlanTitle => 'Cycle count plan';
+
+  @override
+  String stockCyclePlanValue(String amount) {
+    return 'worth at least $amount';
+  }
+
+  @override
+  String get stockCyclePlanValueSetting =>
+      'worth at least the business’s limit';
+
+  @override
+  String get stockCycleScan => 'Scan or type a barcode';
+
+  @override
+  String get stockCycleScanNone => 'No line still to count has this code.';
+
+  @override
+  String get stockCycleScopeHighValue => 'High value';
+
+  @override
+  String get stockCycleScopeItems => 'Items';
+
+  @override
+  String get stockCycleScopePlaces => 'Places';
+
+  @override
+  String get stockCycleSkipReason => 'Why it is skipped';
+
+  @override
+  String get stockCycleSkipTitle => 'Skip this line';
+
+  @override
+  String get stockCycleSkipped => 'Skipped.';
+
+  @override
+  String get stockCycleTabHistory => 'History';
+
+  @override
+  String get stockCycleTabPlans => 'Plans';
+
+  @override
+  String get stockCycleTabTasks => 'To count';
+
+  @override
+  String get stockCycleTaskCancelled => 'Cancelled';
+
+  @override
+  String get stockCycleTaskComplete => 'Complete';
+
+  @override
+  String get stockCycleTaskDone =>
+      'Every line is counted or skipped: the task is complete.';
+
+  @override
+  String get stockCycleTaskNoLines => 'This task lists nothing to count.';
+
+  @override
+  String stockCycleTaskProgress(String left, String total) {
+    return '$left of $total still to count';
+  }
+
+  @override
+  String stockCycleTaskRow(String plan, String due) {
+    return '$plan · due $due';
+  }
+
+  @override
+  String get stockCycleTaskTitle => 'Count';
+
+  @override
+  String get stockCycleThresholdInvalid =>
+      'Enter an amount, or leave it empty.';
+
+  @override
+  String get stockCycleTitle => 'Cycle counts';
+
+  @override
   String get stockDimensionAdd => 'Add a dimension';
 
   @override

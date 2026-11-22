@@ -19,6 +19,8 @@ import 'lint_sources.dart';
 /// guard it (or why it never draws a page of its own).
 const _notGuardedYet = <String, String>{
   '/stock/counts': '#4172 a list of cards: its widget tests measure it at phone and desk widths; joins the guards with the stock guard',
+  '/stock/cycle-counts': '#4295 tabs of lists and a plan sheet: its widget tests measure it at phone and desk widths; joins the guards with the stock guard',
+  '/stock/cycle-counts/:taskId': '#4295 a list of lines and two sheets: its widget tests measure it at phone and desk widths; joins the guards with the stock guard',
   '/stock/transfers': '#4170 a list of cards: its widget tests measure it at phone and desk widths; joins the guards with the stock guard',
   // A record at its address under a guarded list.
   // The purchase orders: guarded by their own leaf.
