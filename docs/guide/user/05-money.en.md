@@ -634,6 +634,20 @@ Open the engagement of an accepted quote's line with **Follow this service** on 
 The quote, the invoice and the payments stay exactly as they are beside it: the engagement shows the invoices it is billed on, what was paid and any correction, but following the work never invoices, collects or changes anything. One engagement exists for each ordered line, however you reach it: from the quote, or from the invoice that billed it.
 
 If a step is refused because the engagement moved on meanwhile, it is read again and you try once more; if no answer came, the same request is tried again and the server answers it only once.
+<!-- anchor: user.money.stock -->
+### Stock
+
+**Audience:** Administrator · Owner
+
+Open **Stock** in the menu, directly below **Purchases & suppliers**. Everything about items and stock is reached there, and only there is it set up.
+
+- **Stock** shows what is on hand by item, variant, lot and place, with the exact quantity.
+- **Movements** is the log of every movement; open one to see what moved, as stored and as entered.
+- **Items** is the item registry: each item's stock settings, its variants and its supplier articles.
+- **Places** holds the sites, zones, shelves and bins with their addresses.
+- **Stock settings** keeps every stock parameter on one page: the stock features with their switches, and the stock rules. A stock setting you find elsewhere links here.
+
+An entry appears only when its feature is on and your role allows its page: someone who may only look sees the pages, not the settings. Purchases keeps what is bought; Sales keeps what is sold.
 
 <!-- anchor: user.money.amounts -->
 ### How amounts are shown

@@ -34821,6 +34821,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockEnteredLabel => 'Entered';
 
   @override
+  String get stockItemsEmpty =>
+      'No items yet. Items are added when a service or a supplier article is kept in stock.';
+
+  @override
+  String get stockItemsIntro =>
+      'The items the business keeps and sells: each one\'s settings, variants and supplier articles.';
+
+  @override
+  String get stockItemsTitle => 'Items';
+
+  @override
   String stockLotLabel(String code) {
     return 'Lot $code';
   }
@@ -35198,6 +35209,22 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get stockReasonVariantUnknown =>
       'This variant is not one of this item.';
+
+  @override
+  String get stockSettingsElsewhere =>
+      'Stock settings are kept on the Stock settings page.';
+
+  @override
+  String get stockSettingsFeatures => 'Stock features';
+
+  @override
+  String get stockSettingsOpen => 'Open stock settings';
+
+  @override
+  String get stockSettingsTitle => 'Stock settings';
+
+  @override
+  String get stockSettingsValues => 'Stock rules';
 
   @override
   String get stockStoredLabel => 'Stored';

@@ -35108,6 +35108,17 @@ class AppLocalizationsEs extends AppLocalizations {
   String get stockEnteredLabel => 'Introducido';
 
   @override
+  String get stockItemsEmpty =>
+      'Todavía no hay artículos. Un artículo aparece cuando un servicio o un artículo de proveedor se mantiene en existencias.';
+
+  @override
+  String get stockItemsIntro =>
+      'Los artículos que la empresa mantiene y vende: los ajustes, las variantes y los artículos de proveedor de cada uno.';
+
+  @override
+  String get stockItemsTitle => 'Artículos';
+
+  @override
   String stockLotLabel(String code) {
     return 'Lote $code';
   }
@@ -35490,6 +35501,22 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get stockReasonVariantUnknown =>
       'Esta variante no es de este artículo.';
+
+  @override
+  String get stockSettingsElsewhere =>
+      'Los ajustes de existencias se mantienen en la página Ajustes de existencias.';
+
+  @override
+  String get stockSettingsFeatures => 'Funciones de existencias';
+
+  @override
+  String get stockSettingsOpen => 'Abrir los ajustes de existencias';
+
+  @override
+  String get stockSettingsTitle => 'Ajustes de existencias';
+
+  @override
+  String get stockSettingsValues => 'Reglas de existencias';
 
   @override
   String get stockStoredLabel => 'Guardado';

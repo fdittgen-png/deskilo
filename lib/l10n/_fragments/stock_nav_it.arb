@@ -1,0 +1,35 @@
+{
+  "@@locale": "it",
+  "stockItemsTitle": "Articoli",
+  "stockItemsIntro": "Gli articoli che l'azienda tiene e vende: le impostazioni, le varianti e gli articoli del fornitore di ciascuno.",
+  "stockItemsEmpty": "Nessun articolo per ora. Un articolo compare quando un servizio o un articolo del fornitore è tenuto in magazzino.",
+  "stockSettingsTitle": "Impostazioni del magazzino",
+  "stockSettingsFeatures": "Funzioni del magazzino",
+  "stockSettingsValues": "Regole del magazzino",
+  "stockSettingsElsewhere": "Le impostazioni del magazzino si tengono nella pagina Impostazioni del magazzino.",
+  "stockSettingsOpen": "Apri le impostazioni del magazzino",
+  "@stockItemsTitle": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "@stockItemsIntro": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "@stockItemsEmpty": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "@stockSettingsTitle": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "@stockSettingsFeatures": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "@stockSettingsValues": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "@stockSettingsElsewhere": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "@stockSettingsOpen": {
+    "description": "the stock pages and group (#4299)"
+  }
+}

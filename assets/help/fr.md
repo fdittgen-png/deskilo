@@ -2888,6 +2888,20 @@ Le devis, la facture et les paiements restent exactement tels quels à côté : 
 
 Si une étape est refusée parce que la prestation a évolué entre-temps, elle est relue et vous réessayez ; si aucune réponse n'est arrivée, la même demande est renvoyée et le serveur ne la traite qu'une fois.
 
+### Stock
+
+**Public:** Administrateur·rice · Propriétaire
+
+Ouvrez **Stock** dans le menu, juste sous **Achats et fournisseurs**. Tout ce qui touche aux articles et au stock s'y trouve, et ne se règle que là.
+
+- **Stock** montre ce qui est en stock par article, variante, lot et emplacement, avec la quantité exacte.
+- **Mouvements** est le journal de chaque mouvement ; ouvrez-en un pour voir ce qui a bougé, tel que stocké et tel que saisi.
+- **Articles** est le registre des articles : les réglages de stock de chacun, ses variantes et ses articles fournisseur.
+- **Emplacements** réunit les sites, zones, étagères et bacs avec leurs adresses.
+- **Réglages du stock** garde tous les paramètres du stock sur une page : les fonctions du stock avec leurs interrupteurs, et les règles du stock. Un réglage du stock trouvé ailleurs renvoie ici.
+
+Une entrée n'apparaît que lorsque sa fonction est activée et que votre rôle autorise sa page : qui peut seulement consulter voit les pages, pas les réglages. Les achats gardent ce qui s'achète ; les ventes, ce qui se vend.
+
 ### Comment les montants sont affichés
 
 **Public:** Tout le monde

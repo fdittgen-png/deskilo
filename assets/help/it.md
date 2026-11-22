@@ -2888,6 +2888,20 @@ Il preventivo, la fattura e i pagamenti restano esattamente come sono: il serviz
 
 Se un passaggio viene rifiutato perché il servizio è cambiato nel frattempo, viene riletto e riprovate; se non è arrivata risposta, la stessa richiesta viene reinviata e il server la soddisfa una volta sola.
 
+### Magazzino
+
+**Destinatari:** Amministratore · Proprietario
+
+Aprite **Magazzino** nel menu, subito sotto **Acquisti e fornitori**. Tutto ciò che riguarda articoli e giacenze si raggiunge lì, e solo lì si imposta.
+
+- **Magazzino** mostra ciò che è disponibile per articolo, variante, lotto e ubicazione, con la quantità esatta.
+- **Movimenti** è il registro di ogni movimento; apritene uno per vedere cosa si è mosso, come memorizzato e come inserito.
+- **Articoli** è il registro degli articoli: le impostazioni di magazzino di ciascuno, le sue varianti e i suoi articoli del fornitore.
+- **Ubicazioni** raccoglie i siti, le zone, gli scaffali e i contenitori con i loro indirizzi.
+- **Impostazioni del magazzino** tiene ogni parametro del magazzino in una pagina: le funzioni del magazzino con i loro interruttori e le regole del magazzino. Un'impostazione del magazzino trovata altrove rimanda qui.
+
+Una voce compare solo quando la sua funzione è attiva e il vostro ruolo consente la sua pagina: chi può solo guardare vede le pagine, non le impostazioni. Gli acquisti tengono ciò che si compra; le vendite, ciò che si vende.
+
 ### Come sono mostrati gli importi
 
 **Destinatari:** Tutti

@@ -7,6 +7,7 @@
 // A guardrail (not editable) is shown with its reason and no edit button.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/settings/settings.dart';
@@ -30,12 +31,21 @@ class SettingsEditor extends ConsumerWidget {
     this.workspaceId,
     this.group,
     this.canEdit = false,
+    this.keyPrefix,
+    this.excludeKeyPrefix,
   });
 
   final SettingScope scope;
   final String? workspaceId;
   final String? group;
   final bool canEdit;
+
+  /// Only the settings whose key starts with it (the Stock settings page's `stock.`).
+  final String? keyPrefix;
+
+  /// Not the settings whose key starts with it: they are kept on a page of their
+  /// own, and a note here says where (#4299).
+  final String? excludeKeyPrefix;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -48,12 +58,18 @@ class SettingsEditor extends ConsumerWidget {
         final offline = set.revision == 'defaults' && set.definitions.isNotEmpty;
         final shown = [
           for (final d in set.definitions.values)
-            if (d.allows(scope) && (group == null || d.group == group)) d,
+            if (d.allows(scope) &&
+                (group == null || d.group == group) &&
+                (keyPrefix == null || d.key.startsWith(keyPrefix!)) &&
+                (excludeKeyPrefix == null || !d.key.startsWith(excludeKeyPrefix!)))
+              d,
         ]..sort((a, b) {
             final byGroup = a.group.compareTo(b.group);
             return byGroup != 0 ? byGroup : a.key.compareTo(b.key);
           });
-        if (shown.isEmpty) return Text(l10n.settingsEmpty);
+        final keptElsewhere = excludeKeyPrefix != null &&
+            set.definitions.values.any((d) => d.allows(scope) && d.key.startsWith(excludeKeyPrefix!));
+        if (shown.isEmpty && !keptElsewhere) return Text(l10n.settingsEmpty);
         String? lastGroup;
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -73,6 +89,18 @@ class SettingsEditor extends ConsumerWidget {
                 set: set,
                 workspaceId: workspaceId,
                 canEdit: canEdit && !offline && d.editable,
+              ),
+            ],
+            if (keptElsewhere) ...[
+              const SizedBox(height: AppSpacing.sm),
+              Text(l10n.stockSettingsElsewhere, key: const ValueKey('settings-stock-elsewhere')),
+              TextButton(
+                key: const ValueKey('settings-stock-open'),
+                onPressed: () {
+                  Navigator.of(context).maybePop();
+                  context.go('/stock/settings');
+                },
+                child: Text(l10n.stockSettingsOpen),
               ),
             ],
           ],
@@ -261,7 +289,13 @@ Future<void> showSettingsEditorSheet(
       builder: (context) => SheetShell(
         title: title,
         children: [
-          SettingsEditor(scope: scope, workspaceId: workspaceId, canEdit: canEdit),
+          SettingsEditor(
+            scope: scope,
+            workspaceId: workspaceId,
+            canEdit: canEdit,
+            // #4299 — the stock settings are kept on the Stock settings page only
+            excludeKeyPrefix: scope == SettingScope.workspace ? 'stock.' : null,
+          ),
         ],
       ),
     );

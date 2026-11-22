@@ -3022,6 +3022,20 @@ Bei einem gesendeten Angebot öffnet **PDF teilen** das Angebot als Dokument: ei
 Angebot, Rechnung und Zahlungen bleiben daneben genau wie sie sind: Der Auftrag zeigt die Rechnungen, auf denen er abgerechnet ist, was bezahlt wurde und jede Korrektur, aber das Verfolgen der Arbeit stellt nichts in Rechnung, kassiert nichts und ändert nichts. Für jede bestellte Position gibt es genau einen Auftrag, gleich wie Sie ihn erreichen: vom Angebot oder von der Rechnung, die ihn abgerechnet hat.
 
 Wird ein Schritt abgelehnt, weil sich der Auftrag inzwischen geändert hat, wird er neu gelesen und Sie versuchen es noch einmal; kam keine Antwort, wird dieselbe Anfrage erneut gesendet und der Server beantwortet sie nur einmal.
+<!-- anchor: user.money.stock -->
+### Lager
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Öffnen Sie **Lager** im Menü, direkt unter **Einkäufe und Lieferanten**. Alles zu Artikeln und Beständen erreichen Sie dort, und nur dort wird es eingerichtet.
+
+- **Lager** zeigt, was nach Artikel, Variante, Charge und Lagerort vorrätig ist, mit der genauen Menge.
+- **Bewegungen** ist das Protokoll jeder Bewegung; öffnen Sie eine, um zu sehen, was sich bewegt hat, wie gespeichert und wie eingegeben.
+- **Artikel** ist das Artikelregister: die Lagereinstellungen jedes Artikels, seine Varianten und seine Lieferantenartikel.
+- **Lagerorte** enthält die Standorte, Zonen, Regale und Fächer mit ihren Adressen.
+- **Lagereinstellungen** hält jeden Lagerparameter auf einer Seite: die Lagerfunktionen mit ihren Schaltern und die Lagerregeln. Eine Lagereinstellung, die Sie anderswo finden, verweist hierher.
+
+Ein Eintrag erscheint nur, wenn seine Funktion eingeschaltet ist und Ihre Rolle die Seite erlaubt: Wer nur ansehen darf, sieht die Seiten, nicht die Einstellungen. Der Einkauf behält, was eingekauft wird; der Verkauf, was verkauft wird.
 
 <!-- anchor: user.money.amounts -->
 ### Wie Beträge angezeigt werden
