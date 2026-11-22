@@ -6680,6 +6680,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Ces factures sont d’un autre mois que ce paiement. Rien n’a été débité.';
 
   @override
+  String get claimRefusedRequestChanged =>
+      'Ce paiement a déjà été envoyé sous une autre forme. Vérifiez les paiements déclarés, puis réessayez.';
+
+  @override
   String get claimRefusedWithdrawn =>
       'Vous avez retiré ce paiement. Sélectionnez à nouveau les factures pour les payer.';
 

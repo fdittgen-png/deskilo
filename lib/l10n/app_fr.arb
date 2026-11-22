@@ -3928,6 +3928,7 @@
   "claimRefusedNothingToFree": "Ce paiement a déjà été retiré.",
   "claimRefusedOther": "L’entreprise a refusé ces factures pour ce paiement. Actualisez et réessayez.",
   "claimRefusedOtherMonth": "Ces factures sont d’un autre mois que ce paiement. Rien n’a été débité.",
+  "claimRefusedRequestChanged": "Ce paiement a déjà été envoyé sous une autre forme. Vérifiez les paiements déclarés, puis réessayez.",
   "claimRefusedWithdrawn": "Vous avez retiré ce paiement. Sélectionnez à nouveau les factures pour les payer.",
   "coOwnerAction": "Copropriété",
   "coOwnerActivate": "Promouvoir propriétaire maintenant",

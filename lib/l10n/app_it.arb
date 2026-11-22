@@ -3928,6 +3928,7 @@
   "claimRefusedNothingToFree": "Questo pagamento è già stato ritirato.",
   "claimRefusedOther": "L’attività ha rifiutato queste fatture per questo pagamento. Aggiorni e riprovi.",
   "claimRefusedOtherMonth": "Queste fatture sono di un mese diverso da questo pagamento. Non è stato addebitato nulla.",
+  "claimRefusedRequestChanged": "Questo pagamento è già stato inviato con altri dati. Controlli i pagamenti dichiarati e riprovi.",
   "claimRefusedWithdrawn": "Ha ritirato questo pagamento. Selezioni di nuovo le fatture per pagarle.",
   "coOwnerAction": "Comproprietà",
   "coOwnerActivate": "Promuovi a proprietario ora",

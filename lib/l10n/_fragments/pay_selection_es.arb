@@ -45,6 +45,7 @@
   "financesInPaymentSince": "En pago desde el {date}",
   "financesWithdrawSettling": "Si acaba de pagar en el proveedor, espere: la confirmación tarda unos minutos.",
   "claimRefusedDecided": "La empresa ya ha decidido sobre este pago.",
+  "claimRefusedRequestChanged": "Este pago ya se envió con otros datos. Compruebe los pagos declarados y vuelva a intentarlo.",
   "financesTakeBack": "Retirar",
   "financesTakeBackTitle": "¿Retirar esta declaración?",
   "financesTakeBackBody": "Declaró haber pagado {invoices}. Una vez retirada, la empresa ya no tiene que confirmarla y estas facturas pueden pagarse de nuevo.",

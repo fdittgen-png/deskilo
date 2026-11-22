@@ -283,6 +283,10 @@
   "@claimRefusedDecided": {
     "description": "#4140 — a declaration the business already decided cannot be taken back (DKC13)"
   },
+  "claimRefusedRequestChanged": "This payment was already sent as another one. Check the declared payments, then try again.",
+  "@claimRefusedRequestChanged": {
+    "description": "#4321 — a declaration sent again under the request id of another payment (DKC15)"
+  },
   "financesTakeBack": "Take back",
   "@financesTakeBack": {
     "description": "#4140 — the action on a declared payment the business has not decided"
