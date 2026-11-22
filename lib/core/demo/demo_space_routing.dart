@@ -48,6 +48,7 @@ import '../time/clock.dart';
 import 'data/bank_statement_repository.dart';
 import 'data/demo_booking_prices.dart';
 import 'data/demo_stock_config_commands.dart';
+import 'data/demo_stock_cycle_counts.dart';
 import 'data/demo_stock_ledger.dart';
 import 'data/demo_stock_operations.dart';
 import 'data/demo_stock_queries.dart';
@@ -317,6 +318,16 @@ List<Override> _moneyPortOverrides(FakeMoneyRepository Function(Ref ref) money) 
   ),
   // #4172 — and returns, corrects and counts on that same stock.
   stockReversalsProvider.overrideWith((ref) => DemoStockReversals(ref.watch(_demoStockLedgerProvider))),
+  // #4295 — and keeps a cycle count plan for its high-value shelf, whose task counts into those same counts.
+  stockCycleCountsProvider.overrideWith(
+    (ref) => DemoStockCycleCounts(
+      demoFirstSpaceId,
+      ref.watch(_demoStockLedgerProvider),
+      ref.watch(stockReversalsProvider),
+      () => ref.read(myPermissionsProvider),
+      (ref.watch(purchaseOrderRepositoryProvider) as FakePurchaseOrderRepository).now,
+    ),
+  ),
 ];
 
 /// #4170 — the Demo's ONE goods ledger: the Stock screen's reads, a delivery
