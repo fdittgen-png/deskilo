@@ -1,0 +1,6 @@
+{
+  "settingLabelStockCycleCountHighValueMinor": "Inventario ciclico: soglia di alto valore",
+  "settingHintStockCycleCountHighValueMinor": "Il valore, in unità minori della valuta dell’azienda, da cui ciò che un luogo contiene di un articolo conta come di alto valore per un piano di inventario ciclico senza soglia propria.",
+  "settingLabelStockCycleCountOverdueDays": "Inventario ciclico: in ritardo dopo",
+  "settingHintStockCycleCountOverdueDays": "Quanti giorni un compito di inventario ciclico può restare aperto dopo la scadenza prima che la posta lo dichiari in ritardo."
+}

@@ -33,6 +33,14 @@ extension StockEntries on DrawerEntries {
           () => go('/stock/transfers'),
           route: '/stock/transfers',
         ),
+        if (features.contains(WorkspaceFeature.stockCounts))
+          DrawerEntry(
+            'drawer-stock-counts',
+            Icons.fact_check_outlined,
+            l10n.stockCountsTitle,
+            () => go('/stock/counts'),
+            route: '/stock/counts',
+          ),
         DrawerEntry('drawer-stock-items', Icons.category_outlined, l10n.stockItemsTitle, () => go('/stock/items'), route: '/stock/items'),
         DrawerEntry('drawer-stock-places', Icons.place_outlined, l10n.stockPlacesTitle, () => go('/stock/places'), route: '/stock/places'),
       ],
@@ -48,6 +56,17 @@ extension StockEntries on DrawerEntries {
       // #4173 — what the goods on hand cost: for who reads the stock AND may see what goods cost.
       if (reads && (may(WorkspacePermission.viewFinances) || may(WorkspacePermission.managePurchases)))
         DrawerEntry('drawer-stock-value', Icons.savings_outlined, l10n.stockValueTitle, () => go('/stock/value'), route: '/stock/value'),
+      // #4295 — scheduled counts: for who counts (countStock implies nothing else) or manages the stock.
+      if (features.contains(WorkspaceFeature.stockCounts) &&
+          features.contains(WorkspaceFeature.stockCycleCounts) &&
+          (may(WorkspacePermission.countStock) || may(WorkspacePermission.manageStock)))
+        DrawerEntry(
+          'drawer-stock-cycle-counts',
+          Icons.event_repeat_outlined,
+          l10n.stockCycleTitle,
+          () => go('/stock/cycle-counts'),
+          route: '/stock/cycle-counts',
+        ),
       if (may(WorkspacePermission.manageStock) || may(WorkspacePermission.manageConfiguration))
         DrawerEntry(
           'drawer-stock-settings',

@@ -155,5 +155,9 @@
   "rolesFilterPermissions": "Filter the permissions",
   "@rolesFilterPermissions": {
     "description": "#3628 the filter over a role's permissions"
+  },
+  "permAllowsCountStock": "Count the lines of a cycle count task without seeing what the ledger holds: the tasks and the count of each line, and nothing else.",
+  "@permAllowsCountStock": {
+    "description": "#4295 permission description"
   }
 }

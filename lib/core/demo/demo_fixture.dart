@@ -62,6 +62,7 @@ import 'seed/demo_booking_seed.dart';
 import 'seed/demo_calendar_seed.dart';
 import 'seed/demo_city_people_seed.dart';
 import 'seed/demo_commerce_seed.dart';
+import 'seed/demo_cycle_count_seed.dart';
 import 'seed/demo_decision_seed.dart';
 import 'seed/demo_flags.dart';
 import 'seed/demo_french_reporting_seed.dart';
@@ -222,6 +223,7 @@ class DemoFixture implements DemoSpaceParts {
     seedDemoEvents(events, today);
     seedDemoAttemptNotice(events, today); // #4136
     seedDemoStockLow(events, today); // #4294
+    seedDemoCycleCountOverdue(events, today); // #4295
     seedDemoDecisions(events, today);
     seedDemoHistoryDecisions(events, today);
     seedDemoAccessories(accessories, floorPlan);

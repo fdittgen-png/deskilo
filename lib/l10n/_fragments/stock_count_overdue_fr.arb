@@ -1,0 +1,5 @@
+{
+  "eventTypeStockCountOverdue": "Inventaire tournant en retard",
+  "eventStockCountOverdue": "L’inventaire tournant « {plan} » est toujours ouvert après son échéance.",
+  "eventStockCountOverdueEnded": "Terminé"
+}

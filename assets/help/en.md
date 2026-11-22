@@ -2966,6 +2966,36 @@ Goods whose cost is **unknown** (a lot received with no cost, or goods with no l
 
 Open any movement (**Stock → Movements**) and read **Where this came from**: the receipt, the order, the supplier bills linked to that order, what each bill owes and the payments and reversals that settle it. Only what is recorded is shown; nothing is matched on a name, a date or an amount. A part you may not see says *not shown to you* (that is not the same as unpaid); a part with nothing recorded says *not linked*; a list cut short says so. Linking a bill never changes what the goods cost. Opening it changes nothing.
 
+### Returns, corrections and counts
+
+**Audience:** Administrator · Owner
+
+You want to take goods back, undo a movement, or put right a figure that is wrong on the shelf, without editing history.
+
+Open a movement in **Stock → Movements**. Where the feature *Returns and corrections* is on and your role may move stock, the page says how much of that movement can still be reversed and offers: **Return from the customer** (for a sale), **Return to the supplier** (for a delivery) or **Correct this movement** (for the others). The form shows what moved and what remains before you confirm. A return of goods to the supplier leaves from the place the goods are in now; goods back from a customer return to the place you choose. A correction is a movement back, and a correction can itself be corrected.
+
+**Counts.** Where the feature *Stock counts* is on, **Stock → Stock counts** lists what was counted against what the ledger held. **Count** records an item at a place and moves nothing: the count waits for someone who may approve adjustments, and says so. The approval applies exactly the difference, and only if the stock has not moved since the count; otherwise it says the count must be done again. Whoever counted does not approve their own count while someone else may; the owner of a one-person business does both.
+
+**Good to know**
+
+- A return or a correction never exceeds what the movement it reverses allows, however many times it is sent.
+- No payment, refund or credit is made by it: if money is involved, correct it in the invoice or the supplier payment.
+- Sending the same form again, after a lost answer, records it once.
+
+### Cycle counts
+
+**Audience:** Administrator · Owner
+
+You want to check parts of the stock on a schedule while the shop stays open, without a full stocktake.
+
+Open **Stock → Cycle counts** (the features *Stock counts* and *Cycle counts* must be on). It has up to three tabs.
+
+- **To count** lists the tasks. Anyone with the right to count (or who manages the stock) opens a task and counts it **blind**: each line says what to count and where, and never what the ledger expects, so the figure cannot sway the count. Scan or type a barcode to find the line, then **Count** it and enter what you found, or **Skip** it with a reason. A person who may only count is told the line is counted and nothing more; someone who manages the stock is told the difference. The task is complete when every line is counted or skipped.
+- **Plans** (for who manages the stock) say what to count and when: *Places* (with everything inside them), *Items*, or *High value* (goods worth at least a threshold, yours or the business's), once or every n days from a due day. When a plan is due it makes one task listing its lines; the same day never makes two.
+- **History** says, for each item at each place, when it was last counted and how many counts were exact.
+
+A counted line is a count of *Stock counts*: it waits for someone who may approve adjustments, and only an approved count changes a balance, applying exactly its difference and only if the stock has not moved since. A task still open after the business's overdue days raises one notice in the inbox, which opens this page; it ends when the task is complete.
+
 ### How amounts are shown
 
 **Audience:** Everyone

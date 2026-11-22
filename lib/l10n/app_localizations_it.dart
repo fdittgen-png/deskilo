@@ -10438,6 +10438,14 @@ class AppLocalizationsIt extends AppLocalizations {
       'Nessun documento di acquisto è stato archiviato per questa richiesta, oppure non può vederlo.';
 
   @override
+  String eventStockCountOverdue(String plan) {
+    return 'L’inventario ciclico «$plan» è ancora aperto dopo la scadenza.';
+  }
+
+  @override
+  String get eventStockCountOverdueEnded => 'Fatto';
+
+  @override
   String eventStockLow(String item, String site, String onHand, String point) {
     return '$item è basso in $site: $onHand disponibili, punto di riordino $point';
   }
@@ -10555,6 +10563,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get eventTypeSpaceReservation => 'Prenotazioni di spazi interi';
+
+  @override
+  String get eventTypeStockCountOverdue => 'Inventario ciclico in ritardo';
 
   @override
   String get eventTypeStockLow => 'Scorta bassa';
@@ -12529,6 +12540,20 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featureStandaloneInvoicingTitle => 'Fatture singole';
 
   @override
+  String get featureStockCountsDesc =>
+      'Conti un articolo in un luogo. Il conteggio attende qualcuno che possa approvare le rettifiche e viene applicato solo se la giacenza non si è mossa da allora. Disattivato: nessun conteggio viene registrato; il registro non cambia.';
+
+  @override
+  String get featureStockCountsTitle => 'Conteggi di magazzino';
+
+  @override
+  String get featureStockCycleCountsDesc =>
+      'Pianifichi controlli a campione di luoghi, articoli o merci di alto valore. Un piano scaduto crea un compito di conteggio che si esegue senza vedere le quantità attese; ogni differenza è approvata come ogni conteggio. Disattivato: nessun piano parte e nessun compito viene creato; il registro non cambia.';
+
+  @override
+  String get featureStockCycleCountsTitle => 'Inventari ciclici';
+
+  @override
   String get featureStockLotsDesc =>
       'Seguire le merci per lotto o per data di scadenza, con una durata di conservazione. Disattivato: nessun articolo è seguito per lotto e ciò che è stato registrato resta invariato.';
 
@@ -12556,6 +12581,13 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get featureStockReorderTitle => 'Punti di riordino';
+
+  @override
+  String get featureStockReturnsDesc =>
+      'Restituisca la merce rispetto alla vendita o alla consegna da cui proviene, oppure corregga un movimento. Ogni reso o correzione è limitato dal movimento che annulla: la stessa merce non viene mai restituita due volte. Disattivato: non viene offerto alcun reso né correzione; il registro non cambia.';
+
+  @override
+  String get featureStockReturnsTitle => 'Resi e correzioni di magazzino';
 
   @override
   String get featureStockTakeOutDesc =>
@@ -24894,6 +24926,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Approvare la rettifica proposta da un inventario.';
 
   @override
+  String get permAllowsCountStock =>
+      'Contare le righe di un compito di inventario ciclico senza vedere ciò che il registro contiene: i compiti e il conteggio di ogni riga, nient’altro.';
+
+  @override
   String get permAllowsDeployToDev =>
       'Aggiornare lo spazio di sviluppo dalla produzione.';
 
@@ -25040,6 +25076,9 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get permApproveStockAdjustments =>
       'Approvare le rettifiche di magazzino';
+
+  @override
+  String get permCountStock => 'Contare il magazzino alla cieca';
 
   @override
   String get permDeployToDev => 'Distribuire in sviluppo';
@@ -28724,6 +28763,18 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questa configurazione di magazzino non è valida: il campo indicato ne spiega il motivo.';
 
   @override
+  String get refusalStockCountDecided =>
+      'Questo conteggio è già stato deciso ed è definitivo. Conti di nuovo se la cifra è ancora sbagliata.';
+
+  @override
+  String get refusalStockCountSelf =>
+      'Un’altra persona che può approvare le rettifiche deve applicare questo conteggio: chi ha contato non approva il proprio conteggio.';
+
+  @override
+  String get refusalStockCountStale =>
+      'La giacenza si è mossa dopo il conteggio, quindi non viene applicato. Conti di nuovo.';
+
+  @override
   String get refusalStockHistory =>
       'Questo articolo ha movimenti di magazzino, che vengono conservati: non può essere eliminato, e la sua unità di magazzino e la sua tracciabilità restano invariate. Disattivalo o crea un nuovo articolo.';
 
@@ -28762,6 +28813,18 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get refusalStockPage =>
       'Questa richiesta di pagina non è valida: richiedere da 1 a 200 righe e proseguire solo dalla posizione indicata da una pagina.';
+
+  @override
+  String get refusalStockReturnBeyond =>
+      'Non si può restituire più di quanto questo movimento conteneva: una parte è già stata restituita o corretta.';
+
+  @override
+  String get refusalStockReturnChanged =>
+      'Questo reso è già stato registrato con un altro contenuto. Controlli il reso precedente prima di inviarne uno nuovo.';
+
+  @override
+  String get refusalStockReturnSource =>
+      'Un reso segue la vendita o la consegna da cui proviene; questo movimento non lo è, o non si corregge qui.';
 
   @override
   String get refusalStockStale =>
@@ -32005,6 +32068,14 @@ class AppLocalizationsIt extends AppLocalizations {
       'Disattivato: un movimento che lascerebbe meno di niente in un luogo è rifiutato. Attivato: viene registrato e il luogo mostra una quantità negativa finché arriva merce.';
 
   @override
+  String get settingHintStockCycleCountHighValueMinor =>
+      'Il valore, in unità minori della valuta dell’azienda, da cui ciò che un luogo contiene di un articolo conta come di alto valore per un piano di inventario ciclico senza soglia propria.';
+
+  @override
+  String get settingHintStockCycleCountOverdueDays =>
+      'Quanti giorni un compito di inventario ciclico può restare aperto dopo la scadenza prima che la posta lo dichiari in ritardo.';
+
+  @override
   String get settingHintStockWeighedGoods =>
       'Attivo: un nuovo articolo di magazzino viene proposto in chilogrammi anziché in pezzi (macelleria, panificio, banco). Ogni articolo può avere un’altra unità.';
 
@@ -32345,6 +32416,14 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settingLabelStockAllowNegative =>
       'Le scorte possono scendere sotto zero';
+
+  @override
+  String get settingLabelStockCycleCountHighValueMinor =>
+      'Inventario ciclico: soglia di alto valore';
+
+  @override
+  String get settingLabelStockCycleCountOverdueDays =>
+      'Inventario ciclico: in ritardo dopo';
 
   @override
   String get settingLabelStockWeighedGoods => 'La merce si vende a peso';
@@ -35173,6 +35252,296 @@ class AppLocalizationsIt extends AppLocalizations {
   String get stockCostUnknown => 'Costo non registrato';
 
   @override
+  String get stockCountsApply => 'Applica';
+
+  @override
+  String get stockCountsCancel => 'Annulla il conteggio';
+
+  @override
+  String get stockCountsEmpty => 'Nessun conteggio per ora.';
+
+  @override
+  String get stockCountsItem => 'Articolo da contare';
+
+  @override
+  String stockCountsLine(
+    String item,
+    String place,
+    String observed,
+    String baseline,
+    String difference,
+  ) {
+    return '$item in $place: contato $observed contro $baseline ($difference)';
+  }
+
+  @override
+  String stockCountsObserved(String unit) {
+    return 'Contato ($unit)';
+  }
+
+  @override
+  String get stockCountsOpen => 'Conta';
+
+  @override
+  String get stockCountsPlace => 'Luogo';
+
+  @override
+  String get stockCountsReason => 'Motivo (facoltativo)';
+
+  @override
+  String get stockCountsReject => 'Rifiuta';
+
+  @override
+  String get stockCountsStale =>
+      'La giacenza si è mossa da questo conteggio: conti di nuovo.';
+
+  @override
+  String get stockCountsStateApplied => 'Applicato';
+
+  @override
+  String get stockCountsStateCancelled => 'Annullato';
+
+  @override
+  String get stockCountsStateRecorded => 'In attesa di approvazione';
+
+  @override
+  String get stockCountsStateRejected => 'Rifiutato';
+
+  @override
+  String get stockCountsSubmit => 'Registra il conteggio';
+
+  @override
+  String get stockCountsTitle => 'Conteggi di magazzino';
+
+  @override
+  String get stockCycleAddPlan => 'Aggiungi un piano';
+
+  @override
+  String get stockCycleBlind =>
+      'Lei conta ciò che trova: la cifra del sistema non viene mostrata, quindi non può influenzare il conteggio.';
+
+  @override
+  String get stockCycleCadence => 'Con che frequenza';
+
+  @override
+  String get stockCycleCadenceEvery => 'Ripetuto';
+
+  @override
+  String get stockCycleCadenceOnce => 'Una volta';
+
+  @override
+  String stockCycleCountObserved(String unit) {
+    return 'Ciò che ha contato ($unit)';
+  }
+
+  @override
+  String get stockCycleCountTitle => 'Conta questa riga';
+
+  @override
+  String get stockCycleCounted => 'Contato.';
+
+  @override
+  String stockCycleCountedDifference(String difference) {
+    return 'Contato. Differenza rispetto al registrato: $difference';
+  }
+
+  @override
+  String get stockCycleEveryDays => 'Ogni quanti giorni';
+
+  @override
+  String stockCycleHistoryAccuracy(int count, String percent) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count conteggi',
+      one: '1 conteggio',
+    );
+    return '$_temp0, $percent % esatti';
+  }
+
+  @override
+  String get stockCycleHistoryEmpty => 'Non è ancora stato contato nulla.';
+
+  @override
+  String stockCycleHistoryLast(String date) {
+    return 'Ultimo conteggio il $date';
+  }
+
+  @override
+  String stockCycleHistoryRow(String item, String place) {
+    return '$item · $place';
+  }
+
+  @override
+  String get stockCycleIntervalInvalid =>
+      'Inserisca un numero intero di giorni, da 1 a 366.';
+
+  @override
+  String get stockCycleLineCount => 'Contare';
+
+  @override
+  String get stockCycleLineCounted => 'Contato';
+
+  @override
+  String get stockCycleLineSkip => 'Salta';
+
+  @override
+  String stockCycleLineSkipped(String reason) {
+    return 'Saltato: $reason';
+  }
+
+  @override
+  String get stockCycleNoPlans =>
+      'Nessun piano per ora: nulla viene contato secondo un calendario.';
+
+  @override
+  String get stockCycleNoTasks => 'Niente da contare per ora.';
+
+  @override
+  String get stockCyclePlanActive => 'In uso';
+
+  @override
+  String stockCyclePlanEvery(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count giorni',
+      one: 'giorno',
+    );
+    return 'ogni $_temp0';
+  }
+
+  @override
+  String stockCyclePlanItemsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count articoli',
+      one: '1 articolo',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get stockCyclePlanName => 'Nome';
+
+  @override
+  String get stockCyclePlanNameRequired => 'Dia un nome al piano.';
+
+  @override
+  String stockCyclePlanNext(String date) {
+    return 'prossima $date';
+  }
+
+  @override
+  String get stockCyclePlanOff => 'non in uso';
+
+  @override
+  String get stockCyclePlanOnce => 'una volta';
+
+  @override
+  String get stockCyclePlanPlaces => 'Posizioni (con tutto ciò che contengono)';
+
+  @override
+  String stockCyclePlanPlacesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count posizioni',
+      one: '1 posizione',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get stockCyclePlanScope => 'Che cosa contare';
+
+  @override
+  String get stockCyclePlanScopeRequired => 'Scelga che cosa conta.';
+
+  @override
+  String stockCyclePlanThreshold(String currency) {
+    return 'Valore minimo ($currency); vuoto: il limite dell’azienda';
+  }
+
+  @override
+  String get stockCyclePlanTitle => 'Piano di conteggio ciclico';
+
+  @override
+  String stockCyclePlanValue(String amount) {
+    return 'valore minimo $amount';
+  }
+
+  @override
+  String get stockCyclePlanValueSetting =>
+      'valore minimo il limite dell’azienda';
+
+  @override
+  String get stockCycleScan => 'Scansiona o digita un codice a barre';
+
+  @override
+  String get stockCycleScanNone =>
+      'Nessuna riga ancora da contare ha questo codice.';
+
+  @override
+  String get stockCycleScopeHighValue => 'Alto valore';
+
+  @override
+  String get stockCycleScopePlaces => 'Posizioni';
+
+  @override
+  String get stockCycleSkipReason => 'Perché viene saltata';
+
+  @override
+  String get stockCycleSkipTitle => 'Salta questa riga';
+
+  @override
+  String get stockCycleSkipped => 'Saltato.';
+
+  @override
+  String get stockCycleTabHistory => 'Storico';
+
+  @override
+  String get stockCycleTabPlans => 'Piani';
+
+  @override
+  String get stockCycleTabTasks => 'Da contare';
+
+  @override
+  String get stockCycleTaskCancelled => 'Annullato';
+
+  @override
+  String get stockCycleTaskComplete => 'Completato';
+
+  @override
+  String get stockCycleTaskDone =>
+      'Ogni riga è contata o saltata: il compito è completato.';
+
+  @override
+  String get stockCycleTaskNoLines =>
+      'Questo compito non elenca nulla da contare.';
+
+  @override
+  String stockCycleTaskProgress(String left, String total) {
+    return '$left su $total ancora da contare';
+  }
+
+  @override
+  String stockCycleTaskRow(String plan, String due) {
+    return '$plan · entro il $due';
+  }
+
+  @override
+  String get stockCycleTaskTitle => 'Contare';
+
+  @override
+  String get stockCycleThresholdInvalid =>
+      'Inserisca un importo o lasci vuoto.';
+
+  @override
+  String get stockCycleTitle => 'Conteggi ciclici';
+
+  @override
   String get stockDimensionAdd => 'Aggiungere una dimensione';
 
   @override
@@ -36098,6 +36467,90 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get stockReorderToOrderTitle => 'Cosa ordinare';
+
+  @override
+  String get stockReversalBackTo => 'La merce torna a';
+
+  @override
+  String get stockReversalCorrectionOpen => 'Correggi questo movimento';
+
+  @override
+  String get stockReversalCorrectionTitle => 'Correggere un movimento';
+
+  @override
+  String get stockReversalCustomerOpen => 'Reso dal cliente';
+
+  @override
+  String get stockReversalCustomerTitle => 'Reso dal cliente';
+
+  @override
+  String stockReversalEntry(String kind, String quantity, String unit) {
+    return '$kind: $quantity $unit';
+  }
+
+  @override
+  String get stockReversalFully =>
+      'Questo movimento è completamente annullato.';
+
+  @override
+  String get stockReversalKindCorrection => 'Corretto';
+
+  @override
+  String get stockReversalKindCustomer => 'Reso dal cliente';
+
+  @override
+  String get stockReversalKindSupplier => 'Reso al fornitore';
+
+  @override
+  String get stockReversalLeavesFrom => 'La merce parte da';
+
+  @override
+  String get stockReversalMoneyInvoice =>
+      'Questo movimento segue una fattura: ogni rimborso o nota di credito si fa nella fattura stessa.';
+
+  @override
+  String get stockReversalMoneyUnavailable =>
+      'Se esista una nota di credito per questo movimento non è mostrato qui: il denaro si corregge a parte.';
+
+  @override
+  String stockReversalMoreThanRemains(String quantity, String unit) {
+    return 'Si possono ancora annullare al massimo $quantity $unit.';
+  }
+
+  @override
+  String get stockReversalNoMoney =>
+      'Questo non fa alcun pagamento, rimborso o nota di credito. Se c’è di mezzo del denaro, lo corregga a parte, nella fattura o nel pagamento al fornitore.';
+
+  @override
+  String get stockReversalNote => 'Nota (facoltativa)';
+
+  @override
+  String stockReversalRemaining(String quantity, String unit, String reversed) {
+    return 'Si può ancora annullare: $quantity $unit · già annullato: $reversed';
+  }
+
+  @override
+  String get stockReversalSection => 'Resi e correzioni';
+
+  @override
+  String stockReversalSource(
+    String item,
+    String quantity,
+    String unit,
+    String from,
+    String to,
+  ) {
+    return '$item: $quantity $unit, $from → $to';
+  }
+
+  @override
+  String get stockReversalSubmit => 'Registra';
+
+  @override
+  String get stockReversalSupplierOpen => 'Reso al fornitore';
+
+  @override
+  String get stockReversalSupplierTitle => 'Reso al fornitore';
 
   @override
   String get stockSettingsElsewhere =>

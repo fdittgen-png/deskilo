@@ -15,6 +15,8 @@ String? eventDestination(WorkspaceEvent event) =>
           when member.isNotEmpty =>
         '/invoices/customer/${Uri.encodeComponent(member)}',
       (EventType.stockLow, _) => '/stock/reorder',
+      // #4295 — the overdue count notice opens the cycle counts, where the open task is.
+      (EventType.stockCountOverdue, _) => '/stock/cycle-counts',
       _ => null,
     };
 

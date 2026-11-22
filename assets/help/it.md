@@ -2966,6 +2966,36 @@ La merce dal costo **ignoto** (un lotto ricevuto senza costo, o senza lotto) è 
 
 Apra un movimento (**Magazzino → Movimenti**) e legga **Da dove viene**: la ricezione, l’ordine, le fatture fornitore collegate a quell’ordine, quanto deve ciascuna e i pagamenti e gli storni che la regolano. Si mostra solo ciò che è registrato; nulla viene abbinato per nome, data o importo. Una parte che non può vedere dice *non le viene mostrato* (non equivale a non pagato); una parte senza nulla di registrato dice *non collegato*; un elenco troncato lo dice. Collegare una fattura non cambia mai quanto costa la merce. Aprirla non cambia nulla.
 
+### Resi, correzioni e conteggi
+
+**Destinatari:** Amministratore · Proprietario
+
+Vuole riprendere della merce, annullare un movimento o correggere una cifra sbagliata sullo scaffale, senza riscrivere la storia.
+
+Apra un movimento in **Magazzino → Movimenti**. Dove la funzione *Resi e correzioni* è attiva e il suo ruolo può muovere il magazzino, la pagina dice quanto di quel movimento si può ancora annullare e propone: **Reso dal cliente** (per una vendita), **Reso al fornitore** (per una consegna) o **Correggi questo movimento** (per gli altri). Il modulo mostra, prima di confermare, ciò che si è mosso e ciò che resta. Un reso al fornitore parte dal luogo in cui la merce si trova ora; quella che torna da un cliente rientra nel luogo che sceglie. Una correzione è un movimento inverso, e una correzione può a sua volta essere corretta.
+
+**Conteggi.** Dove la funzione *Conteggi di magazzino* è attiva, **Magazzino → Conteggi di magazzino** elenca ciò che è stato contato rispetto a ciò che il registro conteneva. **Conta** registra un articolo in un luogo e non muove nulla: il conteggio attende qualcuno che possa approvare le rettifiche, e lo dice. L’approvazione applica esattamente la differenza, e solo se la giacenza non si è mossa dal conteggio; altrimenti dice che bisogna contare di nuovo. Chi ha contato non approva il proprio conteggio finché un altro può farlo; il titolare di un’attività di una sola persona fa entrambe le cose.
+
+**Da sapere**
+
+- Un reso o una correzione non supera mai ciò che consente il movimento che annulla, quante volte sia inviato.
+- Non fa alcun pagamento, rimborso o nota di credito: se c’è di mezzo del denaro, lo corregga nella fattura o nel pagamento al fornitore.
+- Inviare di nuovo lo stesso modulo dopo una risposta persa lo registra una sola volta.
+
+### Conteggi ciclici
+
+**Destinatari:** Amministratore · Proprietario
+
+Vuole controllare parti del magazzino secondo un calendario, a negozio aperto, senza un inventario completo.
+
+Apra **Magazzino → Conteggi ciclici** (le funzioni *Conteggi di magazzino* e *Conteggi ciclici* devono essere attive). La pagina ha fino a tre schede.
+
+- **Da contare** elenca i compiti. Chi ha il diritto di contare (o gestisce il magazzino) apre un compito e lo conta **alla cieca**: ogni riga dice che cosa contare e dove, mai che cosa si aspetta il registrato, perché la cifra non influenzi il conteggio. Scansioni o digiti un codice a barre per trovare la riga, poi **Conta** e inserisca ciò che ha trovato, oppure **Salta** con un motivo. Chi può solo contare sa che la riga è contata, nient’altro; chi gestisce il magazzino conosce la differenza. Il compito è completo quando ogni riga è contata o saltata.
+- **Piani** (per chi gestisce il magazzino) dicono che cosa contare e quando: *Posizioni* (con tutto ciò che contengono), *Articoli* o *Alto valore* (merce di valore minimo una soglia, la sua o quella dell’azienda), una volta o ogni n giorni da un giorno di scadenza. Quando un piano è dovuto, crea un compito con le sue righe; lo stesso giorno non ne crea mai due.
+- **Storico** dice, per ogni articolo in ogni posizione, quando è stato contato l’ultima volta e quanti conteggi erano esatti.
+
+Una riga contata è un conteggio dei *Conteggi di magazzino*: attende chi può approvare le rettifiche, e solo un conteggio approvato cambia un saldo, applicando esattamente la sua differenza e solo se il magazzino non si è mosso da allora. Un compito ancora aperto oltre i giorni di ritardo dell’azienda genera un avviso nella posta in arrivo, che apre questa pagina; termina quando il compito è completato.
+
 ### Come sono mostrati gli importi
 
 **Destinatari:** Tutti

@@ -58,6 +58,7 @@ const Set<String> workspacePermissionKeys = {
   'manageStock',
   'approveStockAdjustments',
   'manageBillingCustomers',
+  'countStock',
 };
 
 /// The event types a validation rule can be for (EventType.dbName, the
@@ -100,6 +101,7 @@ const Set<String> validationRuleKeys = {
   'payment_instructions_change',
   'credential_change',
   'payment_attempt_unreadable',
+  'stock_count_overdue',
   'stock_low',
   'einvoice_outcome_unknown',
 };

@@ -873,5 +873,29 @@
   "featureStockReorderDesc": "Set a minimum per item and site: the inbox says when stock falls to it, and a replenishment list proposes what to order. Off: no point is set, no alert is raised and no list is offered; the ledger is unaffected.",
   "@featureStockReorderDesc": {
     "description": "#4294 feature description"
+  },
+  "featureStockReturnsTitle": "Stock returns and corrections",
+  "@featureStockReturnsTitle": {
+    "description": "#4172 feature name"
+  },
+  "featureStockReturnsDesc": "Return goods against the sale or the delivery they came from, or correct a movement. Each return or correction is bounded by the movement it reverses, so the same goods are never returned twice. Off: no return and no correction is offered; the ledger is unaffected.",
+  "@featureStockReturnsDesc": {
+    "description": "#4172 feature description"
+  },
+  "featureStockCountsTitle": "Stock counts",
+  "@featureStockCountsTitle": {
+    "description": "#4172 feature name"
+  },
+  "featureStockCountsDesc": "Count an item at a place. The count waits for someone who may approve adjustments, and it is applied only if the stock has not moved since it was counted. Off: no count is recorded; the ledger is unaffected.",
+  "@featureStockCountsDesc": {
+    "description": "#4172 feature description"
+  },
+  "featureStockCycleCountsTitle": "Cycle counts",
+  "@featureStockCycleCountsTitle": {
+    "description": "#4295 feature name"
+  },
+  "featureStockCycleCountsDesc": "Plan spot checks of chosen places, items or high-value goods. A due plan makes a count task the counter does without seeing the expected quantities; each difference is approved like any count. Off: no plan runs and no task is made; the ledger is unaffected.",
+  "@featureStockCycleCountsDesc": {
+    "description": "#4295 feature description"
   }
 }

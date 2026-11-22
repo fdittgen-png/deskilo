@@ -33,6 +33,8 @@ abstract final class HelpAnchor {
   static const moneyStockReorder = 'user.money.stock.reorder';
   static const moneyStockValue = 'user.money.stock.value';
   static const moneyStockRegistry = 'user.money.stock.registry';
+  static const moneyStockReversals = 'user.money.stock.reversals';
+  static const moneyStockCycleCounts = 'user.money.stock.cycle';
 
   /// #3527 — the Sales, Purchases and Cash pages.
   static const moneySales = 'user.money.sales';

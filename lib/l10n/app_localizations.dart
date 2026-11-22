@@ -16534,6 +16534,18 @@ abstract class AppLocalizations {
   /// **'No purchase document was filed for this request, or you may not see it.'**
   String get eventSourceNotFound;
 
+  /// #4295 the notice of a cycle count task open past its due day.
+  ///
+  /// In en, this message translates to:
+  /// **'The cycle count \"{plan}\" is still open past its due day.'**
+  String eventStockCountOverdue(String plan);
+
+  /// #4295 suffix of a notice whose task is complete.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get eventStockCountOverdueEnded;
+
   /// #4294 the low-stock notice in the inbox
   ///
   /// In en, this message translates to:
@@ -16761,6 +16773,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Whole-space reservations'**
   String get eventTypeSpaceReservation;
+
+  /// #4295 the type name in the feed and the validation settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Cycle count overdue'**
+  String get eventTypeStockCountOverdue;
 
   /// #4294 the low-stock notice in the inbox
   ///
@@ -20248,6 +20266,30 @@ abstract class AppLocalizations {
   /// **'Standalone invoices'**
   String get featureStandaloneInvoicingTitle;
 
+  /// #4172 feature description
+  ///
+  /// In en, this message translates to:
+  /// **'Count an item at a place. The count waits for someone who may approve adjustments, and it is applied only if the stock has not moved since it was counted. Off: no count is recorded; the ledger is unaffected.'**
+  String get featureStockCountsDesc;
+
+  /// #4172 feature name
+  ///
+  /// In en, this message translates to:
+  /// **'Stock counts'**
+  String get featureStockCountsTitle;
+
+  /// #4295 feature description
+  ///
+  /// In en, this message translates to:
+  /// **'Plan spot checks of chosen places, items or high-value goods. A due plan makes a count task the counter does without seeing the expected quantities; each difference is approved like any count. Off: no plan runs and no task is made; the ledger is unaffected.'**
+  String get featureStockCycleCountsDesc;
+
+  /// #4295 feature name
+  ///
+  /// In en, this message translates to:
+  /// **'Cycle counts'**
+  String get featureStockCycleCountsTitle;
+
   /// #4169 what the lots and expiry feature does, and what off means
   ///
   /// In en, this message translates to:
@@ -20295,6 +20337,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reorder points'**
   String get featureStockReorderTitle;
+
+  /// #4172 feature description
+  ///
+  /// In en, this message translates to:
+  /// **'Return goods against the sale or the delivery they came from, or correct a movement. Each return or correction is bounded by the movement it reverses, so the same goods are never returned twice. Off: no return and no correction is offered; the ledger is unaffected.'**
+  String get featureStockReturnsDesc;
+
+  /// #4172 feature name
+  ///
+  /// In en, this message translates to:
+  /// **'Stock returns and corrections'**
+  String get featureStockReturnsTitle;
 
   /// #4170 what the taking goods out feature does, and what off means
   ///
@@ -39467,6 +39521,12 @@ abstract class AppLocalizations {
   /// **'Approve the adjustment a stock count proposes.'**
   String get permAllowsApproveStockAdjustments;
 
+  /// #4295 permission description
+  ///
+  /// In en, this message translates to:
+  /// **'Count the lines of a cycle count task without seeing what the ledger holds: the tasks and the count of each line, and nothing else.'**
+  String get permAllowsCountStock;
+
   /// #3628 roles at the desk: one line of what the permission allows
   ///
   /// In en, this message translates to:
@@ -39694,6 +39754,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Approve stock adjustments'**
   String get permApproveStockAdjustments;
+
+  /// #4295 permission name
+  ///
+  /// In en, this message translates to:
+  /// **'Count stock, blind'**
+  String get permCountStock;
 
   /// #987/#989 environment pairs: permDeployToDev
   ///
@@ -45723,6 +45789,24 @@ abstract class AppLocalizations {
   /// **'This stock configuration is not valid: the field it names says why.'**
   String get refusalStockConfig;
 
+  /// #4172 refusal
+  ///
+  /// In en, this message translates to:
+  /// **'This count was already decided and is final. Count again if the figure is still wrong.'**
+  String get refusalStockCountDecided;
+
+  /// #4172 refusal
+  ///
+  /// In en, this message translates to:
+  /// **'Someone else who may approve adjustments has to apply this count: whoever counted does not approve their own count.'**
+  String get refusalStockCountSelf;
+
+  /// #4172 refusal
+  ///
+  /// In en, this message translates to:
+  /// **'The stock moved since it was counted, so the count is not applied. Count again.'**
+  String get refusalStockCountStale;
+
   /// refusal DKG08 (#3824): deleting an item or a movement the ledger keeps
   ///
   /// In en, this message translates to:
@@ -45782,6 +45866,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This page request is not valid: ask for 1 to 200 rows, and continue only from the position a page gave.'**
   String get refusalStockPage;
+
+  /// #4172 refusal
+  ///
+  /// In en, this message translates to:
+  /// **'More than this movement held cannot be returned: part of it was already returned or corrected.'**
+  String get refusalStockReturnBeyond;
+
+  /// #4172 refusal
+  ///
+  /// In en, this message translates to:
+  /// **'This return was already recorded with other content. Check the earlier return before sending a new one.'**
+  String get refusalStockReturnChanged;
+
+  /// #4172 refusal
+  ///
+  /// In en, this message translates to:
+  /// **'A return follows the sale or the delivery it comes from; this movement is not one, or is not corrected here.'**
+  String get refusalStockReturnSource;
 
   /// #4169 (0836) DKG10: a stock configuration save of a revision that is no longer current.
   ///
@@ -50907,6 +51009,18 @@ abstract class AppLocalizations {
   /// **'Off: a move that would leave less than nothing at a place is refused. On: it is recorded, and the place shows a negative quantity until goods arrive.'**
   String get settingHintStockAllowNegative;
 
+  /// #4295 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'The value, in minor units of the business currency, from which what a place holds of an item counts as high value for a cycle count plan that has no threshold of its own.'**
+  String get settingHintStockCycleCountHighValueMinor;
+
+  /// #4295 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'How many days a cycle count task may stay open past its due date before the inbox says it is overdue.'**
+  String get settingHintStockCycleCountOverdueDays;
+
   /// #4365 G16 the shop business kind
   ///
   /// In en, this message translates to:
@@ -51446,6 +51560,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Stock may go below zero'**
   String get settingLabelStockAllowNegative;
+
+  /// #4295 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Cycle count: high-value threshold'**
+  String get settingLabelStockCycleCountHighValueMinor;
+
+  /// #4295 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Cycle count: overdue after'**
+  String get settingLabelStockCycleCountOverdueDays;
 
   /// #4365 G16 the shop business kind
   ///
@@ -55916,6 +56042,450 @@ abstract class AppLocalizations {
   /// **'Cost not recorded'**
   String get stockCostUnknown;
 
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get stockCountsApply;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel the count'**
+  String get stockCountsCancel;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'No count yet.'**
+  String get stockCountsEmpty;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Item to count'**
+  String get stockCountsItem;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'{item} at {place}: counted {observed} against {baseline} ({difference})'**
+  String stockCountsLine(
+    String item,
+    String place,
+    String observed,
+    String baseline,
+    String difference,
+  );
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Counted ({unit})'**
+  String stockCountsObserved(String unit);
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Count'**
+  String get stockCountsOpen;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Place'**
+  String get stockCountsPlace;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Reason (optional)'**
+  String get stockCountsReason;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Reject'**
+  String get stockCountsReject;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'The stock moved since this was counted: count it again.'**
+  String get stockCountsStale;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Applied'**
+  String get stockCountsStateApplied;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get stockCountsStateCancelled;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for approval'**
+  String get stockCountsStateRecorded;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected'**
+  String get stockCountsStateRejected;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Record the count'**
+  String get stockCountsSubmit;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Stock counts'**
+  String get stockCountsTitle;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Add a plan'**
+  String get stockCycleAddPlan;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'You count what you find: the system’s figure is not shown, so it cannot sway the count.'**
+  String get stockCycleBlind;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'How often'**
+  String get stockCycleCadence;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Repeating'**
+  String get stockCycleCadenceEvery;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Once'**
+  String get stockCycleCadenceOnce;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'What you counted ({unit})'**
+  String stockCycleCountObserved(String unit);
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Count this line'**
+  String get stockCycleCountTitle;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Counted.'**
+  String get stockCycleCounted;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Counted. Difference from the ledger: {difference}'**
+  String stockCycleCountedDifference(String difference);
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Every how many days'**
+  String get stockCycleEveryDays;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{1 count} other{{count} counts}}, {percent} % exact'**
+  String stockCycleHistoryAccuracy(int count, String percent);
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing has been counted yet.'**
+  String get stockCycleHistoryEmpty;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Last counted {date}'**
+  String stockCycleHistoryLast(String date);
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'{item} · {place}'**
+  String stockCycleHistoryRow(String item, String place);
+
+  /// #4295 a mistake under a plan field
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a whole number of days, from 1 to 366.'**
+  String get stockCycleIntervalInvalid;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Count'**
+  String get stockCycleLineCount;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Counted'**
+  String get stockCycleLineCounted;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get stockCycleLineSkip;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Skipped: {reason}'**
+  String stockCycleLineSkipped(String reason);
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'No plan yet: nothing is counted on a schedule.'**
+  String get stockCycleNoPlans;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing to count right now.'**
+  String get stockCycleNoTasks;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'In use'**
+  String get stockCyclePlanActive;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'every {count, plural, one{day} other{{count} days}}'**
+  String stockCyclePlanEvery(int count);
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{1 item} other{{count} items}}'**
+  String stockCyclePlanItemsCount(int count);
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get stockCyclePlanName;
+
+  /// #4295 a mistake under a plan field
+  ///
+  /// In en, this message translates to:
+  /// **'Name the plan.'**
+  String get stockCyclePlanNameRequired;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'next {date}'**
+  String stockCyclePlanNext(String date);
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'not in use'**
+  String get stockCyclePlanOff;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'once'**
+  String get stockCyclePlanOnce;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Places (with everything inside them)'**
+  String get stockCyclePlanPlaces;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{1 place} other{{count} places}}'**
+  String stockCyclePlanPlacesCount(int count);
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'What to count'**
+  String get stockCyclePlanScope;
+
+  /// #4295 a mistake under a plan field
+  ///
+  /// In en, this message translates to:
+  /// **'Choose what it counts.'**
+  String get stockCyclePlanScopeRequired;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Worth at least ({currency}); empty: the business’s limit'**
+  String stockCyclePlanThreshold(String currency);
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Cycle count plan'**
+  String get stockCyclePlanTitle;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'worth at least {amount}'**
+  String stockCyclePlanValue(String amount);
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'worth at least the business’s limit'**
+  String get stockCyclePlanValueSetting;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Scan or type a barcode'**
+  String get stockCycleScan;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'No line still to count has this code.'**
+  String get stockCycleScanNone;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'High value'**
+  String get stockCycleScopeHighValue;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Places'**
+  String get stockCycleScopePlaces;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Why it is skipped'**
+  String get stockCycleSkipReason;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Skip this line'**
+  String get stockCycleSkipTitle;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Skipped.'**
+  String get stockCycleSkipped;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get stockCycleTabHistory;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Plans'**
+  String get stockCycleTabPlans;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'To count'**
+  String get stockCycleTabTasks;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get stockCycleTaskCancelled;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Complete'**
+  String get stockCycleTaskComplete;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Every line is counted or skipped: the task is complete.'**
+  String get stockCycleTaskDone;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'This task lists nothing to count.'**
+  String get stockCycleTaskNoLines;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'{left} of {total} still to count'**
+  String stockCycleTaskProgress(String left, String total);
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'{plan} · due {due}'**
+  String stockCycleTaskRow(String plan, String due);
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Count'**
+  String get stockCycleTaskTitle;
+
+  /// #4295 a mistake under a plan field
+  ///
+  /// In en, this message translates to:
+  /// **'Enter an amount, or leave it empty.'**
+  String get stockCycleThresholdInvalid;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Cycle counts'**
+  String get stockCycleTitle;
+
   /// #4169 the stock editors: a label or message
   ///
   /// In en, this message translates to:
@@ -57493,6 +58063,144 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'What to order'**
   String get stockReorderToOrderTitle;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Goods come back to'**
+  String get stockReversalBackTo;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Correct this movement'**
+  String get stockReversalCorrectionOpen;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Correct a movement'**
+  String get stockReversalCorrectionTitle;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Return from the customer'**
+  String get stockReversalCustomerOpen;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Return from the customer'**
+  String get stockReversalCustomerTitle;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'{kind}: {quantity} {unit}'**
+  String stockReversalEntry(String kind, String quantity, String unit);
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'This movement is fully reversed.'**
+  String get stockReversalFully;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Corrected'**
+  String get stockReversalKindCorrection;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Returned by the customer'**
+  String get stockReversalKindCustomer;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Returned to the supplier'**
+  String get stockReversalKindSupplier;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Goods leave from'**
+  String get stockReversalLeavesFrom;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'This movement follows an invoice: any refund or credit note is made in the invoice itself.'**
+  String get stockReversalMoneyInvoice;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Whether a credit exists for this movement is not shown here: the money is corrected apart.'**
+  String get stockReversalMoneyUnavailable;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'At most {quantity} {unit} can still be reversed.'**
+  String stockReversalMoreThanRemains(String quantity, String unit);
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'No payment, refund or credit is made by this. If money is involved, correct it in the invoice or the supplier payment, apart.'**
+  String get stockReversalNoMoney;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Note (optional)'**
+  String get stockReversalNote;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Can still be reversed: {quantity} {unit} · already reversed: {reversed}'**
+  String stockReversalRemaining(String quantity, String unit, String reversed);
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Returns and corrections'**
+  String get stockReversalSection;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'{item}: {quantity} {unit}, {from} → {to}'**
+  String stockReversalSource(
+    String item,
+    String quantity,
+    String unit,
+    String from,
+    String to,
+  );
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Record'**
+  String get stockReversalSubmit;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Return to the supplier'**
+  String get stockReversalSupplierOpen;
+
+  /// #4172 stock returns and counts screens
+  ///
+  /// In en, this message translates to:
+  /// **'Return to the supplier'**
+  String get stockReversalSupplierTitle;
 
   /// the stock pages and group (#4299)
   ///

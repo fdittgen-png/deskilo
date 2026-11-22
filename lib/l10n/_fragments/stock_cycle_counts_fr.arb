@@ -1,0 +1,6 @@
+{
+  "settingLabelStockCycleCountHighValueMinor": "Inventaire tournant : seuil de forte valeur",
+  "settingHintStockCycleCountHighValueMinor": "La valeur, en unités mineures de la devise de l’entreprise, à partir de laquelle ce qu’un lieu contient d’un article est de forte valeur pour un plan d’inventaire tournant sans seuil propre.",
+  "settingLabelStockCycleCountOverdueDays": "Inventaire tournant : en retard après",
+  "settingHintStockCycleCountOverdueDays": "Combien de jours une tâche d’inventaire tournant peut rester ouverte après son échéance avant que la boîte de réception la dise en retard."
+}

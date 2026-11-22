@@ -29,5 +29,30 @@
   "refusalStockOnlyExpired": "Was im Hauptlager noch liegt, ist abgelaufen und wird nie verkauft. Die Bestätigung wurde abgelehnt; nichts wurde entnommen.",
   "@refusalStockOnlyExpired": {
     "description": "#4170 (0847) DKG15: only expired stock is left for a sale."
-  }
+  },
+  "refusalStockReturnChanged": "Diese Rückgabe wurde bereits mit anderem Inhalt erfasst. Prüfen Sie die frühere Rückgabe, bevor Sie eine neue senden.",
+  "@refusalStockReturnChanged": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockReturnBeyond": "Es kann nicht mehr zurückgegeben werden, als diese Bewegung enthielt: ein Teil wurde bereits zurückgegeben oder korrigiert.",
+  "@refusalStockReturnBeyond": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockReturnSource": "Eine Rückgabe folgt dem Verkauf oder der Lieferung, aus der sie stammt; diese Bewegung ist keine, oder wird hier nicht korrigiert.",
+  "@refusalStockReturnSource": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockCountDecided": "Diese Zählung ist bereits entschieden und endgültig. Zählen Sie erneut, wenn die Zahl noch falsch ist.",
+  "@refusalStockCountDecided": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockCountStale": "Der Bestand hat sich seit der Zählung bewegt, die Zählung wird nicht angewendet. Zählen Sie erneut.",
+  "@refusalStockCountStale": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockCountSelf": "Dieses Zählergebnis muss jemand anderes anwenden, der Anpassungen genehmigen darf: Wer gezählt hat, genehmigt die eigene Zählung nicht.",
+  "@refusalStockCountSelf": {
+    "description": "#4172 refusal"
+  },
+  "permCountStock": "Bestand blind zählen"
 }

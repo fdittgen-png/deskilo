@@ -134,6 +134,8 @@
   "user.money.stock.reorder": "Nachbestellen: was knapp ist und was zu bestellen ist",
   "user.money.stock.registry": "Das Artikelregister",
   "user.money.stock.value": "Lagerwert und Herkunft der Ware",
+  "user.money.stock.reversals": "Rückgaben, Korrekturen und Zählungen",
+  "user.money.stock.cycle": "Zyklische Zählungen",
   "user.money.amounts": "Wie Beträge angezeigt werden",
   "user.money.finances": "Ihre Finanzen in allen Workspaces",
   "user.money.businesses": "Ihre Unternehmen auf einen Blick",

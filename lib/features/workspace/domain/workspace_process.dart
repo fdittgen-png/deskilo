@@ -148,6 +148,12 @@ const workspaceProcesses = <WorkspaceProcess>[
       WorkspaceFeature.stockTakeOut,
       // #4294 — reorder points, low-stock alerts and the replenishment list.
       WorkspaceFeature.stockReorder,
+      // #4172 — bounded returns and corrections of stock movements.
+      WorkspaceFeature.stockReturns,
+      // #4172 — counts of stock, approved before they move it.
+      WorkspaceFeature.stockCounts,
+      // #4295 — scheduled cycle counts.
+      WorkspaceFeature.stockCycleCounts,
     ]),
   ]),
   WorkspaceProcess('billingPayments', [

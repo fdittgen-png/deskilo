@@ -1,0 +1,5 @@
+{
+  "eventTypeStockCountOverdue": "Permanente Inventur überfällig",
+  "eventStockCountOverdue": "Die Inventur „{plan}“ ist nach ihrem Fälligkeitstag noch offen.",
+  "eventStockCountOverdueEnded": "Erledigt"
+}

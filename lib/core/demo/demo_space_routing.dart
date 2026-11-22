@@ -50,12 +50,14 @@ import 'data/bank_statement_repository.dart';
 import 'data/demo_booking_prices.dart';
 import 'data/demo_stock_candidates.dart';
 import 'data/demo_stock_config_commands.dart';
+import 'data/demo_stock_cycle_counts.dart';
 import 'data/demo_stock_ledger.dart';
 import 'data/demo_stock_operations.dart';
 import 'data/demo_stock_queries.dart';
 import 'data/demo_stock_receiving_commands.dart';
 import 'data/demo_stock_registry.dart';
 import 'data/demo_stock_reorder.dart';
+import 'data/demo_stock_reversals.dart';
 import 'data/demo_stock_trace.dart';
 import 'data/finance_kpi_repository.dart';
 import 'data/money/demo_credit_moves.dart';
@@ -335,6 +337,19 @@ List<Override> _moneyPortOverrides(FakeMoneyRepository Function(Ref ref) money) 
     (ref) => DemoStockOperations(
       ref.watch(_demoStockLedgerProvider),
       ref.watch(stockConfigCommandsProvider) as DemoStockConfigCommands,
+    ),
+  ),
+  // #4172 — and returns, corrects and counts on that same stock.
+  stockReversalsProvider.overrideWith((ref) => DemoStockReversals(ref.watch(_demoStockLedgerProvider))),
+  // #4295 — and keeps a cycle count plan for its high-value shelf, whose task counts into those same counts.
+  stockCycleCountsProvider.overrideWith(
+    (ref) => DemoStockCycleCounts(
+      demoFirstSpaceId,
+      ref.watch(_demoStockLedgerProvider),
+      ref.watch(stockReversalsProvider),
+      ref.watch(stockRegistryProvider),
+      () => ref.read(myPermissionsProvider),
+      (ref.watch(purchaseOrderRepositoryProvider) as FakePurchaseOrderRepository).now,
     ),
   ),
 ];

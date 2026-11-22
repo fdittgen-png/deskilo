@@ -13722,6 +13722,19 @@
   "@eventSourceNotFound": {
     "description": "#2573 open the purchase an expense request was filed as"
   },
+  "eventStockCountOverdue": "The cycle count \"{plan}\" is still open past its due day.",
+  "@eventStockCountOverdue": {
+    "description": "#4295 the notice of a cycle count task open past its due day.",
+    "placeholders": {
+      "plan": {
+        "type": "String"
+      }
+    }
+  },
+  "eventStockCountOverdueEnded": "Done",
+  "@eventStockCountOverdueEnded": {
+    "description": "#4295 suffix of a notice whose task is complete."
+  },
   "eventStockLow": "{item} is low at {site}: {onHand} on hand, reorder point {point}",
   "@eventStockLow": {
     "description": "#4294 the low-stock notice in the inbox",
@@ -13887,6 +13900,10 @@
   "eventTypeSpaceReservation": "Whole-space reservations",
   "@eventTypeSpaceReservation": {
     "description": "Event/validation domain: whole desk/office/level reservations (0059)"
+  },
+  "eventTypeStockCountOverdue": "Cycle count overdue",
+  "@eventTypeStockCountOverdue": {
+    "description": "#4295 the type name in the feed and the validation settings."
   },
   "eventTypeStockLow": "Low stock",
   "@eventTypeStockLow": {
@@ -16348,6 +16365,22 @@
   "@featureStandaloneInvoicingTitle": {
     "description": "#4165 feature switch: featureStandaloneInvoicingTitle"
   },
+  "featureStockCountsDesc": "Count an item at a place. The count waits for someone who may approve adjustments, and it is applied only if the stock has not moved since it was counted. Off: no count is recorded; the ledger is unaffected.",
+  "@featureStockCountsDesc": {
+    "description": "#4172 feature description"
+  },
+  "featureStockCountsTitle": "Stock counts",
+  "@featureStockCountsTitle": {
+    "description": "#4172 feature name"
+  },
+  "featureStockCycleCountsDesc": "Plan spot checks of chosen places, items or high-value goods. A due plan makes a count task the counter does without seeing the expected quantities; each difference is approved like any count. Off: no plan runs and no task is made; the ledger is unaffected.",
+  "@featureStockCycleCountsDesc": {
+    "description": "#4295 feature description"
+  },
+  "featureStockCycleCountsTitle": "Cycle counts",
+  "@featureStockCycleCountsTitle": {
+    "description": "#4295 feature name"
+  },
   "featureStockLotsDesc": "Track goods by lot or by expiry date, with a shelf life. Off: no item is tracked by lot, and what was recorded is kept as it is.",
   "@featureStockLotsDesc": {
     "description": "#4169 what the lots and expiry feature does, and what off means"
@@ -16379,6 +16412,14 @@
   "featureStockReorderTitle": "Reorder points",
   "@featureStockReorderTitle": {
     "description": "#4294 feature name"
+  },
+  "featureStockReturnsDesc": "Return goods against the sale or the delivery they came from, or correct a movement. Each return or correction is bounded by the movement it reverses, so the same goods are never returned twice. Off: no return and no correction is offered; the ledger is unaffected.",
+  "@featureStockReturnsDesc": {
+    "description": "#4172 feature description"
+  },
+  "featureStockReturnsTitle": "Stock returns and corrections",
+  "@featureStockReturnsTitle": {
+    "description": "#4172 feature name"
   },
   "featureStockTakeOutDesc": "Take goods out of stock for use or as a loss, with the reason and the lot. Off: no consumption or loss is offered; transfers and receiving are unaffected.",
   "@featureStockTakeOutDesc": {
@@ -32527,6 +32568,10 @@
   "@permAllowsApproveStockAdjustments": {
     "description": "#3628 roles at the desk: one line of what the permission allows"
   },
+  "permAllowsCountStock": "Count the lines of a cycle count task without seeing what the ledger holds: the tasks and the count of each line, and nothing else.",
+  "@permAllowsCountStock": {
+    "description": "#4295 permission description"
+  },
   "permAllowsDeployToDev": "Refresh the development space from production.",
   "@permAllowsDeployToDev": {
     "description": "#3628 roles at the desk: one line of what the permission allows"
@@ -32678,6 +32723,10 @@
   "permApproveStockAdjustments": "Approve stock adjustments",
   "@permApproveStockAdjustments": {
     "description": "a permission in the role matrix (#3824)"
+  },
+  "permCountStock": "Count stock, blind",
+  "@permCountStock": {
+    "description": "#4295 permission name"
   },
   "permDeployToDev": "Deploy to development",
   "@permDeployToDev": {
@@ -37429,6 +37478,18 @@
   "@refusalStockConfig": {
     "description": "#4169 (0836) DKG11: a stock configuration that is not valid, the field and reason in the detail."
   },
+  "refusalStockCountDecided": "This count was already decided and is final. Count again if the figure is still wrong.",
+  "@refusalStockCountDecided": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockCountSelf": "Someone else who may approve adjustments has to apply this count: whoever counted does not approve their own count.",
+  "@refusalStockCountSelf": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockCountStale": "The stock moved since it was counted, so the count is not applied. Count again.",
+  "@refusalStockCountStale": {
+    "description": "#4172 refusal"
+  },
   "refusalStockHistory": "This item has stock movements, which are kept: it cannot be deleted, and its stock unit and tracking stay as they are. Deactivate it, or create a new item.",
   "@refusalStockHistory": {
     "description": "refusal DKG08 (#3824): deleting an item or a movement the ledger keeps"
@@ -37468,6 +37529,18 @@
   "refusalStockPage": "This page request is not valid: ask for 1 to 200 rows, and continue only from the position a page gave.",
   "@refusalStockPage": {
     "description": "#4161 (0833) DKG09: a stock page request that is not valid (size outside 1..200, or a cursor that is not one)."
+  },
+  "refusalStockReturnBeyond": "More than this movement held cannot be returned: part of it was already returned or corrected.",
+  "@refusalStockReturnBeyond": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockReturnChanged": "This return was already recorded with other content. Check the earlier return before sending a new one.",
+  "@refusalStockReturnChanged": {
+    "description": "#4172 refusal"
+  },
+  "refusalStockReturnSource": "A return follows the sale or the delivery it comes from; this movement is not one, or is not corrected here.",
+  "@refusalStockReturnSource": {
+    "description": "#4172 refusal"
   },
   "refusalStockStale": "This was changed by someone else since you opened it. Read it again, then make your change again.",
   "@refusalStockStale": {
@@ -41383,6 +41456,14 @@
   "@settingHintStockAllowNegative": {
     "description": "a workspace setting's hint (#3824)"
   },
+  "settingHintStockCycleCountHighValueMinor": "The value, in minor units of the business currency, from which what a place holds of an item counts as high value for a cycle count plan that has no threshold of its own.",
+  "@settingHintStockCycleCountHighValueMinor": {
+    "description": "#4295 settings: Setting hint."
+  },
+  "settingHintStockCycleCountOverdueDays": "How many days a cycle count task may stay open past its due date before the inbox says it is overdue.",
+  "@settingHintStockCycleCountOverdueDays": {
+    "description": "#4295 settings: Setting hint."
+  },
   "settingHintStockWeighedGoods": "On: a new stock item is proposed in kilograms instead of pieces (a butcher, a bakery, a grocery counter). Any item can still be given another unit.",
   "@settingHintStockWeighedGoods": {
     "description": "#4365 G16 the shop business kind"
@@ -41742,6 +41823,14 @@
   "settingLabelStockAllowNegative": "Stock may go below zero",
   "@settingLabelStockAllowNegative": {
     "description": "a workspace setting's label (#3824)"
+  },
+  "settingLabelStockCycleCountHighValueMinor": "Cycle count: high-value threshold",
+  "@settingLabelStockCycleCountHighValueMinor": {
+    "description": "#4295 settings: Setting label."
+  },
+  "settingLabelStockCycleCountOverdueDays": "Cycle count: overdue after",
+  "@settingLabelStockCycleCountOverdueDays": {
+    "description": "#4295 settings: Setting label."
   },
   "settingLabelStockWeighedGoods": "Goods are sold by weight",
   "@settingLabelStockWeighedGoods": {
@@ -45318,6 +45407,402 @@
   "@stockCostUnknown": {
     "description": "#4161 the cost of this movement was never recorded (not zero)"
   },
+  "stockCountsApply": "Apply",
+  "@stockCountsApply": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockCountsCancel": "Cancel the count",
+  "@stockCountsCancel": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockCountsEmpty": "No count yet.",
+  "@stockCountsEmpty": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockCountsItem": "Item to count",
+  "@stockCountsItem": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockCountsLine": "{item} at {place}: counted {observed} against {baseline} ({difference})",
+  "@stockCountsLine": {
+    "description": "#4172 stock returns and counts screens",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      },
+      "place": {
+        "type": "String"
+      },
+      "observed": {
+        "type": "String"
+      },
+      "baseline": {
+        "type": "String"
+      },
+      "difference": {
+        "type": "String"
+      }
+    }
+  },
+  "stockCountsObserved": "Counted ({unit})",
+  "@stockCountsObserved": {
+    "description": "#4172 stock returns and counts screens",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "stockCountsOpen": "Count",
+  "@stockCountsOpen": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockCountsPlace": "Place",
+  "@stockCountsPlace": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockCountsReason": "Reason (optional)",
+  "@stockCountsReason": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockCountsReject": "Reject",
+  "@stockCountsReject": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockCountsStale": "The stock moved since this was counted: count it again.",
+  "@stockCountsStale": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockCountsStateApplied": "Applied",
+  "@stockCountsStateApplied": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockCountsStateCancelled": "Cancelled",
+  "@stockCountsStateCancelled": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockCountsStateRecorded": "Waiting for approval",
+  "@stockCountsStateRecorded": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockCountsStateRejected": "Rejected",
+  "@stockCountsStateRejected": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockCountsSubmit": "Record the count",
+  "@stockCountsSubmit": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockCountsTitle": "Stock counts",
+  "@stockCountsTitle": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockCycleAddPlan": "Add a plan",
+  "@stockCycleAddPlan": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleBlind": "You count what you find: the system’s figure is not shown, so it cannot sway the count.",
+  "@stockCycleBlind": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleCadence": "How often",
+  "@stockCycleCadence": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleCadenceEvery": "Repeating",
+  "@stockCycleCadenceEvery": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleCadenceOnce": "Once",
+  "@stockCycleCadenceOnce": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleCountObserved": "What you counted ({unit})",
+  "@stockCycleCountObserved": {
+    "description": "#4295 cycle counts",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "stockCycleCountTitle": "Count this line",
+  "@stockCycleCountTitle": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleCounted": "Counted.",
+  "@stockCycleCounted": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleCountedDifference": "Counted. Difference from the ledger: {difference}",
+  "@stockCycleCountedDifference": {
+    "description": "#4295 cycle counts",
+    "placeholders": {
+      "difference": {
+        "type": "String"
+      }
+    }
+  },
+  "stockCycleEveryDays": "Every how many days",
+  "@stockCycleEveryDays": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleHistoryAccuracy": "{count, plural, one{1 count} other{{count} counts}}, {percent} % exact",
+  "@stockCycleHistoryAccuracy": {
+    "description": "#4295 cycle counts",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "stockCycleHistoryEmpty": "Nothing has been counted yet.",
+  "@stockCycleHistoryEmpty": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleHistoryLast": "Last counted {date}",
+  "@stockCycleHistoryLast": {
+    "description": "#4295 cycle counts",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "stockCycleHistoryRow": "{item} · {place}",
+  "@stockCycleHistoryRow": {
+    "description": "#4295 cycle counts",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      },
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "stockCycleIntervalInvalid": "Enter a whole number of days, from 1 to 366.",
+  "@stockCycleIntervalInvalid": {
+    "description": "#4295 a mistake under a plan field"
+  },
+  "stockCycleLineCount": "Count",
+  "@stockCycleLineCount": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleLineCounted": "Counted",
+  "@stockCycleLineCounted": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleLineSkip": "Skip",
+  "@stockCycleLineSkip": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleLineSkipped": "Skipped: {reason}",
+  "@stockCycleLineSkipped": {
+    "description": "#4295 cycle counts",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "stockCycleNoPlans": "No plan yet: nothing is counted on a schedule.",
+  "@stockCycleNoPlans": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleNoTasks": "Nothing to count right now.",
+  "@stockCycleNoTasks": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCyclePlanActive": "In use",
+  "@stockCyclePlanActive": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCyclePlanEvery": "every {count, plural, one{day} other{{count} days}}",
+  "@stockCyclePlanEvery": {
+    "description": "#4295 cycle counts",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "stockCyclePlanItemsCount": "{count, plural, one{1 item} other{{count} items}}",
+  "@stockCyclePlanItemsCount": {
+    "description": "#4295 cycle counts",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "stockCyclePlanName": "Name",
+  "@stockCyclePlanName": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCyclePlanNameRequired": "Name the plan.",
+  "@stockCyclePlanNameRequired": {
+    "description": "#4295 a mistake under a plan field"
+  },
+  "stockCyclePlanNext": "next {date}",
+  "@stockCyclePlanNext": {
+    "description": "#4295 cycle counts",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "stockCyclePlanOff": "not in use",
+  "@stockCyclePlanOff": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCyclePlanOnce": "once",
+  "@stockCyclePlanOnce": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCyclePlanPlaces": "Places (with everything inside them)",
+  "@stockCyclePlanPlaces": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCyclePlanPlacesCount": "{count, plural, one{1 place} other{{count} places}}",
+  "@stockCyclePlanPlacesCount": {
+    "description": "#4295 cycle counts",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "stockCyclePlanScope": "What to count",
+  "@stockCyclePlanScope": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCyclePlanScopeRequired": "Choose what it counts.",
+  "@stockCyclePlanScopeRequired": {
+    "description": "#4295 a mistake under a plan field"
+  },
+  "stockCyclePlanThreshold": "Worth at least ({currency}); empty: the business’s limit",
+  "@stockCyclePlanThreshold": {
+    "description": "#4295 cycle counts",
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "stockCyclePlanTitle": "Cycle count plan",
+  "@stockCyclePlanTitle": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCyclePlanValue": "worth at least {amount}",
+  "@stockCyclePlanValue": {
+    "description": "#4295 cycle counts",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "stockCyclePlanValueSetting": "worth at least the business’s limit",
+  "@stockCyclePlanValueSetting": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleScan": "Scan or type a barcode",
+  "@stockCycleScan": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleScanNone": "No line still to count has this code.",
+  "@stockCycleScanNone": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleScopeHighValue": "High value",
+  "@stockCycleScopeHighValue": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleScopePlaces": "Places",
+  "@stockCycleScopePlaces": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleSkipReason": "Why it is skipped",
+  "@stockCycleSkipReason": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleSkipTitle": "Skip this line",
+  "@stockCycleSkipTitle": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleSkipped": "Skipped.",
+  "@stockCycleSkipped": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleTabHistory": "History",
+  "@stockCycleTabHistory": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleTabPlans": "Plans",
+  "@stockCycleTabPlans": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleTabTasks": "To count",
+  "@stockCycleTabTasks": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleTaskCancelled": "Cancelled",
+  "@stockCycleTaskCancelled": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleTaskComplete": "Complete",
+  "@stockCycleTaskComplete": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleTaskDone": "Every line is counted or skipped: the task is complete.",
+  "@stockCycleTaskDone": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleTaskNoLines": "This task lists nothing to count.",
+  "@stockCycleTaskNoLines": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleTaskProgress": "{left} of {total} still to count",
+  "@stockCycleTaskProgress": {
+    "description": "#4295 cycle counts",
+    "placeholders": {
+      "left": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "stockCycleTaskRow": "{plan} · due {due}",
+  "@stockCycleTaskRow": {
+    "description": "#4295 cycle counts",
+    "placeholders": {
+      "plan": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      }
+    }
+  },
+  "stockCycleTaskTitle": "Count",
+  "@stockCycleTaskTitle": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleThresholdInvalid": "Enter an amount, or leave it empty.",
+  "@stockCycleThresholdInvalid": {
+    "description": "#4295 a mistake under a plan field"
+  },
+  "stockCycleTitle": "Cycle counts",
+  "@stockCycleTitle": {
+    "description": "#4295 cycle counts"
+  },
   "stockDimensionAdd": "Add a dimension",
   "@stockDimensionAdd": {
     "description": "#4169 the stock editors: a label or message"
@@ -46530,6 +47015,141 @@
   "stockReorderToOrderTitle": "What to order",
   "@stockReorderToOrderTitle": {
     "description": "#4294 reorder: a label or a message"
+  },
+  "stockReversalBackTo": "Goods come back to",
+  "@stockReversalBackTo": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalCorrectionOpen": "Correct this movement",
+  "@stockReversalCorrectionOpen": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalCorrectionTitle": "Correct a movement",
+  "@stockReversalCorrectionTitle": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalCustomerOpen": "Return from the customer",
+  "@stockReversalCustomerOpen": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalCustomerTitle": "Return from the customer",
+  "@stockReversalCustomerTitle": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalEntry": "{kind}: {quantity} {unit}",
+  "@stockReversalEntry": {
+    "description": "#4172 stock returns and counts screens",
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "stockReversalFully": "This movement is fully reversed.",
+  "@stockReversalFully": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalKindCorrection": "Corrected",
+  "@stockReversalKindCorrection": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalKindCustomer": "Returned by the customer",
+  "@stockReversalKindCustomer": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalKindSupplier": "Returned to the supplier",
+  "@stockReversalKindSupplier": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalLeavesFrom": "Goods leave from",
+  "@stockReversalLeavesFrom": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalMoneyInvoice": "This movement follows an invoice: any refund or credit note is made in the invoice itself.",
+  "@stockReversalMoneyInvoice": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalMoneyUnavailable": "Whether a credit exists for this movement is not shown here: the money is corrected apart.",
+  "@stockReversalMoneyUnavailable": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalMoreThanRemains": "At most {quantity} {unit} can still be reversed.",
+  "@stockReversalMoreThanRemains": {
+    "description": "#4172 stock returns and counts screens",
+    "placeholders": {
+      "quantity": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "stockReversalNoMoney": "No payment, refund or credit is made by this. If money is involved, correct it in the invoice or the supplier payment, apart.",
+  "@stockReversalNoMoney": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalNote": "Note (optional)",
+  "@stockReversalNote": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalRemaining": "Can still be reversed: {quantity} {unit} · already reversed: {reversed}",
+  "@stockReversalRemaining": {
+    "description": "#4172 stock returns and counts screens",
+    "placeholders": {
+      "quantity": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      },
+      "reversed": {
+        "type": "String"
+      }
+    }
+  },
+  "stockReversalSection": "Returns and corrections",
+  "@stockReversalSection": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalSource": "{item}: {quantity} {unit}, {from} → {to}",
+  "@stockReversalSource": {
+    "description": "#4172 stock returns and counts screens",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "stockReversalSubmit": "Record",
+  "@stockReversalSubmit": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalSupplierOpen": "Return to the supplier",
+  "@stockReversalSupplierOpen": {
+    "description": "#4172 stock returns and counts screens"
+  },
+  "stockReversalSupplierTitle": "Return to the supplier",
+  "@stockReversalSupplierTitle": {
+    "description": "#4172 stock returns and counts screens"
   },
   "stockSettingsElsewhere": "Stock settings are kept on the Stock settings page.",
   "@stockSettingsElsewhere": {

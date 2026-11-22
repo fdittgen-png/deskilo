@@ -132,6 +132,55 @@ Three reads (`supabase/migrations/0865_stock_goods_trace.sql`, #4173): `stock_go
 
 Evidence: `supabase/tests/database/504_stock_goods_trace.sql` (the whole chain with two bills, one payment over both and a reversed allocation; known, known-zero and unknown cost; a reader of the stock only gets the physical trace and nothing of the supplier leaks; the same unavailable answer for a real and an invented document; purchases off and back on; the three documents reaching the goods, a page and its cursor; the refusals; the value and a backdated movement; nothing written).
 
+## Returns and corrections
+
+Behind `stockReturns` (under `stockManagement`, off by default). Made with `manageStock`, read with `viewStock` or `manageStock`; reversing an adjustment needs `approveStockAdjustments`; an assistant session does none of it.
+
+| question | answer |
+|---|---|
+| What is a return? | `stock_returns`: one logical physical event with a stable `return_id` (per business), a kind (`customer`, `supplier`, `correction`), the digest of its content and its result; immutable. Each line is a `stock_reversals` row with its own stable `return_line_id`, the source movement it reverses, the quantity (in the item's inventory unit) and the movement it wrote; immutable |
+| What bounds it? | the sum of every reversal ever made on a source movement never exceeds that movement's quantity: the source row is locked while the previous reversals are summed (items first, then the source movements, each in id order), so two returns with different identities cannot return more than there was (DKG17). The source row and its frozen cost are never edited |
+| What is a customer return? | from the customer place of a sale to a real place chosen, in the original item, variant and lot, at that lot's frozen unit cost (DKG18 for a source that is not a sale; DKG05 for a virtual or unknown place) |
+| What is a supplier return? | from the real place where the goods are now, to the supplier place of the receipt, in that receipt's lot: the on-hand quantity falls once (DKG03 when it is not there) and the receipt is not subtracted a second time (DKG18 for a source that is not a receipt) |
+| What is a correction? | a movement back (reason `correction`): from the place the source went to, to the place it came from. A correction of a correction names the earlier correction's movement as its source, so the chain is explicit. The opening and the in-transit legs of a transfer are not corrected here; reversing an adjustment needs `approveStockAdjustments` |
+| How is a lost reply recovered? | by the identities: the same request id with the same body answers what it answered; the same `return_id` under a new request id answers the recorded result and writes nothing; the same `return_id` with other content, or a line id of another return, is refused (DKG16) |
+| What about money? | none is made: no payment, refund, credit, payable settlement or posting. A return names the movement it follows (and so the sale or delivery); a payment reversal alone returns no goods |
+| What is read? | `stock_reversible_v1`: for movements, the quantity, what was reversed, what remains and the reversals |
+
+Evidence: `supabase/tests/database/505_stock_returns.sql` (a return of 3, repeated under a new request id; a changed quantity under the finalized identity; a line id of another return; a distinct return of the remaining 7; beyond the sale refused; a return that re-enters the original lot at its frozen cost; the wrong kind of source and a virtual place; a supplier return that lowers the on-hand once and is bounded by the receipt; a correction and a correction of a correction; the rights, an assistant, another business, the feature off; immutability) and `scripts/stock_transfer_race.sh` section F (two distinct returns of 6 of a sale of 10: the second waits and is refused, 6 returned once).
+
+## Stock counts
+
+Behind `stockCounts` (under `stockManagement`, off by default). Recorded with `manageStock`, decided with `approveStockAdjustments`; an assistant session does none of it.
+
+| question | answer |
+|---|---|
+| What is a count? | `stock_counts`: the scope (item, variant, lot, real place), the observed quantity, the ledger's quantity there when it was counted (`baseline_quantity`), how many movements had touched the scope (`baseline_moves`; the ledger is append-only, so only a growing number says it moved), the author and a reason. It has a stable `count_id` per business, apart from the transport request id |
+| What does recording do? | nothing moves. The same count sent again, under the same request id or a new one, answers what was recorded; other content under the same `count_id` is refused (DKG16). A scope names a variant where the item has variants (DKG12) and a lot where it is tracked by lot (DKG06) |
+| How is a count decided? | `apply`, `reject` or `cancel` (`stock_count_decide_v1`). Apply and reject need `approveStockAdjustments`; a count is cancelled by its author or by whoever may approve. A decided count is final (DKG19); the same decision sent again answers the same result and posts nothing more |
+| What does apply post? | exactly one adjustment movement of the difference, to or from the loss place, in the scope's lot and variant, and only if no movement has touched the scope since the count (otherwise DKG20: the stock moved, count again; nothing is overwritten, whoever approves). A difference of zero applies with no movement. Reject and cancel post nothing |
+| What about a one-person business? | whoever holds both rights records and applies the count themselves when no OTHER active member may approve adjustments; the author and the approver are both kept. While another member may approve, whoever counted does not apply their own count (DKG21) |
+| What about an item with no lots? | an item not tracked by lot is counted as a whole: a cost lot a receipt put on it is part of the baseline, and a decrease is taken across its lots, oldest first |
+| Can the generic move make an adjustment? | only for whoever may approve adjustments: `stock_move_v1` with the reason `adjustment` needs `approveStockAdjustments` on top of `manageStock`. The shelf count of an item is already refused once the ledger exists (DKG13) |
+| What is read? | `stock_counts_v1`: each count with whether it is stale (recorded, and its scope has moved) |
+
+Evidence: `supabase/tests/database/506_stock_counts.sql` (a clerk records and applies nothing; the owner applies exactly the difference; the same decision again answers the same; a decided count is final; a stale count refused even for the same person, then a fresh one applied; reject, cancel and a zero difference move nothing; a variant and a lot are part of the scope; the generic adjustment needs the right to approve; rights, another business, an assistant, the feature off; immutability) and `scripts/stock_transfer_race.sh` section G (two applies of one count: one adjustment).
+
+## Cycle counts
+
+Behind `stockCycleCounts` (under `stockCounts`, off by default). Planned and counted with `manageStock`; the approval is `stockCounts`'s; an assistant session does none of it.
+
+| question | answer |
+|---|---|
+| What is a plan? | `stock_count_plans`: a name, a scope (`places`: these places and every place inside them; `items`: these items in every real place; `high_value`: what a place holds of an item is worth at least a threshold, the quantity times the unit cost of its lot), a schedule (every `interval_days` from `next_due_on`, or once) and whether it is active. The threshold is the plan's own, else the setting `stock.cycle_count_high_value_minor`; the days of grace of an overdue task are `stock.cycle_count_overdue_days`; both have a place in the settings and in the setup questionnaire |
+| What makes a task? | `stock_cycle_counts_due()` (a job every hour, and callable by the service role): one task per plan and due day, in the business's own day (`workspace_today`), with a line for every non-zero balance of the scope at a real, active place; then the plan moves on (never into the past) or, with no interval, becomes inactive. A second run makes nothing; two runs at once skip the plan the first holds |
+| What does the counter see? | `stock_count_task_v1`: each line (item, variant, lot, place, state), never a quantity: no baseline, no expected figure |
+| What does counting do? | `stock_cycle_count_line_v1` records a count of `stock_counts` whose stable id is the line's: the stock revision it was counted against is recorded there; the approval and the one idempotent adjustment are that leaf's, so a movement between the count and the approval makes it stale (DKG20) and nothing here moves stock. A line is skipped with a reason (1 to 300 characters); a task is complete when every line is counted or skipped, and takes nothing more (DKG19) |
+| What is overdue? | an open task whose due day plus `stock.cycle_count_overdue_days` has passed: one inbox event `stock_count_overdue` per task (the owner is its actor and subject; read with `manageStock`; nobody decides it); it ends when the task is complete or cancelled |
+| What is the history? | `stock_count_history_v1`: per item and place, when it was last counted, how many counts, how many exact |
+
+Evidence: `supabase/tests/database/507_stock_cycle_counts.sql` (plans and their refusals; one task per due plan, none twice; the business's own day; places with sub-places, items, high value; the blind task; counting, a stale count, skipping with a reason, completion; one overdue notice that ends; history; rights, another business, an assistant, the feature off) and `scripts/stock_transfer_race.sh` section H (two runs of the job at once: one task).
+
 ## States and transitions
 
 Declared states: `start`, `open`, `complete`.

@@ -716,6 +716,38 @@ Ware mit **unbekannten** Kosten (eine Charge ohne Kosten oder Ware ohne Charge) 
 
 Öffnen Sie eine Bewegung (**Lager → Bewegungen**) und lesen Sie **Woher es kam**: den Wareneingang, die Bestellung, die mit ihr verknüpften Lieferantenrechnungen, was jede schuldet und die Zahlungen und Stornos, die sie ausgleichen. Gezeigt wird nur, was erfasst ist; nichts wird über Name, Datum oder Betrag zugeordnet. Ein Teil, den Sie nicht sehen dürfen, sagt *wird Ihnen nicht angezeigt* (das heißt nicht „unbezahlt“); ein Teil ohne Erfassung sagt *nicht verknüpft*; eine gekürzte Liste sagt es. Eine Rechnung zu verknüpfen ändert nie, was die Ware kostet. Sie zu öffnen ändert nichts.
 
+<!-- anchor: user.money.stock.reversals -->
+### Rückgaben, Korrekturen und Zählungen
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie wollen Ware zurücknehmen, eine Bewegung rückgängig machen oder eine falsche Zahl im Regal berichtigen, ohne die Geschichte zu ändern.
+
+Öffnen Sie eine Bewegung unter **Lager → Bewegungen**. Wo die Funktion *Rückgaben und Korrekturen* an ist und Ihre Rolle Ware bewegen darf, sagt die Seite, wie viel dieser Bewegung noch rückgängig gemacht werden kann, und bietet an: **Rückgabe vom Kunden** (bei einem Verkauf), **Rückgabe an den Lieferanten** (bei einer Lieferung) oder **Diese Bewegung korrigieren** (bei den übrigen). Das Formular zeigt vor der Bestätigung, was bewegt wurde und was bleibt. Eine Rückgabe an den Lieferanten verlässt den Ort, an dem die Ware jetzt liegt; Ware vom Kunden kommt an den Ort zurück, den Sie wählen. Eine Korrektur ist eine Gegenbewegung, und eine Korrektur kann selbst korrigiert werden.
+
+**Zählungen.** Wo die Funktion *Bestandszählungen* an ist, listet **Lager → Bestandszählungen** auf, was gegen das Buch gezählt wurde. **Zählen** erfasst einen Artikel an einem Ort und bewegt nichts: Die Zählung wartet auf jemanden, der Anpassungen genehmigen darf, und sagt das. Die Genehmigung wendet genau die Differenz an, und nur wenn sich der Bestand seit der Zählung nicht bewegt hat; sonst verlangt sie eine neue Zählung. Wer gezählt hat, genehmigt die eigene Zählung nicht, solange es jemand anderen gibt; der Inhaber eines Ein-Personen-Unternehmens tut beides.
+
+**Gut zu wissen**
+
+- Eine Rückgabe oder Korrektur übersteigt nie, was die rückgängig gemachte Bewegung erlaubt, wie oft sie auch gesendet wird.
+- Dadurch wird nichts bezahlt, erstattet oder gutgeschrieben: Geht es um Geld, korrigieren Sie es in der Rechnung oder der Lieferantenzahlung.
+- Dasselbe Formular nach einer verlorenen Antwort erneut zu senden, erfasst es nur einmal.
+
+<!-- anchor: user.money.stock.cycle -->
+### Zyklische Zählungen
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie möchten Teile des Lagers nach Zeitplan prüfen, während der Laden geöffnet bleibt, ohne eine vollständige Inventur.
+
+Öffnen Sie **Lager → Zyklische Zählungen** (die Funktionen *Lagerzählungen* und *Zyklische Zählungen* müssen aktiv sein). Die Seite hat bis zu drei Reiter.
+
+- **Zu zählen** listet die Aufgaben. Wer zählen darf (oder das Lager verwaltet), öffnet eine Aufgabe und zählt sie **blind**: Jede Zeile nennt, was und wo zu zählen ist, nie, was der Buchbestand erwartet, damit die Zahl die Zählung nicht beeinflusst. Scannen oder tippen Sie einen Barcode, um die Zeile zu finden, dann **Zählen** und geben ein, was Sie vorgefunden haben, oder **Überspringen** mit einem Grund. Wer nur zählen darf, erfährt, dass die Zeile gezählt ist, sonst nichts; wer das Lager verwaltet, erfährt die Abweichung. Die Aufgabe ist abgeschlossen, wenn jede Zeile gezählt oder übersprungen ist.
+- **Pläne** (für wen das Lager verwaltet) sagen, was und wann gezählt wird: *Orte* (mit allem darin), *Artikel* oder *Hoher Wert* (Ware im Wert von mindestens einer Grenze, Ihrer oder der des Unternehmens), einmal oder alle n Tage ab einem Fälligkeitstag. Ist ein Plan fällig, erzeugt er eine Aufgabe mit seinen Zeilen; derselbe Tag erzeugt nie zwei.
+- **Verlauf** sagt für jeden Artikel an jedem Ort, wann er zuletzt gezählt wurde und wie viele Zählungen exakt waren.
+
+Eine gezählte Zeile ist eine Zählung der *Lagerzählungen*: Sie wartet auf jemanden, der Anpassungen genehmigen darf, und nur eine genehmigte Zählung ändert einen Bestand, genau um ihre Abweichung und nur, wenn sich das Lager seither nicht bewegt hat. Eine Aufgabe, die nach den Überfälligkeitstagen des Unternehmens noch offen ist, löst eine Meldung im Posteingang aus, die diese Seite öffnet; sie endet, wenn die Aufgabe abgeschlossen ist.
+
 <!-- anchor: user.money.amounts -->
 ### Wie Beträge angezeigt werden
 

@@ -18,9 +18,10 @@ void main() {
   // 34→35 (2026-11-03): #3278 managePrivacy — personal data and rights requests.
   // 35→38 (2026-11-13): #3824 viewStock, manageStock, approveStockAdjustments.
   // 38→39 (2026-11-20): #4164 manageBillingCustomers — the billing customers.
-  test('the catalog carries 39 permissions, wire names equal to Dart names',
+  // 39→40 (2026-11-22): #4295 countStock — the blind count of a cycle count task.
+  test('the catalog carries 40 permissions, wire names equal to Dart names',
       () {
-    expect(WorkspacePermission.values, hasLength(39));
+    expect(WorkspacePermission.values, hasLength(40));
     for (final p in WorkspacePermission.values) {
       expect(p.wireName, p.name);
     }
@@ -64,6 +65,8 @@ void main() {
       WorkspacePermission.approveStockAdjustments,
       // #4164 — billing customers are managed by who is given the right.
       WorkspacePermission.manageBillingCustomers,
+      // #4295 — the blind count is given by the owner, a role or the matrix.
+      WorkspacePermission.countStock,
     ]) {
       expect(admin, isNot(contains(p)), reason: '$p stays with the owner');
     }
