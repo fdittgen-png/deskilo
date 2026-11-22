@@ -103,6 +103,7 @@ List<NavGroup> navGroupsOf(
     pick('stock', labels.permModuleStock, Icons.inventory_2_outlined, all, {
       'drawer-stock',
       'drawer-stock-movements',
+      'drawer-stock-transfers',
       'drawer-stock-items',
       'drawer-stock-places',
       'drawer-stock-settings',

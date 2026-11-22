@@ -1,0 +1,195 @@
+{
+  "@@locale": "it",
+  "stockTransfersTitle": "Trasferimenti",
+  "@stockTransfersTitle": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockTransfersOnTheWay": "In viaggio",
+  "@stockTransfersOnTheWay": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockTransfersEmpty": "Nulla è in viaggio tra le sedi.",
+  "@stockTransfersEmpty": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockTransferRoute": "{from} → {to}",
+  "@stockTransferRoute": {
+    "description": "#4170 transfers and take-out: a label or message",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTransferLoadedOn": "Caricato il {date}",
+  "@stockTransferLoadedOn": {
+    "description": "#4170 transfers and take-out: a label or message",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTransferStatusPartly": "Ricevuto in parte",
+  "@stockTransferStatusPartly": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockTransferLine": "{item}: {left} {unit} in viaggio su {loaded}",
+  "@stockTransferLine": {
+    "description": "#4170 transfers and take-out: a label or message",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      },
+      "left": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      },
+      "loaded": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTransferReceive": "Ricevere",
+  "@stockTransferReceive": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockTransferReceiveTitle": "Ricevere merce",
+  "@stockTransferReceiveTitle": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockTransferReceiveTo": "Collocare su",
+  "@stockTransferReceiveTo": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockTransferReceiveQuantity": "{item}: ricevuto ({unit})",
+  "@stockTransferReceiveQuantity": {
+    "description": "#4170 transfers and take-out: a label or message",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTransferReceiveHint": "Ciò che si lascia da parte resta in viaggio e resta visibile.",
+  "@stockTransferReceiveHint": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockMoveOpen": "Spostare merce",
+  "@stockMoveOpen": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockMoveFrom": "Prelevare da",
+  "@stockMoveFrom": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockMoveQuantity": "Quantità ({unit})",
+  "@stockMoveQuantity": {
+    "description": "#4170 transfers and take-out: a label or message",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "stockMoveSameSite": "I due luoghi sono nella stessa sede: la merce viene spostata subito.",
+  "@stockMoveSameSite": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockMoveOtherSite": "I luoghi sono in sedi diverse: la merce è in viaggio finché l’altra sede non la riceve.",
+  "@stockMoveOtherSite": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockMoveSubmit": "Spostare",
+  "@stockMoveSubmit": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockTakeOutOpen": "Prelevare merce",
+  "@stockTakeOutOpen": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockTakeOutUsed": "Consumato dall’attività",
+  "@stockTakeOutUsed": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockTakeOutLoss": "Perso o stornato",
+  "@stockTakeOutLoss": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockTakeOutSubmit": "Prelevare",
+  "@stockTakeOutSubmit": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockReasonReasonPlaces": "Questi luoghi non si adattano a questo tipo di movimento.",
+  "@stockReasonReasonPlaces": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockReasonTransitIsSystem": "Il luogo «in viaggio» appartiene ai trasferimenti tra sedi.",
+  "@stockReasonTransitIsSystem": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockReasonTransferNeedsTransit": "Tra due sedi la merce viene prima caricata e poi ricevuta dall’altra parte.",
+  "@stockReasonTransferNeedsTransit": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockReasonLotExpired": "Questo lotto è scaduto: prelevarlo richiede una conferma esplicita.",
+  "@stockReasonLotExpired": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockReasonOneSource": "Un trasferimento ha un solo luogo di prelievo.",
+  "@stockReasonOneSource": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockReasonReceiveOver": "Non si può ricevere più di ciò che è ancora in viaggio.",
+  "@stockReasonReceiveOver": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockReasonWrongSite": "La merce viene ricevuta su un luogo della sede di destinazione.",
+  "@stockReasonWrongSite": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockReasonSameSite": "I due luoghi sono nella stessa sede: spostare invece la merce in un solo passaggio.",
+  "@stockReasonSameSite": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockReasonTransferUnknown": "Questo trasferimento non appartiene a questa attività.",
+  "@stockReasonTransferUnknown": {
+    "description": "#4170 transfers and take-out: a label or message"
+  },
+  "refusalMainStoreShort": "Il magazzino principale contiene {held} dei {asked} richiesti da questa vendita. Nulla è stato prelevato e la vendita non è stata confermata.",
+  "@refusalMainStoreShort": {
+    "description": "#4170 a sale refused for what the main store holds",
+    "placeholders": {
+      "held": {
+        "type": "String"
+      },
+      "asked": {
+        "type": "String"
+      }
+    }
+  },
+  "refusalMainStoreExpired": "Il magazzino principale contiene solo {held} dei {asked} richiesti da questa vendita che siano vendibili: il resto è scaduto. Nulla è stato prelevato e la vendita non è stata confermata.",
+  "@refusalMainStoreExpired": {
+    "description": "#4170 a sale refused for what the main store holds",
+    "placeholders": {
+      "held": {
+        "type": "String"
+      },
+      "asked": {
+        "type": "String"
+      }
+    }
+  },
+  "refusalOpenStock": "Aprire il magazzino",
+  "@refusalOpenStock": {
+    "description": "#4170 a sale refused for what the main store holds"
+  }
+}

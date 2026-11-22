@@ -26,6 +26,13 @@ extension StockEntries on DrawerEntries {
           () => go('/stock/movements'),
           route: '/stock/movements',
         ),
+        DrawerEntry(
+          'drawer-stock-transfers',
+          Icons.local_shipping_outlined,
+          l10n.stockTransfersTitle,
+          () => go('/stock/transfers'),
+          route: '/stock/transfers',
+        ),
         DrawerEntry('drawer-stock-items', Icons.category_outlined, l10n.stockItemsTitle, () => go('/stock/items'), route: '/stock/items'),
         DrawerEntry('drawer-stock-places', Icons.place_outlined, l10n.stockPlacesTitle, () => go('/stock/places'), route: '/stock/places'),
       ],

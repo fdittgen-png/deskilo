@@ -18,6 +18,7 @@ import 'lint_sources.dart';
 /// Measured routes no desk guard opens yet, each with the issue that will
 /// guard it (or why it never draws a page of its own).
 const _notGuardedYet = <String, String>{
+  '/stock/transfers': '#4170 a list of cards: its widget tests measure it at phone and desk widths; joins the guards with the stock guard',
   // A record at its address under a guarded list.
   // The purchase orders: guarded by their own leaf.
   // Each had two causes, fixed on two branches (#3946 its Tab order, #3947

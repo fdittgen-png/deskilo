@@ -44,9 +44,12 @@ import '../../features/workspace/providers/workspace_fields_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../../features/workspace/providers/workspace_roles_providers.dart';
 import '../storage/resume_place_store.dart';
+import '../time/clock.dart';
 import 'data/bank_statement_repository.dart';
 import 'data/demo_booking_prices.dart';
 import 'data/demo_stock_config_commands.dart';
+import 'data/demo_stock_ledger.dart';
+import 'data/demo_stock_operations.dart';
 import 'data/demo_stock_queries.dart';
 import 'data/demo_stock_receiving_commands.dart';
 import 'data/finance_kpi_repository.dart';
@@ -280,7 +283,7 @@ List<Override> _moneyPortOverrides(FakeMoneyRepository Function(Ref ref) money) 
   // #4161 — the reference business keeps a small shop stock; no other Demo
   // business keeps one.
   stockQueriesProvider.overrideWith(
-    (ref) => const DemoStockQueries(demoFirstSpaceId),
+    (ref) => DemoStockQueries(ref.watch(_demoStockLedgerProvider)),
   ),
   // #4169 — and edits its units, codes and places in memory.
   stockConfigCommandsProvider.overrideWith(
@@ -292,9 +295,27 @@ List<Override> _moneyPortOverrides(FakeMoneyRepository Function(Ref ref) money) 
       demoFirstSpaceId,
       ref.watch(purchaseOrderRepositoryProvider) as FakePurchaseOrderRepository,
       ref.watch(stockConfigCommandsProvider) as DemoStockConfigCommands,
+      ref.watch(_demoStockLedgerProvider),
+    ),
+  ),
+  // #4170 — and moves, transfers between its sites and takes out of that same stock.
+  stockOperationsProvider.overrideWith(
+    (ref) => DemoStockOperations(
+      ref.watch(_demoStockLedgerProvider),
+      ref.watch(stockConfigCommandsProvider) as DemoStockConfigCommands,
     ),
   ),
 ];
+
+/// #4170 — the Demo's ONE goods ledger: the Stock screen's reads, a delivery
+/// put away and every stock command share it, so what one does the others show.
+final _demoStockLedgerProvider = Provider<DemoStockLedger>(
+  (ref) => DemoStockLedger(
+    demoFirstSpaceId,
+    ref.watch(stockConfigCommandsProvider) as DemoStockConfigCommands,
+    ref.watch(clockProvider).now,
+  ),
+);
 
 /// #2470 — the HMRC port is the Demo's: nothing leaves the process, so the
 /// browser's fraud-prevention values are synthetic too and the journey is the

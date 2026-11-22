@@ -28707,12 +28707,25 @@ class AppLocalizationsFr extends AppLocalizations {
       'Cet élément a changé entre-temps. Rouvrez-le pour voir où il en est.';
 
   @override
+  String refusalMainStoreExpired(String held, String asked) {
+    return 'Le magasin principal ne contient que $held sur les $asked que cette vente demande qui soient vendables : le reste a dépassé sa date. Rien n’a été prélevé et la vente n’a pas été confirmée.';
+  }
+
+  @override
+  String refusalMainStoreShort(String held, String asked) {
+    return 'Le magasin principal contient $held sur les $asked que cette vente demande. Rien n’a été prélevé et la vente n’a pas été confirmée.';
+  }
+
+  @override
   String get refusalMemberReturnsAsNew =>
       'Un membre parti revient comme nouveau membre : rendez-le actif pour l’accueillir de nouveau.';
 
   @override
   String get refusalMoneyLocaleLocked =>
       'La devise et le pays sont figés dès que l\'espace a émis un document ou enregistré de l\'argent. Rien n\'a été enregistré.';
+
+  @override
+  String get refusalOpenStock => 'Ouvrir le stock';
 
   @override
   String get refusalPermission =>
@@ -35311,6 +35324,28 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get stockMoveFrom => 'Prélever sur';
+
+  @override
+  String get stockMoveOpen => 'Déplacer des marchandises';
+
+  @override
+  String get stockMoveOtherSite =>
+      'Les emplacements sont dans des sites différents : les marchandises sont en route jusqu’à leur réception par l’autre site.';
+
+  @override
+  String stockMoveQuantity(String unit) {
+    return 'Quantité ($unit)';
+  }
+
+  @override
+  String get stockMoveSameSite =>
+      'Les deux emplacements sont dans un même site : les marchandises sont déplacées immédiatement.';
+
+  @override
+  String get stockMoveSubmit => 'Déplacer';
+
+  @override
   String get stockMovementNotFound =>
       'Ce mouvement n’existe pas, ou vous n’avez pas le droit de le voir.';
 
@@ -35553,6 +35588,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Cet article est suivi par lot : indiquez le code du lot (64 caractères au plus).';
 
   @override
+  String get stockReasonLotExpired =>
+      'Ce lot a dépassé sa date : le prélever demande une confirmation explicite.';
+
+  @override
   String get stockReasonLotGroupConflict =>
       'Les parties d’un même lot doivent s’accorder sur son code, sa date et son coût.';
 
@@ -35569,6 +35608,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get stockReasonNameMalformed => 'Un nom compte de 1 à 60 caractères.';
+
+  @override
+  String get stockReasonOneSource =>
+      'Un transfert n’a qu’un emplacement de départ.';
 
   @override
   String get stockReasonOther => 'Ceci n’est pas valide.';
@@ -35592,12 +35635,24 @@ class AppLocalizationsFr extends AppLocalizations {
       'Une quantité est un nombre supérieur à zéro avec six décimales au plus.';
 
   @override
+  String get stockReasonReasonPlaces =>
+      'Ces emplacements ne conviennent pas à ce type de mouvement.';
+
+  @override
   String get stockReasonReceiptUnknown =>
       'Cette livraison n’est pas une livraison de cette entreprise.';
 
   @override
+  String get stockReasonReceiveOver =>
+      'On ne peut pas réceptionner plus que ce qui est encore en route.';
+
+  @override
   String get stockReasonRegistryUnit =>
       'Cette unité appartient au système et ne peut pas être redéfinie.';
+
+  @override
+  String get stockReasonSameSite =>
+      'Les deux emplacements sont dans un même site : déplacez plutôt les marchandises en une seule étape.';
 
   @override
   String get stockReasonStockOnHand => 'Il y a du stock : sortez-le d’abord.';
@@ -35615,6 +35670,18 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get stockReasonTrackingUnsupported => 'Ce suivi n’est pas disponible.';
+
+  @override
+  String get stockReasonTransferNeedsTransit =>
+      'Entre deux sites, les marchandises sont d’abord chargées puis réceptionnées de l’autre côté.';
+
+  @override
+  String get stockReasonTransferUnknown =>
+      'Ce transfert n’est pas de cette entreprise.';
+
+  @override
+  String get stockReasonTransitIsSystem =>
+      'L’emplacement « en route » appartient aux transferts entre sites.';
 
   @override
   String get stockReasonUnitDuplicate => 'Cette unité est listée deux fois.';
@@ -35658,6 +35725,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Cette variante n’est pas une variante de cet article.';
 
   @override
+  String get stockReasonWrongSite =>
+      'Les marchandises sont réceptionnées sur un emplacement du site de destination.';
+
+  @override
   String get stockSettingsElsewhere =>
       'Les réglages du stock se tiennent sur la page Réglages du stock.';
 
@@ -35681,6 +35752,68 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get stockTabOnHand => 'En stock';
+
+  @override
+  String get stockTakeOutLoss => 'Perdu ou passé en perte';
+
+  @override
+  String get stockTakeOutOpen => 'Sortir des marchandises';
+
+  @override
+  String get stockTakeOutSubmit => 'Sortir';
+
+  @override
+  String get stockTakeOutUsed => 'Utilisé par l’entreprise';
+
+  @override
+  String stockTransferLine(
+    String item,
+    String left,
+    String unit,
+    String loaded,
+  ) {
+    return '$item : $left $unit en route sur $loaded';
+  }
+
+  @override
+  String stockTransferLoadedOn(String date) {
+    return 'Chargé le $date';
+  }
+
+  @override
+  String get stockTransferReceive => 'Réceptionner';
+
+  @override
+  String get stockTransferReceiveHint =>
+      'Ce que vous laissez de côté reste en route et reste visible.';
+
+  @override
+  String stockTransferReceiveQuantity(String item, String unit) {
+    return '$item : reçu ($unit)';
+  }
+
+  @override
+  String get stockTransferReceiveTitle => 'Réceptionner des marchandises';
+
+  @override
+  String get stockTransferReceiveTo => 'Placer sur';
+
+  @override
+  String stockTransferRoute(String from, String to) {
+    return '$from → $to';
+  }
+
+  @override
+  String get stockTransferStatusPartly => 'Reçu en partie';
+
+  @override
+  String get stockTransfersEmpty => 'Rien n’est en route entre vos sites.';
+
+  @override
+  String get stockTransfersOnTheWay => 'En route';
+
+  @override
+  String get stockTransfersTitle => 'Transferts';
 
   @override
   String get stockVariantPrice => 'Prix propre (unités mineures, facultatif)';
