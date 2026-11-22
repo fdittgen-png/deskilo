@@ -35034,6 +35034,17 @@ class AppLocalizationsIt extends AppLocalizations {
   String get stockEnteredLabel => 'Inserito';
 
   @override
+  String get stockItemsEmpty =>
+      'Nessun articolo per ora. Un articolo compare quando un servizio o un articolo del fornitore è tenuto in magazzino.';
+
+  @override
+  String get stockItemsIntro =>
+      'Gli articoli che l\'azienda tiene e vende: le impostazioni, le varianti e gli articoli del fornitore di ciascuno.';
+
+  @override
+  String get stockItemsTitle => 'Articoli';
+
+  @override
   String stockLotLabel(String code) {
     return 'Lotto $code';
   }
@@ -35476,6 +35487,22 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get stockReasonWrongSite =>
       'La merce viene ricevuta su un luogo della sede di destinazione.';
+
+  @override
+  String get stockSettingsElsewhere =>
+      'Le impostazioni del magazzino si tengono nella pagina Impostazioni del magazzino.';
+
+  @override
+  String get stockSettingsFeatures => 'Funzioni del magazzino';
+
+  @override
+  String get stockSettingsOpen => 'Apri le impostazioni del magazzino';
+
+  @override
+  String get stockSettingsTitle => 'Impostazioni del magazzino';
+
+  @override
+  String get stockSettingsValues => 'Regole del magazzino';
 
   @override
   String get stockStoredLabel => 'Registrato';

@@ -35150,6 +35150,17 @@ class AppLocalizationsFr extends AppLocalizations {
   String get stockEnteredLabel => 'Saisi';
 
   @override
+  String get stockItemsEmpty =>
+      'Aucun article pour l\'instant. Un article apparaît lorsqu\'un service ou un article fournisseur est tenu en stock.';
+
+  @override
+  String get stockItemsIntro =>
+      'Les articles que l\'entreprise tient et vend : les réglages, les variantes et les articles fournisseur de chacun.';
+
+  @override
+  String get stockItemsTitle => 'Articles';
+
+  @override
   String stockLotLabel(String code) {
     return 'Lot $code';
   }
@@ -35591,6 +35602,22 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get stockReasonWrongSite =>
       'Les marchandises sont réceptionnées sur un emplacement du site de destination.';
+
+  @override
+  String get stockSettingsElsewhere =>
+      'Les réglages du stock se tiennent sur la page Réglages du stock.';
+
+  @override
+  String get stockSettingsFeatures => 'Fonctions du stock';
+
+  @override
+  String get stockSettingsOpen => 'Ouvrir les réglages du stock';
+
+  @override
+  String get stockSettingsTitle => 'Réglages du stock';
+
+  @override
+  String get stockSettingsValues => 'Règles du stock';
 
   @override
   String get stockStoredLabel => 'Enregistré';

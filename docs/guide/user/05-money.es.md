@@ -622,6 +622,21 @@ El tiempo que un presupuesto nuevo permanece válido cuando no indica fecha de f
 
 En un presupuesto enviado, **Compartir el PDF** abre la oferta como documento: un presupuesto, con su propia referencia y su plazo de validez, el cliente, las líneas y lo que suman tal como se fijaron al enviarlo (el neto, el IVA por tipo y el total). Nunca es una factura y no lleva número de factura. Puede verlo, guardarlo o compartirlo.
 
+<!-- anchor: user.money.stock -->
+### Existencias
+
+**Público:** Administrador/a · Propietario
+
+Abra **Existencias** en el menú, justo debajo de **Compras y proveedores**. Todo lo relativo a artículos y existencias se alcanza allí, y solo allí se configura.
+
+- **Existencias** muestra lo que hay por artículo, variante, lote y ubicación, con la cantidad exacta.
+- **Movimientos** es el registro de cada movimiento; abra uno para ver qué se movió, tal como se guardó y tal como se introdujo.
+- **Artículos** es el registro de artículos: los ajustes de existencias de cada uno, sus variantes y sus artículos de proveedor.
+- **Ubicaciones** reúne los sitios, zonas, estantes y cajones con sus direcciones.
+- **Ajustes de existencias** guarda cada parámetro de existencias en una página: las funciones de existencias con sus interruptores y las reglas de existencias. Un ajuste de existencias que encuentre en otro lugar enlaza aquí.
+
+Una entrada aparece solo cuando su función está activada y su rol permite su página: quien solo puede mirar ve las páginas, no los ajustes. Compras conserva lo que se compra; Ventas, lo que se vende.
+
 <!-- anchor: user.money.amounts -->
 ### Cómo se muestran los importes
 

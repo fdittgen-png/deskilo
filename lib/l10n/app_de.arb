@@ -20559,6 +20559,18 @@
   "stockEmpty": "Es ist noch nichts auf Lager.",
   "stockEmptyFiltered": "Zu diesen Filtern gibt es nichts.",
   "stockEnteredLabel": "Erfasst",
+  "stockItemsEmpty": "Noch keine Artikel. Ein Artikel entsteht, wenn eine Leistung oder ein Lieferantenartikel im Lager geführt wird.",
+  "@stockItemsEmpty": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "stockItemsIntro": "Die Artikel, die das Unternehmen führt und verkauft: Einstellungen, Varianten und Lieferantenartikel je Artikel.",
+  "@stockItemsIntro": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "stockItemsTitle": "Artikel",
+  "@stockItemsTitle": {
+    "description": "the stock pages and group (#4299)"
+  },
   "stockLotLabel": "Charge {code}",
   "stockLotTitle": "Charge",
   "stockMappingAdd": "Lieferantenartikel hinzufügen",
@@ -21067,6 +21079,26 @@
   "stockReasonWrongSite": "Ware wird auf einem Platz des Zielstandorts empfangen.",
   "@stockReasonWrongSite": {
     "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockSettingsElsewhere": "Die Lagereinstellungen werden auf der Seite Lagereinstellungen geführt.",
+  "@stockSettingsElsewhere": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "stockSettingsFeatures": "Lagerfunktionen",
+  "@stockSettingsFeatures": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "stockSettingsOpen": "Lagereinstellungen öffnen",
+  "@stockSettingsOpen": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "stockSettingsTitle": "Lagereinstellungen",
+  "@stockSettingsTitle": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "stockSettingsValues": "Lagerregeln",
+  "@stockSettingsValues": {
+    "description": "the stock pages and group (#4299)"
   },
   "stockStoredLabel": "Gespeichert",
   "stockTabMovements": "Bewegungen",

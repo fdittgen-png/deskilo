@@ -6,6 +6,7 @@
 // loading, empty and failed states, a failed read never shown as empty; and
 // one movement at its address, whose cost a reader without the right is told
 // is not shown (not zero).
+import 'package:deskilo/features/stock/application/stock_view.dart';
 import 'package:deskilo/features/stock/domain/stock_page.dart';
 import 'package:deskilo/features/stock/domain/stock_queries.dart';
 import 'package:deskilo/features/stock/presentation/stock_movement_screen.dart';
@@ -199,10 +200,9 @@ void main() {
         expect(find.text(_en.stockEmpty), findsOneWidget);
       });
 
-      testWidgets('the movements tab lists the movements with their exact quantity', (tester) async {
+      testWidgets('the movement log lists the movements with their exact quantity', (tester) async {
         final stock = _Stock(movements: [_move('m-1'), _move('m-2')]);
-        await _open(tester, stock, size);
-        await tester.tap(find.text(_en.stockTabMovements));
+        await _open(tester, stock, size, home: const StockScreen(tab: StockTab.movements));
         await tester.pumpAndSettle();
         expect(find.text('0.333333 l'), findsNWidgets(2));
         expect(find.byKey(const ValueKey('stock-movement-m-1')), findsOneWidget);

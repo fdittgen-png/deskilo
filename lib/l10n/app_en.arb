@@ -45157,6 +45157,18 @@
   "@stockEnteredLabel": {
     "description": "#4161 the quantity and unit as entered"
   },
+  "stockItemsEmpty": "No items yet. Items are added when a service or a supplier article is kept in stock.",
+  "@stockItemsEmpty": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "stockItemsIntro": "The items the business keeps and sells: each one's settings, variants and supplier articles.",
+  "@stockItemsIntro": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "stockItemsTitle": "Items",
+  "@stockItemsTitle": {
+    "description": "the stock pages and group (#4299)"
+  },
   "stockLotLabel": "Lot {code}",
   "@stockLotLabel": {
     "description": "#4161 a lot, by its code",
@@ -45702,6 +45714,26 @@
   "stockReasonWrongSite": "Goods are received onto a place of the destination site.",
   "@stockReasonWrongSite": {
     "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockSettingsElsewhere": "Stock settings are kept on the Stock settings page.",
+  "@stockSettingsElsewhere": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "stockSettingsFeatures": "Stock features",
+  "@stockSettingsFeatures": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "stockSettingsOpen": "Open stock settings",
+  "@stockSettingsOpen": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "stockSettingsTitle": "Stock settings",
+  "@stockSettingsTitle": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "stockSettingsValues": "Stock rules",
+  "@stockSettingsValues": {
+    "description": "the stock pages and group (#4299)"
   },
   "stockStoredLabel": "Stored",
   "@stockStoredLabel": {

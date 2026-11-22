@@ -20559,6 +20559,18 @@
   "stockEmpty": "Todavía no hay nada en existencias.",
   "stockEmptyFiltered": "Nada coincide con estos filtros.",
   "stockEnteredLabel": "Introducido",
+  "stockItemsEmpty": "Todavía no hay artículos. Un artículo aparece cuando un servicio o un artículo de proveedor se mantiene en existencias.",
+  "@stockItemsEmpty": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "stockItemsIntro": "Los artículos que la empresa mantiene y vende: los ajustes, las variantes y los artículos de proveedor de cada uno.",
+  "@stockItemsIntro": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "stockItemsTitle": "Artículos",
+  "@stockItemsTitle": {
+    "description": "the stock pages and group (#4299)"
+  },
   "stockLotLabel": "Lote {code}",
   "stockLotTitle": "Lote",
   "stockMappingAdd": "Añadir un artículo del proveedor",
@@ -21067,6 +21079,26 @@
   "stockReasonWrongSite": "La mercancía se recibe en un lugar de la sede de destino.",
   "@stockReasonWrongSite": {
     "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockSettingsElsewhere": "Los ajustes de existencias se mantienen en la página Ajustes de existencias.",
+  "@stockSettingsElsewhere": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "stockSettingsFeatures": "Funciones de existencias",
+  "@stockSettingsFeatures": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "stockSettingsOpen": "Abrir los ajustes de existencias",
+  "@stockSettingsOpen": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "stockSettingsTitle": "Ajustes de existencias",
+  "@stockSettingsTitle": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "stockSettingsValues": "Reglas de existencias",
+  "@stockSettingsValues": {
+    "description": "the stock pages and group (#4299)"
   },
   "stockStoredLabel": "Guardado",
   "stockTabMovements": "Movimientos",

@@ -11,6 +11,12 @@ select plan(35);
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00004165' || lpad(n::text, 4, '0'))::uuid;
 $$;
+-- The business's own day, by the server's own rule: every date a test gives a quote or an
+-- invoice is compared with it, never with the database clock's UTC date, so the verdict is
+-- the same at any hour of the day (#4307).
+create function pg_temp.today() returns date language sql stable security definer as $$
+  select public.workspace_today(pg_temp.u(101))
+$$;
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
 select pg_temp.u(n), '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',
        'sa' || n || '@example.test', '', now(), now(), now() from generate_series(1, 4) n;
@@ -61,7 +67,7 @@ begin
   perform set_config('request.jwt.claims', json_build_object('sub', pg_temp.u(1), 'role', 'authenticated')::text, true);
   execute 'set local role authenticated';
   v := public.save_standalone_invoice_draft_v1(pg_temp.u(101), p_draft, p_rev, pg_temp.u(203),
-        current_date, current_date + 30, 'PO-1', 'ORD-9', p_lines);
+        pg_temp.today(), pg_temp.today() + 30, 'PO-1', 'ORD-9', p_lines);
   execute 'reset role';
   return v;
 end $f$;
@@ -95,10 +101,10 @@ select set_config('i.a', public.issue_standalone_invoice_v1(pg_temp.u(101), curr
   '00000000-0000-4000-8000-000000004165'::uuid)::text, false);
 select is((select source || '|' || coalesce(period, '~') || '|' || service_date::text from public.invoices
             where id = (current_setting('i.a')::jsonb ->> 'invoice_id')::uuid),
-  'standalone|~|' || current_date::text, 'the invoice is standalone, with no period and its service date');
+  'standalone|~|' || pg_temp.today()::text, 'the invoice is standalone, with no period and its service date');
 select is((select due_on::text || '|' || basis from public.invoice_maturities
             where invoice_id = (current_setting('i.a')::jsonb ->> 'invoice_id')::uuid),
-  (current_date + 30)::text || '|document_term', 'its due date is its maturity');
+  (pg_temp.today() + 30)::text || '|document_term', 'its due date is its maturity');
 select is((select total_cents from public.invoices where id = (current_setting('i.a')::jsonb ->> 'invoice_id')::uuid),
   14400, 'the total is the server''s');
 select is(pg_temp.as_user(1, format($$select (public.issue_standalone_invoice_v1(%L, %L, 1, '00000000-0000-4000-8000-000000004165'))->>'replayed'$$,
@@ -138,15 +144,17 @@ select is(has_table_privilege('authenticated', 'public.standalone_invoice_drafts
   'no client writes a draft directly');
 
 -- ── the monthly invoice of the same customer and month is untouched ──
-select is(pg_temp.as_user(1, format($$select (public.create_invoice(%L, %L, to_char(current_date, 'YYYY-MM'), null, false, 'full', true))::text is not null$$,
+select is(pg_temp.as_user(1, format($$select (public.create_invoice(%L, %L, to_char(pg_temp.today(), 'YYYY-MM'), null, false, 'full', true))::text is not null$$,
   pg_temp.u(101), pg_temp.u(203))), 'true', 'the monthly invoice of the same month is still issued beside the standalone ones');
 select is((select string_agg(source, ',' order by source) from public.invoices
             where workspace_id = pg_temp.u(101) and member_id = pg_temp.u(203)),
   'monthly,standalone,standalone', 'two standalone and one monthly invoice of one customer and month');
 
 -- ── the facts the draft itself lacks ──
+-- (two days back: 0820's check of the due date reads the database clock's own date, which is
+-- one day from the business's at some hours, so one day back is in the past for only one of them)
 select is(pg_temp.as_user(1, format($$select (public.preview_standalone_invoice_v1(%L,
-    (public.save_standalone_invoice_draft_v1(%L, null, null, %L, current_date, current_date - 1, '', '', '[]'::jsonb) ->> 'draft_id')::uuid, 1) -> 'missing')::text$$,
+    (public.save_standalone_invoice_draft_v1(%L, null, null, %L, pg_temp.today(), pg_temp.today() - 2, '', '', '[]'::jsonb) ->> 'draft_id')::uuid, 1) -> 'missing')::text$$,
   pg_temp.u(101), pg_temp.u(101), pg_temp.u(203))), '["due_on_before_issue", "lines"]',
   'a draft with no lines and a due date in the past names both');
 
@@ -188,7 +196,7 @@ begin
   perform set_config('request.jwt.claims', json_build_object('sub', pg_temp.u(1), 'role', 'authenticated')::text, true);
   execute 'set local role authenticated';
   d := (public.save_standalone_invoice_draft_v1(pg_temp.u(p_ws), null, null, pg_temp.u(p_subject),
-        current_date, current_date + 30, '', '', jsonb_build_array(p_line)) ->> 'draft_id')::uuid;
+        pg_temp.today(), pg_temp.today() + 30, '', '', jsonb_build_array(p_line)) ->> 'draft_id')::uuid;
   v := public.preview_standalone_invoice_v1(pg_temp.u(p_ws), d, 1);
   execute 'reset role';
   return v;

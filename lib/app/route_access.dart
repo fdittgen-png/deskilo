@@ -46,9 +46,15 @@ const Map<String, Set<WorkspacePermission>> routePermissions = {
   // editor's own door needs manageBillingCustomers.
   // #4161 — the stock records and one movement: who sees or moves the stock.
   '/stock': {_P.viewStock, _P.manageStock},
+  '/stock/movements': {_P.viewStock, _P.manageStock},
   '/stock/movements/:id': {_P.viewStock, _P.manageStock},
   // #4170 — the goods on their way and the commands that move goods: seen with the stock, run with manageStock.
   '/stock/transfers': {_P.viewStock, _P.manageStock},
+  // #4299 — the item registry and the places read like the stock; its settings
+  // are for who manages the stock or the configuration.
+  '/stock/items': {_P.viewStock, _P.manageStock},
+  '/stock/places': {_P.viewStock, _P.manageStock},
+  '/stock/settings': {_P.manageStock, _P.manageConfiguration},
   '/money/customers': {_P.manageBillingCustomers, _P.issueInvoices, _P.viewFinances},
   // #4166 — the quotes read under the right to issue or the finances; the server decides who acts.
   '/money/quotes': {_P.issueInvoices, _P.viewFinances},
