@@ -36,6 +36,7 @@ import 'demo_analysis_overrides.dart';
 import 'demo_fixture.dart';
 import 'demo_purchase_order_overrides.dart';
 import 'demo_purchasing_overrides.dart';
+import 'demo_space_fulfilments.dart';
 import 'demo_space_pick.dart';
 import 'demo_space_routing.dart' show kDemoInstallationId;
 import 'seed/demo_purchase_seed.dart';
@@ -99,7 +100,7 @@ List<Override> demoCityCommerceOverrides(DemoFixture fixture) {
     }),
     // #4178 — each space reads its own engagements.
     serviceFulfilmentRepositoryProvider.overrideWith(
-      (ref) => demoPickSpace(ref, demoMapSpaces(stores, (s) => s.serviceFulfilments)),
+      (ref) => demoServiceFulfilments(fixture, demoOpenSpace(ref)),
     ),
     // #3307 — the orders to their suppliers.
     ...demoPurchaseOrderOverrides(orderSpaces),

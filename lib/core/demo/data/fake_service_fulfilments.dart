@@ -1,13 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #4178 (F4) -- the Demo's engagements of ordered services, with the rules of
-// 0851: one engagement per canonical source line (an invoice that billed a quote
-// resolves to the quote's), append-only steps at an expected revision, one
-// request one step (a changed payload under it is refused), only ordered ->
-// started -> done or a reasoned cancellation. It reads the quotes and invoices
-// of the same space and changes none of them. Its answers are the server's JSON,
-// read back through the reader the real repository uses: the Demo cannot drift
-// from the shape.
+// #4178 -- the Demo's engagements, with the rules of 0851 (one per canonical source
+// line, append-only steps at an expected revision, one request one step), reading the
+// space's quotes and invoices and changing none. Its answers are the server's JSON,
+// read back through the real reader: the Demo cannot drift from the shape.
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 
 import '../../../features/money/domain/customer_quote.dart';
@@ -24,23 +20,7 @@ class _Source {
   final int? revision;
 }
 
-class _Step {
-  const _Step(
-    this.revision,
-    this.from,
-    this.to,
-    this.reason,
-    this.actor,
-    this.at,
-  );
-
-  final int revision;
-  final FulfilmentState? from;
-  final FulfilmentState to;
-  final String reason;
-  final String actor;
-  final DateTime at;
-}
+typedef _Step = ({int revision, FulfilmentState? from, FulfilmentState to, String reason, String actor, DateTime at});
 
 class _Engagement {
   _Engagement(this.id, this.source, this.itemId, this.variantId);
@@ -80,8 +60,7 @@ class FakeServiceFulfilmentRepository implements ServiceFulfilmentRepository {
   final String Function() actor;
   final DateTime Function() clock;
 
-  /// What the space already has (the Demo's engagements), made through the
-  /// repository's own operations before the first answer.
+  /// What the space already has, made through its own operations before the first answer.
   final Future<void> Function(FakeServiceFulfilmentRepository repo)? seed;
   Future<void>? _seeding;
   var _inSeed = false;
@@ -244,7 +223,7 @@ class FakeServiceFulfilmentRepository implements ServiceFulfilmentRepository {
     }
     final from = e.state;
     e.state = to;
-    e.steps.add(_Step(e.revision + 1, from, to, why, actor(), clock()));
+    e.steps.add((revision: e.revision + 1, from: from, to: to, reason: why, actor: actor(), at: clock()));
     _requests[requestId] = (
       digest: digest,
       fulfilmentId: e.id,
@@ -424,7 +403,7 @@ class FakeServiceFulfilmentRepository implements ServiceFulfilmentRepository {
       itemId,
       variantId,
     );
-    e.steps.add(_Step(1, null, FulfilmentState.ordered, '', actor(), clock()));
+    e.steps.add((revision: 1, from: null, to: FulfilmentState.ordered, reason: '', actor: actor(), at: clock()));
     _items.add(e);
     _requests[requestId] = (digest: digest, fulfilmentId: e.id, revision: 1);
     return FulfilmentOpened(

@@ -37,6 +37,7 @@ import 'package:deskilo/core/demo/demo_london_space.dart';
 import 'package:deskilo/core/demo/demo_new_york_space.dart';
 import 'package:deskilo/core/demo/demo_persona.dart';
 import 'package:deskilo/core/demo/demo_scope.dart';
+import 'package:deskilo/core/demo/demo_space_fulfilments.dart';
 import 'package:deskilo/core/demo/demo_space_ids.dart';
 import 'package:deskilo/core/demo/demo_space_stores.dart';
 import 'package:deskilo/core/demo/demo_spaces.dart';
@@ -1383,12 +1384,12 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
       final house = w.house(DemoSpaceKey.home).stores;
       final customer = (await house.billingCustomers.fetch(demoFirstSpaceId)).first;
       final invoices = w.f.money.invoices.length;
-      final opened = await house.serviceFulfilments.openDirect(
+      final opened = await demoServiceFulfilments(w.f, DemoSpaceKey.home).openDirect(
         demoFirstSpaceId,
         requestId: 'scenario-engagement',
         input: DirectEngagementInput(subjectId: customer.subjectId, description: 'Coaching', quantity: '3'),
       );
-      final started = await house.serviceFulfilments.transition(
+      final started = await demoServiceFulfilments(w.f, DemoSpaceKey.home).transition(
         demoFirstSpaceId,
         opened.fulfilment.id,
         expectedRevision: opened.fulfilment.revision,

@@ -22,7 +22,6 @@ import 'data/demo_cost_allocation_repository.dart';
 import 'data/einvoice_inbox_repository.dart';
 import 'data/fake_billing_customers.dart';
 import 'data/fake_customer_quotes.dart';
-import 'data/fake_service_fulfilments.dart';
 import 'data/lease_commitment_repository.dart';
 import 'data/money/demo_customer_statement.dart';
 import 'data/money_repository.dart';
@@ -114,20 +113,6 @@ class DemoSpaceStores {
     ),
     _ => FakeCustomerQuoteRepository(clock: () => fixture.seededAt),
   };
-
-  /// #4178 — the engagements of the services ordered in the space, over its
-  /// own quotes and invoices (it reads them and changes none).
-  late final FakeServiceFulfilmentRepository serviceFulfilments = FakeServiceFulfilmentRepository(
-    workspaceId: key.id,
-    quotes: customerQuotes,
-    invoices: () => fixture.space(key).money.invoices,
-    matches: () => fixture.space(key).money.invoiceMatchesStore,
-    hasCustomer: (id) => billingCustomers.of(key.id).any((p) => p.subjectId == id),
-    actor: () => fixture.actor.memberId,
-    clock: () => fixture.seededAt,
-    // Kessler Conseil's training engagement: done before its invoice
-    seed: key == DemoSpaceKey.freelancer ? (r) => seedFreelancerEngagement(r, customerQuotes) : null,
-  );
 
   /// #3846 — the customer statement of the space's own money.
   late final CustomerStatementReader statement = demoCustomerStatementReader(

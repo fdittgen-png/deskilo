@@ -677,6 +677,8 @@ declare
     'supplier_item_mappings',
     -- #4171 what was put away from a delivery
     'stock_receipt_allocations',
+    -- #4170 the transfers between sites and what each loaded
+    'stock_transfers', 'stock_transfer_lines',
     -- #4178 the engagements of the services ordered, their steps and the invoice
     -- lines that billed a direct commitment
     'service_fulfilments', 'service_fulfilment_transitions', 'service_fulfilment_invoice_links'];

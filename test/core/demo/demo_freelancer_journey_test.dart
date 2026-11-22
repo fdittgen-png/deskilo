@@ -15,6 +15,7 @@ import 'package:deskilo/core/demo/data/fake_business_receivables.dart';
 import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/core/demo/demo_persona.dart';
 import 'package:deskilo/core/demo/demo_scope.dart';
+import 'package:deskilo/core/demo/demo_space_fulfilments.dart';
 import 'package:deskilo/core/demo/demo_space_ids.dart';
 import 'package:deskilo/core/demo/demo_space_stores.dart';
 import 'package:deskilo/core/demo/demo_spaces.dart';
@@ -152,7 +153,7 @@ void main() {
 
   test('the training engagement is done before its invoice, and the invoice, '
       'the payment and a credit are read beside it and add nothing to it', () async {
-    final before = (await stores.serviceFulfilments.fulfilments(demoFreelancerSpaceId)).single;
+    final before = (await demoServiceFulfilments(fixture, DemoSpaceKey.freelancer).fulfilments(demoFreelancerSpaceId)).single;
     expect(before.scope.description, 'Training day');
     expect(before.state, FulfilmentState.done);
     expect(before.history.map((h) => h.to), [FulfilmentState.ordered, FulfilmentState.started, FulfilmentState.done]);
@@ -196,14 +197,14 @@ void main() {
       amountCents: 30000,
     );
 
-    final after = (await stores.serviceFulfilments.fulfilments(demoFreelancerSpaceId)).single;
+    final after = (await demoServiceFulfilments(fixture, DemoSpaceKey.freelancer).fulfilments(demoFreelancerSpaceId)).single;
     expect(after.id, before.id, reason: 'the invoice made no second engagement');
     expect(after.history, hasLength(3), reason: 'neither the invoice nor the payment added a step');
     expect(after.state, FulfilmentState.done);
     expect(after.invoices.single.invoiceId, issued.invoiceId);
     expect(after.invoices.single.paidCents, 30000);
     expect(after.quote?.status, 'converted');
-    final fromInvoice = await stores.serviceFulfilments.openFromLine(
+    final fromInvoice = await demoServiceFulfilments(fixture, DemoSpaceKey.freelancer).openFromLine(
       demoFreelancerSpaceId,
       requestId: 'open-from-invoice',
       kind: 'invoice',
