@@ -807,5 +807,19 @@
  "stockCycleHighValueHint": "El valor, en unidades menores de la moneda de la empresa, a partir del cual lo que un lugar contiene de un artículo es de alto valor para un plan sin umbral propio. Se ajusta en los ajustes de la aplicación.",
  "stockCycleOverdue": "Recuento cíclico: vencido tras",
  "stockCycleOverdueHint": "Cuántos días puede seguir abierta una tarea de recuento cíclico después de su fecha antes de declararse vencida. Se ajusta en los ajustes de la aplicación.",
- "optMinorUnits": "{n} (unidades menores)"
+ "optMinorUnits": "{n} (unidades menores)",
+ "stockGroupTagMode": "Modo de etiqueta por defecto de los artículos",
+ "stockGroupTagModeHint": "Si un artículo que ni un grupo ni un ajuste propio contempla lleva una etiqueta RFID: ninguna, una etiqueta que nombra un lote o una etiqueta por unidad (que exige seguimiento por pieza). Se ajusta en los ajustes de la app.",
+ "stockGroupCountDays": "Ciclo de recuento por defecto",
+ "stockGroupCountDaysHint": "Cada cuántos días se propone para un recuento cíclico un artículo que ni un grupo ni un ajuste propio contempla. Se ajusta en los ajustes de la app.",
+ "stockGroupRounding": "Redondeo de precios",
+ "stockGroupRoundingHint": "Cómo se redondea un precio de venta propuesto. Solo sirve para proponer un precio. Se ajusta en los ajustes de la app.",
+ "optTagNone": "Sin etiqueta",
+ "optTagPerBatch": "Una etiqueta por lote",
+ "optTagPerUnit": "Una etiqueta por unidad",
+ "optNotScheduled": "Sin programar",
+ "optRoundNone": "Sin redondeo",
+ "optRound005": "A 0,05",
+ "optRound010": "A 0,10",
+ "optRound099": "Terminando en 0,99"
 }

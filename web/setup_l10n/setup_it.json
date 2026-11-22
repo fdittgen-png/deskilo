@@ -807,5 +807,19 @@
  "stockCycleHighValueHint": "Il valore, in unità minori della valuta dell’azienda, da cui ciò che un luogo contiene di un articolo è di alto valore per un piano senza soglia propria. Si imposta nelle impostazioni dell’app.",
  "stockCycleOverdue": "Inventario ciclico: in ritardo dopo",
  "stockCycleOverdueHint": "Quanti giorni un compito di inventario ciclico può restare aperto dopo la scadenza prima di essere dichiarato in ritardo. Si imposta nelle impostazioni dell’app.",
- "optMinorUnits": "{n} (unità minori)"
+ "optMinorUnits": "{n} (unità minori)",
+ "stockGroupTagMode": "Modalità etichetta predefinita degli articoli",
+ "stockGroupTagModeHint": "Se un articolo che né un gruppo né un'impostazione propria riguarda porta un'etichetta RFID: nessuna, una etichetta che indica un lotto o una etichetta per unità (che richiede la tracciabilità per pezzo). Si imposta nelle impostazioni dell'app.",
+ "stockGroupCountDays": "Ciclo di conteggio predefinito",
+ "stockGroupCountDaysHint": "Ogni quanti giorni un articolo che né un gruppo né un'impostazione propria riguarda è proposto per un conteggio ciclico. Si imposta nelle impostazioni dell'app.",
+ "stockGroupRounding": "Arrotondamento dei prezzi",
+ "stockGroupRoundingHint": "Come si arrotonda un prezzo di vendita proposto. Serve solo a proporre un prezzo. Si imposta nelle impostazioni dell'app.",
+ "optTagNone": "Nessuna etichetta",
+ "optTagPerBatch": "Una etichetta per lotto",
+ "optTagPerUnit": "Una etichetta per unità",
+ "optNotScheduled": "Non programmato",
+ "optRoundNone": "Nessun arrotondamento",
+ "optRound005": "A 0,05",
+ "optRound010": "A 0,10",
+ "optRound099": "Che finisce per 0,99"
 }

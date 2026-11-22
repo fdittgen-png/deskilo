@@ -807,5 +807,19 @@
  "stockCycleHighValueHint": "The value, in minor units of the business currency, from which what a place holds of an item counts as high value for a cycle count plan that has no threshold of its own. Set in the app's settings.",
  "stockCycleOverdue": "Cycle count: overdue after",
  "stockCycleOverdueHint": "How many days a cycle count task may stay open past its due date before the inbox says it is overdue. Set in the app's settings.",
- "optMinorUnits": "{n} (minor units)"
+ "optMinorUnits": "{n} (minor units)",
+ "stockGroupTagMode": "Default tag mode of items",
+ "stockGroupTagModeHint": "Whether an item that no group and no own setting speaks for carries an RFID tag: none, one tag naming a batch, or one tag per unit (which needs tracking by piece). Set in the app's settings.",
+ "stockGroupCountDays": "Default count cycle",
+ "stockGroupCountDaysHint": "Every how many days an item that no group and no own setting speaks for is proposed for a cycle count. Set in the app's settings.",
+ "stockGroupRounding": "Price rounding",
+ "stockGroupRoundingHint": "How a proposed sale price is rounded. It is used only to propose a price. Set in the app's settings.",
+ "optTagNone": "No tag",
+ "optTagPerBatch": "One tag per batch",
+ "optTagPerUnit": "One tag per unit",
+ "optNotScheduled": "Not scheduled",
+ "optRoundNone": "No rounding",
+ "optRound005": "To 0.05",
+ "optRound010": "To 0.10",
+ "optRound099": "Ending in 0.99"
 }

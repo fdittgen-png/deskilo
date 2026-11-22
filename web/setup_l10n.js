@@ -812,7 +812,21 @@ window.SETUP_L10N={
    "stockCycleHighValueHint": "The value, in minor units of the business currency, from which what a place holds of an item counts as high value for a cycle count plan that has no threshold of its own. Set in the app's settings.",
    "stockCycleOverdue": "Cycle count: overdue after",
    "stockCycleOverdueHint": "How many days a cycle count task may stay open past its due date before the inbox says it is overdue. Set in the app's settings.",
-   "optMinorUnits": "{n} (minor units)"
+   "optMinorUnits": "{n} (minor units)",
+   "stockGroupTagMode": "Default tag mode of items",
+   "stockGroupTagModeHint": "Whether an item that no group and no own setting speaks for carries an RFID tag: none, one tag naming a batch, or one tag per unit (which needs tracking by piece). Set in the app's settings.",
+   "stockGroupCountDays": "Default count cycle",
+   "stockGroupCountDaysHint": "Every how many days an item that no group and no own setting speaks for is proposed for a cycle count. Set in the app's settings.",
+   "stockGroupRounding": "Price rounding",
+   "stockGroupRoundingHint": "How a proposed sale price is rounded. It is used only to propose a price. Set in the app's settings.",
+   "optTagNone": "No tag",
+   "optTagPerBatch": "One tag per batch",
+   "optTagPerUnit": "One tag per unit",
+   "optNotScheduled": "Not scheduled",
+   "optRoundNone": "No rounding",
+   "optRound005": "To 0.05",
+   "optRound010": "To 0.10",
+   "optRound099": "Ending in 0.99"
   },
   "feature": {
    "calendarTab": [
@@ -2707,7 +2721,21 @@ window.SETUP_L10N={
    "stockCycleHighValueHint": "La valeur, en unités mineures de la devise de l’entreprise, à partir de laquelle ce qu’un lieu contient d’un article est de forte valeur pour un plan sans seuil propre. Réglé dans les paramètres de l’application.",
    "stockCycleOverdue": "Inventaire tournant : en retard après",
    "stockCycleOverdueHint": "Combien de jours une tâche d’inventaire tournant peut rester ouverte après son échéance avant d’être dite en retard. Réglé dans les paramètres de l’application.",
-   "optMinorUnits": "{n} (unités mineures)"
+   "optMinorUnits": "{n} (unités mineures)",
+   "stockGroupTagMode": "Mode d'étiquette par défaut des articles",
+   "stockGroupTagModeHint": "Si un article que ni un groupe ni un réglage propre ne concerne porte une étiquette RFID : aucune, une étiquette qui désigne un lot, ou une étiquette par unité (ce qui exige un suivi à la pièce). Se règle dans les paramètres de l'app.",
+   "stockGroupCountDays": "Cycle de comptage par défaut",
+   "stockGroupCountDaysHint": "Tous les combien de jours un article que ni un groupe ni un réglage propre ne concerne est proposé pour un comptage tournant. Se règle dans les paramètres de l'app.",
+   "stockGroupRounding": "Arrondi des prix",
+   "stockGroupRoundingHint": "Comment un prix de vente proposé est arrondi. Il ne sert qu'à proposer un prix. Se règle dans les paramètres de l'app.",
+   "optTagNone": "Pas d'étiquette",
+   "optTagPerBatch": "Une étiquette par lot",
+   "optTagPerUnit": "Une étiquette par unité",
+   "optNotScheduled": "Non planifié",
+   "optRoundNone": "Pas d'arrondi",
+   "optRound005": "Au 0,05",
+   "optRound010": "Au 0,10",
+   "optRound099": "Finissant par 0,99"
   },
   "feature": {
    "calendarTab": [
@@ -4602,7 +4630,21 @@ window.SETUP_L10N={
    "stockCycleHighValueHint": "Der Wert in der kleinsten Einheit der Währung des Unternehmens, ab dem das, was ein Ort von einem Artikel hält, für einen Plan ohne eigene Schwelle als hochwertig gilt. Einstellbar in den Einstellungen der App.",
    "stockCycleOverdue": "Permanente Inventur: überfällig nach",
    "stockCycleOverdueHint": "Wie viele Tage eine Inventuraufgabe nach ihrem Fälligkeitstag offen bleiben darf, bevor sie als überfällig gemeldet wird. Einstellbar in den Einstellungen der App.",
-   "optMinorUnits": "{n} (kleinste Einheit)"
+   "optMinorUnits": "{n} (kleinste Einheit)",
+   "stockGroupTagMode": "Standard-Etikettenmodus der Artikel",
+   "stockGroupTagModeHint": "Ob ein Artikel, den weder eine Gruppe noch eine eigene Einstellung betrifft, ein RFID-Etikett trägt: keines, ein Etikett für eine Charge oder ein Etikett je Stück (das eine Verfolgung je Stück braucht). Einstellbar in den Einstellungen der App.",
+   "stockGroupCountDays": "Standard-Zählzyklus",
+   "stockGroupCountDaysHint": "Nach wie vielen Tagen ein Artikel, den weder eine Gruppe noch eine eigene Einstellung betrifft, zur Zyklus-Zählung vorgeschlagen wird. Einstellbar in den Einstellungen der App.",
+   "stockGroupRounding": "Preisrundung",
+   "stockGroupRoundingHint": "Wie ein vorgeschlagener Verkaufspreis gerundet wird. Sie dient nur dazu, einen Preis vorzuschlagen. Einstellbar in den Einstellungen der App.",
+   "optTagNone": "Kein Etikett",
+   "optTagPerBatch": "Ein Etikett je Charge",
+   "optTagPerUnit": "Ein Etikett je Stück",
+   "optNotScheduled": "Nicht geplant",
+   "optRoundNone": "Keine Rundung",
+   "optRound005": "Auf 0,05",
+   "optRound010": "Auf 0,10",
+   "optRound099": "Endend auf 0,99"
   },
   "feature": {
    "calendarTab": [
@@ -6497,7 +6539,21 @@ window.SETUP_L10N={
    "stockCycleHighValueHint": "El valor, en unidades menores de la moneda de la empresa, a partir del cual lo que un lugar contiene de un artículo es de alto valor para un plan sin umbral propio. Se ajusta en los ajustes de la aplicación.",
    "stockCycleOverdue": "Recuento cíclico: vencido tras",
    "stockCycleOverdueHint": "Cuántos días puede seguir abierta una tarea de recuento cíclico después de su fecha antes de declararse vencida. Se ajusta en los ajustes de la aplicación.",
-   "optMinorUnits": "{n} (unidades menores)"
+   "optMinorUnits": "{n} (unidades menores)",
+   "stockGroupTagMode": "Modo de etiqueta por defecto de los artículos",
+   "stockGroupTagModeHint": "Si un artículo que ni un grupo ni un ajuste propio contempla lleva una etiqueta RFID: ninguna, una etiqueta que nombra un lote o una etiqueta por unidad (que exige seguimiento por pieza). Se ajusta en los ajustes de la app.",
+   "stockGroupCountDays": "Ciclo de recuento por defecto",
+   "stockGroupCountDaysHint": "Cada cuántos días se propone para un recuento cíclico un artículo que ni un grupo ni un ajuste propio contempla. Se ajusta en los ajustes de la app.",
+   "stockGroupRounding": "Redondeo de precios",
+   "stockGroupRoundingHint": "Cómo se redondea un precio de venta propuesto. Solo sirve para proponer un precio. Se ajusta en los ajustes de la app.",
+   "optTagNone": "Sin etiqueta",
+   "optTagPerBatch": "Una etiqueta por lote",
+   "optTagPerUnit": "Una etiqueta por unidad",
+   "optNotScheduled": "Sin programar",
+   "optRoundNone": "Sin redondeo",
+   "optRound005": "A 0,05",
+   "optRound010": "A 0,10",
+   "optRound099": "Terminando en 0,99"
   },
   "feature": {
    "calendarTab": [
@@ -8392,7 +8448,21 @@ window.SETUP_L10N={
    "stockCycleHighValueHint": "Il valore, in unità minori della valuta dell’azienda, da cui ciò che un luogo contiene di un articolo è di alto valore per un piano senza soglia propria. Si imposta nelle impostazioni dell’app.",
    "stockCycleOverdue": "Inventario ciclico: in ritardo dopo",
    "stockCycleOverdueHint": "Quanti giorni un compito di inventario ciclico può restare aperto dopo la scadenza prima di essere dichiarato in ritardo. Si imposta nelle impostazioni dell’app.",
-   "optMinorUnits": "{n} (unità minori)"
+   "optMinorUnits": "{n} (unità minori)",
+   "stockGroupTagMode": "Modalità etichetta predefinita degli articoli",
+   "stockGroupTagModeHint": "Se un articolo che né un gruppo né un'impostazione propria riguarda porta un'etichetta RFID: nessuna, una etichetta che indica un lotto o una etichetta per unità (che richiede la tracciabilità per pezzo). Si imposta nelle impostazioni dell'app.",
+   "stockGroupCountDays": "Ciclo di conteggio predefinito",
+   "stockGroupCountDaysHint": "Ogni quanti giorni un articolo che né un gruppo né un'impostazione propria riguarda è proposto per un conteggio ciclico. Si imposta nelle impostazioni dell'app.",
+   "stockGroupRounding": "Arrotondamento dei prezzi",
+   "stockGroupRoundingHint": "Come si arrotonda un prezzo di vendita proposto. Serve solo a proporre un prezzo. Si imposta nelle impostazioni dell'app.",
+   "optTagNone": "Nessuna etichetta",
+   "optTagPerBatch": "Una etichetta per lotto",
+   "optTagPerUnit": "Una etichetta per unità",
+   "optNotScheduled": "Non programmato",
+   "optRoundNone": "Nessun arrotondamento",
+   "optRound005": "A 0,05",
+   "optRound010": "A 0,10",
+   "optRound099": "Che finisce per 0,99"
   },
   "feature": {
    "calendarTab": [

@@ -807,5 +807,19 @@
  "stockCycleHighValueHint": "La valeur, en unités mineures de la devise de l’entreprise, à partir de laquelle ce qu’un lieu contient d’un article est de forte valeur pour un plan sans seuil propre. Réglé dans les paramètres de l’application.",
  "stockCycleOverdue": "Inventaire tournant : en retard après",
  "stockCycleOverdueHint": "Combien de jours une tâche d’inventaire tournant peut rester ouverte après son échéance avant d’être dite en retard. Réglé dans les paramètres de l’application.",
- "optMinorUnits": "{n} (unités mineures)"
+ "optMinorUnits": "{n} (unités mineures)",
+ "stockGroupTagMode": "Mode d'étiquette par défaut des articles",
+ "stockGroupTagModeHint": "Si un article que ni un groupe ni un réglage propre ne concerne porte une étiquette RFID : aucune, une étiquette qui désigne un lot, ou une étiquette par unité (ce qui exige un suivi à la pièce). Se règle dans les paramètres de l'app.",
+ "stockGroupCountDays": "Cycle de comptage par défaut",
+ "stockGroupCountDaysHint": "Tous les combien de jours un article que ni un groupe ni un réglage propre ne concerne est proposé pour un comptage tournant. Se règle dans les paramètres de l'app.",
+ "stockGroupRounding": "Arrondi des prix",
+ "stockGroupRoundingHint": "Comment un prix de vente proposé est arrondi. Il ne sert qu'à proposer un prix. Se règle dans les paramètres de l'app.",
+ "optTagNone": "Pas d'étiquette",
+ "optTagPerBatch": "Une étiquette par lot",
+ "optTagPerUnit": "Une étiquette par unité",
+ "optNotScheduled": "Non planifié",
+ "optRoundNone": "Pas d'arrondi",
+ "optRound005": "Au 0,05",
+ "optRound010": "Au 0,10",
+ "optRound099": "Finissant par 0,99"
 }
