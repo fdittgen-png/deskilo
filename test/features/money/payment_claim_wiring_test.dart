@@ -186,4 +186,80 @@ void main() {
       expect(error, isA<PostgrestException>());
     });
   });
+
+  group('a declaration is one request (#4321)', () {
+    /// A client whose answers come from [answers] in order: a status, or
+    /// null for an answer lost on the way back. The request ids it saw
+    /// are collected in [ids].
+    SupabaseClient scripted(List<int?> answers, List<String> ids) {
+      var n = 0;
+      return SupabaseClient(
+        'http://localhost:54321',
+        'anon-key',
+        httpClient: MockClient((request) async {
+          ids.add(
+            (jsonDecode(request.body) as Map<String, Object?>)['p_request_id']!
+                as String,
+          );
+          final status = answers[n++];
+          if (status == null) throw http.ClientException('connection lost');
+          return http.Response(
+            jsonEncode(
+              status == 200
+                  ? 'event-1'
+                  : {'code': 'DKC06', 'message': 'held', 'details': '', 'hint': ''},
+            ),
+            status,
+            headers: {'content-type': 'application/json'},
+            request: request,
+          );
+        }),
+      );
+    }
+
+    Future<Object?> declare(SupabaseMemberAccountCommands c) => _caught(
+      () => c.declareInvoicesPaid(workspaceId: 'w', memberId: 'm', claim: _claim),
+    );
+
+    test('a lost answer is sent again under the same id', () async {
+      final ids = <String>[];
+      final commands = SupabaseMemberAccountCommands(scripted([null, 200], ids));
+      expect(await declare(commands), isA<http.ClientException>());
+      expect(await declare(commands), isNull);
+      expect(ids, hasLength(2));
+      expect(ids[1], ids[0]);
+    });
+
+    test('an answered declaration is forgotten: the next is a new payment', () async {
+      final ids = <String>[];
+      final commands = SupabaseMemberAccountCommands(scripted([200, 200], ids));
+      await declare(commands);
+      await declare(commands);
+      expect(ids[1], isNot(ids[0]));
+    });
+
+    test('a refusal is forgotten too, and stays its own refusal', () async {
+      final ids = <String>[];
+      final commands = SupabaseMemberAccountCommands(scripted([409, 200], ids));
+      expect(await declare(commands), isA<ClaimRefused>());
+      await declare(commands);
+      expect(ids[1], isNot(ids[0]));
+    });
+
+    test('the payment of another content has its own id', () async {
+      final ids = <String>[];
+      final commands = SupabaseMemberAccountCommands(scripted([null, null], ids));
+      await _caught(
+        () => commands.recordPayment(
+          workspaceId: 'w', memberId: 'm', amountCents: 100,
+        ),
+      );
+      await _caught(
+        () => commands.recordPayment(
+          workspaceId: 'w', memberId: 'm', amountCents: 200,
+        ),
+      );
+      expect(ids[1], isNot(ids[0]));
+    });
+  });
 }

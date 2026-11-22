@@ -196,6 +196,7 @@ class MoneyMemberDocuments {
         memberName: memberName,
         periodLabel: monthLabel,
         strings: strings,
+        timezone: workspace.timezone,
         locale: locale);
     final report = _statementReport(document, workspace);
     await runReportActions(
@@ -293,6 +294,7 @@ class MoneyMemberDocuments {
             periodLabel: document.periodLabel,
             strings: document.strings,
             locale: document.locale,
+            timezone: document.timezone,
             report: report,
             reportImages: await resolveReportImages(_ref, report, strict: true)),
         baseFont: pw.Font.ttf(regular),

@@ -2917,12 +2917,40 @@ Vous voulez dire où les choses sont rangées, pour que la réception, l’inven
 
 Ouvrez **Stock → Emplacements**. Un emplacement a un niveau : **Site** (une succursale ou un dépôt central), **Zone** (une surface de vente, une réserve, une cour), **Allée**, **Travée** et **Étagère** ou **Bac**. Un emplacement se place seulement sous le niveau juste au-dessus : une zone sous un site, une allée sous une zone, une travée sous une allée, une étagère sous une travée. Un comptoir, une cuisine, un véhicule, une machine ou un casier se place n’importe où. Un entrepôt créé avant les niveaux compte comme un site.
 
-Chaque emplacement a une **adresse**, écrite avec les codes de ses parents : `MAIN-SALES-A03-B02-S4` est le magasin principal, la surface de vente, l’allée 3, la travée 2, l’étagère 4. Le code d’un emplacement doit seulement différer de ses voisins sous le même parent : chaque travée peut avoir son étagère `S4`. Renommez un emplacement et les adresses en dessous suivent. Saisissez une partie d’une adresse, un nom ou un code-barres dans la recherche pour trouver un emplacement.
+Chaque emplacement a une **adresse**, écrite avec les codes de ses parents : `MAIN-SALES-A03-B02-S4` est le magasin principal, la surface de vente, l’allée 3, la travée 2, l’étagère 4. Le code d’un emplacement doit seulement différer de ses voisins sous le même parent : chaque travée peut avoir son étagère `S4`. Renommez un emplacement et les adresses en dessous suivent. Saisissez une partie d’une adresse, un nom ou un code-barres dans la recherche pour trouver un emplacement. Un emplacement est lu par son adresse partout où il apparaît : dans le stock, les mouvements, le trajet d’un transfert et les emplacements qu’un déplacement propose. **Imprimer les étiquettes** crée un PDF des emplacements affichés, une étiquette chacun : l’adresse en grand, le nom dessous et un code-barres (celui de l’emplacement, sinon son adresse) qu’un scan retrouve.
 
 **Bon à savoir**
 - Un site indique s’il **reçoit des fournisseurs** ; désactivé, les marchandises n’y arrivent que par transfert depuis un autre site.
 - Un emplacement sous un site est **prélèvement** (en rayon) ou **réserve** (surstock) ; c’est un conseil, jamais une quantité.
 - Le caractère entre les niveaux est le paramètre de l’entreprise **Séparateur dans l’adresse d’un emplacement** (un tiret, un point, une barre oblique ou deux-points) ; seule l’écriture de l’adresse change. Il se règle dans **Réglages du stock**.
+
+### Réapprovisionnement : ce qui est bas et ce qu'il faut commander
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous voulez voir ce qui va manquer et le commander sans passer en revue les rayons.
+
+Ouvrez **Stock → Réapprovisionnement** (la fonction *Seuils de réapprovisionnement* doit être activée). La page a deux listes.
+
+- **Stock bas** liste chaque article ou variante au niveau de son seuil ou en dessous, par site, avec ce qui est en stock et le seuil. Elle est lue dans le registre du stock, exactement, dans l’unité de l’article ; un article sans seuil n’est jamais listé. Un emplacement en transit ne compte pas comme stock disponible.
+- **Que commander** regroupe ce qui est bas par fournisseur dont l’article est marqué **préféré**, dans l’unité d’achat de cet article, arrondi à l’unité entière supérieure. Un article sans article fournisseur préféré figure sous **Aucun fournisseur choisi** : marquez-en un dans les articles fournisseur de l’article.
+
+**Créer un brouillon de commande** crée un brouillon de commande d’achat à partir d’un groupe. Ce n’est qu’un brouillon : rien n’est commandé, chiffré ni envoyé tant que vous ne le confirmez pas dans les commandes d’achat. Il faut le droit de gérer les achats ; demander deux fois le même brouillon ne le crée qu’une fois.
+
+Les **seuils de réapprovisionnement** (sous les deux listes) font qu’un article est bas. Chacun montre l’article, le site, le seuil et ce qu’il faut commander alors : une quantité, *jusqu’à* un niveau, ou rien (il signale seulement). Qui peut gérer le stock en ajoute un avec **Ajouter un seuil** ou ouvre un seuil pour le modifier. Le seuil et la quantité sont des nombres exacts (la virgule décimale convient) ; un niveau à atteindre doit être au-dessus du seuil, un seuil donne une quantité ou un niveau, pas les deux, et un article a un seuil par site (et par variante). L’article, la variante et le site d’un seuil ne se changent pas ensuite : créez-en un autre. Un seuil désactivé est conservé et ne signale rien.
+
+### Le registre des articles
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous voulez une seule liste qui dise, pour chaque article et chaque variante, ce que c’est, ce que cela coûte et se vend, où c’est rangé et combien il y en a.
+
+Ouvrez **Stock → Articles**. Chaque ligne montre le **code-barres**, l’**unité**, le **prix** (le prix de vente du catalogue), le **dernier coût connu**, l’**emplacement de rangement** et ce qui est **en stock**. Le coût n’apparaît que si votre rôle peut voir les finances ou gérer les achats ; sinon la ligne indique *coût non affiché*. Un coût qu’aucune livraison n’a encore donné reste *coût inconnu*, jamais zéro.
+
+- **Emplacement de rangement** : touchez l’icône d’emplacement d’une ligne pour dire où l’article est rangé : son allée, son étagère ou son bac. Une variante sans emplacement propre prend celui de son article. C’est un conseil pour le rangement, l’inventaire et le prélèvement : le stock peut être ailleurs, et le changer ne déplace rien et ne réécrit aucun historique.
+- **Filtrez** par un emplacement pour voir ce qui y est rangé et dans les emplacements en dessous, ou activez *Seulement les articles sans emplacement de rangement* pour voir ce qui en attend encore un.
+- **Recherchez** par nom, code-barres ou adresse. Saisir ou scanner un code-barres dans la recherche et valider ouvre cet article.
+- Les longues listes se chargent par pages : choisissez *Afficher plus*.
 
 ### Comment les montants sont affichés
 
@@ -6155,6 +6183,8 @@ Vous regardez comment l'espace se porte.
 3. Lisez les analyses par domaine, comme **Finances** (**Facturé**, **Encaissé**) et **Espaces et capacité**.
 4. Enregistrez une vue sous **Vues**, ou touchez **Exporter en PDF**.
 
+**Analyses affichées** choisit les analyses que la page montre et leur ordre : cochez celles que vous voulez et faites glisser la poignée d’une ligne pour la déplacer (les flèches à côté font de même au clavier). Votre choix est mémorisé pour vous dans cet espace, sur tout appareil, et s’ouvre de nouveau la fois suivante ; une adresse qui nomme des analyses, ou une vue que vous ouvrez, l’emporte pour cette visite. **Retour au standard** l’efface.
+
 **Bon à savoir**
 
 - Vous ne voyez que les analyses que vous avez le droit de lire.
@@ -6802,7 +6832,7 @@ Vous êtes bloqué sur un champ ou sur un écran.
 
 # Guide de démarrage
 
-**DesKilo — construisez votre espace, pas à pas.** Pour la personne qui s’apprête à créer un espace de coworking, la salle d’une association ou un bureau partagé, et qui veut savoir ce qui est possible, ce qui est nécessaire et dans quel ordre.
+**DesKilo — construisez votre espace, pas à pas.** Pour la personne qui s’apprête à créer une activité avec des places à réserver (un espace de coworking, la salle d’une association, un bureau partagé) ou sans places (un cabinet, un studio, un salon, un·e indépendant·e, une autre entreprise de services), et qui veut savoir ce qui est possible, ce qui est nécessaire et dans quel ordre.
 
 ## Comment utiliser ce guide
 
@@ -6824,6 +6854,7 @@ Seul le niveau *Ouvrir* est indispensable pour démarrer. Arrêtez-vous après n
 
 | Vous voulez… | Commencez ici |
 |---|---|
+| Savoir quelles étapes votre genre d’activité comporte, avec ou sans places | [Quel genre d’activité est-ce ?](help:setup.kind.overview) |
 | Savoir ce que DesKilo sait faire et ce qu’il faut préparer | [Avant de commencer](help:setup.before.overview) |
 | Un lieu que les membres peuvent réserver dès aujourd’hui | [Construire le lieu](help:setup.place.overview) |
 | Dire qui peut faire quoi, et qui valide | [La matrice des rôles](help:user.roles.matrix) |
@@ -6846,6 +6877,102 @@ Seul le niveau *Ouvrir* est indispensable pour démarrer. Arrêtez-vous après n
 - Chaque section nomme son public à la deuxième ligne : vous passez ce qui ne vous concerne pas.
 - Un bloc qui commence par **Attention** signale une décision qui devient difficile à défaire, et indique quand.
 - Ce guide ne certifie rien sur le plan juridique ou fiscal : il dit ce que fait l’application et ce qu’il faut confirmer avec un comptable.
+
+## Commencer par le genre d’activité
+
+La première question de la configuration ne porte ni sur les étages ni sur les tarifs : c’est **Quel genre d’activité est-ce ?** La réponse décide des étapes que vous rencontrez. Un espace de coworking, la salle d’une association ou un bureau partagé a des places à réserver et passe par toutes les étapes. Un cabinet, un studio, un salon, un·e indépendant·e ou une autre entreprise de services n’a pas de places et ne rencontre pas les étapes qui les concernent. Ce chapitre montre la question, ce qu’une activité sans places ne reçoit pas, et un exemple de l’étape du genre jusqu’à la première facture.
+
+Dans ce chapitre :
+- [Quel genre d’activité est-ce ?](help:setup.kind.choose)
+- [Ce qu’une activité sans places ne reçoit pas](help:setup.kind.without-places)
+- [Un exemple suivi : un cabinet sans places](help:setup.kind.example)
+
+### Quel genre d’activité est-ce ?
+
+**Public:** Propriétaire · Copropriétaire
+
+Vous voulez que l’application corresponde à votre activité avant de configurer quoi que ce soit. La première étape du guide dans l’application, **Nom, pays et fuseau horaire**, s’ouvre sur cette question.
+
+<!-- image: setup-kind-choose -->
+
+*Les genres*
+
+| Genre | Ce que c’est |
+|---|---|
+| **Espace de coworking** | Les membres réservent places, bureaux et salles sur un plan. |
+| **Studio** | Cours et ateliers : yoga, danse, musique, art. |
+| **Cabinet** | Rendez-vous : massage, thérapie, coaching, conseil. |
+| **Salon** | Beauté, coiffure, ongles, tatouage. |
+| **Indépendant·e** | Une personne qui vend et facture ses propres services : clients, devis et factures, sans local. |
+| **Entreprise de services** | Toute autre entreprise qui vend ses services. |
+
+**Étapes**
+
+1. Ouvrez [Espace](app:/workspace-settings), ou suivez la première étape du guide de configuration.
+2. Touchez **Quel genre d’activité est-ce ?** et choisissez un genre. Si l’activité est plusieurs choses à la fois, cochez d’autres genres sous **C’est aussi… (facultatif)**.
+3. Lisez ce qu’il **Active** et **Désactive**, puis touchez **Enregistrer**. **Tout afficher** liste chaque fonction.
+
+**Bon à savoir**
+
+- Rien ne change avant **Enregistrer**. Choisir un genre plus tard propose de nouveau et ne change jamais rien en silence.
+- **Espace de coworking** ne propose rien : l’espace garde tout comme avant.
+- Une fonction pas encore revue comme stable n’est activée que si vous la cochez ; sinon, activez-la plus tard dans **Fonctions**.
+- La réservation de cours et de rendez-vous ne fait pas partie de cette version. Aujourd’hui, une activité sans places reçoit ses prestations avec leurs prix, les factures, le paiement en ligne, les messages et sa page publique.
+
+**Voir aussi :** [Quel genre d’activité est-ce ? (Guide utilisateur)](help:user.workspace.settings.business-kind) · [Activer et désactiver des fonctions](help:user.features.processes)
+
+### Ce qu’une activité sans places ne reçoit pas
+
+**Public:** Propriétaire · Copropriétaire
+
+Vous tenez un cabinet, un studio, un salon, une activité d’indépendant·e ou une autre entreprise de services, et vous voulez savoir quelles étapes ne sont pas pour vous. Un genre sans places désactive tout ce qui concerne les places : sièges, plan, borne, salles.
+
+*Étapes qu’une activité sans places ne se voit pas proposer*
+
+| Étape | Pourquoi elle n’y est pas |
+|---|---|
+| **Places sur le plan** | Il n’y a ni salles, ni bureaux, ni sièges à dessiner. |
+| **Tarifs et formules** | Ils tarifent la présence dans un lieu : il leur faut les places autant que la facturation. |
+| **Limites de réservation** | Elles bornent à quelle distance, combien de temps et combien de places à la fois les membres réservent. |
+| **Borne et badges** | Une tablette à l’entrée et des badges de membre relèvent d’un lieu. |
+| **Une première réservation** | Il n’y a pas de place à réserver. |
+
+*Les étapes qui ne concernent pas les places restent, par exemple*
+
+- **Nom, pays et fuseau horaire**, **Horaires d’ouverture** et **Ce que les membres peuvent faire**.
+- **Inviter des membres**, **Services**, **Comment les membres paient** et **Paiement en ligne**.
+- Les étapes de facturation : **Identité légale**, **TVA**, **Numérotation des factures**, **Présentation des factures**, **Facturation électronique**, **Comptabilité** et **Relances**.
+
+**Bon à savoir**
+
+- Les étapes reviennent quand l’activité est d’un genre qui a des places, ou quand les places sont réactivées. Rien n’est supprimé : le plan et les réservations reviennent avec elles.
+- Le reste de ce guide est écrit autour d’*Atelier du Marché*, qui a des places. Quand une section traite du plan, des sièges, de la borne ou des règles de réservation, une activité sans places la saute.
+
+**Voir aussi :** [Vérifier votre espace](help:setup.place.check) · [Activer et désactiver des fonctions](help:user.features.processes)
+
+### Un exemple suivi : un cabinet sans places
+
+**Public:** Propriétaire · Copropriétaire
+
+Vous voulez voir une configuration complète pour une activité sans places, du genre jusqu’à la première facture. L’exemple est le cabinet de l’espace de démonstration, *Lindner Beratung*, un cabinet de conseil à Berlin. Ses personnes et ses chiffres sont inventés ; ouvrez-le dans [L’espace de démonstration](help:user.advanced.demo) pour suivre.
+
+**Étapes**
+
+1. **Quel genre d’activité est-ce ?** Choisissez **Cabinet**. La proposition désactive les places et laisse activés la facturation, le paiement en ligne, les messages et la page publique. Touchez **Enregistrer**.
+2. **Nom, pays et fuseau horaire.** Nommez-le *Lindner Beratung*, pays Allemagne, devise EUR, fuseau Europe/Berlin (voir [Pays, devise, fuseau horaire et langue](help:setup.place.where)).
+3. **Horaires d’ouverture** et **Ce que les membres peuvent faire.** Les clients du cabinet sont ses membres : fixez les jours d’ouverture et ce qu’un client voit de son propre compte. Il n’y a pas d’étape **Places sur le plan**.
+4. **Services.** Listez ce que le cabinet vend, chacun avec un nom, un prix et le taux de TVA (voir [Un service](help:user.money.services.overview)). Il n’y a pas d’étape **Tarifs et formules** : un service a son propre prix.
+5. **Identité légale.** Choisissez le régime de TVA **Assujetti à la TVA (facture la TVA)**, saisissez le numéro d’immatriculation et l’adresse, Kastanienallee 12, 10435 Berlin (voir [Votre identité légale, et ce qu’il faut demander à votre comptable](help:setup.money.identity)).
+6. **TVA** et **Numérotation des factures.** Le cabinet facture la TVA allemande de 19 % et garde les numéros de facture que l’application propose (voir [La TVA en bref](help:setup.money.vat)).
+7. **La première facture.** Ouvrez [Facturation](app:/invoices), touchez **Nouvelle**, choisissez le client et le mois, puis touchez **Émettre la facture** (voir [Émettre une facture](help:user.invoicing.new-invoice)).
+
+**Bon à savoir**
+
+- Le cabinet de démonstration montre le résultat : trois ans de factures mensuelles pour ses propres services, en euros avec la TVA allemande, et un plan vide.
+- L’émission de factures dans DesKilo ne fonctionne aujourd’hui que pour la France et l’Allemagne, et le cabinet est en Allemagne.
+- Aucune étape de cette liste n’attend une place : le cabinet peut facturer dès le premier jour.
+
+**Voir aussi :** [Argent et fiscalité](help:setup.money.overview) · [Facturer à la main ou automatiquement](help:setup.money.invoicing)
 
 ## Avant de commencer
 

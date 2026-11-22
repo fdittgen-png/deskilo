@@ -665,12 +665,41 @@ Lei vuole indicare dove si tiene ogni cosa, perché ricevimento, conteggio e pre
 
 Apra **Magazzino → Ubicazioni**. Un’ubicazione ha un livello: **Sede** (una filiale o un deposito centrale), **Zona** (area di vendita, retro, cortile), **Corsia**, **Campata** e **Scaffale** o **Cassetto**. Un’ubicazione sta solo sotto il livello immediatamente superiore: una zona sotto una sede, una corsia sotto una zona, una campata sotto una corsia, uno scaffale sotto una campata. Un banco, una cucina, un veicolo, una macchina o uno slot si colloca ovunque. Un magazzino creato prima dei livelli conta come sede.
 
-Ogni ubicazione ha un **indirizzo**, scritto con i codici dei suoi livelli superiori: `MAIN-SALES-A03-B02-S4` è il negozio principale, l’area di vendita, la corsia 3, la campata 2, lo scaffale 4. Il codice di un’ubicazione deve solo differire da quelli accanto sotto lo stesso livello superiore, quindi ogni campata può avere il proprio scaffale `S4`. Se rinomina un’ubicazione, gli indirizzi sotto di esso lo seguono. Digiti una parte di un indirizzo, un nome o un codice a barre nella ricerca per trovare un’ubicazione.
+Ogni ubicazione ha un **indirizzo**, scritto con i codici dei suoi livelli superiori: `MAIN-SALES-A03-B02-S4` è il negozio principale, l’area di vendita, la corsia 3, la campata 2, lo scaffale 4. Il codice di un’ubicazione deve solo differire da quelli accanto sotto lo stesso livello superiore, quindi ogni campata può avere il proprio scaffale `S4`. Se rinomina un’ubicazione, gli indirizzi sotto di esso lo seguono. Digiti una parte di un indirizzo, un nome o un codice a barre nella ricerca per trovare un’ubicazione. Un’ubicazione si legge con il suo indirizzo ovunque compaia: nel magazzino, nei movimenti, nel percorso di un trasferimento e nelle ubicazioni che un movimento propone. **Stampa le etichette** crea un PDF delle ubicazioni mostrate, un’etichetta ciascuna: l’indirizzo in grande, il nome sotto e un codice a barre (quello dell’ubicazione, altrimenti il suo indirizzo) che una scansione ritrova.
 
 **Da sapere**
 - Una sede indica se **riceve dai fornitori**; disattivato, la merce vi arriva solo per trasferimento da un’altra sede.
 - Un’ubicazione sotto una sede è **prelievo** (area di vendita) o **riserva** (scorta); è un’indicazione, mai una quantità.
 - Il carattere tra i livelli è l’impostazione dell’azienda **Separatore nell’indirizzo di un’ubicazione** (trattino, punto, barra o due punti); cambia solo come si scrive l’indirizzo. Si imposta in **Impostazioni del magazzino**.
+
+<!-- anchor: user.money.stock.reorder -->
+### Riordino: cosa è basso e cosa ordinare
+
+**Destinatari:** Amministratore · Proprietario
+
+Lei vuole vedere cosa sta per finire e ordinarlo senza scorrere gli scaffali.
+
+Apra **Magazzino → Riordino** (la funzione *Punti di riordino* deve essere attiva). La pagina ha due elenchi.
+
+- **Scorta bassa** elenca ogni articolo o variante al suo punto di riordino o sotto, per sede, con la giacenza e il punto. Viene letta dal registro del magazzino, esatta, nell’unità dell’articolo; un articolo senza punto di riordino non compare mai. Un’ubicazione in transito non conta come giacenza.
+- **Cosa ordinare** raggruppa ciò che è basso per fornitore il cui articolo è indicato come **preferito**, nell’unità d’acquisto di quell’articolo, arrotondata a unità intere. Un articolo senza articolo del fornitore preferito compare sotto **Nessun fornitore scelto**: ne indichi uno negli articoli del fornitore dell’articolo.
+
+**Crea bozza d’ordine** crea una bozza d’ordine d’acquisto da un gruppo. È solo una bozza: nulla viene ordinato, valorizzato o inviato finché non la conferma negli ordini d’acquisto. Serve il diritto di gestire gli acquisti; chiedere due volte la stessa bozza la crea una sola volta.
+
+I **punti di riordino** (sotto le due liste) rendono basso un articolo. Ognuno mostra l’articolo, la sede, il livello e che cosa ordinare allora: una quantità, *fino a* un livello, o niente (segnala soltanto). Chi può gestire il magazzino ne aggiunge uno con **Aggiungi un punto di riordino** o ne apre uno per modificarlo. Il livello e la quantità sono numeri esatti (la virgola decimale va bene); un livello fino a cui ordinare deve essere sopra il punto, un punto indica una quantità o un livello, non entrambi, e un articolo ha un punto per sede (e variante). L’articolo, la variante e la sede di un punto non si cambiano dopo: ne crei un altro. Un punto disattivato viene conservato e non segnala nulla.
+<!-- anchor: user.money.stock.registry -->
+### Il registro degli articoli
+
+**Destinatari:** Amministratore · Proprietario
+
+Lei vuole un’unica lista che dica, per ogni articolo e variante, che cos’è, quanto costa e a quanto si vende, dove va e quanto ce n’è.
+
+Apra **Magazzino → Articoli**. Ogni riga mostra il **codice a barre**, l’**unità**, il **prezzo** (il prezzo di vendita del catalogo), l’**ultimo costo noto**, l’**ubicazione abituale** e ciò che è **disponibile**. Il costo compare solo se il suo ruolo può vedere le finanze o gestire gli acquisti; altrimenti la riga dice *costo non mostrato*. Un costo che nessuna consegna ha ancora dato resta *costo sconosciuto*, mai zero.
+
+- **Ubicazione abituale**: tocchi l’icona di ubicazione di una riga per dire dove va l’articolo: la sua corsia, scaffale o cassetto. Una variante senza ubicazione propria ha quella del suo articolo. È un’indicazione per sistemare, contare e prelevare: la merce può stare altrove e cambiarla non sposta nulla né riscrive alcuna storia.
+- **Filtri** per un’ubicazione per vedere ciò che vi è sistemato e nelle ubicazioni sottostanti, oppure attivi *Solo articoli senza ubicazione abituale* per vedere ciò che ne ha ancora bisogno.
+- **Cerchi** per nome, codice a barre o indirizzo. Digitare o scansionare un codice a barre nella ricerca e confermare apre quell’articolo.
+- Le liste lunghe si caricano a pagine: scelga *Mostra altri*.
 
 <!-- anchor: user.money.amounts -->
 ### Come sono mostrati gli importi

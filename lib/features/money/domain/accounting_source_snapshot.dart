@@ -158,7 +158,8 @@ class AccountingSourceSnapshot {
   final List<SourcePurchase> purchases;
 
   /// Parses the answer to a request for [workspaceId] and `[from, to]`
-  /// made by [principal]. Strict: an unknown ledger kind or category, a
+  /// made by [principal]; the instalments' tax points are dated on the calendar of the business
+  /// ([timezone], its IANA zone). Strict: an unknown ledger kind or category, a
   /// wrong echo or a total that does not equal the sum of its rows is an
   /// [AccountingSourceException], never a skipped row.
   factory AccountingSourceSnapshot.fromRpc(
@@ -167,6 +168,7 @@ class AccountingSourceSnapshot {
     required String from,
     required String to,
     required String principal,
+    String? timezone,
   }) {
     final r = JsonReader.of(raw, context: 'accounting_source_snapshot_v1');
     Never bad(String why) =>
@@ -217,7 +219,7 @@ class AccountingSourceSnapshot {
     final purchases = r.objects('purchases', _purchase);
 
     final totals = r.objectOrAbsent('totals');
-    final instalmentRows = _instalments(r, totals, bad);
+    final instalmentRows = _instalments(r, totals, bad, timezone);
     void agree(String what, JsonReader t, int count, int value, String key) {
       if (t.integer('count') != count || t.integer(key) != value) {
         bad('$what totals disagree with the rows');
@@ -321,9 +323,10 @@ List<({String invoiceId, TaxPointPayment payment})> _instalments(
   JsonReader r,
   JsonReader totals,
   Never Function(String) bad,
+  String? timezone,
 ) {
   if (r.raw('instalments') is! List) bad('no instalments in the answer');
-  final rows = r.objects('instalments', invoiceInstalmentOf);
+  final rows = r.objects('instalments', (row) => invoiceInstalmentOf(row, timezone: timezone));
   final t = totals.objectOrAbsent('instalments');
   if (t.integer('count') != rows.length ||
       t.integer('amount_cents') !=

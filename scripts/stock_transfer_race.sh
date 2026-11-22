@@ -8,6 +8,11 @@
 #       and each item's total over the two places is unchanged.
 #   (B) two sessions each taking 3 of the last 4: the second waits, then is
 #       refused (DKG03); 1 is left and exactly one movement exists.
+#   (D) two put-away sessions each allocate most (4 of 5) of one receipt line:
+#       the second waits for the first's lock on the line, then is refused as
+#       over-allocated; 4 are in stock, one allocation exists.
+#   (E) two sessions each take 2 of an item with a reorder point of 8 at 10 on
+#       hand: the second waits for the item, and one alert (not two) exists.
 #   (C) a legacy booking confirmation (the bridge) against a customer return of
 #       the same item, in both orders: the bridge takes the item's row first like
 #       every stock command, so neither order deadlocks and the stock adds up:
@@ -44,7 +49,7 @@ set local role authenticated;
 select public.create_workspace('Transfer race', 'FR', 'EUR', 'Europe/Paris', 'dev', false, null) as ws \gset
 reset role;
 commit;
-update public.workspaces set feature_flags = coalesce(feature_flags, '{}'::jsonb) || '{"services": true, "stockManagement": true, "stockTakeOut": true}' where id = :'ws';
+update public.workspaces set feature_flags = coalesce(feature_flags, '{}'::jsonb) || '{"services": true, "stockManagement": true, "stockTakeOut": true, "stockReorder": true, "stockReceiving": true, "purchases": true, "purchaseOrders": true}' where id = :'ws';
 insert into public.services (workspace_id, name, price_cents, active, inventory_unit, tracking, stockable)
 values (:'ws', 'Race X', 100, true, 'piece', 'none', true) returning id as x \gset
 insert into public.services (workspace_id, name, price_cents, active, inventory_unit, tracking, stockable)
@@ -79,13 +84,36 @@ select public.stock_loss_v1(:'ws', gen_random_uuid(), jsonb_build_array(
   jsonb_build_object('item_id', :'w', 'quantity', 1, 'from', :'main', 'to', :'loss')));
 reset role;
 commit;
+-- (D) a delivery of 5 pieces, recorded; (E) an item with 10 at MAIN and a reorder point of 8
+insert into public.services (workspace_id, name, price_cents, active, inventory_unit, tracking, stockable)
+values (:'ws', 'Race P', 100, true, 'piece', 'none', true) returning id as p \gset
+insert into public.services (workspace_id, name, price_cents, active, inventory_unit, tracking, stockable)
+values (:'ws', 'Race R', 100, true, 'piece', 'none', true) returning id as r \gset
+insert into public.suppliers (workspace_id, supplier_number, name) values (:'ws', 'S-RACE', 'Race Co') returning id as sup \gset
+insert into public.purchase_orders (workspace_id, year, number, supplier_id, state, currency, created_by_member_id)
+values (:'ws', 2026, 1, :'sup', 'draft', 'EUR', :'member') returning id as ord \gset
+insert into public.purchase_order_lines (workspace_id, order_id, line_no, service_id, description, quantity, unit, unit_price_cents)
+values (:'ws', :'ord', 1, :'p', '', 5, 'piece', 100);
+update public.purchase_orders set state = 'sent', sent_at = now(), sent_via = 'print' where id = :'ord';
+select revision as ordrev from public.purchase_orders where id = :'ord' \gset
+begin;
+select set_config('request.jwt.claims', '{"sub":"$owner","role":"authenticated","aal":"aal2"}', true);
+set local role authenticated;
+select public.record_purchase_order_receipt_v1(:'ws', :'ord', :ordrev, current_date, '[{"line_no": 1, "quantity": 5}]'::jsonb, 'dock', gen_random_uuid());
+select public.stock_move_v1(:'ws', gen_random_uuid(), jsonb_build_array(
+  jsonb_build_object('item_id', :'r', 'quantity', 10, 'from', :'supplier', 'to', :'main')), 'receipt');
+select public.save_stock_reorder_point_v1(:'ws', null, null, gen_random_uuid(),
+  jsonb_build_object('item_id', :'r', 'site_id', :'main', 'reorder_point', '8'));
+reset role;
+commit;
+select id as rcpt from public.purchase_order_receipts where order_id = :'ord' \gset
 select id as ev1 from public.events where workspace_id = :'ws' and type = 'service_charge' and (payload ->> 'quantity')::int = 2 \gset
 select id as ev2 from public.events where workspace_id = :'ws' and type = 'service_charge' and (payload ->> 'quantity')::int = 1 \gset
-\echo :ws :x :y :z :main :shelf :loss :customer :w :inv :ev1 :ev2 :supplier
+\echo :ws :x :y :z :main :shelf :loss :customer :w :inv :ev1 :ev2 :supplier :p :r :rcpt
 SQL
 )
-read -r ws x y z main shelf loss customer w inv ev1 ev2 supplier <<<"$fixture"
-for v in "$ws" "$x" "$y" "$z" "$main" "$shelf" "$loss" "$customer" "$w" "$inv" "$ev1" "$ev2" "$supplier"; do
+read -r ws x y z main shelf loss customer w inv ev1 ev2 supplier p r rcpt <<<"$fixture"
+for v in "$ws" "$x" "$y" "$z" "$main" "$shelf" "$loss" "$customer" "$w" "$inv" "$ev1" "$ev2" "$supplier" "$p" "$r" "$rcpt"; do
   [[ "$v" =~ ^[0-9a-f-]{36}$ ]] || { echo "::error::fixture incomplete: '$fixture'" >&2; exit 1; }
 done
 expect() { [[ "$2" == "$3" ]] || { echo "::error::$1: expected '$3', got '$2'" >&2; exit 1; }; }
@@ -224,4 +252,60 @@ wait "$holder4" || { echo "::error::the holding confirmation failed: $(tr '\n' '
 wait "$contender4" || { echo "::error::the return after the confirmation failed: $(tr '\n' ' ' < "$scratch/contender4")" >&2; exit 1; }
 grep -qx returned "$scratch/contender4" || { echo "::error::the return did not complete: $(tr '\n' ' ' < "$scratch/contender4")" >&2; exit 1; }
 expect "(C2) 1 - 1 (the confirmation) + 1 (the return) = 1" "$(wbal)" "1"
-echo "stock transfer race: opposing transfers never deadlock and keep every total; the last stock is taken once; a booking confirmation and a customer return of one item serialise in both orders"
+# (D) two put-aways of 4 of the 5 received: the second is refused once the first holds them
+put_away() {
+  echo "$as_owner select 'putaway' from (select public.put_away_receipt_v1('$ws', '$2', '$1', jsonb_build_array(jsonb_build_object('line_no', 1, 'quantity', 4, 'location_id', '$main')))) t;"
+}
+pa1=$(uid); pa2=$(uid)
+psql "$url" -X -qAt -v ON_ERROR_STOP=1 >"$scratch/holder5" 2>&1 <<SQL &
+begin;
+$(put_away "$pa1" "$rcpt")
+reset role;
+\\! touch '$scratch/ready5'
+select pg_sleep(4);
+commit;
+SQL
+holder5=$!
+wait_marker "$scratch/ready5" "$scratch/holder5"
+PGAPPNAME="transfer-race-putaway" psql "$url" -X -qAt -v ON_ERROR_STOP=1 >"$scratch/contender5" 2>&1 <<SQL &
+begin;
+$(put_away "$pa2" "$rcpt")
+commit;
+SQL
+contender5=$!
+wait_lock "transfer-race-putaway"
+wait "$holder5" || { echo "::error::the first put-away failed: $(tr '\\n' ' ' < "$scratch/holder5")" >&2; exit 1; }
+wait "$contender5" || true
+grep -qx putaway "$scratch/holder5" || { echo "::error::the first put-away did not complete: $(tr '\\n' ' ' < "$scratch/holder5")" >&2; exit 1; }
+grep -q "over_allocated" "$scratch/contender5" || { echo "::error::the second put-away was not refused as over_allocated: $(tr '\\n' ' ' < "$scratch/contender5")" >&2; exit 1; }
+expect "(D) one allocation of 4 exists" "$(q "select count(*) || '/' || coalesce(sum(inventory_quantity), 0)::int from public.stock_receipt_allocations where receipt_id = '$rcpt'")" "1/4"
+expect "(D) 4 of the item are in stock" "$(q "select coalesce(sum(quantity), 0)::int from public.stock_balances where item_id = '$p' and location_id = '$main'")" "4"
+
+# (E) two sessions each take 2 of the item (10 on hand, the point 8): one alert
+rb=$(uid); rc=$(uid)
+take_r() {
+  echo "$as_owner select 'taken' from (select public.stock_consume_v1('$ws', '$1', jsonb_build_array(jsonb_build_object('item_id', '$r', 'quantity', 2, 'from', '$main', 'to', '$loss')))) t;"
+}
+psql "$url" -X -qAt -v ON_ERROR_STOP=1 >"$scratch/holder6" 2>&1 <<SQL &
+begin;
+$(take_r "$rb")
+reset role;
+\\! touch '$scratch/ready6'
+select pg_sleep(4);
+commit;
+SQL
+holder6=$!
+wait_marker "$scratch/ready6" "$scratch/holder6"
+PGAPPNAME="transfer-race-reorder" psql "$url" -X -qAt -v ON_ERROR_STOP=1 >"$scratch/contender6" 2>&1 <<SQL &
+begin;
+$(take_r "$rc")
+commit;
+SQL
+contender6=$!
+wait_lock "transfer-race-reorder"
+wait "$holder6" || { echo "::error::the first take failed: $(tr '\\n' ' ' < "$scratch/holder6")" >&2; exit 1; }
+wait "$contender6" || { echo "::error::the second take failed: $(tr '\\n' ' ' < "$scratch/contender6")" >&2; exit 1; }
+grep -qx taken "$scratch/contender6" || { echo "::error::the second take did not complete: $(tr '\\n' ' ' < "$scratch/contender6")" >&2; exit 1; }
+expect "(E) 10 - 2 - 2 = 6 of the item on hand" "$(q "select coalesce(sum(quantity), 0)::int from public.stock_balances where item_id = '$r' and location_id = '$main'")" "6"
+expect "(E) the point was crossed by both and raised exactly one open alert" "$(q "select count(*) from public.events where workspace_id = '$ws' and type = 'stock_low' and payload ->> 'item_id' = '$r' and not (payload ? 'ended')")" "1"
+echo "stock transfer race: opposing transfers never deadlock and keep every total; the last stock is taken once; a booking confirmation and a customer return of one item serialise in both orders; two put-aways cannot over-allocate a line; two sessions crossing a reorder point raise one alert"

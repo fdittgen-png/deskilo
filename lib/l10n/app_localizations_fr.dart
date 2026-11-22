@@ -2876,6 +2876,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get biCards => 'Analyses affichées';
 
   @override
+  String get biCardsDragHandle => 'Glisser pour réordonner';
+
+  @override
+  String get biCardsStandard => 'Retour au standard';
+
+  @override
   String biCardsUnavailable(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -3223,6 +3229,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get biDataUnavailable => 'Indisponible';
+
+  @override
+  String get biDefaultViewName => 'Mes analyses';
 
   @override
   String get biDeltaNone => 'Pas encore de comparaison';
@@ -6678,6 +6687,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get claimRefusedOtherMonth =>
       'Ces factures sont d’un autre mois que ce paiement. Rien n’a été débité.';
+
+  @override
+  String get claimRefusedRequestChanged =>
+      'Ce paiement a déjà été envoyé sous une autre forme. Vérifiez les paiements déclarés, puis réessayez.';
 
   @override
   String get claimRefusedWithdrawn =>
@@ -10181,6 +10194,17 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get eventEinvoiceNoticeEnded => 'Réglé';
+
+  @override
+  String get eventEinvoiceOutcomeUncertain =>
+      'Le résultat d’une facture électronique est inconnu : son envoi s’est arrêté avant qu’une réponse soit enregistrée. Elle n’est pas renvoyée. Vérifiez le relevé de la plateforme, puis réglez-le à la main.';
+
+  @override
+  String get eventEinvoiceStuckPrepared =>
+      'Une facture électronique a été préparée et jamais envoyée. Renvoyez-la depuis sa facture, ou laissez-la.';
+
+  @override
   String eventExpenseDeviation(Object reason, Object scheduled) {
     return 'validé $scheduled — $reason';
   }
@@ -10458,6 +10482,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get eventTypeCredentialChange => 'Modification d\'identifiants';
+
+  @override
+  String get eventTypeEinvoiceOutcomeUnknown =>
+      'Envoi de facture électronique interrompu';
 
   @override
   String get eventTypeExpense => 'Dépense';
@@ -12546,6 +12574,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get featureStockReceivingTitle => 'Réception en stock';
+
+  @override
+  String get featureStockReorderDesc =>
+      'Fixez un minimum par article et par site : la boîte de réception signale quand le stock l’atteint, et une liste de réapprovisionnement propose quoi commander. Désactivé : aucun seuil, aucune alerte, aucune liste ; le registre n’est pas touché.';
+
+  @override
+  String get featureStockReorderTitle => 'Seuils de réapprovisionnement';
 
   @override
   String get featureStockTakeOutDesc =>
@@ -17902,6 +17937,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get invoiceSendAction => 'Envoyer à la plateforme gouvernementale';
+
+  @override
+  String get invoiceSendBindingChanged =>
+      'Cette facture a déjà été transmise à cette destination avec un autre contenu. Elle n’est pas renvoyée ; la première transmission reste valable.';
 
   @override
   String get invoiceSendCustomerAccepted =>
@@ -31801,6 +31840,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Jours après l\'émission avant qu\'une première relance soit proposée, et avant l\'échéance d\'une facture sans conditions de paiement.';
 
   @override
+  String get settingHintEinvoiceStuckAttemptMinutes =>
+      'Combien de minutes une facture électronique peut rester préparée, sans envoi commencé, avant que le propriétaire soit prévenu que sa tentative s’est arrêtée. Un envoi commencé sans résultat est signalé dès que son propre délai est écoulé.';
+
+  @override
   String get settingHintFederationAnswerWaitSeconds =>
       'Secondes pendant lesquelles un serveur attend la réponse à un message signé envoyé à un autre serveur avant de renvoyer le même message. Au moins 30 ; gardez-la sous la durée de validité du statut.';
 
@@ -32135,6 +32178,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingLabelDunningFirstAfterDays =>
       'Jours avant une première relance';
+
+  @override
+  String get settingLabelEinvoiceStuckAttemptMinutes =>
+      'Tentative de facture électronique interrompue';
 
   @override
   String get settingLabelFederationAnswerWaitSeconds =>
@@ -35474,6 +35521,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get stockPlacesAdd => 'Ajouter un emplacement';
 
   @override
+  String get stockPlacesLabelsNone =>
+      'Il n’y a aucun emplacement pour lequel imprimer une étiquette.';
+
+  @override
+  String get stockPlacesPrintLabels => 'Imprimer les étiquettes';
+
+  @override
   String get stockPlacesSearch =>
       'Trouver un emplacement par adresse, nom ou code-barres';
 
@@ -35614,6 +35668,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Un code-barres compte de 8 à 14 chiffres.';
 
   @override
+  String get stockReasonHomeInvalid =>
+      'Choisissez un emplacement de cette entreprise en service, qui ne soit ni un fournisseur, ni un client, ni une perte, ni un transit.';
+
+  @override
   String get stockReasonItemForeign =>
       'Cet article n’est pas un article de cette entreprise.';
 
@@ -35693,6 +35751,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Cet article fournisseur est déjà associé.';
 
   @override
+  String get stockReasonMappingUnknown =>
+      'Aucun article fournisseur n’est préféré pour l’une de ces lignes.';
+
+  @override
   String get stockReasonNameDuplicate => 'Ce nom est déjà utilisé.';
 
   @override
@@ -35721,7 +35783,19 @@ class AppLocalizationsFr extends AppLocalizations {
       'L\'usage doit être prélèvement ou réserve.';
 
   @override
+  String get stockReasonPointFixed =>
+      'L’article, la variante et le site d’un seuil ne se changent pas : créez-en un autre.';
+
+  @override
+  String get stockReasonPointTwice =>
+      'Cet article a déjà un seuil sur ce site.';
+
+  @override
   String get stockReasonPriceInvalid => 'Un prix est nul ou positif.';
+
+  @override
+  String get stockReasonQuantityAndTarget =>
+      'Indiquez une quantité à commander ou un niveau à atteindre, pas les deux.';
 
   @override
   String get stockReasonQuantityInvalid =>
@@ -35748,6 +35822,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les deux emplacements sont dans un même site : déplacez plutôt les marchandises en une seule étape.';
 
   @override
+  String get stockReasonSiteUnknown =>
+      'Choisissez un site de cette entreprise.';
+
+  @override
   String get stockReasonStockOnHand => 'Il y a du stock : sortez-le d’abord.';
 
   @override
@@ -35757,6 +35835,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get stockReasonSupplierForeign =>
       'Ce fournisseur n’est pas un fournisseur de cette entreprise.';
+
+  @override
+  String get stockReasonTargetBelowPoint =>
+      'Le niveau à atteindre doit être au-dessus du seuil.';
 
   @override
   String get stockReasonTooLong => 'Ce texte est trop long.';
@@ -35820,6 +35902,178 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get stockReasonWrongSite =>
       'Les marchandises sont réceptionnées sur un emplacement du site de destination.';
+
+  @override
+  String get stockRegistryAllPlaces => 'Tous les emplacements';
+
+  @override
+  String stockRegistryCost(String amount) {
+    return 'coût $amount';
+  }
+
+  @override
+  String get stockRegistryCostHidden => 'coût non affiché';
+
+  @override
+  String get stockRegistryCostUnknown => 'coût inconnu';
+
+  @override
+  String stockRegistryHome(String address) {
+    return 'rangé en $address';
+  }
+
+  @override
+  String get stockRegistryHomeHelp =>
+      'Où cet article est rangé, pour que la réception, l’inventaire et le prélèvement sachent où il va. C’est un conseil : le stock peut être ailleurs, et le changer ne déplace rien.';
+
+  @override
+  String get stockRegistryHomeNone => 'Pas d’emplacement de rangement';
+
+  @override
+  String get stockRegistryHomePlace => 'Emplacement de rangement';
+
+  @override
+  String stockRegistryHomeTitle(String item) {
+    return 'Emplacement de rangement de $item';
+  }
+
+  @override
+  String get stockRegistryMore => 'Afficher plus';
+
+  @override
+  String get stockRegistryNoHome => 'pas d’emplacement de rangement';
+
+  @override
+  String get stockRegistryNoHomeFilter =>
+      'Seulement les articles sans emplacement de rangement';
+
+  @override
+  String stockRegistryOnHand(String quantity) {
+    return '$quantity en stock';
+  }
+
+  @override
+  String get stockRegistryPlaceFilter => 'Emplacement de rangement';
+
+  @override
+  String stockRegistryPrice(String amount) {
+    return 'prix $amount';
+  }
+
+  @override
+  String get stockRegistrySearch =>
+      'Trouver un article par nom, code-barres ou adresse';
+
+  @override
+  String get stockReorderCreateDraft => 'Créer un brouillon de commande';
+
+  @override
+  String stockReorderDraftCreated(String number) {
+    return 'Brouillon de commande $number créé. Rien n’a été commandé ni envoyé.';
+  }
+
+  @override
+  String get stockReorderDraftHelp =>
+      'Un brouillon de commande est créé : rien n’est commandé, chiffré ni envoyé tant que vous ne le confirmez pas.';
+
+  @override
+  String stockReorderGapRow(String site, String quantity) {
+    return '$site · $quantity proposé';
+  }
+
+  @override
+  String stockReorderGroupLine(String item, String quantity, String site) {
+    return '$item : $quantity pour $site';
+  }
+
+  @override
+  String get stockReorderIntro =>
+      'Ce qui est au niveau de son seuil de réapprovisionnement ou en dessous, par site, et ce qu’il faut commander à qui. Rien n’est commandé ici : un brouillon attend votre confirmation.';
+
+  @override
+  String get stockReorderLowEmpty =>
+      'Rien n’est au niveau de son seuil ou en dessous.';
+
+  @override
+  String stockReorderLowRow(String site, String onHand, String point) {
+    return '$site · $onHand en stock · seuil $point';
+  }
+
+  @override
+  String get stockReorderLowTitle => 'Stock bas';
+
+  @override
+  String get stockReorderNoSupplierHelp =>
+      'Ces articles sont bas, mais aucun article fournisseur n’est marqué comme préféré : choisissez-en un dans les articles fournisseur de l’article.';
+
+  @override
+  String get stockReorderNoSupplierTitle => 'Aucun fournisseur choisi';
+
+  @override
+  String get stockReorderPointActive => 'Utilisé';
+
+  @override
+  String get stockReorderPointAdd => 'Ajouter un seuil';
+
+  @override
+  String get stockReorderPointInactive => 'inutilisé';
+
+  @override
+  String stockReorderPointLevel(String unit) {
+    return 'Seuil ($unit)';
+  }
+
+  @override
+  String get stockReorderPointModeQuantity => 'Commander une quantité';
+
+  @override
+  String get stockReorderPointModeTarget => 'Commander jusqu’à';
+
+  @override
+  String stockReorderPointRow(String site, String point, String rule) {
+    return '$site · seuil $point · $rule';
+  }
+
+  @override
+  String get stockReorderPointSite => 'Site';
+
+  @override
+  String get stockReorderPointTitle => 'Seuil de réapprovisionnement';
+
+  @override
+  String get stockReorderPointValue => 'Quantité (vide : signaler seulement)';
+
+  @override
+  String get stockReorderPointWhole => 'L’article dans son ensemble';
+
+  @override
+  String get stockReorderPointsEmpty =>
+      'Aucun seuil n’est défini : rien n’est jamais signalé comme bas.';
+
+  @override
+  String get stockReorderPointsTitle => 'Seuils de réapprovisionnement';
+
+  @override
+  String get stockReorderRuleNone => 'signaler seulement';
+
+  @override
+  String stockReorderRuleQuantity(String quantity) {
+    return 'commander $quantity';
+  }
+
+  @override
+  String stockReorderRuleTarget(String quantity) {
+    return 'commander jusqu’à $quantity';
+  }
+
+  @override
+  String get stockReorderTitle => 'Réapprovisionnement';
+
+  @override
+  String get stockReorderToOrderEmpty => 'Il n’y a rien à commander.';
+
+  @override
+  String get stockReorderToOrderTitle => 'Que commander';
 
   @override
   String get stockSettingsElsewhere =>

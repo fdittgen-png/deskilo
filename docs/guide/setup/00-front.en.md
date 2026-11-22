@@ -1,6 +1,6 @@
 # Setup Guide
 
-**DesKilo — build your space, step by step.** For the person who is about to create a coworking space, an association's room or a shared office, and wants to know what is possible, what is necessary and in which order. *Other languages: [Français](Guide-de-demarrage) · [Deutsch](Einrichtungsanleitung) · [Español](Guia-de-puesta-en-marcha) · [Italiano](Guida-di-avvio).*
+**DesKilo — build your space, step by step.** For the person who is about to set up a business with places to book (a coworking space, an association's room, a shared office) or without places (a practice, a studio, a salon, a freelancer, another service business), and wants to know what is possible, what is necessary and in which order. *Other languages: [Français](Guide-de-demarrage) · [Deutsch](Einrichtungsanleitung) · [Español](Guia-de-puesta-en-marcha) · [Italiano](Guida-di-avvio).*
 
 <!-- anchor: setup.guide.how-to-read -->
 ## How to use this guide
@@ -23,6 +23,7 @@ Only **Open** is required to start. Stop after any level: nothing forces you on.
 
 | You want… | Start here |
 |---|---|
+| To know which steps your kind of business gets, with or without places | [What kind of business is it?](help:setup.kind.overview) |
 | To know what DesKilo can do and what to prepare | [Before you start](help:setup.before.overview) |
 | A place members can book, today | [Build the place](help:setup.place.overview) |
 | To say who may do what, and who approves | [The role matrix](help:user.roles.matrix) |

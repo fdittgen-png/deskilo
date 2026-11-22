@@ -803,7 +803,9 @@ window.SETUP_L10N={
    "stockSepDash": "Dash ( - )",
    "stockSepDot": "Dot ( . )",
    "stockSepSlash": "Slash ( / )",
-   "stockSepColon": "Colon ( : )"
+   "stockSepColon": "Colon ( : )",
+   "einvoiceStuck": "E-invoice attempt left half-way",
+   "einvoiceStuckHint": "How long an e-invoice may stay prepared, with no dispatch started, before the owner is told that its attempt stopped. Set in the app's settings."
   },
   "feature": {
    "calendarTab": [
@@ -1469,6 +1471,10 @@ window.SETUP_L10N={
    "serviceFulfilment": [
     "Service fulfilment",
     "Follow an ordered service as an engagement of its own: ordered, started, done, or cancelled with a reason, with every step kept. The quote, the invoice and the payments stay as they are beside it. Nothing is invoiced or paid by it. Asked for, under billing customers."
+   ],
+   "stockReorder": [
+    "Reorder points",
+    "Set a minimum per item and site: the inbox says when stock falls to it, and a replenishment list proposes what to order. Off: no point is set, no alert is raised and no list is offered; the ledger is unaffected."
    ]
   },
   "process": {
@@ -2668,7 +2674,9 @@ window.SETUP_L10N={
    "stockSepDash": "Tiret ( - )",
    "stockSepDot": "Point ( . )",
    "stockSepSlash": "Barre oblique ( / )",
-   "stockSepColon": "Deux-points ( : )"
+   "stockSepColon": "Deux-points ( : )",
+   "einvoiceStuck": "Tentative de facture électronique interrompue",
+   "einvoiceStuckHint": "Combien de temps une facture électronique peut rester préparée, sans envoi commencé, avant que le propriétaire soit prévenu que sa tentative s’est arrêtée. Réglé dans les paramètres de l’application."
   },
   "feature": {
    "calendarTab": [
@@ -3334,6 +3342,10 @@ window.SETUP_L10N={
    "serviceFulfilment": [
     "Suivi des prestations",
     "Suivez une prestation commandée comme un engagement à part : commandée, commencée, terminée ou annulée avec un motif, chaque étape étant conservée. Le devis, la facture et les paiements restent tels quels à côté. Rien n'est facturé ni payé par ce suivi. Sur demande, sous les clients facturés."
+   ],
+   "stockReorder": [
+    "Seuils de réapprovisionnement",
+    "Fixez un minimum par article et par site : la boîte de réception signale quand le stock l’atteint, et une liste de réapprovisionnement propose quoi commander. Désactivé : aucun seuil, aucune alerte, aucune liste ; le registre n’est pas touché."
    ]
   },
   "process": {
@@ -4533,7 +4545,9 @@ window.SETUP_L10N={
    "stockSepDash": "Bindestrich ( - )",
    "stockSepDot": "Punkt ( . )",
    "stockSepSlash": "Schrägstrich ( / )",
-   "stockSepColon": "Doppelpunkt ( : )"
+   "stockSepColon": "Doppelpunkt ( : )",
+   "einvoiceStuck": "Unterbrochener E-Rechnungsversuch",
+   "einvoiceStuckHint": "Wie lange eine E-Rechnung vorbereitet bleiben darf, ohne dass ein Versand begonnen hat, bevor die Inhaberin oder der Inhaber erfährt, dass der Versuch stehen geblieben ist. Einstellbar in den Einstellungen der App."
   },
   "feature": {
    "calendarTab": [
@@ -5199,6 +5213,10 @@ window.SETUP_L10N={
    "serviceFulfilment": [
     "Leistungsverfolgung",
     "Verfolgen Sie eine bestellte Leistung als eigenen Auftrag: bestellt, begonnen, erledigt oder mit Begründung storniert, jeder Schritt bleibt erhalten. Angebot, Rechnung und Zahlungen bleiben daneben unverändert. Dadurch wird nichts in Rechnung gestellt oder bezahlt. Auf Anfrage, unter den Rechnungskunden."
+   ],
+   "stockReorder": [
+    "Meldebestände",
+    "Legen Sie je Artikel und Standort einen Mindestbestand fest: Der Posteingang meldet, wenn der Bestand ihn erreicht, und eine Nachschubliste schlägt vor, was zu bestellen ist. Aus: kein Meldebestand, kein Alarm, keine Liste; das Lagerbuch bleibt unberührt."
    ]
   },
   "process": {
@@ -6398,7 +6416,9 @@ window.SETUP_L10N={
    "stockSepDash": "Guion ( - )",
    "stockSepDot": "Punto ( . )",
    "stockSepSlash": "Barra ( / )",
-   "stockSepColon": "Dos puntos ( : )"
+   "stockSepColon": "Dos puntos ( : )",
+   "einvoiceStuck": "Intento de factura electrónica interrumpido",
+   "einvoiceStuckHint": "Cuánto tiempo puede quedar preparada una factura electrónica, sin que se haya iniciado el envío, antes de avisar al propietario de que el intento se detuvo. Se ajusta en los ajustes de la aplicación."
   },
   "feature": {
    "calendarTab": [
@@ -7064,6 +7084,10 @@ window.SETUP_L10N={
    "serviceFulfilment": [
     "Seguimiento de servicios",
     "Siga un servicio pedido como un compromiso propio: pedido, iniciado, terminado o cancelado con un motivo, conservando cada paso. El presupuesto, la factura y los pagos quedan como están. Nada se factura ni se paga con él. A petición, bajo los clientes facturados."
+   ],
+   "stockReorder": [
+    "Puntos de reposición",
+    "Fije un mínimo por artículo y sede: la bandeja avisa cuando las existencias lo alcanzan y una lista de reposición propone qué pedir. Desactivado: ningún punto, ninguna alerta ni lista; el libro no se ve afectado."
    ]
   },
   "process": {
@@ -8263,7 +8287,9 @@ window.SETUP_L10N={
    "stockSepDash": "Trattino ( - )",
    "stockSepDot": "Punto ( . )",
    "stockSepSlash": "Barra ( / )",
-   "stockSepColon": "Due punti ( : )"
+   "stockSepColon": "Due punti ( : )",
+   "einvoiceStuck": "Tentativo di fattura elettronica interrotto",
+   "einvoiceStuckHint": "Per quanto tempo una fattura elettronica può restare preparata, senza che l’invio sia iniziato, prima che il titolare sia avvisato che il tentativo si è fermato. Si imposta nelle impostazioni dell’app."
   },
   "feature": {
    "calendarTab": [
@@ -8929,6 +8955,10 @@ window.SETUP_L10N={
    "serviceFulfilment": [
     "Avanzamento dei servizi",
     "Seguite un servizio ordinato come un impegno a sé: ordinato, avviato, concluso o annullato con un motivo, conservando ogni passaggio. Il preventivo, la fattura e i pagamenti restano invariati accanto. Nulla viene fatturato o pagato da questo. Su richiesta, sotto i clienti fatturati."
+   ],
+   "stockReorder": [
+    "Punti di riordino",
+    "Impostate un minimo per articolo e sede: la casella segnala quando la giacenza lo raggiunge e un elenco di riordino propone cosa ordinare. Disattivato: nessun punto, nessun avviso, nessun elenco; il registro non cambia."
    ]
   },
   "process": {

@@ -52,6 +52,8 @@ import 'data/demo_stock_ledger.dart';
 import 'data/demo_stock_operations.dart';
 import 'data/demo_stock_queries.dart';
 import 'data/demo_stock_receiving_commands.dart';
+import 'data/demo_stock_registry.dart';
+import 'data/demo_stock_reorder.dart';
 import 'data/finance_kpi_repository.dart';
 import 'data/money/demo_credit_moves.dart';
 import 'data/money/demo_invoice_issue_drafts.dart';
@@ -288,6 +290,22 @@ List<Override> _moneyPortOverrides(FakeMoneyRepository Function(Ref ref) money) 
   // #4169 — and edits its units, codes and places in memory.
   stockConfigCommandsProvider.overrideWith(
     (ref) => DemoStockConfigCommands(demoFirstSpaceId),
+  ),
+  // #4294 — and keeps reorder points: two shop items are below theirs, read from that same stock.
+  stockReorderProvider.overrideWith(
+    (ref) => DemoStockReorder(
+      demoFirstSpaceId,
+      ref.watch(_demoStockLedgerProvider),
+      ref.watch(stockConfigCommandsProvider),
+    ),
+  ),
+  // #4293 — and keeps a registry of those items: barcode, price, cost, a home address.
+  stockRegistryProvider.overrideWith(
+    (ref) => DemoStockRegistry(
+      demoFirstSpaceId,
+      ref.watch(_demoStockLedgerProvider),
+      ref.watch(stockConfigCommandsProvider),
+    ),
   ),
   // #4171 — and receives the deliveries of its orders into that stock.
   stockReceivingCommandsProvider.overrideWith(

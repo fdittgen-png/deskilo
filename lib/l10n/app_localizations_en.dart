@@ -2845,6 +2845,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get biCards => 'Analyses shown';
 
   @override
+  String get biCardsDragHandle => 'Drag to reorder';
+
+  @override
+  String get biCardsStandard => 'Back to the standard';
+
+  @override
   String biCardsUnavailable(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -3189,6 +3195,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get biDataUnavailable => 'Unavailable';
+
+  @override
+  String get biDefaultViewName => 'My analyses';
 
   @override
   String get biDeltaNone => 'No comparison yet';
@@ -6608,6 +6617,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get claimRefusedOtherMonth =>
       'These invoices are of another month than this payment. Nothing was charged.';
+
+  @override
+  String get claimRefusedRequestChanged =>
+      'This payment was already sent as another one. Check the declared payments, then try again.';
 
   @override
   String get claimRefusedWithdrawn =>
@@ -10065,6 +10078,17 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get eventEinvoiceNoticeEnded => 'Settled';
+
+  @override
+  String get eventEinvoiceOutcomeUncertain =>
+      'The outcome of an e-invoice is unknown: its sending stopped before an answer was recorded. It is not sent again. Check the platform\'s record, then settle it by hand.';
+
+  @override
+  String get eventEinvoiceStuckPrepared =>
+      'An e-invoice was prepared and never sent. Send it again from its invoice, or leave it.';
+
+  @override
   String eventExpenseDeviation(Object reason, Object scheduled) {
     return 'validated $scheduled — $reason';
   }
@@ -10338,6 +10362,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get eventTypeCredentialChange => 'Credentials change';
+
+  @override
+  String get eventTypeEinvoiceOutcomeUnknown => 'E-invoice attempt stopped';
 
   @override
   String get eventTypeExpense => 'Expense';
@@ -12400,6 +12427,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get featureStockReceivingTitle => 'Receiving into stock';
+
+  @override
+  String get featureStockReorderDesc =>
+      'Set a minimum per item and site: the inbox says when stock falls to it, and a replenishment list proposes what to order. Off: no point is set, no alert is raised and no list is offered; the ledger is unaffected.';
+
+  @override
+  String get featureStockReorderTitle => 'Reorder points';
 
   @override
   String get featureStockTakeOutDesc =>
@@ -17695,6 +17729,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get invoiceSendAction => 'Send to the government platform';
+
+  @override
+  String get invoiceSendBindingChanged =>
+      'This invoice was already submitted to this destination with other content. It is not sent again; its first submission stands.';
 
   @override
   String get invoiceSendCustomerAccepted =>
@@ -31428,6 +31466,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Days after issue before a first reminder is suggested, and before an invoice falls due when no payment term was set.';
 
   @override
+  String get settingHintEinvoiceStuckAttemptMinutes =>
+      'How many minutes an e-invoice may stay prepared, with no dispatch started, before the owner is told that its attempt stopped. A dispatch that was started and has no outcome is told as soon as its own time is up.';
+
+  @override
   String get settingHintFederationAnswerWaitSeconds =>
       'Seconds a server waits for the answer to a signed message it sent to another server before it sends the same message again. At least 30; keep it below the status lifetime.';
 
@@ -31752,6 +31794,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get settingLabelDunningFirstAfterDays =>
       'Days before a first reminder';
+
+  @override
+  String get settingLabelEinvoiceStuckAttemptMinutes =>
+      'E-invoice attempt left half-way';
 
   @override
   String get settingLabelFederationAnswerWaitSeconds =>
@@ -35032,6 +35078,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockPlacesAdd => 'Add a place';
 
   @override
+  String get stockPlacesLabelsNone => 'There is no place to print a label for.';
+
+  @override
+  String get stockPlacesPrintLabels => 'Print labels';
+
+  @override
   String get stockPlacesSearch => 'Find a place by address, name or barcode';
 
   @override
@@ -35170,6 +35222,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockReasonGtinLength => 'A barcode has 8 to 14 digits.';
 
   @override
+  String get stockReasonHomeInvalid =>
+      'Choose a place of this business that is in use and is not a supplier, customer, loss or transit place.';
+
+  @override
   String get stockReasonItemForeign => 'This item is not one of this business.';
 
   @override
@@ -35243,6 +35299,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'This supplier article is already mapped.';
 
   @override
+  String get stockReasonMappingUnknown =>
+      'No supplier article is preferred for one of these lines.';
+
+  @override
   String get stockReasonNameDuplicate => 'This name is already used.';
 
   @override
@@ -35270,7 +35330,19 @@ class AppLocalizationsEn extends AppLocalizations {
       'The use must be picking or reserve.';
 
   @override
+  String get stockReasonPointFixed =>
+      'The item, variant and site of a reorder point cannot be changed: make another.';
+
+  @override
+  String get stockReasonPointTwice =>
+      'This item already has a reorder point at this site.';
+
+  @override
   String get stockReasonPriceInvalid => 'A price is zero or more.';
+
+  @override
+  String get stockReasonQuantityAndTarget =>
+      'Name a quantity to order or a level to order up to, not both.';
 
   @override
   String get stockReasonQuantityInvalid =>
@@ -35297,6 +35369,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'Both places are in one site: move the goods in one step instead.';
 
   @override
+  String get stockReasonSiteUnknown => 'Choose a site of this business.';
+
+  @override
   String get stockReasonStockOnHand =>
       'There is stock on hand: take it out first.';
 
@@ -35307,6 +35382,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get stockReasonSupplierForeign =>
       'This supplier is not one of this business.';
+
+  @override
+  String get stockReasonTargetBelowPoint =>
+      'The level to order up to must be above the reorder point.';
 
   @override
   String get stockReasonTooLong => 'This text is too long.';
@@ -35371,6 +35450,176 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get stockReasonWrongSite =>
       'Goods are received onto a place of the destination site.';
+
+  @override
+  String get stockRegistryAllPlaces => 'All places';
+
+  @override
+  String stockRegistryCost(String amount) {
+    return 'cost $amount';
+  }
+
+  @override
+  String get stockRegistryCostHidden => 'cost not shown';
+
+  @override
+  String get stockRegistryCostUnknown => 'cost unknown';
+
+  @override
+  String stockRegistryHome(String address) {
+    return 'home $address';
+  }
+
+  @override
+  String get stockRegistryHomeHelp =>
+      'Where this item belongs, so receiving, counting and picking know where it goes. It is advice: stock may sit elsewhere, and changing it moves nothing.';
+
+  @override
+  String get stockRegistryHomeNone => 'No home place';
+
+  @override
+  String get stockRegistryHomePlace => 'Home place';
+
+  @override
+  String stockRegistryHomeTitle(String item) {
+    return 'Home place of $item';
+  }
+
+  @override
+  String get stockRegistryMore => 'Show more';
+
+  @override
+  String get stockRegistryNoHome => 'no home place';
+
+  @override
+  String get stockRegistryNoHomeFilter => 'Only items with no home place';
+
+  @override
+  String stockRegistryOnHand(String quantity) {
+    return '$quantity on hand';
+  }
+
+  @override
+  String get stockRegistryPlaceFilter => 'Home place';
+
+  @override
+  String stockRegistryPrice(String amount) {
+    return 'price $amount';
+  }
+
+  @override
+  String get stockRegistrySearch => 'Find an item by name, barcode or address';
+
+  @override
+  String get stockReorderCreateDraft => 'Create draft order';
+
+  @override
+  String stockReorderDraftCreated(String number) {
+    return 'Draft order $number created. Nothing was ordered or sent.';
+  }
+
+  @override
+  String get stockReorderDraftHelp =>
+      'A draft order is made: nothing is ordered, priced or sent until you confirm it.';
+
+  @override
+  String stockReorderGapRow(String site, String quantity) {
+    return '$site · $quantity proposed';
+  }
+
+  @override
+  String stockReorderGroupLine(String item, String quantity, String site) {
+    return '$item: $quantity for $site';
+  }
+
+  @override
+  String get stockReorderIntro =>
+      'What is at or below its reorder point, per site, and what to order from whom. Nothing is ordered here: a draft order waits for your confirmation.';
+
+  @override
+  String get stockReorderLowEmpty =>
+      'Nothing is at or below its reorder point.';
+
+  @override
+  String stockReorderLowRow(String site, String onHand, String point) {
+    return '$site · $onHand on hand · reorder point $point';
+  }
+
+  @override
+  String get stockReorderLowTitle => 'Low stock';
+
+  @override
+  String get stockReorderNoSupplierHelp =>
+      'These are low, but no supplier article is marked as preferred for them: choose one in the item\'s supplier articles.';
+
+  @override
+  String get stockReorderNoSupplierTitle => 'No supplier chosen';
+
+  @override
+  String get stockReorderPointActive => 'In use';
+
+  @override
+  String get stockReorderPointAdd => 'Add a reorder point';
+
+  @override
+  String get stockReorderPointInactive => 'not in use';
+
+  @override
+  String stockReorderPointLevel(String unit) {
+    return 'Reorder point ($unit)';
+  }
+
+  @override
+  String get stockReorderPointModeQuantity => 'Order a quantity';
+
+  @override
+  String get stockReorderPointModeTarget => 'Order up to';
+
+  @override
+  String stockReorderPointRow(String site, String point, String rule) {
+    return '$site · reorder point $point · $rule';
+  }
+
+  @override
+  String get stockReorderPointSite => 'Site';
+
+  @override
+  String get stockReorderPointTitle => 'Reorder point';
+
+  @override
+  String get stockReorderPointValue => 'Quantity (empty: only flag)';
+
+  @override
+  String get stockReorderPointWhole => 'The item as a whole';
+
+  @override
+  String get stockReorderPointsEmpty =>
+      'No reorder point is set: nothing is ever flagged as low.';
+
+  @override
+  String get stockReorderPointsTitle => 'Reorder points';
+
+  @override
+  String get stockReorderRuleNone => 'flag only';
+
+  @override
+  String stockReorderRuleQuantity(String quantity) {
+    return 'order $quantity';
+  }
+
+  @override
+  String stockReorderRuleTarget(String quantity) {
+    return 'order up to $quantity';
+  }
+
+  @override
+  String get stockReorderTitle => 'Reorder';
+
+  @override
+  String get stockReorderToOrderEmpty => 'There is nothing to order.';
+
+  @override
+  String get stockReorderToOrderTitle => 'What to order';
 
   @override
   String get stockSettingsElsewhere =>

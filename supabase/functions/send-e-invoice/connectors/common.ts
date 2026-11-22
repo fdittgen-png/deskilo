@@ -78,6 +78,26 @@ export interface ConnectorDocument {
 /** A provider's own words, cut to what a log row can hold. */
 export const clip = (text: string, max = 500): string => text.slice(0, max);
 
+/** Text with what can carry a credential taken out: a URL (its query can
+ * carry a key) and a `key=value` pair of a secret's name. */
+export const redact = (text: string): string =>
+  text
+    .replace(/\b[a-z][a-z0-9+.-]*:\/\/\S+/gi, "[url]")
+    .replace(
+      /\b(api[_-]?key|key|token|secret|password|authorization|signature)=\S+/gi,
+      "$1=[redacted]",
+    );
+
+/** An error as the log and the record may keep it: its class and its
+ * message with nothing that can carry a credential, never the object (its
+ * stack and fields can hold the request's address). */
+export const safeError = (error: unknown): string =>
+  clip(
+    error instanceof Error
+      ? `${error.name}: ${redact(error.message)}`
+      : redact(String(error)),
+  );
+
 /** A non-2xx answer: the provider said no. */
 export async function refused(res: Response): Promise<Submission> {
   const text = await res.text();
@@ -101,7 +121,7 @@ export const unreachable = (error: unknown): Submission => ({
       (error.message === "destination_not_allowed" ||
         error.message === "redirect_refused")
     ? error.message
-    : clip(String(error)),
+    : safeError(error),
   receipt: {},
 });
 

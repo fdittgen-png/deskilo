@@ -1458,6 +1458,8 @@ Vous regardez comment l'espace se porte.
 3. Lisez les analyses par domaine, comme **Finances** (**Facturé**, **Encaissé**) et **Espaces et capacité**.
 4. Enregistrez une vue sous **Vues**, ou touchez **Exporter en PDF**.
 
+**Analyses affichées** choisit les analyses que la page montre et leur ordre : cochez celles que vous voulez et faites glisser la poignée d’une ligne pour la déplacer (les flèches à côté font de même au clavier). Votre choix est mémorisé pour vous dans cet espace, sur tout appareil, et s’ouvre de nouveau la fois suivante ; une adresse qui nomme des analyses, ou une vue que vous ouvrez, l’emporte pour cette visite. **Retour au standard** l’efface.
+
 **Bon à savoir**
 
 - Vous ne voyez que les analyses que vous avez le droit de lire.

@@ -2917,12 +2917,40 @@ Sie möchten festlegen, wo etwas lagert, damit Wareneingang, Zählung und Kommis
 
 Öffnen Sie **Lager → Lagerorte**. Ein Lagerort hat eine Ebene: **Standort** (eine Filiale oder ein Zentrallager), **Zone** (Verkaufsfläche, Lagerraum, Hof), **Gang**, **Regalfeld** und **Fach** oder **Behälter**. Ein Lagerort liegt nur direkt unter der darüberliegenden Ebene: eine Zone unter einem Standort, ein Gang unter einer Zone, ein Regalfeld unter einem Gang, ein Fach unter einem Regalfeld. Eine Theke, eine Küche, ein Fahrzeug, eine Maschine oder ein Fach-Slot lässt sich überall einordnen. Ein Lager, das vor den Ebenen angelegt wurde, gilt als Standort.
 
-Jeder Lagerort hat eine **Adresse** aus den Codes seiner übergeordneten Lagerorte: `MAIN-SALES-A03-B02-S4` ist das Hauptgeschäft, die Verkaufsfläche, Gang 3, Regalfeld 2, Fach 4. Der Code eines Lagerorts muss sich nur von den Nachbarn unter demselben übergeordneten Lagerort unterscheiden, daher kann jedes Regalfeld sein Fach `S4` haben. Benennen Sie einen Lagerort um, folgen die Adressen darunter. Geben Sie einen Teil einer Adresse, einen Namen oder einen Barcode in die Suche ein, um einen Lagerort zu finden.
+Jeder Lagerort hat eine **Adresse** aus den Codes seiner übergeordneten Lagerorte: `MAIN-SALES-A03-B02-S4` ist das Hauptgeschäft, die Verkaufsfläche, Gang 3, Regalfeld 2, Fach 4. Der Code eines Lagerorts muss sich nur von den Nachbarn unter demselben übergeordneten Lagerort unterscheiden, daher kann jedes Regalfeld sein Fach `S4` haben. Benennen Sie einen Lagerort um, folgen die Adressen darunter. Geben Sie einen Teil einer Adresse, einen Namen oder einen Barcode in die Suche ein, um einen Lagerort zu finden. Ein Lagerort wird überall, wo er erscheint, mit seiner Adresse gelesen: im Lager, in den Bewegungen, auf dem Weg einer Umlagerung und bei den Lagerorten, die eine Bewegung anbietet. **Etiketten drucken** erstellt ein PDF der angezeigten Lagerorte, je ein Etikett: die Adresse groß, darunter den Namen und einen Barcode (den des Lagerorts, sonst seine Adresse), den ein Scan wiederfindet.
 
 **Gut zu wissen**
 - Ein Standort legt fest, ob er **Lieferungen von Lieferanten annimmt**; ausgeschaltet kommt Ware nur per Umlagerung von einem anderen Standort an.
 - Ein Lagerort unter einem Standort ist **Kommissionierung** (Verkaufsfläche) oder **Reserve** (Lagerbestand); das ist ein Hinweis, nie eine Menge.
 - Das Zeichen zwischen den Ebenen ist die Einstellung des Unternehmens **Trennzeichen in einer Lagerort-Adresse** (Bindestrich, Punkt, Schrägstrich oder Doppelpunkt); nur die Schreibweise der Adresse ändert sich. Sie steht in den **Lagereinstellungen**.
+
+### Nachbestellen: was knapp ist und was zu bestellen ist
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie möchten sehen, was bald ausgeht, und es bestellen, ohne die Regale durchzugehen.
+
+Öffnen Sie **Lager → Nachbestellen** (die Funktion *Meldebestände* muss aktiv sein). Die Seite hat zwei Listen.
+
+- **Niedriger Bestand** listet jeden Artikel oder jede Variante auf oder unter ihrem Meldebestand, je Standort, mit dem Bestand und dem Meldebestand. Gelesen wird aus dem Lagerbuch, exakt, in der Einheit des Artikels; ein Artikel ohne Meldebestand wird nie gelistet. Ein Lagerort im Transit zählt nicht als vorrätig.
+- **Was zu bestellen ist** gruppiert, was knapp ist, nach dem Lieferanten, dessen Artikel als **bevorzugt** markiert ist, in der Einkaufseinheit dieses Artikels, auf ganze Einheiten aufgerundet. Ein Artikel ohne bevorzugten Lieferantenartikel steht unter **Kein Lieferant gewählt**: Markieren Sie einen in den Lieferantenartikeln des Artikels.
+
+**Bestellentwurf erstellen** erstellt aus einer Gruppe einen Einkaufsbestellungs-Entwurf. Es ist nur ein Entwurf: Nichts wird bestellt, bepreist oder gesendet, bis Sie ihn in den Einkaufsbestellungen bestätigen. Dafür brauchen Sie das Recht, Einkäufe zu verwalten; derselbe Entwurf, zweimal angefordert, entsteht nur einmal.
+
+Die **Meldebestände** (unter den beiden Listen) machen einen Artikel knapp. Jeder zeigt Artikel, Standort, die Schwelle und was dann zu bestellen ist: eine Menge, *bis* zu einem Niveau, oder nichts (er meldet nur). Wer den Lagerbestand verwalten darf, legt einen mit **Meldebestand hinzufügen** an oder öffnet einen zum Ändern. Schwelle und Menge sind exakte Zahlen (ein Dezimalkomma genügt); ein Auffüllniveau muss über dem Meldebestand liegen, ein Meldebestand nennt eine Menge oder ein Niveau, nicht beides, und ein Artikel hat einen Meldebestand je Standort (und Variante). Artikel, Variante und Standort lassen sich danach nicht ändern: Legen Sie einen neuen an. Ein abgeschalteter Meldebestand bleibt erhalten und meldet nichts.
+
+### Das Artikelregister
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie möchten eine Liste, die für jeden Artikel und jede Variante sagt, was es ist, was es kostet und einbringt, wohin es gehört und wie viel es gibt.
+
+Öffnen Sie **Lager → Artikel**. Jede Zeile zeigt **Barcode**, **Einheit**, **Preis** (den Verkaufspreis aus dem Katalog), **zuletzt bekannte Kosten**, **festen Lagerort** und den **Bestand**. Die Kosten erscheinen nur, wenn Ihre Rolle Finanzen sehen oder Einkäufe verwalten darf; sonst steht in der Zeile *Kosten nicht angezeigt*. Kosten, die noch keine Lieferung geliefert hat, bleiben *Kosten unbekannt*, nie null.
+
+- **Fester Lagerort**: Tippen Sie auf das Orts-Symbol einer Zeile, um zu sagen, wohin der Artikel gehört: Gang, Fach oder Behälter. Eine Variante ohne eigenen festen Lagerort hat den ihres Artikels. Es ist ein Hinweis für Einlagerung, Zählung und Kommissionierung: Bestand kann anderswo liegen, und eine Änderung bewegt nichts und schreibt keine Historie um.
+- **Filtern** Sie nach einem Lagerort, um zu sehen, was dort und darunter eingelagert ist, oder schalten Sie *Nur Artikel ohne festen Lagerort* ein, um zu sehen, was noch einen braucht.
+- **Suchen** Sie nach Name, Barcode oder Adresse. Einen Barcode in die Suche eingeben oder scannen und bestätigen öffnet diesen Artikel.
+- Lange Listen werden seitenweise geladen: Wählen Sie *Mehr anzeigen*.
 
 ### Wie Beträge angezeigt werden
 
@@ -6155,6 +6183,8 @@ Sie sehen sich an, wie der Workspace abschneidet.
 3. Lesen Sie die Analysen nach Bereich, etwa **Finanzen** (**Fakturiert**, **Eingenommen**) und **Flächen und Kapazität**.
 4. Speichern Sie unter **Ansichten** eine Ansicht oder tippen Sie auf **Als PDF exportieren**.
 
+**Angezeigte Analysen** wählt, welche Analysen die Seite zeigt und in welcher Reihenfolge: Haken Sie die gewünschten an und ziehen Sie den Griff einer Zeile, um sie zu verschieben (die Pfeile daneben tun dasselbe über die Tastatur). Ihre Auswahl wird für Sie in diesem Arbeitsbereich auf jedem Gerät gemerkt und beim nächsten Mal wieder geöffnet; eine Adresse, die Analysen nennt, oder eine geöffnete Ansicht hat für diesen Besuch Vorrang. **Zurück zum Standard** löscht sie.
+
 **Gut zu wissen**
 
 - Sie sehen nur Analysen, die Sie lesen dürfen.
@@ -6802,7 +6832,7 @@ Sie hängen an einem Feld oder einem Bildschirm fest.
 
 # Einrichtungsanleitung
 
-**DesKilo — bauen Sie Ihren Space, Schritt für Schritt.** Für alle, die einen Coworking-Space, einen Vereinsraum oder ein gemeinsames Büro aufbauen wollen und wissen möchten, was möglich ist, was nötig ist und in welcher Reihenfolge.
+**DesKilo — bauen Sie Ihren Space, Schritt für Schritt.** Für alle, die ein Unternehmen mit buchbaren Plätzen (einen Coworking-Space, einen Vereinsraum, ein gemeinsames Büro) oder ohne Plätze (eine Praxis, ein Studio, einen Salon, eine freiberufliche Tätigkeit, ein anderes Dienstleistungsunternehmen) aufbauen wollen und wissen möchten, was möglich ist, was nötig ist und in welcher Reihenfolge.
 
 ## So nutzen Sie diese Anleitung
 
@@ -6824,6 +6854,7 @@ Nur die Stufe *Öffnen* ist zum Start nötig. Sie können nach jeder Stufe aufh�
 
 | Sie möchten … | Hier beginnen |
 |---|---|
+| Wissen, welche Schritte Ihre Art von Unternehmen hat, mit oder ohne Plätze | [Was für ein Unternehmen ist es?](help:setup.kind.overview) |
 | Wissen, was DesKilo kann und was Sie vorbereiten sollten | [Bevor Sie beginnen](help:setup.before.overview) |
 | Einen Ort, den Mitglieder noch heute buchen können | [Den Ort aufbauen](help:setup.place.overview) |
 | Festlegen, wer was darf und wer bestätigt | [Die Rollenmatrix](help:user.roles.matrix) |
@@ -6846,6 +6877,102 @@ Nur die Stufe *Öffnen* ist zum Start nötig. Sie können nach jeder Stufe aufh�
 - Jeder Abschnitt nennt in der zweiten Zeile seine Zielgruppe, damit Sie überspringen können, was Sie nicht betrifft.
 - Ein Block, der mit **Achtung** beginnt, markiert eine Entscheidung, die sich nur schwer rückgängig machen lässt, und sagt, ab wann.
 - Diese Anleitung bescheinigt nichts Rechtliches oder Steuerliches: Sie sagt, was die App tut und was Sie mit einer Steuerberatung klären sollten.
+
+## Mit der Art des Unternehmens beginnen
+
+Die erste Frage der Einrichtung betrifft weder Etagen noch Tarife: Sie lautet **Was für ein Unternehmen ist es?** Die Antwort entscheidet, welche Schritte Ihnen begegnen. Ein Coworking-Space, ein Vereinsraum oder ein gemeinsames Büro hat Plätze zum Buchen und durchläuft alle Schritte. Eine Praxis, ein Studio, ein Salon, eine freiberufliche Tätigkeit oder ein anderes Dienstleistungsunternehmen hat keine Plätze und begegnet den Schritten dazu nicht. Dieses Kapitel zeigt die Frage, was ein Unternehmen ohne Plätze nicht bekommt, und ein Beispiel vom Schritt zur Art bis zur ersten Rechnung.
+
+In diesem Kapitel:
+- [Was für ein Unternehmen ist es?](help:setup.kind.choose)
+- [Was ein Unternehmen ohne Plätze nicht bekommt](help:setup.kind.without-places)
+- [Ein durchgespieltes Beispiel: eine Praxis ohne Plätze](help:setup.kind.example)
+
+### Was für ein Unternehmen ist es?
+
+**Zielgruppe:** Inhaber · Mitinhaber
+
+Sie möchten, dass die App zu Ihrem Unternehmen passt, bevor Sie etwas einrichten. Der erste Schritt des Leitfadens in der App, **Name, Land und Zeitzone**, beginnt mit dieser Frage.
+
+<!-- image: setup-kind-choose -->
+
+*Die Arten*
+
+| Art | Was es ist |
+|---|---|
+| **Coworking-Space** | Mitglieder buchen Plätze, Tische und Räume auf einem Raumplan. |
+| **Studio** | Kurse und Unterricht: Yoga, Tanz, Musik, Kunst. |
+| **Praxis** | Termine: Massage, Therapie, Coaching, Beratung. |
+| **Salon** | Kosmetik, Friseur, Nägel, Tattoo. |
+| **Freiberufler:in** | Eine Person, die ihre eigenen Leistungen verkauft und abrechnet: Kunden, Angebote und Rechnungen, ohne Räume. |
+| **Dienstleistungsunternehmen** | Jedes andere Unternehmen, das seine Leistungen verkauft. |
+
+**Schritte**
+
+1. Öffnen Sie [Workspace](app:/workspace-settings) oder gehen Sie den ersten Schritt des Einrichtungsleitfadens.
+2. Tippen Sie auf **Was für ein Unternehmen ist es?** und wählen Sie eine Art. Ist das Unternehmen mehreres, kreuzen Sie unter **Es ist auch … (optional)** weitere Arten an.
+3. Lesen Sie, was die Art **Schaltet ein** und **Schaltet aus**, und tippen Sie dann auf **Speichern**. **Alle anzeigen** listet jede Funktion.
+
+**Gut zu wissen**
+
+- Bis **Speichern** ändert sich nichts. Eine später gewählte Art schlägt neu vor und schaltet nie etwas stillschweigend um.
+- **Coworking-Space** schlägt nichts vor: Der Space behält alles, wie es war.
+- Eine Funktion, die noch nicht als stabil geprüft ist, wird nur eingeschaltet, wenn Sie sie ankreuzen; sonst schalten Sie sie später unter **Funktionen** ein.
+- Die Buchung von Kursen und Terminen ist nicht Teil dieser Version. Heute erhält ein Unternehmen ohne Plätze seine Leistungen mit Preisen, Rechnungen, Online-Zahlung, Nachrichten und seine öffentliche Seite.
+
+**Siehe auch:** [Was für ein Unternehmen ist es? (Benutzerhandbuch)](help:user.workspace.settings.business-kind) · [Ganze Prozesse ein- oder ausschalten](help:user.features.processes)
+
+### Was ein Unternehmen ohne Plätze nicht bekommt
+
+**Zielgruppe:** Inhaber · Mitinhaber
+
+Sie führen eine Praxis, ein Studio, einen Salon, eine freiberufliche Tätigkeit oder ein anderes Dienstleistungsunternehmen und möchten wissen, welche Schritte nicht für Sie sind. Eine Art ohne Plätze schaltet alles rund um Plätze aus: Sitzplätze, Raumplan, Kiosk, Räume.
+
+*Schritte, die einem Unternehmen ohne Plätze nicht angeboten werden*
+
+| Schritt | Warum er fehlt |
+|---|---|
+| **Plätze auf dem Plan** | Es gibt keine Räume, Tische oder Sitzplätze zu zeichnen. |
+| **Preise und Tarife** | Sie bepreisen die Anwesenheit an einem Ort, brauchen also die Plätze ebenso wie die Abrechnung. |
+| **Buchungsgrenzen** | Sie begrenzen, wie weit im Voraus, wie lange und wie viele Plätze gleichzeitig Mitglieder buchen. |
+| **Kiosk und Ausweise** | Ein Tablet am Eingang und Mitgliedsausweise gehören zu einem Ort. |
+| **Eine erste Buchung** | Es gibt keinen Platz zu buchen. |
+
+*Schritte, die nicht um Plätze gehen, bleiben, zum Beispiel*
+
+- **Name, Land und Zeitzone**, **Öffnungszeiten** und **Was Mitglieder dürfen**.
+- **Mitglieder einladen**, **Leistungen**, **Wie Mitglieder zahlen** und **Online-Zahlung**.
+- Die Schritte der Rechnungsstellung: **Rechtliche Angaben**, **Umsatzsteuer**, **Rechnungsnummern**, **Rechnungsbild**, **E-Rechnung**, **Buchhaltung** und **Zahlungserinnerungen**.
+
+**Gut zu wissen**
+
+- Die Schritte kommen zurück, wenn das Unternehmen von einer Art ist, die Plätze hat, oder wenn Plätze wieder eingeschaltet werden. Nichts wird gelöscht: Raumplan und Buchungen sind mit ihnen wieder da.
+- Der Rest dieser Anleitung ist um *Atelier du Marché* herum geschrieben, das Plätze hat. Wo ein Abschnitt vom Raumplan, von Sitzplätzen, vom Kiosk oder von Buchungsregeln handelt, überspringt ihn ein Unternehmen ohne Plätze.
+
+**Siehe auch:** [Ihren Space prüfen](help:setup.place.check) · [Ganze Prozesse ein- oder ausschalten](help:user.features.processes)
+
+### Ein durchgespieltes Beispiel: eine Praxis ohne Plätze
+
+**Zielgruppe:** Inhaber · Mitinhaber
+
+Sie möchten eine ganze Einrichtung für ein Unternehmen ohne Plätze sehen, von der Art bis zur ersten Rechnung. Das Beispiel ist die Praxis des Demo-Workspace, *Lindner Beratung*, eine Beratungspraxis in Berlin. Ihre Personen und Zahlen sind erfunden; öffnen Sie sie im [Demo-Workspace](help:user.advanced.demo), um mitzugehen.
+
+**Schritte**
+
+1. **Was für ein Unternehmen ist es?** Wählen Sie **Praxis**. Der Vorschlag schaltet Plätze aus und lässt Rechnungsstellung, Online-Zahlung, Nachrichten und die öffentliche Seite eingeschaltet. Tippen Sie auf **Speichern**.
+2. **Name, Land und Zeitzone.** Nennen Sie sie *Lindner Beratung*, Land Deutschland, Währung EUR, Zeitzone Europe/Berlin (siehe [Land, Währung, Zeitzone und Sprache](help:setup.place.where)).
+3. **Öffnungszeiten** und **Was Mitglieder dürfen.** Die Kunden der Praxis sind ihre Mitglieder: Legen Sie die Öffnungstage fest und was ein Kunde von seinem eigenen Konto sieht. Einen Schritt **Plätze auf dem Plan** gibt es nicht.
+4. **Leistungen.** Listen Sie auf, was die Praxis verkauft, jeweils mit Name, Preis und Steuersatz (siehe [Eine Leistung](help:user.money.services.overview)). Einen Schritt **Preise und Tarife** gibt es nicht: Eine Leistung hat ihren eigenen Preis.
+5. **Rechtliche Angaben.** Wählen Sie das Steuerregime **Umsatzsteuerpflichtig (berechnet USt.)**, tragen Sie die Registernummer und die Adresse Kastanienallee 12, 10435 Berlin ein (siehe [Ihre rechtliche Identität, und was Sie Ihren Steuerberater fragen](help:setup.money.identity)).
+6. **Umsatzsteuer** und **Rechnungsnummern.** Die Praxis erhebt die deutsche Umsatzsteuer von 19 % und behält die Rechnungsnummern, die die App vorschlägt (siehe [Umsatzsteuer im Überblick](help:setup.money.vat)).
+7. **Die erste Rechnung.** Öffnen Sie [Rechnungsstellung](app:/invoices), tippen Sie auf **Neu**, wählen Sie den Kunden und den Monat und tippen Sie dann auf **Rechnung ausstellen** (siehe [Eine Rechnung ausstellen](help:user.invoicing.new-invoice)).
+
+**Gut zu wissen**
+
+- Die Demo-Praxis zeigt das Ergebnis: drei Jahre monatlicher Rechnungen für ihre eigenen Leistungen, in Euro mit deutscher Umsatzsteuer, und einen leeren Raumplan.
+- Rechnungen in DesKilo auszustellen funktioniert heute nur für Frankreich und Deutschland, und die Praxis liegt in Deutschland.
+- Kein Schritt dieser Liste wartet auf einen Platz: Die Praxis kann am ersten Tag Rechnungen stellen.
+
+**Siehe auch:** [Geld und Steuern](help:setup.money.overview) · [Rechnungen von Hand oder automatisch](help:setup.money.invoicing)
 
 ## Bevor Sie beginnen
 

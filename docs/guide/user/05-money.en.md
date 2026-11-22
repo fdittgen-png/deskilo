@@ -665,12 +665,41 @@ You want to say where things are kept, so that receiving, counting and picking k
 
 Open **Stock → Places**. A place has a level: **Site** (a branch or a central depot), **Zone** (a sales floor, a back room, a yard), **Aisle**, **Bay** and **Shelf** or **Bin**. A place sits only under the level directly above it: a zone under a site, an aisle under a zone, a bay under an aisle, a shelf under a bay. A counter, a kitchen, a vehicle, a machine or a slot is placed anywhere. A warehouse made before the levels counts as a site.
 
-Each place has an **address**, written from its parents' codes: `MAIN-SALES-A03-B02-S4` is the main store, the sales floor, aisle 3, bay 2, shelf 4. The code of a place only has to differ from its neighbours under the same parent, so every bay can have its shelf `S4`. Rename a place and the addresses below it follow. Type any part of an address, a name or a barcode in the search to find a place.
+Each place has an **address**, written from its parents' codes: `MAIN-SALES-A03-B02-S4` is the main store, the sales floor, aisle 3, bay 2, shelf 4. The code of a place only has to differ from its neighbours under the same parent, so every bay can have its shelf `S4`. Rename a place and the addresses below it follow. Type any part of an address, a name or a barcode in the search to find a place. A place is read by its address wherever it appears: in the stock, the movements, a transfer's route and the places a move offers. **Print labels** makes a PDF of the places shown, one label each: the address in large type, the name beneath and a barcode (the place's own barcode, else its address) that a scan finds again.
 
 **Good to know**
 - A site says whether it **receives from suppliers**; switch it off and goods arrive there only by transfer from another site.
 - A place below a site is **picking** (front of house) or **reserve** (overstock); it is advice, never a quantity.
 - The character between the levels is the business's setting **Separator in a place address** (a dash, a dot, a slash or a colon); only how an address is written changes. It is set in **Stock settings**.
+
+<!-- anchor: user.money.stock.reorder -->
+### Reorder: what is low and what to order
+
+**Audience:** Administrator · Owner
+
+You want to see what is about to run out and order it without going through the shelves.
+
+Open **Stock → Reorder** (the feature *Reorder points* must be on). The page has two lists.
+
+- **Low stock** lists every item or variant at or below its reorder point, per site, with what is on hand and the point. It is read from the stock ledger, exactly, in the item's unit; an item with no reorder point is never listed. A place that is in transit does not count as stock on hand.
+- **What to order** groups what is low by the supplier whose article is marked **preferred** for it, in that article's purchase unit, rounded up to whole units. An item with no preferred supplier article is listed under **No supplier chosen**: mark one in the item's supplier articles.
+
+**Create draft order** makes a draft purchase order from a group. It is only a draft: nothing is ordered, priced or sent until you confirm it in the purchase orders. It needs the right to manage purchases; asking twice for the same draft makes it once.
+
+**Reorder points** (below the two lists) are what makes an item low. Each shows the item, the site, the level and what to order then: a quantity, *up to* a level, or nothing (it only flags). Whoever may manage the stock adds one with **Add a reorder point** or opens one to change it. The level and the quantity are exact numbers (a decimal comma is fine); a level to order up to must be above the point, a point names a quantity or a level, not both, and an item has one point per site (and variant). The item, variant and site of a point cannot be changed afterwards: make another. A point switched off is kept and flags nothing.
+<!-- anchor: user.money.stock.registry -->
+### The item registry
+
+**Audience:** Administrator · Owner
+
+You want one list that says, for every item and variant, what it is, what it costs and sells for, where it belongs and how much there is.
+
+Open **Stock → Items**. Each line shows the **barcode**, the **unit**, the **price** (the catalogue sale price), the **last known cost**, the **home place** and what is **on hand**. The cost appears only if your role may see finances or manage purchases; otherwise the line says *cost not shown*. A cost that no delivery has given yet stays *cost unknown*, never zero.
+
+- **Home place**: tap the place icon on a line to say where the item belongs: its aisle, shelf or bin. A variant without its own home place has its item's. It is advice for putting away, counting and picking: stock may sit elsewhere, and changing it moves nothing and rewrites no history.
+- **Filter** by a place to see what is homed in it and in the places below it, or switch on *Only items with no home place* to see what still needs one.
+- **Search** by name, barcode or address. Typing or scanning a barcode into the search and confirming opens that item.
+- Long lists load by pages: choose *Show more*.
 
 <!-- anchor: user.money.amounts -->
 ### How amounts are shown

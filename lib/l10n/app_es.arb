@@ -1265,6 +1265,8 @@
   },
   "biBookingBasis": "La capacidad reservada mide reservas, no la asistencia real.",
   "biCards": "Análisis mostrados",
+  "biCardsDragHandle": "Arrastrar para reordenar",
+  "biCardsStandard": "Volver al estándar",
   "biCardsUnavailable": "{count, plural, one{1 análisis de esta vista no está disponible para usted y se omite.} other{{count} análisis de esta vista no están disponibles para usted y se omiten.}}",
   "biCashNotBankBalance": "Pagos registrados, no un saldo bancario conciliado.",
   "@biCashNotBankBalance": {
@@ -1428,6 +1430,7 @@
   "biDataPartial": "Datos parciales",
   "biDataStale": "Datos desactualizados",
   "biDataUnavailable": "No disponible",
+  "biDefaultViewName": "Mis análisis",
   "biDeltaNone": "Aún sin comparación",
   "@biDeltaNone": {
     "description": "Business analytics dashboard: biDeltaNone"
@@ -3928,6 +3931,7 @@
   "claimRefusedNothingToFree": "Este pago ya se retiró.",
   "claimRefusedOther": "El negocio rechazó estas facturas para este pago. Actualice y vuelva a intentarlo.",
   "claimRefusedOtherMonth": "Estas facturas son de otro mes que este pago. No se ha cobrado nada.",
+  "claimRefusedRequestChanged": "Este pago ya se envió con otros datos. Compruebe los pagos declarados y vuelva a intentarlo.",
   "claimRefusedWithdrawn": "Retiró este pago. Vuelva a seleccionar las facturas para pagarlas.",
   "coOwnerAction": "Copropiedad",
   "coOwnerActivate": "Promover a propietario ahora",
@@ -6482,6 +6486,9 @@
   "eventCredentialCleared": "{actor} borró las credenciales de {provider} ({area}): {keys}.",
   "eventCredentialReplaced": "{actor} sustituyó las credenciales de {provider} ({area}): {keys}.",
   "eventCredentialSet": "{actor} registró las credenciales de {provider} ({area}): {keys}.",
+  "eventEinvoiceNoticeEnded": "Resuelto",
+  "eventEinvoiceOutcomeUncertain": "Se desconoce el resultado de una factura electrónica: su envío se detuvo antes de registrar una respuesta. No se vuelve a enviar. Compruebe el registro de la plataforma y resuélvalo a mano.",
+  "eventEinvoiceStuckPrepared": "Una factura electrónica se preparó y nunca se envió. Envíela de nuevo desde su factura, o déjela.",
   "eventExpenseDeviation": "validado {scheduled} — {reason}",
   "eventExpenseRepartitionLine": "{count, plural, one{{actor} reparte «{title}»: {amount} entre 1 socio} other{{actor} reparte «{title}»: {amount} entre {count} socios}}",
   "@eventExpenseRepartitionLine": {
@@ -6675,6 +6682,7 @@
   "eventTypeBadgeSecurityAlert": "Protección del acceso con tarjeta",
   "eventTypeCommitmentVariance": "Diferencia de alquiler",
   "eventTypeCredentialChange": "Cambio de credenciales",
+  "eventTypeEinvoiceOutcomeUnknown": "Envío de factura electrónica interrumpido",
   "eventTypeExpense": "Gasto",
   "eventTypeExpenseRepartition": "Gasto compartido",
   "eventTypeExpenseSchedule": "Gasto programado",
@@ -7775,6 +7783,14 @@
   "featureStockReceivingTitle": "Recepción en existencias",
   "@featureStockReceivingTitle": {
     "description": "#4171 the name of the receiving into stock feature"
+  },
+  "featureStockReorderDesc": "Fije un mínimo por artículo y sede: la bandeja avisa cuando las existencias lo alcanzan y una lista de reposición propone qué pedir. Desactivado: ningún punto, ninguna alerta ni lista; el libro no se ve afectado.",
+  "@featureStockReorderDesc": {
+    "description": "#4294 feature description"
+  },
+  "featureStockReorderTitle": "Puntos de reposición",
+  "@featureStockReorderTitle": {
+    "description": "#4294 feature name"
   },
   "featureStockTakeOutDesc": "Sacar mercancías de las existencias para uso o como pérdida, con el motivo y el lote. Desactivado: no se ofrece consumo ni pérdida; las transferencias y la recepción no cambian.",
   "@featureStockTakeOutDesc": {
@@ -10603,6 +10619,7 @@
     }
   },
   "invoiceSendAction": "Enviar a la plataforma gubernamental",
+  "invoiceSendBindingChanged": "Esta factura ya se envió a este destino con otro contenido. No se vuelve a enviar; el primer envío sigue vigente.",
   "invoiceSendCustomerAccepted": "Enviada — el servicio del cliente la aceptó.",
   "@invoiceSendCustomerAccepted": {
     "description": "Snackbar: the customer's service took the document (#568)"
@@ -18850,6 +18867,7 @@
   "@settingHintDunningFirstAfterDays": {
     "description": "#2484 settings: Setting hint."
   },
+  "settingHintEinvoiceStuckAttemptMinutes": "Cuántos minutos puede quedar preparada una factura electrónica, sin que se haya iniciado el envío, antes de avisar al propietario de que el intento se detuvo. Un envío iniciado sin resultado se avisa en cuanto vence su propio plazo.",
   "settingHintFederationAnswerWaitSeconds": "Segundos que un servidor espera la respuesta a un mensaje firmado enviado a otro servidor antes de volver a enviar el mismo mensaje. Al menos 30; manténgala por debajo de la validez del estado.",
   "settingHintFederationRetentionHours": "Horas que un servidor guarda los acuses de recibo de los mensajes firmados entre servidores, y un hogar personal las huellas de las membresías terminadas, antes de que la limpieza horaria los elimine. Nunca menos que la validez de estado más larga más dos veces el desfase de reloj.",
   "settingHintIdentityClockSkewSeconds": "Segundos de desfase de reloj entre el hogar personal y un servidor de espacios que aún se aceptan, de 0 a 30.",
@@ -19066,6 +19084,7 @@
   "@settingLabelDunningFirstAfterDays": {
     "description": "#2484 settings: Setting label."
   },
+  "settingLabelEinvoiceStuckAttemptMinutes": "Intento de factura electrónica interrumpido",
   "settingLabelFederationAnswerWaitSeconds": "Espera de respuesta entre servidores",
   "settingLabelFederationRetentionHours": "Conservación de los intercambios entre servidores",
   "settingLabelIdentityClockSkewSeconds": "Desfase de reloj permitido",
@@ -20882,6 +20901,8 @@
   "@stockPlacesAdd": {
     "description": "#4169 the stock editors: a label or message"
   },
+  "stockPlacesLabelsNone": "No hay ninguna ubicación para la que imprimir una etiqueta.",
+  "stockPlacesPrintLabels": "Imprimir etiquetas",
   "stockPlacesSearch": "Buscar una ubicación por dirección, nombre o código de barras",
   "stockPlacesTitle": "Ubicaciones",
   "@stockPlacesTitle": {
@@ -21056,6 +21077,7 @@
   "@stockReasonGtinLength": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonHomeInvalid": "Elija una ubicación de esta empresa en uso que no sea de proveedor, cliente, pérdida ni tránsito.",
   "stockReasonItemForeign": "Este artículo no es de este negocio.",
   "@stockReasonItemForeign": {
     "description": "#4169 the stock editors: a text under a field the server refused"
@@ -21127,6 +21149,7 @@
   "@stockReasonMappingDuplicate": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonMappingUnknown": "Ningún artículo de proveedor está marcado como preferido para una de estas líneas.",
   "stockReasonNameDuplicate": "Este nombre ya se usa.",
   "@stockReasonNameDuplicate": {
     "description": "#4169 the stock editors: a text under a field the server refused"
@@ -21156,10 +21179,13 @@
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
   "stockReasonPickRoleUnknown": "El uso debe ser picking o reserva.",
+  "stockReasonPointFixed": "El artículo, la variante y la sede de un punto de reposición no se cambian: cree otro.",
+  "stockReasonPointTwice": "Este artículo ya tiene un punto de reposición en esta sede.",
   "stockReasonPriceInvalid": "Un precio es cero o más.",
   "@stockReasonPriceInvalid": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonQuantityAndTarget": "Indique una cantidad a pedir o un nivel hasta el que pedir, no ambos.",
   "stockReasonQuantityInvalid": "Una cantidad es un número mayor que cero con seis decimales como máximo.",
   "@stockReasonQuantityInvalid": {
     "description": "#4171 receiving into stock: a text under a field the server refused"
@@ -21184,6 +21210,7 @@
   "@stockReasonSameSite": {
     "description": "#4170 transfers and take-out: a label or message"
   },
+  "stockReasonSiteUnknown": "Elija una sede de esta empresa.",
   "stockReasonStockOnHand": "Hay existencias: sáquelas primero.",
   "@stockReasonStockOnHand": {
     "description": "#4169 the stock editors: a text under a field the server refused"
@@ -21196,6 +21223,7 @@
   "@stockReasonSupplierForeign": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonTargetBelowPoint": "El nivel hasta el que pedir debe estar por encima del punto de reposición.",
   "stockReasonTooLong": "Este texto es demasiado largo.",
   "@stockReasonTooLong": {
     "description": "#4169 the stock editors: a text under a field the server refused"
@@ -21264,6 +21292,52 @@
   "@stockReasonWrongSite": {
     "description": "#4170 transfers and take-out: a label or message"
   },
+  "stockRegistryAllPlaces": "Todas las ubicaciones",
+  "stockRegistryCost": "coste {amount}",
+  "stockRegistryCostHidden": "coste no mostrado",
+  "stockRegistryCostUnknown": "coste desconocido",
+  "stockRegistryHome": "ubicación {address}",
+  "stockRegistryHomeHelp": "Dónde va este artículo, para que la recepción, el recuento y la preparación sepan adónde ir. Es una indicación: el stock puede estar en otro sitio y cambiarla no mueve nada.",
+  "stockRegistryHomeNone": "Sin ubicación habitual",
+  "stockRegistryHomePlace": "Ubicación habitual",
+  "stockRegistryHomeTitle": "Ubicación habitual de {item}",
+  "stockRegistryMore": "Mostrar más",
+  "stockRegistryNoHome": "sin ubicación habitual",
+  "stockRegistryNoHomeFilter": "Solo artículos sin ubicación habitual",
+  "stockRegistryOnHand": "{quantity} disponibles",
+  "stockRegistryPlaceFilter": "Ubicación habitual",
+  "stockRegistryPrice": "precio {amount}",
+  "stockRegistrySearch": "Buscar un artículo por nombre, código de barras o dirección",
+  "stockReorderCreateDraft": "Crear borrador de pedido",
+  "stockReorderDraftCreated": "Borrador de pedido {number} creado. No se pidió ni se envió nada.",
+  "stockReorderDraftHelp": "Se crea un borrador de pedido: nada se pide, valora ni envía hasta que lo confirme.",
+  "stockReorderGapRow": "{site} · {quantity} propuestos",
+  "stockReorderGroupLine": "{item}: {quantity} para {site}",
+  "stockReorderIntro": "Lo que está en su punto de reposición o por debajo, por sede, y qué pedir a quién. Aquí no se pide nada: un borrador espera su confirmación.",
+  "stockReorderLowEmpty": "Nada está en su punto de reposición ni por debajo.",
+  "stockReorderLowRow": "{site} · {onHand} disponibles · punto de reposición {point}",
+  "stockReorderLowTitle": "Stock bajo",
+  "stockReorderNoSupplierHelp": "Estos están bajos, pero ningún artículo de proveedor está marcado como preferido: elija uno en los artículos de proveedor del artículo.",
+  "stockReorderNoSupplierTitle": "Ningún proveedor elegido",
+  "stockReorderPointActive": "En uso",
+  "stockReorderPointAdd": "Añadir un punto de reposición",
+  "stockReorderPointInactive": "sin uso",
+  "stockReorderPointLevel": "Punto de reposición ({unit})",
+  "stockReorderPointModeQuantity": "Pedir una cantidad",
+  "stockReorderPointModeTarget": "Pedir hasta",
+  "stockReorderPointRow": "{site} · punto de reposición {point} · {rule}",
+  "stockReorderPointSite": "Sede",
+  "stockReorderPointTitle": "Punto de reposición",
+  "stockReorderPointValue": "Cantidad (vacío: solo avisar)",
+  "stockReorderPointWhole": "El artículo en conjunto",
+  "stockReorderPointsEmpty": "No hay ningún punto de reposición: nada se marca nunca como bajo.",
+  "stockReorderPointsTitle": "Puntos de reposición",
+  "stockReorderRuleNone": "solo avisar",
+  "stockReorderRuleQuantity": "pedir {quantity}",
+  "stockReorderRuleTarget": "pedir hasta {quantity}",
+  "stockReorderTitle": "Reposición",
+  "stockReorderToOrderEmpty": "No hay nada que pedir.",
+  "stockReorderToOrderTitle": "Qué pedir",
   "stockSettingsElsewhere": "Los ajustes de existencias se mantienen en la página Ajustes de existencias.",
   "@stockSettingsElsewhere": {
     "description": "the stock pages and group (#4299)"

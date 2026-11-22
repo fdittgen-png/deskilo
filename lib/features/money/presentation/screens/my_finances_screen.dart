@@ -179,6 +179,7 @@ class _MyFinancesState extends ConsumerState<MyFinancesScreen> {
                       _Payments(
                           filter: _filter,
                           devIds: devIds,
+                          zones: financeZones(all),
                           hostPayments: all.payments),
                       _Reminders(data: prod, dev: dev, partial: partial),
                     ],
@@ -359,8 +360,12 @@ class _Payments extends ConsumerWidget {
   const _Payments({
     required this.filter,
     this.devIds = const {},
+    this.zones = const {},
     this.hostPayments = const [],
   });
+
+  /// The business zone of each workspace, so a payment's year is read on its business's calendar.
+  final Map<String, String?> zones;
 
   /// C6 — my payments on the connected hosts, as they answer; beside the
   /// personal home's own, each payment once by workspace and id.
@@ -374,7 +379,7 @@ class _Payments extends ConsumerWidget {
 
   bool _kept(AccountActivity e) =>
       (filter.workspaceId == null || e.networkId == filter.workspaceId) &&
-      filter.inPeriod(e.occurredAt);
+      filter.inPeriod(e.occurredAt, timezone: zones[e.networkId]);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

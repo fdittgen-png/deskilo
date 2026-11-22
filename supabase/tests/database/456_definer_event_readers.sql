@@ -62,6 +62,8 @@ insert into listed (sig, reason) values
    'callable by the service role only (writes the notice)'),
   ('payment_invoice_capacity_v1(uuid,uuid)',
    'amounts of invoices under its own right; no event'),
+  ('record_payment(uuid,uuid,integer,text,text,date,text,uuid[],uuid)',
+   'writes or checks: returns an id, nothing, or a refusal about the object the caller acts on (a repeat under the same request id returns the id of the caller''s own first declaration)'),
   ('record_badge_auth_failure(text,uuid,uuid,uuid)',
    'callable by the service role only'),
   ('release_invoice_payment(uuid)',
@@ -78,6 +80,10 @@ insert into listed (sig, reason) values
    'writes or checks: returns an id, nothing, or a refusal about the object the caller acts on'),
   ('send_workspace_application_message(uuid,text,uuid)',
    'writes or checks: returns an id, nothing, or a refusal about the object the caller acts on, after can_discuss_workspace_application, which applies the rule'),
+  ('stock_low_rows(uuid,uuid)',
+   'callable by the service role only; the reorder points at or below their level, from the ledger: no event'),
+  ('stock_reorder_check(uuid)',
+   'writes or checks: returns nothing (opens or ends the point''s own stock_low notice)'),
   ('stock_move_v1(uuid,uuid,jsonb,text,timestamp with time zone,jsonb)',
    'writes or checks: returns an id, nothing, or a refusal about the object the caller acts on'),
   ('sweep_pending_events(uuid)',
@@ -137,7 +143,7 @@ select is((select coalesce(string_agg(l.sig, ', ' order by l.sig), '') from list
             where l.reason like 'callable by the service role only%'
               and has_function_privilege('authenticated', l.sig::regprocedure, 'execute')), '',
   'every entry listed as callable by the service role only is not executable by a signed-in client');
-select ok((select count(*) from listed) = 37, 'the list holds 37 reasoned exceptions');
+select ok((select count(*) from listed) = 40, 'the list holds 40 reasoned exceptions');
 
 select * from finish();
 rollback;

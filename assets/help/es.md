@@ -2917,12 +2917,40 @@ Quiere decir dónde se guarda cada cosa, para que la recepción, el recuento y l
 
 Abra **Existencias → Ubicaciones**. Una ubicación tiene un nivel: **Sede** (una sucursal o un depósito central), **Zona** (sala de ventas, trastienda, patio), **Pasillo**, **Módulo** y **Estante** o **Cajón**. Una ubicación va solo bajo el nivel inmediatamente superior: una zona bajo una sede, un pasillo bajo una zona, un módulo bajo un pasillo, un estante bajo un módulo. Un mostrador, una cocina, un vehículo, una máquina o una casilla se coloca donde sea. Un almacén creado antes de los niveles cuenta como sede.
 
-Cada ubicación tiene una **dirección**, escrita con los códigos de sus superiores: `MAIN-SALES-A03-B02-S4` es la tienda principal, la sala de ventas, el pasillo 3, el módulo 2, el estante 4. El código de una ubicación solo debe diferir de sus vecinos bajo la misma superior, así que cada módulo puede tener su estante `S4`. Si cambia el nombre de una ubicación, las direcciones de debajo lo siguen. Escriba parte de una dirección, un nombre o un código de barras en la búsqueda para encontrar una ubicación.
+Cada ubicación tiene una **dirección**, escrita con los códigos de sus superiores: `MAIN-SALES-A03-B02-S4` es la tienda principal, la sala de ventas, el pasillo 3, el módulo 2, el estante 4. El código de una ubicación solo debe diferir de sus vecinos bajo la misma superior, así que cada módulo puede tener su estante `S4`. Si cambia el nombre de una ubicación, las direcciones de debajo lo siguen. Escriba parte de una dirección, un nombre o un código de barras en la búsqueda para encontrar una ubicación. Una ubicación se lee por su dirección dondequiera que aparezca: en las existencias, los movimientos, el recorrido de un traslado y las ubicaciones que ofrece un movimiento. **Imprimir etiquetas** crea un PDF de las ubicaciones mostradas, una etiqueta cada una: la dirección en grande, el nombre debajo y un código de barras (el de la ubicación, si no su dirección) que un escaneo vuelve a encontrar.
 
 **Conviene saber**
 - Una sede indica si **recibe de proveedores**; desactivado, la mercancía llega solo por traslado desde otra sede.
 - Una ubicación bajo una sede es **picking** (zona de venta) o **reserva** (excedente); es una indicación, nunca una cantidad.
 - El carácter entre los niveles es el ajuste de la empresa **Separador en la dirección de una ubicación** (guion, punto, barra o dos puntos); solo cambia cómo se escribe la dirección. Se fija en **Ajustes de existencias**.
+
+### Reposición: lo que está bajo y lo que hay que pedir
+
+**Público:** Administrador/a · Propietario
+
+Quiere ver lo que está a punto de agotarse y pedirlo sin recorrer los estantes.
+
+Abra **Existencias → Reposición** (la función *Puntos de reposición* debe estar activada). La página tiene dos listas.
+
+- **Stock bajo** lista cada artículo o variante en su punto de reposición o por debajo, por sede, con lo disponible y el punto. Se lee del libro de existencias, exacto, en la unidad del artículo; un artículo sin punto de reposición nunca aparece. Una ubicación en tránsito no cuenta como existencias disponibles.
+- **Qué pedir** agrupa lo que está bajo por el proveedor cuyo artículo está marcado como **preferido**, en la unidad de compra de ese artículo, redondeado a unidades enteras. Un artículo sin artículo de proveedor preferido aparece en **Ningún proveedor elegido**: marque uno en los artículos de proveedor del artículo.
+
+**Crear borrador de pedido** crea un borrador de pedido de compra a partir de un grupo. Es solo un borrador: nada se pide, valora ni envía hasta que lo confirme en los pedidos de compra. Requiere el derecho de gestionar compras; pedir dos veces el mismo borrador lo crea una sola vez.
+
+Los **puntos de reposición** (bajo las dos listas) hacen que un artículo esté bajo. Cada uno muestra el artículo, la sede, el nivel y qué pedir entonces: una cantidad, *hasta* un nivel, o nada (solo avisa). Quien puede gestionar las existencias añade uno con **Añadir un punto de reposición** o abre uno para cambiarlo. El nivel y la cantidad son números exactos (la coma decimal vale); un nivel hasta el que pedir debe estar por encima del punto, un punto indica una cantidad o un nivel, no ambos, y un artículo tiene un punto por sede (y variante). El artículo, la variante y la sede de un punto no se cambian después: cree otro. Un punto desactivado se conserva y no avisa de nada.
+
+### El registro de artículos
+
+**Público:** Administrador/a · Propietario
+
+Quiere una sola lista que diga, de cada artículo y variante, qué es, cuánto cuesta y se vende, dónde va y cuánto hay.
+
+Abra **Existencias → Artículos**. Cada línea muestra el **código de barras**, la **unidad**, el **precio** (el precio de venta del catálogo), el **último coste conocido**, la **ubicación habitual** y lo que hay **disponible**. El coste aparece solo si su rol puede ver las finanzas o gestionar las compras; si no, la línea dice *coste no mostrado*. Un coste que ninguna entrega ha dado aún sigue como *coste desconocido*, nunca cero.
+
+- **Ubicación habitual**: toque el icono de ubicación de una línea para decir dónde va el artículo: su pasillo, estante o cajón. Una variante sin ubicación propia tiene la de su artículo. Es una indicación para colocar, contar y preparar: el stock puede estar en otro sitio, y cambiarla no mueve nada ni reescribe ningún historial.
+- **Filtre** por una ubicación para ver lo que tiene allí y en las ubicaciones de debajo, o active *Solo artículos sin ubicación habitual* para ver lo que aún la necesita.
+- **Busque** por nombre, código de barras o dirección. Escribir o escanear un código de barras en la búsqueda y confirmar abre ese artículo.
+- Las listas largas se cargan por páginas: elija *Mostrar más*.
 
 ### Cómo se muestran los importes
 
@@ -6155,6 +6183,8 @@ Observa cómo rinde el espacio.
 3. Lea los análisis por área, como **Finanzas** (**Facturado**, **Cobrado**) y **Espacios y capacidad**.
 4. Guarde una vista en **Vistas**, o pulse **Exportar a PDF**.
 
+**Análisis mostrados** elige qué análisis muestra la página y en qué orden: marque los que quiera y arrastre el asa de una fila para moverla (las flechas junto a ella hacen lo mismo con el teclado). Su elección se recuerda para usted en este espacio, en cualquier dispositivo, y se abre de nuevo la próxima vez; una dirección que nombra análisis, o una vista que abra, prevalece en esa visita. **Volver al estándar** la borra.
+
 **Conviene saber**
 
 - Solo ve los análisis que tiene permiso para leer.
@@ -6802,7 +6832,7 @@ Se ha atascado en un campo o en una pantalla.
 
 # Guía de puesta en marcha
 
-**DesKilo — construya su espacio, paso a paso.** Para quien va a crear un espacio de coworking, la sala de una asociación o una oficina compartida, y quiere saber qué es posible, qué es necesario y en qué orden.
+**DesKilo — construya su espacio, paso a paso.** Para quien va a crear un negocio con plazas reservables (un espacio de coworking, la sala de una asociación, una oficina compartida) o sin plazas (una consulta, un estudio, un salón, un profesional independiente, otra empresa de servicios), y quiere saber qué es posible, qué es necesario y en qué orden.
 
 ## Cómo usar esta guía
 
@@ -6824,6 +6854,7 @@ Solo *Abrir* es obligatorio para empezar. Puede detenerse tras cualquier nivel: 
 
 | Usted quiere… | Empiece aquí |
 |---|---|
+| Saber qué pasos tiene su tipo de negocio, con o sin plazas | [¿Qué tipo de negocio es?](help:setup.kind.overview) |
 | Saber qué puede hacer DesKilo y qué preparar | [Antes de empezar](help:setup.before.overview) |
 | Un lugar que los miembros puedan reservar, hoy mismo | [Construir el lugar](help:setup.place.overview) |
 | Decir quién puede hacer qué y quién aprueba | [La matriz de roles](help:user.roles.matrix) |
@@ -6846,6 +6877,102 @@ Solo *Abrir* es obligatorio para empezar. Puede detenerse tras cualquier nivel: 
 - Cada sección indica su público en la segunda línea, para que pueda saltarse lo que no le concierne.
 - Un bloque que empieza por **Atención** marca una decisión que luego es difícil de deshacer, y dice cuándo.
 - Esta guía nunca certifica nada legal ni fiscal: dice lo que hace la aplicación y lo que conviene confirmar con un contable.
+
+## Empezar por el tipo de negocio
+
+La primera pregunta de la configuración no trata de plantas ni de tarifas: es **¿Qué tipo de negocio es?** La respuesta decide qué pasos encuentra. Un espacio de coworking, la sala de una asociación o una oficina compartida tiene plazas que reservar y pasa por todos los pasos. Una consulta, un estudio, un salón, un profesional independiente u otra empresa de servicios no tiene plazas y no encuentra los pasos que se refieren a ellas. Este capítulo muestra la pregunta, lo que un negocio sin plazas no recibe y un ejemplo desde el paso del tipo hasta la primera factura.
+
+En este capítulo:
+- [¿Qué tipo de negocio es?](help:setup.kind.choose)
+- [Lo que un negocio sin plazas no recibe](help:setup.kind.without-places)
+- [Un ejemplo completo: una consulta sin plazas](help:setup.kind.example)
+
+### ¿Qué tipo de negocio es?
+
+**Público:** Propietario · Copropietario
+
+Quiere que la aplicación se ajuste a su negocio antes de configurar nada. El primer paso de la guía en la aplicación, **Nombre, país y zona horaria**, se abre con esta pregunta.
+
+<!-- image: setup-kind-choose -->
+
+*Los tipos*
+
+| Tipo | Qué es |
+|---|---|
+| **Espacio de coworking** | Los miembros reservan plazas, mesas y salas en un plano. |
+| **Estudio** | Clases y cursos: yoga, danza, música, arte. |
+| **Consulta** | Citas: masaje, terapia, coaching, asesoría. |
+| **Salón** | Belleza, peluquería, uñas, tatuaje. |
+| **Profesional independiente** | Una persona que vende y factura sus propios servicios: clientes, presupuestos y facturas, sin local. |
+| **Empresa de servicios** | Cualquier otro negocio que vende sus servicios. |
+
+**Pasos**
+
+1. Abra [Espacio](app:/workspace-settings), o dé el primer paso de la guía de configuración.
+2. Pulse **¿Qué tipo de negocio es?** y elija un tipo. Si el negocio es varias cosas, marque otros tipos en **También es… (opcional)**.
+3. Lea lo que **Activa** y **Desactiva** y pulse **Guardar**. **Mostrar todo** lista todas las funciones.
+
+**Conviene saber**
+
+- Nada cambia hasta **Guardar**. Elegir un tipo más tarde vuelve a proponer y nunca cambia nada en silencio.
+- **Espacio de coworking** no propone nada: el espacio se queda como estaba.
+- Una función aún no revisada como estable solo se activa si la marca; si no, actívela más tarde en **Funciones**.
+- La reserva de clases y citas no forma parte de esta versión. Hoy un negocio sin plazas obtiene sus servicios con precios, facturas, pago en línea, mensajes y su página pública.
+
+**Véase también:** [¿Qué tipo de negocio es? (Guía de usuario)](help:user.workspace.settings.business-kind) · [Activar o desactivar procesos enteros](help:user.features.processes)
+
+### Lo que un negocio sin plazas no recibe
+
+**Público:** Propietario · Copropietario
+
+Lleva una consulta, un estudio, un salón, un negocio de profesional independiente u otra empresa de servicios y quiere saber qué pasos no son para usted. Un tipo sin plazas desactiva todo lo relativo a plazas: asientos, plano, quiosco, salas.
+
+*Pasos que no se ofrecen a un negocio sin plazas*
+
+| Paso | Por qué no está |
+|---|---|
+| **Puestos en el plano** | No hay salas, mesas ni asientos que dibujar. |
+| **Precios y planes** | Ponen precio a la presencia en un lugar, así que necesitan las plazas además de la facturación. |
+| **Límites de reserva** | Acotan con cuánta antelación, durante cuánto tiempo y cuántas plazas a la vez reservan los miembros. |
+| **Quiosco y tarjetas** | Una tableta en la puerta y las tarjetas de miembro pertenecen a un lugar. |
+| **Una primera reserva** | No hay ninguna plaza que reservar. |
+
+*Los pasos que no tratan de plazas se quedan, por ejemplo*
+
+- **Nombre, país y zona horaria**, **Horario de apertura** y **Qué pueden hacer los miembros**.
+- **Invitar a miembros**, **Servicios**, **Cómo pagan los miembros** y **Pagos en línea**.
+- Los pasos de facturación: **Identidad legal**, **IVA**, **Numeración de facturas**, **Aspecto de las facturas**, **Facturación electrónica**, **Contabilidad** y **Recordatorios de pago**.
+
+**Conviene saber**
+
+- Los pasos vuelven cuando el negocio es de un tipo que tiene plazas o cuando se vuelven a activar las plazas. No se borra nada: el plano y las reservas vuelven con ellos.
+- El resto de esta guía está escrito en torno a *Atelier du Marché*, que tiene plazas. Cuando una sección trata del plano, de los asientos, del quiosco o de las reglas de reserva, un negocio sin plazas la salta.
+
+**Véase también:** [Revisar su espacio](help:setup.place.check) · [Activar o desactivar procesos enteros](help:user.features.processes)
+
+### Un ejemplo completo: una consulta sin plazas
+
+**Público:** Propietario · Copropietario
+
+Quiere ver una configuración entera para un negocio sin plazas, desde el tipo hasta la primera factura. El ejemplo es la consulta del espacio de demostración, *Lindner Beratung*, una consultora en Berlín. Sus personas y sus cifras son inventadas; ábrala en [El espacio de demostración](help:user.advanced.demo) para seguirla.
+
+**Pasos**
+
+1. **¿Qué tipo de negocio es?** Elija **Consulta**. La propuesta desactiva las plazas y deja activadas la facturación, el pago en línea, los mensajes y la página pública. Pulse **Guardar**.
+2. **Nombre, país y zona horaria.** Llámela *Lindner Beratung*, país Alemania, moneda EUR, zona horaria Europe/Berlin (véase [País, moneda, zona horaria e idioma](help:setup.place.where)).
+3. **Horario de apertura** y **Qué pueden hacer los miembros.** Los clientes de la consulta son sus miembros: fije los días de apertura y lo que un cliente ve de su propia cuenta. No hay un paso **Puestos en el plano**.
+4. **Servicios.** Liste lo que vende la consulta, cada uno con nombre, precio y tipo de IVA (véase [Un servicio](help:user.money.services.overview)). No hay un paso **Precios y planes**: un servicio tiene su propio precio.
+5. **Identidad legal.** Elija el régimen de IVA **Sujeto a IVA (cobra IVA)**, introduzca el número de registro y la dirección, Kastanienallee 12, 10435 Berlín (véase [Su identidad legal y qué preguntar a su gestor](help:setup.money.identity)).
+6. **IVA** y **Numeración de facturas.** La consulta cobra el IVA alemán del 19 % y conserva la numeración de facturas que propone la aplicación (véase [El IVA a grandes rasgos](help:setup.money.vat)).
+7. **La primera factura.** Abra [Facturación](app:/invoices), pulse **Nueva**, elija al cliente y el mes y pulse **Emitir factura** (véase [Emitir una factura](help:user.invoicing.new-invoice)).
+
+**Conviene saber**
+
+- La consulta de demostración muestra el resultado: tres años de facturas mensuales por sus propios servicios, en euros con IVA alemán, y un plano vacío.
+- Emitir facturas dentro de DesKilo solo funciona hoy para Francia y Alemania, y la consulta está en Alemania.
+- Ningún paso de esta lista espera a una plaza: la consulta puede facturar desde el primer día.
+
+**Véase también:** [Dinero e impuestos](help:setup.money.overview) · [Facturar a mano o automáticamente](help:setup.money.invoicing)
 
 ## Antes de empezar
 

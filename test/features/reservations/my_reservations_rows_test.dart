@@ -15,6 +15,7 @@ import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/features/reservations/domain/my_reservations.dart';
 import 'package:deskilo/features/reservations/domain/my_reservations_composition.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
+import 'package:deskilo/features/reservations/domain/reservation_refusal.dart';
 import 'package:deskilo/features/reservations/presentation/widgets/my_reservations_body.dart';
 import 'package:deskilo/features/reservations/providers/reservation_providers.dart';
 import 'package:deskilo/features/visits/providers/visits_providers.dart';
@@ -23,7 +24,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
-import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 import 'package:timezone/timezone.dart' as tz;
 
 import '../../helpers/pump_app.dart';
@@ -187,9 +187,9 @@ Future<void> _frames(WidgetTester tester) async {
   }
 }
 
-Future<void> _show(WidgetTester tester, List<Override> overrides) async {
+Future<void> _show(WidgetTester tester, List<Override> overrides, {Locale? locale}) async {
   await pumpApp(tester, const Scaffold(body: MyReservationsBody()),
-      overrides: overrides, size: const Size(800, 1600));
+      overrides: overrides, size: const Size(800, 1600), locale: locale);
   await tester.pumpAndSettle();
 }
 
@@ -346,19 +346,33 @@ void main() {
       expect(_card('b1'), findsOneWidget);
     });
 
-    testWidgets('a host\'s own refusal of Check in is its reason, never a generic one', (tester) async {
-      final hosts = _Hosts()..first['inst-b'] = _page('inst-b', [_item('b1', today9, workspace: 'ws-b')]);
-      final actions = _Actions(hosts)
-        ..refusals.add(const PostgrestException(message: 'reservation is outside the bookable window'));
-      await _show(tester, _overrides(hosts, actions: actions, sources: const [_b]));
-      await tester.tap(find.byKey(const ValueKey('my-reservation-checkin-b1')));
-      await _frames(tester);
-      expect(find.byKey(const ValueKey('my-reservation-failed-b1')), findsOneWidget);
-      expect(
-        tester.widget<Text>(find.byKey(const ValueKey('my-reservation-status-b1'))).data,
-        _l10n.myReservationsStatusReserved,
-      );
-    });
+    // #4315 — the sentence is the host's reason in the reader's language: the refusal reaches the
+    // card typed (as the real adapter now delivers it), and the card words it, never the plain failure.
+    for (final (language, code) in [('en', 'DKK17'), ('de', 'DKK17'), ('fr', 'DKK18')]) {
+      testWidgets('a host\'s own refusal of Check in ($code) is its reason in $language, never a generic one',
+          (tester) async {
+        final hosts = _Hosts()..first['inst-b'] = _page('inst-b', [_item('b1', today9, workspace: 'ws-b')]);
+        final actions = _Actions(hosts)
+          ..refusals.add(
+            ReservationRefused(ReservationRefusal.fromServer(code: code, message: 'host words')),
+          );
+        final l10n = lookupAppLocalizations(Locale(language));
+        await _show(tester, _overrides(hosts, actions: actions, sources: const [_b]), locale: Locale(language));
+        await tester.tap(find.byKey(const ValueKey('my-reservation-checkin-b1')));
+        await _frames(tester);
+        final banner = find.byKey(const ValueKey('my-reservation-failed-b1'));
+        expect(banner, findsOneWidget);
+        final expected = code == 'DKK17' ? l10n.planCheckInNotYetError : l10n.planCheckInOverError;
+        expect(find.descendant(of: banner, matching: find.text(expected)), findsOneWidget,
+            reason: 'the host\'s reason, worded in $language');
+        expect(find.descendant(of: banner, matching: find.text(l10n.myReservationsActionFailed)), findsNothing,
+            reason: 'never the generic sentence');
+        expect(
+          tester.widget<Text>(find.byKey(const ValueKey('my-reservation-status-b1'))).data,
+          l10n.myReservationsStatusReserved,
+        );
+      });
+    }
 
     testWidgets('Cancel asked and kept changes nothing', (tester) async {
       final hosts = _Hosts()..first['inst-b'] = _page('inst-b', [_item('b1', tomorrow9, workspace: 'ws-b')]);

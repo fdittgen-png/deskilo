@@ -665,12 +665,41 @@ Sie möchten festlegen, wo etwas lagert, damit Wareneingang, Zählung und Kommis
 
 Öffnen Sie **Lager → Lagerorte**. Ein Lagerort hat eine Ebene: **Standort** (eine Filiale oder ein Zentrallager), **Zone** (Verkaufsfläche, Lagerraum, Hof), **Gang**, **Regalfeld** und **Fach** oder **Behälter**. Ein Lagerort liegt nur direkt unter der darüberliegenden Ebene: eine Zone unter einem Standort, ein Gang unter einer Zone, ein Regalfeld unter einem Gang, ein Fach unter einem Regalfeld. Eine Theke, eine Küche, ein Fahrzeug, eine Maschine oder ein Fach-Slot lässt sich überall einordnen. Ein Lager, das vor den Ebenen angelegt wurde, gilt als Standort.
 
-Jeder Lagerort hat eine **Adresse** aus den Codes seiner übergeordneten Lagerorte: `MAIN-SALES-A03-B02-S4` ist das Hauptgeschäft, die Verkaufsfläche, Gang 3, Regalfeld 2, Fach 4. Der Code eines Lagerorts muss sich nur von den Nachbarn unter demselben übergeordneten Lagerort unterscheiden, daher kann jedes Regalfeld sein Fach `S4` haben. Benennen Sie einen Lagerort um, folgen die Adressen darunter. Geben Sie einen Teil einer Adresse, einen Namen oder einen Barcode in die Suche ein, um einen Lagerort zu finden.
+Jeder Lagerort hat eine **Adresse** aus den Codes seiner übergeordneten Lagerorte: `MAIN-SALES-A03-B02-S4` ist das Hauptgeschäft, die Verkaufsfläche, Gang 3, Regalfeld 2, Fach 4. Der Code eines Lagerorts muss sich nur von den Nachbarn unter demselben übergeordneten Lagerort unterscheiden, daher kann jedes Regalfeld sein Fach `S4` haben. Benennen Sie einen Lagerort um, folgen die Adressen darunter. Geben Sie einen Teil einer Adresse, einen Namen oder einen Barcode in die Suche ein, um einen Lagerort zu finden. Ein Lagerort wird überall, wo er erscheint, mit seiner Adresse gelesen: im Lager, in den Bewegungen, auf dem Weg einer Umlagerung und bei den Lagerorten, die eine Bewegung anbietet. **Etiketten drucken** erstellt ein PDF der angezeigten Lagerorte, je ein Etikett: die Adresse groß, darunter den Namen und einen Barcode (den des Lagerorts, sonst seine Adresse), den ein Scan wiederfindet.
 
 **Gut zu wissen**
 - Ein Standort legt fest, ob er **Lieferungen von Lieferanten annimmt**; ausgeschaltet kommt Ware nur per Umlagerung von einem anderen Standort an.
 - Ein Lagerort unter einem Standort ist **Kommissionierung** (Verkaufsfläche) oder **Reserve** (Lagerbestand); das ist ein Hinweis, nie eine Menge.
 - Das Zeichen zwischen den Ebenen ist die Einstellung des Unternehmens **Trennzeichen in einer Lagerort-Adresse** (Bindestrich, Punkt, Schrägstrich oder Doppelpunkt); nur die Schreibweise der Adresse ändert sich. Sie steht in den **Lagereinstellungen**.
+
+<!-- anchor: user.money.stock.reorder -->
+### Nachbestellen: was knapp ist und was zu bestellen ist
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie möchten sehen, was bald ausgeht, und es bestellen, ohne die Regale durchzugehen.
+
+Öffnen Sie **Lager → Nachbestellen** (die Funktion *Meldebestände* muss aktiv sein). Die Seite hat zwei Listen.
+
+- **Niedriger Bestand** listet jeden Artikel oder jede Variante auf oder unter ihrem Meldebestand, je Standort, mit dem Bestand und dem Meldebestand. Gelesen wird aus dem Lagerbuch, exakt, in der Einheit des Artikels; ein Artikel ohne Meldebestand wird nie gelistet. Ein Lagerort im Transit zählt nicht als vorrätig.
+- **Was zu bestellen ist** gruppiert, was knapp ist, nach dem Lieferanten, dessen Artikel als **bevorzugt** markiert ist, in der Einkaufseinheit dieses Artikels, auf ganze Einheiten aufgerundet. Ein Artikel ohne bevorzugten Lieferantenartikel steht unter **Kein Lieferant gewählt**: Markieren Sie einen in den Lieferantenartikeln des Artikels.
+
+**Bestellentwurf erstellen** erstellt aus einer Gruppe einen Einkaufsbestellungs-Entwurf. Es ist nur ein Entwurf: Nichts wird bestellt, bepreist oder gesendet, bis Sie ihn in den Einkaufsbestellungen bestätigen. Dafür brauchen Sie das Recht, Einkäufe zu verwalten; derselbe Entwurf, zweimal angefordert, entsteht nur einmal.
+
+Die **Meldebestände** (unter den beiden Listen) machen einen Artikel knapp. Jeder zeigt Artikel, Standort, die Schwelle und was dann zu bestellen ist: eine Menge, *bis* zu einem Niveau, oder nichts (er meldet nur). Wer den Lagerbestand verwalten darf, legt einen mit **Meldebestand hinzufügen** an oder öffnet einen zum Ändern. Schwelle und Menge sind exakte Zahlen (ein Dezimalkomma genügt); ein Auffüllniveau muss über dem Meldebestand liegen, ein Meldebestand nennt eine Menge oder ein Niveau, nicht beides, und ein Artikel hat einen Meldebestand je Standort (und Variante). Artikel, Variante und Standort lassen sich danach nicht ändern: Legen Sie einen neuen an. Ein abgeschalteter Meldebestand bleibt erhalten und meldet nichts.
+<!-- anchor: user.money.stock.registry -->
+### Das Artikelregister
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie möchten eine Liste, die für jeden Artikel und jede Variante sagt, was es ist, was es kostet und einbringt, wohin es gehört und wie viel es gibt.
+
+Öffnen Sie **Lager → Artikel**. Jede Zeile zeigt **Barcode**, **Einheit**, **Preis** (den Verkaufspreis aus dem Katalog), **zuletzt bekannte Kosten**, **festen Lagerort** und den **Bestand**. Die Kosten erscheinen nur, wenn Ihre Rolle Finanzen sehen oder Einkäufe verwalten darf; sonst steht in der Zeile *Kosten nicht angezeigt*. Kosten, die noch keine Lieferung geliefert hat, bleiben *Kosten unbekannt*, nie null.
+
+- **Fester Lagerort**: Tippen Sie auf das Orts-Symbol einer Zeile, um zu sagen, wohin der Artikel gehört: Gang, Fach oder Behälter. Eine Variante ohne eigenen festen Lagerort hat den ihres Artikels. Es ist ein Hinweis für Einlagerung, Zählung und Kommissionierung: Bestand kann anderswo liegen, und eine Änderung bewegt nichts und schreibt keine Historie um.
+- **Filtern** Sie nach einem Lagerort, um zu sehen, was dort und darunter eingelagert ist, oder schalten Sie *Nur Artikel ohne festen Lagerort* ein, um zu sehen, was noch einen braucht.
+- **Suchen** Sie nach Name, Barcode oder Adresse. Einen Barcode in die Suche eingeben oder scannen und bestätigen öffnet diesen Artikel.
+- Lange Listen werden seitenweise geladen: Wählen Sie *Mehr anzeigen*.
 
 <!-- anchor: user.money.amounts -->
 ### Wie Beträge angezeigt werden

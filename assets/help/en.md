@@ -2917,12 +2917,40 @@ You want to say where things are kept, so that receiving, counting and picking k
 
 Open **Stock → Places**. A place has a level: **Site** (a branch or a central depot), **Zone** (a sales floor, a back room, a yard), **Aisle**, **Bay** and **Shelf** or **Bin**. A place sits only under the level directly above it: a zone under a site, an aisle under a zone, a bay under an aisle, a shelf under a bay. A counter, a kitchen, a vehicle, a machine or a slot is placed anywhere. A warehouse made before the levels counts as a site.
 
-Each place has an **address**, written from its parents' codes: `MAIN-SALES-A03-B02-S4` is the main store, the sales floor, aisle 3, bay 2, shelf 4. The code of a place only has to differ from its neighbours under the same parent, so every bay can have its shelf `S4`. Rename a place and the addresses below it follow. Type any part of an address, a name or a barcode in the search to find a place.
+Each place has an **address**, written from its parents' codes: `MAIN-SALES-A03-B02-S4` is the main store, the sales floor, aisle 3, bay 2, shelf 4. The code of a place only has to differ from its neighbours under the same parent, so every bay can have its shelf `S4`. Rename a place and the addresses below it follow. Type any part of an address, a name or a barcode in the search to find a place. A place is read by its address wherever it appears: in the stock, the movements, a transfer's route and the places a move offers. **Print labels** makes a PDF of the places shown, one label each: the address in large type, the name beneath and a barcode (the place's own barcode, else its address) that a scan finds again.
 
 **Good to know**
 - A site says whether it **receives from suppliers**; switch it off and goods arrive there only by transfer from another site.
 - A place below a site is **picking** (front of house) or **reserve** (overstock); it is advice, never a quantity.
 - The character between the levels is the business's setting **Separator in a place address** (a dash, a dot, a slash or a colon); only how an address is written changes. It is set in **Stock settings**.
+
+### Reorder: what is low and what to order
+
+**Audience:** Administrator · Owner
+
+You want to see what is about to run out and order it without going through the shelves.
+
+Open **Stock → Reorder** (the feature *Reorder points* must be on). The page has two lists.
+
+- **Low stock** lists every item or variant at or below its reorder point, per site, with what is on hand and the point. It is read from the stock ledger, exactly, in the item's unit; an item with no reorder point is never listed. A place that is in transit does not count as stock on hand.
+- **What to order** groups what is low by the supplier whose article is marked **preferred** for it, in that article's purchase unit, rounded up to whole units. An item with no preferred supplier article is listed under **No supplier chosen**: mark one in the item's supplier articles.
+
+**Create draft order** makes a draft purchase order from a group. It is only a draft: nothing is ordered, priced or sent until you confirm it in the purchase orders. It needs the right to manage purchases; asking twice for the same draft makes it once.
+
+**Reorder points** (below the two lists) are what makes an item low. Each shows the item, the site, the level and what to order then: a quantity, *up to* a level, or nothing (it only flags). Whoever may manage the stock adds one with **Add a reorder point** or opens one to change it. The level and the quantity are exact numbers (a decimal comma is fine); a level to order up to must be above the point, a point names a quantity or a level, not both, and an item has one point per site (and variant). The item, variant and site of a point cannot be changed afterwards: make another. A point switched off is kept and flags nothing.
+
+### The item registry
+
+**Audience:** Administrator · Owner
+
+You want one list that says, for every item and variant, what it is, what it costs and sells for, where it belongs and how much there is.
+
+Open **Stock → Items**. Each line shows the **barcode**, the **unit**, the **price** (the catalogue sale price), the **last known cost**, the **home place** and what is **on hand**. The cost appears only if your role may see finances or manage purchases; otherwise the line says *cost not shown*. A cost that no delivery has given yet stays *cost unknown*, never zero.
+
+- **Home place**: tap the place icon on a line to say where the item belongs: its aisle, shelf or bin. A variant without its own home place has its item's. It is advice for putting away, counting and picking: stock may sit elsewhere, and changing it moves nothing and rewrites no history.
+- **Filter** by a place to see what is homed in it and in the places below it, or switch on *Only items with no home place* to see what still needs one.
+- **Search** by name, barcode or address. Typing or scanning a barcode into the search and confirming opens that item.
+- Long lists load by pages: choose *Show more*.
 
 ### How amounts are shown
 
@@ -6155,6 +6183,8 @@ You look at how the workspace performs.
 3. Read the analyses by area, such as **Finance** (**Invoiced**, **Collected**) and **Space and capacity**.
 4. Save a view under **Views**, or tap **Export as PDF**.
 
+**Analyses shown** chooses which analyses the page shows and in what order: tick the ones you want and drag the handle of a row to move it (the arrows beside it do the same from the keyboard). Your choice is remembered for you in this workspace, on any device, and opens again next time; an address that names analyses, or a view you open, wins for that visit. **Back to the standard** clears it.
+
 **Good to know**
 
 - You only see analyses you are allowed to read.
@@ -6802,7 +6832,7 @@ You are stuck on one field or one screen.
 
 # Setup Guide
 
-**DesKilo — build your space, step by step.** For the person who is about to create a coworking space, an association's room or a shared office, and wants to know what is possible, what is necessary and in which order.
+**DesKilo — build your space, step by step.** For the person who is about to set up a business with places to book (a coworking space, an association's room, a shared office) or without places (a practice, a studio, a salon, a freelancer, another service business), and wants to know what is possible, what is necessary and in which order.
 
 ## How to use this guide
 
@@ -6824,6 +6854,7 @@ Only **Open** is required to start. Stop after any level: nothing forces you on.
 
 | You want… | Start here |
 |---|---|
+| To know which steps your kind of business gets, with or without places | [What kind of business is it?](help:setup.kind.overview) |
 | To know what DesKilo can do and what to prepare | [Before you start](help:setup.before.overview) |
 | A place members can book, today | [Build the place](help:setup.place.overview) |
 | To say who may do what, and who approves | [The role matrix](help:user.roles.matrix) |
@@ -6846,6 +6877,102 @@ Only **Open** is required to start. Stop after any level: nothing forces you on.
 - Every section names its audience in the second line, so you can skip what is not yours.
 - A block that starts with **Careful** marks a decision that becomes hard to undo, and says when.
 - This guide never certifies anything legal or fiscal: it says what the app does and what to confirm with an accountant.
+
+## Start with the kind of business
+
+The first question of the setup is not about floors or tariffs: it is **What kind of business is it?** The answer decides which steps you meet. A coworking space, an association's room or a shared office has places to book and goes through every step. A practice, a studio, a salon, a freelancer or another service business has no places and does not meet the steps about them. This chapter shows the question, what a business without places does not get, and one example from the kind step to the first invoice.
+
+In this chapter:
+- [What kind of business is it?](help:setup.kind.choose)
+- [What a business without places does not get](help:setup.kind.without-places)
+- [A worked example: a practice without places](help:setup.kind.example)
+
+### What kind of business is it?
+
+**Audience:** Owner · Co-owner
+
+You want the app to match your business before you set anything up. The first step of the in-app guide, **Name, country and time zone**, opens with this question.
+
+<!-- image: setup-kind-choose -->
+
+*The kinds*
+
+| Kind | What it is |
+|---|---|
+| **Coworking space** | Members book seats, desks and rooms on a floor plan. |
+| **Studio** | Classes and courses: yoga, dance, music, art. |
+| **Practice** | Appointments: massage, therapy, coaching, consulting. |
+| **Salon** | Beauty, hair, nails, tattoo. |
+| **Freelancer** | One person selling and invoicing their own services: customers, quotes and invoices, no premises. |
+| **Service business** | Any other business that sells its services. |
+
+**Steps**
+
+1. Open [Workspace](app:/workspace-settings), or take the first step of the setup guide.
+2. Tap **What kind of business is it?** and choose a kind. If the business is several things, tick further kinds under **It is also… (optional)**.
+3. Read what it **Switches on** and **Switches off**, then tap **Save**. **Show all** lists every feature.
+
+**Good to know**
+
+- Nothing changes until **Save**. Choosing a kind later proposes again and never switches anything silently.
+- **Coworking space** proposes nothing: the space keeps everything as it was.
+- A feature not yet reviewed as stable is switched on only if you tick it; otherwise switch it on later in **Features**.
+- Booking of classes and appointments is not part of this version. Today a business without places gets its services with prices, invoices, online payment, messages and its public page.
+
+**See also:** [What kind of business is it? (User Guide)](help:user.workspace.settings.business-kind) · [Switch features on and off](help:user.features.processes)
+
+### What a business without places does not get
+
+**Audience:** Owner · Co-owner
+
+You run a practice, a studio, a salon, a freelancer's business or another service business, and want to know which steps are not for you. A kind without places switches off everything about places: seats, floor plan, kiosk, rooms.
+
+*Steps a business without places is not offered*
+
+| Step | Why it is not there |
+|---|---|
+| **Places on the plan** | There are no rooms, desks or seats to draw. |
+| **Prices and plans** | They price presence in a place, so they need the places as well as billing. |
+| **Booking limits** | They bound how far ahead, how long and how many places at once members book. |
+| **Kiosk and badges** | A tablet at the door and member badges belong to a place. |
+| **A first booking** | There is no place to book. |
+
+*Steps that are not about places stay, for instance*
+
+- **Name, country and time zone**, **Opening hours** and **What members may do**.
+- **Invite members**, **Services**, **How members pay** and **Online payments**.
+- The invoicing steps: **Legal identity**, **VAT**, **Invoice numbering**, **Invoice look**, **E-invoicing**, **Accounting** and **Payment reminders**.
+
+**Good to know**
+
+- The steps come back when the business is of a kind that has places, or when places are switched on again. Nothing is deleted: the floor plan and the bookings are back with them.
+- The rest of this guide is written around *Atelier du Marché*, which has places. Where a section is about the floor plan, seats, the kiosk or booking rules, a business without places skips it.
+
+**See also:** [Check your space](help:setup.place.check) · [Switch features on and off](help:user.features.processes)
+
+### A worked example: a practice without places
+
+**Audience:** Owner · Co-owner
+
+You want to see a whole setup for a business without places, from the kind to the first invoice. The example is the practice of the demo workspace, *Lindner Beratung*, a consulting practice in Berlin. Its people and figures are invented; open it in [The demo workspace](help:user.advanced.demo) to follow along.
+
+**Steps**
+
+1. **What kind of business is it?** Choose **Practice**. The proposal switches places off and keeps invoicing, online payment, messages and the public page on. Tap **Save**.
+2. **Name, country and time zone.** Name it *Lindner Beratung*, country Germany, currency EUR, time zone Europe/Berlin (see [Country, currency, time zone and language](help:setup.place.where)).
+3. **Opening hours** and **What members may do.** The practice's clients are its members: set the days it is open and what a client may see of their own account. There is no **Places on the plan** step.
+4. **Services.** List what the practice sells, each with a name, a price and the VAT rate (see [A service](help:user.money.services.overview)). There is no **Prices and plans** step: a service has its own price.
+5. **Legal identity.** Choose the VAT regime **VAT-registered (charges VAT)**, enter the registration number and the address, Kastanienallee 12, 10435 Berlin (see [Your legal identity, and what to ask your accountant](help:setup.money.identity)).
+6. **VAT** and **Invoice numbering.** The practice charges German VAT of 19 % and keeps the invoice numbers the app proposes (see [VAT in outline](help:setup.money.vat)).
+7. **The first invoice.** Open [Invoicing](app:/invoices), tap **New**, pick the client and the month, then tap **Issue invoice** (see [Issue an invoice](help:user.invoicing.new-invoice)).
+
+**Good to know**
+
+- The demo practice shows the result: three years of monthly invoices for its own services, in euros with German VAT, and an empty floor plan.
+- Issuing invoices inside DesKilo works for France and Germany only today, and the practice is in Germany.
+- No step of this list waits for a place: the practice can invoice on its first day.
+
+**See also:** [Money and tax](help:setup.money.overview) · [Invoice by hand or automatically](help:setup.money.invoicing)
 
 ## Before you start
 

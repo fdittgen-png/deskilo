@@ -610,6 +610,12 @@ List<String> declaredNotWritten(
 
 /// Columns of an exported table left out on purpose, and why.
 const Map<String, Set<String>> _notExportedColumns = {
+  'services': {
+    // #4293 — the place an item belongs at: this installation's own place row. The places of a
+    // configuration transfer are made again on import, so the id means nothing there; the home
+    // is advice that moves no stock, set again from the registry.
+    'home_location_id',
+  },
   'reservations': {
     // #4216 — whether a removed place was a hidden one: the reading rule of a
     // booking that names no place any more, decided by this installation's

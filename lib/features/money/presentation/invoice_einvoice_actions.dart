@@ -145,6 +145,12 @@ void _announce(
   String destination,
 ) {
   final l10n = context.l10n;
+  // Another content than the one already submitted: nothing was sent again,
+  // and the first submission stands as it is.
+  if (submission.conflict) {
+    AppSnack.error(context, l10n.invoiceSendBindingChanged);
+    return;
+  }
   if (submission.accepted) {
     AppSnack.success(
       context,

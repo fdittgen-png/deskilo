@@ -70,6 +70,16 @@ final class UnknownBusinessDay extends BusinessToday {
   String toString() => 'UnknownBusinessDay($reason)';
 }
 
+/// The calendar date of [instant] on the business's own calendar ([timezone], an IANA name),
+/// date-only. When the business's zone is not known the UTC date is read: never the device's, so
+/// the same record reads the same day on every device (#4322).
+DateTime businessDateOf(DateTime instant, String? timezone) {
+  final known = businessTodayAt(instant, timezone).date;
+  if (known != null) return known;
+  final utc = instant.toUtc();
+  return DateTime(utc.year, utc.month, utc.day);
+}
+
 /// The business day at [now] in [timezone] (an IANA name).
 BusinessToday businessTodayAt(DateTime now, String? timezone) {
   final tz.Location location;

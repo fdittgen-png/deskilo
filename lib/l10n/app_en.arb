@@ -3643,6 +3643,14 @@
   "@biCards": {
     "description": "#1924 finance KPI / #1923 analyses picker"
   },
+  "biCardsDragHandle": "Drag to reorder",
+  "@biCardsDragHandle": {
+    "description": "#4340 the analyses page: a label"
+  },
+  "biCardsStandard": "Back to the standard",
+  "@biCardsStandard": {
+    "description": "#4340 the analyses page: a label"
+  },
   "biCardsUnavailable": "{count, plural, one{1 analysis of this view is not available to you and are left out.} other{{count} analyses of this view are not available to you and are left out.}}",
   "@biCardsUnavailable": {
     "description": "#1923 C Web-BI saved views",
@@ -4135,6 +4143,10 @@
   "biDataUnavailable": "Unavailable",
   "@biDataUnavailable": {
     "description": "Shown as a text in capacity evidence (workspace), and 1 other place."
+  },
+  "biDefaultViewName": "My analyses",
+  "@biDefaultViewName": {
+    "description": "#4340 the analyses page: a label"
   },
   "biDeltaNone": "No comparison yet",
   "@biDeltaNone": {
@@ -8659,6 +8671,10 @@
   "claimRefusedOtherMonth": "These invoices are of another month than this payment. Nothing was charged.",
   "@claimRefusedOtherMonth": {
     "description": "#3556 Refusal: the payment's month is not the invoices'"
+  },
+  "claimRefusedRequestChanged": "This payment was already sent as another one. Check the declared payments, then try again.",
+  "@claimRefusedRequestChanged": {
+    "description": "#4321 — a declaration sent again under the request id of another payment (DKC15)"
   },
   "claimRefusedWithdrawn": "You withdrew this payment. Select the invoices again to pay them.",
   "@claimRefusedWithdrawn": {
@@ -13190,6 +13206,18 @@
       }
     }
   },
+  "eventEinvoiceNoticeEnded": "Settled",
+  "@eventEinvoiceNoticeEnded": {
+    "description": "#4325 suffix of a notice whose transmission moved on."
+  },
+  "eventEinvoiceOutcomeUncertain": "The outcome of an e-invoice is unknown: its sending stopped before an answer was recorded. It is not sent again. Check the platform's record, then settle it by hand.",
+  "@eventEinvoiceOutcomeUncertain": {
+    "description": "#4325 the notice of an e-invoice whose outcome is unknown (an uncertain dispatch)."
+  },
+  "eventEinvoiceStuckPrepared": "An e-invoice was prepared and never sent. Send it again from its invoice, or leave it.",
+  "@eventEinvoiceStuckPrepared": {
+    "description": "#4325 the notice of an e-invoice prepared and never sent."
+  },
   "eventExpenseDeviation": "validated {scheduled} — {reason}",
   "@eventExpenseDeviation": {
     "description": "Shown as a text in event lines (events)."
@@ -13701,6 +13729,10 @@
   "eventTypeCredentialChange": "Credentials change",
   "@eventTypeCredentialChange": {
     "description": "#3914 the event type: credentials of an integration changed"
+  },
+  "eventTypeEinvoiceOutcomeUnknown": "E-invoice attempt stopped",
+  "@eventTypeEinvoiceOutcomeUnknown": {
+    "description": "#4325 the type name in the feed and the validation settings."
   },
   "eventTypeExpense": "Expense",
   "@eventTypeExpense": {
@@ -16293,6 +16325,14 @@
   "featureStockReceivingTitle": "Receiving into stock",
   "@featureStockReceivingTitle": {
     "description": "#4171 the name of the receiving into stock feature"
+  },
+  "featureStockReorderDesc": "Set a minimum per item and site: the inbox says when stock falls to it, and a replenishment list proposes what to order. Off: no point is set, no alert is raised and no list is offered; the ledger is unaffected.",
+  "@featureStockReorderDesc": {
+    "description": "#4294 feature description"
+  },
+  "featureStockReorderTitle": "Reorder points",
+  "@featureStockReorderTitle": {
+    "description": "#4294 feature name"
   },
   "featureStockTakeOutDesc": "Take goods out of stock for use or as a loss, with the reason and the lot. Off: no consumption or loss is offered; transfers and receiving are unaffected.",
   "@featureStockTakeOutDesc": {
@@ -23144,6 +23184,10 @@
   "invoiceSendAction": "Send to the government platform",
   "@invoiceSendAction": {
     "description": "E-invoice sheet: post the document to the platform (0073)"
+  },
+  "invoiceSendBindingChanged": "This invoice was already submitted to this destination with other content. It is not sent again; its first submission stands.",
+  "@invoiceSendBindingChanged": {
+    "description": "#4324 Snackbar: the invoice already has a submission to this destination with other content (binding_changed); nothing is sent again"
   },
   "invoiceSendCustomerAccepted": "Sent — the customer's service accepted it.",
   "@invoiceSendCustomerAccepted": {
@@ -41057,6 +41101,10 @@
   "@settingHintDunningFirstAfterDays": {
     "description": "#2484 settings: Setting hint."
   },
+  "settingHintEinvoiceStuckAttemptMinutes": "How many minutes an e-invoice may stay prepared, with no dispatch started, before the owner is told that its attempt stopped. A dispatch that was started and has no outcome is told as soon as its own time is up.",
+  "@settingHintEinvoiceStuckAttemptMinutes": {
+    "description": "#4325 settings: Setting hint."
+  },
   "settingHintFederationAnswerWaitSeconds": "Seconds a server waits for the answer to a signed message it sent to another server before it sends the same message again. At least 30; keep it below the status lifetime.",
   "@settingHintFederationAnswerWaitSeconds": {
     "description": "#2563 C2 answer wait: settingHintFederationAnswerWaitSeconds"
@@ -41404,6 +41452,10 @@
   "settingLabelDunningFirstAfterDays": "Days before a first reminder",
   "@settingLabelDunningFirstAfterDays": {
     "description": "#2484 settings: Setting label."
+  },
+  "settingLabelEinvoiceStuckAttemptMinutes": "E-invoice attempt left half-way",
+  "@settingLabelEinvoiceStuckAttemptMinutes": {
+    "description": "#4325 settings: Setting label."
   },
   "settingLabelFederationAnswerWaitSeconds": "Backchannel answer wait",
   "@settingLabelFederationAnswerWaitSeconds": {
@@ -45564,6 +45616,14 @@
   "@stockPlacesAdd": {
     "description": "#4169 the stock editors: a label or message"
   },
+  "stockPlacesLabelsNone": "There is no place to print a label for.",
+  "@stockPlacesLabelsNone": {
+    "description": "#4293 the places of the stock: a label, a message or a setting"
+  },
+  "stockPlacesPrintLabels": "Print labels",
+  "@stockPlacesPrintLabels": {
+    "description": "#4293 the places of the stock: a label, a message or a setting"
+  },
   "stockPlacesSearch": "Find a place by address, name or barcode",
   "@stockPlacesSearch": {
     "description": "#4293 the places of the stock: a label, a message or a setting"
@@ -45755,6 +45815,10 @@
   "@stockReasonGtinLength": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonHomeInvalid": "Choose a place of this business that is in use and is not a supplier, customer, loss or transit place.",
+  "@stockReasonHomeInvalid": {
+    "description": "#4293 the registry of the stock: a label or a message"
+  },
   "stockReasonItemForeign": "This item is not one of this business.",
   "@stockReasonItemForeign": {
     "description": "#4169 the stock editors: a text under a field the server refused"
@@ -45835,6 +45899,10 @@
   "@stockReasonMappingDuplicate": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonMappingUnknown": "No supplier article is preferred for one of these lines.",
+  "@stockReasonMappingUnknown": {
+    "description": "#4294 reorder: a refusal of the server"
+  },
   "stockReasonNameDuplicate": "This name is already used.",
   "@stockReasonNameDuplicate": {
     "description": "#4169 the stock editors: a text under a field the server refused"
@@ -45867,9 +45935,21 @@
   "@stockReasonPickRoleUnknown": {
     "description": "#4293 the places of the stock: a label, a message or a setting"
   },
+  "stockReasonPointFixed": "The item, variant and site of a reorder point cannot be changed: make another.",
+  "@stockReasonPointFixed": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReasonPointTwice": "This item already has a reorder point at this site.",
+  "@stockReasonPointTwice": {
+    "description": "#4294 reorder points: a label or a message"
+  },
   "stockReasonPriceInvalid": "A price is zero or more.",
   "@stockReasonPriceInvalid": {
     "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonQuantityAndTarget": "Name a quantity to order or a level to order up to, not both.",
+  "@stockReasonQuantityAndTarget": {
+    "description": "#4294 reorder points: a label or a message"
   },
   "stockReasonQuantityInvalid": "A quantity is a number above zero with at most six decimals.",
   "@stockReasonQuantityInvalid": {
@@ -45895,6 +45975,10 @@
   "@stockReasonSameSite": {
     "description": "#4170 transfers and take-out: a label or message"
   },
+  "stockReasonSiteUnknown": "Choose a site of this business.",
+  "@stockReasonSiteUnknown": {
+    "description": "#4294 reorder points: a label or a message"
+  },
   "stockReasonStockOnHand": "There is stock on hand: take it out first.",
   "@stockReasonStockOnHand": {
     "description": "#4169 the stock editors: a text under a field the server refused"
@@ -45906,6 +45990,10 @@
   "stockReasonSupplierForeign": "This supplier is not one of this business.",
   "@stockReasonSupplierForeign": {
     "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonTargetBelowPoint": "The level to order up to must be above the reorder point.",
+  "@stockReasonTargetBelowPoint": {
+    "description": "#4294 reorder points: a label or a message"
   },
   "stockReasonTooLong": "This text is too long.",
   "@stockReasonTooLong": {
@@ -45974,6 +46062,276 @@
   "stockReasonWrongSite": "Goods are received onto a place of the destination site.",
   "@stockReasonWrongSite": {
     "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockRegistryAllPlaces": "All places",
+  "@stockRegistryAllPlaces": {
+    "description": "#4293 the registry of the stock: a label or a message"
+  },
+  "stockRegistryCost": "cost {amount}",
+  "@stockRegistryCost": {
+    "description": "#4293 the registry of the stock: a label or a message",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "stockRegistryCostHidden": "cost not shown",
+  "@stockRegistryCostHidden": {
+    "description": "#4293 the registry of the stock: a label or a message"
+  },
+  "stockRegistryCostUnknown": "cost unknown",
+  "@stockRegistryCostUnknown": {
+    "description": "#4293 the registry of the stock: a label or a message"
+  },
+  "stockRegistryHome": "home {address}",
+  "@stockRegistryHome": {
+    "description": "#4293 the registry of the stock: a label or a message",
+    "placeholders": {
+      "address": {
+        "type": "String"
+      }
+    }
+  },
+  "stockRegistryHomeHelp": "Where this item belongs, so receiving, counting and picking know where it goes. It is advice: stock may sit elsewhere, and changing it moves nothing.",
+  "@stockRegistryHomeHelp": {
+    "description": "#4293 the registry of the stock: a label or a message"
+  },
+  "stockRegistryHomeNone": "No home place",
+  "@stockRegistryHomeNone": {
+    "description": "#4293 the registry of the stock: a label or a message"
+  },
+  "stockRegistryHomePlace": "Home place",
+  "@stockRegistryHomePlace": {
+    "description": "#4293 the registry of the stock: a label or a message"
+  },
+  "stockRegistryHomeTitle": "Home place of {item}",
+  "@stockRegistryHomeTitle": {
+    "description": "#4293 the registry of the stock: a label or a message",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      }
+    }
+  },
+  "stockRegistryMore": "Show more",
+  "@stockRegistryMore": {
+    "description": "#4293 the registry of the stock: a label or a message"
+  },
+  "stockRegistryNoHome": "no home place",
+  "@stockRegistryNoHome": {
+    "description": "#4293 the registry of the stock: a label or a message"
+  },
+  "stockRegistryNoHomeFilter": "Only items with no home place",
+  "@stockRegistryNoHomeFilter": {
+    "description": "#4293 the registry of the stock: a label or a message"
+  },
+  "stockRegistryOnHand": "{quantity} on hand",
+  "@stockRegistryOnHand": {
+    "description": "#4293 the registry of the stock: a label or a message",
+    "placeholders": {
+      "quantity": {
+        "type": "String"
+      }
+    }
+  },
+  "stockRegistryPlaceFilter": "Home place",
+  "@stockRegistryPlaceFilter": {
+    "description": "#4293 the registry of the stock: a label or a message"
+  },
+  "stockRegistryPrice": "price {amount}",
+  "@stockRegistryPrice": {
+    "description": "#4293 the registry of the stock: a label or a message",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "stockRegistrySearch": "Find an item by name, barcode or address",
+  "@stockRegistrySearch": {
+    "description": "#4293 the registry of the stock: a label or a message"
+  },
+  "stockReorderCreateDraft": "Create draft order",
+  "@stockReorderCreateDraft": {
+    "description": "#4294 reorder: a label or a message"
+  },
+  "stockReorderDraftCreated": "Draft order {number} created. Nothing was ordered or sent.",
+  "@stockReorderDraftCreated": {
+    "description": "#4294 reorder: a label or a message",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "stockReorderDraftHelp": "A draft order is made: nothing is ordered, priced or sent until you confirm it.",
+  "@stockReorderDraftHelp": {
+    "description": "#4294 reorder: a label or a message"
+  },
+  "stockReorderGapRow": "{site} · {quantity} proposed",
+  "@stockReorderGapRow": {
+    "description": "#4294 reorder: a label or a message",
+    "placeholders": {
+      "site": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      }
+    }
+  },
+  "stockReorderGroupLine": "{item}: {quantity} for {site}",
+  "@stockReorderGroupLine": {
+    "description": "#4294 reorder: a label or a message",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      },
+      "site": {
+        "type": "String"
+      }
+    }
+  },
+  "stockReorderIntro": "What is at or below its reorder point, per site, and what to order from whom. Nothing is ordered here: a draft order waits for your confirmation.",
+  "@stockReorderIntro": {
+    "description": "#4294 reorder: a label or a message"
+  },
+  "stockReorderLowEmpty": "Nothing is at or below its reorder point.",
+  "@stockReorderLowEmpty": {
+    "description": "#4294 reorder: a label or a message"
+  },
+  "stockReorderLowRow": "{site} · {onHand} on hand · reorder point {point}",
+  "@stockReorderLowRow": {
+    "description": "#4294 reorder: a label or a message",
+    "placeholders": {
+      "site": {
+        "type": "String"
+      },
+      "onHand": {
+        "type": "String"
+      },
+      "point": {
+        "type": "String"
+      }
+    }
+  },
+  "stockReorderLowTitle": "Low stock",
+  "@stockReorderLowTitle": {
+    "description": "#4294 reorder: a label or a message"
+  },
+  "stockReorderNoSupplierHelp": "These are low, but no supplier article is marked as preferred for them: choose one in the item's supplier articles.",
+  "@stockReorderNoSupplierHelp": {
+    "description": "#4294 reorder: a label or a message"
+  },
+  "stockReorderNoSupplierTitle": "No supplier chosen",
+  "@stockReorderNoSupplierTitle": {
+    "description": "#4294 reorder: a label or a message"
+  },
+  "stockReorderPointActive": "In use",
+  "@stockReorderPointActive": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReorderPointAdd": "Add a reorder point",
+  "@stockReorderPointAdd": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReorderPointInactive": "not in use",
+  "@stockReorderPointInactive": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReorderPointLevel": "Reorder point ({unit})",
+  "@stockReorderPointLevel": {
+    "description": "#4294 reorder points: a label or a message",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "stockReorderPointModeQuantity": "Order a quantity",
+  "@stockReorderPointModeQuantity": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReorderPointModeTarget": "Order up to",
+  "@stockReorderPointModeTarget": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReorderPointRow": "{site} · reorder point {point} · {rule}",
+  "@stockReorderPointRow": {
+    "description": "#4294 reorder points: a label or a message",
+    "placeholders": {
+      "site": {
+        "type": "String"
+      },
+      "point": {
+        "type": "String"
+      },
+      "rule": {
+        "type": "String"
+      }
+    }
+  },
+  "stockReorderPointSite": "Site",
+  "@stockReorderPointSite": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReorderPointTitle": "Reorder point",
+  "@stockReorderPointTitle": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReorderPointValue": "Quantity (empty: only flag)",
+  "@stockReorderPointValue": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReorderPointWhole": "The item as a whole",
+  "@stockReorderPointWhole": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReorderPointsEmpty": "No reorder point is set: nothing is ever flagged as low.",
+  "@stockReorderPointsEmpty": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReorderPointsTitle": "Reorder points",
+  "@stockReorderPointsTitle": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReorderRuleNone": "flag only",
+  "@stockReorderRuleNone": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReorderRuleQuantity": "order {quantity}",
+  "@stockReorderRuleQuantity": {
+    "description": "#4294 reorder points: a label or a message",
+    "placeholders": {
+      "quantity": {
+        "type": "String"
+      }
+    }
+  },
+  "stockReorderRuleTarget": "order up to {quantity}",
+  "@stockReorderRuleTarget": {
+    "description": "#4294 reorder points: a label or a message",
+    "placeholders": {
+      "quantity": {
+        "type": "String"
+      }
+    }
+  },
+  "stockReorderTitle": "Reorder",
+  "@stockReorderTitle": {
+    "description": "#4294 reorder: a label or a message"
+  },
+  "stockReorderToOrderEmpty": "There is nothing to order.",
+  "@stockReorderToOrderEmpty": {
+    "description": "#4294 reorder: a label or a message"
+  },
+  "stockReorderToOrderTitle": "What to order",
+  "@stockReorderToOrderTitle": {
+    "description": "#4294 reorder: a label or a message"
   },
   "stockSettingsElsewhere": "Stock settings are kept on the Stock settings page.",
   "@stockSettingsElsewhere": {

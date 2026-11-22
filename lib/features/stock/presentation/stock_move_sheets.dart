@@ -9,6 +9,7 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show ExactQuantity;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/format/decimal_input.dart';
 import '../../../core/ids/request_id.dart';
@@ -20,9 +21,10 @@ import '../domain/stock_config.dart';
 import '../domain/stock_operations.dart';
 import '../domain/stock_page.dart';
 import '../domain/stock_sites.dart';
+import '../providers/stock_providers.dart';
 import 'stock_config_text.dart';
+import 'stock_place_text.dart';
 
-String _placeTitle(StockPlaceConfig p) => p.name.isEmpty ? p.code : '${p.code} · ${p.name}';
 
 /// Moves goods ([takeOut] false) or takes them out ([takeOut] true); true when
 /// done.
@@ -35,7 +37,8 @@ Future<bool> showStockMoveSheet(
   bool takeOut = false,
 }) {
   final l10n = context.l10n;
-  final draft = _MoveDraft(items, places, takeOut: takeOut, locale: Localizations.localeOf(context).toString());
+  final separator = ProviderScope.containerOf(context).read(stockAddressSeparatorProvider);
+  final draft = _MoveDraft(items, places, takeOut: takeOut, locale: Localizations.localeOf(context).toString(), separator: separator);
   return showAppFormSheet(
     context,
     AppFormSheet(
@@ -51,7 +54,7 @@ Future<bool> showStockMoveSheet(
 }
 
 class _MoveDraft {
-  _MoveDraft(this.items, List<StockPlaceConfig> places, {required this.takeOut, required this.locale})
+  _MoveDraft(this.items, List<StockPlaceConfig> places, {required this.takeOut, required this.locale, required this.separator})
     : places = stockRealPlaces(places),
       all = places,
       fields = FormControllers({'quantity': ''});
@@ -61,6 +64,7 @@ class _MoveDraft {
   final List<StockPlaceConfig> all;
   final bool takeOut;
   final String locale;
+  final String separator;
   final FormControllers fields;
 
   /// One per form: a retry of the same submit answers once.
@@ -108,7 +112,7 @@ class _MoveDraft {
   List<Widget> build(BuildContext context, VoidCallback refresh) {
     final l10n = context.l10n;
     final unit = chosen?.unit ?? '';
-    final options = [for (final p in places) (p.id, _placeTitle(p))];
+    final options = [for (final p in places) (p.id, stockPlaceTitle(p, separator))];
     return [
       if (takeOut) ...[
         SegmentedButton<StockTakeOutReason>(

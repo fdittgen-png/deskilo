@@ -2917,12 +2917,40 @@ Lei vuole indicare dove si tiene ogni cosa, perché ricevimento, conteggio e pre
 
 Apra **Magazzino → Ubicazioni**. Un’ubicazione ha un livello: **Sede** (una filiale o un deposito centrale), **Zona** (area di vendita, retro, cortile), **Corsia**, **Campata** e **Scaffale** o **Cassetto**. Un’ubicazione sta solo sotto il livello immediatamente superiore: una zona sotto una sede, una corsia sotto una zona, una campata sotto una corsia, uno scaffale sotto una campata. Un banco, una cucina, un veicolo, una macchina o uno slot si colloca ovunque. Un magazzino creato prima dei livelli conta come sede.
 
-Ogni ubicazione ha un **indirizzo**, scritto con i codici dei suoi livelli superiori: `MAIN-SALES-A03-B02-S4` è il negozio principale, l’area di vendita, la corsia 3, la campata 2, lo scaffale 4. Il codice di un’ubicazione deve solo differire da quelli accanto sotto lo stesso livello superiore, quindi ogni campata può avere il proprio scaffale `S4`. Se rinomina un’ubicazione, gli indirizzi sotto di esso lo seguono. Digiti una parte di un indirizzo, un nome o un codice a barre nella ricerca per trovare un’ubicazione.
+Ogni ubicazione ha un **indirizzo**, scritto con i codici dei suoi livelli superiori: `MAIN-SALES-A03-B02-S4` è il negozio principale, l’area di vendita, la corsia 3, la campata 2, lo scaffale 4. Il codice di un’ubicazione deve solo differire da quelli accanto sotto lo stesso livello superiore, quindi ogni campata può avere il proprio scaffale `S4`. Se rinomina un’ubicazione, gli indirizzi sotto di esso lo seguono. Digiti una parte di un indirizzo, un nome o un codice a barre nella ricerca per trovare un’ubicazione. Un’ubicazione si legge con il suo indirizzo ovunque compaia: nel magazzino, nei movimenti, nel percorso di un trasferimento e nelle ubicazioni che un movimento propone. **Stampa le etichette** crea un PDF delle ubicazioni mostrate, un’etichetta ciascuna: l’indirizzo in grande, il nome sotto e un codice a barre (quello dell’ubicazione, altrimenti il suo indirizzo) che una scansione ritrova.
 
 **Da sapere**
 - Una sede indica se **riceve dai fornitori**; disattivato, la merce vi arriva solo per trasferimento da un’altra sede.
 - Un’ubicazione sotto una sede è **prelievo** (area di vendita) o **riserva** (scorta); è un’indicazione, mai una quantità.
 - Il carattere tra i livelli è l’impostazione dell’azienda **Separatore nell’indirizzo di un’ubicazione** (trattino, punto, barra o due punti); cambia solo come si scrive l’indirizzo. Si imposta in **Impostazioni del magazzino**.
+
+### Riordino: cosa è basso e cosa ordinare
+
+**Destinatari:** Amministratore · Proprietario
+
+Lei vuole vedere cosa sta per finire e ordinarlo senza scorrere gli scaffali.
+
+Apra **Magazzino → Riordino** (la funzione *Punti di riordino* deve essere attiva). La pagina ha due elenchi.
+
+- **Scorta bassa** elenca ogni articolo o variante al suo punto di riordino o sotto, per sede, con la giacenza e il punto. Viene letta dal registro del magazzino, esatta, nell’unità dell’articolo; un articolo senza punto di riordino non compare mai. Un’ubicazione in transito non conta come giacenza.
+- **Cosa ordinare** raggruppa ciò che è basso per fornitore il cui articolo è indicato come **preferito**, nell’unità d’acquisto di quell’articolo, arrotondata a unità intere. Un articolo senza articolo del fornitore preferito compare sotto **Nessun fornitore scelto**: ne indichi uno negli articoli del fornitore dell’articolo.
+
+**Crea bozza d’ordine** crea una bozza d’ordine d’acquisto da un gruppo. È solo una bozza: nulla viene ordinato, valorizzato o inviato finché non la conferma negli ordini d’acquisto. Serve il diritto di gestire gli acquisti; chiedere due volte la stessa bozza la crea una sola volta.
+
+I **punti di riordino** (sotto le due liste) rendono basso un articolo. Ognuno mostra l’articolo, la sede, il livello e che cosa ordinare allora: una quantità, *fino a* un livello, o niente (segnala soltanto). Chi può gestire il magazzino ne aggiunge uno con **Aggiungi un punto di riordino** o ne apre uno per modificarlo. Il livello e la quantità sono numeri esatti (la virgola decimale va bene); un livello fino a cui ordinare deve essere sopra il punto, un punto indica una quantità o un livello, non entrambi, e un articolo ha un punto per sede (e variante). L’articolo, la variante e la sede di un punto non si cambiano dopo: ne crei un altro. Un punto disattivato viene conservato e non segnala nulla.
+
+### Il registro degli articoli
+
+**Destinatari:** Amministratore · Proprietario
+
+Lei vuole un’unica lista che dica, per ogni articolo e variante, che cos’è, quanto costa e a quanto si vende, dove va e quanto ce n’è.
+
+Apra **Magazzino → Articoli**. Ogni riga mostra il **codice a barre**, l’**unità**, il **prezzo** (il prezzo di vendita del catalogo), l’**ultimo costo noto**, l’**ubicazione abituale** e ciò che è **disponibile**. Il costo compare solo se il suo ruolo può vedere le finanze o gestire gli acquisti; altrimenti la riga dice *costo non mostrato*. Un costo che nessuna consegna ha ancora dato resta *costo sconosciuto*, mai zero.
+
+- **Ubicazione abituale**: tocchi l’icona di ubicazione di una riga per dire dove va l’articolo: la sua corsia, scaffale o cassetto. Una variante senza ubicazione propria ha quella del suo articolo. È un’indicazione per sistemare, contare e prelevare: la merce può stare altrove e cambiarla non sposta nulla né riscrive alcuna storia.
+- **Filtri** per un’ubicazione per vedere ciò che vi è sistemato e nelle ubicazioni sottostanti, oppure attivi *Solo articoli senza ubicazione abituale* per vedere ciò che ne ha ancora bisogno.
+- **Cerchi** per nome, codice a barre o indirizzo. Digitare o scansionare un codice a barre nella ricerca e confermare apre quell’articolo.
+- Le liste lunghe si caricano a pagine: scelga *Mostra altri*.
 
 ### Come sono mostrati gli importi
 
@@ -6155,6 +6183,8 @@ Guarda come funziona lo spazio.
 3. Legga le analisi per area, come **Finanze** (**Fatturato**, **Incassato**) e **Spazi e capacità**.
 4. Salvi una vista sotto **Viste**, oppure tocchi **Esporta in PDF**.
 
+**Analisi mostrate** sceglie quali analisi mostra la pagina e in che ordine: spunti quelle che vuole e trascini la maniglia di una riga per spostarla (le frecce accanto fanno lo stesso da tastiera). La Sua scelta viene ricordata per Lei in questo spazio, su qualsiasi dispositivo, e si riapre la volta successiva; un indirizzo che nomina analisi, o una vista che apre, prevale per quella visita. **Torna allo standard** la cancella.
+
 **Da sapere**
 
 - Vede solo le analisi che ha il permesso di leggere.
@@ -6802,7 +6832,7 @@ Vuole che l'app si adatti al Suo modo di lavorare.
 
 # Guida di avvio
 
-**DesKilo — costruisca il suo spazio, passo dopo passo.** Per chi sta per creare uno spazio di coworking, la sala di un’associazione o un ufficio condiviso e vuole sapere che cosa è possibile, che cosa è necessario e in quale ordine.
+**DesKilo — costruisca il suo spazio, passo dopo passo.** Per chi sta per avviare un’attività con posti prenotabili (uno spazio di coworking, la sala di un’associazione, un ufficio condiviso) o senza posti (un ambulatorio, uno studio, un salone, un libero professionista, un’altra impresa di servizi) e vuole sapere che cosa è possibile, che cosa è necessario e in quale ordine.
 
 ## Come usare questa guida
 
@@ -6824,6 +6854,7 @@ Per cominciare è richiesto solo **Aprire**. Può fermarsi dopo qualsiasi livell
 
 | Vuole… | Parta da qui |
 |---|---|
+| Sapere quali passi ha il suo tipo di attività, con o senza posti | [Che tipo di attività è?](help:setup.kind.overview) |
 | Sapere che cosa può fare DesKilo e che cosa preparare | [Prima di iniziare](help:setup.before.overview) |
 | Un luogo che i membri possano prenotare, oggi | [Costruire il luogo](help:setup.place.overview) |
 | Stabilire chi può fare che cosa e chi approva | [La matrice dei ruoli](help:user.roles.matrix) |
@@ -6846,6 +6877,102 @@ Per cominciare è richiesto solo **Aprire**. Può fermarsi dopo qualsiasi livell
 - Ogni sezione indica i destinatari nella seconda riga, così può saltare ciò che non la riguarda.
 - Un blocco che comincia con **Attenzione** segnala una decisione difficile da annullare e dice quando.
 - Questa guida non certifica mai nulla sul piano legale o fiscale: dice che cosa fa l’app e che cosa confermare con un commercialista.
+
+## Iniziare dal tipo di attività
+
+La prima domanda della configurazione non riguarda né i piani né le tariffe: è **Che tipo di attività è?** La risposta decide quali passi incontra. Uno spazio di coworking, la sala di un’associazione o un ufficio condiviso ha posti da prenotare e attraversa tutti i passi. Un ambulatorio, uno studio, un salone, un libero professionista o un’altra impresa di servizi non ha posti e non incontra i passi che li riguardano. Questo capitolo mostra la domanda, ciò che un’attività senza posti non riceve e un esempio dal passo del tipo fino alla prima fattura.
+
+In questo capitolo:
+- [Che tipo di attività è?](help:setup.kind.choose)
+- [Ciò che un’attività senza posti non riceve](help:setup.kind.without-places)
+- [Un esempio completo: un ambulatorio senza posti](help:setup.kind.example)
+
+### Che tipo di attività è?
+
+**Destinatari:** Proprietario · Comproprietario
+
+Vuole che l’app corrisponda alla Sua attività prima di configurare qualsiasi cosa. Il primo passo della guida nell’app, **Nome, paese e fuso orario**, si apre con questa domanda.
+
+<!-- image: setup-kind-choose -->
+
+*I tipi*
+
+| Tipo | Che cos’è |
+|---|---|
+| **Spazio di coworking** | I membri prenotano posti, scrivanie e sale su una planimetria. |
+| **Studio** | Lezioni e corsi: yoga, danza, musica, arte. |
+| **Ambulatorio** | Appuntamenti: massaggio, terapia, coaching, consulenza. |
+| **Salone** | Estetica, parrucchiere, unghie, tatuaggio. |
+| **Libero professionista** | Una persona che vende e fattura i propri servizi: clienti, preventivi e fatture, senza locali. |
+| **Impresa di servizi** | Qualsiasi altra attività che vende i propri servizi. |
+
+**Passaggi**
+
+1. Apra [Spazio di lavoro](app:/workspace-settings), oppure faccia il primo passo della guida alla configurazione.
+2. Tocchi **Che tipo di attività è?** e scelga un tipo. Se l’attività è più cose insieme, spunti altri tipi sotto **È anche… (facoltativo)**.
+3. Legga che cosa **Attiva** e **Disattiva**, poi tocchi **Salva**. **Mostra tutto** elenca ogni funzione.
+
+**Da sapere**
+
+- Nulla cambia prima di **Salva**. Scegliere un tipo più tardi propone di nuovo e non cambia mai nulla in silenzio.
+- **Spazio di coworking** non propone nulla: lo spazio resta com’era.
+- Una funzione non ancora esaminata come stabile viene attivata solo se la spunta; altrimenti la attivi più tardi in **Funzioni**.
+- La prenotazione di lezioni e appuntamenti non fa parte di questa versione. Oggi un’attività senza posti ha i suoi servizi con i prezzi, le fatture, il pagamento online, i messaggi e la sua pagina pubblica.
+
+**Vedi anche:** [Che tipo di attività è? (Guida utente)](help:user.workspace.settings.business-kind) · [Attivare o disattivare interi processi](help:user.features.processes)
+
+### Ciò che un’attività senza posti non riceve
+
+**Destinatari:** Proprietario · Comproprietario
+
+Gestisce un ambulatorio, uno studio, un salone, un’attività da libero professionista o un’altra impresa di servizi e vuole sapere quali passi non fanno per Lei. Un tipo senza posti disattiva tutto ciò che riguarda i posti: sedute, planimetria, chiosco, sale.
+
+*Passi che non vengono proposti a un’attività senza posti*
+
+| Passo | Perché non c’è |
+|---|---|
+| **Posti sulla pianta** | Non ci sono sale, scrivanie o sedute da disegnare. |
+| **Prezzi e piani** | Fissano il prezzo della presenza in un luogo, quindi servono i posti oltre alla fatturazione. |
+| **Limiti di prenotazione** | Limitano con quanto anticipo, per quanto tempo e quanti posti alla volta i membri prenotano. |
+| **Chiosco e badge** | Un tablet all’ingresso e i badge dei membri appartengono a un luogo. |
+| **Una prima prenotazione** | Non c’è nessun posto da prenotare. |
+
+*I passi che non riguardano i posti restano, per esempio*
+
+- **Nome, paese e fuso orario**, **Orari di apertura** e **Cosa possono fare i membri**.
+- **Invitare membri**, **Servizi**, **Come pagano i membri** e **Pagamenti online**.
+- I passi della fatturazione: **Identità legale**, **IVA**, **Numerazione delle fatture**, **Aspetto delle fatture**, **Fatturazione elettronica**, **Contabilità** e **Solleciti di pagamento**.
+
+**Da sapere**
+
+- I passi tornano quando l’attività è di un tipo che ha posti, oppure quando i posti vengono riattivati. Nulla viene eliminato: la planimetria e le prenotazioni tornano con loro.
+- Il resto di questa guida è scritto attorno ad *Atelier du Marché*, che ha posti. Dove una sezione tratta della planimetria, delle sedute, del chiosco o delle regole di prenotazione, un’attività senza posti la salta.
+
+**Vedi anche:** [Verificare il suo spazio](help:setup.place.check) · [Attivare o disattivare interi processi](help:user.features.processes)
+
+### Un esempio completo: un ambulatorio senza posti
+
+**Destinatari:** Proprietario · Comproprietario
+
+Vuole vedere una configurazione intera per un’attività senza posti, dal tipo fino alla prima fattura. L’esempio è l’ambulatorio dello spazio dimostrativo, *Lindner Beratung*, uno studio di consulenza a Berlino. Le sue persone e le sue cifre sono inventate; lo apra in [Lo spazio dimostrativo](help:user.advanced.demo) per seguirlo.
+
+**Passaggi**
+
+1. **Che tipo di attività è?** Scelga **Ambulatorio**. La proposta disattiva i posti e lascia attive la fatturazione, il pagamento online, i messaggi e la pagina pubblica. Tocchi **Salva**.
+2. **Nome, paese e fuso orario.** Lo chiami *Lindner Beratung*, paese Germania, valuta EUR, fuso orario Europe/Berlin (vedi [Paese, valuta, fuso orario e lingua](help:setup.place.where)).
+3. **Orari di apertura** e **Cosa possono fare i membri.** I clienti dell’ambulatorio sono i suoi membri: stabilisca i giorni di apertura e che cosa un cliente vede del proprio conto. Non c’è un passo **Posti sulla pianta**.
+4. **Servizi.** Elenchi ciò che l’ambulatorio vende, ciascuno con nome, prezzo e aliquota IVA (vedi [Un servizio](help:user.money.services.overview)). Non c’è un passo **Prezzi e piani**: un servizio ha il proprio prezzo.
+5. **Identità legale.** Scelga il regime IVA **Soggetto IVA (applica IVA)**, inserisca il numero di registro e l’indirizzo, Kastanienallee 12, 10435 Berlino (vedi [La Sua identità legale e che cosa chiedere al commercialista](help:setup.money.identity)).
+6. **IVA** e **Numerazione delle fatture.** L’ambulatorio applica l’IVA tedesca del 19 % e mantiene la numerazione delle fatture proposta dall’app (vedi [L’IVA in breve](help:setup.money.vat)).
+7. **La prima fattura.** Apra [Fatturazione](app:/invoices), tocchi **Nuova**, scelga il cliente e il mese, poi tocchi **Emetti fattura** (vedi [Emettere una fattura](help:user.invoicing.new-invoice)).
+
+**Da sapere**
+
+- L’ambulatorio dimostrativo mostra il risultato: tre anni di fatture mensili per i propri servizi, in euro con IVA tedesca, e una planimetria vuota.
+- Emettere fatture dentro DesKilo oggi funziona solo per Francia e Germania, e l’ambulatorio è in Germania.
+- Nessun passo di questo elenco aspetta un posto: l’ambulatorio può fatturare dal primo giorno.
+
+**Vedi anche:** [Denaro e imposte](help:setup.money.overview) · [Fatturare a mano o in automatico](help:setup.money.invoicing)
 
 ## Prima di iniziare
 

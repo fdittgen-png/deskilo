@@ -2870,6 +2870,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get biCards => 'Angezeigte Analysen';
 
   @override
+  String get biCardsDragHandle => 'Zum Umsortieren ziehen';
+
+  @override
+  String get biCardsStandard => 'Zurück zum Standard';
+
+  @override
   String biCardsUnavailable(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -3215,6 +3221,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get biDataUnavailable => 'Nicht verfügbar';
+
+  @override
+  String get biDefaultViewName => 'Meine Analysen';
 
   @override
   String get biDeltaNone => 'Noch kein Vergleich';
@@ -6661,6 +6670,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get claimRefusedOtherMonth =>
       'Diese Rechnungen gehören zu einem anderen Monat als diese Zahlung. Es wurde nichts belastet.';
+
+  @override
+  String get claimRefusedRequestChanged =>
+      'Diese Zahlung wurde bereits anders gemeldet. Prüfen Sie die gemeldeten Zahlungen und versuchen Sie es erneut.';
 
   @override
   String get claimRefusedWithdrawn =>
@@ -10160,6 +10173,17 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get eventEinvoiceNoticeEnded => 'Erledigt';
+
+  @override
+  String get eventEinvoiceOutcomeUncertain =>
+      'Das Ergebnis einer E-Rechnung ist unbekannt: Ihr Versand blieb stehen, bevor eine Antwort erfasst wurde. Sie wird nicht erneut gesendet. Prüfen Sie den Eintrag der Plattform und regeln Sie es von Hand.';
+
+  @override
+  String get eventEinvoiceStuckPrepared =>
+      'Eine E-Rechnung wurde vorbereitet und nie gesendet. Senden Sie sie erneut über ihre Rechnung oder lassen Sie sie liegen.';
+
+  @override
   String eventExpenseDeviation(Object reason, Object scheduled) {
     return 'validiert $scheduled — $reason';
   }
@@ -10436,6 +10460,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get eventTypeCredentialChange => 'Änderung der Zugangsdaten';
+
+  @override
+  String get eventTypeEinvoiceOutcomeUnknown =>
+      'E-Rechnungsversand unterbrochen';
 
   @override
   String get eventTypeExpense => 'Ausgabe';
@@ -12511,6 +12539,13 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get featureStockReceivingTitle => 'Wareneingang ins Lager';
+
+  @override
+  String get featureStockReorderDesc =>
+      'Legen Sie je Artikel und Standort einen Mindestbestand fest: Der Posteingang meldet, wenn der Bestand ihn erreicht, und eine Nachschubliste schlägt vor, was zu bestellen ist. Aus: kein Meldebestand, kein Alarm, keine Liste; das Lagerbuch bleibt unberührt.';
+
+  @override
+  String get featureStockReorderTitle => 'Meldebestände';
 
   @override
   String get featureStockTakeOutDesc =>
@@ -17870,6 +17905,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get invoiceSendAction => 'An die staatliche Plattform senden';
+
+  @override
+  String get invoiceSendBindingChanged =>
+      'Diese Rechnung wurde bereits mit anderem Inhalt an dieses Ziel übermittelt. Sie wird nicht erneut gesendet; die erste Übermittlung bleibt bestehen.';
 
   @override
   String get invoiceSendCustomerAccepted =>
@@ -31754,6 +31793,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Tage nach der Ausstellung, bis eine erste Mahnung vorgeschlagen wird und bis eine Rechnung ohne Zahlungsfrist fällig wird.';
 
   @override
+  String get settingHintEinvoiceStuckAttemptMinutes =>
+      'Wie viele Minuten eine E-Rechnung vorbereitet bleiben darf, ohne dass ein Versand begonnen hat, bevor die Inhaberin oder der Inhaber erfährt, dass der Versuch stehen geblieben ist. Ein begonnener Versand ohne Ergebnis wird gemeldet, sobald seine eigene Frist abgelaufen ist.';
+
+  @override
   String get settingHintFederationAnswerWaitSeconds =>
       'Sekunden, die ein Server auf die Antwort auf eine signierte Nachricht an einen anderen Server wartet, bevor er dieselbe Nachricht erneut sendet. Mindestens 30; unter der Statusgültigkeit halten.';
 
@@ -32080,6 +32123,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingLabelDunningFirstAfterDays => 'Tage bis zur ersten Mahnung';
+
+  @override
+  String get settingLabelEinvoiceStuckAttemptMinutes =>
+      'Unterbrochener E-Rechnungsversuch';
 
   @override
   String get settingLabelFederationAnswerWaitSeconds =>
@@ -35415,6 +35462,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get stockPlacesAdd => 'Lagerort hinzufügen';
 
   @override
+  String get stockPlacesLabelsNone =>
+      'Es gibt keinen Lagerort, für den ein Etikett gedruckt werden kann.';
+
+  @override
+  String get stockPlacesPrintLabels => 'Etiketten drucken';
+
+  @override
   String get stockPlacesSearch =>
       'Lagerort nach Adresse, Name oder Barcode suchen';
 
@@ -35554,6 +35608,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get stockReasonGtinLength => 'Ein Barcode hat 8 bis 14 Ziffern.';
 
   @override
+  String get stockReasonHomeInvalid =>
+      'Wählen Sie einen Lagerort dieses Unternehmens, der in Gebrauch ist und kein Lieferanten-, Kunden-, Verlust- oder Transitort ist.';
+
+  @override
   String get stockReasonItemForeign =>
       'Dieser Artikel gehört nicht zu diesem Betrieb.';
 
@@ -35632,6 +35690,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Dieser Lieferantenartikel ist schon zugeordnet.';
 
   @override
+  String get stockReasonMappingUnknown =>
+      'Für eine dieser Zeilen ist kein Lieferantenartikel bevorzugt.';
+
+  @override
   String get stockReasonNameDuplicate => 'Dieser Name wird schon verwendet.';
 
   @override
@@ -35661,7 +35723,19 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Verwendung muss Kommissionierung oder Reserve sein.';
 
   @override
+  String get stockReasonPointFixed =>
+      'Artikel, Variante und Standort eines Meldebestands lassen sich nicht ändern: Legen Sie einen neuen an.';
+
+  @override
+  String get stockReasonPointTwice =>
+      'Dieser Artikel hat an diesem Standort bereits einen Meldebestand.';
+
+  @override
   String get stockReasonPriceInvalid => 'Ein Preis ist null oder größer.';
+
+  @override
+  String get stockReasonQuantityAndTarget =>
+      'Nennen Sie eine Bestellmenge oder ein Auffüllniveau, nicht beides.';
 
   @override
   String get stockReasonQuantityInvalid =>
@@ -35688,6 +35762,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Beide Plätze liegen an einem Standort: lagern Sie die Ware stattdessen in einem Schritt um.';
 
   @override
+  String get stockReasonSiteUnknown =>
+      'Wählen Sie einen Standort dieses Unternehmens.';
+
+  @override
   String get stockReasonStockOnHand =>
       'Es ist Bestand vorhanden: erst ausbuchen.';
 
@@ -35698,6 +35776,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get stockReasonSupplierForeign =>
       'Dieser Lieferant gehört nicht zu diesem Betrieb.';
+
+  @override
+  String get stockReasonTargetBelowPoint =>
+      'Das Auffüllniveau muss über dem Meldebestand liegen.';
 
   @override
   String get stockReasonTooLong => 'Dieser Text ist zu lang.';
@@ -35764,6 +35846,177 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get stockReasonWrongSite =>
       'Ware wird auf einem Platz des Zielstandorts empfangen.';
+
+  @override
+  String get stockRegistryAllPlaces => 'Alle Lagerorte';
+
+  @override
+  String stockRegistryCost(String amount) {
+    return 'Kosten $amount';
+  }
+
+  @override
+  String get stockRegistryCostHidden => 'Kosten nicht angezeigt';
+
+  @override
+  String get stockRegistryCostUnknown => 'Kosten unbekannt';
+
+  @override
+  String stockRegistryHome(String address) {
+    return 'Lagerort $address';
+  }
+
+  @override
+  String get stockRegistryHomeHelp =>
+      'Wohin dieser Artikel gehört, damit Wareneingang, Zählung und Kommissionierung wissen, wohin er kommt. Es ist ein Hinweis: Bestand kann anderswo liegen, und eine Änderung bewegt nichts.';
+
+  @override
+  String get stockRegistryHomeNone => 'Kein fester Lagerort';
+
+  @override
+  String get stockRegistryHomePlace => 'Fester Lagerort';
+
+  @override
+  String stockRegistryHomeTitle(String item) {
+    return 'Fester Lagerort von $item';
+  }
+
+  @override
+  String get stockRegistryMore => 'Mehr anzeigen';
+
+  @override
+  String get stockRegistryNoHome => 'kein fester Lagerort';
+
+  @override
+  String get stockRegistryNoHomeFilter => 'Nur Artikel ohne festen Lagerort';
+
+  @override
+  String stockRegistryOnHand(String quantity) {
+    return '$quantity vorrätig';
+  }
+
+  @override
+  String get stockRegistryPlaceFilter => 'Lagerort';
+
+  @override
+  String stockRegistryPrice(String amount) {
+    return 'Preis $amount';
+  }
+
+  @override
+  String get stockRegistrySearch =>
+      'Artikel nach Name, Barcode oder Adresse suchen';
+
+  @override
+  String get stockReorderCreateDraft => 'Bestellentwurf erstellen';
+
+  @override
+  String stockReorderDraftCreated(String number) {
+    return 'Bestellentwurf $number erstellt. Nichts wurde bestellt oder gesendet.';
+  }
+
+  @override
+  String get stockReorderDraftHelp =>
+      'Es wird ein Bestellentwurf erstellt: Nichts wird bestellt, bepreist oder gesendet, bis Sie ihn bestätigen.';
+
+  @override
+  String stockReorderGapRow(String site, String quantity) {
+    return '$site · $quantity vorgeschlagen';
+  }
+
+  @override
+  String stockReorderGroupLine(String item, String quantity, String site) {
+    return '$item: $quantity für $site';
+  }
+
+  @override
+  String get stockReorderIntro =>
+      'Was auf oder unter seinem Meldebestand liegt, je Standort, und was bei wem zu bestellen ist. Hier wird nichts bestellt: Ein Entwurf wartet auf Ihre Bestätigung.';
+
+  @override
+  String get stockReorderLowEmpty =>
+      'Nichts liegt auf oder unter dem Meldebestand.';
+
+  @override
+  String stockReorderLowRow(String site, String onHand, String point) {
+    return '$site · $onHand vorrätig · Meldebestand $point';
+  }
+
+  @override
+  String get stockReorderLowTitle => 'Niedriger Bestand';
+
+  @override
+  String get stockReorderNoSupplierHelp =>
+      'Diese sind knapp, aber für sie ist kein Lieferantenartikel als bevorzugt markiert: Wählen Sie einen bei den Lieferantenartikeln des Artikels.';
+
+  @override
+  String get stockReorderNoSupplierTitle => 'Kein Lieferant gewählt';
+
+  @override
+  String get stockReorderPointActive => 'In Gebrauch';
+
+  @override
+  String get stockReorderPointAdd => 'Meldebestand hinzufügen';
+
+  @override
+  String get stockReorderPointInactive => 'nicht in Gebrauch';
+
+  @override
+  String stockReorderPointLevel(String unit) {
+    return 'Meldebestand ($unit)';
+  }
+
+  @override
+  String get stockReorderPointModeQuantity => 'Menge bestellen';
+
+  @override
+  String get stockReorderPointModeTarget => 'Auffüllen bis';
+
+  @override
+  String stockReorderPointRow(String site, String point, String rule) {
+    return '$site · Meldebestand $point · $rule';
+  }
+
+  @override
+  String get stockReorderPointSite => 'Standort';
+
+  @override
+  String get stockReorderPointTitle => 'Meldebestand';
+
+  @override
+  String get stockReorderPointValue => 'Menge (leer: nur melden)';
+
+  @override
+  String get stockReorderPointWhole => 'Der Artikel insgesamt';
+
+  @override
+  String get stockReorderPointsEmpty =>
+      'Kein Meldebestand ist gesetzt: Nichts wird je als knapp gemeldet.';
+
+  @override
+  String get stockReorderPointsTitle => 'Meldebestände';
+
+  @override
+  String get stockReorderRuleNone => 'nur melden';
+
+  @override
+  String stockReorderRuleQuantity(String quantity) {
+    return '$quantity bestellen';
+  }
+
+  @override
+  String stockReorderRuleTarget(String quantity) {
+    return 'bis $quantity auffüllen';
+  }
+
+  @override
+  String get stockReorderTitle => 'Nachbestellen';
+
+  @override
+  String get stockReorderToOrderEmpty => 'Es gibt nichts zu bestellen.';
+
+  @override
+  String get stockReorderToOrderTitle => 'Was zu bestellen ist';
 
   @override
   String get stockSettingsElsewhere =>
