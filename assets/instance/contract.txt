@@ -931,7 +931,7 @@ constraint item_groups.item_groups_target_margin_bps_check CHECK (((target_margi
 constraint item_groups.item_groups_till_category_check CHECK (((char_length(btrim(till_category)) >= 1) AND (char_length(btrim(till_category)) <= 40)))
 constraint item_groups.item_groups_tracking_check CHECK ((tracking = ANY (ARRAY['none'::text, 'lot'::text, 'expiry'::text, 'serial'::text])))
 constraint item_groups.item_groups_vat_rate_id_fkey FOREIGN KEY (vat_rate_id) REFERENCES vat_rates(id)
-constraint item_groups.item_groups_weight_price_basis_check CHECK ((weight_price_basis = ANY (ARRAY['kg'::text, '100g'::text])))
+constraint item_groups.item_groups_weight_basis_check CHECK ((weight_basis = ANY (ARRAY['kg'::text, '100g'::text])))
 constraint item_groups.item_groups_workspace_id_deposit_item_id_fkey FOREIGN KEY (workspace_id, deposit_item_id) REFERENCES services(workspace_id, id)
 constraint item_groups.item_groups_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint item_groups.item_groups_workspace_id_home_zone_id_fkey FOREIGN KEY (workspace_id, home_zone_id) REFERENCES stock_locations(workspace_id, id)
@@ -2101,7 +2101,7 @@ constraint services.services_tag_mode_check CHECK ((tag_mode = ANY (ARRAY['none'
 constraint services.services_till_category_check CHECK (((char_length(btrim(till_category)) >= 1) AND (char_length(btrim(till_category)) <= 40)))
 constraint services.services_tracking_check CHECK ((tracking = ANY (ARRAY['none'::text, 'lot'::text, 'expiry'::text, 'serial'::text])))
 constraint services.services_vat_rate_id_fkey FOREIGN KEY (vat_rate_id) REFERENCES vat_rates(id) ON DELETE SET NULL
-constraint services.services_weight_price_basis_check CHECK ((weight_price_basis = ANY (ARRAY['kg'::text, '100g'::text])))
+constraint services.services_weight_basis_check CHECK ((weight_basis = ANY (ARRAY['kg'::text, '100g'::text])))
 constraint services.services_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint services.services_workspace_id_id UNIQUE (workspace_id, id)
 constraint services.system_columns_order CHECK ((modified_datetime >= created_datetime))
@@ -3243,9 +3243,9 @@ routine public.item_group_history_append_only() -> trigger | function | invoker 
 routine public.item_group_history_v1(p_workspace_id uuid, p_group_id uuid, p_item_id uuid, p_limit integer) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:df9e7a4b0cd5
 routine public.item_group_lock(p_ids uuid[], p_exclusive boolean) -> void | function | definer | volatile | exec:service_role | body:7773d10092c7
 routine public.item_group_param_finance(p_param text) -> boolean | function | invoker | immutable | exec:service_role | body:5149d9a75821
-routine public.item_group_param_kind(p_param text) -> text | function | invoker | immutable | exec:service_role | body:7d39f8788d34
-routine public.item_group_params() -> text[] | function | invoker | immutable | exec:service_role | body:60573d39ee83
-routine public.item_group_save_core(p_workspace_id uuid, p_me uuid, p_request_id uuid, p_group_id uuid, p_expected integer, p_body jsonb, p_params jsonb, p_dry boolean) -> jsonb | function | definer | volatile | exec:service_role | body:6c7b76c0f929
+routine public.item_group_param_kind(p_param text) -> text | function | invoker | immutable | exec:service_role | body:3956673584aa
+routine public.item_group_params() -> text[] | function | invoker | immutable | exec:service_role | body:f2839941d19a
+routine public.item_group_save_core(p_workspace_id uuid, p_me uuid, p_request_id uuid, p_group_id uuid, p_expected integer, p_body jsonb, p_params jsonb, p_dry boolean) -> jsonb | function | definer | volatile | exec:service_role | body:398f426b0289
 routine public.item_group_save_v1(p_workspace_id uuid, p_request_id uuid, p_group_id uuid, p_expected_revision integer, p_body jsonb, p_apply boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:72cbd8667efa
 routine public.item_groups_depth() -> trigger | function | invoker | volatile | exec:service_role | body:d4c86b15b62f
 routine public.item_groups_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:0e98a226efa1
