@@ -12520,6 +12520,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get featureStockReorderTitle => 'Meldebestände';
 
   @override
+  String get featureStockReturnsDesc =>
+      'Geben Sie Ware gegen den Verkauf oder die Lieferung zurück, aus der sie stammt, oder korrigieren Sie eine Bewegung. Jede Rückgabe oder Korrektur ist durch die Bewegung begrenzt, die sie rückgängig macht: dieselbe Ware wird nie zweimal zurückgegeben. Aus: keine Rückgabe und keine Korrektur wird angeboten; das Buch bleibt unberührt.';
+
+  @override
+  String get featureStockReturnsTitle => 'Lagerrückgaben und Korrekturen';
+
+  @override
   String get featureStockTakeOutDesc =>
       'Waren für den Verbrauch oder als Verlust aus dem Lager nehmen, mit Grund und Charge. Aus: weder Verbrauch noch Verlust werden angeboten; Umlagerungen und Wareneingang bleiben unberührt.';
 

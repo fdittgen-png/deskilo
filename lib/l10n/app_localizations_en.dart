@@ -12409,6 +12409,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureStockReorderTitle => 'Reorder points';
 
   @override
+  String get featureStockReturnsDesc =>
+      'Return goods against the sale or the delivery they came from, or correct a movement. Each return or correction is bounded by the movement it reverses, so the same goods are never returned twice. Off: no return and no correction is offered; the ledger is unaffected.';
+
+  @override
+  String get featureStockReturnsTitle => 'Stock returns and corrections';
+
+  @override
   String get featureStockTakeOutDesc =>
       'Take goods out of stock for use or as a loss, with the reason and the lot. Off: no consumption or loss is offered; transfers and receiving are unaffected.';
 

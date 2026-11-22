@@ -110,6 +110,23 @@ Behind `stockReorder` (under `stockManagement`, off by default). Set with `manag
 
 Evidence: `supabase/tests/database/498_stock_reorder.sql` (the point and its refusals; one alert while low, ended above, a new one when low again; two sites with their own levels; a second business sees nothing; the list in whole purchase units; the draft and its replay) and `scripts/stock_transfer_race.sh` (two sessions crossing one point give one alert).
 
+## Returns and corrections
+
+Behind `stockReturns` (under `stockManagement`, off by default). Made with `manageStock`, read with `viewStock` or `manageStock`; reversing an adjustment needs `approveStockAdjustments`; an assistant session does none of it.
+
+| question | answer |
+|---|---|
+| What is a return? | `stock_returns`: one logical physical event with a stable `return_id` (per business), a kind (`customer`, `supplier`, `correction`), the digest of its content and its result; immutable. Each line is a `stock_reversals` row with its own stable `return_line_id`, the source movement it reverses, the quantity (in the item's inventory unit) and the movement it wrote; immutable |
+| What bounds it? | the sum of every reversal ever made on a source movement never exceeds that movement's quantity: the source row is locked while the previous reversals are summed (items first, then the source movements, each in id order), so two returns with different identities cannot return more than there was (DKG17). The source row and its frozen cost are never edited |
+| What is a customer return? | from the customer place of a sale to a real place chosen, in the original item, variant and lot, at that lot's frozen unit cost (DKG18 for a source that is not a sale; DKG05 for a virtual or unknown place) |
+| What is a supplier return? | from the real place where the goods are now, to the supplier place of the receipt, in that receipt's lot: the on-hand quantity falls once (DKG03 when it is not there) and the receipt is not subtracted a second time (DKG18 for a source that is not a receipt) |
+| What is a correction? | a movement back (reason `correction`): from the place the source went to, to the place it came from. A correction of a correction names the earlier correction's movement as its source, so the chain is explicit. The opening and the in-transit legs of a transfer are not corrected here; reversing an adjustment needs `approveStockAdjustments` |
+| How is a lost reply recovered? | by the identities: the same request id with the same body answers what it answered; the same `return_id` under a new request id answers the recorded result and writes nothing; the same `return_id` with other content, or a line id of another return, is refused (DKG16) |
+| What about money? | none is made: no payment, refund, credit, payable settlement or posting. A return names the movement it follows (and so the sale or delivery); a payment reversal alone returns no goods |
+| What is read? | `stock_reversible_v1`: for movements, the quantity, what was reversed, what remains and the reversals |
+
+Evidence: `supabase/tests/database/504_stock_returns.sql` (a return of 3, repeated under a new request id; a changed quantity under the finalized identity; a line id of another return; a distinct return of the remaining 7; beyond the sale refused; a return that re-enters the original lot at its frozen cost; the wrong kind of source and a virtual place; a supplier return that lowers the on-hand once and is bounded by the receipt; a correction and a correction of a correction; the rights, an assistant, another business, the feature off; immutability) and `scripts/stock_transfer_race.sh` section F (two distinct returns of 6 of a sale of 10: the second waits and is refused, 6 returned once).
+
 ## States and transitions
 
 Declared states: `start`, `open`, `complete`.

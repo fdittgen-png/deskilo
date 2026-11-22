@@ -447,7 +447,11 @@ enum WorkspaceFeature {
   serviceFulfilment,
 
   /// #4294 — reorder points and low-stock alerts (feature_manifest_stock.dart).
-  stockReorder;
+  stockReorder,
+
+  /// #4172 — bounded returns and corrections of stock movements
+  /// (feature_manifest_stock.dart).
+  stockReturns;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;

@@ -12555,6 +12555,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get featureStockReorderTitle => 'Seuils de réapprovisionnement';
 
   @override
+  String get featureStockReturnsDesc =>
+      'Retournez des marchandises contre la vente ou la livraison dont elles viennent, ou corrigez un mouvement. Chaque retour ou correction est borné par le mouvement qu’il annule : les mêmes marchandises ne sont jamais retournées deux fois. Désactivé : aucun retour ni correction n’est proposé ; le registre n’est pas touché.';
+
+  @override
+  String get featureStockReturnsTitle => 'Retours et corrections de stock';
+
+  @override
   String get featureStockTakeOutDesc =>
       'Sortir des marchandises du stock pour usage ou comme perte, avec le motif et le lot. Désactivé : ni consommation ni perte n’est proposée ; les transferts et la réception ne changent pas.';
 

@@ -28,6 +28,10 @@ import '../../../features/workspace/domain/workspace_feature.dart';
 /// The features the demo's main space keeps off, and why.
 @visibleForTesting
 const Map<WorkspaceFeature, String> demoFeaturesLeftOff = {
+  WorkspaceFeature.stockReturns:
+      '#4172: the server side (bounded returns and corrections) is delivered '
+      "first; the Demo's partial return, on the same ledger as its sales, "
+      'arrives with its screens, which turn the feature on and add its scenario',
   WorkspaceFeature.stockReorder:
       '#4294: the server side (points, alerts, list) is delivered first; the '
       "Demo's low-stock list, on the same ledger as its transfers, arrives with "

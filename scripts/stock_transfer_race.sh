@@ -18,6 +18,9 @@
 #       every stock command, so neither order deadlocks and the stock adds up:
 #       return holds -> the confirmation waits, then takes what the return put
 #       back; confirmation holds -> the return waits, then puts its unit back.
+#   (F) two sessions each return 6 of a sale of 10 under distinct return ids: the
+#       second waits for the first's lock on the sale's movement row, then is
+#       refused (DKG17, 4 left to reverse); 6 are returned, one reversal exists.
 # A holder that never took its lock, or a contender that never waited, fails the
 # script: nothing here can pass empty. A single pgTAP transaction cannot show a
 # race, so each contender is its own psql process on CI's disposable database.
@@ -49,7 +52,7 @@ set local role authenticated;
 select public.create_workspace('Transfer race', 'FR', 'EUR', 'Europe/Paris', 'dev', false, null) as ws \gset
 reset role;
 commit;
-update public.workspaces set feature_flags = coalesce(feature_flags, '{}'::jsonb) || '{"services": true, "stockManagement": true, "stockTakeOut": true, "stockReorder": true, "stockReceiving": true, "purchases": true, "purchaseOrders": true}' where id = :'ws';
+update public.workspaces set feature_flags = coalesce(feature_flags, '{}'::jsonb) || '{"services": true, "stockManagement": true, "stockTakeOut": true, "stockReorder": true, "stockReturns": true, "stockReceiving": true, "purchases": true, "purchaseOrders": true}' where id = :'ws';
 insert into public.services (workspace_id, name, price_cents, active, inventory_unit, tracking, stockable)
 values (:'ws', 'Race X', 100, true, 'piece', 'none', true) returning id as x \gset
 insert into public.services (workspace_id, name, price_cents, active, inventory_unit, tracking, stockable)
@@ -107,13 +110,27 @@ select public.save_stock_reorder_point_v1(:'ws', null, null, gen_random_uuid(),
 reset role;
 commit;
 select id as rcpt from public.purchase_order_receipts where order_id = :'ord' \gset
+-- (F) an item received (20) and 10 of it sold on the invoice: the sale is the movement the returns reverse
+insert into public.services (workspace_id, name, price_cents, active, inventory_unit, tracking, stockable)
+values (:'ws', 'Race Q', 100, true, 'piece', 'none', true) returning id as q \gset
+begin;
+select set_config('request.jwt.claims', '{"sub":"$owner","role":"authenticated","aal":"aal2"}', true);
+set local role authenticated;
+select public.stock_move_v1(:'ws', gen_random_uuid(), jsonb_build_array(
+  jsonb_build_object('item_id', :'q', 'quantity', 20, 'from', :'supplier', 'to', :'main')), 'receipt');
+select public.stock_move_v1(:'ws', gen_random_uuid(), jsonb_build_array(
+  jsonb_build_object('item_id', :'q', 'quantity', 10, 'from', :'main', 'to', :'customer')), 'sale', null,
+  jsonb_build_object('invoice_id', :'inv'));
+reset role;
+commit;
+select id as sale from public.stock_movements where workspace_id = :'ws' and item_id = :'q' and reason = 'sale' \gset
 select id as ev1 from public.events where workspace_id = :'ws' and type = 'service_charge' and (payload ->> 'quantity')::int = 2 \gset
 select id as ev2 from public.events where workspace_id = :'ws' and type = 'service_charge' and (payload ->> 'quantity')::int = 1 \gset
-\echo :ws :x :y :z :main :shelf :loss :customer :w :inv :ev1 :ev2 :supplier :p :r :rcpt
+\echo :ws :x :y :z :main :shelf :loss :customer :w :inv :ev1 :ev2 :supplier :p :r :rcpt :q :sale
 SQL
 )
-read -r ws x y z main shelf loss customer w inv ev1 ev2 supplier p r rcpt <<<"$fixture"
-for v in "$ws" "$x" "$y" "$z" "$main" "$shelf" "$loss" "$customer" "$w" "$inv" "$ev1" "$ev2" "$supplier" "$p" "$r" "$rcpt"; do
+read -r ws x y z main shelf loss customer w inv ev1 ev2 supplier p r rcpt q sale <<<"$fixture"
+for v in "$ws" "$x" "$y" "$z" "$main" "$shelf" "$loss" "$customer" "$w" "$inv" "$ev1" "$ev2" "$supplier" "$p" "$r" "$rcpt" "$q" "$sale"; do
   [[ "$v" =~ ^[0-9a-f-]{36}$ ]] || { echo "::error::fixture incomplete: '$fixture'" >&2; exit 1; }
 done
 expect() { [[ "$2" == "$3" ]] || { echo "::error::$1: expected '$3', got '$2'" >&2; exit 1; }; }
@@ -308,4 +325,33 @@ wait "$contender6" || { echo "::error::the second take failed: $(tr '\\n' ' ' < 
 grep -qx taken "$scratch/contender6" || { echo "::error::the second take did not complete: $(tr '\\n' ' ' < "$scratch/contender6")" >&2; exit 1; }
 expect "(E) 10 - 2 - 2 = 6 of the item on hand" "$(q "select coalesce(sum(quantity), 0)::int from public.stock_balances where item_id = '$r' and location_id = '$main'")" "6"
 expect "(E) the point was crossed by both and raised exactly one open alert" "$(q "select count(*) from public.events where workspace_id = '$ws' and type = 'stock_low' and payload ->> 'item_id' = '$r' and not (payload ? 'ended')")" "1"
+# (F) two sessions each return 6 of the sale of 10, under distinct return ids
+return_q() {
+  echo "$as_owner select 'returned' from (select public.stock_return_v1('$ws', gen_random_uuid(), '$1', 'customer', jsonb_build_array(jsonb_build_object('return_line_id', '$2', 'source_movement_id', '$sale', 'quantity', '6', 'location', '$main')))) t;"
+}
+ra=$(uid); rla=$(uid); rb2=$(uid); rlb=$(uid)
+psql "$url" -X -qAt -v ON_ERROR_STOP=1 >"$scratch/holder7" 2>&1 <<SQL &
+begin;
+$(return_q "$ra" "$rla")
+reset role;
+\\! touch '$scratch/ready7'
+select pg_sleep(4);
+commit;
+SQL
+holder7=$!
+wait_marker "$scratch/ready7" "$scratch/holder7"
+PGAPPNAME="transfer-race-reversal" psql "$url" -X -qAt -v ON_ERROR_STOP=1 >"$scratch/contender7" 2>&1 <<SQL &
+begin;
+$(return_q "$rb2" "$rlb")
+commit;
+SQL
+contender7=$!
+wait_lock "transfer-race-reversal"
+wait "$holder7" || { echo "::error::the first return failed: $(tr '\\n' ' ' < "$scratch/holder7")" >&2; exit 1; }
+wait "$contender7" || true
+grep -qx returned "$scratch/holder7" || { echo "::error::the first return did not complete: $(tr '\\n' ' ' < "$scratch/holder7")" >&2; exit 1; }
+grep -q "DKG17" "$scratch/contender7" || { echo "::error::the second return was not refused as beyond the sale: $(tr '\\n' ' ' < "$scratch/contender7")" >&2; exit 1; }
+expect "(F) 6 of the sale were reversed, by one return" "$(q "select count(*) || '/' || coalesce(sum(quantity), 0)::int from public.stock_reversals where source_movement_id = '$sale'")" "1/6"
+expect "(F) 20 - 10 + 6 = 16 of the item on hand" "$(q "select coalesce(sum(quantity), 0)::int from public.stock_balances where item_id = '$q' and location_id = '$main'")" "16"
+
 echo "stock transfer race: opposing transfers never deadlock and keep every total; the last stock is taken once; a booking confirmation and a customer return of one item serialise in both orders; two put-aways cannot over-allocate a line; two sessions crossing a reorder point raise one alert"

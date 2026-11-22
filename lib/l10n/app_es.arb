@@ -7784,6 +7784,14 @@
   "@featureStockReorderTitle": {
     "description": "#4294 feature name"
   },
+  "featureStockReturnsDesc": "Devuelva mercancías contra la venta o la entrega de la que proceden, o corrija un movimiento. Cada devolución o corrección está limitada por el movimiento que revierte: las mismas mercancías nunca se devuelven dos veces. Desactivado: no se ofrece ninguna devolución ni corrección; el registro no cambia.",
+  "@featureStockReturnsDesc": {
+    "description": "#4172 feature description"
+  },
+  "featureStockReturnsTitle": "Devoluciones y correcciones de stock",
+  "@featureStockReturnsTitle": {
+    "description": "#4172 feature name"
+  },
   "featureStockTakeOutDesc": "Sacar mercancías de las existencias para uso o como pérdida, con el motivo y el lote. Desactivado: no se ofrece consumo ni pérdida; las transferencias y la recepción no cambian.",
   "@featureStockTakeOutDesc": {
     "description": "#4170 what the taking goods out feature does, and what off means"

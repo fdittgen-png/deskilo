@@ -1473,6 +1473,10 @@ window.SETUP_L10N={
    "stockReorder": [
     "Reorder points",
     "Set a minimum per item and site: the inbox says when stock falls to it, and a replenishment list proposes what to order. Off: no point is set, no alert is raised and no list is offered; the ledger is unaffected."
+   ],
+   "stockReturns": [
+    "Stock returns and corrections",
+    "Return goods against the sale or the delivery they came from, or correct a movement. Each return or correction is bounded by the movement it reverses, so the same goods are never returned twice. Off: no return and no correction is offered; the ledger is unaffected."
    ]
   },
   "process": {
@@ -3342,6 +3346,10 @@ window.SETUP_L10N={
    "stockReorder": [
     "Seuils de réapprovisionnement",
     "Fixez un minimum par article et par site : la boîte de réception signale quand le stock l’atteint, et une liste de réapprovisionnement propose quoi commander. Désactivé : aucun seuil, aucune alerte, aucune liste ; le registre n’est pas touché."
+   ],
+   "stockReturns": [
+    "Retours et corrections de stock",
+    "Retournez des marchandises contre la vente ou la livraison dont elles viennent, ou corrigez un mouvement. Chaque retour ou correction est borné par le mouvement qu’il annule : les mêmes marchandises ne sont jamais retournées deux fois. Désactivé : aucun retour ni correction n’est proposé ; le registre n’est pas touché."
    ]
   },
   "process": {
@@ -5211,6 +5219,10 @@ window.SETUP_L10N={
    "stockReorder": [
     "Meldebestände",
     "Legen Sie je Artikel und Standort einen Mindestbestand fest: Der Posteingang meldet, wenn der Bestand ihn erreicht, und eine Nachschubliste schlägt vor, was zu bestellen ist. Aus: kein Meldebestand, kein Alarm, keine Liste; das Lagerbuch bleibt unberührt."
+   ],
+   "stockReturns": [
+    "Lagerrückgaben und Korrekturen",
+    "Geben Sie Ware gegen den Verkauf oder die Lieferung zurück, aus der sie stammt, oder korrigieren Sie eine Bewegung. Jede Rückgabe oder Korrektur ist durch die Bewegung begrenzt, die sie rückgängig macht: dieselbe Ware wird nie zweimal zurückgegeben. Aus: keine Rückgabe und keine Korrektur wird angeboten; das Buch bleibt unberührt."
    ]
   },
   "process": {
@@ -7080,6 +7092,10 @@ window.SETUP_L10N={
    "stockReorder": [
     "Puntos de reposición",
     "Fije un mínimo por artículo y sede: la bandeja avisa cuando las existencias lo alcanzan y una lista de reposición propone qué pedir. Desactivado: ningún punto, ninguna alerta ni lista; el libro no se ve afectado."
+   ],
+   "stockReturns": [
+    "Devoluciones y correcciones de stock",
+    "Devuelva mercancías contra la venta o la entrega de la que proceden, o corrija un movimiento. Cada devolución o corrección está limitada por el movimiento que revierte: las mismas mercancías nunca se devuelven dos veces. Desactivado: no se ofrece ninguna devolución ni corrección; el registro no cambia."
    ]
   },
   "process": {
@@ -8949,6 +8965,10 @@ window.SETUP_L10N={
    "stockReorder": [
     "Punti di riordino",
     "Impostate un minimo per articolo e sede: la casella segnala quando la giacenza lo raggiunge e un elenco di riordino propone cosa ordinare. Disattivato: nessun punto, nessun avviso, nessun elenco; il registro non cambia."
+   ],
+   "stockReturns": [
+    "Resi e correzioni di magazzino",
+    "Restituisca la merce rispetto alla vendita o alla consegna da cui proviene, oppure corregga un movimento. Ogni reso o correzione è limitato dal movimento che annulla: la stessa merce non viene mai restituita due volte. Disattivato: non viene offerto alcun reso né correzione; il registro non cambia."
    ]
   },
   "process": {

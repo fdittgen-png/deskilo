@@ -313,5 +313,13 @@
   "featureStockReorderDesc": "Fije un mínimo por artículo y sede: la bandeja avisa cuando las existencias lo alcanzan y una lista de reposición propone qué pedir. Desactivado: ningún punto, ninguna alerta ni lista; el libro no se ve afectado.",
   "@featureStockReorderDesc": {
     "description": "#4294 feature description"
+  },
+  "featureStockReturnsTitle": "Devoluciones y correcciones de stock",
+  "@featureStockReturnsTitle": {
+    "description": "#4172 feature name"
+  },
+  "featureStockReturnsDesc": "Devuelva mercancías contra la venta o la entrega de la que proceden, o corrija un movimiento. Cada devolución o corrección está limitada por el movimiento que revierte: las mismas mercancías nunca se devuelven dos veces. Desactivado: no se ofrece ninguna devolución ni corrección; el registro no cambia.",
+  "@featureStockReturnsDesc": {
+    "description": "#4172 feature description"
   }
 }

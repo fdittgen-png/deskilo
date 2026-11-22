@@ -20200,6 +20200,18 @@ abstract class AppLocalizations {
   /// **'Reorder points'**
   String get featureStockReorderTitle;
 
+  /// #4172 feature description
+  ///
+  /// In en, this message translates to:
+  /// **'Return goods against the sale or the delivery they came from, or correct a movement. Each return or correction is bounded by the movement it reverses, so the same goods are never returned twice. Off: no return and no correction is offered; the ledger is unaffected.'**
+  String get featureStockReturnsDesc;
+
+  /// #4172 feature name
+  ///
+  /// In en, this message translates to:
+  /// **'Stock returns and corrections'**
+  String get featureStockReturnsTitle;
+
   /// #4170 what the taking goods out feature does, and what off means
   ///
   /// In en, this message translates to:

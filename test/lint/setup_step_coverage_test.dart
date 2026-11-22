@@ -52,6 +52,8 @@ const _switches = <WorkspaceFeature>{
   WorkspaceFeature.stockTakeOut,
   // #4294 — reorder points are asked for on the stock screens, not in the setup guide.
   WorkspaceFeature.stockReorder,
+  // #4172 — returns and corrections are asked for on the stock screens, not in the setup guide.
+  WorkspaceFeature.stockReturns,
   // Booking and the plan read what is already set up.
   WorkspaceFeature.seriesBooking,
   WorkspaceFeature.seatDayTimeline,

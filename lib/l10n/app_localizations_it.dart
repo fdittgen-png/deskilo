@@ -12502,6 +12502,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featureStockReorderTitle => 'Punti di riordino';
 
   @override
+  String get featureStockReturnsDesc =>
+      'Restituisca la merce rispetto alla vendita o alla consegna da cui proviene, oppure corregga un movimento. Ogni reso o correzione è limitato dal movimento che annulla: la stessa merce non viene mai restituita due volte. Disattivato: non viene offerto alcun reso né correzione; il registro non cambia.';
+
+  @override
+  String get featureStockReturnsTitle => 'Resi e correzioni di magazzino';
+
+  @override
   String get featureStockTakeOutDesc =>
       'Prelevare merci dal magazzino per uso o come perdita, con motivo e lotto. Disattivato: non sono offerti consumo né perdita; i trasferimenti e la ricezione restano invariati.';
 

@@ -313,5 +313,13 @@
   "featureStockReorderDesc": "Fixez un minimum par article et par site : la boîte de réception signale quand le stock l’atteint, et une liste de réapprovisionnement propose quoi commander. Désactivé : aucun seuil, aucune alerte, aucune liste ; le registre n’est pas touché.",
   "@featureStockReorderDesc": {
     "description": "#4294 feature description"
+  },
+  "featureStockReturnsTitle": "Retours et corrections de stock",
+  "@featureStockReturnsTitle": {
+    "description": "#4172 feature name"
+  },
+  "featureStockReturnsDesc": "Retournez des marchandises contre la vente ou la livraison dont elles viennent, ou corrigez un mouvement. Chaque retour ou correction est borné par le mouvement qu’il annule : les mêmes marchandises ne sont jamais retournées deux fois. Désactivé : aucun retour ni correction n’est proposé ; le registre n’est pas touché.",
+  "@featureStockReturnsDesc": {
+    "description": "#4172 feature description"
   }
 }

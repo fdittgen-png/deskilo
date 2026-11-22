@@ -12491,6 +12491,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get featureStockReorderTitle => 'Puntos de reposición';
 
   @override
+  String get featureStockReturnsDesc =>
+      'Devuelva mercancías contra la venta o la entrega de la que proceden, o corrija un movimiento. Cada devolución o corrección está limitada por el movimiento que revierte: las mismas mercancías nunca se devuelven dos veces. Desactivado: no se ofrece ninguna devolución ni corrección; el registro no cambia.';
+
+  @override
+  String get featureStockReturnsTitle => 'Devoluciones y correcciones de stock';
+
+  @override
   String get featureStockTakeOutDesc =>
       'Sacar mercancías de las existencias para uso o como pérdida, con el motivo y el lote. Desactivado: no se ofrece consumo ni pérdida; las transferencias y la recepción no cambian.';
 

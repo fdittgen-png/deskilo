@@ -58,4 +58,14 @@ const Map<WorkspaceFeature, FeatureManifestEntry> stockFeatureManifest = {
     requires: WorkspaceFeature.stockManagement,
     defaultOn: false,
   ),
+  // #4172 — a customer return, a supplier return and a correction of a movement, each
+  // bounded by the movement it reverses. Asked for, under the goods ledger. Off: no
+  // return and no correction is offered; the ledger is unaffected.
+  WorkspaceFeature.stockReturns: FeatureManifestEntry(
+    feature: WorkspaceFeature.stockReturns,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.stockManagement,
+    defaultOn: false,
+  ),
 };

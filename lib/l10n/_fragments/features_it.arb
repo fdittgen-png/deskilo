@@ -313,5 +313,13 @@
   "featureStockReorderDesc": "Impostate un minimo per articolo e sede: la casella segnala quando la giacenza lo raggiunge e un elenco di riordino propone cosa ordinare. Disattivato: nessun punto, nessun avviso, nessun elenco; il registro non cambia.",
   "@featureStockReorderDesc": {
     "description": "#4294 feature description"
+  },
+  "featureStockReturnsTitle": "Resi e correzioni di magazzino",
+  "@featureStockReturnsTitle": {
+    "description": "#4172 feature name"
+  },
+  "featureStockReturnsDesc": "Restituisca la merce rispetto alla vendita o alla consegna da cui proviene, oppure corregga un movimento. Ogni reso o correzione è limitato dal movimento che annulla: la stessa merce non viene mai restituita due volte. Disattivato: non viene offerto alcun reso né correzione; il registro non cambia.",
+  "@featureStockReturnsDesc": {
+    "description": "#4172 feature description"
   }
 }

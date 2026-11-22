@@ -16302,6 +16302,14 @@
   "@featureStockReorderTitle": {
     "description": "#4294 feature name"
   },
+  "featureStockReturnsDesc": "Return goods against the sale or the delivery they came from, or correct a movement. Each return or correction is bounded by the movement it reverses, so the same goods are never returned twice. Off: no return and no correction is offered; the ledger is unaffected.",
+  "@featureStockReturnsDesc": {
+    "description": "#4172 feature description"
+  },
+  "featureStockReturnsTitle": "Stock returns and corrections",
+  "@featureStockReturnsTitle": {
+    "description": "#4172 feature name"
+  },
   "featureStockTakeOutDesc": "Take goods out of stock for use or as a loss, with the reason and the lot. Off: no consumption or loss is offered; transfers and receiving are unaffected.",
   "@featureStockTakeOutDesc": {
     "description": "#4170 what the taking goods out feature does, and what off means"

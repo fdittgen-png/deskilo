@@ -275,6 +275,8 @@ const Map<SetupProcess, List<SetupLevel>> setupLevels = {
         WorkspaceFeature.stockTakeOut,
         // #4294 — reorder points, low-stock alerts and the replenishment list.
         WorkspaceFeature.stockReorder,
+        // #4172 — bounded returns and corrections of stock movements.
+        WorkspaceFeature.stockReturns,
       },
     ),
   ],
