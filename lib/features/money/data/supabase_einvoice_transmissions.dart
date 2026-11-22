@@ -175,16 +175,19 @@ class SupabaseEInvoiceTransmissions implements EInvoiceTransmissions {
         detail: 'not_deployed',
       );
     }
-    return EInvoiceSubmission(
-      status: EInvoiceSubmissionStatus.fromWire(
-        phase: data['phase'] as String?,
-        status: data['status'] as String?,
-      ),
-      externalId: data['external_id'] as String? ?? '',
-      detail: data['detail'] as String? ?? data['error'] as String? ?? '',
-      conflict: data['error'] == 'binding_changed',
-    );
+    return _submissionOf(data, conflict: data['error'] == 'binding_changed');
   }
+
+  EInvoiceSubmission _submissionOf(Map<String, dynamic> data, {bool conflict = false}) =>
+      EInvoiceSubmission(
+        status: EInvoiceSubmissionStatus.fromWire(
+          phase: data['phase'] as String?,
+          status: data['status'] as String?,
+        ),
+        externalId: data['external_id'] as String? ?? '',
+        detail: data['detail'] as String? ?? data['error'] as String? ?? '',
+        conflict: conflict,
+      );
 
   @override
   Future<EInvoiceSubmission> requestEInvoiceReceipt({
