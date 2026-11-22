@@ -21132,6 +21132,7 @@
   "@stockReasonMappingDuplicate": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonMappingUnknown": "Per una di queste righe nessun articolo del fornitore è indicato come preferito.",
   "stockReasonNameDuplicate": "Questo nome è già in uso.",
   "@stockReasonNameDuplicate": {
     "description": "#4169 the stock editors: a text under a field the server refused"
@@ -21269,6 +21270,20 @@
   "@stockReasonWrongSite": {
     "description": "#4170 transfers and take-out: a label or message"
   },
+  "stockReorderCreateDraft": "Crea bozza d’ordine",
+  "stockReorderDraftCreated": "Bozza d’ordine {number} creata. Nulla è stato ordinato o inviato.",
+  "stockReorderDraftHelp": "Viene creata una bozza d’ordine: nulla viene ordinato, valorizzato o inviato finché non la conferma.",
+  "stockReorderGapRow": "{site} · {quantity} proposti",
+  "stockReorderGroupLine": "{item}: {quantity} per {site}",
+  "stockReorderIntro": "Ciò che è al suo punto di riordino o sotto, per sede, e cosa ordinare a chi. Qui non si ordina nulla: una bozza attende la Sua conferma.",
+  "stockReorderLowEmpty": "Nulla è al punto di riordino o sotto.",
+  "stockReorderLowRow": "{site} · {onHand} disponibili · punto di riordino {point}",
+  "stockReorderLowTitle": "Scorta bassa",
+  "stockReorderNoSupplierHelp": "Questi sono bassi, ma nessun articolo del fornitore è indicato come preferito: ne scelga uno negli articoli del fornitore dell’articolo.",
+  "stockReorderNoSupplierTitle": "Nessun fornitore scelto",
+  "stockReorderTitle": "Riordino",
+  "stockReorderToOrderEmpty": "Non c’è nulla da ordinare.",
+  "stockReorderToOrderTitle": "Cosa ordinare",
   "stockSettingsElsewhere": "Le impostazioni del magazzino si tengono nella pagina Impostazioni del magazzino.",
   "@stockSettingsElsewhere": {
     "description": "the stock pages and group (#4299)"

@@ -21132,6 +21132,7 @@
   "@stockReasonMappingDuplicate": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonMappingUnknown": "Aucun article fournisseur n’est préféré pour l’une de ces lignes.",
   "stockReasonNameDuplicate": "Ce nom est déjà utilisé.",
   "@stockReasonNameDuplicate": {
     "description": "#4169 the stock editors: a text under a field the server refused"
@@ -21269,6 +21270,20 @@
   "@stockReasonWrongSite": {
     "description": "#4170 transfers and take-out: a label or message"
   },
+  "stockReorderCreateDraft": "Créer un brouillon de commande",
+  "stockReorderDraftCreated": "Brouillon de commande {number} créé. Rien n’a été commandé ni envoyé.",
+  "stockReorderDraftHelp": "Un brouillon de commande est créé : rien n’est commandé, chiffré ni envoyé tant que vous ne le confirmez pas.",
+  "stockReorderGapRow": "{site} · {quantity} proposé",
+  "stockReorderGroupLine": "{item} : {quantity} pour {site}",
+  "stockReorderIntro": "Ce qui est au niveau de son seuil de réapprovisionnement ou en dessous, par site, et ce qu’il faut commander à qui. Rien n’est commandé ici : un brouillon attend votre confirmation.",
+  "stockReorderLowEmpty": "Rien n’est au niveau de son seuil ou en dessous.",
+  "stockReorderLowRow": "{site} · {onHand} en stock · seuil {point}",
+  "stockReorderLowTitle": "Stock bas",
+  "stockReorderNoSupplierHelp": "Ces articles sont bas, mais aucun article fournisseur n’est marqué comme préféré : choisissez-en un dans les articles fournisseur de l’article.",
+  "stockReorderNoSupplierTitle": "Aucun fournisseur choisi",
+  "stockReorderTitle": "Réapprovisionnement",
+  "stockReorderToOrderEmpty": "Il n’y a rien à commander.",
+  "stockReorderToOrderTitle": "Que commander",
   "stockSettingsElsewhere": "Les réglages du stock se tiennent sur la page Réglages du stock.",
   "@stockSettingsElsewhere": {
     "description": "the stock pages and group (#4299)"

@@ -1,0 +1,17 @@
+{
+  "stockReorderTitle": "Riordino",
+  "stockReorderIntro": "Ciò che è al suo punto di riordino o sotto, per sede, e cosa ordinare a chi. Qui non si ordina nulla: una bozza attende la Sua conferma.",
+  "stockReorderLowTitle": "Scorta bassa",
+  "stockReorderLowEmpty": "Nulla è al punto di riordino o sotto.",
+  "stockReorderLowRow": "{site} · {onHand} disponibili · punto di riordino {point}",
+  "stockReorderToOrderTitle": "Cosa ordinare",
+  "stockReorderToOrderEmpty": "Non c’è nulla da ordinare.",
+  "stockReorderGroupLine": "{item}: {quantity} per {site}",
+  "stockReorderDraftHelp": "Viene creata una bozza d’ordine: nulla viene ordinato, valorizzato o inviato finché non la conferma.",
+  "stockReorderCreateDraft": "Crea bozza d’ordine",
+  "stockReorderDraftCreated": "Bozza d’ordine {number} creata. Nulla è stato ordinato o inviato.",
+  "stockReorderNoSupplierTitle": "Nessun fornitore scelto",
+  "stockReorderNoSupplierHelp": "Questi sono bassi, ma nessun articolo del fornitore è indicato come preferito: ne scelga uno negli articoli del fornitore dell’articolo.",
+  "stockReorderGapRow": "{site} · {quantity} proposti",
+  "stockReasonMappingUnknown": "Per una di queste righe nessun articolo del fornitore è indicato come preferito."
+}

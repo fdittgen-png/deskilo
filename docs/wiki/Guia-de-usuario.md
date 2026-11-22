@@ -3060,6 +3060,20 @@ Cada ubicación tiene una **dirección**, escrita con los códigos de sus superi
 - Una ubicación bajo una sede es **picking** (zona de venta) o **reserva** (excedente); es una indicación, nunca una cantidad.
 - El carácter entre los niveles es el ajuste de la empresa **Separador en la dirección de una ubicación** (guion, punto, barra o dos puntos); solo cambia cómo se escribe la dirección. Se fija en **Ajustes de existencias**.
 
+<!-- anchor: user.money.stock.reorder -->
+### Reposición: lo que está bajo y lo que hay que pedir
+
+**Público:** Administrador/a · Propietario
+
+Quiere ver lo que está a punto de agotarse y pedirlo sin recorrer los estantes.
+
+Abra **Existencias → Reposición** (la función *Puntos de reposición* debe estar activada). La página tiene dos listas.
+
+- **Stock bajo** lista cada artículo o variante en su punto de reposición o por debajo, por sede, con lo disponible y el punto. Se lee del libro de existencias, exacto, en la unidad del artículo; un artículo sin punto de reposición nunca aparece. Una ubicación en tránsito no cuenta como existencias disponibles.
+- **Qué pedir** agrupa lo que está bajo por el proveedor cuyo artículo está marcado como **preferido**, en la unidad de compra de ese artículo, redondeado a unidades enteras. Un artículo sin artículo de proveedor preferido aparece en **Ningún proveedor elegido**: marque uno en los artículos de proveedor del artículo.
+
+**Crear borrador de pedido** crea un borrador de pedido de compra a partir de un grupo. Es solo un borrador: nada se pide, valora ni envía hasta que lo confirme en los pedidos de compra. Requiere el derecho de gestionar compras; pedir dos veces el mismo borrador lo crea una sola vez.
+
 <!-- anchor: user.money.amounts -->
 ### Cómo se muestran los importes
 

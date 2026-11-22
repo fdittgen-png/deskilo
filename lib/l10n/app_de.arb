@@ -21132,6 +21132,7 @@
   "@stockReasonMappingDuplicate": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonMappingUnknown": "Für eine dieser Zeilen ist kein Lieferantenartikel bevorzugt.",
   "stockReasonNameDuplicate": "Dieser Name wird schon verwendet.",
   "@stockReasonNameDuplicate": {
     "description": "#4169 the stock editors: a text under a field the server refused"
@@ -21269,6 +21270,20 @@
   "@stockReasonWrongSite": {
     "description": "#4170 transfers and take-out: a label or message"
   },
+  "stockReorderCreateDraft": "Bestellentwurf erstellen",
+  "stockReorderDraftCreated": "Bestellentwurf {number} erstellt. Nichts wurde bestellt oder gesendet.",
+  "stockReorderDraftHelp": "Es wird ein Bestellentwurf erstellt: Nichts wird bestellt, bepreist oder gesendet, bis Sie ihn bestätigen.",
+  "stockReorderGapRow": "{site} · {quantity} vorgeschlagen",
+  "stockReorderGroupLine": "{item}: {quantity} für {site}",
+  "stockReorderIntro": "Was auf oder unter seinem Meldebestand liegt, je Standort, und was bei wem zu bestellen ist. Hier wird nichts bestellt: Ein Entwurf wartet auf Ihre Bestätigung.",
+  "stockReorderLowEmpty": "Nichts liegt auf oder unter dem Meldebestand.",
+  "stockReorderLowRow": "{site} · {onHand} vorrätig · Meldebestand {point}",
+  "stockReorderLowTitle": "Niedriger Bestand",
+  "stockReorderNoSupplierHelp": "Diese sind knapp, aber für sie ist kein Lieferantenartikel als bevorzugt markiert: Wählen Sie einen bei den Lieferantenartikeln des Artikels.",
+  "stockReorderNoSupplierTitle": "Kein Lieferant gewählt",
+  "stockReorderTitle": "Nachbestellen",
+  "stockReorderToOrderEmpty": "Es gibt nichts zu bestellen.",
+  "stockReorderToOrderTitle": "Was zu bestellen ist",
   "stockSettingsElsewhere": "Die Lagereinstellungen werden auf der Seite Lagereinstellungen geführt.",
   "@stockSettingsElsewhere": {
     "description": "the stock pages and group (#4299)"

@@ -672,6 +672,20 @@ Chaque emplacement a une **adresse**, écrite avec les codes de ses parents : `M
 - Un emplacement sous un site est **prélèvement** (en rayon) ou **réserve** (surstock) ; c’est un conseil, jamais une quantité.
 - Le caractère entre les niveaux est le paramètre de l’entreprise **Séparateur dans l’adresse d’un emplacement** (un tiret, un point, une barre oblique ou deux-points) ; seule l’écriture de l’adresse change. Il se règle dans **Réglages du stock**.
 
+<!-- anchor: user.money.stock.reorder -->
+### Réapprovisionnement : ce qui est bas et ce qu'il faut commander
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous voulez voir ce qui va manquer et le commander sans passer en revue les rayons.
+
+Ouvrez **Stock → Réapprovisionnement** (la fonction *Seuils de réapprovisionnement* doit être activée). La page a deux listes.
+
+- **Stock bas** liste chaque article ou variante au niveau de son seuil ou en dessous, par site, avec ce qui est en stock et le seuil. Elle est lue dans le registre du stock, exactement, dans l’unité de l’article ; un article sans seuil n’est jamais listé. Un emplacement en transit ne compte pas comme stock disponible.
+- **Que commander** regroupe ce qui est bas par fournisseur dont l’article est marqué **préféré**, dans l’unité d’achat de cet article, arrondi à l’unité entière supérieure. Un article sans article fournisseur préféré figure sous **Aucun fournisseur choisi** : marquez-en un dans les articles fournisseur de l’article.
+
+**Créer un brouillon de commande** crée un brouillon de commande d’achat à partir d’un groupe. Ce n’est qu’un brouillon : rien n’est commandé, chiffré ni envoyé tant que vous ne le confirmez pas dans les commandes d’achat. Il faut le droit de gérer les achats ; demander deux fois le même brouillon ne le crée qu’une fois.
+
 <!-- anchor: user.money.amounts -->
 ### Comment les montants sont affichés
 

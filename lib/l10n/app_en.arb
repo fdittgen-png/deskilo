@@ -45818,6 +45818,10 @@
   "@stockReasonMappingDuplicate": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonMappingUnknown": "No supplier article is preferred for one of these lines.",
+  "@stockReasonMappingUnknown": {
+    "description": "#4294 reorder: a refusal of the server"
+  },
   "stockReasonNameDuplicate": "This name is already used.",
   "@stockReasonNameDuplicate": {
     "description": "#4169 the stock editors: a text under a field the server refused"
@@ -45957,6 +45961,97 @@
   "stockReasonWrongSite": "Goods are received onto a place of the destination site.",
   "@stockReasonWrongSite": {
     "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockReorderCreateDraft": "Create draft order",
+  "@stockReorderCreateDraft": {
+    "description": "#4294 reorder: a label or a message"
+  },
+  "stockReorderDraftCreated": "Draft order {number} created. Nothing was ordered or sent.",
+  "@stockReorderDraftCreated": {
+    "description": "#4294 reorder: a label or a message",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "stockReorderDraftHelp": "A draft order is made: nothing is ordered, priced or sent until you confirm it.",
+  "@stockReorderDraftHelp": {
+    "description": "#4294 reorder: a label or a message"
+  },
+  "stockReorderGapRow": "{site} · {quantity} proposed",
+  "@stockReorderGapRow": {
+    "description": "#4294 reorder: a label or a message",
+    "placeholders": {
+      "site": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      }
+    }
+  },
+  "stockReorderGroupLine": "{item}: {quantity} for {site}",
+  "@stockReorderGroupLine": {
+    "description": "#4294 reorder: a label or a message",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      },
+      "site": {
+        "type": "String"
+      }
+    }
+  },
+  "stockReorderIntro": "What is at or below its reorder point, per site, and what to order from whom. Nothing is ordered here: a draft order waits for your confirmation.",
+  "@stockReorderIntro": {
+    "description": "#4294 reorder: a label or a message"
+  },
+  "stockReorderLowEmpty": "Nothing is at or below its reorder point.",
+  "@stockReorderLowEmpty": {
+    "description": "#4294 reorder: a label or a message"
+  },
+  "stockReorderLowRow": "{site} · {onHand} on hand · reorder point {point}",
+  "@stockReorderLowRow": {
+    "description": "#4294 reorder: a label or a message",
+    "placeholders": {
+      "site": {
+        "type": "String"
+      },
+      "onHand": {
+        "type": "String"
+      },
+      "point": {
+        "type": "String"
+      }
+    }
+  },
+  "stockReorderLowTitle": "Low stock",
+  "@stockReorderLowTitle": {
+    "description": "#4294 reorder: a label or a message"
+  },
+  "stockReorderNoSupplierHelp": "These are low, but no supplier article is marked as preferred for them: choose one in the item's supplier articles.",
+  "@stockReorderNoSupplierHelp": {
+    "description": "#4294 reorder: a label or a message"
+  },
+  "stockReorderNoSupplierTitle": "No supplier chosen",
+  "@stockReorderNoSupplierTitle": {
+    "description": "#4294 reorder: a label or a message"
+  },
+  "stockReorderTitle": "Reorder",
+  "@stockReorderTitle": {
+    "description": "#4294 reorder: a label or a message"
+  },
+  "stockReorderToOrderEmpty": "There is nothing to order.",
+  "@stockReorderToOrderEmpty": {
+    "description": "#4294 reorder: a label or a message"
+  },
+  "stockReorderToOrderTitle": "What to order",
+  "@stockReorderToOrderTitle": {
+    "description": "#4294 reorder: a label or a message"
   },
   "stockSettingsElsewhere": "Stock settings are kept on the Stock settings page.",
   "@stockSettingsElsewhere": {

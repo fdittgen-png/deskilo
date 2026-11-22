@@ -131,6 +131,7 @@
   "user.money.engagements": "Prestations suivies",
   "user.money.stock": "Stock",
   "user.money.stock.places": "Emplacements et adresses",
+  "user.money.stock.reorder": "Réapprovisionnement : ce qui est bas et ce qu'il faut commander",
   "user.money.amounts": "Comment les montants sont affichés",
   "user.money.finances": "Vos finances dans tous vos espaces",
   "user.money.businesses": "Vos activités en un coup d'œil",

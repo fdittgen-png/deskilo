@@ -104,6 +104,7 @@ List<NavGroup> navGroupsOf(
       'drawer-stock',
       'drawer-stock-movements',
       'drawer-stock-transfers',
+      'drawer-stock-reorder',
       'drawer-stock-items',
       'drawer-stock-places',
       'drawer-stock-settings',
