@@ -733,6 +733,21 @@ Sie wollen Ware zurücknehmen, eine Bewegung rückgängig machen oder eine falsc
 - Dadurch wird nichts bezahlt, erstattet oder gutgeschrieben: Geht es um Geld, korrigieren Sie es in der Rechnung oder der Lieferantenzahlung.
 - Dasselbe Formular nach einer verlorenen Antwort erneut zu senden, erfasst es nur einmal.
 
+<!-- anchor: user.money.stock.cycle -->
+### Zyklische Zählungen
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie möchten Teile des Lagers nach Zeitplan prüfen, während der Laden geöffnet bleibt, ohne eine vollständige Inventur.
+
+Öffnen Sie **Lager → Zyklische Zählungen** (die Funktionen *Lagerzählungen* und *Zyklische Zählungen* müssen aktiv sein). Die Seite hat bis zu drei Reiter.
+
+- **Zu zählen** listet die Aufgaben. Wer zählen darf (oder das Lager verwaltet), öffnet eine Aufgabe und zählt sie **blind**: Jede Zeile nennt, was und wo zu zählen ist, nie, was der Buchbestand erwartet, damit die Zahl die Zählung nicht beeinflusst. Scannen oder tippen Sie einen Barcode, um die Zeile zu finden, dann **Zählen** und geben ein, was Sie vorgefunden haben, oder **Überspringen** mit einem Grund. Wer nur zählen darf, erfährt, dass die Zeile gezählt ist, sonst nichts; wer das Lager verwaltet, erfährt die Abweichung. Die Aufgabe ist abgeschlossen, wenn jede Zeile gezählt oder übersprungen ist.
+- **Pläne** (für wen das Lager verwaltet) sagen, was und wann gezählt wird: *Orte* (mit allem darin), *Artikel* oder *Hoher Wert* (Ware im Wert von mindestens einer Grenze, Ihrer oder der des Unternehmens), einmal oder alle n Tage ab einem Fälligkeitstag. Ist ein Plan fällig, erzeugt er eine Aufgabe mit seinen Zeilen; derselbe Tag erzeugt nie zwei.
+- **Verlauf** sagt für jeden Artikel an jedem Ort, wann er zuletzt gezählt wurde und wie viele Zählungen exakt waren.
+
+Eine gezählte Zeile ist eine Zählung der *Lagerzählungen*: Sie wartet auf jemanden, der Anpassungen genehmigen darf, und nur eine genehmigte Zählung ändert einen Bestand, genau um ihre Abweichung und nur, wenn sich das Lager seither nicht bewegt hat. Eine Aufgabe, die nach den Überfälligkeitstagen des Unternehmens noch offen ist, löst eine Meldung im Posteingang aus, die diese Seite öffnet; sie endet, wenn die Aufgabe abgeschlossen ist.
+
 <!-- anchor: user.money.amounts -->
 ### Wie Beträge angezeigt werden
 

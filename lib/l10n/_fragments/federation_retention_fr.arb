@@ -3,5 +3,7 @@
   "settingLabelFederationRetentionHours": "Conservation des échanges entre serveurs",
   "settingHintFederationRetentionHours": "Heures pendant lesquelles un serveur garde les accusés de réception des messages signés entre serveurs, et un domicile personnel les traces des adhésions terminées, avant le nettoyage horaire. Jamais moins que la plus longue validité de statut plus deux fois l'écart d'horloge.",
   "settingLabelFederationAnswerWaitSeconds": "Attente de réponse entre serveurs",
-  "settingHintFederationAnswerWaitSeconds": "Secondes pendant lesquelles un serveur attend la réponse à un message signé envoyé à un autre serveur avant de renvoyer le même message. Au moins 30 ; gardez-la sous la durée de validité du statut."
+  "settingHintFederationAnswerWaitSeconds": "Secondes pendant lesquelles un serveur attend la réponse à un message signé envoyé à un autre serveur avant de renvoyer le même message. Au moins 30 ; gardez-la sous la durée de validité du statut.",
+  "settingLabelFederationFactDrainBatch": "Faits d'adhésion envoyés par minute",
+  "settingHintFederationFactDrainBatch": "Le nombre maximal de faits d'adhésion qu'un serveur d'espaces envoie à son domicile personnel en une minute. Un serveur renouvelle chaque relation vivante une fois par actualisation du statut d'identité : il suit au plus ce nombre multiplié par les secondes d'actualisation divisées par 60 relations (500 et 300 secondes : 2 500). Augmentez-le quand le médecin d'instance signale un retard d'envoi."
 }

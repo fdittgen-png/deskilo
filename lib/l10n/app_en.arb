@@ -20274,6 +20274,28 @@
   "@instanceDoctorAuthReauthOffTitle": {
     "description": "#3904 Doctor warning: changing a password does not ask the person to sign in again."
   },
+  "instanceDoctorFactBacklogDetail": "{overdue} of {waiting} waiting facts are older than one refresh period; {live} relationships are live and one period delivers {capacity}.\n        Fix: raise federation.fact_drain_batch (or lengthen the refresh period) so that batch x period / 60 exceeds the live relationships.",
+  "@instanceDoctorFactBacklogDetail": {
+    "description": "#4327 Detail: {overdue} waiting longer than a period, {waiting} waiting, {live} live relationships, {capacity} delivered per period; the setting name stays as written.",
+    "placeholders": {
+      "overdue": {
+        "type": "String"
+      },
+      "waiting": {
+        "type": "String"
+      },
+      "live": {
+        "type": "String"
+      },
+      "capacity": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceDoctorFactBacklogTitle": "Membership facts wait longer than a refresh period",
+  "@instanceDoctorFactBacklogTitle": {
+    "description": "#4327 Doctor finding: membership facts wait longer than a refresh period."
+  },
   "instanceDoctorGuardAnonViewDetail": "{names}\n        Without security_invoker the view reads with the owner rights and bypasses the policies of the tables under it.",
   "@instanceDoctorGuardAnonViewDetail": {
     "description": "#3489 Detail of the alarm: a view readable by anon runs as its owner; {names} lists the objects.",
@@ -20401,6 +20423,10 @@
   "instanceDoctorProbeAuth": "Auth configuration",
   "@instanceDoctorProbeAuth": {
     "description": "#3489 Doctor probe name: auth configuration."
+  },
+  "instanceDoctorProbeFactDelivery": "Membership fact delivery",
+  "@instanceDoctorProbeFactDelivery": {
+    "description": "#4327 Doctor probe name: the delivery of membership facts."
   },
   "instanceDoctorProbeFailedDetail": "Supabase answered {status}: {message}\n        The other checks ran without it.",
   "@instanceDoctorProbeFailedDetail": {
@@ -41224,6 +41250,10 @@
   "@settingHintFederationAnswerWaitSeconds": {
     "description": "#2563 C2 answer wait: settingHintFederationAnswerWaitSeconds"
   },
+  "settingHintFederationFactDrainBatch": "The most membership facts a workspace server sends to its personal home in one minute. A server renews each live relationship once per identity status refresh, so it keeps up with this number times the refresh seconds divided by 60 relationships (500 and 300 seconds: 2,500). Raise it when the instance doctor reports a delivery backlog.",
+  "@settingHintFederationFactDrainBatch": {
+    "description": "#4327 fact drain batch: settingHintFederationFactDrainBatch"
+  },
   "settingHintFederationRetentionHours": "Hours a server keeps the receipts of signed messages between servers, and a personal home the tombstones of ended memberships, before the hourly cleanup removes them. Never shorter than the longest status lifetime plus twice the clock difference.",
   "@settingHintFederationRetentionHours": {
     "description": "#2563 C2 retention: settingHintFederationRetentionHours"
@@ -41595,6 +41625,10 @@
   "settingLabelFederationAnswerWaitSeconds": "Backchannel answer wait",
   "@settingLabelFederationAnswerWaitSeconds": {
     "description": "#2563 C2 answer wait: settingLabelFederationAnswerWaitSeconds"
+  },
+  "settingLabelFederationFactDrainBatch": "Membership facts sent per minute",
+  "@settingLabelFederationFactDrainBatch": {
+    "description": "#4327 fact drain batch: settingLabelFederationFactDrainBatch"
   },
   "settingLabelFederationRetentionHours": "Backchannel retention",
   "@settingLabelFederationRetentionHours": {
@@ -45480,6 +45514,312 @@
   "stockCountsTitle": "Stock counts",
   "@stockCountsTitle": {
     "description": "#4172 stock returns and counts screens"
+  },
+  "stockCycleAddPlan": "Add a plan",
+  "@stockCycleAddPlan": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleBlind": "You count what you find: the system’s figure is not shown, so it cannot sway the count.",
+  "@stockCycleBlind": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleCadence": "How often",
+  "@stockCycleCadence": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleCadenceEvery": "Repeating",
+  "@stockCycleCadenceEvery": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleCadenceOnce": "Once",
+  "@stockCycleCadenceOnce": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleCountObserved": "What you counted ({unit})",
+  "@stockCycleCountObserved": {
+    "description": "#4295 cycle counts",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "stockCycleCountTitle": "Count this line",
+  "@stockCycleCountTitle": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleCounted": "Counted.",
+  "@stockCycleCounted": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleCountedDifference": "Counted. Difference from the ledger: {difference}",
+  "@stockCycleCountedDifference": {
+    "description": "#4295 cycle counts",
+    "placeholders": {
+      "difference": {
+        "type": "String"
+      }
+    }
+  },
+  "stockCycleEveryDays": "Every how many days",
+  "@stockCycleEveryDays": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleHistoryAccuracy": "{count, plural, one{1 count} other{{count} counts}}, {percent} % exact",
+  "@stockCycleHistoryAccuracy": {
+    "description": "#4295 cycle counts",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "stockCycleHistoryEmpty": "Nothing has been counted yet.",
+  "@stockCycleHistoryEmpty": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleHistoryLast": "Last counted {date}",
+  "@stockCycleHistoryLast": {
+    "description": "#4295 cycle counts",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "stockCycleHistoryRow": "{item} · {place}",
+  "@stockCycleHistoryRow": {
+    "description": "#4295 cycle counts",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      },
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "stockCycleIntervalInvalid": "Enter a whole number of days, from 1 to 366.",
+  "@stockCycleIntervalInvalid": {
+    "description": "#4295 a mistake under a plan field"
+  },
+  "stockCycleLineCount": "Count",
+  "@stockCycleLineCount": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleLineCounted": "Counted",
+  "@stockCycleLineCounted": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleLineSkip": "Skip",
+  "@stockCycleLineSkip": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleLineSkipped": "Skipped: {reason}",
+  "@stockCycleLineSkipped": {
+    "description": "#4295 cycle counts",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "stockCycleNoPlans": "No plan yet: nothing is counted on a schedule.",
+  "@stockCycleNoPlans": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleNoTasks": "Nothing to count right now.",
+  "@stockCycleNoTasks": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCyclePlanActive": "In use",
+  "@stockCyclePlanActive": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCyclePlanEvery": "every {count, plural, one{day} other{{count} days}}",
+  "@stockCyclePlanEvery": {
+    "description": "#4295 cycle counts",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "stockCyclePlanItemsCount": "{count, plural, one{1 item} other{{count} items}}",
+  "@stockCyclePlanItemsCount": {
+    "description": "#4295 cycle counts",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "stockCyclePlanName": "Name",
+  "@stockCyclePlanName": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCyclePlanNameRequired": "Name the plan.",
+  "@stockCyclePlanNameRequired": {
+    "description": "#4295 a mistake under a plan field"
+  },
+  "stockCyclePlanNext": "next {date}",
+  "@stockCyclePlanNext": {
+    "description": "#4295 cycle counts",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "stockCyclePlanOff": "not in use",
+  "@stockCyclePlanOff": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCyclePlanOnce": "once",
+  "@stockCyclePlanOnce": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCyclePlanPlaces": "Places (with everything inside them)",
+  "@stockCyclePlanPlaces": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCyclePlanPlacesCount": "{count, plural, one{1 place} other{{count} places}}",
+  "@stockCyclePlanPlacesCount": {
+    "description": "#4295 cycle counts",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "stockCyclePlanScope": "What to count",
+  "@stockCyclePlanScope": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCyclePlanScopeRequired": "Choose what it counts.",
+  "@stockCyclePlanScopeRequired": {
+    "description": "#4295 a mistake under a plan field"
+  },
+  "stockCyclePlanThreshold": "Worth at least ({currency}); empty: the business’s limit",
+  "@stockCyclePlanThreshold": {
+    "description": "#4295 cycle counts",
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "stockCyclePlanTitle": "Cycle count plan",
+  "@stockCyclePlanTitle": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCyclePlanValue": "worth at least {amount}",
+  "@stockCyclePlanValue": {
+    "description": "#4295 cycle counts",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "stockCyclePlanValueSetting": "worth at least the business’s limit",
+  "@stockCyclePlanValueSetting": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleScan": "Scan or type a barcode",
+  "@stockCycleScan": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleScanNone": "No line still to count has this code.",
+  "@stockCycleScanNone": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleScopeHighValue": "High value",
+  "@stockCycleScopeHighValue": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleScopePlaces": "Places",
+  "@stockCycleScopePlaces": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleSkipReason": "Why it is skipped",
+  "@stockCycleSkipReason": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleSkipTitle": "Skip this line",
+  "@stockCycleSkipTitle": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleSkipped": "Skipped.",
+  "@stockCycleSkipped": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleTabHistory": "History",
+  "@stockCycleTabHistory": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleTabPlans": "Plans",
+  "@stockCycleTabPlans": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleTabTasks": "To count",
+  "@stockCycleTabTasks": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleTaskCancelled": "Cancelled",
+  "@stockCycleTaskCancelled": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleTaskComplete": "Complete",
+  "@stockCycleTaskComplete": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleTaskDone": "Every line is counted or skipped: the task is complete.",
+  "@stockCycleTaskDone": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleTaskNoLines": "This task lists nothing to count.",
+  "@stockCycleTaskNoLines": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleTaskProgress": "{left} of {total} still to count",
+  "@stockCycleTaskProgress": {
+    "description": "#4295 cycle counts",
+    "placeholders": {
+      "left": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "stockCycleTaskRow": "{plan} · due {due}",
+  "@stockCycleTaskRow": {
+    "description": "#4295 cycle counts",
+    "placeholders": {
+      "plan": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      }
+    }
+  },
+  "stockCycleTaskTitle": "Count",
+  "@stockCycleTaskTitle": {
+    "description": "#4295 cycle counts"
+  },
+  "stockCycleThresholdInvalid": "Enter an amount, or leave it empty.",
+  "@stockCycleThresholdInvalid": {
+    "description": "#4295 a mistake under a plan field"
+  },
+  "stockCycleTitle": "Cycle counts",
+  "@stockCycleTitle": {
+    "description": "#4295 cycle counts"
   },
   "stockDimensionAdd": "Add a dimension",
   "@stockDimensionAdd": {

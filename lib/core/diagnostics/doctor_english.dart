@@ -34,6 +34,7 @@ String _probeEnglish(DoctorProbe probe) => switch (probe) {
   DoctorProbe.roles => 'Installation roles',
   DoctorProbe.push => 'Push configuration',
   DoctorProbe.appUrl => 'App address of the functions',
+  DoctorProbe.factDelivery => 'Membership fact delivery',
 };
 
 const String _install =
@@ -136,6 +137,14 @@ String _authFix(List<Object> facts) =>
       detail:
           '${s(0)}${_pad}Only personal_home and workspace_host exist; '
           'operator_set_installation_roles writes a valid set.',
+    ),
+    DoctorWords.factBacklog => (
+      title: 'Membership facts wait longer than a refresh period',
+      detail:
+          '${n(0)} of ${n(1)} waiting facts are older than one refresh period; ${n(2)} '
+          'relationships are live and one period delivers ${n(3)}.$_pad'
+          'Fix: raise federation.fact_drain_batch (or lengthen the refresh period) '
+          'so that batch x period / 60 exceeds the live relationships.',
     ),
     DoctorWords.pushOwn => (
       title: 'Push configuration',

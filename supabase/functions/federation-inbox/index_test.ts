@@ -70,14 +70,14 @@ for (
     ["reconciled", 200],
     ["duplicate", 200],
     ["superseded", 200],
-    ["bad_signature", 401],
-    ["unknown_installation", 401],
-    ["unknown_key", 401],
+    ["held", 200],
+    ["unauthorized", 401],
     ["bad_digest", 400],
     ["event_conflict", 409],
     ["revision_conflict", 409],
     ["snapshot_conflict", 409],
-    ["wrong_target", 421],
+    ["future_request", 422],
+    ["stale_request", 422],
     ["expired_assertion", 422],
     ["future_assertion", 422],
     ["unlinked_subject", 422],
@@ -93,6 +93,13 @@ for (
     assertEquals(res.body.outcome, outcome);
   });
 }
+
+Deno.test("an outcome the inbox does not know is not a success", async () => {
+  for (const outcome of ["bad_signature", "unknown_installation", "unknown_key", "wrong_target"]) {
+    const res = await post(fakeAdmin({ data: { outcome }, error: null }), "{}");
+    assertEquals(res.status >= 400, true);
+  }
+});
 
 Deno.test("a database failure is a 500 the sender retries", async () => {
   const res = await post(fakeAdmin({ data: null, error: { message: "down" } }), "{}");

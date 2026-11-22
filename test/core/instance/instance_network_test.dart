@@ -231,6 +231,32 @@ void main() {
           'members': 0,
         };
 
+    // #4327 -- the delivery of membership facts: a drain that does not keep up.
+    group('membership fact delivery', () {
+      List<DoctorFinding> delivery(Object? cell) => checkFactDelivery([
+            {'backlog': cell},
+          ]);
+
+      test('a healthy drain, an old schema and an empty answer say nothing', () {
+        expect(delivery('0|130|130|250'), isEmpty);
+        expect(delivery(null), isEmpty);
+        expect(checkFactDelivery(const []), isEmpty);
+        expect(delivery('garbage'), isEmpty);
+      });
+
+      test('events older than a refresh period are a warning', () {
+        final f = delivery('12|140|130|250').single;
+        expect(f.level, DoctorLevel.warn);
+        expect(f.words, DoctorWords.factBacklog);
+        expect(f.facts, [12, 140, 130, 250]);
+        expect(f.detail, contains('12 of 140 waiting facts'));
+      });
+
+      test('more live relationships than one period delivers is the alarm', () {
+        expect(delivery('90|400|1500|1000').single.level, DoctorLevel.alarm);
+      });
+    });
+
     test('a workspace host that names no home is the alarm', () {
       final f = checkInstallationRoles([
         row(['workspace_host'], 'unset'),

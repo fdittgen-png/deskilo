@@ -3067,11 +3067,11 @@ routine public.feature_registry() -> jsonb | function | invoker | immutable | ex
 routine public.federation_answer_wait() -> interval | function | definer | stable | exec: | body:ecc7c683d6e9
 routine public.federation_envelope_headers(p_purpose text, p_target uuid, p_event uuid, p_path text, p_body jsonb) -> jsonb | function | definer | volatile | exec: | body:dc4baaa18342
 routine public.federation_inbox_accept(p_method text, p_path text, p_headers jsonb, p_body_b64 text) -> jsonb | function | definer | volatile | exec:service_role | body:9eb383212bb9
-routine public.federation_outcome_refused(p_outcome text) -> boolean | function | invoker | immutable | exec: | body:378759a641a5
+routine public.federation_outcome_refused(p_outcome text) -> boolean | function | invoker | immutable | exec: | body:3dddfbba8ea8
 routine public.federation_retention_interval() -> interval | function | definer | stable | exec: | body:dddcb725ba48
 routine public.federation_retention_purge() -> jsonb | function | definer | volatile | exec: | body:b6ca15045603
 routine public.federation_signing_input(p_method text, p_path text, p_purpose text, p_source uuid, p_target uuid, p_event uuid, p_timestamp bigint, p_digest text, p_key_id text) -> text | function | invoker | immutable | exec: | body:02a8f231c3d2
-routine public.federation_verify(p_method text, p_path text, p_headers jsonb, p_raw bytea) -> jsonb | function | definer | volatile | exec: | body:cfd8c540eeac
+routine public.federation_verify(p_method text, p_path text, p_headers jsonb, p_raw bytea) -> jsonb | function | definer | volatile | exec: | body:90107da6af4e
 routine public.field_answer_is_personal(p_member_id uuid) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:455cc7017735
 routine public.field_answer_problem(p_definition_id uuid, p_answer jsonb) -> text | function | definer | stable | exec:service_role | body:dfc73d4d2ec2
 routine public.field_contexts() -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:233e963064a5
@@ -3081,7 +3081,7 @@ routine public.field_definitions_import(p_workspace_id uuid, p_definitions jsonb
 routine public.field_named_validators() -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:da8e3e411961
 routine public.field_validation_keys() -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:43485317584a
 routine public.file_vat_declaration_hmrc_v1(p_declaration_id uuid, p_actor_user uuid, p_receipt text) -> void | function | definer | volatile | exec:service_role | body:9c19380b225b
-routine public.finalize_identity_binding() -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:068d7ab3f609
+routine public.finalize_identity_binding() -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:e6791abc4a02
 routine public.financial_command_outcome_v1(p_workspace_id uuid, p_request_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:81b89fcc4b71
 routine public.financial_receipt_replay_v1(p_workspace_id uuid, p_actor uuid, p_request_id uuid, p_kind text, p_digest text) -> uuid | function | definer | volatile | exec:service_role | body:74fb4962ec61
 routine public.financial_subject_command_v1(p_kind text, p_invoice_id uuid, p_request_id uuid, p_text text) -> jsonb | function | definer | volatile | exec:service_role | body:ded5edb77bf7
@@ -3120,11 +3120,16 @@ routine public.identity_binding_revoked_cascade() -> trigger | function | define
 routine public.identity_binding_revoked_invalidate() -> trigger | function | definer | volatile | exec:service_role | body:dfbda10ae4a1
 routine public.identity_bindings_immutable() -> trigger | function | invoker | volatile | exec:service_role | body:faaf73ca1142
 routine public.identity_federation_token_hook(event jsonb) -> jsonb | function | definer | stable | exec: | body:aa69de7aea32
-routine public.identity_status_apply(p_body jsonb, p_source uuid, p_event uuid, p_request_ts bigint) -> text | function | definer | volatile | exec: | body:2eec3d7c7e24
+routine public.identity_provider_issuer(p_provider text) -> text | function | definer | stable | exec: | body:3e4c67b93b3e
+routine public.identity_status_apply(p_body jsonb, p_source uuid, p_event uuid, p_request_ts bigint) -> text | function | definer | volatile | exec: | body:0ae14a9b118d
 routine public.identity_status_drain() -> jsonb | function | definer | volatile | exec: | body:551c93b19236
+routine public.identity_status_enforce(p_issuer text, p_subject text) -> integer | function | definer | volatile | exec: | body:11fa051386fe
 routine public.identity_status_issue(p_user uuid, p_status text) -> integer | function | definer | volatile | exec: | body:a88a61387f1f
+routine public.identity_status_issue_one(p_subject text, p_status text, p_target uuid) -> integer | function | definer | volatile | exec: | body:f5f6839ef0b5
 routine public.identity_status_linked_targets(p_user uuid) -> SETOF uuid | function | definer | stable | exec: | body:c186af7603f1
 routine public.identity_status_on_account_change() -> trigger | function | definer | volatile | exec: | body:e2b19e7c50c1
+routine public.identity_status_on_binding() -> trigger | function | definer | volatile | exec: | body:3ec1d3fd26e9
+routine public.identity_status_reissue() -> integer | function | definer | volatile | exec: | body:279662a4011c
 routine public.import_bank_statement_v1(p_workspace_id uuid, p_statement jsonb, p_lines jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:04298c18cd9e
 routine public.import_closure_days(p_workspace_id uuid, p_days jsonb, p_apply boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:e99f11021cb3
 routine public.import_floor_plan(p_workspace_id uuid, p_plan jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:bc90d83d1544
@@ -3528,14 +3533,17 @@ routine public.members_term_history() -> trigger | function | definer | volatile
 routine public.members_terms_by_command() -> trigger | function | invoker | volatile | exec:service_role | body:fde6083608c7
 routine public.members_vies_guard() -> trigger | function | definer | volatile | exec:service_role | body:9a473e9c6b36
 routine public.members_zero_subscription_guard() -> trigger | function | invoker | volatile | exec:service_role | body:c6c375c30e6f
-routine public.membership_fact_apply(p_body jsonb, p_source uuid, p_event uuid, p_request_ts bigint) -> text | function | definer | volatile | exec: | body:6b1ef02cd00c
-routine public.membership_fact_drain() -> jsonb | function | definer | volatile | exec: | body:6f6142ce935a
-routine public.membership_fact_enqueue(p_state membership_fact_state) -> integer | function | definer | volatile | exec: | body:26bd53f0c8a2
+routine public.membership_fact_apply(p_body jsonb, p_source uuid, p_event uuid, p_request_ts bigint) -> text | function | definer | volatile | exec: | body:5e49fde06bf7
+routine public.membership_fact_backlog() -> text | function | definer | stable | exec: | body:0c0116bef6f6
+routine public.membership_fact_directory_changed() -> trigger | function | definer | volatile | exec: | body:a3ca5d260025
+routine public.membership_fact_drain() -> jsonb | function | definer | volatile | exec: | body:0339442e17e8
+routine public.membership_fact_drain_batch() -> integer | function | definer | stable | exec: | body:7d97336f1ede
+routine public.membership_fact_enqueue(p_state membership_fact_state) -> integer | function | definer | volatile | exec: | body:0e3b1e089008
 routine public.membership_fact_home() -> TABLE(home_installation_id uuid, home_origin text, home_key text) | function | definer | stable | exec: | body:4ddaaae4e1e7
 routine public.membership_fact_in_force(p_user uuid, p_ref text, p_statuses text[]) -> boolean | function | definer | stable | exec: | body:4731c1825176
 routine public.membership_fact_on_binding_change() -> trigger | function | definer | volatile | exec: | body:3d37fdd2d63b
 routine public.membership_fact_on_member_change() -> trigger | function | definer | volatile | exec: | body:865c3b9b8a98
-routine public.membership_fact_produce(p_workspace uuid, p_user uuid) -> integer | function | definer | volatile | exec: | body:ff593077a19e
+routine public.membership_fact_produce(p_workspace uuid, p_user uuid) -> integer | function | definer | volatile | exec: | body:4e50714a9b15
 routine public.membership_fact_reconcile() -> jsonb | function | definer | volatile | exec: | body:da94f0d744b4
 routine public.membership_snapshot_apply(p_body jsonb, p_source uuid, p_event uuid, p_request_ts bigint) -> text | function | definer | volatile | exec: | body:e9ae4b827a82
 routine public.membership_snapshot_digest(p_entries jsonb) -> text | function | invoker | stable | exec: | body:8611fd1e0d7c
@@ -3580,7 +3588,7 @@ routine public.my_mcp_connections() -> jsonb | function | definer | stable | exe
 routine public.my_message_requests() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:f04fa74b6d8e
 routine public.my_organisation_houses_v1() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:43d304bcaef2
 routine public.my_organisations_v1() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:ed9f8d83c22d
-routine public.my_personal_message_directory_v1(p_section text, p_workspace_network_id text, p_after_key text, p_query text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:c0abfae14d62
+routine public.my_personal_message_directory_v1(p_section text, p_workspace_network_id text, p_after_key text, p_query text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:4f0fd5b4e1ef
 routine public.my_personal_preferences(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:213deec91380
 routine public.my_personal_workspace_refs_v1() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:99cb00004823
 routine public.my_public_profile() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:3c381728dd4f
@@ -3635,10 +3643,10 @@ routine public.operator_revoke_database_admin(p_target uuid) -> jsonb | function
 routine public.operator_revoke_installation(p_installation_id uuid) -> jsonb | function | definer | volatile | exec: | body:6aca7ad43e58
 routine public.operator_set_federation_key(p_peer uuid, p_direction text, p_purpose text, p_key_id text, p_secret text) -> jsonb | function | definer | volatile | exec: | body:397fb2422a8a
 routine public.operator_set_identity_federation_client(p_client_id uuid, p_enabled boolean) -> void | function | definer | volatile | exec: | body:484cb66063dc
-routine public.operator_set_installation_roles(p_roles text[], p_installation_id uuid) -> jsonb | function | definer | volatile | exec:service_role | body:7dbbfd986503
+routine public.operator_set_installation_roles(p_roles text[], p_installation_id uuid) -> jsonb | function | definer | volatile | exec: | body:7dbbfd986503
 routine public.operator_set_mcp_endpoint(p_url text) -> jsonb | function | definer | volatile | exec:service_role | body:c659b2933f84
 routine public.operator_set_mcp_runtime(p_enabled boolean) -> jsonb | function | definer | volatile | exec:service_role | body:46902c960cbd
-routine public.operator_set_personal_home(p_kind text, p_url text, p_key text, p_installation_id uuid) -> jsonb | function | definer | volatile | exec:service_role | body:862bc3e5136b
+routine public.operator_set_personal_home(p_kind text, p_url text, p_key text, p_installation_id uuid) -> jsonb | function | definer | volatile | exec: | body:862bc3e5136b
 routine public.organisation_feature_check(p_head uuid) -> void | function | definer | stable | exec:service_role | body:483b7fc7e5c7
 routine public.organisation_head_check(p_head uuid) -> void | function | definer | stable | exec:service_role | body:9879c021f6cb
 routine public.organisation_house_fenced_amounts() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:649e5152c6dd
@@ -3682,7 +3690,7 @@ routine public.payment_test_check(p_workspace_id uuid) -> jsonb | function | def
 routine public.payment_used_cents(p_ledger uuid) -> bigint | function | definer | stable | exec:service_role | body:0510e4d33ba7
 routine public.personal_account_recognised() -> boolean | function | definer | stable | exec:authenticated,service_role | body:6e6491901997
 routine public.personal_data_admin_role_names() -> jsonb | function | invoker | immutable | exec:service_role | body:5eba61ffd006
-routine public.personal_directory_relationships(p_user uuid) -> TABLE(network_id text, permitted_name text, fresh boolean) | function | definer | stable | exec: | body:471dbd6482ea
+routine public.personal_directory_relationships(p_user uuid) -> TABLE(network_id text, permitted_name text, fresh boolean) | function | definer | stable | exec: | body:37c977c5d3dd
 routine public.personal_home_descriptor() -> jsonb | function | definer | stable | exec:service_role | body:1ea555640fdb
 routine public.personal_native_session() -> boolean | function | invoker | stable | exec:anon,authenticated,service_role | body:54c14f4d4611
 routine public.personal_workspace_ref_stamp() -> trigger | function | definer | volatile | exec:service_role | body:49355860cffd
@@ -3728,7 +3736,7 @@ routine public.profiles_auth_locale() -> trigger | function | definer | volatile
 routine public.profiles_default_workspace_ref() -> trigger | function | definer | volatile | exec:service_role | body:8ca04a9d8556
 routine public.propose_price_negotiation(p_member_id uuid, p_fee_cents integer, p_overage_fee_cents integer, p_discount_percent numeric, p_note text, p_valid_from date, p_subscription_pct integer, p_items jsonb) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:629fe93a2903
 routine public.protect_enrolled_installation() -> trigger | function | invoker | volatile | exec: | body:1bfa66ade934
-routine public.protect_federation_history() -> trigger | function | invoker | volatile | exec: | body:108aa471d239
+routine public.protect_federation_history() -> trigger | function | invoker | volatile | exec: | body:c94e1c8518c3
 routine public.protect_identity_federation_client() -> trigger | function | invoker | volatile | exec:service_role | body:de8119cc60cd
 routine public.protect_last_owner() -> trigger | function | definer | volatile | exec:service_role | body:ab5c4b3b7f91
 routine public.protect_membership_fact() -> trigger | function | invoker | volatile | exec: | body:5c839ff452c2
@@ -4561,6 +4569,7 @@ trigger identity_authority.zz_system_columns_stamp CREATE TRIGGER zz_system_colu
 trigger identity_bindings.identity_binding_revoked_cascade CREATE TRIGGER identity_binding_revoked_cascade AFTER UPDATE OF status ON public.identity_bindings FOR EACH ROW EXECUTE FUNCTION identity_binding_revoked_cascade()
 trigger identity_bindings.identity_binding_revoked_invalidate CREATE TRIGGER identity_binding_revoked_invalidate AFTER UPDATE OF status ON public.identity_bindings FOR EACH ROW EXECUTE FUNCTION identity_binding_revoked_invalidate()
 trigger identity_bindings.identity_bindings_immutable CREATE TRIGGER identity_bindings_immutable BEFORE UPDATE ON public.identity_bindings FOR EACH ROW EXECUTE FUNCTION identity_bindings_immutable()
+trigger identity_bindings.identity_status_on_binding CREATE TRIGGER identity_status_on_binding AFTER INSERT OR UPDATE OF status ON public.identity_bindings FOR EACH ROW EXECUTE FUNCTION identity_status_on_binding()
 trigger identity_bindings.membership_fact_on_binding_change CREATE TRIGGER membership_fact_on_binding_change AFTER INSERT OR UPDATE OF status, local_user_id ON public.identity_bindings FOR EACH ROW EXECUTE FUNCTION membership_fact_on_binding_change()
 trigger identity_bindings.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.identity_bindings FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger identity_federation_clients.guard_oauth_client_purpose CREATE TRIGGER guard_oauth_client_purpose BEFORE INSERT OR UPDATE ON public.identity_federation_clients FOR EACH ROW EXECUTE FUNCTION guard_oauth_client_purpose()
@@ -4949,6 +4958,7 @@ trigger workspace_templates.template_regional_capture CREATE TRIGGER template_re
 trigger workspace_templates.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_templates FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger workspaces.analytics_opening_hours CREATE TRIGGER analytics_opening_hours AFTER INSERT OR UPDATE OF booking_rules ON public.workspaces FOR EACH ROW EXECUTE FUNCTION analytics_workspace_changed()
 trigger workspaces.dunning_rules_sync_setting CREATE TRIGGER dunning_rules_sync_setting AFTER INSERT OR UPDATE OF dunning_rules ON public.workspaces FOR EACH ROW EXECUTE FUNCTION dunning_rules_sync_setting()
+trigger workspaces.membership_fact_directory_changed CREATE TRIGGER membership_fact_directory_changed AFTER UPDATE OF feature_flags ON public.workspaces FOR EACH ROW WHEN ((old.feature_flags IS DISTINCT FROM new.feature_flags)) EXECUTE FUNCTION membership_fact_directory_changed()
 trigger workspaces.refresh_public_workspace CREATE TRIGGER refresh_public_workspace AFTER UPDATE OF name, feature_flags, booking_rules, currency_code, address, street, postal_code, city, invoice_legal, visibility, visibility_set_at, vat_regime, country_code, timezone ON public.workspaces FOR EACH ROW EXECUTE FUNCTION refresh_public_profile_cards()
 trigger workspaces.retire_invite_code CREATE TRIGGER retire_invite_code AFTER UPDATE OF invite_code ON public.workspaces FOR EACH ROW EXECUTE FUNCTION retire_invite_code()
 trigger workspaces.stamp_accessory_supplements_since CREATE TRIGGER stamp_accessory_supplements_since BEFORE UPDATE OF feature_flags ON public.workspaces FOR EACH ROW EXECUTE FUNCTION stamp_accessory_supplements_since()

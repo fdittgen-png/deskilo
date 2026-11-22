@@ -733,6 +733,21 @@ Abra un movimiento en **Existencias → Movimientos**. Donde la función *Devolu
 - No hace ningún pago, reembolso ni abono: si hay dinero de por medio, corríjalo en la factura o en el pago al proveedor.
 - Enviar el mismo formulario otra vez tras una respuesta perdida lo registra una sola vez.
 
+<!-- anchor: user.money.stock.cycle -->
+### Recuentos cíclicos
+
+**Público:** Administrador/a · Propietario
+
+Quiere revisar partes de las existencias según un calendario, con la tienda abierta, sin un inventario completo.
+
+Abra **Existencias → Recuentos cíclicos** (las funciones *Recuentos de existencias* y *Recuentos cíclicos* deben estar activas). La página tiene hasta tres pestañas.
+
+- **Por contar** lista las tareas. Quien tiene el derecho de contar (o gestiona las existencias) abre una tarea y la cuenta **a ciegas**: cada línea dice qué contar y dónde, nunca lo que espera lo registrado, para que la cifra no influya en el recuento. Escanee o escriba un código de barras para encontrar la línea, luego **Contar** e introduzca lo que encontró, u **Omitir** con un motivo. Quien solo puede contar sabe que la línea está contada, nada más; quien gestiona las existencias conoce la diferencia. La tarea está completa cuando cada línea está contada u omitida.
+- **Planes** (para quien gestiona las existencias) dicen qué contar y cuándo: *Ubicaciones* (con todo lo que contienen), *Artículos* o *Alto valor* (mercancías de valor mínimo un umbral, el suyo o el de la empresa), una vez o cada n días desde un día de vencimiento. Cuando un plan vence, crea una tarea con sus líneas; el mismo día nunca crea dos.
+- **Historial** dice, para cada artículo en cada ubicación, cuándo se contó por última vez y cuántos recuentos fueron exactos.
+
+Una línea contada es un recuento de los *Recuentos de existencias*: espera a alguien que pueda aprobar ajustes, y solo un recuento aprobado cambia un saldo, aplicando exactamente su diferencia y solo si las existencias no se han movido desde entonces. Una tarea aún abierta pasados los días de retraso de la empresa genera un aviso en la bandeja, que abre esta página; termina cuando la tarea se completa.
+
 <!-- anchor: user.money.amounts -->
 ### Cómo se muestran los importes
 

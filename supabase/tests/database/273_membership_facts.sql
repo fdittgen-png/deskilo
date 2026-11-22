@@ -246,6 +246,8 @@ values (pg_temp.id('000002563d02'), pg_temp.ws(), pg_temp.u(4), false, false, 'a
 select is(pg_temp.out(), 'active<paused<tombstone<active', 'a rejoin is newer than the tombstone');
 select is(public.membership_fact_reconcile()::text, '{"changed": 0, "renewed": 0}',
   'a fresh relationship needs nothing');
+-- the events were sent, long ago: a renewal waits only behind an event not yet sent (#4327)
+update public.membership_fact_outbox set state = 'sent', attempts = 1, last_attempt_at = now() - interval '1 hour';
 update public.membership_fact_state set last_asserted_at = now() - interval '10 minutes';
 select is(public.membership_fact_reconcile()::text, '{"changed": 0, "renewed": 1}',
   'a quiet relationship is re-asserted');

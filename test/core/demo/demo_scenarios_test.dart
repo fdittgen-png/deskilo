@@ -22,10 +22,12 @@ import 'package:deskilo/core/demo/data/book_period_repository.dart';
 import 'package:deskilo/core/demo/data/book_profile_repository.dart';
 import 'package:deskilo/core/demo/data/demo_kiosk_devices.dart';
 import 'package:deskilo/core/demo/data/demo_stock_config_commands.dart';
+import 'package:deskilo/core/demo/data/demo_stock_cycle_counts.dart';
 import 'package:deskilo/core/demo/data/demo_stock_ledger.dart';
 import 'package:deskilo/core/demo/data/demo_stock_operations.dart';
 import 'package:deskilo/core/demo/data/demo_stock_queries.dart';
 import 'package:deskilo/core/demo/data/demo_stock_receiving_commands.dart';
+import 'package:deskilo/core/demo/data/demo_stock_registry.dart';
 import 'package:deskilo/core/demo/data/demo_stock_reorder.dart';
 import 'package:deskilo/core/demo/data/demo_stock_reversals.dart';
 import 'package:deskilo/core/demo/data/fake_organisation_repository.dart';
@@ -72,12 +74,14 @@ import 'package:deskilo/features/money/domain/workspace_asset.dart';
 import 'package:deskilo/features/plan/domain/seat.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/stock/domain/stock_config.dart';
+import 'package:deskilo/features/stock/domain/stock_cycle_counts.dart';
 import 'package:deskilo/features/stock/domain/stock_operations.dart';
 import 'package:deskilo/features/stock/domain/stock_receiving.dart';
 import 'package:deskilo/features/stock/domain/stock_reversals.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/member_badge.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
+import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/domain/workspace_process.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
@@ -1435,6 +1439,40 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
       } on PostgrestException catch (e) {
         return e.code == 'DKG20' && ledger.balance('demo-item-beans', 'demo-place-main').text == '9';
       }
+    },
+  ),
+  // #4295 — the high-value shelf's plan made a task: counted blind (a counter is not told what the
+  // ledger holds), a skip needs a reason, and every line counted or skipped completes the task.
+  WorkspaceFeature.stockCycleCounts: _action(
+    _owner,
+    'Ada counts the high-value shelf blind, skips one line with a reason, and the task is complete',
+    (w) async {
+      final config = DemoStockConfigCommands(demoFirstSpaceId);
+      final ledger = DemoStockLedger(demoFirstSpaceId, config);
+      final reversals = DemoStockReversals(ledger);
+      final cycle = DemoStockCycleCounts(
+        demoFirstSpaceId,
+        ledger,
+        reversals,
+        DemoStockRegistry(demoFirstSpaceId, ledger, config),
+        () => {WorkspacePermission.countStock},
+        () => DateTime(2026, 5, 13),
+      );
+      final task = (await cycle.tasks(demoFirstSpaceId)).single;
+      final lines = (await cycle.task(demoFirstSpaceId, task.taskId)).lines;
+      if (lines.length < 2) return false;
+      final blind = await cycle.countLine(demoFirstSpaceId, lines.first.lineId, '3', 'req-1');
+      try {
+        await cycle.skipLine(demoFirstSpaceId, lines[1].lineId, ' ', 'req-2');
+        return false;
+      } on PostgrestException catch (e) {
+        if (e.code != 'DKG07') return false;
+      }
+      for (final l in lines.skip(1)) {
+        await cycle.skipLine(demoFirstSpaceId, l.lineId, 'Behind the pallet', 'skip-${l.lineId}');
+      }
+      final done = (await cycle.task(demoFirstSpaceId, task.taskId)).state == CountTaskState.complete;
+      return blind.difference == null && blind.baseline == null && done && (await reversals.counts(demoFirstSpaceId)).length == 1;
     },
   ),
   // #4164 — the owner keeps a customer with no account: a business is added

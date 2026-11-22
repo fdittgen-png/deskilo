@@ -15589,6 +15589,20 @@ class AppLocalizationsFr extends AppLocalizations {
       'Un changement de mot de passe ne demande pas de se reconnecter';
 
   @override
+  String instanceDoctorFactBacklogDetail(
+    String overdue,
+    String waiting,
+    String live,
+    String capacity,
+  ) {
+    return '$overdue des $waiting faits en attente ont plus d\'une période d\'actualisation ; $live relations sont vivantes et une période en envoie $capacity.\n        Correction : augmentez federation.fact_drain_batch (ou allongez la période d\'actualisation) pour que lot x période / 60 dépasse les relations vivantes.';
+  }
+
+  @override
+  String get instanceDoctorFactBacklogTitle =>
+      'Des faits d\'adhésion attendent plus longtemps qu\'une période d\'actualisation';
+
+  @override
   String instanceDoctorGuardAnonViewDetail(String names) {
     return '$names\n        Sans security_invoker, la vue lit avec les droits du propriétaire et contourne les politiques des tables sous-jacentes.';
   }
@@ -15705,6 +15719,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get instanceDoctorProbeAuth => 'Configuration de l\'authentification';
+
+  @override
+  String get instanceDoctorProbeFactDelivery => 'Envoi des faits d\'adhésion';
 
   @override
   String instanceDoctorProbeFailedDetail(int status, String message) {
@@ -31936,6 +31953,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Secondes pendant lesquelles un serveur attend la réponse à un message signé envoyé à un autre serveur avant de renvoyer le même message. Au moins 30 ; gardez-la sous la durée de validité du statut.';
 
   @override
+  String get settingHintFederationFactDrainBatch =>
+      'Le nombre maximal de faits d\'adhésion qu\'un serveur d\'espaces envoie à son domicile personnel en une minute. Un serveur renouvelle chaque relation vivante une fois par actualisation du statut d\'identité : il suit au plus ce nombre multiplié par les secondes d\'actualisation divisées par 60 relations (500 et 300 secondes : 2 500). Augmentez-le quand le médecin d\'instance signale un retard d\'envoi.';
+
+  @override
   String get settingHintFederationRetentionHours =>
       'Heures pendant lesquelles un serveur garde les accusés de réception des messages signés entre serveurs, et un domicile personnel les traces des adhésions terminées, avant le nettoyage horaire. Jamais moins que la plus longue validité de statut plus deux fois l\'écart d\'horloge.';
 
@@ -32294,6 +32315,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingLabelFederationAnswerWaitSeconds =>
       'Attente de réponse entre serveurs';
+
+  @override
+  String get settingLabelFederationFactDrainBatch =>
+      'Faits d\'adhésion envoyés par minute';
 
   @override
   String get settingLabelFederationRetentionHours =>
@@ -35419,6 +35444,234 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get stockCountsTitle => 'Comptages de stock';
+
+  @override
+  String get stockCycleAddPlan => 'Ajouter un plan';
+
+  @override
+  String get stockCycleBlind =>
+      'Vous comptez ce que vous trouvez : le chiffre du système n’est pas montré, il ne peut donc pas influencer le comptage.';
+
+  @override
+  String get stockCycleCadence => 'Fréquence';
+
+  @override
+  String get stockCycleCadenceEvery => 'Répété';
+
+  @override
+  String get stockCycleCadenceOnce => 'Une fois';
+
+  @override
+  String stockCycleCountObserved(String unit) {
+    return 'Ce que vous avez compté ($unit)';
+  }
+
+  @override
+  String get stockCycleCountTitle => 'Compter cette ligne';
+
+  @override
+  String get stockCycleCounted => 'Compté.';
+
+  @override
+  String stockCycleCountedDifference(String difference) {
+    return 'Compté. Écart avec le stock enregistré : $difference';
+  }
+
+  @override
+  String get stockCycleEveryDays => 'Tous les combien de jours';
+
+  @override
+  String stockCycleHistoryAccuracy(int count, String percent) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count comptages',
+      one: '$count comptage',
+    );
+    return '$_temp0, $percent % exacts';
+  }
+
+  @override
+  String get stockCycleHistoryEmpty => 'Rien n’a encore été compté.';
+
+  @override
+  String stockCycleHistoryLast(String date) {
+    return 'Dernier comptage le $date';
+  }
+
+  @override
+  String stockCycleHistoryRow(String item, String place) {
+    return '$item · $place';
+  }
+
+  @override
+  String get stockCycleIntervalInvalid =>
+      'Saisissez un nombre entier de jours, de 1 à 366.';
+
+  @override
+  String get stockCycleLineCount => 'Compter';
+
+  @override
+  String get stockCycleLineCounted => 'Compté';
+
+  @override
+  String get stockCycleLineSkip => 'Passer';
+
+  @override
+  String stockCycleLineSkipped(String reason) {
+    return 'Passé : $reason';
+  }
+
+  @override
+  String get stockCycleNoPlans =>
+      'Aucun plan pour l’instant : rien n’est compté selon un calendrier.';
+
+  @override
+  String get stockCycleNoTasks => 'Rien à compter pour l’instant.';
+
+  @override
+  String get stockCyclePlanActive => 'Utilisé';
+
+  @override
+  String stockCyclePlanEvery(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count jours',
+      one: '$count jour',
+    );
+    return 'tous les $_temp0';
+  }
+
+  @override
+  String stockCyclePlanItemsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count articles',
+      one: '$count article',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get stockCyclePlanName => 'Nom';
+
+  @override
+  String get stockCyclePlanNameRequired => 'Donnez un nom au plan.';
+
+  @override
+  String stockCyclePlanNext(String date) {
+    return 'prochaine $date';
+  }
+
+  @override
+  String get stockCyclePlanOff => 'inutilisé';
+
+  @override
+  String get stockCyclePlanOnce => 'une fois';
+
+  @override
+  String get stockCyclePlanPlaces =>
+      'Emplacements (avec tout ce qu’ils contiennent)';
+
+  @override
+  String stockCyclePlanPlacesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count emplacements',
+      one: '$count emplacement',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get stockCyclePlanScope => 'Ce qu’il faut compter';
+
+  @override
+  String get stockCyclePlanScopeRequired => 'Choisissez ce qu’il compte.';
+
+  @override
+  String stockCyclePlanThreshold(String currency) {
+    return 'Valant au moins ($currency) ; vide : la limite de l’entreprise';
+  }
+
+  @override
+  String get stockCyclePlanTitle => 'Plan d’inventaire tournant';
+
+  @override
+  String stockCyclePlanValue(String amount) {
+    return 'valant au moins $amount';
+  }
+
+  @override
+  String get stockCyclePlanValueSetting =>
+      'valant au moins la limite de l’entreprise';
+
+  @override
+  String get stockCycleScan => 'Scanner ou saisir un code-barres';
+
+  @override
+  String get stockCycleScanNone =>
+      'Aucune ligne restant à compter n’a ce code.';
+
+  @override
+  String get stockCycleScopeHighValue => 'Forte valeur';
+
+  @override
+  String get stockCycleScopePlaces => 'Emplacements';
+
+  @override
+  String get stockCycleSkipReason => 'Pourquoi elle est passée';
+
+  @override
+  String get stockCycleSkipTitle => 'Passer cette ligne';
+
+  @override
+  String get stockCycleSkipped => 'Passé.';
+
+  @override
+  String get stockCycleTabHistory => 'Historique';
+
+  @override
+  String get stockCycleTabPlans => 'Plans';
+
+  @override
+  String get stockCycleTabTasks => 'À compter';
+
+  @override
+  String get stockCycleTaskCancelled => 'Annulé';
+
+  @override
+  String get stockCycleTaskComplete => 'Terminé';
+
+  @override
+  String get stockCycleTaskDone =>
+      'Chaque ligne est comptée ou passée : la tâche est terminée.';
+
+  @override
+  String get stockCycleTaskNoLines => 'Cette tâche ne liste rien à compter.';
+
+  @override
+  String stockCycleTaskProgress(String left, String total) {
+    return '$left sur $total restent à compter';
+  }
+
+  @override
+  String stockCycleTaskRow(String plan, String due) {
+    return '$plan · pour le $due';
+  }
+
+  @override
+  String get stockCycleTaskTitle => 'Compter';
+
+  @override
+  String get stockCycleThresholdInvalid =>
+      'Saisissez un montant, ou laissez vide.';
+
+  @override
+  String get stockCycleTitle => 'Inventaires tournants';
 
   @override
   String get stockDimensionAdd => 'Ajouter une dimension';

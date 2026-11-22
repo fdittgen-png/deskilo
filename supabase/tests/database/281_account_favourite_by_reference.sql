@@ -37,9 +37,9 @@ grant execute on all functions in schema pg_temp to authenticated, anon;
 -- A fact as the apply stores it, under the source's epoch.
 create function pg_temp.fact(p_u int, p_c text, p_status text) returns void language sql as $$
   insert into public.membership_facts (user_id, network_id, issuer, source_installation_id,
-    revision, status, asserted_at, valid_until, enrolment_epoch, event_id)
+    revision, status, asserted_at, valid_until, enrolment_epoch, event_id, members_directory)
   select pg_temp.u(p_u), pg_temp.ref(p_c), 'https://p281.test/auth/v1', pg_temp.inst(p_c), 1,
-         p_status, now(), now() + interval '900 seconds', e.enrolled_at, gen_random_uuid()
+         p_status, now(), now() + interval '900 seconds', e.enrolled_at, gen_random_uuid(), true
     from public.enrolled_installations e where e.installation_id = pg_temp.inst(p_c) $$;
 grant execute on all functions in schema pg_temp to authenticated, anon;
 -- One call as u(p_n): 'true'/'false' (is_favorite after it) or the SQLSTATE.

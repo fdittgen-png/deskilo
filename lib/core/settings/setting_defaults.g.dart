@@ -64,6 +64,8 @@ abstract final class SettingDefaults {
   static const int einvoiceStuckAttemptMinutes = 60;
   /// `federation.answer_wait_seconds`
   static const int federationAnswerWaitSeconds = 120;
+  /// `federation.fact_drain_batch`
+  static const int federationFactDrainBatch = 500;
   /// `federation.retention_hours`
   static const int federationRetentionHours = 24;
   /// `identity.clock_skew_seconds`

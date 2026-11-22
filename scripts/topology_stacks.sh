@@ -303,7 +303,9 @@ SQL
 # #2472 C2 -- the directory fixture at P, as the facts flow leaves it: W-A
 # and W-B enrolled (operator_enrol_installation; the origin is a label, P
 # never calls it for the directory), and the facts membership_fact_apply
-# stores (274 seeds the same shape; 273 proves the apply). A and B are
+# stores (274 seeds the same shape; 273 proves the apply). The business lists its
+# members (members_directory, carried by the fact: 0878), as a workspace that shows its
+# directory does. A and B are
 # co-members of the workspace at W-A; A and C of the workspace with the
 # SAME local id at W-B. A is in one group that has no message.
 seed_directory() { # db api wa-installation wb-installation a b c
@@ -313,9 +315,10 @@ select public.operator_enrol_installation('$3', 'https://w-a.topology.test',
 select public.operator_enrol_installation('$4', 'https://w-b.topology.test',
   'sb_publishable_topology_w_b_key', array['workspace_host'], array['workspace@1']);
 insert into public.membership_facts (user_id, network_id, issuer, source_installation_id,
-  revision, status, asserted_at, valid_until, enrolment_epoch, event_id, workspace_name)
+  revision, status, asserted_at, valid_until, enrolment_epoch, event_id, workspace_name,
+  members_directory)
 select v.u, e.installation_id::text || ':$WS', '$2/auth/v1', e.installation_id,
-       1, 'active', now(), now() + interval '2 hours', e.enrolled_at, gen_random_uuid(), v.name
+       1, 'active', now(), now() + interval '2 hours', e.enrolled_at, gen_random_uuid(), v.name, true
   from (values ('$5'::uuid, 'https://w-a.topology.test', 'Topology a'),
                ('$6'::uuid, 'https://w-a.topology.test', 'Topology a'),
                ('$5'::uuid, 'https://w-b.topology.test', 'Topology b'),
@@ -402,7 +405,7 @@ seed() {
   "workspaceId": "$WS",
   "windowFrom": "$from",
   "windowTo": "$to",
-  "p":  {"url": "${API[p]}",  "anon": "${ANON[p]}",  "service": "${SERVICE[p]}",
+  "p":  {"url": "${API[p]}",  "anon": "${ANON[p]}",  "service": "${SERVICE[p]}", "db": "${DB[p]}",
          "roles": ["personal_home"],
          "user": {"id": "$p_user", "email": "topology-p-$run@deskilo.test"},
          "user2": {"id": "$p2_user", "email": "topology-p2-$run@deskilo.test"},
@@ -410,7 +413,7 @@ seed() {
                        "b": {"id": "$d_b", "email": "topology-dir-b-$run@deskilo.test"},
                        "c": {"id": "$d_c", "email": "topology-dir-c-$run@deskilo.test"},
                        "waRef": "$wa_inst:$WS", "wbRef": "$wb_inst:$WS", "groupId": "$GROUP"}},
-  "wa": {"url": "${API[wa]}", "anon": "${ANON[wa]}", "service": "${SERVICE[wa]}",
+  "wa": {"url": "${API[wa]}", "anon": "${ANON[wa]}", "service": "${SERVICE[wa]}", "db": "${DB[wa]}",
          "roles": ["personal_home", "workspace_host"],
          "user": {"id": "$a_user", "email": "topology-a-$run@deskilo.test"},
          "stranger": {"id": "$a_stranger", "email": "topology-a-stranger-$run@deskilo.test"},
@@ -425,7 +428,7 @@ seed() {
          "preview": {"workspaceId": "$PWS", "memberId": "$PMEMBER",
                      "member": {"id": "$pv_member", "email": "preview-member-$run@deskilo.test"},
                      "owner": {"id": "$pv_owner", "email": "preview-owner-$run@deskilo.test"}}},
-  "wb": {"url": "${API[wb]}", "anon": "${ANON[wb]}", "service": "${SERVICE[wb]}",
+  "wb": {"url": "${API[wb]}", "anon": "${ANON[wb]}", "service": "${SERVICE[wb]}", "db": "${DB[wb]}",
          "roles": ["personal_home", "workspace_host"],
          "user": {"id": "$b_user", "email": "topology-b-$run@deskilo.test"},
          "booking": {"workspaceId": "$BWS", "seatId": "$BSEAT", "rentedSeatId": "$BRENTED",

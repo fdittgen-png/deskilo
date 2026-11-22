@@ -24848,6 +24848,23 @@ abstract class AppLocalizations {
   /// **'A password change does not ask to sign in again'**
   String get instanceDoctorAuthReauthOffTitle;
 
+  /// #4327 Detail: {overdue} waiting longer than a period, {waiting} waiting, {live} live relationships, {capacity} delivered per period; the setting name stays as written.
+  ///
+  /// In en, this message translates to:
+  /// **'{overdue} of {waiting} waiting facts are older than one refresh period; {live} relationships are live and one period delivers {capacity}.\n        Fix: raise federation.fact_drain_batch (or lengthen the refresh period) so that batch x period / 60 exceeds the live relationships.'**
+  String instanceDoctorFactBacklogDetail(
+    String overdue,
+    String waiting,
+    String live,
+    String capacity,
+  );
+
+  /// #4327 Doctor finding: membership facts wait longer than a refresh period.
+  ///
+  /// In en, this message translates to:
+  /// **'Membership facts wait longer than a refresh period'**
+  String get instanceDoctorFactBacklogTitle;
+
   /// #3489 Detail of the alarm: a view readable by anon runs as its owner; {names} lists the objects.
   ///
   /// In en, this message translates to:
@@ -24967,6 +24984,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Auth configuration'**
   String get instanceDoctorProbeAuth;
+
+  /// #4327 Doctor probe name: the delivery of membership facts.
+  ///
+  /// In en, this message translates to:
+  /// **'Membership fact delivery'**
+  String get instanceDoctorProbeFactDelivery;
 
   /// #3489 Detail of a failed probe. The number is not a count: it is an HTTP status code. [not a count: status]
   ///
@@ -50661,6 +50684,12 @@ abstract class AppLocalizations {
   /// **'Seconds a server waits for the answer to a signed message it sent to another server before it sends the same message again. At least 30; keep it below the status lifetime.'**
   String get settingHintFederationAnswerWaitSeconds;
 
+  /// #4327 fact drain batch: settingHintFederationFactDrainBatch
+  ///
+  /// In en, this message translates to:
+  /// **'The most membership facts a workspace server sends to its personal home in one minute. A server renews each live relationship once per identity status refresh, so it keeps up with this number times the refresh seconds divided by 60 relationships (500 and 300 seconds: 2,500). Raise it when the instance doctor reports a delivery backlog.'**
+  String get settingHintFederationFactDrainBatch;
+
   /// #2563 C2 retention: settingHintFederationRetentionHours
   ///
   /// In en, this message translates to:
@@ -51218,6 +51247,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Backchannel answer wait'**
   String get settingLabelFederationAnswerWaitSeconds;
+
+  /// #4327 fact drain batch: settingLabelFederationFactDrainBatch
+  ///
+  /// In en, this message translates to:
+  /// **'Membership facts sent per minute'**
+  String get settingLabelFederationFactDrainBatch;
 
   /// #2563 C2 retention: settingLabelFederationRetentionHours
   ///
@@ -56125,6 +56160,342 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Stock counts'**
   String get stockCountsTitle;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Add a plan'**
+  String get stockCycleAddPlan;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'You count what you find: the system’s figure is not shown, so it cannot sway the count.'**
+  String get stockCycleBlind;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'How often'**
+  String get stockCycleCadence;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Repeating'**
+  String get stockCycleCadenceEvery;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Once'**
+  String get stockCycleCadenceOnce;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'What you counted ({unit})'**
+  String stockCycleCountObserved(String unit);
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Count this line'**
+  String get stockCycleCountTitle;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Counted.'**
+  String get stockCycleCounted;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Counted. Difference from the ledger: {difference}'**
+  String stockCycleCountedDifference(String difference);
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Every how many days'**
+  String get stockCycleEveryDays;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{1 count} other{{count} counts}}, {percent} % exact'**
+  String stockCycleHistoryAccuracy(int count, String percent);
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing has been counted yet.'**
+  String get stockCycleHistoryEmpty;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Last counted {date}'**
+  String stockCycleHistoryLast(String date);
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'{item} · {place}'**
+  String stockCycleHistoryRow(String item, String place);
+
+  /// #4295 a mistake under a plan field
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a whole number of days, from 1 to 366.'**
+  String get stockCycleIntervalInvalid;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Count'**
+  String get stockCycleLineCount;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Counted'**
+  String get stockCycleLineCounted;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get stockCycleLineSkip;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Skipped: {reason}'**
+  String stockCycleLineSkipped(String reason);
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'No plan yet: nothing is counted on a schedule.'**
+  String get stockCycleNoPlans;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing to count right now.'**
+  String get stockCycleNoTasks;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'In use'**
+  String get stockCyclePlanActive;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'every {count, plural, one{day} other{{count} days}}'**
+  String stockCyclePlanEvery(int count);
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{1 item} other{{count} items}}'**
+  String stockCyclePlanItemsCount(int count);
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get stockCyclePlanName;
+
+  /// #4295 a mistake under a plan field
+  ///
+  /// In en, this message translates to:
+  /// **'Name the plan.'**
+  String get stockCyclePlanNameRequired;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'next {date}'**
+  String stockCyclePlanNext(String date);
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'not in use'**
+  String get stockCyclePlanOff;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'once'**
+  String get stockCyclePlanOnce;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Places (with everything inside them)'**
+  String get stockCyclePlanPlaces;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{1 place} other{{count} places}}'**
+  String stockCyclePlanPlacesCount(int count);
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'What to count'**
+  String get stockCyclePlanScope;
+
+  /// #4295 a mistake under a plan field
+  ///
+  /// In en, this message translates to:
+  /// **'Choose what it counts.'**
+  String get stockCyclePlanScopeRequired;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Worth at least ({currency}); empty: the business’s limit'**
+  String stockCyclePlanThreshold(String currency);
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Cycle count plan'**
+  String get stockCyclePlanTitle;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'worth at least {amount}'**
+  String stockCyclePlanValue(String amount);
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'worth at least the business’s limit'**
+  String get stockCyclePlanValueSetting;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Scan or type a barcode'**
+  String get stockCycleScan;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'No line still to count has this code.'**
+  String get stockCycleScanNone;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'High value'**
+  String get stockCycleScopeHighValue;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Places'**
+  String get stockCycleScopePlaces;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Why it is skipped'**
+  String get stockCycleSkipReason;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Skip this line'**
+  String get stockCycleSkipTitle;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Skipped.'**
+  String get stockCycleSkipped;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get stockCycleTabHistory;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Plans'**
+  String get stockCycleTabPlans;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'To count'**
+  String get stockCycleTabTasks;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get stockCycleTaskCancelled;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Complete'**
+  String get stockCycleTaskComplete;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Every line is counted or skipped: the task is complete.'**
+  String get stockCycleTaskDone;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'This task lists nothing to count.'**
+  String get stockCycleTaskNoLines;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'{left} of {total} still to count'**
+  String stockCycleTaskProgress(String left, String total);
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'{plan} · due {due}'**
+  String stockCycleTaskRow(String plan, String due);
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Count'**
+  String get stockCycleTaskTitle;
+
+  /// #4295 a mistake under a plan field
+  ///
+  /// In en, this message translates to:
+  /// **'Enter an amount, or leave it empty.'**
+  String get stockCycleThresholdInvalid;
+
+  /// #4295 cycle counts
+  ///
+  /// In en, this message translates to:
+  /// **'Cycle counts'**
+  String get stockCycleTitle;
 
   /// #4169 the stock editors: a label or message
   ///

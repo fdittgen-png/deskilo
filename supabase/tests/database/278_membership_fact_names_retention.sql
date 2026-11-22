@@ -212,6 +212,8 @@ insert into public.members (id, workspace_id, user_id, is_owner, is_admin, statu
 values (pg_temp.id('0000278d0001'), pg_temp.ws(), pg_temp.u(3), false, false, 'active');
 select is(pg_temp.names(), 'active=Facts', 'a fact names its workspace as W holds it');
 update public.workspaces set name = 'Facts Two' where id = pg_temp.ws();
+-- the first event was sent: a renewal waits only behind an event not yet sent (#4327)
+update public.membership_fact_outbox set state = 'delivered', delivered_at = now();
 update public.membership_fact_state set last_asserted_at = now() - interval '10 minutes'
  where subject = pg_temp.u(1)::text;
 select is(public.membership_fact_reconcile()->>'renewed', '1', 'a quiet relationship is re-asserted');
