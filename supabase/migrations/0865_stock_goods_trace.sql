@@ -246,8 +246,13 @@ begin
   if v_layer is null then
     raise exception 'unknown document kind' using errcode = 'DKG09';
   end if;
-  -- the document's own right first: without it the answer is the same whether or not it exists
-  if not public.stock_trace_may(p_workspace_id, v_layer) then
+  -- the document's own right first, and the right of every layer the walk to the goods passes through
+  -- (a payment reaches its bills, a bill its order, an order its receipts): without any of them the
+  -- answer is the same whether or not the document exists, and nothing of a layer the caller may
+  -- not read (its ids included) is returned
+  if not public.stock_trace_may(p_workspace_id, v_layer)
+     or (p_kind = 'payment' and not public.stock_trace_may(p_workspace_id, 'bill'))
+     or not public.stock_trace_may(p_workspace_id, 'order') then
     return jsonb_build_object('state', 'unavailable', 'goods', '[]'::jsonb, 'more', false);
   end if;
   if p_after is not null then
@@ -386,4 +391,4 @@ $fn$;
 revoke execute on function public.stock_valuation_v1(uuid, timestamptz) from public, anon;
 grant execute on function public.stock_valuation_v1(uuid, timestamptz) to authenticated;
 
-select public.set_deskilo_schema_version(871);
+select public.set_deskilo_schema_version(865);

@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #4173 (0871, G6 A): goods are traced to documents and payments, and valued honestly. A movement
+-- #4173 (0865, G6 A): goods are traced to documents and payments, and valued honestly. A movement
 -- reaches its receipt, order, the several bills linked to that order, each bill's obligation and the
 -- allocations, payments and reversals that settle it; a document reaches the exact goods put away
 -- against it, a keyset page at a time; each layer is read under its own domain's right and an
@@ -7,7 +7,7 @@
 -- value totals only known costs and lists the quantities whose cost is unknown. Nothing is written
 -- by a read. Rolled back.
 begin;
-select plan(57);
+select plan(58);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -204,6 +204,11 @@ update public.workspaces set feature_flags = feature_flags || '{"purchases": fal
 select is(pg_temp.trace(1, current_setting('t.water')::uuid)::jsonb #>> '{traces,0,purchase,state}', 'unavailable', 'with purchases off the purchase side is unavailable (the orders hang under it)');
 update public.workspaces set feature_flags = feature_flags || '{"purchases": true}' where id = pg_temp.u(101);
 select is(jsonb_array_length(pg_temp.trace(1, current_setting('t.water')::uuid)::jsonb #> '{traces,0,purchase,bills,items}'), 2, 'and back on, the same evidence is there');
+-- A bill or a payment reaches the goods only through the order and the receipt: with the orders off, nothing of them (ids included) comes back.
+update public.workspaces set feature_flags = feature_flags || '{"purchaseOrders": false}' where id = pg_temp.u(101);
+select is(pg_temp.docgoods(1, 'bill', pg_temp.u(801))::jsonb ->> 'state' || ' ' || (pg_temp.docgoods(1, 'payment', pg_temp.u(901))::jsonb ->> 'state'), 'unavailable unavailable',
+  'with the orders off, a bill and a payment do not reach the goods through them');
+update public.workspaces set feature_flags = feature_flags || '{"purchaseOrders": true}' where id = pg_temp.u(101);
 update public.workspaces set feature_flags = feature_flags || '{"stockManagement": false}' where id = pg_temp.u(101);
 select is(left(pg_temp.trace(1, current_setting('t.water')::uuid), 9), 'ERR DKG01', 'with the goods ledger off nothing is traced (DKG01)');
 update public.workspaces set feature_flags = feature_flags || '{"stockManagement": true}' where id = pg_temp.u(101);

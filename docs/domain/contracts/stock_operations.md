@@ -112,13 +112,13 @@ Evidence: `supabase/tests/database/498_stock_reorder.sql` (the point and its ref
 
 ## Tracing goods to documents and payments, and the operational value
 
-Three reads (`supabase/migrations/0871_stock_goods_trace.sql`, #4173): `stock_goods_trace_v1` (from a movement, or from a lot), `stock_document_goods_v1` (from an order, a bill or a supplier payment) and `stock_valuation_v1`. They write nothing: opening a trace performs no receiving, issuing, settling or returning.
+Three reads (`supabase/migrations/0865_stock_goods_trace.sql`, #4173): `stock_goods_trace_v1` (from a movement, or from a lot), `stock_document_goods_v1` (from an order, a bill or a supplier payment) and `stock_valuation_v1`. They write nothing: opening a trace performs no receiving, issuing, settling or returning.
 
 | question | answer |
 |---|---|
 | What is followed? | only relations that are RECORDED: movement, receipt line, receipt, order (the put-away allocation freezes the order's reference and the supplier's name), the bills whose `purchase_order_id` names that order, each bill's obligations, each obligation's settlement allocations and reversals with their payments. Nothing is matched on a name, a date or an amount |
 | Cardinality? | an order lists ALL its bills (at most 50, `truncated` says more), a bill its obligations, an obligation its allocations AND reversals; one payment funding two bills shows on both. None is flattened into one field on the movement |
-| Who reads what? | each layer under its own domain's right, with its feature on: the goods (viewStock or manageStock; stockManagement), the order and receipt (managePurchases or viewFinances; purchaseOrders), the bill and obligation (the same; purchases), the payment and allocation (viewFinances or recordOutgoingPayments; purchases), the cost of goods (managePurchases or viewFinances). viewStock alone grants none of the others |
+| Who reads what? | each layer under its own domain's right, with its feature on: the goods (viewStock or manageStock; stockManagement), the order and receipt (managePurchases or viewFinances; purchaseOrders), the bill and obligation (the same; purchases), the payment and allocation (viewFinances or recordOutgoingPayments; purchases), the cost of goods (managePurchases or viewFinances). viewStock alone grants none of the others. Reaching goods FROM a bill needs the order right too, and FROM a payment the bill and order rights, because the walk passes through those layers: without them the answer is `unavailable` and no order or receipt id comes back |
 | What does a reader without the right see? | `{"state": "unavailable"}` for that layer, the same answer whether or not the target exists: an unavailable financial source is not unpaid, and a call for a document the reader may not read tells nothing about whether it exists. A document the caller MAY read but that is not in this business is refused (DKG07) |
 | States of a link? | `linked`, `not_linked` (nothing recorded: not refused, not "no goods"), `unavailable`, and `listed` for a list. A bill or payment that no recorded order link reaches is `not_linked` |
 | A delegated assistant session, another business? | refused (DKN01); this surface is closed to delegated sessions |
@@ -129,7 +129,7 @@ Three reads (`supabase/migrations/0871_stock_goods_trace.sql`, #4173): `stock_go
 | Backdating? | the recomputation follows the movements as recorded: a permitted backdated movement changes a LATER calculation (its `movements_counted` and `last_recorded_at` move); the original facts never change |
 | Does linking a bill change a lot's cost? | no: nothing here rewrites a cost; a lot received before its bill stays as qualified when it was put away |
 
-Evidence: `supabase/tests/database/506_stock_goods_trace.sql` (the whole chain with two bills, one payment over both and a reversed allocation; known, known-zero and unknown cost; a reader of the stock only gets the physical trace and nothing of the supplier leaks; the same unavailable answer for a real and an invented document; purchases off and back on; the three documents reaching the goods, a page and its cursor; the refusals; the value and a backdated movement; nothing written).
+Evidence: `supabase/tests/database/504_stock_goods_trace.sql` (the whole chain with two bills, one payment over both and a reversed allocation; known, known-zero and unknown cost; a reader of the stock only gets the physical trace and nothing of the supplier leaks; the same unavailable answer for a real and an invented document; purchases off and back on; the three documents reaching the goods, a page and its cursor; the refusals; the value and a backdated movement; nothing written).
 
 ## States and transitions
 

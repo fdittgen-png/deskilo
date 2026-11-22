@@ -4026,7 +4026,7 @@ routine public.stock_config_refuse(p_field text, p_reason text) -> void | functi
 routine public.stock_config_uuid(p_obj jsonb, p_key text, p_field text) -> uuid | function | invoker | immutable | exec:service_role | body:44939cbcaa4c
 routine public.stock_consume_v1(p_workspace_id uuid, p_request_id uuid, p_lines jsonb, p_occurred_at timestamp with time zone) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:fec6db5939ae
 routine public.stock_count_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:d3b0836023b9
-routine public.stock_document_goods_v1(p_workspace_id uuid, p_kind text, p_id uuid, p_limit integer, p_after jsonb) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:98f670c161d5
+routine public.stock_document_goods_v1(p_workspace_id uuid, p_kind text, p_id uuid, p_limit integer, p_after jsonb) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:29237a814200
 routine public.stock_fefo_proposal_v1(p_workspace_id uuid, p_item_id uuid, p_variant_id uuid, p_location_id uuid, p_quantity numeric) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:f11900768530
 routine public.stock_goods_trace_v1(p_workspace_id uuid, p_movement_id uuid, p_lot_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:82188f3cb571
 routine public.stock_gtin_valid(p_code text) -> boolean | function | invoker | immutable | exec:service_role | body:f1fa32962018
