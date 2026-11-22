@@ -53,5 +53,6 @@
   "refusalStockCountSelf": "Otra persona que pueda aprobar ajustes debe aplicar este recuento: quien contó no aprueba su propio recuento.",
   "@refusalStockCountSelf": {
     "description": "#4172 refusal"
-  }
+  },
+  "permCountStock": "Contar el stock a ciegas"
 }

@@ -434,4 +434,4 @@ $fn$;
 revoke execute on function public.stock_reversible_v1(uuid, uuid[]) from public, anon;
 grant execute on function public.stock_reversible_v1(uuid, uuid[]) to authenticated;
 
-select public.set_deskilo_schema_version(866);
+select public.set_deskilo_schema_version(867);

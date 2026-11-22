@@ -14,7 +14,9 @@
 --     lists the lines (item, variant, lot, place) the plan's scope holds, and moves the plan to its next day. A
 --     repeated run makes nothing twice.
 --   * The counter reads a task with NO quantities (`stock_count_task_v1`): the lines name what to count and where,
---     never what the ledger expects. Counting a line records a count of #4172 (its stable id is the line's), so the
+--     never what the ledger expects. The right is `countStock` (or `manageStock`): it runs the task reader and the
+--     line count only, implies nothing else, and the line count tells a counter who holds neither `manageStock`
+--     nor `approveStockAdjustments` that the line is counted, never the baseline or the difference. Counting a line records a count of #4172 (its stable id is the line's), so the
 --     stock revision it was counted against, the approval and the idempotent adjustment are that leaf's: a movement
 --     between the count and the approval is refused as stale there, and nothing here changes a balance. A line is
 --     skipped with a reason. A task is complete when every line is counted or skipped.
@@ -90,6 +92,9 @@ create table public.stock_count_task_lines (
   location_id uuid not null,
   state text not null default 'pending' check (state in ('pending', 'counted', 'skipped')),
   skip_reason text not null default '' check (char_length(skip_reason) <= 300),
+  -- the count of #4172 this line was counted as, and how many times it was counted (a cancelled count is counted again)
+  attempt integer not null default 1,
+  count_id uuid,
   unique (workspace_id, id),
   check ((state = 'skipped') = (skip_reason <> '')),
   foreign key (workspace_id, task_id) references public.stock_count_tasks (workspace_id, id) on delete cascade,
@@ -135,6 +140,28 @@ begin
 end;
 $fn$;
 revoke execute on function public.stock_cycle_actor(uuid) from public, anon, authenticated;
+
+-- who counts a task, blind: whoever holds `countStock` (it implies nothing else) or manages the stock
+create or replace function public.stock_blind_actor(p_workspace_id uuid)
+returns uuid language plpgsql stable security definer set search_path = public as $fn$
+declare
+  v_me uuid;
+begin
+  if auth.uid() is null or public.mcp_is_delegated() then
+    raise exception 'not allowed to count stock' using errcode = 'DKN01';
+  end if;
+  select id into v_me from public.members where workspace_id = p_workspace_id and user_id = auth.uid() and status = 'active';
+  if v_me is null or not (public.has_permission(p_workspace_id, 'countStock') or public.has_permission(p_workspace_id, 'manageStock')) then
+    raise exception 'not allowed to count stock' using errcode = 'DKN01';
+  end if;
+  if not (public.feature_effective(p_workspace_id, 'stockManagement') and public.feature_effective(p_workspace_id, 'stockCounts')
+          and public.feature_effective(p_workspace_id, 'stockCycleCounts')) then
+    raise exception 'cycle counts are off in this business' using errcode = 'DKG01';
+  end if;
+  return v_me;
+end;
+$fn$;
+revoke execute on function public.stock_blind_actor(uuid) from public, anon, authenticated;
 
 -- ── a plan ─────────────────────────────────────────────────────────────
 -- Body: {name, scope_kind, location_ids?, item_ids?, high_value_minor?, interval_days?, next_due_on, active?}.
@@ -270,25 +297,32 @@ begin
   loop
     v_today := public.workspace_today(p.workspace_id);
     if p.next_due_on > v_today then continue; end if;
-    insert into public.stock_count_tasks (workspace_id, plan_id, due_on) values (p.workspace_id, p.id, p.next_due_on)
-    on conflict (plan_id, due_on) do nothing
-    returning id into v_task;
-    if v_task is not null then
-      insert into public.stock_count_task_lines (workspace_id, task_id, item_id, variant_id, lot_id, location_id)
-      select p.workspace_id, v_task, s.item_id, s.variant_id, s.lot_id, s.location_id from public.stock_cycle_scope_lines(p.id) s
-      on conflict do nothing;
-      get diagnostics v_lines = row_count;
-      if v_lines = 0 then
-        update public.stock_count_tasks set state = 'complete', completed_at = now() where id = v_task;
+    -- a plan that fails does not stop the others: its own savepoint, and the failure is logged
+    begin
+      v_task := null;
+      insert into public.stock_count_tasks (workspace_id, plan_id, due_on) values (p.workspace_id, p.id, p.next_due_on)
+      on conflict (plan_id, due_on) do nothing
+      returning id into v_task;
+      if v_task is not null then
+        insert into public.stock_count_task_lines (workspace_id, task_id, item_id, variant_id, lot_id, location_id)
+        select p.workspace_id, v_task, s.item_id, s.variant_id, s.lot_id, s.location_id from public.stock_cycle_scope_lines(p.id) s
+        on conflict do nothing;
+        get diagnostics v_lines = row_count;
+        if v_lines = 0 then
+          update public.stock_count_tasks set state = 'complete', completed_at = now() where id = v_task;
+        end if;
+        v_n := v_n + 1;
       end if;
-      v_n := v_n + 1;
-    end if;
-    -- the plan moves on: every n days from the due day (never into the past), or once
-    update public.stock_count_plans
-       set next_due_on = case when p.interval_days is null then p.next_due_on
-                              else greatest(p.next_due_on + p.interval_days, v_today + 1) end,
-           active = p.interval_days is not null
-     where id = p.id;
+      -- the plan moves on: every n days from the due day (never into the past), or once
+      update public.stock_count_plans
+         set next_due_on = case when p.interval_days is null then p.next_due_on
+                                else greatest(p.next_due_on + p.interval_days, v_today + 1) end,
+             active = p.interval_days is not null
+       where id = p.id;
+    exception when others then
+      if left(sqlstate, 2) in ('40', '53') or sqlstate = '55P03' then raise; end if;
+      raise warning 'the cycle count plan % was not run (%)', p.id, sqlstate;
+    end;
   end loop;
   perform public.stock_cycle_counts_alert(p_workspace_id);
   return v_n;
@@ -301,7 +335,7 @@ grant execute on function public.stock_cycle_counts_due(uuid) to service_role;
 create or replace function public.stock_count_tasks_v1(p_workspace_id uuid, p_state text default null)
 returns jsonb language plpgsql stable security definer set search_path = public as $fn$
 begin
-  perform public.stock_cycle_actor(p_workspace_id);
+  perform public.stock_blind_actor(p_workspace_id);
   if p_state is not null and p_state not in ('open', 'complete', 'cancelled') then
     raise exception 'a state is open, complete or cancelled' using errcode = 'DKG07';
   end if;
@@ -325,7 +359,7 @@ returns jsonb language plpgsql stable security definer set search_path = public 
 declare
   t public.stock_count_tasks;
 begin
-  perform public.stock_cycle_actor(p_workspace_id);
+  perform public.stock_blind_actor(p_workspace_id);
   select * into t from public.stock_count_tasks where id = p_task_id and workspace_id = p_workspace_id;
   if t.id is null then raise exception 'not a task of this business' using errcode = 'DKG04'; end if;
   return jsonb_build_object('task_id', t.id, 'plan_id', t.plan_id, 'due_on', t.due_on, 'state', t.state,
@@ -344,6 +378,8 @@ grant execute on function public.stock_count_task_v1(uuid, uuid) to authenticate
 create or replace function public.stock_count_task_close(p_task_id uuid)
 returns void language plpgsql security definer set search_path = public as $fn$
 begin
+  -- the task first: two lines counted at once close it once, whichever commits last
+  perform 1 from public.stock_count_tasks where id = p_task_id for update;
   update public.stock_count_tasks t set state = 'complete', completed_at = now()
    where t.id = p_task_id and t.state = 'open'
      and not exists (select 1 from public.stock_count_task_lines x where x.task_id = t.id and x.state = 'pending');
@@ -358,9 +394,10 @@ create or replace function public.stock_cycle_count_line_v1(
   p_workspace_id uuid, p_request_id uuid, p_line_id uuid, p_observed text
 ) returns jsonb language plpgsql security definer set search_path = public as $fn$
 declare
-  v_me uuid := public.stock_cycle_actor(p_workspace_id);
+  v_me uuid := public.stock_blind_actor(p_workspace_id);
   v_line public.stock_count_task_lines;
   v_task public.stock_count_tasks;
+  v_count uuid;
   v_result jsonb;
 begin
   select * into v_line from public.stock_count_task_lines where id = p_line_id and workspace_id = p_workspace_id;
@@ -370,13 +407,19 @@ begin
   select * into v_task from public.stock_count_tasks where id = v_line.task_id;
   if v_task.state <> 'open' then raise exception 'this task is no longer open' using errcode = 'DKG19'; end if;
   if v_line.state = 'skipped' then raise exception 'this line was skipped' using errcode = 'DKG19'; end if;
-  v_result := public.stock_count_record_v1(p_workspace_id, p_request_id, v_line.id,
+  -- the count's own identity: the line's, and the attempt (a cancelled count is counted again under the next one)
+  v_count := md5(v_line.id::text || ':' || v_line.attempt::text)::uuid;
+  v_result := public.stock_count_record_core(p_workspace_id, p_request_id, v_count,
     jsonb_strip_nulls(jsonb_build_object('item_id', v_line.item_id, 'variant_id', v_line.variant_id,
                                           'lot_id', v_line.lot_id, 'location_id', v_line.location_id)),
-    p_observed, 'cycle count');
-  update public.stock_count_task_lines set state = 'counted' where id = v_line.id and state = 'pending';
+    p_observed, 'cycle count', v_me);
+  update public.stock_count_task_lines set state = 'counted', count_id = v_count where id = v_line.id and state = 'pending';
   perform public.stock_count_task_close(v_line.task_id);
-  return v_result || jsonb_build_object('task_id', v_line.task_id,
+  -- a blind counter is told the line is counted, never what the ledger held or how far off the count was
+  if not (public.has_permission(p_workspace_id, 'manageStock') or public.has_permission(p_workspace_id, 'approveStockAdjustments')) then
+    v_result := jsonb_build_object('count_id', v_count, 'state', v_result ->> 'state');
+  end if;
+  return v_result || jsonb_build_object('line_id', v_line.id, 'task_id', v_line.task_id,
     'task_state', (select state from public.stock_count_tasks where id = v_line.task_id));
 end;
 $fn$;
@@ -387,7 +430,7 @@ create or replace function public.stock_cycle_skip_line_v1(
   p_workspace_id uuid, p_request_id uuid, p_line_id uuid, p_reason text
 ) returns jsonb language plpgsql security definer set search_path = public as $fn$
 declare
-  v_me uuid := public.stock_cycle_actor(p_workspace_id);
+  v_me uuid := public.stock_blind_actor(p_workspace_id);
   v_digest text;
   v_done jsonb;
   v_line public.stock_count_task_lines;
@@ -414,6 +457,26 @@ end;
 $fn$;
 revoke execute on function public.stock_cycle_skip_line_v1(uuid, uuid, uuid, text) from public, anon;
 grant execute on function public.stock_cycle_skip_line_v1(uuid, uuid, uuid, text) to authenticated;
+
+-- a count that is cancelled puts its line back to pending (and reopens a task it had completed): it is counted again
+create or replace function public.stock_count_cancel_recounts()
+returns trigger language plpgsql security definer set search_path = public as $fn$
+declare
+  v_task uuid;
+begin
+  update public.stock_count_task_lines set state = 'pending', attempt = attempt + 1, count_id = null
+   where workspace_id = new.workspace_id and count_id = new.count_id and state = 'counted'
+  returning task_id into v_task;
+  if v_task is not null then
+    update public.stock_count_tasks set state = 'open', completed_at = null where id = v_task and state = 'complete';
+  end if;
+  return new;
+end;
+$fn$;
+revoke execute on function public.stock_count_cancel_recounts() from public, anon, authenticated;
+create trigger stock_counts_cancel_recounts after update of state on public.stock_counts
+  for each row when (old.state = 'recorded' and new.state = 'cancelled')
+  execute function public.stock_count_cancel_recounts();
 
 -- ── the history ────────────────────────────────────────────────────────
 -- Per item and place: when it was last counted, how many counts, how many were exact (no difference).
@@ -502,7 +565,7 @@ begin
       from public.stock_count_tasks tk join public.stock_count_plans pl on pl.id = tk.plan_id
      where tk.state = 'open' and (p_workspace_id is null or tk.workspace_id = p_workspace_id)
        and public.feature_effective(tk.workspace_id, 'stockCycleCounts')
-       and tk.due_on + coalesce((public.setting_value(tk.workspace_id, 'stock.cycle_count_overdue_days') #>> '{}')::integer, 7)
+       and tk.due_on + (public.setting_value(tk.workspace_id, 'stock.cycle_count_overdue_days') #>> '{}')::integer
            < public.workspace_today(tk.workspace_id)
   loop
     select m.id into v_actor from public.members m
@@ -548,8 +611,26 @@ exception when others then
 end
 $cron$;
 
--- the workspace export carries the plans, the tasks and their lines (#2860): 0869's function restated
--- restates 0869
+-- ── the right to count blind ────────────────────────────────────────────
+-- restates 0821
+create or replace function public.role_permission_catalog() returns text[]
+language sql immutable as $fn$
+  select array[
+    'manageRoles','manageMembers','manageValidation','workspaceSettings',
+    'issueInvoices','viewFinances','manageDocuments','manageServices',
+    'approveExpenses','viewNegotiations','manageNegotiations','paymentTermsEdit',
+    'manageSites','manageBilling','manageReservations','operateKiosk','exportData',
+    'designDocuments','viewPersonalData','manageIntegrations','manageConfiguration',
+    'deployToProd','deployToDev','accessProd','viewAnalytics',
+    'useMessages','makeReservations','viewCalendar','viewDirectory',
+    'viewMyMoney','viewDocuments','managePurchases','recordOutgoingPayments',
+    'manageLease','managePrivacy','viewStock','manageStock','approveStockAdjustments',
+    'manageBillingCustomers','countStock'];
+$fn$;
+revoke execute on function public.role_permission_catalog() from public, anon;
+
+-- the workspace export carries the plans, the tasks and their lines (#2860): 0870's function restated
+-- restates 0870
 create or replace function public.export_workspace_records(p_workspace_id uuid)
 returns jsonb language plpgsql stable security definer set search_path = public as $fn$
 declare

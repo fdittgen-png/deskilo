@@ -7,7 +7,7 @@
 -- overdue open task raises one notice, ended when the task is complete; the history says when and how exactly;
 -- the rights, another business, an assistant and the feature off are refused. Rolled back.
 begin;
-select plan(33);
+select plan(43);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -73,12 +73,13 @@ select pg_temp.u(n), '00000000-0000-0000-0000-000000000000', 'authenticated', 'a
 insert into public.workspaces (id, name, country_code, currency_code, timezone, created_by, feature_flags, role_permissions) values
   (pg_temp.u(101), 'Cycle A', 'FR', 'EUR', 'Pacific/Kiritimati', pg_temp.u(1),
    '{"services": true, "stockManagement": true, "stockLots": true, "stockCounts": true, "stockCycleCounts": true}',
-   '{"member": ["viewStock"]}'),
+   '{"member": ["viewStock"], "admin": ["countStock"]}'),
   (pg_temp.u(102), 'Cycle B', 'FR', 'EUR', 'Europe/Paris', pg_temp.u(4),
    '{"services": true, "stockManagement": true, "stockCounts": true, "stockCycleCounts": true}', '{}');
 insert into public.members (id, workspace_id, user_id, is_owner, is_admin, status) values
   (pg_temp.u(201), pg_temp.u(101), pg_temp.u(1), true, true, 'active'),
   (pg_temp.u(202), pg_temp.u(101), pg_temp.u(2), false, false, 'active'),
+  (pg_temp.u(203), pg_temp.u(101), pg_temp.u(3), false, true, 'active'),
   (pg_temp.u(204), pg_temp.u(102), pg_temp.u(4), true, true, 'active');
 insert into public.services (id, workspace_id, name, price_cents, active, inventory_unit, tracking, stockable) values
   (pg_temp.u(301), pg_temp.u(101), 'Mugs', 300, true, 'piece', 'none', true),
@@ -132,9 +133,12 @@ select is(pg_temp.tasks(2), 'ERR DKN01', 'a member who only views the stock cann
 select is(pg_temp.f(pg_temp.cnt(1, 920, pg_temp.line_of(801, 301), '8'), 'difference'), '-2.000000', 'counting the mugs records a count of 8 against 10');
 select is(pg_temp.onhand(301, pg_temp.loc('MAIN')), 10::numeric, 'counting moves nothing');
 select is(pg_temp.cnt(1, 921, pg_temp.line_of(801, 301), '8'), pg_temp.cnt(1, 920, pg_temp.line_of(801, 301), '8'), 'the same line counted again answers the same');
-select is((select state from public.stock_counts where count_id = pg_temp.line_of(801, 301)), 'recorded', 'it is a count of #4172, waiting for its approval');
+create or replace function pg_temp.count_of(p_plan int, p_item int) returns uuid language sql stable as $f$
+  select x.count_id from public.stock_count_task_lines x join public.stock_count_tasks t on t.id = x.task_id where t.plan_id = pg_temp.u(p_plan) and x.item_id = pg_temp.u(p_item) limit 1 $f$;
+grant execute on function pg_temp.count_of(int, int) to authenticated, anon;
+select is((select state from public.stock_counts where count_id = pg_temp.count_of(801, 301)), 'recorded', 'it is a count of #4172, waiting for its approval');
 select pg_temp.mv(931, 301, '1', pg_temp.place('supplier'), pg_temp.loc('MAIN'), 'receipt');
-select is(pg_temp.run_as(pg_temp.u(1), format($q$select public.stock_count_decide_v1(%L, %L, %L, 'apply')::text$q$, pg_temp.u(101), pg_temp.u(932), pg_temp.line_of(801, 301))), 'ERR DKG20',
+select is(pg_temp.run_as(pg_temp.u(1), format($q$select public.stock_count_decide_v1(%L, %L, %L, 'apply')::text$q$, pg_temp.u(101), pg_temp.u(932), pg_temp.count_of(801, 301))), 'ERR DKG20',
   'a movement between the count and the approval makes it stale: refused, the balance is not overwritten');
 select is(pg_temp.onhand(301, pg_temp.loc('MAIN')), 11::numeric, 'the balance is what it is');
 
@@ -154,8 +158,33 @@ select pg_temp.run_as(pg_temp.u(1), format($q$select public.stock_cycle_skip_lin
 select pg_temp.run_as(pg_temp.u(1), format($q$select public.stock_cycle_skip_line_v1(%L, %L, %L, 'gone')::text$q$, pg_temp.u(101), pg_temp.u(951), (select x.id from public.stock_count_task_lines x join public.stock_count_tasks t on t.id = x.task_id where t.plan_id = pg_temp.u(804) and x.state = 'pending' limit 1)));
 select is((select payload ->> 'ended' from public.events where type = 'stock_count_overdue'), 'complete', 'the notice ends when the task is complete');
 
+-- ── the counter who holds only the right to count blind ──
+select is(pg_temp.run_as(pg_temp.u(3), format($q$select jsonb_array_length(public.stock_count_task_v1(%L, %L) -> 'lines')::text$q$, pg_temp.u(101),
+  (select id from public.stock_count_tasks where plan_id = pg_temp.u(804) order by due_on limit 1))), '2', 'a member who holds only countStock reads a task');
+select is(pg_temp.run_as(pg_temp.u(3), format($q$select public.stock_count_plan_save_v1(%L, %L, %L, '{}'::jsonb)::text$q$, pg_temp.u(101), pg_temp.u(960), pg_temp.u(809))), 'ERR DKN01', 'but plans nothing');
+select is(pg_temp.run_as(pg_temp.u(3), format($q$select public.stock_counts_v1(%L)::text$q$, pg_temp.u(101))), 'ERR DKN01', 'reads none of the counts');
+select is(pg_temp.run_as(pg_temp.u(3), format($q$select public.stock_count_history_v1(%L)::text$q$, pg_temp.u(101))), 'ERR DKN01', 'nor the history');
+select is(pg_temp.run_as(pg_temp.u(3), $q$select count(*)::text from public.stock_balances$q$), '0', 'nor the balances');
+select is(pg_temp.run_as(pg_temp.u(3), $q$select count(*)::text from public.stock_movements$q$), '0', 'nor the movements');
+select pg_temp.plan(1, 961, 807, format('{"name": "Blind", "scope_kind": "items", "item_ids": ["%s"], "next_due_on": "%s"}', pg_temp.u(301), current_setting('cy.today')));
+select pg_temp.due();
+select is(pg_temp.run_as(pg_temp.u(3), format($q$select (public.stock_cycle_count_line_v1(%L, %L, %L, '9') ?| array['baseline', 'difference', 'observed'])::text$q$, pg_temp.u(101), pg_temp.u(962),
+  (select x.id from public.stock_count_task_lines x join public.stock_count_tasks t on t.id = x.task_id where t.plan_id = pg_temp.u(807) limit 1))), 'false',
+  'she counts a line and is told neither the baseline, nor the observed figure, nor the difference');
+select is((select state from public.stock_counts where count_id = (select count_id from public.stock_count_task_lines x join public.stock_count_tasks t on t.id = x.task_id where t.plan_id = pg_temp.u(807) limit 1)), 'recorded',
+  'it is a count of #4172 waiting for its approval');
+
+-- ── a cancelled count is counted again ──
+select pg_temp.run_as(pg_temp.u(1), format($q$select public.stock_count_decide_v1(%L, %L, %L, 'cancel')::text$q$, pg_temp.u(101), pg_temp.u(963),
+  (select count_id from public.stock_count_task_lines x join public.stock_count_tasks t on t.id = x.task_id where t.plan_id = pg_temp.u(807) limit 1)));
+select is((select x.state || '/' || t.state from public.stock_count_task_lines x join public.stock_count_tasks t on t.id = x.task_id where t.plan_id = pg_temp.u(807)), 'pending/open',
+  'cancelling its count puts the line back to pending and reopens the task');
+select is(pg_temp.f(pg_temp.run_as(pg_temp.u(3), format($q$select public.stock_cycle_count_line_v1(%L, %L, %L, '9')::text$q$, pg_temp.u(101), pg_temp.u(964),
+  (select x.id from public.stock_count_task_lines x join public.stock_count_tasks t on t.id = x.task_id where t.plan_id = pg_temp.u(807) limit 1))), 'task_state'), 'complete',
+  'and it is counted again, under a new count');
+
 -- ── history, business, feature ──
-select is(pg_temp.run_as(pg_temp.u(1), format($q$select (public.stock_count_history_v1(%L, %L) -> 0 ->> 'counts')$q$, pg_temp.u(101), pg_temp.u(301))), '1', 'the history says the mugs were counted once');
+select is(pg_temp.run_as(pg_temp.u(1), format($q$select (public.stock_count_history_v1(%L, %L) -> 0 ->> 'counts')$q$, pg_temp.u(101), pg_temp.u(301))), '2', 'the history says the mugs were counted twice (a cancelled count is not one)');
 select is(pg_temp.run_as(pg_temp.u(4), format($q$select public.stock_count_tasks_v1(%L)::text$q$, pg_temp.u(101))), 'ERR DKN01', 'another business sees nothing');
 update public.workspaces set feature_flags = feature_flags || '{"stockCycleCounts": false}' where id = pg_temp.u(101);
 select is(pg_temp.tasks(1), 'ERR DKG01', 'with the feature off nothing is read');

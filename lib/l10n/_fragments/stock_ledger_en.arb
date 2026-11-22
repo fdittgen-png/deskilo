@@ -107,5 +107,9 @@
   "refusalStockCountSelf": "Someone else who may approve adjustments has to apply this count: whoever counted does not approve their own count.",
   "@refusalStockCountSelf": {
     "description": "#4172 refusal"
+  },
+  "permCountStock": "Count stock, blind",
+  "@permCountStock": {
+    "description": "#4295 permission name"
   }
 }

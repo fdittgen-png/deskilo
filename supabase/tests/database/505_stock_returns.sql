@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #4172 (0865-0867): bounded returns and corrections. A logical return and its lines have their own
+-- #4172 (0866-0868): bounded returns and corrections. A logical return and its lines have their own
 -- stable identities, apart from the transport request: the same return sent again answers the recorded
 -- result and writes nothing, other content under the same identity is refused; the sum reversed on a
 -- movement never exceeds it, whatever the identities; a customer return re-enters the original item and

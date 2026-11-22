@@ -1659,7 +1659,8 @@ window.SETUP_L10N={
    "viewStock": "See the stock",
    "manageStock": "Move goods in and out of stock",
    "approveStockAdjustments": "Approve stock adjustments",
-   "manageBillingCustomers": "Manage billing customers"
+   "manageBillingCustomers": "Manage billing customers",
+   "countStock": "Count stock, blind"
   },
   "domain": {
    "payment": "Payment",
@@ -3545,7 +3546,8 @@ window.SETUP_L10N={
    "viewStock": "Voir les stocks",
    "manageStock": "Entrer et sortir des marchandises du stock",
    "approveStockAdjustments": "Approuver les ajustements de stock",
-   "manageBillingCustomers": "Gérer les clients facturés"
+   "manageBillingCustomers": "Gérer les clients facturés",
+   "countStock": "Compter le stock, à l’aveugle"
   },
   "domain": {
    "payment": "Paiement",
@@ -5431,7 +5433,8 @@ window.SETUP_L10N={
    "viewStock": "Lager einsehen",
    "manageStock": "Waren ein- und auslagern",
    "approveStockAdjustments": "Bestandskorrekturen genehmigen",
-   "manageBillingCustomers": "Rechnungskunden verwalten"
+   "manageBillingCustomers": "Rechnungskunden verwalten",
+   "countStock": "Bestand blind zählen"
   },
   "domain": {
    "payment": "Zahlung",
@@ -7317,7 +7320,8 @@ window.SETUP_L10N={
    "viewStock": "Ver las existencias",
    "manageStock": "Entrar y sacar mercancías del almacén",
    "approveStockAdjustments": "Aprobar ajustes de existencias",
-   "manageBillingCustomers": "Gestionar clientes facturados"
+   "manageBillingCustomers": "Gestionar clientes facturados",
+   "countStock": "Contar el stock a ciegas"
   },
   "domain": {
    "payment": "Pago",
@@ -9203,7 +9207,8 @@ window.SETUP_L10N={
    "viewStock": "Vedere le scorte",
    "manageStock": "Movimentare la merce in entrata e in uscita",
    "approveStockAdjustments": "Approvare le rettifiche di magazzino",
-   "manageBillingCustomers": "Gestire i clienti fatturati"
+   "manageBillingCustomers": "Gestire i clienti fatturati",
+   "countStock": "Contare il magazzino alla cieca"
   },
   "domain": {
    "payment": "Pagamento",

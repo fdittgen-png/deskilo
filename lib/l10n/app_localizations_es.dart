@@ -24826,6 +24826,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Aprobar el ajuste que propone un recuento.';
 
   @override
+  String get permAllowsCountStock =>
+      'Contar las líneas de una tarea de recuento cíclico sin ver lo que contiene el registro: las tareas y el recuento de cada línea, nada más.';
+
+  @override
   String get permAllowsDeployToDev =>
       'Actualizar el espacio de desarrollo desde producción.';
 
@@ -24972,6 +24976,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get permApproveStockAdjustments => 'Aprobar ajustes de existencias';
+
+  @override
+  String get permCountStock => 'Contar el stock a ciegas';
 
   @override
   String get permDeployToDev => 'Desplegar en desarrollo';

@@ -27,6 +27,9 @@
 #   (H) two runs of the cycle count job at once for a plan that is due: the second
 #       skips the plan the first holds (it does not wait), and exactly one task,
 #       with its lines, exists.
+#   (H2) the last two lines of a task, on different items, counted at once: the
+#       second waits for the task's lock, and the task is closed (complete), not
+#       left open with nothing pending.
 # A holder that never took its lock, or a contender that never waited, fails the
 # script: nothing here can pass empty. A single pgTAP transaction cannot show a
 # race, so each contender is its own psql process on CI's disposable database.
@@ -133,6 +136,10 @@ select id as sale from public.stock_movements where workspace_id = :'ws' and ite
 -- (G) an item with 10 at MAIN and a count of 7 recorded for it
 insert into public.services (workspace_id, name, price_cents, active, inventory_unit, tracking, stockable)
 values (:'ws', 'Race C', 100, true, 'piece', 'none', true) returning id as c \gset
+insert into public.services (workspace_id, name, price_cents, active, inventory_unit, tracking, stockable)
+values (:'ws', 'Race E1', 100, true, 'piece', 'none', true) returning id as e1 \gset
+insert into public.services (workspace_id, name, price_cents, active, inventory_unit, tracking, stockable)
+values (:'ws', 'Race E2', 100, true, 'piece', 'none', true) returning id as e2 \gset
 begin;
 select set_config('request.jwt.claims', '{"sub":"$owner","role":"authenticated","aal":"aal2"}', true);
 set local role authenticated;
@@ -143,15 +150,21 @@ select public.stock_count_record_v1(:'ws', gen_random_uuid(), gen_random_uuid(),
 -- (H) a plan that is due today, in the own day of the business, over the same item
 select public.stock_count_plan_save_v1(:'ws', gen_random_uuid(), gen_random_uuid(), jsonb_build_object('name', 'Race plan', 'scope_kind', 'items',
   'item_ids', jsonb_build_array(:'c'), 'next_due_on', (now() at time zone 'Europe/Paris')::date)) ->> 'plan_id' as plan \gset
+-- (H2) two items of 5 at MAIN and a plan due today over both: its task has two lines on different items
+select public.stock_move_v1(:'ws', gen_random_uuid(), jsonb_build_array(
+  jsonb_build_object('item_id', :'e1', 'quantity', 5, 'from', :'supplier', 'to', :'main'),
+  jsonb_build_object('item_id', :'e2', 'quantity', 5, 'from', :'supplier', 'to', :'main')), 'receipt');
+select public.stock_count_plan_save_v1(:'ws', gen_random_uuid(), gen_random_uuid(), jsonb_build_object('name', 'Race plan two', 'scope_kind', 'items',
+  'item_ids', jsonb_build_array(:'e1', :'e2'), 'next_due_on', (now() at time zone 'Europe/Paris')::date)) ->> 'plan_id' as plan2 \gset
 reset role;
 commit;
 select id as ev1 from public.events where workspace_id = :'ws' and type = 'service_charge' and (payload ->> 'quantity')::int = 2 \gset
 select id as ev2 from public.events where workspace_id = :'ws' and type = 'service_charge' and (payload ->> 'quantity')::int = 1 \gset
-\echo :ws :x :y :z :main :shelf :loss :customer :w :inv :ev1 :ev2 :supplier :p :r :rcpt :q :sale :c :cnt :plan
+\echo :ws :x :y :z :main :shelf :loss :customer :w :inv :ev1 :ev2 :supplier :p :r :rcpt :q :sale :c :cnt :plan :e1 :e2 :plan2
 SQL
 )
-read -r ws x y z main shelf loss customer w inv ev1 ev2 supplier p r rcpt q sale c cnt plan <<<"$fixture"
-for v in "$ws" "$x" "$y" "$z" "$main" "$shelf" "$loss" "$customer" "$w" "$inv" "$ev1" "$ev2" "$supplier" "$p" "$r" "$rcpt" "$q" "$sale" "$c" "$cnt" "$plan"; do
+read -r ws x y z main shelf loss customer w inv ev1 ev2 supplier p r rcpt q sale c cnt plan e1 e2 plan2 <<<"$fixture"
+for v in "$ws" "$x" "$y" "$z" "$main" "$shelf" "$loss" "$customer" "$w" "$inv" "$ev1" "$ev2" "$supplier" "$p" "$r" "$rcpt" "$q" "$sale" "$c" "$cnt" "$plan" "$e1" "$e2" "$plan2"; do
   [[ "$v" =~ ^[0-9a-f-]{36}$ ]] || { echo "::error::fixture incomplete: '$fixture'" >&2; exit 1; }
 done
 expect() { [[ "$2" == "$3" ]] || { echo "::error::$1: expected '$3', got '$2'" >&2; exit 1; }; }
@@ -423,5 +436,37 @@ wait "$holder9" || { echo "::error::the first run failed: $(tr '\\n' ' ' < "$scr
 grep -qx "made 1" "$scratch/holder9" || { echo "::error::the first run did not make the task: $(tr '\\n' ' ' < "$scratch/holder9")" >&2; exit 1; }
 grep -qx "made 0" "$scratch/contender9" || { echo "::error::the second run did not skip the plan: $(tr '\\n' ' ' < "$scratch/contender9")" >&2; exit 1; }
 expect "(H) one task with its lines exists for the plan" "$(q "select count(*) || '/' || (select count(*) from public.stock_count_task_lines x join public.stock_count_tasks t2 on t2.id = x.task_id where t2.plan_id = '$plan') from public.stock_count_tasks where plan_id = '$plan'")" "1/1"
+
+# (H2) the two lines of the second plan's task, counted at once
+psql "$url" -X -qAt -v ON_ERROR_STOP=1 >/dev/null 2>&1 <<SQL
+select public.stock_cycle_counts_due('$ws');
+SQL
+read -r la lb <<<"$(q "select string_agg(x.id::text, ' ' order by x.id) from public.stock_count_task_lines x join public.stock_count_tasks t on t.id = x.task_id where t.plan_id = '$plan2'")"
+for v in "$la" "$lb"; do
+  [[ "$v" =~ ^[0-9a-f-]{36}$ ]] || { echo "::error::the task of the second plan has no two lines: '$la' '$lb'" >&2; exit 1; }
+done
+count_line() {
+  echo "$as_owner select 'counted ' || (public.stock_cycle_count_line_v1('$ws', gen_random_uuid(), '$1', '5') ->> 'task_state');"
+}
+psql "$url" -X -qAt -v ON_ERROR_STOP=1 >"$scratch/holder10" 2>&1 <<SQL &
+begin;
+$(count_line "$la")
+reset role;
+\\! touch '$scratch/ready10'
+select pg_sleep(4);
+commit;
+SQL
+holder10=$!
+wait_marker "$scratch/ready10" "$scratch/holder10"
+PGAPPNAME="transfer-race-taskclose" psql "$url" -X -qAt -v ON_ERROR_STOP=1 >"$scratch/contender10" 2>&1 <<SQL &
+begin;
+$(count_line "$lb")
+commit;
+SQL
+contender10=$!
+wait_lock "transfer-race-taskclose"
+wait "$holder10" || { echo "::error::the first count failed: $(tr '\\n' ' ' < "$scratch/holder10")" >&2; exit 1; }
+wait "$contender10" || { echo "::error::the second count failed: $(tr '\\n' ' ' < "$scratch/contender10")" >&2; exit 1; }
+expect "(H2) the task is complete, with nothing pending" "$(q "select t.state || '/' || (select count(*) from public.stock_count_task_lines x where x.task_id = t.id and x.state = 'pending') from public.stock_count_tasks t where t.plan_id = '$plan2'")" "complete/0"
 
 echo "stock transfer race: opposing transfers never deadlock and keep every total; the last stock is taken once; a booking confirmation and a customer return of one item serialise in both orders; two put-aways cannot over-allocate a line; two sessions crossing a reorder point raise one alert"

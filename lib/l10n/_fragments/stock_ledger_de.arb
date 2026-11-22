@@ -53,5 +53,6 @@
   "refusalStockCountSelf": "Dieses Zählergebnis muss jemand anderes anwenden, der Anpassungen genehmigen darf: Wer gezählt hat, genehmigt die eigene Zählung nicht.",
   "@refusalStockCountSelf": {
     "description": "#4172 refusal"
-  }
+  },
+  "permCountStock": "Bestand blind zählen"
 }

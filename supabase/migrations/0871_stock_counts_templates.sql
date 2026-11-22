@@ -6,7 +6,7 @@
 -- #4172 (A2, third of three files) -- the `stockCounts` feature in the template
 -- field registry and in the builtin template that writes the feature flags.
 
--- restates 0867
+-- restates 0868
 create or replace function public.template_field_registry()
 returns jsonb
 language sql
@@ -651,4 +651,4 @@ on conflict (key) where owner_workspace_id is null do update
       configuration = excluded.configuration,
       floor_plan = excluded.floor_plan;
 
-select public.set_deskilo_schema_version(870);
+select public.set_deskilo_schema_version(871);

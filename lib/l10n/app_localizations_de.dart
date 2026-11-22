@@ -24900,6 +24900,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die von einer Inventur vorgeschlagene Korrektur genehmigen.';
 
   @override
+  String get permAllowsCountStock =>
+      'Die Zeilen einer Inventuraufgabe zählen, ohne zu sehen, was das Buch führt: die Aufgaben und das Zählen jeder Zeile, sonst nichts.';
+
+  @override
   String get permAllowsDeployToDev =>
       'Den Entwicklungs-Space aus der Produktion auffrischen.';
 
@@ -25046,6 +25050,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get permApproveStockAdjustments => 'Bestandskorrekturen genehmigen';
+
+  @override
+  String get permCountStock => 'Bestand blind zählen';
 
   @override
   String get permDeployToDev => 'In die Entwicklung ausrollen';

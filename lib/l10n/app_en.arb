@@ -32486,6 +32486,10 @@
   "@permAllowsApproveStockAdjustments": {
     "description": "#3628 roles at the desk: one line of what the permission allows"
   },
+  "permAllowsCountStock": "Count the lines of a cycle count task without seeing what the ledger holds: the tasks and the count of each line, and nothing else.",
+  "@permAllowsCountStock": {
+    "description": "#4295 permission description"
+  },
   "permAllowsDeployToDev": "Refresh the development space from production.",
   "@permAllowsDeployToDev": {
     "description": "#3628 roles at the desk: one line of what the permission allows"
@@ -32637,6 +32641,10 @@
   "permApproveStockAdjustments": "Approve stock adjustments",
   "@permApproveStockAdjustments": {
     "description": "a permission in the role matrix (#3824)"
+  },
+  "permCountStock": "Count stock, blind",
+  "@permCountStock": {
+    "description": "#4295 permission name"
   },
   "permDeployToDev": "Deploy to development",
   "@permDeployToDev": {
