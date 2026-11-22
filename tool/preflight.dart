@@ -123,12 +123,16 @@ void _listTests(
     ),
     ..._staleSentenceTests(root, paths, before, sources),
   }.toList()..sort();
-  stdout.writeln('tests to run before the push (beyond the lint folder): '
-      '${tests.length}');
-  for (final t in tests) {
+  // The lint folder is listed, not assumed: its guards scan the whole tree,
+  // and a list that left it out was read as complete (#4310).
+  final all = ['test/lint', ...tests.where((t) => !t.startsWith('test/lint/'))];
+  stdout.writeln('tests to run before the push: ${all.length}');
+  for (final t in all) {
     stdout.writeln('  $t');
   }
-  stdout.writeln('tests to run: ${tests.length}');
+  stdout
+    ..writeln('tests to run: ${all.length}')
+    ..writeln('  flutter test ${all.join(' ')}');
 }
 
 final _englishFragment = RegExp(r'^lib/l10n/_fragments/[^/]+_en\.arb$');

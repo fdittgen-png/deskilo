@@ -2828,7 +2828,7 @@ routine public.create_workspace_twin(p_workspace_id uuid) -> uuid | function | d
 routine public.currency_minor_digits(p_currency text) -> integer | function | invoker | immutable | exec:authenticated,service_role | body:01dad38d3031
 routine public.current_privacy_notice(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:18b05ca5e88e
 routine public.customer_quote_actor(p_workspace uuid) -> members | function | definer | stable | exec:service_role | body:960642c8bb9a
-routine public.customer_quote_dry_run(p_workspace uuid, p_actor members, p_subject uuid, p_lines jsonb, p_on date) -> jsonb | function | definer | volatile | exec:service_role | body:b3481c9887f2
+routine public.customer_quote_dry_run(p_workspace uuid, p_actor members, p_subject uuid, p_lines jsonb, p_on date) -> jsonb | function | definer | volatile | exec:service_role | body:3af87de5f3cd
 routine public.customer_quote_frozen() -> trigger | function | invoker | volatile | exec:service_role | body:a7af5988fd9e
 routine public.customer_quote_json(q customer_quotes) -> jsonb | function | definer | stable | exec:service_role | body:06cd8bbe5e29
 routine public.customer_quote_line_clean(p_line jsonb, p_index integer) -> jsonb | function | invoker | stable | exec:service_role | body:ec2d50e7afbb
@@ -3992,7 +3992,7 @@ routine public.space_host_roster(p_workspace uuid) -> jsonb | function | definer
 routine public.stage_asset_valuations_v1(p_workspace_id uuid, p_request_id uuid, p_metadata jsonb, p_rows jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:aafe660685fe
 routine public.stamp_accessory_supplements_since() -> trigger | function | invoker | volatile | exec:service_role | body:3f79931d6627
 routine public.standalone_invoice_buyer(p_workspace_id uuid, p_subject uuid) -> jsonb | function | definer | stable | exec:service_role | body:142f8bb03646
-routine public.standalone_invoice_issue_core(p_workspace_id uuid, p_actor members, p_draft standalone_invoice_drafts) -> uuid | function | definer | volatile | exec:service_role | body:9444b2377397
+routine public.standalone_invoice_issue_core(p_workspace_id uuid, p_actor members, p_draft standalone_invoice_drafts) -> uuid | function | definer | volatile | exec:service_role | body:1760c6e729b1
 routine public.standalone_invoice_line_v1(p_line jsonb, p_index integer, p_currency text, p_percent numeric, p_category text, p_tax_point date) -> jsonb | function | invoker | stable | exec:service_role | body:5167a928fed0
 routine public.standalone_invoice_subject(p_workspace_id uuid, p_subject uuid) -> members | function | definer | stable | exec:service_role | body:03bed41502dd
 routine public.start_space_inquiry(p_workspace uuid, p_body text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:24335253d564

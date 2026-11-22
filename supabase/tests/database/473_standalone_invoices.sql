@@ -6,7 +6,7 @@
 -- refuses before a number is taken, two deliberate invoices of one customer
 -- and month coexist with the monthly one, and no client writes a draft.
 begin;
-select plan(35);
+select plan(38);
 
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00004165' || lpad(n::text, 4, '0'))::uuid;
@@ -151,12 +151,27 @@ select is((select string_agg(source, ',' order by source) from public.invoices
   'monthly,standalone,standalone', 'two standalone and one monthly invoice of one customer and month');
 
 -- ── the facts the draft itself lacks ──
--- (two days back: 0820's check of the due date reads the database clock's own date, which is
--- one day from the business's at some hours, so one day back is in the past for only one of them)
 select is(pg_temp.as_user(1, format($$select (public.preview_standalone_invoice_v1(%L,
-    (public.save_standalone_invoice_draft_v1(%L, null, null, %L, pg_temp.today(), pg_temp.today() - 2, '', '', '[]'::jsonb) ->> 'draft_id')::uuid, 1) -> 'missing')::text$$,
+    (public.save_standalone_invoice_draft_v1(%L, null, null, %L, pg_temp.today(), pg_temp.today() - 1, '', '', '[]'::jsonb) ->> 'draft_id')::uuid, 1) -> 'missing')::text$$,
   pg_temp.u(101), pg_temp.u(101), pg_temp.u(203))), '["due_on_before_issue", "lines"]',
   'a draft with no lines and a due date in the past names both');
+
+-- ── the business's own day (#4309): a zone whose date differs from the database's ──
+-- Kiritimati (UTC+14) is on the next day from 10:00 UTC, Pago Pago (UTC-11) on the previous one
+-- before 11:00 UTC: at every instant one of them has a date other than the database's.
+select set_config('t.zone', (select z from (values ('Pacific/Kiritimati'), ('Pacific/Pago_Pago')) v(z)
+                              where (now() at time zone z)::date <> (now() at time zone 'UTC')::date limit 1), false);
+update public.workspaces set timezone = current_setting('t.zone') where id = pg_temp.u(101);
+select isnt(pg_temp.today(), (now() at time zone 'UTC')::date, 'the business''s day is not the database''s (UTC) day: ' || current_setting('t.zone'));
+select is(pg_temp.as_user(1, format($$select (public.preview_standalone_invoice_v1(%L,
+    (public.save_standalone_invoice_draft_v1(%L, null, null, %L, pg_temp.today(), pg_temp.today() - 1, '', '', '[]'::jsonb) ->> 'draft_id')::uuid, 1) -> 'missing')::text$$,
+  pg_temp.u(101), pg_temp.u(101), pg_temp.u(203))), '["due_on_before_issue", "lines"]',
+  'the business''s yesterday is a due date in the past');
+select is(pg_temp.as_user(1, format($$select (public.preview_standalone_invoice_v1(%L,
+    (public.save_standalone_invoice_draft_v1(%L, null, null, %L, pg_temp.today(), pg_temp.today(), '', '', '[]'::jsonb) ->> 'draft_id')::uuid, 1) -> 'missing')::text$$,
+  pg_temp.u(101), pg_temp.u(101), pg_temp.u(203))), '["lines"]',
+  'the business''s today is not');
+update public.workspaces set timezone = 'Europe/Paris' where id = pg_temp.u(101);
 
 -- ── the existing paths that must not take a standalone invoice ──
 select ok(pg_temp.as_user(1, format($$select public.create_invoice(%L, %L, '2026-10', %L)::text$$,
