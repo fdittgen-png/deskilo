@@ -1,6 +1,6 @@
 # Guide de démarrage
 
-**DesKilo — construisez votre espace, pas à pas.** Pour la personne qui s’apprête à créer un espace de coworking, la salle d’une association ou un bureau partagé, et qui veut savoir ce qui est possible, ce qui est nécessaire et dans quel ordre. *Autres langues : [English](Setup-Guide) · [Deutsch](Einrichtungsanleitung) · [Español](Guia-de-puesta-en-marcha) · [Italiano](Guida-di-avvio).*
+**DesKilo — construisez votre espace, pas à pas.** Pour la personne qui s’apprête à créer une activité avec des places à réserver (un espace de coworking, la salle d’une association, un bureau partagé) ou sans places (un cabinet, un studio, un salon, un·e indépendant·e, une autre entreprise de services), et qui veut savoir ce qui est possible, ce qui est nécessaire et dans quel ordre. *Autres langues : [English](Setup-Guide) · [Deutsch](Einrichtungsanleitung) · [Español](Guia-de-puesta-en-marcha) · [Italiano](Guida-di-avvio).*
 
 <!-- anchor: setup.guide.how-to-read -->
 ## Comment utiliser ce guide
@@ -23,6 +23,7 @@ Seul le niveau *Ouvrir* est indispensable pour démarrer. Arrêtez-vous après n
 
 | Vous voulez… | Commencez ici |
 |---|---|
+| Savoir quelles étapes votre genre d’activité comporte, avec ou sans places | [Quel genre d’activité est-ce ?](help:setup.kind.overview) |
 | Savoir ce que DesKilo sait faire et ce qu’il faut préparer | [Avant de commencer](help:setup.before.overview) |
 | Un lieu que les membres peuvent réserver dès aujourd’hui | [Construire le lieu](help:setup.place.overview) |
 | Dire qui peut faire quoi, et qui valide | [La matrice des rôles](help:user.roles.matrix) |
