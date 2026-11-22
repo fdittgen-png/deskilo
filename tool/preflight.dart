@@ -130,9 +130,16 @@ void _listTests(
   for (final t in all) {
     stdout.writeln('  $t');
   }
+  final guards = [
+    'test/lint',
+    ...guardTests(paths, table).where((t) => !t.startsWith('test/lint/')),
+  ];
   stdout
     ..writeln('tests to run: ${all.length}')
-    ..writeln('  flutter test ${all.join(' ')}');
+    ..writeln('  flutter test ${all.join(' ')}')
+    ..writeln('guards (always run before the push, even when the list '
+        'above is too long to run locally): ${guards.length}')
+    ..writeln('  flutter test ${guards.join(' ')}');
 }
 
 final _englishFragment = RegExp(r'^lib/l10n/_fragments/[^/]+_en\.arb$');
