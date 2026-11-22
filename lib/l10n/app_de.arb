@@ -6670,6 +6670,8 @@
   "eventServiceChargeTitle": "{name} ×{quantity} — {amount}",
   "eventSettlementReview": "{settlement}: {reason, select, costs_changed{Der Anbieter hat die Kosten nach der Erfassung geändert} amount_changed{Der Anbieter hat den Betrag nach der Erfassung geändert} currency_mismatch{Ein Kostenposten ist in einer anderen Währung als die Abrechnung} other{Die Meldung weicht vom Erfassten ab}}. Nichts davon wurde gebucht; sie wartet auf Prüfung.",
   "eventSourceNotFound": "Zu dieser Anfrage wurde kein Einkaufsbeleg abgelegt, oder Sie dürfen ihn nicht sehen.",
+  "eventStockCountOverdue": "Die Inventur „{plan}“ ist nach ihrem Fälligkeitstag noch offen.",
+  "eventStockCountOverdueEnded": "Erledigt",
   "eventSystemDecider": "System",
   "eventTypeAdjustment": "Korrektur",
   "eventTypeBadgeSecurityAlert": "Schutz der Badge-Anmeldung",
@@ -6733,6 +6735,7 @@
   "eventTypeServiceCharge": "Leistung",
   "eventTypeSettlementReview": "Zu prüfende Abrechnung",
   "eventTypeSpaceReservation": "Ganzraum-Reservierungen",
+  "eventTypeStockCountOverdue": "Permanente Inventur überfällig",
   "eventTypeSubscriptionChange": "Abonnementänderung",
   "@eventTypeSubscriptionChange": {
     "description": "#982 validation domains: eventTypeSubscriptionChange"

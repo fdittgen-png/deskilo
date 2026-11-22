@@ -24,6 +24,9 @@
 #   (G) two sessions apply the same count (7 observed, 10 on hand) under different
 #       request ids: the second waits for the first's lock on the item, then
 #       answers the same result; exactly one adjustment of 3 exists.
+#   (H) two runs of the cycle count job at once for a plan that is due: the second
+#       skips the plan the first holds (it does not wait), and exactly one task,
+#       with its lines, exists.
 # A holder that never took its lock, or a contender that never waited, fails the
 # script: nothing here can pass empty. A single pgTAP transaction cannot show a
 # race, so each contender is its own psql process on CI's disposable database.
@@ -55,7 +58,7 @@ set local role authenticated;
 select public.create_workspace('Transfer race', 'FR', 'EUR', 'Europe/Paris', 'dev', false, null) as ws \gset
 reset role;
 commit;
-update public.workspaces set feature_flags = coalesce(feature_flags, '{}'::jsonb) || '{"services": true, "stockManagement": true, "stockTakeOut": true, "stockReorder": true, "stockReturns": true, "stockCounts": true, "stockReceiving": true, "purchases": true, "purchaseOrders": true}' where id = :'ws';
+update public.workspaces set feature_flags = coalesce(feature_flags, '{}'::jsonb) || '{"services": true, "stockManagement": true, "stockTakeOut": true, "stockReorder": true, "stockReturns": true, "stockCounts": true, "stockCycleCounts": true, "stockReceiving": true, "purchases": true, "purchaseOrders": true}' where id = :'ws';
 insert into public.services (workspace_id, name, price_cents, active, inventory_unit, tracking, stockable)
 values (:'ws', 'Race X', 100, true, 'piece', 'none', true) returning id as x \gset
 insert into public.services (workspace_id, name, price_cents, active, inventory_unit, tracking, stockable)
@@ -137,15 +140,18 @@ select public.stock_move_v1(:'ws', gen_random_uuid(), jsonb_build_array(
   jsonb_build_object('item_id', :'c', 'quantity', 10, 'from', :'supplier', 'to', :'main')), 'receipt');
 select public.stock_count_record_v1(:'ws', gen_random_uuid(), gen_random_uuid(),
   jsonb_build_object('item_id', :'c', 'location_id', :'main'), '7', 'race') ->> 'count_id' as cnt \gset
+-- (H) a plan that is due today, in the own day of the business, over the same item
+select public.stock_count_plan_save_v1(:'ws', gen_random_uuid(), gen_random_uuid(), jsonb_build_object('name', 'Race plan', 'scope_kind', 'items',
+  'item_ids', jsonb_build_array(:'c'), 'next_due_on', (now() at time zone 'Europe/Paris')::date)) ->> 'plan_id' as plan \gset
 reset role;
 commit;
 select id as ev1 from public.events where workspace_id = :'ws' and type = 'service_charge' and (payload ->> 'quantity')::int = 2 \gset
 select id as ev2 from public.events where workspace_id = :'ws' and type = 'service_charge' and (payload ->> 'quantity')::int = 1 \gset
-\echo :ws :x :y :z :main :shelf :loss :customer :w :inv :ev1 :ev2 :supplier :p :r :rcpt :q :sale :c :cnt
+\echo :ws :x :y :z :main :shelf :loss :customer :w :inv :ev1 :ev2 :supplier :p :r :rcpt :q :sale :c :cnt :plan
 SQL
 )
-read -r ws x y z main shelf loss customer w inv ev1 ev2 supplier p r rcpt q sale c cnt <<<"$fixture"
-for v in "$ws" "$x" "$y" "$z" "$main" "$shelf" "$loss" "$customer" "$w" "$inv" "$ev1" "$ev2" "$supplier" "$p" "$r" "$rcpt" "$q" "$sale" "$c" "$cnt"; do
+read -r ws x y z main shelf loss customer w inv ev1 ev2 supplier p r rcpt q sale c cnt plan <<<"$fixture"
+for v in "$ws" "$x" "$y" "$z" "$main" "$shelf" "$loss" "$customer" "$w" "$inv" "$ev1" "$ev2" "$supplier" "$p" "$r" "$rcpt" "$q" "$sale" "$c" "$cnt" "$plan"; do
   [[ "$v" =~ ^[0-9a-f-]{36}$ ]] || { echo "::error::fixture incomplete: '$fixture'" >&2; exit 1; }
 done
 expect() { [[ "$2" == "$3" ]] || { echo "::error::$1: expected '$3', got '$2'" >&2; exit 1; }; }
@@ -397,5 +403,25 @@ grep -qx "decided applied" "$scratch/holder8" || { echo "::error::the first appl
 grep -qx "decided applied" "$scratch/contender8" || { echo "::error::the second apply did not answer the same result: $(tr '\\n' ' ' < "$scratch/contender8")" >&2; exit 1; }
 expect "(G) one adjustment of 3 exists" "$(q "select count(*) || '/' || coalesce(sum(quantity), 0)::int from public.stock_movements where item_id = '$c' and reason = 'adjustment'")" "1/3"
 expect "(G) 10 - 3 = 7 of the item on hand" "$(q "select coalesce(sum(quantity), 0)::int from public.stock_balances where item_id = '$c' and location_id = '$main'")" "7"
+
+# (H) two runs of the cycle count job at once for a plan that is due: the second skips the plan the first holds
+psql "$url" -X -qAt -v ON_ERROR_STOP=1 >"$scratch/holder9" 2>&1 <<SQL &
+begin;
+select 'made ' || public.stock_cycle_counts_due('$ws');
+\\! touch '$scratch/ready9'
+select pg_sleep(3);
+commit;
+SQL
+holder9=$!
+wait_marker "$scratch/ready9" "$scratch/holder9"
+psql "$url" -X -qAt -v ON_ERROR_STOP=1 >"$scratch/contender9" 2>&1 <<SQL
+begin;
+select 'made ' || public.stock_cycle_counts_due('$ws');
+commit;
+SQL
+wait "$holder9" || { echo "::error::the first run failed: $(tr '\\n' ' ' < "$scratch/holder9")" >&2; exit 1; }
+grep -qx "made 1" "$scratch/holder9" || { echo "::error::the first run did not make the task: $(tr '\\n' ' ' < "$scratch/holder9")" >&2; exit 1; }
+grep -qx "made 0" "$scratch/contender9" || { echo "::error::the second run did not skip the plan: $(tr '\\n' ' ' < "$scratch/contender9")" >&2; exit 1; }
+expect "(H) one task with its lines exists for the plan" "$(q "select count(*) || '/' || (select count(*) from public.stock_count_task_lines x join public.stock_count_tasks t2 on t2.id = x.task_id where t2.plan_id = '$plan') from public.stock_count_tasks where plan_id = '$plan'")" "1/1"
 
 echo "stock transfer race: opposing transfers never deadlock and keep every total; the last stock is taken once; a booking confirmation and a customer return of one item serialise in both orders; two put-aways cannot over-allocate a line; two sessions crossing a reorder point raise one alert"

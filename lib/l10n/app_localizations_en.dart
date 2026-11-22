@@ -10325,6 +10325,14 @@ class AppLocalizationsEn extends AppLocalizations {
       'No purchase document was filed for this request, or you may not see it.';
 
   @override
+  String eventStockCountOverdue(String plan) {
+    return 'The cycle count \"$plan\" is still open past its due day.';
+  }
+
+  @override
+  String get eventStockCountOverdueEnded => 'Done';
+
+  @override
   String get eventSystemDecider => 'System';
 
   @override
@@ -10422,6 +10430,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get eventTypeSpaceReservation => 'Whole-space reservations';
+
+  @override
+  String get eventTypeStockCountOverdue => 'Cycle count overdue';
 
   @override
   String get eventTypeSubscriptionChange => 'Subscription change';

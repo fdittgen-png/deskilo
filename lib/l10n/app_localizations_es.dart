@@ -10391,6 +10391,14 @@ class AppLocalizationsEs extends AppLocalizations {
       'No se archivó ningún documento de compra para esta solicitud, o no puede verlo.';
 
   @override
+  String eventStockCountOverdue(String plan) {
+    return 'El recuento cíclico «$plan» sigue abierto después de su fecha.';
+  }
+
+  @override
+  String get eventStockCountOverdueEnded => 'Hecho';
+
+  @override
   String get eventSystemDecider => 'Sistema';
 
   @override
@@ -10489,6 +10497,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get eventTypeSpaceReservation => 'Reservas de espacios enteros';
+
+  @override
+  String get eventTypeStockCountOverdue => 'Recuento cíclico vencido';
 
   @override
   String get eventTypeSubscriptionChange => 'Cambio de suscripción';

@@ -13682,6 +13682,19 @@
   "@eventSourceNotFound": {
     "description": "#2573 open the purchase an expense request was filed as"
   },
+  "eventStockCountOverdue": "The cycle count \"{plan}\" is still open past its due day.",
+  "@eventStockCountOverdue": {
+    "description": "#4295 the notice of a cycle count task open past its due day.",
+    "placeholders": {
+      "plan": {
+        "type": "String"
+      }
+    }
+  },
+  "eventStockCountOverdueEnded": "Done",
+  "@eventStockCountOverdueEnded": {
+    "description": "#4295 suffix of a notice whose task is complete."
+  },
   "eventSystemDecider": "System",
   "@eventSystemDecider": {
     "description": "Validator name shown when the timeout sweep decided, not a member"
@@ -13813,6 +13826,10 @@
   "eventTypeSpaceReservation": "Whole-space reservations",
   "@eventTypeSpaceReservation": {
     "description": "Event/validation domain: whole desk/office/level reservations (0059)"
+  },
+  "eventTypeStockCountOverdue": "Cycle count overdue",
+  "@eventTypeStockCountOverdue": {
+    "description": "#4295 the type name in the feed and the validation settings."
   },
   "eventTypeSubscriptionChange": "Subscription change",
   "@eventTypeSubscriptionChange": {

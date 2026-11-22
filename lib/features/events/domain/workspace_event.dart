@@ -130,6 +130,11 @@ enum EventType {
   /// who read the finances, ended when the attempt is read, paid or ended.
   paymentAttemptUnreadable('payment_attempt_unreadable'),
 
+  /// #4295 — a cycle count task still open past its due day: told once per task
+  /// to those who manage the stock, ended when the task is complete or cancelled.
+  /// Nobody decides it.
+  stockCountOverdue('stock_count_overdue'),
+
   /// #1088 — a wire word THIS build does not know. The `events.type`
   /// constraint has been widened six times; a client that has not been
   /// updated yet must still show the rest of the feed, and must still

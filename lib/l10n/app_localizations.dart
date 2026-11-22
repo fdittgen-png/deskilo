@@ -16474,6 +16474,18 @@ abstract class AppLocalizations {
   /// **'No purchase document was filed for this request, or you may not see it.'**
   String get eventSourceNotFound;
 
+  /// #4295 the notice of a cycle count task open past its due day.
+  ///
+  /// In en, this message translates to:
+  /// **'The cycle count \"{plan}\" is still open past its due day.'**
+  String eventStockCountOverdue(String plan);
+
+  /// #4295 suffix of a notice whose task is complete.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get eventStockCountOverdueEnded;
+
   /// Validator name shown when the timeout sweep decided, not a member
   ///
   /// In en, this message translates to:
@@ -16671,6 +16683,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Whole-space reservations'**
   String get eventTypeSpaceReservation;
+
+  /// #4295 the type name in the feed and the validation settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Cycle count overdue'**
+  String get eventTypeStockCountOverdue;
 
   /// #982 validation domains: eventTypeSubscriptionChange
   ///

@@ -144,6 +144,21 @@ Behind `stockCounts` (under `stockManagement`, off by default). Recorded with `m
 
 Evidence: `supabase/tests/database/505_stock_counts.sql` (a clerk records and applies nothing; the owner applies exactly the difference; the same decision again answers the same; a decided count is final; a stale count refused even for the same person, then a fresh one applied; reject, cancel and a zero difference move nothing; a variant and a lot are part of the scope; the generic adjustment needs the right to approve; rights, another business, an assistant, the feature off; immutability) and `scripts/stock_transfer_race.sh` section G (two applies of one count: one adjustment).
 
+## Cycle counts
+
+Behind `stockCycleCounts` (under `stockCounts`, off by default). Planned and counted with `manageStock`; the approval is `stockCounts`'s; an assistant session does none of it.
+
+| question | answer |
+|---|---|
+| What is a plan? | `stock_count_plans`: a name, a scope (`places`: these places and every place inside them; `items`: these items in every real place; `high_value`: what a place holds of an item is worth at least a threshold, the quantity times the unit cost of its lot), a schedule (every `interval_days` from `next_due_on`, or once) and whether it is active. The threshold is the plan's own, else the setting `stock.cycle_count_high_value_minor`; the days of grace of an overdue task are `stock.cycle_count_overdue_days`; both have a place in the settings and in the setup questionnaire |
+| What makes a task? | `stock_cycle_counts_due()` (a job every hour, and callable by the service role): one task per plan and due day, in the business's own day (`workspace_today`), with a line for every non-zero balance of the scope at a real, active place; then the plan moves on (never into the past) or, with no interval, becomes inactive. A second run makes nothing; two runs at once skip the plan the first holds |
+| What does the counter see? | `stock_count_task_v1`: each line (item, variant, lot, place, state), never a quantity: no baseline, no expected figure |
+| What does counting do? | `stock_cycle_count_line_v1` records a count of `stock_counts` whose stable id is the line's: the stock revision it was counted against is recorded there; the approval and the one idempotent adjustment are that leaf's, so a movement between the count and the approval makes it stale (DKG20) and nothing here moves stock. A line is skipped with a reason (1 to 300 characters); a task is complete when every line is counted or skipped, and takes nothing more (DKG19) |
+| What is overdue? | an open task whose due day plus `stock.cycle_count_overdue_days` has passed: one inbox event `stock_count_overdue` per task (the owner is its actor and subject; read with `manageStock`; nobody decides it); it ends when the task is complete or cancelled |
+| What is the history? | `stock_count_history_v1`: per item and place, when it was last counted, how many counts, how many exact |
+
+Evidence: `supabase/tests/database/507_stock_cycle_counts.sql` (plans and their refusals; one task per due plan, none twice; the business's own day; places with sub-places, items, high value; the blind task; counting, a stale count, skipping with a reason, completion; one overdue notice that ends; history; rights, another business, an assistant, the feature off) and `scripts/stock_transfer_race.sh` section H (two runs of the job at once: one task).
+
 ## States and transitions
 
 Declared states: `start`, `open`, `complete`.

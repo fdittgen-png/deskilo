@@ -275,7 +275,8 @@ bool _appendsSubject(WorkspaceEvent event) {
       event.type == EventType.settlementReview ||
       event.type == EventType.kioskDevice ||
       event.type == EventType.credentialChange ||
-      event.type == EventType.paymentAttemptUnreadable) {
+      event.type == EventType.paymentAttemptUnreadable ||
+      event.type == EventType.stockCountOverdue) {
     return false;
   }
   return !event.actorIsSubject || event.type == EventType.serviceCharge;
@@ -289,9 +290,21 @@ String _otherLine(
   String actor,
   Map<String, String> names,
   MoneyFormat currency,
-) => event.type == EventType.paymentAttemptUnreadable
-    ? _paymentAttemptUnreadableLine(l10n, event, names, currency)
-    : _noticeOrFallbackLine(l10n, event, actor);
+) => switch (event.type) {
+  EventType.paymentAttemptUnreadable =>
+    _paymentAttemptUnreadableLine(l10n, event, names, currency),
+  EventType.stockCountOverdue => _stockCountOverdueLine(l10n, event),
+  _ => _noticeOrFallbackLine(l10n, event, actor),
+};
+
+/// #4295 — a cycle count task still open past its due day; once the task is
+/// complete or cancelled, says so.
+String _stockCountOverdueLine(AppLocalizations l10n, WorkspaceEvent event) {
+  final line = l10n.eventStockCountOverdue('${event.payload['plan'] ?? ''}');
+  return event.payload['ended'] == null
+      ? line
+      : '$line · ${l10n.eventStockCountOverdueEnded}';
+}
 
 /// The lines of the notices that are not about a booking or money in motion:
 /// the badge sign-in alert, and (#3132) the owners' notice that an assistant

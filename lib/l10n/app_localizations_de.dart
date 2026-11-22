@@ -10423,6 +10423,14 @@ class AppLocalizationsDe extends AppLocalizations {
       'Zu dieser Anfrage wurde kein Einkaufsbeleg abgelegt, oder Sie dürfen ihn nicht sehen.';
 
   @override
+  String eventStockCountOverdue(String plan) {
+    return 'Die Inventur „$plan“ ist nach ihrem Fälligkeitstag noch offen.';
+  }
+
+  @override
+  String get eventStockCountOverdueEnded => 'Erledigt';
+
+  @override
   String get eventSystemDecider => 'System';
 
   @override
@@ -10521,6 +10529,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get eventTypeSpaceReservation => 'Ganzraum-Reservierungen';
+
+  @override
+  String get eventTypeStockCountOverdue => 'Permanente Inventur überfällig';
 
   @override
   String get eventTypeSubscriptionChange => 'Abonnementänderung';
