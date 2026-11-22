@@ -798,5 +798,7 @@
  "stockSepDash": "Dash ( - )",
  "stockSepDot": "Dot ( . )",
  "stockSepSlash": "Slash ( / )",
- "stockSepColon": "Colon ( : )"
+ "stockSepColon": "Colon ( : )",
+ "einvoiceStuck": "E-invoice attempt left half-way",
+ "einvoiceStuckHint": "How long an e-invoice may stay prepared, with no dispatch started, before the owner is told that its attempt stopped. Set in the app's settings."
 }

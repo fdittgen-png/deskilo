@@ -10194,6 +10194,17 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get eventEinvoiceNoticeEnded => 'Réglé';
+
+  @override
+  String get eventEinvoiceOutcomeUncertain =>
+      'Le résultat d’une facture électronique est inconnu : son envoi s’est arrêté avant qu’une réponse soit enregistrée. Elle n’est pas renvoyée. Vérifiez le relevé de la plateforme, puis réglez-le à la main.';
+
+  @override
+  String get eventEinvoiceStuckPrepared =>
+      'Une facture électronique a été préparée et jamais envoyée. Renvoyez-la depuis sa facture, ou laissez-la.';
+
+  @override
   String eventExpenseDeviation(Object reason, Object scheduled) {
     return 'validé $scheduled — $reason';
   }
@@ -10471,6 +10482,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get eventTypeCredentialChange => 'Modification d\'identifiants';
+
+  @override
+  String get eventTypeEinvoiceOutcomeUnknown =>
+      'Envoi de facture électronique interrompu';
 
   @override
   String get eventTypeExpense => 'Dépense';
@@ -17922,6 +17937,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get invoiceSendAction => 'Envoyer à la plateforme gouvernementale';
+
+  @override
+  String get invoiceSendBindingChanged =>
+      'Cette facture a déjà été transmise à cette destination avec un autre contenu. Elle n’est pas renvoyée ; la première transmission reste valable.';
 
   @override
   String get invoiceSendCustomerAccepted =>
@@ -31790,6 +31809,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Jours après l\'émission avant qu\'une première relance soit proposée, et avant l\'échéance d\'une facture sans conditions de paiement.';
 
   @override
+  String get settingHintEinvoiceStuckAttemptMinutes =>
+      'Combien de minutes une facture électronique peut rester préparée, sans envoi commencé, avant que le propriétaire soit prévenu que sa tentative s’est arrêtée. Un envoi commencé sans résultat est signalé dès que son propre délai est écoulé.';
+
+  @override
   String get settingHintFederationAnswerWaitSeconds =>
       'Secondes pendant lesquelles un serveur attend la réponse à un message signé envoyé à un autre serveur avant de renvoyer le même message. Au moins 30 ; gardez-la sous la durée de validité du statut.';
 
@@ -32124,6 +32147,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingLabelDunningFirstAfterDays =>
       'Jours avant une première relance';
+
+  @override
+  String get settingLabelEinvoiceStuckAttemptMinutes =>
+      'Tentative de facture électronique interrompue';
 
   @override
   String get settingLabelFederationAnswerWaitSeconds =>

@@ -9,7 +9,7 @@
 -- evidence, and cannot be repeated. The legacy `status` column stays a
 -- three-value projection an older client can read.
 begin;
-select plan(48);
+select plan(49);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -53,10 +53,14 @@ select is((pg_temp.prep('government', 'prod', 'h1', '')->>'outcome'), 'existing'
   'the same business transmission answers the original, whatever the request');
 select is((pg_temp.prep('government', 'prod', 'h1', '')->>'id'), current_setting('ei.id1'),
   'and it is the same record');
-select is((pg_temp.prep('government', 'prod', 'h2', '')->>'outcome'), 'conflict',
-  'changed bytes conflict');
-select is((pg_temp.prep('government', 'prod', 'h1', 'iso')->>'outcome'), 'conflict',
-  'a changed recipient conflicts');
+-- 0862: nothing has left from a prepared row, so changed bytes or a changed recipient prepare it
+-- again (under the same row); once it is sent they conflict (502 holds the whole table).
+select is((pg_temp.prep('government', 'prod', 'h2', '')->>'outcome'), 'prepared',
+  'changed bytes on a prepared row prepare it again');
+select is((pg_temp.prep('government', 'prod', 'h1', 'iso')->>'outcome'), 'prepared',
+  'a changed recipient on a prepared row prepares it again');
+select is((pg_temp.prep('government', 'prod', 'h1', '')->>'id'), current_setting('ei.id1'),
+  'and the original content prepares it back, still the one record');
 select is((select count(*)::int from public.invoice_transmissions
             where invoice_id = current_setting('ei.inv')::uuid), 1,
   'one record, one stored artifact');
@@ -168,11 +172,11 @@ select is((select resolved_by::text || '|' || status from public.invoice_transmi
   current_setting('ei.uo') || '|accepted', 'actor recorded; status projects accepted');
 
 select is(has_function_privilege('authenticated',
-  'public.claim_einvoice_dispatch_v1(uuid,uuid,integer)', 'execute')
+  'public.claim_einvoice_dispatch_v1(uuid,uuid,integer,text)', 'execute')
   or has_table_privilege('authenticated', 'public.invoice_transmission_artifacts', 'select'),
   false, 'client roles reach neither the RPCs nor the artifacts');
 select ok(has_function_privilege('service_role',
-  'public.claim_einvoice_dispatch_v1(uuid,uuid,integer)', 'execute'), 'the service role can claim');
+  'public.claim_einvoice_dispatch_v1(uuid,uuid,integer,text)', 'execute'), 'the service role can claim');
 
 -- #3576: recovering an uncertain transmission that kept its provider id.
 -- Database-only identities (government/dev, customer/dev): no provider call.

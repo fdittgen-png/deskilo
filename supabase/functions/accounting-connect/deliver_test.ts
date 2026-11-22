@@ -397,6 +397,14 @@ const run = (
     w.deps,
   );
 
+Deno.test("the preliminary check names its purpose, so a delivery under way is settled in servicing (#4323)", async () => {
+  const w = world();
+  await run(w);
+  const check = w.calls.find((c) => c.fn === "accounting_connection_manageable_v1")!;
+  assertEquals(check.as, "caller");
+  assertEquals(check.args, { p_connection_id: CONN, p_purpose: "settle" });
+});
+
 Deno.test("a period is delivered once: a second run creates nothing", async () => {
   const w = world();
   const first = await run(w);

@@ -321,8 +321,12 @@ export async function deliverPeriod(
     }, 400);
   }
   const caller = deps.caller(authorization);
+  // A delivery under way is settled while the connectors are in servicing:
+  // the door asks the member and the right, and a delivery that does not
+  // exist yet is still refused where it is recorded.
   const allowed = await caller.rpc("accounting_connection_manageable_v1", {
     p_connection_id: connectionId,
+    p_purpose: "settle",
   });
   const manageable = allowed.data as {
     workspace_id?: string;

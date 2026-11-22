@@ -13206,6 +13206,18 @@
       }
     }
   },
+  "eventEinvoiceNoticeEnded": "Settled",
+  "@eventEinvoiceNoticeEnded": {
+    "description": "#4325 suffix of a notice whose transmission moved on."
+  },
+  "eventEinvoiceOutcomeUncertain": "The outcome of an e-invoice is unknown: its sending stopped before an answer was recorded. It is not sent again. Check the platform's record, then settle it by hand.",
+  "@eventEinvoiceOutcomeUncertain": {
+    "description": "#4325 the notice of an e-invoice whose outcome is unknown (an uncertain dispatch)."
+  },
+  "eventEinvoiceStuckPrepared": "An e-invoice was prepared and never sent. Send it again from its invoice, or leave it.",
+  "@eventEinvoiceStuckPrepared": {
+    "description": "#4325 the notice of an e-invoice prepared and never sent."
+  },
   "eventExpenseDeviation": "validated {scheduled} — {reason}",
   "@eventExpenseDeviation": {
     "description": "Shown as a text in event lines (events)."
@@ -13717,6 +13729,10 @@
   "eventTypeCredentialChange": "Credentials change",
   "@eventTypeCredentialChange": {
     "description": "#3914 the event type: credentials of an integration changed"
+  },
+  "eventTypeEinvoiceOutcomeUnknown": "E-invoice attempt stopped",
+  "@eventTypeEinvoiceOutcomeUnknown": {
+    "description": "#4325 the type name in the feed and the validation settings."
   },
   "eventTypeExpense": "Expense",
   "@eventTypeExpense": {
@@ -23168,6 +23184,10 @@
   "invoiceSendAction": "Send to the government platform",
   "@invoiceSendAction": {
     "description": "E-invoice sheet: post the document to the platform (0073)"
+  },
+  "invoiceSendBindingChanged": "This invoice was already submitted to this destination with other content. It is not sent again; its first submission stands.",
+  "@invoiceSendBindingChanged": {
+    "description": "#4324 Snackbar: the invoice already has a submission to this destination with other content (binding_changed); nothing is sent again"
   },
   "invoiceSendCustomerAccepted": "Sent — the customer's service accepted it.",
   "@invoiceSendCustomerAccepted": {
@@ -41056,6 +41076,10 @@
   "@settingHintDunningFirstAfterDays": {
     "description": "#2484 settings: Setting hint."
   },
+  "settingHintEinvoiceStuckAttemptMinutes": "How many minutes an e-invoice may stay prepared, with no dispatch started, before the owner is told that its attempt stopped. A dispatch that was started and has no outcome is told as soon as its own time is up.",
+  "@settingHintEinvoiceStuckAttemptMinutes": {
+    "description": "#4325 settings: Setting hint."
+  },
   "settingHintFederationAnswerWaitSeconds": "Seconds a server waits for the answer to a signed message it sent to another server before it sends the same message again. At least 30; keep it below the status lifetime.",
   "@settingHintFederationAnswerWaitSeconds": {
     "description": "#2563 C2 answer wait: settingHintFederationAnswerWaitSeconds"
@@ -41403,6 +41427,10 @@
   "settingLabelDunningFirstAfterDays": "Days before a first reminder",
   "@settingLabelDunningFirstAfterDays": {
     "description": "#2484 settings: Setting label."
+  },
+  "settingLabelEinvoiceStuckAttemptMinutes": "E-invoice attempt left half-way",
+  "@settingLabelEinvoiceStuckAttemptMinutes": {
+    "description": "#4325 settings: Setting label."
   },
   "settingLabelFederationAnswerWaitSeconds": "Backchannel answer wait",
   "@settingLabelFederationAnswerWaitSeconds": {

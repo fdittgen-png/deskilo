@@ -346,6 +346,7 @@
   },
   "invoiceSendRejected": "Die Plattform hat sie abgelehnt.",
   "invoiceSendRejectedDetail": "Die Plattform hat sie abgelehnt. {detail}",
+  "invoiceSendBindingChanged": "Diese Rechnung wurde bereits mit anderem Inhalt an dieses Ziel übermittelt. Sie wird nicht erneut gesendet; die erste Übermittlung bleibt bestehen.",
   "invoiceSentOn": "Gesendet am {date} · {status}",
   "@invoiceSentOn": {
     "placeholders": {

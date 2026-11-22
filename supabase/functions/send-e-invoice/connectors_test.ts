@@ -730,3 +730,16 @@ Deno.test("generic: a refused credential or endpoint (401/403/404) fails without
     assertEquals(out.status, "failed", String(code));
   }
 });
+
+Deno.test("an unreachable provider keeps its error class and a message with no address or key (#4323)", async () => {
+  const { unreachable, redact, safeError } = await import("./connectors/common.ts");
+  const error = new TypeError(
+    "error sending request for url (https://api.example.test/v1/send?api_key=SECRET123&x=1): connection refused",
+  );
+  const kept = unreachable(error).detail;
+  assert(kept.startsWith("TypeError: "));
+  assert(!kept.includes("SECRET123"));
+  assert(!kept.includes("api.example.test"));
+  assertEquals(redact("token=abc and key=def"), "token=[redacted] and key=[redacted]");
+  assertEquals(safeError("plain"), "plain");
+});

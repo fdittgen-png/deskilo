@@ -798,5 +798,7 @@
  "stockSepDash": "Tiret ( - )",
  "stockSepDot": "Point ( . )",
  "stockSepSlash": "Barre oblique ( / )",
- "stockSepColon": "Deux-points ( : )"
+ "stockSepColon": "Deux-points ( : )",
+ "einvoiceStuck": "Tentative de facture électronique interrompue",
+ "einvoiceStuckHint": "Combien de temps une facture électronique peut rester préparée, sans envoi commencé, avant que le propriétaire soit prévenu que sa tentative s’est arrêtée. Réglé dans les paramètres de l’application."
 }
