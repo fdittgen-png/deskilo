@@ -45742,6 +45742,10 @@
   "@stockReasonGtinLength": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonHomeInvalid": "Choose a place of this business that is in use and is not a supplier, customer, loss or transit place.",
+  "@stockReasonHomeInvalid": {
+    "description": "#4293 the registry of the stock: a label or a message"
+  },
   "stockReasonItemForeign": "This item is not one of this business.",
   "@stockReasonItemForeign": {
     "description": "#4169 the stock editors: a text under a field the server refused"
@@ -45961,6 +45965,95 @@
   "stockReasonWrongSite": "Goods are received onto a place of the destination site.",
   "@stockReasonWrongSite": {
     "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockRegistryAllPlaces": "All places",
+  "@stockRegistryAllPlaces": {
+    "description": "#4293 the registry of the stock: a label or a message"
+  },
+  "stockRegistryCost": "cost {amount}",
+  "@stockRegistryCost": {
+    "description": "#4293 the registry of the stock: a label or a message",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "stockRegistryCostHidden": "cost not shown",
+  "@stockRegistryCostHidden": {
+    "description": "#4293 the registry of the stock: a label or a message"
+  },
+  "stockRegistryCostUnknown": "cost unknown",
+  "@stockRegistryCostUnknown": {
+    "description": "#4293 the registry of the stock: a label or a message"
+  },
+  "stockRegistryHome": "home {address}",
+  "@stockRegistryHome": {
+    "description": "#4293 the registry of the stock: a label or a message",
+    "placeholders": {
+      "address": {
+        "type": "String"
+      }
+    }
+  },
+  "stockRegistryHomeHelp": "Where this item belongs, so receiving, counting and picking know where it goes. It is advice: stock may sit elsewhere, and changing it moves nothing.",
+  "@stockRegistryHomeHelp": {
+    "description": "#4293 the registry of the stock: a label or a message"
+  },
+  "stockRegistryHomeNone": "No home place",
+  "@stockRegistryHomeNone": {
+    "description": "#4293 the registry of the stock: a label or a message"
+  },
+  "stockRegistryHomePlace": "Home place",
+  "@stockRegistryHomePlace": {
+    "description": "#4293 the registry of the stock: a label or a message"
+  },
+  "stockRegistryHomeTitle": "Home place of {item}",
+  "@stockRegistryHomeTitle": {
+    "description": "#4293 the registry of the stock: a label or a message",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      }
+    }
+  },
+  "stockRegistryMore": "Show more",
+  "@stockRegistryMore": {
+    "description": "#4293 the registry of the stock: a label or a message"
+  },
+  "stockRegistryNoHome": "no home place",
+  "@stockRegistryNoHome": {
+    "description": "#4293 the registry of the stock: a label or a message"
+  },
+  "stockRegistryNoHomeFilter": "Only items with no home place",
+  "@stockRegistryNoHomeFilter": {
+    "description": "#4293 the registry of the stock: a label or a message"
+  },
+  "stockRegistryOnHand": "{quantity} on hand",
+  "@stockRegistryOnHand": {
+    "description": "#4293 the registry of the stock: a label or a message",
+    "placeholders": {
+      "quantity": {
+        "type": "String"
+      }
+    }
+  },
+  "stockRegistryPlaceFilter": "Home place",
+  "@stockRegistryPlaceFilter": {
+    "description": "#4293 the registry of the stock: a label or a message"
+  },
+  "stockRegistryPrice": "price {amount}",
+  "@stockRegistryPrice": {
+    "description": "#4293 the registry of the stock: a label or a message",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "stockRegistrySearch": "Find an item by name, barcode or address",
+  "@stockRegistrySearch": {
+    "description": "#4293 the registry of the stock: a label or a message"
   },
   "stockSettingsElsewhere": "Stock settings are kept on the Stock settings page.",
   "@stockSettingsElsewhere": {

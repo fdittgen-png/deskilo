@@ -834,6 +834,26 @@ the app's startup check, the wizard's upgrade — because it is the one
 signal written by the SQL itself, whichever way the SQL arrived. Never
 compute a version from `supabase_migrations` row counts or names.
 
+**Effect on apps (ADR 0053, #3728).** The decision is
+`docs/decisions/0053-compatibility-of-app-installation-and-features.md`. Every
+migration after it keeps an older app right:
+- a function keeps its meaning for a caller that does not send a new
+  parameter (the parameter has a default that reproduces the old behaviour);
+  a changed signature is a new function;
+- a column or a status value is never given a second meaning;
+- an object the app writes whole is merged on the server, never replaced;
+- add, move the readers, remove: nothing is removed or narrowed before the
+  installation's floor was raised past the last app that read the old shape
+  (the floor does not exist yet, so for now: nothing is removed);
+- from the next migration on, the line after `-- risk:` is
+  `-- apps: additive | needs app at least N | breaks apps below N`. The lint
+  that requires it is K4 (#3731), not yet written: until then a reviewer
+  checks it.
+Anything stored or exchanged with a version of its own gets a row in that
+record's table, with what its reader does with a higher version (refuse,
+ignore, show generically); reading an unknown or missing value as a known
+one is not allowed.
+
 **The gate this feeds has no feature flag.** A server older than the app
 sends every route to `/server-update` (`lib/app/schema_gate.dart`); the
 flags live on that server, so a flag could not be read to switch the gate

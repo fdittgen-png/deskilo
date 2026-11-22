@@ -56504,6 +56504,12 @@ abstract class AppLocalizations {
   /// **'A barcode has 8 to 14 digits.'**
   String get stockReasonGtinLength;
 
+  /// #4293 the registry of the stock: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a place of this business that is in use and is not a supplier, customer, loss or transit place.'**
+  String get stockReasonHomeInvalid;
+
   /// #4169 the stock editors: a text under a field the server refused
   ///
   /// In en, this message translates to:
@@ -56833,6 +56839,102 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Goods are received onto a place of the destination site.'**
   String get stockReasonWrongSite;
+
+  /// #4293 the registry of the stock: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'All places'**
+  String get stockRegistryAllPlaces;
+
+  /// #4293 the registry of the stock: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'cost {amount}'**
+  String stockRegistryCost(String amount);
+
+  /// #4293 the registry of the stock: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'cost not shown'**
+  String get stockRegistryCostHidden;
+
+  /// #4293 the registry of the stock: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'cost unknown'**
+  String get stockRegistryCostUnknown;
+
+  /// #4293 the registry of the stock: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'home {address}'**
+  String stockRegistryHome(String address);
+
+  /// #4293 the registry of the stock: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'Where this item belongs, so receiving, counting and picking know where it goes. It is advice: stock may sit elsewhere, and changing it moves nothing.'**
+  String get stockRegistryHomeHelp;
+
+  /// #4293 the registry of the stock: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'No home place'**
+  String get stockRegistryHomeNone;
+
+  /// #4293 the registry of the stock: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'Home place'**
+  String get stockRegistryHomePlace;
+
+  /// #4293 the registry of the stock: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'Home place of {item}'**
+  String stockRegistryHomeTitle(String item);
+
+  /// #4293 the registry of the stock: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'Show more'**
+  String get stockRegistryMore;
+
+  /// #4293 the registry of the stock: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'no home place'**
+  String get stockRegistryNoHome;
+
+  /// #4293 the registry of the stock: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'Only items with no home place'**
+  String get stockRegistryNoHomeFilter;
+
+  /// #4293 the registry of the stock: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'{quantity} on hand'**
+  String stockRegistryOnHand(String quantity);
+
+  /// #4293 the registry of the stock: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'Home place'**
+  String get stockRegistryPlaceFilter;
+
+  /// #4293 the registry of the stock: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'price {amount}'**
+  String stockRegistryPrice(String amount);
+
+  /// #4293 the registry of the stock: a label or a message
+  ///
+  /// In en, this message translates to:
+  /// **'Find an item by name, barcode or address'**
+  String get stockRegistrySearch;
 
   /// the stock pages and group (#4299)
   ///
