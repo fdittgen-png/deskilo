@@ -35,13 +35,18 @@ begin
     if auth.uid() is not null and not public.has_permission(new.workspace_id, 'manageStock') then
       raise exception 'not allowed to configure the stock' using errcode = 'DKN01';
     end if;
-    if new.home_location_id is not null and not exists (
-         select 1 from public.stock_locations l
-           join public.stock_location_kinds k on k.key = l.kind
-          where l.id = new.home_location_id and l.workspace_id = new.workspace_id
-            and l.active and not k.virtual and l.kind <> 'in_transit') then
-      raise exception 'not a place an item can be kept at' using errcode = 'DKG11',
-        detail = jsonb_build_object('field', 'home_location_id', 'reason', 'home_invalid')::text;
+    -- The place is read under a share lock: a concurrent deactivation of it (an update of its
+    -- row) waits for this write, and a write that comes after sees it deactivated.
+    if new.home_location_id is not null then
+      perform 1 from public.stock_locations l
+        join public.stock_location_kinds k on k.key = l.kind
+       where l.id = new.home_location_id and l.workspace_id = new.workspace_id
+         and l.active and not k.virtual and l.kind <> 'in_transit'
+         for share of l;
+      if not found then
+        raise exception 'not a place an item can be kept at' using errcode = 'DKG11',
+          detail = jsonb_build_object('field', 'home_location_id', 'reason', 'home_invalid')::text;
+      end if;
     end if;
   end if;
   return new;
