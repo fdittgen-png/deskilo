@@ -29,11 +29,11 @@ grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.fact(p_u int, p_c text, p_st text, p_fresh boolean default true)
 returns void language sql as $$
   insert into public.membership_facts (user_id, network_id, issuer, source_installation_id,
-    revision, status, asserted_at, valid_until, enrolment_epoch, event_id)
+    revision, status, asserted_at, valid_until, enrolment_epoch, event_id, members_directory)
   select pg_temp.u(p_u), pg_temp.ref(p_c), 'https://p.test/auth/v1', pg_temp.inst(p_c), 1, p_st,
          case when p_fresh then now() else now() - interval '2 hours' end,
          case when p_fresh then now() + interval '900 seconds' else now() - interval '1 hour' end,
-         e.enrolled_at, gen_random_uuid()
+         e.enrolled_at, gen_random_uuid(), true
     from public.enrolled_installations e where e.installation_id = pg_temp.inst(p_c) $$;
 grant execute on all functions in schema pg_temp to authenticated, anon;
 -- plpgsql: each call reads what earlier statements wrote.

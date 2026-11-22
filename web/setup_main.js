@@ -102,8 +102,9 @@ const DEFAULTS={
  // #2563 C2 — how long the backchannel's receipts and ended-membership
  // tombstones are kept (platform setting federation.retention_hours), and
  // how long a server waits for an answer before it sends a message again
- // (platform setting federation.answer_wait_seconds).
- federation:{retentionHours:'24',answerWait:'120'},
+ // (platform setting federation.answer_wait_seconds), and how many membership facts it sends
+ // per minute (platform setting federation.fact_drain_batch, #4327).
+ federation:{retentionHours:'24',answerWait:'120',factBatch:'500'},
  // #4217 — how long after its first sending a checkout may be sent again under
  // its original request, per provider (platform settings payments.resend_window_*_minutes).
  paymentResend:{mollie:'50',paypal:'330',stripe:'1380'},

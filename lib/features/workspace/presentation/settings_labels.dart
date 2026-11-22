@@ -66,6 +66,7 @@ String _federationSettingLabel(AppLocalizations l10n, String key) => switch (key
       'identity.clock_skew_seconds' => l10n.settingLabelIdentityClockSkewSeconds,
       'federation.retention_hours' => l10n.settingLabelFederationRetentionHours,
       'federation.answer_wait_seconds' => l10n.settingLabelFederationAnswerWaitSeconds,
+      'federation.fact_drain_batch' => l10n.settingLabelFederationFactDrainBatch,
       _ => _biReportSettingLabel(l10n, key),
     };
 
@@ -196,6 +197,7 @@ String? _federationSettingHint(AppLocalizations l10n, String key) => switch (key
       'identity.clock_skew_seconds' => l10n.settingHintIdentityClockSkewSeconds,
       'federation.retention_hours' => l10n.settingHintFederationRetentionHours,
       'federation.answer_wait_seconds' => l10n.settingHintFederationAnswerWaitSeconds,
+      'federation.fact_drain_batch' => l10n.settingHintFederationFactDrainBatch,
       _ => _biReportSettingHint(l10n, key),
     };
 

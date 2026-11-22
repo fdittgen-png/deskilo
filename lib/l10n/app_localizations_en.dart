@@ -15401,6 +15401,20 @@ class AppLocalizationsEn extends AppLocalizations {
       'A password change does not ask to sign in again';
 
   @override
+  String instanceDoctorFactBacklogDetail(
+    String overdue,
+    String waiting,
+    String live,
+    String capacity,
+  ) {
+    return '$overdue of $waiting waiting facts are older than one refresh period; $live relationships are live and one period delivers $capacity.\n        Fix: raise federation.fact_drain_batch (or lengthen the refresh period) so that batch x period / 60 exceeds the live relationships.';
+  }
+
+  @override
+  String get instanceDoctorFactBacklogTitle =>
+      'Membership facts wait longer than a refresh period';
+
+  @override
   String instanceDoctorGuardAnonViewDetail(String names) {
     return '$names\n        Without security_invoker the view reads with the owner rights and bypasses the policies of the tables under it.';
   }
@@ -15516,6 +15530,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get instanceDoctorProbeAuth => 'Auth configuration';
+
+  @override
+  String get instanceDoctorProbeFactDelivery => 'Membership fact delivery';
 
   @override
   String instanceDoctorProbeFailedDetail(int status, String message) {
@@ -31555,6 +31572,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Seconds a server waits for the answer to a signed message it sent to another server before it sends the same message again. At least 30; keep it below the status lifetime.';
 
   @override
+  String get settingHintFederationFactDrainBatch =>
+      'The most membership facts a workspace server sends to its personal home in one minute. A server renews each live relationship once per identity status refresh, so it keeps up with this number times the refresh seconds divided by 60 relationships (500 and 300 seconds: 2,500). Raise it when the instance doctor reports a delivery backlog.';
+
+  @override
   String get settingHintFederationRetentionHours =>
       'Hours a server keeps the receipts of signed messages between servers, and a personal home the tombstones of ended memberships, before the hourly cleanup removes them. Never shorter than the longest status lifetime plus twice the clock difference.';
 
@@ -31891,6 +31912,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get settingLabelFederationAnswerWaitSeconds =>
       'Backchannel answer wait';
+
+  @override
+  String get settingLabelFederationFactDrainBatch =>
+      'Membership facts sent per minute';
 
   @override
   String get settingLabelFederationRetentionHours => 'Backchannel retention';

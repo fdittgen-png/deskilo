@@ -1163,6 +1163,25 @@ final List<({SettingSeed row, String since})> settingSeeds = [
     ),
   ),
   (
+    since: 'membership_fact_capacity',
+    row: (
+      key: 'federation.fact_drain_batch',
+      type: 'int',
+      defaultValue: 500,
+      min: 50,
+      max: 2000,
+      unit: 'entries',
+      group: 'security',
+      scopes: ['platform'],
+      editPermission: 'workspaceSettings',
+      floor: null,
+      editable: true,
+      choices: null,
+      source: 'membership fact drain (#4327)',
+      note: 'The most membership facts a workspace server sends to its personal home in one minute. A server renews each live relationship once per identity status refresh period, so it keeps up with at most this number times the period in seconds divided by 60 relationships (500 and 300 seconds: 2 500). Raise it when the instance doctor reports a delivery backlog.',
+    ),
+  ),
+  (
     since: 'supplier_lookup_settings',
     row: (
       key: 'purchase.supplier_lookup_timeout_seconds',

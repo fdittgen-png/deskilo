@@ -69,6 +69,9 @@ const EINVOICE_STUCK=[['15','optMinutes',{n:15}],['60','optOneHour'],['240','opt
 const FED_RETENTION=[['1','optOneHour'],['6','optHours',{n:6}],['24','optHours',{n:24}],['72','optHours',{n:72}],['168','optDays',{n:7}],['720','optDays',{n:30}]];
 // #2563 C2 — the wait for a backchannel answer (platform setting
 // federation.answer_wait_seconds): 30..600 seconds.
+// #4327 — the membership facts a server sends per minute (platform setting
+// federation.fact_drain_batch): 50..2000.
+const FED_FACT_BATCH=[['100','optEntries',{n:100}],['250','optEntries',{n:250}],['500','optEntries',{n:500}],['1000','optEntries',{n:1000}],['2000','optEntries',{n:2000}]];
 const FED_ANSWER_WAIT=[['30','optSeconds',{n:30}],['60','optOneMinute'],['120','optMinutes',{n:2}],['300','optMinutes',{n:5}],['600','optMinutes',{n:10}]];
 // #2863 — the supplier lookup (platform settings
 // purchase.supplier_lookup_timeout_seconds 3..30 s and
@@ -154,6 +157,7 @@ const PARAM_META=[
  ['paymentResend.stripe','resendStripe','enum',()=>RESEND_STRIPE.map(x=>x[0]),{needs:'moneyTab'}],['einvoiceStuck.minutes','einvoiceStuck','enum',()=>EINVOICE_STUCK.map(x=>x[0]),{needs:'moneyTab'}],
  ['federation.retentionHours','fedRetention','enum',()=>FED_RETENTION.map(x=>x[0])],
  ['federation.answerWait','fedAnswerWait','enum',()=>FED_ANSWER_WAIT.map(x=>x[0])],
+ ['federation.factBatch','fedFactBatch','enum',()=>FED_FACT_BATCH.map(x=>x[0])],
  ['inbox.pageSize','inboxPageSize','enum',()=>INBOX_PAGE.map(x=>x[0])],
  ['bi.detailPageSize','biDetailPageSize','enum',()=>BI_DETAIL_PAGE.map(x=>x[0]),{needs:'moneyTab'}],
  ['badgeSecurity.failureLimit','badgeFailureLimit','num',{min:1,max:50}],

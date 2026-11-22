@@ -30,6 +30,7 @@ enum DoctorWords {
   authReauthOff,
   appUrlMissing,
   appUrlForeign,
+  factBacklog,
 }
 
 /// The questions the doctor asks, each named once: a failed one is worded in
@@ -45,6 +46,7 @@ enum DoctorProbe {
   roles,
   push,
   appUrl,
+  factDelivery,
 }
 
 /// How serious a finding is. [alarm] means people are affected right now.

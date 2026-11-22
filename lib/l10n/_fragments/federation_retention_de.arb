@@ -3,5 +3,7 @@
   "settingLabelFederationRetentionHours": "Aufbewahrung des Server-Austauschs",
   "settingHintFederationRetentionHours": "Stunden, die ein Server die Empfangsbelege signierter Nachrichten zwischen Servern und ein persönliches Zuhause die Spuren beendeter Mitgliedschaften aufbewahrt, bevor die stündliche Bereinigung sie entfernt. Nie kürzer als die längste Statusgültigkeit plus die doppelte Uhrabweichung.",
   "settingLabelFederationAnswerWaitSeconds": "Wartezeit auf Antwort im Server-Austausch",
-  "settingHintFederationAnswerWaitSeconds": "Sekunden, die ein Server auf die Antwort auf eine signierte Nachricht an einen anderen Server wartet, bevor er dieselbe Nachricht erneut sendet. Mindestens 30; unter der Statusgültigkeit halten."
+  "settingHintFederationAnswerWaitSeconds": "Sekunden, die ein Server auf die Antwort auf eine signierte Nachricht an einen anderen Server wartet, bevor er dieselbe Nachricht erneut sendet. Mindestens 30; unter der Statusgültigkeit halten.",
+  "settingLabelFederationFactDrainBatch": "Mitgliedschaftsfakten pro Minute",
+  "settingHintFederationFactDrainBatch": "Die höchste Zahl an Mitgliedschaftsfakten, die ein Arbeitsbereichs-Server in einer Minute an sein persönliches Zuhause sendet. Ein Server erneuert jede lebende Beziehung einmal je Aktualisierung des Identitätsstatus; er schafft höchstens diese Zahl mal die Aktualisierungssekunden geteilt durch 60 Beziehungen (500 und 300 Sekunden: 2.500). Erhöhen Sie sie, wenn der Instanz-Doktor einen Sendestau meldet."
 }

@@ -152,11 +152,11 @@ select is((select status || ' ' || revision from public.identity_status_assertio
 select is(pg_temp.tx(pg_temp.b(1, 'sa', 10, 'active')), 'duplicate', 'the same event is a retry');
 select is(pg_temp.tx(pg_temp.b(1, 'sa', 11, 'active')), 'event_conflict',
   'same event, other body: tampering');
-select is(pg_temp.tx(pg_temp.b(2, 'sa', 11, 'active'), p_secret => repeat('x', 40)), 'bad_signature',
+select is(pg_temp.tx(pg_temp.b(2, 'sa', 11, 'active'), p_secret => repeat('x', 40)), 'unauthorized',
   'a wrong key signs nothing');
-select is(pg_temp.tx(pg_temp.b(2, 'sa', 11, 'active'), p_source => pg_temp.u(9)), 'unknown_installation',
+select is(pg_temp.tx(pg_temp.b(2, 'sa', 11, 'active'), p_source => pg_temp.u(9)), 'unauthorized',
   'no inbound key: unknown');
-select is(pg_temp.tx(pg_temp.b(2, 'sa', 11, 'active'), p_target => pg_temp.w()), 'wrong_target',
+select is(pg_temp.tx(pg_temp.b(2, 'sa', 11, 'active'), p_target => pg_temp.w()), 'unauthorized',
   'another target is refused');
 select is(pg_temp.tx(pg_temp.b(2, 'sa', 11, 'active'), pg_temp.b(2, 'sa', 99, 'active')),
   'bad_digest', 'an unsigned body is refused');
@@ -179,7 +179,7 @@ select is(pg_temp.tx(pg_temp.b(9, 'sa', 12, 'active')), 'superseded', 'a late ac
 select is(pg_temp.tx(pg_temp.b(10, 'sa', 14, 'erased')), 'applied', 'an erasure applies');
 select is(pg_temp.tx(pg_temp.b(11, 'sa', 15, 'active')), 'superseded', 'and is final');
 select is(pg_temp.tx(pg_temp.b(12, 'nobody', 1, 'suspended')), 'unlinked_subject',
-  'an unbound subject is refused');
+  'an unbound subject is refused unless the home says it');
 select is(pg_temp.tx(pg_temp.b(13, 'sr', 1, 'active')) || ' ' ||
           pg_temp.tx(pg_temp.b(14, 'sr', 2, 'suspended')), 'unlinked_subject applied',
   'a revoked binding: no active, but a suspension');
@@ -188,12 +188,12 @@ select is(pg_temp.tx(pg_temp.b(15, 'sa', 16, 'active', p_issuer => 'https://othe
 
 -- ── W: rotation, retirement and the API roles ─────────────────────────
 select public.operator_set_federation_key(pg_temp.p(), 'inbound', 'identity_status', 'k2', repeat('t', 40));
-select is(pg_temp.tx(pg_temp.b(16, 'sr', 3, 'suspended')), 'unknown_key', 'a rotated-out key verifies nothing');
+select is(pg_temp.tx(pg_temp.b(16, 'sr', 3, 'suspended')), 'unauthorized', 'a rotated-out key verifies nothing');
 select is(pg_temp.tx(pg_temp.b(16, 'sr', 3, 'suspended'), p_secret => repeat('t', 40), p_key => 'k2'),
   'applied', 'the new key does');
 select public.operator_retire_federation_key(pg_temp.p(), 'inbound', 'identity_status', 'k2');
 select is(pg_temp.tx(pg_temp.b(17, 'sr', 4, 'suspended'), p_secret => repeat('t', 40), p_key => 'k2'),
-  'unknown_installation', 'all keys retired: unknown');
+  'unauthorized', 'all keys retired: unknown');
 select is((select count(*)::int from public.federation_keys k
             where exists (select 1 from vault.secrets s where s.id = k.vault_secret_id) and retired_at is not null),
   0, 'a retired key has no secret left');
