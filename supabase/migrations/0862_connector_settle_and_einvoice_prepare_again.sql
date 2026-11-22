@@ -49,7 +49,7 @@ begin
   v_def := pg_temp.anchor_replace(v_def,
     $o$if coalesce(p_purpose, 'work') = 'revoke' then$o$,
     $n$if coalesce(p_purpose, 'work') in ('revoke', 'settle') then$n$);
-  if v_def is null then raise exception '0863: the purpose anchor of accounting_connection_manageable_v1 is not found' using errcode = 'P0001'; end if;
+  if v_def is null then raise exception '0862: the purpose anchor of accounting_connection_manageable_v1 is not found' using errcode = 'P0001'; end if;
   execute v_def;
 end
 $patch$;
@@ -62,36 +62,36 @@ begin
   v_def := pg_get_functiondef('public.hmrc_actor(uuid)'::regprocedure);
   v_def := pg_temp.anchor_replace(v_def, $o$hmrc_actor(p_workspace_id uuid)$o$,
     $n$hmrc_actor(p_workspace_id uuid, p_purpose text DEFAULT 'work'::text)$n$);
-  if v_def is null then raise exception '0863: the signature anchor of hmrc_actor is not found' using errcode = 'P0001'; end if;
+  if v_def is null then raise exception '0862: the signature anchor of hmrc_actor is not found' using errcode = 'P0001'; end if;
   v_def := pg_temp.anchor_replace(v_def,
     $o$if not public.feature_effective(p_workspace_id, 'mtdSubmission')
      or not public.feature_effective(p_workspace_id, 'vatDeclarations') then$o$,
     $n$if coalesce(p_purpose, 'work') <> 'revoke'
      and (not public.feature_effective(p_workspace_id, 'mtdSubmission')
           or not public.feature_effective(p_workspace_id, 'vatDeclarations')) then$n$);
-  if v_def is null then raise exception '0863: the feature anchor of hmrc_actor is not found' using errcode = 'P0001'; end if;
+  if v_def is null then raise exception '0862: the feature anchor of hmrc_actor is not found' using errcode = 'P0001'; end if;
   v_def := pg_temp.anchor_replace(v_def,
     $o$if not exists (select 1 from public.workspaces w where w.id = p_workspace_id and upper(w.country_code) = 'GB') then$o$,
     $n$if coalesce(p_purpose, 'work') <> 'revoke'
      and not exists (select 1 from public.workspaces w where w.id = p_workspace_id and upper(w.country_code) = 'GB') then$n$);
-  if v_def is null then raise exception '0863: the country anchor of hmrc_actor is not found' using errcode = 'P0001'; end if;
+  if v_def is null then raise exception '0862: the country anchor of hmrc_actor is not found' using errcode = 'P0001'; end if;
   drop function public.hmrc_actor(uuid);
   execute v_def;
 
   v_def := pg_get_functiondef('public.hmrc_connection_manageable_v1(uuid)'::regprocedure);
   v_def := pg_temp.anchor_replace(v_def, $o$hmrc_connection_manageable_v1(p_connection_id uuid)$o$,
     $n$hmrc_connection_manageable_v1(p_connection_id uuid, p_purpose text DEFAULT 'work'::text)$n$);
-  if v_def is null then raise exception '0863: the signature anchor of hmrc_connection_manageable_v1 is not found' using errcode = 'P0001'; end if;
+  if v_def is null then raise exception '0862: the signature anchor of hmrc_connection_manageable_v1 is not found' using errcode = 'P0001'; end if;
   v_def := pg_temp.anchor_replace(v_def, $o$perform public.hmrc_actor(c.workspace_id);$o$,
     $n$perform public.hmrc_actor(c.workspace_id, coalesce(p_purpose, 'work'));$n$);
-  if v_def is null then raise exception '0863: the actor anchor of hmrc_connection_manageable_v1 is not found' using errcode = 'P0001'; end if;
+  if v_def is null then raise exception '0862: the actor anchor of hmrc_connection_manageable_v1 is not found' using errcode = 'P0001'; end if;
   drop function public.hmrc_connection_manageable_v1(uuid);
   execute v_def;
 
   v_def := pg_get_functiondef('public.revoke_hmrc_connection_v1(uuid)'::regprocedure);
   v_def := pg_temp.anchor_replace(v_def, $o$perform public.hmrc_actor(c.workspace_id);$o$,
     $n$perform public.hmrc_actor(c.workspace_id, 'revoke');$n$);
-  if v_def is null then raise exception '0863: the actor anchor of revoke_hmrc_connection_v1 is not found' using errcode = 'P0001'; end if;
+  if v_def is null then raise exception '0862: the actor anchor of revoke_hmrc_connection_v1 is not found' using errcode = 'P0001'; end if;
   execute v_def;
 end
 $patch$;
@@ -123,7 +123,7 @@ begin
     set phase = 'sent', owner_id = p_owner, generation = generation + 1,
         deadline = now() + make_interval(secs => p_window_seconds)
     where id = p_id and phase in ('prepared', 'failed')
-      -- the claim is of the document the caller verified (0863)
+      -- the claim is of the document the caller verified (0862)
       and (p_hash is null or document_hash = p_hash)
     returning * into v_row;
   if found then
@@ -260,4 +260,4 @@ grant execute on function public.prepare_einvoice_v1(uuid, uuid, text, text, tex
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(863);
+select public.set_deskilo_schema_version(862);

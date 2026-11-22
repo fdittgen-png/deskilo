@@ -134,7 +134,7 @@ export interface TransmissionStore {
   latestTest(workspaceId: string): Promise<TransmissionRow | null>;
   artifact(id: string): Promise<Artifact | null>;
   /** [hash] is the document the caller verified: the claim is refused with
-   * `binding_changed` when the row's document is another (0863). */
+   * `binding_changed` when the row's document is another (0862). */
   claim(id: string, owner: string, windowSeconds: number, hash?: string): Promise<ClaimResult>;
   record(
     id: string,

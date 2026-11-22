@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- 0863. (1) With the accounting connectors in servicing, the manageable door answers `settle` for the
+-- 0862. (1) With the accounting connectors in servicing, the manageable door answers `settle` for the
 -- member and the right and still refuses `work`; a delivery that exists records its outcome, a new one
 -- is refused where it is written; a plain member, another business and an assistant are refused.
 -- (2) The HMRC connection is revoked by the owner with mtdSubmission and vatDeclarations off; its door
@@ -41,9 +41,9 @@ grant execute on all functions in schema pg_temp to authenticated, anon;
 
 do $seed$
 declare
-  u_o uuid := '00000000-0000-4000-8000-0000086300c1';
-  u_p uuid := '00000000-0000-4000-8000-0000086300c2';
-  u_x uuid := '00000000-0000-4000-8000-0000086300c3';
+  u_o uuid := '00000000-0000-4000-8000-0000086200c1';
+  u_p uuid := '00000000-0000-4000-8000-0000086200c2';
+  u_x uuid := '00000000-0000-4000-8000-0000086200c3';
   ws uuid; ws2 uuid; wg uuid; site uuid; sg uuid; c1 uuid; ch uuid; mo uuid; inv uuid;
 begin
   insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
@@ -84,7 +84,7 @@ end
 $seed$;
 
 -- ── a delivery admitted while the connectors are active ──
-select is(pg_temp.rec('00000000-0000-4000-8000-00000863d001', 'generated'), 'created', 'with the feature on, a delivery is admitted');
+select is(pg_temp.rec('00000000-0000-4000-8000-00000862d001', 'generated'), 'created', 'with the feature on, a delivery is admitted');
 
 -- ── servicing ──
 update public.workspaces set feature_flags = feature_flags || '{"accountingConnectors": false}'::jsonb where id = pg_temp.v('ws')::uuid;
@@ -100,8 +100,8 @@ select is(pg_temp.as_actor('x', format($q$select public.accounting_connection_ma
   'another business''s owner is refused');
 select is(pg_temp.as_actor('o', format($q$select public.accounting_connection_manageable_v1(%L, 'settle')::text$q$, pg_temp.v('c1')), true), '42501',
   'an assistant''s delegated token is refused');
-select is(pg_temp.rec('00000000-0000-4000-8000-00000863d001', 'sent'), 'updated', 'servicing: the outcome of the delivery under way is recorded');
-select is(pg_temp.rec('00000000-0000-4000-8000-00000863d002', 'generated'), '0A000', 'servicing: a new delivery is still refused');
+select is(pg_temp.rec('00000000-0000-4000-8000-00000862d001', 'sent'), 'updated', 'servicing: the outcome of the delivery under way is recorded');
+select is(pg_temp.rec('00000000-0000-4000-8000-00000862d002', 'generated'), '0A000', 'servicing: a new delivery is still refused');
 
 -- ── HMRC: the owner revokes with the features off ──
 select is(pg_temp.as_actor('o', format($q$select (public.hmrc_connection_manageable_v1(%L) ->> 'workspace_id')$q$, pg_temp.v('ch'))), pg_temp.v('wg'),

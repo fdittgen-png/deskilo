@@ -112,7 +112,7 @@ class FakeStore implements TransmissionStore {
     const found = [...this.rows.values()].find((r) => r.key === key);
     if (found && found.binding !== binding &&
         (found.phase === "prepared" || found.phase === "failed")) {
-      // 0863: nothing left from a prepared or failed row, so the changed
+      // 0862: nothing left from a prepared or failed row, so the changed
       // content replaces what was stored and the row is prepared again.
       found.binding = binding;
       found.phase = "prepared";
@@ -234,7 +234,7 @@ class FakeStore implements TransmissionStore {
   }
   claim(id: string, owner: string, window: number, hash?: string): Promise<ClaimResult> {
     const r = this.rows.get(id)!;
-    // 0863: the claim is of the document the handler verified
+    // 0862: the claim is of the document the handler verified
     if (hash !== undefined && r.artifact.sha256 !== hash) {
       return Promise.resolve({ claimed: false, phase: r.phase, detail: "binding_changed" });
     }
@@ -418,7 +418,7 @@ Deno.test("O2: simultaneous requests upload once, whatever the bytes", async () 
   assertEquals(rs.filter((x) => x.status === 200).length, 1); // one winner
   for (const loser of rs.filter((x) => x.status !== 200)) {
     // every other request is refused, holds a document the row replaced
-    // meanwhile (0863), or is told the dispatch is in flight
+    // meanwhile (0862), or is told the dispatch is in flight
     assertEquals(
       loser.body.error === "binding_changed" ||
         loser.body.error === "artifact_unavailable" ||

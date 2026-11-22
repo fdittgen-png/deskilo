@@ -53,7 +53,7 @@ select is((pg_temp.prep('government', 'prod', 'h1', '')->>'outcome'), 'existing'
   'the same business transmission answers the original, whatever the request');
 select is((pg_temp.prep('government', 'prod', 'h1', '')->>'id'), current_setting('ei.id1'),
   'and it is the same record');
--- 0863: nothing has left from a prepared row, so changed bytes or a changed recipient prepare it
+-- 0862: nothing has left from a prepared row, so changed bytes or a changed recipient prepare it
 -- again (under the same row); once it is sent they conflict (502 holds the whole table).
 select is((pg_temp.prep('government', 'prod', 'h2', '')->>'outcome'), 'prepared',
   'changed bytes on a prepared row prepare it again');
