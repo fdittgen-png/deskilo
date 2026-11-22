@@ -2000,6 +2000,40 @@ constraint seats.seats_x_check CHECK ((x >= 0))
 constraint seats.seats_y_check CHECK ((y >= 0))
 constraint seats.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint seats.system_company_present CHECK ((company_id IS NOT NULL))
+constraint service_fulfilment_invoice_links.service_fulfilment_invoice_li_workspace_id_invoice_id_line__key UNIQUE (workspace_id, invoice_id, line_id)
+constraint service_fulfilment_invoice_links.service_fulfilment_invoice_li_workspace_id_linked_by_membe_fkey FOREIGN KEY (workspace_id, linked_by_member_id) REFERENCES members(workspace_id, id) ON DELETE CASCADE
+constraint service_fulfilment_invoice_links.service_fulfilment_invoice_link_workspace_id_fulfilment_id_fkey FOREIGN KEY (workspace_id, fulfilment_id) REFERENCES service_fulfilments(workspace_id, id) ON DELETE CASCADE
+constraint service_fulfilment_invoice_links.service_fulfilment_invoice_links_invoice_id_fkey FOREIGN KEY (invoice_id) REFERENCES invoices(id) ON DELETE RESTRICT
+constraint service_fulfilment_invoice_links.service_fulfilment_invoice_links_pkey PRIMARY KEY (id)
+constraint service_fulfilment_invoice_links.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint service_fulfilment_invoice_links.system_company_present CHECK ((company_id IS NOT NULL))
+constraint service_fulfilment_transitions.service_fulfilment_transition_workspace_id_actor_member_id_fkey FOREIGN KEY (workspace_id, actor_member_id) REFERENCES members(workspace_id, id) ON DELETE CASCADE
+constraint service_fulfilment_transitions.service_fulfilment_transitions_check CHECK (((revision = 1) = (from_state IS NULL)))
+constraint service_fulfilment_transitions.service_fulfilment_transitions_check1 CHECK (((to_state <> 'cancelled'::text) OR (btrim(reason) <> ''::text)))
+constraint service_fulfilment_transitions.service_fulfilment_transitions_from_state_check CHECK ((from_state = ANY (ARRAY['ordered'::text, 'started'::text, 'done'::text, 'cancelled'::text])))
+constraint service_fulfilment_transitions.service_fulfilment_transitions_fulfilment_id_revision_key UNIQUE (fulfilment_id, revision)
+constraint service_fulfilment_transitions.service_fulfilment_transitions_pkey PRIMARY KEY (id)
+constraint service_fulfilment_transitions.service_fulfilment_transitions_reason_check CHECK ((char_length(reason) <= 500))
+constraint service_fulfilment_transitions.service_fulfilment_transitions_revision_check CHECK ((revision >= 1))
+constraint service_fulfilment_transitions.service_fulfilment_transitions_to_state_check CHECK ((to_state = ANY (ARRAY['ordered'::text, 'started'::text, 'done'::text, 'cancelled'::text])))
+constraint service_fulfilment_transitions.service_fulfilment_transitions_workspace_id_fulfilment_id_fkey FOREIGN KEY (workspace_id, fulfilment_id) REFERENCES service_fulfilments(workspace_id, id) ON DELETE CASCADE
+constraint service_fulfilment_transitions.service_fulfilment_transitions_workspace_id_request_id_key UNIQUE (workspace_id, request_id)
+constraint service_fulfilment_transitions.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint service_fulfilment_transitions.system_company_present CHECK ((company_id IS NOT NULL))
+constraint service_fulfilments.service_fulfilments_check CHECK (((source_kind <> 'direct'::text) OR (source_id = id)))
+constraint service_fulfilments.service_fulfilments_check1 CHECK (((variant_id IS NULL) OR (item_id IS NOT NULL)))
+constraint service_fulfilments.service_fulfilments_pkey PRIMARY KEY (id)
+constraint service_fulfilments.service_fulfilments_revision_check CHECK ((revision >= 1))
+constraint service_fulfilments.service_fulfilments_scope_check CHECK ((jsonb_typeof(scope) = 'object'::text))
+constraint service_fulfilments.service_fulfilments_source_kind_check CHECK ((source_kind = ANY (ARRAY['quote'::text, 'invoice'::text, 'direct'::text])))
+constraint service_fulfilments.service_fulfilments_source_revision_check CHECK (((source_revision IS NULL) OR (source_revision >= 1)))
+constraint service_fulfilments.service_fulfilments_state_check CHECK ((state = ANY (ARRAY['ordered'::text, 'started'::text, 'done'::text, 'cancelled'::text])))
+constraint service_fulfilments.service_fulfilments_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint service_fulfilments.service_fulfilments_workspace_id_id_key UNIQUE (workspace_id, id)
+constraint service_fulfilments.service_fulfilments_workspace_id_source_kind_source_id_sour_key UNIQUE (workspace_id, source_kind, source_id, source_line_id)
+constraint service_fulfilments.service_fulfilments_workspace_id_subject_member_id_fkey FOREIGN KEY (workspace_id, subject_member_id) REFERENCES members(workspace_id, id) ON DELETE CASCADE
+constraint service_fulfilments.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint service_fulfilments.system_company_present CHECK ((company_id IS NOT NULL))
 constraint services.services_category_shape CHECK (((category IS NULL) OR (((char_length(category) >= 1) AND (char_length(category) <= 40)) AND (btrim(category) <> ''::text))))
 constraint services.services_description_length CHECK (((description IS NULL) OR (char_length(description) <= 2000)))
 constraint services.services_duration_range CHECK (((duration_minutes IS NULL) OR ((duration_minutes >= 5) AND (duration_minutes <= 1440))))
@@ -2883,14 +2917,14 @@ routine public.export_floor_plan(p_workspace_id uuid) -> jsonb | function | defi
 routine public.export_my_data(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:17e11f53b85b
 routine public.export_my_personal_data_v1() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:d7b715189c7e
 routine public.export_workspace_configuration(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:92590453f1db
-routine public.export_workspace_records(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:20cb14d4d33f
+routine public.export_workspace_records(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:4e12b3fd6631
 routine public.extend_rights_request(p_request_id uuid, p_reason text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:04408416313f
 routine public.feature_available_in(p_country text, p_key text) -> boolean | function | invoker | stable | exec:authenticated,service_role | body:afd99a4fede6
 routine public.feature_effective(p_workspace_id uuid, p_key text) -> boolean | function | invoker | stable | exec:authenticated,service_role | body:1d4c5b503042
 routine public.feature_effective_in(p_flags jsonb, p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:f36e5aa82a04
 routine public.feature_operation_allowed(p_workspace uuid, p_feature text, p_operation text) -> boolean | function | definer | stable | exec:service_role | body:084f4cf0e3a0
 routine public.feature_raw(p_flags jsonb, p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:3f29a2e68fc1
-routine public.feature_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:ab46c416b26d
+routine public.feature_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:48ecdd6a10f9
 routine public.federation_answer_wait() -> interval | function | definer | stable | exec: | body:ecc7c683d6e9
 routine public.federation_envelope_headers(p_purpose text, p_target uuid, p_event uuid, p_path text, p_body jsonb) -> jsonb | function | definer | volatile | exec: | body:dc4baaa18342
 routine public.federation_inbox_accept(p_method text, p_path text, p_headers jsonb, p_body_b64 text) -> jsonb | function | definer | volatile | exec:service_role | body:9eb383212bb9
@@ -3100,6 +3134,7 @@ routine public.level_visible(p_level uuid) -> boolean | function | definer | sta
 routine public.lexicon_allowed_keys() -> TABLE(key text, placeholders text[]) | function | invoker | stable | exec:authenticated,service_role | body:6e0e0cd306e4
 routine public.link_purchase_source_v1(p_workspace_id uuid, p_purchase_id uuid, p_source_kind text, p_source_id uuid, p_revision integer, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:ab220816c28f
 routine public.link_purchase_to_order_v1(p_workspace_id uuid, p_purchase_id uuid, p_order_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:1351cc277140
+routine public.link_service_fulfilment_invoice_v1(p_workspace_id uuid, p_fulfilment_id uuid, p_invoice_id uuid, p_line_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:933318604618
 routine public.list_all_workspaces() -> TABLE(id uuid, name text, environment text, pair_id uuid, member_count bigint, owner_count bigint, is_member boolean) | function | definer | stable | exec:authenticated,service_role | body:ad87ae14c060
 routine public.list_mcp_eligibility_requests() -> TABLE(request_id uuid, local_user_id uuid, email text, revision integer, requested_at timestamp with time zone) | function | definer | stable | exec:authenticated,service_role | body:bc03809b5ee0
 routine public.local_workspace_of_ref(p_ref text) -> uuid | function | definer | stable | exec:service_role | body:c41164d1e388
@@ -3421,6 +3456,7 @@ routine public.open_accounting_connection_v1(p_workspace_id uuid, p_issuer_site_
 routine public.open_claim_invoices(p_workspace uuid) -> TABLE(invoice_id uuid, reason text) | function | definer | stable | exec:service_role | body:e5a8469e834c
 routine public.open_hmrc_connection_v1(p_workspace_id uuid, p_issuer_site_id uuid, p_display_name text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:3cc8f4152d4a
 routine public.open_payment_intent(p_workspace_id uuid, p_member_id uuid, p_provider text, p_period text, p_amount_cents integer, p_currency text, p_request_id uuid, p_invoice_ids uuid[]) -> TABLE(id uuid, reference text, status text, order_id text, created_at timestamp with time zone, reused boolean) | function | definer | volatile | exec:authenticated,service_role | body:f267074406f2
+routine public.open_service_fulfilment_v1(p_workspace_id uuid, p_request_id uuid, p_source jsonb, p_scope jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f4a04441f566
 routine public.operator_activate_mcp_runtime(p_installation_id uuid, p_epoch integer, p_fingerprint text) -> jsonb | function | definer | volatile | exec:service_role | body:8d021c2c8498
 routine public.operator_approve_mcp_client(p_client_id text, p_name text, p_active boolean) -> jsonb | function | definer | volatile | exec:service_role | body:7edcf1c6a5bc
 routine public.operator_disable_mcp_runtime(p_installation_id uuid, p_reason text) -> jsonb | function | definer | volatile | exec:service_role | body:bd6a3393d787
@@ -3824,6 +3860,18 @@ routine public.send_inquiry_message(p_inquiry uuid, p_body text) -> uuid | funct
 routine public.send_inquiry_message_v1(p_inquiry uuid, p_body text, p_request_id uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:7d361a3ffe89
 routine public.send_member_note(p_workspace_id uuid, p_to_member_id uuid, p_body text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:05c9229611ea
 routine public.send_workspace_application_message(p_event_id uuid, p_body text, p_expected_account uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:f316d7071863
+routine public.service_fulfilment_actor(p_workspace uuid) -> members | function | definer | stable | exec:service_role | body:1a9e2c1cd693
+routine public.service_fulfilment_digest(p_text text) -> text | function | invoker | immutable | exec:service_role | body:98b5527e39bb
+routine public.service_fulfilment_direct_scope(p_workspace uuid, p_scope jsonb) -> jsonb | function | definer | stable | exec:service_role | body:f246972368da
+routine public.service_fulfilment_frozen() -> trigger | function | invoker | volatile | exec:service_role | body:5371d420b58e
+routine public.service_fulfilment_invoice_ids(f service_fulfilments) -> SETOF uuid | function | definer | stable | exec:service_role | body:d4d01d76053d
+routine public.service_fulfilment_json(f service_fulfilments) -> jsonb | function | definer | stable | exec:service_role | body:11d89631a565
+routine public.service_fulfilment_line_scope(p_line jsonb) -> jsonb | function | invoker | immutable | exec:service_role | body:88274158d789
+routine public.service_fulfilment_of_line_v1(p_workspace_id uuid, p_kind text, p_id uuid, p_line_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:919659bf1e8c
+routine public.service_fulfilment_source(p_workspace uuid, p_kind text, p_id uuid, p_line uuid) -> jsonb | function | definer | stable | exec:service_role | body:9141bd5521a1
+routine public.service_fulfilment_v1(p_workspace_id uuid, p_fulfilment_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:aeee36fa6c8f
+routine public.service_fulfilments_readable(p_workspace uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:5bd6602ab4ad
+routine public.service_fulfilments_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e46019f2545e
 routine public.services_keep_stock_history() -> trigger | function | invoker | volatile | exec:service_role | body:3fff17b7b78e
 routine public.services_stock_ledger_after() -> trigger | function | definer | volatile | exec:service_role | body:751d6ed4659a
 routine public.services_stock_ledger_before() -> trigger | function | definer | volatile | exec:service_role | body:4d8e5994602f
@@ -3925,7 +3973,7 @@ routine public.setup_current_levels(p_flags jsonb, p_country text) -> jsonb | fu
 routine public.setup_hours_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:4f359045c81a
 routine public.setup_invitation_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:5852379a5e56
 routine public.setup_level_arguments() -> text[] | function | invoker | immutable | exec:service_role | body:7f746fc5ea32
-routine public.setup_level_catalogue() -> jsonb | function | invoker | immutable | exec:service_role | body:83a6abee21aa
+routine public.setup_level_catalogue() -> jsonb | function | invoker | immutable | exec:service_role | body:02c805d86279
 routine public.setup_level_rank(p_process text, p_level text) -> integer | function | invoker | immutable | exec:service_role | body:a54edb860b1c
 routine public.setup_levels_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:c01c658a9993
 routine public.setup_member_rights_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:fa33dc1d0dfa
@@ -4033,7 +4081,7 @@ routine public.tell_owners_kiosk_device(p_workspace_id uuid, p_change text, p_de
 routine public.template_blocked_validations(p_tables jsonb, p_selected text[]) -> jsonb | function | invoker | immutable | exec:service_role | body:c094ee38e47a
 routine public.template_compatibility(p_template workspace_templates, p_groups text[]) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:99d317191047
 routine public.template_customizations(p_workspace_id uuid, p_template workspace_templates, p_groups jsonb) -> jsonb | function | definer | stable | exec:service_role | body:9906b0d4a427
-routine public.template_field_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:07a639edf046
+routine public.template_field_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:e6c9d96c49a6
 routine public.template_local_needs(p_template_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:680fc4d8017c
 routine public.template_local_slot_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:41d51bce65a7
 routine public.template_outline(p_template_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e7a5648e8753
@@ -4052,6 +4100,7 @@ routine public.template_wording_check(p_workspace_id uuid, p_config jsonb) -> vo
 routine public.toggle_message_star(p_kind text, p_message_id uuid) -> boolean | function | definer | volatile | exec:authenticated,service_role | body:88ca42478a05
 routine public.touch_conversation() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:1a8384fd9011
 routine public.touch_last_seen() -> void | function | definer | volatile | exec:authenticated,service_role | body:2d50fbe02f88
+routine public.transition_service_fulfilment_v1(p_workspace_id uuid, p_fulfilment_id uuid, p_expected_revision integer, p_to text, p_reason text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:e1ef6dfd4ba8
 routine public.unarchive_conversation_on_message() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:1ef58a6f7319
 routine public.unblock_account(p_user uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:913dd34e1777
 routine public.unmatch_bank_line_in_v1(p_line_id uuid, p_reason text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:afb740029be2
@@ -4572,6 +4621,12 @@ trigger seats.analytics_seat_history_update CREATE TRIGGER analytics_seat_histor
 trigger seats.realtime_deletion_signal CREATE TRIGGER realtime_deletion_signal AFTER DELETE ON public.seats REFERENCING OLD TABLE AS old_rows FOR EACH STATEMENT EXECUTE FUNCTION realtime_deletion_signal()
 trigger seats.seats_resource_guard CREATE TRIGGER seats_resource_guard BEFORE INSERT OR UPDATE ON public.seats FOR EACH ROW EXECUTE FUNCTION seats_resource_guard()
 trigger seats.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.seats FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger service_fulfilment_invoice_links.service_fulfilment_invoice_links_frozen CREATE TRIGGER service_fulfilment_invoice_links_frozen BEFORE DELETE OR UPDATE ON public.service_fulfilment_invoice_links FOR EACH ROW EXECUTE FUNCTION service_fulfilment_frozen()
+trigger service_fulfilment_invoice_links.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.service_fulfilment_invoice_links FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger service_fulfilment_transitions.service_fulfilment_transitions_frozen CREATE TRIGGER service_fulfilment_transitions_frozen BEFORE DELETE OR UPDATE ON public.service_fulfilment_transitions FOR EACH ROW EXECUTE FUNCTION service_fulfilment_frozen()
+trigger service_fulfilment_transitions.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.service_fulfilment_transitions FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger service_fulfilments.service_fulfilments_frozen CREATE TRIGGER service_fulfilments_frozen BEFORE DELETE OR UPDATE ON public.service_fulfilments FOR EACH ROW EXECUTE FUNCTION service_fulfilment_frozen()
+trigger service_fulfilments.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.service_fulfilments FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger services.realtime_deletion_signal CREATE TRIGGER realtime_deletion_signal AFTER DELETE ON public.services REFERENCING OLD TABLE AS old_rows FOR EACH STATEMENT EXECUTE FUNCTION realtime_deletion_signal()
 trigger services.refresh_public_services CREATE TRIGGER refresh_public_services AFTER INSERT OR DELETE OR UPDATE ON public.services FOR EACH ROW EXECUTE FUNCTION refresh_public_profile_cards()
 trigger services.services_keep_stock_history CREATE TRIGGER services_keep_stock_history BEFORE DELETE ON public.services FOR EACH ROW EXECUTE FUNCTION services_keep_stock_history()
