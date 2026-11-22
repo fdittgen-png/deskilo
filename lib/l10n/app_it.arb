@@ -7776,6 +7776,14 @@
   "@featureStockReceivingTitle": {
     "description": "#4171 the name of the receiving into stock feature"
   },
+  "featureStockReorderDesc": "Impostate un minimo per articolo e sede: la casella segnala quando la giacenza lo raggiunge e un elenco di riordino propone cosa ordinare. Disattivato: nessun punto, nessun avviso, nessun elenco; il registro non cambia.",
+  "@featureStockReorderDesc": {
+    "description": "#4294 feature description"
+  },
+  "featureStockReorderTitle": "Punti di riordino",
+  "@featureStockReorderTitle": {
+    "description": "#4294 feature name"
+  },
   "featureStockTakeOutDesc": "Prelevare merci dal magazzino per uso o come perdita, con motivo e lotto. Disattivato: non sono offerti consumo né perdita; i trasferimenti e la ricezione restano invariati.",
   "@featureStockTakeOutDesc": {
     "description": "#4170 what the taking goods out feature does, and what off means"

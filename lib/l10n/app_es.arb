@@ -7776,6 +7776,14 @@
   "@featureStockReceivingTitle": {
     "description": "#4171 the name of the receiving into stock feature"
   },
+  "featureStockReorderDesc": "Fije un mínimo por artículo y sede: la bandeja avisa cuando las existencias lo alcanzan y una lista de reposición propone qué pedir. Desactivado: ningún punto, ninguna alerta ni lista; el libro no se ve afectado.",
+  "@featureStockReorderDesc": {
+    "description": "#4294 feature description"
+  },
+  "featureStockReorderTitle": "Puntos de reposición",
+  "@featureStockReorderTitle": {
+    "description": "#4294 feature name"
+  },
   "featureStockTakeOutDesc": "Sacar mercancías de las existencias para uso o como pérdida, con el motivo y el lote. Desactivado: no se ofrece consumo ni pérdida; las transferencias y la recepción no cambian.",
   "@featureStockTakeOutDesc": {
     "description": "#4170 what the taking goods out feature does, and what off means"

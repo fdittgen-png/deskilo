@@ -48,4 +48,14 @@ const Map<WorkspaceFeature, FeatureManifestEntry> stockFeatureManifest = {
     requires: WorkspaceFeature.stockManagement,
     defaultOn: false,
   ),
+  // #4294 — reorder points per item and site, low-stock alerts in the inbox and a
+  // replenishment list. Asked for, under the goods ledger. Off: no point is set, no
+  // alert is raised and no list is offered; the ledger is unaffected.
+  WorkspaceFeature.stockReorder: FeatureManifestEntry(
+    feature: WorkspaceFeature.stockReorder,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.stockManagement,
+    defaultOn: false,
+  ),
 };

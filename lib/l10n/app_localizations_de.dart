@@ -12513,6 +12513,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get featureStockReceivingTitle => 'Wareneingang ins Lager';
 
   @override
+  String get featureStockReorderDesc =>
+      'Legen Sie je Artikel und Standort einen Mindestbestand fest: Der Posteingang meldet, wenn der Bestand ihn erreicht, und eine Nachschubliste schlägt vor, was zu bestellen ist. Aus: kein Meldebestand, kein Alarm, keine Liste; das Lagerbuch bleibt unberührt.';
+
+  @override
+  String get featureStockReorderTitle => 'Meldebestände';
+
+  @override
   String get featureStockTakeOutDesc =>
       'Waren für den Verbrauch oder als Verlust aus dem Lager nehmen, mit Grund und Charge. Aus: weder Verbrauch noch Verlust werden angeboten; Umlagerungen und Wareneingang bleiben unberührt.';
 

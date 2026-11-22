@@ -12495,6 +12495,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featureStockReceivingTitle => 'Ricezione a magazzino';
 
   @override
+  String get featureStockReorderDesc =>
+      'Impostate un minimo per articolo e sede: la casella segnala quando la giacenza lo raggiunge e un elenco di riordino propone cosa ordinare. Disattivato: nessun punto, nessun avviso, nessun elenco; il registro non cambia.';
+
+  @override
+  String get featureStockReorderTitle => 'Punti di riordino';
+
+  @override
   String get featureStockTakeOutDesc =>
       'Prelevare merci dal magazzino per uso o come perdita, con motivo e lotto. Disattivato: non sono offerti consumo né perdita; i trasferimenti e la ricezione restano invariati.';
 

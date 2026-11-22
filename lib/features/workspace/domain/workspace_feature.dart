@@ -436,18 +436,18 @@ enum WorkspaceFeature {
   /// Asked for, under invoicing. Off: nothing changes.
   customerQuotes,
 
-  /// #4169 — lots and expiry on goods: an item tracked by lot or by expiry
-  /// date, with a shelf life. Asked for, under the goods ledger. Off: items
-  /// are not tracked by lot and nothing else changes.
+  /// #4169 — lots and expiry on goods (feature_manifest_stock.dart).
   stockLots,
 
-  /// #4171 — a purchase-order delivery put away into stock once, its origin
-  /// kept (feature_manifest_stock.dart). Turning it on waits for #4170 (G4-A).
+  /// #4171 — a delivery put away into stock once (feature_manifest_stock.dart).
   stockReceiving,
 
   /// #4170 — goods taken out for use or as a loss (feature_manifest_stock.dart).
   stockTakeOut,
-  serviceFulfilment;
+  serviceFulfilment,
+
+  /// #4294 — reorder points and low-stock alerts (feature_manifest_stock.dart).
+  stockReorder;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;

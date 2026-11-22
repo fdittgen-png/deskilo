@@ -87,7 +87,8 @@ void main() {
     // #4171 — stockReceiving: receiving into stock is asked for.
     // #4178 — serviceFulfilment: following an ordered service is asked for.
     // #4170 — stockTakeOut: taking goods out is asked for.
-    expect(onCount, featureManifest.length - 63);
+    // #4294 — stockReorder: reorder points are asked for.
+    expect(onCount, featureManifest.length - 64);
   });
 
   testWidgets(

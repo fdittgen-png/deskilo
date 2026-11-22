@@ -7776,6 +7776,14 @@
   "@featureStockReceivingTitle": {
     "description": "#4171 the name of the receiving into stock feature"
   },
+  "featureStockReorderDesc": "Fixez un minimum par article et par site : la boîte de réception signale quand le stock l’atteint, et une liste de réapprovisionnement propose quoi commander. Désactivé : aucun seuil, aucune alerte, aucune liste ; le registre n’est pas touché.",
+  "@featureStockReorderDesc": {
+    "description": "#4294 feature description"
+  },
+  "featureStockReorderTitle": "Seuils de réapprovisionnement",
+  "@featureStockReorderTitle": {
+    "description": "#4294 feature name"
+  },
   "featureStockTakeOutDesc": "Sortir des marchandises du stock pour usage ou comme perte, avec le motif et le lot. Désactivé : ni consommation ni perte n’est proposée ; les transferts et la réception ne changent pas.",
   "@featureStockTakeOutDesc": {
     "description": "#4170 what the taking goods out feature does, and what off means"

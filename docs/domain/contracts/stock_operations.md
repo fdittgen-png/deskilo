@@ -94,6 +94,22 @@ Every finalized stock effect goes through ONE internal function (`stock_apply_li
 
 Evidence: `supabase/tests/database/495_stock_paths.sql` (the generic reason matrix and the system in-transit place; a replenishment inside a site, exact and fractional and converted by a carton's factor; between sites only through transit; all-line rollback and no clipping; the legacy bridge taking exactly from the place inside MAIN and refusing when short; the negative policy for an untracked item and never a lot; consumption and loss with replay, a different body refused, expired lots and the proposal; stockTakeOut off; a transfer loaded, received in part, retried and received in full with the sum unchanged at each step; one source place; the outcome of a request; the count refused and off/on again changing nothing; the member who only sees the stock, the delegated session, another business and the ledger off), `scripts/stock_transfer_race.sh` (opposing multi-item transfers never deadlock; the last stock is taken once).
 
+## Reorder points, low-stock alerts and the replenishment list
+
+Behind `stockReorder` (under `stockManagement`, off by default). Set with `manageStock`, read with `manageStock`, `managePurchases` or `viewStock`, a draft order made with `managePurchases`; an assistant session does none of it.
+
+| question | answer |
+|---|---|
+| What is a point? | `stock_reorder_points`: at one site, for one item (or one variant; none = the item as a whole), a `reorder_point` (exact, inventory unit) and optionally a `reorder_quantity` (what to order) or a `target_quantity` (order up to it, above the point), never both. One point per item, variant and site. An item without a point is never low. Written only by `save_stock_reorder_point_v1` (idempotent by request id, stale revision refused, what the point is for never changes) |
+| What is a site here? | the root place of a tree (`stock_site_of`): the points follow that function when #4293 gives the site its own level |
+| What is low? | what the site's real places hold of the item is at or below the point; goods in transit and in virtual places are not counted; read from the ledger, never stored |
+| What raises an alert? | one inbox event `stock_low` per point while it stays low (the owner is its actor and subject; one open notice per point is held by a unique index): opened when a movement or a save finds the point crossed, ended with the time when the stock rises above it; a repeated movement while low changes nothing; a new alert opens when it is low again. Read with `manageStock` or `managePurchases`; not the owner's own data (left out of the personal export) |
+| Is the movement path slower? | the trigger leaves at once for an item with no active point, and for a movement between places that are not real places of a site |
+| What does the replenishment list say? | the low rows with what to order (the reorder quantity, or what is missing up to the target), grouped by the supplier whose article is `preferred` for the item (one per item and variant; a variant's own wins over the item's), in the article's purchase unit rounded up to whole units; rows with no preferred article are listed as "no supplier chosen" |
+| What is the draft order? | `create_replenishment_draft_v1`: a DRAFT purchase order for one supplier from lines that are that supplier's preferred article, priced at zero and never sent; the same request answers the same order |
+
+Evidence: `supabase/tests/database/497_stock_reorder.sql` (the point and its refusals; one alert while low, ended above, a new one when low again; two sites with their own levels; a second business sees nothing; the list in whole purchase units; the draft and its replay) and `scripts/stock_transfer_race.sh` (two sessions crossing one point give one alert).
+
 ## States and transitions
 
 Declared states: `start`, `open`, `complete`.
