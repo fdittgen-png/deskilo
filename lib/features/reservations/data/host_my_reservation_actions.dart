@@ -13,6 +13,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../core/backend/context_clients.dart';
 import '../domain/my_reservations.dart';
 import 'host_my_reservations_repository.dart';
+import 'reservation_refusal_boundary.dart';
 
 class HostMyReservationActions implements MyReservationActions {
   const HostMyReservationActions({required this.pages, required this.hostOf});
@@ -50,18 +51,21 @@ class HostMyReservationActions implements MyReservationActions {
   ) async {
     final host = await verifiedMyReservationsHost(hostOf, source);
     try {
-      await host.client.rpc<Object?>(
-        command,
-        params: {'p_reservation_id': reservationId},
-      );
-    } on PostgrestException catch (e, st) {
-      // trace-exempt: an older host without the command is typed; every
-      // other answer is the host's own reason, rethrown for the row.
-      if (e.code != 'PGRST202') rethrow;
-      Error.throwWithStackTrace(
-        MyReservationsRefused(MyReservationsFailure.unsupported, detail: e.message),
-        st,
-      );
+      // A coded answer of the host becomes the typed refusal the card reads, through the one
+      // conversion of the booking writes; a transport fault stays what it is.
+      await asReservationRefusal(() async {
+        try {
+          await host.client.rpc<Object?>(command, params: {'p_reservation_id': reservationId});
+        } on PostgrestException catch (e, st) {
+          // trace-exempt: an older host without the command is typed; every other answer is
+          // the host's own reason, rethrown for the conversion.
+          if (e.code != 'PGRST202') rethrow;
+          Error.throwWithStackTrace(
+            MyReservationsRefused(MyReservationsFailure.unsupported, detail: e.message),
+            st,
+          );
+        }
+      });
     } finally {
       host.lease?.release();
     }
