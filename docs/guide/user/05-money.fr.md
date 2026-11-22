@@ -703,6 +703,21 @@ Ouvrez **Stock → Articles**. Chaque ligne montre le **code-barres**, l’**uni
 - **Recherchez** par nom, code-barres ou adresse. Saisir ou scanner un code-barres dans la recherche et valider ouvre cet article.
 - Les longues listes se chargent par pages : choisissez *Afficher plus*.
 
+<!-- anchor: user.money.stock.groups -->
+### Groupes d’articles
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous voulez dire une fois ce qu’une famille d’articles a en commun — combien de temps elle se garde, comment elle est suivie, à quelle fréquence elle est comptée — et que chaque article suive.
+
+Ouvrez **Stock → Groupes d’articles** (il faut la fonction *Groupes d’articles* sous la gestion du stock). Un groupe a un nom, se place au sommet ou dans un autre groupe (un seul niveau de sous-groupes) et porte les réglages que vous choisissez : **suivi**, **durée de conservation**, **mode de puce**, **unité de stock**, **compter tous les n jours**, **âge minimum** et **vendu au poids**. Un réglage laissé *Non défini* n’est pas décidé à ce niveau.
+
+- **Un article suit son groupe tant qu’il n’a pas sa propre valeur.** La valeur en vigueur est celle de l’article s’il en a une, sinon celle de son sous-groupe, sinon celle de son groupe. Ouvrez **Groupe et réglages hérités** d’un article (l’icône de dossier sur sa ligne dans **Stock → Articles**) pour voir d’où vient chaque réglage (*Du groupe Boissons depuis le 3 déc.* ou *Valeur propre*), le déplacer dans un autre groupe et rendre une valeur propre avec **Utiliser la valeur du groupe**.
+- **Chaque changement est prévisualisé.** En enregistrant un groupe, vous voyez d’abord ce que le changement atteint : *s’applique à 1, 1 gardent leur propre valeur, 0 ne peuvent pas être atteints*. Rien n’est appliqué avant un deuxième enregistrement ; toute modification entre-temps demande un nouvel aperçu. Un article que le changement ne peut pas atteindre (par exemple une unité sur un article qui a déjà des mouvements) est listé, et le changement du groupe est enregistré pour les autres.
+- **Historique.** La feuille du groupe liste chaque changement avec le nombre d’articles atteints ; la ligne d’origine d’un article dit depuis quand.
+- Un sous-groupe ne peut pas avoir de sous-groupes ; les puces par pièce demandent un suivi à la pièce ; un groupe encore utilisé par des articles ne se supprime pas (déplacez-les d’abord). Ce qui est déjà enregistré — factures, réceptions, mouvements — ne change jamais.
+- Modifier les groupes demande le droit de gérer le stock ; les lire, celui de le voir.
+
 <!-- anchor: user.money.stock.value -->
 ### Valeur du stock et origine des marchandises
 

@@ -2954,6 +2954,20 @@ Abra **Existencias → Artículos**. Cada línea muestra el **código de barras*
 - **Busque** por nombre, código de barras o dirección. Escribir o escanear un código de barras en la búsqueda y confirmar abre ese artículo.
 - Las listas largas se cargan por páginas: elija *Mostrar más*.
 
+### Grupos de artículos
+
+**Público:** Administrador/a · Propietario
+
+Quiere decir una vez lo que una familia de artículos tiene en común — cuánto dura, cómo se sigue, cada cuánto se cuenta — y que cada artículo lo siga.
+
+Abra **Stock → Grupos de artículos** (requiere la función *Grupos de artículos* bajo la gestión del stock). Un grupo tiene un nombre, está arriba o dentro de otro grupo (un solo nivel de subgrupos) y lleva los ajustes que elija: **seguimiento**, **vida útil**, **modo de etiqueta**, **unidad de inventario**, **contar cada n días**, **edad mínima** y **se vende al peso**. Un ajuste que deja *Sin definir* no se decide en este nivel.
+
+- **Un artículo sigue a su grupo mientras no tenga un valor propio.** Rige el valor del propio artículo si lo tiene, si no el de su subgrupo, si no el de su grupo. Abra **Grupo y ajustes heredados** de un artículo (el icono de carpeta en su línea de **Stock → Artículos**) para ver de dónde viene cada ajuste (*Del grupo Bebidas desde el 3 dic.* o *Valor propio*), moverlo a otro grupo y devolver un valor propio con **Usar el valor del grupo**.
+- **Cada cambio se previsualiza.** Al guardar un grupo se muestra primero lo que el cambio alcanza: *se aplica a 1, 1 conservan su propio valor, 0 no se pueden alcanzar*. No se aplica nada hasta guardar por segunda vez; cualquier edición intermedia pide una nueva vista previa. Un artículo que el cambio no puede alcanzar (por ejemplo una unidad en un artículo que ya tiene movimientos) se lista, y el cambio del grupo se guarda para los demás.
+- **Historial.** La hoja del grupo lista cada cambio con cuántos artículos alcanzó; la línea de origen de un artículo dice desde cuándo.
+- Un subgrupo no puede tener subgrupos; las etiquetas por pieza necesitan seguimiento por pieza; un grupo que aún usan artículos no se elimina (muévalos primero). Lo ya registrado — facturas, recepciones, movimientos — nunca cambia.
+- Cambiar los grupos requiere el derecho de gestionar el stock; leerlos, el de verlo.
+
 ### Valor de las existencias y origen de la mercancía
 
 **Público:** Administrador/a · Propietario

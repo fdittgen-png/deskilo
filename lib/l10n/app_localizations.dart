@@ -29275,6 +29275,328 @@ abstract class AppLocalizations {
   /// **'Customers'**
   String get invoicingViewCustomers;
 
+  /// #4361 G12 item groups: itemGroupAssignField
+  ///
+  /// In en, this message translates to:
+  /// **'Group'**
+  String get itemGroupAssignField;
+
+  /// #4361 G12 item groups: itemGroupAssignNone
+  ///
+  /// In en, this message translates to:
+  /// **'No group'**
+  String get itemGroupAssignNone;
+
+  /// #4361 G12 item groups: itemGroupAssignOpen
+  ///
+  /// In en, this message translates to:
+  /// **'Group and inherited settings'**
+  String get itemGroupAssignOpen;
+
+  /// #4361 G12 item groups: itemGroupAssignTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Group of {item}'**
+  String itemGroupAssignTitle(String item);
+
+  /// #4361 G12 item groups: itemGroupClose
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get itemGroupClose;
+
+  /// #4361 G12 item groups: itemGroupConfirm
+  ///
+  /// In en, this message translates to:
+  /// **'Check what this reaches, then save again to apply it.'**
+  String get itemGroupConfirm;
+
+  /// #4361 G12 item groups: itemGroupCountEvery
+  ///
+  /// In en, this message translates to:
+  /// **'Count every (days)'**
+  String get itemGroupCountEvery;
+
+  /// #4361 G12 item groups: itemGroupDelete
+  ///
+  /// In en, this message translates to:
+  /// **'Delete the group'**
+  String get itemGroupDelete;
+
+  /// #4361 G12 item groups: itemGroupDeleted
+  ///
+  /// In en, this message translates to:
+  /// **'Group deleted.'**
+  String get itemGroupDeleted;
+
+  /// #4361 G12 item groups: itemGroupEditTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Group'**
+  String get itemGroupEditTitle;
+
+  /// #4361 G12 item groups: itemGroupFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The item groups could not be read.'**
+  String get itemGroupFailed;
+
+  /// #4361 G12 item groups: itemGroupFrom
+  ///
+  /// In en, this message translates to:
+  /// **'From {group}'**
+  String itemGroupFrom(String group);
+
+  /// #4361 G12 item groups: itemGroupFromSince
+  ///
+  /// In en, this message translates to:
+  /// **'From {group} since {date}'**
+  String itemGroupFromSince(String group, String date);
+
+  /// #4361 G12 item groups: itemGroupHistory
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get itemGroupHistory;
+
+  /// #4361 G12 item groups: itemGroupHistoryLine
+  ///
+  /// In en, this message translates to:
+  /// **'{parameter}: {from} → {to}, reached {affected}'**
+  String itemGroupHistoryLine(
+    String parameter,
+    String from,
+    String to,
+    int affected,
+  );
+
+  /// #4361 G12 item groups: itemGroupHistoryNone
+  ///
+  /// In en, this message translates to:
+  /// **'No change recorded yet.'**
+  String get itemGroupHistoryNone;
+
+  /// #4361 G12 item groups: itemGroupItemsCount
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{1 item} other{{count} items}}'**
+  String itemGroupItemsCount(int count);
+
+  /// #4361 G12 item groups: itemGroupMinAge
+  ///
+  /// In en, this message translates to:
+  /// **'Minimum age for a sale'**
+  String get itemGroupMinAge;
+
+  /// #4361 G12 item groups: itemGroupMove
+  ///
+  /// In en, this message translates to:
+  /// **'Move'**
+  String get itemGroupMove;
+
+  /// #4361 G12 item groups: itemGroupMoveReaches
+  ///
+  /// In en, this message translates to:
+  /// **'Moving it changes {count} settings.'**
+  String itemGroupMoveReaches(int count);
+
+  /// #4361 G12 item groups: itemGroupMoved
+  ///
+  /// In en, this message translates to:
+  /// **'The item is in its new group.'**
+  String get itemGroupMoved;
+
+  /// #4361 G12 item groups: itemGroupName
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get itemGroupName;
+
+  /// #4361 G12 item groups: itemGroupNewTitle
+  ///
+  /// In en, this message translates to:
+  /// **'New group'**
+  String get itemGroupNewTitle;
+
+  /// #4361 G12 item groups: itemGroupNo
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get itemGroupNo;
+
+  /// #4361 G12 item groups: itemGroupNoParent
+  ///
+  /// In en, this message translates to:
+  /// **'Top level'**
+  String get itemGroupNoParent;
+
+  /// #4361 G12 item groups: itemGroupNotSet
+  ///
+  /// In en, this message translates to:
+  /// **'Not set'**
+  String get itemGroupNotSet;
+
+  /// #4361 G12 item groups: itemGroupOwn
+  ///
+  /// In en, this message translates to:
+  /// **'Own value'**
+  String get itemGroupOwn;
+
+  /// #4361 G12 item groups: itemGroupParent
+  ///
+  /// In en, this message translates to:
+  /// **'Inside group'**
+  String get itemGroupParent;
+
+  /// #4361 G12 item groups: itemGroupPreviewLine
+  ///
+  /// In en, this message translates to:
+  /// **'{parameter}: applies to {affected}, {kept} keep their own value, {skipped} cannot be reached'**
+  String itemGroupPreviewLine(
+    String parameter,
+    int affected,
+    int kept,
+    int skipped,
+  );
+
+  /// #4361 G12 item groups: itemGroupPreviewNothing
+  ///
+  /// In en, this message translates to:
+  /// **'No item is reached.'**
+  String get itemGroupPreviewNothing;
+
+  /// #4361 G12 item groups: itemGroupPreviewTitle
+  ///
+  /// In en, this message translates to:
+  /// **'What this change reaches'**
+  String get itemGroupPreviewTitle;
+
+  /// #4361 G12 item groups: itemGroupReasonDepth
+  ///
+  /// In en, this message translates to:
+  /// **'A sub-group cannot have sub-groups.'**
+  String get itemGroupReasonDepth;
+
+  /// #4361 G12 item groups: itemGroupReasonGroupUnknown
+  ///
+  /// In en, this message translates to:
+  /// **'This group does not exist.'**
+  String get itemGroupReasonGroupUnknown;
+
+  /// #4361 G12 item groups: itemGroupReasonHasMovements
+  ///
+  /// In en, this message translates to:
+  /// **'it already has movements'**
+  String get itemGroupReasonHasMovements;
+
+  /// #4361 G12 item groups: itemGroupReasonHasSubgroups
+  ///
+  /// In en, this message translates to:
+  /// **'This group has sub-groups: delete them first.'**
+  String get itemGroupReasonHasSubgroups;
+
+  /// #4361 G12 item groups: itemGroupReasonInUse
+  ///
+  /// In en, this message translates to:
+  /// **'This group is used by items: move them first.'**
+  String get itemGroupReasonInUse;
+
+  /// #4361 G12 item groups: itemGroupReasonNameDuplicate
+  ///
+  /// In en, this message translates to:
+  /// **'Another group already has this name.'**
+  String get itemGroupReasonNameDuplicate;
+
+  /// #4361 G12 item groups: itemGroupReasonNeedsSerial
+  ///
+  /// In en, this message translates to:
+  /// **'Per-piece tags need tracking by piece.'**
+  String get itemGroupReasonNeedsSerial;
+
+  /// #4361 G12 item groups: itemGroupReasonNotOverridable
+  ///
+  /// In en, this message translates to:
+  /// **'This setting cannot be given its own value.'**
+  String get itemGroupReasonNotOverridable;
+
+  /// #4361 G12 item groups: itemGroupSkippedLine
+  ///
+  /// In en, this message translates to:
+  /// **'{item}: {parameter} ({reason})'**
+  String itemGroupSkippedLine(String item, String parameter, String reason);
+
+  /// #4361 G12 item groups: itemGroupSkippedTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Not reached'**
+  String get itemGroupSkippedTitle;
+
+  /// #4361 G12 item groups: itemGroupSoldByWeight
+  ///
+  /// In en, this message translates to:
+  /// **'Sold by weight'**
+  String get itemGroupSoldByWeight;
+
+  /// #4361 G12 item groups: itemGroupTagBatch
+  ///
+  /// In en, this message translates to:
+  /// **'One tag per batch'**
+  String get itemGroupTagBatch;
+
+  /// #4361 G12 item groups: itemGroupTagMode
+  ///
+  /// In en, this message translates to:
+  /// **'Tag mode'**
+  String get itemGroupTagMode;
+
+  /// #4361 G12 item groups: itemGroupTagNone
+  ///
+  /// In en, this message translates to:
+  /// **'No tags'**
+  String get itemGroupTagNone;
+
+  /// #4361 G12 item groups: itemGroupTagUnit
+  ///
+  /// In en, this message translates to:
+  /// **'One tag per piece'**
+  String get itemGroupTagUnit;
+
+  /// #4361 G12 item groups: itemGroupTrackingSerial
+  ///
+  /// In en, this message translates to:
+  /// **'By piece (serial)'**
+  String get itemGroupTrackingSerial;
+
+  /// #4361 G12 item groups: itemGroupUseGroup
+  ///
+  /// In en, this message translates to:
+  /// **'Use the group’s value'**
+  String get itemGroupUseGroup;
+
+  /// #4361 G12 item groups: itemGroupYes
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get itemGroupYes;
+
+  /// #4361 G12 item groups: itemGroupsAdd
+  ///
+  /// In en, this message translates to:
+  /// **'Add a group'**
+  String get itemGroupsAdd;
+
+  /// #4361 G12 item groups: itemGroupsEmpty
+  ///
+  /// In en, this message translates to:
+  /// **'No group yet. A group holds settings that its items share.'**
+  String get itemGroupsEmpty;
+
+  /// #4361 G12 item groups: itemGroupsTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Item groups'**
+  String get itemGroupsTitle;
+
   /// Journal export (#2370): roles the posting engine could not resolve
   ///
   /// In en, this message translates to:

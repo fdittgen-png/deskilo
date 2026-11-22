@@ -18531,6 +18531,203 @@ class AppLocalizationsIt extends AppLocalizations {
   String get invoicingViewCustomers => 'Clienti';
 
   @override
+  String get itemGroupAssignField => 'Gruppo';
+
+  @override
+  String get itemGroupAssignNone => 'Nessun gruppo';
+
+  @override
+  String get itemGroupAssignOpen => 'Gruppo e impostazioni ereditate';
+
+  @override
+  String itemGroupAssignTitle(String item) {
+    return 'Gruppo di $item';
+  }
+
+  @override
+  String get itemGroupClose => 'Chiudi';
+
+  @override
+  String get itemGroupConfirm =>
+      'Controlli cosa raggiunge, poi salvi di nuovo per applicarla.';
+
+  @override
+  String get itemGroupCountEvery => 'Conta ogni (giorni)';
+
+  @override
+  String get itemGroupDelete => 'Elimina il gruppo';
+
+  @override
+  String get itemGroupDeleted => 'Gruppo eliminato.';
+
+  @override
+  String get itemGroupEditTitle => 'Gruppo';
+
+  @override
+  String get itemGroupFailed =>
+      'Non è stato possibile leggere i gruppi di articoli.';
+
+  @override
+  String itemGroupFrom(String group) {
+    return 'Dal gruppo $group';
+  }
+
+  @override
+  String itemGroupFromSince(String group, String date) {
+    return 'Dal gruppo $group dal $date';
+  }
+
+  @override
+  String get itemGroupHistory => 'Cronologia';
+
+  @override
+  String itemGroupHistoryLine(
+    String parameter,
+    String from,
+    String to,
+    int affected,
+  ) {
+    return '$parameter: $from → $to, raggiunti $affected';
+  }
+
+  @override
+  String get itemGroupHistoryNone => 'Ancora nessuna modifica registrata.';
+
+  @override
+  String itemGroupItemsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count articoli',
+      one: '1 articolo',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get itemGroupMinAge => 'Età minima per una vendita';
+
+  @override
+  String get itemGroupMove => 'Sposta';
+
+  @override
+  String itemGroupMoveReaches(int count) {
+    return 'Spostarlo cambia $count impostazioni.';
+  }
+
+  @override
+  String get itemGroupMoved => 'L’articolo è nel suo nuovo gruppo.';
+
+  @override
+  String get itemGroupName => 'Nome';
+
+  @override
+  String get itemGroupNewTitle => 'Nuovo gruppo';
+
+  @override
+  String get itemGroupNo => 'No';
+
+  @override
+  String get itemGroupNoParent => 'Livello superiore';
+
+  @override
+  String get itemGroupNotSet => 'Non impostato';
+
+  @override
+  String get itemGroupOwn => 'Valore proprio';
+
+  @override
+  String get itemGroupParent => 'Dentro il gruppo';
+
+  @override
+  String itemGroupPreviewLine(
+    String parameter,
+    int affected,
+    int kept,
+    int skipped,
+  ) {
+    return '$parameter: si applica a $affected, $kept mantengono il proprio valore, $skipped non sono raggiungibili';
+  }
+
+  @override
+  String get itemGroupPreviewNothing => 'Nessun articolo è raggiunto.';
+
+  @override
+  String get itemGroupPreviewTitle => 'Cosa raggiunge questa modifica';
+
+  @override
+  String get itemGroupReasonDepth =>
+      'Un sottogruppo non può avere sottogruppi.';
+
+  @override
+  String get itemGroupReasonGroupUnknown => 'Questo gruppo non esiste.';
+
+  @override
+  String get itemGroupReasonHasMovements => 'ha già movimenti';
+
+  @override
+  String get itemGroupReasonHasSubgroups =>
+      'Questo gruppo ha sottogruppi: li elimini prima.';
+
+  @override
+  String get itemGroupReasonInUse =>
+      'Questo gruppo è usato da articoli: li sposti prima.';
+
+  @override
+  String get itemGroupReasonNameDuplicate =>
+      'Un altro gruppo ha già questo nome.';
+
+  @override
+  String get itemGroupReasonNeedsSerial =>
+      'I tag per pezzo richiedono il tracciamento per pezzo.';
+
+  @override
+  String get itemGroupReasonNotOverridable =>
+      'Questa impostazione non può avere un valore proprio.';
+
+  @override
+  String itemGroupSkippedLine(String item, String parameter, String reason) {
+    return '$item: $parameter ($reason)';
+  }
+
+  @override
+  String get itemGroupSkippedTitle => 'Non raggiunti';
+
+  @override
+  String get itemGroupSoldByWeight => 'Venduto a peso';
+
+  @override
+  String get itemGroupTagBatch => 'Un tag per lotto';
+
+  @override
+  String get itemGroupTagMode => 'Modalità tag';
+
+  @override
+  String get itemGroupTagNone => 'Nessun tag';
+
+  @override
+  String get itemGroupTagUnit => 'Un tag per pezzo';
+
+  @override
+  String get itemGroupTrackingSerial => 'Per pezzo (seriale)';
+
+  @override
+  String get itemGroupUseGroup => 'Usa il valore del gruppo';
+
+  @override
+  String get itemGroupYes => 'Sì';
+
+  @override
+  String get itemGroupsAdd => 'Aggiungi un gruppo';
+
+  @override
+  String get itemGroupsEmpty =>
+      'Ancora nessun gruppo. Un gruppo raccoglie impostazioni che i suoi articoli condividono.';
+
+  @override
+  String get itemGroupsTitle => 'Gruppi di articoli';
+
+  @override
   String journalBlocked(String roles) {
     return 'Associa prima questi ruoli nel piano dei conti: $roles';
   }

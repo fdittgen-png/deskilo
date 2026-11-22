@@ -2954,6 +2954,20 @@ Sie möchten eine Liste, die für jeden Artikel und jede Variante sagt, was es i
 - **Suchen** Sie nach Name, Barcode oder Adresse. Einen Barcode in die Suche eingeben oder scannen und bestätigen öffnet diesen Artikel.
 - Lange Listen werden seitenweise geladen: Wählen Sie *Mehr anzeigen*.
 
+### Artikelgruppen
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie möchten einmal festlegen, was eine Familie von Artikeln gemeinsam hat – wie lange sie hält, wie sie nachverfolgt und wie oft sie gezählt wird – und jeden Artikel folgen lassen.
+
+Öffnen Sie **Lager → Artikelgruppen** (dafür ist die Funktion *Artikelgruppen* unter der Lagerverwaltung nötig). Eine Gruppe hat einen Namen, steht oben oder in einer anderen Gruppe (eine Ebene Untergruppen, nicht mehr) und trägt die Einstellungen, die Sie wählen: **Nachverfolgung**, **Haltbarkeit**, **Tag-Modus**, **Lagereinheit**, **Zählen alle n Tage**, **Mindestalter** und **Nach Gewicht verkauft**. Eine Einstellung, die Sie auf *Nicht festgelegt* lassen, wird auf dieser Ebene nicht entschieden.
+
+- **Ein Artikel folgt seiner Gruppe, solange er keinen eigenen Wert hat.** Es gilt der eigene Wert des Artikels, sonst der seiner Untergruppe, sonst der seiner Gruppe. Öffnen Sie **Gruppe und geerbte Einstellungen** eines Artikels (das Ordner-Symbol in seiner Zeile unter **Lager → Artikel**), um zu sehen, woher jede Einstellung kommt (*Von Getränke seit 3. Dez.* oder *Eigener Wert*), ihn in eine andere Gruppe zu verschieben und einen eigenen Wert mit **Wert der Gruppe verwenden** zurückzugeben.
+- **Jede Änderung wird vorab gezeigt.** Beim Speichern einer Gruppe sehen Sie zuerst, was die Änderung erreicht: *gilt für 1, 1 behalten ihren eigenen Wert, 0 sind nicht erreichbar*. Erst das zweite Speichern wendet sie an; jede Änderung dazwischen verlangt eine neue Vorschau. Ein Artikel, den die Änderung nicht erreichen kann (etwa eine Einheit bei einem Artikel mit Bewegungen), wird aufgeführt, und die Änderung der Gruppe wird für die anderen trotzdem gespeichert.
+- **Verlauf.** Das Blatt der Gruppe listet jede Änderung mit der Zahl der erreichten Artikel; die Herkunftszeile eines Artikels nennt, seit wann.
+- Eine Untergruppe kann keine Untergruppen haben; Tags pro Stück brauchen Nachverfolgung pro Stück; eine Gruppe, die noch Artikel verwenden, wird nicht gelöscht (verschieben Sie sie zuerst). Bereits Festgehaltenes – Rechnungen, Wareneingänge, Bewegungen – ändert sich nie.
+- Gruppen ändern braucht das Recht, das Lager zu verwalten; sie lesen das Recht, es einzusehen.
+
 ### Lagerwert und Herkunft der Ware
 
 **Zielgruppe:** Administrator:in · Inhaber

@@ -703,6 +703,21 @@ Open **Stock → Items**. Each line shows the **barcode**, the **unit**, the **p
 - **Search** by name, barcode or address. Typing or scanning a barcode into the search and confirming opens that item.
 - Long lists load by pages: choose *Show more*.
 
+<!-- anchor: user.money.stock.groups -->
+### Item groups
+
+**Audience:** Administrator · Owner
+
+You want to say once what a family of items has in common — how long it keeps, how it is tracked, how often it is counted — and have every item follow.
+
+Open **Stock → Item groups** (it needs the *Item groups* feature under stock management). A group has a name, sits at the top or inside another group (one level of sub-groups, no more) and carries the settings you choose: **tracking**, **shelf life**, **tag mode**, **inventory unit**, **count every n days**, **minimum age** and **sold by weight**. A setting you leave *Not set* is not decided at this level.
+
+- **An item follows its group unless it keeps its own value.** The value in force is the item's own if it has one, else its sub-group's, else its group's. Open an item's **Group and inherited settings** (the folder icon on its line in **Stock → Items**) to see where each setting comes from (*From Drinks since 3 Dec* or *Own value*), to move it into another group, and to give an own value back with **Use the group's value**.
+- **Every change is previewed.** Saving a group first shows what the change reaches: *applies to 1, 1 keep their own value, 0 cannot be reached*. Nothing is applied until you save a second time; editing anything in between asks for a new preview. An item the change cannot reach (for example a unit on an item that already has movements) is listed, and the group's change still saves for the others.
+- **History.** The group's sheet lists every change with how many items it reached; an item's source line says since when.
+- A sub-group cannot have sub-groups; per-piece tags need tracking by piece; a group still used by items cannot be deleted (move them first). Facts already recorded — invoices, receipts, movements — never change.
+- Changing groups needs the right to manage the stock; reading them needs the right to see it.
+
 <!-- anchor: user.money.stock.value -->
 ### Stock value and where goods came from
 

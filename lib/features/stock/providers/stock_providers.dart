@@ -6,6 +6,7 @@ import '../../../core/settings/setting_defaults.g.dart';
 import '../../money/providers/purchase_order_providers.dart';
 import '../../workspace/providers/operation_context_providers.dart';
 import '../application/stock_walk.dart';
+import '../data/supabase_item_groups.dart';
 import '../data/supabase_stock_config_commands.dart';
 import '../data/supabase_stock_cycle_counts.dart';
 import '../data/supabase_stock_operations.dart';
@@ -15,6 +16,7 @@ import '../data/supabase_stock_registry.dart';
 import '../data/supabase_stock_reorder.dart';
 import '../data/supabase_stock_reversals.dart';
 import '../data/supabase_stock_trace.dart';
+import '../domain/item_groups.dart';
 import '../domain/stock_config.dart';
 import '../domain/stock_config_commands.dart';
 import '../domain/stock_cycle_counts.dart';
@@ -133,6 +135,16 @@ final stockReorderPointsProvider = FutureProvider.autoDispose.family<List<StockR
 final stockReplenishmentProvider = FutureProvider.autoDispose.family<ReplenishmentList, String>(
   (ref, workspaceId) => ref.watch(stockReorderProvider).replenishment(workspaceId),
   retry: (_, _) => null,
+);
+
+/// #4361 -- the item groups of the selected business (the Demo keeps its own in memory).
+final itemGroupsProvider = Provider<ItemGroups>(
+  (ref) => SupabaseItemGroups(ref.watch(selectedWorkspaceClientProvider)),
+);
+
+/// #4361 -- the groups of [workspaceId], for the screens.
+final itemGroupListProvider = FutureProvider.autoDispose.family<List<ItemGroup>, String>(
+  (ref, workspaceId) => ref.watch(itemGroupsProvider).groups(workspaceId),
 );
 
 /// #4173 -- the trace of goods to their documents and the operational value, for the selected

@@ -703,6 +703,21 @@ Apra **Magazzino → Articoli**. Ogni riga mostra il **codice a barre**, l’**u
 - **Cerchi** per nome, codice a barre o indirizzo. Digitare o scansionare un codice a barre nella ricerca e confermare apre quell’articolo.
 - Le liste lunghe si caricano a pagine: scelga *Mostra altri*.
 
+<!-- anchor: user.money.stock.groups -->
+### Gruppi di articoli
+
+**Destinatari:** Amministratore · Proprietario
+
+Vuole dire una volta ciò che una famiglia di articoli ha in comune — quanto dura, come viene tracciata, ogni quanto viene contata — e che ogni articolo la segua.
+
+Apra **Magazzino → Gruppi di articoli** (serve la funzione *Gruppi di articoli* sotto la gestione del magazzino). Un gruppo ha un nome, sta in alto o dentro un altro gruppo (un solo livello di sottogruppi) e porta le impostazioni che sceglie: **tracciamento**, **durata di conservazione**, **modalità tag**, **unità di magazzino**, **conta ogni n giorni**, **età minima** e **venduto a peso**. Un’impostazione lasciata *Non impostato* non è decisa a questo livello.
+
+- **Un articolo segue il suo gruppo finché non ha un valore proprio.** Vale il valore dell’articolo se ce l’ha, altrimenti quello del suo sottogruppo, altrimenti quello del suo gruppo. Apra **Gruppo e impostazioni ereditate** di un articolo (l’icona della cartella sulla sua riga in **Magazzino → Articoli**) per vedere da dove viene ogni impostazione (*Dal gruppo Bevande dal 3 dic.* o *Valore proprio*), spostarlo in un altro gruppo e restituire un valore proprio con **Usa il valore del gruppo**.
+- **Ogni modifica è mostrata in anteprima.** Salvando un gruppo vede prima cosa raggiunge la modifica: *si applica a 1, 1 mantengono il proprio valore, 0 non sono raggiungibili*. Nulla viene applicato finché non salva una seconda volta; ogni modifica intermedia chiede una nuova anteprima. Un articolo che la modifica non può raggiungere (ad esempio un’unità su un articolo che ha già movimenti) viene elencato, e la modifica del gruppo viene salvata per gli altri.
+- **Cronologia.** Il foglio del gruppo elenca ogni modifica con quanti articoli ha raggiunto; la riga di origine di un articolo dice da quando.
+- Un sottogruppo non può avere sottogruppi; i tag per pezzo richiedono il tracciamento per pezzo; un gruppo ancora usato da articoli non si elimina (li sposti prima). Ciò che è già registrato — fatture, ricezioni, movimenti — non cambia mai.
+- Modificare i gruppi richiede il diritto di gestire il magazzino; leggerli, quello di vederlo.
+
 <!-- anchor: user.money.stock.value -->
 ### Valore del magazzino e origine della merce
 

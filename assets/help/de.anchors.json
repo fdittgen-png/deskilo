@@ -133,6 +133,7 @@
   "user.money.stock.places": "Lagerorte und Adressen",
   "user.money.stock.reorder": "Nachbestellen: was knapp ist und was zu bestellen ist",
   "user.money.stock.registry": "Das Artikelregister",
+  "user.money.stock.groups": "Artikelgruppen",
   "user.money.stock.value": "Lagerwert und Herkunft der Ware",
   "user.money.stock.reversals": "Rückgaben, Korrekturen und Zählungen",
   "user.money.stock.cycle": "Zyklische Zählungen",
