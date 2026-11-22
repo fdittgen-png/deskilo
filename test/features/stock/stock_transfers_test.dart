@@ -129,7 +129,7 @@ void main() {
         await _settle(tester);
         await _choose(tester, 'stock-move-item', 'Mugs');
         await _choose(tester, 'stock-move-from', 'MAIN · Main store');
-        await _choose(tester, 'stock-move-to', 'SHELF-A · Shelf A');
+        await _choose(tester, 'stock-move-to', 'MAIN-SHELF-A · Shelf A');
         expect(find.byKey(const ValueKey('stock-move-same-site')), findsOneWidget);
         await tester.enterText(find.byKey(const ValueKey('stock-move-quantity')), '3');
         await tester.tap(find.byKey(const ValueKey('stock-move-submit')));
@@ -157,7 +157,7 @@ void main() {
         await tester.tap(find.byKey(const ValueKey('stock-move-open')));
         await _settle(tester);
         await _choose(tester, 'stock-move-item', 'Mugs');
-        await _choose(tester, 'stock-move-from', 'SHELF-A · Shelf A');
+        await _choose(tester, 'stock-move-from', 'MAIN-SHELF-A · Shelf A');
         await _choose(tester, 'stock-move-to', 'MAIN · Main store');
         await tester.enterText(find.byKey(const ValueKey('stock-move-quantity')), '500');
         await tester.tap(find.byKey(const ValueKey('stock-move-submit')));

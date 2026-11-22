@@ -35391,6 +35391,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get stockPlacesAdd => 'Lagerort hinzufügen';
 
   @override
+  String get stockPlacesLabelsNone =>
+      'Es gibt keinen Lagerort, für den ein Etikett gedruckt werden kann.';
+
+  @override
+  String get stockPlacesPrintLabels => 'Etiketten drucken';
+
+  @override
   String get stockPlacesSearch =>
       'Lagerort nach Adresse, Name oder Barcode suchen';
 
