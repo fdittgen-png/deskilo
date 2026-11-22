@@ -5720,6 +5720,7 @@ Map<String, _Getter> _part14() => {
   'carnetSold': (l) => l.carnetSold,
   'carnetValidity': (l) => l.carnetValidity,
   'claimRefusedEmpty': (l) => l.claimRefusedEmpty,
+  'claimRefusedRequestChanged': (l) => l.claimRefusedRequestChanged,
   'coloursPreview': (l) => l.coloursPreview,
   'commonCancel': (l) => l.commonCancel,
   'commonRetry': (l) => l.commonRetry,
