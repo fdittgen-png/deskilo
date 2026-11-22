@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/settings/active_settings.dart';
+import '../../../core/settings/setting_defaults.g.dart';
 import '../../money/providers/purchase_order_providers.dart';
 import '../../workspace/providers/operation_context_providers.dart';
 import '../application/stock_walk.dart';
@@ -51,6 +53,15 @@ final stockMovementsWalkProvider = NotifierProvider.autoDispose
         },
       ),
     );
+
+/// #4293 -- the character shown between the levels of a place address
+/// (`stock.address_separator`); the registry default while the settings load.
+final stockAddressSeparatorProvider = Provider<String>((ref) {
+  final settings = ref.watch(activeSettingsProvider);
+  return settings != null && settings.definitions.containsKey('stock.address_separator')
+      ? settings.read<String>('stock.address_separator')
+      : SettingDefaults.stockAddressSeparator;
+});
 
 /// The places of a business, for the place filter.
 final stockPlacesProvider = FutureProvider.autoDispose

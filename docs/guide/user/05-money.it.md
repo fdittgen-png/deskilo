@@ -649,6 +649,22 @@ Aprite **Magazzino** nel menu, subito sotto **Acquisti e fornitori**. Tutto ciò
 
 Una voce compare solo quando la sua funzione è attiva e il vostro ruolo consente la sua pagina: chi può solo guardare vede le pagine, non le impostazioni. Gli acquisti tengono ciò che si compra; le vendite, ciò che si vende.
 
+<!-- anchor: user.money.stock.places -->
+### Ubicazioni e indirizzi
+
+**Destinatari:** Amministratore · Proprietario
+
+Lei vuole indicare dove si tiene ogni cosa, perché ricevimento, conteggio e prelievo sappiano dove andare.
+
+Apra **Magazzino → Ubicazioni**. Un’ubicazione ha un livello: **Sede** (una filiale o un deposito centrale), **Zona** (area di vendita, retro, cortile), **Corsia**, **Campata** e **Scaffale** o **Cassetto**. Un’ubicazione sta solo sotto il livello immediatamente superiore: una zona sotto una sede, una corsia sotto una zona, una campata sotto una corsia, uno scaffale sotto una campata. Un banco, una cucina, un veicolo, una macchina o uno slot si colloca ovunque. Un magazzino creato prima dei livelli conta come sede.
+
+Ogni ubicazione ha un **indirizzo**, scritto con i codici dei suoi livelli superiori: `MAIN-SALES-A03-B02-S4` è il negozio principale, l’area di vendita, la corsia 3, la campata 2, lo scaffale 4. Il codice di un’ubicazione deve solo differire da quelli accanto sotto lo stesso livello superiore, quindi ogni campata può avere il proprio scaffale `S4`. Se rinomina un’ubicazione, gli indirizzi sotto di esso lo seguono. Digiti una parte di un indirizzo, un nome o un codice a barre nella ricerca per trovare un’ubicazione.
+
+**Da sapere**
+- Una sede indica se **riceve dai fornitori**; disattivato, la merce vi arriva solo per trasferimento da un’altra sede.
+- Un’ubicazione sotto una sede è **prelievo** (area di vendita) o **riserva** (scorta); è un’indicazione, mai una quantità.
+- Il carattere tra i livelli è l’impostazione dell’azienda **Separatore nell’indirizzo di un’ubicazione** (trattino, punto, barra o due punti); cambia solo come si scrive l’indirizzo. Si imposta in **Impostazioni del magazzino**.
+
 <!-- anchor: user.money.amounts -->
 ### Come sono mostrati gli importi
 

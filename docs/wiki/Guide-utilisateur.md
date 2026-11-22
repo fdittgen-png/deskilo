@@ -3037,6 +3037,22 @@ Ouvrez **Stock** dans le menu, juste sous **Achats et fournisseurs**. Tout ce qu
 
 Une entrée n'apparaît que lorsque sa fonction est activée et que votre rôle autorise sa page : qui peut seulement consulter voit les pages, pas les réglages. Les achats gardent ce qui s'achète ; les ventes, ce qui se vend.
 
+<!-- anchor: user.money.stock.places -->
+### Emplacements et adresses
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous voulez dire où les choses sont rangées, pour que la réception, l’inventaire et le prélèvement sachent où aller.
+
+Ouvrez **Stock → Emplacements**. Un emplacement a un niveau : **Site** (une succursale ou un dépôt central), **Zone** (une surface de vente, une réserve, une cour), **Allée**, **Travée** et **Étagère** ou **Bac**. Un emplacement se place seulement sous le niveau juste au-dessus : une zone sous un site, une allée sous une zone, une travée sous une allée, une étagère sous une travée. Un comptoir, une cuisine, un véhicule, une machine ou un casier se place n’importe où. Un entrepôt créé avant les niveaux compte comme un site.
+
+Chaque emplacement a une **adresse**, écrite avec les codes de ses parents : `MAIN-SALES-A03-B02-S4` est le magasin principal, la surface de vente, l’allée 3, la travée 2, l’étagère 4. Le code d’un emplacement doit seulement différer de ses voisins sous le même parent : chaque travée peut avoir son étagère `S4`. Renommez un emplacement et les adresses en dessous suivent. Saisissez une partie d’une adresse, un nom ou un code-barres dans la recherche pour trouver un emplacement.
+
+**Bon à savoir**
+- Un site indique s’il **reçoit des fournisseurs** ; désactivé, les marchandises n’y arrivent que par transfert depuis un autre site.
+- Un emplacement sous un site est **prélèvement** (en rayon) ou **réserve** (surstock) ; c’est un conseil, jamais une quantité.
+- Le caractère entre les niveaux est le paramètre de l’entreprise **Séparateur dans l’adresse d’un emplacement** (un tiret, un point, une barre oblique ou deux-points) ; seule l’écriture de l’adresse change. Il se règle dans **Réglages du stock**.
+
 <!-- anchor: user.money.amounts -->
 ### Comment les montants sont affichés
 

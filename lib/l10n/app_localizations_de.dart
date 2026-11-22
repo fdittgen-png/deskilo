@@ -31930,6 +31930,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Tage, die eine persönliche Einladung nach dem Erstellen eingelöst werden kann. Bereits versendete Einladungen behalten ihr Datum. Kann nur verkürzt werden.';
 
   @override
+  String get settingHintStockAddressSeparator =>
+      'Das Zeichen zwischen den Ebenen einer Lagerort-Adresse (Standort, Zone, Gang, Regalfeld, Fach): MAG1-SALES-A03-B02-S4 mit Bindestrich, MAG1.SALES.A03.B02.S4 mit Punkt. Nur die Schreibweise ändert sich.';
+
+  @override
   String get settingHintStockAllowNegative =>
       'Aus: eine Bewegung, die an einem Ort weniger als nichts übrig ließe, wird abgelehnt. An: sie wird gebucht, und der Ort zeigt eine negative Menge, bis Ware eintrifft.';
 
@@ -32241,6 +32245,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get settingLabelSecurityInvitationExpiryDays =>
       'Gültigkeit einer Einladung';
+
+  @override
+  String get settingLabelStockAddressSeparator =>
+      'Trennzeichen in einer Lagerort-Adresse';
 
   @override
   String get settingLabelStockAllowNegative => 'Bestand darf unter null fallen';
@@ -35280,10 +35288,19 @@ class AppLocalizationsDe extends AppLocalizations {
   String get stockPlaceKind => 'Art des Lagerorts';
 
   @override
+  String get stockPlaceKindAisle => 'Gang';
+
+  @override
+  String get stockPlaceKindBay => 'Regalfeld';
+
+  @override
   String get stockPlaceKindBin => 'Fach';
 
   @override
   String get stockPlaceKindShelf => 'Regal';
+
+  @override
+  String get stockPlaceKindSite => 'Standort';
 
   @override
   String get stockPlaceKindWarehouse => 'Lager';
@@ -35301,10 +35318,39 @@ class AppLocalizationsDe extends AppLocalizations {
   String get stockPlaceParent => 'Innerhalb von';
 
   @override
+  String get stockPlaceReceives => 'Nimmt Lieferungen von Lieferanten an';
+
+  @override
+  String get stockPlaceReceivesHelp =>
+      'Aus: Ware kommt nur per Umlagerung von einem anderen Standort.';
+
+  @override
+  String get stockPlaceReceivesNo => 'nur Umlagerungen';
+
+  @override
+  String get stockPlaceReceivesYes => 'nimmt Lieferungen an';
+
+  @override
+  String get stockPlaceRole => 'Verwendung';
+
+  @override
+  String get stockPlaceRoleNone => 'Nicht angegeben';
+
+  @override
+  String get stockPlaceRolePicking => 'Kommissionierung (Verkaufsfläche)';
+
+  @override
+  String get stockPlaceRoleReserve => 'Reserve (Lagerbestand)';
+
+  @override
   String get stockPlaceVirtual => 'Vom System geführt';
 
   @override
   String get stockPlacesAdd => 'Lagerort hinzufügen';
+
+  @override
+  String get stockPlacesSearch =>
+      'Lagerort nach Adresse, Name oder Barcode suchen';
 
   @override
   String get stockPlacesTitle => 'Lagerorte';
@@ -35452,6 +35498,18 @@ class AppLocalizationsDe extends AppLocalizations {
   String get stockReasonKindUnknown => 'Diese Art ist nicht bekannt.';
 
   @override
+  String get stockReasonLevelChildrenWrong =>
+      'In diesem Lagerort liegen Lagerorte, die seine Ebene brauchen; verschieben Sie diese zuerst.';
+
+  @override
+  String get stockReasonLevelParentMissing =>
+      'Nur ein Standort steht für sich; jede andere Ebene liegt unter der darüberliegenden.';
+
+  @override
+  String get stockReasonLevelParentWrong =>
+      'Ein Lagerort dieser Ebene liegt nur direkt unter der darüberliegenden Ebene.';
+
+  @override
   String get stockReasonLineConflict =>
       'Die Zeile ist doppelt benannt und die Angaben widersprechen sich.';
 
@@ -35523,6 +35581,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get stockReasonParentInactive =>
       'Der übergeordnete Lagerort ist nicht mehr in Gebrauch.';
+
+  @override
+  String get stockReasonPickRoleUnknown =>
+      'Die Verwendung muss Kommissionierung oder Reserve sein.';
 
   @override
   String get stockReasonPriceInvalid => 'Ein Preis ist null oder größer.';

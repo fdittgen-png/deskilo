@@ -73,6 +73,7 @@ const FED_ANSWER_WAIT=[['30','optSeconds',{n:30}],['60','optOneMinute'],['120','
 const SUP_LOOKUP_WAIT=[['5','optSeconds',{n:5}],['10','optSeconds',{n:10}],['15','optSeconds',{n:15}],['30','optSeconds',{n:30}]];
 // #3675 — where badge sign-in works (workspace setting
 // security.badge_signin_where), while kiosk enrolment is on.
+const STOCK_SEP=[['-','stockSepDash'],['.','stockSepDot'],['/','stockSepSlash'],[':','stockSepColon']];
 const BADGE_WHERE=[['enrolled_kiosks','badgeWhereKiosks'],['any_device','badgeWhereAnyDevice']];
 const SUP_LOOKUP_RATE=[['5','optPerMinute',{n:5}],['10','optPerMinute',{n:10}],['20','optPerMinute',{n:20}],['60','optPerMinute',{n:60}],['120','optPerMinute',{n:120}]];
 // #2571 — a US space's own longer retention (workspace setting
@@ -151,6 +152,8 @@ const PARAM_META=[
  ['badgeSecurity.signinWhere','badgeSigninWhere','enum',()=>BADGE_WHERE.map(x=>x[0]),{needs:'badgeSignIn'}],
  // #3824 — whether a move may leave less than nothing at a place (workspace setting stock.allow_negative).
  ['stock.allowNegative','stockAllowNegative','bool',null,{needs:'stockManagement'}],
+ // #4293 — the character between the levels of a place address (workspace setting stock.address_separator).
+ ['stock.addressSeparator','stockAddressSeparator','enum',()=>STOCK_SEP.map(x=>x[0]),{needs:'stockManagement'}],
  ['supplierLookup.timeout','supLookupWait','enum',()=>SUP_LOOKUP_WAIT.map(x=>x[0])],
  ['supplierLookup.perMinute','supLookupRate','enum',()=>SUP_LOOKUP_RATE.map(x=>x[0])],
  ['retention.usYears','retUsYears','enum',()=>RET_US_YEARS.map(x=>x[0])],

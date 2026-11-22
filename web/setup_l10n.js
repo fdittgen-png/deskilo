@@ -797,7 +797,13 @@ window.SETUP_L10N={
    "resendPaypal": "Resend window, PayPal",
    "resendPaypalHint": "How long after a checkout was first sent to PayPal the same checkout may be sent again under its original request. Keep it below how long PayPal remembers a request (6 hours). Set in the app's settings.",
    "resendStripe": "Resend window, Stripe",
-   "resendStripeHint": "How long after a checkout was first sent to Stripe the same checkout may be sent again under its original request. Keep it below how long Stripe remembers a request (24 hours). Set in the app's settings."
+   "resendStripeHint": "How long after a checkout was first sent to Stripe the same checkout may be sent again under its original request. Keep it below how long Stripe remembers a request (24 hours). Set in the app's settings.",
+   "stockAddressSeparator": "Separator in a place address",
+   "stockAddressSeparatorHint": "The character between the levels of a place address (site, zone, aisle, bay, shelf): MAG1-SALES-A03-B02-S4 with a dash, MAG1.SALES.A03.B02.S4 with a dot. Only how an address is written changes.",
+   "stockSepDash": "Dash ( - )",
+   "stockSepDot": "Dot ( . )",
+   "stockSepSlash": "Slash ( / )",
+   "stockSepColon": "Colon ( : )"
   },
   "feature": {
    "calendarTab": [
@@ -2656,7 +2662,13 @@ window.SETUP_L10N={
    "resendPaypal": "Fenêtre de réémission, PayPal",
    "resendPaypalHint": "Combien de temps après le premier envoi d'un paiement à PayPal le même paiement peut être renvoyé sous sa requête d'origine. À garder sous la durée pendant laquelle PayPal retient une requête (6 heures). Se règle dans les paramètres de l'app.",
    "resendStripe": "Fenêtre de réémission, Stripe",
-   "resendStripeHint": "Combien de temps après le premier envoi d'un paiement à Stripe le même paiement peut être renvoyé sous sa requête d'origine. À garder sous la durée pendant laquelle Stripe retient une requête (24 heures). Se règle dans les paramètres de l'app."
+   "resendStripeHint": "Combien de temps après le premier envoi d'un paiement à Stripe le même paiement peut être renvoyé sous sa requête d'origine. À garder sous la durée pendant laquelle Stripe retient une requête (24 heures). Se règle dans les paramètres de l'app.",
+   "stockAddressSeparator": "Séparateur dans l’adresse d’un emplacement",
+   "stockAddressSeparatorHint": "Le caractère entre les niveaux d’une adresse d’emplacement (site, zone, allée, travée, étagère) : MAG1-SALES-A03-B02-S4 avec un tiret, MAG1.SALES.A03.B02.S4 avec un point. Seule l’écriture de l’adresse change.",
+   "stockSepDash": "Tiret ( - )",
+   "stockSepDot": "Point ( . )",
+   "stockSepSlash": "Barre oblique ( / )",
+   "stockSepColon": "Deux-points ( : )"
   },
   "feature": {
    "calendarTab": [
@@ -4515,7 +4527,13 @@ window.SETUP_L10N={
    "resendPaypal": "Wiederholungsfenster, PayPal",
    "resendPaypalHint": "Wie lange nach dem ersten Senden einer Zahlung an PayPal dieselbe Zahlung unter ihrer ursprünglichen Anfrage erneut gesendet werden darf. Unter der Dauer halten, für die PayPal eine Anfrage behält (6 Stunden). Wird in den Einstellungen der App festgelegt.",
    "resendStripe": "Wiederholungsfenster, Stripe",
-   "resendStripeHint": "Wie lange nach dem ersten Senden einer Zahlung an Stripe dieselbe Zahlung unter ihrer ursprünglichen Anfrage erneut gesendet werden darf. Unter der Dauer halten, für die Stripe eine Anfrage behält (24 Stunden). Wird in den Einstellungen der App festgelegt."
+   "resendStripeHint": "Wie lange nach dem ersten Senden einer Zahlung an Stripe dieselbe Zahlung unter ihrer ursprünglichen Anfrage erneut gesendet werden darf. Unter der Dauer halten, für die Stripe eine Anfrage behält (24 Stunden). Wird in den Einstellungen der App festgelegt.",
+   "stockAddressSeparator": "Trennzeichen in einer Lagerort-Adresse",
+   "stockAddressSeparatorHint": "Das Zeichen zwischen den Ebenen einer Lagerort-Adresse (Standort, Zone, Gang, Regalfeld, Fach): MAG1-SALES-A03-B02-S4 mit Bindestrich, MAG1.SALES.A03.B02.S4 mit Punkt. Nur die Schreibweise ändert sich.",
+   "stockSepDash": "Bindestrich ( - )",
+   "stockSepDot": "Punkt ( . )",
+   "stockSepSlash": "Schrägstrich ( / )",
+   "stockSepColon": "Doppelpunkt ( : )"
   },
   "feature": {
    "calendarTab": [
@@ -6374,7 +6392,13 @@ window.SETUP_L10N={
    "resendPaypal": "Ventana de reenvío, PayPal",
    "resendPaypalHint": "Cuánto tiempo después del primer envío de un pago a PayPal puede reenviarse el mismo pago con su solicitud original. Manténgala por debajo del tiempo que PayPal conserva una solicitud (6 horas). Se define en los ajustes de la app.",
    "resendStripe": "Ventana de reenvío, Stripe",
-   "resendStripeHint": "Cuánto tiempo después del primer envío de un pago a Stripe puede reenviarse el mismo pago con su solicitud original. Manténgala por debajo del tiempo que Stripe conserva una solicitud (24 horas). Se define en los ajustes de la app."
+   "resendStripeHint": "Cuánto tiempo después del primer envío de un pago a Stripe puede reenviarse el mismo pago con su solicitud original. Manténgala por debajo del tiempo que Stripe conserva una solicitud (24 horas). Se define en los ajustes de la app.",
+   "stockAddressSeparator": "Separador en la dirección de una ubicación",
+   "stockAddressSeparatorHint": "El carácter entre los niveles de una dirección de lugar (sede, zona, pasillo, módulo, estante): MAG1-SALES-A03-B02-S4 con guion, MAG1.SALES.A03.B02.S4 con punto. Solo cambia cómo se escribe la dirección.",
+   "stockSepDash": "Guion ( - )",
+   "stockSepDot": "Punto ( . )",
+   "stockSepSlash": "Barra ( / )",
+   "stockSepColon": "Dos puntos ( : )"
   },
   "feature": {
    "calendarTab": [
@@ -8233,7 +8257,13 @@ window.SETUP_L10N={
    "resendPaypal": "Finestra di reinvio, PayPal",
    "resendPaypalHint": "Per quanto tempo dopo il primo invio di un pagamento a PayPal lo stesso pagamento può essere reinviato con la sua richiesta originale. Tienila sotto il tempo per cui PayPal conserva una richiesta (6 ore). Si imposta nelle impostazioni dell'app.",
    "resendStripe": "Finestra di reinvio, Stripe",
-   "resendStripeHint": "Per quanto tempo dopo il primo invio di un pagamento a Stripe lo stesso pagamento può essere reinviato con la sua richiesta originale. Tienila sotto il tempo per cui Stripe conserva una richiesta (24 ore). Si imposta nelle impostazioni dell'app."
+   "resendStripeHint": "Per quanto tempo dopo il primo invio di un pagamento a Stripe lo stesso pagamento può essere reinviato con la sua richiesta originale. Tienila sotto il tempo per cui Stripe conserva una richiesta (24 ore). Si imposta nelle impostazioni dell'app.",
+   "stockAddressSeparator": "Separatore nell’indirizzo di un’ubicazione",
+   "stockAddressSeparatorHint": "Il carattere tra i livelli dell’indirizzo di un’ubicazione (sede, zona, corsia, campata, scaffale): MAG1-SALES-A03-B02-S4 con il trattino, MAG1.SALES.A03.B02.S4 con il punto. Cambia solo come si scrive l’indirizzo.",
+   "stockSepDash": "Trattino ( - )",
+   "stockSepDot": "Punto ( . )",
+   "stockSepSlash": "Barra ( / )",
+   "stockSepColon": "Due punti ( : )"
   },
   "feature": {
    "calendarTab": [

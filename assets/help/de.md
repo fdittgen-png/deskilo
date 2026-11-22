@@ -2902,6 +2902,21 @@ Wird ein Schritt abgelehnt, weil sich der Auftrag inzwischen geändert hat, wird
 
 Ein Eintrag erscheint nur, wenn seine Funktion eingeschaltet ist und Ihre Rolle die Seite erlaubt: Wer nur ansehen darf, sieht die Seiten, nicht die Einstellungen. Der Einkauf behält, was eingekauft wird; der Verkauf, was verkauft wird.
 
+### Lagerorte und Adressen
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie möchten festlegen, wo etwas lagert, damit Wareneingang, Zählung und Kommissionierung wissen, wohin.
+
+Öffnen Sie **Lager → Lagerorte**. Ein Lagerort hat eine Ebene: **Standort** (eine Filiale oder ein Zentrallager), **Zone** (Verkaufsfläche, Lagerraum, Hof), **Gang**, **Regalfeld** und **Fach** oder **Behälter**. Ein Lagerort liegt nur direkt unter der darüberliegenden Ebene: eine Zone unter einem Standort, ein Gang unter einer Zone, ein Regalfeld unter einem Gang, ein Fach unter einem Regalfeld. Eine Theke, eine Küche, ein Fahrzeug, eine Maschine oder ein Fach-Slot lässt sich überall einordnen. Ein Lager, das vor den Ebenen angelegt wurde, gilt als Standort.
+
+Jeder Lagerort hat eine **Adresse** aus den Codes seiner übergeordneten Lagerorte: `MAIN-SALES-A03-B02-S4` ist das Hauptgeschäft, die Verkaufsfläche, Gang 3, Regalfeld 2, Fach 4. Der Code eines Lagerorts muss sich nur von den Nachbarn unter demselben übergeordneten Lagerort unterscheiden, daher kann jedes Regalfeld sein Fach `S4` haben. Benennen Sie einen Lagerort um, folgen die Adressen darunter. Geben Sie einen Teil einer Adresse, einen Namen oder einen Barcode in die Suche ein, um einen Lagerort zu finden.
+
+**Gut zu wissen**
+- Ein Standort legt fest, ob er **Lieferungen von Lieferanten annimmt**; ausgeschaltet kommt Ware nur per Umlagerung von einem anderen Standort an.
+- Ein Lagerort unter einem Standort ist **Kommissionierung** (Verkaufsfläche) oder **Reserve** (Lagerbestand); das ist ein Hinweis, nie eine Menge.
+- Das Zeichen zwischen den Ebenen ist die Einstellung des Unternehmens **Trennzeichen in einer Lagerort-Adresse** (Bindestrich, Punkt, Schrägstrich oder Doppelpunkt); nur die Schreibweise der Adresse ändert sich. Sie steht in den **Lagereinstellungen**.
+
 ### Wie Beträge angezeigt werden
 
 **Zielgruppe:** Alle

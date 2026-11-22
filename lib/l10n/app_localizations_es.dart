@@ -31839,6 +31839,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Días en que una invitación personal puede canjearse tras crearse. Las invitaciones ya enviadas conservan su fecha. Solo se puede acortar.';
 
   @override
+  String get settingHintStockAddressSeparator =>
+      'El carácter entre los niveles de una dirección de ubicación (sede, zona, pasillo, módulo, estante): MAG1-SALES-A03-B02-S4 con guion, MAG1.SALES.A03.B02.S4 con punto. Solo cambia cómo se escribe la dirección.';
+
+  @override
   String get settingHintStockAllowNegative =>
       'Desactivado: se rechaza un movimiento que dejaría menos que nada en un lugar. Activado: se registra y el lugar muestra una cantidad negativa hasta que llegue mercancía.';
 
@@ -32163,6 +32167,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingLabelSecurityInvitationExpiryDays =>
       'Validez de una invitación';
+
+  @override
+  String get settingLabelStockAddressSeparator =>
+      'Separador en la dirección de una ubicación';
 
   @override
   String get settingLabelStockAllowNegative =>
@@ -35185,10 +35193,19 @@ class AppLocalizationsEs extends AppLocalizations {
   String get stockPlaceKind => 'Tipo de ubicación';
 
   @override
+  String get stockPlaceKindAisle => 'Pasillo';
+
+  @override
+  String get stockPlaceKindBay => 'Módulo';
+
+  @override
   String get stockPlaceKindBin => 'Cajón';
 
   @override
   String get stockPlaceKindShelf => 'Estantería';
+
+  @override
+  String get stockPlaceKindSite => 'Sede';
 
   @override
   String get stockPlaceKindWarehouse => 'Almacén';
@@ -35206,10 +35223,39 @@ class AppLocalizationsEs extends AppLocalizations {
   String get stockPlaceParent => 'Dentro de';
 
   @override
+  String get stockPlaceReceives => 'Recibe de proveedores';
+
+  @override
+  String get stockPlaceReceivesHelp =>
+      'Desactivado: la mercancía llega aquí solo por traslado desde otra sede.';
+
+  @override
+  String get stockPlaceReceivesNo => 'solo traslados';
+
+  @override
+  String get stockPlaceReceivesYes => 'recibe de proveedores';
+
+  @override
+  String get stockPlaceRole => 'Uso';
+
+  @override
+  String get stockPlaceRoleNone => 'Sin indicar';
+
+  @override
+  String get stockPlaceRolePicking => 'Picking (zona de venta)';
+
+  @override
+  String get stockPlaceRoleReserve => 'Reserva (excedente)';
+
+  @override
   String get stockPlaceVirtual => 'Llevada por el sistema';
 
   @override
   String get stockPlacesAdd => 'Añadir una ubicación';
+
+  @override
+  String get stockPlacesSearch =>
+      'Buscar una ubicación por dirección, nombre o código de barras';
 
   @override
   String get stockPlacesTitle => 'Ubicaciones';
@@ -35359,6 +35405,18 @@ class AppLocalizationsEs extends AppLocalizations {
   String get stockReasonKindUnknown => 'Este tipo no se conoce.';
 
   @override
+  String get stockReasonLevelChildrenWrong =>
+      'Esta ubicación contiene otras que necesitan su nivel; muévalas primero.';
+
+  @override
+  String get stockReasonLevelParentMissing =>
+      'Solo una sede está sola; cada otro nivel va bajo el nivel superior.';
+
+  @override
+  String get stockReasonLevelParentWrong =>
+      'Una ubicación de este nivel va solo bajo el nivel inmediatamente superior.';
+
+  @override
   String get stockReasonLineConflict =>
       'La línea se nombra dos veces y no coinciden.';
 
@@ -35428,6 +35486,9 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get stockReasonParentInactive =>
       'La ubicación que la contiene ya no está en uso.';
+
+  @override
+  String get stockReasonPickRoleUnknown => 'El uso debe ser picking o reserva.';
 
   @override
   String get stockReasonPriceInvalid => 'Un precio es cero o más.';

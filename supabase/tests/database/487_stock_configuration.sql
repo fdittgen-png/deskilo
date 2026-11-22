@@ -137,7 +137,7 @@ select is(pg_temp.save_item(1, 302, 3, 519, '{"shelf_life_days": 30}') like '%"r
   'the same request id with the same body answers replayed, with another body it refuses');
 
 -- Places.
-select is((pg_temp.save_place(1, null, null, 520, '{"kind": "shelf", "code": "S1", "parent_id": "' || pg_temp.loc('MAIN') || '"}')::jsonb ->> 'revision'), '1',
+select is((pg_temp.save_place(1, null, null, 520, '{"kind": "zone", "code": "S1", "parent_id": "' || pg_temp.loc('MAIN') || '"}')::jsonb ->> 'revision'), '1',
   'a place is created under MAIN');
 select is(pg_temp.save_place(1, pg_temp.loc('MAIN'), 1, 521, '{"parent_id": "' || pg_temp.loc('S1') || '"}'),
   'ERR DKG11 {"field": "parent_id", "reason": "location_cycle"}', 'a place cannot go under its own child');

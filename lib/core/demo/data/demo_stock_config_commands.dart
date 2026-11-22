@@ -46,11 +46,48 @@ class DemoStockConfigCommands implements StockConfigCommands {
   final Map<String, StockPlaceConfig> _places = {
     'demo-place-main': const StockPlaceConfig(
       id: 'demo-place-main', revision: 1, kind: 'warehouse', code: 'MAIN', name: 'Main store',
-      barcode: null, parentId: null, active: true, virtual: false,
+      barcode: null, parentId: null, active: true, virtual: false, addressPath: 'MAIN',
     ),
     'demo-place-shelf': const StockPlaceConfig(
       id: 'demo-place-shelf', revision: 1, kind: 'shelf', code: 'SHELF-A', name: 'Shelf A',
       barcode: null, parentId: 'demo-place-main', active: true, virtual: false,
+      addressPath: 'MAIN${stockAddressJoint}SHELF-A',
+    ),
+    // #4293 -- two sites: the store (MAIN, as before) and a central depot, each with a sales
+    // and a back-room zone, and one full five-level address MAIN-SALES-A03-B02-S4.
+    'demo-place-depot': const StockPlaceConfig(
+      id: 'demo-place-depot', revision: 1, kind: 'site', code: 'DEPOT', name: 'Central depot',
+      barcode: null, parentId: null, active: true, virtual: false, addressPath: 'DEPOT',
+    ),
+    'demo-place-sales': const StockPlaceConfig(
+      id: 'demo-place-sales', revision: 1, kind: 'zone', code: 'SALES', name: 'Sales floor',
+      barcode: null, parentId: 'demo-place-main', active: true, virtual: false,
+      pickRole: 'picking', addressPath: 'MAIN${stockAddressJoint}SALES',
+    ),
+    'demo-place-back': const StockPlaceConfig(
+      id: 'demo-place-back', revision: 1, kind: 'zone', code: 'BACK', name: 'Back room',
+      barcode: null, parentId: 'demo-place-main', active: true, virtual: false,
+      pickRole: 'reserve', addressPath: 'MAIN${stockAddressJoint}BACK',
+    ),
+    'demo-place-depot-back': const StockPlaceConfig(
+      id: 'demo-place-depot-back', revision: 1, kind: 'zone', code: 'BACK', name: 'Depot reserve',
+      barcode: null, parentId: 'demo-place-depot', active: true, virtual: false,
+      pickRole: 'reserve', addressPath: 'DEPOT${stockAddressJoint}BACK',
+    ),
+    'demo-place-aisle': const StockPlaceConfig(
+      id: 'demo-place-aisle', revision: 1, kind: 'aisle', code: 'A03', name: '',
+      barcode: null, parentId: 'demo-place-sales', active: true, virtual: false,
+      addressPath: 'MAIN${stockAddressJoint}SALES${stockAddressJoint}A03',
+    ),
+    'demo-place-bay': const StockPlaceConfig(
+      id: 'demo-place-bay', revision: 1, kind: 'bay', code: 'B02', name: '',
+      barcode: null, parentId: 'demo-place-aisle', active: true, virtual: false,
+      addressPath: 'MAIN${stockAddressJoint}SALES${stockAddressJoint}A03${stockAddressJoint}B02',
+    ),
+    'demo-place-eye-shelf': const StockPlaceConfig(
+      id: 'demo-place-eye-shelf', revision: 1, kind: 'shelf', code: 'S4', name: 'Eye level',
+      barcode: null, parentId: 'demo-place-bay', active: true, virtual: false, pickRole: 'picking',
+      addressPath: 'MAIN${stockAddressJoint}SALES${stockAddressJoint}A03${stockAddressJoint}B02${stockAddressJoint}S4',
     ),
     'demo-place-supplier': const StockPlaceConfig(
       id: 'demo-place-supplier', revision: 1, kind: 'supplier', code: 'SUPPLIER', name: '',
@@ -107,26 +144,75 @@ class DemoStockConfigCommands implements StockConfigCommands {
     final old = placeId == null ? null : _places[placeId];
     if (placeId != null && old == null) throw const StockConfigRefused('place', 'location_parent_foreign');
     if (old != null && old.revision != expectedRevision) throw const StockConfigStale();
+    final (:code, :parentId, :kind, :pick) = _checkedPlace(place, old, placeId);
+    final id = placeId ?? 'demo-place-new-${_next++}';
+    final revision = (old?.revision ?? 0) + 1;
+    _places[id] = StockPlaceConfig(
+      id: id, revision: revision, kind: kind, code: code,
+      name: place['name'] as String? ?? '', barcode: place['barcode'] as String?,
+      parentId: parentId, active: place['active'] as bool? ?? true, virtual: false,
+      receivesFromSuppliers: stockKindLevel(kind) != 1 || (place['receives_from_suppliers'] as bool? ?? true),
+      pickRole: stockKindLevel(kind) == 1 ? null : pick,
+      addressPath: _pathOf(parentId, code),
+    );
+    _recompose(id);
+    return (id: id, revision: revision, replayed: false);
+  }
+
+  /// What the server refuses before it writes a place: a code or name that is malformed or taken
+  /// among its siblings, a parent that is itself, a level under the wrong level, an unknown use.
+  ({String code, String? parentId, String kind, String? pick}) _checkedPlace(
+    Map<String, Object?> place,
+    StockPlaceConfig? old,
+    String? placeId,
+  ) {
     final code = (place['code'] as String? ?? '').trim();
     final problems = checkStockPlace(code: code, name: place['name'] as String? ?? '', barcode: place['barcode'] as String? ?? '');
     if (problems.isNotEmpty) {
       final first = problems.entries.first;
       throw StockConfigRefused(first.key, first.value);
     }
-    if (_places.values.any((p) => p.code == code && p.id != placeId)) {
+    final parentId = place.containsKey('parent_id') ? place['parent_id'] as String? : old?.parentId;
+    final kind = place['kind'] as String? ?? old?.kind ?? 'shelf';
+    if (_places.values.any((p) => p.code == code && p.parentId == parentId && p.id != placeId)) {
       throw const StockConfigRefused('code', 'code_duplicate');
     }
-    if (place['parent_id'] != null && place['parent_id'] == placeId) {
+    if (parentId != null && parentId == placeId) {
       throw const StockConfigRefused('parent_id', 'location_cycle');
     }
-    final id = placeId ?? 'demo-place-new-${_next++}';
-    final revision = (old?.revision ?? 0) + 1;
-    _places[id] = StockPlaceConfig(
-      id: id, revision: revision, kind: place['kind'] as String? ?? 'shelf', code: code,
-      name: place['name'] as String? ?? '', barcode: place['barcode'] as String?,
-      parentId: place['parent_id'] as String?, active: place['active'] as bool? ?? true, virtual: false,
-    );
-    return (id: id, revision: revision, replayed: false);
+    _checkLevel(kind, old, parentId);
+    final pick = place.containsKey('pick_role') ? place['pick_role'] as String? : old?.pickRole;
+    if (pick != null && pick != 'picking' && pick != 'reserve') {
+      throw const StockConfigRefused('pick_role', 'pick_role_unknown');
+    }
+    return (code: code, parentId: parentId, kind: kind, pick: pick);
+  }
+
+  /// The server's level rule: checked when a place is made or its kind or parent changes.
+  void _checkLevel(String kind, StockPlaceConfig? old, String? parentId) {
+    final level = stockKindLevel(kind);
+    if (level == null || (old != null && kind == old.kind && parentId == old.parentId)) return;
+    if (parentId == null) {
+      if (level != 1) throw const StockConfigRefused('parent_id', 'level_parent_missing');
+    } else if (stockKindLevel(_places[parentId]?.kind ?? '') != level - 1) {
+      throw const StockConfigRefused('parent_id', 'level_parent_wrong');
+    }
+  }
+
+  String _pathOf(String? parentId, String code) =>
+      parentId == null ? code : '${_places[parentId]?.addressPath ?? ''}$stockAddressJoint$code';
+
+  /// Everything below [parentId] takes the address of its parent again, as the server's trigger does.
+  void _recompose(String parentId) {
+    for (final c in _places.values.where((p) => p.parentId == parentId).toList()) {
+      _places[c.id] = StockPlaceConfig(
+        id: c.id, revision: c.revision, kind: c.kind, code: c.code, name: c.name, barcode: c.barcode,
+        parentId: c.parentId, active: c.active, virtual: c.virtual,
+        receivesFromSuppliers: c.receivesFromSuppliers, pickRole: c.pickRole,
+        addressPath: _pathOf(c.parentId, c.code),
+      );
+      _recompose(c.id);
+    }
   }
 
   final Map<String, StockDimension> _dimensions = {

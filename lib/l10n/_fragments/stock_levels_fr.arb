@@ -1,0 +1,20 @@
+{
+  "stockPlaceKindSite": "Site",
+  "stockPlaceKindAisle": "Allée",
+  "stockPlaceKindBay": "Travée",
+  "stockPlacesSearch": "Trouver un emplacement par adresse, nom ou code-barres",
+  "stockPlaceReceives": "Reçoit des fournisseurs",
+  "stockPlaceReceivesHelp": "Désactivé : les marchandises n'arrivent ici que par transfert depuis un autre site.",
+  "stockPlaceReceivesYes": "reçoit des fournisseurs",
+  "stockPlaceReceivesNo": "transferts seulement",
+  "stockPlaceRole": "Usage",
+  "stockPlaceRoleNone": "Non précisé",
+  "stockPlaceRolePicking": "Prélèvement (en rayon)",
+  "stockPlaceRoleReserve": "Réserve (surstock)",
+  "stockReasonLevelParentWrong": "Un emplacement de ce niveau se place seulement sous le niveau juste au-dessus.",
+  "stockReasonLevelParentMissing": "Seul un site se tient seul ; tout autre niveau se place sous le niveau au-dessus.",
+  "stockReasonLevelChildrenWrong": "Cet emplacement en contient d'autres qui ont besoin de son niveau ; déplacez-les d'abord.",
+  "stockReasonPickRoleUnknown": "L'usage doit être prélèvement ou réserve.",
+  "settingLabelStockAddressSeparator": "Séparateur dans l'adresse d'un emplacement",
+  "settingHintStockAddressSeparator": "Le caractère entre les niveaux d'une adresse d'emplacement (site, zone, allée, travée, étagère) : MAG1-SALES-A03-B02-S4 avec un tiret, MAG1.SALES.A03.B02.S4 avec un point. Seule l'écriture de l'adresse change."
+}
