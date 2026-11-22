@@ -160,9 +160,9 @@ select is(pg_temp.as_user(1, format($$select (public.preview_standalone_invoice_
 -- Kiritimati (UTC+14) is on the next day from 10:00 UTC, Pago Pago (UTC-11) on the previous one
 -- before 11:00 UTC: at every instant one of them has a date other than the database's.
 select set_config('t.zone', (select z from (values ('Pacific/Kiritimati'), ('Pacific/Pago_Pago')) v(z)
-                              where (now() at time zone z)::date <> current_date limit 1), false);
+                              where (now() at time zone z)::date <> (now() at time zone 'UTC')::date limit 1), false);
 update public.workspaces set timezone = current_setting('t.zone') where id = pg_temp.u(101);
-select isnt(pg_temp.today(), current_date, 'the business''s day is not the database''s: ' || current_setting('t.zone'));
+select isnt(pg_temp.today(), (now() at time zone 'UTC')::date, 'the business''s day is not the database''s (UTC) day: ' || current_setting('t.zone'));
 select is(pg_temp.as_user(1, format($$select (public.preview_standalone_invoice_v1(%L,
     (public.save_standalone_invoice_draft_v1(%L, null, null, %L, pg_temp.today(), pg_temp.today() - 1, '', '', '[]'::jsonb) ->> 'draft_id')::uuid, 1) -> 'missing')::text$$,
   pg_temp.u(101), pg_temp.u(101), pg_temp.u(203))), '["due_on_before_issue", "lines"]',
