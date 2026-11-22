@@ -152,6 +152,8 @@ const workspaceProcesses = <WorkspaceProcess>[
       WorkspaceFeature.stockReturns,
       // #4172 — counts of stock, approved before they move it.
       WorkspaceFeature.stockCounts,
+      // #4295 — scheduled cycle counts.
+      WorkspaceFeature.stockCycleCounts,
     ]),
   ]),
   WorkspaceProcess('billingPayments', [

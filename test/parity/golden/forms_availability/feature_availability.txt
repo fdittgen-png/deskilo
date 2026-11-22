@@ -168,3 +168,4 @@ serviceFulfilment | everywhere | y y y y y y y y y y
 stockReorder | everywhere | y y y y y y y y y y
 stockReturns | everywhere | y y y y y y y y y y
 stockCounts | everywhere | y y y y y y y y y y
+stockCycleCounts | everywhere | y y y y y y y y y y

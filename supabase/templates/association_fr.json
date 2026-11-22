@@ -210,6 +210,7 @@
         "stockReorder": false,
         "stockReturns": false,
         "stockCounts": false,
+        "stockCycleCounts": false,
         "stockTakeOut": false,
         "subscriptionInvoices": false,
         "supplyClassification": false,

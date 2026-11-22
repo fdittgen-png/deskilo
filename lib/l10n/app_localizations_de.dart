@@ -12499,6 +12499,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get featureStockCountsTitle => 'Bestandszählungen';
 
   @override
+  String get featureStockCycleCountsDesc =>
+      'Planen Sie Stichproben für ausgewählte Orte, Artikel oder hochwertige Ware. Ein fälliger Plan erzeugt eine Zählaufgabe, die ohne die erwarteten Mengen erledigt wird; jede Differenz wird wie jede Zählung genehmigt. Aus: kein Plan läuft und keine Aufgabe entsteht; das Buch bleibt unberührt.';
+
+  @override
+  String get featureStockCycleCountsTitle => 'Permanente Inventur';
+
+  @override
   String get featureStockLotsDesc =>
       'Waren nach Charge oder Verfallsdatum verfolgen, mit einer Haltbarkeit. Aus: kein Artikel wird nach Charge verfolgt, und Erfasstes bleibt unverändert.';
 
@@ -31992,6 +31999,14 @@ class AppLocalizationsDe extends AppLocalizations {
       'Aus: eine Bewegung, die an einem Ort weniger als nichts übrig ließe, wird abgelehnt. An: sie wird gebucht, und der Ort zeigt eine negative Menge, bis Ware eintrifft.';
 
   @override
+  String get settingHintStockCycleCountHighValueMinor =>
+      'Der Wert in der kleinsten Einheit der Währung des Unternehmens, ab dem das, was ein Ort von einem Artikel hält, für einen Inventurplan ohne eigene Schwelle als hochwertig gilt.';
+
+  @override
+  String get settingHintStockCycleCountOverdueDays =>
+      'Wie viele Tage eine Inventuraufgabe nach ihrem Fälligkeitstag offen bleiben darf, bevor der Posteingang sie als überfällig meldet.';
+
+  @override
   String get settingHintVatViesEvidenceDays =>
       'Tage, die eine gültige Prüfung der USt-IdNr. aktuell genug bleibt, um auf einer neuen Rechnung als Nachweis zu dienen. Ein kürzerer Wert verlangt früher eine neue Prüfung; er beweist nicht, dass ein Geschäft gültig ist.';
 
@@ -32306,6 +32321,14 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingLabelStockAllowNegative => 'Bestand darf unter null fallen';
+
+  @override
+  String get settingLabelStockCycleCountHighValueMinor =>
+      'Permanente Inventur: Schwelle für hohen Wert';
+
+  @override
+  String get settingLabelStockCycleCountOverdueDays =>
+      'Permanente Inventur: überfällig nach';
 
   @override
   String get settingLabelVatViesEvidenceDays =>

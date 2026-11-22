@@ -7766,6 +7766,14 @@
   "@featureStockCountsTitle": {
     "description": "#4172 feature name"
   },
+  "featureStockCycleCountsDesc": "Pianifichi controlli a campione di luoghi, articoli o merci di alto valore. Un piano scaduto crea un compito di conteggio che si esegue senza vedere le quantità attese; ogni differenza è approvata come ogni conteggio. Disattivato: nessun piano parte e nessun compito viene creato; il registro non cambia.",
+  "@featureStockCycleCountsDesc": {
+    "description": "#4295 feature description"
+  },
+  "featureStockCycleCountsTitle": "Inventari ciclici",
+  "@featureStockCycleCountsTitle": {
+    "description": "#4295 feature name"
+  },
   "featureStockLotsDesc": "Seguire le merci per lotto o per data di scadenza, con una durata di conservazione. Disattivato: nessun articolo è seguito per lotto e ciò che è stato registrato resta invariato.",
   "@featureStockLotsDesc": {
     "description": "#4169 what the lots and expiry feature does, and what off means"
@@ -19023,6 +19031,8 @@
   },
   "settingHintStockAddressSeparator": "Il carattere tra i livelli dell'indirizzo di un’ubicazione (sede, zona, corsia, campata, scaffale): MAG1-SALES-A03-B02-S4 con il trattino, MAG1.SALES.A03.B02.S4 con il punto. Cambia solo come si scrive l'indirizzo.",
   "settingHintStockAllowNegative": "Disattivato: un movimento che lascerebbe meno di niente in un luogo è rifiutato. Attivato: viene registrato e il luogo mostra una quantità negativa finché arriva merce.",
+  "settingHintStockCycleCountHighValueMinor": "Il valore, in unità minori della valuta dell’azienda, da cui ciò che un luogo contiene di un articolo conta come di alto valore per un piano di inventario ciclico senza soglia propria.",
+  "settingHintStockCycleCountOverdueDays": "Quanti giorni un compito di inventario ciclico può restare aperto dopo la scadenza prima che la posta lo dichiari in ritardo.",
   "settingHintVatViesEvidenceDays": "Giorni in cui un controllo valido della partita IVA resta abbastanza recente da fungere da prova su una nuova fattura. Un valore più breve richiede prima un nuovo controllo; non prova che un’operazione sia valida.",
   "@settingHintVatViesEvidenceDays": {
     "description": "#2487 retention settings"
@@ -19239,6 +19249,8 @@
   },
   "settingLabelStockAddressSeparator": "Separatore nell'indirizzo di un’ubicazione",
   "settingLabelStockAllowNegative": "Le scorte possono scendere sotto zero",
+  "settingLabelStockCycleCountHighValueMinor": "Inventario ciclico: soglia di alto valore",
+  "settingLabelStockCycleCountOverdueDays": "Inventario ciclico: in ritardo dopo",
   "settingLabelVatViesEvidenceDays": "Validità del controllo della partita IVA",
   "@settingLabelVatViesEvidenceDays": {
     "description": "#2487 retention settings"

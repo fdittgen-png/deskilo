@@ -245,6 +245,7 @@ const Map<WorkspaceFeature, FeatureAssessment> featureAssessments = {
   WorkspaceFeature.stockReorder: _ownerBeta,
   WorkspaceFeature.stockReturns: _ownerBeta,
   WorkspaceFeature.stockCounts: _ownerBeta,
+  WorkspaceFeature.stockCycleCounts: _ownerBeta,
   WorkspaceFeature.organisation: _ownerBeta,
   WorkspaceFeature.standaloneInvoicing: _ownerBeta,
   WorkspaceFeature.billingCustomers: _ownerBeta,

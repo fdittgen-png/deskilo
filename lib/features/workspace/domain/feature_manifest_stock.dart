@@ -78,4 +78,14 @@ const Map<WorkspaceFeature, FeatureManifestEntry> stockFeatureManifest = {
     requires: WorkspaceFeature.stockManagement,
     defaultOn: false,
   ),
+  // #4295 — scheduled cycle counts of chosen places, items or high-value goods while the shop
+  // stays open; each counted line is a count of #4172, approved there. Asked for, under the
+  // counts. Off: no plan runs and no task is made; the ledger is unaffected.
+  WorkspaceFeature.stockCycleCounts: FeatureManifestEntry(
+    feature: WorkspaceFeature.stockCycleCounts,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.stockCounts,
+    defaultOn: false,
+  ),
 };

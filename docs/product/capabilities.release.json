@@ -2284,6 +2284,12 @@
       "capabilities": []
     },
     {
+      "key": "stockCycleCounts",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "stockLots",
       "maturity": "beta",
       "lifecycle": "active",

@@ -12481,6 +12481,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featureStockCountsTitle => 'Conteggi di magazzino';
 
   @override
+  String get featureStockCycleCountsDesc =>
+      'Pianifichi controlli a campione di luoghi, articoli o merci di alto valore. Un piano scaduto crea un compito di conteggio che si esegue senza vedere le quantità attese; ogni differenza è approvata come ogni conteggio. Disattivato: nessun piano parte e nessun compito viene creato; il registro non cambia.';
+
+  @override
+  String get featureStockCycleCountsTitle => 'Inventari ciclici';
+
+  @override
   String get featureStockLotsDesc =>
       'Seguire le merci per lotto o per data di scadenza, con una durata di conservazione. Disattivato: nessun articolo è seguito per lotto e ciò che è stato registrato resta invariato.';
 
@@ -31940,6 +31947,14 @@ class AppLocalizationsIt extends AppLocalizations {
       'Disattivato: un movimento che lascerebbe meno di niente in un luogo è rifiutato. Attivato: viene registrato e il luogo mostra una quantità negativa finché arriva merce.';
 
   @override
+  String get settingHintStockCycleCountHighValueMinor =>
+      'Il valore, in unità minori della valuta dell’azienda, da cui ciò che un luogo contiene di un articolo conta come di alto valore per un piano di inventario ciclico senza soglia propria.';
+
+  @override
+  String get settingHintStockCycleCountOverdueDays =>
+      'Quanti giorni un compito di inventario ciclico può restare aperto dopo la scadenza prima che la posta lo dichiari in ritardo.';
+
+  @override
   String get settingHintVatViesEvidenceDays =>
       'Giorni in cui un controllo valido della partita IVA resta abbastanza recente da fungere da prova su una nuova fattura. Un valore più breve richiede prima un nuovo controllo; non prova che un’operazione sia valida.';
 
@@ -32269,6 +32284,14 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settingLabelStockAllowNegative =>
       'Le scorte possono scendere sotto zero';
+
+  @override
+  String get settingLabelStockCycleCountHighValueMinor =>
+      'Inventario ciclico: soglia di alto valore';
+
+  @override
+  String get settingLabelStockCycleCountOverdueDays =>
+      'Inventario ciclico: in ritardo dopo';
 
   @override
   String get settingLabelVatViesEvidenceDays =>

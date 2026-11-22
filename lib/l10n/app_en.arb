@@ -16278,6 +16278,14 @@
   "@featureStockCountsTitle": {
     "description": "#4172 feature name"
   },
+  "featureStockCycleCountsDesc": "Plan spot checks of chosen places, items or high-value goods. A due plan makes a count task the counter does without seeing the expected quantities; each difference is approved like any count. Off: no plan runs and no task is made; the ledger is unaffected.",
+  "@featureStockCycleCountsDesc": {
+    "description": "#4295 feature description"
+  },
+  "featureStockCycleCountsTitle": "Cycle counts",
+  "@featureStockCycleCountsTitle": {
+    "description": "#4295 feature name"
+  },
   "featureStockLotsDesc": "Track goods by lot or by expiry date, with a shelf life. Off: no item is tracked by lot, and what was recorded is kept as it is.",
   "@featureStockLotsDesc": {
     "description": "#4169 what the lots and expiry feature does, and what off means"
@@ -41304,6 +41312,14 @@
   "@settingHintStockAllowNegative": {
     "description": "a workspace setting's hint (#3824)"
   },
+  "settingHintStockCycleCountHighValueMinor": "The value, in minor units of the business currency, from which what a place holds of an item counts as high value for a cycle count plan that has no threshold of its own.",
+  "@settingHintStockCycleCountHighValueMinor": {
+    "description": "#4295 settings: Setting hint."
+  },
+  "settingHintStockCycleCountOverdueDays": "How many days a cycle count task may stay open past its due date before the inbox says it is overdue.",
+  "@settingHintStockCycleCountOverdueDays": {
+    "description": "#4295 settings: Setting hint."
+  },
   "settingHintVatViesEvidenceDays": "Days a valid VAT-number check stays recent enough to stand as evidence on a new invoice. A shorter value asks for a fresh check sooner; it is not proof that a transaction is valid.",
   "@settingHintVatViesEvidenceDays": {
     "description": "#2487 retention settings"
@@ -41651,6 +41667,14 @@
   "settingLabelStockAllowNegative": "Stock may go below zero",
   "@settingLabelStockAllowNegative": {
     "description": "a workspace setting's label (#3824)"
+  },
+  "settingLabelStockCycleCountHighValueMinor": "Cycle count: high-value threshold",
+  "@settingLabelStockCycleCountHighValueMinor": {
+    "description": "#4295 settings: Setting label."
+  },
+  "settingLabelStockCycleCountOverdueDays": "Cycle count: overdue after",
+  "@settingLabelStockCycleCountOverdueDays": {
+    "description": "#4295 settings: Setting label."
   },
   "settingLabelVatViesEvidenceDays": "VAT-number check freshness",
   "@settingLabelVatViesEvidenceDays": {

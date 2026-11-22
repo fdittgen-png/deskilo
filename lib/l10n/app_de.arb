@@ -7766,6 +7766,14 @@
   "@featureStockCountsTitle": {
     "description": "#4172 feature name"
   },
+  "featureStockCycleCountsDesc": "Planen Sie Stichproben für ausgewählte Orte, Artikel oder hochwertige Ware. Ein fälliger Plan erzeugt eine Zählaufgabe, die ohne die erwarteten Mengen erledigt wird; jede Differenz wird wie jede Zählung genehmigt. Aus: kein Plan läuft und keine Aufgabe entsteht; das Buch bleibt unberührt.",
+  "@featureStockCycleCountsDesc": {
+    "description": "#4295 feature description"
+  },
+  "featureStockCycleCountsTitle": "Permanente Inventur",
+  "@featureStockCycleCountsTitle": {
+    "description": "#4295 feature name"
+  },
   "featureStockLotsDesc": "Waren nach Charge oder Verfallsdatum verfolgen, mit einer Haltbarkeit. Aus: kein Artikel wird nach Charge verfolgt, und Erfasstes bleibt unverändert.",
   "@featureStockLotsDesc": {
     "description": "#4169 what the lots and expiry feature does, and what off means"
@@ -19023,6 +19031,8 @@
   },
   "settingHintStockAddressSeparator": "Das Zeichen zwischen den Ebenen einer Lagerort-Adresse (Standort, Zone, Gang, Regalfeld, Fach): MAG1-SALES-A03-B02-S4 mit Bindestrich, MAG1.SALES.A03.B02.S4 mit Punkt. Nur die Schreibweise ändert sich.",
   "settingHintStockAllowNegative": "Aus: eine Bewegung, die an einem Ort weniger als nichts übrig ließe, wird abgelehnt. An: sie wird gebucht, und der Ort zeigt eine negative Menge, bis Ware eintrifft.",
+  "settingHintStockCycleCountHighValueMinor": "Der Wert in der kleinsten Einheit der Währung des Unternehmens, ab dem das, was ein Ort von einem Artikel hält, für einen Inventurplan ohne eigene Schwelle als hochwertig gilt.",
+  "settingHintStockCycleCountOverdueDays": "Wie viele Tage eine Inventuraufgabe nach ihrem Fälligkeitstag offen bleiben darf, bevor der Posteingang sie als überfällig meldet.",
   "settingHintVatViesEvidenceDays": "Tage, die eine gültige Prüfung der USt-IdNr. aktuell genug bleibt, um auf einer neuen Rechnung als Nachweis zu dienen. Ein kürzerer Wert verlangt früher eine neue Prüfung; er beweist nicht, dass ein Geschäft gültig ist.",
   "@settingHintVatViesEvidenceDays": {
     "description": "#2487 retention settings"
@@ -19239,6 +19249,8 @@
   },
   "settingLabelStockAddressSeparator": "Trennzeichen in einer Lagerort-Adresse",
   "settingLabelStockAllowNegative": "Bestand darf unter null fallen",
+  "settingLabelStockCycleCountHighValueMinor": "Permanente Inventur: Schwelle für hohen Wert",
+  "settingLabelStockCycleCountOverdueDays": "Permanente Inventur: überfällig nach",
   "settingLabelVatViesEvidenceDays": "Aktualität der USt-IdNr.-Prüfung",
   "@settingLabelVatViesEvidenceDays": {
     "description": "#2487 retention settings"

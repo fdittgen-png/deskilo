@@ -7766,6 +7766,14 @@
   "@featureStockCountsTitle": {
     "description": "#4172 feature name"
   },
+  "featureStockCycleCountsDesc": "Planifiez des contrôles ponctuels de lieux, d’articles ou de marchandises de valeur. Un plan échu crée une tâche de comptage que le compteur fait sans voir les quantités attendues ; chaque écart est approuvé comme tout comptage. Désactivé : aucun plan ne s’exécute et aucune tâche n’est créée ; le registre n’est pas touché.",
+  "@featureStockCycleCountsDesc": {
+    "description": "#4295 feature description"
+  },
+  "featureStockCycleCountsTitle": "Inventaires tournants",
+  "@featureStockCycleCountsTitle": {
+    "description": "#4295 feature name"
+  },
   "featureStockLotsDesc": "Suivre les marchandises par lot ou par date de péremption, avec une durée de conservation. Désactivé : aucun article n’est suivi par lot, et ce qui a été enregistré est conservé tel quel.",
   "@featureStockLotsDesc": {
     "description": "#4169 what the lots and expiry feature does, and what off means"
@@ -19023,6 +19031,8 @@
   },
   "settingHintStockAddressSeparator": "Le caractère entre les niveaux d'une adresse d'emplacement (site, zone, allée, travée, étagère) : MAG1-SALES-A03-B02-S4 avec un tiret, MAG1.SALES.A03.B02.S4 avec un point. Seule l'écriture de l'adresse change.",
   "settingHintStockAllowNegative": "Désactivé : un mouvement qui laisserait moins que rien à un endroit est refusé. Activé : il est enregistré, et l'endroit affiche une quantité négative jusqu'à l'arrivée de marchandises.",
+  "settingHintStockCycleCountHighValueMinor": "La valeur, en unités mineures de la devise de l’entreprise, à partir de laquelle ce qu’un lieu contient d’un article est de forte valeur pour un plan d’inventaire tournant sans seuil propre.",
+  "settingHintStockCycleCountOverdueDays": "Combien de jours une tâche d’inventaire tournant peut rester ouverte après son échéance avant que la boîte de réception la dise en retard.",
   "settingHintVatViesEvidenceDays": "Jours pendant lesquels un contrôle valide du numéro de TVA reste assez récent pour servir de preuve sur une nouvelle facture. Une valeur plus courte demande un nouveau contrôle plus tôt ; ce n’est pas la preuve qu’une opération est valable.",
   "@settingHintVatViesEvidenceDays": {
     "description": "#2487 retention settings"
@@ -19239,6 +19249,8 @@
   },
   "settingLabelStockAddressSeparator": "Séparateur dans l'adresse d'un emplacement",
   "settingLabelStockAllowNegative": "Le stock peut passer sous zéro",
+  "settingLabelStockCycleCountHighValueMinor": "Inventaire tournant : seuil de forte valeur",
+  "settingLabelStockCycleCountOverdueDays": "Inventaire tournant : en retard après",
   "settingLabelVatViesEvidenceDays": "Fraîcheur du contrôle du numéro de TVA",
   "@settingLabelVatViesEvidenceDays": {
     "description": "#2487 retention settings"

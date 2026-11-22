@@ -20164,6 +20164,18 @@ abstract class AppLocalizations {
   /// **'Stock counts'**
   String get featureStockCountsTitle;
 
+  /// #4295 feature description
+  ///
+  /// In en, this message translates to:
+  /// **'Plan spot checks of chosen places, items or high-value goods. A due plan makes a count task the counter does without seeing the expected quantities; each difference is approved like any count. Off: no plan runs and no task is made; the ledger is unaffected.'**
+  String get featureStockCycleCountsDesc;
+
+  /// #4295 feature name
+  ///
+  /// In en, this message translates to:
+  /// **'Cycle counts'**
+  String get featureStockCycleCountsTitle;
+
   /// #4169 what the lots and expiry feature does, and what off means
   ///
   /// In en, this message translates to:
@@ -50829,6 +50841,18 @@ abstract class AppLocalizations {
   /// **'Off: a move that would leave less than nothing at a place is refused. On: it is recorded, and the place shows a negative quantity until goods arrive.'**
   String get settingHintStockAllowNegative;
 
+  /// #4295 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'The value, in minor units of the business currency, from which what a place holds of an item counts as high value for a cycle count plan that has no threshold of its own.'**
+  String get settingHintStockCycleCountHighValueMinor;
+
+  /// #4295 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'How many days a cycle count task may stay open past its due date before the inbox says it is overdue.'**
+  String get settingHintStockCycleCountOverdueDays;
+
   /// #2487 retention settings
   ///
   /// In en, this message translates to:
@@ -51350,6 +51374,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Stock may go below zero'**
   String get settingLabelStockAllowNegative;
+
+  /// #4295 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Cycle count: high-value threshold'**
+  String get settingLabelStockCycleCountHighValueMinor;
+
+  /// #4295 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Cycle count: overdue after'**
+  String get settingLabelStockCycleCountOverdueDays;
 
   /// #2487 retention settings
   ///

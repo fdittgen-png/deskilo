@@ -12470,6 +12470,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get featureStockCountsTitle => 'Recuentos de stock';
 
   @override
+  String get featureStockCycleCountsDesc =>
+      'Planifique controles puntuales de lugares, artículos o mercancías de alto valor. Un plan vencido crea una tarea de recuento que se hace sin ver las cantidades esperadas; cada diferencia se aprueba como cualquier recuento. Desactivado: ningún plan se ejecuta ni se crea tarea; el registro no cambia.';
+
+  @override
+  String get featureStockCycleCountsTitle => 'Recuentos cíclicos';
+
+  @override
   String get featureStockLotsDesc =>
       'Seguir las mercancías por lote o por fecha de caducidad, con una vida útil. Desactivado: ningún artículo se sigue por lote y lo registrado se conserva tal cual.';
 
@@ -31901,6 +31908,14 @@ class AppLocalizationsEs extends AppLocalizations {
       'Desactivado: se rechaza un movimiento que dejaría menos que nada en un lugar. Activado: se registra y el lugar muestra una cantidad negativa hasta que llegue mercancía.';
 
   @override
+  String get settingHintStockCycleCountHighValueMinor =>
+      'El valor, en unidades menores de la moneda de la empresa, a partir del cual lo que un lugar contiene de un artículo se considera de alto valor para un plan de recuento sin umbral propio.';
+
+  @override
+  String get settingHintStockCycleCountOverdueDays =>
+      'Cuántos días puede seguir abierta una tarea de recuento cíclico después de su fecha antes de que la bandeja la declare vencida.';
+
+  @override
   String get settingHintVatViesEvidenceDays =>
       'Días que una comprobación válida del NIF-IVA sigue siendo lo bastante reciente para servir de prueba en una nueva factura. Un valor más corto pide una nueva comprobación antes; no prueba que una operación sea válida.';
 
@@ -32229,6 +32244,14 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingLabelStockAllowNegative =>
       'Las existencias pueden bajar de cero';
+
+  @override
+  String get settingLabelStockCycleCountHighValueMinor =>
+      'Recuento cíclico: umbral de alto valor';
+
+  @override
+  String get settingLabelStockCycleCountOverdueDays =>
+      'Recuento cíclico: vencido tras';
 
   @override
   String get settingLabelVatViesEvidenceDays =>

@@ -803,7 +803,12 @@ window.SETUP_L10N={
    "stockSepDash": "Dash ( - )",
    "stockSepDot": "Dot ( . )",
    "stockSepSlash": "Slash ( / )",
-   "stockSepColon": "Colon ( : )"
+   "stockSepColon": "Colon ( : )",
+   "stockCycleHighValue": "Cycle count: high-value threshold",
+   "stockCycleHighValueHint": "The value, in minor units of the business currency, from which what a place holds of an item counts as high value for a cycle count plan that has no threshold of its own. Set in the app's settings.",
+   "stockCycleOverdue": "Cycle count: overdue after",
+   "stockCycleOverdueHint": "How many days a cycle count task may stay open past its due date before the inbox says it is overdue. Set in the app's settings.",
+   "optMinorUnits": "{n} (minor units)"
   },
   "feature": {
    "calendarTab": [
@@ -1481,6 +1486,10 @@ window.SETUP_L10N={
    "stockCounts": [
     "Stock counts",
     "Count an item at a place. The count waits for someone who may approve adjustments, and it is applied only if the stock has not moved since it was counted. Off: no count is recorded; the ledger is unaffected."
+   ],
+   "stockCycleCounts": [
+    "Cycle counts",
+    "Plan spot checks of chosen places, items or high-value goods. A due plan makes a count task the counter does without seeing the expected quantities; each difference is approved like any count. Off: no plan runs and no task is made; the ledger is unaffected."
    ]
   },
   "process": {
@@ -2680,7 +2689,12 @@ window.SETUP_L10N={
    "stockSepDash": "Tiret ( - )",
    "stockSepDot": "Point ( . )",
    "stockSepSlash": "Barre oblique ( / )",
-   "stockSepColon": "Deux-points ( : )"
+   "stockSepColon": "Deux-points ( : )",
+   "stockCycleHighValue": "Inventaire tournant : seuil de forte valeur",
+   "stockCycleHighValueHint": "La valeur, en unités mineures de la devise de l’entreprise, à partir de laquelle ce qu’un lieu contient d’un article est de forte valeur pour un plan sans seuil propre. Réglé dans les paramètres de l’application.",
+   "stockCycleOverdue": "Inventaire tournant : en retard après",
+   "stockCycleOverdueHint": "Combien de jours une tâche d’inventaire tournant peut rester ouverte après son échéance avant d’être dite en retard. Réglé dans les paramètres de l’application.",
+   "optMinorUnits": "{n} (unités mineures)"
   },
   "feature": {
    "calendarTab": [
@@ -3358,6 +3372,10 @@ window.SETUP_L10N={
    "stockCounts": [
     "Inventaires de stock",
     "Comptez un article à un endroit. Le comptage attend quelqu’un qui peut approuver les ajustements, et il n’est appliqué que si le stock n’a pas bougé depuis. Désactivé : aucun comptage n’est enregistré ; le registre n’est pas touché."
+   ],
+   "stockCycleCounts": [
+    "Inventaires tournants",
+    "Planifiez des contrôles ponctuels de lieux, d’articles ou de marchandises de valeur. Un plan échu crée une tâche de comptage que le compteur fait sans voir les quantités attendues ; chaque écart est approuvé comme tout comptage. Désactivé : aucun plan ne s’exécute et aucune tâche n’est créée ; le registre n’est pas touché."
    ]
   },
   "process": {
@@ -4557,7 +4575,12 @@ window.SETUP_L10N={
    "stockSepDash": "Bindestrich ( - )",
    "stockSepDot": "Punkt ( . )",
    "stockSepSlash": "Schrägstrich ( / )",
-   "stockSepColon": "Doppelpunkt ( : )"
+   "stockSepColon": "Doppelpunkt ( : )",
+   "stockCycleHighValue": "Permanente Inventur: Schwelle für hohen Wert",
+   "stockCycleHighValueHint": "Der Wert in der kleinsten Einheit der Währung des Unternehmens, ab dem das, was ein Ort von einem Artikel hält, für einen Plan ohne eigene Schwelle als hochwertig gilt. Einstellbar in den Einstellungen der App.",
+   "stockCycleOverdue": "Permanente Inventur: überfällig nach",
+   "stockCycleOverdueHint": "Wie viele Tage eine Inventuraufgabe nach ihrem Fälligkeitstag offen bleiben darf, bevor sie als überfällig gemeldet wird. Einstellbar in den Einstellungen der App.",
+   "optMinorUnits": "{n} (kleinste Einheit)"
   },
   "feature": {
    "calendarTab": [
@@ -5235,6 +5258,10 @@ window.SETUP_L10N={
    "stockCounts": [
     "Bestandszählungen",
     "Zählen Sie einen Artikel an einem Ort. Die Zählung wartet auf jemanden, der Anpassungen genehmigen darf, und wird nur angewendet, wenn sich der Bestand seit der Zählung nicht bewegt hat. Aus: keine Zählung wird erfasst; das Buch bleibt unberührt."
+   ],
+   "stockCycleCounts": [
+    "Permanente Inventur",
+    "Planen Sie Stichproben für ausgewählte Orte, Artikel oder hochwertige Ware. Ein fälliger Plan erzeugt eine Zählaufgabe, die ohne die erwarteten Mengen erledigt wird; jede Differenz wird wie jede Zählung genehmigt. Aus: kein Plan läuft und keine Aufgabe entsteht; das Buch bleibt unberührt."
    ]
   },
   "process": {
@@ -6434,7 +6461,12 @@ window.SETUP_L10N={
    "stockSepDash": "Guion ( - )",
    "stockSepDot": "Punto ( . )",
    "stockSepSlash": "Barra ( / )",
-   "stockSepColon": "Dos puntos ( : )"
+   "stockSepColon": "Dos puntos ( : )",
+   "stockCycleHighValue": "Recuento cíclico: umbral de alto valor",
+   "stockCycleHighValueHint": "El valor, en unidades menores de la moneda de la empresa, a partir del cual lo que un lugar contiene de un artículo es de alto valor para un plan sin umbral propio. Se ajusta en los ajustes de la aplicación.",
+   "stockCycleOverdue": "Recuento cíclico: vencido tras",
+   "stockCycleOverdueHint": "Cuántos días puede seguir abierta una tarea de recuento cíclico después de su fecha antes de declararse vencida. Se ajusta en los ajustes de la aplicación.",
+   "optMinorUnits": "{n} (unidades menores)"
   },
   "feature": {
    "calendarTab": [
@@ -7112,6 +7144,10 @@ window.SETUP_L10N={
    "stockCounts": [
     "Recuentos de stock",
     "Cuente un artículo en un lugar. El recuento espera a alguien que pueda aprobar ajustes y solo se aplica si el stock no se ha movido desde entonces. Desactivado: no se registra ningún recuento; el registro no cambia."
+   ],
+   "stockCycleCounts": [
+    "Recuentos cíclicos",
+    "Planifique controles puntuales de lugares, artículos o mercancías de alto valor. Un plan vencido crea una tarea de recuento que se hace sin ver las cantidades esperadas; cada diferencia se aprueba como cualquier recuento. Desactivado: ningún plan se ejecuta ni se crea tarea; el registro no cambia."
    ]
   },
   "process": {
@@ -8311,7 +8347,12 @@ window.SETUP_L10N={
    "stockSepDash": "Trattino ( - )",
    "stockSepDot": "Punto ( . )",
    "stockSepSlash": "Barra ( / )",
-   "stockSepColon": "Due punti ( : )"
+   "stockSepColon": "Due punti ( : )",
+   "stockCycleHighValue": "Inventario ciclico: soglia di alto valore",
+   "stockCycleHighValueHint": "Il valore, in unità minori della valuta dell’azienda, da cui ciò che un luogo contiene di un articolo è di alto valore per un piano senza soglia propria. Si imposta nelle impostazioni dell’app.",
+   "stockCycleOverdue": "Inventario ciclico: in ritardo dopo",
+   "stockCycleOverdueHint": "Quanti giorni un compito di inventario ciclico può restare aperto dopo la scadenza prima di essere dichiarato in ritardo. Si imposta nelle impostazioni dell’app.",
+   "optMinorUnits": "{n} (unità minori)"
   },
   "feature": {
    "calendarTab": [
@@ -8989,6 +9030,10 @@ window.SETUP_L10N={
    "stockCounts": [
     "Conteggi di magazzino",
     "Conti un articolo in un luogo. Il conteggio attende qualcuno che possa approvare le rettifiche e viene applicato solo se la giacenza non si è mossa da allora. Disattivato: nessun conteggio viene registrato; il registro non cambia."
+   ],
+   "stockCycleCounts": [
+    "Inventari ciclici",
+    "Pianifichi controlli a campione di luoghi, articoli o merci di alto valore. Un piano scaduto crea un compito di conteggio che si esegue senza vedere le quantità attese; ogni differenza è approvata come ogni conteggio. Disattivato: nessun piano parte e nessun compito viene creato; il registro non cambia."
    ]
   },
   "process": {

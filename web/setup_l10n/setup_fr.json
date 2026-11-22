@@ -798,5 +798,10 @@
  "stockSepDash": "Tiret ( - )",
  "stockSepDot": "Point ( . )",
  "stockSepSlash": "Barre oblique ( / )",
- "stockSepColon": "Deux-points ( : )"
+ "stockSepColon": "Deux-points ( : )",
+ "stockCycleHighValue": "Inventaire tournant : seuil de forte valeur",
+ "stockCycleHighValueHint": "La valeur, en unités mineures de la devise de l’entreprise, à partir de laquelle ce qu’un lieu contient d’un article est de forte valeur pour un plan sans seuil propre. Réglé dans les paramètres de l’application.",
+ "stockCycleOverdue": "Inventaire tournant : en retard après",
+ "stockCycleOverdueHint": "Combien de jours une tâche d’inventaire tournant peut rester ouverte après son échéance avant d’être dite en retard. Réglé dans les paramètres de l’application.",
+ "optMinorUnits": "{n} (unités mineures)"
 }

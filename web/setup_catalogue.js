@@ -678,6 +678,10 @@ window.SETUP_REGISTRY={
   [
    "stockCounts",
    false
+  ],
+  [
+   "stockCycleCounts",
+   false
   ]
  ],
  "requires": {
@@ -796,7 +800,8 @@ window.SETUP_REGISTRY={
   "serviceFulfilment": "billingCustomers",
   "stockReorder": "stockManagement",
   "stockReturns": "stockManagement",
-  "stockCounts": "stockManagement"
+  "stockCounts": "stockManagement",
+  "stockCycleCounts": "stockCounts"
  },
  "availableIn": {
   "recapitulativeStatement": [
@@ -1517,7 +1522,8 @@ window.SETUP_PROCESSES=[
      "stockTakeOut",
      "stockReorder",
      "stockReturns",
-     "stockCounts"
+     "stockCounts",
+     "stockCycleCounts"
     ]
    }
   ]
@@ -2008,7 +2014,8 @@ window.SETUP_LEVELS={
       "stockTakeOut",
       "stockReorder",
       "stockReturns",
-      "stockCounts"
+      "stockCounts",
+      "stockCycleCounts"
      ],
      "needs": {
       "money": "invoices"

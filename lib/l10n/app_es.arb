@@ -7766,6 +7766,14 @@
   "@featureStockCountsTitle": {
     "description": "#4172 feature name"
   },
+  "featureStockCycleCountsDesc": "Planifique controles puntuales de lugares, artículos o mercancías de alto valor. Un plan vencido crea una tarea de recuento que se hace sin ver las cantidades esperadas; cada diferencia se aprueba como cualquier recuento. Desactivado: ningún plan se ejecuta ni se crea tarea; el registro no cambia.",
+  "@featureStockCycleCountsDesc": {
+    "description": "#4295 feature description"
+  },
+  "featureStockCycleCountsTitle": "Recuentos cíclicos",
+  "@featureStockCycleCountsTitle": {
+    "description": "#4295 feature name"
+  },
   "featureStockLotsDesc": "Seguir las mercancías por lote o por fecha de caducidad, con una vida útil. Desactivado: ningún artículo se sigue por lote y lo registrado se conserva tal cual.",
   "@featureStockLotsDesc": {
     "description": "#4169 what the lots and expiry feature does, and what off means"
@@ -19023,6 +19031,8 @@
   },
   "settingHintStockAddressSeparator": "El carácter entre los niveles de una dirección de ubicación (sede, zona, pasillo, módulo, estante): MAG1-SALES-A03-B02-S4 con guion, MAG1.SALES.A03.B02.S4 con punto. Solo cambia cómo se escribe la dirección.",
   "settingHintStockAllowNegative": "Desactivado: se rechaza un movimiento que dejaría menos que nada en un lugar. Activado: se registra y el lugar muestra una cantidad negativa hasta que llegue mercancía.",
+  "settingHintStockCycleCountHighValueMinor": "El valor, en unidades menores de la moneda de la empresa, a partir del cual lo que un lugar contiene de un artículo se considera de alto valor para un plan de recuento sin umbral propio.",
+  "settingHintStockCycleCountOverdueDays": "Cuántos días puede seguir abierta una tarea de recuento cíclico después de su fecha antes de que la bandeja la declare vencida.",
   "settingHintVatViesEvidenceDays": "Días que una comprobación válida del NIF-IVA sigue siendo lo bastante reciente para servir de prueba en una nueva factura. Un valor más corto pide una nueva comprobación antes; no prueba que una operación sea válida.",
   "@settingHintVatViesEvidenceDays": {
     "description": "#2487 retention settings"
@@ -19239,6 +19249,8 @@
   },
   "settingLabelStockAddressSeparator": "Separador en la dirección de una ubicación",
   "settingLabelStockAllowNegative": "Las existencias pueden bajar de cero",
+  "settingLabelStockCycleCountHighValueMinor": "Recuento cíclico: umbral de alto valor",
+  "settingLabelStockCycleCountOverdueDays": "Recuento cíclico: vencido tras",
   "settingLabelVatViesEvidenceDays": "Vigencia de la comprobación del NIF-IVA",
   "@settingLabelVatViesEvidenceDays": {
     "description": "#2487 retention settings"

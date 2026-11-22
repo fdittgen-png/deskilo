@@ -73,6 +73,11 @@ const FED_ANSWER_WAIT=[['30','optSeconds',{n:30}],['60','optOneMinute'],['120','
 const SUP_LOOKUP_WAIT=[['5','optSeconds',{n:5}],['10','optSeconds',{n:10}],['15','optSeconds',{n:15}],['30','optSeconds',{n:30}]];
 // #3675 — where badge sign-in works (workspace setting
 // security.badge_signin_where), while kiosk enrolment is on.
+// #4295 — cycle counts: the value from which a place's holding of an item is high value (workspace
+// setting stock.cycle_count_high_value_minor, in minor units) and the days a task may stay open
+// past its due date before the inbox says it is overdue (stock.cycle_count_overdue_days).
+const STOCK_CYCLE_VALUE=[['10000','optMinorUnits',{n:10000}],['50000','optMinorUnits',{n:50000}],['100000','optMinorUnits',{n:100000}],['500000','optMinorUnits',{n:500000}]];
+const STOCK_CYCLE_OVERDUE=[['3','optDays',{n:3}],['7','optDays',{n:7}],['14','optDays',{n:14}],['30','optDays',{n:30}]];
 const STOCK_SEP=[['-','stockSepDash'],['.','stockSepDot'],['/','stockSepSlash'],[':','stockSepColon']];
 const BADGE_WHERE=[['enrolled_kiosks','badgeWhereKiosks'],['any_device','badgeWhereAnyDevice']];
 const SUP_LOOKUP_RATE=[['5','optPerMinute',{n:5}],['10','optPerMinute',{n:10}],['20','optPerMinute',{n:20}],['60','optPerMinute',{n:60}],['120','optPerMinute',{n:120}]];
@@ -154,6 +159,7 @@ const PARAM_META=[
  ['stock.allowNegative','stockAllowNegative','bool',null,{needs:'stockManagement'}],
  // #4293 — the character between the levels of a place address (workspace setting stock.address_separator).
  ['stock.addressSeparator','stockAddressSeparator','enum',()=>STOCK_SEP.map(x=>x[0]),{needs:'stockManagement'}],
+ ['stock.cycleHighValue','stockCycleHighValue','enum',()=>STOCK_CYCLE_VALUE.map(x=>x[0]),{needs:'stockCycleCounts'}],['stock.cycleOverdue','stockCycleOverdue','enum',()=>STOCK_CYCLE_OVERDUE.map(x=>x[0]),{needs:'stockCycleCounts'}],
  ['supplierLookup.timeout','supLookupWait','enum',()=>SUP_LOOKUP_WAIT.map(x=>x[0])],
  ['supplierLookup.perMinute','supLookupRate','enum',()=>SUP_LOOKUP_RATE.map(x=>x[0])],
  ['retention.usYears','retUsYears','enum',()=>RET_US_YEARS.map(x=>x[0])],

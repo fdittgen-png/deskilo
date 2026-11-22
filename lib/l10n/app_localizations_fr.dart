@@ -12534,6 +12534,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get featureStockCountsTitle => 'Inventaires de stock';
 
   @override
+  String get featureStockCycleCountsDesc =>
+      'Planifiez des contrôles ponctuels de lieux, d’articles ou de marchandises de valeur. Un plan échu crée une tâche de comptage que le compteur fait sans voir les quantités attendues ; chaque écart est approuvé comme tout comptage. Désactivé : aucun plan ne s’exécute et aucune tâche n’est créée ; le registre n’est pas touché.';
+
+  @override
+  String get featureStockCycleCountsTitle => 'Inventaires tournants';
+
+  @override
   String get featureStockLotsDesc =>
       'Suivre les marchandises par lot ou par date de péremption, avec une durée de conservation. Désactivé : aucun article n’est suivi par lot, et ce qui a été enregistré est conservé tel quel.';
 
@@ -32039,6 +32046,14 @@ class AppLocalizationsFr extends AppLocalizations {
       'Désactivé : un mouvement qui laisserait moins que rien à un endroit est refusé. Activé : il est enregistré, et l\'endroit affiche une quantité négative jusqu\'à l\'arrivée de marchandises.';
 
   @override
+  String get settingHintStockCycleCountHighValueMinor =>
+      'La valeur, en unités mineures de la devise de l’entreprise, à partir de laquelle ce qu’un lieu contient d’un article est de forte valeur pour un plan d’inventaire tournant sans seuil propre.';
+
+  @override
+  String get settingHintStockCycleCountOverdueDays =>
+      'Combien de jours une tâche d’inventaire tournant peut rester ouverte après son échéance avant que la boîte de réception la dise en retard.';
+
+  @override
   String get settingHintVatViesEvidenceDays =>
       'Jours pendant lesquels un contrôle valide du numéro de TVA reste assez récent pour servir de preuve sur une nouvelle facture. Une valeur plus courte demande un nouveau contrôle plus tôt ; ce n’est pas la preuve qu’une opération est valable.';
 
@@ -32363,6 +32378,14 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get settingLabelStockAllowNegative => 'Le stock peut passer sous zéro';
+
+  @override
+  String get settingLabelStockCycleCountHighValueMinor =>
+      'Inventaire tournant : seuil de forte valeur';
+
+  @override
+  String get settingLabelStockCycleCountOverdueDays =>
+      'Inventaire tournant : en retard après';
 
   @override
   String get settingLabelVatViesEvidenceDays =>

@@ -12388,6 +12388,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureStockCountsTitle => 'Stock counts';
 
   @override
+  String get featureStockCycleCountsDesc =>
+      'Plan spot checks of chosen places, items or high-value goods. A due plan makes a count task the counter does without seeing the expected quantities; each difference is approved like any count. Off: no plan runs and no task is made; the ledger is unaffected.';
+
+  @override
+  String get featureStockCycleCountsTitle => 'Cycle counts';
+
+  @override
   String get featureStockLotsDesc =>
       'Track goods by lot or by expiry date, with a shelf life. Off: no item is tracked by lot, and what was recorded is kept as it is.';
 
@@ -31666,6 +31673,14 @@ class AppLocalizationsEn extends AppLocalizations {
       'Off: a move that would leave less than nothing at a place is refused. On: it is recorded, and the place shows a negative quantity until goods arrive.';
 
   @override
+  String get settingHintStockCycleCountHighValueMinor =>
+      'The value, in minor units of the business currency, from which what a place holds of an item counts as high value for a cycle count plan that has no threshold of its own.';
+
+  @override
+  String get settingHintStockCycleCountOverdueDays =>
+      'How many days a cycle count task may stay open past its due date before the inbox says it is overdue.';
+
+  @override
   String get settingHintVatViesEvidenceDays =>
       'Days a valid VAT-number check stays recent enough to stand as evidence on a new invoice. A shorter value asks for a fresh check sooner; it is not proof that a transaction is valid.';
 
@@ -31965,6 +31980,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingLabelStockAllowNegative => 'Stock may go below zero';
+
+  @override
+  String get settingLabelStockCycleCountHighValueMinor =>
+      'Cycle count: high-value threshold';
+
+  @override
+  String get settingLabelStockCycleCountOverdueDays =>
+      'Cycle count: overdue after';
 
   @override
   String get settingLabelVatViesEvidenceDays => 'VAT-number check freshness';
