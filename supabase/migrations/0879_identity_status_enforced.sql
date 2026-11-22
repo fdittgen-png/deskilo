@@ -19,8 +19,9 @@
 --   * An assertion that arrives for a subject not bound yet is kept when it is `suspended` or
 --     `erased` and comes from the installation registered as this host's personal home, answered
 --     `held`, and enforced when the binding is made. An `active` one, or one from any other
---     installation, for an unbound subject is refused as before. Revoking a binding lifts the ban this
---     enforcement set on its account.
+--     installation, for an unbound subject is refused as before. Revoking a binding does not lift a ban the
+--     status still holds the account out with; it lifts the ban this enforcement set once the
+--     status no longer does.
 --   * Behaviour when the home falls silent: a suspension is enforced for the lifetime the home
 --     gave it (plus the clock skew) and lapses with it, so a host never holds a person out on the
 --     strength of a home it no longer hears; the home re-asserts every non-active status each
@@ -82,7 +83,7 @@ begin
     return 0;
   end if;
   v_until := case v_row.status
-               when 'erased' then now() + interval '100 years'
+               when 'erased' then timestamptz '2999-12-31 00:00:00+00'
                when 'suspended' then v_row.valid_until + v_skew
                else null end;
   -- A suspension whose deadline has passed enforces nothing.
@@ -104,6 +105,16 @@ begin
                 jsonb_build_object('status', v_row.status, 'until', v_until));
         v_record := v_until;
         v_changed := v_changed + 1;
+      elsif v_row.status = 'erased' then
+        -- an erasure always holds the account out, whoever set the ban in force; a ban is never shortened
+        if v_ban < v_until then
+          update auth.users set banned_until = v_until where id = v_user;
+          insert into public.database_authority_audit (installation_id, action, actor, target_user_id, detail)
+          values (public.installation_id(), 'identity_status_enforced', 'system', v_user,
+                  jsonb_build_object('status', v_row.status, 'until', v_until));
+          v_changed := v_changed + 1;
+        end if;
+        v_record := v_until;
       elsif v_ours then
         -- its own ban: extended only when less than one refresh period of it remains
         if v_ban < v_until and v_ban < now() + v_every + v_skew then
@@ -207,9 +218,15 @@ begin
   if new.status = 'active' then
     perform public.identity_status_enforce(new.issuer, new.subject);
   elsif tg_op = 'UPDATE' and old.status = 'active' then
+    -- Unlinking never lifts a status that still holds the account out: the ban is lifted here
+    -- only when the assertion no longer does (active, or a suspension past its deadline).
     select * into v_row from public.identity_status_assertions
      where issuer = new.issuer and subject = new.subject for update;
-    if v_row.enforced_until is not null then
+    if v_row.enforced_until is not null
+       and (v_row.status = 'active'
+            or (v_row.status = 'suspended'
+                and v_row.valid_until + make_interval(secs =>
+                    (public.setting_value(null, 'identity.clock_skew_seconds') #>> '{}')::int) <= now())) then
       select u.banned_until into v_ban from auth.users u where u.id = new.local_user_id for update;
       if v_ban is not distinct from v_row.enforced_until then
         update auth.users set banned_until = null where id = new.local_user_id;

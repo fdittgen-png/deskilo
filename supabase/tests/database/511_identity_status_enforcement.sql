@@ -6,7 +6,7 @@
 -- re-asserts a status that is not active once per refresh period and goes on to the installations
 -- that have not acknowledged an erasure.
 begin;
-select plan(37);
+select plan(39);
 
 create function pg_temp.u(p_n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-0000002562b' || p_n)::uuid $$;
@@ -143,6 +143,7 @@ select is((select (banned_until > now() + interval '29 days')::text from auth.us
 select is(pg_temp.tx(pg_temp.b(25, 'sa', 32, 'erased')), 'applied', 'an erasure is applied');
 select is((select (banned_until > now() + interval '50 years')::text from auth.users where id = pg_temp.u(3)), 'true', 'and bans for good');
 select is(pg_temp.tx(pg_temp.b(26, 'sa', 33, 'active')), 'superseded', 'nothing lifts it');
+
 -- a status for a subject not bound yet
 select is(pg_temp.tx(pg_temp.b(27, 'later', 1, 'suspended')) || ' ' || pg_temp.tx(pg_temp.b(28, 'never', 1, 'active')),
   'held unlinked_subject', 'a suspension for a subject not bound yet is kept; an active one is refused');
@@ -168,15 +169,20 @@ select is(pg_temp.tx(pg_temp.b(34, 'sm', 6, 'suspended')), 'applied', 'asserted 
 select is((select (u.banned_until = _ban.b and (select count(*)::int from public.database_authority_audit
               where action = 'identity_status_enforced' and target_user_id = pg_temp.u(2)) = _ban.n)::text
              from auth.users u, _ban where u.id = pg_temp.u(2)), 'true', 'changes neither the ban nor the audit');
--- revoking the binding lifts the ban the enforcement set
+-- revoking the binding does not lift it while the suspension holds
 update public.identity_bindings set status = 'revoked', revoked_at = now() where subject = 'sm' and status = 'active';
-select is((select (banned_until is null)::text from auth.users where id = pg_temp.u(2)), 'true', 'a binding revoked while the ban holds lifts it');
+select is((select (banned_until > now())::text from auth.users where id = pg_temp.u(2)), 'true',
+  'unlinking does not lift a ban the status still holds the account out with');
 -- a suspension lapses with its deadline
 alter table public.identity_status_assertions disable trigger protect_federation_history;
 update public.identity_status_assertions set valid_until = now() - interval '1 hour', asserted_at = now() - interval '2 hours' where subject = 'later';
 alter table public.identity_status_assertions enable trigger protect_federation_history;
 select is(public.identity_status_enforce(pg_temp.iss(), 'later'), 1, 'a suspension past its deadline is looked at again');
 select is((select (banned_until is null)::text from auth.users where id = pg_temp.u(4)), 'true', 'and stops being enforced');
+-- an erasure holds an account out whoever set the ban in force
+update auth.users set banned_until = now() + interval '1 day' where id = pg_temp.u(4);
+select is(pg_temp.tx(pg_temp.b(35, 'later', 5, 'erased')), 'applied', 'an erasure for an account banned another way');
+select is((select (banned_until > now() + interval '900 years')::text from auth.users where id = pg_temp.u(4)), 'true', 'bans it for good');
 select is((select count(*)::int from unnest(array['anon', 'authenticated', 'service_role']) r
             where has_function_privilege(r, 'public.identity_status_enforce(text, text)', 'EXECUTE')
                or has_function_privilege(r, 'public.identity_status_reissue()', 'EXECUTE')), 0, 'no API role reaches the functions');
