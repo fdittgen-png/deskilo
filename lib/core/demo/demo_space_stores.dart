@@ -275,8 +275,7 @@ DemoSpaceStores _home(DemoFixture fixture, _Orders orders) {
     actor: () => fixture.activeMemberId,
     workspaceId: demoFirstSpaceId,
   );
-  // #2365 last year's books, closed and exported; #2370 the studio's
-  // Pennylane connection.
+  // #2365 last year's books, closed and exported; #2370 the studio's Pennylane connection.
   final periods = seedDemoBookPeriods(now, actor: fixture.actor.memberId);
   final homeOrders = orders(buying, fixture.money, 'EUR', seeded: true);
   seedDemoBeansBill(buying.purchases, homeOrders, now); // #4173 the shop's beans bill, part-paid
