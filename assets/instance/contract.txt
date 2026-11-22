@@ -3134,7 +3134,7 @@ routine public.level_visible(p_level uuid) -> boolean | function | definer | sta
 routine public.lexicon_allowed_keys() -> TABLE(key text, placeholders text[]) | function | invoker | stable | exec:authenticated,service_role | body:6e0e0cd306e4
 routine public.link_purchase_source_v1(p_workspace_id uuid, p_purchase_id uuid, p_source_kind text, p_source_id uuid, p_revision integer, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:ab220816c28f
 routine public.link_purchase_to_order_v1(p_workspace_id uuid, p_purchase_id uuid, p_order_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:1351cc277140
-routine public.link_service_fulfilment_invoice_v1(p_workspace_id uuid, p_fulfilment_id uuid, p_invoice_id uuid, p_line_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:933318604618
+routine public.link_service_fulfilment_invoice_v1(p_workspace_id uuid, p_fulfilment_id uuid, p_invoice_id uuid, p_line_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:b1484a639483
 routine public.list_all_workspaces() -> TABLE(id uuid, name text, environment text, pair_id uuid, member_count bigint, owner_count bigint, is_member boolean) | function | definer | stable | exec:authenticated,service_role | body:ad87ae14c060
 routine public.list_mcp_eligibility_requests() -> TABLE(request_id uuid, local_user_id uuid, email text, revision integer, requested_at timestamp with time zone) | function | definer | stable | exec:authenticated,service_role | body:bc03809b5ee0
 routine public.local_workspace_of_ref(p_ref text) -> uuid | function | definer | stable | exec:service_role | body:c41164d1e388
@@ -3456,7 +3456,7 @@ routine public.open_accounting_connection_v1(p_workspace_id uuid, p_issuer_site_
 routine public.open_claim_invoices(p_workspace uuid) -> TABLE(invoice_id uuid, reason text) | function | definer | stable | exec:service_role | body:e5a8469e834c
 routine public.open_hmrc_connection_v1(p_workspace_id uuid, p_issuer_site_id uuid, p_display_name text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:3cc8f4152d4a
 routine public.open_payment_intent(p_workspace_id uuid, p_member_id uuid, p_provider text, p_period text, p_amount_cents integer, p_currency text, p_request_id uuid, p_invoice_ids uuid[]) -> TABLE(id uuid, reference text, status text, order_id text, created_at timestamp with time zone, reused boolean) | function | definer | volatile | exec:authenticated,service_role | body:f267074406f2
-routine public.open_service_fulfilment_v1(p_workspace_id uuid, p_request_id uuid, p_source jsonb, p_scope jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f4a04441f566
+routine public.open_service_fulfilment_v1(p_workspace_id uuid, p_request_id uuid, p_source jsonb, p_scope jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:8775ca2fb96b
 routine public.operator_activate_mcp_runtime(p_installation_id uuid, p_epoch integer, p_fingerprint text) -> jsonb | function | definer | volatile | exec:service_role | body:8d021c2c8498
 routine public.operator_approve_mcp_client(p_client_id text, p_name text, p_active boolean) -> jsonb | function | definer | volatile | exec:service_role | body:7edcf1c6a5bc
 routine public.operator_disable_mcp_runtime(p_installation_id uuid, p_reason text) -> jsonb | function | definer | volatile | exec:service_role | body:bd6a3393d787
@@ -3868,7 +3868,7 @@ routine public.service_fulfilment_invoice_ids(f service_fulfilments) -> SETOF uu
 routine public.service_fulfilment_json(f service_fulfilments) -> jsonb | function | definer | stable | exec:service_role | body:11d89631a565
 routine public.service_fulfilment_line_scope(p_line jsonb) -> jsonb | function | invoker | immutable | exec:service_role | body:88274158d789
 routine public.service_fulfilment_of_line_v1(p_workspace_id uuid, p_kind text, p_id uuid, p_line_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:919659bf1e8c
-routine public.service_fulfilment_source(p_workspace uuid, p_kind text, p_id uuid, p_line uuid) -> jsonb | function | definer | stable | exec:service_role | body:9141bd5521a1
+routine public.service_fulfilment_source(p_workspace uuid, p_kind text, p_id uuid, p_line uuid) -> jsonb | function | definer | stable | exec:service_role | body:69a44770129f
 routine public.service_fulfilment_v1(p_workspace_id uuid, p_fulfilment_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:aeee36fa6c8f
 routine public.service_fulfilments_readable(p_workspace uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:5bd6602ab4ad
 routine public.service_fulfilments_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e46019f2545e
