@@ -3931,6 +3931,7 @@
   "claimRefusedNothingToFree": "Diese Zahlung wurde bereits zurückgezogen.",
   "claimRefusedOther": "Der Betrieb hat diese Rechnungen für diese Zahlung abgelehnt. Aktualisieren Sie und versuchen Sie es erneut.",
   "claimRefusedOtherMonth": "Diese Rechnungen gehören zu einem anderen Monat als diese Zahlung. Es wurde nichts belastet.",
+  "claimRefusedRequestChanged": "Diese Zahlung wurde bereits anders gemeldet. Prüfen Sie die gemeldeten Zahlungen und versuchen Sie es erneut.",
   "claimRefusedWithdrawn": "Sie haben diese Zahlung zurückgezogen. Wählen Sie die Rechnungen erneut aus, um sie zu bezahlen.",
   "coOwnerAction": "Mit-Inhaberschaft",
   "coOwnerActivate": "Jetzt zum Inhaber machen",

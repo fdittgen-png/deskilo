@@ -6662,6 +6662,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Queste fatture sono di un mese diverso da questo pagamento. Non è stato addebitato nulla.';
 
   @override
+  String get claimRefusedRequestChanged =>
+      'Questo pagamento è già stato inviato con altri dati. Controlli i pagamenti dichiarati e riprovi.';
+
+  @override
   String get claimRefusedWithdrawn =>
       'Ha ritirato questo pagamento. Selezioni di nuovo le fatture per pagarle.';
 

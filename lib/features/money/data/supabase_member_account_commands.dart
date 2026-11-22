@@ -2,6 +2,7 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/ids/request_id.dart';
 import '../domain/member_account_commands.dart';
 import '../domain/payment_claims.dart';
 import '../domain/payment_method.dart';
@@ -14,6 +15,30 @@ class SupabaseMemberAccountCommands implements MemberAccountCommands {
 
   final SupabaseClient _client;
 
+  /// One request id per confirmation (#4321). A declaration whose answer
+  /// was lost is sent again under the id of its first attempt, so the
+  /// server answers the one declaration it made. The id is forgotten once
+  /// the server has answered, accepted or refused: the next confirmation
+  /// of the same words is a new payment.
+  final Map<String, String> _attempts = {};
+
+  Future<String> _declared(String key, Map<String, Object?> params) async {
+    final id = _attempts.putIfAbsent(key, newRequestId);
+    try {
+      final result = await _client.rpc<Object?>(
+        'record_payment',
+        params: {...params, 'p_request_id': id},
+      );
+      _attempts.remove(key);
+      return result! as String;
+    } on PostgrestException {
+      // trace-exempt: the server answered; the caller reads its refusal
+      _attempts.remove(key);
+      rethrow;
+    }
+    // Any other failure is a lost answer: the id stays for the next try.
+  }
+
   @override
   Future<String> recordPayment({
     required String workspaceId,
@@ -24,21 +49,19 @@ class SupabaseMemberAccountCommands implements MemberAccountCommands {
     DateTime? paidOn,
     String? period,
   }) async {
-    final result = await _client.rpc<dynamic>(
-      'record_payment',
-      params: {
-        'p_workspace_id': workspaceId,
-        'p_member_id': memberId,
-        'p_amount_cents': amountCents,
-        'p_note': note,
-        'p_method': method?.wireName ?? '',
-        // 0070 — a date, not a timestamp: what matters is the DAY the money
-        // moved, in the payer's own calendar.
-        'p_paid_on': paidOn == null ? null : isoDay(paidOn),
-        'p_period': period,
-      },
-    );
-    return result as String;
+    // 0070 — a date, not a timestamp: what matters is the DAY the money
+    // moved, in the payer's own calendar.
+    final day = paidOn == null ? null : isoDay(paidOn);
+    final params = {
+      'p_workspace_id': workspaceId,
+      'p_member_id': memberId,
+      'p_amount_cents': amountCents,
+      'p_note': note,
+      'p_method': method?.wireName ?? '',
+      'p_paid_on': day,
+      'p_period': period,
+    };
+    return _declared(params.values.join('|'), params);
   }
 
   @override
@@ -47,10 +70,11 @@ class SupabaseMemberAccountCommands implements MemberAccountCommands {
     required String memberId,
     required InvoiceClaim claim,
   }) async {
-    final result = await _claimed(
-      () => _client.rpc<Object?>(
-        'record_payment',
-        params: {
+    final ids = [...claim.invoiceIds]..sort();
+    return _claimed(
+      () => _declared(
+        [workspaceId, memberId, claim.amountCents, claim.period, ...ids].join('|'),
+        {
           'p_workspace_id': workspaceId,
           'p_member_id': memberId,
           'p_amount_cents': claim.amountCents,
@@ -62,7 +86,6 @@ class SupabaseMemberAccountCommands implements MemberAccountCommands {
         },
       ),
     );
-    return result as String;
   }
 
   @override

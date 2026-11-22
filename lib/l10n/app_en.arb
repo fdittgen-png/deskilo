@@ -8672,6 +8672,10 @@
   "@claimRefusedOtherMonth": {
     "description": "#3556 Refusal: the payment's month is not the invoices'"
   },
+  "claimRefusedRequestChanged": "This payment was already sent as another one. Check the declared payments, then try again.",
+  "@claimRefusedRequestChanged": {
+    "description": "#4321 — a declaration sent again under the request id of another payment (DKC15)"
+  },
   "claimRefusedWithdrawn": "You withdrew this payment. Select the invoices again to pay them.",
   "@claimRefusedWithdrawn": {
     "description": "#3556 Refusal: retrying a payment whose invoices were withdrawn"

@@ -6672,6 +6672,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Diese Rechnungen gehören zu einem anderen Monat als diese Zahlung. Es wurde nichts belastet.';
 
   @override
+  String get claimRefusedRequestChanged =>
+      'Diese Zahlung wurde bereits anders gemeldet. Prüfen Sie die gemeldeten Zahlungen und versuchen Sie es erneut.';
+
+  @override
   String get claimRefusedWithdrawn =>
       'Sie haben diese Zahlung zurückgezogen. Wählen Sie die Rechnungen erneut aus, um sie zu bezahlen.';
 

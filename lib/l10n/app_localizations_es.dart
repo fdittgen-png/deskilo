@@ -6657,6 +6657,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Estas facturas son de otro mes que este pago. No se ha cobrado nada.';
 
   @override
+  String get claimRefusedRequestChanged =>
+      'Este pago ya se envió con otros datos. Compruebe los pagos declarados y vuelva a intentarlo.';
+
+  @override
   String get claimRefusedWithdrawn =>
       'Retiró este pago. Vuelva a seleccionar las facturas para pagarlas.';
 

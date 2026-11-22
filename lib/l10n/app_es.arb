@@ -3931,6 +3931,7 @@
   "claimRefusedNothingToFree": "Este pago ya se retiró.",
   "claimRefusedOther": "El negocio rechazó estas facturas para este pago. Actualice y vuelva a intentarlo.",
   "claimRefusedOtherMonth": "Estas facturas son de otro mes que este pago. No se ha cobrado nada.",
+  "claimRefusedRequestChanged": "Este pago ya se envió con otros datos. Compruebe los pagos declarados y vuelva a intentarlo.",
   "claimRefusedWithdrawn": "Retiró este pago. Vuelva a seleccionar las facturas para pagarlas.",
   "coOwnerAction": "Copropiedad",
   "coOwnerActivate": "Promover a propietario ahora",

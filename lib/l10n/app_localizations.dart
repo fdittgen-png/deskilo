@@ -10427,6 +10427,12 @@ abstract class AppLocalizations {
   /// **'These invoices are of another month than this payment. Nothing was charged.'**
   String get claimRefusedOtherMonth;
 
+  /// #4321 — a declaration sent again under the request id of another payment (DKC15)
+  ///
+  /// In en, this message translates to:
+  /// **'This payment was already sent as another one. Check the declared payments, then try again.'**
+  String get claimRefusedRequestChanged;
+
   /// #3556 Refusal: retrying a payment whose invoices were withdrawn
   ///
   /// In en, this message translates to:

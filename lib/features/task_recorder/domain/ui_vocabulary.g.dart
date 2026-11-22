@@ -7936,6 +7936,7 @@ const Set<String> uiLabelKeys = {
   'claimRefusedNothingToFree',
   'claimRefusedOther',
   'claimRefusedOtherMonth',
+  'claimRefusedRequestChanged',
   'claimRefusedWithdrawn',
   'coOwnerAction',
   'coOwnerActivate',

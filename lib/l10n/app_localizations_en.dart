@@ -6619,6 +6619,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'These invoices are of another month than this payment. Nothing was charged.';
 
   @override
+  String get claimRefusedRequestChanged =>
+      'This payment was already sent as another one. Check the declared payments, then try again.';
+
+  @override
   String get claimRefusedWithdrawn =>
       'You withdrew this payment. Select the invoices again to pay them.';
 
