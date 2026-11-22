@@ -71,6 +71,20 @@ GoRouter _router(String at) => GoRouter(
   initialLocation: at,
   routes: [
     GoRoute(path: '/', builder: (_, _) => const Text('home')),
+    // #4347 -- a page that is not the list, with a link to a record of the list
+    GoRoute(
+      path: '/m',
+      pageBuilder: (context, state) => MaterialPage<void>(
+        key: const ValueKey('/m'),
+        child: Scaffold(
+          body: TextButton(
+            key: const ValueKey('link-b'),
+            onPressed: () => openRecordFrom(context, '/x/b'),
+            child: const Text('open b from m'),
+          ),
+        ),
+      ),
+    ),
     GoRoute(
       path: '/x',
       pageBuilder: (context, state) => MaterialPage<void>(
@@ -109,6 +123,14 @@ Future<GoRouter> _pump(WidgetTester tester, String at, Size size) async {
   );
   await tester.pumpAndSettle();
   return router;
+}
+
+/// Frames enough for a page to arrive (bounded: no settling loop).
+Future<void> _frames(WidgetTester tester) async {
+  await tester.pump();
+  for (var i = 0; i < 8; i++) {
+    await tester.pump(const Duration(milliseconds: 100));
+  }
 }
 
 String _at(GoRouter r) => r.routeInformationProvider.value.uri.path;
@@ -219,5 +241,27 @@ void main() {
     await tester.pumpAndSettle();
     expect(_at(r), '/x');
     expect(_k('row-a'), findsOneWidget);
+  });
+
+  testWidgets('#4347 on a desk: a link on another page shows the record beside its list, not the old page', (tester) async {
+    final r = await _pump(tester, '/m', desk);
+    await tester.tap(_k('link-b'));
+    await _frames(tester);
+    expect(_at(r), '/x/b');
+    expect(_k('record-b'), findsOneWidget, reason: 'the list draws the record beside itself');
+    expect(_k('link-b'), findsNothing, reason: 'the page the link was on is not left in view');
+    expect(find.text('open b from m'), findsNothing);
+  });
+
+  testWidgets('#4347 on a phone: the same link opens the record as a page over where the person was; Back returns', (tester) async {
+    final r = await _pump(tester, '/m', phone);
+    await tester.tap(_k('link-b'));
+    await _frames(tester);
+    expect(_at(r), '/x/b');
+    expect(_k('page-b'), findsOneWidget);
+    r.pop();
+    await _frames(tester);
+    expect(_at(r), '/m');
+    expect(_k('link-b'), findsOneWidget);
   });
 }

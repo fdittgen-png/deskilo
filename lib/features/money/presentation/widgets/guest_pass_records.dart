@@ -10,12 +10,12 @@
 // only to who may read the invoices (guest_passes_screen.dart).
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/list_detail_route.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/empty_state.dart';
@@ -83,7 +83,7 @@ class GuestPassRecords extends ConsumerWidget {
     // #3837 — the business's invoices, read beside the passes.
     final invoices = ref.watch(invoicesProvider).value ?? const []; // empty-ok: an invoice not read leaves the pass's money unsaid
     PassInvoice invoiceOf(GuestPassRecord p) => passInvoiceOf(p, invoices);
-    void openInvoice(String id) => context.push('/invoices/$id');
+    void openInvoice(String id) => openRecordFrom(context, '/invoices/$id');
     bool uncorrected(GuestPassRecord p) => p.revoked && invoiceOf(p).state == PassInvoiceState.notCorrected;
     return RecordsTable<GuestPassRecord>(
       tableId: 'guest-passes-sold',

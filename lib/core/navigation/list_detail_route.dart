@@ -11,6 +11,8 @@
 // next record with the arrow keys replaces it, so Back never walks through
 // every record looked at. Close goes to the list's own address, also after
 // a direct link or a reload, where there is no list in the history.
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -82,6 +84,20 @@ String _topPath(GoRouter router) {
 /// history.
 void openRecord(BuildContext context, String listPath, String id) =>
     context.push('$listPath/${Uri.encodeComponent(id)}');
+
+/// Opens the record at [address] from a page that is NOT its list (a link on a movement's page, a
+/// supplier's page, the passes' table). On a large window the record's own page draws nothing -- its
+/// list draws it beside itself -- so a push from any other page would change the address and leave
+/// that page on screen with nothing new (#4347): there the address is gone to, the list and the
+/// record together, as the search does; the platform's Back returns to where the person was. Below
+/// large the record is a page of its own and is pushed over where the person was.
+void openRecordFrom(BuildContext context, String address) {
+  if (recordBesideList(context)) {
+    context.go(address);
+  } else {
+    unawaited(context.push(address));
+  }
+}
 
 /// Shows [id] instead of the record open now (the arrow keys): no new entry.
 void moveToRecord(BuildContext context, String listPath, String id) =>
