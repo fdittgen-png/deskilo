@@ -24660,6 +24660,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Approve the adjustment a stock count proposes.';
 
   @override
+  String get permAllowsCountStock =>
+      'Count the lines of a cycle count task without seeing what the ledger holds: the tasks and the count of each line, and nothing else.';
+
+  @override
   String get permAllowsDeployToDev =>
       'Refresh the development space from production.';
 
@@ -24804,6 +24808,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get permApproveStockAdjustments => 'Approve stock adjustments';
+
+  @override
+  String get permCountStock => 'Count stock, blind';
 
   @override
   String get permDeployToDev => 'Deploy to development';

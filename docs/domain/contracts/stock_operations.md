@@ -125,7 +125,7 @@ Behind `stockReturns` (under `stockManagement`, off by default). Made with `mana
 | What about money? | none is made: no payment, refund, credit, payable settlement or posting. A return names the movement it follows (and so the sale or delivery); a payment reversal alone returns no goods |
 | What is read? | `stock_reversible_v1`: for movements, the quantity, what was reversed, what remains and the reversals |
 
-Evidence: `supabase/tests/database/504_stock_returns.sql` (a return of 3, repeated under a new request id; a changed quantity under the finalized identity; a line id of another return; a distinct return of the remaining 7; beyond the sale refused; a return that re-enters the original lot at its frozen cost; the wrong kind of source and a virtual place; a supplier return that lowers the on-hand once and is bounded by the receipt; a correction and a correction of a correction; the rights, an assistant, another business, the feature off; immutability) and `scripts/stock_transfer_race.sh` section F (two distinct returns of 6 of a sale of 10: the second waits and is refused, 6 returned once).
+Evidence: `supabase/tests/database/505_stock_returns.sql` (a return of 3, repeated under a new request id; a changed quantity under the finalized identity; a line id of another return; a distinct return of the remaining 7; beyond the sale refused; a return that re-enters the original lot at its frozen cost; the wrong kind of source and a virtual place; a supplier return that lowers the on-hand once and is bounded by the receipt; a correction and a correction of a correction; the rights, an assistant, another business, the feature off; immutability) and `scripts/stock_transfer_race.sh` section F (two distinct returns of 6 of a sale of 10: the second waits and is refused, 6 returned once).
 
 ## Stock counts
 
@@ -142,7 +142,7 @@ Behind `stockCounts` (under `stockManagement`, off by default). Recorded with `m
 | Can the generic move make an adjustment? | only for whoever may approve adjustments: `stock_move_v1` with the reason `adjustment` needs `approveStockAdjustments` on top of `manageStock`. The shelf count of an item is already refused once the ledger exists (DKG13) |
 | What is read? | `stock_counts_v1`: each count with whether it is stale (recorded, and its scope has moved) |
 
-Evidence: `supabase/tests/database/505_stock_counts.sql` (a clerk records and applies nothing; the owner applies exactly the difference; the same decision again answers the same; a decided count is final; a stale count refused even for the same person, then a fresh one applied; reject, cancel and a zero difference move nothing; a variant and a lot are part of the scope; the generic adjustment needs the right to approve; rights, another business, an assistant, the feature off; immutability) and `scripts/stock_transfer_race.sh` section G (two applies of one count: one adjustment).
+Evidence: `supabase/tests/database/506_stock_counts.sql` (a clerk records and applies nothing; the owner applies exactly the difference; the same decision again answers the same; a decided count is final; a stale count refused even for the same person, then a fresh one applied; reject, cancel and a zero difference move nothing; a variant and a lot are part of the scope; the generic adjustment needs the right to approve; rights, another business, an assistant, the feature off; immutability) and `scripts/stock_transfer_race.sh` section G (two applies of one count: one adjustment).
 
 ## Cycle counts
 

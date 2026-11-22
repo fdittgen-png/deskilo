@@ -60,7 +60,7 @@ begin
   if p_reason in ('adjustment', 'opening') and not public.has_permission(p_workspace_id, 'approveStockAdjustments') then
     raise exception 'an adjustment or an opening is made by someone who may approve adjustments' using errcode = 'DKN01';
   end if;$n$);
-  if v_next is null then raise exception '0869: the anchor of stock_move_v1 is not found' using errcode = 'P0001'; end if;
+  if v_next is null then raise exception '0870: the anchor of stock_move_v1 is not found' using errcode = 'P0001'; end if;
   execute v_next;
 end
 $patch$;
@@ -161,11 +161,11 @@ revoke execute on function public.stock_scope_on_hand(uuid, uuid, uuid, uuid, uu
 
 -- ── recording a count ──────────────────────────────────────────────────
 -- Scope: {item_id, variant_id?, lot_id?, location_id}. Nothing moves.
-create or replace function public.stock_count_record_v1(
-  p_workspace_id uuid, p_request_id uuid, p_count_id uuid, p_scope jsonb, p_observed text, p_reason text default ''
+create or replace function public.stock_count_record_core(
+  p_workspace_id uuid, p_request_id uuid, p_count_id uuid, p_scope jsonb, p_observed text, p_reason text, p_member uuid
 ) returns jsonb language plpgsql security definer set search_path = public as $fn$
 declare
-  v_me uuid := public.stock_ops_actor(p_workspace_id);
+  v_me uuid := p_member;
   v_item public.services;
   v_loc public.stock_locations;
   v_var uuid;
@@ -238,6 +238,17 @@ begin
   v_result := jsonb_build_object('count_id', p_count_id, 'state', 'recorded', 'baseline', v_base::text,
     'observed', v_obs::text, 'difference', (v_obs - v_base)::text);
   return public.purchase_request_end(p_workspace_id, p_request_id, 'stock_count', v_digest, v_result);
+end;
+$fn$;
+revoke execute on function public.stock_count_record_core(uuid, uuid, uuid, jsonb, text, text, uuid) from public, anon, authenticated;
+
+-- A count is recorded by whoever manages the stock.
+create or replace function public.stock_count_record_v1(
+  p_workspace_id uuid, p_request_id uuid, p_count_id uuid, p_scope jsonb, p_observed text, p_reason text default ''
+) returns jsonb language plpgsql security definer set search_path = public as $fn$
+begin
+  return public.stock_count_record_core(p_workspace_id, p_request_id, p_count_id, p_scope, p_observed, p_reason,
+                                        public.stock_ops_actor(p_workspace_id));
 end;
 $fn$;
 revoke execute on function public.stock_count_record_v1(uuid, uuid, uuid, jsonb, text, text) from public, anon;
@@ -387,8 +398,8 @@ $fn$;
 revoke execute on function public.stock_counts_v1(uuid, text) from public, anon;
 grant execute on function public.stock_counts_v1(uuid, text) to authenticated;
 
--- the workspace export carries the counts (#2860): 0866's function restated
--- restates 0866
+-- the workspace export carries the counts (#2860): 0867's function restated
+-- restates 0867
 create or replace function public.export_workspace_records(p_workspace_id uuid)
 returns jsonb language plpgsql stable security definer set search_path = public as $fn$
 declare
@@ -472,4 +483,4 @@ $fn$;
 revoke execute on function public.export_workspace_records(uuid) from public, anon;
 grant execute on function public.export_workspace_records(uuid) to authenticated;
 
-select public.set_deskilo_schema_version(869);
+select public.set_deskilo_schema_version(870);

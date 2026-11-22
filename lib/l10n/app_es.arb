@@ -14322,6 +14322,7 @@
   "permAllowsAccessProd": "Entrar en la producción de un par de desarrollo y producción.",
   "permAllowsApproveExpenses": "Aprobar los gastos que presentan los miembros.",
   "permAllowsApproveStockAdjustments": "Aprobar el ajuste que propone un recuento.",
+  "permAllowsCountStock": "Contar las líneas de una tarea de recuento cíclico sin ver lo que contiene el registro: las tareas y el recuento de cada línea, nada más.",
   "permAllowsDeployToDev": "Actualizar el espacio de desarrollo desde producción.",
   "permAllowsDeployToProd": "Llevar la configuración y los datos maestros de desarrollo a producción.",
   "permAllowsDesignDocuments": "Diseñar las plantillas, textos y diseños de los documentos.",
@@ -14363,6 +14364,7 @@
     "description": "Permission label (#513)"
   },
   "permApproveStockAdjustments": "Aprobar ajustes de existencias",
+  "permCountStock": "Contar el stock a ciegas",
   "permDeployToDev": "Desplegar en desarrollo",
   "@permDeployToDev": {
     "description": "#987/#989 environment pairs: permDeployToDev"

@@ -850,7 +850,8 @@ window.SETUP_REGISTRY={
   "viewStock",
   "manageStock",
   "approveStockAdjustments",
-  "manageBillingCustomers"
+  "manageBillingCustomers",
+  "countStock"
  ],
  "defaultMatrix": {
   "co_owner": [
@@ -892,7 +893,8 @@ window.SETUP_REGISTRY={
    "viewStock",
    "manageStock",
    "approveStockAdjustments",
-   "manageBillingCustomers"
+   "manageBillingCustomers",
+   "countStock"
   ],
   "admin": [
    "manageMembers",

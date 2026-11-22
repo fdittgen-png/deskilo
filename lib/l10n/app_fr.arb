@@ -14322,6 +14322,7 @@
   "permAllowsAccessProd": "Entrer dans la production d'une paire développement et production.",
   "permAllowsApproveExpenses": "Approuver les dépenses soumises par les membres.",
   "permAllowsApproveStockAdjustments": "Approuver l'ajustement proposé par un inventaire.",
+  "permAllowsCountStock": "Compter les lignes d’une tâche d’inventaire tournant sans voir ce que le registre contient : les tâches et le comptage de chaque ligne, rien d’autre.",
   "permAllowsDeployToDev": "Rafraîchir l'espace de développement depuis la production.",
   "permAllowsDeployToProd": "Pousser la configuration et les données de base du développement vers la production.",
   "permAllowsDesignDocuments": "Concevoir les modèles, textes et mises en page des documents.",
@@ -14363,6 +14364,7 @@
     "description": "Permission label (#513)"
   },
   "permApproveStockAdjustments": "Approuver les ajustements de stock",
+  "permCountStock": "Compter le stock, à l’aveugle",
   "permDeployToDev": "Déployer en développement",
   "@permDeployToDev": {
     "description": "#987/#989 environment pairs: permDeployToDev"

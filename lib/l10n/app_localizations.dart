@@ -39419,6 +39419,12 @@ abstract class AppLocalizations {
   /// **'Approve the adjustment a stock count proposes.'**
   String get permAllowsApproveStockAdjustments;
 
+  /// #4295 permission description
+  ///
+  /// In en, this message translates to:
+  /// **'Count the lines of a cycle count task without seeing what the ledger holds: the tasks and the count of each line, and nothing else.'**
+  String get permAllowsCountStock;
+
   /// #3628 roles at the desk: one line of what the permission allows
   ///
   /// In en, this message translates to:
@@ -39646,6 +39652,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Approve stock adjustments'**
   String get permApproveStockAdjustments;
+
+  /// #4295 permission name
+  ///
+  /// In en, this message translates to:
+  /// **'Count stock, blind'**
+  String get permCountStock;
 
   /// #987/#989 environment pairs: permDeployToDev
   ///

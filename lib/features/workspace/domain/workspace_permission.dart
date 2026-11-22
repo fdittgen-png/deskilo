@@ -156,7 +156,12 @@ enum WorkspacePermission {
   /// businesses it invoices, with or without an account): their billed name,
   /// postal identity, tax identifiers and delivery contact. Not an admin
   /// default: it is given by the owner, a role or the matrix.
-  manageBillingCustomers;
+  manageBillingCustomers,
+
+  /// #4295 — count the stock a cycle count task names, blind: the task reader and
+  /// the line count, and nothing of what the ledger holds. It does not imply
+  /// `manageStock`. Not an admin default.
+  countStock;
 
   /// The wire name — identical to the Dart name, pinned by test.
   String get wireName => name;

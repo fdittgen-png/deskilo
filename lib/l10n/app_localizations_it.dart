@@ -24866,6 +24866,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Approvare la rettifica proposta da un inventario.';
 
   @override
+  String get permAllowsCountStock =>
+      'Contare le righe di un compito di inventario ciclico senza vedere ciò che il registro contiene: i compiti e il conteggio di ogni riga, nient’altro.';
+
+  @override
   String get permAllowsDeployToDev =>
       'Aggiornare lo spazio di sviluppo dalla produzione.';
 
@@ -25012,6 +25016,9 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get permApproveStockAdjustments =>
       'Approvare le rettifiche di magazzino';
+
+  @override
+  String get permCountStock => 'Contare il magazzino alla cieca';
 
   @override
   String get permDeployToDev => 'Distribuire in sviluppo';

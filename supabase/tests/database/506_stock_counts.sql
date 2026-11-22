@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #4172 (0868-0870): stock counts, approved before they move the stock. Whoever manages the stock records a
+-- #4172 (0869-0871): stock counts, approved before they move the stock. Whoever manages the stock records a
 -- count (nothing moves); whoever may approve adjustments applies it, as one adjustment of exactly the
 -- difference, and only if no movement has touched the scope since (a stale count is refused even when the
 -- same person approves, and a fresh one is reviewed); reject and cancel move nothing; a decision is final and

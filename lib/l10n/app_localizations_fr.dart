@@ -24940,6 +24940,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Approuver l\'ajustement proposé par un inventaire.';
 
   @override
+  String get permAllowsCountStock =>
+      'Compter les lignes d’une tâche d’inventaire tournant sans voir ce que le registre contient : les tâches et le comptage de chaque ligne, rien d’autre.';
+
+  @override
   String get permAllowsDeployToDev =>
       'Rafraîchir l\'espace de développement depuis la production.';
 
@@ -25087,6 +25091,9 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get permApproveStockAdjustments =>
       'Approuver les ajustements de stock';
+
+  @override
+  String get permCountStock => 'Compter le stock, à l’aveugle';
 
   @override
   String get permDeployToDev => 'Déployer en développement';

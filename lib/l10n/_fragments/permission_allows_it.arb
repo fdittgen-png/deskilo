@@ -38,5 +38,6 @@
   "permAllowsViewStock": "Vedere il magazzino: cosa è dove, i lotti e i movimenti.",
   "permAllowsManageStock": "Caricare, spostare e scaricare merci.",
   "permAllowsApproveStockAdjustments": "Approvare la rettifica proposta da un inventario.",
-  "rolesFilterPermissions": "Filtra i permessi"
+  "rolesFilterPermissions": "Filtra i permessi",
+  "permAllowsCountStock": "Contare le righe di un compito di inventario ciclico senza vedere ciò che il registro contiene: i compiti e il conteggio di ogni riga, nient’altro."
 }

@@ -6,7 +6,7 @@
 -- #4295 (third of three files) -- the `stockCycleCounts` feature in the template
 -- field registry and in the builtin template that writes the feature flags.
 
--- restates 0870
+-- restates 0871
 create or replace function public.template_field_registry()
 returns jsonb
 language sql
