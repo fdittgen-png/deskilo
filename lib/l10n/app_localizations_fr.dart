@@ -28769,6 +28769,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Ce comptage est déjà décidé et reste définitif. Comptez à nouveau si le chiffre est toujours faux.';
 
   @override
+  String get refusalStockCountSelf =>
+      'Une autre personne pouvant approuver les ajustements doit appliquer ce comptage : celui qui a compté n’approuve pas son propre comptage.';
+
+  @override
   String get refusalStockCountStale =>
       'Le stock a bougé depuis le comptage : il n’est pas appliqué. Comptez à nouveau.';
 

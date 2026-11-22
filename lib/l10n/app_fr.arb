@@ -16469,6 +16469,10 @@
   "@refusalStockCountDecided": {
     "description": "#4172 refusal"
   },
+  "refusalStockCountSelf": "Une autre personne pouvant approuver les ajustements doit appliquer ce comptage : celui qui a compté n’approuve pas son propre comptage.",
+  "@refusalStockCountSelf": {
+    "description": "#4172 refusal"
+  },
   "refusalStockCountStale": "Le stock a bougé depuis le comptage : il n’est pas appliqué. Comptez à nouveau.",
   "@refusalStockCountStale": {
     "description": "#4172 refusal"

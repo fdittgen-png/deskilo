@@ -28731,6 +28731,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Diese Zählung ist bereits entschieden und endgültig. Zählen Sie erneut, wenn die Zahl noch falsch ist.';
 
   @override
+  String get refusalStockCountSelf =>
+      'Dieses Zählergebnis muss jemand anderes anwenden, der Anpassungen genehmigen darf: Wer gezählt hat, genehmigt die eigene Zählung nicht.';
+
+  @override
   String get refusalStockCountStale =>
       'Der Bestand hat sich seit der Zählung bewegt, die Zählung wird nicht angewendet. Zählen Sie erneut.';
 

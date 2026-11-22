@@ -28444,6 +28444,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'This count was already decided and is final. Count again if the figure is still wrong.';
 
   @override
+  String get refusalStockCountSelf =>
+      'Someone else who may approve adjustments has to apply this count: whoever counted does not approve their own count.';
+
+  @override
   String get refusalStockCountStale =>
       'The stock moved since it was counted, so the count is not applied. Count again.';
 

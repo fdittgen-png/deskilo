@@ -13,7 +13,8 @@
 --     `manageStock` records it. Recording moves nothing.
 --   * `approveStockAdjustments` decides it: APPLY posts the difference as one adjustment movement to or
 --     from the loss place, and only if no movement has touched the scope since the count (otherwise
---     DKG20: the stock moved, count again; nothing is overwritten); REJECT and CANCEL post nothing. A
+--     DKG20: the stock moved, count again; nothing is overwritten); REJECT and CANCEL post nothing. Whoever
+--     counted does not apply their own count while another active member may approve adjustments (DKG21). A
 --     decided count is final (DKG19), and the same decision sent again answers the same result. A person
 --     who holds both rights, the owner of a one-person business, records and applies it themselves, and
 --     both are kept (`author_member_id`, `decided_by_member_id`).
@@ -134,12 +135,15 @@ create policy stock_counts_select on public.stock_counts for select to authentic
 create policy mcp_delegated_deny on public.stock_counts as restrictive for all to authenticated
   using (not public.mcp_is_delegated()) with check (not public.mcp_is_delegated());
 
--- how many movements have touched a scope: the ledger is append-only, so only a growing number says it moved
+-- how many movements have touched a scope: the ledger is append-only, so only a growing number says it moved.
+-- An item that is not tracked by lot is counted as a whole: a cost lot a receipt put on it is part of the count.
 create or replace function public.stock_scope_moves(p_workspace_id uuid, p_item_id uuid, p_variant_id uuid, p_lot_id uuid, p_location_id uuid)
 returns integer language sql stable security definer set search_path = public as $fn$
   select count(*)::integer from public.stock_movements m
    where m.workspace_id = p_workspace_id and m.item_id = p_item_id
-     and m.variant_id is not distinct from p_variant_id and m.lot_id is not distinct from p_lot_id
+     and m.variant_id is not distinct from p_variant_id
+     and (m.lot_id is not distinct from p_lot_id
+          or (p_lot_id is null and exists (select 1 from public.services s where s.id = p_item_id and s.tracking = 'none')))
      and (m.from_location_id = p_location_id or m.to_location_id = p_location_id)
 $fn$;
 revoke execute on function public.stock_scope_moves(uuid, uuid, uuid, uuid, uuid) from public, anon, authenticated;
@@ -148,7 +152,9 @@ create or replace function public.stock_scope_on_hand(p_workspace_id uuid, p_ite
 returns numeric language sql stable security definer set search_path = public as $fn$
   select coalesce(sum(b.quantity), 0)::numeric(18, 6) from public.stock_balances b
    where b.workspace_id = p_workspace_id and b.item_id = p_item_id
-     and b.variant_id is not distinct from p_variant_id and b.lot_id is not distinct from p_lot_id
+     and b.variant_id is not distinct from p_variant_id
+     and (b.lot_id is not distinct from p_lot_id
+          or (p_lot_id is null and exists (select 1 from public.services s where s.id = p_item_id and s.tracking = 'none')))
      and b.location_id = p_location_id
 $fn$;
 revoke execute on function public.stock_scope_on_hand(uuid, uuid, uuid, uuid, uuid) from public, anon, authenticated;
@@ -255,6 +261,9 @@ declare
   v_diff numeric;
   v_mid uuid;
   v_state text;
+  v_part integer := 0;
+  v_one uuid;
+  t record;
   v_result jsonb;
 begin
   if auth.uid() is null or public.mcp_is_delegated() then
@@ -300,6 +309,13 @@ begin
 
   v_mid := null;
   if p_decision = 'apply' then
+    -- whoever counted does not approve their own count while someone else may: a business of one approves its own
+    if v_c.author_member_id = v_me.id and exists (
+         select 1 from public.members m
+          where m.workspace_id = p_workspace_id and m.status = 'active' and m.id <> v_me.id
+            and public.member_has_permission(m.id, 'approveStockAdjustments')) then
+      raise exception 'a count is approved by someone other than whoever counted it, since there is someone' using errcode = 'DKG21';
+    end if;
     -- the stock moved since it was counted: nothing is overwritten, a fresh count is reviewed
     if public.stock_scope_moves(p_workspace_id, v_c.item_id, v_c.variant_id, v_c.lot_id, v_c.location_id) <> v_c.baseline_moves then
       raise exception 'the stock moved since it was counted: count it again' using errcode = 'DKG20';
@@ -311,9 +327,17 @@ begin
       if v_diff > 0 then
         v_mid := public.stock_record(p_workspace_id, v_c.item_id, v_c.lot_id, v_loss, v_c.location_id, v_diff, v_unit, v_diff,
                                      now(), 'adjustment', v_me.id, p_request_id, 1, 1, '{}'::jsonb, v_c.variant_id);
-      else
+      elsif v_c.lot_id is not null then
         v_mid := public.stock_record(p_workspace_id, v_c.item_id, v_c.lot_id, v_c.location_id, v_loss, -v_diff, v_unit, -v_diff,
                                      now(), 'adjustment', v_me.id, p_request_id, 1, 1, '{}'::jsonb, v_c.variant_id);
+      else
+        -- an item counted as a whole gives back what it holds across its lots, oldest first
+        for t in select * from public.stock_take(p_workspace_id, v_c.item_id, v_c.location_id, -v_diff, v_c.variant_id) loop
+          v_part := v_part + 1;
+          v_one := public.stock_record(p_workspace_id, v_c.item_id, t.lot_id, v_c.location_id, v_loss, t.quantity,
+                                       v_unit, t.quantity, now(), 'adjustment', v_me.id, p_request_id, 1, v_part, '{}'::jsonb, v_c.variant_id);
+          v_mid := coalesce(v_mid, v_one);
+        end loop;
       end if;
     end if;
   end if;

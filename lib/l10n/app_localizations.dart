@@ -45654,6 +45654,12 @@ abstract class AppLocalizations {
   /// #4172 refusal
   ///
   /// In en, this message translates to:
+  /// **'Someone else who may approve adjustments has to apply this count: whoever counted does not approve their own count.'**
+  String get refusalStockCountSelf;
+
+  /// #4172 refusal
+  ///
+  /// In en, this message translates to:
   /// **'The stock moved since it was counted, so the count is not applied. Count again.'**
   String get refusalStockCountStale;
 

@@ -16469,6 +16469,10 @@
   "@refusalStockCountDecided": {
     "description": "#4172 refusal"
   },
+  "refusalStockCountSelf": "Dieses Zählergebnis muss jemand anderes anwenden, der Anpassungen genehmigen darf: Wer gezählt hat, genehmigt die eigene Zählung nicht.",
+  "@refusalStockCountSelf": {
+    "description": "#4172 refusal"
+  },
   "refusalStockCountStale": "Der Bestand hat sich seit der Zählung bewegt, die Zählung wird nicht angewendet. Zählen Sie erneut.",
   "@refusalStockCountStale": {
     "description": "#4172 refusal"
