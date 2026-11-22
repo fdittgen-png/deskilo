@@ -3,7 +3,7 @@ import 'service_item.dart';
 
 /// #4318 — how many public services the public page, its Discover card and
 /// the search by service carry. The server's `public_page_service_limit()`
-/// (supabase/migrations/0859_public_page_service_limit.sql) is the source;
+/// (supabase/migrations/0864_public_page_service_limit.sql) is the source;
 /// test/lint/public_page_service_limit_test.dart keeps this value equal to it.
 const publicPageServiceLimit = 12;
 

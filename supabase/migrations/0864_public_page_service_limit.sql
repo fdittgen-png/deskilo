@@ -56,4 +56,4 @@ begin
 end;
 $refresh$;
 
-select public.set_deskilo_schema_version(859);
+select public.set_deskilo_schema_version(864);
