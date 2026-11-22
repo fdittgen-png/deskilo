@@ -19,6 +19,7 @@
 // still has, and only the server answers it.
 import 'dart:async';
 
+import '../../../core/backend/connection_outcome.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/storage/booking_intent_store.dart';
 import '../../../core/time/clock.dart';
@@ -182,7 +183,7 @@ class BookingRecovery {
         requestId: intent.requestId,
       );
     } catch (e, st) {
-      if (e is TimeoutException || isTransientNetworkFailure(e)) {
+      if (leftOutcomeUnknown(e)) {
         // The request may have reached the server: the intent stays open.
         await _settle(
           'mark unknown',

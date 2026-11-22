@@ -4,6 +4,7 @@
 // plan view; seat taps offer check-in / reserve / check-out, each
 // completed by a badge code (wedge scanners type it) sent to the
 // stateless kiosk_act RPC — nothing is retained on the device.
+import 'dart:convert';
 import 'dart:ui' as ui;
 
 import 'package:deskilo/app/app.dart';
@@ -15,11 +16,16 @@ import 'package:deskilo/features/kiosk/presentation/screens/kiosk_screen.dart';
 import 'package:deskilo/features/plan/presentation/widgets/plan_canvas.dart';
 import 'package:deskilo/features/plan/presentation/widgets/seat_photos.dart';
 import 'package:deskilo/features/profile/domain/profile.dart';
+import 'package:deskilo/features/reservations/data/supabase_reservation_repository.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
+import 'package:deskilo/features/reservations/domain/reservation_repository.dart';
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:http/http.dart' as http;
+import 'package:http/testing.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/fake_profile_repository.dart';
@@ -301,6 +307,38 @@ void main() {
     final act = reservations.kioskActs.single;
     expect(act.action, 'check_in');
     expect(act.badgeToken, '04a2b3c4d5');
+  });
+
+  // #4316 — the fake raises the typed refusal itself, which is how the real adapter's gap went
+  // unseen: here the identification goes through the real adapter over a controlled HTTP answer.
+  testWidgets('an unknown badge answered over HTTP by kiosk_identify shows the kiosk\'s own '
+      'sentence, not the generic one', (tester) async {
+    final real = SupabaseReservationRepository(
+      SupabaseClient(
+        'http://127.0.0.1:54321',
+        'sb_publishable_test',
+        httpClient: MockClient(
+          (request) async => http.Response(
+            jsonEncode({'code': 'P0001', 'message': 'badge not recognized', 'details': null, 'hint': null}),
+            400,
+            request: request,
+            headers: {'content-type': 'application/json'},
+          ),
+        ),
+        authOptions: const AuthClientOptions(autoRefreshToken: false),
+      ),
+      InMemoryCacheStore(),
+    );
+    final reservations = await pumpKiosk(tester, repo: _IdentifiesThroughAdapter(real));
+    await tester.tapAt(seatCenter(tester));
+    await _settleFrames(tester);
+    await tester.tap(find.byKey(const ValueKey('kiosk-check-out')));
+    await _settleFrames(tester);
+    await tester.enterText(find.byKey(const ValueKey('kiosk-badge-field')), 'unregistered-badge');
+    await tester.tap(find.byKey(const ValueKey('kiosk-badge-submit')));
+    await _settleFrames(tester);
+    expect(reservations.kioskActs, isEmpty);
+    expect(find.text('Badge not recognized.'), findsOneWidget);
   });
 
   testWidgets('an unknown badge is refused with the badge error, not the '
@@ -899,4 +937,24 @@ void main() {
     expect(find.byKey(const ValueKey('blocked-message-reserver')),
         findsNothing);
   });
+}
+
+/// The fake booking repository whose badge identification is the REAL adapter's.
+class _IdentifiesThroughAdapter extends FakeReservationRepository {
+  _IdentifiesThroughAdapter(this._real);
+
+  final ReservationRepository _real;
+
+  @override
+  Future<KioskIdentity> kioskIdentify({required String workspaceId, required String badgeToken}) =>
+      _real.kioskIdentify(workspaceId: workspaceId, badgeToken: badgeToken);
+}
+
+/// Frames enough for a sheet and a request answered by a controlled client to arrive; a bounded
+/// pump, not `pumpAndSettle` (the kiosk's clock keeps a frame scheduled).
+Future<void> _settleFrames(WidgetTester tester) async {
+  await tester.pump();
+  for (var i = 0; i < 6; i++) {
+    await tester.pump(const Duration(milliseconds: 150));
+  }
 }
