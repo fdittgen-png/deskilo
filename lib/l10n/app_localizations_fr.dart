@@ -35423,6 +35423,11 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String stockCycleDueButton(String date) {
+    return 'Jour d’échéance : $date';
+  }
+
+  @override
   String get stockCycleEveryDays => 'Tous les combien de jours';
 
   @override
@@ -35468,9 +35473,6 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get stockCycleNextDue => 'Jour d’échéance';
-
-  @override
   String get stockCycleNoPlans =>
       'Aucun plan pour l’instant : rien n’est compté selon un calendrier.';
 
@@ -35490,9 +35492,6 @@ class AppLocalizationsFr extends AppLocalizations {
     );
     return 'tous les $_temp0';
   }
-
-  @override
-  String get stockCyclePlanItems => 'Articles';
 
   @override
   String stockCyclePlanItemsCount(int count) {
@@ -35569,9 +35568,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get stockCycleScopeHighValue => 'Forte valeur';
-
-  @override
-  String get stockCycleScopeItems => 'Articles';
 
   @override
   String get stockCycleScopePlaces => 'Emplacements';

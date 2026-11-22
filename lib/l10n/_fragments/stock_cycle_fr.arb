@@ -14,16 +14,13 @@
   "stockCyclePlanName": "Nom",
   "stockCyclePlanScope": "Ce qu’il faut compter",
   "stockCycleScopePlaces": "Emplacements",
-  "stockCycleScopeItems": "Articles",
   "stockCycleScopeHighValue": "Forte valeur",
   "stockCyclePlanPlaces": "Emplacements (avec tout ce qu’ils contiennent)",
-  "stockCyclePlanItems": "Articles",
   "stockCyclePlanThreshold": "Valant au moins ({currency}) ; vide : la limite de l’entreprise",
   "stockCycleCadence": "Fréquence",
   "stockCycleCadenceOnce": "Une fois",
   "stockCycleCadenceEvery": "Répété",
   "stockCycleEveryDays": "Tous les combien de jours",
-  "stockCycleNextDue": "Jour d’échéance",
   "stockCyclePlanActive": "Utilisé",
   "stockCyclePlanOff": "inutilisé",
   "stockCyclePlanPlacesCount": "{count, plural, one{{count} emplacement} other{{count} emplacements}}",
@@ -57,5 +54,6 @@
   "stockCyclePlanNameRequired": "Donnez un nom au plan.",
   "stockCyclePlanScopeRequired": "Choisissez ce qu’il compte.",
   "stockCycleIntervalInvalid": "Saisissez un nombre entier de jours, de 1 à 366.",
-  "stockCycleThresholdInvalid": "Saisissez un montant, ou laissez vide."
+  "stockCycleThresholdInvalid": "Saisissez un montant, ou laissez vide.",
+  "stockCycleDueButton": "Jour d’échéance : {date}"
 }

@@ -13,6 +13,7 @@ import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/trace/trace_logger.dart';
+import '../../../core/ui/app_date_picker.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/stock_config.dart';
@@ -132,8 +133,9 @@ class _PlanDraft {
   }
 
   Future<void> _pickDay(BuildContext context, VoidCallback refresh) async {
-    final now = DateTime.tryParse(due) ?? DateTime.now();
-    final day = await showDatePicker(
+    // the due day is always a business day in `YYYY-MM-DD` (the sheet starts from the business's today)
+    final now = DateTime.parse(due);
+    final day = await showAppDatePicker(
       context: context,
       initialDate: now,
       firstDate: DateTime(now.year - 1),
@@ -158,7 +160,7 @@ class _PlanDraft {
         key: const ValueKey('stock-plan-scope'),
         segments: [
           ButtonSegment(value: CountScope.places, label: Text(l10n.stockCycleScopePlaces)),
-          ButtonSegment(value: CountScope.items, label: Text(l10n.stockCycleScopeItems)),
+          ButtonSegment(value: CountScope.items, label: Text(l10n.stockItemsTitle)),
           ButtonSegment(value: CountScope.highValue, label: Text(l10n.stockCycleScopeHighValue)),
         ],
         selected: {scope},
@@ -205,7 +207,7 @@ class _PlanDraft {
       ?_choiceText(context),
     ],
     CountScope.items => [
-      Text(l10n.stockCyclePlanItems),
+      Text(l10n.stockItemsTitle),
       Wrap(
         spacing: 8,
         children: [
@@ -267,7 +269,7 @@ class _PlanDraft {
     OutlinedButton.icon(
       key: const ValueKey('stock-plan-due'),
       icon: const Icon(Icons.event_outlined),
-      label: Text('${l10n.stockCycleNextDue}: ${MaterialLocalizations.of(context).formatMediumDate(DateTime.tryParse(due) ?? DateTime.now())}'),
+      label: Text(l10n.stockCycleDueButton(MaterialLocalizations.of(context).formatMediumDate(DateTime.parse(due)))),
       onPressed: () => _pickDay(context, refresh),
     ),
   ];

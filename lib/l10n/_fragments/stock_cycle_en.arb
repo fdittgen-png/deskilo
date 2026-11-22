@@ -75,20 +75,12 @@
   "@stockCycleScopePlaces": {
     "description": "#4295 cycle counts"
   },
-  "stockCycleScopeItems": "Items",
-  "@stockCycleScopeItems": {
-    "description": "#4295 cycle counts"
-  },
   "stockCycleScopeHighValue": "High value",
   "@stockCycleScopeHighValue": {
     "description": "#4295 cycle counts"
   },
   "stockCyclePlanPlaces": "Places (with everything inside them)",
   "@stockCyclePlanPlaces": {
-    "description": "#4295 cycle counts"
-  },
-  "stockCyclePlanItems": "Items",
-  "@stockCyclePlanItems": {
     "description": "#4295 cycle counts"
   },
   "stockCyclePlanThreshold": "Worth at least ({currency}); empty: the business’s limit",
@@ -114,10 +106,6 @@
   },
   "stockCycleEveryDays": "Every how many days",
   "@stockCycleEveryDays": {
-    "description": "#4295 cycle counts"
-  },
-  "stockCycleNextDue": "Due day",
-  "@stockCycleNextDue": {
     "description": "#4295 cycle counts"
   },
   "stockCyclePlanActive": "In use",
@@ -316,5 +304,14 @@
   "stockCycleThresholdInvalid": "Enter an amount, or leave it empty.",
   "@stockCycleThresholdInvalid": {
     "description": "#4295 a mistake under a plan field"
+  },
+  "stockCycleDueButton": "Due day: {date}",
+  "@stockCycleDueButton": {
+    "description": "#4295 the button that sets a plan's due day",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
   }
 }

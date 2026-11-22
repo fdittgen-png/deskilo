@@ -56132,6 +56132,12 @@ abstract class AppLocalizations {
   /// **'Counted. Difference from the ledger: {difference}'**
   String stockCycleCountedDifference(String difference);
 
+  /// #4295 the button that sets a plan's due day
+  ///
+  /// In en, this message translates to:
+  /// **'Due day: {date}'**
+  String stockCycleDueButton(String date);
+
   /// #4295 cycle counts
   ///
   /// In en, this message translates to:
@@ -56195,12 +56201,6 @@ abstract class AppLocalizations {
   /// #4295 cycle counts
   ///
   /// In en, this message translates to:
-  /// **'Due day'**
-  String get stockCycleNextDue;
-
-  /// #4295 cycle counts
-  ///
-  /// In en, this message translates to:
   /// **'No plan yet: nothing is counted on a schedule.'**
   String get stockCycleNoPlans;
 
@@ -56221,12 +56221,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'every {count, plural, one{day} other{{count} days}}'**
   String stockCyclePlanEvery(int count);
-
-  /// #4295 cycle counts
-  ///
-  /// In en, this message translates to:
-  /// **'Items'**
-  String get stockCyclePlanItems;
 
   /// #4295 cycle counts
   ///
@@ -56329,12 +56323,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'High value'**
   String get stockCycleScopeHighValue;
-
-  /// #4295 cycle counts
-  ///
-  /// In en, this message translates to:
-  /// **'Items'**
-  String get stockCycleScopeItems;
 
   /// #4295 cycle counts
   ///

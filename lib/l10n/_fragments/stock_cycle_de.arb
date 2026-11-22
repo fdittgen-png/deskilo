@@ -14,16 +14,13 @@
   "stockCyclePlanName": "Name",
   "stockCyclePlanScope": "Was gezählt wird",
   "stockCycleScopePlaces": "Orte",
-  "stockCycleScopeItems": "Artikel",
   "stockCycleScopeHighValue": "Hoher Wert",
   "stockCyclePlanPlaces": "Orte (mit allem darin)",
-  "stockCyclePlanItems": "Artikel",
   "stockCyclePlanThreshold": "Wert mindestens ({currency}); leer: die Grenze des Unternehmens",
   "stockCycleCadence": "Wie oft",
   "stockCycleCadenceOnce": "Einmal",
   "stockCycleCadenceEvery": "Wiederholt",
   "stockCycleEveryDays": "Alle wie viele Tage",
-  "stockCycleNextDue": "Fälligkeitstag",
   "stockCyclePlanActive": "In Gebrauch",
   "stockCyclePlanOff": "nicht in Gebrauch",
   "stockCyclePlanPlacesCount": "{count, plural, one{1 Ort} other{{count} Orte}}",
@@ -57,5 +54,6 @@
   "stockCyclePlanNameRequired": "Geben Sie dem Plan einen Namen.",
   "stockCyclePlanScopeRequired": "Wählen Sie, was gezählt wird.",
   "stockCycleIntervalInvalid": "Geben Sie eine ganze Zahl von Tagen ein, von 1 bis 366.",
-  "stockCycleThresholdInvalid": "Geben Sie einen Betrag ein oder lassen Sie das Feld leer."
+  "stockCycleThresholdInvalid": "Geben Sie einen Betrag ein oder lassen Sie das Feld leer.",
+  "stockCycleDueButton": "Fälligkeitstag: {date}"
 }
