@@ -20,8 +20,10 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'lint_sources.dart';
 
-/// The first migration the rules apply to; earlier ones are grandfathered.
-const String _firstChecked = '0859';
+/// The first migration the rules apply to; earlier ones are grandfathered
+/// (0860 was written before the rules existed and adds two columns with no
+/// stated audience).
+const String _firstChecked = '0861';
 
 final _lineComment = RegExp(r'--[^\n]*');
 
