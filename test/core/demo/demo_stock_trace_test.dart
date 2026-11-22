@@ -11,7 +11,6 @@ import 'package:deskilo/core/demo/data/purchase_order_repository.dart';
 import 'package:deskilo/core/demo/demo_link.dart';
 import 'package:deskilo/core/demo/demo_persona.dart';
 import 'package:deskilo/core/demo/demo_space_ids.dart';
-import 'package:deskilo/features/money/presentation/widgets/purchases_sheet.dart';
 import 'package:deskilo/features/money/providers/purchase_order_providers.dart';
 import 'package:deskilo/features/stock/domain/stock_receiving.dart';
 import 'package:deskilo/features/stock/providers/stock_providers.dart';
@@ -123,12 +122,6 @@ void main() {
 
       // the bill reaches the same goods again
       final again = find.byKey(ValueKey('stock-goods-$movement'));
-      if (find.byType(PurchaseRecord).evaluate().isEmpty) {
-        // on a desk the pushed hub keeps the movement page in view in this harness; the bill's own
-        // address (which the tap reached) shows the record, so open it there
-        container.read(routerProvider).go('/money/purchases/doc/demo-bill-beans');
-        await _settle(tester);
-      }
       // on a desk the bill sits beside its table and may already be in view
       if (again.evaluate().isEmpty) await tester.scrollUntilVisible(again, 300, scrollable: find.byType(Scrollable).last);
       await tester.ensureVisible(again);
