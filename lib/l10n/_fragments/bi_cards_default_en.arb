@@ -1,0 +1,14 @@
+{
+  "biDefaultViewName": "My analyses",
+  "@biDefaultViewName": {
+    "description": "#4340 the analyses page: a label"
+  },
+  "biCardsStandard": "Back to the standard",
+  "@biCardsStandard": {
+    "description": "#4340 the analyses page: a label"
+  },
+  "biCardsDragHandle": "Drag to reorder",
+  "@biCardsDragHandle": {
+    "description": "#4340 the analyses page: a label"
+  }
+}

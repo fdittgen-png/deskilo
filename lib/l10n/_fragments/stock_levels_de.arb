@@ -16,5 +16,7 @@
   "stockReasonLevelChildrenWrong": "In diesem Lagerort liegen Lagerorte, die seine Ebene brauchen; verschieben Sie diese zuerst.",
   "stockReasonPickRoleUnknown": "Die Verwendung muss Kommissionierung oder Reserve sein.",
   "settingLabelStockAddressSeparator": "Trennzeichen in einer Lagerort-Adresse",
-  "settingHintStockAddressSeparator": "Das Zeichen zwischen den Ebenen einer Lagerort-Adresse (Standort, Zone, Gang, Regalfeld, Fach): MAG1-SALES-A03-B02-S4 mit Bindestrich, MAG1.SALES.A03.B02.S4 mit Punkt. Nur die Schreibweise ändert sich."
+  "settingHintStockAddressSeparator": "Das Zeichen zwischen den Ebenen einer Lagerort-Adresse (Standort, Zone, Gang, Regalfeld, Fach): MAG1-SALES-A03-B02-S4 mit Bindestrich, MAG1.SALES.A03.B02.S4 mit Punkt. Nur die Schreibweise ändert sich.",
+  "stockPlacesPrintLabels": "Etiketten drucken",
+  "stockPlacesLabelsNone": "Es gibt keinen Lagerort, für den ein Etikett gedruckt werden kann."
 }

@@ -2869,6 +2869,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get biCards => 'Análisis mostrados';
 
   @override
+  String get biCardsDragHandle => 'Arrastrar para reordenar';
+
+  @override
+  String get biCardsStandard => 'Volver al estándar';
+
+  @override
   String biCardsUnavailable(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -3214,6 +3220,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get biDataUnavailable => 'No disponible';
+
+  @override
+  String get biDefaultViewName => 'Mis análisis';
 
   @override
   String get biDeltaNone => 'Aún sin comparación';
@@ -6646,6 +6655,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get claimRefusedOtherMonth =>
       'Estas facturas son de otro mes que este pago. No se ha cobrado nada.';
+
+  @override
+  String get claimRefusedRequestChanged =>
+      'Este pago ya se envió con otros datos. Compruebe los pagos declarados y vuelva a intentarlo.';
 
   @override
   String get claimRefusedWithdrawn =>
@@ -10131,6 +10144,17 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get eventEinvoiceNoticeEnded => 'Resuelto';
+
+  @override
+  String get eventEinvoiceOutcomeUncertain =>
+      'Se desconoce el resultado de una factura electrónica: su envío se detuvo antes de registrar una respuesta. No se vuelve a enviar. Compruebe el registro de la plataforma y resuélvalo a mano.';
+
+  @override
+  String get eventEinvoiceStuckPrepared =>
+      'Una factura electrónica se preparó y nunca se envió. Envíela de nuevo desde su factura, o déjela.';
+
+  @override
   String eventExpenseDeviation(Object reason, Object scheduled) {
     return 'validado $scheduled — $reason';
   }
@@ -10399,6 +10423,20 @@ class AppLocalizationsEs extends AppLocalizations {
   String get eventStockCountOverdueEnded => 'Hecho';
 
   @override
+  String eventStockLow(String item, String site, String onHand, String point) {
+    return '$item está bajo en $site: $onHand en existencias, punto de reposición $point';
+  }
+
+  @override
+  String get eventStockLowEnded => 'de nuevo por encima del punto';
+
+  @override
+  String get eventStockLowItemFallback => 'Un artículo';
+
+  @override
+  String get eventStockLowSiteFallback => 'una sede';
+
+  @override
   String get eventSystemDecider => 'Sistema';
 
   @override
@@ -10412,6 +10450,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get eventTypeCredentialChange => 'Cambio de credenciales';
+
+  @override
+  String get eventTypeEinvoiceOutcomeUnknown =>
+      'Envío de factura electrónica interrumpido';
 
   @override
   String get eventTypeExpense => 'Gasto';
@@ -10500,6 +10542,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get eventTypeStockCountOverdue => 'Recuento cíclico vencido';
+
+  @override
+  String get eventTypeStockLow => 'Existencias bajas';
 
   @override
   String get eventTypeSubscriptionChange => 'Cambio de suscripción';
@@ -17855,6 +17900,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get invoiceSendAction => 'Enviar a la plataforma gubernamental';
+
+  @override
+  String get invoiceSendBindingChanged =>
+      'Esta factura ya se envió a este destino con otro contenido. No se vuelve a enviar; el primer envío sigue vigente.';
 
   @override
   String get invoiceSendCustomerAccepted =>
@@ -31513,6 +31562,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get servicesNew => 'Nuevo servicio';
 
   @override
+  String get servicesNotOnPublicPage => 'No está en la página pública';
+
+  @override
   String get servicesOtherCategory => 'Otros servicios';
 
   @override
@@ -31520,6 +31572,34 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get servicesPublic => 'Mostrar en nuestra página pública';
+
+  @override
+  String servicesPublicPageHidden(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count servicios públicos no se muestran allí.',
+      one: '$count servicio público no se muestra allí.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String servicesPublicPageNotice(int count, int limit) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count servicios son públicos',
+      one: '$count servicio es público',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      limit,
+      locale: localeName,
+      other: 'los $limit primeros',
+      one: 'el primero ($limit)',
+    );
+    return '$_temp0. La página pública muestra $_temp1, en el orden de esta lista.';
+  }
 
   @override
   String get servicesSaveFailed =>
@@ -31700,6 +31780,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingHintDunningFirstAfterDays =>
       'Días tras la emisión antes de proponer un primer recordatorio y antes del vencimiento de una factura sin plazo de pago.';
+
+  @override
+  String get settingHintEinvoiceStuckAttemptMinutes =>
+      'Cuántos minutos puede quedar preparada una factura electrónica, sin que se haya iniciado el envío, antes de avisar al propietario de que el intento se detuvo. Un envío iniciado sin resultado se avisa en cuanto vence su propio plazo.';
 
   @override
   String get settingHintFederationAnswerWaitSeconds =>
@@ -32045,6 +32129,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingLabelDunningFirstAfterDays =>
       'Días antes de un primer recordatorio';
+
+  @override
+  String get settingLabelEinvoiceStuckAttemptMinutes =>
+      'Intento de factura electrónica interrumpido';
 
   @override
   String get settingLabelFederationAnswerWaitSeconds =>
@@ -35277,6 +35365,24 @@ class AppLocalizationsEs extends AppLocalizations {
   String get stockEnteredLabel => 'Introducido';
 
   @override
+  String get stockGoodsMore => 'Mostrar más';
+
+  @override
+  String get stockGoodsNone =>
+      'No hay mercancías vinculadas (nada registrado no es lo mismo que ninguna).';
+
+  @override
+  String stockGoodsRow(String item, String entered, String stored) {
+    return '$item: $entered ($stored)';
+  }
+
+  @override
+  String get stockGoodsTitle => 'Mercancías almacenadas';
+
+  @override
+  String get stockGoodsUnavailable => 'No se le muestran las mercancías.';
+
+  @override
   String get stockItemsEmpty =>
       'Todavía no hay artículos. Un artículo aparece cuando un servicio o un artículo de proveedor se mantiene en existencias.';
 
@@ -35435,6 +35541,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get stockPlacesAdd => 'Añadir una ubicación';
+
+  @override
+  String get stockPlacesLabelsNone =>
+      'No hay ninguna ubicación para la que imprimir una etiqueta.';
+
+  @override
+  String get stockPlacesPrintLabels => 'Imprimir etiquetas';
 
   @override
   String get stockPlacesSearch =>
@@ -35658,6 +35771,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Este artículo del proveedor ya está asociado.';
 
   @override
+  String get stockReasonMappingUnknown =>
+      'Ningún artículo de proveedor está marcado como preferido para una de estas líneas.';
+
+  @override
   String get stockReasonNameDuplicate => 'Este nombre ya se usa.';
 
   @override
@@ -35686,7 +35803,19 @@ class AppLocalizationsEs extends AppLocalizations {
   String get stockReasonPickRoleUnknown => 'El uso debe ser picking o reserva.';
 
   @override
+  String get stockReasonPointFixed =>
+      'El artículo, la variante y la sede de un punto de reposición no se cambian: cree otro.';
+
+  @override
+  String get stockReasonPointTwice =>
+      'Este artículo ya tiene un punto de reposición en esta sede.';
+
+  @override
   String get stockReasonPriceInvalid => 'Un precio es cero o más.';
+
+  @override
+  String get stockReasonQuantityAndTarget =>
+      'Indique una cantidad a pedir o un nivel hasta el que pedir, no ambos.';
 
   @override
   String get stockReasonQuantityInvalid =>
@@ -35712,6 +35841,9 @@ class AppLocalizationsEs extends AppLocalizations {
       'Ambos lugares están en una misma sede: mueva la mercancía en un solo paso.';
 
   @override
+  String get stockReasonSiteUnknown => 'Elija una sede de esta empresa.';
+
+  @override
   String get stockReasonStockOnHand => 'Hay existencias: sáquelas primero.';
 
   @override
@@ -35721,6 +35853,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get stockReasonSupplierForeign =>
       'Este proveedor no es de este negocio.';
+
+  @override
+  String get stockReasonTargetBelowPoint =>
+      'El nivel hasta el que pedir debe estar por encima del punto de reposición.';
 
   @override
   String get stockReasonTooLong => 'Este texto es demasiado largo.';
@@ -35848,6 +35984,117 @@ class AppLocalizationsEs extends AppLocalizations {
       'Buscar un artículo por nombre, código de barras o dirección';
 
   @override
+  String get stockReorderCreateDraft => 'Crear borrador de pedido';
+
+  @override
+  String stockReorderDraftCreated(String number) {
+    return 'Borrador de pedido $number creado. No se pidió ni se envió nada.';
+  }
+
+  @override
+  String get stockReorderDraftHelp =>
+      'Se crea un borrador de pedido: nada se pide, valora ni envía hasta que lo confirme.';
+
+  @override
+  String stockReorderGapRow(String site, String quantity) {
+    return '$site · $quantity propuestos';
+  }
+
+  @override
+  String stockReorderGroupLine(String item, String quantity, String site) {
+    return '$item: $quantity para $site';
+  }
+
+  @override
+  String get stockReorderIntro =>
+      'Lo que está en su punto de reposición o por debajo, por sede, y qué pedir a quién. Aquí no se pide nada: un borrador espera su confirmación.';
+
+  @override
+  String get stockReorderLowEmpty =>
+      'Nada está en su punto de reposición ni por debajo.';
+
+  @override
+  String stockReorderLowRow(String site, String onHand, String point) {
+    return '$site · $onHand disponibles · punto de reposición $point';
+  }
+
+  @override
+  String get stockReorderLowTitle => 'Stock bajo';
+
+  @override
+  String get stockReorderNoSupplierHelp =>
+      'Estos están bajos, pero ningún artículo de proveedor está marcado como preferido: elija uno en los artículos de proveedor del artículo.';
+
+  @override
+  String get stockReorderNoSupplierTitle => 'Ningún proveedor elegido';
+
+  @override
+  String get stockReorderPointActive => 'En uso';
+
+  @override
+  String get stockReorderPointAdd => 'Añadir un punto de reposición';
+
+  @override
+  String get stockReorderPointInactive => 'sin uso';
+
+  @override
+  String stockReorderPointLevel(String unit) {
+    return 'Punto de reposición ($unit)';
+  }
+
+  @override
+  String get stockReorderPointModeQuantity => 'Pedir una cantidad';
+
+  @override
+  String get stockReorderPointModeTarget => 'Pedir hasta';
+
+  @override
+  String stockReorderPointRow(String site, String point, String rule) {
+    return '$site · punto de reposición $point · $rule';
+  }
+
+  @override
+  String get stockReorderPointSite => 'Sede';
+
+  @override
+  String get stockReorderPointTitle => 'Punto de reposición';
+
+  @override
+  String get stockReorderPointValue => 'Cantidad (vacío: solo avisar)';
+
+  @override
+  String get stockReorderPointWhole => 'El artículo en conjunto';
+
+  @override
+  String get stockReorderPointsEmpty =>
+      'No hay ningún punto de reposición: nada se marca nunca como bajo.';
+
+  @override
+  String get stockReorderPointsTitle => 'Puntos de reposición';
+
+  @override
+  String get stockReorderRuleNone => 'solo avisar';
+
+  @override
+  String stockReorderRuleQuantity(String quantity) {
+    return 'pedir $quantity';
+  }
+
+  @override
+  String stockReorderRuleTarget(String quantity) {
+    return 'pedir hasta $quantity';
+  }
+
+  @override
+  String get stockReorderTitle => 'Reposición';
+
+  @override
+  String get stockReorderToOrderEmpty => 'No hay nada que pedir.';
+
+  @override
+  String get stockReorderToOrderTitle => 'Qué pedir';
+
+  @override
   String get stockReversalBackTo => 'Las mercancías vuelven a';
 
   @override
@@ -35968,6 +36215,73 @@ class AppLocalizationsEs extends AppLocalizations {
   String get stockTakeOutUsed => 'Consumido por el negocio';
 
   @override
+  String stockTraceBill(String reference) {
+    return 'Factura $reference';
+  }
+
+  @override
+  String get stockTraceBillsUnavailable => 'No se le muestran las facturas.';
+
+  @override
+  String stockTraceLotCostKnown(String amount) {
+    return 'Coste del lote: $amount';
+  }
+
+  @override
+  String get stockTraceMore => 'Existen más de los que se listan aquí.';
+
+  @override
+  String get stockTraceNoBill =>
+      'Todavía no hay ninguna factura vinculada a este pedido.';
+
+  @override
+  String get stockTraceNoPayment => 'No hay ningún pago registrado.';
+
+  @override
+  String get stockTraceNoPurchase =>
+      'No hay ninguna compra registrada para este movimiento.';
+
+  @override
+  String get stockTraceNote =>
+      'Solo se muestra lo registrado: nada se empareja por un nombre, una fecha o un importe. Vincular una factura nunca cambia lo que cuesta la mercancía.';
+
+  @override
+  String stockTraceOrder(String reference, String supplier) {
+    return 'Pedido $reference · $supplier';
+  }
+
+  @override
+  String stockTraceOwed(String amount) {
+    return 'Adeudado: $amount';
+  }
+
+  @override
+  String stockTracePaid(String amount, String date) {
+    return '$amount pagados el $date';
+  }
+
+  @override
+  String get stockTracePaymentsUnavailable =>
+      'No se le muestran los pagos (no es lo mismo que «sin pagar»).';
+
+  @override
+  String get stockTracePurchaseUnavailable =>
+      'No se le muestra el lado de compras.';
+
+  @override
+  String stockTraceReceived(String date) {
+    return 'Recibido el $date';
+  }
+
+  @override
+  String stockTraceReversed(String amount, String date) {
+    return '$amount revertidos el $date';
+  }
+
+  @override
+  String get stockTraceTitle => 'De dónde viene';
+
+  @override
   String stockTransferLine(
     String item,
     String left,
@@ -36016,6 +36330,62 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get stockTransfersTitle => 'Traslados';
+
+  @override
+  String get stockValueBasis =>
+      'Un valor operativo de los movimientos registrados a su coste de lote registrado. No es un saldo contabilizado de existencias ni indica coste de ventas.';
+
+  @override
+  String get stockValueComplete =>
+      'Cada artículo en existencias tiene un coste conocido.';
+
+  @override
+  String stockValueCutoff(String at, String calculated, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count movimientos',
+      one: 'un movimiento',
+    );
+    return 'A $at, calculado $calculated a partir de $_temp0.';
+  }
+
+  @override
+  String get stockValueIncomplete =>
+      'Incompleto: las mercancías de coste desconocido no están en este total.';
+
+  @override
+  String stockValueKnownTotal(String amount) {
+    return 'Coste conocido: $amount';
+  }
+
+  @override
+  String stockValueLine(String quantity, String amount) {
+    return '$quantity · $amount';
+  }
+
+  @override
+  String get stockValueLinesTitle => 'Mercancías valoradas';
+
+  @override
+  String get stockValueMovesLater =>
+      'Un movimiento registrado después con una fecha anterior cambia un cálculo posterior, nunca los hechos registrados antes.';
+
+  @override
+  String get stockValueNeedsRight =>
+      'Ver lo que cuestan las mercancías requiere el derecho de gestionar las compras o de leer las finanzas.';
+
+  @override
+  String get stockValueTitle => 'Valor de las existencias';
+
+  @override
+  String get stockValueUncostedNoCost => 'el lote no tiene coste';
+
+  @override
+  String get stockValueUncostedNoLot => 'sin lote';
+
+  @override
+  String get stockValueUncostedTitle => 'Coste desconocido';
 
   @override
   String get stockVariantPrice => 'Precio propio (unidades menores, opcional)';

@@ -3643,6 +3643,14 @@
   "@biCards": {
     "description": "#1924 finance KPI / #1923 analyses picker"
   },
+  "biCardsDragHandle": "Drag to reorder",
+  "@biCardsDragHandle": {
+    "description": "#4340 the analyses page: a label"
+  },
+  "biCardsStandard": "Back to the standard",
+  "@biCardsStandard": {
+    "description": "#4340 the analyses page: a label"
+  },
   "biCardsUnavailable": "{count, plural, one{1 analysis of this view is not available to you and are left out.} other{{count} analyses of this view are not available to you and are left out.}}",
   "@biCardsUnavailable": {
     "description": "#1923 C Web-BI saved views",
@@ -4135,6 +4143,10 @@
   "biDataUnavailable": "Unavailable",
   "@biDataUnavailable": {
     "description": "Shown as a text in capacity evidence (workspace), and 1 other place."
+  },
+  "biDefaultViewName": "My analyses",
+  "@biDefaultViewName": {
+    "description": "#4340 the analyses page: a label"
   },
   "biDeltaNone": "No comparison yet",
   "@biDeltaNone": {
@@ -8659,6 +8671,10 @@
   "claimRefusedOtherMonth": "These invoices are of another month than this payment. Nothing was charged.",
   "@claimRefusedOtherMonth": {
     "description": "#3556 Refusal: the payment's month is not the invoices'"
+  },
+  "claimRefusedRequestChanged": "This payment was already sent as another one. Check the declared payments, then try again.",
+  "@claimRefusedRequestChanged": {
+    "description": "#4321 — a declaration sent again under the request id of another payment (DKC15)"
   },
   "claimRefusedWithdrawn": "You withdrew this payment. Select the invoices again to pay them.",
   "@claimRefusedWithdrawn": {
@@ -13190,6 +13206,18 @@
       }
     }
   },
+  "eventEinvoiceNoticeEnded": "Settled",
+  "@eventEinvoiceNoticeEnded": {
+    "description": "#4325 suffix of a notice whose transmission moved on."
+  },
+  "eventEinvoiceOutcomeUncertain": "The outcome of an e-invoice is unknown: its sending stopped before an answer was recorded. It is not sent again. Check the platform's record, then settle it by hand.",
+  "@eventEinvoiceOutcomeUncertain": {
+    "description": "#4325 the notice of an e-invoice whose outcome is unknown (an uncertain dispatch)."
+  },
+  "eventEinvoiceStuckPrepared": "An e-invoice was prepared and never sent. Send it again from its invoice, or leave it.",
+  "@eventEinvoiceStuckPrepared": {
+    "description": "#4325 the notice of an e-invoice prepared and never sent."
+  },
   "eventExpenseDeviation": "validated {scheduled} — {reason}",
   "@eventExpenseDeviation": {
     "description": "Shown as a text in event lines (events)."
@@ -13695,6 +13723,36 @@
   "@eventStockCountOverdueEnded": {
     "description": "#4295 suffix of a notice whose task is complete."
   },
+  "eventStockLow": "{item} is low at {site}: {onHand} on hand, reorder point {point}",
+  "@eventStockLow": {
+    "description": "#4294 the low-stock notice in the inbox",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      },
+      "site": {
+        "type": "String"
+      },
+      "onHand": {
+        "type": "String"
+      },
+      "point": {
+        "type": "String"
+      }
+    }
+  },
+  "eventStockLowEnded": "back above its point",
+  "@eventStockLowEnded": {
+    "description": "#4294 the low-stock notice in the inbox"
+  },
+  "eventStockLowItemFallback": "An item",
+  "@eventStockLowItemFallback": {
+    "description": "#4294 the low-stock notice in the inbox"
+  },
+  "eventStockLowSiteFallback": "a site",
+  "@eventStockLowSiteFallback": {
+    "description": "#4294 the low-stock notice in the inbox"
+  },
   "eventSystemDecider": "System",
   "@eventSystemDecider": {
     "description": "Validator name shown when the timeout sweep decided, not a member"
@@ -13714,6 +13772,10 @@
   "eventTypeCredentialChange": "Credentials change",
   "@eventTypeCredentialChange": {
     "description": "#3914 the event type: credentials of an integration changed"
+  },
+  "eventTypeEinvoiceOutcomeUnknown": "E-invoice attempt stopped",
+  "@eventTypeEinvoiceOutcomeUnknown": {
+    "description": "#4325 the type name in the feed and the validation settings."
   },
   "eventTypeExpense": "Expense",
   "@eventTypeExpense": {
@@ -13830,6 +13892,10 @@
   "eventTypeStockCountOverdue": "Cycle count overdue",
   "@eventTypeStockCountOverdue": {
     "description": "#4295 the type name in the feed and the validation settings."
+  },
+  "eventTypeStockLow": "Low stock",
+  "@eventTypeStockLow": {
+    "description": "#4294 the low-stock notice in the inbox"
   },
   "eventTypeSubscriptionChange": "Subscription change",
   "@eventTypeSubscriptionChange": {
@@ -23193,6 +23259,10 @@
   "invoiceSendAction": "Send to the government platform",
   "@invoiceSendAction": {
     "description": "E-invoice sheet: post the document to the platform (0073)"
+  },
+  "invoiceSendBindingChanged": "This invoice was already submitted to this destination with other content. It is not sent again; its first submission stands.",
+  "@invoiceSendBindingChanged": {
+    "description": "#4324 Snackbar: the invoice already has a submission to this destination with other content (binding_changed); nothing is sent again"
   },
   "invoiceSendCustomerAccepted": "Sent — the customer's service accepted it.",
   "@invoiceSendCustomerAccepted": {
@@ -40889,6 +40959,10 @@
   "@servicesNew": {
     "description": "FAB tooltip and sheet title when creating a service"
   },
+  "servicesNotOnPublicPage": "Not on the public page",
+  "@servicesNotOnPublicPage": {
+    "description": "#4318 the services list: a public service beyond the ones the public page shows"
+  },
   "servicesOtherCategory": "Other services",
   "@servicesOtherCategory": {
     "description": "#3552 the services list: the heading of services without a category"
@@ -40900,6 +40974,27 @@
   "servicesPublic": "Show on our public page",
   "@servicesPublic": {
     "description": "#3552 the service editor: whether the service is shown on the public page"
+  },
+  "servicesPublicPageHidden": "{count, plural, one{{count} public service is not shown there.} other{{count} public services are not shown there.}}",
+  "@servicesPublicPageHidden": {
+    "description": "#4318 the services list: how many public services the public page does not show",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "servicesPublicPageNotice": "{count, plural, one{{count} service is public} other{{count} services are public}}. The public page shows {limit, plural, one{the first {limit}} other{the first {limit}}}, in the order of this list.",
+  "@servicesPublicPageNotice": {
+    "description": "#4318 the services list: how many services are public and how many the public page shows",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "limit": {
+        "type": "int"
+      }
+    }
   },
   "servicesSaveFailed": "The service could not be saved. Try again.",
   "@servicesSaveFailed": {
@@ -41112,6 +41207,10 @@
   "settingHintDunningFirstAfterDays": "Days after issue before a first reminder is suggested, and before an invoice falls due when no payment term was set.",
   "@settingHintDunningFirstAfterDays": {
     "description": "#2484 settings: Setting hint."
+  },
+  "settingHintEinvoiceStuckAttemptMinutes": "How many minutes an e-invoice may stay prepared, with no dispatch started, before the owner is told that its attempt stopped. A dispatch that was started and has no outcome is told as soon as its own time is up.",
+  "@settingHintEinvoiceStuckAttemptMinutes": {
+    "description": "#4325 settings: Setting hint."
   },
   "settingHintFederationAnswerWaitSeconds": "Seconds a server waits for the answer to a signed message it sent to another server before it sends the same message again. At least 30; keep it below the status lifetime.",
   "@settingHintFederationAnswerWaitSeconds": {
@@ -41468,6 +41567,10 @@
   "settingLabelDunningFirstAfterDays": "Days before a first reminder",
   "@settingLabelDunningFirstAfterDays": {
     "description": "#2484 settings: Setting label."
+  },
+  "settingLabelEinvoiceStuckAttemptMinutes": "E-invoice attempt left half-way",
+  "@settingLabelEinvoiceStuckAttemptMinutes": {
+    "description": "#4325 settings: Setting label."
   },
   "settingLabelFederationAnswerWaitSeconds": "Backchannel answer wait",
   "@settingLabelFederationAnswerWaitSeconds": {
@@ -45515,6 +45618,37 @@
   "@stockEnteredLabel": {
     "description": "#4161 the quantity and unit as entered"
   },
+  "stockGoodsMore": "Show more",
+  "@stockGoodsMore": {
+    "description": "#4173 the goods put away against a document"
+  },
+  "stockGoodsNone": "No goods are linked to it (nothing is recorded, which is not the same as none).",
+  "@stockGoodsNone": {
+    "description": "#4173 the goods put away against a document"
+  },
+  "stockGoodsRow": "{item}: {entered} ({stored})",
+  "@stockGoodsRow": {
+    "description": "#4173 the goods put away against a document",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      },
+      "entered": {
+        "type": "String"
+      },
+      "stored": {
+        "type": "String"
+      }
+    }
+  },
+  "stockGoodsTitle": "Goods put away",
+  "@stockGoodsTitle": {
+    "description": "#4173 the goods put away against a document"
+  },
+  "stockGoodsUnavailable": "The goods are not shown to you.",
+  "@stockGoodsUnavailable": {
+    "description": "#4173 the goods put away against a document"
+  },
   "stockItemsEmpty": "No items yet. Items are added when a service or a supplier article is kept in stock.",
   "@stockItemsEmpty": {
     "description": "the stock pages and group (#4299)"
@@ -45725,6 +45859,14 @@
   "stockPlacesAdd": "Add a place",
   "@stockPlacesAdd": {
     "description": "#4169 the stock editors: a label or message"
+  },
+  "stockPlacesLabelsNone": "There is no place to print a label for.",
+  "@stockPlacesLabelsNone": {
+    "description": "#4293 the places of the stock: a label, a message or a setting"
+  },
+  "stockPlacesPrintLabels": "Print labels",
+  "@stockPlacesPrintLabels": {
+    "description": "#4293 the places of the stock: a label, a message or a setting"
   },
   "stockPlacesSearch": "Find a place by address, name or barcode",
   "@stockPlacesSearch": {
@@ -46001,6 +46143,10 @@
   "@stockReasonMappingDuplicate": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonMappingUnknown": "No supplier article is preferred for one of these lines.",
+  "@stockReasonMappingUnknown": {
+    "description": "#4294 reorder: a refusal of the server"
+  },
   "stockReasonNameDuplicate": "This name is already used.",
   "@stockReasonNameDuplicate": {
     "description": "#4169 the stock editors: a text under a field the server refused"
@@ -46033,9 +46179,21 @@
   "@stockReasonPickRoleUnknown": {
     "description": "#4293 the places of the stock: a label, a message or a setting"
   },
+  "stockReasonPointFixed": "The item, variant and site of a reorder point cannot be changed: make another.",
+  "@stockReasonPointFixed": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReasonPointTwice": "This item already has a reorder point at this site.",
+  "@stockReasonPointTwice": {
+    "description": "#4294 reorder points: a label or a message"
+  },
   "stockReasonPriceInvalid": "A price is zero or more.",
   "@stockReasonPriceInvalid": {
     "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonQuantityAndTarget": "Name a quantity to order or a level to order up to, not both.",
+  "@stockReasonQuantityAndTarget": {
+    "description": "#4294 reorder points: a label or a message"
   },
   "stockReasonQuantityInvalid": "A quantity is a number above zero with at most six decimals.",
   "@stockReasonQuantityInvalid": {
@@ -46061,6 +46219,10 @@
   "@stockReasonSameSite": {
     "description": "#4170 transfers and take-out: a label or message"
   },
+  "stockReasonSiteUnknown": "Choose a site of this business.",
+  "@stockReasonSiteUnknown": {
+    "description": "#4294 reorder points: a label or a message"
+  },
   "stockReasonStockOnHand": "There is stock on hand: take it out first.",
   "@stockReasonStockOnHand": {
     "description": "#4169 the stock editors: a text under a field the server refused"
@@ -46072,6 +46234,10 @@
   "stockReasonSupplierForeign": "This supplier is not one of this business.",
   "@stockReasonSupplierForeign": {
     "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonTargetBelowPoint": "The level to order up to must be above the reorder point.",
+  "@stockReasonTargetBelowPoint": {
+    "description": "#4294 reorder points: a label or a message"
   },
   "stockReasonTooLong": "This text is too long.",
   "@stockReasonTooLong": {
@@ -46229,6 +46395,187 @@
   "stockRegistrySearch": "Find an item by name, barcode or address",
   "@stockRegistrySearch": {
     "description": "#4293 the registry of the stock: a label or a message"
+  },
+  "stockReorderCreateDraft": "Create draft order",
+  "@stockReorderCreateDraft": {
+    "description": "#4294 reorder: a label or a message"
+  },
+  "stockReorderDraftCreated": "Draft order {number} created. Nothing was ordered or sent.",
+  "@stockReorderDraftCreated": {
+    "description": "#4294 reorder: a label or a message",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "stockReorderDraftHelp": "A draft order is made: nothing is ordered, priced or sent until you confirm it.",
+  "@stockReorderDraftHelp": {
+    "description": "#4294 reorder: a label or a message"
+  },
+  "stockReorderGapRow": "{site} · {quantity} proposed",
+  "@stockReorderGapRow": {
+    "description": "#4294 reorder: a label or a message",
+    "placeholders": {
+      "site": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      }
+    }
+  },
+  "stockReorderGroupLine": "{item}: {quantity} for {site}",
+  "@stockReorderGroupLine": {
+    "description": "#4294 reorder: a label or a message",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      },
+      "site": {
+        "type": "String"
+      }
+    }
+  },
+  "stockReorderIntro": "What is at or below its reorder point, per site, and what to order from whom. Nothing is ordered here: a draft order waits for your confirmation.",
+  "@stockReorderIntro": {
+    "description": "#4294 reorder: a label or a message"
+  },
+  "stockReorderLowEmpty": "Nothing is at or below its reorder point.",
+  "@stockReorderLowEmpty": {
+    "description": "#4294 reorder: a label or a message"
+  },
+  "stockReorderLowRow": "{site} · {onHand} on hand · reorder point {point}",
+  "@stockReorderLowRow": {
+    "description": "#4294 reorder: a label or a message",
+    "placeholders": {
+      "site": {
+        "type": "String"
+      },
+      "onHand": {
+        "type": "String"
+      },
+      "point": {
+        "type": "String"
+      }
+    }
+  },
+  "stockReorderLowTitle": "Low stock",
+  "@stockReorderLowTitle": {
+    "description": "#4294 reorder: a label or a message"
+  },
+  "stockReorderNoSupplierHelp": "These are low, but no supplier article is marked as preferred for them: choose one in the item's supplier articles.",
+  "@stockReorderNoSupplierHelp": {
+    "description": "#4294 reorder: a label or a message"
+  },
+  "stockReorderNoSupplierTitle": "No supplier chosen",
+  "@stockReorderNoSupplierTitle": {
+    "description": "#4294 reorder: a label or a message"
+  },
+  "stockReorderPointActive": "In use",
+  "@stockReorderPointActive": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReorderPointAdd": "Add a reorder point",
+  "@stockReorderPointAdd": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReorderPointInactive": "not in use",
+  "@stockReorderPointInactive": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReorderPointLevel": "Reorder point ({unit})",
+  "@stockReorderPointLevel": {
+    "description": "#4294 reorder points: a label or a message",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "stockReorderPointModeQuantity": "Order a quantity",
+  "@stockReorderPointModeQuantity": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReorderPointModeTarget": "Order up to",
+  "@stockReorderPointModeTarget": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReorderPointRow": "{site} · reorder point {point} · {rule}",
+  "@stockReorderPointRow": {
+    "description": "#4294 reorder points: a label or a message",
+    "placeholders": {
+      "site": {
+        "type": "String"
+      },
+      "point": {
+        "type": "String"
+      },
+      "rule": {
+        "type": "String"
+      }
+    }
+  },
+  "stockReorderPointSite": "Site",
+  "@stockReorderPointSite": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReorderPointTitle": "Reorder point",
+  "@stockReorderPointTitle": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReorderPointValue": "Quantity (empty: only flag)",
+  "@stockReorderPointValue": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReorderPointWhole": "The item as a whole",
+  "@stockReorderPointWhole": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReorderPointsEmpty": "No reorder point is set: nothing is ever flagged as low.",
+  "@stockReorderPointsEmpty": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReorderPointsTitle": "Reorder points",
+  "@stockReorderPointsTitle": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReorderRuleNone": "flag only",
+  "@stockReorderRuleNone": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReorderRuleQuantity": "order {quantity}",
+  "@stockReorderRuleQuantity": {
+    "description": "#4294 reorder points: a label or a message",
+    "placeholders": {
+      "quantity": {
+        "type": "String"
+      }
+    }
+  },
+  "stockReorderRuleTarget": "order up to {quantity}",
+  "@stockReorderRuleTarget": {
+    "description": "#4294 reorder points: a label or a message",
+    "placeholders": {
+      "quantity": {
+        "type": "String"
+      }
+    }
+  },
+  "stockReorderTitle": "Reorder",
+  "@stockReorderTitle": {
+    "description": "#4294 reorder: a label or a message"
+  },
+  "stockReorderToOrderEmpty": "There is nothing to order.",
+  "@stockReorderToOrderEmpty": {
+    "description": "#4294 reorder: a label or a message"
+  },
+  "stockReorderToOrderTitle": "What to order",
+  "@stockReorderToOrderTitle": {
+    "description": "#4294 reorder: a label or a message"
   },
   "stockReversalBackTo": "Goods come back to",
   "@stockReversalBackTo": {
@@ -46413,6 +46760,114 @@
   "@stockTakeOutUsed": {
     "description": "#4170 transfers and take-out: a label or message"
   },
+  "stockTraceBill": "Bill {reference}",
+  "@stockTraceBill": {
+    "description": "#4173 the goods trace and the stock value",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTraceBillsUnavailable": "The bills are not shown to you.",
+  "@stockTraceBillsUnavailable": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockTraceLotCostKnown": "Lot cost: {amount}",
+  "@stockTraceLotCostKnown": {
+    "description": "#4173 the goods trace and the stock value",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTraceMore": "More exist than are listed here.",
+  "@stockTraceMore": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockTraceNoBill": "No bill is linked to this order yet.",
+  "@stockTraceNoBill": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockTraceNoPayment": "No payment is recorded for it.",
+  "@stockTraceNoPayment": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockTraceNoPurchase": "No purchase is recorded for this movement.",
+  "@stockTraceNoPurchase": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockTraceNote": "Only what is recorded is shown: nothing is matched on a name, a date or an amount. Linking a bill never changes what the goods cost.",
+  "@stockTraceNote": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockTraceOrder": "Order {reference} · {supplier}",
+  "@stockTraceOrder": {
+    "description": "#4173 the goods trace and the stock value",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      },
+      "supplier": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTraceOwed": "Owed: {amount}",
+  "@stockTraceOwed": {
+    "description": "#4173 the goods trace and the stock value",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTracePaid": "Paid {amount} on {date}",
+  "@stockTracePaid": {
+    "description": "#4173 the goods trace and the stock value",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTracePaymentsUnavailable": "Payments are not shown to you (that is not the same as unpaid).",
+  "@stockTracePaymentsUnavailable": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockTracePurchaseUnavailable": "The purchase side is not shown to you.",
+  "@stockTracePurchaseUnavailable": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockTraceReceived": "Received on {date}",
+  "@stockTraceReceived": {
+    "description": "#4173 the goods trace and the stock value",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTraceReversed": "Reversed {amount} on {date}",
+  "@stockTraceReversed": {
+    "description": "#4173 the goods trace and the stock value",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTraceTitle": "Where this came from",
+  "@stockTraceTitle": {
+    "description": "#4173 the goods trace and the stock value"
+  },
   "stockTransferLine": "{item}: {left} {unit} on the way of {loaded}",
   "@stockTransferLine": {
     "description": "#4170 transfers and take-out: a label or message",
@@ -46495,6 +46950,82 @@
   "stockTransfersTitle": "Transfers",
   "@stockTransfersTitle": {
     "description": "#4170 transfers and take-out: a label or message"
+  },
+  "stockValueBasis": "An operational value from the recorded movements at their recorded lot costs. It is not a posted stock-book balance and states no cost of goods.",
+  "@stockValueBasis": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockValueComplete": "Every item on hand has a known cost.",
+  "@stockValueComplete": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockValueCutoff": "As of {at}, calculated {calculated} from {count, plural, one{one movement} other{{count} movements}}.",
+  "@stockValueCutoff": {
+    "description": "#4173 the goods trace and the stock value",
+    "placeholders": {
+      "at": {
+        "type": "String"
+      },
+      "calculated": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "stockValueIncomplete": "Not complete: goods whose cost is unknown are not in this total.",
+  "@stockValueIncomplete": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockValueKnownTotal": "Known cost: {amount}",
+  "@stockValueKnownTotal": {
+    "description": "#4173 the goods trace and the stock value",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "stockValueLine": "{quantity} · {amount}",
+  "@stockValueLine": {
+    "description": "#4173 the goods trace and the stock value",
+    "placeholders": {
+      "quantity": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "stockValueLinesTitle": "Priced goods",
+  "@stockValueLinesTitle": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockValueMovesLater": "A movement recorded later with an earlier date changes a later calculation, never the facts recorded before.",
+  "@stockValueMovesLater": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockValueNeedsRight": "Seeing what goods cost needs the right to manage purchases or to read the finances.",
+  "@stockValueNeedsRight": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockValueTitle": "Stock value",
+  "@stockValueTitle": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockValueUncostedNoCost": "the lot has no cost",
+  "@stockValueUncostedNoCost": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockValueUncostedNoLot": "no lot",
+  "@stockValueUncostedNoLot": {
+    "description": "#4173 the goods trace and the stock value"
+  },
+  "stockValueUncostedTitle": "Cost unknown",
+  "@stockValueUncostedTitle": {
+    "description": "#4173 the goods trace and the stock value"
   },
   "stockVariantPrice": "Own price (minor units, optional)",
   "@stockVariantPrice": {

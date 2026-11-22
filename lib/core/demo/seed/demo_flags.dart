@@ -32,10 +32,6 @@ const Map<WorkspaceFeature, String> demoFeaturesLeftOff = {
       '#4295: the server side (plans, tasks, the blind count, the history) is '
       "delivered first; the Demo's plan for its high-value shelf arrives with "
       'its screens, which turn the feature on and add its scenario',
-  WorkspaceFeature.stockReorder:
-      '#4294: the server side (points, alerts, list) is delivered first; the '
-      "Demo's low-stock list, on the same ledger as its transfers, arrives with "
-      'its screens, which turn the feature on and add its scenario',
   WorkspaceFeature.mtdSubmission:
       'UK only: off in the head, on in the London house (ws-3), where its '
       'scenario is performed (#4009); left off in the other houses',

@@ -45,6 +45,7 @@
   "financesInPaymentSince": "In pagamento dal {date}",
   "financesWithdrawSettling": "Se ha appena pagato presso il fornitore, attenda: la conferma richiede qualche minuto.",
   "claimRefusedDecided": "L’azienda ha già deciso su questo pagamento.",
+  "claimRefusedRequestChanged": "Questo pagamento è già stato inviato con altri dati. Controlli i pagamenti dichiarati e riprovi.",
   "financesTakeBack": "Ritira",
   "financesTakeBackTitle": "Ritirare questa dichiarazione?",
   "financesTakeBackBody": "Ha dichiarato di aver pagato {invoices}. Una volta ritirata, l’azienda non deve più confermarla e queste fatture possono essere pagate di nuovo.",

@@ -44,6 +44,18 @@ extension StockEntries on DrawerEntries {
         DrawerEntry('drawer-stock-items', Icons.category_outlined, l10n.stockItemsTitle, () => go('/stock/items'), route: '/stock/items'),
         DrawerEntry('drawer-stock-places', Icons.place_outlined, l10n.stockPlacesTitle, () => go('/stock/places'), route: '/stock/places'),
       ],
+      if (features.contains(WorkspaceFeature.stockReorder) &&
+          (reads || may(WorkspacePermission.managePurchases)))
+        DrawerEntry(
+          'drawer-stock-reorder',
+          Icons.trending_down_outlined,
+          l10n.stockReorderTitle,
+          () => go('/stock/reorder'),
+          route: '/stock/reorder',
+        ),
+      // #4173 — what the goods on hand cost: for who reads the stock AND may see what goods cost.
+      if (reads && (may(WorkspacePermission.viewFinances) || may(WorkspacePermission.managePurchases)))
+        DrawerEntry('drawer-stock-value', Icons.savings_outlined, l10n.stockValueTitle, () => go('/stock/value'), route: '/stock/value'),
       if (may(WorkspacePermission.manageStock) || may(WorkspacePermission.manageConfiguration))
         DrawerEntry(
           'drawer-stock-settings',

@@ -1,0 +1,6 @@
+{
+  "eventTypeEinvoiceOutcomeUnknown": "Envoi de facture électronique interrompu",
+  "eventEinvoiceOutcomeUncertain": "Le résultat d’une facture électronique est inconnu : son envoi s’est arrêté avant qu’une réponse soit enregistrée. Elle n’est pas renvoyée. Vérifiez le relevé de la plateforme, puis réglez-le à la main.",
+  "eventEinvoiceStuckPrepared": "Une facture électronique a été préparée et jamais envoyée. Renvoyez-la depuis sa facture, ou laissez-la.",
+  "eventEinvoiceNoticeEnded": "Réglé"
+}

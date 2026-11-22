@@ -48,7 +48,7 @@ insert into public.setting_definitions
   (key, type, default_value, min_value, max_value, unit, group_key, scopes,
    edit_permission, floor_value, editable, choices, source, note)
 values
-('stock.cycle_count_high_value_minor', 'int', '50000'::jsonb, 1, 100000000, 'minor units', 'business', array['workspace'], 'manageStock', null, true, null, 'stock_cycle_counts (#4295)', 'The value, in minor units of the business currency (cents), from which what a place holds of an item counts as high value for a cycle count plan that selects high-value goods and has no threshold of its own: the quantity there times the unit cost of its lot.'),
+('stock.cycle_count_high_value_minor', 'int', '50000'::jsonb, 1, 100000000, 'currency units', 'business', array['workspace'], 'manageStock', null, true, null, 'stock_cycle_counts (#4295)', 'The value, in minor units of the business currency (cents), from which what a place holds of an item counts as high value for a cycle count plan that selects high-value goods and has no threshold of its own: the quantity there times the unit cost of its lot.'),
 ('stock.cycle_count_overdue_days', 'int', '7'::jsonb, 1, 90, 'days', 'business', array['workspace'], 'manageStock', null, true, null, 'stock_cycle_counts (#4295)', 'How many days a cycle count task may stay open past its due date before the inbox says it is overdue: once per task.')
 on conflict (key) do nothing;
 -- END GENERATED SEED

@@ -114,9 +114,15 @@ class EInvoiceSubmission {
     required this.status,
     this.externalId = '',
     this.detail = '',
+    this.conflict = false,
   });
 
   final EInvoiceSubmissionStatus status;
+
+  /// The invoice already has a submission to this destination with other
+  /// content (`binding_changed`, 409): nothing was sent again, and the
+  /// phase says where the first one stands.
+  final bool conflict;
 
   /// The platform's own id for the document — the handle for asking about
   /// it later. '' when it returned none.

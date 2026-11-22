@@ -61,6 +61,9 @@ const BI_DETAIL_PAGE=[['10','optEntries',{n:10}],['25','optEntries',{n:25}],['50
 const RESEND_MOLLIE=[['15','optMinutes',{n:15}],['30','optMinutes',{n:30}],['50','optMinutes',{n:50}]];
 const RESEND_PAYPAL=[['60','optOneHour'],['120','optHours',{n:2}],['240','optHours',{n:4}],['330','optMinutes',{n:330}]];
 const RESEND_STRIPE=[['60','optOneHour'],['360','optHours',{n:6}],['720','optHours',{n:12}],['1380','optHours',{n:23}]];
+// #4325 — how long a prepared e-invoice may wait for its dispatch before the owner is told
+// (platform setting einvoice.stuck_attempt_minutes): 5 minutes to 7 days.
+const EINVOICE_STUCK=[['15','optMinutes',{n:15}],['60','optOneHour'],['240','optHours',{n:4}],['1440','optDays',{n:1}],['10080','optDays',{n:7}]];
 // #2563 C2 — backchannel retention (platform setting
 // federation.retention_hours): 1..720 hours.
 const FED_RETENTION=[['1','optOneHour'],['6','optHours',{n:6}],['24','optHours',{n:24}],['72','optHours',{n:72}],['168','optDays',{n:7}],['720','optDays',{n:30}]];
@@ -148,7 +151,7 @@ const PARAM_META=[
  ['directory.pageSize','dirPageSize','enum',()=>DIR_PAGE.map(x=>x[0])],['directory.queryLength','dirQueryLength','enum',()=>DIR_QUERY.map(x=>x[0])],
  ['quotes.defaultValidity','quoteDefaultValidity','enum',()=>QUOTE_VALIDITY.map(x=>x[0]),{needs:'customerQuotes'}],['quotes.maxValidity','quoteMaxValidity','enum',()=>QUOTE_MAX_VALIDITY.map(x=>x[0]),{needs:'customerQuotes'}],
  ['paymentResend.mollie','resendMollie','enum',()=>RESEND_MOLLIE.map(x=>x[0]),{needs:'moneyTab'}],['paymentResend.paypal','resendPaypal','enum',()=>RESEND_PAYPAL.map(x=>x[0]),{needs:'moneyTab'}],
- ['paymentResend.stripe','resendStripe','enum',()=>RESEND_STRIPE.map(x=>x[0]),{needs:'moneyTab'}],
+ ['paymentResend.stripe','resendStripe','enum',()=>RESEND_STRIPE.map(x=>x[0]),{needs:'moneyTab'}],['einvoiceStuck.minutes','einvoiceStuck','enum',()=>EINVOICE_STUCK.map(x=>x[0]),{needs:'moneyTab'}],
  ['federation.retentionHours','fedRetention','enum',()=>FED_RETENTION.map(x=>x[0])],
  ['federation.answerWait','fedAnswerWait','enum',()=>FED_ANSWER_WAIT.map(x=>x[0])],
  ['inbox.pageSize','inboxPageSize','enum',()=>INBOX_PAGE.map(x=>x[0])],

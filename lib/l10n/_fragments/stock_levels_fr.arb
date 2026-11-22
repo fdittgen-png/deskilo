@@ -16,5 +16,7 @@
   "stockReasonLevelChildrenWrong": "Cet emplacement en contient d'autres qui ont besoin de son niveau ; déplacez-les d'abord.",
   "stockReasonPickRoleUnknown": "L'usage doit être prélèvement ou réserve.",
   "settingLabelStockAddressSeparator": "Séparateur dans l'adresse d'un emplacement",
-  "settingHintStockAddressSeparator": "Le caractère entre les niveaux d'une adresse d'emplacement (site, zone, allée, travée, étagère) : MAG1-SALES-A03-B02-S4 avec un tiret, MAG1.SALES.A03.B02.S4 avec un point. Seule l'écriture de l'adresse change."
+  "settingHintStockAddressSeparator": "Le caractère entre les niveaux d'une adresse d'emplacement (site, zone, allée, travée, étagère) : MAG1-SALES-A03-B02-S4 avec un tiret, MAG1.SALES.A03.B02.S4 avec un point. Seule l'écriture de l'adresse change.",
+  "stockPlacesPrintLabels": "Imprimer les étiquettes",
+  "stockPlacesLabelsNone": "Il n’y a aucun emplacement pour lequel imprimer une étiquette."
 }

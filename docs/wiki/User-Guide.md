@@ -3053,13 +3053,30 @@ You want to say where things are kept, so that receiving, counting and picking k
 
 Open **Stock → Places**. A place has a level: **Site** (a branch or a central depot), **Zone** (a sales floor, a back room, a yard), **Aisle**, **Bay** and **Shelf** or **Bin**. A place sits only under the level directly above it: a zone under a site, an aisle under a zone, a bay under an aisle, a shelf under a bay. A counter, a kitchen, a vehicle, a machine or a slot is placed anywhere. A warehouse made before the levels counts as a site.
 
-Each place has an **address**, written from its parents' codes: `MAIN-SALES-A03-B02-S4` is the main store, the sales floor, aisle 3, bay 2, shelf 4. The code of a place only has to differ from its neighbours under the same parent, so every bay can have its shelf `S4`. Rename a place and the addresses below it follow. Type any part of an address, a name or a barcode in the search to find a place.
+Each place has an **address**, written from its parents' codes: `MAIN-SALES-A03-B02-S4` is the main store, the sales floor, aisle 3, bay 2, shelf 4. The code of a place only has to differ from its neighbours under the same parent, so every bay can have its shelf `S4`. Rename a place and the addresses below it follow. Type any part of an address, a name or a barcode in the search to find a place. A place is read by its address wherever it appears: in the stock, the movements, a transfer's route and the places a move offers. **Print labels** makes a PDF of the places shown, one label each: the address in large type, the name beneath and a barcode (the place's own barcode, else its address) that a scan finds again.
 
 **Good to know**
 - A site says whether it **receives from suppliers**; switch it off and goods arrive there only by transfer from another site.
 - A place below a site is **picking** (front of house) or **reserve** (overstock); it is advice, never a quantity.
 - The character between the levels is the business's setting **Separator in a place address** (a dash, a dot, a slash or a colon); only how an address is written changes. It is set in **Stock settings**.
 
+<!-- anchor: user.money.stock.reorder -->
+### Reorder: what is low and what to order
+
+**Audience:** Administrator · Owner
+
+You want to see what is about to run out and order it without going through the shelves.
+
+When an item falls to its reorder point, whoever may manage the stock or the purchases gets **one notice** in the inbox (under Money): the item, the site, what is on hand and the point. It is told once while the stock stays low, and says so when the stock rises above the point again. Tapping it opens this page.
+
+Open **Stock → Reorder** (the feature *Reorder points* must be on). The page has two lists.
+
+- **Low stock** lists every item or variant at or below its reorder point, per site, with what is on hand and the point. It is read from the stock ledger, exactly, in the item's unit; an item with no reorder point is never listed. A place that is in transit does not count as stock on hand.
+- **What to order** groups what is low by the supplier whose article is marked **preferred** for it, in that article's purchase unit, rounded up to whole units. An item with no preferred supplier article is listed under **No supplier chosen**: mark one in the item's supplier articles.
+
+**Create draft order** makes a draft purchase order from a group. It is only a draft: nothing is ordered, priced or sent until you confirm it in the purchase orders. It needs the right to manage purchases; asking twice for the same draft makes it once.
+
+**Reorder points** (below the two lists) are what makes an item low. Each shows the item, the site, the level and what to order then: a quantity, *up to* a level, or nothing (it only flags). Whoever may manage the stock adds one with **Add a reorder point** or opens one to change it. The level and the quantity are exact numbers (a decimal comma is fine); a level to order up to must be above the point, a point names a quantity or a level, not both, and an item has one point per site (and variant). The item, variant and site of a point cannot be changed afterwards: make another. A point switched off is kept and flags nothing.
 <!-- anchor: user.money.stock.registry -->
 ### The item registry
 
@@ -3073,6 +3090,19 @@ Open **Stock → Items**. Each line shows the **barcode**, the **unit**, the **p
 - **Filter** by a place to see what is homed in it and in the places below it, or switch on *Only items with no home place* to see what still needs one.
 - **Search** by name, barcode or address. Typing or scanning a barcode into the search and confirming opens that item.
 - Long lists load by pages: choose *Show more*.
+
+<!-- anchor: user.money.stock.value -->
+### Stock value and where goods came from
+
+**Audience:** Administrator · Owner
+
+You want to see what the stock on hand is worth, and where a delivery came from and whether it was paid.
+
+Open **Stock → Stock value** (it needs the right to manage purchases or to read the finances). The page shows the **known cost** of what is on hand, as of a date, with when it was calculated and from how many movements. It is an *operational value*: the recorded movements at the cost recorded for each lot. It is not a posted stock-book balance and it states no cost of goods.
+
+Goods whose cost is **unknown** (a lot received with no cost, or goods with no lot) are listed by quantity and are **not** in the total; the page says *Not complete* while any exist, and a known cost of zero is a priced line, not an unknown one. A movement recorded later with an earlier date changes a later calculation, never the facts recorded before.
+
+Open any movement (**Stock → Movements**) and read **Where this came from**: the receipt, the order, the supplier bills linked to that order, what each bill owes and the payments and reversals that settle it. Only what is recorded is shown; nothing is matched on a name, a date or an amount. A part you may not see says *not shown to you* (that is not the same as unpaid); a part with nothing recorded says *not linked*; a list cut short says so. Linking a bill never changes what the goods cost. Opening it changes nothing.
 
 <!-- anchor: user.money.stock.reversals -->
 ### Returns, corrections and counts
@@ -4912,6 +4942,7 @@ You sell something that is not a seat: a locker, printing, coffee. You list it o
 - A service is never deleted, only deactivated, because invoices refer to it.
 - A service that comes from a stock shows how many are left, or **Out of stock**.
 - To record one for a member, use **Add a service** on their page.
+- **Show on our public page**: the public page, its card in Discover and the search by service carry the first 12 public services, in the order of the services list (category, then name). The list says how many services are public and marks the ones the page does not show.
 
 **See also:** [Accessories](#accessories) · [The member page](#the-member-page)
 
@@ -6542,6 +6573,8 @@ You look at how the workspace performs.
 2. Choose **Period length** (**Month**, **Quarter**, **Year**), a comparison, and a grouping where offered.
 3. Read the analyses by area, such as **Finance** (**Invoiced**, **Collected**) and **Space and capacity**.
 4. Save a view under **Views**, or tap **Export as PDF**.
+
+**Analyses shown** chooses which analyses the page shows and in what order: tick the ones you want and drag the handle of a row to move it (the arrows beside it do the same from the keyboard). Your choice is remembered for you in this workspace, on any device, and opens again next time; an address that names analyses, or a view you open, wins for that visit. **Back to the standard** clears it.
 
 **Good to know**
 

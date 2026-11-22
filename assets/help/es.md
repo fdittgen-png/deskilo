@@ -2917,12 +2917,29 @@ Quiere decir dónde se guarda cada cosa, para que la recepción, el recuento y l
 
 Abra **Existencias → Ubicaciones**. Una ubicación tiene un nivel: **Sede** (una sucursal o un depósito central), **Zona** (sala de ventas, trastienda, patio), **Pasillo**, **Módulo** y **Estante** o **Cajón**. Una ubicación va solo bajo el nivel inmediatamente superior: una zona bajo una sede, un pasillo bajo una zona, un módulo bajo un pasillo, un estante bajo un módulo. Un mostrador, una cocina, un vehículo, una máquina o una casilla se coloca donde sea. Un almacén creado antes de los niveles cuenta como sede.
 
-Cada ubicación tiene una **dirección**, escrita con los códigos de sus superiores: `MAIN-SALES-A03-B02-S4` es la tienda principal, la sala de ventas, el pasillo 3, el módulo 2, el estante 4. El código de una ubicación solo debe diferir de sus vecinos bajo la misma superior, así que cada módulo puede tener su estante `S4`. Si cambia el nombre de una ubicación, las direcciones de debajo lo siguen. Escriba parte de una dirección, un nombre o un código de barras en la búsqueda para encontrar una ubicación.
+Cada ubicación tiene una **dirección**, escrita con los códigos de sus superiores: `MAIN-SALES-A03-B02-S4` es la tienda principal, la sala de ventas, el pasillo 3, el módulo 2, el estante 4. El código de una ubicación solo debe diferir de sus vecinos bajo la misma superior, así que cada módulo puede tener su estante `S4`. Si cambia el nombre de una ubicación, las direcciones de debajo lo siguen. Escriba parte de una dirección, un nombre o un código de barras en la búsqueda para encontrar una ubicación. Una ubicación se lee por su dirección dondequiera que aparezca: en las existencias, los movimientos, el recorrido de un traslado y las ubicaciones que ofrece un movimiento. **Imprimir etiquetas** crea un PDF de las ubicaciones mostradas, una etiqueta cada una: la dirección en grande, el nombre debajo y un código de barras (el de la ubicación, si no su dirección) que un escaneo vuelve a encontrar.
 
 **Conviene saber**
 - Una sede indica si **recibe de proveedores**; desactivado, la mercancía llega solo por traslado desde otra sede.
 - Una ubicación bajo una sede es **picking** (zona de venta) o **reserva** (excedente); es una indicación, nunca una cantidad.
 - El carácter entre los niveles es el ajuste de la empresa **Separador en la dirección de una ubicación** (guion, punto, barra o dos puntos); solo cambia cómo se escribe la dirección. Se fija en **Ajustes de existencias**.
+
+### Reposición: lo que está bajo y lo que hay que pedir
+
+**Público:** Administrador/a · Propietario
+
+Quiere ver lo que está a punto de agotarse y pedirlo sin recorrer los estantes.
+
+Cuando un artículo llega a su punto de reposición, quien puede gestionar las existencias o las compras recibe **un aviso** en la bandeja (en Dinero): el artículo, la sede, lo disponible y el punto. Se da una sola vez mientras el stock sigue bajo, y avisa cuando vuelve a superar el punto. Al tocarlo se abre esta página.
+
+Abra **Existencias → Reposición** (la función *Puntos de reposición* debe estar activada). La página tiene dos listas.
+
+- **Stock bajo** lista cada artículo o variante en su punto de reposición o por debajo, por sede, con lo disponible y el punto. Se lee del libro de existencias, exacto, en la unidad del artículo; un artículo sin punto de reposición nunca aparece. Una ubicación en tránsito no cuenta como existencias disponibles.
+- **Qué pedir** agrupa lo que está bajo por el proveedor cuyo artículo está marcado como **preferido**, en la unidad de compra de ese artículo, redondeado a unidades enteras. Un artículo sin artículo de proveedor preferido aparece en **Ningún proveedor elegido**: marque uno en los artículos de proveedor del artículo.
+
+**Crear borrador de pedido** crea un borrador de pedido de compra a partir de un grupo. Es solo un borrador: nada se pide, valora ni envía hasta que lo confirme en los pedidos de compra. Requiere el derecho de gestionar compras; pedir dos veces el mismo borrador lo crea una sola vez.
+
+Los **puntos de reposición** (bajo las dos listas) hacen que un artículo esté bajo. Cada uno muestra el artículo, la sede, el nivel y qué pedir entonces: una cantidad, *hasta* un nivel, o nada (solo avisa). Quien puede gestionar las existencias añade uno con **Añadir un punto de reposición** o abre uno para cambiarlo. El nivel y la cantidad son números exactos (la coma decimal vale); un nivel hasta el que pedir debe estar por encima del punto, un punto indica una cantidad o un nivel, no ambos, y un artículo tiene un punto por sede (y variante). El artículo, la variante y la sede de un punto no se cambian después: cree otro. Un punto desactivado se conserva y no avisa de nada.
 
 ### El registro de artículos
 
@@ -2936,6 +2953,18 @@ Abra **Existencias → Artículos**. Cada línea muestra el **código de barras*
 - **Filtre** por una ubicación para ver lo que tiene allí y en las ubicaciones de debajo, o active *Solo artículos sin ubicación habitual* para ver lo que aún la necesita.
 - **Busque** por nombre, código de barras o dirección. Escribir o escanear un código de barras en la búsqueda y confirmar abre ese artículo.
 - Las listas largas se cargan por páginas: elija *Mostrar más*.
+
+### Valor de las existencias y origen de la mercancía
+
+**Público:** Administrador/a · Propietario
+
+Quiere ver cuánto valen las existencias, de dónde vino una entrega y si se pagó.
+
+Abra **Existencias → Valor de las existencias** (requiere el derecho de gestionar las compras o de leer las finanzas). La página muestra el **coste conocido** de lo que hay, a una fecha, con el momento del cálculo y el número de movimientos. Es un *valor operativo*: los movimientos registrados al coste registrado de cada lote. No es un saldo contabilizado de existencias ni indica coste de ventas.
+
+Las mercancías de coste **desconocido** (un lote recibido sin coste, o sin lote) se listan por cantidad y **no** están en el total; la página dice *Incompleto* mientras existan, y un coste conocido de cero es una línea valorada, no desconocida. Un movimiento registrado después con una fecha anterior cambia un cálculo posterior, nunca los hechos registrados antes.
+
+Abra un movimiento (**Existencias → Movimientos**) y lea **De dónde viene**: la recepción, el pedido, las facturas de proveedor vinculadas a ese pedido, lo que debe cada una y los pagos y reversiones que la liquidan. Solo se muestra lo registrado; nada se empareja por un nombre, una fecha o un importe. Una parte que no puede ver dice *no se le muestra* (no es lo mismo que sin pagar); una parte sin nada registrado dice *sin vincular*; una lista recortada lo dice. Vincular una factura nunca cambia lo que cuesta la mercancía. Abrirlo no cambia nada.
 
 ### Devoluciones, correcciones y recuentos
 
@@ -4678,6 +4707,7 @@ Vende algo que no es un puesto: una taquilla, impresión, café. Lo da de alta u
 - Un servicio nunca se elimina, solo se desactiva, porque hay facturas que lo mencionan.
 - Un servicio que procede de un stock muestra cuántas unidades quedan, o **Agotado**.
 - Para registrar uno a un miembro, use **Añadir un servicio** en su ficha.
+- **Mostrar en nuestra página pública**: la página pública, su ficha en Descubrir y la búsqueda por servicio recogen los 12 primeros servicios públicos, en el orden de la lista de servicios (categoría y luego nombre). La lista indica cuántos servicios son públicos y señala los que la página no muestra.
 
 **Véase también:** [Accesorios](help:user.money.accessories) · [La ficha del miembro](help:user.members.page)
 
@@ -6182,6 +6212,8 @@ Observa cómo rinde el espacio.
 2. Elija la **Duración del periodo** (**Mes**, **Trimestre**, **Año**), una comparación y, cuando se ofrezca, una agrupación.
 3. Lea los análisis por área, como **Finanzas** (**Facturado**, **Cobrado**) y **Espacios y capacidad**.
 4. Guarde una vista en **Vistas**, o pulse **Exportar a PDF**.
+
+**Análisis mostrados** elige qué análisis muestra la página y en qué orden: marque los que quiera y arrastre el asa de una fila para moverla (las flechas junto a ella hacen lo mismo con el teclado). Su elección se recuerda para usted en este espacio, en cualquier dispositivo, y se abre de nuevo la próxima vez; una dirección que nombra análisis, o una vista que abra, prevalece en esa visita. **Volver al estándar** la borra.
 
 **Conviene saber**
 

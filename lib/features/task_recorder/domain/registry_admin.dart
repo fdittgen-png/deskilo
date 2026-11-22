@@ -102,6 +102,8 @@ const Set<String> validationRuleKeys = {
   'credential_change',
   'payment_attempt_unreadable',
   'stock_count_overdue',
+  'stock_low',
+  'einvoice_outcome_unknown',
 };
 
 /// The validation rule that applies when a type has none of its own.

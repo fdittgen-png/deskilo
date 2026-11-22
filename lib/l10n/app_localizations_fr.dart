@@ -2876,6 +2876,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get biCards => 'Analyses affichées';
 
   @override
+  String get biCardsDragHandle => 'Glisser pour réordonner';
+
+  @override
+  String get biCardsStandard => 'Retour au standard';
+
+  @override
   String biCardsUnavailable(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -3223,6 +3229,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get biDataUnavailable => 'Indisponible';
+
+  @override
+  String get biDefaultViewName => 'Mes analyses';
 
   @override
   String get biDeltaNone => 'Pas encore de comparaison';
@@ -6678,6 +6687,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get claimRefusedOtherMonth =>
       'Ces factures sont d’un autre mois que ce paiement. Rien n’a été débité.';
+
+  @override
+  String get claimRefusedRequestChanged =>
+      'Ce paiement a déjà été envoyé sous une autre forme. Vérifiez les paiements déclarés, puis réessayez.';
 
   @override
   String get claimRefusedWithdrawn =>
@@ -10181,6 +10194,17 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get eventEinvoiceNoticeEnded => 'Réglé';
+
+  @override
+  String get eventEinvoiceOutcomeUncertain =>
+      'Le résultat d’une facture électronique est inconnu : son envoi s’est arrêté avant qu’une réponse soit enregistrée. Elle n’est pas renvoyée. Vérifiez le relevé de la plateforme, puis réglez-le à la main.';
+
+  @override
+  String get eventEinvoiceStuckPrepared =>
+      'Une facture électronique a été préparée et jamais envoyée. Renvoyez-la depuis sa facture, ou laissez-la.';
+
+  @override
   String eventExpenseDeviation(Object reason, Object scheduled) {
     return 'validé $scheduled — $reason';
   }
@@ -10452,6 +10476,20 @@ class AppLocalizationsFr extends AppLocalizations {
   String get eventStockCountOverdueEnded => 'Terminé';
 
   @override
+  String eventStockLow(String item, String site, String onHand, String point) {
+    return '$item est bas à $site : $onHand en stock, seuil $point';
+  }
+
+  @override
+  String get eventStockLowEnded => 'de nouveau au-dessus du seuil';
+
+  @override
+  String get eventStockLowItemFallback => 'Un article';
+
+  @override
+  String get eventStockLowSiteFallback => 'un site';
+
+  @override
   String get eventSystemDecider => 'Système';
 
   @override
@@ -10466,6 +10504,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get eventTypeCredentialChange => 'Modification d\'identifiants';
+
+  @override
+  String get eventTypeEinvoiceOutcomeUnknown =>
+      'Envoi de facture électronique interrompu';
 
   @override
   String get eventTypeExpense => 'Dépense';
@@ -10556,6 +10598,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get eventTypeStockCountOverdue => 'Inventaire tournant en retard';
+
+  @override
+  String get eventTypeStockLow => 'Stock bas';
 
   @override
   String get eventTypeSubscriptionChange => 'Changement d\'abonnement';
@@ -17941,6 +17986,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get invoiceSendAction => 'Envoyer à la plateforme gouvernementale';
+
+  @override
+  String get invoiceSendBindingChanged =>
+      'Cette facture a déjà été transmise à cette destination avec un autre contenu. Elle n’est pas renvoyée ; la première transmission reste valable.';
 
   @override
   String get invoiceSendCustomerAccepted =>
@@ -31651,6 +31700,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get servicesNew => 'Nouveau service';
 
   @override
+  String get servicesNotOnPublicPage => 'Pas sur la page publique';
+
+  @override
   String get servicesOtherCategory => 'Autres prestations';
 
   @override
@@ -31658,6 +31710,34 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get servicesPublic => 'Afficher sur notre page publique';
+
+  @override
+  String servicesPublicPageHidden(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count services publics n’y sont pas affichés.',
+      one: '$count service public n’y est pas affiché.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String servicesPublicPageNotice(int count, int limit) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count services sont publics',
+      one: '$count service est public',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      limit,
+      locale: localeName,
+      other: 'les $limit premiers',
+      one: 'le premier ($limit)',
+    );
+    return '$_temp0. La page publique affiche $_temp1, dans l’ordre de cette liste.';
+  }
 
   @override
   String get servicesSaveFailed =>
@@ -31838,6 +31918,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingHintDunningFirstAfterDays =>
       'Jours après l\'émission avant qu\'une première relance soit proposée, et avant l\'échéance d\'une facture sans conditions de paiement.';
+
+  @override
+  String get settingHintEinvoiceStuckAttemptMinutes =>
+      'Combien de minutes une facture électronique peut rester préparée, sans envoi commencé, avant que le propriétaire soit prévenu que sa tentative s’est arrêtée. Un envoi commencé sans résultat est signalé dès que son propre délai est écoulé.';
 
   @override
   String get settingHintFederationAnswerWaitSeconds =>
@@ -32182,6 +32266,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingLabelDunningFirstAfterDays =>
       'Jours avant une première relance';
+
+  @override
+  String get settingLabelEinvoiceStuckAttemptMinutes =>
+      'Tentative de facture électronique interrompue';
 
   @override
   String get settingLabelFederationAnswerWaitSeconds =>
@@ -35431,6 +35519,25 @@ class AppLocalizationsFr extends AppLocalizations {
   String get stockEnteredLabel => 'Saisi';
 
   @override
+  String get stockGoodsMore => 'Afficher plus';
+
+  @override
+  String get stockGoodsNone =>
+      'Aucune marchandise n’y est liée (rien d’enregistré n’est pas la même chose que aucune).';
+
+  @override
+  String stockGoodsRow(String item, String entered, String stored) {
+    return '$item : $entered ($stored)';
+  }
+
+  @override
+  String get stockGoodsTitle => 'Marchandises mises en stock';
+
+  @override
+  String get stockGoodsUnavailable =>
+      'Les marchandises ne vous sont pas montrées.';
+
+  @override
   String get stockItemsEmpty =>
       'Aucun article pour l\'instant. Un article apparaît lorsqu\'un service ou un article fournisseur est tenu en stock.';
 
@@ -35589,6 +35696,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get stockPlacesAdd => 'Ajouter un emplacement';
+
+  @override
+  String get stockPlacesLabelsNone =>
+      'Il n’y a aucun emplacement pour lequel imprimer une étiquette.';
+
+  @override
+  String get stockPlacesPrintLabels => 'Imprimer les étiquettes';
 
   @override
   String get stockPlacesSearch =>
@@ -35814,6 +35928,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Cet article fournisseur est déjà associé.';
 
   @override
+  String get stockReasonMappingUnknown =>
+      'Aucun article fournisseur n’est préféré pour l’une de ces lignes.';
+
+  @override
   String get stockReasonNameDuplicate => 'Ce nom est déjà utilisé.';
 
   @override
@@ -35842,7 +35960,19 @@ class AppLocalizationsFr extends AppLocalizations {
       'L\'usage doit être prélèvement ou réserve.';
 
   @override
+  String get stockReasonPointFixed =>
+      'L’article, la variante et le site d’un seuil ne se changent pas : créez-en un autre.';
+
+  @override
+  String get stockReasonPointTwice =>
+      'Cet article a déjà un seuil sur ce site.';
+
+  @override
   String get stockReasonPriceInvalid => 'Un prix est nul ou positif.';
+
+  @override
+  String get stockReasonQuantityAndTarget =>
+      'Indiquez une quantité à commander ou un niveau à atteindre, pas les deux.';
 
   @override
   String get stockReasonQuantityInvalid =>
@@ -35869,6 +35999,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les deux emplacements sont dans un même site : déplacez plutôt les marchandises en une seule étape.';
 
   @override
+  String get stockReasonSiteUnknown =>
+      'Choisissez un site de cette entreprise.';
+
+  @override
   String get stockReasonStockOnHand => 'Il y a du stock : sortez-le d’abord.';
 
   @override
@@ -35878,6 +36012,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get stockReasonSupplierForeign =>
       'Ce fournisseur n’est pas un fournisseur de cette entreprise.';
+
+  @override
+  String get stockReasonTargetBelowPoint =>
+      'Le niveau à atteindre doit être au-dessus du seuil.';
 
   @override
   String get stockReasonTooLong => 'Ce texte est trop long.';
@@ -36004,6 +36142,117 @@ class AppLocalizationsFr extends AppLocalizations {
       'Trouver un article par nom, code-barres ou adresse';
 
   @override
+  String get stockReorderCreateDraft => 'Créer un brouillon de commande';
+
+  @override
+  String stockReorderDraftCreated(String number) {
+    return 'Brouillon de commande $number créé. Rien n’a été commandé ni envoyé.';
+  }
+
+  @override
+  String get stockReorderDraftHelp =>
+      'Un brouillon de commande est créé : rien n’est commandé, chiffré ni envoyé tant que vous ne le confirmez pas.';
+
+  @override
+  String stockReorderGapRow(String site, String quantity) {
+    return '$site · $quantity proposé';
+  }
+
+  @override
+  String stockReorderGroupLine(String item, String quantity, String site) {
+    return '$item : $quantity pour $site';
+  }
+
+  @override
+  String get stockReorderIntro =>
+      'Ce qui est au niveau de son seuil de réapprovisionnement ou en dessous, par site, et ce qu’il faut commander à qui. Rien n’est commandé ici : un brouillon attend votre confirmation.';
+
+  @override
+  String get stockReorderLowEmpty =>
+      'Rien n’est au niveau de son seuil ou en dessous.';
+
+  @override
+  String stockReorderLowRow(String site, String onHand, String point) {
+    return '$site · $onHand en stock · seuil $point';
+  }
+
+  @override
+  String get stockReorderLowTitle => 'Stock bas';
+
+  @override
+  String get stockReorderNoSupplierHelp =>
+      'Ces articles sont bas, mais aucun article fournisseur n’est marqué comme préféré : choisissez-en un dans les articles fournisseur de l’article.';
+
+  @override
+  String get stockReorderNoSupplierTitle => 'Aucun fournisseur choisi';
+
+  @override
+  String get stockReorderPointActive => 'Utilisé';
+
+  @override
+  String get stockReorderPointAdd => 'Ajouter un seuil';
+
+  @override
+  String get stockReorderPointInactive => 'inutilisé';
+
+  @override
+  String stockReorderPointLevel(String unit) {
+    return 'Seuil ($unit)';
+  }
+
+  @override
+  String get stockReorderPointModeQuantity => 'Commander une quantité';
+
+  @override
+  String get stockReorderPointModeTarget => 'Commander jusqu’à';
+
+  @override
+  String stockReorderPointRow(String site, String point, String rule) {
+    return '$site · seuil $point · $rule';
+  }
+
+  @override
+  String get stockReorderPointSite => 'Site';
+
+  @override
+  String get stockReorderPointTitle => 'Seuil de réapprovisionnement';
+
+  @override
+  String get stockReorderPointValue => 'Quantité (vide : signaler seulement)';
+
+  @override
+  String get stockReorderPointWhole => 'L’article dans son ensemble';
+
+  @override
+  String get stockReorderPointsEmpty =>
+      'Aucun seuil n’est défini : rien n’est jamais signalé comme bas.';
+
+  @override
+  String get stockReorderPointsTitle => 'Seuils de réapprovisionnement';
+
+  @override
+  String get stockReorderRuleNone => 'signaler seulement';
+
+  @override
+  String stockReorderRuleQuantity(String quantity) {
+    return 'commander $quantity';
+  }
+
+  @override
+  String stockReorderRuleTarget(String quantity) {
+    return 'commander jusqu’à $quantity';
+  }
+
+  @override
+  String get stockReorderTitle => 'Réapprovisionnement';
+
+  @override
+  String get stockReorderToOrderEmpty => 'Il n’y a rien à commander.';
+
+  @override
+  String get stockReorderToOrderTitle => 'Que commander';
+
+  @override
   String get stockReversalBackTo => 'Les marchandises reviennent à';
 
   @override
@@ -36124,6 +36373,74 @@ class AppLocalizationsFr extends AppLocalizations {
   String get stockTakeOutUsed => 'Utilisé par l’entreprise';
 
   @override
+  String stockTraceBill(String reference) {
+    return 'Facture $reference';
+  }
+
+  @override
+  String get stockTraceBillsUnavailable =>
+      'Les factures ne vous sont pas montrées.';
+
+  @override
+  String stockTraceLotCostKnown(String amount) {
+    return 'Coût du lot : $amount';
+  }
+
+  @override
+  String get stockTraceMore => 'Il en existe plus que ce qui est listé ici.';
+
+  @override
+  String get stockTraceNoBill =>
+      'Aucune facture n’est encore liée à cette commande.';
+
+  @override
+  String get stockTraceNoPayment => 'Aucun paiement n’y est enregistré.';
+
+  @override
+  String get stockTraceNoPurchase =>
+      'Aucun achat n’est enregistré pour ce mouvement.';
+
+  @override
+  String get stockTraceNote =>
+      'Seul ce qui est enregistré est montré : rien n’est rapproché par un nom, une date ou un montant. Lier une facture ne change jamais le coût de la marchandise.';
+
+  @override
+  String stockTraceOrder(String reference, String supplier) {
+    return 'Commande $reference · $supplier';
+  }
+
+  @override
+  String stockTraceOwed(String amount) {
+    return 'Dû : $amount';
+  }
+
+  @override
+  String stockTracePaid(String amount, String date) {
+    return '$amount payés le $date';
+  }
+
+  @override
+  String get stockTracePaymentsUnavailable =>
+      'Les paiements ne vous sont pas montrés (ce n’est pas la même chose que « impayé »).';
+
+  @override
+  String get stockTracePurchaseUnavailable =>
+      'Le côté achats ne vous est pas montré.';
+
+  @override
+  String stockTraceReceived(String date) {
+    return 'Reçu le $date';
+  }
+
+  @override
+  String stockTraceReversed(String amount, String date) {
+    return '$amount annulés le $date';
+  }
+
+  @override
+  String get stockTraceTitle => 'D’où cela vient';
+
+  @override
   String stockTransferLine(
     String item,
     String left,
@@ -36172,6 +36489,61 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get stockTransfersTitle => 'Transferts';
+
+  @override
+  String get stockValueBasis =>
+      'Une valeur opérationnelle des mouvements enregistrés à leur coût de lot enregistré. Ce n’est pas un solde comptabilisé du stock et elle n’indique aucun coût des marchandises.';
+
+  @override
+  String get stockValueComplete => 'Chaque article en stock a un coût connu.';
+
+  @override
+  String stockValueCutoff(String at, String calculated, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count mouvements',
+      one: '$count mouvement',
+    );
+    return 'Au $at, calculé $calculated à partir de $_temp0.';
+  }
+
+  @override
+  String get stockValueIncomplete =>
+      'Incomplet : les marchandises au coût inconnu ne sont pas dans ce total.';
+
+  @override
+  String stockValueKnownTotal(String amount) {
+    return 'Coût connu : $amount';
+  }
+
+  @override
+  String stockValueLine(String quantity, String amount) {
+    return '$quantity · $amount';
+  }
+
+  @override
+  String get stockValueLinesTitle => 'Marchandises valorisées';
+
+  @override
+  String get stockValueMovesLater =>
+      'Un mouvement enregistré plus tard avec une date antérieure change un calcul ultérieur, jamais les faits enregistrés avant.';
+
+  @override
+  String get stockValueNeedsRight =>
+      'Voir ce que coûtent les marchandises demande le droit de gérer les achats ou de lire les finances.';
+
+  @override
+  String get stockValueTitle => 'Valeur du stock';
+
+  @override
+  String get stockValueUncostedNoCost => 'le lot n’a pas de coût';
+
+  @override
+  String get stockValueUncostedNoLot => 'sans lot';
+
+  @override
+  String get stockValueUncostedTitle => 'Coût inconnu';
 
   @override
   String get stockVariantPrice => 'Prix propre (unités mineures, facultatif)';

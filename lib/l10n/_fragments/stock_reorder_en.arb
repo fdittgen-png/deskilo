@@ -1,0 +1,241 @@
+{
+  "stockReorderTitle": "Reorder",
+  "@stockReorderTitle": {
+    "description": "#4294 reorder: a label or a message"
+  },
+  "stockReorderIntro": "What is at or below its reorder point, per site, and what to order from whom. Nothing is ordered here: a draft order waits for your confirmation.",
+  "@stockReorderIntro": {
+    "description": "#4294 reorder: a label or a message"
+  },
+  "stockReorderLowTitle": "Low stock",
+  "@stockReorderLowTitle": {
+    "description": "#4294 reorder: a label or a message"
+  },
+  "stockReorderLowEmpty": "Nothing is at or below its reorder point.",
+  "@stockReorderLowEmpty": {
+    "description": "#4294 reorder: a label or a message"
+  },
+  "stockReorderLowRow": "{site} · {onHand} on hand · reorder point {point}",
+  "@stockReorderLowRow": {
+    "description": "#4294 reorder: a label or a message",
+    "placeholders": {
+      "site": {
+        "type": "String"
+      },
+      "onHand": {
+        "type": "String"
+      },
+      "point": {
+        "type": "String"
+      }
+    }
+  },
+  "stockReorderToOrderTitle": "What to order",
+  "@stockReorderToOrderTitle": {
+    "description": "#4294 reorder: a label or a message"
+  },
+  "stockReorderToOrderEmpty": "There is nothing to order.",
+  "@stockReorderToOrderEmpty": {
+    "description": "#4294 reorder: a label or a message"
+  },
+  "stockReorderGroupLine": "{item}: {quantity} for {site}",
+  "@stockReorderGroupLine": {
+    "description": "#4294 reorder: a label or a message",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      },
+      "site": {
+        "type": "String"
+      }
+    }
+  },
+  "stockReorderDraftHelp": "A draft order is made: nothing is ordered, priced or sent until you confirm it.",
+  "@stockReorderDraftHelp": {
+    "description": "#4294 reorder: a label or a message"
+  },
+  "stockReorderCreateDraft": "Create draft order",
+  "@stockReorderCreateDraft": {
+    "description": "#4294 reorder: a label or a message"
+  },
+  "stockReorderDraftCreated": "Draft order {number} created. Nothing was ordered or sent.",
+  "@stockReorderDraftCreated": {
+    "description": "#4294 reorder: a label or a message",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "stockReorderNoSupplierTitle": "No supplier chosen",
+  "@stockReorderNoSupplierTitle": {
+    "description": "#4294 reorder: a label or a message"
+  },
+  "stockReorderNoSupplierHelp": "These are low, but no supplier article is marked as preferred for them: choose one in the item's supplier articles.",
+  "@stockReorderNoSupplierHelp": {
+    "description": "#4294 reorder: a label or a message"
+  },
+  "stockReorderGapRow": "{site} · {quantity} proposed",
+  "@stockReorderGapRow": {
+    "description": "#4294 reorder: a label or a message",
+    "placeholders": {
+      "site": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      }
+    }
+  },
+  "stockReasonMappingUnknown": "No supplier article is preferred for one of these lines.",
+  "@stockReasonMappingUnknown": {
+    "description": "#4294 reorder: a refusal of the server"
+  },
+  "stockReorderPointsTitle": "Reorder points",
+  "@stockReorderPointsTitle": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReorderPointsEmpty": "No reorder point is set: nothing is ever flagged as low.",
+  "@stockReorderPointsEmpty": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReorderPointRow": "{site} · reorder point {point} · {rule}",
+  "@stockReorderPointRow": {
+    "description": "#4294 reorder points: a label or a message",
+    "placeholders": {
+      "site": {
+        "type": "String"
+      },
+      "point": {
+        "type": "String"
+      },
+      "rule": {
+        "type": "String"
+      }
+    }
+  },
+  "stockReorderRuleQuantity": "order {quantity}",
+  "@stockReorderRuleQuantity": {
+    "description": "#4294 reorder points: a label or a message",
+    "placeholders": {
+      "quantity": {
+        "type": "String"
+      }
+    }
+  },
+  "stockReorderRuleTarget": "order up to {quantity}",
+  "@stockReorderRuleTarget": {
+    "description": "#4294 reorder points: a label or a message",
+    "placeholders": {
+      "quantity": {
+        "type": "String"
+      }
+    }
+  },
+  "stockReorderRuleNone": "flag only",
+  "@stockReorderRuleNone": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReorderPointInactive": "not in use",
+  "@stockReorderPointInactive": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReorderPointAdd": "Add a reorder point",
+  "@stockReorderPointAdd": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReorderPointTitle": "Reorder point",
+  "@stockReorderPointTitle": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReorderPointSite": "Site",
+  "@stockReorderPointSite": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReorderPointWhole": "The item as a whole",
+  "@stockReorderPointWhole": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReorderPointLevel": "Reorder point ({unit})",
+  "@stockReorderPointLevel": {
+    "description": "#4294 reorder points: a label or a message",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "stockReorderPointModeQuantity": "Order a quantity",
+  "@stockReorderPointModeQuantity": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReorderPointModeTarget": "Order up to",
+  "@stockReorderPointModeTarget": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReorderPointValue": "Quantity (empty: only flag)",
+  "@stockReorderPointValue": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReorderPointActive": "In use",
+  "@stockReorderPointActive": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReasonSiteUnknown": "Choose a site of this business.",
+  "@stockReasonSiteUnknown": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReasonPointFixed": "The item, variant and site of a reorder point cannot be changed: make another.",
+  "@stockReasonPointFixed": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReasonQuantityAndTarget": "Name a quantity to order or a level to order up to, not both.",
+  "@stockReasonQuantityAndTarget": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReasonTargetBelowPoint": "The level to order up to must be above the reorder point.",
+  "@stockReasonTargetBelowPoint": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "stockReasonPointTwice": "This item already has a reorder point at this site.",
+  "@stockReasonPointTwice": {
+    "description": "#4294 reorder points: a label or a message"
+  },
+  "eventTypeStockLow": "Low stock",
+  "@eventTypeStockLow": {
+    "description": "#4294 the low-stock notice in the inbox"
+  },
+  "eventStockLow": "{item} is low at {site}: {onHand} on hand, reorder point {point}",
+  "@eventStockLow": {
+    "description": "#4294 the low-stock notice in the inbox",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      },
+      "site": {
+        "type": "String"
+      },
+      "onHand": {
+        "type": "String"
+      },
+      "point": {
+        "type": "String"
+      }
+    }
+  },
+  "eventStockLowEnded": "back above its point",
+  "@eventStockLowEnded": {
+    "description": "#4294 the low-stock notice in the inbox"
+  },
+  "eventStockLowItemFallback": "An item",
+  "@eventStockLowItemFallback": {
+    "description": "#4294 the low-stock notice in the inbox"
+  },
+  "eventStockLowSiteFallback": "a site",
+  "@eventStockLowSiteFallback": {
+    "description": "#4294 the low-stock notice in the inbox"
+  }
+}

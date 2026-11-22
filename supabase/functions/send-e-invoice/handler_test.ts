@@ -110,6 +110,24 @@ class FakeStore implements TransmissionStore {
       "|",
     );
     const found = [...this.rows.values()].find((r) => r.key === key);
+    if (found && found.binding !== binding &&
+        (found.phase === "prepared" || found.phase === "failed")) {
+      // 0862: nothing left from a prepared or failed row, so the changed
+      // content replaces what was stored and the row is prepared again.
+      found.binding = binding;
+      found.phase = "prepared";
+      found.external_id = "";
+      found.detail = "";
+      found.artifact = {
+        bytes: i.bytes,
+        sha256: i.hash,
+        fileName: i.fileName,
+        mimeType: i.mimeType,
+        receiverScheme: i.receiverScheme,
+        receiverId: i.receiverId,
+      };
+      return Promise.resolve({ outcome: "prepared", id: found.id, phase: "prepared" });
+    }
     if (found) {
       return Promise.resolve(
         found.binding !== binding
@@ -214,8 +232,14 @@ class FakeStore implements TransmissionStore {
   artifact(id: string) {
     return Promise.resolve(this.rows.get(id)?.artifact ?? null);
   }
-  claim(id: string, owner: string, window: number): Promise<ClaimResult> {
+  async claim(id: string, owner: string, window: number, binding?: string): Promise<ClaimResult> {
     const r = this.rows.get(id)!;
+    // 0862: the claim is of the document and receiver the handler verified
+    if (binding !== undefined) {
+      const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(r.binding));
+      const held = [...new Uint8Array(digest)].map((b) => b.toString(16).padStart(2, "0")).join("");
+      if (held !== binding) return { claimed: false, phase: r.phase, detail: "binding_changed" };
+    }
     if (r.phase === "sent" && r.deadline < this.now) r.phase = "uncertain";
     if (r.phase === "prepared" || r.phase === "failed") {
       r.phase = "sent";
@@ -395,9 +419,12 @@ Deno.test("O2: simultaneous requests upload once, whatever the bytes", async () 
   assertEquals(s.rows.size, 1); // one durable identity
   assertEquals(rs.filter((x) => x.status === 200).length, 1); // one winner
   for (const loser of rs.filter((x) => x.status !== 200)) {
-    // every other request is refused or told the dispatch is in flight
+    // every other request is refused, holds a document the row replaced
+    // meanwhile (0862), or is told the dispatch is in flight
     assertEquals(
-      loser.body.error === "binding_changed" || loser.body.phase === "sent",
+      loser.body.error === "binding_changed" ||
+        loser.body.error === "artifact_unavailable" ||
+        loser.body.phase === "sent",
       true,
       JSON.stringify(loser),
     );
@@ -1803,4 +1830,48 @@ Deno.test("#3932 the Spanish channel needs its sandbox certificate and key, neve
   const r = await read(await call(s, p.fetchImpl, esBody));
   assertEquals([r.status, r.body.error, r.body.missing], [409, "sandbox_credentials_missing", ["private_key"]]);
   assertEquals([s.rows.size, p.posts.length], [0, 0]);
+});
+
+Deno.test("#4324: a failed row whose receiver changed is prepared again and sent once", async () => {
+  const s = new FakeStore();
+  const refused = provider(() => new Response("no", { status: 400 }));
+  const first = await read(await call(s, refused.fetchImpl, bodyOf()));
+  assertEquals(first.body.phase, "rejected");
+  // the connector refused before dispatch: the row is failed, nothing left
+  [...s.rows.values()][0].phase = "failed";
+  const p = provider(ok);
+  const again = await read(
+    await call(s, p.fetchImpl, bodyOf({ receiver_scheme: "iso", receiver_id: "9" })),
+  );
+  assertEquals(again.status, 200);
+  assertEquals(again.body.phase, "accepted");
+  assertEquals(p.posts.length, 1);
+  assertEquals(s.rows.size, 1);
+});
+
+Deno.test("#4324: the conflict that remains is a 409 once the document left", async () => {
+  const s = new FakeStore();
+  const p = provider(ok);
+  await call(s, p.fetchImpl, bodyOf());
+  const again = await read(
+    await call(s, p.fetchImpl, bodyOf({ content_base64: btoa("<xml>other</xml>") })),
+  );
+  assertEquals(again.status, 409);
+  assertEquals(again.body.error, "binding_changed");
+  assertEquals(p.posts.length, 1);
+});
+
+Deno.test("#4324: a request holding a document the row replaced sends nothing", async () => {
+  const s = new FakeStore();
+  const p = provider(ok);
+  const real = s.claim.bind(s);
+  // the document is replaced between the request's verification and its claim
+  s.claim = (id, owner, window, binding) => {
+    s.rows.get(id)!.binding = "replaced|facturX||";
+    return real(id, owner, window, binding);
+  };
+  const r = await read(await call(s, p.fetchImpl, bodyOf()));
+  assertEquals(r.status, 409);
+  assertEquals(r.body.error, "binding_changed");
+  assertEquals(p.posts.length, 0);
 });

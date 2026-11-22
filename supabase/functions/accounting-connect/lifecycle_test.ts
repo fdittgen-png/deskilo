@@ -27,7 +27,7 @@ function world(opts: {
   const answer = (as: string) => ({
     rpc: (fn: string, args: Record<string, unknown>) => {
       calls.push({ as, fn, args });
-      if (fn === "accounting_connection_manageable_v1") {
+      if (fn === "accounting_connection_manageable_v1" || fn === "hmrc_connection_manageable_v1") {
         return Promise.resolve(opts.allowed === false
           ? { data: null, error: { code: "42501" } }
           : { data: { id: CONN, workspace_id: "w", target_id: target, auth_kind: opts.authKind ?? "oauth2" }, error: null });
@@ -115,6 +115,14 @@ Deno.test("the revocation's preliminary check names its purpose, so offboarding 
   const verify = world({ target: "pennylane_api", authKind: "token" });
   await handle(post({ action: "verify", connection_id: CONN }), verify.deps);
   assertEquals(verify.calls.find((c) => c.fn === "accounting_connection_manageable_v1")!.args, { p_connection_id: CONN });
+});
+
+Deno.test("the HMRC connection is revoked with the same purpose, so offboarding survives MTD being switched off (#4323)", async () => {
+  const w = world({ target: "hmrc_mtd" });
+  await handle(post({ action: "revoke", connection_id: CONN }), w.deps);
+  const check = w.calls.find((c) => c.fn === "hmrc_connection_manageable_v1")!;
+  assertEquals(check.as, "caller");
+  assertEquals(check.args, { p_connection_id: CONN, p_purpose: "revoke" });
 });
 
 Deno.test("a target that refuses or is unreachable still leaves the connection revoked, the failure said", async () => {

@@ -799,6 +799,8 @@
  "stockSepDot": "Point ( . )",
  "stockSepSlash": "Barre oblique ( / )",
  "stockSepColon": "Deux-points ( : )",
+ "einvoiceStuck": "Tentative de facture électronique interrompue",
+ "einvoiceStuckHint": "Combien de temps une facture électronique peut rester préparée, sans envoi commencé, avant que le propriétaire soit prévenu que sa tentative s’est arrêtée. Réglé dans les paramètres de l’application.",
  "stockCycleHighValue": "Inventaire tournant : seuil de forte valeur",
  "stockCycleHighValueHint": "La valeur, en unités mineures de la devise de l’entreprise, à partir de laquelle ce qu’un lieu contient d’un article est de forte valeur pour un plan sans seuil propre. Réglé dans les paramètres de l’application.",
  "stockCycleOverdue": "Inventaire tournant : en retard après",

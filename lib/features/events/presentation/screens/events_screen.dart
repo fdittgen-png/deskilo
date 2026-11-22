@@ -105,7 +105,6 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
     unawaited(ref.read(updatesSeenProvider(scope).notifier).markOpened(categories: categories, newVisit: newVisit));
   }
 
-
   String _line(
     AppLocalizations l10n,
     WorkspaceEvent event,
@@ -208,6 +207,8 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
       EventType.credentialChange: Icons.key_outlined,
       EventType.paymentAttemptUnreadable: Icons.sync_problem_outlined,
       EventType.stockCountOverdue: Icons.fact_check_outlined,
+      EventType.stockLow: Icons.inventory_2_outlined,
+      EventType.einvoiceOutcomeUnknown: Icons.mark_email_unread_outlined,
       EventType.unknown: Icons.info_outline,
     };
     return icons[event.type] ?? Icons.info_outline;
@@ -396,13 +397,12 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
     _followTab();
     final l10n = context.l10n;
     final eventsAsync = ref.watch(eventsProvider);
-    final names = ref.watch(memberNamesProvider).value ?? const {};
+    final names = ref.watch(eventNamesProvider).value ?? const {};
     final targets = ref.watch(targetNamesProvider).value ?? const {};
     final myMember = ref.watch(myMemberProvider).value;
     final decisions = ref.watch(eventDecisionsProvider).value ??
         const <String, List<EventDecision>>{};
-    final policies =
-        ref.watch(validationPoliciesProvider).value ?? const [];
+    final policies = ref.watch(validationPoliciesProvider).value ?? const [];
     final currency = appFormatOf(context).moneyIn(ref.watch(currentWorkspaceProvider).value?.currencyCode);
     // #687 — MESSAGES ARE NOT NOTIFICATIONS ANY MORE.
     //

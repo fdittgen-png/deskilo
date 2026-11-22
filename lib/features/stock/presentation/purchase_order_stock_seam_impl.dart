@@ -26,6 +26,7 @@ import '../domain/stock_receiving.dart';
 import '../providers/stock_providers.dart';
 import 'purchase_order_putaway.dart';
 import 'stock_config_text.dart';
+import 'stock_document_goods_block.dart';
 
 /// A quantity as a person reads it: no trailing ".0".
 String _qty(double q) => q == q.truncateToDouble() ? q.truncate().toString() : '$q';
@@ -57,6 +58,21 @@ class StockPurchaseOrderSeam implements PurchaseOrderStockSeam {
     required String workspaceId,
     required PurchaseOrder order,
   }) => _allowed(ref) ? _DeliveryActions(workspaceId: workspaceId, order: order) : null;
+
+  @override
+  Widget? goodsOfDocument(
+    BuildContext context,
+    WidgetRef ref, {
+    required String workspaceId,
+    required String kind,
+    required String id,
+  }) {
+    final held = ref.watch(myPermissionsProvider);
+    final reads = held.contains(WorkspacePermission.viewStock) || held.contains(WorkspacePermission.manageStock);
+    return reads && ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.stockManagement)
+        ? StockDocumentGoodsBlock(workspaceId: workspaceId, kind: kind, id: id)
+        : null;
+  }
 
   @override
   Future<ReceiptPutAway?> receiptPutAway(

@@ -1265,6 +1265,8 @@
   },
   "biBookingBasis": "La capacità prenotata misura le prenotazioni, non la presenza effettiva.",
   "biCards": "Analisi mostrate",
+  "biCardsDragHandle": "Trascini per riordinare",
+  "biCardsStandard": "Torna allo standard",
   "biCardsUnavailable": "{count, plural, one{1 analisi di questa vista non è disponibile per Lei e viene omessa.} other{{count} analisi di questa vista non sono disponibili per Lei e vengono omesse.}}",
   "biCashNotBankBalance": "Pagamenti registrati, non un saldo bancario riconciliato.",
   "@biCashNotBankBalance": {
@@ -1428,6 +1430,7 @@
   "biDataPartial": "Dati parziali",
   "biDataStale": "Dati non aggiornati",
   "biDataUnavailable": "Non disponibile",
+  "biDefaultViewName": "Le mie analisi",
   "biDeltaNone": "Nessun confronto per ora",
   "@biDeltaNone": {
     "description": "Business analytics dashboard: biDeltaNone"
@@ -3928,6 +3931,7 @@
   "claimRefusedNothingToFree": "Questo pagamento è già stato ritirato.",
   "claimRefusedOther": "L’attività ha rifiutato queste fatture per questo pagamento. Aggiorni e riprovi.",
   "claimRefusedOtherMonth": "Queste fatture sono di un mese diverso da questo pagamento. Non è stato addebitato nulla.",
+  "claimRefusedRequestChanged": "Questo pagamento è già stato inviato con altri dati. Controlli i pagamenti dichiarati e riprovi.",
   "claimRefusedWithdrawn": "Ha ritirato questo pagamento. Selezioni di nuovo le fatture per pagarle.",
   "coOwnerAction": "Comproprietà",
   "coOwnerActivate": "Promuovi a proprietario ora",
@@ -6482,6 +6486,9 @@
   "eventCredentialCleared": "{actor} ha cancellato le credenziali di {provider} ({area}): {keys}.",
   "eventCredentialReplaced": "{actor} ha sostituito le credenziali di {provider} ({area}): {keys}.",
   "eventCredentialSet": "{actor} ha impostato le credenziali di {provider} ({area}): {keys}.",
+  "eventEinvoiceNoticeEnded": "Regolata",
+  "eventEinvoiceOutcomeUncertain": "L’esito di una fattura elettronica è sconosciuto: il suo invio si è fermato prima che fosse registrata una risposta. Non viene inviata di nuovo. Controlli il registro della piattaforma, poi la regoli a mano.",
+  "eventEinvoiceStuckPrepared": "Una fattura elettronica è stata preparata e mai inviata. La invii di nuovo dalla sua fattura, oppure la lasci.",
   "eventExpenseDeviation": "validato {scheduled} — {reason}",
   "eventExpenseRepartitionLine": "{count, plural, one{{actor} ripartisce «{title}»: {amount} tra 1 membro} other{{actor} ripartisce «{title}»: {amount} tra {count} membri}}",
   "@eventExpenseRepartitionLine": {
@@ -6672,11 +6679,16 @@
   "eventSourceNotFound": "Nessun documento di acquisto è stato archiviato per questa richiesta, oppure non può vederlo.",
   "eventStockCountOverdue": "L’inventario ciclico «{plan}» è ancora aperto dopo la scadenza.",
   "eventStockCountOverdueEnded": "Fatto",
+  "eventStockLow": "{item} è basso in {site}: {onHand} disponibili, punto di riordino {point}",
+  "eventStockLowEnded": "di nuovo sopra il punto",
+  "eventStockLowItemFallback": "Un articolo",
+  "eventStockLowSiteFallback": "una sede",
   "eventSystemDecider": "Sistema",
   "eventTypeAdjustment": "Rettifica",
   "eventTypeBadgeSecurityAlert": "Protezione dell’accesso con badge",
   "eventTypeCommitmentVariance": "Differenza di affitto",
   "eventTypeCredentialChange": "Modifica delle credenziali",
+  "eventTypeEinvoiceOutcomeUnknown": "Invio di fattura elettronica interrotto",
   "eventTypeExpense": "Spesa",
   "eventTypeExpenseRepartition": "Spesa condivisa",
   "eventTypeExpenseSchedule": "Spesa programmata",
@@ -6736,6 +6748,7 @@
   "eventTypeSettlementReview": "Liquidazione da verificare",
   "eventTypeSpaceReservation": "Prenotazioni di spazi interi",
   "eventTypeStockCountOverdue": "Inventario ciclico in ritardo",
+  "eventTypeStockLow": "Scorta bassa",
   "eventTypeSubscriptionChange": "Cambio di abbonamento",
   "@eventTypeSubscriptionChange": {
     "description": "#982 validation domains: eventTypeSubscriptionChange"
@@ -10638,6 +10651,7 @@
     }
   },
   "invoiceSendAction": "Invia alla piattaforma governativa",
+  "invoiceSendBindingChanged": "Questa fattura è già stata trasmessa a questa destinazione con un altro contenuto. Non viene inviata di nuovo; la prima trasmissione resta valida.",
   "invoiceSendCustomerAccepted": "Inviata — il servizio del cliente l’ha accettata.",
   "@invoiceSendCustomerAccepted": {
     "description": "Snackbar: the customer's service took the document (#568)"
@@ -18747,9 +18761,12 @@
   "servicesInactive": "Inattivo",
   "servicesName": "Nome",
   "servicesNew": "Nuovo servizio",
+  "servicesNotOnPublicPage": "Non sulla pagina pubblica",
   "servicesOtherCategory": "Altri servizi",
   "servicesPrice": "Prezzo",
   "servicesPublic": "Mostra sulla nostra pagina pubblica",
+  "servicesPublicPageHidden": "{count, plural, one{{count} servizio pubblico non vi è mostrato.} other{{count} servizi pubblici non vi sono mostrati.}}",
+  "servicesPublicPageNotice": "{count, plural, one{{count} servizio è pubblico} other{{count} servizi sono pubblici}}. La pagina pubblica mostra {limit, plural, one{il primo ({limit})} other{i primi {limit}}}, nell’ordine di questo elenco.",
   "servicesSaveFailed": "Non è stato possibile salvare il servizio. Riprovi.",
   "servicesTitle": "Servizi",
   "settingCouldNotSave": "Impossibile salvare l'impostazione",
@@ -18908,6 +18925,7 @@
   "@settingHintDunningFirstAfterDays": {
     "description": "#2484 settings: Setting hint."
   },
+  "settingHintEinvoiceStuckAttemptMinutes": "Quanti minuti una fattura elettronica può restare preparata, senza che l’invio sia iniziato, prima che il titolare sia avvisato che il tentativo si è fermato. Un invio iniziato e senza esito viene segnalato appena scade il suo termine.",
   "settingHintFederationAnswerWaitSeconds": "Secondi per cui un server attende la risposta a un messaggio firmato inviato a un altro server prima di inviare di nuovo lo stesso messaggio. Almeno 30; tenerla sotto la validità dello stato.",
   "settingHintFederationRetentionHours": "Ore per cui un server conserva le ricevute dei messaggi firmati tra server, e una casa personale le tracce delle iscrizioni terminate, prima che la pulizia oraria le rimuova. Mai meno della validità di stato più lunga più due volte lo scarto d'orologio.",
   "settingHintIdentityClockSkewSeconds": "Secondi di scarto d'orologio tra la casa personale e un server di spazi ancora accettati, da 0 a 30.",
@@ -19126,6 +19144,7 @@
   "@settingLabelDunningFirstAfterDays": {
     "description": "#2484 settings: Setting label."
   },
+  "settingLabelEinvoiceStuckAttemptMinutes": "Tentativo di fattura elettronica interrotto",
   "settingLabelFederationAnswerWaitSeconds": "Attesa della risposta tra server",
   "settingLabelFederationRetentionHours": "Conservazione degli scambi tra server",
   "settingLabelIdentityClockSkewSeconds": "Scarto d'orologio ammesso",
@@ -20806,6 +20825,11 @@
   "stockEmpty": "Non c’è ancora nulla in magazzino.",
   "stockEmptyFiltered": "Nulla corrisponde a questi filtri.",
   "stockEnteredLabel": "Inserito",
+  "stockGoodsMore": "Mostra altro",
+  "stockGoodsNone": "Nessuna merce è collegata (nulla di registrato non equivale a nessuna).",
+  "stockGoodsRow": "{item}: {entered} ({stored})",
+  "stockGoodsTitle": "Merce messa a magazzino",
+  "stockGoodsUnavailable": "La merce non le viene mostrata.",
   "stockItemsEmpty": "Nessun articolo per ora. Un articolo compare quando un servizio o un articolo del fornitore è tenuto in magazzino.",
   "@stockItemsEmpty": {
     "description": "the stock pages and group (#4299)"
@@ -20961,6 +20985,8 @@
   "@stockPlacesAdd": {
     "description": "#4169 the stock editors: a label or message"
   },
+  "stockPlacesLabelsNone": "Non c’è nessuna ubicazione per cui stampare un’etichetta.",
+  "stockPlacesPrintLabels": "Stampa le etichette",
   "stockPlacesSearch": "Cerchi un’ubicazione per indirizzo, nome o codice a barre",
   "stockPlacesTitle": "Ubicazioni",
   "@stockPlacesTitle": {
@@ -21207,6 +21233,7 @@
   "@stockReasonMappingDuplicate": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonMappingUnknown": "Per una di queste righe nessun articolo del fornitore è indicato come preferito.",
   "stockReasonNameDuplicate": "Questo nome è già in uso.",
   "@stockReasonNameDuplicate": {
     "description": "#4169 the stock editors: a text under a field the server refused"
@@ -21236,10 +21263,13 @@
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
   "stockReasonPickRoleUnknown": "L'uso deve essere prelievo o riserva.",
+  "stockReasonPointFixed": "Articolo, variante e sede di un punto di riordino non si cambiano: ne crei un altro.",
+  "stockReasonPointTwice": "Questo articolo ha già un punto di riordino in questa sede.",
   "stockReasonPriceInvalid": "Un prezzo è zero o più.",
   "@stockReasonPriceInvalid": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonQuantityAndTarget": "Indichi una quantità da ordinare o un livello fino a cui ordinare, non entrambi.",
   "stockReasonQuantityInvalid": "Una quantità è un numero maggiore di zero con al massimo sei decimali.",
   "@stockReasonQuantityInvalid": {
     "description": "#4171 receiving into stock: a text under a field the server refused"
@@ -21264,6 +21294,7 @@
   "@stockReasonSameSite": {
     "description": "#4170 transfers and take-out: a label or message"
   },
+  "stockReasonSiteUnknown": "Scelga una sede di questa azienda.",
   "stockReasonStockOnHand": "C’è giacenza: prima scaricarla.",
   "@stockReasonStockOnHand": {
     "description": "#4169 the stock editors: a text under a field the server refused"
@@ -21276,6 +21307,7 @@
   "@stockReasonSupplierForeign": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonTargetBelowPoint": "Il livello fino a cui ordinare deve essere sopra il punto di riordino.",
   "stockReasonTooLong": "Questo testo è troppo lungo.",
   "@stockReasonTooLong": {
     "description": "#4169 the stock editors: a text under a field the server refused"
@@ -21360,6 +21392,36 @@
   "stockRegistryPlaceFilter": "Ubicazione abituale",
   "stockRegistryPrice": "prezzo {amount}",
   "stockRegistrySearch": "Cerchi un articolo per nome, codice a barre o indirizzo",
+  "stockReorderCreateDraft": "Crea bozza d’ordine",
+  "stockReorderDraftCreated": "Bozza d’ordine {number} creata. Nulla è stato ordinato o inviato.",
+  "stockReorderDraftHelp": "Viene creata una bozza d’ordine: nulla viene ordinato, valorizzato o inviato finché non la conferma.",
+  "stockReorderGapRow": "{site} · {quantity} proposti",
+  "stockReorderGroupLine": "{item}: {quantity} per {site}",
+  "stockReorderIntro": "Ciò che è al suo punto di riordino o sotto, per sede, e cosa ordinare a chi. Qui non si ordina nulla: una bozza attende la Sua conferma.",
+  "stockReorderLowEmpty": "Nulla è al punto di riordino o sotto.",
+  "stockReorderLowRow": "{site} · {onHand} disponibili · punto di riordino {point}",
+  "stockReorderLowTitle": "Scorta bassa",
+  "stockReorderNoSupplierHelp": "Questi sono bassi, ma nessun articolo del fornitore è indicato come preferito: ne scelga uno negli articoli del fornitore dell’articolo.",
+  "stockReorderNoSupplierTitle": "Nessun fornitore scelto",
+  "stockReorderPointActive": "In uso",
+  "stockReorderPointAdd": "Aggiungi un punto di riordino",
+  "stockReorderPointInactive": "non in uso",
+  "stockReorderPointLevel": "Punto di riordino ({unit})",
+  "stockReorderPointModeQuantity": "Ordinare una quantità",
+  "stockReorderPointModeTarget": "Ordinare fino a",
+  "stockReorderPointRow": "{site} · punto di riordino {point} · {rule}",
+  "stockReorderPointSite": "Sede",
+  "stockReorderPointTitle": "Punto di riordino",
+  "stockReorderPointValue": "Quantità (vuoto: solo segnalare)",
+  "stockReorderPointWhole": "L’articolo nel suo insieme",
+  "stockReorderPointsEmpty": "Nessun punto di riordino è impostato: nulla viene mai segnalato come basso.",
+  "stockReorderPointsTitle": "Punti di riordino",
+  "stockReorderRuleNone": "solo segnalare",
+  "stockReorderRuleQuantity": "ordinare {quantity}",
+  "stockReorderRuleTarget": "ordinare fino a {quantity}",
+  "stockReorderTitle": "Riordino",
+  "stockReorderToOrderEmpty": "Non c’è nulla da ordinare.",
+  "stockReorderToOrderTitle": "Cosa ordinare",
   "stockReversalBackTo": "La merce torna a",
   "stockReversalCorrectionOpen": "Correggi questo movimento",
   "stockReversalCorrectionTitle": "Correggere un movimento",
@@ -21421,6 +21483,22 @@
   "@stockTakeOutUsed": {
     "description": "#4170 transfers and take-out: a label or message"
   },
+  "stockTraceBill": "Fattura {reference}",
+  "stockTraceBillsUnavailable": "Le fatture non le vengono mostrate.",
+  "stockTraceLotCostKnown": "Costo del lotto: {amount}",
+  "stockTraceMore": "Ne esistono più di quelli elencati qui.",
+  "stockTraceNoBill": "Nessuna fattura è ancora collegata a questo ordine.",
+  "stockTraceNoPayment": "Nessun pagamento è registrato.",
+  "stockTraceNoPurchase": "Nessun acquisto è registrato per questo movimento.",
+  "stockTraceNote": "Si mostra solo ciò che è registrato: nulla viene abbinato per nome, data o importo. Collegare una fattura non cambia mai quanto costa la merce.",
+  "stockTraceOrder": "Ordine {reference} · {supplier}",
+  "stockTraceOwed": "Dovuto: {amount}",
+  "stockTracePaid": "{amount} pagati il {date}",
+  "stockTracePaymentsUnavailable": "I pagamenti non le vengono mostrati (non equivale a «non pagato»).",
+  "stockTracePurchaseUnavailable": "Il lato acquisti non le viene mostrato.",
+  "stockTraceReceived": "Ricevuto il {date}",
+  "stockTraceReversed": "{amount} stornati il {date}",
+  "stockTraceTitle": "Da dove viene",
   "stockTransferLine": "{item}: {left} {unit} in viaggio su {loaded}",
   "@stockTransferLine": {
     "description": "#4170 transfers and take-out: a label or message",
@@ -21504,6 +21582,19 @@
   "@stockTransfersTitle": {
     "description": "#4170 transfers and take-out: a label or message"
   },
+  "stockValueBasis": "Un valore operativo dei movimenti registrati al costo di lotto registrato. Non è un saldo contabilizzato del magazzino e non indica un costo del venduto.",
+  "stockValueComplete": "Ogni articolo disponibile ha un costo noto.",
+  "stockValueCutoff": "Al {at}, calcolato {calculated} da {count, plural, one{un movimento} other{{count} movimenti}}.",
+  "stockValueIncomplete": "Non completo: la merce con costo ignoto non è in questo totale.",
+  "stockValueKnownTotal": "Costo noto: {amount}",
+  "stockValueLine": "{quantity} · {amount}",
+  "stockValueLinesTitle": "Merce valorizzata",
+  "stockValueMovesLater": "Un movimento registrato dopo con data anteriore cambia un calcolo successivo, mai i fatti registrati prima.",
+  "stockValueNeedsRight": "Vedere quanto costa la merce richiede il diritto di gestire gli acquisti o di leggere le finanze.",
+  "stockValueTitle": "Valore del magazzino",
+  "stockValueUncostedNoCost": "il lotto non ha costo",
+  "stockValueUncostedNoLot": "senza lotto",
+  "stockValueUncostedTitle": "Costo ignoto",
   "stockVariantPrice": "Prezzo proprio (unità minori, facoltativo)",
   "@stockVariantPrice": {
     "description": "#4169 the stock editors: a label or message"

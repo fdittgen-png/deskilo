@@ -26,7 +26,9 @@ import '../domain/stock_page.dart';
 import '../domain/stock_reversals.dart';
 import '../providers/stock_providers.dart';
 import 'stock_day.dart';
+import 'stock_place_text.dart';
 import 'stock_reversal_sheet.dart';
+import 'stock_trace_section.dart';
 
 @visibleForTesting
 /// A cost in minor units of [currency] (`250.5`) as the major amount it is
@@ -117,6 +119,7 @@ class _Detail extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final m = movement;
+    final addresses = ref.watch(stockAddressesProvider(m.workspaceId));
     final day = MaterialLocalizations.of(context)
         .formatFullDate(stockDayOf(ref, m.occurredAt));
     final cost = !seesCost
@@ -133,8 +136,8 @@ class _Detail extends ConsumerWidget {
       padding: const EdgeInsets.all(AppSpacing.md),
       children: [
         row('item', l10n.expenseSupplyItem, m.itemLabel),
-        row('from', l10n.planFromLabel, m.fromLocationCode),
-        row('to', l10n.planToLabel, m.toLocationCode),
+        row('from', l10n.planFromLabel, addresses[m.fromLocationId] ?? m.fromLocationCode),
+        row('to', l10n.planToLabel, addresses[m.toLocationId] ?? m.toLocationCode),
         row(
           'lot',
           l10n.stockLotTitle,
@@ -154,6 +157,8 @@ class _Detail extends ConsumerWidget {
         row('reason', l10n.creditMoveReasonLabel, m.reason),
         row('cost', l10n.stockCostLabel, cost),
         _Reversals(movement: m),
+        // #4173 — where it came from: the receipt, the order, the bills and their payments, as recorded.
+        StockTraceSection(workspaceId: m.workspaceId, movementId: m.id),
       ],
     );
   }

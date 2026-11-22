@@ -115,11 +115,14 @@ select throws_ok($$ select public.record_provenance(pg_temp.v('ws')::uuid, 'tran
 
 -- 13-15. once only
 select is((select count(*)::int from public.provenance_envelopes where result_kind = 'transmission'), 3, 'one envelope per prepared transmission');
-select pg_temp.prep('government', 'h1', '{"renderer": "other"}'::jsonb);
+select pg_temp.prep('government', 'h1', '{"renderer": "other"}'::jsonb, '0088', 'recv-1');
 select is((select declared ->> 'renderer' from pg_temp.env(pg_temp.v('t1'))), 'facturX', 'a replay adds none and changes none');
+-- 0862: nothing left from a prepared row, so a changed submission prepares it again; the first envelope stays
+-- as written and the new attempt has its own (a changed submission of a sent one is a conflict, tested in 502)
 select pg_temp.prep('government', 'h-changed');
-select is((select count(*)::int from public.provenance_envelopes where result_kind = 'transmission'), 3,
-  'a conflicting (changed) submission adds none either');
+select is((select count(*)::int from public.provenance_envelopes where result_kind = 'transmission'
+            and (result_id = pg_temp.v('t1')::uuid or issuer ->> 'transmission_id' = pg_temp.v('t1'))), 2,
+  'a changed submission of a prepared transmission is prepared again: the first envelope stays, the new attempt has its own');
 
 -- 16-19. nothing after the preparation touches it
 create temp table env_before as select to_jsonb(e) j from pg_temp.env(pg_temp.v('t1')) e;

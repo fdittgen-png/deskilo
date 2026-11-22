@@ -11,6 +11,7 @@ import '../domain/event_decision.dart';
 import '../domain/validation_policy.dart';
 import '../domain/workspace_event.dart';
 import 'event_labels.dart';
+import 'event_stock_low_line.dart';
 
 // #1306 — the sentences a pending decision is shown with, shared by the
 // events face and the calendar, which carries the decisions when the
@@ -276,7 +277,9 @@ bool _appendsSubject(WorkspaceEvent event) {
       event.type == EventType.kioskDevice ||
       event.type == EventType.credentialChange ||
       event.type == EventType.paymentAttemptUnreadable ||
-      event.type == EventType.stockCountOverdue) {
+      event.type == EventType.stockCountOverdue ||
+      event.type == EventType.stockLow ||
+      event.type == EventType.einvoiceOutcomeUnknown) {
     return false;
   }
   return !event.actorIsSubject || event.type == EventType.serviceCharge;
@@ -293,9 +296,22 @@ String _otherLine(
 ) => switch (event.type) {
   EventType.paymentAttemptUnreadable =>
     _paymentAttemptUnreadableLine(l10n, event, names, currency),
+  EventType.einvoiceOutcomeUnknown => _einvoiceOutcomeUnknownLine(l10n, event),
+  EventType.stockLow => stockLowLine(l10n, event, names),
   EventType.stockCountOverdue => _stockCountOverdueLine(l10n, event),
   _ => _noticeOrFallbackLine(l10n, event, actor),
 };
+
+/// #4325 — an e-invoice attempt that stopped half-way: unknown outcome, or
+/// prepared and never sent; once the transmission moved on, says so.
+String _einvoiceOutcomeUnknownLine(AppLocalizations l10n, WorkspaceEvent event) {
+  final line = event.payload['phase'] == 'prepared'
+      ? l10n.eventEinvoiceStuckPrepared
+      : l10n.eventEinvoiceOutcomeUncertain;
+  return event.payload['ended'] == null
+      ? line
+      : '$line · ${l10n.eventEinvoiceNoticeEnded}';
+}
 
 /// #4295 — a cycle count task still open past its due day; once the task is
 /// complete or cancelled, says so.

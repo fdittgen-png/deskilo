@@ -3053,13 +3053,30 @@ Sie möchten festlegen, wo etwas lagert, damit Wareneingang, Zählung und Kommis
 
 Öffnen Sie **Lager → Lagerorte**. Ein Lagerort hat eine Ebene: **Standort** (eine Filiale oder ein Zentrallager), **Zone** (Verkaufsfläche, Lagerraum, Hof), **Gang**, **Regalfeld** und **Fach** oder **Behälter**. Ein Lagerort liegt nur direkt unter der darüberliegenden Ebene: eine Zone unter einem Standort, ein Gang unter einer Zone, ein Regalfeld unter einem Gang, ein Fach unter einem Regalfeld. Eine Theke, eine Küche, ein Fahrzeug, eine Maschine oder ein Fach-Slot lässt sich überall einordnen. Ein Lager, das vor den Ebenen angelegt wurde, gilt als Standort.
 
-Jeder Lagerort hat eine **Adresse** aus den Codes seiner übergeordneten Lagerorte: `MAIN-SALES-A03-B02-S4` ist das Hauptgeschäft, die Verkaufsfläche, Gang 3, Regalfeld 2, Fach 4. Der Code eines Lagerorts muss sich nur von den Nachbarn unter demselben übergeordneten Lagerort unterscheiden, daher kann jedes Regalfeld sein Fach `S4` haben. Benennen Sie einen Lagerort um, folgen die Adressen darunter. Geben Sie einen Teil einer Adresse, einen Namen oder einen Barcode in die Suche ein, um einen Lagerort zu finden.
+Jeder Lagerort hat eine **Adresse** aus den Codes seiner übergeordneten Lagerorte: `MAIN-SALES-A03-B02-S4` ist das Hauptgeschäft, die Verkaufsfläche, Gang 3, Regalfeld 2, Fach 4. Der Code eines Lagerorts muss sich nur von den Nachbarn unter demselben übergeordneten Lagerort unterscheiden, daher kann jedes Regalfeld sein Fach `S4` haben. Benennen Sie einen Lagerort um, folgen die Adressen darunter. Geben Sie einen Teil einer Adresse, einen Namen oder einen Barcode in die Suche ein, um einen Lagerort zu finden. Ein Lagerort wird überall, wo er erscheint, mit seiner Adresse gelesen: im Lager, in den Bewegungen, auf dem Weg einer Umlagerung und bei den Lagerorten, die eine Bewegung anbietet. **Etiketten drucken** erstellt ein PDF der angezeigten Lagerorte, je ein Etikett: die Adresse groß, darunter den Namen und einen Barcode (den des Lagerorts, sonst seine Adresse), den ein Scan wiederfindet.
 
 **Gut zu wissen**
 - Ein Standort legt fest, ob er **Lieferungen von Lieferanten annimmt**; ausgeschaltet kommt Ware nur per Umlagerung von einem anderen Standort an.
 - Ein Lagerort unter einem Standort ist **Kommissionierung** (Verkaufsfläche) oder **Reserve** (Lagerbestand); das ist ein Hinweis, nie eine Menge.
 - Das Zeichen zwischen den Ebenen ist die Einstellung des Unternehmens **Trennzeichen in einer Lagerort-Adresse** (Bindestrich, Punkt, Schrägstrich oder Doppelpunkt); nur die Schreibweise der Adresse ändert sich. Sie steht in den **Lagereinstellungen**.
 
+<!-- anchor: user.money.stock.reorder -->
+### Nachbestellen: was knapp ist und was zu bestellen ist
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie möchten sehen, was bald ausgeht, und es bestellen, ohne die Regale durchzugehen.
+
+Fällt ein Artikel auf seinen Meldebestand, erhält, wer den Lagerbestand oder den Einkauf verwalten darf, **eine Meldung** im Posteingang (unter Geld): Artikel, Standort, vorrätige Menge und Meldebestand. Sie kommt einmal, solange der Bestand knapp bleibt, und sagt es, wenn er wieder über den Meldebestand steigt. Ein Tipp darauf öffnet diese Seite.
+
+Öffnen Sie **Lager → Nachbestellen** (die Funktion *Meldebestände* muss aktiv sein). Die Seite hat zwei Listen.
+
+- **Niedriger Bestand** listet jeden Artikel oder jede Variante auf oder unter ihrem Meldebestand, je Standort, mit dem Bestand und dem Meldebestand. Gelesen wird aus dem Lagerbuch, exakt, in der Einheit des Artikels; ein Artikel ohne Meldebestand wird nie gelistet. Ein Lagerort im Transit zählt nicht als vorrätig.
+- **Was zu bestellen ist** gruppiert, was knapp ist, nach dem Lieferanten, dessen Artikel als **bevorzugt** markiert ist, in der Einkaufseinheit dieses Artikels, auf ganze Einheiten aufgerundet. Ein Artikel ohne bevorzugten Lieferantenartikel steht unter **Kein Lieferant gewählt**: Markieren Sie einen in den Lieferantenartikeln des Artikels.
+
+**Bestellentwurf erstellen** erstellt aus einer Gruppe einen Einkaufsbestellungs-Entwurf. Es ist nur ein Entwurf: Nichts wird bestellt, bepreist oder gesendet, bis Sie ihn in den Einkaufsbestellungen bestätigen. Dafür brauchen Sie das Recht, Einkäufe zu verwalten; derselbe Entwurf, zweimal angefordert, entsteht nur einmal.
+
+Die **Meldebestände** (unter den beiden Listen) machen einen Artikel knapp. Jeder zeigt Artikel, Standort, die Schwelle und was dann zu bestellen ist: eine Menge, *bis* zu einem Niveau, oder nichts (er meldet nur). Wer den Lagerbestand verwalten darf, legt einen mit **Meldebestand hinzufügen** an oder öffnet einen zum Ändern. Schwelle und Menge sind exakte Zahlen (ein Dezimalkomma genügt); ein Auffüllniveau muss über dem Meldebestand liegen, ein Meldebestand nennt eine Menge oder ein Niveau, nicht beides, und ein Artikel hat einen Meldebestand je Standort (und Variante). Artikel, Variante und Standort lassen sich danach nicht ändern: Legen Sie einen neuen an. Ein abgeschalteter Meldebestand bleibt erhalten und meldet nichts.
 <!-- anchor: user.money.stock.registry -->
 ### Das Artikelregister
 
@@ -3073,6 +3090,19 @@ Sie möchten eine Liste, die für jeden Artikel und jede Variante sagt, was es i
 - **Filtern** Sie nach einem Lagerort, um zu sehen, was dort und darunter eingelagert ist, oder schalten Sie *Nur Artikel ohne festen Lagerort* ein, um zu sehen, was noch einen braucht.
 - **Suchen** Sie nach Name, Barcode oder Adresse. Einen Barcode in die Suche eingeben oder scannen und bestätigen öffnet diesen Artikel.
 - Lange Listen werden seitenweise geladen: Wählen Sie *Mehr anzeigen*.
+
+<!-- anchor: user.money.stock.value -->
+### Lagerwert und Herkunft der Ware
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie möchten sehen, was der Lagerbestand wert ist, woher eine Lieferung kam und ob sie bezahlt wurde.
+
+Öffnen Sie **Lager → Lagerwert** (dafür braucht es das Recht, den Einkauf zu verwalten oder die Finanzen einzusehen). Die Seite zeigt die **bekannten Kosten** des Bestands zu einem Stichtag, mit dem Zeitpunkt der Berechnung und der Zahl der Bewegungen. Es ist ein *operativer Wert*: die erfassten Bewegungen zu den erfassten Chargenkosten. Er ist kein gebuchter Lagerbuchsaldo und nennt keinen Wareneinsatz.
+
+Ware mit **unbekannten** Kosten (eine Charge ohne Kosten oder Ware ohne Charge) steht nach Menge in einer Liste und ist **nicht** in der Summe; die Seite sagt *Nicht vollständig*, solange es sie gibt, und bekannte Kosten von null sind eine bewertete Zeile, keine unbekannten. Eine später erfasste Bewegung mit früherem Datum ändert eine spätere Berechnung, nie die zuvor erfassten Tatsachen.
+
+Öffnen Sie eine Bewegung (**Lager → Bewegungen**) und lesen Sie **Woher es kam**: den Wareneingang, die Bestellung, die mit ihr verknüpften Lieferantenrechnungen, was jede schuldet und die Zahlungen und Stornos, die sie ausgleichen. Gezeigt wird nur, was erfasst ist; nichts wird über Name, Datum oder Betrag zugeordnet. Ein Teil, den Sie nicht sehen dürfen, sagt *wird Ihnen nicht angezeigt* (das heißt nicht „unbezahlt“); ein Teil ohne Erfassung sagt *nicht verknüpft*; eine gekürzte Liste sagt es. Eine Rechnung zu verknüpfen ändert nie, was die Ware kostet. Sie zu öffnen ändert nichts.
 
 <!-- anchor: user.money.stock.reversals -->
 ### Rückgaben, Korrekturen und Zählungen
@@ -4912,6 +4942,7 @@ Sie verkaufen etwas, das kein Sitzplatz ist: ein Schließfach, Drucken, Kaffee. 
 - Eine Leistung wird nie gelöscht, nur deaktiviert, weil Rechnungen auf sie verweisen.
 - Eine Leistung, die aus einem Bestand stammt, zeigt, wie viele noch übrig sind, oder **Ausverkauft**.
 - Um eine für ein Mitglied zu erfassen, nutzen Sie **Leistung hinzufügen** auf seiner Seite.
+- **Auf unserer öffentlichen Seite zeigen**: Die öffentliche Seite, ihre Karte in Entdecken und die Suche nach Leistungen zeigen die ersten 12 öffentlichen Leistungen, in der Reihenfolge der Leistungsliste (Kategorie, dann Name). Die Liste nennt, wie viele Leistungen öffentlich sind, und markiert die, die die Seite nicht zeigt.
 
 **Siehe auch:** [Zubehör](#zubehör) · [Die Mitgliederseite](#die-mitgliederseite)
 
@@ -6542,6 +6573,8 @@ Sie sehen sich an, wie der Workspace abschneidet.
 2. Wählen Sie die **Zeitraumlänge** (**Monat**, **Quartal**, **Jahr**), einen Vergleich und, wo angeboten, eine Gruppierung.
 3. Lesen Sie die Analysen nach Bereich, etwa **Finanzen** (**Fakturiert**, **Eingenommen**) und **Flächen und Kapazität**.
 4. Speichern Sie unter **Ansichten** eine Ansicht oder tippen Sie auf **Als PDF exportieren**.
+
+**Angezeigte Analysen** wählt, welche Analysen die Seite zeigt und in welcher Reihenfolge: Haken Sie die gewünschten an und ziehen Sie den Griff einer Zeile, um sie zu verschieben (die Pfeile daneben tun dasselbe über die Tastatur). Ihre Auswahl wird für Sie in diesem Arbeitsbereich auf jedem Gerät gemerkt und beim nächsten Mal wieder geöffnet; eine Adresse, die Analysen nennt, oder eine geöffnete Ansicht hat für diesen Besuch Vorrang. **Zurück zum Standard** löscht sie.
 
 **Gut zu wissen**
 

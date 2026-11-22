@@ -30,6 +30,8 @@ abstract final class HelpAnchor {
   static const moneyEngagements = 'user.money.engagements';
   static const moneyStock = 'user.money.stock';
   static const moneyStockPlaces = 'user.money.stock.places';
+  static const moneyStockReorder = 'user.money.stock.reorder';
+  static const moneyStockValue = 'user.money.stock.value';
   static const moneyStockRegistry = 'user.money.stock.registry';
   static const moneyStockReversals = 'user.money.stock.reversals';
 
