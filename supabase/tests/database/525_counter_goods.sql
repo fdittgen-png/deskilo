@@ -4,7 +4,7 @@
 -- included; a correction moves nothing; the physical return is its own command by someone who may manage the stock, bounded
 -- by what the correction credits, and refunds and credits nothing; stock-only people cannot sell. Rolled back.
 begin;
-select plan(14);
+select plan(15);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -100,6 +100,9 @@ select pg_temp.run_as(pg_temp.u(1), format($q$select public.stock_move_v1(%L, %L
 insert into public.members (id, workspace_id, user_id, is_owner, is_admin, status) values (pg_temp.u(298), pg_temp.u(101), pg_temp.u(3), false, false, 'active');
 
 select is(pg_temp.onhand(), 10::numeric, 'ten mugs are on hand');
+select is((select (e -> 'lines' -> 0 ->> 'supply') || ' ' || (e -> 'lines' -> 0 ->> 'amount_cents') || ' ' || (e -> 'lines' -> 0 #>> '{commercial,quantity}')
+             from (select pg_temp.draft(1, 101, 1299, null, null, format('{"lines": [{"item_id": "%s", "quantity": "3"}]}', pg_temp.u(301)))::jsonb e) x),
+  'goods 1500 3', 'a goods line needs only its item and its quantity: price, unit, rate and kind come from the server');
 select set_config('t.d', pg_temp.draft(1, 101, 1301, null, null, '{"source_ref": "g-1", "lines": [' || pg_temp.goodsline(301, '2') || ']}'), false);
 select is((current_setting('t.d')::jsonb #>> '{lines,0,supply}') || ' ' || (current_setting('t.d')::jsonb #>> '{totals,gross_minor}'), 'goods 1000', 'a goods line takes the item''s price and is frozen as goods: 2 x 5.00');
 select set_config('t.r', pg_temp.f(current_setting('t.d'), 'receipt_id'), false);
