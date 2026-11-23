@@ -2100,7 +2100,7 @@ constraint services.services_supply_class_check CHECK ((supply_class = ANY (ARRA
 constraint services.services_tag_mode_check CHECK ((tag_mode = ANY (ARRAY['none'::text, 'per_batch'::text, 'per_unit'::text])))
 constraint services.services_till_category_check CHECK (((char_length(btrim(till_category)) >= 1) AND (char_length(btrim(till_category)) <= 40)))
 constraint services.services_tracking_check CHECK ((tracking = ANY (ARRAY['none'::text, 'lot'::text, 'expiry'::text, 'serial'::text])))
-constraint services.services_vat_rate_id_fkey FOREIGN KEY (vat_rate_id) REFERENCES vat_rates(id) ON DELETE SET NULL
+constraint services.services_vat_rate_of_workspace_fkey FOREIGN KEY (workspace_id, vat_rate_id) REFERENCES vat_rates(workspace_id, id) ON DELETE SET NULL (vat_rate_id)
 constraint services.services_weight_basis_check CHECK ((weight_basis = ANY (ARRAY['kg'::text, '100g'::text])))
 constraint services.services_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint services.services_workspace_id_id UNIQUE (workspace_id, id)
@@ -2504,6 +2504,7 @@ constraint vat_rates.vat_rates_pkey PRIMARY KEY (id)
 constraint vat_rates.vat_rates_supersedes_id_fkey FOREIGN KEY (supersedes_id) REFERENCES vat_rates(id) ON DELETE SET NULL
 constraint vat_rates.vat_rates_validity_check CHECK (((valid_to IS NULL) OR (valid_to > valid_from)))
 constraint vat_rates.vat_rates_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint vat_rates.vat_rates_workspace_id_id_key UNIQUE (workspace_id, id)
 constraint vat_return_entries.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint vat_return_entries.system_company_present CHECK ((company_id IS NOT NULL))
 constraint vat_return_entries.vat_return_entries_declaration_id_fkey FOREIGN KEY (declaration_id) REFERENCES vat_declarations(id) ON DELETE CASCADE
@@ -2992,7 +2993,7 @@ routine public.create_reservation(p_workspace_id uuid, p_seat_id uuid, p_office_
 routine public.create_reservation_once(p_client_request_id uuid, p_workspace_id uuid, p_seat_id uuid, p_desk_id uuid, p_office_id uuid, p_level_id uuid, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone, p_check_in boolean) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:98d868b4bfc6
 routine public.create_sample_data(p_workspace_id uuid, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:87e5c8c21a8b
 routine public.create_series(p_workspace_id uuid, p_seat_id uuid, p_first_start timestamp with time zone, p_first_end timestamp with time zone, p_pattern text, p_until timestamp with time zone, p_desk_id uuid, p_office_id uuid, p_level_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:219bb9acbee8
-routine public.create_service_v1(p_workspace_id uuid, p_request_id uuid, p_service jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:9274aa5cd689
+routine public.create_service_v1(p_workspace_id uuid, p_request_id uuid, p_service jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:dd6568a6cf5b
 routine public.create_subscription_level(p_workspace_id uuid, p_percent integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:1da31a0f2287
 routine public.create_workspace(p_name text, p_country_code text, p_currency_code text, p_timezone text, p_environment text, p_with_twin boolean, p_feature_flags jsonb) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:7362a342e0eb
 routine public.create_workspace_once(p_client_request_id uuid, p_name text, p_country_code text, p_currency_code text, p_timezone text, p_environment text, p_with_twin boolean, p_feature_flags jsonb, p_template_id uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:1be3d02c11a4
@@ -4208,7 +4209,7 @@ routine public.standalone_invoice_line_v1(p_line jsonb, p_index integer, p_curre
 routine public.standalone_invoice_subject(p_workspace_id uuid, p_subject uuid) -> members | function | definer | stable | exec:service_role | body:03bed41502dd
 routine public.start_space_inquiry(p_workspace uuid, p_body text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:24335253d564
 routine public.start_space_inquiry_v1(p_workspace uuid, p_body text, p_request_id uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:307a68c96e0f
-routine public.stock_apply_lines(p_workspace_id uuid, p_actor uuid, p_request_id uuid, p_lines jsonb, p_reason text, p_at timestamp with time zone, p_links jsonb, p_mode text) -> jsonb | function | definer | volatile | exec:service_role | body:dd0719af2ff4
+routine public.stock_apply_lines(p_workspace_id uuid, p_actor uuid, p_request_id uuid, p_lines jsonb, p_reason text, p_at timestamp with time zone, p_links jsonb, p_mode text) -> jsonb | function | definer | volatile | exec:service_role | body:8e093ac8e4d5
 routine public.stock_bits_value(p_bits bit varying) -> numeric | function | invoker | immutable | exec:service_role | body:fbdb23474211
 routine public.stock_blind_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:8d7f9c93e191
 routine public.stock_command_args(p_request_id uuid, p_lines jsonb) -> void | function | invoker | immutable | exec:service_role | body:2c0224c1f582
