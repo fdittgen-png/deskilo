@@ -26,6 +26,7 @@ const _notUsed = {
   902, 903, 904, // standalone payments (#4165 B1), done in 0901
   912, 913, 914, // billing access (#4164 B1), done in 0910-0911
   921, // the expiry report read (#4431), on its own branch: it takes this off
+  923, 924, // the trace chain (#4432), on its own branch: it takes these off
 };
 
 int _valueOf(List<Measure> all, String startsWith) => all
