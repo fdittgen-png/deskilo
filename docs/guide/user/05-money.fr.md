@@ -779,6 +779,17 @@ Avec la fonction *Puces* activée, un article a un **mode de puce**, posé sur s
 - Le mode d'un article qui a déjà des puces ne change pas tant que ses puces ne sont pas retirées ou que son stock n'est pas nul ; le changement d'un groupe saute alors l'article et le liste comme conservé. Une puce sur un emplacement désigne toujours un seul emplacement.
 - Un code de puce est une étiquette UHF (EPC ; un SGTIN-96 est lu par le serveur comme GTIN et numéro de série) ou une puce NFC, enregistré en hexadécimal majuscule et unique dans l'entreprise entre articles, pièces et emplacements. Lier et retirer demandent le droit de gérer le stock ; lire demande celui de le voir.
 
+<!-- anchor: user.money.stock.whereis -->
+### Où est-ce
+
+**Public:** Membre
+
+Ouvrez une ligne du **Stock** pour voir **Où est-ce** pour cet article (ou ce lot) : tous les emplacements qui le tiennent, avec la quantité, la variante et le lot. Les marchandises chargées pour un autre site disent de quel emplacement à quel emplacement. Ce qui est parti chez un client ou en perte, ou revenu, est montré à part avec le mouvement qui l'a déplacé. Les pièces d'un article suivi à la pièce sont listées avec leur emplacement, leur état et leurs étiquettes.
+
+- **Maintenant** est ce que le stock tient à cet instant ; **À une date…** montre ce qu'il tenait à la fin de ce jour, rejoué depuis les mouvements. Regarder ne change rien.
+- Les emplacements sur une étagère s'additionnent toujours à la quantité affichée en haut.
+- À un jour passé, les marchandises en route et les pièces ne sont pas encore montrées.
+
 <!-- anchor: user.money.stock.value -->
 ### Valeur du stock et origine des marchandises
 

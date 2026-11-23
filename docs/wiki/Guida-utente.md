@@ -3167,6 +3167,17 @@ Con la funzione *Tag* attiva, un articolo ha una **modalità del tag**, impostat
 - La modalità di un articolo che ha già dei tag non cambia finché i tag non sono ritirati o la giacenza non è zero; la modifica di un gruppo salta allora l'articolo e lo elenca come mantenuto. Un tag su un luogo indica sempre un solo luogo.
 - Un codice tag è un'etichetta UHF (EPC; il server legge un SGTIN-96 come GTIN e numero di serie) o un chip NFC, salvato in esadecimale maiuscolo e unico nell'azienda tra articoli, pezzi e luoghi. Collegare e ritirare richiedono il diritto di gestire il magazzino; leggere, quello di vederlo.
 
+<!-- anchor: user.money.stock.whereis -->
+### Dov'è
+
+**Destinatari:** Membro
+
+Apra una riga di **Magazzino** per vedere **Dov'è** quell'articolo (o quel lotto): ogni luogo che lo tiene, con quantità, variante e lotto. La merce caricata per un altro sito dice da quale luogo a quale. Ciò che è uscito verso un cliente o una perdita, o è tornato, è mostrato a parte con il movimento che l'ha spostato. I pezzi di un articolo seguito a pezzi sono elencati con luogo, stato ed etichette.
+
+- **Adesso** è ciò che il magazzino tiene in questo momento; **In un giorno…** mostra ciò che teneva a fine giornata, ricostruito dai movimenti. Guardare non cambia nulla.
+- I luoghi su uno scaffale sommano sempre la quantità mostrata in alto.
+- In un giorno passato la merce in viaggio e i pezzi non sono ancora mostrati.
+
 <!-- anchor: user.money.stock.value -->
 ### Valore del magazzino e origine della merce
 

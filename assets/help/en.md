@@ -3026,6 +3026,16 @@ With the *Tags* feature on, an item carries a **tag mode**, set on its group and
 - The mode of an item that already has tags cannot change until its tags are retired or its stock is zero; a group's change then skips the item and lists it as kept. A tag on a place always names one place.
 - A tag code is a UHF label (EPC, an SGTIN-96 is read as its GTIN and serial by the server) or an NFC chip, stored in upper-case hex and unique in the business across items, pieces and places. Binding and retiring need the right to manage the stock; reading needs the right to see it.
 
+### Where is it
+
+**Audience:** Member
+
+Open any line of **Stock** to see **Where is it** for that item (or that lot): every place that holds it with the quantity, the variant and the lot. Goods loaded for another site say from which place to which. What left to a customer or a loss, or came back, is shown apart with the movement that moved it. The pieces of an item tracked by piece are listed with their place, their state and their tags.
+
+- **Now** is what the stock holds at this moment; **On a day…** shows what it held when that day was over, replayed from the movements. Nothing is changed by looking.
+- The places on a shelf always add up to the quantity shown on top.
+- At a past day the goods on the road and the pieces are not shown yet.
+
 ### Stock value and where goods came from
 
 **Audience:** Administrator · Owner

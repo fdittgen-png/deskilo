@@ -1,0 +1,16 @@
+{
+  "@@locale": "fr",
+  "stockWhereIsTitle": "Où est-ce",
+  "stockWhereIsOpen": "Où est-ce",
+  "stockWhereIsOnHand": "{quantity} en tout",
+  "stockWhereIsNow": "Maintenant",
+  "stockWhereIsPickDate": "À une date…",
+  "stockWhereIsAsOf": "Au {date}",
+  "stockWhereIsNowhere": "Rien n'est tenu dans un emplacement à cette date.",
+  "stockWhereIsTransit": "En route",
+  "stockWhereIsTransitLine": "De {from} à {to}",
+  "stockWhereIsAway": "Sorti ou venu de l'extérieur",
+  "stockWhereIsPieces": "Pièces",
+  "stockWhereIsPiecesPast": "Les pièces d'un jour passé ne sont pas encore montrées : elles viennent des mouvements de chaque pièce.",
+  "stockWhereIsPiecesMore": "Seules les 200 premières pièces sont montrées."
+}

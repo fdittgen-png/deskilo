@@ -64,6 +64,7 @@ import 'data/demo_stock_reorder.dart';
 import 'data/demo_stock_reversals.dart';
 import 'data/demo_stock_tags.dart';
 import 'data/demo_stock_trace.dart';
+import 'data/demo_stock_where_is.dart';
 import 'data/demo_till.dart';
 import 'data/finance_kpi_repository.dart';
 import 'data/money/demo_credit_moves.dart';
@@ -338,6 +339,8 @@ List<Override> _moneyPortOverrides(FakeMoneyRepository Function(Ref ref) money, 
   stockReversalsProvider.overrideWith((ref) => stocks.of(ref).reversals),
   // #4361 — and keeps item groups: drinks (with hot drinks beneath) and homeware, the syrup keeping its own shelf life.
   itemGroupsProvider.overrideWith((ref) => stocks.of(ref).itemGroups),
+  // #4434 — and answers where an item is, now and on a past day, from that same ledger.
+  stockWhereIsProvider.overrideWith((ref) => DemoStockWhereIs(stocks.of(ref).ledger, stocks.of(ref).tags)),
   // #4295 — and keeps a cycle count plan for its high-value shelf, whose task counts into those same counts.
   stockCycleCountsProvider.overrideWith(
     (ref) => DemoStockCycleCounts(

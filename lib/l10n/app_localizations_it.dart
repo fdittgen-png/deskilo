@@ -37703,6 +37703,53 @@ class AppLocalizationsIt extends AppLocalizations {
   String get stockWhenLabel => 'Quando';
 
   @override
+  String stockWhereIsAsOf(String date) {
+    return 'Al $date';
+  }
+
+  @override
+  String get stockWhereIsAway => 'Uscito o venuto dall\'esterno';
+
+  @override
+  String get stockWhereIsNow => 'Adesso';
+
+  @override
+  String get stockWhereIsNowhere =>
+      'In questa data nulla è tenuto in un luogo.';
+
+  @override
+  String stockWhereIsOnHand(String quantity) {
+    return '$quantity in tutto';
+  }
+
+  @override
+  String get stockWhereIsOpen => 'Dov\'è';
+
+  @override
+  String get stockWhereIsPickDate => 'In un giorno…';
+
+  @override
+  String get stockWhereIsPieces => 'Pezzi';
+
+  @override
+  String get stockWhereIsPiecesMore => 'Sono mostrati solo i primi 200 pezzi.';
+
+  @override
+  String get stockWhereIsPiecesPast =>
+      'I pezzi di un giorno passato non sono ancora mostrati: vengono dai movimenti di ogni pezzo.';
+
+  @override
+  String get stockWhereIsTitle => 'Dov\'è';
+
+  @override
+  String get stockWhereIsTransit => 'In viaggio';
+
+  @override
+  String stockWhereIsTransitLine(String from, String to) {
+    return 'Da $from a $to';
+  }
+
+  @override
   String get subprocessAttendance => 'Presenze e utilizzo';
 
   @override

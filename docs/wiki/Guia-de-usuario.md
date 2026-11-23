@@ -3167,6 +3167,17 @@ Con la función *Etiquetas* activada, un artículo tiene un **modo de etiqueta**
 - El modo de un artículo que ya tiene etiquetas no cambia hasta retirarlas o hasta que su stock sea cero; un cambio del grupo salta entonces el artículo y lo lista como conservado. Una etiqueta de un lugar designa siempre un solo lugar.
 - Un código de etiqueta es una etiqueta UHF (EPC; el servidor lee un SGTIN-96 como GTIN y número de serie) o un chip NFC, guardado en hexadecimal mayúsculo y único en la empresa entre artículos, piezas y lugares. Vincular y retirar exigen el derecho a gestionar el stock; leer, el de verlo.
 
+<!-- anchor: user.money.stock.whereis -->
+### Dónde está
+
+**Público:** Miembro
+
+Abra una línea de **Stock** para ver **Dónde está** ese artículo (o ese lote): todos los lugares que lo tienen, con la cantidad, la variante y el lote. La mercancía cargada para otro sitio dice de qué lugar a qué lugar. Lo que salió a un cliente o a una pérdida, o volvió, se muestra aparte con el movimiento que lo movió. Las piezas de un artículo seguido por pieza se listan con su lugar, su estado y sus etiquetas.
+
+- **Ahora** es lo que el stock tiene en este momento; **En un día…** muestra lo que tenía al acabar ese día, reconstruido desde los movimientos. Mirar no cambia nada.
+- Los lugares en un estante suman siempre la cantidad mostrada arriba.
+- En un día pasado aún no se muestran la mercancía en camino ni las piezas.
+
 <!-- anchor: user.money.stock.value -->
 ### Valor de las existencias y origen de la mercancía
 

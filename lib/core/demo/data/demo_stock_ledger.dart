@@ -187,6 +187,9 @@ class DemoStockLedger {
 
   String _key(String itemId, String place, String? lotId) => '$itemId|$place|${lotId ?? ''}';
 
+  /// The places with their kind and whether they are virtual, by id.
+  Future<Map<String, StockPlaceConfig>> placeConfigs() => _places();
+
   Future<Map<String, StockPlaceConfig>> _places() async =>
       {for (final p in await _config.places(workspaceId)) p.id: p};
 

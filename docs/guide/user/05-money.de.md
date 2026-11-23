@@ -779,6 +779,17 @@ Mit der Funktion *Tags* hat ein Artikel einen **Tag-Modus**, der an seiner Grupp
 - Der Modus eines Artikels, der schon Tags hat, ändert sich erst, wenn die Tags zurückgegeben sind oder der Bestand null ist; eine Änderung der Gruppe überspringt den Artikel dann und führt ihn als beibehalten auf. Ein Tag an einem Lagerplatz bezeichnet immer genau einen Platz.
 - Ein Tag-Code ist ein UHF-Etikett (EPC; ein SGTIN-96 liest der Server als GTIN und Seriennummer) oder ein NFC-Chip, in Großbuchstaben-Hex gespeichert und im Betrieb über Artikel, Stücke und Plätze eindeutig. Zum Binden und Zurückgeben braucht es das Recht, das Lager zu verwalten, zum Lesen das Recht, es zu sehen.
 
+<!-- anchor: user.money.stock.whereis -->
+### Wo ist es
+
+**Zielgruppe:** Mitglied
+
+Öffnen Sie eine Zeile im **Lager**, um **Wo ist es** für diesen Artikel (oder diese Charge) zu sehen: jeder Platz, der ihn hält, mit Menge, Variante und Charge. Für einen anderen Standort geladene Ware nennt, von welchem Platz zu welchem. Was zu einem Kunden oder in einen Verlust ging oder zurückkam, steht getrennt mit der Bewegung, die es bewegt hat. Die Stücke eines stückgeführten Artikels stehen mit Platz, Zustand und Etiketten.
+
+- **Jetzt** ist, was das Lager in diesem Moment hält; **An einem Tag…** zeigt, was es am Ende dieses Tages hielt, aus den Bewegungen nachgerechnet. Ansehen ändert nichts.
+- Die Plätze im Regal ergeben immer die oben gezeigte Menge.
+- An einem vergangenen Tag werden Ware unterwegs und Stücke noch nicht gezeigt.
+
 <!-- anchor: user.money.stock.value -->
 ### Lagerwert und Herkunft der Ware
 

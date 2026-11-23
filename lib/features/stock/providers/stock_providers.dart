@@ -19,6 +19,7 @@ import '../data/supabase_stock_reorder.dart';
 import '../data/supabase_stock_reversals.dart';
 import '../data/supabase_stock_tags.dart';
 import '../data/supabase_stock_trace.dart';
+import '../data/supabase_stock_where_is.dart';
 import '../domain/item_groups.dart';
 import '../domain/stock_code_resolver.dart';
 import '../domain/stock_config.dart';
@@ -34,6 +35,7 @@ import '../domain/stock_reversals.dart';
 import '../domain/stock_service_creator.dart';
 import '../domain/stock_tags.dart';
 import '../domain/stock_trace.dart';
+import '../domain/stock_where_is.dart';
 
 /// #4161 -- the stock reads of the selected business. The Demo and the tests
 /// replace it.
@@ -298,3 +300,13 @@ final stockCountsProvider = FutureProvider.autoDispose
 /// #4350 -- the creation of a new service from the Stock page, wired by the app (the stock never imports
 /// the money feature); null where nothing is wired, which offers no "new item".
 final stockServiceCreatorProvider = Provider<StockServiceCreator?>((ref) => null);
+
+/// #4434 -- "where is it": the port, and one answer for an item (and a lot), now or as of a date.
+final stockWhereIsProvider = Provider<StockWhereIs>((ref) => SupabaseStockWhereIs(ref.watch(selectedWorkspaceClientProvider)));
+
+/// What to look at: an item, perhaps one of its lots, now (no date) or at [at].
+typedef WhereIsQuery = ({String workspaceId, String itemId, String? lotId, DateTime? at});
+
+final stockWhereIsAnswerProvider = FutureProvider.autoDispose.family<WhereIsAnswer, WhereIsQuery>(
+  (ref, q) => ref.watch(stockWhereIsProvider).whereIs(q.workspaceId, q.itemId, lotId: q.lotId, at: q.at),
+);

@@ -40,6 +40,12 @@ class DemoStockTags implements StockTags {
   final Future<String?> Function(String itemId)? tagModeOf;
 
   final List<_Bound> _active = [];
+
+  /// The tagged pieces of an item: the piece and its tag (#4434).
+  List<({String pieceId, String code})> pieceTags(String itemId) => [
+    for (final t in _active)
+      if (t.pieceId != null && t.owner.itemId == itemId) (pieceId: t.pieceId!, code: t.code),
+  ];
   final Map<String, TagBound> _answers = {};
   int _next = 10;
 

@@ -48,6 +48,8 @@ const Map<String, Set<WorkspacePermission>> routePermissions = {
   '/stock': {_P.viewStock, _P.manageStock},
   '/stock/movements': {_P.viewStock, _P.manageStock},
   '/stock/movements/:id': {_P.viewStock, _P.manageStock},
+  // #4434 — where an item is: read like the stock, and the server asks the same.
+  '/stock/where/:itemId': {_P.viewStock, _P.manageStock},
   // #4170 — the goods on their way and the commands that move goods: seen with the stock, run with manageStock.
   '/stock/transfers': {_P.viewStock, _P.manageStock},
   // #4172 — the counts: seen by who sees the stock or approves, counted with manageStock, applied with the approval right.

@@ -59914,6 +59914,84 @@ abstract class AppLocalizations {
   /// **'When'**
   String get stockWhenLabel;
 
+  /// #4434 where is it
+  ///
+  /// In en, this message translates to:
+  /// **'As of {date}'**
+  String stockWhereIsAsOf(String date);
+
+  /// #4434 where is it
+  ///
+  /// In en, this message translates to:
+  /// **'Left or came from outside'**
+  String get stockWhereIsAway;
+
+  /// #4434 where is it
+  ///
+  /// In en, this message translates to:
+  /// **'Now'**
+  String get stockWhereIsNow;
+
+  /// #4434 where is it
+  ///
+  /// In en, this message translates to:
+  /// **'None of it is held at a place at this date.'**
+  String get stockWhereIsNowhere;
+
+  /// #4434 where is it
+  ///
+  /// In en, this message translates to:
+  /// **'{quantity} in all'**
+  String stockWhereIsOnHand(String quantity);
+
+  /// #4434 where is it
+  ///
+  /// In en, this message translates to:
+  /// **'Where is it'**
+  String get stockWhereIsOpen;
+
+  /// #4434 where is it
+  ///
+  /// In en, this message translates to:
+  /// **'On a day…'**
+  String get stockWhereIsPickDate;
+
+  /// #4434 where is it
+  ///
+  /// In en, this message translates to:
+  /// **'Pieces'**
+  String get stockWhereIsPieces;
+
+  /// #4434 where is it
+  ///
+  /// In en, this message translates to:
+  /// **'Only the first 200 pieces are shown.'**
+  String get stockWhereIsPiecesMore;
+
+  /// #4434 where is it
+  ///
+  /// In en, this message translates to:
+  /// **'The pieces of a past day are not shown yet: they come from the movements of each piece.'**
+  String get stockWhereIsPiecesPast;
+
+  /// #4434 where is it
+  ///
+  /// In en, this message translates to:
+  /// **'Where is it'**
+  String get stockWhereIsTitle;
+
+  /// #4434 where is it
+  ///
+  /// In en, this message translates to:
+  /// **'On the road'**
+  String get stockWhereIsTransit;
+
+  /// #4434 where is it
+  ///
+  /// In en, this message translates to:
+  /// **'From {from} to {to}'**
+  String stockWhereIsTransitLine(String from, String to);
+
   /// Shown as the title in process names (workspace).
   ///
   /// In en, this message translates to:
