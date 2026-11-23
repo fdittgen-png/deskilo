@@ -161,6 +161,9 @@ class _Cycle implements StockCycleCounts {
   Future<List<CountHistoryRow>> history(String workspaceId) async => [
     CountHistoryRow(itemId: 'i-beans', locationId: 'demo-place-main', counts: 4, exact: 3, lastCountedAt: DateTime.utc(2026, 3)),
   ];
+  @override
+  Future<BulkCountResult> countByTagRead(String workspaceId, {required String requestId, required String taskId, required List<String> codes}) =>
+      throw UnimplementedError('not under test here');
 }
 
 Future<void> _open(WidgetTester tester, Widget home, _Cycle cycle, Size size, {Set<WorkspacePermission>? held, StockCodeResolver? resolver}) async {

@@ -14,6 +14,7 @@ import 'package:deskilo/core/demo/data/demo_stock_queries.dart';
 import 'package:deskilo/core/demo/data/demo_stock_registry.dart';
 import 'package:deskilo/core/demo/data/demo_stock_tags.dart';
 import 'package:deskilo/core/nfc/nfc_uid_reader.dart';
+import 'package:deskilo/features/stock/domain/stock_bulk_read.dart';
 import 'package:deskilo/features/stock/domain/stock_tags.dart';
 import 'package:deskilo/features/stock/presentation/stock_tags_dialog.dart';
 import 'package:deskilo/features/stock/presentation/stock_transfers_screen.dart';
@@ -66,6 +67,8 @@ class _UhfOnly implements StockTags {
   @override
   Future<void> retire(String workspaceId, {required String requestId, required String code, required String reason}) =>
       throw UnimplementedError();
+  @override
+  Future<BulkResolution> resolveCodes(String workspaceId, List<String> codes) => throw UnimplementedError('not under test here');
 }
 
 Future<void> _frames(WidgetTester tester) async {

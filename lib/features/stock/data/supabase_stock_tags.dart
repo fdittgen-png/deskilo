@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../domain/stock_bulk_read.dart';
 import '../domain/stock_tags.dart';
 import 'stock_rpc.dart';
 
@@ -39,4 +40,9 @@ class SupabaseStockTags implements StockTags {
       'p_reason': reason,
     });
   }
+
+  @override
+  Future<BulkResolution> resolveCodes(String workspaceId, List<String> codes) async => BulkResolution.fromJson(
+    await StockRpc(_client).object('stock_resolve_codes_v1', {'p_workspace_id': workspaceId, 'p_codes': codes}),
+  );
 }

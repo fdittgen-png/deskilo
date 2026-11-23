@@ -86,4 +86,15 @@ class SupabaseStockCycleCounts implements StockCycleCounts {
     final answer = await _call('stock_count_history_v1', {'p_workspace_id': workspaceId});
     return [for (final raw in _list(answer, 'stock_count_history_v1')) CountHistoryRow.fromJson(JsonReader.of(raw, context: 'stock_count_history_v1'))];
   }
+
+  @override
+  Future<BulkCountResult> countByTagRead(String workspaceId, {required String requestId, required String taskId, required List<String> codes}) async =>
+      BulkCountResult.fromJson(
+        await _call('stock_count_tag_read_v1', {
+          'p_workspace_id': workspaceId,
+          'p_request_id': requestId,
+          'p_task_id': taskId,
+          'p_codes': codes,
+        }),
+      );
 }
