@@ -22,10 +22,16 @@ import '../../tool/test_inventory/inventory.dart' show testFiles;
 /// Migration numbers taken by a lane at push time and never used, or taken by a branch not yet on this one.
 /// A number listed here must have no file: the branch that brings it takes it off the list.
 const _notUsed = {
-  898, 899, // till S4 (#4185), folded into 0897
-  902, 903, 904, // standalone payments (#4165 B1), done in 0901
-  912, 913, 914, // billing access (#4164 B1), done in 0910-0911
-  921, // the expiry report read (#4431), on its own branch: it takes this off
+  898, // till S4 (#4185), folded into 0897
+  899, // till S4 (#4185), folded into 0897
+  902, // standalone payments (#4165 B1), done in 0901
+  903, // standalone payments (#4165 B1), done in 0901
+  904, // standalone payments (#4165 B1), done in 0901
+  912, // billing access (#4164 B1), done in 0910-0911
+  913, // billing access (#4164 B1), done in 0910-0911
+  914, // billing access (#4164 B1), done in 0910-0911
+  921, // reserved by a branch not merged yet: it takes this off
+  924, // reserved with 0922-0923 (#4432), not needed
 };
 
 int _valueOf(List<Measure> all, String startsWith) => all
