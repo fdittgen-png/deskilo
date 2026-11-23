@@ -6,13 +6,17 @@
 -- #4398 -- one stock path at command level. `stock_record` is the one writer of the ledger; from here only `stock_apply_lines`
 -- calls it, so a rule added there (the pieces of G13, the lots, the variants, the places of a reason) holds for every movement.
 -- A return, the decision of a count, the opening stock, the legacy count edit and the booking bridge become modes of it
--- ('return', 'count', 'open', 'bridge'); behaviour is unchanged except where this file says so:
+-- ('return', 'count', 'open', 'bridge', 'legacy'); behaviour is unchanged except where this file says so. The modes that record what a
+-- historical fact or the booking bridge hands them ('bridge', 'open', 'return') write exactly that (item, variant, lot, places, quantity):
+-- no check against today's variants, lot tracking or active places, and no new choice of lots; 'legacy' (the count edit of an
+-- item's own stock) only skips those checks. A correction, a return or a customer return never makes a piece from nothing:
+-- the tag it names is one the business already knows (DKG26).
 --   * a return line may name its pieces (`units`), so a piece tracked by its tag goes back to the supplier or comes back from the
 --     customer with the goods: before, a return of such an item had no way to name them;
 --   * a sale taken from several places by the booking bridge is several lines of one request (line n, part 1) instead of one line
 --     with several parts.
 --
--- restates 0847 0867 0870 0887
+-- restates 0847 0867 0870 0887 (stock_pieces_apply)
 create or replace function pg_temp.occurrences(p_def text, p_old text)
 returns int language sql as $f$
   select (length(p_def) - length(replace(p_def, p_old, ''))) / length(p_old)
@@ -40,7 +44,16 @@ select pg_temp.patch('public.stock_apply_lines(uuid, uuid, uuid, jsonb, text, ti
     $o$  v_no := 0;
   for e in select value from jsonb_array_elements(p_lines) loop
     v_no := v_no + 1;
-    select * into v_item from public.services$o$],
+    select * into v_item from public.services$o$,
+    $o$and workspace_id = p_workspace_id and stockable;$o$,
+    $o$where id = (e ->> 'from')::uuid and workspace_id = p_workspace_id and active;$o$,
+    $o$where id = (e ->> 'to')::uuid and workspace_id = p_workspace_id and active;$o$,
+    $o$and x.active) then
+      raise exception 'line %: not a variant of this item'$o$,
+    $o$    if v_var is null and exists (select 1 from public.item_variants x where x.item_id = v_item.id and x.active) then$o$,
+    $o$    if v_item.tracking <> 'none' and v_lot is null then$o$,
+    $o$    if v_lot is null and not v_fv then
+      for t in select * from public.stock_take($o$],
   array[
     $n$    -- a return was checked against its source movement by stock_return_v1, whose places follow the movement it reverses
     if not v_ok and p_mode <> 'return' then
@@ -52,7 +65,23 @@ select pg_temp.patch('public.stock_apply_lines(uuid, uuid, uuid, jsonb, text, ti
     if p_mode = 'return' and coalesce(e ->> 'line_no', '') ~ '^[0-9]{1,6}$' then
       v_no := (e ->> 'line_no')::int;
     end if;
-    select * into v_item from public.services$n$]);
+    select * into v_item from public.services$n$,
+    $n$and workspace_id = p_workspace_id and (stockable or p_mode in ('bridge', 'open', 'return', 'legacy'));$n$,
+    $n$where id = (e ->> 'from')::uuid and workspace_id = p_workspace_id and (active or p_mode in ('bridge', 'open', 'return', 'legacy'));$n$,
+    $n$where id = (e ->> 'to')::uuid and workspace_id = p_workspace_id and (active or p_mode in ('bridge', 'open', 'return', 'legacy'));$n$,
+    $n$and (x.active or p_mode in ('bridge', 'open', 'return', 'legacy'))) then
+      raise exception 'line %: not a variant of this item'$n$,
+    $n$    if v_var is null and not (p_mode in ('bridge', 'open', 'return', 'legacy')) and exists (select 1 from public.item_variants x where x.item_id = v_item.id and x.active) then$n$,
+    $n$    if v_item.tracking <> 'none' and v_lot is null and not (p_mode in ('bridge', 'open', 'return', 'legacy')) then$n$,
+    $n$    if v_lot is null and not v_fv and p_mode not in ('bridge', 'open', 'return') then
+      for t in select * from public.stock_take($n$]);
+
+select pg_temp.patch('public.stock_pieces_apply(uuid, uuid, uuid, uuid, jsonb, uuid, uuid, text, numeric)'::regprocedure,
+  array[
+    $o$v_fk not in ('supplier', 'opening', 'loss') then$o$],
+  array[
+    $n$v_fk not in ('supplier', 'opening', 'loss')
+         or p_reason in ('return_out', 'return_in', 'correction') then$n$]);
 
 select pg_temp.patch('public.stock_return_v1(uuid, uuid, uuid, text, jsonb, timestamp with time zone)'::regprocedure,
   array[
@@ -125,7 +154,7 @@ select pg_temp.patch('public.services_stock_ledger_before()'::regprocedure,
     $n$  if v_diff <> 0 then
     perform public.stock_apply_lines(new.workspace_id, v_actor, v_req, jsonb_build_array(jsonb_build_object(
         'item_id', new.id, 'from', case when v_diff > 0 then v_loss else v_main end, 'to', case when v_diff > 0 then v_main else v_loss end,
-        'quantity', abs(v_diff)::text, 'expired_ack', true)), 'adjustment', now(), '{}'::jsonb, 'bridge');
+        'quantity', abs(v_diff)::text, 'expired_ack', true)), 'adjustment', now(), '{}'::jsonb, 'legacy');
   end if;$n$]);
 
 select pg_temp.patch('public.apply_stock_on_confirm()'::regprocedure,
