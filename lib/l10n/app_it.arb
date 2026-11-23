@@ -3484,6 +3484,7 @@
   "businessKindDescPractice": "Appuntamenti: massaggio, terapia, coaching, consulenza.",
   "businessKindDescSalon": "Estetica, parrucchiere, unghie, tatuaggio.",
   "businessKindDescService": "Qualsiasi altra attività che vende i propri servizi.",
+  "businessKindDescShop": "Merce acquistata, tenuta a magazzino e venduta: un alimentari, un panificio, una macelleria, un fiorista o un negozio di quartiere.",
   "businessKindDescStudio": "Lezioni e corsi: yoga, danza, musica, arte.",
   "businessKindMoreTitle": "È anche… (facoltativo)",
   "businessKindNameCoworking": "Spazio di coworking",
@@ -3491,6 +3492,7 @@
   "businessKindNamePractice": "Ambulatorio",
   "businessKindNameSalon": "Salone",
   "businessKindNameService": "Impresa di servizi",
+  "businessKindNameShop": "Negozio",
   "businessKindNameStudio": "Studio",
   "businessKindNoBookingYet": "La prenotazione di lezioni e appuntamenti non fa parte di questa versione. Oggi ha: i suoi servizi con i prezzi, le fatture, il pagamento online, i messaggi e la sua pagina pubblica.",
   "businessKindNoChange": "Le funzioni restano come sono.",
@@ -5208,6 +5210,7 @@
   "discoveryKindPractices": "Studi professionali",
   "discoveryKindSalons": "Saloni",
   "discoveryKindServices": "Altri servizi",
+  "discoveryKindShops": "Negozi",
   "discoveryKindStudios": "Studi",
   "discoveryKindUncovered": "{count, plural, one{Un elenco non sa filtrare per tipo: non è stato interpellato.} other{{count} elenchi non sanno filtrare per tipo: non sono stati interpellati.}}",
   "discoveryLoadedCount": "Luoghi caricati: {loaded} · mostrati: {shown} · directory che hanno risposto: {answered} su {sources}",
@@ -18978,6 +18981,7 @@
   },
   "settingHintBusinessKind": "Che cos'è l'attività: uno spazio di coworking, uno studio, uno studio professionale, un salone o un'altra attività di servizi. Propone le funzioni e le parole di cui ha bisogno; uno spazio di coworking resta com'era.",
   "settingHintBusinessMoreKinds": "Altri tipi che l'attività è anche, se ce ne sono, oltre a quello principale.",
+  "settingHintBusinessShopType": "Alimentari, panificio, macelleria, fiorista o negozio di quartiere. Cambia le parole e gli esempi dell’app, mai ciò che fa.",
   "settingHintCalendarRangeDays": "Fissato dalla piattaforma: il periodo più lungo che una richiesta del calendario può chiedere. Delimita la richiesta.",
   "@settingHintCalendarRangeDays": {
     "description": "#2487 settings: Setting hint."
@@ -19133,6 +19137,7 @@
   "settingHintStockPriceRounding": "Come si arrotonda un prezzo di vendita proposto: al 0,05 o 0,10 più vicino, o a un prezzo che finisce per 0,99. Serve solo a proporre un prezzo.",
   "settingHintStockRepeatedScan": "Cosa fa un foglio di merci quando lo stesso codice è scansionato ancora: aggiungere uno alla riga o chiedere la quantità.",
   "settingHintStockTagRebindGraceDays": "Quanti giorni dopo il ritiro un codice di etichetta può essere associato di nuovo. 0 significa subito. Un'etichetta in uso non è mai associata due volte.",
+  "settingHintStockWeighedGoods": "Attivo: un nuovo articolo di magazzino viene proposto in chilogrammi anziché in pezzi (macelleria, panificio, banco). Ogni articolo può avere un’altra unità.",
   "settingHintVatViesEvidenceDays": "Giorni in cui un controllo valido della partita IVA resta abbastanza recente da fungere da prova su una nuova fattura. Un valore più breve richiede prima un nuovo controllo; non prova che un’operazione sia valida.",
   "@settingHintVatViesEvidenceDays": {
     "description": "#2487 retention settings"
@@ -19203,6 +19208,7 @@
   },
   "settingLabelBusinessKind": "Tipo di attività",
   "settingLabelBusinessMoreKinds": "Anche un tipo di attività",
+  "settingLabelBusinessShopType": "Tipo di negozio",
   "settingLabelCalendarRangeDays": "Periodo del calendario",
   "@settingLabelCalendarRangeDays": {
     "description": "#2487 settings: Setting label."
@@ -19358,6 +19364,7 @@
   "settingLabelStockPriceRounding": "Arrotondamento dei prezzi",
   "settingLabelStockRepeatedScan": "Un codice scansionato di nuovo",
   "settingLabelStockTagRebindGraceDays": "Giorni prima di riutilizzare un'etichetta ritirata",
+  "settingLabelStockWeighedGoods": "La merce si vende a peso",
   "settingLabelVatViesEvidenceDays": "Validità del controllo della partita IVA",
   "@settingLabelVatViesEvidenceDays": {
     "description": "#2487 retention settings"
@@ -20219,6 +20226,11 @@
   "shellPendingDecisions": "{count, plural, one{1 decisione la aspetta} other{{count} decisioni la aspettano}}",
   "shellReserveButton": "Prenota",
   "shellSwipeCoachMark": "Scorra la barra verso il basso per la vista a schermo intero. Scorra verso l’alto, o tenga premuto il pulsante Prenota, per riportarla.",
+  "shopTypeBakery": "Panificio",
+  "shopTypeButcher": "Macelleria",
+  "shopTypeCornerShop": "Negozio di quartiere",
+  "shopTypeFlorist": "Fiorista",
+  "shopTypeGrocery": "Alimentari",
   "shortcutClose": "Chiudi",
   "shortcutFilter": "Filtra questo elenco",
   "shortcutKeys": "I tasti di questa pagina",

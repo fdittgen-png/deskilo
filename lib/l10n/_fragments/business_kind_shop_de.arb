@@ -1,0 +1,15 @@
+{
+  "@@locale": "de",
+  "businessKindNameShop": "Laden",
+  "businessKindDescShop": "Ware, die eingekauft, gelagert und verkauft wird: ein Feinkostladen, eine Bäckerei, eine Metzgerei, ein Blumenladen oder ein Späti.",
+  "discoveryKindShops": "Läden",
+  "shopTypeGrocery": "Lebensmittelgeschäft",
+  "shopTypeBakery": "Bäckerei",
+  "shopTypeButcher": "Metzgerei",
+  "shopTypeFlorist": "Blumenladen",
+  "shopTypeCornerShop": "Späti",
+  "settingLabelBusinessShopType": "Art des Ladens",
+  "settingHintBusinessShopType": "Lebensmittelgeschäft, Bäckerei, Metzgerei, Blumenladen oder Späti. Es ändert die Wörter und Beispiele der App, nie ihr Verhalten.",
+  "settingLabelStockWeighedGoods": "Ware wird nach Gewicht verkauft",
+  "settingHintStockWeighedGoods": "An: Ein neuer Lagerartikel wird in Kilogramm statt in Stück vorgeschlagen (Metzgerei, Bäckerei, Theke). Jeder Artikel kann weiterhin eine andere Einheit erhalten."
+}

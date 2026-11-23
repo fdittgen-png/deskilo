@@ -3776,6 +3776,7 @@ Sie führen ein Studio, eine Praxis oder einen Salon statt eines Coworking-Space
 - Coworking schlägt nichts vor, und Plätze auszuschalten löscht nichts: Schalten Sie sie wieder ein, und Raumplan und Buchungen sind zurück.
 
 - **Freiberufler** ist für eine Person, die Kunden Dienstleistungen verkauft: Orte bleiben ausgeschaltet, eingeschaltet werden Rechnungen, Rechnungskunden, Angebote und Einkäufe, nie ein Anbieter, Nachrichten oder eine öffentliche Seite. Es ist eine eigene Art: **Dienstleistung** bleibt, wie es war.
+- **Laden** ist für einen Betrieb, der Ware einkauft, lagert und verkauft. Er lässt die Platzbuchung aus und schlägt das Lager vor (Wareneingang, Ausbuchen, Chargen nach Datum, Meldebestände), Leistungen als Katalog, Einkäufe und Bestellungen. Außerdem wählen Sie die **Art des Ladens** – Lebensmittelgeschäft, Bäckerei, Metzgerei, Blumenladen oder Späti: Sie ändert Wörter und Beispiele, nie das Verhalten der App. Wenn Sie nach Gewicht verkaufen, schalten Sie in den Lagereinstellungen **Ware wird nach Gewicht verkauft** ein; ein neuer Artikel wird dann in Kilogramm vorgeschlagen. Der Kassenverkauf wird vorgeschlagen, sobald es ihn gibt; RFID-Tags werden angeboten, nie vorgeschlagen.
 - Me nennt die Art, die jedes Ihrer Geschäfte gewählt hat, neben Land und Währung.
 
 **Siehe auch:** [Funktionen](#ganze-prozesse-ein--oder-ausschalten)

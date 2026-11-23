@@ -5937,6 +5937,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Toute autre entreprise qui vend ses services.';
 
   @override
+  String get businessKindDescShop =>
+      'Des marchandises achetées, tenues en stock et vendues : une épicerie, une boulangerie, une boucherie, un fleuriste ou une supérette.';
+
+  @override
   String get businessKindDescStudio =>
       'Cours et ateliers : yoga, danse, musique, art.';
 
@@ -5957,6 +5961,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get businessKindNameService => 'Entreprise de services';
+
+  @override
+  String get businessKindNameShop => 'Commerce';
 
   @override
   String get businessKindNameStudio => 'Studio';
@@ -8666,6 +8673,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get discoveryKindServices => 'Autres services';
+
+  @override
+  String get discoveryKindShops => 'Commerces';
 
   @override
   String get discoveryKindStudios => 'Studios';
@@ -32185,6 +32195,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les autres types d\'activité exercés en plus du principal, le cas échéant.';
 
   @override
+  String get settingHintBusinessShopType =>
+      'Épicerie, boulangerie, boucherie, fleuriste ou supérette. Cela change les mots et les exemples de l’application, jamais ce qu’elle fait.';
+
+  @override
   String get settingHintCalendarRangeDays =>
       'Fixée par la plateforme : la période la plus longue qu’une requête de calendrier peut demander. Elle borne la requête.';
 
@@ -32469,6 +32483,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Combien de jours après son retrait un code d\'étiquette peut être lié de nouveau. 0 : tout de suite. Une étiquette en vigueur n\'est jamais liée deux fois.';
 
   @override
+  String get settingHintStockWeighedGoods =>
+      'Activé : un nouvel article de stock est proposé en kilogrammes plutôt qu’en pièces (boucherie, boulangerie, comptoir d’épicerie). Tout article peut garder une autre unité.';
+
+  @override
   String get settingHintVatViesEvidenceDays =>
       'Jours pendant lesquels un contrôle valide du numéro de TVA reste assez récent pour servir de preuve sur une nouvelle facture. Une valeur plus courte demande un nouveau contrôle plus tôt ; ce n’est pas la preuve qu’une opération est valable.';
 
@@ -32557,6 +32575,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get settingLabelBusinessMoreKinds => 'Aussi un type d\'activité';
+
+  @override
+  String get settingLabelBusinessShopType => 'Type de commerce';
 
   @override
   String get settingLabelCalendarRangeDays => 'Période du calendrier';
@@ -32827,6 +32848,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingLabelStockTagRebindGraceDays =>
       'Jours avant de réutiliser une étiquette retirée';
+
+  @override
+  String get settingLabelStockWeighedGoods =>
+      'Les marchandises se vendent au poids';
 
   @override
   String get settingLabelVatViesEvidenceDays =>
@@ -35103,6 +35128,21 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get shellSwipeCoachMark =>
       'Balayez la barre vers le bas pour l\'affichage plein écran. Balayez vers le haut, ou appuyez longuement sur le bouton Réserver, pour la faire revenir.';
+
+  @override
+  String get shopTypeBakery => 'Boulangerie';
+
+  @override
+  String get shopTypeButcher => 'Boucherie';
+
+  @override
+  String get shopTypeCornerShop => 'Supérette';
+
+  @override
+  String get shopTypeFlorist => 'Fleuriste';
+
+  @override
+  String get shopTypeGrocery => 'Épicerie';
 
   @override
   String get shortcutClose => 'Fermer';

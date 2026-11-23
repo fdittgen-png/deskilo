@@ -28,7 +28,7 @@ import 'stock_config_text.dart';
 typedef NewStockItemPorts = ({StockServiceCreator creator, StockConfigCommands commands, StockRegistry registry});
 
 /// What the sheet chooses from: the VAT rates, the places (and their address separator) and the currency.
-typedef NewStockItemChoices = ({List<StockVatChoice> vat, List<StockPlaceConfig> places, String separator, String currency});
+typedef NewStockItemChoices = ({List<StockVatChoice> vat, List<StockPlaceConfig> places, String separator, String currency, String unit});
 
 /// The units a new item may be counted in (the registry's units of count, mass and volume).
 const _units = ['piece', 'g', 'kg', 'ml', 'cl', 'l'];
@@ -41,7 +41,7 @@ Future<bool> showNewStockItemSheet(
   required NewStockItemChoices choices,
 }) {
   final l10n = context.l10n;
-  final draft = _NewItemDraft(ports, choices.vat, choices.places, choices.separator, choices.currency);
+  final draft = _NewItemDraft(ports, choices.vat, choices.places, choices.separator, choices.currency)..unit = choices.unit;
   return showAppFormSheet(
     context,
     AppFormSheet(

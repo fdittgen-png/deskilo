@@ -57,6 +57,7 @@ use `deskilo-forms` §4 and the repository's existing test helpers.
 | a platform-channel feature needs a test | no device in `flutter test` | mock the channel (`setMockMethodCallHandler`) for Dart→native, and `handlePlatformMessage` with `StandardMethodCodec().encodeMethodCall` for native→Dart; the native half stays a manual device check, say so (#1824 `deskilo/capture`) |
 | re-reading an autoDispose family provider in one test returns the FIRST answer | a kept listener keeps the element (and its cached value) alive | `container.invalidate(provider(arg))` before each fresh read (a pull to refresh), as `mcp_multi_target_journey_test` does |
 | an awaited provider error is ALSO reported as an uncaught test failure | the `listen` subscription was closed right after the failing `read(.future)` | keep provider listeners until `addTearDown`; never close them in a `finally` next to the await |
+| the SECOND walk in one test file (phone, then desk) fails where the same walk alone passes: a sheet never opens, a flag is already changed | the Demo keeps state within one process (its stores, the settings, the flags the first walk saved) | one walk per file per width: the walk in a kit file (`test/core/demo/shop_kind_walk_kit.dart`), a tiny `*_test.dart` per width that calls it (as the freelancer's walks do); the coverage row names both files (#4365) |
 
 Quick-view keys: `member-doc-quick` / `-download` / `-share` (one prefix
 for every member letter), `vat-report-*`, `proforma-*`.
