@@ -4,7 +4,9 @@
 // demo_shop_business_desk_journey_test.dart (a desk), one file each because the Demo keeps state between two walks
 // in one process: Bruno enters the Épicerie du Marché from My spaces, finds goods already in its stock (the four
 // items, not the first-run page), moves three mugs to a shelf by the screens, and the movement shows in THIS
-// business's ledger (its own, mirrored from the reference business's: nothing else moved).
+// business's ledger (its own, mirrored from the reference business's: nothing else moved). Its stock value and the
+// trace of that movement are read in the shop (not refused as another business's), and the reference business's
+// ledger is the same after the shop moved goods, also after switching back to it.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/demo/demo_persona.dart';
 import 'package:deskilo/core/demo/demo_space_ids.dart';
@@ -40,6 +42,7 @@ Future<void> walkShopBusiness(WidgetTester tester, Size size) async {
   await pumpDemo(tester, persona: DemoPersona.member, openHub: false, size: size);
   final router = GoRouter.of(tester.element(find.byType(Scaffold).first))..go('/me');
   await _frames(tester);
+  final homeBefore = (await ProviderScope.containerOf(tester.element(find.byType(DeskiloApp))).read(stockQueriesProvider).movementsPage(demoFirstSpaceId, limit: 200)).rows.length;
   final space = find.byKey(const ValueKey('me-space-ws-11'));
   await tester.scrollUntilVisible(space, 300, scrollable: find.byType(Scrollable).first);
   await _tap(tester, space);
@@ -63,4 +66,20 @@ Future<void> walkShopBusiness(WidgetTester tester, Size size) async {
   final after = (await container.read(stockQueriesProvider).movementsPage(demoShopSpaceId, limit: 200)).rows;
   expect(after.length, before + 1, reason: 'the move is in the shop\'s ledger');
   expect(router.routeInformationProvider.value.uri.path, isNot('/reserve'));
+
+  // the stock value and the trace of the new movement are read in THIS business
+  final value = await container.read(stockTraceReaderProvider).valuation(demoShopSpaceId);
+  expect(value.lines, isNotEmpty, reason: 'the shop\'s stock has a value to read');
+  final moved = after.first;
+  final trace = await container.read(stockTraceReaderProvider).trace(demoShopSpaceId, moved.id);
+  expect(trace, isNotNull, reason: 'a movement of the shop traces in the shop');
+
+  // the reference business is untouched, also after switching back to it
+  router.go('/me');
+  await _frames(tester);
+  final home = find.byKey(const ValueKey('me-space-$demoFirstSpaceId'));
+  await tester.scrollUntilVisible(home, 300, scrollable: find.byType(Scrollable).first);
+  await _tap(tester, home);
+  final homeAfter = (await container.read(stockQueriesProvider).movementsPage(demoFirstSpaceId, limit: 200)).rows.length;
+  expect(homeAfter, homeBefore, reason: 'a move in the shop leaves the reference business\'s ledger as it was');
 }

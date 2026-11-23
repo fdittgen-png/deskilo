@@ -75,7 +75,6 @@ import 'data/series_previewer.dart';
 import 'data/workspace_repository.dart' show FakeWorkspaceMembership;
 import 'demo_finance_commands.dart';
 import 'demo_fixture.dart';
-import 'demo_space_ids.dart';
 import 'demo_space_pick.dart';
 
 /// Demo's one fictional installation: nothing is verified against a
@@ -309,7 +308,7 @@ List<Override> _moneyPortOverrides(FakeMoneyRepository Function(Ref ref) money, 
   // #4171 — and receives the deliveries of its orders into that stock.
   stockReceivingCommandsProvider.overrideWith(
     (ref) => DemoStockReceivingCommands(
-      demoFirstSpaceId,
+      stocks.of(ref).id,
       ref.watch(purchaseOrderRepositoryProvider) as FakePurchaseOrderRepository,
       stocks.of(ref).config,
       stocks.of(ref).ledger,
@@ -318,7 +317,7 @@ List<Override> _moneyPortOverrides(FakeMoneyRepository Function(Ref ref) money, 
   // #4173 — and traces its goods to the orders they were put away from, and values them.
   stockTraceReaderProvider.overrideWith(
     (ref) => DemoStockTrace(
-      demoFirstSpaceId,
+      stocks.of(ref).id,
       stocks.of(ref).ledger,
       ref.watch(purchaseOrderRepositoryProvider) as FakePurchaseOrderRepository,
       ref.watch(stockReceivingCommandsProvider) as DemoStockReceivingCommands,
@@ -334,7 +333,7 @@ List<Override> _moneyPortOverrides(FakeMoneyRepository Function(Ref ref) money, 
   // #4295 — and keeps a cycle count plan for its high-value shelf, whose task counts into those same counts.
   stockCycleCountsProvider.overrideWith(
     (ref) => DemoStockCycleCounts(
-      demoFirstSpaceId,
+      stocks.of(ref).id,
       stocks.of(ref).ledger,
       stocks.of(ref).reversals,
       stocks.of(ref).registry,
@@ -363,14 +362,14 @@ class _DemoStocks {
 
 class _DemoStock {
   _DemoStock(DemoFixture fixture, DemoSpaceKey key, DateTime Function() now) {
-    final id = key.id;
+    id = key.id;
     final money = fixture.space(key).money;
     final candidates = DemoStockCandidates(() async => [
       for (final s in await money.fetchServices(id))
         if (s.active) (id: s.id, name: s.name),
     ]);
     config = DemoStockConfigCommands(id, candidates: candidates);
-    ledger = DemoStockLedger(id, config, () => fixture.seededAt, candidates);
+    ledger = DemoStockLedger(id, config, now, candidates);
     registry = DemoStockRegistry(id, ledger, config);
     reorder = DemoStockReorder(id, ledger, config);
     operations = DemoStockOperations(ledger, config);
@@ -380,6 +379,8 @@ class _DemoStock {
     codeResolver = DemoStockCodeResolver(id, config, registry, tags);
   }
 
+  /// The business this kit belongs to: what every command, trace and count of the kit is scoped to.
+  late final String id;
   late final DemoStockConfigCommands config;
   late final DemoStockLedger ledger;
   late final DemoStockRegistry registry;
