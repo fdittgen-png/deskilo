@@ -117,7 +117,7 @@ class SupabaseCommercialTermsRepository implements CommercialTermsRepository {
     String? requestId,
   }) async {
     // One command that carries a request id (#4376): a retry of the same id answers the first service.
-    final raw = await _client.rpc<dynamic>(
+    final raw = await _client.rpc<Object?>(
       'create_service_v1',
       params: {
         'p_workspace_id': workspaceId,
@@ -133,7 +133,7 @@ class SupabaseCommercialTermsRepository implements CommercialTermsRepository {
         },
       },
     );
-    return _serviceFromRow(Map<String, dynamic>.from(raw as Map));
+    return _serviceFromRow((raw! as Map).cast<String, Object?>());
   }
 
   @override

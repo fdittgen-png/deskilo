@@ -9,11 +9,11 @@ import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/data/retry.dart' show newRequestId;
 import '../../../../core/format/cents.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/ids/request_id.dart' show newRequestId;
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
