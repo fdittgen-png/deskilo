@@ -27,12 +27,12 @@
       }
     }
   },
-  "stockTagPiece": "Stück {index}",
+  "stockTagPiece": "Stück {number}",
   "@stockTagPiece": {
     "description": "#4362 G13 tags: the name of one piece in the list of pieces",
     "placeholders": {
-      "index": {
-        "type": "int"
+      "number": {
+        "type": "String"
       }
     }
   },

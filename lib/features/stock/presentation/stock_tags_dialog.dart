@@ -153,7 +153,7 @@ class _TagsDialogState extends ConsumerState<_TagsDialog> {
                     key: const ValueKey('stock-tags-pieces'),
                     style: Theme.of(context).textTheme.titleSmall,
                   ),
-                  for (final (i, t) in tags.where((t) => t.isPiece).indexed) _tagTile(l10n, t, title: l10n.stockTagPiece(i + 1)),
+                  for (final (i, t) in tags.where((t) => t.isPiece).indexed) _tagTile(l10n, t, title: l10n.stockTagPiece('${i + 1}')),
                 ],
                 const SizedBox(height: AppSpacing.sm),
                 StockNfcButton(onUid: _bind),

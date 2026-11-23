@@ -19,6 +19,17 @@ const itemGroupEditable = [
   'sold_by_weight',
 ];
 
+/// The proposals a group carries: copied into a new item as a starting point, never inherited and never linked, so a
+/// change of one reaches no item.
+const itemGroupProposals = [
+  'default_purchase_unit',
+  'default_purchase_factor_num',
+  'default_purchase_factor_den',
+  'reorder_point_default',
+  'reorder_quantity_default',
+  'home_zone_id',
+];
+
 /// A group: its name, its parent (a group nests one level), the parameters it sets (a parameter it does not set
 /// is absent or null) and how many items belong to it.
 class ItemGroup {
@@ -39,7 +50,7 @@ class ItemGroup {
       parentId: r.stringOrNull('parent_id'),
       name: r.string('name'),
       revision: r.intOrNull('revision') ?? 0,
-      params: {for (final k in itemGroupEditable) if (raw[k] != null) k: raw[k]},
+      params: {for (final k in [...itemGroupEditable, ...itemGroupProposals]) if (raw[k] != null) k: raw[k]},
       items: r.intOrNull('items') ?? 0,
     );
   }

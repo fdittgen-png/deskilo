@@ -51,7 +51,7 @@ void main() {
         await _open(tester, const TagOwner.item('demo-item-basket'), 'Gift basket', size);
         expect(find.text(_en.stockTagsPieces(5)), findsOneWidget);
         for (var i = 1; i <= 5; i++) {
-          expect(find.text(_en.stockTagPiece(i)), findsOneWidget);
+          expect(find.text(_en.stockTagPiece('$i')), findsOneWidget);
         }
         expect(find.byKey(const ValueKey('stock-piece-E2801160600002054AF3E001')), findsOneWidget);
       });

@@ -11248,6 +11248,10 @@
   "itemGroupHistory": "Verlauf",
   "itemGroupHistoryLine": "{parameter}: {from} → {to}, {affected, plural, one{1 Artikel erreicht} other{{affected} Artikel erreicht}}",
   "itemGroupHistoryNone": "Noch keine Änderung festgehalten.",
+  "itemGroupHomeZone": "Standard-Lagerzone",
+  "@itemGroupHomeZone": {
+    "description": "#4361 G12 proposals: the home zone a group proposes to an item"
+  },
   "itemGroupMinAge": "Mindestalter für einen Verkauf",
   "itemGroupMove": "Verschieben",
   "itemGroupMoveReaches": "{count, plural, one{Das Verschieben ändert 1 Einstellung.} other{Das Verschieben ändert {count} Einstellungen.}}",
@@ -11261,6 +11265,18 @@
   "itemGroupPreviewLine": "{parameter}: {affected, plural, one{gilt für 1 Artikel} other{gilt für {affected} Artikel}}, {kept, plural, one{1 behält seinen eigenen Wert} other{{kept} behalten ihren eigenen Wert}}, {skipped, plural, one{1 ist nicht erreichbar} other{{skipped} sind nicht erreichbar}}",
   "itemGroupPreviewNothing": "Kein Artikel wird erreicht.",
   "itemGroupPreviewTitle": "Was diese Änderung erreicht",
+  "itemGroupProposalHint": "Wird einem neuen Artikel vorgeschlagen",
+  "@itemGroupProposalHint": {
+    "description": "#4361 G12 proposals: said under a proposal, which reaches no existing item"
+  },
+  "itemGroupPurchaseFactor": "Faktor: wie viele Lagereinheiten eine Einkaufseinheit enthält (12, 0,5 oder 1/3)",
+  "@itemGroupPurchaseFactor": {
+    "description": "#4361 G12 proposals: the factor of the proposed purchase unit, one number or a fraction"
+  },
+  "itemGroupPurchaseUnit": "Standard-Einkaufseinheit",
+  "@itemGroupPurchaseUnit": {
+    "description": "#4361 G12 proposals: the purchase unit a group proposes to a new item"
+  },
   "itemGroupReasonDepth": "Eine Untergruppe kann keine Untergruppen haben.",
   "itemGroupReasonGroupUnknown": "Diese Gruppe gibt es nicht.",
   "itemGroupReasonHasMovements": "es hat schon Bewegungen",
@@ -11269,6 +11285,14 @@
   "itemGroupReasonNameDuplicate": "Eine andere Gruppe hat schon diesen Namen.",
   "itemGroupReasonNeedsSerial": "Tags pro Stück brauchen Nachverfolgung pro Stück.",
   "itemGroupReasonNotOverridable": "Für diese Einstellung gibt es keinen eigenen Wert.",
+  "itemGroupReorderPoint": "Standard-Meldebestand",
+  "@itemGroupReorderPoint": {
+    "description": "#4361 G12 proposals: the reorder point a group proposes to an item that has none"
+  },
+  "itemGroupReorderQty": "Standard-Nachbestellmenge",
+  "@itemGroupReorderQty": {
+    "description": "#4361 G12 proposals: the reorder quantity a group proposes to an item that has none"
+  },
   "itemGroupSkippedLine": "{item}: {parameter} ({reason})",
   "itemGroupSkippedTitle": "Nicht erreicht",
   "itemGroupSoldByWeight": "Nach Gewicht verkauft",
@@ -21736,12 +21760,12 @@
   "stockTagOnPiece": "Dieser Tag sitzt an einem Stück, das noch auf Lager ist.",
   "stockTagOwnerUnknown": "Dieser Artikel oder Lagerplatz ist nicht bekannt.",
   "stockTagPerUnit": "Dieser Artikel wird stückweise getaggt: Taggen Sie die Stücke beim Wareneingang.",
-  "stockTagPiece": "Stück {index}",
+  "stockTagPiece": "Stück {number}",
   "@stockTagPiece": {
     "description": "#4362 G13 tags: the name of one piece in the list of pieces",
     "placeholders": {
-      "index": {
-        "type": "int"
+      "number": {
+        "type": "String"
       }
     }
   },

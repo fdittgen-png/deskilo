@@ -18631,6 +18631,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get itemGroupHistoryNone => 'Aún no hay ningún cambio registrado.';
 
   @override
+  String get itemGroupHomeZone => 'Zona de almacén por defecto';
+
+  @override
   String get itemGroupMinAge => 'Edad mínima para una venta';
 
   @override
@@ -18703,6 +18706,16 @@ class AppLocalizationsEs extends AppLocalizations {
   String get itemGroupPreviewTitle => 'Lo que alcanza este cambio';
 
   @override
+  String get itemGroupProposalHint => 'Se propone a un artículo nuevo';
+
+  @override
+  String get itemGroupPurchaseFactor =>
+      'Factor: cuántas unidades de inventario contiene una unidad de compra (12, 0,5 o 1/3)';
+
+  @override
+  String get itemGroupPurchaseUnit => 'Unidad de compra por defecto';
+
+  @override
   String get itemGroupReasonDepth => 'Un subgrupo no puede tener subgrupos.';
 
   @override
@@ -18729,6 +18742,12 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get itemGroupReasonNotOverridable =>
       'Este ajuste no puede tener un valor propio.';
+
+  @override
+  String get itemGroupReorderPoint => 'Punto de pedido por defecto';
+
+  @override
+  String get itemGroupReorderQty => 'Cantidad de pedido por defecto';
 
   @override
   String itemGroupSkippedLine(String item, String parameter, String reason) {
@@ -37237,8 +37256,8 @@ class AppLocalizationsEs extends AppLocalizations {
       'Este artículo se etiqueta pieza a pieza: etiquete sus piezas al recibirlas.';
 
   @override
-  String stockTagPiece(int index) {
-    return 'Pieza $index';
+  String stockTagPiece(String number) {
+    return 'Pieza $number';
   }
 
   @override

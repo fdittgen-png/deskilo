@@ -18652,6 +18652,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get itemGroupHistoryNone => 'Ancora nessuna modifica registrata.';
 
   @override
+  String get itemGroupHomeZone => 'Zona di giacenza predefinita';
+
+  @override
   String get itemGroupMinAge => 'Età minima per una vendita';
 
   @override
@@ -18724,6 +18727,16 @@ class AppLocalizationsIt extends AppLocalizations {
   String get itemGroupPreviewTitle => 'Cosa raggiunge questa modifica';
 
   @override
+  String get itemGroupProposalHint => 'Proposto a un nuovo articolo';
+
+  @override
+  String get itemGroupPurchaseFactor =>
+      'Fattore: quante unità di magazzino contiene un\'unità di acquisto (12, 0,5 o 1/3)';
+
+  @override
+  String get itemGroupPurchaseUnit => 'Unità di acquisto predefinita';
+
+  @override
   String get itemGroupReasonDepth =>
       'Un sottogruppo non può avere sottogruppi.';
 
@@ -18752,6 +18765,12 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get itemGroupReasonNotOverridable =>
       'Questa impostazione non può avere un valore proprio.';
+
+  @override
+  String get itemGroupReorderPoint => 'Punto di riordino predefinito';
+
+  @override
+  String get itemGroupReorderQty => 'Quantità di riordino predefinita';
 
   @override
   String itemGroupSkippedLine(String item, String parameter, String reason) {
@@ -37282,8 +37301,8 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questo articolo è etichettato pezzo per pezzo: etichetti i pezzi alla ricezione.';
 
   @override
-  String stockTagPiece(int index) {
-    return 'Pezzo $index';
+  String stockTagPiece(String number) {
+    return 'Pezzo $number';
   }
 
   @override

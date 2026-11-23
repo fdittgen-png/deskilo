@@ -18504,6 +18504,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get itemGroupHistoryNone => 'No change recorded yet.';
 
   @override
+  String get itemGroupHomeZone => 'Default home zone';
+
+  @override
   String get itemGroupMinAge => 'Minimum age for a sale';
 
   @override
@@ -18576,6 +18579,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get itemGroupPreviewTitle => 'What this change reaches';
 
   @override
+  String get itemGroupProposalHint => 'Proposed into a new item';
+
+  @override
+  String get itemGroupPurchaseFactor =>
+      'Factor: how many inventory units one purchase unit holds (12, 0.5 or 1/3)';
+
+  @override
+  String get itemGroupPurchaseUnit => 'Default purchase unit';
+
+  @override
   String get itemGroupReasonDepth => 'A sub-group cannot have sub-groups.';
 
   @override
@@ -18603,6 +18616,12 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get itemGroupReasonNotOverridable =>
       'This setting cannot be given its own value.';
+
+  @override
+  String get itemGroupReorderPoint => 'Default reorder point';
+
+  @override
+  String get itemGroupReorderQty => 'Default reorder quantity';
 
   @override
   String itemGroupSkippedLine(String item, String parameter, String reason) {
@@ -36934,8 +36953,8 @@ class AppLocalizationsEn extends AppLocalizations {
       'This item is tagged piece by piece: tag its pieces when they are received.';
 
   @override
-  String stockTagPiece(int index) {
-    return 'Piece $index';
+  String stockTagPiece(String number) {
+    return 'Piece $number';
   }
 
   @override

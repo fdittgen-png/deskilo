@@ -118,6 +118,9 @@ class DemoItemGroups implements ItemGroups {
     for (final e in changes.entries) {
       e.value == null ? next.remove(e.key) : next[e.key] = e.value;
     }
+    if ((next['default_purchase_factor_num'] == null) != (next['default_purchase_factor_den'] == null)) {
+      throw const StockConfigRefused('default_purchase_factor_num', 'factor_both');
+    }
     if (next['tag_mode'] == 'per_unit' && (next['tracking'] ?? _groups[parentId]?.params['tracking']) != 'serial') {
       throw const StockConfigRefused('tag_mode', 'needs_serial');
     }
@@ -136,6 +139,8 @@ class DemoItemGroups implements ItemGroups {
     final impact = <String, GroupImpact>{};
     final skipped = <SkippedItem>[];
     for (final k in changes.keys) {
+      // a proposal reaches no item: it is copied into a new one, never inherited
+      if (itemGroupProposals.contains(k)) continue;
       if (old?.params[k] == changes[k]) continue;
       var affected = 0;
       var kept = 0;

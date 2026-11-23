@@ -11,6 +11,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../core/format/decimal_input.dart';
+import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/trace/trace_logger.dart';
@@ -19,6 +21,8 @@ import '../../../core/ui/dropdown_field.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/item_groups.dart';
+import '../domain/purchase_factor.dart';
+import '../domain/stock_config.dart';
 import 'item_group_text.dart';
 
 /// The units a group may set for its items (the registry's units of count, mass and volume).
@@ -31,9 +35,10 @@ Future<bool> showItemGroupSheet(
   required String workspaceId,
   required ItemGroup? group,
   required List<ItemGroup> groups,
+  List<StockPlaceConfig> places = const [],
 }) {
   final l10n = context.l10n;
-  final draft = _GroupDraft(port, workspaceId, group, groups);
+  final draft = _GroupDraft(port, workspaceId, group, groups, places, appFormatOf(context).locale);
   return showAppFormSheet(
     context,
     AppFormSheet(
@@ -49,24 +54,33 @@ Future<bool> showItemGroupSheet(
 }
 
 class _GroupDraft {
-  _GroupDraft(this.port, this.workspaceId, this.group, this.groups)
+  _GroupDraft(this.port, this.workspaceId, this.group, this.groups, this.places, this.locale)
     : _id = group?.id ?? newRequestId(),
       parentId = group?.parentId,
       tracking = group?.params['tracking'] as String?,
       tagMode = group?.params['tag_mode'] as String?,
       unit = group?.params['inventory_unit'] as String?,
       sold = group?.params['sold_by_weight'] as bool?,
+      zone = group?.params['home_zone_id'] as String?,
       fields = FormControllers({
         'name': group?.name ?? '',
         'shelf': '${group?.params['shelf_life_days'] ?? ''}',
         'count': '${group?.params['count_every_days'] ?? ''}',
         'age': '${group?.params['min_age'] ?? ''}',
+        'purchaseUnit': '${group?.params['default_purchase_unit'] ?? ''}',
+        'factor': group?.params['default_purchase_factor_num'] == null
+            ? ''
+            : purchaseFactorText((group!.params['default_purchase_factor_num']! as num).toInt(), ((group.params['default_purchase_factor_den'] ?? 1) as num).toInt()),
+        'reorderPoint': '${group?.params['reorder_point_default'] ?? ''}',
+        'reorderQty': '${group?.params['reorder_quantity_default'] ?? ''}',
       });
 
   final ItemGroups port;
   final String workspaceId;
   final ItemGroup? group;
   final List<ItemGroup> groups;
+  final List<StockPlaceConfig> places;
+  final String locale;
   final FormControllers fields;
   final String _id;
 
@@ -77,11 +91,17 @@ class _GroupDraft {
   String? tagMode;
   String? unit;
   bool? sold;
+  String? zone;
 
   GroupSaved? _preview;
   String? _previewOf;
 
   int? _int(String key) => int.tryParse(fields.text(key));
+
+  /// A decimal typed with the member's own separators, as the dot-decimal text the server reads; null when empty or not one.
+  String? _decimal(String key) => fields.text(key).isEmpty ? null : decimalTextFromInput(fields.text(key), locale: locale, grouping: false);
+
+  PurchaseFactor? get _factor => fields.text('factor').isEmpty ? null : parsePurchaseFactor(fields.text('factor'));
 
   Map<String, Object?> body() => {
     'name': fields.text('name'),
@@ -94,6 +114,12 @@ class _GroupDraft {
       'count_every_days': _int('count'),
       'min_age': _int('age'),
       'sold_by_weight': sold,
+      'default_purchase_unit': fields.text('purchaseUnit').isEmpty ? null : fields.text('purchaseUnit'),
+      'default_purchase_factor_num': _factor?.num,
+      'default_purchase_factor_den': _factor?.den,
+      'reorder_point_default': _decimal('reorderPoint'),
+      'reorder_quantity_default': _decimal('reorderQty'),
+      'home_zone_id': zone,
     },
   };
 
@@ -101,6 +127,12 @@ class _GroupDraft {
     if (fields.text('name').isEmpty) 'name': l10n.stockReasonNameMalformed,
     for (final (key, field) in [('shelf', 'shelf'), ('count', 'count'), ('age', 'age')])
       if (fields.text(key).isNotEmpty && (_int(key) ?? 0) < 1) field: l10n.stockReasonOutOfRange,
+    // a purchase unit and its factor go together, and the factor is one number or a fraction above zero
+    if (fields.text('factor').isNotEmpty && _factor == null) 'factor': l10n.stockReasonOutOfRange,
+    if (fields.text('purchaseUnit').isNotEmpty && fields.text('factor').isEmpty) 'factor': l10n.stockReasonOutOfRange,
+    if (fields.text('purchaseUnit').isEmpty && fields.text('factor').isNotEmpty) 'purchaseUnit': l10n.stockReasonNameMalformed,
+    if (fields.text('reorderPoint').isNotEmpty && _decimal('reorderPoint') == null) 'reorderPoint': l10n.stockReasonOutOfRange,
+    if (fields.text('reorderQty').isNotEmpty && (_decimal('reorderQty') == null || _decimal('reorderQty') == '0')) 'reorderQty': l10n.stockReasonOutOfRange,
   };
 
   Future<String?> submit(AppLocalizations l10n) async {
@@ -209,6 +241,40 @@ class _GroupDraft {
         value: sold,
         items: [(null, l10n.itemGroupNotSet), (true, l10n.itemGroupYes), (false, l10n.itemGroupNo)],
         onChanged: (v) => edit(() => sold = v),
+      ),
+      const FormGap(),
+      Text(l10n.itemGroupProposalHint, key: const ValueKey('item-group-proposals'), style: Theme.of(context).textTheme.bodySmall),
+      const FormGap.small(),
+      AppTextField(key: const ValueKey('item-group-purchase-unit'), controller: fields['purchaseUnit'], fieldKey: 'purchaseUnit', label: l10n.itemGroupPurchaseUnit, onChanged: (_) => _preview = null),
+      const FormGap(),
+      AppTextField(key: const ValueKey('item-group-factor'), controller: fields['factor'], fieldKey: 'factor', label: l10n.itemGroupPurchaseFactor, onChanged: (_) => _preview = null),
+      const FormGap(),
+      AppTextField(
+        key: const ValueKey('item-group-reorder-point'),
+        controller: fields['reorderPoint'],
+        fieldKey: 'reorderPoint',
+        label: l10n.itemGroupReorderPoint,
+        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+        inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]'))],
+        onChanged: (_) => _preview = null,
+      ),
+      const FormGap(),
+      AppTextField(
+        key: const ValueKey('item-group-reorder-qty'),
+        controller: fields['reorderQty'],
+        fieldKey: 'reorderQty',
+        label: l10n.itemGroupReorderQty,
+        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+        inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]'))],
+        onChanged: (_) => _preview = null,
+      ),
+      const FormGap(),
+      AppDropdownField<String?>(
+        key: const ValueKey('item-group-home-zone'),
+        label: l10n.itemGroupHomeZone,
+        value: zone,
+        items: [(null, l10n.itemGroupNotSet), for (final p in places) (p.id, p.name)],
+        onChanged: (v) => edit(() => zone = v),
       ),
       if (_preview != null) _PreviewCard(preview: _preview!),
       if (group != null) ...[

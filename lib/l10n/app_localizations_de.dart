@@ -18685,6 +18685,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get itemGroupHistoryNone => 'Noch keine Änderung festgehalten.';
 
   @override
+  String get itemGroupHomeZone => 'Standard-Lagerzone';
+
+  @override
   String get itemGroupMinAge => 'Mindestalter für einen Verkauf';
 
   @override
@@ -18757,6 +18760,16 @@ class AppLocalizationsDe extends AppLocalizations {
   String get itemGroupPreviewTitle => 'Was diese Änderung erreicht';
 
   @override
+  String get itemGroupProposalHint => 'Wird einem neuen Artikel vorgeschlagen';
+
+  @override
+  String get itemGroupPurchaseFactor =>
+      'Faktor: wie viele Lagereinheiten eine Einkaufseinheit enthält (12, 0,5 oder 1/3)';
+
+  @override
+  String get itemGroupPurchaseUnit => 'Standard-Einkaufseinheit';
+
+  @override
   String get itemGroupReasonDepth =>
       'Eine Untergruppe kann keine Untergruppen haben.';
 
@@ -18785,6 +18798,12 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get itemGroupReasonNotOverridable =>
       'Für diese Einstellung gibt es keinen eigenen Wert.';
+
+  @override
+  String get itemGroupReorderPoint => 'Standard-Meldebestand';
+
+  @override
+  String get itemGroupReorderQty => 'Standard-Nachbestellmenge';
 
   @override
   String itemGroupSkippedLine(String item, String parameter, String reason) {
@@ -37342,8 +37361,8 @@ class AppLocalizationsDe extends AppLocalizations {
       'Dieser Artikel wird stückweise getaggt: Taggen Sie die Stücke beim Wareneingang.';
 
   @override
-  String stockTagPiece(int index) {
-    return 'Stück $index';
+  String stockTagPiece(String number) {
+    return 'Stück $number';
   }
 
   @override

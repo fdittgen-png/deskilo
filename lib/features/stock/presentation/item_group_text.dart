@@ -5,6 +5,7 @@
 // still in use...). Anything else falls back to the stock's own wording.
 import '../../../l10n/app_localizations.dart';
 import '../domain/item_groups.dart';
+import '../domain/purchase_factor.dart';
 import '../domain/stock_config.dart';
 import 'stock_config_text.dart';
 
@@ -16,6 +17,11 @@ String itemGroupParamLabel(AppLocalizations l10n, String param) => switch (param
   'count_every_days' => l10n.itemGroupCountEvery,
   'min_age' => l10n.itemGroupMinAge,
   'sold_by_weight' => l10n.itemGroupSoldByWeight,
+  'default_purchase_unit' => l10n.itemGroupPurchaseUnit,
+  'default_purchase_factor_num' || 'default_purchase_factor_den' => l10n.itemGroupPurchaseFactor,
+  'reorder_point_default' => l10n.itemGroupReorderPoint,
+  'reorder_quantity_default' => l10n.itemGroupReorderQty,
+  'home_zone_id' => l10n.itemGroupHomeZone,
   _ => param,
 };
 
@@ -43,6 +49,14 @@ String itemGroupValueText(AppLocalizations l10n, String param, Object? value) {
 String itemGroupSummary(AppLocalizations l10n, ItemGroup g) => [
   for (final p in itemGroupEditable)
     if (g.params[p] != null) '${itemGroupParamLabel(l10n, p)}: ${itemGroupValueText(l10n, p, g.params[p])}',
+  for (final p in itemGroupProposals)
+    // the factor is one number: its numerator speaks for the pair
+    if (g.params[p] != null && p != 'default_purchase_factor_den')
+      '${itemGroupParamLabel(l10n, p)}: ${switch (p) {
+        'default_purchase_factor_num' => purchaseFactorText((g.params[p]! as num).toInt(), ((g.params['default_purchase_factor_den'] ?? 1) as num).toInt()),
+        'home_zone_id' => l10n.itemGroupYes,
+        _ => g.params[p],
+      }}',
 ].join(' · ');
 
 /// What a skipped item's reason says.

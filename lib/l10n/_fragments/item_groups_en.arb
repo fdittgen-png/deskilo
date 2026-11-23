@@ -193,6 +193,30 @@
   "@itemGroupTagModeOwn": {
     "description": "#4362 G13: the item's own value of the tag mode (none, one per batch, one per piece), over its group's"
   },
+  "itemGroupPurchaseUnit": "Default purchase unit",
+  "@itemGroupPurchaseUnit": {
+    "description": "#4361 G12 proposals: the purchase unit a group proposes to a new item"
+  },
+  "itemGroupPurchaseFactor": "Factor: how many inventory units one purchase unit holds (12, 0.5 or 1/3)",
+  "@itemGroupPurchaseFactor": {
+    "description": "#4361 G12 proposals: the factor of the proposed purchase unit, one number or a fraction"
+  },
+  "itemGroupReorderPoint": "Default reorder point",
+  "@itemGroupReorderPoint": {
+    "description": "#4361 G12 proposals: the reorder point a group proposes to an item that has none"
+  },
+  "itemGroupReorderQty": "Default reorder quantity",
+  "@itemGroupReorderQty": {
+    "description": "#4361 G12 proposals: the reorder quantity a group proposes to an item that has none"
+  },
+  "itemGroupHomeZone": "Default home zone",
+  "@itemGroupHomeZone": {
+    "description": "#4361 G12 proposals: the home zone a group proposes to an item"
+  },
+  "itemGroupProposalHint": "Proposed into a new item",
+  "@itemGroupProposalHint": {
+    "description": "#4361 G12 proposals: said under a proposal, which reaches no existing item"
+  },
   "itemGroupOwn": "Own value",
   "@itemGroupOwn": {
     "description": "#4361 G12 item groups: itemGroupOwn"

@@ -29460,6 +29460,12 @@ abstract class AppLocalizations {
   /// **'No change recorded yet.'**
   String get itemGroupHistoryNone;
 
+  /// #4361 G12 proposals: the home zone a group proposes to an item
+  ///
+  /// In en, this message translates to:
+  /// **'Default home zone'**
+  String get itemGroupHomeZone;
+
   /// #4361 G12 item groups: itemGroupMinAge
   ///
   /// In en, this message translates to:
@@ -29543,6 +29549,24 @@ abstract class AppLocalizations {
   /// **'What this change reaches'**
   String get itemGroupPreviewTitle;
 
+  /// #4361 G12 proposals: said under a proposal, which reaches no existing item
+  ///
+  /// In en, this message translates to:
+  /// **'Proposed into a new item'**
+  String get itemGroupProposalHint;
+
+  /// #4361 G12 proposals: the factor of the proposed purchase unit, one number or a fraction
+  ///
+  /// In en, this message translates to:
+  /// **'Factor: how many inventory units one purchase unit holds (12, 0.5 or 1/3)'**
+  String get itemGroupPurchaseFactor;
+
+  /// #4361 G12 proposals: the purchase unit a group proposes to a new item
+  ///
+  /// In en, this message translates to:
+  /// **'Default purchase unit'**
+  String get itemGroupPurchaseUnit;
+
   /// #4361 G12 item groups: itemGroupReasonDepth
   ///
   /// In en, this message translates to:
@@ -29590,6 +29614,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This setting cannot be given its own value.'**
   String get itemGroupReasonNotOverridable;
+
+  /// #4361 G12 proposals: the reorder point a group proposes to an item that has none
+  ///
+  /// In en, this message translates to:
+  /// **'Default reorder point'**
+  String get itemGroupReorderPoint;
+
+  /// #4361 G12 proposals: the reorder quantity a group proposes to an item that has none
+  ///
+  /// In en, this message translates to:
+  /// **'Default reorder quantity'**
+  String get itemGroupReorderQty;
 
   /// #4361 G12 item groups: itemGroupSkippedLine
   ///
@@ -59318,8 +59354,8 @@ abstract class AppLocalizations {
   /// #4362 G13 tags: the name of one piece in the list of pieces
   ///
   /// In en, this message translates to:
-  /// **'Piece {index}'**
-  String stockTagPiece(int index);
+  /// **'Piece {number}'**
+  String stockTagPiece(String number);
 
   /// #4363 G14 tags: stockTagReasonDamaged
   ///

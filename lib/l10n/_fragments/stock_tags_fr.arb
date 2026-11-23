@@ -18,7 +18,7 @@
   "stockReasonTagOwnerInactive": "Cet article ou ce lieu est désactivé : réactivez-le avant d'y associer une étiquette.",
   "stockTagsTitle": "Puces : {name}",
   "stockTagsOpen": "Puces",
-  "stockTagsPieces": "{count, plural, one{1 pièce étiquetée à l'unité} other{{count} pièces étiquetées à l'unité}}",
+  "stockTagsPieces": "{count, plural, one{{count} pièce étiquetée à l'unité} other{{count} pièces étiquetées à l'unité}}",
   "@stockTagsPieces": {
     "description": "#4362 G13 tags: heading of the pieces of an item that carries one tag per piece",
     "placeholders": {
@@ -27,12 +27,12 @@
       }
     }
   },
-  "stockTagPiece": "Pièce {index}",
+  "stockTagPiece": "Pièce {number}",
   "@stockTagPiece": {
     "description": "#4362 G13 tags: the name of one piece in the list of pieces",
     "placeholders": {
-      "index": {
-        "type": "int"
+      "number": {
+        "type": "String"
       }
     }
   },

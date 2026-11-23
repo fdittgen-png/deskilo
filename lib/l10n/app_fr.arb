@@ -11248,6 +11248,10 @@
   "itemGroupHistory": "Historique",
   "itemGroupHistoryLine": "{parameter} : {from} → {to}, {affected, plural, one{{affected} article atteint} other{{affected} articles atteints}}",
   "itemGroupHistoryNone": "Aucun changement enregistré pour l’instant.",
+  "itemGroupHomeZone": "Zone de rangement par défaut",
+  "@itemGroupHomeZone": {
+    "description": "#4361 G12 proposals: the home zone a group proposes to an item"
+  },
   "itemGroupMinAge": "Âge minimum pour une vente",
   "itemGroupMove": "Déplacer",
   "itemGroupMoveReaches": "{count, plural, one{Le déplacement change {count} réglage.} other{Le déplacement change {count} réglages.}}",
@@ -11261,6 +11265,18 @@
   "itemGroupPreviewLine": "{parameter} : {affected, plural, one{s’applique à {affected} article} other{s’applique à {affected} articles}}, {kept, plural, one{{kept} garde sa propre valeur} other{{kept} gardent leur propre valeur}}, {skipped, plural, one{{skipped} ne peut pas être atteint} other{{skipped} ne peuvent pas être atteints}}",
   "itemGroupPreviewNothing": "Aucun article n’est atteint.",
   "itemGroupPreviewTitle": "Ce que ce changement atteint",
+  "itemGroupProposalHint": "Proposé à un nouvel article",
+  "@itemGroupProposalHint": {
+    "description": "#4361 G12 proposals: said under a proposal, which reaches no existing item"
+  },
+  "itemGroupPurchaseFactor": "Facteur : combien d'unités de stock contient une unité d'achat (12, 0,5 ou 1/3)",
+  "@itemGroupPurchaseFactor": {
+    "description": "#4361 G12 proposals: the factor of the proposed purchase unit, one number or a fraction"
+  },
+  "itemGroupPurchaseUnit": "Unité d'achat par défaut",
+  "@itemGroupPurchaseUnit": {
+    "description": "#4361 G12 proposals: the purchase unit a group proposes to a new item"
+  },
   "itemGroupReasonDepth": "Un sous-groupe ne peut pas avoir de sous-groupes.",
   "itemGroupReasonGroupUnknown": "Ce groupe n’existe pas.",
   "itemGroupReasonHasMovements": "il a déjà des mouvements",
@@ -11269,6 +11285,14 @@
   "itemGroupReasonNameDuplicate": "Un autre groupe porte déjà ce nom.",
   "itemGroupReasonNeedsSerial": "Les puces par pièce demandent un suivi à la pièce.",
   "itemGroupReasonNotOverridable": "Ce réglage ne peut pas avoir de valeur propre.",
+  "itemGroupReorderPoint": "Seuil de réapprovisionnement par défaut",
+  "@itemGroupReorderPoint": {
+    "description": "#4361 G12 proposals: the reorder point a group proposes to an item that has none"
+  },
+  "itemGroupReorderQty": "Quantité de réapprovisionnement par défaut",
+  "@itemGroupReorderQty": {
+    "description": "#4361 G12 proposals: the reorder quantity a group proposes to an item that has none"
+  },
   "itemGroupSkippedLine": "{item} : {parameter} ({reason})",
   "itemGroupSkippedTitle": "Non atteints",
   "itemGroupSoldByWeight": "Vendu au poids",
@@ -21736,12 +21760,12 @@
   "stockTagOnPiece": "Cette puce est sur une pièce encore en stock.",
   "stockTagOwnerUnknown": "Cet article ou cet emplacement est inconnu.",
   "stockTagPerUnit": "Cet article est étiqueté pièce par pièce : étiquetez ses pièces à la réception.",
-  "stockTagPiece": "Pièce {index}",
+  "stockTagPiece": "Pièce {number}",
   "@stockTagPiece": {
     "description": "#4362 G13 tags: the name of one piece in the list of pieces",
     "placeholders": {
-      "index": {
-        "type": "int"
+      "number": {
+        "type": "String"
       }
     }
   },
@@ -21755,7 +21779,7 @@
   "stockTagsFailed": "Les puces n’ont pas pu être lues.",
   "stockTagsNone": "Aucune puce n’est encore associée.",
   "stockTagsOpen": "Puces",
-  "stockTagsPieces": "{count, plural, one{1 pièce étiquetée à l'unité} other{{count} pièces étiquetées à l'unité}}",
+  "stockTagsPieces": "{count, plural, one{{count} pièce étiquetée à l'unité} other{{count} pièces étiquetées à l'unité}}",
   "@stockTagsPieces": {
     "description": "#4362 G13 tags: heading of the pieces of an item that carries one tag per piece",
     "placeholders": {
