@@ -14,6 +14,7 @@ import '../../../core/scan/scan_detector.dart';
 import '../../../core/scan/scan_prefs.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/ui/app_snack.dart';
+import '../../../core/ui/dropdown_field.dart';
 import '../../../core/ui/form_kit.dart';
 import 'stock_scan_hint.dart';
 
@@ -86,14 +87,12 @@ class _StockScanSettingsState extends ConsumerState<StockScanSettings> {
           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
         ),
         const FormGap(),
-        Text(l10n.stockScanTerminator, style: Theme.of(context).textTheme.labelLarge),
-        const SizedBox(height: AppSpacing.xs),
-        SegmentedButton<ScanTerminator>(
+        AppDropdownField<ScanTerminator>(
           key: const ValueKey('stock-scan-terminator'),
-          showSelectedIcon: false,
-          segments: [for (final t in ScanTerminator.values) ButtonSegment(value: t, label: Text(label(t)))],
-          selected: {_terminator ?? prefs.terminator},
-          onSelectionChanged: (s) => setState(() => _terminator = s.first),
+          label: l10n.stockScanTerminator,
+          value: _terminator ?? prefs.terminator,
+          items: [for (final t in ScanTerminator.values) (t, label(t))],
+          onChanged: (v) => setState(() => _terminator = v),
         ),
         const FormGap(),
         Align(
