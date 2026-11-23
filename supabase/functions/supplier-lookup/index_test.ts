@@ -428,3 +428,32 @@ Deno.test("an outage answers in neutral words: no token, identifier or upstream 
   assertEquals(text.includes("secret-xyz") || down.includes("secret-xyz"), false);
   assertEquals(down.includes("11223344556"), false);
 });
+
+// #4412 -- an uncaught error is the envelope: a code and the request id, never the error's own words.
+import { guard } from "../_shared/serve.ts";
+
+Deno.test("#4412 supplier-lookup: a thrown error answers the envelope and no internal message", async () => {
+  const saved = console.error;
+  console.error = () => {};
+  try {
+    const deps = {
+      caller: () => {
+        throw new Error("rpc table suppliers_secret exploded");
+      },
+      limiter: new RateLimiter(),
+    };
+    const answer = await guard("supplier-lookup", (req) => handle(req, deps))(
+      new Request("https://x.test/", {
+        method: "POST",
+        headers: { Authorization: "Bearer t", "x-request-id": "r-sup" },
+        body: JSON.stringify({ workspace_id: "0b8a6a4e-5c2f-4c7b-9d1e-2f3a4b5c6d7e", provider: "vies", kind: "vat", mode: "identifier", country_code: "fr", identifier: "11223344556" }),
+      }),
+    );
+    assertEquals(answer.status, 500);
+    const text = await answer.text();
+    assertEquals(JSON.parse(text), { error: "internal_error", request_id: "r-sup" });
+    assertEquals(text.includes("suppliers_secret"), false);
+  } finally {
+    console.error = saved;
+  }
+});

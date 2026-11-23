@@ -49,14 +49,28 @@ class _State extends ConsumerState<StockCountTaskScreen> {
   }
 
   /// Opens the line still to count whose item has the scanned barcode.
-  Future<void> _find(String workspaceId, CountTask task, Map<String, StockItem> items) async {
+  Future<void> _find(String workspaceId, CountTask task, Map<String, StockItem> items, Map<String, String> places) async {
     final code = _scan.text.trim();
     if (code.isEmpty) return;
     final l10n = context.l10n;
     try {
-      final rows = (await ref.read(stockRegistryProvider).page(workspaceId, limit: 200)).rows;
-      final ids = {for (final r in rows) if (r.barcode == code) r.itemId};
-      final line = task.lines.where((l) => l.state == CountLineState.pending && ids.contains(l.itemId)).firstOrNull;
+      // The same resolver every other scan uses: the registry's size does not matter. A code that names a variant or a
+      // lot opens only the line of that variant or lot; one that names neither and fits several pending lines (an item
+      // kept in two places) asks which, instead of taking the first.
+      final answer = await ref.read(stockCodeResolverProvider).resolve(workspaceId, code);
+      final itemId = answer.item?.id;
+      final fits = itemId == null || itemId.isEmpty
+          ? const <CountTaskLine>[]
+          : [
+              for (final l in task.lines)
+                if (l.state == CountLineState.pending &&
+                    l.itemId == itemId &&
+                    (answer.variantId == null || l.variantId == answer.variantId) &&
+                    (answer.lotId == null || l.lotId == answer.lotId))
+                  l,
+            ];
+      if (!mounted) return;
+      final line = fits.length > 1 ? await _choose(fits, places) : fits.firstOrNull;
       if (!mounted) return;
       setState(() => _scanProblem = line == null ? l10n.stockCycleScanNone : null);
       if (line == null) return;
@@ -67,6 +81,22 @@ class _State extends ConsumerState<StockCountTaskScreen> {
       if (mounted) AppSnack.error(context, l10n.stockReadFailed);
     }
   }
+
+  /// Which of several pending lines the scanned code is for: one button per line, by its place.
+  Future<CountTaskLine?> _choose(List<CountTaskLine> lines, Map<String, String> places) => showDialog<CountTaskLine>(
+    context: context,
+    builder: (c) => SimpleDialog(
+      title: Text(c.l10n.stockCycleScanWhich),
+      children: [
+        for (final l in lines)
+          SimpleDialogOption(
+            key: ValueKey('stock-cycle-scan-pick-${l.lineId}'),
+            onPressed: () => Navigator.of(c).pop(l),
+            child: Text(places[l.locationId] ?? l.locationId),
+          ),
+      ],
+    ),
+  );
 
   void _refresh(String workspaceId) {
     ref
@@ -204,7 +234,7 @@ class _State extends ConsumerState<StockCountTaskScreen> {
                   error: _scanProblem,
                   prefixIcon: const Icon(Icons.qr_code_scanner),
                   textInputAction: TextInputAction.search,
-                  onSubmitted: (_) => _find(workspaceId, task, items),
+                  onSubmitted: (_) => _find(workspaceId, task, items, places),
                 ),
                 const SizedBox(height: AppSpacing.md),
               ],

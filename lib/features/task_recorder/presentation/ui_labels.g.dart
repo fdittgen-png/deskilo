@@ -9091,6 +9091,7 @@ Map<String, _Getter> _part21() => {
   'statusNetExplanation': (l) => l.statusNetExplanation,
   'stockCameraDenied': (l) => l.stockCameraDenied,
   'stockCyclePlanValueSetting': (l) => l.stockCyclePlanValueSetting,
+  'stockCycleScanWhich': (l) => l.stockCycleScanWhich,
   'stockGoodsUnavailable': (l) => l.stockGoodsUnavailable,
   'stockPlaceKindWarehouse': (l) => l.stockPlaceKindWarehouse,
   'stockPutAwayCostUnknown': (l) => l.stockPutAwayCostUnknown,
