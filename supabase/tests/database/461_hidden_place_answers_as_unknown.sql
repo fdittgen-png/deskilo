@@ -1,4 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
+-- utc-date-file: the assertions hold with the business's day one day ahead of and one day behind the database's (workspace_today forced to current_date +/- 1 on the dev project, #4384)
 -- #4148 (0807): a booking needs its place to be visible to the member it is
 -- booked for. A place the member may not see is answered exactly as one that
 -- does not exist, free or taken, through every booking command; a series

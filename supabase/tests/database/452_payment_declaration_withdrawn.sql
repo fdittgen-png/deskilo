@@ -55,10 +55,12 @@ exception when others then
   execute 'reset role';
   return 'ERR ' || sqlstate;
 end $f$;
+-- the business's own day, not the database session's: they differ for a few hours a day
+select set_config('t.today', public.workspace_today(pg_temp.u(101))::text, false);
 -- User [n] declares Ada's [p_invoice] paid ([p_cents], [p_period]); the event's id.
 create function pg_temp.declare_paid(n int, p_invoice uuid, p_cents int, p_period text) returns text language sql as $$
   select pg_temp.as_user(n, format(
-    'select public.record_payment(%L, %L, %s, %L, %L, current_date, %L, array[%L]::uuid[])::text',
+    'select public.record_payment(%L, %L, %s, %L, %L, current_setting(''t.today'')::date, %L, array[%L]::uuid[])::text',
     pg_temp.u(101), pg_temp.u(202), p_cents, '', 'transfer', p_period, p_invoice));
 $$;
 create function pg_temp.withdraw(n int, p_event text) returns text language sql as $$

@@ -1,4 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
+-- utc-date-file: the assertions hold with the business's day one day ahead of and one day behind the database's (workspace_today forced to current_date +/- 1 on the dev project, #4384)
 -- #1917: vat_tax_point reads current_date, so it is STABLE, never
 -- IMMUTABLE; its answers are unchanged: a finished period ends on its
 -- last day, a running one on today.

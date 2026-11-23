@@ -1,4 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
+-- utc-date-file: the assertions hold with the business's day one day ahead of and one day behind the database's (workspace_today forced to current_date +/- 1 on the dev project, #4384)
 -- #4171 (0840-0842, A): a delivery is received into stock exactly once. The delivery
 -- of 0684 still records with receiving off; with it on, two cartons of twelve are
 -- 24 pieces at a place in a new lot, the factor, unit and quantity are frozen, a lost

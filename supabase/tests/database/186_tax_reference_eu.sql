@@ -1,4 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
+-- utc-date-file: the dates of global reference rows (tax and rate registries): no business day is involved, the database's own date is the one meant (#4384)
 -- #2478 (C2 of #2476): is_eu_country / eu_country_code read the eu_member
 -- rows. Same answers as the array they replaced for a fixed list of codes
 -- (the list the Dart golden pins), and the answer follows the data: a

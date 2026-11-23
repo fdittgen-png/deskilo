@@ -1,4 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
+-- utc-date-file: the assertions hold with the business's day one day ahead of and one day behind the database's (workspace_today forced to current_date +/- 1 on the dev project, #4384)
 -- #3839 (0751, L2 of #3787): a customer's statement for a period. Per
 -- currency, opening + movements = closing; the closing is the open-items
 -- statement of the last day and the opening the one of the day before the

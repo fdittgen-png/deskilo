@@ -1,4 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
+-- utc-date-file: the assertions hold with the business's day one day ahead of and one day behind the database's (workspace_today forced to current_date +/- 1 on the dev project, #4384)
 -- #2571 / 0604: a retention clock gives a disposition, never a permission.
 -- The rules here are SYNTHETIC (countries ZZ and ZY, confirmed inside this
 -- rolled-back transaction) so the mechanism is proved without claiming any

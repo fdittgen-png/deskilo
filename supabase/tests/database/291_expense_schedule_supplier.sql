@@ -1,4 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
+-- utc-date-file: the assertions hold with the business's day one day ahead of and one day behind the database's (workspace_today forced to current_date +/- 1 on the dev project, #4384)
 -- #2567: a member's scheduled expense names the supplier it pays
 -- (`set_expense_schedule_supplier`, migration 9999). The issue's proving
 -- scenario end to end, with real roles (definer RPCs and RLS reads run as

@@ -1,4 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
+-- utc-date-file: the assertions hold with the business's day one day ahead of and one day behind the database's (workspace_today forced to current_date +/- 1 on the dev project, #4384)
 --
 -- #2380 (0650) -- a confirmed match of money in is undone once, by a person
 -- with the right that matches, with a reason, on the record, and only the
