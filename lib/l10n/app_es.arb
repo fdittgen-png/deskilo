@@ -21736,11 +21736,11 @@
   "stockTagOnPiece": "Esta etiqueta está en una pieza que sigue en stock.",
   "stockTagOwnerUnknown": "Este artículo o ubicación no se conoce.",
   "stockTagPerUnit": "Este artículo se etiqueta pieza a pieza: etiquete sus piezas al recibirlas.",
-  "stockTagPiece": "Pieza {n}",
+  "stockTagPiece": "Pieza {index}",
   "@stockTagPiece": {
     "description": "#4362 G13 tags: the name of one piece in the list of pieces",
     "placeholders": {
-      "n": {
+      "index": {
         "type": "int"
       }
     }
@@ -21755,7 +21755,7 @@
   "stockTagsFailed": "No se pudieron leer las etiquetas.",
   "stockTagsNone": "Aún no hay ninguna etiqueta asociada.",
   "stockTagsOpen": "Etiquetas",
-  "stockTagsPieces": "Piezas etiquetadas una a una ({count})",
+  "stockTagsPieces": "{count, plural, one{1 pieza etiquetada una a una} other{{count} piezas etiquetadas una a una}}",
   "@stockTagsPieces": {
     "description": "#4362 G13 tags: heading of the pieces of an item that carries one tag per piece",
     "placeholders": {

@@ -18,7 +18,7 @@
   "stockReasonTagOwnerInactive": "Dieser Artikel oder Ort ist deaktiviert: Aktivieren Sie ihn wieder, bevor ihm ein Etikett zugeordnet wird.",
   "stockTagsTitle": "Tags: {name}",
   "stockTagsOpen": "Tags",
-  "stockTagsPieces": "Einzeln etikettierte Stücke ({count})",
+  "stockTagsPieces": "{count, plural, one{1 einzeln etikettiertes Stück} other{{count} einzeln etikettierte Stücke}}",
   "@stockTagsPieces": {
     "description": "#4362 G13 tags: heading of the pieces of an item that carries one tag per piece",
     "placeholders": {
@@ -27,11 +27,11 @@
       }
     }
   },
-  "stockTagPiece": "Stück {n}",
+  "stockTagPiece": "Stück {index}",
   "@stockTagPiece": {
     "description": "#4362 G13 tags: the name of one piece in the list of pieces",
     "placeholders": {
-      "n": {
+      "index": {
         "type": "int"
       }
     }

@@ -37342,8 +37342,8 @@ class AppLocalizationsDe extends AppLocalizations {
       'Dieser Artikel wird stückweise getaggt: Taggen Sie die Stücke beim Wareneingang.';
 
   @override
-  String stockTagPiece(int n) {
-    return 'Stück $n';
+  String stockTagPiece(int index) {
+    return 'Stück $index';
   }
 
   @override
@@ -37383,7 +37383,13 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String stockTagsPieces(int count) {
-    return 'Einzeln etikettierte Stücke ($count)';
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count einzeln etikettierte Stücke',
+      one: '1 einzeln etikettiertes Stück',
+    );
+    return '$_temp0';
   }
 
   @override

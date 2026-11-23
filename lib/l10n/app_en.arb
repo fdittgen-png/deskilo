@@ -48010,11 +48010,11 @@
   "@stockTagPerUnit": {
     "description": "#4363 G14 tags: stockTagPerUnit"
   },
-  "stockTagPiece": "Piece {n}",
+  "stockTagPiece": "Piece {index}",
   "@stockTagPiece": {
     "description": "#4362 G13 tags: the name of one piece in the list of pieces",
     "placeholders": {
-      "n": {
+      "index": {
         "type": "int"
       }
     }
@@ -48069,7 +48069,7 @@
   "@stockTagsOpen": {
     "description": "#4363 G14 tags: stockTagsOpen"
   },
-  "stockTagsPieces": "Pieces tagged one by one ({count})",
+  "stockTagsPieces": "{count, plural, one{1 piece tagged one by one} other{{count} pieces tagged one by one}}",
   "@stockTagsPieces": {
     "description": "#4362 G13 tags: heading of the pieces of an item that carries one tag per piece",
     "placeholders": {

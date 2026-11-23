@@ -59318,8 +59318,8 @@ abstract class AppLocalizations {
   /// #4362 G13 tags: the name of one piece in the list of pieces
   ///
   /// In en, this message translates to:
-  /// **'Piece {n}'**
-  String stockTagPiece(int n);
+  /// **'Piece {index}'**
+  String stockTagPiece(int index);
 
   /// #4363 G14 tags: stockTagReasonDamaged
   ///
@@ -59384,7 +59384,7 @@ abstract class AppLocalizations {
   /// #4362 G13 tags: heading of the pieces of an item that carries one tag per piece
   ///
   /// In en, this message translates to:
-  /// **'Pieces tagged one by one ({count})'**
+  /// **'{count, plural, one{1 piece tagged one by one} other{{count} pieces tagged one by one}}'**
   String stockTagsPieces(int count);
 
   /// #4363 G14 tags: stockTagsRetire

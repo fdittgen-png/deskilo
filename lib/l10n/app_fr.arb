@@ -21736,11 +21736,11 @@
   "stockTagOnPiece": "Cette puce est sur une pièce encore en stock.",
   "stockTagOwnerUnknown": "Cet article ou cet emplacement est inconnu.",
   "stockTagPerUnit": "Cet article est étiqueté pièce par pièce : étiquetez ses pièces à la réception.",
-  "stockTagPiece": "Pièce {n}",
+  "stockTagPiece": "Pièce {index}",
   "@stockTagPiece": {
     "description": "#4362 G13 tags: the name of one piece in the list of pieces",
     "placeholders": {
-      "n": {
+      "index": {
         "type": "int"
       }
     }
@@ -21755,7 +21755,7 @@
   "stockTagsFailed": "Les puces n’ont pas pu être lues.",
   "stockTagsNone": "Aucune puce n’est encore associée.",
   "stockTagsOpen": "Puces",
-  "stockTagsPieces": "Pièces étiquetées une à une ({count})",
+  "stockTagsPieces": "{count, plural, one{1 pièce étiquetée à l'unité} other{{count} pièces étiquetées à l'unité}}",
   "@stockTagsPieces": {
     "description": "#4362 G13 tags: heading of the pieces of an item that carries one tag per piece",
     "placeholders": {
