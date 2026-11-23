@@ -7,6 +7,7 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show isoDay;
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
+import '../../../core/data/server_names.dart';
 import '../../../core/validation/pending_validation.dart';
 import '../domain/invitation_answer.dart';
 import '../domain/member.dart';
@@ -117,7 +118,7 @@ mixin SupabaseMembership on SupabaseWorkspaceRows, SupabaseManagedIdentity
     final userId = client.auth.currentUser?.id;
     if (userId == null) return null;
     final row = await client
-        .from('members')
+        .from(ServerTable.members)
         .select()
         .eq('workspace_id', workspaceId)
         .eq('user_id', userId)
@@ -144,7 +145,7 @@ mixin SupabaseMembership on SupabaseWorkspaceRows, SupabaseManagedIdentity
     // members ↔ profiles share auth.users ids but carry no direct FK, so
     // PostgREST cannot embed — two queries, joined client-side.
     final memberRows = await client
-        .from('members')
+        .from(ServerTable.members)
         .select(
           'id, user_id, managed_identity, managed_name, member_number, home_site_id',
         )
@@ -209,7 +210,7 @@ mixin SupabaseMembership on SupabaseWorkspaceRows, SupabaseManagedIdentity
   @override
   Future<List<Member>> fetchMembers(String workspaceId) async {
     final rows = await client
-        .from('members')
+        .from(ServerTable.members)
         .select()
         .eq('workspace_id', workspaceId)
         .order('joined_at', ascending: true);
@@ -317,7 +318,7 @@ mixin SupabaseMembership on SupabaseWorkspaceRows, SupabaseManagedIdentity
     OveragePolicy policy,
   ) async {
     await client
-        .from('members')
+        .from(ServerTable.members)
         .update({'overage_policy': policy.name})
         .eq('id', memberId);
   }
@@ -443,7 +444,7 @@ mixin SupabaseMembership on SupabaseWorkspaceRows, SupabaseManagedIdentity
   Future<List<Member>> fetchMyMembers() async {
     final userId = client.auth.currentUser?.id;
     if (userId == null) return const [];
-    final rows = await client.from('members').select().eq('user_id', userId);
+    final rows = await client.from(ServerTable.members).select().eq('user_id', userId);
     return rows.map(memberFromRow).toList();
   }
 
@@ -466,7 +467,7 @@ mixin SupabaseMembership on SupabaseWorkspaceRows, SupabaseManagedIdentity
   @override
   Future<NewMemberDefaults> fetchNewMemberDefaults(String workspaceId) async {
     final row = await client
-        .from('workspaces')
+        .from(ServerTable.workspaces)
         .select('billing_rules')
         .eq('id', workspaceId)
         .single();

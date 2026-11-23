@@ -5,6 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/data/paged_fetch.dart';
 import '../../../core/data/retry.dart' show newRequestId;
+import '../../../core/data/server_names.dart';
 import '../domain/commercial_terms_repository.dart';
 import '../domain/fee_band.dart';
 import '../domain/package.dart';
@@ -63,7 +64,7 @@ class SupabaseCommercialTermsRepository implements CommercialTermsRepository {
   @override
   Future<SubscriptionLevels> fetchSubscriptionLevels(String workspaceId) async {
     final row = await _client
-        .from('workspaces')
+        .from(ServerTable.workspaces)
         .select('subscription_levels')
         .eq('id', workspaceId)
         .single();
@@ -78,7 +79,7 @@ class SupabaseCommercialTermsRepository implements CommercialTermsRepository {
     SubscriptionLevels levels,
   ) async {
     await _client
-        .from('workspaces')
+        .from(ServerTable.workspaces)
         .update({'subscription_levels': levels.toDb()})
         .eq('id', workspaceId);
   }
@@ -94,7 +95,7 @@ class SupabaseCommercialTermsRepository implements CommercialTermsRepository {
       table: 'services',
       build: () {
         var query = _client
-            .from('services')
+            .from(ServerTable.services)
             .select()
             .eq('workspace_id', workspaceId);
         if (!includeInactive) query = query.eq('active', true);
@@ -139,7 +140,7 @@ class SupabaseCommercialTermsRepository implements CommercialTermsRepository {
   @override
   Future<ServiceItem> updateService(String serviceId, ServiceChange change) async {
     final row = await _client
-        .from('services')
+        .from(ServerTable.services)
         .update({
           ...?change.details?.toRow(),
           'supply_class': ?change.supplyClass?.wire,

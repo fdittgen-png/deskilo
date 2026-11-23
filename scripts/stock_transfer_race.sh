@@ -65,7 +65,7 @@ SQL
   exit "$original_status"
 }
 trap cleanup EXIT
-q() { psql "$url" -X -qAt -v ON_ERROR_STOP=1 -c "$1"; }
+. "$(dirname "${BASH_SOURCE[0]}")/lib/race.sh"
 as_owner="select set_config('request.jwt.claims', '{\"sub\":\"$owner\",\"role\":\"authenticated\",\"aal\":\"aal2\"}', true); set local role authenticated;"
 fixture=$(psql "$url" -X -qAt -v ON_ERROR_STOP=1 <<SQL | tail -1
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
@@ -186,7 +186,6 @@ count_item=$c
 for v in "$ws" "$x" "$y" "$z" "$main" "$shelf" "$loss" "$customer" "$w" "$inv" "$ev1" "$ev2" "$supplier" "$p" "$r" "$rcpt" "$q" "$sale" "$c" "$cnt" "$plan" "$e1" "$e2" "$plan2"; do
   [[ "$v" =~ ^[0-9a-f-]{36}$ ]] || { echo "::error::fixture incomplete: '$fixture'" >&2; exit 1; }
 done
-expect() { [[ "$2" == "$3" ]] || { echo "::error::$1: expected '$3', got '$2'" >&2; exit 1; }; }
 total() { q "select coalesce(sum(quantity), 0)::int from public.stock_balances where item_id = '$1' and location_id in ('$main', '$shelf')"; }
 # wait_marker MARKER HOLDER-LOG: the holder's own output is shown when it never took its lock
 wait_marker() {

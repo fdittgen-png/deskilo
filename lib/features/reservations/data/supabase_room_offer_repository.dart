@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/server_names.dart';
 import '../domain/room_offer.dart';
 
 /// `room_offer_v1` (0496): the server decides whether the room is open to the
@@ -14,7 +15,7 @@ class SupabaseRoomOfferRepository implements RoomOfferRepository {
   Future<RoomOfferView> fetch(String workspaceId, String officeId) async =>
       RoomOfferView.fromJson(
         await _client.rpc<Object?>(
-          'room_offer_v1',
+          ServerRpc.roomOfferV1,
           params: {'p_workspace_id': workspaceId, 'p_office_id': officeId},
         ),
       );
