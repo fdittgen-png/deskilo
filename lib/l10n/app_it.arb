@@ -23352,6 +23352,10 @@
   "tillCashInvalid": "Inserisca l'importo dato come numero.",
   "tillCashShort": "I contanti dati sono inferiori al totale.",
   "tillChangeDue": "Resto da dare: {amount}",
+  "tillConfirmSale": "Confermare la vendita",
+  "@tillConfirmSale": {
+    "description": "#4366 the till: the sale was sent and its answer was lost; send it again under the same request"
+  },
   "tillFailed": "La cassa non ha potuto eseguirlo. Riprovi.",
   "tillKeysEmpty": "Non c'è ancora nulla da vendere. Aggiunga prima degli articoli nel magazzino.",
   "tillKeysTitle": "Articoli da battere",

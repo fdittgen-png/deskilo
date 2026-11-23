@@ -9101,6 +9101,7 @@ Map<String, _Getter> _part21() => {
   'taxRefNewVersion': (l) => l.taxRefNewVersion,
   'taxRefStatus': (l) => l.taxRefStatus,
   'taxRefWithdrawReason': (l) => l.taxRefWithdrawReason,
+  'tillConfirmSale': (l) => l.tillConfirmSale,
   'tipBadgesQr': (l) => l.tipBadgesQr,
   'tipFeaturesRequires': (l) => l.tipFeaturesRequires,
   'tipMessagesAlerts': (l) => l.tipMessagesAlerts,

@@ -23,6 +23,7 @@ class TillBasket extends StatelessWidget {
     required this.onPay,
     required this.onNext,
     required this.onRetry,
+    required this.onConfirm,
   });
 
   final TillState state;
@@ -31,6 +32,7 @@ class TillBasket extends StatelessWidget {
   final VoidCallback onPay;
   final VoidCallback onNext;
   final VoidCallback onRetry;
+  final VoidCallback onConfirm;
 
   @override
   Widget build(BuildContext context) {
@@ -55,8 +57,8 @@ class TillBasket extends StatelessWidget {
                     line: state.lines[i],
                     priced: draft != null && i < draft.lines.length ? draft.lines[i] : null,
                     money: money,
-                    onQuantity: sold == null ? () => onQuantity(i) : null,
-                    onRemove: sold == null ? () => onRemove(i) : null,
+                    onQuantity: sold == null && !state.unconfirmed ? () => onQuantity(i) : null,
+                    onRemove: sold == null && !state.unconfirmed ? () => onRemove(i) : null,
                   ),
                 ),
         ),
@@ -64,7 +66,9 @@ class TillBasket extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(AppSpacing.md),
           child: sold != null
-              ? _Sold(sold: sold, change: state.change, money: money, onNext: onNext)
+              ? _Sold(sold: sold, change: state.change, money: money, onNext: state.busy ? null : onNext)
+              : state.unconfirmed
+              ? _Unconfirmed(state: state, onConfirm: onConfirm)
               : _Footer(state: state, money: money, onPay: onPay, onRetry: onRetry),
         ),
       ],
@@ -101,6 +105,34 @@ class _Line extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+/// The sale was sent and its answer did not come: only confirming it is offered, so it is never made twice.
+class _Unconfirmed extends StatelessWidget {
+  const _Unconfirmed({required this.state, required this.onConfirm});
+
+  final TillState state;
+  final VoidCallback onConfirm;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final problem = state.problem;
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        if (problem != null) Text(tillProblemText(l10n, problem), key: const ValueKey('till-problem'), style: TextStyle(color: Theme.of(context).colorScheme.error)),
+        const FormGap(),
+        FilledButton(
+          key: const ValueKey('till-confirm'),
+          style: FilledButton.styleFrom(minimumSize: const Size.fromHeight(56)),
+          onPressed: state.busy ? null : onConfirm,
+          child: Text(l10n.tillConfirmSale),
+        ),
+      ],
     );
   }
 }
@@ -158,7 +190,7 @@ class _Sold extends StatelessWidget {
   final TillSold sold;
   final int? change;
   final MoneyFormat money;
-  final VoidCallback onNext;
+  final VoidCallback? onNext;
 
   @override
   Widget build(BuildContext context) {

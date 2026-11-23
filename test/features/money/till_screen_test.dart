@@ -45,6 +45,21 @@ class _Items extends DemoStockQueries {
   Future<List<StockItem>> items(String workspaceId) => _items();
 }
 
+/// A till whose sale is made but whose answer is lost the first time.
+class _LostAnswer extends DemoTill {
+  _LostAnswer() : super(country: 'FR', currency: 'EUR', vatPercent: 20);
+
+  bool lost = false;
+
+  @override
+  Future<TillSold> finalize(String workspaceId, {required String requestId, required String receiptId, required int expectedRevision, required List<TillTender> tenders}) async {
+    final sold = await super.finalize(workspaceId, requestId: requestId, receiptId: receiptId, expectedRevision: expectedRevision, tenders: tenders);
+    if (lost) return sold;
+    lost = true;
+    throw Exception('connection lost');
+  }
+}
+
 /// A till whose readiness cannot be read the first time.
 class _FlakyReadiness extends DemoTill {
   _FlakyReadiness() : super(country: 'FR', currency: 'EUR', vatPercent: 20);
@@ -155,6 +170,19 @@ void main() {
         expect(find.byKey(const ValueKey('till-not-ready')), findsOneWidget);
         expect(find.text(_en.tillNotReady('${_en.tillOpIssueReceipt}, ${_en.tillOpReconcileTender}')), findsOneWidget);
         expect(find.byKey(const ValueKey('till-key-demo-item-milk')), findsNothing);
+      });
+
+      testWidgets('a sale whose answer was lost offers only to confirm it, and confirming sells once', (tester) async {
+        await _open(tester, _LostAnswer(), size);
+        await _tap(tester, 'till-key-demo-item-milk');
+        await _tap(tester, 'till-pay');
+        await _tap(tester, 'till-cash-exact');
+        expect(find.byKey(const ValueKey('till-confirm')), findsOneWidget);
+        expect(find.byKey(const ValueKey('till-pay')), findsNothing);
+        await _tap(tester, 'till-key-demo-item-milk');
+        expect(find.textContaining('1 l'), findsOneWidget, reason: 'the basket is not changed while the sale may have been made');
+        await _tap(tester, 'till-confirm');
+        expect(find.text(_en.tillReceiptNumber('R-00001')), findsOneWidget);
       });
 
       testWidgets('a readiness that cannot be read says so and reads again on a tap', (tester) async {

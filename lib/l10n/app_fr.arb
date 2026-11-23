@@ -23352,6 +23352,10 @@
   "tillCashInvalid": "Saisissez le montant remis sous forme de nombre.",
   "tillCashShort": "Les espèces remises sont inférieures au total.",
   "tillChangeDue": "Monnaie à rendre : {amount}",
+  "tillConfirmSale": "Confirmer la vente",
+  "@tillConfirmSale": {
+    "description": "#4366 the till: the sale was sent and its answer was lost; send it again under the same request"
+  },
   "tillFailed": "La caisse n'a pas pu le faire. Réessayez.",
   "tillKeysEmpty": "Il n'y a encore rien à vendre. Ajoutez d'abord des articles dans le stock.",
   "tillKeysTitle": "Articles à encaisser",

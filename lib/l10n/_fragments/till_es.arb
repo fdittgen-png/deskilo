@@ -31,5 +31,9 @@
   "@tillRetry": {
     "description": "#4366 the till: ask the server again"
   },
+  "tillConfirmSale": "Confirmar la venta",
+  "@tillConfirmSale": {
+    "description": "#4366 the till: the sale was sent and its answer was lost; send it again under the same request"
+  },
   "tillFailed": "La caja no pudo hacerlo. Inténtelo de nuevo."
 }

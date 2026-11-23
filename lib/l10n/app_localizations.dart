@@ -63916,6 +63916,12 @@ abstract class AppLocalizations {
   /// **'Change due: {amount}'**
   String tillChangeDue(String amount);
 
+  /// #4366 the till: the sale was sent and its answer was lost; send it again under the same request
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm the sale'**
+  String get tillConfirmSale;
+
   /// #4366 the till
   ///
   /// In en, this message translates to:

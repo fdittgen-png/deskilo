@@ -40148,6 +40148,9 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get tillConfirmSale => 'Confirmer la vente';
+
+  @override
   String get tillFailed => 'La caisse n\'a pas pu le faire. Réessayez.';
 
   @override

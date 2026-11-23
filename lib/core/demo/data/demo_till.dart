@@ -12,6 +12,9 @@ import 'demo_stock_registry.dart';
 /// The server's refusal: its SQLSTATE as the code, its words as the message.
 PostgrestException _refused(String code, String message) => PostgrestException(message: message, code: code);
 
+/// The prices of Demo items the stock registry does not carry (the T-shirt the variants are edited on), in cents.
+const _unstocked = <String, int>{'demo-item-shirt': 1900};
+
 class DemoTill implements TillPort {
   DemoTill({required this.country, required this.currency, required this.vatPercent, this.ready = true, this.minorDigits = 2});
 
@@ -51,7 +54,7 @@ class DemoTill implements TillPort {
     var tax = 0;
     final priced = <TillPricedLine>[];
     for (final l in lines) {
-      final unit = DemoStockRegistry.catalogue[l.itemId]?.$2;
+      final unit = DemoStockRegistry.catalogue[l.itemId]?.$2 ?? _unstocked[l.itemId];
       if (unit == null) throw _refused('DKL02', 'line_${priced.length + 1}_unit_price');
       final amount = _times(unit, l.quantity);
       final lineTax = amount - (amount * 100 / (100 + vatPercent)).round();

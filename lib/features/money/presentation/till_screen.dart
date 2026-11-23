@@ -155,6 +155,7 @@ class _TillState extends ConsumerState<_Till> {
             onPay: () => unawaited(_pay(state)),
             onNext: _session.next,
             onRetry: () => unawaited(_session.retry()),
+            onConfirm: () => unawaited(_session.confirmSale()),
           ),
         );
         if (WindowClass.ofWidth(box.maxWidth).atLeast(WindowClass.medium)) {

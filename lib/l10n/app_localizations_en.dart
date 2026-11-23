@@ -39647,6 +39647,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get tillConfirmSale => 'Confirm the sale';
+
+  @override
   String get tillFailed => 'The till could not do that. Try again.';
 
   @override

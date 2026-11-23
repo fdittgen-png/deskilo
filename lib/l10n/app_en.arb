@@ -51551,6 +51551,10 @@
       }
     }
   },
+  "tillConfirmSale": "Confirm the sale",
+  "@tillConfirmSale": {
+    "description": "#4366 the till: the sale was sent and its answer was lost; send it again under the same request"
+  },
   "tillFailed": "The till could not do that. Try again.",
   "@tillFailed": {
     "description": "#4366 the till"

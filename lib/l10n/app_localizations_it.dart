@@ -40027,6 +40027,9 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get tillConfirmSale => 'Confermare la vendita';
+
+  @override
   String get tillFailed => 'La cassa non ha potuto eseguirlo. Riprovi.';
 
   @override
