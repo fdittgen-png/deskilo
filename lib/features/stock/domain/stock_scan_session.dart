@@ -27,7 +27,7 @@ enum ScanOutcome {
 
 /// A counted line: an item (and variant) with an exact quantity in its inventory unit, as a fraction.
 class ScanLine {
-  ScanLine({required this.itemId, required this.itemName, required this.unit, this.variantId, this.variantLabel, this.lotCode});
+  ScanLine({required this.itemId, required this.itemName, required this.unit, this.variantId, this.variantLabel, this.lotCode, this.expiresOn});
 
   final String itemId;
   final String itemName;
@@ -35,6 +35,9 @@ class ScanLine {
   final String? variantId;
   final String? variantLabel;
   final String? lotCode;
+
+  /// The expiry day (`YYYY-MM-DD`) a GS1 code carried, when it did.
+  final String? expiresOn;
 
   /// The quantity so far, as `num / den` of [unit].
   int num = 0;
@@ -124,6 +127,7 @@ class StockScanSession {
     bool Function(ScannedPlace place)? placeAllowed,
     bool Function(ScannedItem item)? itemAllowed,
     bool fromTag = false,
+    ({String? lot, String? expiresOn})? gs1,
   }) {
     // a tag bound to a place names that place, like its barcode does
     final place = resolution.place;
@@ -149,7 +153,8 @@ class StockScanSession {
           unit: item.unit,
           variantId: resolution.variantId,
           variantLabel: resolution.variantLabel,
-          lotCode: resolution.lotCode,
+          lotCode: gs1?.lot ?? resolution.lotCode,
+          expiresOn: gs1?.expiresOn,
         );
         final existing = lines.where(candidate.same).firstOrNull;
         if (existing != null && !addsOne) {

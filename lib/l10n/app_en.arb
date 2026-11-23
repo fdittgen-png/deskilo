@@ -45719,6 +45719,31 @@
   "@statusTo": {
     "description": "#934 workspace status / repartition wizard: statusTo"
   },
+  "stockCameraCount": "{count, plural, one{1 code read} other{{count} codes read}}",
+  "@stockCameraCount": {
+    "description": "#4360 G11 camera: stockCameraCount",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "stockCameraDenied": "The camera could not start. Allow camera access for DesKilo in the device’s settings, then try again.",
+  "@stockCameraDenied": {
+    "description": "#4360 G11 camera: stockCameraDenied"
+  },
+  "stockCameraMisread": "That code did not read cleanly — scan again.",
+  "@stockCameraMisread": {
+    "description": "#4360 G11 camera: stockCameraMisread"
+  },
+  "stockCameraOpen": "Scan with the camera",
+  "@stockCameraOpen": {
+    "description": "#4360 G11 camera: stockCameraOpen"
+  },
+  "stockCameraTitle": "Camera scanner",
+  "@stockCameraTitle": {
+    "description": "#4360 G11 camera: stockCameraTitle"
+  },
   "stockCostLabel": "Cost per unit",
   "@stockCostLabel": {
     "description": "#4161 the cost per unit of a movement"
@@ -47571,6 +47596,22 @@
         "type": "String"
       }
     }
+  },
+  "stockScanConfirm": "When the camera reads a code",
+  "@stockScanConfirm": {
+    "description": "#4360 G11 camera: stockScanConfirm"
+  },
+  "stockScanConfirmClick": "Click",
+  "@stockScanConfirmClick": {
+    "description": "#4360 G11 camera: stockScanConfirmClick"
+  },
+  "stockScanConfirmNone": "Do nothing",
+  "@stockScanConfirmNone": {
+    "description": "#4360 G11 camera: stockScanConfirmNone"
+  },
+  "stockScanConfirmVibrate": "Vibrate",
+  "@stockScanConfirmVibrate": {
+    "description": "#4360 G11 camera: stockScanConfirmVibrate"
   },
   "stockScanFailed": "The scanned code could not be read. Check the connection and scan it again.",
   "@stockScanFailed": {

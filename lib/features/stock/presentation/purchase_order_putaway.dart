@@ -253,8 +253,11 @@ class PutAwayDraft {
         }
         final current = scanner?.session.current;
         if (current != null) part.place = current.id;
+        final tracking = context.items[part.line.lineNo]?.tracking ?? 'none';
         final lot = line.lotCode;
-        if (lot != null && lot.isNotEmpty) part.lot.text = lot;
+        if (tracking != 'none' && lot != null && lot.isNotEmpty) part.lot.text = lot;
+        final expiry = tracking == 'expiry' && line.expiresOn != null ? DateTime.tryParse(line.expiresOn!) : null;
+        if (expiry != null) part.expiry = (date: expiry, problem: null);
       }
     }
     _refresh?.call();

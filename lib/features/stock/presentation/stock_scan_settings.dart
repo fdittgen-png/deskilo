@@ -27,6 +27,7 @@ class StockScanSettings extends ConsumerStatefulWidget {
 class _StockScanSettingsState extends ConsumerState<StockScanSettings> {
   final _interval = TextEditingController();
   ScanTerminator? _terminator;
+  ScanConfirm? _confirm;
   String? _error;
   bool _seeded = false;
 
@@ -44,7 +45,7 @@ class _StockScanSettingsState extends ConsumerState<StockScanSettings> {
       return;
     }
     setState(() => _error = null);
-    await ref.read(scanPrefsProvider.notifier).save(current.copyWith(intervalMs: ms, terminator: _terminator));
+    await ref.read(scanPrefsProvider.notifier).save(current.copyWith(intervalMs: ms, terminator: _terminator, confirm: _confirm));
     if (mounted) AppSnack.success(context, l10n.valuationSaved);
   }
 
@@ -57,6 +58,7 @@ class _StockScanSettingsState extends ConsumerState<StockScanSettings> {
       _seeded = true;
       _interval.text = '${prefs.intervalMs}';
       _terminator = prefs.terminator;
+      _confirm = prefs.confirm;
     }
     String label(ScanTerminator t) => switch (t) {
       ScanTerminator.either => l10n.stockScanTerminatorEither,
@@ -94,6 +96,20 @@ class _StockScanSettingsState extends ConsumerState<StockScanSettings> {
           segments: [for (final t in ScanTerminator.values) ButtonSegment(value: t, label: Text(label(t)))],
           selected: {_terminator ?? prefs.terminator},
           onSelectionChanged: (s) => setState(() => _terminator = s.first),
+        ),
+        const FormGap(),
+        Text(l10n.stockScanConfirm, style: Theme.of(context).textTheme.labelLarge),
+        const SizedBox(height: AppSpacing.xs),
+        SegmentedButton<ScanConfirm>(
+          key: const ValueKey('stock-scan-confirm'),
+          showSelectedIcon: false,
+          segments: [
+            ButtonSegment(value: ScanConfirm.none, label: Text(l10n.stockScanConfirmNone)),
+            ButtonSegment(value: ScanConfirm.vibrate, label: Text(l10n.stockScanConfirmVibrate)),
+            ButtonSegment(value: ScanConfirm.click, label: Text(l10n.stockScanConfirmClick)),
+          ],
+          selected: {_confirm ?? prefs.confirm},
+          onSelectionChanged: (s) => setState(() => _confirm = s.first),
         ),
         const FormGap(),
         Align(

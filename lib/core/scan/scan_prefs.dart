@@ -12,8 +12,21 @@ import '../storage/prefs_stores.dart';
 import 'scan_detector.dart';
 
 /// The scanner's timing and terminator on this device.
+/// How a code read by the camera is confirmed on the device: nothing, a vibration, or a click.
+enum ScanConfirm {
+  none('none'),
+  vibrate('vibrate'),
+  click('click');
+
+  const ScanConfirm(this.wire);
+
+  final String wire;
+
+  static ScanConfirm fromWire(String? wire) => values.firstWhere((c) => c.wire == wire, orElse: () => vibrate);
+}
+
 class ScanPrefs {
-  const ScanPrefs({this.intervalMs = defaultIntervalMs, this.terminator = ScanTerminator.either});
+  const ScanPrefs({this.intervalMs = defaultIntervalMs, this.terminator = ScanTerminator.either, this.confirm = ScanConfirm.vibrate});
 
   /// The default longest gap between two keys of a scan, in milliseconds.
   static const defaultIntervalMs = 50;
@@ -25,12 +38,18 @@ class ScanPrefs {
   final int intervalMs;
   final ScanTerminator terminator;
 
+  /// #4360 -- how the camera confirms a code it read.
+  final ScanConfirm confirm;
+
   Duration get interval => Duration(milliseconds: intervalMs);
 
-  ScanPrefs copyWith({int? intervalMs, ScanTerminator? terminator}) =>
-      ScanPrefs(intervalMs: (intervalMs ?? this.intervalMs).clamp(minIntervalMs, maxIntervalMs), terminator: terminator ?? this.terminator);
+  ScanPrefs copyWith({int? intervalMs, ScanTerminator? terminator, ScanConfirm? confirm}) => ScanPrefs(
+    intervalMs: (intervalMs ?? this.intervalMs).clamp(minIntervalMs, maxIntervalMs),
+    terminator: terminator ?? this.terminator,
+    confirm: confirm ?? this.confirm,
+  );
 
-  Map<String, Object?> toJson() => {'interval_ms': intervalMs, 'terminator': terminator.wire};
+  Map<String, Object?> toJson() => {'interval_ms': intervalMs, 'terminator': terminator.wire, 'confirm': confirm.wire};
 
   static ScanPrefs fromJson(Object? decoded) {
     if (decoded is! Map) return const ScanPrefs();
@@ -38,6 +57,7 @@ class ScanPrefs {
     return const ScanPrefs().copyWith(
       intervalMs: r.intOrNull('interval_ms'),
       terminator: ScanTerminator.fromWire(r.stringOrNull('terminator')),
+      confirm: ScanConfirm.fromWire(r.stringOrNull('confirm')),
     );
   }
 }
