@@ -147,8 +147,12 @@ class _EditorState extends ConsumerState<CustomerQuoteEditorScreen> {
           ..version = value.version
           ..revision = value.revision;
         final read = await commands.read(workspaceId, value.quoteId);
-        for (final (i, line) in (read?.draft?.lines ?? const <StandaloneLine>[]).indexed) {
-          if (i < _form.lines.length) _form.lines[i].lineId = line.lineId;
+        // The server answers the lines in the order they were sent: only an answer that lines up is attached.
+        final answered = read?.draft?.lines ?? const <StandaloneLine>[];
+        if (answered.length == _form.lines.length) {
+          for (final (i, line) in answered.indexed) {
+            _form.lines[i].lineId = line.lineId;
+          }
         }
         ref.invalidate(customerQuotesProvider(workspaceId));
         return true;

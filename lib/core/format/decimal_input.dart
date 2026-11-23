@@ -94,6 +94,11 @@ String? _decimalInputText(
   return negative ? '-$normal' : normal;
 }
 
+/// The number typed in [raw] as canonical dot-decimal text (`12.5`), or null: what a screen sends when the server reads
+/// the text itself. [grouping] off reads a quantity or a weight: one separator at most, always the decimal one.
+String? decimalTextFromInput(String raw, {required String locale, bool grouping = true, bool allowNegative = false}) =>
+    _decimalInputText(raw, locale: locale, grouping: grouping, allowNegative: allowNegative);
+
 /// #4161 -- a quantity typed by a member: the locale entry (`0,5`, `1 234,5`)
 /// mapped to canonical text and read exactly, or the reason it is none. A
 /// text that is no number is `malformed`; one with too many decimals or too

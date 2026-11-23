@@ -5,6 +5,7 @@
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/format/decimal_input.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../domain/standalone_invoice.dart';
@@ -32,13 +33,24 @@ String _unitLabel(BuildContext context, String code) {
 /// once the server has given one.
 class StandaloneLineForm {
   StandaloneLineForm({StandaloneLine? from})
-    : lineId = from?.lineId,
+    : _from = from,
+      lineId = from?.lineId,
       unit = from?.unitCode ?? 'hour',
       gross = from?.grossPrice ?? false,
       rateId = from?.vatRateId,
       description = TextEditingController(text: from?.description),
       quantity = TextEditingController(text: from?.quantity),
       price = TextEditingController(text: from?.unitPrice);
+
+  /// The line this form was opened with: what it does not edit (the supply kind, the base quantity) is kept as it was.
+  final StandaloneLine? _from;
+
+  /// A unit the composer does not list, shown by the label it was stored with and saved unchanged; null when listed.
+  ({String code, String label})? get unlistedUnit {
+    final from = _from;
+    if (from == null || standaloneUnits.any((u) => u.code == from.unitCode)) return null;
+    return (code: from.unitCode, label: from.unitLabel);
+  }
 
   String? lineId;
   String unit;
@@ -55,18 +67,23 @@ class StandaloneLineForm {
   }
 
   StandaloneLine toLine(BuildContext context) {
-    final un = standaloneUnits.firstWhere((u) => u.code == unit).un;
-    return StandaloneLine(
-      lineId: lineId,
+    final locale = Localizations.localeOf(context).toLanguageTag();
+    final from = _from;
+    final listed = standaloneUnits.where((u) => u.code == unit);
+    final unlisted = unlistedUnit;
+    // An unlisted unit that is still the chosen one is saved as it was stored; a listed one is read from the table.
+    final keep = listed.isEmpty && unlisted != null && unlisted.code == unit;
+    final base = from ?? const StandaloneLine(description: '', quantity: '', unitCode: 'hour', unitLabel: '', unitPrice: '');
+    return base.copyWith(
       description: description.text.trim(),
-      quantity: quantity.text.trim().replaceAll(',', '.'),
+      quantity: decimalTextFromInput(quantity.text, locale: locale, grouping: false) ?? quantity.text.trim(),
       unitCode: unit,
-      unitLabel: _unitLabel(context, unit),
-      unEceCode: un,
-      unitPrice: price.text.trim().replaceAll(',', '.'),
+      unitLabel: keep ? unlisted.label : _unitLabel(context, unit),
+      unEceCode: keep ? from!.unEceCode : (listed.isEmpty ? '' : listed.first.un),
+      unitPrice: decimalTextFromInput(price.text, locale: locale) ?? price.text.trim(),
       grossPrice: gross,
-      vatRateId: rateId,
-    );
+      vatRateId: () => rateId,
+    ).withLineId(lineId);
   }
 }
 
@@ -125,6 +142,7 @@ class StandaloneLineEditor extends StatelessWidget {
                     initialValue: form.unit,
                     decoration: InputDecoration(labelText: l.standaloneInvoiceLineUnit),
                     items: [
+                      if (form.unlistedUnit case final u?) DropdownMenuItem(value: u.code, child: Text(u.label)),
                       for (final u in standaloneUnits)
                         DropdownMenuItem(
                           value: u.code,
