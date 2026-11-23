@@ -17,9 +17,9 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/settings/setting_defaults.g.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/calendar_days.dart';
-import '../../../../core/time/clock.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/form_kit.dart';
+import '../../../workspace/providers/business_date_provider.dart';
 import '../../application/customer_quote_commands.dart';
 import '../../domain/customer_quote.dart';
 import '../../providers/customer_quote_providers.dart';
@@ -114,8 +114,7 @@ class _QuoteConversionState extends ConsumerState<_QuoteConversionSheet> {
   @override
   void initState() {
     super.initState();
-    final now = ref.read(clockProvider).now();
-    final today = DateTime(now.year, now.month, now.day);
+    final today = ref.read(businessDayProvider);
     _state = ValueNotifier(
       _Conversion(
         serviceDate: today,

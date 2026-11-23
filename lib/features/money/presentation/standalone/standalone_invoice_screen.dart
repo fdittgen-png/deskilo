@@ -18,10 +18,10 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/settings/setting_defaults.g.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../core/time/calendar_days.dart';
-import '../../../../core/time/clock.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/kit/page_title.dart';
+import '../../../workspace/providers/business_date_provider.dart';
 import '../../application/issue_standalone_invoice.dart';
 import '../../domain/standalone_invoice.dart';
 import '../../providers/money_providers.dart'
@@ -94,7 +94,7 @@ class _State extends ConsumerState<StandaloneInvoiceScreen> {
   }
 
   Future<void> _check(String workspaceId) async {
-    final draft = _draft(ref.read(clockProvider).now());
+    final draft = _draft(ref.read(businessDayProvider));
     if (draft == null) return;
     final commands = ref.read(standaloneInvoiceCommandsProvider);
     setState(() => _busy = true);
@@ -225,7 +225,7 @@ class _State extends ConsumerState<StandaloneInvoiceScreen> {
     final names = ref.watch(memberLabelsProvider);
     final customers = names.entries.toList()
       ..sort((a, b) => a.value.compareTo(b.value));
-    final today = ref.watch(clockProvider).now();
+    final today = ref.watch(businessDayProvider);
     return [
       DropdownButtonFormField<String>(
         key: const ValueKey('standalone-customer'),

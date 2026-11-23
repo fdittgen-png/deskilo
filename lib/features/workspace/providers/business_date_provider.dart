@@ -10,6 +10,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/time/business_day_providers.dart';
+import '../../../core/time/clock.dart';
 import '../../../core/time/workspace_calendar.dart';
 import 'operation_context_providers.dart';
 
@@ -35,3 +36,9 @@ class _Dates {
   final WorkspaceCalendar calendar;
   DateTime dateOf(DateTime instant) => calendar.dateOf(instant);
 }
+
+/// #4426 -- today on the active business's calendar, date-only: what a new document offers as its date (an issue date,
+/// a service date, a decision date) whatever the zone of the device. It moves at the business's midnight.
+final businessDayProvider = Provider<DateTime>(
+  (ref) => ref.watch(businessDateOfProvider)(ref.watch(clockProvider).now()),
+);

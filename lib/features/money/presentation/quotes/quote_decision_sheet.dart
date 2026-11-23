@@ -9,9 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
-import '../../../../core/time/clock.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../workspace/providers/business_date_provider.dart';
 import '../../application/customer_quote_commands.dart';
 import '../../domain/customer_quote.dart';
 import '../../providers/customer_quote_providers.dart';
@@ -53,8 +53,7 @@ abstract final class QuoteDecisionSheet {
     final revision = quote.current;
     if (revision == null) return Future.value(false);
     final l10n = context.l10n;
-    final today = ref.read(clockProvider).now();
-    final state = _Answer(DateTime(today.year, today.month, today.day));
+    final state = _Answer(ref.read(businessDayProvider));
     return showAppFormSheet(
       context,
       AppFormSheet(
