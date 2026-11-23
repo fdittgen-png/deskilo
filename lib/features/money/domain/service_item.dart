@@ -47,6 +47,7 @@ sealed class ServiceItem with _$ServiceItem implements SystemStamped {
 abstract final class ServiceLimits {
   static const int minMinutes = 5;
   static const int maxMinutes = 1440;
+  // not-mirrored: the editor's own length for one line of a catalogue, no server check
   static const int nameMaxLength = 80;
   static const int descriptionMaxLength = 2000;
   static const int categoryMaxLength = 40;

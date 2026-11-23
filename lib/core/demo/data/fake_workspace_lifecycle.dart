@@ -15,6 +15,7 @@ import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/domain/workspace_settings_save.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
+import '../../codes/dk_code.dart';
 import 'fake_workspace_state.dart';
 
 mixin FakeWorkspaceLifecycle on FakeWorkspaceState
@@ -34,7 +35,7 @@ mixin FakeWorkspaceLifecycle on FakeWorkspaceState
   Future<void> setDevMode(String workspaceId, {required bool enabled}) async {
     if (!myMember.canAdminister) {
       throw const PostgrestException(
-          message: 'not an admin of this workspace', code: 'DKN01');
+          message: 'not an admin of this workspace', code: DkCode.dkn01);
     }
     final i = workspaces.indexWhere((w) => w.id == workspaceId);
     if (i >= 0) workspaces[i] = workspaces[i].copyWith(devMode: enabled);
@@ -52,7 +53,7 @@ mixin FakeWorkspaceLifecycle on FakeWorkspaceState
   Future<List<WorkspaceOverview>> fetchAllWorkspaces() async {
     if (!platformOwner) {
       throw const PostgrestException(
-          message: 'platform owners only', code: 'DKN01');
+          message: 'platform owners only', code: DkCode.dkn01);
     }
     return List.of(allWorkspaces);
   }
@@ -61,7 +62,7 @@ mixin FakeWorkspaceLifecycle on FakeWorkspaceState
   Future<List<WorkspaceOwner>> fetchWorkspaceOwners(String workspaceId) async {
     if (!platformOwner) {
       throw const PostgrestException(
-          message: 'platform owners only', code: 'DKN01');
+          message: 'platform owners only', code: DkCode.dkn01);
     }
     ownerReads.add(workspaceId);
     return List.of(ownersByWorkspace[workspaceId] ?? const []);
@@ -203,7 +204,7 @@ mixin FakeWorkspaceLifecycle on FakeWorkspaceState
       throw PostgrestException(
         message:
             'retention: the books of this space are kept; nothing was deleted',
-        code: 'DKE01',
+        code: DkCode.dke01,
         details: kept,
       );
     }
