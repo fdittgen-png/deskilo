@@ -21298,11 +21298,11 @@
   "@stockPutAwayRemaining": {
     "description": "#4171 receiving into stock: a label or message"
   },
-  "stockPutAwayTagAllRead": "Tutti i {needed} pezzi di questa riga hanno già un tag.",
+  "stockPutAwayTagAllRead": "{needed, plural, one{L'unico pezzo di questa riga ({needed}) ha già un tag.} other{Tutti i {needed} pezzi di questa riga hanno già un tag.}}",
   "stockPutAwayTagField": "Tag del pezzo successivo",
   "stockPutAwayTagRemove": "Rimuovere il tag {code}",
-  "stockPutAwayTagsCount": "{read} pezzi letti su {needed}",
-  "stockPutAwayTagsMissing": "Un tag per pezzo: {needed} necessari, {read} letti.",
+  "stockPutAwayTagsCount": "{read, plural, one{{read} pezzo letto} other{{read} pezzi letti}} su {needed, plural, one{{needed}} other{{needed}}}",
+  "stockPutAwayTagsMissing": "Un tag per pezzo: {needed, plural, one{{needed} necessario} other{{needed} necessari}}, {read, plural, one{{read} letto} other{{read} letti}}.",
   "stockPutAwayTagsTitle": "Tag dei pezzi",
   "stockPutAwayTitle": "Collocare {order}",
   "@stockPutAwayTitle": {

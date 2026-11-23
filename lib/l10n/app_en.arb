@@ -46928,7 +46928,7 @@
   },
   "stockPutAwayPieceProblem": "Piece {piece}: {problem}",
   "@stockPutAwayPieceProblem": {
-    "description": "#4379 G13b put-away by piece",
+    "description": "#4379 G13b put-away by piece [not a count: piece] -- the piece's place among the line's tags",
     "placeholders": {
       "piece": {
         "type": "int"
@@ -46970,7 +46970,7 @@
   "@stockPutAwayRemaining": {
     "description": "#4171 receiving into stock: a label or message"
   },
-  "stockPutAwayTagAllRead": "All {needed} pieces of this line already have a tag.",
+  "stockPutAwayTagAllRead": "{needed, plural, one{The {needed} piece of this line already has a tag.} other{All {needed} pieces of this line already have a tag.}}",
   "@stockPutAwayTagAllRead": {
     "description": "#4379 G13b put-away by piece",
     "placeholders": {
@@ -46992,7 +46992,7 @@
       }
     }
   },
-  "stockPutAwayTagsCount": "{read} of {needed} pieces read",
+  "stockPutAwayTagsCount": "{read, plural, one{{read} piece} other{{read} pieces}} read of {needed, plural, one{{needed}} other{{needed}}}",
   "@stockPutAwayTagsCount": {
     "description": "#4379 G13b put-away by piece",
     "placeholders": {
@@ -47004,7 +47004,7 @@
       }
     }
   },
-  "stockPutAwayTagsMissing": "Read one tag per piece: {needed} needed, {read} read.",
+  "stockPutAwayTagsMissing": "Read one tag per piece: {needed, plural, one{{needed} needed} other{{needed} needed}}, {read, plural, one{{read} read} other{{read} read}}.",
   "@stockPutAwayTagsMissing": {
     "description": "#4379 G13b put-away by piece",
     "placeholders": {

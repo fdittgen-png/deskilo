@@ -36595,7 +36595,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String stockPutAwayTagAllRead(int needed) {
-    return 'Les $needed pièces de cette ligne ont déjà une puce.';
+    String _temp0 = intl.Intl.pluralLogic(
+      needed,
+      locale: localeName,
+      other: 'Les $needed pièces de cette ligne ont déjà une puce.',
+      one: 'La $needed pièce de cette ligne a déjà une puce.',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -36608,12 +36614,36 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String stockPutAwayTagsCount(int read, int needed) {
-    return '$read pièces lues sur $needed';
+    String _temp0 = intl.Intl.pluralLogic(
+      read,
+      locale: localeName,
+      other: '$read pièces lues',
+      one: '$read pièce lue',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      needed,
+      locale: localeName,
+      other: '$needed',
+      one: '$needed',
+    );
+    return '$_temp0 sur $_temp1';
   }
 
   @override
   String stockPutAwayTagsMissing(int needed, int read) {
-    return 'Lisez une puce par pièce : $needed attendues, $read lues.';
+    String _temp0 = intl.Intl.pluralLogic(
+      needed,
+      locale: localeName,
+      other: '$needed attendues',
+      one: '$needed attendue',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      read,
+      locale: localeName,
+      other: '$read lues',
+      one: '$read lue',
+    );
+    return 'Lisez une puce par pièce : $_temp0, $_temp1.';
   }
 
   @override

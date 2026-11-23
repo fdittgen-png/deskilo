@@ -1,10 +1,10 @@
 {
   "@@locale": "de",
   "stockPutAwayTagsTitle": "Tags der Stücke",
-  "stockPutAwayTagsCount": "{read} von {needed} Stücken gelesen",
+  "stockPutAwayTagsCount": "{read, plural, one{{read} Stück} other{{read} Stücke}} von {needed, plural, one{{needed}} other{{needed}}} gelesen",
   "stockPutAwayTagField": "Tag des nächsten Stücks",
-  "stockPutAwayTagAllRead": "Alle {needed} Stücke dieser Zeile haben schon einen Tag.",
-  "stockPutAwayTagsMissing": "Ein Tag pro Stück lesen: {needed} nötig, {read} gelesen.",
+  "stockPutAwayTagAllRead": "{needed, plural, one{Das {needed} Stück dieser Zeile hat schon einen Tag.} other{Alle {needed} Stücke dieser Zeile haben schon einen Tag.}}",
+  "stockPutAwayTagsMissing": "Ein Tag pro Stück lesen: {needed, plural, one{{needed} nötig} other{{needed} nötig}}, {read, plural, one{{read} gelesen} other{{read} gelesen}}.",
   "stockPutAwayPieceProblem": "Stück {piece}: {problem}",
   "stockPutAwayTagRemove": "Tag {code} entfernen"
 }

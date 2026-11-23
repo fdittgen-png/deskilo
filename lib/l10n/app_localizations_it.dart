@@ -36479,7 +36479,13 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String stockPutAwayTagAllRead(int needed) {
-    return 'Tutti i $needed pezzi di questa riga hanno già un tag.';
+    String _temp0 = intl.Intl.pluralLogic(
+      needed,
+      locale: localeName,
+      other: 'Tutti i $needed pezzi di questa riga hanno già un tag.',
+      one: 'L\'unico pezzo di questa riga ($needed) ha già un tag.',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -36492,12 +36498,36 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String stockPutAwayTagsCount(int read, int needed) {
-    return '$read pezzi letti su $needed';
+    String _temp0 = intl.Intl.pluralLogic(
+      read,
+      locale: localeName,
+      other: '$read pezzi letti',
+      one: '$read pezzo letto',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      needed,
+      locale: localeName,
+      other: '$needed',
+      one: '$needed',
+    );
+    return '$_temp0 su $_temp1';
   }
 
   @override
   String stockPutAwayTagsMissing(int needed, int read) {
-    return 'Un tag per pezzo: $needed necessari, $read letti.';
+    String _temp0 = intl.Intl.pluralLogic(
+      needed,
+      locale: localeName,
+      other: '$needed necessari',
+      one: '$needed necessario',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      read,
+      locale: localeName,
+      other: '$read letti',
+      one: '$read letto',
+    );
+    return 'Un tag per pezzo: $_temp0, $_temp1.';
   }
 
   @override

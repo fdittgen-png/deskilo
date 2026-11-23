@@ -21298,11 +21298,11 @@
   "@stockPutAwayRemaining": {
     "description": "#4171 receiving into stock: a label or message"
   },
-  "stockPutAwayTagAllRead": "Les {needed} pièces de cette ligne ont déjà une puce.",
+  "stockPutAwayTagAllRead": "{needed, plural, one{La {needed} pièce de cette ligne a déjà une puce.} other{Les {needed} pièces de cette ligne ont déjà une puce.}}",
   "stockPutAwayTagField": "Puce de la pièce suivante",
   "stockPutAwayTagRemove": "Retirer la puce {code}",
-  "stockPutAwayTagsCount": "{read} pièces lues sur {needed}",
-  "stockPutAwayTagsMissing": "Lisez une puce par pièce : {needed} attendues, {read} lues.",
+  "stockPutAwayTagsCount": "{read, plural, one{{read} pièce lue} other{{read} pièces lues}} sur {needed, plural, one{{needed}} other{{needed}}}",
+  "stockPutAwayTagsMissing": "Lisez une puce par pièce : {needed, plural, one{{needed} attendue} other{{needed} attendues}}, {read, plural, one{{read} lue} other{{read} lues}}.",
   "stockPutAwayTagsTitle": "Puces des pièces",
   "stockPutAwayTitle": "Ranger {order}",
   "@stockPutAwayTitle": {

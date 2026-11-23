@@ -1,10 +1,10 @@
 {
   "@@locale": "fr",
   "stockPutAwayTagsTitle": "Puces des pièces",
-  "stockPutAwayTagsCount": "{read} pièces lues sur {needed}",
+  "stockPutAwayTagsCount": "{read, plural, one{{read} pièce lue} other{{read} pièces lues}} sur {needed, plural, one{{needed}} other{{needed}}}",
   "stockPutAwayTagField": "Puce de la pièce suivante",
-  "stockPutAwayTagAllRead": "Les {needed} pièces de cette ligne ont déjà une puce.",
-  "stockPutAwayTagsMissing": "Lisez une puce par pièce : {needed} attendues, {read} lues.",
+  "stockPutAwayTagAllRead": "{needed, plural, one{La {needed} pièce de cette ligne a déjà une puce.} other{Les {needed} pièces de cette ligne ont déjà une puce.}}",
+  "stockPutAwayTagsMissing": "Lisez une puce par pièce : {needed, plural, one{{needed} attendue} other{{needed} attendues}}, {read, plural, one{{read} lue} other{{read} lues}}.",
   "stockPutAwayPieceProblem": "Pièce {piece} : {problem}",
   "stockPutAwayTagRemove": "Retirer la puce {code}"
 }

@@ -1,10 +1,10 @@
 {
   "@@locale": "it",
   "stockPutAwayTagsTitle": "Tag dei pezzi",
-  "stockPutAwayTagsCount": "{read} pezzi letti su {needed}",
+  "stockPutAwayTagsCount": "{read, plural, one{{read} pezzo letto} other{{read} pezzi letti}} su {needed, plural, one{{needed}} other{{needed}}}",
   "stockPutAwayTagField": "Tag del pezzo successivo",
-  "stockPutAwayTagAllRead": "Tutti i {needed} pezzi di questa riga hanno già un tag.",
-  "stockPutAwayTagsMissing": "Un tag per pezzo: {needed} necessari, {read} letti.",
+  "stockPutAwayTagAllRead": "{needed, plural, one{L'unico pezzo di questa riga ({needed}) ha già un tag.} other{Tutti i {needed} pezzi di questa riga hanno già un tag.}}",
+  "stockPutAwayTagsMissing": "Un tag per pezzo: {needed, plural, one{{needed} necessario} other{{needed} necessari}}, {read, plural, one{{read} letto} other{{read} letti}}.",
   "stockPutAwayPieceProblem": "Pezzo {piece}: {problem}",
   "stockPutAwayTagRemove": "Rimuovere il tag {code}"
 }

@@ -68,7 +68,7 @@ class _Receiving implements StockReceivingCommands {
 
   final DemoStockReceivingCommands _inner;
   final sent = <(String, List<PutAwayAllocation>)>[];
-  Object? refuseNext;
+  Exception? refuseNext;
 
   @override
   Future<PutAwayResult> putAway(String workspaceId, String receiptId, List<PutAwayAllocation> allocations, String requestId) async {
@@ -177,14 +177,14 @@ void main() {
     group('on a $name', () {
       testWidgets('3 of 12 pieces are put away with their 3 tags; a tag read twice is refused', (tester) async {
         final receiving = await _openPutAway(tester, size, '12');
-        expect(find.text(_en.stockPutAwayTagsCount(0, 0)), findsOneWidget, reason: 'nothing read, nothing put away yet');
+        expect(find.text(_en.stockPutAwayTagsCount(0, 12)), findsOneWidget, reason: 'nothing read of 12');
         await _read(tester, '04:aa:11:bb');
         await _read(tester, '04aa11cc');
         await _read(tester, '04AA11BB');
         expect(find.text(_en.stockScanAlreadyRead('04AA11BB')), findsOneWidget, reason: 'the same tag, written otherwise');
         await _read(tester, '04aa11dd');
         expect(_quantity(tester), '3', reason: 'the quantity follows the tags');
-        expect(find.text(_en.stockPutAwayTagsCount(3, 3)), findsOneWidget);
+        expect(find.text(_en.stockPutAwayTagsCount(3, 12)), findsOneWidget);
         await _tap(tester, 'putaway-confirm');
         final (_, allocations) = receiving.sent.single;
         expect(allocations.single.quantity, '3');
