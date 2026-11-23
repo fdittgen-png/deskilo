@@ -1,4 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
+-- utc-date-file: the assertions hold with the business's day one day ahead of and one day behind the database's (workspace_today forced to current_date +/- 1 on the dev project, #4384)
 -- #2569 / 0473-0474: the premises lease the space holds as tenant -- its
 -- terms with their history, the scheduled expenses they generate, and its
 -- termination. Real roles; every refusal is followed by a readback.

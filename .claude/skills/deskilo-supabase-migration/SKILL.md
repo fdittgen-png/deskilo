@@ -124,5 +124,6 @@ until the K4 lint, #3731, exists). Rules: AGENT_RULES, "Every migration ends wit
   A guard comparing whole rows subtracts `public.system_column_names()`.
 - Decisions apply through an AFTER UPDATE trigger on `events`, never a branch in
   `respond_to_event` (0151 idiom).
+- `export_workspace_records` carries the literal table list the export lint reads (`workspace_export_coverage_test`): a table added to the export is a WHOLE restatement of that function in the latest migration, never an anchored patch.
 - A rendering that exists in SQL and Dart (`profile_full_name` / `fullName`, …) changes
   in both; `personal_info_test` pins Dart to the SQL harness output.

@@ -1,4 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
+-- utc-date-file: the assertions hold with the business's day one day ahead of and one day behind the database's (workspace_today forced to current_date +/- 1 on the dev project, #4384)
 -- #2362 (0434, 0435, 0439, 0440): the journey of a US seller on the gate the migrations
 -- seed -- no fixture row opens it. A New York space with the sales tax of its
 -- ZIP code and the taxability of its kinds (fixtures of this file: no rate ships)

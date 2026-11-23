@@ -1,4 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
+-- utc-date-file: the assertions hold with the business's day one day ahead of and one day behind the database's (workspace_today forced to current_date +/- 1 on the dev project, #4384)
 -- #4173 (0865, G6 A): goods are traced to documents and payments, and valued honestly. A movement
 -- reaches its receipt, order, the several bills linked to that order, each bill's obligation and the
 -- allocations, payments and reversals that settle it; a document reaches the exact goods put away

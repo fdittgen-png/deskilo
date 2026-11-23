@@ -1,4 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
+-- utc-date-file: the assertions hold with the business's day one day ahead of and one day behind the database's (workspace_today forced to current_date +/- 1 on the dev project, #4384)
 -- #3838 (0750, L1 of #3787): the match history. The statement of a past day
 -- reads a match as it stood then: a day between a match's creation and its
 -- approval says "awaiting approval" with the full amount still due, the day

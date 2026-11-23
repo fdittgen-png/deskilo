@@ -1,4 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
+-- utc-date-file: the dates of global reference rows (tax and rate registries): no business day is involved, the database's own date is the one meant (#4384)
 -- #2479 (C3 of #2476, 0431): the issuing gate, the tax point policy and the
 -- shapes of the four new domains are ROWS. One real create_invoice per scene
 -- against a Canadian seller (the same fixture as 183): turning the country's

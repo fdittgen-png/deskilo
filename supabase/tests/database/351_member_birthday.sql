@@ -1,4 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
+-- utc-date-file: the assertions hold with the business's day one day ahead of and one day behind the database's (workspace_today forced to current_date +/- 1 on the dev project, #4384)
 -- #3278 (0668, 0669) — the birthday is read by its person, by viewPersonalData
 -- and managePrivacy holders of a shared workspace and by nobody else (a billing
 -- clerk reads the address, not the birthday), through the projection AND by a

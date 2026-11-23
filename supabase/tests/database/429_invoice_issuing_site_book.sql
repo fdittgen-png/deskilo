@@ -1,4 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
+-- utc-date-file: the assertions hold with the business's day one day ahead of and one day behind the database's (workspace_today forced to current_date +/- 1 on the dev project, #4384)
 --
 -- #3968 (0770) -- an invoice posts in the book of its own issuing site only.
 -- Two sites with a book each and a member whose home is the second site: the
