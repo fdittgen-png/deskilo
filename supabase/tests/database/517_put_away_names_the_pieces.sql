@@ -5,16 +5,18 @@
 -- already-bound tag is refused with the allocation (and the unit) in the detail. A per-batch item needs no units and
 -- refuses them. The over-allocation rule holds. Rolled back.
 begin;
-select plan(14);
+select plan(18);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
 $f$;
-create or replace function pg_temp.run_as(p_user uuid, p_sql text)
+create or replace function pg_temp.run_as(p_user uuid, p_sql text, p_delegated boolean default false)
 returns text language plpgsql as $f$
 declare v text; d text;
 begin
-  perform set_config('request.jwt.claims', jsonb_build_object('sub', p_user, 'role', 'authenticated', 'aal', 'aal2')::text, true);
+  perform set_config('request.jwt.claims',
+    (jsonb_build_object('sub', p_user, 'role', 'authenticated', 'aal', 'aal2')
+     || case when p_delegated then '{"client_id": "assistant"}'::jsonb else '{}'::jsonb end)::text, true);
   set local role authenticated;
   begin
     execute p_sql into v;
@@ -47,11 +49,19 @@ $f$;
 grant execute on all functions in schema pg_temp to authenticated, anon;
 
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
-values (pg_temp.u(1), '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', 'putaway-1@deskilo.test', '', now(), now(), now());
+select pg_temp.u(n), '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', 'putaway-' || n || '@deskilo.test', '', now(), now(), now() from generate_series(1, 2) n;
 insert into public.workspaces (id, name, country_code, currency_code, timezone, created_by, feature_flags, role_permissions) values
   (pg_temp.u(101), 'Pieces put away', 'FR', 'EUR', 'Europe/Paris', pg_temp.u(1),
+   '{"services": true, "purchases": true, "purchaseOrders": true, "stockManagement": true, "stockReceiving": true, "stockTags": true}', '{}'),
+  (pg_temp.u(102), 'Pieces elsewhere', 'FR', 'EUR', 'Europe/Paris', pg_temp.u(2),
    '{"services": true, "purchases": true, "purchaseOrders": true, "stockManagement": true, "stockReceiving": true, "stockTags": true}', '{}');
-insert into public.members (id, workspace_id, user_id, is_owner, is_admin, status) values (pg_temp.u(201), pg_temp.u(101), pg_temp.u(1), true, true, 'active');
+insert into public.members (id, workspace_id, user_id, is_owner, is_admin, status) values
+  (pg_temp.u(201), pg_temp.u(101), pg_temp.u(1), true, true, 'active'),
+  (pg_temp.u(202), pg_temp.u(102), pg_temp.u(2), true, true, 'active');
+insert into public.services (id, workspace_id, name, price_cents, active, stock, inventory_unit, tracking, stockable, tag_mode)
+values (pg_temp.u(311), pg_temp.u(102), 'Foreign phones', 9000, true, null, 'piece', 'serial', true, 'per_unit');
+insert into public.stock_tagged_units (id, workspace_id, item_id, location_id, state)
+values (pg_temp.u(950), pg_temp.u(102), pg_temp.u(311), (select id from public.stock_locations where workspace_id = pg_temp.u(102) and code = 'MAIN'), 'in_stock');
 insert into public.suppliers (id, workspace_id, supplier_number, name) values (pg_temp.u(401), pg_temp.u(101), 'S-1', 'Phone Co');
 insert into public.services (id, workspace_id, name, price_cents, active, stock, inventory_unit, tracking, stockable, tag_mode) values
   (pg_temp.u(301), pg_temp.u(101), 'Phones', 9000, true, null, 'piece', 'serial', true, 'per_unit'),
@@ -78,6 +88,8 @@ select is(pg_temp.putaway(712, '[' || pg_temp.alloc(1, 3, '[{"tag": "E2806894000
 select is(pg_temp.putaway(713, '[' || pg_temp.alloc(1, 1, '[{"tag": "E28068940000401561D68CF0"}]') || ']'),
   'ERR DKG22 {"line": 1, "unit": 1, "allocation": 0}', 'a tag already bound elsewhere in the business is refused at its unit');
 select is(left(pg_temp.putaway(714, '[' || pg_temp.alloc(2, 1, pg_temp.tags(20, 1)) || ']'), 9), 'ERR DKG11', 'a per-batch item refuses units');
+select is(pg_temp.putaway(732, '[' || pg_temp.alloc(1, 1, '[{"piece_id": "' || pg_temp.u(950) || '"}]') || ']'), 'ERR DKG26 {"line": 1, "unit": 1, "allocation": 0}',
+  'a piece of another business named by its id is refused');
 select is(pg_temp.pieces(), 0::bigint, 'and no piece was made by any of them');
 
 -- ── the put-away that names its pieces ──
@@ -90,6 +102,13 @@ select is(pg_temp.putaway(721, '[' || pg_temp.alloc(2, 5) || ']') like '{%', tru
 select is(left(pg_temp.putaway(722, '[' || pg_temp.alloc(1, 10, pg_temp.tags(30, 10)) || ']'), 9), 'ERR DKG11', 'more than was delivered is still refused (over-allocated)');
 select is(pg_temp.putaway(723, '[' || pg_temp.alloc(1, 9, pg_temp.tags(40, 9)) || ']') like '{%', true, 'the nine left are put away with nine tags');
 select is(pg_temp.run_as(pg_temp.u(1), format('select public.stock_pieces_check_v1(%L, %L)::text', pg_temp.u(101), pg_temp.u(301))), '[]', 'the pieces equal what the ledger holds');
+
+-- ── who may put away, and whose pieces ──
+select is(pg_temp.run_as(pg_temp.u(2), format('select public.put_away_receipt_v1(%L, %L, %L, %L::jsonb)::text', pg_temp.u(101), current_setting('t.receipt')::uuid, pg_temp.u(730),
+  '[' || pg_temp.alloc(1, 1, pg_temp.tags(60, 1)) || ']')), 'ERR DKN01 ', 'a member of another business puts nothing away');
+select is(pg_temp.run_as(pg_temp.u(1), format('select public.put_away_receipt_v1(%L, %L, %L, %L::jsonb)::text', pg_temp.u(101), current_setting('t.receipt')::uuid, pg_temp.u(731),
+  '[' || pg_temp.alloc(1, 1, pg_temp.tags(61, 1)) || ']'), true), 'ERR DKN01 ', 'an assistant session puts nothing away');
+select is(pg_temp.pieces(), 12::bigint, 'and no piece was made by either');
 
 select * from finish();
 rollback;
