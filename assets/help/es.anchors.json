@@ -138,6 +138,7 @@
   "user.money.stock.nfc": "Etiquetas con el NFC del teléfono",
   "user.money.till": "Caja",
   "user.money.stock.rfid": "Etiquetas RFID: una por lote o una por pieza",
+  "user.money.stock.bulkread": "Lectura de muchas etiquetas",
   "user.money.stock.value": "Valor de las existencias y origen de la mercancía",
   "user.money.stock.reversals": "Devoluciones, correcciones y recuentos",
   "user.money.stock.cycle": "Recuentos cíclicos",

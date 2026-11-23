@@ -1,0 +1,131 @@
+{
+  "@@locale": "en",
+  "stockBulkReadTitle": "Reading many tags",
+  "@stockBulkReadTitle": {
+    "description": "#4364 reading many tags"
+  },
+  "stockBulkReadField": "Tag reader input",
+  "@stockBulkReadField": {
+    "description": "#4364 reading many tags"
+  },
+  "stockBulkReadHint": "Read the tags with your reader. Each tag counts once, however often it is read.",
+  "@stockBulkReadHint": {
+    "description": "#4364 reading many tags"
+  },
+  "stockBulkReadCount": "{count, plural, one{1 tag read} other{{count} tags read}}",
+  "@stockBulkReadCount": {
+    "description": "#4364 reading many tags",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "stockBulkReadRepeats": "{n, plural, one{1 repeated read ignored} other{{n} repeated reads ignored}}",
+  "@stockBulkReadRepeats": {
+    "description": "#4364 reading many tags",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "stockBulkReadDropped": "{n, plural, one{1 tag left out: the read is full} other{{n} tags left out: the read is full}}",
+  "@stockBulkReadDropped": {
+    "description": "#4364 reading many tags",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "stockBulkReadPieces": "{item} · {count, plural, one{1 piece} other{{count} pieces}}",
+  "@stockBulkReadPieces": {
+    "description": "#4364 reading many tags",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "stockBulkReadUnknown": "Tags nobody knows",
+  "@stockBulkReadUnknown": {
+    "description": "#4364 reading many tags"
+  },
+  "stockBulkReadNotInStock": "Pieces that are not in stock",
+  "@stockBulkReadNotInStock": {
+    "description": "#4364 reading many tags"
+  },
+  "stockBulkReadNotPieces": "Tags that name no piece",
+  "@stockBulkReadNotPieces": {
+    "description": "#4364 reading many tags"
+  },
+  "stockBulkReadStop": "Stop reading",
+  "@stockBulkReadStop": {
+    "description": "#4364 reading many tags"
+  },
+  "stockBulkReadAgain": "Read again",
+  "@stockBulkReadAgain": {
+    "description": "#4364 reading many tags"
+  },
+  "stockBulkReadOpen": "Read many tags",
+  "@stockBulkReadOpen": {
+    "description": "#4364 reading many tags"
+  },
+  "stockBulkReadConfirm": "Fill the count",
+  "@stockBulkReadConfirm": {
+    "description": "#4364 reading many tags"
+  },
+  "stockBulkReadDone": "{lines, plural, one{1 line} other{{lines} lines}} counted, {left, plural, one{1 tag} other{{left} tags}} left out",
+  "@stockBulkReadDone": {
+    "description": "#4364 reading many tags",
+    "placeholders": {
+      "lines": {
+        "type": "int"
+      },
+      "left": {
+        "type": "int"
+      }
+    }
+  },
+  "stockBulkReadResolving": "Checking the tags…",
+  "@stockBulkReadResolving": {
+    "description": "#4364 reading many tags"
+  },
+  "stockBulkReadReasonNotAPiece": "names no piece",
+  "@stockBulkReadReasonNotAPiece": {
+    "description": "#4364 reading many tags"
+  },
+  "stockBulkReadReasonAlready": "already counted: the first read of a line is final",
+  "@stockBulkReadReasonAlready": {
+    "description": "#4364 reading many tags"
+  },
+  "stockBulkReadReasonInvalid": "cannot be read",
+  "@stockBulkReadReasonInvalid": {
+    "description": "#4364 reading many tags"
+  },
+  "stockBulkReadReasonNotCounted": "not counted",
+  "@stockBulkReadReasonNotCounted": {
+    "description": "#4364 reading many tags"
+  },
+  "stockBulkReadReasonNotInStock": "not in stock",
+  "@stockBulkReadReasonNotInStock": {
+    "description": "#4364 reading many tags"
+  },
+  "stockBulkReadReasonOtherPlace": "belongs to another place",
+  "@stockBulkReadReasonOtherPlace": {
+    "description": "#4364 reading many tags"
+  },
+  "stockBulkReadLimit": "At most {limit, plural, one{1 tag} other{{limit} tags}} per read",
+  "@stockBulkReadLimit": {
+    "description": "#4364 reading many tags",
+    "placeholders": {
+      "limit": {
+        "type": "int"
+      }
+    }
+  }
+}

@@ -3026,6 +3026,17 @@ Mit der Funktion *Tags* hat ein Artikel einen **Tag-Modus**, der an seiner Grupp
 - Der Modus eines Artikels, der schon Tags hat, ändert sich erst, wenn die Tags zurückgegeben sind oder der Bestand null ist; eine Änderung der Gruppe überspringt den Artikel dann und führt ihn als beibehalten auf. Ein Tag an einem Lagerplatz bezeichnet immer genau einen Platz.
 - Ein Tag-Code ist ein UHF-Etikett (EPC; ein SGTIN-96 liest der Server als GTIN und Seriennummer) oder ein NFC-Chip, in Großbuchstaben-Hex gespeichert und im Betrieb über Artikel, Stücke und Plätze eindeutig. Zum Binden und Zurückgeben braucht es das Recht, das Lager zu verwalten, zum Lesen das Recht, es zu sehen.
 
+### Viele Etiketten lesen
+
+**Zielgruppe:** Mitglied
+
+Sind die Funktionen *Etiketten* und *Etikettenlesung* an, bietet eine Zähl-Aufgabe **Viele Etiketten lesen**. Halten Sie ein UHF-Lesegerät (es tippt wie eine Tastatur) vor das Regal: Jede Etikette wird einmal behalten, wie oft sie auch gelesen wird, bis zur größten Zahl von Etiketten je Lesung (**500**, sofern Ihre Administration keine andere Zahl festlegt). Das Blatt zeigt während des Lesens, wie viele Stücke je Artikel gefunden wurden; unbekannte Etiketten, Stücke, die nicht im Bestand sind, und Etiketten ohne Stück stehen getrennt.
+
+- **Lesen beenden** friert die Summe ein, danach **Zählung füllen**. Vorher ändert sich nichts, und ein Wiederholen antwortet nur einmal.
+- Eine Zeile eines stückgeführten Artikels wird durch die an ihrem Platz gelesenen Stücke ihres Artikels gezählt; andere Zeilen bleiben offen. Die erste Lesung einer Zeile gilt: Die Etikette einer schon gezählten Zeile wird ausgelassen.
+- Wer nur zählen darf, sieht, was gelesen wurde, nie was erwartet war. Wer das Lager verwaltet, sieht auch, welche erwarteten Stücke nicht gelesen wurden.
+- Die Zählung wartet danach wie jede Zählung auf ihre Freigabe; kein Bestand bewegt sich.
+
 ### Lagerwert und Herkunft der Ware
 
 **Zielgruppe:** Administrator:in · Inhaber

@@ -3167,6 +3167,18 @@ Con la función *Etiquetas* activada, un artículo tiene un **modo de etiqueta**
 - El modo de un artículo que ya tiene etiquetas no cambia hasta retirarlas o hasta que su stock sea cero; un cambio del grupo salta entonces el artículo y lo lista como conservado. Una etiqueta de un lugar designa siempre un solo lugar.
 - Un código de etiqueta es una etiqueta UHF (EPC; el servidor lee un SGTIN-96 como GTIN y número de serie) o un chip NFC, guardado en hexadecimal mayúsculo y único en la empresa entre artículos, piezas y lugares. Vincular y retirar exigen el derecho a gestionar el stock; leer, el de verlo.
 
+<!-- anchor: user.money.stock.bulkread -->
+### Lectura de muchas etiquetas
+
+**Público:** Miembro
+
+Con las funciones *Etiquetas* y *Lectura de etiquetas* activadas, una tarea de recuento ofrece **Leer muchas etiquetas**. Apunte un lector UHF (escribe como un teclado) hacia el estante: cada etiqueta se guarda una vez, por muchas veces que se lea, hasta el máximo de etiquetas de una lectura (**500**, salvo otro valor fijado por su administrador). La hoja muestra, mientras lee, cuántas piezas de cada artículo se encontraron; las etiquetas desconocidas, las piezas que no están en stock y las etiquetas sin pieza se listan aparte.
+
+- Pulse **Detener la lectura** para congelar el total y luego **Rellenar el recuento**. Nada cambia antes, y un reintento responde una sola vez.
+- Una línea de un artículo seguido por pieza se cuenta con las piezas de su artículo leídas en su lugar; las demás líneas siguen abiertas. La primera lectura de una línea es definitiva: la etiqueta de una línea ya contada se descarta.
+- Quien solo puede contar ve lo leído, nunca lo esperado. Quien gestiona el stock ve además qué piezas esperadas no se leyeron.
+- El recuento espera después su aprobación como cualquier recuento; ningún saldo se mueve.
+
 <!-- anchor: user.money.stock.value -->
 ### Valor de las existencias y origen de la mercancía
 

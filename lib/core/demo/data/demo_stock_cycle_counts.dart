@@ -17,6 +17,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../codes/dk_code.dart';
 import 'demo_stock_ledger.dart';
+import 'demo_stock_tags.dart';
 
 PostgrestException _refused(String code, String message) => PostgrestException(message: message, code: code);
 
@@ -26,12 +27,13 @@ String _day(DateTime at) => at.toIso8601String().substring(0, 10);
 
 /// The in-memory cycle counts of the reference business.
 class DemoStockCycleCounts implements StockCycleCounts {
-  DemoStockCycleCounts(this._workspaceId, this._ledger, this._reversals, this._registry, this._held, this._now);
+  DemoStockCycleCounts(this._workspaceId, this._ledger, this._reversals, this._registry, this._tags, this._held, this._now);
 
   final String _workspaceId;
   final DemoStockLedger _ledger;
   final StockReversals _reversals;
   final StockRegistry _registry;
+  final DemoStockTags _tags;
 
   /// What the person holds: a blind counter does not see what the ledger expects.
   final Set<WorkspacePermission> Function() _held;
@@ -252,5 +254,53 @@ class DemoStockCycleCounts implements StockCycleCounts {
           exact: e.value.exact,
         ),
     ];
+  }
+
+  final Map<String, BulkCountResult> _bulk = {};
+
+  @override
+  Future<BulkCountResult> countByTagRead(String workspaceId, {required String requestId, required String taskId, required List<String> codes}) async {
+    if (_bulk[requestId] case final done?) {
+      return BulkCountResult(taskState: done.taskState, lines: done.lines, leftOut: done.leftOut, missing: done.missing, replayed: true);
+    }
+    if (!_mine(workspaceId) || !_lines.containsKey(taskId)) {
+      if (_mine(workspaceId)) await _seed();
+      if (!_mine(workspaceId) || !_lines.containsKey(taskId)) throw _refused(DkCode.dkg04, 'not a task of this business');
+    }
+    if (_state[taskId] != CountTaskState.open) throw _refused(DkCode.dkg19, 'this task is no longer open');
+    final held = _held();
+    final sees = held.contains(WorkspacePermission.manageStock) || held.contains(WorkspacePermission.approveStockAdjustments);
+    final seen = <String>{};
+    final byItem = <String, int>{};
+    final left = <BulkLeftOut>[];
+    for (final raw in codes) {
+      final typed = raw.trim();
+      if (typed.isEmpty || raw.length > 200) {
+        left.add(BulkLeftOut(code: typed, reason: 'invalid'));
+        continue;
+      }
+      final code = DemoStockTags.normalise(typed);
+      if (!seen.add(code)) continue;
+      final item = _tags.pieceItemOf(code);
+      if (item == null) {
+        left.add(BulkLeftOut(code: code, reason: 'not_a_piece'));
+      } else {
+        byItem[item] = (byItem[item] ?? 0) + 1;
+      }
+    }
+    final counted = <BulkCountedLine>[];
+    for (final line in [..._lines[taskId]!]) {
+      final n = byItem[line.itemId];
+      if (line.state != CountLineState.pending || n == null) continue;
+      await countLine(workspaceId, line.lineId, '$n', 'bulk-$requestId-${line.lineId}');
+      counted.add(BulkCountedLine(lineId: line.lineId, itemId: line.itemId, locationId: line.locationId, read: n, state: 'counted'));
+    }
+    return _bulk[requestId] = BulkCountResult(
+      taskState: _state[taskId]!,
+      lines: counted,
+      leftOut: left,
+      missing: sees ? const [] : null,
+      replayed: false,
+    );
   }
 }
