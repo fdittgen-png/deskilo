@@ -6,6 +6,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../instance/app_compatibility.dart';
 import '../lifecycle/app_foreground.dart';
 import '../trace/trace_logger.dart';
+import 'context_client_providers.dart';
 import 'schema_version.dart';
 
 part 'app_floor.g.dart';
@@ -13,6 +14,7 @@ part 'app_floor.g.dart';
 /// #3726 — the floor could not be asked: no network, a timeout, a malformed
 /// answer. Distinct from an installation without the function, which is an
 /// answer: it has no floor.
+@visibleForTesting
 class AppFloorUnavailable implements Exception {
   const AppFloorUnavailable(this.cause);
   final Object cause;
@@ -30,7 +32,7 @@ abstract interface class AppFloorSource {
 
 /// Asks [client]. A missing function is an answer (no floor); silence and
 /// anything but an integer or null are not.
-Future<int?> readAppFloor(SupabaseClient client) async {
+Future<int?> _readAppFloor(SupabaseClient client) async {
   final Object? value;
   try {
     value = await client
@@ -48,25 +50,19 @@ Future<int?> readAppFloor(SupabaseClient client) async {
   throw AppFloorUnavailable('not an integer: $value');
 }
 
-@visibleForTesting
-class SupabaseAppFloorSource implements AppFloorSource {
-  const SupabaseAppFloorSource();
+class _ClientAppFloorSource implements AppFloorSource {
+  const _ClientAppFloorSource(this._client);
+  final SupabaseClient _client;
 
   @override
-  Future<int?> read() async {
-    final SupabaseClient client;
-    try {
-      client = Supabase.instance.client;
-    } catch (e, st) {
-      // trace-exempt: no client means no answer, stack kept; the caller traces.
-      Error.throwWithStackTrace(AppFloorUnavailable(e), st);
-    }
-    return readAppFloor(client);
-  }
+  Future<int?> read() => _readAppFloor(_client);
 }
 
+/// The floor of the installation this device is signed in to (or would
+/// sign in to): the personal home's client.
 @Riverpod(keepAlive: true)
-AppFloorSource appFloorSource(Ref ref) => const SupabaseAppFloorSource();
+AppFloorSource appFloorSource(Ref ref) =>
+    _ClientAppFloorSource(ref.watch(personalClientProvider));
 
 /// The last verdict an installation's floor gave, kept for the process.
 /// A failed refresh never erases it (decision on #3726, point 2).
@@ -101,7 +97,7 @@ Future<AppFloorVerdict> appFloor(Ref ref) async {
       );
     }
     return memory.known = verdict;
-  } on AppFloorUnavailable catch (e, st) {
+  } on Object catch (e, st) {
     TraceLogger.instance.warn(
       'backend',
       'app floor could not be read — keeping ${memory.known ?? 'no verdict'}',

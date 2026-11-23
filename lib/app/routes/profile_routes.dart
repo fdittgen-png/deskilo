@@ -6,9 +6,9 @@
 import 'package:go_router/go_router.dart';
 
 import '../../core/backend/backend_uri.dart';
+import '../../features/auth/presentation/screens/app_update_screen.dart';
 import '../../features/me/presentation/me_data_tab.dart';
 import '../../features/me/providers/personal_shell_providers.dart';
-import '../../features/profile/presentation/screens/app_update_screen.dart';
 import '../../features/profile/presentation/screens/backend_screen.dart';
 import '../../features/profile/presentation/screens/consent_screen.dart';
 import '../../features/profile/presentation/screens/developer_screen.dart';

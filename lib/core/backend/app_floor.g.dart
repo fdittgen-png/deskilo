@@ -8,13 +8,20 @@ part of 'app_floor.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
+/// The floor of the installation this device is signed in to (or would
+/// sign in to): the personal home's client.
 
 @ProviderFor(appFloorSource)
 final appFloorSourceProvider = AppFloorSourceProvider._();
 
+/// The floor of the installation this device is signed in to (or would
+/// sign in to): the personal home's client.
+
 final class AppFloorSourceProvider
     extends $FunctionalProvider<AppFloorSource, AppFloorSource, AppFloorSource>
     with $Provider<AppFloorSource> {
+  /// The floor of the installation this device is signed in to (or would
+  /// sign in to): the personal home's client.
   AppFloorSourceProvider._()
     : super(
         from: null,
@@ -48,7 +55,7 @@ final class AppFloorSourceProvider
   }
 }
 
-String _$appFloorSourceHash() => r'088487358dd7424fe32013740d891143bbe5b79e';
+String _$appFloorSourceHash() => r'e35d35e455d2cfb7aaace33c425737d853e8ddd3';
 
 @ProviderFor(appFloorMemory)
 final appFloorMemoryProvider = AppFloorMemoryProvider._();
@@ -157,4 +164,4 @@ final class AppFloorProvider
   }
 }
 
-String _$appFloorHash() => r'2dfe64e2b2bae9f7b35cc0de869231a531d1f42f';
+String _$appFloorHash() => r'45fbc4ec1bec07aa7c54d154e7470fd6be9c35a9';

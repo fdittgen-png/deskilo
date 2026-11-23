@@ -7,8 +7,8 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/backend/app_floor.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../auth/providers/auth_providers.dart';
-import '../../../auth/providers/sign_out.dart';
+import '../../providers/auth_providers.dart';
+import '../../providers/sign_out.dart';
 
 /// #3726 — the installation this device uses accepts only newer apps.
 ///

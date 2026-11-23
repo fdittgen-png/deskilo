@@ -20,6 +20,7 @@
 // repositories — and each of them talks to a server.
 import 'dart:typed_data';
 
+import '../backend/app_floor.dart';
 import '../backend/schema_version.dart';
 import '../files/file_types.dart';
 import '../instance/schema_compatibility.dart';
@@ -50,6 +51,11 @@ class DemoOutwardEdges {
   /// configured backend how old its schema was, and an old one sent an
   /// otherwise independent demonstration to the server-update screen.
   final DemoSchemaVersionSource schema = DemoSchemaVersionSource();
+
+  /// #3726 — the installation floor the ROUTER watches, closed for the same
+  /// reason: a floor on a configured backend must not send the Demo to the
+  /// app-update screen.
+  final DemoAppFloorSource appFloor = DemoAppFloorSource();
 
   /// Nothing reached the device or the network.
   bool get nothingLeft =>
@@ -154,6 +160,18 @@ class DemoPushEndpoints implements PushEndpointRepository {
 /// so "current" is the truthful answer rather than a convenient one —
 /// and `schemaCompatibility` never sends a visitor to /server-update for
 /// the state of a backend the session is not talking to.
+/// #3726 — the floor a Demo session reports: none. The fixture runs on no
+/// installation, so no installation can refuse this app.
+class DemoAppFloorSource implements AppFloorSource {
+  int reads = 0;
+
+  @override
+  Future<int?> read() async {
+    reads++;
+    return null;
+  }
+}
+
 class DemoSchemaVersionSource implements SchemaVersionSource {
   int reads = 0;
 

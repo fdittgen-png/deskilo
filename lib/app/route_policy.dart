@@ -261,7 +261,7 @@ RouteDecision? _schemaDecision(
   final schemaGate = schemaGateRedirect(facts.schema, path);
   if (facts.schema != SchemaCompatibility.behind) {
     return schemaGate == null
-        ? null
+        ? _appFloorDecision(request, facts, demoEntry)
         : RouteDecision.go(facts.home, RouteReason.schemaCurrent);
   }
   if (path == '/demo' || demoEntry != null) return null;
@@ -297,8 +297,6 @@ RouteDecision resolveDestination(RouteRequest request, RouteFacts facts) {
   final demoEntry = _demoLinkRedirect(request);
   final schemaHop = _schemaDecision(request, facts, demoEntry);
   if (schemaHop != null) return schemaHop;
-  final floorHop = _appFloorDecision(request, facts, demoEntry);
-  if (floorHop != null) return floorHop;
   if (facts.auth == AuthFact.loading) return const RouteDecision.stay();
   if (demoEntry != null) return demoEntry;
 
