@@ -5,26 +5,29 @@
 -- lets an explicit credit settle a standalone invoice where a legacy credit of an invoiced month is refused; and the
 -- credit-note excess of an explicit payment stays explicit. Rolled back.
 begin;
-select plan(8);
+select plan(12);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
   u_o uuid := '00000000-0000-4000-8000-0000041651a1';
   u_a uuid := '00000000-0000-4000-8000-0000041651a2';
-  ws uuid; m_o uuid; m_a uuid;
+  u_b uuid := '00000000-0000-4000-8000-0000041651a3';
+  ws uuid; m_o uuid; m_a uuid; m_b uuid;
   d date;
   p text;
 begin
   insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
   select u, '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',
          'explicit-credit-' || u || '@deskilo.test', '', now(), now(), now()
-    from unnest(array[u_o, u_a]) u;
+    from unnest(array[u_o, u_a, u_b]) u;
   insert into public.workspaces (name, country_code, currency_code, timezone, created_by, feature_flags)
-  values ('Explicit credit', 'FR', 'EUR', 'Europe/Paris', u_o, '{"moneyTab": true, "invoicing": true}'::jsonb)
+  values ('Explicit credit', 'FR', 'EUR', 'Europe/Paris', u_o, '{"moneyTab": true, "invoicing": true, "bankImport": true}'::jsonb)
   returning id into ws;
   delete from public.validation_policies where workspace_id = ws;
   insert into public.members (workspace_id, user_id, is_owner, is_admin, status, joined_at)
-  values (ws, u_o, true, true, 'active', '2026-01-01'), (ws, u_a, false, false, 'active', '2026-01-01');
+  values (ws, u_o, true, true, 'active', '2026-01-01'), (ws, u_a, false, false, 'active', '2026-01-01'),
+         (ws, u_b, false, false, 'active', '2026-01-01');
+  select id into m_b from public.members where workspace_id = ws and user_id = u_b;
   select id into m_o from public.members where workspace_id = ws and user_id = u_o;
   select id into m_a from public.members where workspace_id = ws and user_id = u_a;
   d := public.workspace_today(ws);
@@ -32,7 +35,8 @@ begin
   insert into public.ledger_entries (workspace_id, member_id, kind, category, amount_cents, description, period, allocation_mode)
   values (ws, m_a, 'credit', 'payment', 800, 'explicit receipt', p, 'explicit'),
          (ws, m_a, 'credit', 'payment', 300, 'legacy receipt', p, 'legacy'),
-         (ws, m_a, 'credit', 'payment', 1500, 'explicit overpayment', p, 'explicit');
+         (ws, m_a, 'credit', 'payment', 1500, 'explicit overpayment', p, 'explicit'),
+         (ws, m_a, 'credit', 'payment', 200, 'explicit to move', p, 'explicit');
   -- A monthly invoice of the credits' month, issued after them.
   insert into public.invoices (workspace_id, member_id, issuer_member_id, number, title, lines, total_cents, currency,
                                member_name, workspace_name, issuer_name, signature, period, issued_at, kind,
@@ -45,6 +49,7 @@ begin
   perform set_config('t.m_o', m_o::text, true);
   perform set_config('t.m_a', m_a::text, true);
   perform set_config('t.p', p, true);
+  perform set_config('t.m_b', m_b::text, true);
 end;
 $seed$;
 select pg_temp.seed();
@@ -77,7 +82,12 @@ select is((select string_agg(line ->> 'description', ', ' order by line ->> 'des
              from public.customer_statement_items(current_setting('t.ws')::uuid, current_setting('t.m_a')::uuid,
                                                   now() + interval '1 hour')
             where kind = 'credit'),
-  'explicit overpayment, explicit receipt', 'the explicit credits stay on the statement; the legacy one counts as deducted');
+  'explicit overpayment, explicit receipt, explicit to move', 'the explicit credits stay on the statement; the legacy one counts as deducted');
+
+select is((public.member_account(current_setting('t.m_a')::uuid) ->> 'credit_cents')::int, 2500,
+  'on Me the explicit credits are credit on account at once; the legacy one of the running month is not');
+select is((public.member_statement(current_setting('t.m_a')::uuid, current_setting('t.p')) ->> 'credits_cents')::int, 300,
+  'the month''s balance counts its legacy credit only, as its bill deducts');
 
 -- ── Allocation ───────────────────────────────────────────────────────────
 select lives_ok($$select public.match_invoice_part(pg_temp.owner(), pg_temp.inv('EC-S1'), pg_temp.credit('explicit receipt'), 'exact', '', 800)$$,
@@ -94,6 +104,14 @@ select is((select l.allocation_mode || ':' || l.amount_cents from public.ledger_
 select is((select count(*)::int from public.ledger_entries
             where member_id = current_setting('t.m_a')::uuid and allocation_mode = 'legacy'),
   1, 'nothing else became legacy');
+select pg_temp.act('a1');
+set local role authenticated;
+select lives_ok($$select public.move_payment_credit_v1(pg_temp.credit('explicit to move'), current_setting('t.m_b')::uuid, 'paid for Ben', '00000000-0000-4000-8000-00000416f501')$$,
+  'the owner moves an explicit credit to Ben');
+reset role;
+select is((select allocation_mode from public.ledger_entries
+            where member_id = current_setting('t.m_b')::uuid and kind = 'credit'),
+  'explicit', 'the moved credit stays explicit');
 
 select * from finish();
 rollback;

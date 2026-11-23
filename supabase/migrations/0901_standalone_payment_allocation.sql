@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: transforming
 -- apps: additive
--- (two columns with a constant default, one trigger, three new functions, five functions patched; no row changes)
+-- (two columns with a constant default, one trigger, three new functions, eight functions patched; no row changes)
 --
 -- #4165 B1 -- paying standalone invoices. A standalone invoice has no month, so it cannot be paid through the monthly
 -- claim (check_payment_claim keys a payment to one month). Two versioned adapters take a standalone selection under an
@@ -16,7 +16,14 @@
 -- month it was received in the business's calendar (the capture day, or the declared paid_on), never an invoice's.
 -- Explicit credits are spent only by their allocations: the monthly derivation (invoice_lines_for) does not deduct them
 -- from a month's bill, and the "credit already deducted on an issued invoice" heuristic of match_invoice_part and the
--- customer statement applies to legacy credits only. Every existing row and caller stays `legacy` and behaves as before.
+-- customer statement applies to legacy credits only; on Me (member_account) an explicit credit left over is credit on
+-- account at once, the month's balance (member_statement) leaves it out, and a moved credit keeps its mode. Every
+-- existing row and caller stays `legacy` and behaves as before.
+--
+-- The receipt day of an online payment is the day the server settles its capture (settle_online_payment carries no
+-- provider timestamp); the providers' webhooks settle within minutes, and a settlement replayed late by reconciliation
+-- posts on its own day. The monthly path keeps its own code for a mixed selection (DKC14, 0820); the standalone path
+-- answers DKC16.
 
 -- ── 1. the mode ──────────────────────────────────────────────────────────
 -- audience: all row readers
@@ -376,6 +383,47 @@ begin
     E'and le.period = p_period\n',
     E'and le.period = p_period\n       and (le.kind <> ''credit'' or le.allocation_mode = ''legacy'')\n');
   if v_new is null then raise exception '0901: invoice_lines_for anchor missing'; end if;
+  execute v_new;
+
+  -- member_account: an explicit credit left over is credit on account at once, whatever its month, and no monthly
+  -- invoice of its month counts as having deducted it.
+  select pg_get_functiondef('public.member_account(uuid)'::regprocedure) into v_def;
+  v_new := pg_temp.anchor_replace(v_def,
+    E'and (le.category = ''adjustment''\n         or le.period < to_char(now(), ''YYYY-MM''))',
+    E'and (le.category = ''adjustment'' or le.allocation_mode = ''explicit''\n         or le.period < to_char(now(), ''YYYY-MM''))');
+  if v_new is null then raise exception '0901: member_account spare anchor missing'; end if;
+  v_def := v_new;
+  v_new := pg_temp.anchor_replace(v_def,
+    E'where i.member_id = p_member_id\n        and i.period = le.period',
+    E'where le.allocation_mode = ''legacy'' and i.member_id = p_member_id\n        and i.period = le.period');
+  if v_new is null then raise exception '0901: member_account deducted anchor missing'; end if;
+  execute v_new;
+
+  -- member_statement: a month's balance counts the legacy credits of its month, as its bill deducts them.
+  select pg_get_functiondef('public.member_statement(uuid, text)'::regprocedure) into v_def;
+  v_new := pg_temp.anchor_replace(v_def,
+    E'and (le.kind <> ''credit'' or le.amount_cents > public.payment_used_cents(le.id));',
+    E'and (le.kind <> ''credit'' or le.amount_cents > public.payment_used_cents(le.id))\n    and (le.kind <> ''credit'' or le.allocation_mode = ''legacy'');');
+  if v_new is null then raise exception '0901: member_statement anchor missing'; end if;
+  execute v_new;
+
+  -- move_payment_credit_v1: a moved credit keeps its mode, and the invoiced-month guards (a month's bill deducted
+  -- it, or would never reach it) bind legacy credits only.
+  select pg_get_functiondef('public.move_payment_credit_v1(uuid, uuid, text, uuid)'::regprocedure) into v_def;
+  v_new := pg_temp.anchor_replace(v_def,
+    E'where i.member_id = v_credit.member_id and i.period = v_credit.period',
+    E'where v_credit.allocation_mode = ''legacy'' and i.member_id = v_credit.member_id and i.period = v_credit.period');
+  if v_new is null then raise exception '0901: move_payment_credit_v1 source guard anchor missing'; end if;
+  v_def := v_new;
+  v_new := pg_temp.anchor_replace(v_def,
+    E'where i.member_id = p_to_member_id and i.period = v_credit.period',
+    E'where v_credit.allocation_mode = ''legacy'' and i.member_id = p_to_member_id and i.period = v_credit.period');
+  if v_new is null then raise exception '0901: move_payment_credit_v1 target guard anchor missing'; end if;
+  v_def := v_new;
+  v_new := pg_temp.anchor_replace(v_def,
+    E'occurred_on)\n  values (v_ws, p_to_member_id, ''credit'', ''payment'', v_credit.amount_cents,\n          v_credit.description, v_credit.period, v_day)',
+    E'occurred_on, allocation_mode)\n  values (v_ws, p_to_member_id, ''credit'', ''payment'', v_credit.amount_cents,\n          v_credit.description, v_credit.period, v_day, v_credit.allocation_mode)');
+  if v_new is null then raise exception '0901: move_payment_credit_v1 anchor missing'; end if;
   execute v_new;
 
   -- check_payment_claim: the monthly path names the standalone invoices it leaves to their own payment.

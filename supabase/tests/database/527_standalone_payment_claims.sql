@@ -6,7 +6,7 @@
 -- posts an explicit credit in the month of paid_on and applies its claim; a receipt naming no invoice stays an explicit
 -- unapplied credit. The monthly path refuses a standalone invoice by its code. Rolled back.
 begin;
-select plan(28);
+select plan(34);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -38,6 +38,8 @@ begin
   values (ws, m_a, m_o, 'SP-S1', 'S1', '[]'::jsonb, 3000, 'EUR', 'Ada', 'Standalone pay', 'Owner', 'sig', null, d - 70, 'full', 'standalone', d - 70, d + 10),
          (ws, m_a, m_o, 'SP-S2', 'S2', '[]'::jsonb, 2000, 'EUR', 'Ada', 'Standalone pay', 'Owner', 'sig', null, d - 5, 'full', 'standalone', d - 5, d + 10),
          (ws, m_a, m_o, 'SP-S3', 'S3', '[]'::jsonb, 1000, 'EUR', 'Ada', 'Standalone pay', 'Owner', 'sig', null, d - 5, 'full', 'standalone', d - 5, d + 10),
+         (ws, m_a, m_o, 'SP-S4', 'S4', '[]'::jsonb, 1100, 'EUR', 'Ada', 'Standalone pay', 'Owner', 'sig', null, d - 5, 'full', 'standalone', d - 5, d + 10),
+         (ws, m_a, m_o, 'SP-S5', 'S5', '[]'::jsonb, 600, 'EUR', 'Ada', 'Standalone pay', 'Owner', 'sig', null, d - 5, 'full', 'standalone', d - 5, d + 10),
          (ws, m_a, m_o, 'SP-SC', 'SC', '[]'::jsonb, 900, 'CHF', 'Ada', 'Standalone pay', 'Owner', 'sig', null, d - 5, 'full', 'standalone', d - 5, d + 10),
          (ws, m_b, m_o, 'SP-SB', 'SB', '[]'::jsonb, 4000, 'EUR', 'Ben', 'Standalone pay', 'Owner', 'sig', null, d - 5, 'full', 'standalone', d - 5, d + 10),
          (ws, m_a, m_o, 'SP-M1', 'M1', '[]'::jsonb, 1200, 'EUR', 'Ada', 'Standalone pay', 'Owner', 'sig', '2026-10', '2026-10-01', 'full', 'monthly', null, null);
@@ -157,6 +159,34 @@ select is((select l.allocation_mode || ':' || (l.amount_cents - public.payment_u
              join public.events e on e.id = l.event_id
             where e.payload ->> 'request_id' = '00000000-0000-4000-8000-00000416f201'),
   'explicit:700', 'it stays an explicit credit, unapplied until an allocation');
+
+-- ── A withdrawn claim, then a late capture ───────────────────────────────
+select pg_temp.act('a2');
+set local role authenticated;
+select is(pg_temp.open_sp(array[pg_temp.inv('SP-S4')], 1100, '00000000-0000-4000-8000-00000416f301'), false, 'Ada pays S4 online');
+select lives_ok($$select public.withdraw_payment_claim((select id from public.payment_intents where request_id = '00000000-0000-4000-8000-00000416f301'))$$,
+  'and withdraws its claim before the capture');
+select is(pg_temp.refusal_code($$select pg_temp.open_sp(array[pg_temp.inv('SP-S4')], 1100, '00000000-0000-4000-8000-00000416f301')$$),
+  'DKC12', 'the withdrawn payment is not sent again');
+reset role;
+select public.settle_online_payment('stripe', (select order_id from public.payment_intents where request_id = '00000000-0000-4000-8000-00000416f301'), 'cap-sp-2', 1100);
+select is((select l.allocation_mode || ':' || (l.amount_cents - public.payment_used_cents(l.id)) || ':' || public.invoice_still_due_cents(pg_temp.inv('SP-S4'))
+             from public.ledger_entries l join public.payment_intents pi on pi.ledger_entry_id = l.id
+            where pi.request_id = '00000000-0000-4000-8000-00000416f301'),
+  'explicit:1100:1100', 'the late capture is Ada''s explicit credit, applied to nothing; S4 still owes');
+
+-- ── Whoever issues the invoices opens one for Ada; online payments off ──
+select pg_temp.act('a1');
+set local role authenticated;
+select is(pg_temp.open_sp(array[pg_temp.inv('SP-S5')], 600, '00000000-0000-4000-8000-00000416f401'), false,
+  'the owner opens a standalone payment for Ada');
+reset role;
+update public.workspaces set feature_flags = feature_flags || '{"onlinePayments": false}'::jsonb where id = current_setting('t.ws')::uuid;
+select pg_temp.act('a2');
+set local role authenticated;
+select is(pg_temp.refusal($$select pg_temp.open_sp(array[pg_temp.inv('SP-S5')], 600, '00000000-0000-4000-8000-00000416f402')$$),
+  'online payments are off in this workspace', 'with online payments off no standalone payment is opened');
+reset role;
 
 select * from finish();
 rollback;
