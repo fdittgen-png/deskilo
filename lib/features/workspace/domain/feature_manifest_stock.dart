@@ -131,4 +131,12 @@ const Map<WorkspaceFeature, FeatureManifestEntry> stockFeatureManifest = {
     requires: WorkspaceFeature.counterReceipts,
     defaultOn: false,
   ),
+  // #4364 — UHF bulk reads: many tags read at once to receive, move and count, resolved in batches; nothing is sent until the user confirms. Asked for, under RFID tags. Off: tags are read one at a time.
+  WorkspaceFeature.stockTagReads: FeatureManifestEntry(
+    feature: WorkspaceFeature.stockTagReads,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.stockTags,
+    defaultOn: false,
+  ),
 };

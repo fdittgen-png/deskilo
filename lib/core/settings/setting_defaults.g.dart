@@ -206,6 +206,10 @@ abstract final class SettingDefaults {
   static const String stockPriceRounding = 'none';
   /// `stock.repeated_scan`
   static const String stockRepeatedScan = 'add_one';
+  /// `stock.tag_read_max_tags`
+  static const int stockTagReadMaxTags = 500;
+  /// `stock.tag_read_unit_as_quantity`
+  static const bool stockTagReadUnitAsQuantity = false;
   /// `stock.tag_rebind_grace_days`
   static const int stockTagRebindGraceDays = 30;
   /// `stock.weighed_goods`

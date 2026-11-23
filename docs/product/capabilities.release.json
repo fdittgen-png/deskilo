@@ -2344,6 +2344,12 @@
       "capabilities": []
     },
     {
+      "key": "stockTagReads",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "stockTags",
       "maturity": "beta",
       "lifecycle": "active",

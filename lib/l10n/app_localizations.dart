@@ -20428,6 +20428,18 @@ abstract class AppLocalizations {
   /// **'Scanning'**
   String get featureStockScanningTitle;
 
+  /// #4364 feature description
+  ///
+  /// In en, this message translates to:
+  /// **'A UHF reader in keyboard mode reads many tags at once to receive, move and count: the tags are collected, de-duplicated and resolved, and nothing is sent until the user confirms.'**
+  String get featureStockTagReadsDesc;
+
+  /// #4364 feature name
+  ///
+  /// In en, this message translates to:
+  /// **'Reading many tags'**
+  String get featureStockTagReadsTitle;
+
   /// #4362 feature description
   ///
   /// In en, this message translates to:
@@ -51654,6 +51666,18 @@ abstract class AppLocalizations {
   /// **'What a goods sheet does when the same code is scanned again: add one more to the line, or ask the quantity.'**
   String get settingHintStockRepeatedScan;
 
+  /// #4364 setting label/hint
+  ///
+  /// In en, this message translates to:
+  /// **'How many different tags one bulk read keeps before it takes no more. The same tag read many times counts once.'**
+  String get settingHintStockTagReadMaxTags;
+
+  /// #4364 setting label/hint
+  ///
+  /// In en, this message translates to:
+  /// **'In a bulk move, a tag on a piece of an item that is not tracked piece by piece is added as quantity 1 of that item. Off: such a tag is left out and listed.'**
+  String get settingHintStockTagReadUnitAsQuantity;
+
   /// #4362/#4359 setting label/hint
   ///
   /// In en, this message translates to:
@@ -52283,6 +52307,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'A code scanned again'**
   String get settingLabelStockRepeatedScan;
+
+  /// #4364 setting label/hint
+  ///
+  /// In en, this message translates to:
+  /// **'Most tags in one bulk read'**
+  String get settingLabelStockTagReadMaxTags;
+
+  /// #4364 setting label/hint
+  ///
+  /// In en, this message translates to:
+  /// **'A piece read in a move counts as one of its item'**
+  String get settingLabelStockTagReadUnitAsQuantity;
 
   /// #4362/#4359 setting label/hint
   ///

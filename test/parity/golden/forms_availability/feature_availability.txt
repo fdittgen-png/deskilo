@@ -163,6 +163,7 @@ billingCustomers | everywhere | y y y y y y y y y y
 customerQuotes | everywhere | y y y y y y y y y y
 stockLots | everywhere | y y y y y y y y y y
 stockReceiving | everywhere | y y y y y y y y y y
+stockTagReads | everywhere | y y y y y y y y y y
 stockTakeOut | everywhere | y y y y y y y y y y
 serviceFulfilment | everywhere | y y y y y y y y y y
 stockReorder | everywhere | y y y y y y y y y y

@@ -215,6 +215,7 @@
         "stockReorder": false,
         "stockReturns": false,
         "stockScanning": false,
+        "stockTagReads": false,
         "stockTags": false,
         "stockTakeOut": false,
         "subscriptionInvoices": false,
