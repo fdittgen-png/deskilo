@@ -40,7 +40,7 @@ void main() {
         'distinct': 2,
         'limit': 500,
         'truncated': false,
-        'invalid': [],
+        'invalid': <Object?>[],
         'results': [
           {
             'input': 'E28068940000401561D68F01',
