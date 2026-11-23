@@ -21,7 +21,9 @@ select is((select profile_digest from public.business_kinds where code = 'shop')
 select is((select feature_profile from public.business_kinds where code = 'freelancer'),
   '{"placeBooking": false, "moneyTab": true, "services": true, "invoicing": true, "billingCustomers": true, "customerQuotes": true, "purchases": true, "standaloneInvoicing": true, "serviceFulfilment": true}'::jsonb,
   'the freelancer keeps the profile it had');
-select is((select profile_version from public.business_kinds where code = 'freelancer'), 1, 'and its version');
+select is((select profile_digest from public.business_kinds where code = 'freelancer'),
+  encode(sha256(convert_to((select feature_profile::text from public.business_kinds where code = 'freelancer'), 'UTF8')), 'hex'),
+  'and its digest still follows its profile');
 select is((select count(*)::int from public.business_kinds where profile_digest = ''), 0, 'every kind has a digest');
 
 select is((select default_value from public.setting_definitions where key = 'business.shop_type'), '"grocery"'::jsonb,

@@ -1,6 +1,6 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
--- (one new kind row and two registry rows; no workspace's stored flags or settings move, and the
+-- (one new kind row, born with its profile at version 1, and two registry rows; no workspace's stored flags or settings move, and the
 -- other kinds' profiles are not changed)
 --
 -- #4365 (G16) -- a shop is a kind of business of its own: an épicerie, a bakery, a butcher, a
@@ -18,11 +18,9 @@
 --  * `stock.weighed_goods` (bool, off): the business sells by weight, so a new item is proposed in
 --    kilograms.
 
-insert into public.business_kinds (code, sort_order) values ('shop', 47)
+insert into public.business_kinds (code, sort_order, feature_profile)
+values ('shop', 47, '{"placeBooking": false, "moneyTab": true, "services": true, "invoicing": true, "purchases": true, "purchaseOrders": true, "stockManagement": true, "stockReceiving": true, "stockTakeOut": true, "stockLots": true, "stockReorder": true, "stockItemGroups": true, "stockScanning": true}'::jsonb)
 on conflict (code) do nothing;
-update public.business_kinds
-   set feature_profile = '{"placeBooking": false, "moneyTab": true, "services": true, "invoicing": true, "purchases": true, "purchaseOrders": true, "stockManagement": true, "stockReceiving": true, "stockTakeOut": true, "stockLots": true, "stockReorder": true, "stockItemGroups": true, "stockScanning": true}'::jsonb
- where code = 'shop' and feature_profile = '{}'::jsonb;
 
 -- BEGIN GENERATED SEED (dart run tool/build_settings_seed.dart)
 insert into public.setting_definitions
