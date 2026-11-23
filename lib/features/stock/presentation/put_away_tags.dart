@@ -36,7 +36,7 @@ int? piecesOf(StockItemConfig item, String unit, ExactQuantity quantity) {
       : item.units.where((u) => u.unit == unit).map((u) => (num: u.factorNum, den: u.factorDen)).firstOrNull;
   if (factor == null) return null;
   final micro = quantity.scaled(factor.num, factor.den).value?.micro;
-  final one = BigInt.from(1000000);
+  final one = ExactQuantity.parse('1').micro; // one piece, in the kernel's own scale
   if (micro == null || micro.remainder(one) != BigInt.zero) return null;
   return (micro ~/ one).toInt();
 }
