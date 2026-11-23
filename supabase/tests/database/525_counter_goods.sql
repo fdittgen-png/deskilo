@@ -4,7 +4,7 @@
 -- included; a correction moves nothing; the physical return is its own command by someone who may manage the stock, bounded
 -- by what the correction credits, and refunds and credits nothing; stock-only people cannot sell. Rolled back.
 begin;
-select plan(15);
+select plan(24);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -89,6 +89,12 @@ insert into public.vat_rates (id, workspace_id, label, percent, category, is_def
 select pg_temp.u(800 + w), pg_temp.u(100 + w), 'Standard', 20, 'S', true, 'standard' from generate_series(1, 4) w;
 insert into public.setting_values (scope, workspace_id, key, value)
 select 'workspace', pg_temp.u(100 + w), 'counter.fiscal_obligation', '"none"'::jsonb from generate_series(1, 4) w;
+-- another business, with its own owner: its people have no say in this one
+insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
+values (pg_temp.u(4), '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', 'cother-4@deskilo.test', '', now(), now(), now());
+insert into public.workspaces (id, name, country_code, currency_code, timezone, created_by, vat_regime, feature_flags, role_permissions)
+values (pg_temp.u(105), 'Counter other', 'FR', 'EUR', 'Europe/Paris', pg_temp.u(4), 'vat_registered', '{"services": true, "invoicing": true, "standaloneInvoicing": true, "counterReceipts": true, "stockManagement": true}', '{}');
+insert into public.members (id, workspace_id, user_id, is_owner, is_admin, status) values (pg_temp.u(205), pg_temp.u(105), pg_temp.u(4), true, true, 'active');
 
 
 
@@ -125,6 +131,38 @@ select set_config('t.ret', pg_temp.ret(1, 1310, pg_temp.f(current_setting('t.c')
 select is(pg_temp.f(current_setting('t.ret'), 'movements') || ' ' || pg_temp.onhand()::text, '1 9.000000', 'the physical return takes the goods back, linked to the correction');
 select is(pg_temp.ret(1, 1311, pg_temp.f(current_setting('t.c'), 'receipt_id')::uuid, format('[{"corrects_line_id": "%s", "quantity": "1"}]', current_setting('t.cline'))), 'ERR DKL08 {"left": "0", "line": 1, "reason": "return_beyond"}', 'no more comes back than the correction credits');
 select is((select count(*)::int from public.counter_refunds) || ' ' || (select count(*)::int from public.counter_receipts where kind = 'correction'), '0 1', 'and a return neither refunds nor credits');
+
+-- ── stockable items are goods; goods need the ledger and its places; another business; a return per line ──
+select is(pg_temp.draft(1, 101, 1320, null, null, format('{"lines": [{"item_id": "%s", "quantity": "1", "supply": "general"}]}', pg_temp.u(301))), 'ERR DKL02 line_1_supply', 'a stockable item sold as a service is refused: it is goods, or nothing');
+select set_config('t.dg', pg_temp.draft(1, 101, 1321, null, null, '{"source_ref": "g-3", "lines": [' || pg_temp.goodsline(301, '1') || ']}'), false);
+update public.workspaces set feature_flags = feature_flags - 'stockManagement' where id = pg_temp.u(101);
+select is(pg_temp.fin(1, 101, 1322, pg_temp.f(current_setting('t.dg'), 'receipt_id')::uuid, 1, '[{"kind": "cash", "amount_minor": 500}]'), 'ERR DKL07 goods_off', 'with the goods ledger off a goods sale is refused (DKL07 goods_off)');
+update public.workspaces set feature_flags = feature_flags || '{"stockManagement": true}' where id = pg_temp.u(101);
+update public.stock_locations set code = 'MAINX' where workspace_id = pg_temp.u(101) and code = 'MAIN';
+select is(pg_temp.fin(1, 101, 1323, pg_temp.f(current_setting('t.dg'), 'receipt_id')::uuid, 1, '[{"kind": "cash", "amount_minor": 500}]'), 'ERR DKL07 from_place', 'with no place MAIN to take the goods from the sale is refused (DKL07 from_place)');
+select is(pg_temp.ret(1, 1324, pg_temp.f(current_setting('t.c'), 'receipt_id')::uuid, format('[{"corrects_line_id": "%s", "quantity": "1"}]', current_setting('t.cline'))), 'ERR DKL08 {"left": "0", "line": 1, "reason": "return_beyond"}', 'a return beyond is still refused first');
+update public.stock_locations set code = 'MAIN' where workspace_id = pg_temp.u(101) and code = 'MAINX';
+select is(left(pg_temp.ret(4, 1325, pg_temp.f(current_setting('t.c'), 'receipt_id')::uuid, format('[{"corrects_line_id": "%s", "quantity": "1"}]', current_setting('t.cline'))), 9), 'ERR DKN01', 'a person of another business takes nothing back here');
+-- two lines of the same item: a return is bounded per line, not per item
+select set_config('t.d4', pg_temp.draft(1, 101, 1326, null, null, '{"source_ref": "g-4", "lines": [' || pg_temp.goodsline(301, '1') || ', ' || pg_temp.goodsline(301, '1') || ']}'), false);
+select set_config('t.r4', pg_temp.f(current_setting('t.d4'), 'receipt_id'), false);
+select set_config('t.f4', pg_temp.fin(1, 101, 1327, current_setting('t.r4')::uuid, 1, '[{"kind": "cash", "amount_minor": 1000}]'), false);
+select set_config('t.l41', (select id::text from public.counter_receipt_lines where receipt_id = current_setting('t.r4')::uuid and line_no = 1), false);
+select set_config('t.l42', (select id::text from public.counter_receipt_lines where receipt_id = current_setting('t.r4')::uuid and line_no = 2), false);
+select set_config('t.c4', pg_temp.corr(1, 101, 1328, current_setting('t.r4')::uuid, format('{"lines": [{"corrects_line_id": "%s", "quantity": "1"}, {"corrects_line_id": "%s", "quantity": "1"}]}', current_setting('t.l41'), current_setting('t.l42'))), false);
+select set_config('t.c4l2', (select id::text from public.counter_receipt_lines where receipt_id = pg_temp.f(current_setting('t.c4'), 'receipt_id')::uuid and line_no = 2), false);
+select set_config('t.c4l1', (select id::text from public.counter_receipt_lines where receipt_id = pg_temp.f(current_setting('t.c4'), 'receipt_id')::uuid and line_no = 1), false);
+select is(pg_temp.f(pg_temp.ret(1, 1329, pg_temp.f(current_setting('t.c4'), 'receipt_id')::uuid, format('[{"corrects_line_id": "%s", "quantity": "1"}]', current_setting('t.c4l2'))), 'movements'), '1', 'the second of two lines of the same item is taken back');
+select is(pg_temp.f(pg_temp.ret(1, 1330, pg_temp.f(current_setting('t.c4'), 'receipt_id')::uuid, format('[{"corrects_line_id": "%s", "quantity": "1"}]', current_setting('t.c4l1'))), 'movements'), '1', 'and so is the first, each within its own line');
+select is(left(pg_temp.ret(1, 1331, pg_temp.f(current_setting('t.c4'), 'receipt_id')::uuid, format('[{"corrects_line_id": "%s", "quantity": "1"}]', current_setting('t.c4l1'))), 9), 'ERR DKL08', 'a line is not taken back twice');
+select set_config('t.d5', pg_temp.draft(1, 101, 1333, null, null, '{"source_ref": "g-5", "lines": [' || pg_temp.goodsline(301, '1') || ']}'), false);
+select set_config('t.r5', pg_temp.f(current_setting('t.d5'), 'receipt_id'), false);
+select set_config('t.f5', pg_temp.fin(1, 101, 1334, current_setting('t.r5')::uuid, 1, '[{"kind": "cash", "amount_minor": 500}]'), false);
+select set_config('t.l5', (select id::text from public.counter_receipt_lines where receipt_id = current_setting('t.r5')::uuid and line_no = 1), false);
+select set_config('t.c5', pg_temp.corr(1, 101, 1335, current_setting('t.r5')::uuid, format('{"lines": [{"corrects_line_id": "%s", "quantity": "1"}]}', current_setting('t.l5'))), false);
+select set_config('t.c5l', (select id::text from public.counter_receipt_lines where receipt_id = pg_temp.f(current_setting('t.c5'), 'receipt_id')::uuid and line_no = 1), false);
+update public.stock_locations set code = 'MAINX' where workspace_id = pg_temp.u(101) and code = 'MAIN';
+select is(pg_temp.ret(1, 1332, pg_temp.f(current_setting('t.c5'), 'receipt_id')::uuid, format('[{"corrects_line_id": "%s", "quantity": "1"}]', current_setting('t.c5l'))), 'ERR DKL07 to_place', 'with no place MAIN a return finds no place to put the goods back (DKL07 to_place)');
 
 select * from finish();
 rollback;

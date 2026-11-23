@@ -5,7 +5,7 @@
 -- refund follows a correction, needs the right to record outgoing payments and never exceeds what the correction credits.
 -- Rolled back.
 begin;
-select plan(21);
+select plan(28);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -81,6 +81,12 @@ insert into public.vat_rates (id, workspace_id, label, percent, category, is_def
 select pg_temp.u(800 + w), pg_temp.u(100 + w), 'Standard', 20, 'S', true, 'standard' from generate_series(1, 4) w;
 insert into public.setting_values (scope, workspace_id, key, value)
 select 'workspace', pg_temp.u(100 + w), 'counter.fiscal_obligation', '"none"'::jsonb from generate_series(1, 4) w;
+-- another business, with its own owner: its people have no say in this one
+insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
+values (pg_temp.u(4), '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', 'cother-4@deskilo.test', '', now(), now(), now());
+insert into public.workspaces (id, name, country_code, currency_code, timezone, created_by, vat_regime, feature_flags, role_permissions)
+values (pg_temp.u(105), 'Counter other', 'FR', 'EUR', 'Europe/Paris', pg_temp.u(4), 'vat_registered', '{"services": true, "invoicing": true, "standaloneInvoicing": true, "counterReceipts": true, "stockManagement": true}', '{}');
+insert into public.members (id, workspace_id, user_id, is_owner, is_admin, status) values (pg_temp.u(205), pg_temp.u(105), pg_temp.u(4), true, true, 'active');
 
 
 
@@ -122,6 +128,20 @@ select set_config('t.e', pg_temp.newdraft(1011, 'c-5'), false);
 select set_config('t.t5', pg_temp.treq(2, 1012, current_setting('t.e')::uuid, 1200), false);
 select is(pg_temp.f(pg_temp.tres(2, 1013, pg_temp.f(current_setting('t.t5'), 'tender_id')::uuid, 'unknown'), 'state'), 'unknown', 'a cashier records that the answer did not come');
 select is(left(pg_temp.tres(2, 1014, pg_temp.f(current_setting('t.t5'), 'tender_id')::uuid, 'accepted'), 9), 'ERR DKN01', 'but settling it takes someone who may see the finances');
+
+-- ── the lines are replaced over a card, never below it; accepted card money is flagged; another business has no say ──
+select set_config('t.g', pg_temp.newdraft(1021, 'c-6'), false);
+select set_config('t.t6', pg_temp.treq(1, 1022, current_setting('t.g')::uuid, 1200), false);
+select is(pg_temp.f(pg_temp.tres(1, 1023, pg_temp.f(current_setting('t.t6'), 'tender_id')::uuid, 'accepted'), 'state'), 'accepted', 'a card tender of 12.00 is accepted');
+select is(pg_temp.draft(1, 101, 1024, current_setting('t.g')::uuid, 1, '{"source_ref": "c-6", "lines": [' || pg_temp.line('Haircut', '1', '5.00') || ']}'), 'ERR DKL06 tender_sum', 'the lines are not replaced for a total below what the card holds');
+select is(pg_temp.f(pg_temp.draft(1, 101, 1025, current_setting('t.g')::uuid, 1, '{"source_ref": "c-6", "lines": [' || pg_temp.line('Haircut', '1', '12.00') || ']}'), 'revision'), '2', 'they are replaced for the same total');
+select is((select reconciliation from public.counter_tenders where id = pg_temp.f(current_setting('t.t6'), 'tender_id')::uuid), 'needed', 'and the accepted card money is flagged for an explicit reconciliation');
+select is(left(pg_temp.fin(1, 101, 1026, current_setting('t.g')::uuid, 2, '[]'), 15), 'ERR DKL06 tende', 'the sale waits for it');
+update public.setting_values set value = '"register_required"'::jsonb where workspace_id = pg_temp.u(101) and key = 'counter.fiscal_obligation';
+select is(left(pg_temp.trec(1, 1027, pg_temp.f(current_setting('t.t6'), 'tender_id')::uuid), 9), 'ERR DKL01', 'a reconciliation is refused where the operation is not supported');
+update public.setting_values set value = '"none"'::jsonb where workspace_id = pg_temp.u(101) and key = 'counter.fiscal_obligation';
+select is(left(pg_temp.treq(4, 1028, current_setting('t.g')::uuid, 1), 9) || ' ' || left(pg_temp.tres(4, 1029, pg_temp.f(current_setting('t.t6'), 'tender_id')::uuid, 'refused'), 9) || ' ' || left(pg_temp.trec(4, 1030, pg_temp.f(current_setting('t.t6'), 'tender_id')::uuid), 9),
+  'ERR DKN01 ERR DKN01 ERR DKN01', 'a person of another business asks, answers and reconciles nothing here');
 
 select * from finish();
 rollback;

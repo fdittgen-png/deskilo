@@ -134,6 +134,7 @@ begin
   if p_request_id is null or p_tender_id is null then
     raise exception 'a tender is reconciled with a request id' using errcode = '22023';
   end if;
+  perform public.counter_require_operation(p_workspace_id, 'reconcile_tender');
   v_digest := md5(p_tender_id::text);
   v_done := public.purchase_request_begin(p_workspace_id, p_request_id, 'counter_tender_reconcile', v_digest);
   if v_done is not null then
@@ -178,6 +179,10 @@ create policy mcp_delegated_deny on public.counter_refunds as restrictive for al
 create or replace function public.counter_refunds_frozen()
 returns trigger language plpgsql set search_path = public as $fn$
 begin
+  -- the cascade of a workspace's deletion or of an erasure is not an edit
+  if pg_trigger_depth() > 1 then
+    return coalesce(new, old);
+  end if;
   raise exception 'a refund is never edited or deleted' using errcode = 'DKL03';
 end;
 $fn$;

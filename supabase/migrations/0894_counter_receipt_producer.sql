@@ -171,6 +171,11 @@ begin
         v_in := v_in || jsonb_build_object('unit', jsonb_build_object('code', v_item.inventory_unit, 'label', v_item.inventory_unit,
                                                                       'un_ece_code', case when v_item.inventory_unit = 'piece' then 'C62' else '' end));
       end if;
+      -- a stockable item is goods, and only goods: it is never frozen as a service while its stock stays untouched
+      if v_item.stockable and coalesce(v_in ->> 'supply', '') not in ('', 'goods') then
+        v_missing := v_missing || ('line_' || v_idx || '_supply');
+        continue;
+      end if;
       if coalesce(v_in ->> 'supply', '') = '' then
         v_in := v_in || jsonb_build_object('supply', case when v_item.stockable then 'goods' else 'general' end);
       end if;
@@ -233,7 +238,11 @@ begin
     return v_done || jsonb_build_object('replayed', true);
   end if;
   select * into v_ws from public.workspaces w where w.id = p_workspace_id;
+  -- the business's own currency: a sale in another one is not a counter sale of this business
   v_cur := upper(coalesce(nullif(p_body ->> 'currency', ''), v_ws.currency_code));
+  if v_cur is distinct from upper(v_ws.currency_code) then
+    raise exception 'receipt_essentials_missing' using errcode = 'DKL02', detail = 'currency';
+  end if;
   v_basis := coalesce(nullif(p_body ->> 'price_basis', ''), 'gross');
   v_kind := coalesce(nullif(p_body ->> 'source_kind', ''), 'counter');
   v_ref := coalesce(p_body ->> 'source_ref', '');
@@ -266,6 +275,16 @@ begin
     if p_expected_revision is distinct from v_rec.revision then
       raise exception 'this receipt changed meanwhile' using errcode = 'DKL10';
     end if;
+    -- a card authorization of this sale was asked for the offer as it was: the lines may change, but never below what the
+    -- card holds (the sale could not be settled), and money already accepted is flagged for an explicit reconciliation
+    -- (an authorization still out is flagged when its answer comes, 0895)
+    if coalesce((select sum(t.amount_minor) from public.counter_tenders t
+                  where t.receipt_id = v_rec.id and t.kind = 'card' and t.state in ('requested', 'accepted', 'unknown')), 0)
+       > (v_calc #>> '{totals,gross_minor}')::bigint then
+      raise exception 'the card tenders of this sale exceed the new total' using errcode = 'DKL06', detail = 'tender_sum';
+    end if;
+    update public.counter_tenders set reconciliation = 'needed'
+     where receipt_id = v_rec.id and kind = 'card' and state = 'accepted' and reconciliation is null;
     update public.counter_receipts set currency = v_cur, price_basis = v_basis, financial_subject_id = v_subject,
            source_kind = v_kind, source_ref = v_ref, revision = revision + 1,
            total_minor = (v_calc #>> '{totals,gross_minor}')::bigint, tax_minor = (v_calc #>> '{totals,tax_minor}')::bigint

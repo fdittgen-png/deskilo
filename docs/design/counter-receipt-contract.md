@@ -4,13 +4,13 @@ Commands are RPCs of the `public` schema, called as the signed-in person (`authe
 
 ## 1. `counter_receipt_draft_v1(p_workspace_id, p_request_id, p_receipt_id, p_expected_revision, p_body)`
 
-`p_receipt_id` null makes a draft; set (with `p_expected_revision`) it replaces the lines of an open draft (a moved revision is refused, DKL10).
+`p_receipt_id` null makes a draft; set (with `p_expected_revision`) it replaces the lines of an open draft (a moved revision is refused, DKL10). Replacing the lines under a card authorization is allowed only for a total that still covers the card tenders (else DKL06 `tender_sum`); an accepted card tender is then flagged `reconciliation: "needed"` and the sale waits for `counter_tender_reconcile_v1`.
 
 `p_body`:
 
 | field | type | meaning |
 |---|---|---|
-| `currency` | text, optional | ISO code, default the business's |
+| `currency` | text, optional | must be the business's own currency (DKL02 `currency` otherwise); default the business's |
 | `price_basis` | `gross` (default) or `net` | how every `unit_price` is read |
 | `financial_subject_id` | uuid, optional | a `members.id` of this business; absent = a sale with no customer (never creates an account, a member or a subscription) |
 | `source_kind`, `source_ref` | text, optional | the sale's natural identity (`source_ref` up to 200 chars); a finalized sale per (`source_kind`, `source_ref`) exists once |
@@ -27,7 +27,7 @@ A line:
 | `unit_price` | decimal string in **major** units, read on `price_basis` | default the item's price (gross basis only) |
 | `base_quantity` | decimal string, default `"1"` | the price is per this quantity |
 | `unit` | `{code, label ≤ 20, un_ece_code}` | default the item's inventory unit |
-| `supply` | `general`, `property` or `goods` | default `goods` for a stockable item, else `general` |
+| `supply` | `general`, `property` or `goods` | a stockable item is `goods` and only goods (any other value: DKL02 `line_<n>_supply`); other items default `general` |
 | `vat_rate_id` | uuid, optional | default the item's rate, else the business's default rate |
 | `line_id` | uuid, optional | the server makes one when absent |
 | `from_location_id`, `lot_id` | uuid, optional (goods) | where the goods leave from (default the place `MAIN`) and the lot to name |

@@ -204,6 +204,10 @@ declare
   v_new jsonb;
   v_state text;
 begin
+  -- the cascade of a workspace's deletion or of an erasure runs as a trigger of the key's action: it is not an edit
+  if pg_trigger_depth() > 1 then
+    return coalesce(new, old);
+  end if;
   if tg_table_name = 'counter_receipts' then
     if tg_op = 'DELETE' then
       if old.state = 'finalized' then

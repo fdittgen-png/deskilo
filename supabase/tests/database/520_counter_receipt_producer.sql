@@ -6,7 +6,7 @@
 -- refused; a frozen receipt survives a change of the rates; a correction is a new receipt citing the original, bounded
 -- by what each original line has left; amounts are exact in 0, 2 and 3 decimal currencies. Rolled back.
 begin;
-select plan(24);
+select plan(27);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -108,6 +108,13 @@ select is(left(pg_temp.fin(1, 101, 916, pg_temp.f(current_setting('t.d2'), 'rece
 update public.vat_rates set percent = 5 where id = pg_temp.u(801);
 select is((select public.counter_receipt_decode(frozen) #>> '{totals,gross_minor}' from public.counter_receipts where id = current_setting('t.r1')::uuid) || ' ' || (select public.counter_receipt_decode(frozen) #>> '{lines,0,vat_percent}' from public.counter_receipts where id = current_setting('t.r1')::uuid),
   '1200 20.000000', 'a frozen receipt survives a change of the rates');
+
+-- ── the business's own currency; a customer named on every sale where asked ──
+select is(pg_temp.draft(1, 101, 930, null, null, '{"currency": "JPY", "lines": [' || pg_temp.line('Haircut', '1', '1500') || ']}'), 'ERR DKL02 currency', 'a sale in another currency than the business''s is refused');
+select is(pg_temp.draft(1, 101, 931, null, null, '{"currency": "ZZZ", "lines": [' || pg_temp.line('Haircut', '1', '1.00') || ']}'), 'ERR DKL02 currency', 'and so is a currency that does not exist');
+insert into public.setting_values (scope, workspace_id, key, value) values ('workspace', pg_temp.u(101), 'counter.customerless_sales', '"refused"'::jsonb);
+select set_config('t.d3', pg_temp.draft(1, 101, 932, null, null, '{"source_ref": "nocust", "lines": [' || pg_temp.line('Haircut', '1', '12.00') || ']}'), false);
+select is(left(pg_temp.fin(1, 101, 933, pg_temp.f(current_setting('t.d3'), 'receipt_id')::uuid, 1, '[{"kind": "cash", "amount_minor": 1200}]'), 9), 'ERR DKL05', 'where the business names a customer on every sale, one with none is refused (DKL05)');
 
 select * from finish();
 rollback;

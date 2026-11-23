@@ -59,9 +59,9 @@ begin
       raise exception 'this quantity is not a quantity' using errcode = 'DKL08', detail = jsonb_build_object('line', v_idx, 'reason', 'quantity')::text;
     end if;
     v_qty := (e ->> 'quantity')::numeric;
+    -- per line of the correction: the line's own id is in the movement's links
     select coalesce(sum(m.entered_quantity), 0) into v_back from public.stock_movements m
-     where m.workspace_id = p_workspace_id and m.counter_receipt_id = v_rec.id and m.reason = 'return_in'
-       and m.item_id = v_line.item_id and m.variant_id is not distinct from v_line.variant_id;
+     where m.workspace_id = p_workspace_id and m.counter_line_id = v_line.id and m.reason = 'return_in';
     if v_qty > v_line.quantity - v_back then
       raise exception 'more is taken back than the correction credits' using errcode = 'DKL08',
         detail = jsonb_build_object('line', v_idx, 'reason', 'return_beyond', 'left', trim_scale(v_line.quantity - v_back)::text)::text;
@@ -73,7 +73,8 @@ begin
     end if;
     v_move := v_move || jsonb_build_array(jsonb_strip_nulls(jsonb_build_object(
       'item_id', v_line.item_id, 'variant_id', v_line.variant_id, 'quantity', trim_scale(v_qty)::text,
-      'unit', v_line.frozen #>> '{commercial,unit,code}', 'from', public.stock_place(p_workspace_id, 'customer'), 'to', v_to)));
+      'unit', v_line.frozen #>> '{commercial,unit,code}', 'from', public.stock_place(p_workspace_id, 'customer'), 'to', v_to,
+      'counter_line_id', v_line.id)));
   end loop;
   v_moved := public.stock_apply_lines(p_workspace_id, v_me, p_request_id, v_move, 'return_in', now(),
                                       jsonb_build_object('counter_receipt_id', v_rec.id), 'generic');
