@@ -2,9 +2,8 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../core/trace/trace_logger.dart';
 import '../domain/stock_reversals.dart';
-import 'stock_refusals.dart';
+import 'stock_rpc.dart';
 
 /// #4172 (B) -- the returns, corrections and counts behind the port:
 /// `stock_reversible_v1`, `stock_return_v1`, `stock_counts_v1`,
@@ -16,14 +15,7 @@ class SupabaseStockReversals implements StockReversals {
 
   final SupabaseClient _client;
 
-  Future<Object?> _call(String rpc, Map<String, Object?> params) async {
-    try {
-      return await _client.rpc<Object?>(rpc, params: params);
-    } on PostgrestException catch (e, stack) {
-      TraceLogger.instance.warn('stock', '$rpc was refused: ${e.code}', stackTrace: stack);
-      throwStockFailure(e, stack);
-    }
-  }
+  Future<Object?> _call(String rpc, Map<String, Object?> params) => StockRpc(_client).run(rpc, params);
 
   @override
   Future<Map<String, StockReversible>> reversible(String workspaceId, List<String> movementIds) async {

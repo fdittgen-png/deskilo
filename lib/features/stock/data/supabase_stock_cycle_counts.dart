@@ -2,9 +2,8 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../core/trace/trace_logger.dart';
 import '../domain/stock_cycle_counts.dart';
-import 'stock_refusals.dart';
+import 'stock_rpc.dart';
 
 /// #4295 -- the cycle counts behind the port: the plans as the table the server lets a stock manager
 /// read, and `stock_count_plan_save_v1`, `stock_count_tasks_v1`, `stock_count_task_v1`,
@@ -15,30 +14,20 @@ class SupabaseStockCycleCounts implements StockCycleCounts {
 
   final SupabaseClient _client;
 
-  Future<Object?> _call(String rpc, Map<String, Object?> params) async {
-    try {
-      return await _client.rpc<Object?>(rpc, params: params);
-    } on PostgrestException catch (e, stack) {
-      TraceLogger.instance.warn('stock', '$rpc was refused: ${e.code}', stackTrace: stack);
-      throwStockFailure(e, stack);
-    }
-  }
+  Future<Object?> _call(String rpc, Map<String, Object?> params) => StockRpc(_client).run(rpc, params);
 
   List<Object?> _list(Object? answer, String rpc) => answer is List ? answer : throw StateError('$rpc answered no list');
 
   @override
   Future<List<CountPlan>> plans(String workspaceId) async {
-    try {
+    return StockRpc(_client).guard('the count plans were refused', () async {
       final rows = await _client
           .from('stock_count_plans')
           .select('id, name, scope_kind, location_ids, item_ids, high_value_minor, interval_days, next_due_on, active')
           .eq('workspace_id', workspaceId)
           .order('next_due_on');
       return [for (final row in rows) CountPlan.fromRow(row)];
-    } on PostgrestException catch (e, stack) {
-      TraceLogger.instance.warn('stock', 'the count plans were refused: ${e.code}', stackTrace: stack);
-      throwStockFailure(e, stack);
-    }
+    });
   }
 
   @override

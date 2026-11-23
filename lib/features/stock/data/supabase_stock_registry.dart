@@ -5,6 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../domain/stock_page.dart';
 import '../domain/stock_queries.dart';
 import '../domain/stock_registry.dart';
+import 'stock_rpc.dart';
 
 /// #4293 -- `stock_registry_page_v1` and `set_stock_home_v1` behind the port. A page whose shape
 /// is wrong or that neither ends nor continues throws: it is never shown as an empty list.
@@ -21,9 +22,9 @@ class SupabaseStockRegistry implements StockRegistry {
     int limit = 50,
     StockCursor? after,
   }) async {
-    final answer = await _client.rpc<Object?>(
+    final answer = await StockRpc(_client).run(
       'stock_registry_page_v1',
-      params: {
+      {
         'p_workspace_id': workspaceId,
         'p_location_id': placeId,
         'p_no_home': noHome,
@@ -50,9 +51,9 @@ class SupabaseStockRegistry implements StockRegistry {
     required String? placeId,
     required String requestId,
   }) async {
-    await _client.rpc<Object?>(
+    await StockRpc(_client).run(
       'set_stock_home_v1',
-      params: {
+      {
         'p_workspace_id': workspaceId,
         'p_item_id': itemId,
         'p_variant_id': variantId,
