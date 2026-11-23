@@ -5,6 +5,7 @@
 // look sees no editor; a mistake is shown under its field before anything is
 // sent; a save sends the complete lists at the revision it read; a stale
 // revision and a refusal are said, in the sheet, and nothing is shown saved.
+import 'package:deskilo/features/stock/domain/stock_code_resolver.dart';
 import 'package:deskilo/features/stock/domain/stock_config.dart';
 import 'package:deskilo/features/stock/domain/stock_config_commands.dart';
 import 'package:deskilo/features/stock/domain/stock_page.dart';
@@ -141,6 +142,14 @@ class _Config implements StockConfigCommands {
   Future<StockSaved> saveMapping(String workspaceId, {required Map<String, Object?> mapping, required String requestId, String? mappingId, int? expectedRevision}) => throw UnimplementedError();
 }
 
+/// Resolves the Tea's barcode the way the server does.
+class _Resolver implements StockCodeResolver {
+  @override
+  Future<StockCodeResolution> resolve(String workspaceId, String code) async => code == '4006381333931'
+      ? StockCodeResolution(kind: ScannedKind.item, code: code, item: const ScannedItem(id: 'i-Tea', name: 'Tea', unit: 'piece'))
+      : StockCodeResolution.unknown(code);
+}
+
 Future<void> _open(
   WidgetTester tester,
   _Config config,
@@ -160,6 +169,7 @@ Future<void> _open(
       stockQueriesProvider.overrideWithValue(_Queries()),
       stockConfigCommandsProvider.overrideWithValue(config),
       stockRegistryProvider.overrideWithValue(registry ?? _Registry()),
+      stockCodeResolverProvider.overrideWithValue(_Resolver()),
       myPermissionsProvider.overrideWithValue(held),
       if (separator != null) stockAddressSeparatorProvider.overrideWithValue(separator),
       if (lots) enabledFeaturesSyncProvider.overrideWithValue({WorkspaceFeature.stockManagement, WorkspaceFeature.stockLots}),

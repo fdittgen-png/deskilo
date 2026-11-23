@@ -158,21 +158,11 @@ class _ItemsState extends ConsumerState<_Items> {
         (r.homeAddressPath ?? '').split(stockAddressJoint).join(separator).toLowerCase().contains(q);
   }
 
-  /// A barcode typed or scanned: the item that has it opens.
-  void _scanned(String code, bool mayManage) {
-    final hit = _rows.where((r) => r.barcode == code.trim()).firstOrNull;
-    if (hit == null || !mayManage) return;
-    final lotsOn = ref.read(enabledFeaturesSyncProvider).contains(WorkspaceFeature.stockLots);
-    unawaited(
-      showStockItemEditor(
-        context,
-        ref.read(stockConfigCommandsProvider),
-        workspaceId: widget.workspaceId,
-        itemId: hit.itemId,
-        itemName: hit.itemName,
-        options: (lots: lotsOn, keep: false),
-      ),
-    );
+  /// A search submitted that names no row of the list is a code typed by hand: it goes the way a scanner's goes.
+  void _submitted(String text, bool mayManage) {
+    final code = text.trim();
+    if (code.isEmpty || _rows.any((r) => r.itemName.toLowerCase().contains(code.toLowerCase()))) return;
+    unawaited(_fromScanner(code, mayManage));
   }
 
   /// A scanner's code (#4359): an item opens, a place filters the list by it.
@@ -252,7 +242,7 @@ class _ItemsState extends ConsumerState<_Items> {
                 fieldKey: 'search',
                 label: l10n.stockRegistrySearch,
                 onChanged: (v) => setState(() => _query = v),
-                onSubmitted: (v) => _scanned(v, mayManage),
+                onSubmitted: (v) => _submitted(v, mayManage),
               ),
               const FormGap.small(),
               AppDropdownField<String?>(

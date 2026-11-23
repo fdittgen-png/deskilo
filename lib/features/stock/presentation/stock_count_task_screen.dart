@@ -54,9 +54,11 @@ class _State extends ConsumerState<StockCountTaskScreen> {
     if (code.isEmpty) return;
     final l10n = context.l10n;
     try {
-      final rows = (await ref.read(stockRegistryProvider).page(workspaceId, limit: 200)).rows;
-      final ids = {for (final r in rows) if (r.barcode == code) r.itemId};
-      final line = task.lines.where((l) => l.state == CountLineState.pending && ids.contains(l.itemId)).firstOrNull;
+      // The same resolver every other scan uses: the registry's size does not matter.
+      final itemId = (await ref.read(stockCodeResolverProvider).resolve(workspaceId, code)).item?.id;
+      final line = itemId == null || itemId.isEmpty
+          ? null
+          : task.lines.where((l) => l.state == CountLineState.pending && l.itemId == itemId).firstOrNull;
       if (!mounted) return;
       setState(() => _scanProblem = line == null ? l10n.stockCycleScanNone : null);
       if (line == null) return;
