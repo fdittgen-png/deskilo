@@ -1578,6 +1578,12 @@
       "capabilities": []
     },
     {
+      "key": "counterTillSessions",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "customFields",
       "maturity": "beta",
       "lifecycle": "active",

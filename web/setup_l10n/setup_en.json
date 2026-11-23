@@ -851,5 +851,14 @@
  "optChannelPrint": "Print",
  "optChannelBoth": "Share and print",
  "optCustomerlessAllowed": "Allowed",
- "optCustomerlessRefused": "A customer is always named"
+ "optCustomerlessRefused": "A customer is always named",
+ "counterBlind": "Count the drawer blind",
+ "counterBlindHint": "The counter does not see the expected cash until the drawer is counted. Set in the app's settings.",
+ "counterByDenomination": "Count by denomination",
+ "counterByDenominationHint": "The float and the counted drawer are given note by note and coin by coin. Set in the app's settings.",
+ "counterPaidOutLimit": "Largest paid-out without approval",
+ "counterPaidOutLimitHint": "A paid-out above this needs someone who may record outgoing payments. Set in the app's settings.",
+ "counterCashReasons": "Reasons for cash in and out",
+ "counterCashReasonsHint": "Separated by commas, for example change, expense, other. Set in the app's settings.",
+ "optNoLimit": "No limit"
 }

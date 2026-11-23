@@ -36,8 +36,12 @@ final _grantTable = RegExp(r'_(grants|shares|invitations|permissions)$');
 /// `create policy <name> on <table> for <cmd>` — `for select` is the only
 /// verb allowed on such a table, and a policy with no `for` clause is
 /// `FOR ALL`, which is the dangerous default this rule exists to catch.
+/// #4164 -- `as restrictive` is read too: a restrictive policy only narrows
+/// what a permissive one allows (the `mcp_delegated_deny` on every table), so
+/// it never grants a write and is not counted.
 final _policy = RegExp(
   r'create\s+policy\s+[^\s]+\s+on\s+([a-z0-9_."]+)\s*'
+  r'(?:as\s+(restrictive|permissive)\s*)?'
   r'(?:\n\s*)?(?:for\s+(select|insert|update|delete|all))?',
   caseSensitive: false,
 );
@@ -52,7 +56,8 @@ List<String> writePoliciesOnGrantTables(String sql) {
   for (final m in _policy.allMatches(sql)) {
     final table = _bare(m.group(1)!);
     if (!_grantTable.hasMatch(table)) continue;
-    final cmd = (m.group(2) ?? 'all').toLowerCase();
+    if ((m.group(2) ?? '').toLowerCase() == 'restrictive') continue;
+    final cmd = (m.group(3) ?? 'all').toLowerCase();
     if (cmd != 'select') found.add('$table:$cmd');
   }
   return found;
@@ -87,6 +92,15 @@ void main() {
           with check (owner_id = auth.uid());
       '''),
       ['trip_shares:insert'],
+    );
+    // #4164 -- a restrictive policy narrows and never grants; a permissive one named so still counts.
+    expect(
+      writePoliciesOnGrantTables('''
+        create policy mcp_delegated_deny on public.billing_access_grants as restrictive for all to authenticated
+          using (not public.mcp_is_delegated());
+        create policy x on public.billing_access_grants as permissive for update using (true);
+      '''),
+      ['billing_access_grants:update'],
     );
     // A policy with no `for` clause is FOR ALL — the silent one.
     expect(

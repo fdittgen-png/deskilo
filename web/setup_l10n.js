@@ -856,7 +856,16 @@ window.SETUP_L10N={
    "optChannelPrint": "Print",
    "optChannelBoth": "Share and print",
    "optCustomerlessAllowed": "Allowed",
-   "optCustomerlessRefused": "A customer is always named"
+   "optCustomerlessRefused": "A customer is always named",
+   "counterBlind": "Count the drawer blind",
+   "counterBlindHint": "The counter does not see the expected cash until the drawer is counted. Set in the app's settings.",
+   "counterByDenomination": "Count by denomination",
+   "counterByDenominationHint": "The float and the counted drawer are given note by note and coin by coin. Set in the app's settings.",
+   "counterPaidOutLimit": "Largest paid-out without approval",
+   "counterPaidOutLimitHint": "A paid-out above this needs someone who may record outgoing payments. Set in the app's settings.",
+   "counterCashReasons": "Reasons for cash in and out",
+   "counterCashReasonsHint": "Separated by commas, for example change, expense, other. Set in the app's settings.",
+   "optNoLimit": "No limit"
   },
   "feature": {
    "calendarTab": [
@@ -1554,6 +1563,10 @@ window.SETUP_L10N={
    "counterReceipts": [
     "Counter receipts",
     "A sale at the counter gives an immutable receipt of its own, numbered once, with the tender it was paid with. It is offered only where the country's operation is supported, and says plainly where it is not."
+   ],
+   "counterTillSessions": [
+    "Till sessions and day close",
+    "Open a till with its float, count the drawer at the close, and close the day with its report. A sale needs an open till; the expected cash is derived from what was taken, never typed."
    ]
   },
   "process": {
@@ -2807,7 +2820,16 @@ window.SETUP_L10N={
    "optChannelPrint": "Imprimer",
    "optChannelBoth": "Partager et imprimer",
    "optCustomerlessAllowed": "Autorisées",
-   "optCustomerlessRefused": "Un client est toujours nommé"
+   "optCustomerlessRefused": "Un client est toujours nommé",
+   "counterBlind": "Compter le tiroir à l'aveugle",
+   "counterBlindHint": "La caisse ne voit pas les espèces attendues avant d'avoir compté le tiroir. Réglé dans les paramètres de l'app.",
+   "counterByDenomination": "Compter par coupures",
+   "counterByDenominationHint": "Le fond de caisse et le tiroir compté sont donnés billet par billet et pièce par pièce. Réglé dans les paramètres de l'app.",
+   "counterPaidOutLimit": "Plus grand retrait sans autorisation",
+   "counterPaidOutLimitHint": "Un retrait au-delà exige une personne pouvant enregistrer des paiements sortants. Réglé dans les paramètres de l'app.",
+   "counterCashReasons": "Motifs des entrées et sorties d'espèces",
+   "counterCashReasonsHint": "Séparés par des virgules, par exemple monnaie, dépense, autre. Réglé dans les paramètres de l'app.",
+   "optNoLimit": "Aucune limite"
   },
   "feature": {
    "calendarTab": [
@@ -3505,6 +3527,10 @@ window.SETUP_L10N={
    "counterReceipts": [
     "Tickets de caisse",
     "Une vente au comptoir donne un ticket immuable, numéroté une seule fois, avec le règlement reçu. Il n'est proposé que là où l'opération du pays est prise en charge, et dit clairement quand elle ne l'est pas."
+   ],
+   "counterTillSessions": [
+    "Sessions de caisse et clôture de journée",
+    "Ouvrez une caisse avec son fond, comptez le tiroir à la fermeture et clôturez la journée avec son rapport. Une vente exige une caisse ouverte ; les espèces attendues se déduisent de ce qui a été encaissé, jamais saisies."
    ]
   },
   "process": {
@@ -4758,7 +4784,16 @@ window.SETUP_L10N={
    "optChannelPrint": "Drucken",
    "optChannelBoth": "Teilen und drucken",
    "optCustomerlessAllowed": "Erlaubt",
-   "optCustomerlessRefused": "Ein Kunde wird immer genannt"
+   "optCustomerlessRefused": "Ein Kunde wird immer genannt",
+   "counterBlind": "Die Schublade blind zählen",
+   "counterBlindHint": "Die Kasse sieht das erwartete Bargeld erst nach dem Zählen der Schublade. Einzustellen in den Einstellungen der App.",
+   "counterByDenomination": "Nach Stückelung zählen",
+   "counterByDenominationHint": "Wechselgeld und gezählte Schublade werden Schein für Schein und Münze für Münze angegeben. Einzustellen in den Einstellungen der App.",
+   "counterPaidOutLimit": "Größte Entnahme ohne Freigabe",
+   "counterPaidOutLimitHint": "Eine Entnahme darüber braucht jemanden, der ausgehende Zahlungen erfassen darf. Einzustellen in den Einstellungen der App.",
+   "counterCashReasons": "Gründe für Bargeld ein und aus",
+   "counterCashReasonsHint": "Durch Kommas getrennt, zum Beispiel Wechselgeld, Ausgabe, sonstiges. Einzustellen in den Einstellungen der App.",
+   "optNoLimit": "Keine Grenze"
   },
   "feature": {
    "calendarTab": [
@@ -5456,6 +5491,10 @@ window.SETUP_L10N={
    "counterReceipts": [
     "Kassenbelege",
     "Ein Verkauf an der Kasse ergibt einen unveränderlichen, einmal nummerierten Beleg mit der erhaltenen Zahlung. Er wird nur angeboten, wo der Vorgang des Landes unterstützt wird, und sagt klar, wenn nicht."
+   ],
+   "counterTillSessions": [
+    "Kassensitzungen und Tagesabschluss",
+    "Eine Kasse mit ihrem Wechselgeld eröffnen, die Schublade beim Abschluss zählen und den Tag mit seinem Bericht abschließen. Ein Verkauf braucht eine geöffnete Kasse; das erwartete Bargeld wird aus dem Eingenommenen abgeleitet, nie eingetippt."
    ]
   },
   "process": {
@@ -6709,7 +6748,16 @@ window.SETUP_L10N={
    "optChannelPrint": "Imprimir",
    "optChannelBoth": "Compartir e imprimir",
    "optCustomerlessAllowed": "Permitidas",
-   "optCustomerlessRefused": "Siempre se nombra un cliente"
+   "optCustomerlessRefused": "Siempre se nombra un cliente",
+   "counterBlind": "Contar el cajón a ciegas",
+   "counterBlindHint": "La caja no ve el efectivo esperado hasta contar el cajón. Se ajusta en los ajustes de la app.",
+   "counterByDenomination": "Contar por denominaciones",
+   "counterByDenominationHint": "El fondo y el cajón contado se dan billete a billete y moneda a moneda. Se ajusta en los ajustes de la app.",
+   "counterPaidOutLimit": "Mayor salida sin autorización",
+   "counterPaidOutLimitHint": "Una salida por encima necesita a alguien que pueda registrar pagos salientes. Se ajusta en los ajustes de la app.",
+   "counterCashReasons": "Motivos de entradas y salidas de efectivo",
+   "counterCashReasonsHint": "Separados por comas, por ejemplo cambio, gasto, otro. Se ajusta en los ajustes de la app.",
+   "optNoLimit": "Sin límite"
   },
   "feature": {
    "calendarTab": [
@@ -7407,6 +7455,10 @@ window.SETUP_L10N={
    "counterReceipts": [
     "Tickets de caja",
     "Una venta en el mostrador da un ticket inmutable, numerado una sola vez, con el cobro recibido. Solo se ofrece donde la operación del país está soportada, y dice claramente cuándo no lo está."
+   ],
+   "counterTillSessions": [
+    "Sesiones de caja y cierre del día",
+    "Abra una caja con su fondo, cuente el cajón al cierre y cierre el día con su informe. Una venta necesita una caja abierta; el efectivo esperado se deriva de lo cobrado, nunca se escribe."
    ]
   },
   "process": {
@@ -8660,7 +8712,16 @@ window.SETUP_L10N={
    "optChannelPrint": "Stampare",
    "optChannelBoth": "Condividere e stampare",
    "optCustomerlessAllowed": "Consentite",
-   "optCustomerlessRefused": "Un cliente è sempre indicato"
+   "optCustomerlessRefused": "Un cliente è sempre indicato",
+   "counterBlind": "Contare il cassetto alla cieca",
+   "counterBlindHint": "La cassa non vede il contante atteso finché il cassetto non è contato. Si imposta nelle impostazioni dell'app.",
+   "counterByDenomination": "Contare per tagli",
+   "counterByDenominationHint": "Il fondo e il cassetto contato si indicano banconota per banconota e moneta per moneta. Si imposta nelle impostazioni dell'app.",
+   "counterPaidOutLimit": "Prelievo massimo senza autorizzazione",
+   "counterPaidOutLimitHint": "Un prelievo oltre questo richiede qualcuno che possa registrare pagamenti in uscita. Si imposta nelle impostazioni dell'app.",
+   "counterCashReasons": "Motivi di entrate e uscite di contante",
+   "counterCashReasonsHint": "Separati da virgole, per esempio resto, spesa, altro. Si imposta nelle impostazioni dell'app.",
+   "optNoLimit": "Nessun limite"
   },
   "feature": {
    "calendarTab": [
@@ -9358,6 +9419,10 @@ window.SETUP_L10N={
    "counterReceipts": [
     "Scontrini di cassa",
     "Una vendita al banco dà uno scontrino immutabile, numerato una sola volta, con il pagamento ricevuto. È offerto solo dove l'operazione del paese è supportata e dice chiaramente quando non lo è."
+   ],
+   "counterTillSessions": [
+    "Sessioni di cassa e chiusura della giornata",
+    "Apra una cassa con il suo fondo, conti il cassetto alla chiusura e chiuda la giornata con il suo rapporto. Una vendita richiede una cassa aperta; il contante atteso si ricava da quanto incassato, mai digitato."
    ]
   },
   "process": {

@@ -136,6 +136,7 @@
   "user.money.stock.groups": "Item groups",
   "user.money.stock.scanning": "Working with a scanner",
   "user.money.stock.nfc": "Tags with the phone's NFC",
+  "user.money.till": "Till",
   "user.money.stock.value": "Stock value and where goods came from",
   "user.money.stock.reversals": "Returns, corrections and counts",
   "user.money.stock.cycle": "Cycle counts",

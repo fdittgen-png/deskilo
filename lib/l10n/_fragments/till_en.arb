@@ -1,0 +1,172 @@
+{
+  "tillTitle": "Till",
+  "@tillTitle": {
+    "description": "#4366 the till"
+  },
+  "tillNotReady": "Not ready in your country: {operation}",
+  "@tillNotReady": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "operation": {
+        "type": "String"
+      }
+    }
+  },
+  "tillNotReadyHint": "Nothing is numbered and nothing is taken until the country's operation is supported.",
+  "@tillNotReadyHint": {
+    "description": "#4366 the till"
+  },
+  "tillOpIssueReceipt": "issuing a receipt",
+  "@tillOpIssueReceipt": {
+    "description": "#4366 the till"
+  },
+  "tillOpCorrectReceipt": "correcting a receipt",
+  "@tillOpCorrectReceipt": {
+    "description": "#4366 the till"
+  },
+  "tillOpReconcileTender": "reconciling a card payment",
+  "@tillOpReconcileTender": {
+    "description": "#4366 the till"
+  },
+  "tillOpSignFiscal": "signing a fiscal receipt",
+  "@tillOpSignFiscal": {
+    "description": "#4366 the till"
+  },
+  "tillOpExportFiscal": "exporting fiscal records",
+  "@tillOpExportFiscal": {
+    "description": "#4366 the till"
+  },
+  "tillKeysTitle": "Items to ring up",
+  "@tillKeysTitle": {
+    "description": "#4366 the till"
+  },
+  "tillKeysEmpty": "There is nothing to sell yet. Add items in the stock first.",
+  "@tillKeysEmpty": {
+    "description": "#4366 the till"
+  },
+  "tillBasketTitle": "Basket",
+  "@tillBasketTitle": {
+    "description": "#4366 the till"
+  },
+  "tillBasketEmpty": "Tap an item to start a sale.",
+  "@tillBasketEmpty": {
+    "description": "#4366 the till"
+  },
+  "tillQuantityTitle": "Quantity sold",
+  "@tillQuantityTitle": {
+    "description": "#4366 the till"
+  },
+  "tillQuantityHint": "An exact quantity, for example 1 or 0.350.",
+  "@tillQuantityHint": {
+    "description": "#4366 the till"
+  },
+  "tillQuantityRefused": "Enter a quantity above zero with at most six decimals.",
+  "@tillQuantityRefused": {
+    "description": "#4366 the till"
+  },
+  "tillRemoveLine": "Take {name} out of the basket",
+  "@tillRemoveLine": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "tillTotalDue": "Total to pay: {amount}",
+  "@tillTotalDue": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "tillTaxIncluded": "of which tax {amount}",
+  "@tillTaxIncluded": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "tillPricing": "Pricing the basket…",
+  "@tillPricing": {
+    "description": "#4366 the till"
+  },
+  "tillPayCash": "Take cash",
+  "@tillPayCash": {
+    "description": "#4366 the till"
+  },
+  "tillCashGiven": "Cash given",
+  "@tillCashGiven": {
+    "description": "#4366 the till"
+  },
+  "tillCashExact": "Exact amount",
+  "@tillCashExact": {
+    "description": "#4366 the till"
+  },
+  "tillCashShort": "The cash given is less than the total.",
+  "@tillCashShort": {
+    "description": "#4366 the till"
+  },
+  "tillCashInvalid": "Enter the amount given as a number.",
+  "@tillCashInvalid": {
+    "description": "#4366 the till"
+  },
+  "tillSoldTitle": "Sold",
+  "@tillSoldTitle": {
+    "description": "#4366 the till"
+  },
+  "tillReceiptNumber": "Receipt {number}",
+  "@tillReceiptNumber": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "tillChangeDue": "Change due: {amount}",
+  "@tillChangeDue": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "tillNextCustomer": "Next customer",
+  "@tillNextCustomer": {
+    "description": "#4366 the till"
+  },
+  "tillRetry": "Try again",
+  "@tillRetry": {
+    "description": "#4366 the till: ask the server again"
+  },
+  "tillConfirmSale": "Confirm the sale",
+  "@tillConfirmSale": {
+    "description": "#4366 the till: the sale was sent and its answer was lost; send it again under the same request"
+  },
+  "tillLeaveTitle": "The sale is not confirmed",
+  "@tillLeaveTitle": {
+    "description": "#4366 the till: title of the question asked when leaving with a sale waiting to be confirmed"
+  },
+  "tillLeaveBody": "The sale was sent and its answer did not come. Leaving keeps it waiting: open the till again and confirm it. Do not ring it up again.",
+  "@tillLeaveBody": {
+    "description": "#4366 the till: what leaving with a sale waiting to be confirmed does"
+  },
+  "tillLeaveStay": "Stay",
+  "@tillLeaveStay": {
+    "description": "#4366 the till: stay on the till"
+  },
+  "tillLeaveGo": "Leave",
+  "@tillLeaveGo": {
+    "description": "#4366 the till: leave the till with the sale still waiting"
+  },
+  "tillFailed": "The till could not do that. Try again.",
+  "@tillFailed": {
+    "description": "#4366 the till"
+  }
+}
