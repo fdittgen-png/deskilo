@@ -14,7 +14,6 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
-import '../../../../core/settings/setting_defaults.g.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/calendar_days.dart';
 import '../../../../core/ui/app_sheet.dart';
@@ -23,6 +22,7 @@ import '../../../workspace/providers/business_date_provider.dart';
 import '../../application/customer_quote_commands.dart';
 import '../../domain/customer_quote.dart';
 import '../../providers/customer_quote_providers.dart';
+import '../../providers/standalone_invoice_providers.dart';
 import 'quote_text.dart';
 
 /// The conversion sheet of an accepted quote.
@@ -118,9 +118,16 @@ class _QuoteConversionState extends ConsumerState<_QuoteConversionSheet> {
     _state = ValueNotifier(
       _Conversion(
         serviceDate: today,
-        dueOn: addCalendarDays(today, SettingDefaults.dunningFirstAfterDays),
+        dueOn: addCalendarDays(today, ref.read(invoiceDueDaysProvider)),
       ),
     );
+    // The payment term arrives after the sheet opens: the due date offered follows it until the person sets one.
+    ref.listenManual<int>(invoiceDueDaysProvider, (was, now) {
+      final c = _state.value;
+      if (was != null && c.dueOn == addCalendarDays(c.serviceDate, was)) {
+        _state.value = c.withDates(dueOn: addCalendarDays(c.serviceDate, now));
+      }
+    });
   }
 
   @override

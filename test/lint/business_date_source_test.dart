@@ -11,6 +11,8 @@
 // move onto the business's calendar; the ceiling only falls. (`DateTime.now()` itself is already
 // banned by `no_wall_clock_test`, and `.toLocal()` below presentation is pinned by
 // `format_seam_test`.)
+import 'dart:io';
+
 import 'package:flutter_test/flutter_test.dart';
 
 import 'literal_ratchet.dart';
@@ -21,13 +23,26 @@ final _deviceDate = LiteralKind(
     r'\bnow\(\)\s*\.(?:year|month|day|weekday)\b'
     r'|\.toLocal\(\)\s*\.(?:year|month|day|weekday)\b'
     r'|\bDateTime\(\s*(?:now|today|_now|clock\.now\(\))\s*\.year\b'
-    r'|DateUtils\.dateOnly\(\s*(?:now|clock\.now\(\)|ref\.read\(clockProvider\)\.now\(\))',
+    r'|DateUtils\.dateOnly\(\s*(?:now|clock\.now\(\)|ref\.read\(clockProvider\)\.now\(\))'
+    // #4426 -- the instant handed on as the day itself: `today = ...clockProvider...now();`
+    r'|\b(?:today|_today|day|date|_date)\s*=\s*(?:ref\.(?:read|watch)\(clockProvider\)|clock)\.now\(\)\s*[;,)]',
   ),
 );
 
-/// The cases recorded when the lint was added (#4322); each is a date to move onto the business's
-/// calendar, and the number only falls.
-const _ceiling = 68;
+/// The layers whose dates are counted: domain and presentation since #4322, and since #4426 providers, application and
+/// the app's own wiring, where the same device date was being made.
+bool _counted(File f) {
+  final path = f.path;
+  if (path.endsWith('.g.dart') || path.endsWith('.freezed.dart')) return false;
+  if (path.contains('lib/app/')) return true;
+  if (!path.contains('lib/features/')) return false;
+  return ['/domain/', '/presentation/', '/providers/', '/application/'].any(path.contains);
+}
+
+/// The cases recorded per file (#4322, widened by #4426): each is a date to move onto the business's calendar. A count
+/// only falls, and a file that is not listed holds none: a new file cannot add a device-clock date. Regenerate with
+/// `WRITE_BASELINE=true flutter test test/lint/business_date_source_test.dart` when a file is cleaned.
+const _baselineFile = 'test/lint/business_date_source_baseline.txt';
 
 void main() {
   test('the pattern sees a date read off the device clock and not one read on the business\'s calendar', () {
@@ -37,6 +52,9 @@ void main() {
       'final today = DateTime(now.year, now.month, now.day);',
       'final d = DateUtils.dateOnly(now);',
       'final d = DateUtils.dateOnly(ref.read(clockProvider).now());',
+      'final today = ref.watch(clockProvider).now();',
+      'final today = ref.read(clockProvider).now();',
+      'final date = clock.now();',
     ]) {
       expect(_deviceDate.pattern.hasMatch(bad), isTrue, reason: bad);
     }
@@ -45,30 +63,43 @@ void main() {
       'final d = calendar.dateOf(clock.now());',
       'final today = ref.watch(businessTodayProvider);',
       'final shown = appFormatOf(context).date(at);',
+      'final today = ref.watch(businessDayProvider);',
+      'final d = ref.watch(businessDateOfProvider)(ref.watch(clockProvider).now());',
+      'final at = ref.read(clockProvider).now();',
     ]) {
       expect(_deviceDate.pattern.hasMatch(good), isFalse, reason: good);
     }
   });
 
-  test('dates made off the device clock in domain and presentation only fall', () {
-    final files = filesUnder(['lib/features']).where(
-      (f) =>
-          (f.path.contains('/domain/') || f.path.contains('/presentation/')) &&
-          !f.path.endsWith('.g.dart') &&
-          !f.path.endsWith('.freezed.dart'),
-    );
+  test('dates made off the device clock only fall, per file, and a file not on the list holds none', () {
+    final files = filesUnder(['lib/features', 'lib/app']).where(_counted);
     final perFile = countLiterals(files, [_deviceDate])[_deviceDate.name]!;
+    if (const bool.fromEnvironment('WRITE_BASELINE')) {
+      File(_baselineFile).writeAsStringSync(
+        '# #4322/#4426 -- dates made off the device clock, per file; a count only falls (see business_date_source_test.dart)\n'
+        '${(perFile.entries.toList()..sort((a, b) => a.key.compareTo(b.key))).map((e) => '${e.key}: ${e.value}').join('\n')}\n',
+      );
+    }
+    final baseline = {
+      for (final line in File(_baselineFile).readAsLinesSync())
+        if (line.isNotEmpty && !line.startsWith('#')) line.split(': ').first: int.parse(line.split(': ').last),
+    };
+    final up = <String>[];
+    final down = <String>[];
+    for (final path in {...perFile.keys, ...baseline.keys}) {
+      final now = perFile[path] ?? 0;
+      final was = baseline[path] ?? 0;
+      if (now > was) up.add('$path: $was -> $now');
+      if (now < was) down.add('$path: $was -> $now');
+    }
     expect(
-      total(perFile),
-      _ceiling,
-      reason: ratchetMessage(
-        rule: 'business date source (#4322): read the date on the business\'s calendar '
-            '(businessDateOf, WorkspaceCalendar.dateOf, businessTodayProvider)',
-        kind: _deviceDate.name,
-        ceiling: _ceiling,
-        actual: total(perFile),
-        perFile: perFile,
-      ),
+      up,
+      isEmpty,
+      reason:
+          'a date made off the device clock where the business\'s calendar is the source (#4322, #4426): read it through '
+          'businessDayProvider / businessDateOfProvider / WorkspaceCalendar.dateOf. A file not in the baseline holds none.',
     );
+    expect(down, isEmpty, reason: 'a win: lower the baseline of these files (WRITE_BASELINE=true)');
+    expect(total(perFile), total({for (final e in baseline.entries) e.key: e.value}));
   });
 }

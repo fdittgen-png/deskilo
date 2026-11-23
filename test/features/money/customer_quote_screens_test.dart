@@ -10,6 +10,7 @@ import 'package:deskilo/core/demo/data/fake_billing_customers.dart';
 import 'package:deskilo/core/demo/data/fake_customer_quotes.dart';
 import 'package:deskilo/core/time/calendar_days.dart';
 import 'package:deskilo/core/time/clock.dart';
+import 'package:deskilo/core/ui/date_field.dart';
 import 'package:deskilo/features/money/application/customer_quote_commands.dart';
 import 'package:deskilo/features/money/domain/billing_customer.dart';
 import 'package:deskilo/features/money/domain/customer_quote.dart';
@@ -19,11 +20,13 @@ import 'package:deskilo/features/money/presentation/screens/customer_quote_scree
 import 'package:deskilo/features/money/presentation/screens/customer_quotes_screen.dart';
 import 'package:deskilo/features/money/providers/billing_customer_providers.dart';
 import 'package:deskilo/features/money/providers/customer_quote_providers.dart';
+import 'package:deskilo/features/money/providers/standalone_invoice_providers.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo/l10n/app_localizations_en.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 
@@ -66,6 +69,7 @@ Future<_Setup> _open(
   Widget screen, {
   Set<WorkspacePermission>? permissions,
   bool withQuotes = true,
+  List<Override> extra = const [],
 }) async {
   tester.view.physicalSize = const Size(900, 1600);
   tester.view.devicePixelRatio = 1;
@@ -88,6 +92,7 @@ Future<_Setup> _open(
     overrides: [
       ...standardTestOverrides(),
       customerQuoteRepositoryProvider.overrideWithValue(quotes),
+      ...extra,
       billingCustomerRepositoryProvider.overrideWithValue(customers),
       myPermissionsProvider.overrideWithValue(
         permissions ??
@@ -135,6 +140,13 @@ Future<void> _settle(WidgetTester tester) async {
     await tester.pump(const Duration(milliseconds: 100));
   }
 }
+
+/// The business's day in these tests is a day no device clock shows: what a screen offers as a date must be it.
+final _businessDay = DateTime(2031, 5, 17);
+final _dayOverrides = [
+  businessDateOfProvider.overrideWithValue((_) => _businessDay),
+  invoiceDueDaysProvider.overrideWithValue(21),
+];
 
 void main() {
   testWidgets('the list shows each quote with its reference, status and the '
@@ -332,5 +344,33 @@ void main() {
         .convert(setup.workspaceId, 'quote-1', draftRevision: 1, requestId: 'r1');
     expect(outcome, isA<QuoteDone<QuoteConverted>>());
     expect((outcome as QuoteDone<QuoteConverted>).value.replayed, isTrue);
+  });
+
+  testWidgets('the editor offers the business\'s day as the issue date, not the device\'s', (tester) async {
+    await _open(tester, const CustomerQuoteEditorScreen(quoteId: 'new'), extra: _dayOverrides);
+    expect(tester.widget<AppDateField>(find.byKey(const ValueKey('quote-issued-on'))).value, _businessDay);
+  });
+
+  testWidgets('the answer sheet offers the business\'s day as the decision date', (tester) async {
+    await _open(tester, const CustomerQuoteScreen(quoteId: 'quote-1'), extra: _dayOverrides);
+    await tester.tap(find.byKey(const ValueKey('quote-record-answer')));
+    await _settle(tester);
+    expect(tester.widget<AppDateField>(find.byKey(const ValueKey('quote-decided-on'))).value, _businessDay);
+  });
+
+  testWidgets('the conversion sheet offers the business\'s day as the service date and the payment term after it', (tester) async {
+    final setup = await _open(tester, const CustomerQuoteScreen(quoteId: 'quote-1'), extra: _dayOverrides);
+    await setup.quotes.recordDecision(
+      setup.workspaceId,
+      'quote-1',
+      QuoteDecisionInput(accepted: true, revision: 1, decidedOn: setup.today, source: 'email'),
+    );
+    ProviderScope.containerOf(tester.element(find.byType(Scaffold).first))
+        .invalidate(customerQuoteProvider((workspaceId: setup.workspaceId, quoteId: 'quote-1')));
+    await _settle(tester);
+    await tester.tap(find.byKey(const ValueKey('quote-convert')));
+    await _settle(tester);
+    expect(tester.widget<AppDateField>(find.byKey(const ValueKey('quote-convert-service-date'))).value, _businessDay);
+    expect(tester.widget<AppDateField>(find.byKey(const ValueKey('quote-convert-due-date'))).value, addCalendarDays(_businessDay, 21));
   });
 }
