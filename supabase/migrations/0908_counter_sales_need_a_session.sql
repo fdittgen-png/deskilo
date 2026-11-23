@@ -16,14 +16,15 @@
 
 -- the open session of a till of this business, or the refusal that names the till
 create or replace function public.counter_open_session(p_workspace_id uuid, p_till text)
-returns uuid language plpgsql stable security definer set search_path = public as $fn$
+returns uuid language plpgsql volatile security definer set search_path = public as $fn$
 declare
   v_till uuid;
   v_session uuid;
 begin
   begin v_till := nullif(p_till, '')::uuid; exception when others then v_till := null; end;
+  -- share-locked: a close (for update) waits for the transaction that took the session, as for a sale
   select s.id into v_session from public.counter_till_sessions s
-   where s.workspace_id = p_workspace_id and s.till_id = v_till and s.state = 'open';
+   where s.workspace_id = p_workspace_id and s.till_id = v_till and s.state = 'open' for share;
   if v_session is null then
     raise exception 'open the till first' using errcode = 'DKL12',
       detail = jsonb_build_object('reason', 'till_open_first', 'till_id', v_till)::text;
@@ -96,8 +97,8 @@ declare
     E'    insert into public.counter_refunds (workspace_id, receipt_id, part, kind, amount_minor, request_id, refunded_by_member_id)\n    values (p_workspace_id, v_rec.id, v_part, v_t ->> \'kind\', (v_t ->> \'amount_minor\')::bigint, p_request_id, v_me);'];
   v_news text[] := array[
     E'  v_given bigint;\n  v_part int;\n  v_result jsonb;\n  v_session uuid;\nbegin',
-    E'  perform public.counter_require_operation(p_workspace_id, \'reconcile_tender\');\n  -- cash comes out of a drawer: with the sessions on, its parts name a till that has an open session\n  if public.feature_effective(p_workspace_id, \'counterTillSessions\')\n     and exists (select 1 from jsonb_array_elements(p_refunds) x where x ->> \'kind\' = \'cash\') then\n    v_session := public.counter_open_session(p_workspace_id,\n      (select x ->> \'till_id\' from jsonb_array_elements(p_refunds) x where x ->> \'kind\' = \'cash\' limit 1));\n  end if;\n  for v_t in select value from jsonb_array_elements(p_refunds) loop',
-    E'    insert into public.counter_refunds (workspace_id, receipt_id, part, kind, amount_minor, request_id, refunded_by_member_id, till_session_id)\n    values (p_workspace_id, v_rec.id, v_part, v_t ->> \'kind\', (v_t ->> \'amount_minor\')::bigint, p_request_id, v_me,\n            case when v_t ->> \'kind\' = \'cash\' then v_session end);'];
+    E'  perform public.counter_require_operation(p_workspace_id, \'reconcile_tender\');\n  for v_t in select value from jsonb_array_elements(p_refunds) loop',
+    E'    -- cash comes out of a drawer: with the sessions on, each cash part names a till that has an open session, share-locked\n    v_session := null;\n    if v_t ->> \'kind\' = \'cash\' and public.feature_effective(p_workspace_id, \'counterTillSessions\') then\n      v_session := public.counter_open_session(p_workspace_id, v_t ->> \'till_id\');\n    end if;\n    insert into public.counter_refunds (workspace_id, receipt_id, part, kind, amount_minor, request_id, refunded_by_member_id, till_session_id)\n    values (p_workspace_id, v_rec.id, v_part, v_t ->> \'kind\', (v_t ->> \'amount_minor\')::bigint, p_request_id, v_me, v_session);'];
 begin
   for k in 1 .. array_length(v_olds, 1) loop
     if pg_temp.occurrences(v_def, v_olds[k]) <> 1 then

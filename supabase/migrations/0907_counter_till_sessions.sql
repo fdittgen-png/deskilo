@@ -17,6 +17,11 @@
 --   * The expected cash is DERIVED, never typed: the float, plus the cash tenders of the sales of the session, less its cash
 --     refunds, plus paid-in, less paid-out. While a session is open and `counter.blind_count` is on, only someone who may see
 --     the finances reads it; the counter counts first and sees the difference after.
+--     The blind count is a counting discipline, not a secret: the server hides the DERIVED figure and refuses its read, and the
+--     difference is shown when a count is submitted (that is what counting is for); the facts the counter itself recorded (the
+--     float it counted, its entries, the sales it made) stay readable to it, so it is not an access barrier against a counter who
+--     adds them up. What the server guarantees is that the expected cash is never typed, never taken from the client, and read
+--     by the finances right alone while the session is open.
 --   * Boundaries: a sale takes a share lock on its session and a close takes it for update, so a sale finalized at the moment
 --     of the close lands in that session only if its transaction committed first (0908); a closed session refuses the sale.
 --   * Rights are the ones the till already has (no new permission): working the counter is issueInvoices on a business with the
