@@ -12,7 +12,6 @@ import 'package:deskilo/core/demo/seed/demo_second_space_seed.dart';
 import 'package:deskilo/core/time/calendar_days.dart';
 import 'package:deskilo/core/ui/date_field.dart';
 import 'package:deskilo/features/money/presentation/standalone/standalone_invoice_screen.dart';
-import 'package:deskilo/features/money/providers/business_day_provider.dart';
 import 'package:deskilo/features/money/providers/standalone_invoice_providers.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
@@ -155,7 +154,7 @@ void main() {
 
   testWidgets('the composer offers the business\'s day as the service date and the payment term after it', (tester) async {
     final day = DateTime(2031, 5, 17);
-    await open(tester, const Size(390, 844), extra: [businessDayProvider.overrideWithValue(day), invoiceDueDaysProvider.overrideWithValue(21)]);
+    await open(tester, const Size(390, 844), extra: [businessDateOfProvider.overrideWithValue((_) => day), invoiceDueDaysProvider.overrideWithValue(21)]);
     expect(tester.widget<AppDateField>(await reveal(tester, 'standalone-service-date')).value, day);
     expect(tester.widget<AppDateField>(await reveal(tester, 'standalone-due-date')).value, addCalendarDays(day, 21));
   });
