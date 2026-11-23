@@ -35408,6 +35408,102 @@ class AppLocalizationsEn extends AppLocalizations {
   String get statusTo => 'To';
 
   @override
+  String get stockBulkReadAgain => 'Read again';
+
+  @override
+  String get stockBulkReadConfirm => 'Fill the count';
+
+  @override
+  String stockBulkReadCount(int count, int limit) {
+    return '$count of at most $limit tags read';
+  }
+
+  @override
+  String stockBulkReadDone(int lines, int left) {
+    String _temp0 = intl.Intl.pluralLogic(
+      lines,
+      locale: localeName,
+      other: '$lines lines',
+      one: '1 line',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      left,
+      locale: localeName,
+      other: '$left tags',
+      one: '1 tag',
+    );
+    return '$_temp0 counted, $_temp1 left out';
+  }
+
+  @override
+  String stockBulkReadDropped(int n) {
+    return '$n tags left out: the read is full';
+  }
+
+  @override
+  String get stockBulkReadField => 'Tag reader input';
+
+  @override
+  String get stockBulkReadHint =>
+      'Read the tags with your reader. Each tag counts once, however often it is read.';
+
+  @override
+  String get stockBulkReadNotInStock => 'Pieces that are not in stock';
+
+  @override
+  String get stockBulkReadNotPieces => 'Tags that name no piece';
+
+  @override
+  String get stockBulkReadOpen => 'Read many tags';
+
+  @override
+  String stockBulkReadPieces(String item, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count pieces',
+      one: '1 piece',
+    );
+    return '$item · $_temp0';
+  }
+
+  @override
+  String get stockBulkReadReasonAlready =>
+      'already counted: the first read of a line is final';
+
+  @override
+  String get stockBulkReadReasonInvalid => 'cannot be read';
+
+  @override
+  String get stockBulkReadReasonNotAPiece => 'names no piece';
+
+  @override
+  String get stockBulkReadReasonNotCounted => 'not counted';
+
+  @override
+  String get stockBulkReadReasonNotInStock => 'not in stock';
+
+  @override
+  String get stockBulkReadReasonOtherPlace => 'belongs to another place';
+
+  @override
+  String stockBulkReadRepeats(int n) {
+    return '$n repeated reads ignored';
+  }
+
+  @override
+  String get stockBulkReadResolving => 'Checking the tags…';
+
+  @override
+  String get stockBulkReadStop => 'Stop reading';
+
+  @override
+  String get stockBulkReadTitle => 'Reading many tags';
+
+  @override
+  String get stockBulkReadUnknown => 'Tags nobody knows';
+
+  @override
   String stockCameraCount(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

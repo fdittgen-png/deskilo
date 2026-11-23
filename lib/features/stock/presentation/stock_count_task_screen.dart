@@ -27,6 +27,7 @@ import '../domain/stock_config.dart';
 import '../domain/stock_cycle_counts.dart';
 import '../domain/stock_page.dart';
 import '../providers/stock_providers.dart';
+import 'stock_bulk_read_sheet.dart';
 import 'stock_config_text.dart';
 
 class StockCountTaskScreen extends ConsumerStatefulWidget {
@@ -97,6 +98,36 @@ class _State extends ConsumerState<StockCountTaskScreen> {
       ],
     ),
   );
+
+  /// #4364 -- "Read many tags": the tags a UHF reader typed fill the counted lines of this task (blind: the counter is
+  /// told what it read, never what was expected). The read waits for its approval like any count; no balance moves.
+  Future<void> _bulkRead(String workspaceId) async {
+    final l10n = context.l10n;
+    final requestId = newRequestId();
+    BulkCountResult? answer;
+    final done = await showModalBottomSheet<bool>(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      builder: (c) => StockBulkReadSheet(
+        workspaceId: workspaceId,
+        confirmLabel: l10n.stockBulkReadConfirm,
+        onConfirm: (resolution, codes) async {
+          try {
+            answer = await ref.read(stockCycleCountsProvider).countByTagRead(workspaceId, requestId: requestId, taskId: widget.taskId, codes: codes);
+            return null;
+          } on Object catch (e, st) {
+            TraceLogger.instance.warn('stock', 'a bulk read was not counted: $e', stackTrace: st);
+            return knownRefusalText(l10n, e) ?? stockSaveProblem(l10n, e);
+          }
+        },
+      ),
+    );
+    if (done != true || !mounted) return;
+    _refresh(workspaceId);
+    final r = answer;
+    if (r != null) AppSnack.success(context, l10n.stockBulkReadDone(r.lines.length, r.leftOut.length));
+  }
 
   void _refresh(String workspaceId) {
     ref
@@ -236,6 +267,16 @@ class _State extends ConsumerState<StockCountTaskScreen> {
                   textInputAction: TextInputAction.search,
                   onSubmitted: (_) => _find(workspaceId, task, items, places),
                 ),
+                if (ref.watch(stockTagReadsProvider))
+                  Align(
+                    alignment: AlignmentDirectional.centerStart,
+                    child: OutlinedButton.icon(
+                      key: const ValueKey('stock-bulk-open'),
+                      onPressed: () => _bulkRead(workspaceId),
+                      icon: const Icon(Icons.sensors),
+                      label: Text(l10n.stockBulkReadOpen),
+                    ),
+                  ),
                 const SizedBox(height: AppSpacing.md),
               ],
               if (task.lines.isEmpty) Text(l10n.stockCycleTaskNoLines, key: const ValueKey('stock-cycle-no-lines')),

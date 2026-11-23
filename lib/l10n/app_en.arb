@@ -45963,6 +45963,128 @@
   "@statusTo": {
     "description": "#934 workspace status / repartition wizard: statusTo"
   },
+  "stockBulkReadAgain": "Read again",
+  "@stockBulkReadAgain": {
+    "description": "#4364 reading many tags"
+  },
+  "stockBulkReadConfirm": "Fill the count",
+  "@stockBulkReadConfirm": {
+    "description": "#4364 reading many tags"
+  },
+  "stockBulkReadCount": "{count} of at most {limit} tags read",
+  "@stockBulkReadCount": {
+    "description": "#4364 reading many tags",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "limit": {
+        "type": "int"
+      }
+    }
+  },
+  "stockBulkReadDone": "{lines, plural, one{1 line} other{{lines} lines}} counted, {left, plural, one{1 tag} other{{left} tags}} left out",
+  "@stockBulkReadDone": {
+    "description": "#4364 reading many tags",
+    "placeholders": {
+      "lines": {
+        "type": "int"
+      },
+      "left": {
+        "type": "int"
+      }
+    }
+  },
+  "stockBulkReadDropped": "{n} tags left out: the read is full",
+  "@stockBulkReadDropped": {
+    "description": "#4364 reading many tags",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "stockBulkReadField": "Tag reader input",
+  "@stockBulkReadField": {
+    "description": "#4364 reading many tags"
+  },
+  "stockBulkReadHint": "Read the tags with your reader. Each tag counts once, however often it is read.",
+  "@stockBulkReadHint": {
+    "description": "#4364 reading many tags"
+  },
+  "stockBulkReadNotInStock": "Pieces that are not in stock",
+  "@stockBulkReadNotInStock": {
+    "description": "#4364 reading many tags"
+  },
+  "stockBulkReadNotPieces": "Tags that name no piece",
+  "@stockBulkReadNotPieces": {
+    "description": "#4364 reading many tags"
+  },
+  "stockBulkReadOpen": "Read many tags",
+  "@stockBulkReadOpen": {
+    "description": "#4364 reading many tags"
+  },
+  "stockBulkReadPieces": "{item} · {count, plural, one{1 piece} other{{count} pieces}}",
+  "@stockBulkReadPieces": {
+    "description": "#4364 reading many tags",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "stockBulkReadReasonAlready": "already counted: the first read of a line is final",
+  "@stockBulkReadReasonAlready": {
+    "description": "#4364 reading many tags"
+  },
+  "stockBulkReadReasonInvalid": "cannot be read",
+  "@stockBulkReadReasonInvalid": {
+    "description": "#4364 reading many tags"
+  },
+  "stockBulkReadReasonNotAPiece": "names no piece",
+  "@stockBulkReadReasonNotAPiece": {
+    "description": "#4364 reading many tags"
+  },
+  "stockBulkReadReasonNotCounted": "not counted",
+  "@stockBulkReadReasonNotCounted": {
+    "description": "#4364 reading many tags"
+  },
+  "stockBulkReadReasonNotInStock": "not in stock",
+  "@stockBulkReadReasonNotInStock": {
+    "description": "#4364 reading many tags"
+  },
+  "stockBulkReadReasonOtherPlace": "belongs to another place",
+  "@stockBulkReadReasonOtherPlace": {
+    "description": "#4364 reading many tags"
+  },
+  "stockBulkReadRepeats": "{n} repeated reads ignored",
+  "@stockBulkReadRepeats": {
+    "description": "#4364 reading many tags",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "stockBulkReadResolving": "Checking the tags…",
+  "@stockBulkReadResolving": {
+    "description": "#4364 reading many tags"
+  },
+  "stockBulkReadStop": "Stop reading",
+  "@stockBulkReadStop": {
+    "description": "#4364 reading many tags"
+  },
+  "stockBulkReadTitle": "Reading many tags",
+  "@stockBulkReadTitle": {
+    "description": "#4364 reading many tags"
+  },
+  "stockBulkReadUnknown": "Tags nobody knows",
+  "@stockBulkReadUnknown": {
+    "description": "#4364 reading many tags"
+  },
   "stockCameraCount": "{count, plural, one{1 code read} other{{count} codes read}}",
   "@stockCameraCount": {
     "description": "#4360 G11 camera: stockCameraCount",

@@ -56777,6 +56777,138 @@ abstract class AppLocalizations {
   /// **'To'**
   String get statusTo;
 
+  /// #4364 reading many tags
+  ///
+  /// In en, this message translates to:
+  /// **'Read again'**
+  String get stockBulkReadAgain;
+
+  /// #4364 reading many tags
+  ///
+  /// In en, this message translates to:
+  /// **'Fill the count'**
+  String get stockBulkReadConfirm;
+
+  /// #4364 reading many tags
+  ///
+  /// In en, this message translates to:
+  /// **'{count} of at most {limit} tags read'**
+  String stockBulkReadCount(int count, int limit);
+
+  /// #4364 reading many tags
+  ///
+  /// In en, this message translates to:
+  /// **'{lines, plural, one{1 line} other{{lines} lines}} counted, {left, plural, one{1 tag} other{{left} tags}} left out'**
+  String stockBulkReadDone(int lines, int left);
+
+  /// #4364 reading many tags
+  ///
+  /// In en, this message translates to:
+  /// **'{n} tags left out: the read is full'**
+  String stockBulkReadDropped(int n);
+
+  /// #4364 reading many tags
+  ///
+  /// In en, this message translates to:
+  /// **'Tag reader input'**
+  String get stockBulkReadField;
+
+  /// #4364 reading many tags
+  ///
+  /// In en, this message translates to:
+  /// **'Read the tags with your reader. Each tag counts once, however often it is read.'**
+  String get stockBulkReadHint;
+
+  /// #4364 reading many tags
+  ///
+  /// In en, this message translates to:
+  /// **'Pieces that are not in stock'**
+  String get stockBulkReadNotInStock;
+
+  /// #4364 reading many tags
+  ///
+  /// In en, this message translates to:
+  /// **'Tags that name no piece'**
+  String get stockBulkReadNotPieces;
+
+  /// #4364 reading many tags
+  ///
+  /// In en, this message translates to:
+  /// **'Read many tags'**
+  String get stockBulkReadOpen;
+
+  /// #4364 reading many tags
+  ///
+  /// In en, this message translates to:
+  /// **'{item} · {count, plural, one{1 piece} other{{count} pieces}}'**
+  String stockBulkReadPieces(String item, int count);
+
+  /// #4364 reading many tags
+  ///
+  /// In en, this message translates to:
+  /// **'already counted: the first read of a line is final'**
+  String get stockBulkReadReasonAlready;
+
+  /// #4364 reading many tags
+  ///
+  /// In en, this message translates to:
+  /// **'cannot be read'**
+  String get stockBulkReadReasonInvalid;
+
+  /// #4364 reading many tags
+  ///
+  /// In en, this message translates to:
+  /// **'names no piece'**
+  String get stockBulkReadReasonNotAPiece;
+
+  /// #4364 reading many tags
+  ///
+  /// In en, this message translates to:
+  /// **'not counted'**
+  String get stockBulkReadReasonNotCounted;
+
+  /// #4364 reading many tags
+  ///
+  /// In en, this message translates to:
+  /// **'not in stock'**
+  String get stockBulkReadReasonNotInStock;
+
+  /// #4364 reading many tags
+  ///
+  /// In en, this message translates to:
+  /// **'belongs to another place'**
+  String get stockBulkReadReasonOtherPlace;
+
+  /// #4364 reading many tags
+  ///
+  /// In en, this message translates to:
+  /// **'{n} repeated reads ignored'**
+  String stockBulkReadRepeats(int n);
+
+  /// #4364 reading many tags
+  ///
+  /// In en, this message translates to:
+  /// **'Checking the tags…'**
+  String get stockBulkReadResolving;
+
+  /// #4364 reading many tags
+  ///
+  /// In en, this message translates to:
+  /// **'Stop reading'**
+  String get stockBulkReadStop;
+
+  /// #4364 reading many tags
+  ///
+  /// In en, this message translates to:
+  /// **'Reading many tags'**
+  String get stockBulkReadTitle;
+
+  /// #4364 reading many tags
+  ///
+  /// In en, this message translates to:
+  /// **'Tags nobody knows'**
+  String get stockBulkReadUnknown;
+
   /// #4360 G11 camera: stockCameraCount
   ///
   /// In en, this message translates to:

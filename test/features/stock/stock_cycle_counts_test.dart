@@ -8,14 +8,17 @@
 // difference; a skip needs a reason; a closed task offers no buttons; a failed read says so and asks
 // again. Nothing here moves a balance.
 import 'package:deskilo/core/demo/data/demo_stock_config_commands.dart';
+import 'package:deskilo/features/stock/domain/stock_bulk_read.dart';
 import 'package:deskilo/features/stock/domain/stock_code_resolver.dart';
 import 'package:deskilo/features/stock/domain/stock_cycle_counts.dart';
 import 'package:deskilo/features/stock/domain/stock_page.dart';
 import 'package:deskilo/features/stock/domain/stock_queries.dart';
 import 'package:deskilo/features/stock/domain/stock_registry.dart';
+import 'package:deskilo/features/stock/domain/stock_tags.dart';
 import 'package:deskilo/features/stock/presentation/stock_count_task_screen.dart';
 import 'package:deskilo/features/stock/presentation/stock_cycle_counts_screen.dart';
 import 'package:deskilo/features/stock/providers/stock_providers.dart';
+import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo/l10n/app_localizations_en.dart';
@@ -161,12 +164,47 @@ class _Cycle implements StockCycleCounts {
   Future<List<CountHistoryRow>> history(String workspaceId) async => [
     CountHistoryRow(itemId: 'i-beans', locationId: 'demo-place-main', counts: 4, exact: 3, lastCountedAt: DateTime.utc(2026, 3)),
   ];
+  final bulk = <({String request, List<String> codes})>[];
+
   @override
-  Future<BulkCountResult> countByTagRead(String workspaceId, {required String requestId, required String taskId, required List<String> codes}) =>
-      throw UnimplementedError('not under test here');
+  Future<BulkCountResult> countByTagRead(String workspaceId, {required String requestId, required String taskId, required List<String> codes}) async {
+    bulk.add((request: requestId, codes: codes));
+    return const BulkCountResult(
+      taskState: CountTaskState.open,
+      lines: [BulkCountedLine(lineId: 'l-2', itemId: 'i-mugs', locationId: 'demo-place-main', read: 2, state: 'counted')],
+      leftOut: [BulkLeftOut(code: 'ZZ', reason: 'not_a_piece')],
+      replayed: false,
+    );
+  }
 }
 
-Future<void> _open(WidgetTester tester, Widget home, _Cycle cycle, Size size, {Set<WorkspacePermission>? held, StockCodeResolver? resolver}) async {
+/// Resolves a bulk read as the server does: the two mug tags are pieces of the mugs, anything else is unknown.
+class _Tags implements StockTags {
+  @override
+  Future<BulkResolution> resolveCodes(String workspaceId, List<String> codes) async => BulkResolution(
+    received: codes.length,
+    distinct: codes.length,
+    limit: 500,
+    truncated: false,
+    invalid: const [],
+    codes: [
+      for (final c in codes)
+        c.startsWith('E2')
+            ? BulkCode(
+                input: c,
+                kind: 'tag',
+                itemName: 'Mugs',
+                piece: BulkPiece(id: 'p-$c', state: 'in_stock', itemId: 'i-mugs', place: const BulkPlace(id: 'demo-place-main', code: 'MAIN', name: 'Main store')),
+              )
+            : BulkCode(input: c, kind: 'unknown'),
+    ],
+  );
+
+  @override
+  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
+}
+
+Future<void> _open(WidgetTester tester, Widget home, _Cycle cycle, Size size, {Set<WorkspacePermission>? held, StockCodeResolver? resolver, bool tagReads = false}) async {
   await pumpApp(
     tester,
     home,
@@ -179,6 +217,10 @@ Future<void> _open(WidgetTester tester, Widget home, _Cycle cycle, Size size, {S
       stockConfigCommandsProvider.overrideWithValue(DemoStockConfigCommands('ws-1')),
       stockCycleCountsProvider.overrideWithValue(cycle),
       myPermissionsProvider.overrideWithValue(held ?? {WorkspacePermission.manageStock, WorkspacePermission.countStock}),
+      if (tagReads) ...[
+        stockTagsStoreProvider.overrideWithValue(_Tags()),
+        enabledFeaturesSyncProvider.overrideWithValue({WorkspaceFeature.stockManagement, WorkspaceFeature.stockTags, WorkspaceFeature.stockTagReads}),
+      ],
     ],
   );
   await _frames(tester);
@@ -257,6 +299,36 @@ void main() {
         expect((draft.name, draft.scope, draft.intervalDays), ('Back room', CountScope.places, 14));
         expect(draft.locationIds, ['demo-place-main']);
         expect(draft.planId, isNotEmpty);
+      });
+
+      testWidgets('reading many tags: the tally follows the read, the unknown tag is shown apart, one confirm sends the codes once', (tester) async {
+        final cycle = _Cycle();
+        await _open(tester, const StockCountTaskScreen(taskId: 't-1'), cycle, size, tagReads: true);
+        await tester.tap(find.byKey(const ValueKey('stock-bulk-open')));
+        await _frames(tester);
+        expect(tester.widget<FilledButton>(find.byKey(const ValueKey('stock-bulk-confirm'))).onPressed, isNull, reason: 'nothing read yet');
+        await tester.enterText(find.byKey(const ValueKey('stock-bulk-input')), 'E2AA\nE2BB\nE2AA\nZZ\n');
+        await tester.pump();
+        await tester.pump(const Duration(seconds: 1));
+        await _frames(tester);
+        expect(find.text(_en.stockBulkReadCount(3, 500)), findsOneWidget);
+        expect(find.text(_en.stockBulkReadRepeats(1)), findsOneWidget);
+        expect(find.text(_en.stockBulkReadPieces('Mugs', 2)), findsOneWidget);
+        expect(find.byKey(const ValueKey('stock-bulk-apart-unknown')), findsOneWidget);
+        expect(find.byKey(const ValueKey('stock-bulk-compare')), findsNothing, reason: 'a counter is never shown what is expected');
+        expect(cycle.bulk, isEmpty, reason: 'nothing is sent while reading');
+        await tester.tap(find.byKey(const ValueKey('stock-bulk-stop')));
+        await _frames(tester);
+        await tester.tap(find.byKey(const ValueKey('stock-bulk-confirm')));
+        await _frames(tester);
+        expect(cycle.bulk.single.codes, ['E2AA', 'E2BB', 'ZZ']);
+        expect(cycle.bulk.single.request, isNotEmpty);
+        expect(find.byKey(const ValueKey('stock-bulk-confirm')), findsNothing, reason: 'the sheet closed');
+      });
+
+      testWidgets('without the tag reads feature there is no button to read many tags', (tester) async {
+        await _open(tester, const StockCountTaskScreen(taskId: 't-1'), _Cycle(), size);
+        expect(find.byKey(const ValueKey('stock-bulk-open')), findsNothing);
       });
 
       testWidgets('a task is counted blind: no expected quantity anywhere; counting sends what was counted once', (tester) async {

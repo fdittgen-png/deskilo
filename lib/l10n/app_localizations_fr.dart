@@ -35856,6 +35856,104 @@ class AppLocalizationsFr extends AppLocalizations {
   String get statusTo => 'Au';
 
   @override
+  String get stockBulkReadAgain => 'Lire à nouveau';
+
+  @override
+  String get stockBulkReadConfirm => 'Remplir le comptage';
+
+  @override
+  String stockBulkReadCount(int count, int limit) {
+    return '$count étiquettes lues sur $limit au plus';
+  }
+
+  @override
+  String stockBulkReadDone(int lines, int left) {
+    String _temp0 = intl.Intl.pluralLogic(
+      lines,
+      locale: localeName,
+      other: '$lines lignes comptées',
+      one: '1 ligne comptée',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      left,
+      locale: localeName,
+      other: '$left étiquettes écartées',
+      one: '1 étiquette écartée',
+    );
+    return '$_temp0, $_temp1';
+  }
+
+  @override
+  String stockBulkReadDropped(int n) {
+    return '$n étiquettes écartées : la lecture est pleine';
+  }
+
+  @override
+  String get stockBulkReadField => 'Saisie du lecteur d\'étiquettes';
+
+  @override
+  String get stockBulkReadHint =>
+      'Lisez les étiquettes avec votre lecteur. Chaque étiquette compte une fois, même lue souvent.';
+
+  @override
+  String get stockBulkReadNotInStock => 'Pièces qui ne sont pas en stock';
+
+  @override
+  String get stockBulkReadNotPieces =>
+      'Étiquettes qui ne désignent aucune pièce';
+
+  @override
+  String get stockBulkReadOpen => 'Lire de nombreuses étiquettes';
+
+  @override
+  String stockBulkReadPieces(String item, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count pièces',
+      one: '1 pièce',
+    );
+    return '$item · $_temp0';
+  }
+
+  @override
+  String get stockBulkReadReasonAlready =>
+      'déjà comptée : la première lecture d\'une ligne est définitive';
+
+  @override
+  String get stockBulkReadReasonInvalid => 'illisible';
+
+  @override
+  String get stockBulkReadReasonNotAPiece => 'ne désigne aucune pièce';
+
+  @override
+  String get stockBulkReadReasonNotCounted => 'non comptée';
+
+  @override
+  String get stockBulkReadReasonNotInStock => 'pas en stock';
+
+  @override
+  String get stockBulkReadReasonOtherPlace =>
+      'appartient à un autre emplacement';
+
+  @override
+  String stockBulkReadRepeats(int n) {
+    return '$n lectures répétées ignorées';
+  }
+
+  @override
+  String get stockBulkReadResolving => 'Vérification des étiquettes…';
+
+  @override
+  String get stockBulkReadStop => 'Arrêter la lecture';
+
+  @override
+  String get stockBulkReadTitle => 'Lecture de nombreuses étiquettes';
+
+  @override
+  String get stockBulkReadUnknown => 'Étiquettes inconnues';
+
+  @override
   String stockCameraCount(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
