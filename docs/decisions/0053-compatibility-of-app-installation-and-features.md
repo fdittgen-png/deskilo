@@ -127,11 +127,18 @@ Next to `-- risk:` (second line, AGENT_RULES) the file carries one line:
 least" in the same file. `additive` is the default claim and is the one a
 reviewer checks against rules 2 to 4. The line is **required from the next
 migration after this record**; earlier migrations are classified by the
-consumer-contract comparison, not by a header. It is **not yet enforced**:
-the lint beside `test/lint/migration_version_marker_test.dart` is K4
-(#3731), and so is the comparison that proves the last released app's
-calls still exist with the meaning it expects (the two committed copies of
-`assets/instance/contract.txt`, at the release tag and at master).
+consumer-contract comparison, not by a header. It is **enforced from
+migration 0898** by `test/lint/consumer_contract_test.dart` (K4, #3731).
+The comparison that proves a released app's calls still exist is the
+**consumer contract**: what the app calls (functions with the parameters
+it sends, tables with the columns it reads and writes), extracted from the
+release tag's source by `tool/consumer_contract.dart` into
+`contracts/consumer/releases/<tag>.json`, and checked against the schema
+after all migrations by `scripts/consumer_contract_check.sh` in the
+database job. A call that reads a missing function as an answer
+(`isMissingFunction`) is listed as optional. This proves structure, not
+behaviour: a function that keeps its signature and changes its meaning is
+still the review's to catch (rules 2 and 3).
 
 ### 5. Everything that has a version of its own
 Measured in the code on master `55fc2cd68`; each row's *field* is the wire

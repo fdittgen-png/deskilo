@@ -1,0 +1,2828 @@
+{
+  "format": "deskilo.consumer-contract",
+  "version": 1,
+  "source": "v1.0.3+1727051",
+  "functions": {
+    "accept_commitment_variance_v1": [
+      "p_amount_cents",
+      "p_line_no",
+      "p_occurrence_id",
+      "p_purchase_id",
+      "p_reason",
+      "p_request_id",
+      "p_workspace_id"
+    ],
+    "accept_privacy_policy": [
+      "p_version"
+    ],
+    "account_group_details": [
+      "p_group"
+    ],
+    "account_group_members_of": [
+      "p_group"
+    ],
+    "account_group_message_reach": [
+      "p_message"
+    ],
+    "accounting_connections_v1": [
+      "p_workspace_id"
+    ],
+    "accounting_source_snapshot_v1": [
+      "p_from",
+      "p_to",
+      "p_workspace_id"
+    ],
+    "accounting_transfers_v1": [
+      "p_from",
+      "p_to",
+      "p_workspace_id"
+    ],
+    "acknowledge_readiness_section": [
+      "p_section",
+      "p_workspace_id"
+    ],
+    "acknowledge_setup_step": null,
+    "acknowledge_workspace_notice": [
+      "p_version",
+      "p_workspace_id"
+    ],
+    "activate_co_owner": [
+      "p_member_id"
+    ],
+    "add_account_group_member": [
+      "p_group",
+      "p_user"
+    ],
+    "add_business_to_organisation": [
+      "p_business",
+      "p_organisation"
+    ],
+    "add_conversation_participant": [
+      "p_conversation_id",
+      "p_member_id"
+    ],
+    "add_lease_term_v1": [
+      "p_amount_cents",
+      "p_effective_from",
+      "p_every_months",
+      "p_kind",
+      "p_label",
+      "p_lease_id",
+      "p_request_id",
+      "p_revision",
+      "p_workspace_id"
+    ],
+    "admin_create_reservation_for": [
+      "p_ends_at",
+      "p_level_id",
+      "p_seat_id",
+      "p_starts_at",
+      "p_subject_member_id",
+      "p_workspace_id"
+    ],
+    "amend_customer_quote_v1": [
+      "p_quote_id",
+      "p_workspace_id"
+    ],
+    "apply_business_kind_v1": [
+      "p_expected",
+      "p_flags",
+      "p_kind",
+      "p_more_kinds",
+      "p_request_id",
+      "p_reviewed_digest",
+      "p_reviewed_version",
+      "p_workspace"
+    ],
+    "apply_payment_to_invoices": [
+      "p_allocations",
+      "p_note",
+      "p_payment_ledger_id",
+      "p_workspace_id"
+    ],
+    "apply_supplier_credit_note_v1": null,
+    "apply_workspace_template": [
+      "p_groups",
+      "p_template_id",
+      "p_workspace_id"
+    ],
+    "apply_workspace_template_exact": [
+      "p_expected_version",
+      "p_groups",
+      "p_request_id",
+      "p_template_id",
+      "p_workspace_id"
+    ],
+    "asset_candidate_lines_v1": [
+      "p_workspace_id"
+    ],
+    "asset_valuations_page_v1": [
+      "p_cursor",
+      "p_filters",
+      "p_workspace_id"
+    ],
+    "assign_workspace_role": [
+      "p_assign",
+      "p_member_id",
+      "p_role_id"
+    ],
+    "badge_pin_needs_review": [
+      "p_member_id",
+      "p_workspace_id"
+    ],
+    "bank_statement_lines_v1": [
+      "p_statement_id"
+    ],
+    "bank_statements_v1": [
+      "p_workspace_id"
+    ],
+    "bi_export_snapshot_v1": [
+      "p_format",
+      "p_report_id",
+      "p_report_revision",
+      "p_requests",
+      "p_workspace_id"
+    ],
+    "bi_query_batch_v1": [
+      "p_requests",
+      "p_workspace_id"
+    ],
+    "bi_view_delete": [
+      "p_expected_revision",
+      "p_id",
+      "p_workspace_id"
+    ],
+    "bi_view_save": [
+      "p_definition",
+      "p_expected_revision",
+      "p_id",
+      "p_name",
+      "p_request_id",
+      "p_scope",
+      "p_workspace_id"
+    ],
+    "bi_view_set_default": [
+      "p_id",
+      "p_scope",
+      "p_workspace_id"
+    ],
+    "bi_views_list": [
+      "p_workspace_id"
+    ],
+    "billing_customer_create_v1": [
+      "p_capacity",
+      "p_party",
+      "p_workspace"
+    ],
+    "billing_customers_v1": [
+      "p_workspace"
+    ],
+    "billing_party_save_v1": [
+      "p_capacity",
+      "p_expected_revision",
+      "p_party",
+      "p_subject",
+      "p_workspace"
+    ],
+    "block_account": [
+      "p_user"
+    ],
+    "book_chart": [
+      "p_workspace_id"
+    ],
+    "book_periods_v1": [
+      "p_workspace_id"
+    ],
+    "book_profiles": [
+      "p_workspace_id"
+    ],
+    "booking_prices": [
+      "p_from",
+      "p_to",
+      "p_workspace_id"
+    ],
+    "business_mail_sender_v1": [
+      "p_workspace_id"
+    ],
+    "business_payables_page_v1": [
+      "p_after_created",
+      "p_after_id",
+      "p_creditor_kind",
+      "p_currency",
+      "p_workspace_id"
+    ],
+    "business_receivables_page_v1": [
+      "p_after_id",
+      "p_after_issued",
+      "p_bucket",
+      "p_currency",
+      "p_workspace_id"
+    ],
+    "business_receivables_summary_v1": [
+      "p_workspace_id"
+    ],
+    "buy_package": [
+      "p_package_id",
+      "p_workspace_id"
+    ],
+    "calendar_items": [
+      "p_from",
+      "p_kinds",
+      "p_member_id",
+      "p_to",
+      "p_workspace_id"
+    ],
+    "cancel_customer_quote_v1": [
+      "p_quote_id",
+      "p_workspace_id"
+    ],
+    "cancel_expense_schedule": [
+      "p_schedule_id"
+    ],
+    "cancel_my_guest_visit": [
+      "p_id"
+    ],
+    "cancel_purchase_order_v1": [
+      "p_order_id",
+      "p_reason",
+      "p_request_id",
+      "p_revision",
+      "p_workspace_id"
+    ],
+    "cancel_reservation": null,
+    "cancel_series": [
+      "p_from",
+      "p_series_id"
+    ],
+    "capability_states_v1": [
+      "p_workspace_id"
+    ],
+    "check_in_reservation": null,
+    "check_out_reservation": null,
+    "claim_instance_ownership": null,
+    "clear_badge_pin": [],
+    "clear_einvoice_credentials": [
+      "p_workspace_id"
+    ],
+    "clear_house_prices_pending": [
+      "p_workspace_id"
+    ],
+    "clear_payment_provider": [
+      "p_provider",
+      "p_workspace_id"
+    ],
+    "clear_readiness_acknowledgement": [
+      "p_section",
+      "p_workspace_id"
+    ],
+    "clear_sample_data": [
+      "p_batch_id",
+      "p_workspace_id"
+    ],
+    "clear_setup_step_acknowledgement": [
+      "p_step",
+      "p_workspace_id"
+    ],
+    "close_book_period_v1": [
+      "p_from",
+      "p_to",
+      "p_workspace_id"
+    ],
+    "close_space_inquiry": [
+      "p_inquiry"
+    ],
+    "complete_rights_request": [
+      "p_outcome",
+      "p_refusal_reason",
+      "p_request_id"
+    ],
+    "compute_postings": [
+      "p_from",
+      "p_issuer_site_id",
+      "p_to",
+      "p_workspace_id"
+    ],
+    "confirm_asset_valuations_v1": [
+      "p_batch_id",
+      "p_reason",
+      "p_request_id",
+      "p_revision",
+      "p_supersedes",
+      "p_workspace_id"
+    ],
+    "confirm_expense_occurrence": [
+      "p_amount_cents",
+      "p_note",
+      "p_occurrence_id",
+      "p_reason"
+    ],
+    "confirm_tax_reference": [
+      "p_id",
+      "p_source"
+    ],
+    "conversation_details": [
+      "p_conversation_id"
+    ],
+    "convert_customer_quote_v1": [
+      "p_draft_revision",
+      "p_quote_id",
+      "p_request_id",
+      "p_reviewed_digest",
+      "p_workspace_id"
+    ],
+    "convert_to_series": [
+      "p_ends_at",
+      "p_pattern",
+      "p_reservation_id",
+      "p_starts_at",
+      "p_until"
+    ],
+    "cost_allocation_rules_v1": [
+      "p_workspace_id"
+    ],
+    "create_account_group": [
+      "p_expected_account",
+      "p_title",
+      "p_users"
+    ],
+    "create_expense_schedule": [
+      "p_amount_cents",
+      "p_description",
+      "p_ends_on",
+      "p_every",
+      "p_repeat_count",
+      "p_starts_on",
+      "p_title",
+      "p_unit",
+      "p_workspace_id"
+    ],
+    "create_group_conversation": [
+      "p_member_ids",
+      "p_title",
+      "p_workspace_id"
+    ],
+    "create_invitation": [
+      "p_also_prod",
+      "p_first_name",
+      "p_is_admin",
+      "p_last_name",
+      "p_member_id",
+      "p_workspace_id"
+    ],
+    "create_invoice": [
+      "p_buyer_reference",
+      "p_correction_reason",
+      "p_detailed",
+      "p_kind",
+      "p_member_id",
+      "p_period",
+      "p_purchase_order",
+      "p_replaces",
+      "p_workspace_id"
+    ],
+    "create_invoice_receipted_v1": [
+      "p_kind",
+      "p_member_id",
+      "p_period",
+      "p_request_id",
+      "p_workspace_id"
+    ],
+    "create_invoice_replacement_v1": [
+      "p_buyer_reference",
+      "p_correction_reason",
+      "p_detailed",
+      "p_kind",
+      "p_member_id",
+      "p_period",
+      "p_purchase_order",
+      "p_replaces",
+      "p_request_id",
+      "p_workspace_id"
+    ],
+    "create_managed_member": [
+      "p_access",
+      "p_identity",
+      "p_workspace_id"
+    ],
+    "create_organisation": [
+      "p_head",
+      "p_name"
+    ],
+    "create_organisation_house_once": [
+      "p_client_request_id",
+      "p_country",
+      "p_currency",
+      "p_language",
+      "p_name",
+      "p_organisation",
+      "p_timezone"
+    ],
+    "create_replenishment_draft_v1": [
+      "p_lines",
+      "p_request_id",
+      "p_supplier_id",
+      "p_workspace_id"
+    ],
+    "create_reservation_once": null,
+    "create_sample_data": [
+      "p_request_id",
+      "p_workspace_id"
+    ],
+    "create_series": [
+      "p_desk_id",
+      "p_first_end",
+      "p_first_start",
+      "p_level_id",
+      "p_office_id",
+      "p_pattern",
+      "p_seat_id",
+      "p_until",
+      "p_workspace_id"
+    ],
+    "create_workspace": null,
+    "create_workspace_once": null,
+    "create_workspace_twin": [
+      "p_workspace_id"
+    ],
+    "current_privacy_notice": [
+      "p_workspace_id"
+    ],
+    "customer_quote_v1": [
+      "p_quote_id",
+      "p_workspace_id"
+    ],
+    "customer_quotes_v1": [
+      "p_workspace_id"
+    ],
+    "customer_statement_period_v1": [
+      "p_from",
+      "p_member_id",
+      "p_to",
+      "p_workspace_id"
+    ],
+    "customer_statement_v1": [
+      "p_as_of",
+      "p_member_id",
+      "p_workspace_id"
+    ],
+    "decide_asset_v1": null,
+    "decide_mcp_eligibility": [
+      "p_approve",
+      "p_decision_id",
+      "p_expected_revision",
+      "p_subject"
+    ],
+    "decide_purchase_v1": null,
+    "decide_workspace_application": [
+      "p_approve",
+      "p_comment",
+      "p_expected_account",
+      "p_member_id"
+    ],
+    "delegate_instance_role": [
+      "p_email"
+    ],
+    "delete_account_group_message": [
+      "p_message"
+    ],
+    "delete_account_message": [
+      "p_message"
+    ],
+    "delete_accounting_map_v1": [
+      "p_map_id"
+    ],
+    "delete_plan_object": [
+      "p_id",
+      "p_kind"
+    ],
+    "delete_revoked_badge": [
+      "p_badge_id"
+    ],
+    "delete_site": [
+      "p_site_id"
+    ],
+    "delete_workspace_template": [
+      "p_template_id"
+    ],
+    "deploy_entities": [
+      "p_entities",
+      "p_from",
+      "p_to"
+    ],
+    "deployable_entities": [],
+    "deskilo_schema_version": [],
+    "direct_conversation": [
+      "p_other_member_id",
+      "p_workspace_id"
+    ],
+    "discard_customer_quote_draft_v1": [
+      "p_quote_id",
+      "p_workspace_id"
+    ],
+    "discard_setup_step_draft": [
+      "p_expected_version",
+      "p_step",
+      "p_workspace_id"
+    ],
+    "distribute_expense": [
+      "p_amount_cents",
+      "p_method",
+      "p_period",
+      "p_shares",
+      "p_source_event_id",
+      "p_title",
+      "p_workspace_id"
+    ],
+    "edit_message": [
+      "p_body",
+      "p_kind",
+      "p_message_id"
+    ],
+    "einvoice_match_candidates": [
+      "p_inbox_id"
+    ],
+    "einvoice_status": [
+      "p_workspace_id"
+    ],
+    "end_tax_exemption_certificate": [
+      "p_id",
+      "p_on"
+    ],
+    "enrol_kiosk_device_v1": [
+      "p_name",
+      "p_workspace_id"
+    ],
+    "erase_my_membership": [
+      "p_workspace_id"
+    ],
+    "export_my_data": [
+      "p_workspace_id"
+    ],
+    "export_my_personal_data_v1": [],
+    "export_workspace_configuration": [
+      "p_workspace_id"
+    ],
+    "export_workspace_records": [
+      "p_workspace_id"
+    ],
+    "extend_rights_request": [
+      "p_reason",
+      "p_request_id"
+    ],
+    "finalize_identity_binding": null,
+    "financial_command_outcome_v1": [
+      "p_request_id",
+      "p_workspace_id"
+    ],
+    "forward_message": [
+      "p_expected_account",
+      "p_kind",
+      "p_message_id",
+      "p_target_id",
+      "p_target_kind"
+    ],
+    "generate_closure_days": [
+      "p_apply",
+      "p_country",
+      "p_workspace_id",
+      "p_year"
+    ],
+    "get_setup_journey": [
+      "p_workspace_id"
+    ],
+    "get_setup_step_draft": [
+      "p_step",
+      "p_workspace_id"
+    ],
+    "give_lease_notice_v1": [
+      "p_effective_end",
+      "p_lease_id",
+      "p_notice_given_on",
+      "p_reason",
+      "p_request_id",
+      "p_revision",
+      "p_workspace_id"
+    ],
+    "grant_workspace_template": [
+      "p_email",
+      "p_template_id"
+    ],
+    "has_badge_pin": [],
+    "hmrc_connection_v1": [
+      "p_workspace_id"
+    ],
+    "import_bank_statement_v1": [
+      "p_lines",
+      "p_statement",
+      "p_workspace_id"
+    ],
+    "import_closure_days": [
+      "p_apply",
+      "p_days",
+      "p_workspace_id"
+    ],
+    "import_floor_plan_v3": [
+      "p_accessories",
+      "p_plan",
+      "p_workspace_id"
+    ],
+    "import_workspace_configuration": [
+      "p_configuration",
+      "p_mode",
+      "p_workspace_id"
+    ],
+    "ingest_einvoice": [
+      "p_parsed",
+      "p_syntax",
+      "p_workspace_id",
+      "p_xml"
+    ],
+    "inquiry_messages": [
+      "p_before_at",
+      "p_before_id",
+      "p_inquiry"
+    ],
+    "inspect_workspace_template": [
+      "p_template_id"
+    ],
+    "instance_grant_database_admin": [
+      "p_can_provision",
+      "p_target"
+    ],
+    "instance_grant_mcp_eligibility": [
+      "p_days",
+      "p_reason",
+      "p_subject"
+    ],
+    "instance_mcp_endpoint_check": [],
+    "instance_mcp_overview": [],
+    "instance_probe_mcp_endpoint": [],
+    "instance_responsibles": null,
+    "instance_revoke_database_admin": [
+      "p_target"
+    ],
+    "instance_set_mcp_client": [
+      "p_active",
+      "p_client_id"
+    ],
+    "instance_set_mcp_endpoint": [
+      "p_url"
+    ],
+    "instance_set_mcp_loopback_clients": [
+      "p_enabled"
+    ],
+    "instance_set_mcp_runtime": [
+      "p_enabled"
+    ],
+    "invitation_preview": [
+      "p_code"
+    ],
+    "invoice_email_state_v1": [
+      "p_invoice_id",
+      "p_workspace_id"
+    ],
+    "invoice_issue_draft": [
+      "p_correction_reason",
+      "p_kind",
+      "p_member_id",
+      "p_period",
+      "p_replaces",
+      "p_workspace_id"
+    ],
+    "invoice_issue_readiness": [
+      "p_correction_reason",
+      "p_kind",
+      "p_member_id",
+      "p_period",
+      "p_replaces",
+      "p_workspace_id"
+    ],
+    "invoice_reminder_evidence": [
+      "p_invoice_id"
+    ],
+    "invoice_send_basis": [
+      "p_invoice_id"
+    ],
+    "invoice_sent_document": [
+      "p_invoice_id"
+    ],
+    "is_platform_owner": null,
+    "issue_member_badge": [
+      "p_label",
+      "p_member_id",
+      "p_workspace_id"
+    ],
+    "issue_my_badge": [
+      "p_label",
+      "p_workspace_id"
+    ],
+    "issue_standalone_invoice_v1": [
+      "p_draft_id",
+      "p_request_id",
+      "p_revision",
+      "p_workspace_id"
+    ],
+    "join_by_invitation": [
+      "p_code"
+    ],
+    "join_workspace": [
+      "p_invite_code"
+    ],
+    "kiosk_act": [
+      "p_action",
+      "p_badge_token",
+      "p_ends_at",
+      "p_level_id",
+      "p_seat_id",
+      "p_starts_at",
+      "p_workspace_id"
+    ],
+    "kiosk_devices_v1": [
+      "p_workspace_id"
+    ],
+    "kiosk_identify": [
+      "p_badge_token",
+      "p_workspace_id"
+    ],
+    "kpi_cost_allocation": [
+      "p_from",
+      "p_to",
+      "p_workspace_id"
+    ],
+    "kpi_costs_summary": [
+      "p_from",
+      "p_to",
+      "p_workspace_id"
+    ],
+    "kpi_customer_quality": [
+      "p_from",
+      "p_to",
+      "p_workspace_id"
+    ],
+    "kpi_finance_summary": [
+      "p_from",
+      "p_to",
+      "p_workspace_id"
+    ],
+    "kpi_item_margins": [
+      "p_from",
+      "p_to",
+      "p_workspace_id"
+    ],
+    "kpi_memberships_current": null,
+    "kpi_overdue_receivables": null,
+    "kpi_pending_actions_current": null,
+    "kpi_purchases_summary": [
+      "p_from",
+      "p_to",
+      "p_workspace_id"
+    ],
+    "kpi_sales_quality": [
+      "p_from",
+      "p_to",
+      "p_workspace_id"
+    ],
+    "kpi_seat_capacity": [
+      "p_from",
+      "p_level_id",
+      "p_to",
+      "p_workspace_id"
+    ],
+    "kpi_vendor_quality": [
+      "p_from",
+      "p_to",
+      "p_workspace_id"
+    ],
+    "leave_account_group": [
+      "p_group"
+    ],
+    "leave_conversation": [
+      "p_conversation_id"
+    ],
+    "leave_workspace": [
+      "p_workspace_id"
+    ],
+    "link_purchase_source_v1": [
+      "p_purchase_id",
+      "p_request_id",
+      "p_revision",
+      "p_source_id",
+      "p_source_kind",
+      "p_workspace_id"
+    ],
+    "link_purchase_to_order_v1": [
+      "p_order_id",
+      "p_purchase_id",
+      "p_workspace_id"
+    ],
+    "link_service_fulfilment_invoice_v1": [
+      "p_fulfilment_id",
+      "p_invoice_id",
+      "p_line_id",
+      "p_workspace_id"
+    ],
+    "list_all_workspaces": null,
+    "list_mcp_eligibility_requests": [],
+    "managed_identity_of": [
+      "p_member_id"
+    ],
+    "mark_account_conversation_read": [
+      "p_conversation"
+    ],
+    "mark_account_group_read": [
+      "p_group"
+    ],
+    "mark_conversation_read": [
+      "p_conversation_id"
+    ],
+    "mark_conversation_unread": [
+      "p_conversation_id"
+    ],
+    "mark_inquiry_read": [
+      "p_inquiry"
+    ],
+    "mark_instance_notice_read": [
+      "p_id"
+    ],
+    "mark_member_notes_read": [
+      "p_from_member_id",
+      "p_workspace_id"
+    ],
+    "mark_purchase_order_sent_v1": [
+      "p_order_id",
+      "p_request_id",
+      "p_revision",
+      "p_workspace_id"
+    ],
+    "mark_settlement_review_handled_v1": [
+      "p_note",
+      "p_review_id"
+    ],
+    "mark_vat_declaration_submitted": [
+      "p_channel",
+      "p_declaration_id",
+      "p_receipt"
+    ],
+    "match_bank_line_v1": [
+      "p_invoice_id",
+      "p_line_id",
+      "p_note",
+      "p_resolution"
+    ],
+    "match_einvoice": [
+      "p_event_id",
+      "p_inbox_id"
+    ],
+    "match_invoice": [
+      "p_amount_cents",
+      "p_invoice_id",
+      "p_note",
+      "p_payment_ledger_id",
+      "p_resolution"
+    ],
+    "match_purchase_commitments_v1": [
+      "p_matches",
+      "p_purchase_id",
+      "p_request_id",
+      "p_revision",
+      "p_workspace_id"
+    ],
+    "mcp_confirm_action": [
+      "p_accept",
+      "p_confirmation_id"
+    ],
+    "mcp_consent_options": [
+      "p_authorization_id"
+    ],
+    "mcp_disclosure_status": [],
+    "mcp_endpoint": [],
+    "mcp_finalize_connection": [
+      "p_authorization_id"
+    ],
+    "mcp_get_action_confirmation": [
+      "p_confirmation_id"
+    ],
+    "mcp_google_status": null,
+    "mcp_my_action_confirmations": [
+      "p_answered_since"
+    ],
+    "mcp_policy_status": [
+      "p_workspace_id"
+    ],
+    "mcp_prepare_connection": [
+      "p_authorization_id",
+      "p_client_id",
+      "p_scopes"
+    ],
+    "mcp_usage_summary_mine": [],
+    "mcp_usage_summary_workspace": [
+      "p_workspace_id"
+    ],
+    "member_account": [
+      "p_member_id"
+    ],
+    "member_credit_balance": [
+      "p_member_id"
+    ],
+    "member_emails": [
+      "p_workspace_id"
+    ],
+    "member_employment_status": [
+      "p_employed",
+      "p_member"
+    ],
+    "member_price_negotiation": [
+      "p_member_id"
+    ],
+    "member_profiles": [
+      "p_user_ids",
+      "p_workspace_id"
+    ],
+    "member_reimbursements_summary_v1": [
+      "p_workspace_id"
+    ],
+    "member_statement": null,
+    "message_history": [
+      "p_kind",
+      "p_message_id"
+    ],
+    "message_info": [
+      "p_message_id"
+    ],
+    "message_marks_in": [
+      "p_context_id",
+      "p_context_kind"
+    ],
+    "move_payment_credit_v1": [
+      "p_credit_id",
+      "p_reason",
+      "p_request_id",
+      "p_to_member_id"
+    ],
+    "my_account_conversation_with": [
+      "p_recipient"
+    ],
+    "my_account_conversations": [
+      "p_before_at",
+      "p_before_id"
+    ],
+    "my_account_group_messages": [
+      "p_before_at",
+      "p_before_id",
+      "p_group"
+    ],
+    "my_account_messages": [
+      "p_before_at",
+      "p_before_id",
+      "p_conversation"
+    ],
+    "my_admin_visibility": [
+      "p_visible",
+      "p_workspace"
+    ],
+    "my_blocks": null,
+    "my_business_kinds_v1": [],
+    "my_contact_availability": null,
+    "my_conversation_flags": null,
+    "my_conversations": [
+      "p_include_archived",
+      "p_workspace_id"
+    ],
+    "my_database_capabilities": null,
+    "my_favorites": [
+      "p_workspace"
+    ],
+    "my_finance_overview": [],
+    "my_financial_activity": [
+      "p_before_at",
+      "p_before_id",
+      "p_kind"
+    ],
+    "my_group_inbox": null,
+    "my_guest_participations": [],
+    "my_identity_status": null,
+    "my_inbox": null,
+    "my_inquiries": null,
+    "my_instance_notices": [],
+    "my_mcp_connections": [],
+    "my_message_requests": null,
+    "my_organisation_houses_v1": null,
+    "my_organisations_v1": null,
+    "my_personal_message_directory_v1": [
+      "p_after_key",
+      "p_query",
+      "p_section",
+      "p_workspace_network_id"
+    ],
+    "my_personal_preferences": [
+      "p_workspace_id"
+    ],
+    "my_personal_workspace_refs_v1": [],
+    "my_public_profile": [],
+    "my_reachable_people": null,
+    "my_reservations_page_v1": null,
+    "my_rights_requests": [],
+    "my_settings": [
+      "p_workspace"
+    ],
+    "my_starred_messages": null,
+    "my_visibility": [],
+    "my_visibility_network_v1": [],
+    "my_workspace_applications": null,
+    "my_workspace_hosts_v1": [],
+    "my_workspace_public_page": null,
+    "oauth_authorization_context": [
+      "p_authorization_id"
+    ],
+    "offset_member_claim_v1": null,
+    "open_accounting_connection_v1": [
+      "p_auth_kind",
+      "p_display_name",
+      "p_issuer_site_id",
+      "p_target_id",
+      "p_workspace_id"
+    ],
+    "open_service_fulfilment_v1": [
+      "p_request_id",
+      "p_scope",
+      "p_source",
+      "p_workspace_id"
+    ],
+    "organisation_overview_v1": [
+      "p_from",
+      "p_organisation",
+      "p_to"
+    ],
+    "payment_credentials_status": [
+      "p_workspace_id"
+    ],
+    "payment_invoice_capacity_v1": [
+      "p_payment_ledger_id",
+      "p_workspace_id"
+    ],
+    "payment_test_check": [
+      "p_workspace_id"
+    ],
+    "place_dunning_hold": [
+      "p_invoice_id",
+      "p_note",
+      "p_reason"
+    ],
+    "place_feedback_of": [
+      "p_ids",
+      "p_kind",
+      "p_workspace"
+    ],
+    "place_retention_hold": [
+      "p_doc_class",
+      "p_issuer_site_id",
+      "p_reason",
+      "p_workspace_id"
+    ],
+    "plan_media_orphans": [
+      "p_workspace_id"
+    ],
+    "posting_parties": [
+      "p_document_ids",
+      "p_workspace_id"
+    ],
+    "premises_leases_v1": [
+      "p_workspace_id"
+    ],
+    "prepare_quote_conversion_v1": [
+      "p_due_on",
+      "p_quote_id",
+      "p_service_date",
+      "p_workspace_id"
+    ],
+    "prepare_usage_period_v1": [
+      "p_period",
+      "p_request_id",
+      "p_workspace_id"
+    ],
+    "preview_deployment": [
+      "p_entities",
+      "p_from",
+      "p_to"
+    ],
+    "preview_document_number": [
+      "p_journal",
+      "p_workspace_id"
+    ],
+    "preview_invoice": [
+      "p_member_id",
+      "p_period",
+      "p_workspace_id"
+    ],
+    "preview_my_account": [
+      "p_as"
+    ],
+    "preview_my_erasure": [
+      "p_workspace_id"
+    ],
+    "preview_series": [
+      "p_desk_id",
+      "p_first_end",
+      "p_first_start",
+      "p_level_id",
+      "p_office_id",
+      "p_pattern",
+      "p_seat_id",
+      "p_until",
+      "p_workspace_id"
+    ],
+    "preview_standalone_invoice_v1": [
+      "p_draft_id",
+      "p_revision",
+      "p_workspace_id"
+    ],
+    "preview_workspace_template": [
+      "p_groups",
+      "p_template_id",
+      "p_workspace_id"
+    ],
+    "propose_price_negotiation": [
+      "p_discount_percent",
+      "p_fee_cents",
+      "p_items",
+      "p_member_id",
+      "p_note",
+      "p_overage_fee_cents",
+      "p_subscription_pct",
+      "p_valid_from"
+    ],
+    "public_identity_authority": [],
+    "public_network_descriptor": null,
+    "purchase_approval_detail_v1": [
+      "p_purchase_id",
+      "p_workspace_id"
+    ],
+    "purchase_approval_page_v1": [
+      "p_after_created",
+      "p_after_id",
+      "p_workspace_id"
+    ],
+    "purchase_commitment_page_v1": [
+      "p_before",
+      "p_lease_id",
+      "p_workspace_id"
+    ],
+    "purchase_detail_v1": [
+      "p_purchase_id",
+      "p_workspace_id"
+    ],
+    "purchase_payables_page_v1": null,
+    "put_away_receipt_v1": [
+      "p_allocations",
+      "p_receipt_id",
+      "p_request_id",
+      "p_workspace_id"
+    ],
+    "react_to_message": [
+      "p_emoji",
+      "p_kind",
+      "p_message_id"
+    ],
+    "reconcile_bank_line_out_v1": [
+      "p_line_id",
+      "p_outgoing_payment_id"
+    ],
+    "record_book_export_v1": [
+      "p_bytes",
+      "p_declared",
+      "p_documents",
+      "p_format_id",
+      "p_from",
+      "p_rows",
+      "p_sha256",
+      "p_to",
+      "p_workspace_id"
+    ],
+    "record_customer_quote_decision_v1": [
+      "p_decided_on",
+      "p_decision",
+      "p_evidence",
+      "p_quote_id",
+      "p_revision",
+      "p_source",
+      "p_workspace_id"
+    ],
+    "record_file_deliveries_v1": [
+      "p_book_export_id",
+      "p_documents",
+      "p_issuer_site_id",
+      "p_target_id",
+      "p_workspace_id"
+    ],
+    "record_invoice_reminder": [
+      "p_invoice_id"
+    ],
+    "record_member_reimbursement_v1": null,
+    "record_payment": null,
+    "record_privacy_incident": [
+      "p_kind",
+      "p_note",
+      "p_workspace_id"
+    ],
+    "record_purchase_exchange_rate_v1": null,
+    "record_purchase_order_receipt_v1": [
+      "p_lines",
+      "p_note",
+      "p_order_id",
+      "p_received_on",
+      "p_request_id",
+      "p_revision",
+      "p_workspace_id"
+    ],
+    "record_receipt_and_put_away_v1": [
+      "p_allocations",
+      "p_lines",
+      "p_note",
+      "p_order_id",
+      "p_received_on",
+      "p_request_id",
+      "p_revision",
+      "p_workspace_id"
+    ],
+    "record_rights_request": [
+      "p_details",
+      "p_kind",
+      "p_member_id",
+      "p_received_at",
+      "p_workspace_id"
+    ],
+    "record_screen_capture": [
+      "p_context_id",
+      "p_kind"
+    ],
+    "record_service_charge": [
+      "p_period",
+      "p_quantity",
+      "p_service_id",
+      "p_subject_member_id",
+      "p_workspace_id"
+    ],
+    "record_setup_step_timing": [
+      "p_opened_at",
+      "p_seconds",
+      "p_step",
+      "p_workspace_id"
+    ],
+    "record_supplier_payment_v1": null,
+    "record_workspace_export": [
+      "p_row_count",
+      "p_sha256",
+      "p_workspace_id"
+    ],
+    "register_asset_candidate_v1": [
+      "p_description",
+      "p_line_no",
+      "p_purchase_id",
+      "p_request_id",
+      "p_workspace_id"
+    ],
+    "register_my_nfc_badge": [
+      "p_label",
+      "p_uid",
+      "p_workspace_id"
+    ],
+    "register_nfc_badge": [
+      "p_label",
+      "p_member_id",
+      "p_uid",
+      "p_workspace_id"
+    ],
+    "register_public_directory": null,
+    "reject_einvoice": [
+      "p_inbox_id",
+      "p_reason"
+    ],
+    "release_dunning_hold": [
+      "p_invoice_id"
+    ],
+    "release_retention_hold": [
+      "p_hold_id",
+      "p_reason"
+    ],
+    "reminder_email_target_v1": [
+      "p_invoice_id",
+      "p_workspace_id"
+    ],
+    "reminder_email_targets_v1": [
+      "p_invoice_ids",
+      "p_workspace_id"
+    ],
+    "remove_account_group_member": [
+      "p_group",
+      "p_user"
+    ],
+    "remove_business_from_organisation": [
+      "p_business"
+    ],
+    "remove_conversation_participant": [
+      "p_conversation_id",
+      "p_member_id"
+    ],
+    "rename_administrator_role": [
+      "p_names",
+      "p_workspace_id"
+    ],
+    "rename_organisation": [
+      "p_name",
+      "p_organisation"
+    ],
+    "reopen_book_period_v1": [
+      "p_period_id",
+      "p_reason",
+      "p_workspace_id"
+    ],
+    "reorder_levels": [
+      "p_expected",
+      "p_level_ids",
+      "p_workspace_id"
+    ],
+    "replace_fee_bands": [
+      "p_bands",
+      "p_workspace_id"
+    ],
+    "request_house_membership": [
+      "p_house"
+    ],
+    "request_invoice_issue": null,
+    "request_invoice_issue_v1": [
+      "p_allow_zero",
+      "p_buyer_reference",
+      "p_detailed",
+      "p_kind",
+      "p_member_id",
+      "p_period",
+      "p_purchase_order",
+      "p_request_id",
+      "p_workspace_id"
+    ],
+    "request_invoice_void": null,
+    "request_invoice_void_v1": [
+      "p_invoice_id",
+      "p_reason",
+      "p_request_id"
+    ],
+    "request_invoice_writeoff": [
+      "p_invoice_id",
+      "p_reason"
+    ],
+    "request_matrix_change": [
+      "p_permissions",
+      "p_role",
+      "p_workspace_id"
+    ],
+    "request_matrix_permission": [
+      "p_enabled",
+      "p_permission",
+      "p_role",
+      "p_workspace_id"
+    ],
+    "request_mcp_eligibility": null,
+    "request_member_status_change": null,
+    "request_payment_terms_change": [
+      "p_member_id",
+      "p_reason",
+      "p_terms"
+    ],
+    "request_public_workspace_profile": null,
+    "request_quota_extension": [
+      "p_half_days",
+      "p_period",
+      "p_workspace_id"
+    ],
+    "request_refund": null,
+    "request_refund_v1": [
+      "p_invoice_id",
+      "p_note",
+      "p_request_id"
+    ],
+    "request_reservation_deletion": null,
+    "request_role_change": [
+      "p_make_admin",
+      "p_target_member_id",
+      "p_workspace_id"
+    ],
+    "request_subscription_change": null,
+    "request_usage_correction": [
+      "p_reason",
+      "p_record_id"
+    ],
+    "request_usage_record_delete": [
+      "p_reason",
+      "p_record_id"
+    ],
+    "reservation_request_outcome": [
+      "p_client_request_id",
+      "p_workspace_id"
+    ],
+    "reset_work_hours": [
+      "p_workspace_id"
+    ],
+    "reset_workspace": [
+      "p_workspace_id"
+    ],
+    "reset_workspace_public_page": null,
+    "resolve_invoice_email_v1": [
+      "p_attempt_id",
+      "p_delivered",
+      "p_workspace_id"
+    ],
+    "resolve_purchase_order_send_v1": [
+      "p_attempt_id",
+      "p_delivered",
+      "p_workspace_id"
+    ],
+    "resolve_reminder_email_v1": [
+      "p_attempt_id",
+      "p_delivered",
+      "p_workspace_id"
+    ],
+    "resolve_supplier_review": [
+      "p_candidate_id",
+      "p_supplier_id"
+    ],
+    "respond_to_event": null,
+    "respond_to_message_request": [
+      "p_accept",
+      "p_conversation"
+    ],
+    "retention_holds": [
+      "p_workspace_id"
+    ],
+    "reverse_commitment_match_v1": [
+      "p_match_id",
+      "p_reason",
+      "p_request_id",
+      "p_workspace_id"
+    ],
+    "reverse_purchase_allocation_v1": null,
+    "review_bank_line_v1": [
+      "p_duplicate",
+      "p_line_id"
+    ],
+    "review_payment_reversal_v1": [
+      "p_intent_id"
+    ],
+    "revoke_guest_pass": [
+      "p_pass_id",
+      "p_request_id",
+      "p_workspace_id"
+    ],
+    "revoke_handover": [
+      "p_member_id"
+    ],
+    "revoke_kiosk_device_v1": [
+      "p_device_id"
+    ],
+    "revoke_mcp_connection": [
+      "p_client_id"
+    ],
+    "revoke_mcp_eligibility": [
+      "p_subject"
+    ],
+    "revoke_mcp_workspace_scope": [
+      "p_client_id",
+      "p_workspace_id"
+    ],
+    "revoke_member_badge": [
+      "p_badge_id"
+    ],
+    "revoke_my_badge": [
+      "p_badge_id"
+    ],
+    "revoke_my_identity_binding": null,
+    "revoke_workspace_template_grant": [
+      "p_email",
+      "p_template_id"
+    ],
+    "rollback_deployment": [
+      "p_deployment_id"
+    ],
+    "room_offer_v1": [
+      "p_office_id",
+      "p_workspace_id"
+    ],
+    "room_rentals_v1": [
+      "p_workspace_id"
+    ],
+    "sales_tax_return": [
+      "p_end",
+      "p_start",
+      "p_workspace_id"
+    ],
+    "sample_data_status": [
+      "p_workspace_id"
+    ],
+    "save_accounting_map_v1": [
+      "p_connection_id",
+      "p_key",
+      "p_kind",
+      "p_remote_code",
+      "p_remote_id",
+      "p_remote_name"
+    ],
+    "save_book_account": [
+      "p_account_type",
+      "p_code",
+      "p_expected_revision",
+      "p_id",
+      "p_is_posting",
+      "p_issuer_site_id",
+      "p_name",
+      "p_origin",
+      "p_workspace_id"
+    ],
+    "save_book_mapping": [
+      "p_account_id",
+      "p_effective_from",
+      "p_expected_revision",
+      "p_issuer_site_id",
+      "p_role",
+      "p_workspace_id"
+    ],
+    "save_book_profile": [
+      "p_accounting_basis",
+      "p_authority_mode",
+      "p_effective_from",
+      "p_expected_revision",
+      "p_external_system",
+      "p_fiscal_year_start_day",
+      "p_fiscal_year_start_month",
+      "p_functional_currency",
+      "p_issuer_site_id",
+      "p_workspace_id"
+    ],
+    "save_business_mail_sender_v1": [
+      "p_api_key",
+      "p_revision",
+      "p_sender_email",
+      "p_sender_name",
+      "p_workspace_id"
+    ],
+    "save_cost_allocation_rule_v1": [
+      "p_expected_revision",
+      "p_request_id",
+      "p_rule",
+      "p_rule_id",
+      "p_workspace_id"
+    ],
+    "save_customer_quote_draft_v1": [
+      "p_buyer_reference",
+      "p_expected_version",
+      "p_issued_on",
+      "p_lines",
+      "p_notes",
+      "p_purchase_order",
+      "p_quote_id",
+      "p_subject",
+      "p_valid_until",
+      "p_workspace_id"
+    ],
+    "save_guest_pass_offer": [
+      "p_active",
+      "p_id",
+      "p_name",
+      "p_price_cents",
+      "p_unit",
+      "p_vat_rate_id",
+      "p_workspace_id"
+    ],
+    "save_item_dimension_v1": [
+      "p_dimension",
+      "p_dimension_id",
+      "p_expected_revision",
+      "p_request_id",
+      "p_workspace_id"
+    ],
+    "save_item_variants_v1": [
+      "p_expected_revision",
+      "p_item_id",
+      "p_request_id",
+      "p_variants",
+      "p_workspace_id"
+    ],
+    "save_mcp_policy": [
+      "p_enabled",
+      "p_expected_revision",
+      "p_mutation_id",
+      "p_operations",
+      "p_optional_fields",
+      "p_target_ceiling",
+      "p_workspace_id"
+    ],
+    "save_premises_lease_v1": [
+      "p_lease_id",
+      "p_payload",
+      "p_request_id",
+      "p_revision",
+      "p_workspace_id"
+    ],
+    "save_purchase_draft_v1": null,
+    "save_purchase_order_v1": [
+      "p_expected_revision",
+      "p_payload",
+      "p_request_id",
+      "p_workspace_id"
+    ],
+    "save_room_rental_v1": [
+      "p_audience_all",
+      "p_available_from",
+      "p_available_until",
+      "p_cost_cents",
+      "p_cost_kind",
+      "p_document_id",
+      "p_office_id",
+      "p_period",
+      "p_revision",
+      "p_status",
+      "p_supplier_id",
+      "p_workspace_id"
+    ],
+    "save_setup_journey": null,
+    "save_setup_step_draft": [
+      "p_expected_version",
+      "p_payload",
+      "p_request_id",
+      "p_step",
+      "p_workspace_id"
+    ],
+    "save_standalone_invoice_draft_v1": [
+      "p_buyer_reference",
+      "p_draft_id",
+      "p_due_on",
+      "p_expected_revision",
+      "p_lines",
+      "p_purchase_order",
+      "p_service_date",
+      "p_subject",
+      "p_workspace_id"
+    ],
+    "save_stock_item_v1": [
+      "p_expected_revision",
+      "p_item",
+      "p_item_id",
+      "p_request_id",
+      "p_workspace_id"
+    ],
+    "save_stock_location_v1": [
+      "p_expected_revision",
+      "p_place",
+      "p_place_id",
+      "p_request_id",
+      "p_workspace_id"
+    ],
+    "save_stock_reorder_point_v1": [
+      "p_expected_revision",
+      "p_point",
+      "p_point_id",
+      "p_request_id",
+      "p_workspace_id"
+    ],
+    "save_supplier": [
+      "p_city",
+      "p_contact",
+      "p_country_code",
+      "p_name",
+      "p_number",
+      "p_postal_code",
+      "p_street",
+      "p_subdivision",
+      "p_supplier_id",
+      "p_tax_id",
+      "p_tax_id_kind",
+      "p_workspace_id"
+    ],
+    "save_supplier_item_mapping_v1": [
+      "p_expected_revision",
+      "p_mapping",
+      "p_mapping_id",
+      "p_request_id",
+      "p_workspace_id"
+    ],
+    "save_vat_declaration": [
+      "p_period_end",
+      "p_period_start",
+      "p_workspace_id"
+    ],
+    "save_workspace_as_template": [
+      "p_description",
+      "p_groups",
+      "p_key",
+      "p_name",
+      "p_tags",
+      "p_visibility",
+      "p_workspace_id"
+    ],
+    "save_workspace_as_template_once": [
+      "p_description",
+      "p_groups",
+      "p_key",
+      "p_name",
+      "p_request_id",
+      "p_tags",
+      "p_visibility",
+      "p_workspace_id"
+    ],
+    "save_workspace_field": [
+      "p_active",
+      "p_contexts",
+      "p_group_key",
+      "p_key",
+      "p_labels",
+      "p_options",
+      "p_personal_data",
+      "p_required",
+      "p_sort_order",
+      "p_type",
+      "p_validation",
+      "p_visibility",
+      "p_workspace_id"
+    ],
+    "save_workspace_public_page": null,
+    "save_workspace_settings": [
+      "p_expected_modified",
+      "p_settings",
+      "p_workspace_id"
+    ],
+    "schedule_member_pause": [
+      "p_from",
+      "p_member_id",
+      "p_request_id",
+      "p_to"
+    ],
+    "schedule_member_share_change": [
+      "p_effective_on",
+      "p_member_id",
+      "p_pct",
+      "p_request_id"
+    ],
+    "search_available_accounts": [
+      "p_before",
+      "p_query"
+    ],
+    "search_workspace_templates": [
+      "p_cursor",
+      "p_excluded",
+      "p_limit",
+      "p_query",
+      "p_required"
+    ],
+    "sell_credit": [
+      "p_member_id",
+      "p_product_id",
+      "p_workspace_id"
+    ],
+    "sell_guest_pass": [
+      "p_days",
+      "p_ends_at",
+      "p_guest",
+      "p_method",
+      "p_offer_id",
+      "p_paid",
+      "p_request_id",
+      "p_seat_id",
+      "p_starts_at",
+      "p_workspace_id"
+    ],
+    "send_account_group_message": [
+      "p_body",
+      "p_expected_account",
+      "p_group"
+    ],
+    "send_account_message": [
+      "p_body",
+      "p_expected_account",
+      "p_recipient"
+    ],
+    "send_conversation_message": [
+      "p_body",
+      "p_conversation_id"
+    ],
+    "send_customer_quote_v1": [
+      "p_expected_version",
+      "p_quote_id",
+      "p_revision",
+      "p_workspace_id"
+    ],
+    "send_inquiry_message_v1": [
+      "p_body",
+      "p_inquiry",
+      "p_request_id"
+    ],
+    "send_member_note": [
+      "p_body",
+      "p_to_member_id",
+      "p_workspace_id"
+    ],
+    "send_workspace_application_message": [
+      "p_body",
+      "p_event_id",
+      "p_expected_account"
+    ],
+    "service_fulfilment_of_line_v1": [
+      "p_id",
+      "p_kind",
+      "p_line_id",
+      "p_workspace_id"
+    ],
+    "service_fulfilment_v1": [
+      "p_fulfilment_id",
+      "p_workspace_id"
+    ],
+    "service_fulfilments_v1": [
+      "p_workspace_id"
+    ],
+    "set_account_group_admin": [
+      "p_admin",
+      "p_group",
+      "p_user"
+    ],
+    "set_account_group_meta": [
+      "p_announce_only",
+      "p_description",
+      "p_group",
+      "p_title"
+    ],
+    "set_accounting_journals": [
+      "p_journals",
+      "p_workspace_id"
+    ],
+    "set_accounting_token_v1": [
+      "p_connection_id",
+      "p_remote_tenant_id",
+      "p_token"
+    ],
+    "set_badge_auth_enabled": [
+      "p_badge_id",
+      "p_enabled"
+    ],
+    "set_badge_pin": [
+      "p_pin"
+    ],
+    "set_billing_rule": [
+      "p_key",
+      "p_value",
+      "p_workspace_id"
+    ],
+    "set_billing_rules": [
+      "p_rules",
+      "p_workspace_id"
+    ],
+    "set_booking_rule": [
+      "p_key",
+      "p_value",
+      "p_workspace_id"
+    ],
+    "set_business_kind": [
+      "p_kind",
+      "p_more_kinds",
+      "p_workspace"
+    ],
+    "set_capability_state_v1": [
+      "p_key",
+      "p_reason",
+      "p_to",
+      "p_workspace_id"
+    ],
+    "set_co_owner": [
+      "p_member_id",
+      "p_status"
+    ],
+    "set_contact_availability": [
+      "p_available"
+    ],
+    "set_conversation_details": [
+      "p_announce_only",
+      "p_conversation_id",
+      "p_description"
+    ],
+    "set_conversation_meta": [
+      "p_avatar_path",
+      "p_conversation_id",
+      "p_title"
+    ],
+    "set_conversation_prefs": [
+      "p_archived",
+      "p_conversation_id",
+      "p_muted",
+      "p_pinned"
+    ],
+    "set_dev_mode": [
+      "p_enabled",
+      "p_workspace_id"
+    ],
+    "set_dunning_rules": [
+      "p_rules",
+      "p_workspace_id"
+    ],
+    "set_einvoice_credentials": [
+      "p_config",
+      "p_workspace_id"
+    ],
+    "set_expense_schedule_supplier": [
+      "p_schedule_id",
+      "p_supplier_id"
+    ],
+    "set_expense_schedule_vat": [
+      "p_schedule_id",
+      "p_vat"
+    ],
+    "set_favorite": [
+      "p_kind",
+      "p_on",
+      "p_resource",
+      "p_workspace"
+    ],
+    "set_feature_flags": [
+      "p_expected",
+      "p_flags",
+      "p_workspace_id"
+    ],
+    "set_house_members_welcome": [
+      "p_house",
+      "p_on"
+    ],
+    "set_invitation_roles": [
+      "p_code",
+      "p_role_keys",
+      "p_workspace_id"
+    ],
+    "set_invoice_pdf_template": [
+      "p_template",
+      "p_workspace_id"
+    ],
+    "set_level_kind_v1": [
+      "p_kind",
+      "p_level_id",
+      "p_workspace_id"
+    ],
+    "set_level_site": [
+      "p_level_id",
+      "p_site_id"
+    ],
+    "set_managed_access": [
+      "p_access",
+      "p_member_id"
+    ],
+    "set_mcp_disclosure_maximum": [
+      "p_fields"
+    ],
+    "set_member_customer_capacity": [
+      "p_capacity",
+      "p_member_id"
+    ],
+    "set_member_einvoice_address": [
+      "p_endpoint_id",
+      "p_endpoint_scheme",
+      "p_member_id",
+      "p_subdivision"
+    ],
+    "set_member_field_values": [
+      "p_answers",
+      "p_context",
+      "p_member_id"
+    ],
+    "set_member_home_site": [
+      "p_member_id",
+      "p_site_id"
+    ],
+    "set_member_kiosk": [
+      "p_is_kiosk",
+      "p_member_id"
+    ],
+    "set_member_level_permission": [
+      "p_allowed",
+      "p_member_id"
+    ],
+    "set_member_reservation_limit": [
+      "p_limit",
+      "p_member_id"
+    ],
+    "set_member_simultaneous_limit": [
+      "p_limit",
+      "p_member_id"
+    ],
+    "set_member_vat_treatment": [
+      "p_member_id",
+      "p_reason",
+      "p_treatment"
+    ],
+    "set_message_forward_lock": [
+      "p_kind",
+      "p_locked",
+      "p_message_id"
+    ],
+    "set_my_about": [
+      "p_bio",
+      "p_profession"
+    ],
+    "set_number_sequence": [
+      "p_date_part",
+      "p_digits",
+      "p_journal",
+      "p_next_value",
+      "p_prefix",
+      "p_reset",
+      "p_suffix",
+      "p_workspace_id"
+    ],
+    "set_organisation_head": [
+      "p_head",
+      "p_organisation"
+    ],
+    "set_participant_admin": [
+      "p_admin",
+      "p_conversation_id",
+      "p_member_id"
+    ],
+    "set_payment_credentials": [
+      "p_config",
+      "p_provider",
+      "p_workspace_id"
+    ],
+    "set_personal_preferences": [
+      "p_expected_account",
+      "p_patch",
+      "p_workspace_id"
+    ],
+    "set_public_profile": [
+      "p_publish"
+    ],
+    "set_rating": [
+      "p_kind",
+      "p_resource",
+      "p_stars",
+      "p_workspace"
+    ],
+    "set_repartition_rule": [
+      "p_rule",
+      "p_workspace_id"
+    ],
+    "set_room_rental_audience_v1": [
+      "p_audience",
+      "p_rental_id",
+      "p_workspace_id"
+    ],
+    "set_room_rental_fees_v1": [
+      "p_fees",
+      "p_rental_id",
+      "p_workspace_id"
+    ],
+    "set_seat_block": [
+      "p_blocked_from",
+      "p_blocked_to",
+      "p_seat_id"
+    ],
+    "set_setting": [
+      "p_key",
+      "p_note",
+      "p_value",
+      "p_workspace"
+    ],
+    "set_stock_home_v1": [
+      "p_item_id",
+      "p_location_id",
+      "p_request_id",
+      "p_variant_id",
+      "p_workspace_id"
+    ],
+    "set_supplier_bank": [
+      "p_account_holder",
+      "p_bic",
+      "p_iban",
+      "p_supplier_id"
+    ],
+    "set_supplier_status": [
+      "p_status",
+      "p_supplier_id"
+    ],
+    "set_tax_exemption_certificate": [
+      "p_file_path",
+      "p_kind",
+      "p_member_id",
+      "p_number",
+      "p_state",
+      "p_valid_from",
+      "p_valid_to",
+      "p_workspace_id"
+    ],
+    "set_tax_reference": [
+      "p_confirmed",
+      "p_country",
+      "p_domain",
+      "p_key",
+      "p_source",
+      "p_valid_from",
+      "p_value"
+    ],
+    "set_vat_rates": [
+      "p_rates",
+      "p_workspace_id"
+    ],
+    "set_visibility": [
+      "p_audience",
+      "p_field",
+      "p_workspaces"
+    ],
+    "set_visibility_if_unchanged_network_v1": [
+      "p_audience",
+      "p_expected",
+      "p_field",
+      "p_workspace_refs"
+    ],
+    "set_workspace_branding": [
+      "p_branding",
+      "p_workspace_id"
+    ],
+    "set_workspace_code": [
+      "p_code",
+      "p_workspace_id"
+    ],
+    "set_workspace_environment": [
+      "p_environment",
+      "p_workspace_id"
+    ],
+    "set_workspace_favorite": [
+      "p_on",
+      "p_workspace"
+    ],
+    "set_workspace_favorite_ref_v1": [
+      "p_on",
+      "p_ref"
+    ],
+    "set_workspace_lexicon_term": [
+      "p_key",
+      "p_locale",
+      "p_text",
+      "p_workspace_id"
+    ],
+    "set_workspace_mcp_access": [
+      "p_enabled",
+      "p_expected",
+      "p_workspace_id"
+    ],
+    "set_workspace_rating": [
+      "p_stars",
+      "p_workspace"
+    ],
+    "set_workspace_role": [
+      "p_active",
+      "p_key",
+      "p_names",
+      "p_permissions",
+      "p_sort_order",
+      "p_workspace_id"
+    ],
+    "set_workspace_template_visibility": [
+      "p_template_id",
+      "p_visibility"
+    ],
+    "setting_history": [
+      "p_key",
+      "p_workspace"
+    ],
+    "settle_invoices": [
+      "p_invoice_ids",
+      "p_member_id",
+      "p_note",
+      "p_workspace_id"
+    ],
+    "settle_invoices_v1": [
+      "p_invoice_ids",
+      "p_member_id",
+      "p_note",
+      "p_request_id",
+      "p_workspace_id"
+    ],
+    "settle_lease_charges_v1": [
+      "p_actual_cents",
+      "p_due_on",
+      "p_lease_id",
+      "p_period_end",
+      "p_period_start",
+      "p_request_id",
+      "p_revision",
+      "p_workspace_id"
+    ],
+    "setup_step_timing_ranges": null,
+    "shared_workspaces_of_group": [
+      "p_group"
+    ],
+    "shared_workspaces_with": [
+      "p_user"
+    ],
+    "space_host_roster": [
+      "p_workspace"
+    ],
+    "stage_asset_valuations_v1": [
+      "p_metadata",
+      "p_request_id",
+      "p_rows",
+      "p_workspace_id"
+    ],
+    "start_space_inquiry_v1": [
+      "p_body",
+      "p_request_id",
+      "p_workspace"
+    ],
+    "stock_consume_v1": null,
+    "stock_count_decide_v1": [
+      "p_count_id",
+      "p_decision",
+      "p_note",
+      "p_request_id",
+      "p_workspace_id"
+    ],
+    "stock_count_record_v1": [
+      "p_count_id",
+      "p_observed",
+      "p_reason",
+      "p_request_id",
+      "p_scope",
+      "p_workspace_id"
+    ],
+    "stock_counts_v1": null,
+    "stock_document_goods_v1": [
+      "p_after",
+      "p_id",
+      "p_kind",
+      "p_limit",
+      "p_workspace_id"
+    ],
+    "stock_fefo_proposal_v1": null,
+    "stock_goods_trace_v1": [
+      "p_movement_id",
+      "p_workspace_id"
+    ],
+    "stock_loss_v1": null,
+    "stock_low_v1": [
+      "p_site_id",
+      "p_workspace_id"
+    ],
+    "stock_movements_page_v1": null,
+    "stock_on_hand_page_v1": null,
+    "stock_registry_page_v1": [
+      "p_after",
+      "p_limit",
+      "p_location_id",
+      "p_no_home",
+      "p_workspace_id"
+    ],
+    "stock_replenishment_v1": [
+      "p_site_id",
+      "p_workspace_id"
+    ],
+    "stock_return_v1": null,
+    "stock_reversible_v1": null,
+    "stock_transfer_load_v1": [
+      "p_lines",
+      "p_request_id",
+      "p_to_location_id",
+      "p_workspace_id"
+    ],
+    "stock_transfer_receive_v1": [
+      "p_lines",
+      "p_request_id",
+      "p_transfer_id",
+      "p_workspace_id"
+    ],
+    "stock_transfer_v1": [
+      "p_lines",
+      "p_request_id",
+      "p_workspace_id"
+    ],
+    "stock_valuation_v1": [
+      "p_at",
+      "p_workspace_id"
+    ],
+    "store_invoice_original": [
+      "p_invoice_id",
+      "p_pdf_sha256",
+      "p_xml"
+    ],
+    "submit_expense": [
+      "p_amount_cents",
+      "p_category",
+      "p_description",
+      "p_supply",
+      "p_vat",
+      "p_workspace_id"
+    ],
+    "submit_purchase_v1": null,
+    "submit_rights_request": [
+      "p_client_request_id",
+      "p_details",
+      "p_kind",
+      "p_workspace_id"
+    ],
+    "supplier_balances_v1": [
+      "p_workspace_id"
+    ],
+    "supplier_payables_page_v1": [
+      "p_after_created",
+      "p_after_id",
+      "p_supplier_id",
+      "p_workspace_id"
+    ],
+    "sweep_billing_invoices": [
+      "p_workspace_id"
+    ],
+    "sweep_day_end": [
+      "p_workspace_id"
+    ],
+    "sweep_expense_schedules": [
+      "p_workspace_id"
+    ],
+    "sweep_payment_reminders": [
+      "p_workspace_id"
+    ],
+    "sweep_pending_events": [
+      "p_workspace_id"
+    ],
+    "tax_reference_history": [
+      "p_country",
+      "p_domain",
+      "p_key"
+    ],
+    "template_local_needs": [
+      "p_template_id"
+    ],
+    "template_outline": [
+      "p_template_id"
+    ],
+    "template_publication_preview": [
+      "p_groups",
+      "p_workspace_id"
+    ],
+    "toggle_message_star": [
+      "p_kind",
+      "p_message_id"
+    ],
+    "touch_last_seen": [],
+    "transition_service_fulfilment_v1": [
+      "p_expected_revision",
+      "p_fulfilment_id",
+      "p_reason",
+      "p_request_id",
+      "p_to",
+      "p_workspace_id"
+    ],
+    "unblock_account": [
+      "p_user"
+    ],
+    "unmatch_bank_line_in_v1": [
+      "p_line_id",
+      "p_reason",
+      "p_request_id"
+    ],
+    "unreconcile_bank_line_out_v1": [
+      "p_line_id",
+      "p_reason",
+      "p_request_id"
+    ],
+    "unset_my_kiosk": [
+      "p_workspace_id"
+    ],
+    "update_managed_identity": [
+      "p_identity",
+      "p_member_id"
+    ],
+    "update_reservation": null,
+    "upsert_site": [
+      "p_city",
+      "p_country_code",
+      "p_id",
+      "p_legal_id",
+      "p_name",
+      "p_postal_code",
+      "p_sort_order",
+      "p_street",
+      "p_subdivision",
+      "p_tax_exemption_reason",
+      "p_vat_id",
+      "p_workspace_id"
+    ],
+    "usage_records_read_v1": [
+      "p_member_id",
+      "p_period",
+      "p_workspace_id"
+    ],
+    "verify_invoice_signature": [
+      "p_invoice_id"
+    ],
+    "visible_account": [
+      "p_user_id"
+    ],
+    "who_can_access_me": [
+      "p_workspace_id"
+    ],
+    "withdraw_instance_delegation": [
+      "p_user"
+    ],
+    "withdraw_mcp_eligibility": null,
+    "withdraw_payment_claim": [
+      "p_intent"
+    ],
+    "withdraw_payment_declaration": [
+      "p_event"
+    ],
+    "withdraw_tax_reference": [
+      "p_id",
+      "p_reason"
+    ],
+    "work_hours_provenance": [
+      "p_workspace_id"
+    ],
+    "workspace_application_thread": null,
+    "workspace_assets_v1": [
+      "p_workspace_id"
+    ],
+    "workspace_feedback_of": [
+      "p_ids"
+    ],
+    "workspace_inquiries": [
+      "p_workspace"
+    ],
+    "workspace_local_readiness": [
+      "p_workspace_id"
+    ],
+    "workspace_owners": [
+      "p_workspace_id"
+    ],
+    "workspace_readiness": [
+      "p_workspace_id"
+    ],
+    "workspace_recorded_payments_v1": null,
+    "workspace_setup_status": null,
+    "workspace_status": [
+      "p_from",
+      "p_to",
+      "p_workspace_id"
+    ],
+    "workspace_template_grantees": [
+      "p_template_id"
+    ]
+  },
+  "optional": [
+    "apply_business_kind_v1",
+    "deskilo_schema_version",
+    "instance_mcp_overview",
+    "mcp_endpoint",
+    "mcp_get_action_confirmation",
+    "my_instance_notices"
+  ],
+  "tables": {
+    "accessories": null,
+    "book_exports": [
+      "exported_at",
+      "period_from",
+      "period_to",
+      "workspace_id"
+    ],
+    "business_kinds": [
+      "active",
+      "code",
+      "feature_profile",
+      "profile_digest",
+      "profile_version",
+      "sort_order"
+    ],
+    "charging_stations": null,
+    "closure_days": null,
+    "conversation_participants": null,
+    "credit_products": null,
+    "data_access_log": null,
+    "deployments": null,
+    "desks": null,
+    "document_exchange_rates": [
+      "document_id",
+      "document_kind",
+      "workspace_id"
+    ],
+    "einvoice_inbox": [
+      "issue_date",
+      "workspace_id"
+    ],
+    "event_decisions": null,
+    "events": null,
+    "exchange_rate_sources": [
+      "active",
+      "code",
+      "sort_order"
+    ],
+    "expense_occurrences": null,
+    "expense_repartitions": null,
+    "expense_schedules": null,
+    "fee_bands": null,
+    "guest_pass_offers": null,
+    "guest_passes": [
+      "sold_at",
+      "workspace_id"
+    ],
+    "installation_identity": [
+      "installation_id",
+      "personal_home_key",
+      "personal_home_kind",
+      "personal_home_url",
+      "roles"
+    ],
+    "invoice_dunning_holds": [
+      "invoice_id",
+      "reason",
+      "workspace_id"
+    ],
+    "invoice_match_payments": [
+      "amount_cents",
+      "id",
+      "invoice_id",
+      "matched_at",
+      "payment_ledger_id",
+      "workspace_id"
+    ],
+    "invoice_matches": [
+      "invoice_id",
+      "workspace_id"
+    ],
+    "invoice_originals": [
+      "created_by_user",
+      "created_datetime",
+      "invoice_id",
+      "path",
+      "pdf_bytes",
+      "pdf_sha256",
+      "workspace_id",
+      "xml",
+      "xml_sha256"
+    ],
+    "invoice_reminders": [
+      "id",
+      "invoice_id",
+      "sent_at",
+      "workspace_id"
+    ],
+    "invoice_transmissions": [
+      "id",
+      "sent_at",
+      "workspace_id"
+    ],
+    "invoices": null,
+    "item_codes": [
+      "code",
+      "item_id",
+      "kind",
+      "unit",
+      "workspace_id"
+    ],
+    "item_dimension_values": [
+      "active",
+      "dimension_id",
+      "id",
+      "label",
+      "workspace_id"
+    ],
+    "item_dimensions": [
+      "active",
+      "id",
+      "name",
+      "revision",
+      "workspace_id"
+    ],
+    "item_units": [
+      "default_purchase",
+      "default_sale",
+      "factor_den",
+      "factor_num",
+      "item_id",
+      "unit",
+      "workspace_id"
+    ],
+    "item_variants": [
+      "active",
+      "canonical",
+      "id",
+      "item_id",
+      "price_cents",
+      "workspace_id"
+    ],
+    "ledger_credit_moves": [
+      "from_credit_id",
+      "id",
+      "reversal_ledger_id",
+      "workspace_id"
+    ],
+    "ledger_entries": null,
+    "levels": null,
+    "member_badges": null,
+    "member_notes": null,
+    "member_period_terms": [
+      "member_id",
+      "period",
+      "workspace_id"
+    ],
+    "member_term_changes": null,
+    "members": null,
+    "number_sequences": null,
+    "offices": null,
+    "organisation_houses": null,
+    "organisations": [
+      "id",
+      "welcoming_houses"
+    ],
+    "packages": null,
+    "payment_intents": null,
+    "personal_invoice_group_items": null,
+    "personal_invoice_groups": null,
+    "plan_images": null,
+    "plans": [
+      "active",
+      "id",
+      "name",
+      "workspace_id"
+    ],
+    "profile_birthdays": [
+      "birthday",
+      "user_id"
+    ],
+    "profiles": null,
+    "provider_settlement_reviews": [
+      "handled_at",
+      "handled_note",
+      "id",
+      "last_reported_at",
+      "reason",
+      "settlement_id",
+      "workspace_id"
+    ],
+    "public_directory_sources": null,
+    "public_person_cards": [
+      "bio",
+      "name",
+      "profession",
+      "user_id"
+    ],
+    "public_workspace_cards": null,
+    "purchase_documents": [
+      "created_datetime",
+      "id",
+      "workspace_id"
+    ],
+    "purchase_order_receipts": [
+      "created_datetime",
+      "received_on",
+      "workspace_id"
+    ],
+    "purchase_order_sends": null,
+    "purchase_orders": null,
+    "purchase_sources": [
+      "purchase_id",
+      "source_id",
+      "source_kind",
+      "workspace_id"
+    ],
+    "push_endpoints": [
+      "endpoint"
+    ],
+    "reminder_email_sends": null,
+    "reservations": null,
+    "rights_requests": null,
+    "seat_accessories": [
+      "accessory_id",
+      "seat_id",
+      "workspace_id"
+    ],
+    "seats": null,
+    "services": null,
+    "sites": null,
+    "stock_location_kinds": [
+      "key",
+      "virtual"
+    ],
+    "stock_locations": [
+      "active",
+      "address_path",
+      "barcode",
+      "code",
+      "id",
+      "kind",
+      "name",
+      "parent_id",
+      "pick_role",
+      "receives_from_suppliers",
+      "revision",
+      "workspace_id"
+    ],
+    "stock_receipt_allocations": [
+      "created_datetime",
+      "part",
+      "receipt_id",
+      "workspace_id"
+    ],
+    "stock_reorder_points": [
+      "active",
+      "created_datetime",
+      "id",
+      "item_id",
+      "reorder_point",
+      "reorder_quantity",
+      "revision",
+      "site_id",
+      "target_quantity",
+      "variant_id",
+      "workspace_id"
+    ],
+    "stock_transfer_lines": [
+      "id",
+      "item_id",
+      "loaded",
+      "lot_id",
+      "received",
+      "transfer_id",
+      "variant_id",
+      "workspace_id"
+    ],
+    "stock_transfers": [
+      "created_datetime",
+      "from_location_id",
+      "id",
+      "revision",
+      "status",
+      "to_location_id",
+      "workspace_id"
+    ],
+    "supplier_bank_revisions": [
+      "revision",
+      "supplier_id",
+      "workspace_id"
+    ],
+    "supplier_item_mappings": [
+      "active",
+      "article_ref",
+      "id",
+      "item_id",
+      "purchase_unit",
+      "revision",
+      "supplier_id",
+      "variant_id",
+      "workspace_id"
+    ],
+    "supplier_review_candidates": [
+      "candidate_supplier_ids",
+      "created_datetime",
+      "id",
+      "reason",
+      "source_identifier",
+      "source_name",
+      "status",
+      "workspace_id"
+    ],
+    "suppliers": [
+      "id",
+      "name",
+      "supplier_number",
+      "workspace_id"
+    ],
+    "tax_exemption_certificates": [
+      "id",
+      "kind",
+      "member_id",
+      "number",
+      "state",
+      "valid_from",
+      "valid_to"
+    ],
+    "validation_policies": null,
+    "vat_declarations": null,
+    "vat_rates": null,
+    "workspace_documents": null,
+    "workspace_field_definitions": [
+      "workspace_id"
+    ],
+    "workspace_field_values": [
+      "member_id"
+    ],
+    "workspace_role_members": [
+      "member_id",
+      "role_id",
+      "workspace_id"
+    ],
+    "workspace_roles": [
+      "active",
+      "builtin",
+      "id",
+      "key",
+      "names",
+      "permissions",
+      "sort_order",
+      "workspace_id"
+    ],
+    "workspace_templates": null,
+    "workspaces": null
+  },
+  "unresolved": [
+    "lib/features/directory/data/supabase_inbox_pages.dart:27"
+  ]
+}

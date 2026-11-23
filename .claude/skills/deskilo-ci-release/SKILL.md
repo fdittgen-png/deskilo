@@ -73,6 +73,9 @@ gh pr view <n> --json state,mergeable,mergeStateStatus,headRefOid
 
 ## Deploy
 A release needs the owner's explicit authorization and the required gates; the commands below are reference, never a step to take after a merge on your own initiative.
+- **After a release tag** (#3731): add its consumer contract, extracted from the tag's own tree:
+  `git worktree add --detach /tmp/rel <tag> && dart run tool/consumer_contract.dart --root /tmp/rel --source <tag> --write contracts/consumer/releases/<tag>.json`.
+  The database job then proves the schema still serves that release.
 - **The train** (when released): `gh workflow run release-train.yml -f track=alpha -f release_notes="…"`
   (or `-f track=production`). The input IS the Play track; it puts iOS (TestFlight
   external), Android (Play closed alpha), web, DMG and MSI on ONE commit. Several
