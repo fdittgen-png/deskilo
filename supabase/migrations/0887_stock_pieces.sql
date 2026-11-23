@@ -54,6 +54,10 @@ begin
   if v_tracking <> 'serial' then
     perform public.stock_config_refuse('tag_mode', 'needs_serial');
   end if;
+  -- the mode is pinned on the item once pieces are named: a later change of its group, of the business default
+  -- or of its own group assignment cannot turn the piece-by-piece rule off while pieces are in stock
+  update public.services set tag_mode = 'per_unit', stock_revision = stock_revision + 1
+   where id = p_item_id and tag_mode is distinct from 'per_unit';
   if v_units is null or jsonb_typeof(v_units) <> 'array' or jsonb_array_length(v_units) = 0 then
     raise exception 'name the pieces: this item is tracked piece by piece' using errcode = 'DKG25';
   end if;
@@ -89,6 +93,8 @@ begin
       if v_code is null or v_fk not in ('supplier', 'opening', 'loss') then
         raise exception 'a named piece is not where this movement takes it from' using errcode = 'DKG26';
       end if;
+      -- the same lock a bind and a retire take on the code, so a receipt and a bind of one code serialise
+      perform pg_advisory_xact_lock(hashtextextended('stock_tag:' || p_workspace_id::text || ':' || v_code, 0));
       if exists (select 1 from public.stock_tags t where t.workspace_id = p_workspace_id and t.code = v_code and t.state = 'active') then
         raise exception 'tag % is already on %', v_code,
           public.stock_tag_owner_text((select t from public.stock_tags t where t.workspace_id = p_workspace_id and t.code = v_code and t.state = 'active'))

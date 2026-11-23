@@ -36485,6 +36485,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Cet article ne porte pas d\'étiquettes : son mode d\'étiquette est aucun.';
 
   @override
+  String get stockReasonTagOwnerInactive =>
+      'Cet article ou ce lieu est désactivé : réactivez-le avant d\'y associer une étiquette.';
+
+  @override
   String get stockReasonTagOwnerUnknown =>
       'L\'article, le lieu ou l\'exemplaire visé par cette étiquette n\'est pas connu ici.';
 

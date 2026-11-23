@@ -14,5 +14,6 @@
   "stockReasonTagPerUnitItem": "Une étiquette par unité se pose sur un exemplaire, pas sur l'article : associez-la à un exemplaire.",
   "stockReasonTagMalformed": "Ce code n'est pas un code d'étiquette lisible.",
   "stockReasonTagOwnerUnknown": "L'article, le lieu ou l'exemplaire visé par cette étiquette n'est pas connu ici.",
-  "stockReasonUnitsNotTracked": "Les exemplaires ne sont nommés que pour un article suivi pièce par pièce."
+  "stockReasonUnitsNotTracked": "Les exemplaires ne sont nommés que pour un article suivi pièce par pièce.",
+  "stockReasonTagOwnerInactive": "Cet article ou ce lieu est désactivé : réactivez-le avant d'y associer une étiquette."
 }

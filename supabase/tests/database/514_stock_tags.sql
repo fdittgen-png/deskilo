@@ -6,7 +6,7 @@
 -- the feature off are refused; the one resolver answers place, item, variant, package unit, lot, tag and unknown for
 -- barcodes and tags, scoped to the business, names only for an assistant. Rolled back.
 begin;
-select plan(46);
+select plan(55);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -146,6 +146,32 @@ select is(pg_temp.f(pg_temp.res(2, 'NOPE-NOT-HERE'), 'kind'), 'unknown', 'an unk
 select is(pg_temp.f(pg_temp.res(4, '4006381333931', 101), 'kind'), 'ERR DKN01', 'another business cannot ask about this one');
 select is(pg_temp.res(4, '4006381333931', 102)::jsonb #>> '{item,name}', 'Foreign', 'and finds its own item under the same code');
 select is((pg_temp.res(3, 'MUG-OWN', 101, true)::jsonb -> 'item') ? 'id', false, 'an assistant is told the name and no identifier');
+
+-- ── a deactivated item or place takes no new tag, and its tags answer as not known until it is back (#4362 read) ──
+insert into public.services (id, workspace_id, name, price_cents, active, inventory_unit, tracking, stockable, tag_mode) values
+  (pg_temp.u(305), pg_temp.u(101), 'Retired mugs', 100, false, 'piece', 'none', true, 'per_batch'),
+  (pg_temp.u(306), pg_temp.u(101), 'Live mugs', 100, true, 'piece', 'none', true, 'per_batch');
+insert into public.stock_locations (id, workspace_id, parent_id, kind, code, active) values
+  (pg_temp.u(902), pg_temp.u(101), pg_temp.loc('MAIN'), 'zone', 'OLD-ZONE', false);
+insert into public.item_variants (id, workspace_id, item_id, canonical) values (pg_temp.u(312), pg_temp.u(102), pg_temp.u(304), 'size:l');
+select is(pg_temp.bind(1, 960, format('{"code": "A1B2C3D4", "owner": {"kind": "item", "item_id": "%s"}}', pg_temp.u(305))), 'ERR DKG11', 'a deactivated item takes no new tag');
+select is(pg_temp.bind(1, 961, format('{"code": "A1B2C3D5", "owner": {"kind": "place", "location_id": "%s"}}', pg_temp.u(902))), 'ERR DKG11', 'nor does a deactivated place');
+select pg_temp.bind(1, 962, format('{"code": "A1B2C3D6", "owner": {"kind": "item", "item_id": "%s"}}', pg_temp.u(306)));
+select is(pg_temp.f(pg_temp.res(1, 'A1B2C3D6'), 'kind'), 'tag', 'a tag on a live item resolves');
+update public.services set active = false where id = pg_temp.u(306);
+select is(pg_temp.f(pg_temp.res(1, 'A1B2C3D6'), 'kind'), 'unknown', 'once the item is deactivated its tag, still bound, resolves as not known');
+update public.services set active = true where id = pg_temp.u(306);
+select is(pg_temp.f(pg_temp.res(1, 'A1B2C3D6'), 'kind'), 'tag', 'and answers again when it is back');
+
+-- ── another business's caller, and a variant of another business ──
+select is(pg_temp.retire(4, 963, 'A1B2C3D6'), 'ERR DKN01', 'a person of another business retires no tag of this one');
+select is(pg_temp.run_as(pg_temp.u(4), format('select public.stock_tags_v1(%L, %L::jsonb)::text', pg_temp.u(101), format('{"kind": "item", "item_id": "%s"}', pg_temp.u(306)))), 'ERR DKN01', 'nor lists its tags');
+select is(pg_temp.run_as(pg_temp.u(4), format('select public.stock_pieces_check_v1(%L, %L)::text', pg_temp.u(101), pg_temp.u(303))), 'ERR DKN01', 'nor reads the pieces of its items');
+create or replace function pg_temp.sqlstate_of(p_sql text) returns text language plpgsql as $f$
+begin execute p_sql; return 'none'; exception when others then return sqlstate; end
+$f$;
+select is(pg_temp.sqlstate_of(format('insert into public.stock_tags (workspace_id, code, tag_kind, owner_kind, item_id, variant_id) values (%L, %L, %L, %L, %L, %L)',
+  pg_temp.u(101), 'A1B2C3D7', 'uid', 'variant', pg_temp.u(301), pg_temp.u(312))), '23503', 'a tag cannot name a variant of another business');
 
 select * from finish();
 rollback;

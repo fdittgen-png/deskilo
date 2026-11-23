@@ -46816,6 +46816,10 @@
   "@stockReasonTagModeNone": {
     "description": "#4362 reason"
   },
+  "stockReasonTagOwnerInactive": "This item or place is deactivated: bring it back before a tag is bound to it.",
+  "@stockReasonTagOwnerInactive": {
+    "description": "#4362 reason"
+  },
   "stockReasonTagOwnerUnknown": "The item, place or piece this tag is meant for is not known here.",
   "@stockReasonTagOwnerUnknown": {
     "description": "#4362 reason"

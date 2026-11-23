@@ -9738,6 +9738,7 @@ Map<String, _Getter> _part23() => {
   'stockPutAwayAll': (l) => l.stockPutAwayAll,
   'stockPutAwayPlace': (l) => l.stockPutAwayPlace,
   'stockReasonCostInvalid': (l) => l.stockReasonCostInvalid,
+  'stockReasonTagOwnerInactive': (l) => l.stockReasonTagOwnerInactive,
   'stockReasonTagPerUnitItem': (l) => l.stockReasonTagPerUnitItem,
   'stockRegistryCostHidden': (l) => l.stockRegistryCostHidden,
   'stockRegistryCostUnknown': (l) => l.stockRegistryCostUnknown,

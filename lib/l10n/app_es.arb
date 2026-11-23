@@ -21427,6 +21427,7 @@
   },
   "stockReasonTagMalformed": "Este código no es un código de etiqueta legible.",
   "stockReasonTagModeNone": "Este artículo no lleva etiquetas: su modo de etiqueta es ninguno.",
+  "stockReasonTagOwnerInactive": "Este artículo o lugar está desactivado: vuelva a activarlo antes de asociarle una etiqueta.",
   "stockReasonTagOwnerUnknown": "El artículo, lugar o pieza al que va esta etiqueta no se conoce aquí.",
   "stockReasonTagPerUnitItem": "Una etiqueta por unidad va en una pieza, no en el artículo: asóciela a una pieza.",
   "stockReasonTargetBelowPoint": "El nivel hasta el que pedir debe estar por encima del punto de reposición.",

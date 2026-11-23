@@ -36,12 +36,13 @@ create table public.stock_tagged_units (
   id uuid primary key default gen_random_uuid(),
   workspace_id uuid not null references public.workspaces (id) on delete cascade,
   item_id uuid not null,
-  variant_id uuid references public.item_variants (id),
+  variant_id uuid,
   lot_id uuid,
   location_id uuid not null,
   state text not null default 'in_stock' check (state in ('in_stock', 'sold', 'returned', 'written_off', 'retired')),
   unique (workspace_id, id),
   foreign key (workspace_id, item_id) references public.services (workspace_id, id) on delete cascade,
+  foreign key (workspace_id, variant_id) references public.item_variants (workspace_id, id),
   foreign key (workspace_id, lot_id) references public.stock_lots (workspace_id, id) on delete cascade,
   foreign key (workspace_id, location_id) references public.stock_locations (workspace_id, id) on delete cascade
 );
@@ -74,6 +75,7 @@ create table public.stock_tags (
     when 'place' then location_id is not null and item_id is null and variant_id is null and lot_id is null and unit_code is null and piece_id is null
     else piece_id is not null and item_id is not null and variant_id is null and lot_id is null and unit_code is null and location_id is null end),
   foreign key (workspace_id, item_id) references public.services (workspace_id, id) on delete cascade,
+  foreign key (workspace_id, variant_id) references public.item_variants (workspace_id, id) on delete cascade,
   foreign key (workspace_id, lot_id) references public.stock_lots (workspace_id, id) on delete cascade,
   foreign key (workspace_id, location_id) references public.stock_locations (workspace_id, id) on delete cascade,
   foreign key (workspace_id, piece_id) references public.stock_tagged_units (workspace_id, id) on delete cascade,
@@ -268,9 +270,15 @@ begin
        or public.stock_place_is_virtual(v_loc) then
       perform public.stock_config_refuse('owner', 'tag_owner_unknown');
     end if;
+    if not exists (select 1 from public.stock_locations l where l.id = v_loc and l.active) then
+      perform public.stock_config_refuse('owner', 'tag_owner_inactive');
+    end if;
   else
     if v_item is null or not exists (select 1 from public.services s where s.id = v_item and s.workspace_id = p_workspace_id and s.stockable) then
       perform public.stock_config_refuse('owner', 'tag_owner_unknown');
+    end if;
+    if not exists (select 1 from public.services s where s.id = v_item and s.active) then
+      perform public.stock_config_refuse('owner', 'tag_owner_inactive');
     end if;
     if (v_kind = 'variant' and not exists (select 1 from public.item_variants x where x.id = v_var and x.item_id = v_item))
        or (v_kind = 'lot' and not exists (select 1 from public.stock_lots x where x.id = v_lot and x.item_id = v_item and x.workspace_id = p_workspace_id))
@@ -278,7 +286,10 @@ begin
       perform public.stock_config_refuse('owner', 'tag_owner_unknown');
     end if;
   end if;
-  -- one tag, one owner, in the whole business
+  -- one tag, one owner, in the whole business; the item row is taken before the code, in the order a receipt takes them
+  if v_kind <> 'place' then
+    perform 1 from public.services s where s.id = v_item for update;
+  end if;
   perform pg_advisory_xact_lock(hashtextextended('stock_tag:' || p_workspace_id::text || ':' || v_code, 0));
   select * into v_have from public.stock_tags where workspace_id = p_workspace_id and code = v_code and state = 'active';
   if v_have.id is not null then
@@ -469,7 +480,12 @@ begin
   -- a tag in force, or an SGTIN of a product the business knows
   v_norm := case when public.feature_effective(p_workspace_id, 'stockTags') then public.stock_tag_normalize(v_code) end;
   if v_norm is not null then
-    select * into t from public.stock_tags where workspace_id = p_workspace_id and code = v_norm and state = 'active';
+    -- a tag in force on a deactivated place or item stays bound (reactivating it restores the answer); until
+    -- then the code resolves as not known, as a barcode of an inactive item does
+    select g.* into t from public.stock_tags g where g.workspace_id = p_workspace_id and g.code = v_norm and g.state = 'active'
+       and (case when g.owner_kind = 'place'
+                 then exists (select 1 from public.stock_locations z where z.id = g.location_id and z.active)
+                 else exists (select 1 from public.services z where z.id = g.item_id and z.active) end);
     v_sg := public.stock_sgtin96_decode(v_norm);
     if t.id is not null then
       v_out := jsonb_build_object('kind', 'tag', 'matched_by', 'tag', 'code', v_norm);

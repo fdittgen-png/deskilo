@@ -36027,6 +36027,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'This item does not carry tags: its tag mode is none.';
 
   @override
+  String get stockReasonTagOwnerInactive =>
+      'This item or place is deactivated: bring it back before a tag is bound to it.';
+
+  @override
   String get stockReasonTagOwnerUnknown =>
       'The item, place or piece this tag is meant for is not known here.';
 

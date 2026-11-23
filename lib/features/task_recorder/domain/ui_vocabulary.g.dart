@@ -14881,6 +14881,7 @@ const Set<String> uiLabelKeys = {
   'stockReasonSupplierForeign',
   'stockReasonTagMalformed',
   'stockReasonTagModeNone',
+  'stockReasonTagOwnerInactive',
   'stockReasonTagOwnerUnknown',
   'stockReasonTagPerUnitItem',
   'stockReasonTargetBelowPoint',

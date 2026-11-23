@@ -21427,6 +21427,7 @@
   },
   "stockReasonTagMalformed": "Ce code n'est pas un code d'étiquette lisible.",
   "stockReasonTagModeNone": "Cet article ne porte pas d'étiquettes : son mode d'étiquette est aucun.",
+  "stockReasonTagOwnerInactive": "Cet article ou ce lieu est désactivé : réactivez-le avant d'y associer une étiquette.",
   "stockReasonTagOwnerUnknown": "L'article, le lieu ou l'exemplaire visé par cette étiquette n'est pas connu ici.",
   "stockReasonTagPerUnitItem": "Une étiquette par unité se pose sur un exemplaire, pas sur l'article : associez-la à un exemplaire.",
   "stockReasonTargetBelowPoint": "Le niveau à atteindre doit être au-dessus du seuil.",

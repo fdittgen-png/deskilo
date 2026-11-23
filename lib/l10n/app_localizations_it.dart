@@ -36368,6 +36368,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questo articolo non porta etichette: la sua modalità etichetta è nessuna.';
 
   @override
+  String get stockReasonTagOwnerInactive =>
+      'Questo articolo o luogo è disattivato: lo riattivi prima di associargli un\'etichetta.';
+
+  @override
   String get stockReasonTagOwnerUnknown =>
       'L\'articolo, il luogo o il pezzo a cui è destinata questa etichetta non è noto qui.';
 

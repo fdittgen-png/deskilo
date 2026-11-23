@@ -6,7 +6,7 @@
 -- path that does not name its pieces is held to it at commit; a piece in stock is not retired with its tag; an item
 -- not tagged piece by piece takes no named pieces. Rolled back.
 begin;
-select plan(22);
+select plan(28);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -138,6 +138,28 @@ select is(pg_temp.held(), 'DKG25', 'a path that moves the ledger without naming 
 select is(pg_temp.mv(3, 950, pg_temp.line(301, '1', pg_temp.place('supplier'), pg_temp.loc('MAIN'), '[{"tag": "E28068940000401561D679F9"}]', ', "new_lot": {"total_cost_minor": 100}'), 'receipt'), 'ERR DKG11',
   'a mug is not named piece by piece');
 select is(pg_temp.mv(3, 951, pg_temp.line(301, '2', pg_temp.place('supplier'), pg_temp.loc('MAIN'), 'null'), 'receipt') like '[%' or true, true, 'while its ordinary movement is untouched');
+
+-- ── the mode is pinned on the item by its first pieces: no group, assignment or default change turns it off (#4362 read) ──
+insert into public.services (id, workspace_id, name, price_cents, active, inventory_unit, tracking, stockable, tag_mode) values
+  (pg_temp.u(304), pg_temp.u(101), 'Crates', 5000, true, 'piece', 'serial', true, null);
+select pg_temp.run_as(pg_temp.u(1), format('select public.item_group_save_v1(%L, %L, %L, 0, %L::jsonb)::text', pg_temp.u(101), pg_temp.u(970), pg_temp.u(971),
+  '{"name": "Crate group", "parameters": {"tracking": "serial", "tag_mode": "per_unit"}}'));
+select pg_temp.run_as(pg_temp.u(1), format('select public.item_group_save_v1(%L, %L, %L, 0, %L::jsonb)::text', pg_temp.u(101), pg_temp.u(972), pg_temp.u(973),
+  '{"name": "Plain group", "parameters": {"tag_mode": "none"}}'));
+select pg_temp.run_as(pg_temp.u(1), format('select public.item_group_assign_v1(%L, %L, %L, (select stock_revision from public.services where id = %L), %L)::text', pg_temp.u(101), pg_temp.u(974), pg_temp.u(304), pg_temp.u(304), pg_temp.u(971)));
+select is((select tag_mode from public.services where id = pg_temp.u(304)) is null, true, 'an item in a per-unit group keeps no mode of its own before its first pieces');
+select is(pg_temp.mv(3, 975, pg_temp.line(304, '2', pg_temp.place('supplier'), pg_temp.loc('MAIN'),
+  '[{"tag": "E28068940000401561D67A01"}, {"tag": "E28068940000401561D67A02"}]', ', "new_lot": {"total_cost_minor": 2000}'), 'receipt') like '{%', true,
+  'its pieces are received');
+select is((select tag_mode from public.services where id = pg_temp.u(304)), 'per_unit', 'and the first pieces pin the mode on the item');
+select pg_temp.run_as(pg_temp.u(1), format('select public.item_group_save_v1(%L, %L, %L, 1, %L::jsonb)::text', pg_temp.u(101), pg_temp.u(976), pg_temp.u(971),
+  '{"parameters": {"tag_mode": "none"}}'));
+select is(pg_temp.mv(3, 977, pg_temp.line(304, '1', pg_temp.loc('MAIN'), pg_temp.place('loss'), '[]', format(', "lot_id": "%s"', (select id from public.stock_lots where item_id = pg_temp.u(304)))), 'loss'), 'ERR DKG25',
+  'a change of the group''s tag mode does not reach it: a movement without its pieces is still refused');
+select pg_temp.run_as(pg_temp.u(1), format('select public.item_group_assign_v1(%L, %L, %L, (select stock_revision from public.services where id = %L), %L)::text', pg_temp.u(101), pg_temp.u(978), pg_temp.u(304), pg_temp.u(304), pg_temp.u(973)));
+select is(pg_temp.mv(3, 979, pg_temp.line(304, '1', pg_temp.loc('MAIN'), pg_temp.place('loss'), '[]', format(', "lot_id": "%s"', (select id from public.stock_lots where item_id = pg_temp.u(304)))), 'loss'), 'ERR DKG25',
+  'nor does a move to a group without the mode');
+select is(pg_temp.run_as(pg_temp.u(3), format('select public.stock_pieces_check_v1(%L, %L)::text', pg_temp.u(101), pg_temp.u(304))), '[]', 'the pieces still equal the ledger');
 
 select * from finish();
 rollback;

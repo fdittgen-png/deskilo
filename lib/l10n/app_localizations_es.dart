@@ -36324,6 +36324,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Este artículo no lleva etiquetas: su modo de etiqueta es ninguno.';
 
   @override
+  String get stockReasonTagOwnerInactive =>
+      'Este artículo o lugar está desactivado: vuelva a activarlo antes de asociarle una etiqueta.';
+
+  @override
   String get stockReasonTagOwnerUnknown =>
       'El artículo, lugar o pieza al que va esta etiqueta no se conoce aquí.';
 

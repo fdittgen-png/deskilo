@@ -36426,6 +36426,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Dieser Artikel trägt keine Etiketten: Sein Etikettenmodus ist keiner.';
 
   @override
+  String get stockReasonTagOwnerInactive =>
+      'Dieser Artikel oder Ort ist deaktiviert: Aktivieren Sie ihn wieder, bevor ihm ein Etikett zugeordnet wird.';
+
+  @override
   String get stockReasonTagOwnerUnknown =>
       'Der Artikel, Ort oder das Stück, für den dieses Etikett gedacht ist, ist hier nicht bekannt.';
 

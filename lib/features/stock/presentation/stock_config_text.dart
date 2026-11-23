@@ -148,6 +148,7 @@ String? _tagReason(AppLocalizations l10n, String reason) => switch (reason) {
   'tag_per_unit_item' => l10n.stockReasonTagPerUnitItem,
   'tag_malformed' => l10n.stockReasonTagMalformed,
   'tag_owner_unknown' => l10n.stockReasonTagOwnerUnknown,
+  'tag_owner_inactive' => l10n.stockReasonTagOwnerInactive,
   'units_not_tracked' => l10n.stockReasonUnitsNotTracked,
   _ => null,
 };

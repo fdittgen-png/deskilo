@@ -14,5 +14,6 @@
   "stockReasonTagPerUnitItem": "Un'etichetta per unità va su un pezzo, non sull'articolo: la associ a un pezzo.",
   "stockReasonTagMalformed": "Questo codice non è un codice di etichetta leggibile.",
   "stockReasonTagOwnerUnknown": "L'articolo, il luogo o il pezzo a cui è destinata questa etichetta non è noto qui.",
-  "stockReasonUnitsNotTracked": "I pezzi si indicano solo per un articolo tracciato pezzo per pezzo."
+  "stockReasonUnitsNotTracked": "I pezzi si indicano solo per un articolo tracciato pezzo per pezzo.",
+  "stockReasonTagOwnerInactive": "Questo articolo o luogo è disattivato: lo riattivi prima di associargli un'etichetta."
 }

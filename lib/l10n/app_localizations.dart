@@ -57880,6 +57880,12 @@ abstract class AppLocalizations {
   /// #4362 reason
   ///
   /// In en, this message translates to:
+  /// **'This item or place is deactivated: bring it back before a tag is bound to it.'**
+  String get stockReasonTagOwnerInactive;
+
+  /// #4362 reason
+  ///
+  /// In en, this message translates to:
   /// **'The item, place or piece this tag is meant for is not known here.'**
   String get stockReasonTagOwnerUnknown;
 

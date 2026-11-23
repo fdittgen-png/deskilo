@@ -14,5 +14,6 @@
   "stockReasonTagPerUnitItem": "Ein Etikett je Einheit gehört an ein Stück, nicht an den Artikel: Ordnen Sie es einem Stück zu.",
   "stockReasonTagMalformed": "Dieser Code ist kein lesbarer Etikettencode.",
   "stockReasonTagOwnerUnknown": "Der Artikel, Ort oder das Stück, für den dieses Etikett gedacht ist, ist hier nicht bekannt.",
-  "stockReasonUnitsNotTracked": "Stücke werden nur für einen stückweise verfolgten Artikel benannt."
+  "stockReasonUnitsNotTracked": "Stücke werden nur für einen stückweise verfolgten Artikel benannt.",
+  "stockReasonTagOwnerInactive": "Dieser Artikel oder Ort ist deaktiviert: Aktivieren Sie ihn wieder, bevor ihm ein Etikett zugeordnet wird."
 }

@@ -59,5 +59,9 @@
   "stockReasonUnitsNotTracked": "Pieces are named only for an item tracked piece by piece.",
   "@stockReasonUnitsNotTracked": {
     "description": "#4362 reason"
+  },
+  "stockReasonTagOwnerInactive": "This item or place is deactivated: bring it back before a tag is bound to it.",
+  "@stockReasonTagOwnerInactive": {
+    "description": "#4362 reason"
   }
 }
