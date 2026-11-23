@@ -310,3 +310,14 @@ typedef _WhereIsQuery = ({String workspaceId, String itemId, String? lotId, Date
 final stockWhereIsAnswerProvider = FutureProvider.autoDispose.family<WhereIsAnswer, _WhereIsQuery>(
   (ref, q) => ref.watch(stockWhereIsProvider).whereIs(q.workspaceId, q.itemId, lotId: q.lotId, at: q.at),
 );
+
+/// #4364 -- whether bulk reading is on (`stockTagReads`): the counts and the moves offer "Read many tags".
+final stockTagReadsProvider = Provider<bool>((ref) => ref.watch(stockTagsProvider) && ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.stockTagReads));
+
+/// #4364 -- the most different tags one bulk read keeps (`stock.tag_read_max_tags`); the registry default while the settings load.
+final stockTagReadMaxProvider = Provider<int>((ref) {
+  final settings = ref.watch(activeSettingsProvider);
+  return settings != null && settings.definitions.containsKey('stock.tag_read_max_tags')
+      ? settings.read<int>('stock.tag_read_max_tags')
+      : SettingDefaults.stockTagReadMaxTags;
+});

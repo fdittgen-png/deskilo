@@ -241,6 +241,70 @@ class CountHistoryRow {
 }
 
 /// The cycle counts behind one port, so the Demo answers like the server.
+/// One line a bulk read counted: how many pieces of its own were read at its place.
+class BulkCountedLine {
+  const BulkCountedLine({required this.lineId, required this.itemId, required this.locationId, required this.read, required this.state});
+
+  final String lineId;
+  final String itemId;
+  final String locationId;
+  final int read;
+  final String state;
+}
+
+/// A tag a bulk count left out, and why: `not_a_piece`, `already_counted`, `invalid`, or, for who may see what the ledger
+/// holds, `not_in_stock` / `other_place`; a blind counter is told `not_counted`.
+class BulkLeftOut {
+  const BulkLeftOut({required this.code, required this.reason});
+
+  final String code;
+  final String reason;
+}
+
+/// #4364 (G15) -- what `stock_count_tag_read_v1` answered. `missing` (the codes of the pieces expected and not read) is
+/// null for a blind counter: it is told what it counted, never what was expected.
+class BulkCountResult {
+  const BulkCountResult({required this.taskState, required this.lines, required this.leftOut, this.missing, required this.replayed});
+
+  final CountTaskState taskState;
+  final List<BulkCountedLine> lines;
+  final List<BulkLeftOut> leftOut;
+  final List<String>? missing;
+  final bool replayed;
+
+  factory BulkCountResult.fromJson(Object? json) {
+    final r = JsonReader.of(json, context: 'stock_count_tag_read_v1');
+    final missing = r.raw('missing');
+    return BulkCountResult(
+      taskState: CountTaskState.fromWire(r.stringOrNull('task_state')),
+      lines: [
+        for (final l in r.requiredList('lines'))
+          () {
+            final x = JsonReader.of(l, context: 'stock_count_tag_read_v1.lines');
+            return BulkCountedLine(
+              lineId: x.string('line_id'),
+              itemId: x.string('item_id'),
+              locationId: x.string('location_id'),
+              read: x.integer('read'),
+              state: x.string('state'),
+            );
+          }(),
+      ],
+      leftOut: [
+        for (final l in r.requiredList('left_out'))
+          () {
+            final x = JsonReader.of(l, context: 'stock_count_tag_read_v1.left_out');
+            return BulkLeftOut(code: x.string('code'), reason: x.string('reason'));
+          }(),
+      ],
+      missing: missing is List
+          ? [for (final m in missing) JsonReader.of(m, context: 'stock_count_tag_read_v1.missing').string('code')]
+          : null,
+      replayed: r.boolOr('replayed', fallback: false),
+    );
+  }
+}
+
 abstract interface class StockCycleCounts {
   /// The plans of the business (read by who manages the stock).
   Future<List<CountPlan>> plans(String workspaceId);
@@ -262,4 +326,9 @@ abstract interface class StockCycleCounts {
 
   /// When each item at each place was last counted, and how exact the counts were.
   Future<List<CountHistoryRow>> history(String workspaceId);
+
+  /// #4364 -- fills the lines of a task from a bulk read of tags: a line of a piece-tracked item is counted by the
+  /// pieces of its own read at its place; the first read of a line is final. The count waits for its approval, and no
+  /// balance moves. One request id answers once.
+  Future<BulkCountResult> countByTagRead(String workspaceId, {required String requestId, required String taskId, required List<String> codes});
 }

@@ -2399,6 +2399,11 @@ constraint stock_lots.stock_lots_workspace_id_id_key UNIQUE (workspace_id, id)
 constraint stock_lots.stock_lots_workspace_id_item_id_fkey FOREIGN KEY (workspace_id, item_id) REFERENCES services(workspace_id, id) ON DELETE CASCADE
 constraint stock_lots.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint stock_lots.system_company_present CHECK ((company_id IS NOT NULL))
+constraint stock_movement_units.stock_movement_units_pkey PRIMARY KEY (movement_id, unit_id)
+constraint stock_movement_units.stock_movement_units_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint stock_movement_units.stock_movement_units_workspace_id_unit_id_fkey FOREIGN KEY (workspace_id, unit_id) REFERENCES stock_tagged_units(workspace_id, id) ON DELETE CASCADE
+constraint stock_movement_units.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint stock_movement_units.system_company_present CHECK ((company_id IS NOT NULL))
 constraint stock_movements.stock_movements_check CHECK ((from_location_id <> to_location_id))
 constraint stock_movements.stock_movements_counter_line_fkey FOREIGN KEY (workspace_id, counter_line_id) REFERENCES counter_receipt_lines(workspace_id, id)
 constraint stock_movements.stock_movements_counter_receipt_fkey FOREIGN KEY (workspace_id, counter_receipt_id) REFERENCES counter_receipts(workspace_id, id)
@@ -3272,7 +3277,7 @@ routine public.export_floor_plan(p_workspace_id uuid) -> jsonb | function | defi
 routine public.export_my_data(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:60e99a54bb53
 routine public.export_my_personal_data_v1() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:d7b715189c7e
 routine public.export_workspace_configuration(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:92590453f1db
-routine public.export_workspace_records(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:209c5c2067bd
+routine public.export_workspace_records(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:495bafc27e46
 routine public.extend_rights_request(p_request_id uuid, p_reason text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:04408416313f
 routine public.feature_available_in(p_country text, p_key text) -> boolean | function | invoker | stable | exec:authenticated,service_role | body:afd99a4fede6
 routine public.feature_effective(p_workspace_id uuid, p_key text) -> boolean | function | invoker | stable | exec:authenticated,service_role | body:1d4c5b503042
@@ -4394,7 +4399,7 @@ routine public.standalone_invoice_line_v1(p_line jsonb, p_index integer, p_curre
 routine public.standalone_invoice_subject(p_workspace_id uuid, p_subject uuid) -> members | function | definer | stable | exec:service_role | body:03bed41502dd
 routine public.start_space_inquiry(p_workspace uuid, p_body text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:24335253d564
 routine public.start_space_inquiry_v1(p_workspace uuid, p_body text, p_request_id uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:307a68c96e0f
-routine public.stock_apply_lines(p_workspace_id uuid, p_actor uuid, p_request_id uuid, p_lines jsonb, p_reason text, p_at timestamp with time zone, p_links jsonb, p_mode text) -> jsonb | function | definer | volatile | exec:service_role | body:c7c75a46792a
+routine public.stock_apply_lines(p_workspace_id uuid, p_actor uuid, p_request_id uuid, p_lines jsonb, p_reason text, p_at timestamp with time zone, p_links jsonb, p_mode text) -> jsonb | function | definer | volatile | exec:service_role | body:bc91af318609
 routine public.stock_bits_value(p_bits bit varying) -> numeric | function | invoker | immutable | exec:service_role | body:fbdb23474211
 routine public.stock_blind_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:8d7f9c93e191
 routine public.stock_command_args(p_request_id uuid, p_lines jsonb) -> void | function | invoker | immutable | exec:service_role | body:2c0224c1f582
@@ -4452,10 +4457,11 @@ routine public.stock_on_hand_v1(p_workspace_id uuid, p_item_id uuid, p_location_
 routine public.stock_open(p_workspace_id uuid) -> void | function | definer | volatile | exec:service_role | body:7db595e68950
 routine public.stock_ops_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:3d13ac56d749
 routine public.stock_page_reader(p_workspace_id uuid, p_limit integer) -> void | function | definer | stable | exec:service_role | body:076a546069b5
-routine public.stock_pieces_apply(p_workspace_id uuid, p_item_id uuid, p_variant uuid, p_lot uuid, p_line jsonb, p_from uuid, p_to uuid, p_reason text, p_qty numeric) -> void | function | definer | volatile | exec:service_role | body:a709ecb39b71
+routine public.stock_pieces_apply(p_workspace_id uuid, p_item_id uuid, p_variant uuid, p_lot uuid, p_line jsonb, p_from uuid, p_to uuid, p_reason text, p_qty numeric) -> void | function | definer | volatile | exec:service_role | body:35ed363a0114
 routine public.stock_pieces_balanced() -> trigger | function | definer | volatile | exec:service_role | body:463c18ad6fe0
 routine public.stock_pieces_check_v1(p_workspace_id uuid, p_item_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:02ca0c495636
 routine public.stock_pieces_difference(p_workspace_id uuid, p_item_id uuid, p_place uuid) -> TABLE(variant_id uuid, lot_id uuid, ledger numeric, pieces bigint) | function | definer | stable | exec:service_role | body:854e3e94a1a0
+routine public.stock_pieces_move(p_workspace_id uuid, p_item_id uuid, p_variant uuid, p_lot uuid, p_line jsonb, p_from uuid, p_to uuid, p_reason text, p_qty numeric) -> uuid[] | function | definer | volatile | exec:service_role | body:be42353e49b9
 routine public.stock_place(p_workspace_id uuid, p_kind text) -> uuid | function | definer | stable | exec:service_role | body:d8a6625b10f4
 routine public.stock_place_is_virtual(p_location_id uuid) -> boolean | function | definer | stable | exec:service_role | body:51374325b462
 routine public.stock_place_tree(p_workspace_id uuid, p_root uuid) -> TABLE(id uuid, depth integer) | function | definer | stable | exec:service_role | body:5b3743876319
@@ -5155,6 +5161,7 @@ trigger stock_locations.stock_locations_address_follow CREATE TRIGGER stock_loca
 trigger stock_locations.stock_locations_keep_history CREATE TRIGGER stock_locations_keep_history BEFORE DELETE ON public.stock_locations FOR EACH ROW EXECUTE FUNCTION stock_locations_keep_history()
 trigger stock_locations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.stock_locations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger stock_lots.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.stock_lots FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger stock_movement_units.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.stock_movement_units FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger stock_movements.stock_movements_append_only CREATE TRIGGER stock_movements_append_only BEFORE DELETE OR UPDATE ON public.stock_movements FOR EACH ROW EXECUTE FUNCTION stock_movements_append_only()
 trigger stock_movements.stock_movements_apply CREATE TRIGGER stock_movements_apply AFTER INSERT ON public.stock_movements FOR EACH ROW EXECUTE FUNCTION stock_movements_apply()
 trigger stock_movements.stock_movements_reorder CREATE TRIGGER stock_movements_reorder AFTER INSERT ON public.stock_movements FOR EACH ROW EXECUTE FUNCTION stock_movements_reorder()

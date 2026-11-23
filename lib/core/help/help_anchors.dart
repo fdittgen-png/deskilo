@@ -40,6 +40,7 @@ abstract final class HelpAnchor {
   static const moneyStockNfc = 'user.money.stock.nfc';
   static const moneyStockRfid = 'user.money.stock.rfid';
   static const moneyStockWhereIs = 'user.money.stock.whereis';
+  static const moneyStockBulkRead = 'user.money.stock.bulkread';
   static const moneyTill = 'user.money.till';
 
   /// #3527 — the Sales, Purchases and Cash pages.
