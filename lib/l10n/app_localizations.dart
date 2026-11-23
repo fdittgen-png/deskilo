@@ -20356,6 +20356,18 @@ abstract class AppLocalizations {
   /// **'The expiry report'**
   String get featureStockExpiryReportTitle;
 
+  /// #4435 the handling units feature: what it does
+  ///
+  /// In en, this message translates to:
+  /// **'Goods move in the pallet or carton they were received in, or in the store\'s own repackaged units, and stay traceable through the repack.'**
+  String get featureStockHandlingUnitsDesc;
+
+  /// #4435 the handling units feature: its name
+  ///
+  /// In en, this message translates to:
+  /// **'Handling units'**
+  String get featureStockHandlingUnitsTitle;
+
   /// #4361 feature description
   ///
   /// In en, this message translates to:

@@ -12648,6 +12648,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get featureStockExpiryReportTitle => 'Le rapport de péremption';
 
   @override
+  String get featureStockHandlingUnitsDesc =>
+      'Les marchandises circulent dans la palette ou le carton où elles sont arrivées, ou dans les unités reconditionnées du magasin, et restent traçables à travers le reconditionnement.';
+
+  @override
+  String get featureStockHandlingUnitsTitle => 'Unités de manutention';
+
+  @override
   String get featureStockItemGroupsDesc =>
       'Regroupez les articles pour partager leurs réglages : suivi, durée de conservation, mode d\'étiquette, unités, TVA, caisse et plus. Un article hérite de la valeur de son groupe sauf s\'il garde la sienne ; un changement de groupe montre combien d\'articles il touche avant d\'être enregistré.';
 

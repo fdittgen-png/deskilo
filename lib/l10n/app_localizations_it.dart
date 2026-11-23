@@ -12595,6 +12595,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featureStockExpiryReportTitle => 'Il rapporto di scadenza';
 
   @override
+  String get featureStockHandlingUnitsDesc =>
+      'Le merci si spostano nel bancale o nel cartone in cui sono arrivate, o nelle unità riconfezionate del negozio, e restano tracciabili attraverso il riconfezionamento.';
+
+  @override
+  String get featureStockHandlingUnitsTitle => 'Unità di movimentazione';
+
+  @override
   String get featureStockItemGroupsDesc =>
       'Raggruppi gli articoli per condividerne le impostazioni: tracciabilità, scadenza, modalità etichetta, unità, IVA, cassa e altro. Un articolo eredita il valore del suo gruppo salvo che mantenga il proprio; una modifica al gruppo mostra quanti articoli raggiunge prima di essere salvata.';
 

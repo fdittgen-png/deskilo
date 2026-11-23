@@ -7810,6 +7810,14 @@
   "@featureStockExpiryReportTitle": {
     "description": "#4431 the expiry report feature: its name"
   },
+  "featureStockHandlingUnitsDesc": "Les marchandises circulent dans la palette ou le carton où elles sont arrivées, ou dans les unités reconditionnées du magasin, et restent traçables à travers le reconditionnement.",
+  "@featureStockHandlingUnitsDesc": {
+    "description": "#4435 the handling units feature: what it does"
+  },
+  "featureStockHandlingUnitsTitle": "Unités de manutention",
+  "@featureStockHandlingUnitsTitle": {
+    "description": "#4435 the handling units feature: its name"
+  },
   "featureStockItemGroupsDesc": "Regroupez les articles pour partager leurs réglages : suivi, durée de conservation, mode d'étiquette, unités, TVA, caisse et plus. Un article hérite de la valeur de son groupe sauf s'il garde la sienne ; un changement de groupe montre combien d'articles il touche avant d'être enregistré.",
   "featureStockItemGroupsTitle": "Groupes d'articles",
   "featureStockLotsDesc": "Suivre les marchandises par lot ou par date de péremption, avec une durée de conservation. Désactivé : aucun article n’est suivi par lot, et ce qui a été enregistré est conservé tel quel.",

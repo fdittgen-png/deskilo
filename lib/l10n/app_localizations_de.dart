@@ -12613,6 +12613,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get featureStockExpiryReportTitle => 'Der Verfallsbericht';
 
   @override
+  String get featureStockHandlingUnitsDesc =>
+      'Ware bewegt sich in der Palette oder dem Karton, in dem sie ankam, oder in den eigenen umgepackten Einheiten des Ladens und bleibt über das Umpacken rückverfolgbar.';
+
+  @override
+  String get featureStockHandlingUnitsTitle => 'Packeinheiten';
+
+  @override
   String get featureStockItemGroupsDesc =>
       'Artikel gruppieren, damit ihre Einstellungen geteilt werden: Nachverfolgung, Haltbarkeit, Etikettenmodus, Einheiten, Mehrwertsteuer, Kasse und mehr. Ein Artikel erbt den Wert seiner Gruppe, außer er behält seinen eigenen; eine Änderung an der Gruppe zeigt vor dem Speichern, wie viele Artikel sie erreicht.';
 

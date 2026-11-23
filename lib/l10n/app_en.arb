@@ -16425,6 +16425,14 @@
   "@featureStockExpiryReportTitle": {
     "description": "#4431 the expiry report feature: its name"
   },
+  "featureStockHandlingUnitsDesc": "Goods move in the pallet or carton they were received in, or in the store's own repackaged units, and stay traceable through the repack.",
+  "@featureStockHandlingUnitsDesc": {
+    "description": "#4435 the handling units feature: what it does"
+  },
+  "featureStockHandlingUnitsTitle": "Handling units",
+  "@featureStockHandlingUnitsTitle": {
+    "description": "#4435 the handling units feature: its name"
+  },
   "featureStockItemGroupsDesc": "Group items so that their settings are shared: tracking, shelf life, tag mode, units, VAT, the till and more. An item inherits its group's value unless it keeps its own; a change to a group shows how many items it reaches before it is saved.",
   "@featureStockItemGroupsDesc": {
     "description": "#4361 feature description"

@@ -12584,6 +12584,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get featureStockExpiryReportTitle => 'El informe de caducidad';
 
   @override
+  String get featureStockHandlingUnitsDesc =>
+      'La mercancía se mueve en el palé o la caja en que llegó, o en las unidades reenvasadas de la tienda, y sigue siendo trazable a través del reenvasado.';
+
+  @override
+  String get featureStockHandlingUnitsTitle => 'Unidades de manipulación';
+
+  @override
   String get featureStockItemGroupsDesc =>
       'Agrupe artículos para compartir sus ajustes: seguimiento, caducidad, modo de etiqueta, unidades, IVA, caja y más. Un artículo hereda el valor de su grupo salvo que conserve el suyo; un cambio de grupo muestra a cuántos artículos llega antes de guardarse.';
 

@@ -12500,6 +12500,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureStockExpiryReportTitle => 'The expiry report';
 
   @override
+  String get featureStockHandlingUnitsDesc =>
+      'Goods move in the pallet or carton they were received in, or in the store\'s own repackaged units, and stay traceable through the repack.';
+
+  @override
+  String get featureStockHandlingUnitsTitle => 'Handling units';
+
+  @override
   String get featureStockItemGroupsDesc =>
       'Group items so that their settings are shared: tracking, shelf life, tag mode, units, VAT, the till and more. An item inherits its group\'s value unless it keeps its own; a change to a group shows how many items it reaches before it is saved.';
 

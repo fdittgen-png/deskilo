@@ -7810,6 +7810,14 @@
   "@featureStockExpiryReportTitle": {
     "description": "#4431 the expiry report feature: its name"
   },
+  "featureStockHandlingUnitsDesc": "Le merci si spostano nel bancale o nel cartone in cui sono arrivate, o nelle unità riconfezionate del negozio, e restano tracciabili attraverso il riconfezionamento.",
+  "@featureStockHandlingUnitsDesc": {
+    "description": "#4435 the handling units feature: what it does"
+  },
+  "featureStockHandlingUnitsTitle": "Unità di movimentazione",
+  "@featureStockHandlingUnitsTitle": {
+    "description": "#4435 the handling units feature: its name"
+  },
   "featureStockItemGroupsDesc": "Raggruppi gli articoli per condividerne le impostazioni: tracciabilità, scadenza, modalità etichetta, unità, IVA, cassa e altro. Un articolo eredita il valore del suo gruppo salvo che mantenga il proprio; una modifica al gruppo mostra quanti articoli raggiunge prima di essere salvata.",
   "featureStockItemGroupsTitle": "Gruppi di articoli",
   "featureStockLotsDesc": "Seguire le merci per lotto o per data di scadenza, con una durata di conservazione. Disattivato: nessun articolo è seguito per lotto e ciò che è stato registrato resta invariato.",
