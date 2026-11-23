@@ -38,7 +38,8 @@ abstract interface class CommercialTermsRepository {
     bool includeInactive = false,
   });
 
-  /// Owner-only (RLS services_write): creates a service.
+  /// Needs manageServices: creates a service. [requestId] makes it safe to retry (#4376): the same id and
+  /// content answer the first service, other content under it is refused; null takes a fresh id.
   Future<ServiceItem> createService(
     String workspaceId, {
     required String name,
@@ -46,6 +47,7 @@ abstract interface class CommercialTermsRepository {
     String? vatRateId,
     SupplyClass supplyClass = SupplyClass.property,
     ServiceDetails details = const ServiceDetails(),
+    String? requestId,
   });
 
   /// Owner-only: partial update of name, price, VAT rate and active flag.

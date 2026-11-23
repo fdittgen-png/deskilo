@@ -149,5 +149,6 @@ grep the whole repo (skills, commands, workflow comments) for its old wording.
   Never `for f in $files` in zsh: it passes all paths as one
   argument and conflict markers get committed. `git grep -l '^<<<<<<<'` before
   every push. If it conflicts again, stop and report.
+- **A stacked branch is rebuilt on master by `git rebase --onto origin/master <its true base> <branch>` or by merging, never by applying a diff taken against another head**: a diff against a head that predates a later commit of the base silently reverts that commit (#4385 reverted the 494 date fix). Before the PR, compare the tree of the rebuilt branch with what the squash of the original would give (`git diff <original head> <rebuilt head> --stat` shows only the base's own commits).
 - A branch whose PR was superseded is deleted, not merged (reference.md "Working beside other agents").
 - Record non-obvious lessons in the memory file or a skill's reference.md, not in the wiki.

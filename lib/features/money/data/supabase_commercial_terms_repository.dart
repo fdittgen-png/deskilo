@@ -4,6 +4,7 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/data/paged_fetch.dart';
+import '../../../core/data/retry.dart' show newRequestId;
 import '../domain/commercial_terms_repository.dart';
 import '../domain/fee_band.dart';
 import '../domain/package.dart';
@@ -113,22 +114,26 @@ class SupabaseCommercialTermsRepository implements CommercialTermsRepository {
     String? vatRateId,
     SupplyClass supplyClass = SupplyClass.property,
     ServiceDetails details = const ServiceDetails(),
+    String? requestId,
   }) async {
-    final row = await _client
-        .from('services')
-        .insert({
+    // One command that carries a request id (#4376): a retry of the same id answers the first service.
+    final raw = await _client.rpc<Object?>(
+      'create_service_v1',
+      params: {
+        'p_workspace_id': workspaceId,
+        'p_request_id': requestId ?? newRequestId(),
+        'p_service': {
           ...details.toRow(),
           'supply_class': supplyClass.wire,
-          'workspace_id': workspaceId,
           'name': name,
           'price_cents': priceCents,
           // '' means "the workspace default", which the column stores as
           // NULL — the resolution lives in one place, the server.
           'vat_rate_id': (vatRateId ?? '').isEmpty ? null : vatRateId,
-        })
-        .select()
-        .single();
-    return _serviceFromRow(row);
+        },
+      },
+    );
+    return _serviceFromRow((raw! as Map).cast<String, Object?>());
   }
 
   @override

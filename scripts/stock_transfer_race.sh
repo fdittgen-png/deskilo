@@ -37,6 +37,8 @@
 #       is refused (DKG22); one active tag, on the first item.
 #   (K) a receipt naming a new piece's tag and a bind of the same code: the bind waits for the code's lock and
 #       is refused (DKG22); one tag, on the piece.
+#   (L) two put-aways of one receipt line naming 3 tags each of the 4 delivered piece by piece: the second
+#       waits for the line's lock and is refused as over-allocated; one set of 3 pieces.
 # A holder that never took its lock, or a contender that never waited, fails the
 # script: nothing here can pass empty. A single pgTAP transaction cannot show a
 # race, so each contender is its own psql process on CI's disposable database.
@@ -115,10 +117,12 @@ insert into public.purchase_order_lines (workspace_id, order_id, line_no, servic
 values (:'ws', :'ord', 1, :'p', '', 5, 'piece', 100);
 update public.purchase_orders set state = 'sent', sent_at = now(), sent_via = 'print' where id = :'ord';
 select revision as ordrev from public.purchase_orders where id = :'ord' \gset
+-- the business's own day, not the session's: they differ for a few hours a day (#4384)
+select public.workspace_today(:'ws') as today \gset
 begin;
 select set_config('request.jwt.claims', '{"sub":"$owner","role":"authenticated","aal":"aal2"}', true);
 set local role authenticated;
-select public.record_purchase_order_receipt_v1(:'ws', :'ord', :ordrev, current_date, '[{"line_no": 1, "quantity": 5}]'::jsonb, 'dock', gen_random_uuid());
+select public.record_purchase_order_receipt_v1(:'ws', :'ord', :ordrev, :'today'::date, '[{"line_no": 1, "quantity": 5}]'::jsonb, 'dock', gen_random_uuid());
 select public.stock_move_v1(:'ws', gen_random_uuid(), jsonb_build_array(
   jsonb_build_object('item_id', :'r', 'quantity', 10, 'from', :'supplier', 'to', :'main')), 'receipt');
 select public.save_stock_reorder_point_v1(:'ws', null, null, gen_random_uuid(),
@@ -606,5 +610,56 @@ wait "$contender14" || true
 grep -q "^received" "$scratch/holder14" || { echo "::error::the receipt did not complete: $(tr '\n' ' ' < "$scratch/holder14")" >&2; exit 1; }
 grep -q "DKG22" "$scratch/contender14" || { echo "::error::the bind was not refused as bound to the piece: $(tr '\n' ' ' < "$scratch/contender14")" >&2; exit 1; }
 expect "(K) the code is on the received piece only" "$(q "select count(*) || '/' || bool_and(owner_kind = 'piece')::text from public.stock_tags where workspace_id = '$ws' and state = 'active' and code = 'E28068940000401561D68B01'")" "1/true"
+
+# (L) two put-aways of the same receipt line, each naming 3 tags of the 4 delivered piece by piece: the second waits
+# for the line's lock, then is refused as over-allocated (DKG11); one set of 3 pieces exists, never a second.
+psql "$url" -X -qAt -v ON_ERROR_STOP=1 -v ws="$ws" -v member="$(q "select id from public.members where workspace_id = '$ws' and user_id = '$owner'")" >"$scratch/setup15" 2>&1 <<SQL
+insert into public.services (workspace_id, name, price_cents, active, inventory_unit, tracking, stockable, tag_mode)
+values (:'ws', 'Race pieces', 100, true, 'piece', 'serial', true, 'per_unit') returning id as pu \gset
+insert into public.purchase_orders (workspace_id, year, number, supplier_id, state, currency, created_by_member_id)
+values (:'ws', 2026, 9, (select id from public.suppliers where workspace_id = :'ws' limit 1), 'draft', 'EUR', :'member') returning id as ord2 \gset
+insert into public.purchase_order_lines (workspace_id, order_id, line_no, service_id, description, quantity, unit, unit_price_cents)
+values (:'ws', :'ord2', 1, :'pu', '', 4, 'piece', 100);
+update public.purchase_orders set state = 'sent', sent_at = now(), sent_via = 'print' where id = :'ord2';
+select revision as ordrev2 from public.purchase_orders where id = :'ord2' \gset
+select public.workspace_today(:'ws') as today2 \gset
+begin;
+select set_config('request.jwt.claims', '{"sub":"$owner","role":"authenticated","aal":"aal2"}', true);
+set local role authenticated;
+select public.record_purchase_order_receipt_v1(:'ws', :'ord2', :ordrev2, :'today2'::date, '[{"line_no": 1, "quantity": 4}]'::jsonb, 'dock', gen_random_uuid());
+reset role;
+commit;
+select 'receipt ' || id from public.purchase_order_receipts where order_id = :'ord2';
+select 'item ' || :'pu';
+SQL
+rcpt2=$(grep '^receipt ' "$scratch/setup15" | cut -d' ' -f2)
+pitem=$(grep '^item ' "$scratch/setup15" | cut -d' ' -f2)
+[[ -n "$rcpt2" && -n "$pitem" ]] || { echo "::error::the piece delivery was not set up: $(tr '\n' ' ' < "$scratch/setup15")" >&2; exit 1; }
+put_away_units() { # REQUEST TAG-PREFIX
+  echo "$as_owner select 'putaway' from (select public.put_away_receipt_v1('$ws', '$rcpt2', '$1', jsonb_build_array(jsonb_build_object('line_no', 1, 'quantity', 3, 'location_id', '$main', 'units', jsonb_build_array(jsonb_build_object('tag', '${2}01'), jsonb_build_object('tag', '${2}02'), jsonb_build_object('tag', '${2}03'))))) ) t;"
+}
+pb1=$(uid); pb2=$(uid)
+psql "$url" -X -qAt -v ON_ERROR_STOP=1 >"$scratch/holder15" 2>&1 <<SQL &
+begin;
+$(put_away_units "$pb1" "E28068940000401561D69A")
+reset role;
+\\! touch '$scratch/ready15'
+select pg_sleep(4);
+commit;
+SQL
+holder15=$!
+wait_marker "$scratch/ready15" "$scratch/holder15"
+PGAPPNAME="transfer-race-putaway-pieces" psql "$url" -X -qAt -v ON_ERROR_STOP=1 >"$scratch/contender15" 2>&1 <<SQL &
+begin;
+$(put_away_units "$pb2" "E28068940000401561D69B")
+commit;
+SQL
+contender15=$!
+wait_lock "transfer-race-putaway-pieces"
+wait "$holder15" || { echo "::error::the first piece put-away failed: $(tr '\n' ' ' < "$scratch/holder15")" >&2; exit 1; }
+wait "$contender15" || true
+grep -qx putaway "$scratch/holder15" || { echo "::error::the first piece put-away did not complete: $(tr '\n' ' ' < "$scratch/holder15")" >&2; exit 1; }
+grep -q "over_allocated" "$scratch/contender15" || { echo "::error::the second piece put-away was not refused as over_allocated: $(tr '\n' ' ' < "$scratch/contender15")" >&2; exit 1; }
+expect "(L) three pieces exist, with their tags, once" "$(q "select count(*) || '/' || (select count(*) from public.stock_tags where workspace_id = '$ws' and owner_kind = 'piece' and state = 'active' and item_id = '$pitem') from public.stock_tagged_units where workspace_id = '$ws' and item_id = '$pitem'")" "3/3"
 
 echo "stock transfer race: opposing transfers never deadlock and keep every total; the last stock is taken once; a booking confirmation and a customer return of one item serialise in both orders; two put-aways cannot over-allocate a line; two sessions crossing a reorder point raise one alert"

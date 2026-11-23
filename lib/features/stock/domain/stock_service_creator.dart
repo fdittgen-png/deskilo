@@ -13,5 +13,5 @@ abstract interface class StockServiceCreator {
   Future<List<StockVatChoice>> vatChoices(String workspaceId);
 
   /// Creates the service (a price in minor units, a VAT rate or none) and returns its id.
-  Future<String> create(String workspaceId, {required String name, required int priceCents, String? vatRateId});
+  Future<String> create(String workspaceId, {required String name, required int priceCents, String? vatRateId, String? requestId});
 }
