@@ -244,23 +244,27 @@ class PutAwayDraft {
       }
     } else if (result.outcome == ScanOutcome.line && line != null) {
       final part = _parts.where((p) => context.items[p.line.lineNo]?.itemId == line.itemId).firstOrNull;
-      if (part != null) {
-        part.scanned = true;
-        if (result.asksQuantity) {
-          part.focus.requestFocus();
-        } else {
-          part.qty.text = line.quantityText;
-        }
-        final current = scanner?.session.current;
-        if (current != null) part.place = current.id;
-        final tracking = context.items[part.line.lineNo]?.tracking ?? 'none';
-        final lot = line.lotCode;
-        if (tracking != 'none' && lot != null && lot.isNotEmpty) part.lot.text = lot;
-        final expiry = tracking == 'expiry' && line.expiresOn != null ? DateTime.tryParse(line.expiresOn!) : null;
-        if (expiry != null) part.expiry = (date: expiry, problem: null);
-      }
+      if (part != null) _countOn(part, line, asksQuantity: result.asksQuantity);
     }
     _refresh?.call();
+  }
+
+  /// A scanned item counts on its line: the first scan replaces the quantity the form started with, the current
+  /// place is its place, and a lot label or a GS1 lot and expiry set what the item tracks.
+  void _countOn(_Part part, ScanLine line, {required bool asksQuantity}) {
+    part.scanned = true;
+    if (asksQuantity) {
+      part.focus.requestFocus();
+    } else {
+      part.qty.text = line.quantityText;
+    }
+    final current = scanner?.session.current;
+    if (current != null) part.place = current.id;
+    final tracking = context.items[part.line.lineNo]?.tracking ?? 'none';
+    final lot = line.lotCode;
+    if (tracking != 'none' && lot != null && lot.isNotEmpty) part.lot.text = lot;
+    final expiry = tracking == 'expiry' && line.expiresOn != null ? DateTime.tryParse(line.expiresOn!) : null;
+    if (expiry != null) part.expiry = (date: expiry, problem: null);
   }
 
   /// The quantity of a part: what was typed, or (empty, while recording a

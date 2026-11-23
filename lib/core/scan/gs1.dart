@@ -2,9 +2,11 @@
 //
 // #4360 (G11) -- what a camera reads off a product or a place label, before anything is resolved: a GTIN's check
 // digit is validated (a misread is said, never sent to the server), and a GS1 element string (the text of a GS1
-// DataMatrix or QR) is parsed for its GTIN (AI 01), lot (10), expiry (17) and serial (21). Pure: no Flutter.
+// DataMatrix or QR) is parsed for its GTIN (AI 01), lot (10), expiry (17) and serial (21). Pure: no Flutter widgets.
+import 'package:flutter/foundation.dart' show visibleForTesting;
 
 /// Whether [code] is a GTIN (8, 12, 13 or 14 digits) whose last digit is the check digit of the others.
+@visibleForTesting
 bool gtinValid(String code) {
   if (!RegExp(r'^\d+$').hasMatch(code) || ![8, 12, 13, 14].contains(code.length)) return false;
   var sum = 0;
