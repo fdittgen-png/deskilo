@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+// #4423 -- the invariant: an edge function reads its environment through one module, and the direct reads
+// outside it only fall.
 import { assertEquals, assertThrows } from "jsr:@std/assert@1";
 import { env, KEYS, requiredEnv } from "./config.ts";
 import { sourceFiles } from "./catch_check.ts";

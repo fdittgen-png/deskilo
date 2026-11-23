@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+// #4412 -- the invariant: an edge function answers one envelope (a stable code and words safe to show), a failure
+// never carries the error's own words, the logger keeps secrets, personal data and cycles out of its lines, and a
+// request id is never echoed raw.
 import { assert, assertEquals } from "jsr:@std/assert@1";
 import { fail, INTERNAL_ERROR, ok, refuse } from "./respond.ts";
 import { describeError, redactFields, scrub } from "./log.ts";

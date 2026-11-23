@@ -397,8 +397,7 @@ class ConnectedInstallations {
       }
       if (session.isExpired) await client.auth.refreshSession();
       final user = (await client.auth.getUser()).user;
-      final identity = await client
-          .from(ServerTable.installationIdentity)
+      final identity = await client.from(ServerTable.installationIdentity)
           .select('installation_id')
           .single();
       // #2562 C1b -- a connection adopted under a canonical identity stays

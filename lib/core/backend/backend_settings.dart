@@ -380,8 +380,7 @@ class SupabaseProbeTransport implements BackendProbeTransport {
   final SupabaseClient _client;
 
   @override
-  Future<void> readOneWorkspace() => _client
-      .from(ServerTable.workspaces)
+  Future<void> readOneWorkspace() => _client.from(ServerTable.workspaces)
       .select('id')
       .limit(1)
       .timeout(const Duration(seconds: 12));

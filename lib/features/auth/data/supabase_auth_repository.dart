@@ -41,8 +41,7 @@ class SupabaseAuthRepository implements AuthRepository {
 
   Future<FederationAuthority?> _authority() async {
     try {
-      return FederationAuthority.parse(await (authorityRead?.call() ??
-          _client.rpc<Object?>(ServerRpc.publicIdentityAuthority)));
+      return FederationAuthority.parse(await (authorityRead?.call() ?? _client.rpc<Object?>(ServerRpc.publicIdentityAuthority)));
     } on PostgrestException catch (error, stack) {
       // trace-exempt: an older standalone installation retains native login.
       if (isMissingFunction(error)) return null;

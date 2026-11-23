@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+// #4412 -- the invariant: a catch of an edge function logs, rethrows or says why it is handled; an empty or
+// swallowing one fails the CI check, and the ones that predate the rule only fall.
 import { assertEquals } from "jsr:@std/assert@1";
 import { checkTree, unaccountedCatches } from "./catch_check.ts";
 
