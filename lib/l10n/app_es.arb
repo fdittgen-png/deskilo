@@ -20831,6 +20831,10 @@
   "stockCyclePlanValueSetting": "valor mínimo el límite de la empresa",
   "stockCycleScan": "Escanear o escribir un código de barras",
   "stockCycleScanNone": "Ninguna línea por contar tiene este código.",
+  "stockCycleScanWhich": "Varias líneas por contar tienen este código: elija la que está contando.",
+  "@stockCycleScanWhich": {
+    "description": "#4395 cycle counts: a code that fits several pending lines asks which one"
+  },
   "stockCycleScopeHighValue": "Alto valor",
   "stockCycleScopePlaces": "Ubicaciones",
   "stockCycleSkipReason": "Por qué se omite",

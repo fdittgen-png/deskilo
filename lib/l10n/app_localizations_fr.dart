@@ -36077,6 +36077,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Aucune ligne restant à compter n’a ce code.';
 
   @override
+  String get stockCycleScanWhich =>
+      'Plusieurs lignes encore à compter ont ce code : choisissez celle que vous comptez.';
+
+  @override
   String get stockCycleScopeHighValue => 'Forte valeur';
 
   @override

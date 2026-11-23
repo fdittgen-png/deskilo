@@ -9,6 +9,7 @@ import 'package:deskilo/features/stock/domain/stock_page.dart';
 import 'package:deskilo/features/stock/domain/stock_receiving.dart';
 import 'package:deskilo/features/stock/domain/stock_scan_session.dart';
 import 'package:deskilo/features/stock/presentation/purchase_order_putaway.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show ExactQuantity;
 import 'package:flutter_test/flutter_test.dart';
 
 PutAwayDraft _draft(String tracking) => PutAwayDraft(
@@ -41,7 +42,7 @@ PutAwayDraft _draft(String tracking) => PutAwayDraft(
     revision: 1,
     lines: [],
   ),
-  const [DeliveredLineProgress(lineNo: 1, description: 'Oat milk', unit: 'l', serviceId: null, received: 6, putAway: 0)],
+  [DeliveredLineProgress(lineNo: 1, description: 'Oat milk', unit: 'l', serviceId: null, received: ExactQuantity.parse('6'), putAway: ExactQuantity.zero)],
 );
 
 PutAwayAllocation _scanned(String tracking) {
