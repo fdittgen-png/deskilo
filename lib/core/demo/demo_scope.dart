@@ -122,6 +122,7 @@ import '../push/push_opt_out.dart';
 import '../push/push_providers.dart';
 import '../realtime/realtime_providers.dart';
 import '../scan/front_camera.dart';
+import '../scan/scan_prefs.dart';
 import '../share/file_sharer.dart';
 import '../share/text_sharer.dart';
 import '../storage/active_workspace_store.dart';
@@ -451,4 +452,5 @@ List<Override> _shellPrefOverrides(DemoDevicePrefs prefs) => [
   shellSwipeCoachStoreProvider.overrideWithValue(prefs.shellSwipeCoach),
   deskRailCollapsedStoreProvider.overrideWithValue(prefs.deskRailCollapsed),
   paneWidthStoreProvider.overrideWithValue(prefs.paneWidths),
+  scanPrefsStoreProvider.overrideWithValue(prefs.scanPrefs),
 ];

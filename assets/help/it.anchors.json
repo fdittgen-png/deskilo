@@ -133,6 +133,8 @@
   "user.money.stock.places": "Ubicazioni e indirizzi",
   "user.money.stock.reorder": "Riordino: cosa è basso e cosa ordinare",
   "user.money.stock.registry": "Il registro degli articoli",
+  "user.money.stock.scanning": "Lavorare con uno scanner",
+  "user.money.stock.nfc": "Tag con l’NFC del telefono",
   "user.money.stock.value": "Valore del magazzino e origine della merce",
   "user.money.stock.reversals": "Resi, correzioni e conteggi",
   "user.money.stock.cycle": "Conteggi ciclici",

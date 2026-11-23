@@ -49,6 +49,7 @@ import '../time/clock.dart';
 import 'data/bank_statement_repository.dart';
 import 'data/demo_booking_prices.dart';
 import 'data/demo_stock_candidates.dart';
+import 'data/demo_stock_code_resolver.dart';
 import 'data/demo_stock_config_commands.dart';
 import 'data/demo_stock_cycle_counts.dart';
 import 'data/demo_stock_ledger.dart';
@@ -58,6 +59,7 @@ import 'data/demo_stock_receiving_commands.dart';
 import 'data/demo_stock_registry.dart';
 import 'data/demo_stock_reorder.dart';
 import 'data/demo_stock_reversals.dart';
+import 'data/demo_stock_tags.dart';
 import 'data/demo_stock_trace.dart';
 import 'data/finance_kpi_repository.dart';
 import 'data/money/demo_credit_moves.dart';
@@ -313,6 +315,17 @@ List<Override> _moneyPortOverrides(FakeMoneyRepository Function(Ref ref) money) 
       ref.watch(stockConfigCommandsProvider),
     ),
   ),
+  // #4359 — and resolves a scanned code (a place, an item, a carton) from its own registry and units.
+  stockCodeResolverProvider.overrideWith(
+    (ref) => DemoStockCodeResolver(
+      demoFirstSpaceId,
+      ref.watch(stockConfigCommandsProvider),
+      ref.watch(stockRegistryProvider),
+      ref.watch(stockTagsStoreProvider) as DemoStockTags,
+    ),
+  ),
+  // #4363 — and keeps tags (an NFC chip on a shelf and on the mugs) in memory.
+  stockTagsStoreProvider.overrideWith((ref) => DemoStockTags()),
   // #4171 — and receives the deliveries of its orders into that stock.
   stockReceivingCommandsProvider.overrideWith(
     (ref) => DemoStockReceivingCommands(

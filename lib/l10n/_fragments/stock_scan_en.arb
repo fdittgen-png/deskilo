@@ -1,0 +1,135 @@
+{
+  "stockScanPlacing": "Placing into {place}",
+  "@stockScanPlacing": {
+    "description": "#4359 G10 scanner: stockScanPlacing",
+    "placeholders": {
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "stockScanLast": "{item}: {quantity} {unit}",
+  "@stockScanLast": {
+    "description": "#4359 G10 scanner: stockScanLast",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "stockScanUnknown": "Unknown code {code} — add it to an item?",
+  "@stockScanUnknown": {
+    "description": "#4359 G10 scanner: stockScanUnknown",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "stockScanUnknownAdd": "Open the items",
+  "@stockScanUnknownAdd": {
+    "description": "#4359 G10 scanner: stockScanUnknownAdd"
+  },
+  "stockScanRefusedPlace": "{place} cannot take goods.",
+  "@stockScanRefusedPlace": {
+    "description": "#4359 G10 scanner: stockScanRefusedPlace",
+    "placeholders": {
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "stockScanRefusedCode": "The code {code} names nothing this form can use.",
+  "@stockScanRefusedCode": {
+    "description": "#4359 G10 scanner: stockScanRefusedCode",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "stockScanFailed": "The scanned code could not be read. Check the connection and scan it again.",
+  "@stockScanFailed": {
+    "description": "#4359 G10 scanner: stockScanFailed"
+  },
+  "stockScanHelp": "Working with a scanner",
+  "@stockScanHelp": {
+    "description": "#4359 G10 scanner: stockScanHelp"
+  },
+  "stockScanSettingsTitle": "Scanner",
+  "@stockScanSettingsTitle": {
+    "description": "#4359 G10 scanner: stockScanSettingsTitle"
+  },
+  "stockScanSettingsHint": "A scanner in keyboard mode types the code and presses Enter. These two settings belong to this device: a code typed faster than the gap below is taken for a scan.",
+  "@stockScanSettingsHint": {
+    "description": "#4359 G10 scanner: stockScanSettingsHint"
+  },
+  "stockScanInterval": "Longest gap between two keys of a scan (milliseconds)",
+  "@stockScanInterval": {
+    "description": "#4359 G10 scanner: stockScanInterval"
+  },
+  "stockScanIntervalInvalid": "Enter a whole number of milliseconds within the allowed range.",
+  "@stockScanIntervalInvalid": {
+    "description": "#4359 G10: the interval is not within the range"
+  },
+  "stockScanTerminator": "What ends a scanned code",
+  "@stockScanTerminator": {
+    "description": "#4359 G10 scanner: stockScanTerminator"
+  },
+  "stockScanTerminatorEither": "Enter or Tab",
+  "@stockScanTerminatorEither": {
+    "description": "#4359 G10 scanner: stockScanTerminatorEither"
+  },
+  "stockScanTerminatorEnter": "Enter",
+  "@stockScanTerminatorEnter": {
+    "description": "#4359 G10 scanner: stockScanTerminatorEnter"
+  },
+  "stockScanTerminatorTab": "Tab",
+  "@stockScanTerminatorTab": {
+    "description": "#4359 G10 scanner: stockScanTerminatorTab"
+  },
+  "stockScanSave": "Save the scanner settings",
+  "@stockScanSave": {
+    "description": "#4359 G10 scanner: stockScanSave"
+  },
+  "stockScanHint": "Using a barcode scanner? Turn on Scanning",
+  "@stockScanHint": {
+    "description": "#4359 G10: the line that sends a business using a scanner to the Scanning feature"
+  },
+  "stockScanNfc": "Read a tag",
+  "@stockScanNfc": {
+    "description": "#4363 G14: stockScanNfc"
+  },
+  "stockScanNfcReading": "Hold the tag to the back of the phone…",
+  "@stockScanNfcReading": {
+    "description": "#4363 G14: stockScanNfcReading"
+  },
+  "stockScanNfcFailed": "The phone could not start reading. Check that NFC is on.",
+  "@stockScanNfcFailed": {
+    "description": "#4363 G14: stockScanNfcFailed"
+  },
+  "stockScanAlreadyRead": "Tag {code} was already read.",
+  "@stockScanAlreadyRead": {
+    "description": "#4363 G14: stockScanAlreadyRead",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "stockScanUnknownTag": "Unknown tag {code}",
+  "@stockScanUnknownTag": {
+    "description": "#4363 G14: stockScanUnknownTag",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  }
+}

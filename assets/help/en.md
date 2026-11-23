@@ -2954,6 +2954,34 @@ Open **Stock → Items**. Each line shows the **barcode**, the **unit**, the **p
 - **Search** by name, barcode or address. Typing or scanning a barcode into the search and confirming opens that item.
 - Long lists load by pages: choose *Show more*.
 
+### Working with a scanner
+
+**Audience:** Administrator · Owner
+
+You want to receive, move and take out goods by scanning, without touching a field.
+
+A barcode scanner in keyboard mode (it types the code and presses Enter) works in the move and take-out sheets, in the put-away of a delivery, and on **Stock → Items** and **Stock → Places**. You do not tap a field first. A text field that has the focus keeps its own typing, so what you type is never taken for a scan.
+
+- **Scan the place, then the items.** A place code sets the current place; it stays until you scan another and is shown at the top (*Placing into …*). In a move, the first place is where the goods come from and the second where they go. An item, variant or package code names the item and counts it: a carton code adds the carton's exact quantity (for example 12 pieces), and a lot label sets the lot.
+- **A repeated scan** adds one more, or, when your business chose so in the stock settings (*Repeated scan*), puts you on the quantity field instead.
+- **A code that names nothing** says *Unknown code … — add it to an item?*; whoever may manage the stock can open the items and give it to one. A place that cannot take goods, or an item that is not kept in stock, is refused in words and nothing is filled.
+- **Nothing is sent by a scan.** It only fills the form; the button you press runs the same command, with the same rights, as without a scanner.
+- **Settings.** Whether scanning is used is the business's *Scanner* feature under stock management. The longest gap between two keys of one scan (a person types slower than a scanner) and what ends a code (Enter, Tab or either) belong to the device, in **Stock → Stock settings → Scanner**.
+
+### Tags with the phone's NFC
+
+**Audience:** Administrator · Owner
+
+You want to bind an NFC chip to an item or a place, and read chips as you work, with the phone you already have.
+
+With the *Tags* feature on and a phone that reads NFC, **Stock → Items** and **Stock → Places** show a tag button on each line, and the scan bar of a goods sheet shows **Read a tag**. The button is absent on a device without NFC (a desktop, most tablets, a phone with NFC switched off): use a scanner or a handheld reader there.
+
+- **Bind a tag.** Open the tags of an item or a place, tap **Read a tag** and hold the chip to the back of the phone. One read binds one tag. Reading the same chip again says it was already bound here and binds nothing new; a chip that is bound to something else is refused and says to what. An owner may carry several tags. The server takes the code in any case and with spaces, colons or dashes.
+- **Retire a tag** that is lost, damaged or replaced: choose the reason. A tag retired lately cannot be bound again at once (the waiting time is a stock setting), and a tag on a piece that is still in stock cannot be retired.
+- **Read in a goods sheet.** A chip is read like a scanned code: a place tag sets the current place, an item tag counts the item. A chip read twice in one sheet is ignored (*already read*); a chip that names nothing says *Unknown tag*.
+- **UHF labels** cannot be read by a phone. An item that only has them says *use the RFID reader*.
+- Binding needs the right to manage the stock; reading needs the right to see it.
+
 ### Stock value and where goods came from
 
 **Audience:** Administrator · Owner
