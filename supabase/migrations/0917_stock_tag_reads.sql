@@ -61,24 +61,31 @@ language plpgsql immutable set search_path = public as $fn$
 declare
   v_code text;
   v_key text;
-  v_keys text[] := array[]::text[];
+  v_keys jsonb := '{}'::jsonb;
+  v_n int := 0;
 begin
   p_distinct := array[]::text[];
   p_more := false;
+  -- the repeats of one tag are many: a read is accepted up to a generous multiple of what it may keep, never without bound
+  if coalesce(array_length(p_codes, 1), 0) > p_limit * 20 then
+    raise exception 'a read sends at most % codes', p_limit * 20 using errcode = 'DKG07';
+  end if;
   foreach v_code in array coalesce(p_codes, array[]::text[]) loop
     v_code := btrim(coalesce(v_code, ''));
-    if v_code = '' then
+    -- a code is at most 200 characters, as the resolver of a scan holds it
+    if v_code = '' or char_length(v_code) > 200 then
       continue;
     end if;
     v_key := coalesce(public.stock_tag_normalize(v_code), v_code);
-    if v_key = any (v_keys) then
+    if v_keys ? v_key then
       continue;
     end if;
-    if coalesce(array_length(v_keys, 1), 0) >= p_limit then
+    if v_n >= p_limit then
       p_more := true;
       exit;
     end if;
-    v_keys := v_keys || v_key;
+    v_keys := v_keys || jsonb_build_object(v_key, true);
+    v_n := v_n + 1;
     p_distinct := p_distinct || v_code;
   end loop;
 end;
@@ -209,11 +216,13 @@ begin
     end if;
     select * into v_u from public.stock_tagged_units u where u.id = v_t.piece_id and u.workspace_id = p_workspace_id;
     if v_u.state <> 'in_stock' then
-      v_left := v_left || jsonb_build_array(jsonb_build_object('code', v_t.code, 'reason', 'not_in_stock', 'state', v_u.state));
+      v_left := v_left || jsonb_build_array(case when v_sees then jsonb_build_object('code', v_t.code, 'reason', 'not_in_stock', 'state', v_u.state)
+                                                 else jsonb_build_object('code', v_t.code, 'reason', 'not_counted') end);
     elsif not exists (select 1 from public.stock_count_task_lines l
                        where l.task_id = v_task.id and l.state = 'pending' and l.item_id = v_u.item_id and l.location_id = v_u.location_id
                          and l.variant_id is not distinct from v_u.variant_id and l.lot_id is not distinct from v_u.lot_id) then
-      v_left := v_left || jsonb_build_array(jsonb_build_object('code', v_t.code, 'reason', 'other_place'));
+      v_left := v_left || jsonb_build_array(case when v_sees then jsonb_build_object('code', v_t.code, 'reason', 'other_place')
+                                                 else jsonb_build_object('code', v_t.code, 'reason', 'not_counted') end);
     else
       v_read := v_read || v_u.id;
     end if;
