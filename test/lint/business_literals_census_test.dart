@@ -14,8 +14,8 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 
-import 'literal_ratchet.dart';
 import 'lint_sources.dart';
+import 'literal_ratchet.dart';
 
 const _baselinePath = 'test/lint/business_literals_census.txt';
 const _write = bool.fromEnvironment('WRITE_CENSUS');
