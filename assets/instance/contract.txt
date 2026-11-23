@@ -4269,7 +4269,7 @@ routine public.service_fulfilments_v1(p_workspace_id uuid) -> jsonb | function |
 routine public.services_group_overrides() -> trigger | function | invoker | volatile | exec:service_role | body:932ffd3eedf9
 routine public.services_keep_stock_history() -> trigger | function | invoker | volatile | exec:service_role | body:3fff17b7b78e
 routine public.services_stock_ledger_after() -> trigger | function | definer | volatile | exec:service_role | body:ffa2212c4d72
-routine public.services_stock_ledger_before() -> trigger | function | definer | volatile | exec:service_role | body:b023a287d644
+routine public.services_stock_ledger_before() -> trigger | function | definer | volatile | exec:service_role | body:e64d5a57f1b8
 routine public.set_account_group_admin(p_group uuid, p_user uuid, p_admin boolean) -> void | function | definer | volatile | exec:authenticated,service_role | body:05f3d09fb508
 routine public.set_account_group_meta(p_group uuid, p_title text, p_description text, p_announce_only boolean) -> void | function | definer | volatile | exec:authenticated,service_role | body:39e68f6fc324
 routine public.set_accounting_credentials(p_connection_id uuid, p_secrets jsonb, p_patch jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:be713559c0be
@@ -4393,7 +4393,7 @@ routine public.standalone_invoice_line_v1(p_line jsonb, p_index integer, p_curre
 routine public.standalone_invoice_subject(p_workspace_id uuid, p_subject uuid) -> members | function | definer | stable | exec:service_role | body:03bed41502dd
 routine public.start_space_inquiry(p_workspace uuid, p_body text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:24335253d564
 routine public.start_space_inquiry_v1(p_workspace uuid, p_body text, p_request_id uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:307a68c96e0f
-routine public.stock_apply_lines(p_workspace_id uuid, p_actor uuid, p_request_id uuid, p_lines jsonb, p_reason text, p_at timestamp with time zone, p_links jsonb, p_mode text) -> jsonb | function | definer | volatile | exec:service_role | body:13e18e5dec95
+routine public.stock_apply_lines(p_workspace_id uuid, p_actor uuid, p_request_id uuid, p_lines jsonb, p_reason text, p_at timestamp with time zone, p_links jsonb, p_mode text) -> jsonb | function | definer | volatile | exec:service_role | body:58c63264c6fc
 routine public.stock_bits_value(p_bits bit varying) -> numeric | function | invoker | immutable | exec:service_role | body:fbdb23474211
 routine public.stock_blind_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:8d7f9c93e191
 routine public.stock_command_args(p_request_id uuid, p_lines jsonb) -> void | function | invoker | immutable | exec:service_role | body:2c0224c1f582
@@ -4450,7 +4450,7 @@ routine public.stock_on_hand_v1(p_workspace_id uuid, p_item_id uuid, p_location_
 routine public.stock_open(p_workspace_id uuid) -> void | function | definer | volatile | exec:service_role | body:7db595e68950
 routine public.stock_ops_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:3d13ac56d749
 routine public.stock_page_reader(p_workspace_id uuid, p_limit integer) -> void | function | definer | stable | exec:service_role | body:076a546069b5
-routine public.stock_pieces_apply(p_workspace_id uuid, p_item_id uuid, p_variant uuid, p_lot uuid, p_line jsonb, p_from uuid, p_to uuid, p_reason text, p_qty numeric) -> void | function | definer | volatile | exec:service_role | body:c2975783433c
+routine public.stock_pieces_apply(p_workspace_id uuid, p_item_id uuid, p_variant uuid, p_lot uuid, p_line jsonb, p_from uuid, p_to uuid, p_reason text, p_qty numeric) -> void | function | definer | volatile | exec:service_role | body:a9845a600127
 routine public.stock_pieces_balanced() -> trigger | function | definer | volatile | exec:service_role | body:463c18ad6fe0
 routine public.stock_pieces_check_v1(p_workspace_id uuid, p_item_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:02ca0c495636
 routine public.stock_pieces_difference(p_workspace_id uuid, p_item_id uuid, p_place uuid) -> TABLE(variant_id uuid, lot_id uuid, ledger numeric, pieces bigint) | function | definer | stable | exec:service_role | body:854e3e94a1a0
