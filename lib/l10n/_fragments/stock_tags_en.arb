@@ -202,5 +202,21 @@
   "stockTagPerUnit": "This item is tagged piece by piece: tag its pieces when they are received.",
   "@stockTagPerUnit": {
     "description": "#4363 G14 tags: stockTagPerUnit"
+  },
+  "settingLabelStockTagReadMaxTags": "Most tags in one bulk read",
+  "@settingLabelStockTagReadMaxTags": {
+    "description": "#4364 setting label/hint"
+  },
+  "settingHintStockTagReadMaxTags": "How many different tags one bulk read keeps before it takes no more. The same tag read many times counts once.",
+  "@settingHintStockTagReadMaxTags": {
+    "description": "#4364 setting label/hint"
+  },
+  "settingLabelStockTagReadUnitAsQuantity": "A piece read in a move counts as one of its item",
+  "@settingLabelStockTagReadUnitAsQuantity": {
+    "description": "#4364 setting label/hint"
+  },
+  "settingHintStockTagReadUnitAsQuantity": "In a bulk move, a tag on a piece of an item that is not tracked piece by piece is added as quantity 1 of that item. Off: such a tag is left out and listed.",
+  "@settingHintStockTagReadUnitAsQuantity": {
+    "description": "#4364 setting label/hint"
   }
 }

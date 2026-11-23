@@ -12656,6 +12656,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get featureStockScanningTitle => 'Scannen';
 
   @override
+  String get featureStockTagReadsDesc =>
+      'Ein UHF-Lesegerät im Tastaturmodus liest viele Etiketten auf einmal zum Wareneingang, Umlagern und Zählen: Die Etiketten werden gesammelt, entdoppelt und aufgelöst, und nichts wird gesendet, bevor die Person bestätigt.';
+
+  @override
+  String get featureStockTagReadsTitle => 'Viele Etiketten lesen';
+
+  @override
   String get featureStockTagsDesc =>
       'Artikel, Einheiten, Chargen und Orte mit RFID- oder NFC-Etiketten versehen, wie ein Barcode gespeichert und im Betrieb eindeutig. Ein Etikett kann eine Charge oder ein Stück benennen, wie es die Gruppe des Artikels sagt; ein gelesenes Etikett wird überall erkannt, wo ein Barcode erkannt wird.';
 
@@ -32550,6 +32557,14 @@ class AppLocalizationsDe extends AppLocalizations {
       'Was ein Warenblatt tut, wenn derselbe Code noch einmal gescannt wird: eins mehr zur Zeile hinzufügen oder die Menge erfragen.';
 
   @override
+  String get settingHintStockTagReadMaxTags =>
+      'Wie viele verschiedene Etiketten eine Massenlesung behält, bevor sie keine weiteren annimmt. Dieselbe Etikette, mehrfach gelesen, zählt einmal.';
+
+  @override
+  String get settingHintStockTagReadUnitAsQuantity =>
+      'Bei einer Massenumlagerung wird eine Etikette auf einem Stück eines nicht stückweise geführten Artikels als Menge 1 dieses Artikels aufgenommen. Aus: Eine solche Etikette wird ausgelassen und aufgelistet.';
+
+  @override
   String get settingHintStockTagRebindGraceDays =>
       'Wie viele Tage nach dem Entfernen ein Etikettencode wieder gebunden werden darf. 0 heißt sofort. Ein gültiges Etikett wird nie doppelt gebunden.';
 
@@ -32929,6 +32944,14 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingLabelStockRepeatedScan => 'Ein erneut gescannter Code';
+
+  @override
+  String get settingLabelStockTagReadMaxTags =>
+      'Höchstzahl Etiketten je Massenlesung';
+
+  @override
+  String get settingLabelStockTagReadUnitAsQuantity =>
+      'Ein gelesenes Stück in einer Umlagerung zählt als eins seines Artikels';
 
   @override
   String get settingLabelStockTagRebindGraceDays =>

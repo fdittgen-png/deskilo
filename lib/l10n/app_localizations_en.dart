@@ -12543,6 +12543,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureStockScanningTitle => 'Scanning';
 
   @override
+  String get featureStockTagReadsDesc =>
+      'A UHF reader in keyboard mode reads many tags at once to receive, move and count: the tags are collected, de-duplicated and resolved, and nothing is sent until the user confirms.';
+
+  @override
+  String get featureStockTagReadsTitle => 'Reading many tags';
+
+  @override
   String get featureStockTagsDesc =>
       'Tag items, units, batches and places with RFID or NFC tags, stored like a barcode and unique in the business. A tag may name one batch or one piece, as the item\'s group says; a tag read is recognised wherever a barcode is.';
 
@@ -32219,6 +32226,14 @@ class AppLocalizationsEn extends AppLocalizations {
       'What a goods sheet does when the same code is scanned again: add one more to the line, or ask the quantity.';
 
   @override
+  String get settingHintStockTagReadMaxTags =>
+      'How many different tags one bulk read keeps before it takes no more. The same tag read many times counts once.';
+
+  @override
+  String get settingHintStockTagReadUnitAsQuantity =>
+      'In a bulk move, a tag on a piece of an item that is not tracked piece by piece is added as quantity 1 of that item. Off: such a tag is left out and listed.';
+
+  @override
   String get settingHintStockTagRebindGraceDays =>
       'How many days after it was retired a tag code may be bound again. 0 means at once. A tag in force is never bound twice.';
 
@@ -32584,6 +32599,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingLabelStockRepeatedScan => 'A code scanned again';
+
+  @override
+  String get settingLabelStockTagReadMaxTags => 'Most tags in one bulk read';
+
+  @override
+  String get settingLabelStockTagReadUnitAsQuantity =>
+      'A piece read in a move counts as one of its item';
 
   @override
   String get settingLabelStockTagRebindGraceDays =>
