@@ -31,6 +31,9 @@ const Map<WorkspaceFeature, String> demoFeaturesLeftOff = {
   WorkspaceFeature.counterReceipts:
       '#4184: the server side is delivered first; its Demo scenario arrives with the screens, '
       'which turn the feature on and add it',
+  WorkspaceFeature.counterTill:
+      '#4366: the till is the screen of the counter receipt; its Demo scenario (the shop\'s Saturday morning) '
+      'arrives with the shop space of #4365, which turns both features on',
   WorkspaceFeature.stockScanning:
       '#4359: the scanning of the goods sheets is the client slice; its Demo scenario '
       'arrives with the screens, which turn the feature on and add it',
