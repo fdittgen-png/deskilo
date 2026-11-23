@@ -22,6 +22,10 @@ String itemGroupParamLabel(AppLocalizations l10n, String param) => switch (param
   'reorder_point_default' => l10n.itemGroupReorderPoint,
   'reorder_quantity_default' => l10n.itemGroupReorderQty,
   'home_zone_id' => l10n.itemGroupHomeZone,
+  'vat_rate_id' => l10n.itemGroupVatRate,
+  'supply_class' => l10n.itemGroupSupply,
+  'price_rounding' => l10n.itemGroupRounding,
+  'target_margin_bps' => l10n.itemGroupMargin,
   _ => param,
 };
 
@@ -41,6 +45,10 @@ String itemGroupValueText(AppLocalizations l10n, String param, Object? value) {
       _ => l10n.itemGroupTagNone,
     },
     'sold_by_weight' => value == true ? l10n.itemGroupYes : l10n.itemGroupNo,
+    'supply_class' => value == 'property' ? l10n.itemGroupSupplyProperty : l10n.itemGroupSupplyGeneral,
+    'price_rounding' => value == 'none' ? l10n.itemGroupRoundingNone : '$value',
+    'target_margin_bps' => '${percentOfMarginBps((value as num).toInt())} %',
+    'vat_rate_id' || 'home_zone_id' => l10n.itemGroupSet,
     _ => '$value',
   };
 }
@@ -57,7 +65,7 @@ String itemGroupSummary(AppLocalizations l10n, ItemGroup g) => [
 /// A proposal of [g] as a person reads it: the factor as one number or a fraction, the home zone as set.
 String _proposalText(AppLocalizations l10n, ItemGroup g, String p) => switch (p) {
   'default_purchase_factor_num' => purchaseFactorText((g.params[p]! as num).toInt(), ((g.params['default_purchase_factor_den'] ?? 1) as num).toInt()),
-  'home_zone_id' => l10n.itemGroupYes,
+  'home_zone_id' || 'target_margin_bps' || 'price_rounding' => itemGroupValueText(l10n, p, g.params[p]),
   _ => '${g.params[p]}',
 };
 

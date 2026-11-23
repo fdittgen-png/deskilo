@@ -2,6 +2,7 @@
 //
 // #4361 (G12) -- the factor of a purchase unit is read exactly: whole numbers, decimals with a point or a comma, and
 // fractions, in lowest terms; zero, signs and text are refused.
+import 'package:deskilo/features/stock/domain/item_groups.dart';
 import 'package:deskilo/features/stock/domain/purchase_factor.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -23,5 +24,18 @@ void main() {
   test('a factor is shown as a whole number when it is one, else as a fraction', () {
     expect(purchaseFactorText(12, 1), '12');
     expect(purchaseFactorText(1, 3), '1/3');
+  });
+
+  test('a margin in percent is basis points, exactly: two decimals at most, up to a thousand percent', () {
+    expect(marginBpsOfPercent('35'), 3500);
+    expect(marginBpsOfPercent('12.5'), 1250);
+    expect(marginBpsOfPercent('0.05'), 5);
+    expect(marginBpsOfPercent('1000'), 100000);
+    for (final bad in ['', 'abc', '12.345', '1000.01', '-1', '1,5']) {
+      expect(marginBpsOfPercent(bad), isNull, reason: bad);
+    }
+    expect(percentOfMarginBps(3500), '35');
+    expect(percentOfMarginBps(1250), '12.5');
+    expect(percentOfMarginBps(5), '0.05');
   });
 }

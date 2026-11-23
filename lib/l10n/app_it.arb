@@ -11245,14 +11245,26 @@
   "itemGroupDelete": "Elimina il gruppo",
   "itemGroupDeleted": "Gruppo eliminato.",
   "itemGroupFailed": "Non è stato possibile leggere i gruppi di articoli.",
+  "itemGroupFinanceHint": "Queste impostazioni richiedono il diritto di gestire i servizi e di vedere le finanze.",
+  "@itemGroupFinanceHint": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
   "itemGroupFrom": "Dal gruppo {group}",
   "itemGroupFromSince": "Dal gruppo {group} dal {date}",
+  "itemGroupHidden": "Non visibile a lei",
+  "@itemGroupHidden": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
   "itemGroupHistory": "Cronologia",
   "itemGroupHistoryLine": "{parameter}: {from} → {to}, {affected, plural, one{raggiunto 1 articolo} other{raggiunti {affected} articoli}}",
   "itemGroupHistoryNone": "Ancora nessuna modifica registrata.",
   "itemGroupHomeZone": "Zona di giacenza predefinita",
   "@itemGroupHomeZone": {
     "description": "#4361 G12 proposals: the home zone a group proposes to an item"
+  },
+  "itemGroupMargin": "Margine obiettivo sul costo (%)",
+  "@itemGroupMargin": {
+    "description": "#4361 G12 finance parameters of an item group"
   },
   "itemGroupMinAge": "Età minima per una vendita",
   "itemGroupMove": "Sposta",
@@ -11295,9 +11307,33 @@
   "@itemGroupReorderQty": {
     "description": "#4361 G12 proposals: the reorder quantity a group proposes to an item that has none"
   },
+  "itemGroupRounding": "Arrotondamento del prezzo",
+  "@itemGroupRounding": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupRoundingNone": "Nessun arrotondamento",
+  "@itemGroupRoundingNone": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupSet": "Impostato",
+  "@itemGroupSet": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
   "itemGroupSkippedLine": "{item}: {parameter} ({reason})",
   "itemGroupSkippedTitle": "Non raggiunti",
   "itemGroupSoldByWeight": "Venduto a peso",
+  "itemGroupSupply": "Tipo di operazione",
+  "@itemGroupSupply": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupSupplyGeneral": "Generale",
+  "@itemGroupSupplyGeneral": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupSupplyProperty": "Immobile",
+  "@itemGroupSupplyProperty": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
   "itemGroupTagBatch": "Un tag per lotto",
   "itemGroupTagMode": "Modalità tag",
   "itemGroupTagModeOwn": "Etichetta su questo articolo",
@@ -11308,6 +11344,10 @@
   "itemGroupTagUnit": "Un tag per pezzo",
   "itemGroupTrackingSerial": "Per pezzo (seriale)",
   "itemGroupUseGroup": "Usa il valore del gruppo",
+  "itemGroupVatRate": "Aliquota IVA",
+  "@itemGroupVatRate": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
   "itemGroupYes": "Sì",
   "itemGroupsAdd": "Aggiungi un gruppo",
   "itemGroupsEmpty": "Ancora nessun gruppo. Un gruppo raccoglie impostazioni che i suoi articoli condividono.",

@@ -18479,6 +18479,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get itemGroupFailed => 'The item groups could not be read.';
 
   @override
+  String get itemGroupFinanceHint =>
+      'These settings need the right to manage services and to see the finances.';
+
+  @override
   String itemGroupFrom(String group) {
     return 'From $group';
   }
@@ -18487,6 +18491,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String itemGroupFromSince(String group, String date) {
     return 'From $group since $date';
   }
+
+  @override
+  String get itemGroupHidden => 'Not shown to you';
 
   @override
   String get itemGroupHistory => 'History';
@@ -18512,6 +18519,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get itemGroupHomeZone => 'Default home zone';
+
+  @override
+  String get itemGroupMargin => 'Target margin on cost (%)';
 
   @override
   String get itemGroupMinAge => 'Minimum age for a sale';
@@ -18631,6 +18641,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get itemGroupReorderQty => 'Default reorder quantity';
 
   @override
+  String get itemGroupRounding => 'Price rounding';
+
+  @override
+  String get itemGroupRoundingNone => 'No rounding';
+
+  @override
+  String get itemGroupSet => 'Set';
+
+  @override
   String itemGroupSkippedLine(String item, String parameter, String reason) {
     return '$item: $parameter ($reason)';
   }
@@ -18640,6 +18659,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get itemGroupSoldByWeight => 'Sold by weight';
+
+  @override
+  String get itemGroupSupply => 'Supply class';
+
+  @override
+  String get itemGroupSupplyGeneral => 'General';
+
+  @override
+  String get itemGroupSupplyProperty => 'Property';
 
   @override
   String get itemGroupTagBatch => 'One tag per batch';
@@ -18661,6 +18689,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get itemGroupUseGroup => 'Use the group’s value';
+
+  @override
+  String get itemGroupVatRate => 'VAT rate';
 
   @override
   String get itemGroupYes => 'Yes';

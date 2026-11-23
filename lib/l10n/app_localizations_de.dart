@@ -18660,6 +18660,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Artikelgruppen konnten nicht gelesen werden.';
 
   @override
+  String get itemGroupFinanceHint =>
+      'Diese Einstellungen brauchen das Recht, Leistungen zu verwalten und die Finanzen zu sehen.';
+
+  @override
   String itemGroupFrom(String group) {
     return 'Von $group';
   }
@@ -18668,6 +18672,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String itemGroupFromSince(String group, String date) {
     return 'Von $group seit $date';
   }
+
+  @override
+  String get itemGroupHidden => 'Für Sie nicht sichtbar';
 
   @override
   String get itemGroupHistory => 'Verlauf';
@@ -18693,6 +18700,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get itemGroupHomeZone => 'Standard-Lagerzone';
+
+  @override
+  String get itemGroupMargin => 'Zielmarge auf die Kosten (%)';
 
   @override
   String get itemGroupMinAge => 'Mindestalter für einen Verkauf';
@@ -18813,6 +18823,15 @@ class AppLocalizationsDe extends AppLocalizations {
   String get itemGroupReorderQty => 'Standard-Nachbestellmenge';
 
   @override
+  String get itemGroupRounding => 'Preisrundung';
+
+  @override
+  String get itemGroupRoundingNone => 'Keine Rundung';
+
+  @override
+  String get itemGroupSet => 'Gesetzt';
+
+  @override
   String itemGroupSkippedLine(String item, String parameter, String reason) {
     return '$item: $parameter ($reason)';
   }
@@ -18822,6 +18841,15 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get itemGroupSoldByWeight => 'Nach Gewicht verkauft';
+
+  @override
+  String get itemGroupSupply => 'Leistungsart';
+
+  @override
+  String get itemGroupSupplyGeneral => 'Allgemein';
+
+  @override
+  String get itemGroupSupplyProperty => 'Grundstück';
 
   @override
   String get itemGroupTagBatch => 'Ein Tag pro Charge';
@@ -18843,6 +18871,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get itemGroupUseGroup => 'Wert der Gruppe verwenden';
+
+  @override
+  String get itemGroupVatRate => 'Steuersatz';
 
   @override
   String get itemGroupYes => 'Ja';

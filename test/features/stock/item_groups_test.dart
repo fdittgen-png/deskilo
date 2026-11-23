@@ -9,6 +9,7 @@
 import 'package:deskilo/core/demo/data/demo_item_groups.dart';
 import 'package:deskilo/core/demo/data/demo_stock_config_commands.dart';
 import 'package:deskilo/core/ui/dropdown_field.dart';
+import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:deskilo/features/stock/domain/stock_config.dart';
 import 'package:deskilo/features/stock/presentation/item_group_assign_dialog.dart';
 import 'package:deskilo/features/stock/presentation/item_groups_screen.dart';
@@ -17,7 +18,9 @@ import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo/l10n/app_localizations_en.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
@@ -40,7 +43,7 @@ class _NoPlaces extends DemoStockConfigCommands {
   Future<List<StockPlaceConfig>> places(String workspaceId) => Future.error(Exception('places down'));
 }
 
-Future<DemoItemGroups> _open(WidgetTester tester, Size size, {Widget? home, bool places = true}) async {
+Future<DemoItemGroups> _open(WidgetTester tester, Size size, {Widget? home, bool places = true, bool finance = false}) async {
   final config = places ? DemoStockConfigCommands('ws-1') : _NoPlaces();
   final groups = DemoItemGroups('ws-1', config, () => DateTime(2026, 11, 22));
   await pumpApp(
@@ -51,7 +54,8 @@ Future<DemoItemGroups> _open(WidgetTester tester, Size size, {Widget? home, bool
       ...standardTestOverrides(),
       itemGroupsProvider.overrideWithValue(groups),
       stockConfigCommandsProvider.overrideWithValue(config),
-      myPermissionsProvider.overrideWithValue({WorkspacePermission.viewStock, WorkspacePermission.manageStock}),
+      myPermissionsProvider.overrideWithValue({WorkspacePermission.viewStock, WorkspacePermission.manageStock, if (finance) ...{WorkspacePermission.manageServices, WorkspacePermission.viewFinances}}),
+      vatRatesProvider.overrideWith((ref) async => const [VatRate(id: 'vat-std', label: 'Standard 20 %', percent: 20, isDefault: true), VatRate(id: 'vat-red', label: 'Reduced 5.5 %', percent: 5.5)]),
       enabledFeaturesSyncProvider.overrideWithValue({WorkspaceFeature.stockManagement, WorkspaceFeature.stockItemGroups}),
     ],
   );
@@ -167,6 +171,55 @@ void main() {
         await _open(tester, size, places: false);
         await _tap(tester, 'item-group-add');
         expect(find.byKey(const ValueKey('item-group-name')), findsOneWidget);
+      });
+
+      testWidgets('what an item costs or sells for is set by someone who may manage services and see the finances', (tester) async {
+        final w = await _open(tester, size, finance: true);
+        await _tap(tester, 'item-group-add');
+        await tester.enterText(find.byKey(const ValueKey('item-group-name')), 'Fresh');
+        await _choose(tester, 'item-group-vat', 'Reduced 5.5 %');
+        await _choose(tester, 'item-group-supply', _en.itemGroupSupplyGeneral);
+        await _choose(tester, 'item-group-rounding', '0.05');
+        await tester.enterText(find.byKey(const ValueKey('item-group-margin')), '35,5');
+        await _tap(tester, 'item-group-save');
+        // a setting that reaches items is previewed first: the second save applies it
+        await _tap(tester, 'item-group-save');
+        final saved = (await w.groups('ws-1')).firstWhere((g) => g.name == 'Fresh');
+        expect(saved.params['vat_rate_id'], 'vat-red');
+        expect(saved.params['supply_class'], 'general');
+        expect(saved.params['price_rounding'], '0.05');
+        expect(saved.params['target_margin_bps'], 3550);
+      });
+
+      testWidgets('someone without the finances is not shown them and never changes them', (tester) async {
+        final w = await _open(tester, size);
+        final groups = await w.groups('ws-1');
+        final drinks = groups.firstWhere((g) => g.id == 'demo-group-drinks');
+        await w.save('ws-1', requestId: 'r-fin', groupId: drinks.id, expectedRevision: drinks.revision, body: {'parameters': {'vat_rate_id': 'vat-std', 'target_margin_bps': 2500}});
+        ProviderScope.containerOf(tester.element(find.byType(Scaffold).first)).invalidate(itemGroupListProvider('ws-1'));
+        await _frames(tester);
+        expect(find.byKey(const ValueKey('item-group-vat')), findsNothing);
+        await tester.tap(find.byKey(const ValueKey('item-group-demo-group-drinks')));
+        await _frames(tester);
+        expect(find.byKey(const ValueKey('item-group-vat')), findsNothing);
+        expect(find.byKey(const ValueKey('item-group-margin')), findsNothing);
+        await tester.enterText(find.byKey(const ValueKey('item-group-name')), 'Drinks and more');
+        await _tap(tester, 'item-group-save');
+        final after = (await w.groups('ws-1')).firstWhere((g) => g.id == 'demo-group-drinks');
+        expect(after.name, 'Drinks and more');
+        expect(after.params['vat_rate_id'], 'vat-std', reason: 'a save without the finances leaves them as they were');
+        expect(after.params['target_margin_bps'], 2500);
+      });
+
+      testWidgets('a margin that is not a percent with two decimals at most is refused', (tester) async {
+        await _open(tester, size, finance: true);
+        await _tap(tester, 'item-group-add');
+        await tester.enterText(find.byKey(const ValueKey('item-group-name')), 'Margins');
+        for (final bad in ['12.345', '1001', '1.2.3']) {
+          await tester.enterText(find.byKey(const ValueKey('item-group-margin')), bad);
+          await _tap(tester, 'item-group-save');
+          expect(find.text(_en.stockReasonOutOfRange), findsOneWidget, reason: bad);
+        }
       });
 
       testWidgets('an empty group is created, then deleted', (tester) async {

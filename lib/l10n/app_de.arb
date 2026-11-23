@@ -11245,14 +11245,26 @@
   "itemGroupDelete": "Gruppe löschen",
   "itemGroupDeleted": "Gruppe gelöscht.",
   "itemGroupFailed": "Die Artikelgruppen konnten nicht gelesen werden.",
+  "itemGroupFinanceHint": "Diese Einstellungen brauchen das Recht, Leistungen zu verwalten und die Finanzen zu sehen.",
+  "@itemGroupFinanceHint": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
   "itemGroupFrom": "Von {group}",
   "itemGroupFromSince": "Von {group} seit {date}",
+  "itemGroupHidden": "Für Sie nicht sichtbar",
+  "@itemGroupHidden": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
   "itemGroupHistory": "Verlauf",
   "itemGroupHistoryLine": "{parameter}: {from} → {to}, {affected, plural, one{1 Artikel erreicht} other{{affected} Artikel erreicht}}",
   "itemGroupHistoryNone": "Noch keine Änderung festgehalten.",
   "itemGroupHomeZone": "Standard-Lagerzone",
   "@itemGroupHomeZone": {
     "description": "#4361 G12 proposals: the home zone a group proposes to an item"
+  },
+  "itemGroupMargin": "Zielmarge auf die Kosten (%)",
+  "@itemGroupMargin": {
+    "description": "#4361 G12 finance parameters of an item group"
   },
   "itemGroupMinAge": "Mindestalter für einen Verkauf",
   "itemGroupMove": "Verschieben",
@@ -11295,9 +11307,33 @@
   "@itemGroupReorderQty": {
     "description": "#4361 G12 proposals: the reorder quantity a group proposes to an item that has none"
   },
+  "itemGroupRounding": "Preisrundung",
+  "@itemGroupRounding": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupRoundingNone": "Keine Rundung",
+  "@itemGroupRoundingNone": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupSet": "Gesetzt",
+  "@itemGroupSet": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
   "itemGroupSkippedLine": "{item}: {parameter} ({reason})",
   "itemGroupSkippedTitle": "Nicht erreicht",
   "itemGroupSoldByWeight": "Nach Gewicht verkauft",
+  "itemGroupSupply": "Leistungsart",
+  "@itemGroupSupply": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupSupplyGeneral": "Allgemein",
+  "@itemGroupSupplyGeneral": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupSupplyProperty": "Grundstück",
+  "@itemGroupSupplyProperty": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
   "itemGroupTagBatch": "Ein Tag pro Charge",
   "itemGroupTagMode": "Tag-Modus",
   "itemGroupTagModeOwn": "Etikett an diesem Artikel",
@@ -11308,6 +11344,10 @@
   "itemGroupTagUnit": "Ein Tag pro Stück",
   "itemGroupTrackingSerial": "Pro Stück (seriell)",
   "itemGroupUseGroup": "Wert der Gruppe verwenden",
+  "itemGroupVatRate": "Steuersatz",
+  "@itemGroupVatRate": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
   "itemGroupYes": "Ja",
   "itemGroupsAdd": "Gruppe hinzufügen",
   "itemGroupsEmpty": "Noch keine Gruppe. Eine Gruppe hält Einstellungen, die ihre Artikel teilen.",
