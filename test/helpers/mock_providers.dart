@@ -8,6 +8,7 @@ import 'package:deskilo/app/recorder_target_wiring.dart';
 import 'package:deskilo/app/shell/desk_navigation.dart';
 import 'package:deskilo/app/shell/shell_bar_visibility.dart';
 import 'package:deskilo/app/shell/shell_drawer.dart' show navigationDefaultProvider;
+import 'package:deskilo/core/backend/app_floor.dart';
 import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:deskilo/core/backend/connected_installation_providers.dart';
 import 'package:deskilo/core/backend/connected_installations.dart';
@@ -354,6 +355,7 @@ List<Override> standardTestOverrides({
   NavigationStyleStore? navigationStyle,
   DeploymentRepository? deployment,
   SchemaVersionSource? schemaVersion,
+  AppFloorSource? appFloor,
   WorkspaceFilesRepository? workspaceFiles,
   WorkspaceFieldsRepository? fields,
   WorkspaceRolesRepository? roles,
@@ -420,6 +422,8 @@ List<Override> standardTestOverrides({
     // test is sent to the update screen unless it says otherwise.
     schemaVersionSourceProvider.overrideWithValue(
         schemaVersion ?? const FixedSchemaVersionSource(requiredSchemaVersion)),
+    appFloorSourceProvider
+        .overrideWithValue(appFloor ?? const FixedAppFloorSource(null)),
     // #969/#970 — the per-device preferences, in memory by default.
     navigationStyleStoreProvider.overrideWithValue(
         navigationStyle ?? InMemoryNavigationStyleStore()),
@@ -748,6 +752,19 @@ class FakeQrScanner {
 
 /// #1312 — a server whose `deskilo_schema_version()` answers [version];
 /// null is a server that predates the marker.
+/// #3726 — an installation floor fixed for a test: null is "no floor";
+/// [unavailable] reads as silence.
+class FixedAppFloorSource implements AppFloorSource {
+  const FixedAppFloorSource(this.floor, {this.unavailable = false});
+  final int? floor;
+  final bool unavailable;
+  @override
+  Future<int?> read() async {
+    if (unavailable) throw const AppFloorUnavailable('offline in the test');
+    return floor;
+  }
+}
+
 class FixedSchemaVersionSource implements SchemaVersionSource {
   const FixedSchemaVersionSource(this.version, {this.unavailable = false});
   final int? version;

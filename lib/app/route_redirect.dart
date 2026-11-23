@@ -11,7 +11,9 @@
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../core/backend/app_floor.dart';
 import '../core/backend/schema_version.dart';
+import '../core/instance/app_compatibility.dart';
 import '../core/instance/schema_compatibility.dart';
 import '../features/auth/providers/auth_providers.dart';
 import '../features/kiosk/providers/kiosk_mode.dart';
@@ -113,6 +115,7 @@ RouteFacts _factsOf(
   return RouteFacts(
     schema: ref.read(schemaCompatibilityProvider).value ??
         SchemaCompatibility.unknown,
+    appFloor: ref.read(appFloorProvider).value ?? AppFloorVerdict.unknown,
     auth: signedIn ? AuthFact.signedIn : AuthFact.signedOut,
     privacy: privacyFactOf(
         loading: profile.isLoading,
