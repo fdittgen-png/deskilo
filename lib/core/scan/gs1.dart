@@ -33,6 +33,7 @@ const _gs = '\u001d';
 
 /// Parses [raw] as a GS1 element string, with or without parentheses and a symbology identifier (`]d2`, `]Q3`);
 /// null when it carries no valid GTIN (a misread, or not a GS1 code at all).
+@visibleForTesting
 Gs1? parseGs1(String raw) {
   var text = raw.trim();
   if (RegExp(r'^\][A-Za-z]\d').hasMatch(text)) text = text.substring(3);
