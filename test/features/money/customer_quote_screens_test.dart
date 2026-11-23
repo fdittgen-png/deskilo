@@ -19,6 +19,7 @@ import 'package:deskilo/features/money/presentation/screens/customer_quote_edito
 import 'package:deskilo/features/money/presentation/screens/customer_quote_screen.dart';
 import 'package:deskilo/features/money/presentation/screens/customer_quotes_screen.dart';
 import 'package:deskilo/features/money/providers/billing_customer_providers.dart';
+import 'package:deskilo/features/money/providers/business_day_provider.dart';
 import 'package:deskilo/features/money/providers/customer_quote_providers.dart';
 import 'package:deskilo/features/money/providers/standalone_invoice_providers.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
@@ -144,7 +145,7 @@ Future<void> _settle(WidgetTester tester) async {
 /// The business's day in these tests is a day no device clock shows: what a screen offers as a date must be it.
 final _businessDay = DateTime(2031, 5, 17);
 final _dayOverrides = [
-  businessDateOfProvider.overrideWithValue((_) => _businessDay),
+  businessDayProvider.overrideWithValue(_businessDay),
   invoiceDueDaysProvider.overrideWithValue(21),
 ];
 

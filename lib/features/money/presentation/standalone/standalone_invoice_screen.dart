@@ -16,13 +16,13 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_typography.dart';
-import '../../../../core/time/business_day_provider.dart';
 import '../../../../core/time/calendar_days.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../application/issue_standalone_invoice.dart';
 import '../../domain/standalone_invoice.dart';
+import '../../providers/business_day_provider.dart';
 import '../../providers/money_providers.dart'
     show invoicingBusinessProvider, memberLabelsProvider, vatRatesProvider;
 import '../../providers/standalone_invoice_providers.dart';

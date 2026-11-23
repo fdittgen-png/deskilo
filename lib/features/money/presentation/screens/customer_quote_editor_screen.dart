@@ -16,7 +16,6 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_typography.dart';
-import '../../../../core/time/business_day_provider.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -25,6 +24,7 @@ import '../../domain/billing_customer.dart';
 import '../../domain/customer_quote.dart';
 import '../../domain/standalone_invoice.dart';
 import '../../providers/billing_customer_providers.dart';
+import '../../providers/business_day_provider.dart';
 import '../../providers/customer_quote_providers.dart';
 import '../../providers/money_providers.dart' show vatRatesProvider;
 import '../quotes/quote_text.dart';
