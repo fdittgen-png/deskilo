@@ -5,7 +5,7 @@
 -- lets an explicit credit settle a standalone invoice where a legacy credit of an invoiced month is refused; and the
 -- credit-note excess of an explicit payment stays explicit. Rolled back.
 begin;
-select plan(12);
+select plan(13);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -112,6 +112,8 @@ reset role;
 select is((select allocation_mode from public.ledger_entries
             where member_id = current_setting('t.m_b')::uuid and kind = 'credit'),
   'explicit', 'the moved credit stays explicit');
+select is((public.member_statement(current_setting('t.m_a')::uuid, current_setting('t.p')) ->> 'credits_cents')::int, 300,
+  'and Ada''s month balance is unchanged by the move: its reversal is explicit too');
 
 select * from finish();
 rollback;

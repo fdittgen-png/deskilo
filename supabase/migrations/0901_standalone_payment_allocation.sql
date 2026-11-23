@@ -399,11 +399,12 @@ begin
   if v_new is null then raise exception '0901: member_account deducted anchor missing'; end if;
   execute v_new;
 
-  -- member_statement: a month's balance counts the legacy credits of its month, as its bill deducts them.
+  -- member_statement: a month's balance counts the legacy rows of its month, as its bill deducts them: an explicit credit
+  -- and the reversal of a moved explicit credit stay out together.
   select pg_get_functiondef('public.member_statement(uuid, text)'::regprocedure) into v_def;
   v_new := pg_temp.anchor_replace(v_def,
     E'and (le.kind <> ''credit'' or le.amount_cents > public.payment_used_cents(le.id));',
-    E'and (le.kind <> ''credit'' or le.amount_cents > public.payment_used_cents(le.id))\n    and (le.kind <> ''credit'' or le.allocation_mode = ''legacy'');');
+    E'and (le.kind <> ''credit'' or le.amount_cents > public.payment_used_cents(le.id))\n    and le.allocation_mode = ''legacy'';');
   if v_new is null then raise exception '0901: member_statement anchor missing'; end if;
   execute v_new;
 
@@ -419,6 +420,16 @@ begin
     E'where i.member_id = p_to_member_id and i.period = v_credit.period',
     E'where v_credit.allocation_mode = ''legacy'' and i.member_id = p_to_member_id and i.period = v_credit.period');
   if v_new is null then raise exception '0901: move_payment_credit_v1 target guard anchor missing'; end if;
+  v_def := v_new;
+  v_new := pg_temp.anchor_replace(v_def,
+    E'occurred_on)\n  values (v_ws, v_credit.member_id, ''charge'', ''adjustment''',
+    E'occurred_on, allocation_mode)\n  values (v_ws, v_credit.member_id, ''charge'', ''adjustment''');
+  if v_new is null then raise exception '0901: move_payment_credit_v1 reversal columns anchor missing'; end if;
+  v_def := v_new;
+  v_new := pg_temp.anchor_replace(v_def,
+    E'v_credit.period, v_day)\n  returning id into v_reversal;',
+    E'v_credit.period, v_day, v_credit.allocation_mode)\n  returning id into v_reversal;');
+  if v_new is null then raise exception '0901: move_payment_credit_v1 reversal values anchor missing'; end if;
   v_def := v_new;
   v_new := pg_temp.anchor_replace(v_def,
     E'occurred_on)\n  values (v_ws, p_to_member_id, ''credit'', ''payment'', v_credit.amount_cents,\n          v_credit.description, v_credit.period, v_day)',
