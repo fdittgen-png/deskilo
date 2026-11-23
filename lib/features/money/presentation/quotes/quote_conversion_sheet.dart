@@ -14,15 +14,15 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
-import '../../../../core/settings/setting_defaults.g.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/calendar_days.dart';
-import '../../../../core/time/clock.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../application/customer_quote_commands.dart';
 import '../../domain/customer_quote.dart';
+import '../../providers/business_day_provider.dart';
 import '../../providers/customer_quote_providers.dart';
+import '../../providers/standalone_invoice_providers.dart';
 import 'quote_text.dart';
 
 /// The conversion sheet of an accepted quote.
@@ -114,15 +114,31 @@ class _QuoteConversionState extends ConsumerState<_QuoteConversionSheet> {
   @override
   void initState() {
     super.initState();
-    final now = ref.read(clockProvider).now();
-    final today = DateTime(now.year, now.month, now.day);
+    final today = ref.read(businessDayProvider);
     _state = ValueNotifier(
       _Conversion(
         serviceDate: today,
-        dueOn: addCalendarDays(today, SettingDefaults.dunningFirstAfterDays),
+        dueOn: addCalendarDays(today, ref.read(invoiceDueDaysProvider)),
       ),
     );
+    // The business's calendar and the payment term can arrive after the sheet opens: a date the person has not set follows
+    // them, one the person set is never overwritten.
+    ref
+      ..listenManual<DateTime>(businessDayProvider, (was, now) {
+        final c = _state.value;
+        final service = _serviceTouched ? c.serviceDate : now;
+        final due = _dueTouched ? c.dueOn : addCalendarDays(service, ref.read(invoiceDueDaysProvider));
+        _state.value = c.withDates(serviceDate: service, dueOn: due);
+      })
+      ..listenManual<int>(invoiceDueDaysProvider, (was, now) {
+        final c = _state.value;
+        if (!_dueTouched) _state.value = c.withDates(dueOn: addCalendarDays(c.serviceDate, now));
+      });
   }
+
+  /// Whether the person has chosen a date: a chosen date is theirs, whatever arrives later.
+  bool _serviceTouched = false;
+  bool _dueTouched = false;
 
   @override
   void dispose() {
@@ -208,7 +224,10 @@ class _QuoteConversionState extends ConsumerState<_QuoteConversionSheet> {
         label: l10n.standaloneInvoiceServiceDate,
         value: s.serviceDate,
         enabled: !s.busy,
-        onChanged: (d) => _edit(s.withDates(serviceDate: d.date)),
+        onChanged: (d) {
+          _serviceTouched = true;
+          _edit(s.withDates(serviceDate: d.date));
+        },
       ),
       const FormGap(),
       AppDateField(
@@ -216,7 +235,10 @@ class _QuoteConversionState extends ConsumerState<_QuoteConversionSheet> {
         label: l10n.standaloneInvoiceDueDate,
         value: s.dueOn,
         enabled: !s.busy,
-        onChanged: (d) => _edit(s.withDates(dueOn: d.date)),
+        onChanged: (d) {
+          _dueTouched = true;
+          _edit(s.withDates(dueOn: d.date));
+        },
       ),
       const FormGap(),
       OutlinedButton(

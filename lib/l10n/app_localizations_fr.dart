@@ -18717,6 +18717,9 @@ class AppLocalizationsFr extends AppLocalizations {
       'Aucun changement enregistré pour l’instant.';
 
   @override
+  String get itemGroupHomeZone => 'Zone de rangement par défaut';
+
+  @override
   String get itemGroupMinAge => 'Âge minimum pour une vente';
 
   @override
@@ -18789,6 +18792,16 @@ class AppLocalizationsFr extends AppLocalizations {
   String get itemGroupPreviewTitle => 'Ce que ce changement atteint';
 
   @override
+  String get itemGroupProposalHint => 'Proposé à un nouvel article';
+
+  @override
+  String get itemGroupPurchaseFactor =>
+      'Facteur : combien d\'unités de stock contient une unité d\'achat (12, 0,5 ou 1/3)';
+
+  @override
+  String get itemGroupPurchaseUnit => 'Unité d\'achat par défaut';
+
+  @override
   String get itemGroupReasonDepth =>
       'Un sous-groupe ne peut pas avoir de sous-groupes.';
 
@@ -18819,6 +18832,13 @@ class AppLocalizationsFr extends AppLocalizations {
       'Ce réglage ne peut pas avoir de valeur propre.';
 
   @override
+  String get itemGroupReorderPoint => 'Seuil de réapprovisionnement par défaut';
+
+  @override
+  String get itemGroupReorderQty =>
+      'Quantité de réapprovisionnement par défaut';
+
+  @override
   String itemGroupSkippedLine(String item, String parameter, String reason) {
     return '$item : $parameter ($reason)';
   }
@@ -18834,6 +18854,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get itemGroupTagMode => 'Mode de puce';
+
+  @override
+  String get itemGroupTagModeOwn => 'Étiquette sur cet article';
 
   @override
   String get itemGroupTagNone => 'Pas de puce';
@@ -37456,6 +37479,11 @@ class AppLocalizationsFr extends AppLocalizations {
       'Cet article est étiqueté pièce par pièce : étiquetez ses pièces à la réception.';
 
   @override
+  String stockTagPiece(String number) {
+    return 'Pièce $number';
+  }
+
+  @override
   String get stockTagReasonDamaged => 'Abîmée';
 
   @override
@@ -37489,6 +37517,17 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get stockTagsOpen => 'Puces';
+
+  @override
+  String stockTagsPieces(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count pièces étiquetées à l\'unité',
+      one: '$count pièce étiquetée à l\'unité',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get stockTagsRetire => 'Retirer';

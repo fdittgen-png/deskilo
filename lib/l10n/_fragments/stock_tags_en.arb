@@ -77,6 +77,24 @@
   "@stockTagsOpen": {
     "description": "#4363 G14 tags: stockTagsOpen"
   },
+  "stockTagsPieces": "{count, plural, one{1 piece tagged one by one} other{{count} pieces tagged one by one}}",
+  "@stockTagsPieces": {
+    "description": "#4362 G13 tags: heading of the pieces of an item that carries one tag per piece",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "stockTagPiece": "Piece {number}",
+  "@stockTagPiece": {
+    "description": "#4362 G13 tags: the name of one piece in the list of pieces",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
   "stockTagsNone": "No tag is bound yet.",
   "@stockTagsNone": {
     "description": "#4363 G14 tags: stockTagsNone"

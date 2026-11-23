@@ -18504,6 +18504,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get itemGroupHistoryNone => 'No change recorded yet.';
 
   @override
+  String get itemGroupHomeZone => 'Default home zone';
+
+  @override
   String get itemGroupMinAge => 'Minimum age for a sale';
 
   @override
@@ -18576,6 +18579,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get itemGroupPreviewTitle => 'What this change reaches';
 
   @override
+  String get itemGroupProposalHint => 'Proposed into a new item';
+
+  @override
+  String get itemGroupPurchaseFactor =>
+      'Factor: how many inventory units one purchase unit holds (12, 0.5 or 1/3)';
+
+  @override
+  String get itemGroupPurchaseUnit => 'Default purchase unit';
+
+  @override
   String get itemGroupReasonDepth => 'A sub-group cannot have sub-groups.';
 
   @override
@@ -18605,6 +18618,12 @@ class AppLocalizationsEn extends AppLocalizations {
       'This setting cannot be given its own value.';
 
   @override
+  String get itemGroupReorderPoint => 'Default reorder point';
+
+  @override
+  String get itemGroupReorderQty => 'Default reorder quantity';
+
+  @override
   String itemGroupSkippedLine(String item, String parameter, String reason) {
     return '$item: $parameter ($reason)';
   }
@@ -18620,6 +18639,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get itemGroupTagMode => 'Tag mode';
+
+  @override
+  String get itemGroupTagModeOwn => 'Tag on this item';
 
   @override
   String get itemGroupTagNone => 'No tags';
@@ -36992,6 +37014,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'This item is tagged piece by piece: tag its pieces when they are received.';
 
   @override
+  String stockTagPiece(String number) {
+    return 'Piece $number';
+  }
+
+  @override
   String get stockTagReasonDamaged => 'Damaged';
 
   @override
@@ -37025,6 +37052,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get stockTagsOpen => 'Tags';
+
+  @override
+  String stockTagsPieces(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count pieces tagged one by one',
+      one: '1 piece tagged one by one',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get stockTagsRetire => 'Retire';

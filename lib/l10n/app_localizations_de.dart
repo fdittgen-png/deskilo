@@ -18685,6 +18685,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get itemGroupHistoryNone => 'Noch keine Änderung festgehalten.';
 
   @override
+  String get itemGroupHomeZone => 'Standard-Lagerzone';
+
+  @override
   String get itemGroupMinAge => 'Mindestalter für einen Verkauf';
 
   @override
@@ -18757,6 +18760,16 @@ class AppLocalizationsDe extends AppLocalizations {
   String get itemGroupPreviewTitle => 'Was diese Änderung erreicht';
 
   @override
+  String get itemGroupProposalHint => 'Wird einem neuen Artikel vorgeschlagen';
+
+  @override
+  String get itemGroupPurchaseFactor =>
+      'Faktor: wie viele Lagereinheiten eine Einkaufseinheit enthält (12, 0,5 oder 1/3)';
+
+  @override
+  String get itemGroupPurchaseUnit => 'Standard-Einkaufseinheit';
+
+  @override
   String get itemGroupReasonDepth =>
       'Eine Untergruppe kann keine Untergruppen haben.';
 
@@ -18787,6 +18800,12 @@ class AppLocalizationsDe extends AppLocalizations {
       'Für diese Einstellung gibt es keinen eigenen Wert.';
 
   @override
+  String get itemGroupReorderPoint => 'Standard-Meldebestand';
+
+  @override
+  String get itemGroupReorderQty => 'Standard-Nachbestellmenge';
+
+  @override
   String itemGroupSkippedLine(String item, String parameter, String reason) {
     return '$item: $parameter ($reason)';
   }
@@ -18802,6 +18821,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get itemGroupTagMode => 'Tag-Modus';
+
+  @override
+  String get itemGroupTagModeOwn => 'Etikett an diesem Artikel';
 
   @override
   String get itemGroupTagNone => 'Keine Tags';
@@ -37400,6 +37422,11 @@ class AppLocalizationsDe extends AppLocalizations {
       'Dieser Artikel wird stückweise getaggt: Taggen Sie die Stücke beim Wareneingang.';
 
   @override
+  String stockTagPiece(String number) {
+    return 'Stück $number';
+  }
+
+  @override
   String get stockTagReasonDamaged => 'Beschädigt';
 
   @override
@@ -37433,6 +37460,17 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get stockTagsOpen => 'Tags';
+
+  @override
+  String stockTagsPieces(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count einzeln etikettierte Stücke',
+      one: '1 einzeln etikettiertes Stück',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get stockTagsRetire => 'Außer Betrieb nehmen';

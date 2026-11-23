@@ -3009,6 +3009,22 @@ Prema **Incassare in contanti** e digiti i **Contanti dati** (o **Importo esatto
 
 Dove il suo paese non consente ancora la cassa, questa indica l'operazione mancante e non offre nulla: nulla viene numerato né incassato. Una riga di merce richiede la gestione del magazzino; un rifiuto del server è detto a parole. Pagamenti con carta, sconti, rimborsi e resi non fanno parte di questa prima cassa.
 
+### Tag RFID: uno per lotto o uno per pezzo
+
+**Destinatari:** Amministratore · Proprietario
+
+Lei decide se un tag su un articolo indica un lotto o un singolo pezzo, e che cosa conta una lettura massiva.
+
+Con la funzione *Tag* attiva, un articolo ha una **modalità del tag**, impostata sul suo gruppo e mantenuta dall'articolo finché non ha un valore proprio. Apra le impostazioni di gruppo di un articolo (**Magazzino → Articoli**, l'icona della cartella sulla sua riga) e legga **Etichetta su questo articolo**: dice da dove viene il valore (*Da Bevande dal 3 dic.* oppure *Valore proprio*), permette di dare all'articolo un valore proprio, e **Usa il valore del gruppo** lo restituisce.
+
+- **Nessun tag.** L'articolo non porta tag.
+- **Un tag per lotto.** Un tag indica un lotto o una confezione: una cassa, un secchio, uno scatolone. Leggerlo conta un lotto, mai un pezzo.
+- **Un tag per pezzo.** Un tag indica un pezzo, il che richiede che l'articolo sia tracciato pezzo per pezzo. Sotto **Tag** dell'articolo, **Pezzi etichettati uno a uno (n)** elenca ogni pezzo con il suo tag.
+
+- Una lettura massiva conta pezzi solo per gli articoli con un tag per pezzo. Per un articolo con un tag per lotto conta lotti e mostra la quantità registrata del lotto accanto al conteggio, mai come cifra contata.
+- La modalità di un articolo che ha già dei tag non cambia finché i tag non sono ritirati o la giacenza non è zero; la modifica di un gruppo salta allora l'articolo e lo elenca come mantenuto. Un tag su un luogo indica sempre un solo luogo.
+- Un codice tag è un'etichetta UHF (EPC; il server legge un SGTIN-96 come GTIN e numero di serie) o un chip NFC, salvato in esadecimale maiuscolo e unico nell'azienda tra articoli, pezzi e luoghi. Collegare e ritirare richiedono il diritto di gestire il magazzino; leggere, quello di vederlo.
+
 ### Valore del magazzino e origine della merce
 
 **Destinatari:** Amministratore · Proprietario

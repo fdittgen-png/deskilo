@@ -14,6 +14,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../core/backend/connected_target.dart';
 import '../../../core/backend/connection_outcome.dart';
 import '../../../core/backend/context_clients.dart';
+import '../../../core/codes/pg_code.dart';
 import '../../../core/data/server_names.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../domain/workspace_export.dart';
@@ -45,10 +46,10 @@ Future<ResolvedWorkspaceHost> resolveWorkspaceExportHost(
 WorkspaceExportFailure? workspaceExportRefusalOf(PostgrestException e) =>
     switch (e.code) {
       // #3278 — a 42501 that says why: read before the generic forbidden.
-      '42501' when e.message.contains('privacy_self_service_off') =>
+      PgCode.insufficientPrivilege when e.message.contains('privacy_self_service_off') =>
         WorkspaceExportFailure.selfServiceOff,
-      '42501' => WorkspaceExportFailure.forbidden,
-      'P0001' when e.message.contains('not a member') =>
+      PgCode.insufficientPrivilege => WorkspaceExportFailure.forbidden,
+      PgCode.raiseException when e.message.contains('not a member') =>
         WorkspaceExportFailure.forbidden,
       _ => null,
     };

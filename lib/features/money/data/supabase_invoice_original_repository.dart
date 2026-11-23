@@ -9,6 +9,7 @@ import 'dart:typed_data';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/codes/pg_code.dart';
 import '../../../core/data/paged_fetch.dart';
 import '../domain/invoice_original.dart';
 
@@ -108,10 +109,10 @@ class SupabaseInvoiceOriginalRepository implements InvoiceOriginalRepository {
       );
     } on PostgrestException catch (e, st) {
       // trace-exempt: each answer becomes a refusal or the record kept.
-      if (e.code != '23505') {
+      if (e.code != PgCode.uniqueViolation) {
         Error.throwWithStackTrace(
           InvoiceOriginalRefused(
-            e.code == '42501'
+            e.code == PgCode.insufficientPrivilege
                 ? InvoiceOriginalRefusal.notAllowed
                 : InvoiceOriginalRefusal.refused,
             e.message,

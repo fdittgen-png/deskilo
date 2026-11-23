@@ -5,9 +5,13 @@
 // item into or out of a group first PREVIEWS how many settings that changes, and a second tap makes the move; the
 // move carries the item's revision and its own request id. Giving a setting back to the group changes only that
 // item. What the dialog shows is one immutable view held in a notifier, replaced as things happen.
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/help/help_anchors.dart';
+import '../../../core/help/help_dot.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
@@ -102,6 +106,19 @@ class _AssignDialogState extends ConsumerState<_AssignDialog> {
     }
   }
 
+  /// Gives the item its own value for [parameter], whatever its group says; the server refuses what cannot hold (a tag
+  /// per piece needs tracking by piece) and the refusal is said here.
+  Future<void> _setOwn(int revision, String parameter, Object value) async {
+    final l10n = context.l10n;
+    try {
+      await ref.read(itemGroupsProvider).setOverride(widget.workspaceId, newRequestId(), (itemId: widget.itemId, expectedRevision: revision, parameter: parameter, mode: 'set', value: value));
+      _reload();
+    } on Object catch (e, st) {
+      TraceLogger.instance.warn('stock', 'an item was not given its own value: $e', stackTrace: st);
+      if (mounted) _view.value = _view.value.said(itemGroupProblem(l10n, e));
+    }
+  }
+
   Future<void> _useGroup(int revision, String parameter) async {
     final l10n = context.l10n;
     try {
@@ -173,7 +190,24 @@ class _AssignDialogState extends ConsumerState<_AssignDialog> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text('${itemGroupParamLabel(l10n, p)}: ${itemGroupValueText(l10n, p, param.value)}'),
-        Text(_source(context, l10n, param), style: Theme.of(context).textTheme.bodySmall),
+        Text(_source(context, l10n, param), key: ValueKey('item-group-source-$p'), style: Theme.of(context).textTheme.bodySmall),
+        if (p == 'tag_mode')
+          Row(
+            children: [
+              Expanded(
+                child: AppDropdownField<String?>(
+                  key: const ValueKey('item-group-tag-mode'),
+                  label: l10n.itemGroupTagModeOwn,
+                  value: param.value as String?,
+                  items: [for (final m in const ['none', 'per_batch', 'per_unit']) (m, itemGroupValueText(l10n, 'tag_mode', m))],
+                  onChanged: (v) {
+                    if (v != null && v != param.value) unawaited(_setOwn(revision, p, v));
+                  },
+                ),
+              ),
+              HelpDot(l10n.itemGroupTagModeOwn, anchor: HelpAnchor.moneyStockRfid),
+            ],
+          ),
         if (param.own && canGiveBack)
           TextButton(key: ValueKey('item-group-use-$p'), onPressed: () => _useGroup(revision, p), child: Text(l10n.itemGroupUseGroup)),
       ],

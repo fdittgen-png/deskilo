@@ -11248,6 +11248,10 @@
   "itemGroupHistory": "Historial",
   "itemGroupHistoryLine": "{parameter}: {from} → {to}, {affected, plural, one{alcanzó 1 artículo} other{alcanzó {affected} artículos}}",
   "itemGroupHistoryNone": "Aún no hay ningún cambio registrado.",
+  "itemGroupHomeZone": "Zona de almacén por defecto",
+  "@itemGroupHomeZone": {
+    "description": "#4361 G12 proposals: the home zone a group proposes to an item"
+  },
   "itemGroupMinAge": "Edad mínima para una venta",
   "itemGroupMove": "Mover",
   "itemGroupMoveReaches": "{count, plural, one{Moverlo cambia 1 ajuste.} other{Moverlo cambia {count} ajustes.}}",
@@ -11261,6 +11265,18 @@
   "itemGroupPreviewLine": "{parameter}: {affected, plural, one{se aplica a 1 artículo} other{se aplica a {affected} artículos}}, {kept, plural, one{1 conserva su propio valor} other{{kept} conservan su propio valor}}, {skipped, plural, one{1 no se puede alcanzar} other{{skipped} no se pueden alcanzar}}",
   "itemGroupPreviewNothing": "No se alcanza ningún artículo.",
   "itemGroupPreviewTitle": "Lo que alcanza este cambio",
+  "itemGroupProposalHint": "Se propone a un artículo nuevo",
+  "@itemGroupProposalHint": {
+    "description": "#4361 G12 proposals: said under a proposal, which reaches no existing item"
+  },
+  "itemGroupPurchaseFactor": "Factor: cuántas unidades de inventario contiene una unidad de compra (12, 0,5 o 1/3)",
+  "@itemGroupPurchaseFactor": {
+    "description": "#4361 G12 proposals: the factor of the proposed purchase unit, one number or a fraction"
+  },
+  "itemGroupPurchaseUnit": "Unidad de compra por defecto",
+  "@itemGroupPurchaseUnit": {
+    "description": "#4361 G12 proposals: the purchase unit a group proposes to a new item"
+  },
   "itemGroupReasonDepth": "Un subgrupo no puede tener subgrupos.",
   "itemGroupReasonGroupUnknown": "Este grupo no existe.",
   "itemGroupReasonHasMovements": "ya tiene movimientos",
@@ -11269,11 +11285,23 @@
   "itemGroupReasonNameDuplicate": "Otro grupo ya tiene este nombre.",
   "itemGroupReasonNeedsSerial": "Las etiquetas por pieza necesitan seguimiento por pieza.",
   "itemGroupReasonNotOverridable": "Este ajuste no puede tener un valor propio.",
+  "itemGroupReorderPoint": "Punto de pedido por defecto",
+  "@itemGroupReorderPoint": {
+    "description": "#4361 G12 proposals: the reorder point a group proposes to an item that has none"
+  },
+  "itemGroupReorderQty": "Cantidad de pedido por defecto",
+  "@itemGroupReorderQty": {
+    "description": "#4361 G12 proposals: the reorder quantity a group proposes to an item that has none"
+  },
   "itemGroupSkippedLine": "{item}: {parameter} ({reason})",
   "itemGroupSkippedTitle": "No alcanzados",
   "itemGroupSoldByWeight": "Se vende al peso",
   "itemGroupTagBatch": "Una etiqueta por lote",
   "itemGroupTagMode": "Modo de etiqueta",
+  "itemGroupTagModeOwn": "Etiqueta de este artículo",
+  "@itemGroupTagModeOwn": {
+    "description": "#4362 G13: the item's own value of the tag mode (none, one per batch, one per piece), over its group's"
+  },
   "itemGroupTagNone": "Sin etiquetas",
   "itemGroupTagUnit": "Una etiqueta por pieza",
   "itemGroupTrackingSerial": "Por pieza (serie)",
@@ -21739,6 +21767,15 @@
   "stockTagOnPiece": "Esta etiqueta está en una pieza que sigue en stock.",
   "stockTagOwnerUnknown": "Este artículo o ubicación no se conoce.",
   "stockTagPerUnit": "Este artículo se etiqueta pieza a pieza: etiquete sus piezas al recibirlas.",
+  "stockTagPiece": "Pieza {number}",
+  "@stockTagPiece": {
+    "description": "#4362 G13 tags: the name of one piece in the list of pieces",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
   "stockTagReasonDamaged": "Dañada",
   "stockTagReasonLost": "Perdida",
   "stockTagReasonReplaced": "Sustituida",
@@ -21749,6 +21786,15 @@
   "stockTagsFailed": "No se pudieron leer las etiquetas.",
   "stockTagsNone": "Aún no hay ninguna etiqueta asociada.",
   "stockTagsOpen": "Etiquetas",
+  "stockTagsPieces": "{count, plural, one{1 pieza etiquetada una a una} other{{count} piezas etiquetadas una a una}}",
+  "@stockTagsPieces": {
+    "description": "#4362 G13 tags: heading of the pieces of an item that carries one tag per piece",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "stockTagsRetire": "Retirar",
   "stockTagsRetireWhy": "¿Por qué se retira?",
   "stockTagsRetired": "Etiqueta {code} retirada.",

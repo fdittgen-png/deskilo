@@ -7,13 +7,14 @@
 import 'package:deskilo/features/money/domain/counter_till.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
+import '../../codes/dk_code.dart';
 import 'demo_stock_registry.dart';
 
 /// The server's refusal: its SQLSTATE as the code, its words as the message.
 PostgrestException _refused(String code, String message) => PostgrestException(message: message, code: code);
 
 /// The prices of Demo items the stock registry does not carry (the T-shirt the variants are edited on), in cents.
-const _unstocked = <String, int>{'demo-item-shirt': 1900};
+const _unstocked = <String, int>{'demo-item-shirt': 1900, 'demo-item-basket': 3900, 'demo-item-apples': 1800};
 
 class DemoTill implements TillPort {
   DemoTill({required this.country, required this.currency, required this.vatPercent, this.ready = true, this.minorDigits = 2});
@@ -48,14 +49,14 @@ class DemoTill implements TillPort {
     final id = receiptId ?? 'demo-receipt-${_drafts.length + _sales + 1}';
     final known = _drafts[id];
     if (receiptId != null && (known == null || known.revision != expectedRevision)) {
-      throw _refused('DKL10', 'this receipt changed meanwhile');
+      throw _refused(DkCode.dkl10, 'this receipt changed meanwhile');
     }
     var gross = 0;
     var tax = 0;
     final priced = <TillPricedLine>[];
     for (final l in lines) {
       final unit = DemoStockRegistry.catalogue[l.itemId]?.$2 ?? _unstocked[l.itemId];
-      if (unit == null) throw _refused('DKL02', 'line_${priced.length + 1}_unit_price');
+      if (unit == null) throw _refused(DkCode.dkl02, 'line_${priced.length + 1}_unit_price');
       final amount = _times(unit, l.quantity);
       final lineTax = amount - (amount * 100 / (100 + vatPercent)).round();
       gross += amount;
@@ -87,10 +88,10 @@ class DemoTill implements TillPort {
     final again = _done[requestId];
     if (again != null) return again;
     final draft = _drafts[receiptId];
-    if (!ready) throw _refused('DKL01', 'the country operation is not supported');
-    if (draft == null) throw _refused('DKL04', 'this receipt is not an open draft');
-    if (draft.revision != expectedRevision) throw _refused('DKL10', 'this receipt changed meanwhile');
-    if (tenders.fold<int>(0, (a, t) => a + t.amountMinor) != draft.totals.grossMinor) throw _refused('DKL06', 'tender_sum');
+    if (!ready) throw _refused(DkCode.dkl01, 'the country operation is not supported');
+    if (draft == null) throw _refused(DkCode.dkl04, 'this receipt is not an open draft');
+    if (draft.revision != expectedRevision) throw _refused(DkCode.dkl10, 'this receipt changed meanwhile');
+    if (tenders.fold<int>(0, (a, t) => a + t.amountMinor) != draft.totals.grossMinor) throw _refused(DkCode.dkl06, 'tender_sum');
     final sold = TillSold(receiptId: receiptId, number: 'R-${(++_sales).toString().padLeft(5, '0')}', totals: draft.totals);
     _drafts.remove(receiptId);
     return _done[requestId] = sold;

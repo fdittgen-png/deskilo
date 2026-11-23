@@ -137,6 +137,7 @@
   "user.money.stock.scanning": "Lavorare con uno scanner",
   "user.money.stock.nfc": "Tag con l’NFC del telefono",
   "user.money.till": "Cassa",
+  "user.money.stock.rfid": "Tag RFID: uno per lotto o uno per pezzo",
   "user.money.stock.value": "Valore del magazzino e origine della merce",
   "user.money.stock.reversals": "Resi, correzioni e conteggi",
   "user.money.stock.cycle": "Conteggi ciclici",

@@ -67,7 +67,9 @@ class _GroupList extends ConsumerWidget {
   final bool mayManage;
 
   Future<void> _open(BuildContext context, WidgetRef ref, ItemGroup? group) async {
-    final saved = await showItemGroupSheet(context, ref.read(itemGroupsProvider), workspaceId: workspaceId, group: group, groups: groups);
+    final places = await ref.read(stockPlaceConfigsProvider(workspaceId).future);
+    if (!context.mounted) return;
+    final saved = await showItemGroupSheet(context, ref.read(itemGroupsProvider), workspaceId: workspaceId, group: group, groups: groups, places: places);
     if (saved) ref.invalidate(itemGroupListProvider(workspaceId));
   }
 

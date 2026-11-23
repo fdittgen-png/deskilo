@@ -3,7 +3,10 @@ import 'dart:convert';
 
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show JsonReader;
 import 'package:meta/meta.dart';
+
 import '../../l10n/app_localizations.dart';
+import '../codes/dk_code.dart';
+import '../codes/pg_code.dart';
 import '../data/server_error.dart';
 
 /// #1305 S2 — the refusals every surface can meet, whatever it was doing.
@@ -204,67 +207,67 @@ const List<String> privacySelfServiceOffSubstrings = [
 
 /// #2380 — the bank statement codes of 0603 and 0650.
 const Map<String, KnownRefusal> _bankRefusals = {
-  'DKB01': KnownRefusal.bankLineDecided,
-  'DKB02': KnownRefusal.bankLineRefused,
-  'DKB03': KnownRefusal.bankFileRefused,
-  'DKB04': KnownRefusal.bankMatchBeyondLink,
-  'DKB05': KnownRefusal.bankMatchSeveralPayments,
-  'DKB06': KnownRefusal.bankMatchClosedPeriod,
-  'DKB07': KnownRefusal.bankMatchUndoLaterFirst,
+  DkCode.dkb01: KnownRefusal.bankLineDecided,
+  DkCode.dkb02: KnownRefusal.bankLineRefused,
+  DkCode.dkb03: KnownRefusal.bankFileRefused,
+  DkCode.dkb04: KnownRefusal.bankMatchBeyondLink,
+  DkCode.dkb05: KnownRefusal.bankMatchSeveralPayments,
+  DkCode.dkb06: KnownRefusal.bankMatchClosedPeriod,
+  DkCode.dkb07: KnownRefusal.bankMatchUndoLaterFirst,
 };
 
 /// #3811 — the invoicing codes of 0740 and the installation's DKR01 (0559):
 /// read by their code, never their sentence.
 const Map<String, KnownRefusal> _codedRefusals = {
-  'DKI03': KnownRefusal.changedMeanwhile,
-  'DKI04': KnownRefusal.changedMeanwhile,
-  'DKI05': KnownRefusal.changedMeanwhile,
-  'DKI06': KnownRefusal.changedMeanwhile,
-  'DKD01': KnownRefusal.alreadyDecided,
-  'DKR01': KnownRefusal.personalHomeHostsNoWorkspace,
+  DkCode.dki03: KnownRefusal.changedMeanwhile,
+  DkCode.dki04: KnownRefusal.changedMeanwhile,
+  DkCode.dki05: KnownRefusal.changedMeanwhile,
+  DkCode.dki06: KnownRefusal.changedMeanwhile,
+  DkCode.dkd01: KnownRefusal.alreadyDecided,
+  DkCode.dkr01: KnownRefusal.personalHomeHostsNoWorkspace,
   // #3821 — a business refusal: this person may not do this (0745).
-  'DKN01': KnownRefusal.permission,
+  DkCode.dkn01: KnownRefusal.permission,
   // #3824 — the goods ledger (0747).
-  'DKG01': KnownRefusal.stockOff,
-  'DKG02': KnownRefusal.stockUnit,
-  'DKG03': KnownRefusal.stockNotEnough,
-  'DKG04': KnownRefusal.stockItem,
-  'DKG05': KnownRefusal.stockLocation,
-  'DKG06': KnownRefusal.stockLot,
-  'DKG07': KnownRefusal.stockMove,
-  'DKG08': KnownRefusal.stockHistory,
-  'DKG09': KnownRefusal.stockPage,
-  'DKG10': KnownRefusal.stockStale,
-  'DKG11': KnownRefusal.stockConfig,
-  'DKG12': KnownRefusal.stockVariant,
-  'DKG13': KnownRefusal.stockLedgerKept,
-  'DKG15': KnownRefusal.stockOnlyExpired,
-  'DKG16': KnownRefusal.stockReturnChanged,
-  'DKG17': KnownRefusal.stockReturnBeyond,
-  'DKG18': KnownRefusal.stockReturnSource,
-  'DKG19': KnownRefusal.stockCountDecided,
-  'DKG20': KnownRefusal.stockCountStale,
-  'DKG21': KnownRefusal.stockCountSelf,
-  'DKG22': KnownRefusal.stockTagBound,
-  'DKG23': KnownRefusal.stockTagRetiredLately,
-  'DKG24': KnownRefusal.stockPieceInStock,
-  'DKG25': KnownRefusal.stockNamePieces,
-  'DKG26': KnownRefusal.stockPieceWhere,
-  'DKL01': KnownRefusal.counterUnsupported,
-  'DKL02': KnownRefusal.counterEssentials,
-  'DKL04': KnownRefusal.counterNotOpen,
-  'DKL05': KnownRefusal.counterCustomerNeeded,
-  'DKL06': KnownRefusal.counterTenders,
-  'DKL08': KnownRefusal.counterCorrectionBeyond,
-  'DKL07': KnownRefusal.counterGoods,
-  'DKL10': KnownRefusal.counterChanged,
-  'DKL11': KnownRefusal.counterTenderState,
-  'DKL12': KnownRefusal.counterTill,
-  'DKL13': KnownRefusal.counterCashEntry,
-  'DKL14': KnownRefusal.counterDayClose,
-  'DKL15': KnownRefusal.counterDayOpen,
+  DkCode.dkg01: KnownRefusal.stockOff,
+  DkCode.dkg02: KnownRefusal.stockUnit,
+  DkCode.dkg03: KnownRefusal.stockNotEnough,
+  DkCode.dkg04: KnownRefusal.stockItem,
+  DkCode.dkg05: KnownRefusal.stockLocation,
+  DkCode.dkg06: KnownRefusal.stockLot,
+  DkCode.dkg07: KnownRefusal.stockMove,
+  DkCode.dkg08: KnownRefusal.stockHistory,
+  DkCode.dkg09: KnownRefusal.stockPage,
+  DkCode.dkg10: KnownRefusal.stockStale,
+  DkCode.dkg11: KnownRefusal.stockConfig,
+  DkCode.dkg12: KnownRefusal.stockVariant,
+  DkCode.dkg13: KnownRefusal.stockLedgerKept,
+  DkCode.dkg15: KnownRefusal.stockOnlyExpired,
+  DkCode.dkg16: KnownRefusal.stockReturnChanged,
+  DkCode.dkg17: KnownRefusal.stockReturnBeyond,
+  DkCode.dkg18: KnownRefusal.stockReturnSource,
+  DkCode.dkg19: KnownRefusal.stockCountDecided,
+  DkCode.dkg20: KnownRefusal.stockCountStale,
+  DkCode.dkg21: KnownRefusal.stockCountSelf,
+  DkCode.dkg22: KnownRefusal.stockTagBound,
+  DkCode.dkg23: KnownRefusal.stockTagRetiredLately,
+  DkCode.dkg24: KnownRefusal.stockPieceInStock,
+  DkCode.dkg25: KnownRefusal.stockNamePieces,
+  DkCode.dkg26: KnownRefusal.stockPieceWhere,
+  DkCode.dkl01: KnownRefusal.counterUnsupported,
+  DkCode.dkl02: KnownRefusal.counterEssentials,
+  DkCode.dkl04: KnownRefusal.counterNotOpen,
+  DkCode.dkl05: KnownRefusal.counterCustomerNeeded,
+  DkCode.dkl06: KnownRefusal.counterTenders,
+  DkCode.dkl08: KnownRefusal.counterCorrectionBeyond,
+  DkCode.dkl07: KnownRefusal.counterGoods,
+  DkCode.dkl10: KnownRefusal.counterChanged,
+  DkCode.dkl11: KnownRefusal.counterTenderState,
+  DkCode.dkl12: KnownRefusal.counterTill,
+  DkCode.dkl13: KnownRefusal.counterCashEntry,
+  DkCode.dkl14: KnownRefusal.counterDayClose,
+  DkCode.dkl15: KnownRefusal.counterDayOpen,
   // #4008 — a member who left (0782).
-  'DKM01': KnownRefusal.memberReturnsAsNew,
+  DkCode.dkm01: KnownRefusal.memberReturnsAsNew,
 };
 
 /// #3811 — the server's refusal code and its DETAIL, for a screen that reads
@@ -286,16 +289,16 @@ KnownRefusal? knownRefusalOf(Object error) {
   }
   // 42501 is Postgres's own insufficient_privilege — an RLS refusal or a
   // revoked grant, which never carries one of our sentences.
-  if (serverErrorCode(error) == '42501') return KnownRefusal.permission;
-  if (serverErrorCode(error) == 'DK423') return KnownRefusal.moneyLocaleLocked;
-  if (serverErrorCode(error) == 'DKV01') return KnownRefusal.vatRateVersioned;
+  if (serverErrorCode(error) == PgCode.insufficientPrivilege) return KnownRefusal.permission;
+  if (serverErrorCode(error) == DkCode.dk423) return KnownRefusal.moneyLocaleLocked;
+  if (serverErrorCode(error) == DkCode.dkv01) return KnownRefusal.vatRateVersioned;
   // #2370 — DKA01: the issuer was connected meanwhile, by someone else.
-  if (serverErrorCode(error) == 'DKA01') return KnownRefusal.changedMeanwhile;
-  if (serverErrorCode(error) == 'DKA02') {
+  if (serverErrorCode(error) == DkCode.dka01) return KnownRefusal.changedMeanwhile;
+  if (serverErrorCode(error) == DkCode.dka02) {
     return KnownRefusal.accountingConnectionClosed;
   }
-  if (serverErrorCode(error) == 'DKA03') return KnownRefusal.accountingValueRefused;
-  if (serverErrorCode(error) == 'DKE01') return KnownRefusal.retentionKept;
+  if (serverErrorCode(error) == DkCode.dka03) return KnownRefusal.accountingValueRefused;
+  if (serverErrorCode(error) == DkCode.dke01) return KnownRefusal.retentionKept;
   final bank = _bankRefusals[serverErrorCode(error)];
   if (bank != null) return bank;
   final coded = _codedRefusals[serverErrorCode(error)];
@@ -405,11 +408,11 @@ String? _counterRefusalText(AppLocalizations l10n, KnownRefusal refusal) => swit
 /// server says it as a JSON detail, read here, never its sentence.
 ({String itemId, String held, String asked})? _mainStoreOf(Object error) {
   final code = serverErrorCode(error);
-  if (code != 'DKG03' && code != 'DKG15') return null;
+  if (code != DkCode.dkg03 && code != DkCode.dkg15) return null;
   final raw = serverErrorDetails(error);
   if (raw == null) return null;
   try {
-    final r = JsonReader.of(jsonDecode(raw), context: 'DKG03');
+    final r = JsonReader.of(jsonDecode(raw), context: DkCode.dkg03);
     if (r.stringOrNull('scope') != 'main_store') return null;
     final item = r.stringOrNull('item_id');
     final held = r.stringOrNull('held');
@@ -425,7 +428,7 @@ String? _counterRefusalText(AppLocalizations l10n, KnownRefusal refusal) => swit
 String? _mainStoreText(AppLocalizations l10n, Object error) {
   final main = _mainStoreOf(error);
   if (main == null) return null;
-  return serverErrorCode(error) == 'DKG15'
+  return serverErrorCode(error) == DkCode.dkg15
       ? l10n.refusalMainStoreExpired(main.held, main.asked)
       : l10n.refusalMainStoreShort(main.held, main.asked);
 }

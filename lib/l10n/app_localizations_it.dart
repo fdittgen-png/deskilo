@@ -18652,6 +18652,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get itemGroupHistoryNone => 'Ancora nessuna modifica registrata.';
 
   @override
+  String get itemGroupHomeZone => 'Zona di giacenza predefinita';
+
+  @override
   String get itemGroupMinAge => 'Età minima per una vendita';
 
   @override
@@ -18724,6 +18727,16 @@ class AppLocalizationsIt extends AppLocalizations {
   String get itemGroupPreviewTitle => 'Cosa raggiunge questa modifica';
 
   @override
+  String get itemGroupProposalHint => 'Proposto a un nuovo articolo';
+
+  @override
+  String get itemGroupPurchaseFactor =>
+      'Fattore: quante unità di magazzino contiene un\'unità di acquisto (12, 0,5 o 1/3)';
+
+  @override
+  String get itemGroupPurchaseUnit => 'Unità di acquisto predefinita';
+
+  @override
   String get itemGroupReasonDepth =>
       'Un sottogruppo non può avere sottogruppi.';
 
@@ -18754,6 +18767,12 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questa impostazione non può avere un valore proprio.';
 
   @override
+  String get itemGroupReorderPoint => 'Punto di riordino predefinito';
+
+  @override
+  String get itemGroupReorderQty => 'Quantità di riordino predefinita';
+
+  @override
   String itemGroupSkippedLine(String item, String parameter, String reason) {
     return '$item: $parameter ($reason)';
   }
@@ -18769,6 +18788,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get itemGroupTagMode => 'Modalità tag';
+
+  @override
+  String get itemGroupTagModeOwn => 'Etichetta su questo articolo';
 
   @override
   String get itemGroupTagNone => 'Nessun tag';
@@ -37340,6 +37362,11 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questo articolo è etichettato pezzo per pezzo: etichetti i pezzi alla ricezione.';
 
   @override
+  String stockTagPiece(String number) {
+    return 'Pezzo $number';
+  }
+
+  @override
   String get stockTagReasonDamaged => 'Danneggiato';
 
   @override
@@ -37373,6 +37400,17 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get stockTagsOpen => 'Tag';
+
+  @override
+  String stockTagsPieces(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count pezzi etichettati singolarmente',
+      one: '1 pezzo etichettato singolarmente',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get stockTagsRetire => 'Ritira';

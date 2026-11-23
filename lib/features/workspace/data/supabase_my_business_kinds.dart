@@ -6,6 +6,7 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show JsonReader;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/codes/pg_code.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/my_business_kinds.dart';
 
@@ -15,7 +16,7 @@ class SupabaseMyBusinessKinds implements MyBusinessKindsReader {
   final SupabaseClient _client;
 
   /// PostgREST's answers for a function the server does not have.
-  static const _unknownFunction = {'PGRST202', '42883'};
+  static const _unknownFunction = {PgCode.pgrstFunctionNotFound, PgCode.undefinedFunction};
 
   @override
   Future<Map<String, String>> read() async {

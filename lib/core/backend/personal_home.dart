@@ -11,6 +11,7 @@
 // explicit [PersonalHomeUnavailable], never a quiet fallback.
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../codes/pg_code.dart';
 import '../data/server_names.dart';
 import 'backend_settings.dart';
 
@@ -116,7 +117,7 @@ Future<PersonalHomeDeclaration> readPersonalHomeDeclaration(
   } on PostgrestException catch (e, st) {
     // trace-exempt: an undefined column is a schema from before 9999;
     // anything else is rethrown unchanged, stack kept.
-    if (e.code != '42703') Error.throwWithStackTrace(e, st);
+    if (e.code != PgCode.undefinedColumn) Error.throwWithStackTrace(e, st);
     return PersonalHomeDeclaration.legacy;
   }
 }

@@ -5,6 +5,7 @@
 // which holds the key.
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/codes/pg_code.dart';
 import '../domain/reminder_mail.dart';
 
 class SupabaseReminderMail implements ReminderMail {
@@ -95,7 +96,7 @@ class SupabaseReminderMail implements ReminderMail {
     final details = e.details;
     final body = details is Map ? details : const <String, Object?>{};
     if (e.status == 409) {
-      return body['code'] == '40001'
+      return body['code'] == PgCode.serializationFailure
           ? const ReminderMailLevelChanged()
           : const ReminderMailAwaitsDecision();
     }

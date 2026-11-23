@@ -28,6 +28,7 @@ const helpAnchorIndex = <String>{
   HelpAnchor.moneyStockCycleCounts,
   HelpAnchor.moneyStockScanning,
   HelpAnchor.moneyStockNfc,
+  HelpAnchor.moneyStockRfid,
   HelpAnchor.moneyTill,
   HelpAnchor.advancedDeploy,
   HelpAnchor.advancedTroubleshooting,

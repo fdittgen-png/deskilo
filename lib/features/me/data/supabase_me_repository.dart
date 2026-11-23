@@ -2,6 +2,7 @@
 import 'package:meta/meta.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/codes/pg_code.dart';
 import '../domain/account_favorite.dart';
 import '../domain/me_repository.dart';
 import '../domain/personal_export.dart';
@@ -111,9 +112,9 @@ class SupabaseMeRepository implements MeRepository {
 @visibleForTesting
 PersonalExportFailure? personalExportRefusalOf(PostgrestException e) =>
     switch (e.code) {
-      'PGRST202' || '42883' => PersonalExportFailure.unsupported,
-      '42501' => PersonalExportFailure.forbidden,
-      'P0001'
+      PgCode.pgrstFunctionNotFound || PgCode.undefinedFunction => PersonalExportFailure.unsupported,
+      PgCode.insufficientPrivilege => PersonalExportFailure.forbidden,
+      PgCode.raiseException
           when e.message.contains('identity_session_refused') ||
               e.message.contains('not authenticated') ||
               e.message.contains('managed in the Deskilo app') =>

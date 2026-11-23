@@ -105,6 +105,41 @@ void main() {
         expect(find.text(_en.itemGroupReasonNeedsSerial), findsOneWidget);
       });
 
+      testWidgets('a group carries what it proposes to a new item: the purchase unit with its factor, the reorder point and quantity, the home zone', (tester) async {
+        final w = await _open(tester, size);
+        await _tap(tester, 'item-group-add');
+        await tester.enterText(find.byKey(const ValueKey('item-group-name')), 'Dry goods');
+        await tester.enterText(find.byKey(const ValueKey('item-group-purchase-unit')), 'carton');
+        await tester.enterText(find.byKey(const ValueKey('item-group-factor')), '12');
+        await tester.enterText(find.byKey(const ValueKey('item-group-reorder-point')), '5.5');
+        await tester.enterText(find.byKey(const ValueKey('item-group-reorder-qty')), '20');
+        await _choose(tester, 'item-group-home-zone', 'Back room');
+        await _tap(tester, 'item-group-save');
+        final saved = (await w.groups('ws-1')).firstWhere((g) => g.name == 'Dry goods');
+        expect(saved.params['default_purchase_unit'], 'carton');
+        expect((saved.params['default_purchase_factor_num'], saved.params['default_purchase_factor_den']), (12, 1));
+        expect(saved.params['reorder_point_default'], '5.5');
+        expect(saved.params['reorder_quantity_default'], '20');
+        expect(saved.params['home_zone_id'], 'demo-place-back');
+        expect(find.textContaining('carton'), findsWidgets, reason: 'the group line says what it proposes');
+      });
+
+      testWidgets('a purchase unit needs its factor, a factor is one number or a fraction above zero, and a third is exact', (tester) async {
+        final w = await _open(tester, size);
+        await _tap(tester, 'item-group-add');
+        await tester.enterText(find.byKey(const ValueKey('item-group-name')), 'Syrups');
+        await tester.enterText(find.byKey(const ValueKey('item-group-purchase-unit')), 'bottle');
+        await _tap(tester, 'item-group-save');
+        expect(find.text(_en.stockReasonOutOfRange), findsOneWidget, reason: 'a unit without a factor');
+        await tester.enterText(find.byKey(const ValueKey('item-group-factor')), '1/0');
+        await _tap(tester, 'item-group-save');
+        expect(find.text(_en.stockReasonOutOfRange), findsOneWidget, reason: 'a zero denominator');
+        await tester.enterText(find.byKey(const ValueKey('item-group-factor')), '1/3');
+        await _tap(tester, 'item-group-save');
+        final saved = (await w.groups('ws-1')).firstWhere((g) => g.name == 'Syrups');
+        expect((saved.params['default_purchase_factor_num'], saved.params['default_purchase_factor_den']), (1, 3));
+      });
+
       testWidgets('an empty group is created, then deleted', (tester) async {
         final w = await _open(tester, size);
         await _tap(tester, 'item-group-add');
@@ -116,6 +151,40 @@ void main() {
         await _frames(tester);
         await _tap(tester, 'item-group-delete');
         expect((await w.groups('ws-1')).map((g) => g.name), isNot(contains('Gift baskets')));
+      });
+
+      testWidgets('the tag mode of an item comes from its group, is overridden on the item and goes back; a tag per piece needs tracking by piece', (tester) async {
+        final w = await _open(
+          tester,
+          size,
+          home: Builder(
+            builder: (context) => Scaffold(
+              body: TextButton(
+                key: const ValueKey('open'),
+                onPressed: () => showItemGroupAssign(context, workspaceId: 'ws-1', itemId: 'demo-item-milk', itemName: 'Milk'),
+                child: const Text('open'),
+              ),
+            ),
+          ),
+        );
+        final drinks = (await w.groups('ws-1')).firstWhere((g) => g.id == 'demo-group-drinks');
+        await w.save('ws-1', requestId: 'r-1', groupId: drinks.id, expectedRevision: drinks.revision, body: {'parameters': {'tag_mode': 'per_batch'}});
+        await tester.tap(find.byKey(const ValueKey('open')));
+        await _frames(tester);
+        final row = find.byKey(const ValueKey('item-group-param-tag_mode'));
+        expect(find.descendant(of: row, matching: find.textContaining('Drinks')), findsOneWidget, reason: 'inherited from the group, and said where from');
+        expect((await w.effective('ws-1', 'demo-item-milk')).params['tag_mode']!.value, 'per_batch');
+        // a tag per piece is refused for an item tracked by lot, in words, and nothing changes
+        await _choose(tester, 'item-group-tag-mode', _en.itemGroupTagUnit);
+        expect(find.text(_en.itemGroupReasonNeedsSerial), findsOneWidget);
+        expect((await w.effective('ws-1', 'demo-item-milk')).params['tag_mode']!.value, 'per_batch');
+        // no tag at all is the item's own value, shown inline as its own, and given back to the group
+        await _choose(tester, 'item-group-tag-mode', _en.itemGroupTagNone);
+        expect((await w.effective('ws-1', 'demo-item-milk')).params['tag_mode']!.own, isTrue);
+        expect(find.descendant(of: row, matching: find.text(_en.itemGroupOwn)), findsOneWidget);
+        await _tap(tester, 'item-group-use-tag_mode');
+        expect((await w.effective('ws-1', 'demo-item-milk')).params['tag_mode']!.value, 'per_batch');
+        expect(find.descendant(of: row, matching: find.textContaining('Drinks')), findsOneWidget);
       });
 
       testWidgets('an item shows where each setting comes from, an own value goes back to the group, a move is previewed', (tester) async {

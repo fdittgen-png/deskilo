@@ -15,6 +15,7 @@ import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../codes/dk_code.dart';
 import 'demo_stock_ledger.dart';
 
 PostgrestException _refused(String code, String message) => PostgrestException(message: message, code: code);
@@ -109,17 +110,17 @@ class DemoStockCycleCounts implements StockCycleCounts {
 
   @override
   Future<void> savePlan(String workspaceId, CountPlanDraft d) async {
-    if (!_mine(workspaceId)) throw _refused('DKG04', 'not a plan of this business');
+    if (!_mine(workspaceId)) throw _refused(DkCode.dkg04, 'not a plan of this business');
     await _seed();
     final name = d.name.trim();
     if (name.isEmpty || name.length > 80 || !RegExp(r'^\d{4}-\d{2}-\d{2}$').hasMatch(d.nextDueOn)) {
-      throw _refused('DKG07', 'a plan has a name, a scope (places, items or high value) and a due day');
+      throw _refused(DkCode.dkg07, 'a plan has a name, a scope (places, items or high value) and a due day');
     }
     if ((d.intervalDays != null && (d.intervalDays! < 1 || d.intervalDays! > 366)) || (d.highValueMinor != null && d.highValueMinor! < 1)) {
-      throw _refused('DKG07', 'a plan repeats every 1 to 366 days, or once');
+      throw _refused(DkCode.dkg07, 'a plan repeats every 1 to 366 days, or once');
     }
     if ((d.scope == CountScope.places && d.locationIds.isEmpty) || (d.scope == CountScope.items && d.itemIds.isEmpty)) {
-      throw _refused('DKG07', 'the scope names what to count (at most 200)');
+      throw _refused(DkCode.dkg07, 'the scope names what to count (at most 200)');
     }
     _plans[d.planId] = CountPlan(
       id: d.planId,
@@ -155,10 +156,10 @@ class DemoStockCycleCounts implements StockCycleCounts {
 
   @override
   Future<CountTask> task(String workspaceId, String taskId) async {
-    if (!_mine(workspaceId)) throw _refused('DKG04', 'not a task of this business');
+    if (!_mine(workspaceId)) throw _refused(DkCode.dkg04, 'not a task of this business');
     await _seed();
     final t = _tasks.where((x) => x.taskId == taskId).firstOrNull;
-    if (t == null) throw _refused('DKG04', 'not a task of this business');
+    if (t == null) throw _refused(DkCode.dkg04, 'not a task of this business');
     return CountTask(taskId: taskId, dueOn: t.dueOn, state: _state[taskId]!, lines: List.unmodifiable(_lines[taskId]!));
   }
 
@@ -192,14 +193,14 @@ class DemoStockCycleCounts implements StockCycleCounts {
   @override
   Future<CountLineResult> countLine(String workspaceId, String lineId, String observed, String requestId) async {
     if (_answers[requestId] case final done?) return done;
-    if (!_mine(workspaceId)) throw _refused('DKG04', 'not a line of this business');
+    if (!_mine(workspaceId)) throw _refused(DkCode.dkg04, 'not a line of this business');
     await _seed();
     final taskId = _taskOfLine[lineId];
-    if (taskId == null) throw _refused('DKG04', 'not a line of this business');
-    if (_state[taskId] != CountTaskState.open) throw _refused('DKG19', 'this task is no longer open');
+    if (taskId == null) throw _refused(DkCode.dkg04, 'not a line of this business');
+    if (_state[taskId] != CountTaskState.open) throw _refused(DkCode.dkg19, 'this task is no longer open');
     final line = _lines[taskId]!.firstWhere((l) => l.lineId == lineId);
-    if (line.state == CountLineState.skipped) throw _refused('DKG19', 'this line was skipped');
-    if (!_quantity.hasMatch(observed.trim())) throw _refused('DKG07', 'a count has a quantity');
+    if (line.state == CountLineState.skipped) throw _refused(DkCode.dkg19, 'this line was skipped');
+    if (!_quantity.hasMatch(observed.trim())) throw _refused(DkCode.dkg07, 'a count has a quantity');
     final seen = ExactQuantity.parse(observed.trim());
     final baseline = _ledger.balance(line.itemId, line.locationId, lotId: line.lotId);
     await _reversals.recordCount(workspaceId, (
@@ -225,14 +226,14 @@ class DemoStockCycleCounts implements StockCycleCounts {
   Future<CountLineResult> skipLine(String workspaceId, String lineId, String reason, String requestId) async {
     if (_answers[requestId] case final done?) return done;
     final why = reason.trim();
-    if (why.isEmpty || why.length > 300) throw _refused('DKG07', 'a line is skipped with a reason of 1 to 300 characters');
-    if (!_mine(workspaceId)) throw _refused('DKG04', 'not a line of this business');
+    if (why.isEmpty || why.length > 300) throw _refused(DkCode.dkg07, 'a line is skipped with a reason of 1 to 300 characters');
+    if (!_mine(workspaceId)) throw _refused(DkCode.dkg04, 'not a line of this business');
     await _seed();
     final taskId = _taskOfLine[lineId];
-    if (taskId == null) throw _refused('DKG04', 'not a line of this business');
+    if (taskId == null) throw _refused(DkCode.dkg04, 'not a line of this business');
     final line = _lines[taskId]!.firstWhere((l) => l.lineId == lineId);
-    if (line.state == CountLineState.counted) throw _refused('DKG19', 'this line was counted');
-    if (_state[taskId] != CountTaskState.open) throw _refused('DKG19', 'this task is no longer open');
+    if (line.state == CountLineState.counted) throw _refused(DkCode.dkg19, 'this line was counted');
+    if (_state[taskId] != CountTaskState.open) throw _refused(DkCode.dkg19, 'this task is no longer open');
     _setLine(taskId, lineId, CountLineState.skipped, reason: why);
     return _answers[requestId] = _close(taskId, lineId, state: 'skipped');
   }

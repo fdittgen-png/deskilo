@@ -761,6 +761,23 @@ Pulse **Cobrar en efectivo** y escriba el **Efectivo entregado** (o **Importe ex
 
 Donde su país aún no permite la caja, esta nombra la operación que falta y no ofrece nada: nada se numera ni se cobra. Una línea de mercancía necesita la gestión de stock; el rechazo del servidor se dice con palabras. Los pagos con tarjeta, descuentos, reembolsos y devoluciones no forman parte de esta primera caja.
 
+<!-- anchor: user.money.stock.rfid -->
+### Etiquetas RFID: una por lote o una por pieza
+
+**Público:** Administrador/a · Propietario
+
+Usted decide si una etiqueta de un artículo designa un lote o una pieza, y qué cuenta una lectura masiva.
+
+Con la función *Etiquetas* activada, un artículo tiene un **modo de etiqueta**, fijado en su grupo y conservado por el artículo mientras no tenga valor propio. Abra los ajustes de grupo de un artículo (**Stock → Artículos**, el icono de carpeta en su línea) y lea **Etiqueta de este artículo**: dice de dónde viene el valor (*De Bebidas desde el 3 dic.* o *Valor propio*), permite dar al artículo un valor propio, y **Usar el valor del grupo** se lo devuelve.
+
+- **Sin etiquetas.** El artículo no lleva etiqueta.
+- **Una etiqueta por lote.** Una etiqueta designa un lote o un bulto: una caja, un cubo, un cartón. Leerla cuenta un lote, nunca una pieza.
+- **Una etiqueta por pieza.** Una etiqueta designa una pieza, lo que exige que el artículo se siga pieza a pieza. Bajo **Etiquetas** del artículo, **Piezas etiquetadas una a una (n)** lista cada pieza con su etiqueta.
+
+- Una lectura masiva solo cuenta piezas en los artículos de una etiqueta por pieza. En un artículo de una etiqueta por lote cuenta lotes y muestra la cantidad registrada del lote junto al recuento, nunca como cifra contada.
+- El modo de un artículo que ya tiene etiquetas no cambia hasta retirarlas o hasta que su stock sea cero; un cambio del grupo salta entonces el artículo y lo lista como conservado. Una etiqueta de un lugar designa siempre un solo lugar.
+- Un código de etiqueta es una etiqueta UHF (EPC; el servidor lee un SGTIN-96 como GTIN y número de serie) o un chip NFC, guardado en hexadecimal mayúsculo y único en la empresa entre artículos, piezas y lugares. Vincular y retirar exigen el derecho a gestionar el stock; leer, el de verlo.
+
 <!-- anchor: user.money.stock.value -->
 ### Valor de las existencias y origen de la mercancía
 

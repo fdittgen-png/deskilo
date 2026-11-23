@@ -79,6 +79,10 @@ const List<({String command, String owns})> _order = [
   ),
   (command: 'dart run tool/build_help.dart', owns: 'assets/help/*.md'),
   (
+    command: 'dart run tool/build_dk_codes.dart',
+    owns: 'lib/core/codes/dk_code.dart',
+  ),
+  (
     command: 'dart run tool/record_applied_migrations.dart',
     owns: 'supabase/APPLIED.sha256',
   ),
@@ -191,6 +195,10 @@ List<Step> preflightSteps(
     }
     if (p.startsWith('docs/wiki/')) {
       select('dart run tool/build_help.dart', p);
+    }
+    if (p.startsWith('supabase/migrations/') || p == 'tool/build_dk_codes.dart') {
+      // a migration may raise a code the app reads by its constant (#4417)
+      select('dart run tool/build_dk_codes.dart', p);
     }
     if (p.startsWith('supabase/migrations/')) {
       select('dart run tool/record_applied_migrations.dart', p);
