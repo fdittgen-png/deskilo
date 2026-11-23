@@ -49,7 +49,11 @@ void main() {
     expect(status.matches(ProcessFilter.active), isFalse);
     expect(
       status.outsidePrerequisites,
-      [(feature: WorkspaceFeature.moneyTab, processKey: 'billingPayments')],
+      [
+        (feature: WorkspaceFeature.moneyTab, processKey: 'billingPayments'),
+        // a counter receipt is a standalone invoice (CS1, #4184): billing's, and off until switched on
+        (feature: WorkspaceFeature.standaloneInvoicing, processKey: 'billingPayments'),
+      ],
       reason:
           'invoicing is still stored on, so it is not named: switching '
           'the process on would not change it',
