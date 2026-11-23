@@ -10,8 +10,8 @@ Positions read: label, field label, field hint, field helper, field error, field
 
 | file | symbol/widget | literal | surface | action |
 |---|---|---|---|---|
-| `lib/core/demo/data/demo_stock_config_commands.dart:260` | label | Red | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/data/demo_stock_config_commands.dart:261` | label | Blue | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/data/demo_stock_config_commands.dart:266` | label | Red | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/data/demo_stock_config_commands.dart:267` | label | Blue | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_calendar_seed.dart:57` | title | Check-in | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_calendar_seed.dart:69` | title | Check-out | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_calendar_seed.dart:81` | title | Check-in | core/demo | KEEP_NON_UI_LITERAL |

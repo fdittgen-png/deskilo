@@ -24076,6 +24076,260 @@
   "@invoicingViewCustomers": {
     "description": "#3587 list view: one line per customer"
   },
+  "itemGroupAssignNone": "No group",
+  "@itemGroupAssignNone": {
+    "description": "#4361 G12 item groups: itemGroupAssignNone"
+  },
+  "itemGroupAssignOpen": "Group and inherited settings",
+  "@itemGroupAssignOpen": {
+    "description": "#4361 G12 item groups: itemGroupAssignOpen"
+  },
+  "itemGroupAssignTitle": "Group of {item}",
+  "@itemGroupAssignTitle": {
+    "description": "#4361 G12 item groups: itemGroupAssignTitle",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      }
+    }
+  },
+  "itemGroupClose": "Close",
+  "@itemGroupClose": {
+    "description": "#4361 G12 item groups: itemGroupClose"
+  },
+  "itemGroupConfirm": "Check what this reaches, then save again to apply it.",
+  "@itemGroupConfirm": {
+    "description": "#4361 G12 item groups: itemGroupConfirm"
+  },
+  "itemGroupCountEvery": "Count every (days)",
+  "@itemGroupCountEvery": {
+    "description": "#4361 G12 item groups: itemGroupCountEvery"
+  },
+  "itemGroupDelete": "Delete the group",
+  "@itemGroupDelete": {
+    "description": "#4361 G12 item groups: itemGroupDelete"
+  },
+  "itemGroupDeleted": "Group deleted.",
+  "@itemGroupDeleted": {
+    "description": "#4361 G12 item groups: itemGroupDeleted"
+  },
+  "itemGroupFailed": "The item groups could not be read.",
+  "@itemGroupFailed": {
+    "description": "#4361 G12 item groups: itemGroupFailed"
+  },
+  "itemGroupFrom": "From {group}",
+  "@itemGroupFrom": {
+    "description": "#4361 G12 item groups: itemGroupFrom",
+    "placeholders": {
+      "group": {
+        "type": "String"
+      }
+    }
+  },
+  "itemGroupFromSince": "From {group} since {date}",
+  "@itemGroupFromSince": {
+    "description": "#4361 G12 item groups: itemGroupFromSince",
+    "placeholders": {
+      "group": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "itemGroupHistory": "History",
+  "@itemGroupHistory": {
+    "description": "#4361 G12 item groups: itemGroupHistory"
+  },
+  "itemGroupHistoryLine": "{parameter}: {from} → {to}, {affected, plural, one{reached 1 item} other{reached {affected} items}}",
+  "@itemGroupHistoryLine": {
+    "description": "#4361 G12 item groups: itemGroupHistoryLine",
+    "placeholders": {
+      "parameter": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      },
+      "affected": {
+        "type": "int"
+      }
+    }
+  },
+  "itemGroupHistoryNone": "No change recorded yet.",
+  "@itemGroupHistoryNone": {
+    "description": "#4361 G12 item groups: itemGroupHistoryNone"
+  },
+  "itemGroupMinAge": "Minimum age for a sale",
+  "@itemGroupMinAge": {
+    "description": "#4361 G12 item groups: itemGroupMinAge"
+  },
+  "itemGroupMove": "Move",
+  "@itemGroupMove": {
+    "description": "#4361 G12 item groups: itemGroupMove"
+  },
+  "itemGroupMoveReaches": "{count, plural, one{Moving it changes 1 setting.} other{Moving it changes {count} settings.}}",
+  "@itemGroupMoveReaches": {
+    "description": "#4361 G12 item groups: itemGroupMoveReaches",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "itemGroupMoved": "The item is in its new group.",
+  "@itemGroupMoved": {
+    "description": "#4361 G12 item groups: itemGroupMoved"
+  },
+  "itemGroupName": "Name",
+  "@itemGroupName": {
+    "description": "#4361 G12 item groups: itemGroupName"
+  },
+  "itemGroupNo": "No",
+  "@itemGroupNo": {
+    "description": "#4361 G12 item groups: itemGroupNo"
+  },
+  "itemGroupNoParent": "Top level",
+  "@itemGroupNoParent": {
+    "description": "#4361 G12 item groups: itemGroupNoParent"
+  },
+  "itemGroupNotSet": "Not set",
+  "@itemGroupNotSet": {
+    "description": "#4361 G12 item groups: itemGroupNotSet"
+  },
+  "itemGroupOwn": "Own value",
+  "@itemGroupOwn": {
+    "description": "#4361 G12 item groups: itemGroupOwn"
+  },
+  "itemGroupParent": "Inside group",
+  "@itemGroupParent": {
+    "description": "#4361 G12 item groups: itemGroupParent"
+  },
+  "itemGroupPreviewLine": "{parameter}: {affected, plural, one{applies to 1 item} other{applies to {affected} items}}, {kept, plural, one{1 keeps its own value} other{{kept} keep their own value}}, {skipped, plural, one{1 cannot be reached} other{{skipped} cannot be reached}}",
+  "@itemGroupPreviewLine": {
+    "description": "#4361 G12 item groups: itemGroupPreviewLine",
+    "placeholders": {
+      "parameter": {
+        "type": "String"
+      },
+      "affected": {
+        "type": "int"
+      },
+      "kept": {
+        "type": "int"
+      },
+      "skipped": {
+        "type": "int"
+      }
+    }
+  },
+  "itemGroupPreviewNothing": "No item is reached.",
+  "@itemGroupPreviewNothing": {
+    "description": "#4361 G12 item groups: itemGroupPreviewNothing"
+  },
+  "itemGroupPreviewTitle": "What this change reaches",
+  "@itemGroupPreviewTitle": {
+    "description": "#4361 G12 item groups: itemGroupPreviewTitle"
+  },
+  "itemGroupReasonDepth": "A sub-group cannot have sub-groups.",
+  "@itemGroupReasonDepth": {
+    "description": "#4361 G12 item groups: itemGroupReasonDepth"
+  },
+  "itemGroupReasonGroupUnknown": "This group does not exist.",
+  "@itemGroupReasonGroupUnknown": {
+    "description": "#4361 G12 item groups: itemGroupReasonGroupUnknown"
+  },
+  "itemGroupReasonHasMovements": "it already has movements",
+  "@itemGroupReasonHasMovements": {
+    "description": "#4361 G12 item groups: itemGroupReasonHasMovements"
+  },
+  "itemGroupReasonHasSubgroups": "This group has sub-groups: delete them first.",
+  "@itemGroupReasonHasSubgroups": {
+    "description": "#4361 G12 item groups: itemGroupReasonHasSubgroups"
+  },
+  "itemGroupReasonInUse": "This group is used by items: move them first.",
+  "@itemGroupReasonInUse": {
+    "description": "#4361 G12 item groups: itemGroupReasonInUse"
+  },
+  "itemGroupReasonNameDuplicate": "Another group already has this name.",
+  "@itemGroupReasonNameDuplicate": {
+    "description": "#4361 G12 item groups: itemGroupReasonNameDuplicate"
+  },
+  "itemGroupReasonNeedsSerial": "Per-piece tags need tracking by piece.",
+  "@itemGroupReasonNeedsSerial": {
+    "description": "#4361 G12 item groups: itemGroupReasonNeedsSerial"
+  },
+  "itemGroupReasonNotOverridable": "This setting cannot be given its own value.",
+  "@itemGroupReasonNotOverridable": {
+    "description": "#4361 G12 item groups: itemGroupReasonNotOverridable"
+  },
+  "itemGroupSkippedLine": "{item}: {parameter} ({reason})",
+  "@itemGroupSkippedLine": {
+    "description": "#4361 G12 item groups: itemGroupSkippedLine",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      },
+      "parameter": {
+        "type": "String"
+      },
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "itemGroupSkippedTitle": "Not reached",
+  "@itemGroupSkippedTitle": {
+    "description": "#4361 G12 item groups: itemGroupSkippedTitle"
+  },
+  "itemGroupSoldByWeight": "Sold by weight",
+  "@itemGroupSoldByWeight": {
+    "description": "#4361 G12 item groups: itemGroupSoldByWeight"
+  },
+  "itemGroupTagBatch": "One tag per batch",
+  "@itemGroupTagBatch": {
+    "description": "#4361 G12 item groups: itemGroupTagBatch"
+  },
+  "itemGroupTagMode": "Tag mode",
+  "@itemGroupTagMode": {
+    "description": "#4361 G12 item groups: itemGroupTagMode"
+  },
+  "itemGroupTagNone": "No tags",
+  "@itemGroupTagNone": {
+    "description": "#4361 G12 item groups: itemGroupTagNone"
+  },
+  "itemGroupTagUnit": "One tag per piece",
+  "@itemGroupTagUnit": {
+    "description": "#4361 G12 item groups: itemGroupTagUnit"
+  },
+  "itemGroupTrackingSerial": "By piece (serial)",
+  "@itemGroupTrackingSerial": {
+    "description": "#4361 G12 item groups: itemGroupTrackingSerial"
+  },
+  "itemGroupUseGroup": "Use the group’s value",
+  "@itemGroupUseGroup": {
+    "description": "#4361 G12 item groups: itemGroupUseGroup"
+  },
+  "itemGroupYes": "Yes",
+  "@itemGroupYes": {
+    "description": "#4361 G12 item groups: itemGroupYes"
+  },
+  "itemGroupsAdd": "Add a group",
+  "@itemGroupsAdd": {
+    "description": "#4361 G12 item groups: itemGroupsAdd"
+  },
+  "itemGroupsEmpty": "No group yet. A group holds settings that its items share.",
+  "@itemGroupsEmpty": {
+    "description": "#4361 G12 item groups: itemGroupsEmpty"
+  },
+  "itemGroupsTitle": "Item groups",
+  "@itemGroupsTitle": {
+    "description": "#4361 G12 item groups: itemGroupsTitle"
+  },
   "journalBlocked": "Map these roles in the book chart first: {roles}",
   "@journalBlocked": {
     "description": "Journal export (#2370): roles the posting engine could not resolve",
@@ -47357,6 +47611,139 @@
   "@stockReversalSupplierTitle": {
     "description": "#4172 stock returns and counts screens"
   },
+  "stockScanAlreadyRead": "Tag {code} was already read.",
+  "@stockScanAlreadyRead": {
+    "description": "#4363 G14: stockScanAlreadyRead",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "stockScanFailed": "The scanned code could not be read. Check the connection and scan it again.",
+  "@stockScanFailed": {
+    "description": "#4359 G10 scanner: stockScanFailed"
+  },
+  "stockScanHelp": "Working with a scanner",
+  "@stockScanHelp": {
+    "description": "#4359 G10 scanner: stockScanHelp"
+  },
+  "stockScanHint": "Using a barcode scanner? Turn on Scanning",
+  "@stockScanHint": {
+    "description": "#4359 G10: the line that sends a business using a scanner to the Scanning feature"
+  },
+  "stockScanInterval": "Longest gap between two keys of a scan (milliseconds)",
+  "@stockScanInterval": {
+    "description": "#4359 G10 scanner: stockScanInterval"
+  },
+  "stockScanIntervalInvalid": "Enter a whole number of milliseconds within the allowed range.",
+  "@stockScanIntervalInvalid": {
+    "description": "#4359 G10: the interval is not within the range"
+  },
+  "stockScanLast": "{item}: {quantity} {unit}",
+  "@stockScanLast": {
+    "description": "#4359 G10 scanner: stockScanLast",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "stockScanNfc": "Read a tag",
+  "@stockScanNfc": {
+    "description": "#4363 G14: stockScanNfc"
+  },
+  "stockScanNfcFailed": "The phone could not start reading. Check that NFC is on.",
+  "@stockScanNfcFailed": {
+    "description": "#4363 G14: stockScanNfcFailed"
+  },
+  "stockScanNfcReading": "Hold the tag to the back of the phone…",
+  "@stockScanNfcReading": {
+    "description": "#4363 G14: stockScanNfcReading"
+  },
+  "stockScanPlacing": "Placing into {place}",
+  "@stockScanPlacing": {
+    "description": "#4359 G10 scanner: stockScanPlacing",
+    "placeholders": {
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "stockScanRefusedCode": "The code {code} names nothing this form can use.",
+  "@stockScanRefusedCode": {
+    "description": "#4359 G10 scanner: stockScanRefusedCode",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "stockScanRefusedPlace": "{place} cannot take goods.",
+  "@stockScanRefusedPlace": {
+    "description": "#4359 G10 scanner: stockScanRefusedPlace",
+    "placeholders": {
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "stockScanSave": "Save the scanner settings",
+  "@stockScanSave": {
+    "description": "#4359 G10 scanner: stockScanSave"
+  },
+  "stockScanSettingsHint": "A scanner in keyboard mode types the code and presses Enter. These two settings belong to this device: a code typed faster than the gap below is taken for a scan.",
+  "@stockScanSettingsHint": {
+    "description": "#4359 G10 scanner: stockScanSettingsHint"
+  },
+  "stockScanSettingsTitle": "Scanner",
+  "@stockScanSettingsTitle": {
+    "description": "#4359 G10 scanner: stockScanSettingsTitle"
+  },
+  "stockScanTerminator": "What ends a scanned code",
+  "@stockScanTerminator": {
+    "description": "#4359 G10 scanner: stockScanTerminator"
+  },
+  "stockScanTerminatorEither": "Enter or Tab",
+  "@stockScanTerminatorEither": {
+    "description": "#4359 G10 scanner: stockScanTerminatorEither"
+  },
+  "stockScanTerminatorEnter": "Enter",
+  "@stockScanTerminatorEnter": {
+    "description": "#4359 G10 scanner: stockScanTerminatorEnter"
+  },
+  "stockScanTerminatorTab": "Tab",
+  "@stockScanTerminatorTab": {
+    "description": "#4359 G10 scanner: stockScanTerminatorTab"
+  },
+  "stockScanUnknown": "Unknown code {code} — add it to an item?",
+  "@stockScanUnknown": {
+    "description": "#4359 G10 scanner: stockScanUnknown",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "stockScanUnknownAdd": "Open the items",
+  "@stockScanUnknownAdd": {
+    "description": "#4359 G10 scanner: stockScanUnknownAdd"
+  },
+  "stockScanUnknownTag": "Unknown tag {code}",
+  "@stockScanUnknownTag": {
+    "description": "#4363 G14: stockScanUnknownTag",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
   "stockSettingsElsewhere": "Stock settings are kept on the Stock settings page.",
   "@stockSettingsElsewhere": {
     "description": "the stock pages and group (#4299)"
@@ -47388,6 +47775,127 @@
   "stockTabOnHand": "On hand",
   "@stockTabOnHand": {
     "description": "#4161 the Stock screen: the tab of what is on hand"
+  },
+  "stockTagBoundElsewhere": "This tag is already bound to {owner}.",
+  "@stockTagBoundElsewhere": {
+    "description": "#4363 G14 tags: stockTagBoundElsewhere",
+    "placeholders": {
+      "owner": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTagKindNfc": "NFC chip",
+  "@stockTagKindNfc": {
+    "description": "#4363 G14 tags: stockTagKindNfc"
+  },
+  "stockTagKindUhf": "UHF label",
+  "@stockTagKindUhf": {
+    "description": "#4363 G14 tags: stockTagKindUhf"
+  },
+  "stockTagMalformed": "That is not a valid tag code.",
+  "@stockTagMalformed": {
+    "description": "#4363 G14 tags: stockTagMalformed"
+  },
+  "stockTagModeNone": "This item does not use tags.",
+  "@stockTagModeNone": {
+    "description": "#4363 G14 tags: stockTagModeNone"
+  },
+  "stockTagNotInForce": "This is not a tag in force here.",
+  "@stockTagNotInForce": {
+    "description": "#4363 G14 tags: stockTagNotInForce"
+  },
+  "stockTagOnPiece": "This tag is on a piece that is still in stock.",
+  "@stockTagOnPiece": {
+    "description": "#4363 G14 tags: stockTagOnPiece"
+  },
+  "stockTagOwnerUnknown": "This item or place is not known.",
+  "@stockTagOwnerUnknown": {
+    "description": "#4363 G14 tags: stockTagOwnerUnknown"
+  },
+  "stockTagPerUnit": "This item is tagged piece by piece: tag its pieces when they are received.",
+  "@stockTagPerUnit": {
+    "description": "#4363 G14 tags: stockTagPerUnit"
+  },
+  "stockTagReasonDamaged": "Damaged",
+  "@stockTagReasonDamaged": {
+    "description": "#4363 G14 tags: stockTagReasonDamaged"
+  },
+  "stockTagReasonLost": "Lost",
+  "@stockTagReasonLost": {
+    "description": "#4363 G14 tags: stockTagReasonLost"
+  },
+  "stockTagReasonReplaced": "Replaced",
+  "@stockTagReasonReplaced": {
+    "description": "#4363 G14 tags: stockTagReasonReplaced"
+  },
+  "stockTagRetiredLately": "This tag was retired recently; it can be bound again after the waiting time set in the stock settings.",
+  "@stockTagRetiredLately": {
+    "description": "#4363 G14 tags: stockTagRetiredLately"
+  },
+  "stockTagsAlready": "Tag {code} was already bound here.",
+  "@stockTagsAlready": {
+    "description": "#4363 G14 tags: stockTagsAlready",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTagsBound": "Tag {code} bound.",
+  "@stockTagsBound": {
+    "description": "#4363 G14 tags: stockTagsBound",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTagsClose": "Close",
+  "@stockTagsClose": {
+    "description": "#4363 G14 tags: stockTagsClose"
+  },
+  "stockTagsFailed": "The tags could not be read.",
+  "@stockTagsFailed": {
+    "description": "#4363 G14 tags: stockTagsFailed"
+  },
+  "stockTagsNone": "No tag is bound yet.",
+  "@stockTagsNone": {
+    "description": "#4363 G14 tags: stockTagsNone"
+  },
+  "stockTagsOpen": "Tags",
+  "@stockTagsOpen": {
+    "description": "#4363 G14 tags: stockTagsOpen"
+  },
+  "stockTagsRetire": "Retire",
+  "@stockTagsRetire": {
+    "description": "#4363 G14 tags: stockTagsRetire"
+  },
+  "stockTagsRetireWhy": "Why is it retired?",
+  "@stockTagsRetireWhy": {
+    "description": "#4363 G14 tags: stockTagsRetireWhy"
+  },
+  "stockTagsRetired": "Tag {code} retired.",
+  "@stockTagsRetired": {
+    "description": "#4363 G14 tags: stockTagsRetired",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTagsTitle": "Tags: {name}",
+  "@stockTagsTitle": {
+    "description": "#4363 G14 tags: stockTagsTitle",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTagsUhfOnly": "This item uses UHF tags — use the RFID reader.",
+  "@stockTagsUhfOnly": {
+    "description": "#4363 G14 tags: stockTagsUhfOnly"
   },
   "stockTakeOutLoss": "Lost or written off",
   "@stockTakeOutLoss": {

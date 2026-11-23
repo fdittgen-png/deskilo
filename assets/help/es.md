@@ -2954,6 +2954,48 @@ Abra **Existencias → Artículos**. Cada línea muestra el **código de barras*
 - **Busque** por nombre, código de barras o dirección. Escribir o escanear un código de barras en la búsqueda y confirmar abre ese artículo.
 - Las listas largas se cargan por páginas: elija *Mostrar más*.
 
+### Grupos de artículos
+
+**Público:** Administrador/a · Propietario
+
+Quiere decir una vez lo que una familia de artículos tiene en común — cuánto dura, cómo se sigue, cada cuánto se cuenta — y que cada artículo lo siga.
+
+Abra **Stock → Grupos de artículos** (requiere la función *Grupos de artículos* bajo la gestión del stock). Un grupo tiene un nombre, está arriba o dentro de otro grupo (un solo nivel de subgrupos) y lleva los ajustes que elija: **seguimiento**, **vida útil**, **modo de etiqueta**, **unidad de inventario**, **contar cada n días**, **edad mínima** y **se vende al peso**. Un ajuste que deja *Sin definir* no se decide en este nivel.
+
+- **Un artículo sigue a su grupo mientras no tenga un valor propio.** Rige el valor del propio artículo si lo tiene, si no el de su subgrupo, si no el de su grupo. Abra **Grupo y ajustes heredados** de un artículo (el icono de carpeta en su línea de **Stock → Artículos**) para ver de dónde viene cada ajuste (*Del grupo Bebidas desde el 3 dic.* o *Valor propio*), moverlo a otro grupo y devolver un valor propio con **Usar el valor del grupo**.
+- **Cada cambio se previsualiza.** Al guardar un grupo se muestra primero lo que el cambio alcanza: *se aplica a 1, 1 conservan su propio valor, 0 no se pueden alcanzar*. No se aplica nada hasta guardar por segunda vez; cualquier edición intermedia pide una nueva vista previa. Un artículo que el cambio no puede alcanzar (por ejemplo una unidad en un artículo que ya tiene movimientos) se lista, y el cambio del grupo se guarda para los demás.
+- **Historial.** La hoja del grupo lista cada cambio con cuántos artículos alcanzó; la línea de origen de un artículo dice desde cuándo.
+- Un subgrupo no puede tener subgrupos; las etiquetas por pieza necesitan seguimiento por pieza; un grupo que aún usan artículos no se elimina (muévalos primero). Lo ya registrado — facturas, recepciones, movimientos — nunca cambia.
+- Cambiar los grupos requiere el derecho de gestionar el stock; leerlos, el de verlo.
+
+### Trabajar con un escáner
+
+**Público:** Administrador/a · Propietario
+
+Quiere recibir, mover y dar de baja mercancías escaneando, sin tocar un campo.
+
+Un escáner de códigos de barras en modo teclado (escribe el código y pulsa Intro) funciona en las hojas de traslado y de salida, al ubicar una entrega, y en **Stock → Artículos** y **Stock → Ubicaciones**. No hace falta tocar un campo antes. Un campo de texto con el foco conserva su propia escritura: lo que usted escribe nunca se toma por un escaneo.
+
+- **Escanee la ubicación y luego los artículos.** Un código de ubicación fija la ubicación actual; se mantiene hasta que escanee otra y se muestra arriba (*Colocando en …*). En un traslado, la primera ubicación es el origen y la segunda el destino. Un código de artículo, de variante o de embalaje designa el artículo y lo cuenta: un código de caja añade la cantidad exacta de la caja (por ejemplo 12 piezas) y una etiqueta de lote fija el lote.
+- **Un escaneo repetido** añade uno más o, si su negocio lo eligió en los ajustes del stock (*Escaneo repetido*), le lleva al campo de cantidad.
+- **Un código que no designa nada** dice *Código … desconocido: ¿añadirlo a un artículo?*; quien puede gestionar el stock abre los artículos y se lo asigna a uno. Una ubicación que no puede recibir mercancías, o un artículo que no se lleva en stock, se rechaza con palabras y no se rellena nada.
+- **Un escaneo no envía nada.** Solo rellena el formulario; el botón que pulsa ejecuta el mismo comando, con los mismos derechos, que sin escáner.
+- **Ajustes.** El uso del escáner depende de la función *Escáner* del negocio, bajo la gestión del stock. El intervalo máximo entre dos teclas de un escaneo (una persona escribe más despacio que un escáner) y lo que termina un código (Intro, Tab o ambos) son del dispositivo, en **Stock → Ajustes del stock → Escáner**.
+
+### Etiquetas con el NFC del teléfono
+
+**Público:** Administrador/a · Propietario
+
+Quiere asociar un chip NFC a un artículo o a una ubicación y leer chips mientras trabaja, con el teléfono que ya tiene.
+
+Con la función *Etiquetas* activada y un teléfono que lee NFC, **Stock → Artículos** y **Stock → Ubicaciones** muestran un botón de etiquetas en cada línea, y la barra de escaneo de una hoja de mercancías muestra **Leer una etiqueta**. El botón no aparece en un dispositivo sin NFC (un ordenador, la mayoría de las tabletas, un teléfono con el NFC desactivado): use allí un escáner o un lector portátil.
+
+- **Asociar una etiqueta.** Abra las etiquetas de un artículo o de una ubicación, toque **Leer una etiqueta** y acerque el chip a la parte trasera del teléfono. Una lectura asocia una etiqueta. Leer el mismo chip otra vez dice que ya estaba asociado aquí y no asocia nada nuevo; un chip asociado a otra cosa se rechaza y dice a cuál. Un propietario puede llevar varias etiquetas. El servidor acepta el código en mayúsculas o minúsculas, con espacios, dos puntos o guiones.
+- **Retirar una etiqueta** perdida, dañada o sustituida: elija el motivo. Una etiqueta retirada hace poco no puede asociarse de nuevo enseguida (la espera es un ajuste del stock), y una etiqueta en una pieza que sigue en stock no puede retirarse.
+- **Leer en una hoja de mercancías.** Un chip se lee como un código escaneado: una etiqueta de ubicación fija la ubicación actual, una de artículo cuenta el artículo. Un chip leído dos veces en una hoja se ignora (*ya leído*); un chip que no designa nada dice *Etiqueta desconocida*.
+- **Las etiquetas UHF** no las puede leer un teléfono. Un artículo que solo las tiene dice *use el lector RFID*.
+- Asociar requiere el derecho de gestionar el stock; leer, el de verlo.
+
 ### Valor de las existencias y origen de la mercancía
 
 **Público:** Administrador/a · Propietario
