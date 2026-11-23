@@ -2335,12 +2335,12 @@ constraint stock_reversals.system_columns_order CHECK ((modified_datetime >= cre
 constraint stock_reversals.system_company_present CHECK ((company_id IS NOT NULL))
 constraint stock_tagged_units.stock_tagged_units_pkey PRIMARY KEY (id)
 constraint stock_tagged_units.stock_tagged_units_state_check CHECK ((state = ANY (ARRAY['in_stock'::text, 'sold'::text, 'returned'::text, 'written_off'::text, 'retired'::text])))
-constraint stock_tagged_units.stock_tagged_units_variant_id_fkey FOREIGN KEY (variant_id) REFERENCES item_variants(id)
 constraint stock_tagged_units.stock_tagged_units_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint stock_tagged_units.stock_tagged_units_workspace_id_id_key UNIQUE (workspace_id, id)
 constraint stock_tagged_units.stock_tagged_units_workspace_id_item_id_fkey FOREIGN KEY (workspace_id, item_id) REFERENCES services(workspace_id, id) ON DELETE CASCADE
 constraint stock_tagged_units.stock_tagged_units_workspace_id_location_id_fkey FOREIGN KEY (workspace_id, location_id) REFERENCES stock_locations(workspace_id, id) ON DELETE CASCADE
 constraint stock_tagged_units.stock_tagged_units_workspace_id_lot_id_fkey FOREIGN KEY (workspace_id, lot_id) REFERENCES stock_lots(workspace_id, id) ON DELETE CASCADE
+constraint stock_tagged_units.stock_tagged_units_workspace_id_variant_id_fkey FOREIGN KEY (workspace_id, variant_id) REFERENCES item_variants(workspace_id, id)
 constraint stock_tagged_units.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint stock_tagged_units.system_company_present CHECK ((company_id IS NOT NULL))
 constraint stock_tags.stock_tags_check CHECK (((state = 'retired'::text) = (retired_at IS NOT NULL)))
@@ -2366,6 +2366,7 @@ constraint stock_tags.stock_tags_workspace_id_location_id_fkey FOREIGN KEY (work
 constraint stock_tags.stock_tags_workspace_id_lot_id_fkey FOREIGN KEY (workspace_id, lot_id) REFERENCES stock_lots(workspace_id, id) ON DELETE CASCADE
 constraint stock_tags.stock_tags_workspace_id_piece_id_fkey FOREIGN KEY (workspace_id, piece_id) REFERENCES stock_tagged_units(workspace_id, id) ON DELETE CASCADE
 constraint stock_tags.stock_tags_workspace_id_retired_by_member_id_fkey FOREIGN KEY (workspace_id, retired_by_member_id) REFERENCES members(workspace_id, id)
+constraint stock_tags.stock_tags_workspace_id_variant_id_fkey FOREIGN KEY (workspace_id, variant_id) REFERENCES item_variants(workspace_id, id) ON DELETE CASCADE
 constraint stock_tags.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint stock_tags.system_company_present CHECK ((company_id IS NOT NULL))
 constraint stock_transfer_lines.stock_transfer_lines_check CHECK (((received >= (0)::numeric) AND (received <= loaded)))
@@ -4263,7 +4264,7 @@ routine public.stock_on_hand_v1(p_workspace_id uuid, p_item_id uuid, p_location_
 routine public.stock_open(p_workspace_id uuid) -> void | function | definer | volatile | exec:service_role | body:d1773b388acf
 routine public.stock_ops_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:3d13ac56d749
 routine public.stock_page_reader(p_workspace_id uuid, p_limit integer) -> void | function | definer | stable | exec:service_role | body:076a546069b5
-routine public.stock_pieces_apply(p_workspace_id uuid, p_item_id uuid, p_variant uuid, p_lot uuid, p_line jsonb, p_from uuid, p_to uuid, p_reason text, p_qty numeric) -> void | function | definer | volatile | exec:service_role | body:4053b871aab9
+routine public.stock_pieces_apply(p_workspace_id uuid, p_item_id uuid, p_variant uuid, p_lot uuid, p_line jsonb, p_from uuid, p_to uuid, p_reason text, p_qty numeric) -> void | function | definer | volatile | exec:service_role | body:c0a278643dfc
 routine public.stock_pieces_balanced() -> trigger | function | definer | volatile | exec:service_role | body:463c18ad6fe0
 routine public.stock_pieces_check_v1(p_workspace_id uuid, p_item_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:02ca0c495636
 routine public.stock_pieces_difference(p_workspace_id uuid, p_item_id uuid, p_place uuid) -> TABLE(variant_id uuid, lot_id uuid, ledger numeric, pieces bigint) | function | definer | stable | exec:service_role | body:854e3e94a1a0
@@ -4280,7 +4281,7 @@ routine public.stock_reorder_check(p_point_id uuid) -> void | function | definer
 routine public.stock_reorder_quantity(p_obj jsonb, p_key text, p_default numeric) -> numeric | function | invoker | immutable | exec:service_role | body:0b131a38cdb8
 routine public.stock_reorder_reader(p_workspace_id uuid) -> void | function | definer | stable | exec:service_role | body:4e84c60e590e
 routine public.stock_replenishment_v1(p_workspace_id uuid, p_site_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:b71e455d57e3
-routine public.stock_resolve_code_v1(p_workspace_id uuid, p_code text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:12735fdf96b0
+routine public.stock_resolve_code_v1(p_workspace_id uuid, p_code text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:c259b66eed14
 routine public.stock_return_v1(p_workspace_id uuid, p_request_id uuid, p_return_id uuid, p_kind text, p_lines jsonb, p_occurred_at timestamp with time zone) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:61f77cc02424
 routine public.stock_returns_append_only() -> trigger | function | invoker | volatile | exec:service_role | body:20ba809ab789
 routine public.stock_reversible_v1(p_workspace_id uuid, p_movement_ids uuid[]) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:d76f54fb6135
@@ -4291,7 +4292,7 @@ routine public.stock_sgtin96_decode(p_code text) -> jsonb | function | invoker |
 routine public.stock_site_of(p_location_id uuid) -> uuid | function | definer | stable | exec:service_role | body:b87fbae71313
 routine public.stock_site_on_hand(p_workspace_id uuid, p_item_id uuid, p_variant_id uuid, p_site_id uuid) -> numeric | function | definer | stable | exec:service_role | body:2cd2b213bc31
 routine public.stock_tag_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:2b7429084c09
-routine public.stock_tag_bind_v1(p_workspace_id uuid, p_request_id uuid, p_tag jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:b972d13f84e9
+routine public.stock_tag_bind_v1(p_workspace_id uuid, p_request_id uuid, p_tag jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:11b1dc24eb6a
 routine public.stock_tag_kind(p_code text) -> text | function | invoker | immutable | exec:service_role | body:b1ad2faa62ae
 routine public.stock_tag_normalize(p_code text) -> text | function | invoker | immutable | exec:service_role | body:0d60893ed6ad
 routine public.stock_tag_owner_text(t stock_tags) -> text | function | definer | stable | exec:service_role | body:b43f7998d257
