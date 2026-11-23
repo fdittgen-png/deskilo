@@ -348,6 +348,14 @@
   "featureCounterReceiptsDesc": "Una venta en el mostrador da un ticket inmutable, numerado una sola vez, con el cobro recibido. Solo se ofrece donde la operación del país está soportada, y dice claramente cuándo no lo está.",
   "featureCounterTillSessionsTitle": "Sesiones de caja y cierre del día",
   "featureCounterTillSessionsDesc": "Abra una caja con su fondo, cuente el cajón al cierre y cierre el día con su informe. Una venta necesita una caja abierta; el efectivo esperado se deriva de lo cobrado, nunca se escribe.",
+  "featureStockExpiryReportTitle": "El informe de caducidad",
+  "featureStockExpiryReportDesc": "Imprime, en una fecha elegida, cada lote o pieza en stock caducado en esa fecha o que caduca después, con un diseño editable como los demás informes.",
+  "@featureStockExpiryReportTitle": {
+    "description": "#4431 the expiry report feature: its name"
+  },
+  "@featureStockExpiryReportDesc": {
+    "description": "#4431 the expiry report feature: what it does"
+  },
   "featureStockTagReadsTitle": "Lectura de muchas etiquetas",
   "featureStockTagReadsDesc": "Un lector UHF en modo teclado lee muchas etiquetas a la vez para recibir, mover y contar: las etiquetas se reúnen, se eliminan duplicados y se resuelven, y no se envía nada hasta que la persona confirma."
 }

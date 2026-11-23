@@ -12588,6 +12588,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featureStockCycleCountsTitle => 'Inventari ciclici';
 
   @override
+  String get featureStockExpiryReportDesc =>
+      'Stampa, a una data scelta, ogni lotto o pezzo in magazzino scaduto a quella data o che scade dopo, con un layout modificabile come gli altri rapporti.';
+
+  @override
+  String get featureStockExpiryReportTitle => 'Il rapporto di scadenza';
+
+  @override
   String get featureStockItemGroupsDesc =>
       'Raggruppi gli articoli per condividerne le impostazioni: tracciabilità, scadenza, modalità etichetta, unità, IVA, cassa e altro. Un articolo eredita il valore del suo gruppo salvo che mantenga il proprio; una modifica al gruppo mostra quanti articoli raggiunge prima di essere salvata.';
 
@@ -30000,6 +30007,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get reportDocStatus => 'Situazione dello spazio';
 
   @override
+  String get reportDocStockExpiry => 'Rapporto di scadenza';
+
+  @override
   String get reportDocTrialBalance => 'Bilancio di verifica';
 
   @override
@@ -32522,6 +32532,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Quanti giorni un compito di inventario ciclico può restare aperto dopo la scadenza prima che la posta lo dichiari in ritardo.';
 
   @override
+  String get settingHintStockExpiryHorizonDays =>
+      'Quanti giorni dopo la data di riferimento il rapporto di scadenza guarda ciò che sta per scadere, quando alla stampa non si indica un orizzonte.';
+
+  @override
   String get settingHintStockGroupDefaultCountDays =>
       'Ogni quanti giorni un articolo che né un gruppo né un\'impostazione propria riguarda è proposto per un conteggio ciclico. 0 significa non programmato.';
 
@@ -32928,6 +32942,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settingLabelStockCycleCountOverdueDays =>
       'Inventario ciclico: in ritardo dopo';
+
+  @override
+  String get settingLabelStockExpiryHorizonDays =>
+      'Rapporto di scadenza: orizzonte';
 
   @override
   String get settingLabelStockGroupDefaultCountDays =>
@@ -36394,6 +36412,65 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get stockEnteredLabel => 'Inserito';
+
+  @override
+  String get stockExpiryAny => 'Qualsiasi';
+
+  @override
+  String stockExpiryCut(String rows) {
+    return 'Il rapporto è tagliato a $rows righe: restringa la data, il luogo o il gruppo.';
+  }
+
+  @override
+  String get stockExpiryDate => 'Data di riferimento';
+
+  @override
+  String stockExpiryDaysAhead(String days) {
+    return 'tra $days g';
+  }
+
+  @override
+  String stockExpiryDaysPast(String days) {
+    return '$days g fa';
+  }
+
+  @override
+  String get stockExpiryGroup => 'Gruppo di articoli';
+
+  @override
+  String get stockExpiryHorizon => 'Orizzonte (giorni)';
+
+  @override
+  String get stockExpiryHorizonHint => 'Vuoto: l\'impostazione dell\'azienda.';
+
+  @override
+  String get stockExpiryNone =>
+      'A questa data nulla in magazzino è scaduto o sta per scadere.';
+
+  @override
+  String get stockExpiryPlace => 'Luogo';
+
+  @override
+  String get stockExpiryPrint => 'Stampa il rapporto';
+
+  @override
+  String get stockExpiryReadFailed =>
+      'Non è stato possibile leggere il rapporto di scadenza.';
+
+  @override
+  String get stockExpiryScope => 'Che cosa elencare';
+
+  @override
+  String get stockExpiryScopeBoth => 'Scaduto e in scadenza';
+
+  @override
+  String get stockExpiryScopeExpired => 'Scaduto';
+
+  @override
+  String get stockExpiryScopeExpiring => 'In scadenza';
+
+  @override
+  String get stockExpiryTitle => 'Rapporto di scadenza';
 
   @override
   String get stockFirstRunBody =>

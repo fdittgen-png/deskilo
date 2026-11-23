@@ -807,6 +807,8 @@
  "stockCycleHighValueHint": "Der Wert in der kleinsten Einheit der Währung des Unternehmens, ab dem das, was ein Ort von einem Artikel hält, für einen Plan ohne eigene Schwelle als hochwertig gilt. Einstellbar in den Einstellungen der App.",
  "stockCycleOverdue": "Permanente Inventur: überfällig nach",
  "stockCycleOverdueHint": "Wie viele Tage eine Inventuraufgabe nach ihrem Fälligkeitstag offen bleiben darf, bevor sie als überfällig gemeldet wird. Einstellbar in den Einstellungen der App.",
+ "stockExpiryHorizon": "Verfallsbericht: Vorausschau",
+ "stockExpiryHorizonHint": "Wie viele Tage nach dem Stichtag der Verfallsbericht vorausschaut, was bald abläuft. In den Einstellungen der App festgelegt.",
  "optMinorUnits": "{n} (kleinste Einheit)",
  "businessKind_shop": "Laden — kauft, lagert und verkauft Ware",
  "businessShopType": "Art des Ladens",

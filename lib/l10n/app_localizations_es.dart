@@ -12577,6 +12577,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get featureStockCycleCountsTitle => 'Recuentos cíclicos';
 
   @override
+  String get featureStockExpiryReportDesc =>
+      'Imprime, en una fecha elegida, cada lote o pieza en stock caducado en esa fecha o que caduca después, con un diseño editable como los demás informes.';
+
+  @override
+  String get featureStockExpiryReportTitle => 'El informe de caducidad';
+
+  @override
   String get featureStockItemGroupsDesc =>
       'Agrupe artículos para compartir sus ajustes: seguimiento, caducidad, modo de etiqueta, unidades, IVA, caja y más. Un artículo hereda el valor de su grupo salvo que conserve el suyo; un cambio de grupo muestra a cuántos artículos llega antes de guardarse.';
 
@@ -29963,6 +29970,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get reportDocStatus => 'Situación del espacio';
 
   @override
+  String get reportDocStockExpiry => 'Informe de caducidad';
+
+  @override
   String get reportDocTrialBalance => 'Balance de sumas y saldos';
 
   @override
@@ -32480,6 +32490,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Cuántos días puede seguir abierta una tarea de recuento cíclico después de su fecha antes de que la bandeja la declare vencida.';
 
   @override
+  String get settingHintStockExpiryHorizonDays =>
+      'Cuántos días después de la fecha de referencia mira el informe de caducidad lo que está por caducar, cuando no se indica un horizonte al imprimirlo.';
+
+  @override
   String get settingHintStockGroupDefaultCountDays =>
       'Cada cuántos días se propone para un recuento cíclico un artículo que ni un grupo ni un ajuste propio contempla. 0 significa sin programar.';
 
@@ -32885,6 +32899,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingLabelStockCycleCountOverdueDays =>
       'Recuento cíclico: vencido tras';
+
+  @override
+  String get settingLabelStockExpiryHorizonDays =>
+      'Informe de caducidad: horizonte';
 
   @override
   String get settingLabelStockGroupDefaultCountDays =>
@@ -36355,6 +36373,65 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get stockEnteredLabel => 'Introducido';
+
+  @override
+  String get stockExpiryAny => 'Cualquiera';
+
+  @override
+  String stockExpiryCut(String rows) {
+    return 'El informe se corta en $rows filas: acote la fecha, el lugar o el grupo.';
+  }
+
+  @override
+  String get stockExpiryDate => 'Fecha de referencia';
+
+  @override
+  String stockExpiryDaysAhead(String days) {
+    return 'en $days d';
+  }
+
+  @override
+  String stockExpiryDaysPast(String days) {
+    return 'hace $days d';
+  }
+
+  @override
+  String get stockExpiryGroup => 'Grupo de artículos';
+
+  @override
+  String get stockExpiryHorizon => 'Horizonte (días)';
+
+  @override
+  String get stockExpiryHorizonHint => 'Vacío: el ajuste de la empresa.';
+
+  @override
+  String get stockExpiryNone =>
+      'En esta fecha nada del stock está caducado ni a punto de caducar.';
+
+  @override
+  String get stockExpiryPlace => 'Lugar';
+
+  @override
+  String get stockExpiryPrint => 'Imprimir el informe';
+
+  @override
+  String get stockExpiryReadFailed =>
+      'No se pudo leer el informe de caducidad.';
+
+  @override
+  String get stockExpiryScope => 'Qué listar';
+
+  @override
+  String get stockExpiryScopeBoth => 'Caducado y por caducar';
+
+  @override
+  String get stockExpiryScopeExpired => 'Caducado';
+
+  @override
+  String get stockExpiryScopeExpiring => 'Por caducar';
+
+  @override
+  String get stockExpiryTitle => 'Informe de caducidad';
 
   @override
   String get stockFirstRunBody =>

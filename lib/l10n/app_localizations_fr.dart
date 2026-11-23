@@ -12641,6 +12641,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get featureStockCycleCountsTitle => 'Inventaires tournants';
 
   @override
+  String get featureStockExpiryReportDesc =>
+      'Imprime, à une date choisie, chaque lot ou pièce en stock périmé à cette date ou qui périme après, avec une mise en page modifiable comme les autres rapports.';
+
+  @override
+  String get featureStockExpiryReportTitle => 'Le rapport de péremption';
+
+  @override
   String get featureStockItemGroupsDesc =>
       'Regroupez les articles pour partager leurs réglages : suivi, durée de conservation, mode d\'étiquette, unités, TVA, caisse et plus. Un article hérite de la valeur de son groupe sauf s\'il garde la sienne ; un changement de groupe montre combien d\'articles il touche avant d\'être enregistré.';
 
@@ -30092,6 +30099,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get reportDocStatus => 'Situation de l\'espace';
 
   @override
+  String get reportDocStockExpiry => 'Rapport de péremption';
+
+  @override
   String get reportDocTrialBalance => 'Balance générale et auxiliaire';
 
   @override
@@ -32621,6 +32631,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Combien de jours une tâche d’inventaire tournant peut rester ouverte après son échéance avant que la boîte de réception la dise en retard.';
 
   @override
+  String get settingHintStockExpiryHorizonDays =>
+      'Combien de jours après la date de référence le rapport de péremption regarde ce qui va bientôt périmer, quand aucun horizon n\'est donné à l\'impression.';
+
+  @override
   String get settingHintStockGroupDefaultCountDays =>
       'Tous les combien de jours un article que ni un groupe ni un réglage propre ne concerne est proposé pour un comptage tournant. 0 : non planifié.';
 
@@ -33021,6 +33035,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingLabelStockCycleCountOverdueDays =>
       'Inventaire tournant : en retard après';
+
+  @override
+  String get settingLabelStockExpiryHorizonDays =>
+      'Rapport de péremption : horizon';
 
   @override
   String get settingLabelStockGroupDefaultCountDays =>
@@ -36514,6 +36532,65 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get stockEnteredLabel => 'Saisi';
+
+  @override
+  String get stockExpiryAny => 'Tous';
+
+  @override
+  String stockExpiryCut(String rows) {
+    return 'Le rapport est coupé à $rows lignes : restreignez la date, l\'emplacement ou le groupe.';
+  }
+
+  @override
+  String get stockExpiryDate => 'Date de référence';
+
+  @override
+  String stockExpiryDaysAhead(String days) {
+    return 'dans $days j';
+  }
+
+  @override
+  String stockExpiryDaysPast(String days) {
+    return 'il y a $days j';
+  }
+
+  @override
+  String get stockExpiryGroup => 'Groupe d\'articles';
+
+  @override
+  String get stockExpiryHorizon => 'Horizon (jours)';
+
+  @override
+  String get stockExpiryHorizonHint => 'Vide : le réglage de l\'entreprise.';
+
+  @override
+  String get stockExpiryNone =>
+      'À cette date, rien en stock n\'est périmé ni sur le point de l\'être.';
+
+  @override
+  String get stockExpiryPlace => 'Emplacement';
+
+  @override
+  String get stockExpiryPrint => 'Imprimer le rapport';
+
+  @override
+  String get stockExpiryReadFailed =>
+      'Le rapport de péremption n\'a pas pu être lu.';
+
+  @override
+  String get stockExpiryScope => 'Ce qu\'il faut lister';
+
+  @override
+  String get stockExpiryScopeBoth => 'Périmé et bientôt périmé';
+
+  @override
+  String get stockExpiryScopeExpired => 'Périmé';
+
+  @override
+  String get stockExpiryScopeExpiring => 'Bientôt périmé';
+
+  @override
+  String get stockExpiryTitle => 'Rapport de péremption';
 
   @override
   String get stockFirstRunBody =>

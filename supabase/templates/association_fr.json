@@ -208,6 +208,7 @@
         "standaloneInvoicing": false,
         "stockCounts": false,
         "stockCycleCounts": false,
+        "stockExpiryReport": false,
         "stockItemGroups": false,
         "stockLots": false,
         "stockManagement": false,

@@ -12493,6 +12493,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureStockCycleCountsTitle => 'Cycle counts';
 
   @override
+  String get featureStockExpiryReportDesc =>
+      'Prints, at a date you choose, every lot or piece in stock that is expired at that date or expires after it, with a layout you can edit like the other reports.';
+
+  @override
+  String get featureStockExpiryReportTitle => 'The expiry report';
+
+  @override
   String get featureStockItemGroupsDesc =>
       'Group items so that their settings are shared: tracking, shelf life, tag mode, units, VAT, the till and more. An item inherits its group\'s value unless it keeps its own; a change to a group shows how many items it reaches before it is saved.';
 
@@ -29753,6 +29760,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reportDocStatus => 'Workspace status';
 
   @override
+  String get reportDocStockExpiry => 'Expiry report';
+
+  @override
   String get reportDocTrialBalance => 'Trial balance';
 
   @override
@@ -32243,6 +32253,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'How many days a cycle count task may stay open past its due date before the inbox says it is overdue.';
 
   @override
+  String get settingHintStockExpiryHorizonDays =>
+      'How many days after the reference date the expiry report looks ahead for what is about to expire, when no horizon is named when it is printed.';
+
+  @override
   String get settingHintStockGroupDefaultCountDays =>
       'Every how many days an item that no group and no own setting speaks for is proposed for a cycle count. 0 means not scheduled.';
 
@@ -32618,6 +32632,9 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get settingLabelStockCycleCountOverdueDays =>
       'Cycle count: overdue after';
+
+  @override
+  String get settingLabelStockExpiryHorizonDays => 'Expiry report: look ahead';
 
   @override
   String get settingLabelStockGroupDefaultCountDays =>
@@ -36060,6 +36077,64 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get stockEnteredLabel => 'Entered';
+
+  @override
+  String get stockExpiryAny => 'Any';
+
+  @override
+  String stockExpiryCut(String rows) {
+    return 'The report is cut at $rows rows: narrow the date, the place or the group.';
+  }
+
+  @override
+  String get stockExpiryDate => 'Reference date';
+
+  @override
+  String stockExpiryDaysAhead(String days) {
+    return 'in $days d';
+  }
+
+  @override
+  String stockExpiryDaysPast(String days) {
+    return '$days d past';
+  }
+
+  @override
+  String get stockExpiryGroup => 'Item group';
+
+  @override
+  String get stockExpiryHorizon => 'Look ahead (days)';
+
+  @override
+  String get stockExpiryHorizonHint => 'Empty: the business\'s own setting.';
+
+  @override
+  String get stockExpiryNone =>
+      'Nothing in stock is expired or about to expire at this date.';
+
+  @override
+  String get stockExpiryPlace => 'Place';
+
+  @override
+  String get stockExpiryPrint => 'Print the report';
+
+  @override
+  String get stockExpiryReadFailed => 'The expiry report could not be read.';
+
+  @override
+  String get stockExpiryScope => 'What to list';
+
+  @override
+  String get stockExpiryScopeBoth => 'Expired and expiring';
+
+  @override
+  String get stockExpiryScopeExpired => 'Expired';
+
+  @override
+  String get stockExpiryScopeExpiring => 'Expiring';
+
+  @override
+  String get stockExpiryTitle => 'Expiry report';
 
   @override
   String get stockFirstRunBody =>

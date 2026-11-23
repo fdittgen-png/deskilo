@@ -807,6 +807,8 @@
  "stockCycleHighValueHint": "El valor, en unidades menores de la moneda de la empresa, a partir del cual lo que un lugar contiene de un artículo es de alto valor para un plan sin umbral propio. Se ajusta en los ajustes de la aplicación.",
  "stockCycleOverdue": "Recuento cíclico: vencido tras",
  "stockCycleOverdueHint": "Cuántos días puede seguir abierta una tarea de recuento cíclico después de su fecha antes de declararse vencida. Se ajusta en los ajustes de la aplicación.",
+ "stockExpiryHorizon": "Informe de caducidad: horizonte",
+ "stockExpiryHorizonHint": "Cuántos días después de la fecha de referencia mira el informe de caducidad lo que está por caducar. Se define en los ajustes de la app.",
  "optMinorUnits": "{n} (unidades menores)",
  "businessKind_shop": "Tienda — compra, guarda en stock y vende mercancías",
  "businessShopType": "Tipo de tienda",

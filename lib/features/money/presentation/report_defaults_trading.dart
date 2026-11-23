@@ -10,6 +10,7 @@ import 'package:meta/meta.dart';
 
 import '../../../l10n/app_localizations.dart';
 import '../domain/invoice_pdf_template.dart';
+import 'report_defaults_stock_expiry.dart';
 
 @visibleForTesting
 ReportBands purchaseOrderBands(AppLocalizations l10n) {
@@ -59,5 +60,8 @@ ReportBands _quoteBands(AppLocalizations l10n) {
 }
 
 /// The bands of the trading document [docId].
-ReportBands tradingDocumentBands(String docId, AppLocalizations l10n) =>
-    docId == 'quote' ? _quoteBands(l10n) : purchaseOrderBands(l10n);
+ReportBands tradingDocumentBands(String docId, AppLocalizations l10n) => switch (docId) {
+  'quote' => _quoteBands(l10n),
+  'stock_expiry' => stockExpiryBands(l10n),
+  _ => purchaseOrderBands(l10n),
+};

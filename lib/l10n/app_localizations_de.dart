@@ -12606,6 +12606,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get featureStockCycleCountsTitle => 'Permanente Inventur';
 
   @override
+  String get featureStockExpiryReportDesc =>
+      'Druckt zu einem gewählten Datum jede Charge oder jedes Stück im Bestand, die an diesem Datum abgelaufen sind oder danach ablaufen, mit einem Layout, das Sie wie die anderen Berichte bearbeiten können.';
+
+  @override
+  String get featureStockExpiryReportTitle => 'Der Verfallsbericht';
+
+  @override
   String get featureStockItemGroupsDesc =>
       'Artikel gruppieren, damit ihre Einstellungen geteilt werden: Nachverfolgung, Haltbarkeit, Etikettenmodus, Einheiten, Mehrwertsteuer, Kasse und mehr. Ein Artikel erbt den Wert seiner Gruppe, außer er behält seinen eigenen; eine Änderung an der Gruppe zeigt vor dem Speichern, wie viele Artikel sie erreicht.';
 
@@ -30056,6 +30063,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get reportDocStatus => 'Lage des Arbeitsbereichs';
 
   @override
+  String get reportDocStockExpiry => 'Verfallsbericht';
+
+  @override
   String get reportDocTrialBalance => 'Summen- und Saldenliste';
 
   @override
@@ -32574,6 +32584,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Wie viele Tage eine Inventuraufgabe nach ihrem Fälligkeitstag offen bleiben darf, bevor der Posteingang sie als überfällig meldet.';
 
   @override
+  String get settingHintStockExpiryHorizonDays =>
+      'Wie viele Tage nach dem Stichtag der Verfallsbericht vorausschaut, was bald abläuft, wenn beim Drucken kein Horizont genannt wird.';
+
+  @override
   String get settingHintStockGroupDefaultCountDays =>
       'Nach wie vielen Tagen ein Artikel, den weder eine Gruppe noch eine eigene Einstellung betrifft, zur Zyklus-Zählung vorgeschlagen wird. 0 heißt nicht geplant.';
 
@@ -32963,6 +32977,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get settingLabelStockCycleCountOverdueDays =>
       'Permanente Inventur: überfällig nach';
+
+  @override
+  String get settingLabelStockExpiryHorizonDays =>
+      'Verfallsbericht: Vorausschau';
 
   @override
   String get settingLabelStockGroupDefaultCountDays =>
@@ -36451,6 +36469,65 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get stockEnteredLabel => 'Erfasst';
+
+  @override
+  String get stockExpiryAny => 'Alle';
+
+  @override
+  String stockExpiryCut(String rows) {
+    return 'Der Bericht ist bei $rows Zeilen abgeschnitten: Datum, Lagerplatz oder Gruppe eingrenzen.';
+  }
+
+  @override
+  String get stockExpiryDate => 'Stichtag';
+
+  @override
+  String stockExpiryDaysAhead(String days) {
+    return 'in $days T.';
+  }
+
+  @override
+  String stockExpiryDaysPast(String days) {
+    return 'vor $days T.';
+  }
+
+  @override
+  String get stockExpiryGroup => 'Artikelgruppe';
+
+  @override
+  String get stockExpiryHorizon => 'Vorausschau (Tage)';
+
+  @override
+  String get stockExpiryHorizonHint => 'Leer: die Einstellung des Betriebs.';
+
+  @override
+  String get stockExpiryNone =>
+      'Zu diesem Datum ist nichts im Bestand abgelaufen oder läuft bald ab.';
+
+  @override
+  String get stockExpiryPlace => 'Lagerplatz';
+
+  @override
+  String get stockExpiryPrint => 'Bericht drucken';
+
+  @override
+  String get stockExpiryReadFailed =>
+      'Der Verfallsbericht konnte nicht gelesen werden.';
+
+  @override
+  String get stockExpiryScope => 'Was aufgelistet wird';
+
+  @override
+  String get stockExpiryScopeBoth => 'Abgelaufen und ablaufend';
+
+  @override
+  String get stockExpiryScopeExpired => 'Abgelaufen';
+
+  @override
+  String get stockExpiryScopeExpiring => 'Läuft ab';
+
+  @override
+  String get stockExpiryTitle => 'Verfallsbericht';
 
   @override
   String get stockFirstRunBody =>

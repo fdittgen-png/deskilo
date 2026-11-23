@@ -3167,6 +3167,23 @@ Con la funzione *Tag* attiva, un articolo ha una **modalità del tag**, impostat
 - La modalità di un articolo che ha già dei tag non cambia finché i tag non sono ritirati o la giacenza non è zero; la modifica di un gruppo salta allora l'articolo e lo elenca come mantenuto. Un tag su un luogo indica sempre un solo luogo.
 - Un codice tag è un'etichetta UHF (EPC; il server legge un SGTIN-96 come GTIN e numero di serie) o un chip NFC, salvato in esadecimale maiuscolo e unico nell'azienda tra articoli, pezzi e luoghi. Collegare e ritirare richiedono il diritto di gestire il magazzino; leggere, quello di vederlo.
 
+<!-- anchor: user.money.stock.expiry -->
+### Il rapporto di scadenza
+
+**Destinatari:** Amministratore · Proprietario
+
+Vuole sapere, a una data scelta, che cosa in magazzino è scaduto e che cosa sta per scadere, e stamparlo.
+
+Con la funzione *Rapporto di scadenza* attiva, apra **Magazzino → Rapporto di scadenza**. Elenca ogni lotto in giacenza, e ogni pezzo di un articolo tracciato pezzo per pezzo, **scaduto** alla data di riferimento (la sua data è anteriore) o che **scade** da quella data, una riga ciascuno con articolo, lotto, luogo, quantità nella sua unità e distanza della sua data da quella di riferimento (*6 g fa*, *oggi*, *tra 9 g*). L'elenco è ordinato per data e poi per luogo; un lotto senza giacenza non compare, e un pezzo mostra il suo tag.
+
+- **Data di riferimento.** Oggi nel calendario dell'azienda, finché non sceglie un altro giorno.
+- **Che cosa elencare.** *Scaduto*, *In scadenza* o *Scaduto e in scadenza*.
+- **Orizzonte.** Quanti giorni dopo la data contano come in scadenza. Vuoto, vale l'impostazione dell'azienda (30 giorni salvo modifica).
+- **Luogo e gruppo di articoli.** Solo ciò che un luogo contiene, o gli articoli di un gruppo (sottogruppi inclusi).
+
+- **Stampa il rapporto** apre il motore dei rapporti: anteprima rapida, salva o condividi. Il rapporto è il documento `stock_expiry`: il suo layout si modifica come quello di ogni rapporto nel designer dei rapporti, che ne elenca anche le parole e i campi dati.
+- Un elenco di più di 2000 righe viene tagliato e lo dice: restringa la data, il luogo o il gruppo. Basta poter vedere la giacenza per consultarlo e stamparlo.
+
 <!-- anchor: user.money.stock.bulkread -->
 ### Lettura di molte etichette
 

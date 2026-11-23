@@ -25,6 +25,7 @@ import 'package:deskilo/core/demo/data/demo_kiosk_devices.dart';
 import 'package:deskilo/core/demo/data/demo_stock_code_resolver.dart';
 import 'package:deskilo/core/demo/data/demo_stock_config_commands.dart';
 import 'package:deskilo/core/demo/data/demo_stock_cycle_counts.dart';
+import 'package:deskilo/core/demo/data/demo_stock_expiry.dart';
 import 'package:deskilo/core/demo/data/demo_stock_ledger.dart';
 import 'package:deskilo/core/demo/data/demo_stock_operations.dart';
 import 'package:deskilo/core/demo/data/demo_stock_queries.dart';
@@ -79,6 +80,7 @@ import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/stock/domain/stock_code_resolver.dart';
 import 'package:deskilo/features/stock/domain/stock_config.dart';
 import 'package:deskilo/features/stock/domain/stock_cycle_counts.dart';
+import 'package:deskilo/features/stock/domain/stock_expiry.dart';
 import 'package:deskilo/features/stock/domain/stock_operations.dart';
 import 'package:deskilo/features/stock/domain/stock_receiving.dart';
 import 'package:deskilo/features/stock/domain/stock_reversals.dart';
@@ -1444,6 +1446,20 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
       } on PostgrestException catch (e) {
         return e.code == 'DKG20' && ledger.balance('demo-item-beans', 'demo-place-main').text == '9';
       }
+    },
+  ),
+  // #4431 — the expiry report: what expired and what is about to, by date, the five basket pieces one by one, and a place keeps
+  // its own.
+  WorkspaceFeature.stockExpiryReport: _action(
+    _owner,
+    'Ada reads what expired and what expires in the next 30 days: the milk lot that expired comes first, the gift basket is listed piece by piece, and a place keeps only what it holds',
+    (w) async {
+      final expiry = DemoStockExpiry(() => DateTime(2026, 5, 13), DemoStockTags());
+      final all = await expiry.report(demoFirstSpaceId, const ExpiryQuery());
+      final first = all.rows.first;
+      final pieces = all.rows.where((r) => r.isPiece).toList();
+      final main = await expiry.report(demoFirstSpaceId, const ExpiryQuery(locationId: 'demo-place-main'));
+      return first.lotCode == 'MILK-09' && first.days < 0 && pieces.length == 5 && pieces.every((p) => p.tag.isNotEmpty) && main.rows.every((r) => r.locationCode == 'MAIN');
     },
   ),
   // #4295 — the high-value shelf's plan made a task: counted blind (a counter is not told what the

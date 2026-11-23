@@ -7802,6 +7802,14 @@
   "@featureStockCycleCountsTitle": {
     "description": "#4295 feature name"
   },
+  "featureStockExpiryReportDesc": "Druckt zu einem gewählten Datum jede Charge oder jedes Stück im Bestand, die an diesem Datum abgelaufen sind oder danach ablaufen, mit einem Layout, das Sie wie die anderen Berichte bearbeiten können.",
+  "@featureStockExpiryReportDesc": {
+    "description": "#4431 the expiry report feature: what it does"
+  },
+  "featureStockExpiryReportTitle": "Der Verfallsbericht",
+  "@featureStockExpiryReportTitle": {
+    "description": "#4431 the expiry report feature: its name"
+  },
   "featureStockItemGroupsDesc": "Artikel gruppieren, damit ihre Einstellungen geteilt werden: Nachverfolgung, Haltbarkeit, Etikettenmodus, Einheiten, Mehrwertsteuer, Kasse und mehr. Ein Artikel erbt den Wert seiner Gruppe, außer er behält seinen eigenen; eine Änderung an der Gruppe zeigt vor dem Speichern, wie viele Artikel sie erreicht.",
   "featureStockItemGroupsTitle": "Artikelgruppen",
   "featureStockLotsDesc": "Waren nach Charge oder Verfallsdatum verfolgen, mit einer Haltbarkeit. Aus: kein Artikel wird nach Charge verfolgt, und Erfasstes bleibt unverändert.",
@@ -17242,6 +17250,10 @@
   "@reportDocStatus": {
     "description": "#934 workspace status / repartition wizard: reportDocStatus"
   },
+  "reportDocStockExpiry": "Verfallsbericht",
+  "@reportDocStockExpiry": {
+    "description": "#4431 the expiry report"
+  },
   "reportDocTrialBalance": "Summen- und Saldenliste",
   "reportDocUsage": "Verbrauchsbericht",
   "@reportDocUsage": {
@@ -19231,6 +19243,10 @@
   "settingHintStockAllowNegative": "Aus: eine Bewegung, die an einem Ort weniger als nichts übrig ließe, wird abgelehnt. An: sie wird gebucht, und der Ort zeigt eine negative Menge, bis Ware eintrifft.",
   "settingHintStockCycleCountHighValueMinor": "Der Wert in der kleinsten Einheit der Währung des Unternehmens, ab dem das, was ein Ort von einem Artikel hält, für einen Inventurplan ohne eigene Schwelle als hochwertig gilt.",
   "settingHintStockCycleCountOverdueDays": "Wie viele Tage eine Inventuraufgabe nach ihrem Fälligkeitstag offen bleiben darf, bevor der Posteingang sie als überfällig meldet.",
+  "settingHintStockExpiryHorizonDays": "Wie viele Tage nach dem Stichtag der Verfallsbericht vorausschaut, was bald abläuft, wenn beim Drucken kein Horizont genannt wird.",
+  "@settingHintStockExpiryHorizonDays": {
+    "description": "#4431 setting hint"
+  },
   "settingHintStockGroupDefaultCountDays": "Nach wie vielen Tagen ein Artikel, den weder eine Gruppe noch eine eigene Einstellung betrifft, zur Zyklus-Zählung vorgeschlagen wird. 0 heißt nicht geplant.",
   "settingHintStockGroupDefaultTagMode": "Ob ein Artikel, den weder eine Gruppe noch eine eigene Einstellung betrifft, ein RFID-Etikett trägt: keines, ein Etikett für eine Charge oder ein Etikett je Stück (das eine Verfolgung je Stück braucht).",
   "settingHintStockPriceRounding": "Wie ein vorgeschlagener Verkaufspreis gerundet wird: auf 0,05 oder 0,10 oder auf einen Preis, der auf 0,99 endet. Sie dient nur dazu, einen Preis vorzuschlagen.",
@@ -19467,6 +19483,10 @@
   "settingLabelStockAllowNegative": "Bestand darf unter null fallen",
   "settingLabelStockCycleCountHighValueMinor": "Permanente Inventur: Schwelle für hohen Wert",
   "settingLabelStockCycleCountOverdueDays": "Permanente Inventur: überfällig nach",
+  "settingLabelStockExpiryHorizonDays": "Verfallsbericht: Vorausschau",
+  "@settingLabelStockExpiryHorizonDays": {
+    "description": "#4431 setting label"
+  },
   "settingLabelStockGroupDefaultCountDays": "Standard-Zählzyklus (Tage)",
   "settingLabelStockGroupDefaultTagMode": "Standard-Etikettenmodus der Artikel",
   "settingLabelStockPriceRounding": "Preisrundung",
@@ -21123,6 +21143,89 @@
   "stockEmpty": "Es ist noch nichts auf Lager.",
   "stockEmptyFiltered": "Zu diesen Filtern gibt es nichts.",
   "stockEnteredLabel": "Erfasst",
+  "stockExpiryAny": "Alle",
+  "@stockExpiryAny": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryCut": "Der Bericht ist bei {rows} Zeilen abgeschnitten: Datum, Lagerplatz oder Gruppe eingrenzen.",
+  "@stockExpiryCut": {
+    "description": "#4431 the expiry report",
+    "placeholders": {
+      "rows": {
+        "type": "String"
+      }
+    }
+  },
+  "stockExpiryDate": "Stichtag",
+  "@stockExpiryDate": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryDaysAhead": "in {days} T.",
+  "@stockExpiryDaysAhead": {
+    "description": "#4431 the expiry report",
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "stockExpiryDaysPast": "vor {days} T.",
+  "@stockExpiryDaysPast": {
+    "description": "#4431 the expiry report",
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "stockExpiryGroup": "Artikelgruppe",
+  "@stockExpiryGroup": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryHorizon": "Vorausschau (Tage)",
+  "@stockExpiryHorizon": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryHorizonHint": "Leer: die Einstellung des Betriebs.",
+  "@stockExpiryHorizonHint": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryNone": "Zu diesem Datum ist nichts im Bestand abgelaufen oder läuft bald ab.",
+  "@stockExpiryNone": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryPlace": "Lagerplatz",
+  "@stockExpiryPlace": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryPrint": "Bericht drucken",
+  "@stockExpiryPrint": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryReadFailed": "Der Verfallsbericht konnte nicht gelesen werden.",
+  "@stockExpiryReadFailed": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryScope": "Was aufgelistet wird",
+  "@stockExpiryScope": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryScopeBoth": "Abgelaufen und ablaufend",
+  "@stockExpiryScopeBoth": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryScopeExpired": "Abgelaufen",
+  "@stockExpiryScopeExpired": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryScopeExpiring": "Läuft ab",
+  "@stockExpiryScopeExpiring": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryTitle": "Verfallsbericht",
+  "@stockExpiryTitle": {
+    "description": "#4431 the expiry report"
+  },
   "stockFirstRunBody": "Beginnen Sie mit einem Ort, an dem Ware liegt, dann mit den Artikeln, die Sie führen. Danach nehmen Sie eine Lieferung an oder bewegen Ware ein.",
   "stockFirstRunItem": "Ersten Artikel hinzufügen",
   "stockFirstRunNext": "Nehmen Sie dann eine Lieferung einer Bestellung an oder bewegen Sie Ware über Bewegungen ein.",

@@ -11,6 +11,7 @@ import '../data/supabase_item_groups.dart';
 import '../data/supabase_stock_code_resolver.dart';
 import '../data/supabase_stock_config_commands.dart';
 import '../data/supabase_stock_cycle_counts.dart';
+import '../data/supabase_stock_expiry.dart';
 import '../data/supabase_stock_operations.dart';
 import '../data/supabase_stock_queries.dart';
 import '../data/supabase_stock_receiving_commands.dart';
@@ -25,6 +26,7 @@ import '../domain/stock_code_resolver.dart';
 import '../domain/stock_config.dart';
 import '../domain/stock_config_commands.dart';
 import '../domain/stock_cycle_counts.dart';
+import '../domain/stock_expiry.dart';
 import '../domain/stock_operations.dart';
 import '../domain/stock_page.dart';
 import '../domain/stock_queries.dart';
@@ -36,6 +38,7 @@ import '../domain/stock_service_creator.dart';
 import '../domain/stock_tags.dart';
 import '../domain/stock_trace.dart';
 import '../domain/stock_trace_chain.dart';
+import '../presentation/stock_expiry_printer.dart';
 
 /// #4161 -- the stock reads of the selected business. The Demo and the tests
 /// replace it.
@@ -311,6 +314,19 @@ final stockCountsProvider = FutureProvider.autoDispose
 /// #4350 -- the creation of a new service from the Stock page, wired by the app (the stock never imports
 /// the money feature); null where nothing is wired, which offers no "new item".
 final stockServiceCreatorProvider = Provider<StockServiceCreator?>((ref) => null);
+
+/// #4431 -- the expiry report of the selected business, read from the server (the Demo answers from its own lots).
+final stockExpiryProvider = Provider<StockExpiry>((ref) => SupabaseStockExpiry(ref.watch(selectedWorkspaceClientProvider)));
+
+/// #4431 -- the expiry report of one question, read again when the question changes.
+final stockExpiryReportProvider = FutureProvider.autoDispose.family<ExpiryReport, ({String workspaceId, ExpiryQuery query})>(
+  (ref, key) => ref.watch(stockExpiryProvider).report(key.workspaceId, key.query),
+  retry: (_, _) => null,
+);
+
+/// #4431 -- the printing of the expiry report through the report engine, wired by the app (the stock never imports the money
+/// feature); null where nothing is wired, which offers no print.
+final stockExpiryPrinterProvider = Provider<StockExpiryPrinter?>((ref) => null);
 
 /// #4364 -- whether bulk reading is on (`stockTagReads`): the counts and the moves offer "Read many tags".
 final stockTagReadsProvider = Provider<bool>((ref) => ref.watch(stockTagsProvider) && ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.stockTagReads));

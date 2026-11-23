@@ -1,6 +1,14 @@
 {
   "settingLabelStockCycleCountHighValueMinor": "Permanente Inventur: Schwelle für hohen Wert",
   "settingHintStockCycleCountHighValueMinor": "Der Wert in der kleinsten Einheit der Währung des Unternehmens, ab dem das, was ein Ort von einem Artikel hält, für einen Inventurplan ohne eigene Schwelle als hochwertig gilt.",
+  "settingLabelStockExpiryHorizonDays": "Verfallsbericht: Vorausschau",
+  "@settingLabelStockExpiryHorizonDays": {
+    "description": "#4431 setting label"
+  },
+  "settingHintStockExpiryHorizonDays": "Wie viele Tage nach dem Stichtag der Verfallsbericht vorausschaut, was bald abläuft, wenn beim Drucken kein Horizont genannt wird.",
+  "@settingHintStockExpiryHorizonDays": {
+    "description": "#4431 setting hint"
+  },
   "settingLabelStockCycleCountOverdueDays": "Permanente Inventur: überfällig nach",
   "settingHintStockCycleCountOverdueDays": "Wie viele Tage eine Inventuraufgabe nach ihrem Fälligkeitstag offen bleiben darf, bevor der Posteingang sie als überfällig meldet."
 }

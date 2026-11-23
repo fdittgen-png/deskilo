@@ -7802,6 +7802,14 @@
   "@featureStockCycleCountsTitle": {
     "description": "#4295 feature name"
   },
+  "featureStockExpiryReportDesc": "Stampa, a una data scelta, ogni lotto o pezzo in magazzino scaduto a quella data o che scade dopo, con un layout modificabile come gli altri rapporti.",
+  "@featureStockExpiryReportDesc": {
+    "description": "#4431 the expiry report feature: what it does"
+  },
+  "featureStockExpiryReportTitle": "Il rapporto di scadenza",
+  "@featureStockExpiryReportTitle": {
+    "description": "#4431 the expiry report feature: its name"
+  },
   "featureStockItemGroupsDesc": "Raggruppi gli articoli per condividerne le impostazioni: tracciabilità, scadenza, modalità etichetta, unità, IVA, cassa e altro. Un articolo eredita il valore del suo gruppo salvo che mantenga il proprio; una modifica al gruppo mostra quanti articoli raggiunge prima di essere salvata.",
   "featureStockItemGroupsTitle": "Gruppi di articoli",
   "featureStockLotsDesc": "Seguire le merci per lotto o per data di scadenza, con una durata di conservazione. Disattivato: nessun articolo è seguito per lotto e ciò che è stato registrato resta invariato.",
@@ -17242,6 +17250,10 @@
   "@reportDocStatus": {
     "description": "#934 workspace status / repartition wizard: reportDocStatus"
   },
+  "reportDocStockExpiry": "Rapporto di scadenza",
+  "@reportDocStockExpiry": {
+    "description": "#4431 the expiry report"
+  },
   "reportDocTrialBalance": "Bilancio di verifica",
   "reportDocUsage": "Report dei consumi",
   "@reportDocUsage": {
@@ -19231,6 +19243,10 @@
   "settingHintStockAllowNegative": "Disattivato: un movimento che lascerebbe meno di niente in un luogo è rifiutato. Attivato: viene registrato e il luogo mostra una quantità negativa finché arriva merce.",
   "settingHintStockCycleCountHighValueMinor": "Il valore, in unità minori della valuta dell’azienda, da cui ciò che un luogo contiene di un articolo conta come di alto valore per un piano di inventario ciclico senza soglia propria.",
   "settingHintStockCycleCountOverdueDays": "Quanti giorni un compito di inventario ciclico può restare aperto dopo la scadenza prima che la posta lo dichiari in ritardo.",
+  "settingHintStockExpiryHorizonDays": "Quanti giorni dopo la data di riferimento il rapporto di scadenza guarda ciò che sta per scadere, quando alla stampa non si indica un orizzonte.",
+  "@settingHintStockExpiryHorizonDays": {
+    "description": "#4431 setting hint"
+  },
   "settingHintStockGroupDefaultCountDays": "Ogni quanti giorni un articolo che né un gruppo né un'impostazione propria riguarda è proposto per un conteggio ciclico. 0 significa non programmato.",
   "settingHintStockGroupDefaultTagMode": "Se un articolo che né un gruppo né un'impostazione propria riguarda porta un'etichetta RFID: nessuna, una etichetta che indica un lotto o una etichetta per unità (che richiede la tracciabilità per pezzo).",
   "settingHintStockPriceRounding": "Come si arrotonda un prezzo di vendita proposto: al 0,05 o 0,10 più vicino, o a un prezzo che finisce per 0,99. Serve solo a proporre un prezzo.",
@@ -19467,6 +19483,10 @@
   "settingLabelStockAllowNegative": "Le scorte possono scendere sotto zero",
   "settingLabelStockCycleCountHighValueMinor": "Inventario ciclico: soglia di alto valore",
   "settingLabelStockCycleCountOverdueDays": "Inventario ciclico: in ritardo dopo",
+  "settingLabelStockExpiryHorizonDays": "Rapporto di scadenza: orizzonte",
+  "@settingLabelStockExpiryHorizonDays": {
+    "description": "#4431 setting label"
+  },
   "settingLabelStockGroupDefaultCountDays": "Ciclo di conteggio predefinito (giorni)",
   "settingLabelStockGroupDefaultTagMode": "Modalità etichetta predefinita degli articoli",
   "settingLabelStockPriceRounding": "Arrotondamento dei prezzi",
@@ -21123,6 +21143,89 @@
   "stockEmpty": "Non c’è ancora nulla in magazzino.",
   "stockEmptyFiltered": "Nulla corrisponde a questi filtri.",
   "stockEnteredLabel": "Inserito",
+  "stockExpiryAny": "Qualsiasi",
+  "@stockExpiryAny": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryCut": "Il rapporto è tagliato a {rows} righe: restringa la data, il luogo o il gruppo.",
+  "@stockExpiryCut": {
+    "description": "#4431 the expiry report",
+    "placeholders": {
+      "rows": {
+        "type": "String"
+      }
+    }
+  },
+  "stockExpiryDate": "Data di riferimento",
+  "@stockExpiryDate": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryDaysAhead": "tra {days} g",
+  "@stockExpiryDaysAhead": {
+    "description": "#4431 the expiry report",
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "stockExpiryDaysPast": "{days} g fa",
+  "@stockExpiryDaysPast": {
+    "description": "#4431 the expiry report",
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "stockExpiryGroup": "Gruppo di articoli",
+  "@stockExpiryGroup": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryHorizon": "Orizzonte (giorni)",
+  "@stockExpiryHorizon": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryHorizonHint": "Vuoto: l'impostazione dell'azienda.",
+  "@stockExpiryHorizonHint": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryNone": "A questa data nulla in magazzino è scaduto o sta per scadere.",
+  "@stockExpiryNone": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryPlace": "Luogo",
+  "@stockExpiryPlace": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryPrint": "Stampa il rapporto",
+  "@stockExpiryPrint": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryReadFailed": "Non è stato possibile leggere il rapporto di scadenza.",
+  "@stockExpiryReadFailed": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryScope": "Che cosa elencare",
+  "@stockExpiryScope": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryScopeBoth": "Scaduto e in scadenza",
+  "@stockExpiryScopeBoth": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryScopeExpired": "Scaduto",
+  "@stockExpiryScopeExpired": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryScopeExpiring": "In scadenza",
+  "@stockExpiryScopeExpiring": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryTitle": "Rapporto di scadenza",
+  "@stockExpiryTitle": {
+    "description": "#4431 the expiry report"
+  },
   "stockFirstRunBody": "Cominci da una posizione dove si tiene la merce, poi dagli articoli che tiene. Dopo, riceva una consegna o sposti merce.",
   "stockFirstRunItem": "Aggiungi il suo primo articolo",
   "stockFirstRunNext": "Poi riceva una consegna da un ordine, o sposti merce da Movimenti.",

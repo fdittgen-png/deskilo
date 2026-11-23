@@ -139,4 +139,13 @@ const Map<WorkspaceFeature, FeatureManifestEntry> stockFeatureManifest = {
     requires: WorkspaceFeature.stockTags,
     defaultOn: false,
   ),
+  // #4431 — the expiry report: every lot or piece on hand that is expired at a chosen date or expires after it, printed from
+  // the report engine with a layout the business can edit. Asked for, under stock management.
+  WorkspaceFeature.stockExpiryReport: FeatureManifestEntry(
+    feature: WorkspaceFeature.stockExpiryReport,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.stockManagement,
+    defaultOn: false,
+  ),
 };

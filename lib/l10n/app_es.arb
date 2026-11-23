@@ -7802,6 +7802,14 @@
   "@featureStockCycleCountsTitle": {
     "description": "#4295 feature name"
   },
+  "featureStockExpiryReportDesc": "Imprime, en una fecha elegida, cada lote o pieza en stock caducado en esa fecha o que caduca después, con un diseño editable como los demás informes.",
+  "@featureStockExpiryReportDesc": {
+    "description": "#4431 the expiry report feature: what it does"
+  },
+  "featureStockExpiryReportTitle": "El informe de caducidad",
+  "@featureStockExpiryReportTitle": {
+    "description": "#4431 the expiry report feature: its name"
+  },
   "featureStockItemGroupsDesc": "Agrupe artículos para compartir sus ajustes: seguimiento, caducidad, modo de etiqueta, unidades, IVA, caja y más. Un artículo hereda el valor de su grupo salvo que conserve el suyo; un cambio de grupo muestra a cuántos artículos llega antes de guardarse.",
   "featureStockItemGroupsTitle": "Grupos de artículos",
   "featureStockLotsDesc": "Seguir las mercancías por lote o por fecha de caducidad, con una vida útil. Desactivado: ningún artículo se sigue por lote y lo registrado se conserva tal cual.",
@@ -17242,6 +17250,10 @@
   "@reportDocStatus": {
     "description": "#934 workspace status / repartition wizard: reportDocStatus"
   },
+  "reportDocStockExpiry": "Informe de caducidad",
+  "@reportDocStockExpiry": {
+    "description": "#4431 the expiry report"
+  },
   "reportDocTrialBalance": "Balance de sumas y saldos",
   "reportDocUsage": "Informe de consumo",
   "@reportDocUsage": {
@@ -19231,6 +19243,10 @@
   "settingHintStockAllowNegative": "Desactivado: se rechaza un movimiento que dejaría menos que nada en un lugar. Activado: se registra y el lugar muestra una cantidad negativa hasta que llegue mercancía.",
   "settingHintStockCycleCountHighValueMinor": "El valor, en unidades menores de la moneda de la empresa, a partir del cual lo que un lugar contiene de un artículo se considera de alto valor para un plan de recuento sin umbral propio.",
   "settingHintStockCycleCountOverdueDays": "Cuántos días puede seguir abierta una tarea de recuento cíclico después de su fecha antes de que la bandeja la declare vencida.",
+  "settingHintStockExpiryHorizonDays": "Cuántos días después de la fecha de referencia mira el informe de caducidad lo que está por caducar, cuando no se indica un horizonte al imprimirlo.",
+  "@settingHintStockExpiryHorizonDays": {
+    "description": "#4431 setting hint"
+  },
   "settingHintStockGroupDefaultCountDays": "Cada cuántos días se propone para un recuento cíclico un artículo que ni un grupo ni un ajuste propio contempla. 0 significa sin programar.",
   "settingHintStockGroupDefaultTagMode": "Si un artículo que ni un grupo ni un ajuste propio contempla lleva una etiqueta RFID: ninguna, una etiqueta que nombra un lote o una etiqueta por unidad (que exige seguimiento por pieza).",
   "settingHintStockPriceRounding": "Cómo se redondea un precio de venta propuesto: al 0,05 o 0,10 más cercano, o a un precio que termina en 0,99. Solo sirve para proponer un precio.",
@@ -19467,6 +19483,10 @@
   "settingLabelStockAllowNegative": "Las existencias pueden bajar de cero",
   "settingLabelStockCycleCountHighValueMinor": "Recuento cíclico: umbral de alto valor",
   "settingLabelStockCycleCountOverdueDays": "Recuento cíclico: vencido tras",
+  "settingLabelStockExpiryHorizonDays": "Informe de caducidad: horizonte",
+  "@settingLabelStockExpiryHorizonDays": {
+    "description": "#4431 setting label"
+  },
   "settingLabelStockGroupDefaultCountDays": "Ciclo de recuento por defecto (días)",
   "settingLabelStockGroupDefaultTagMode": "Modo de etiqueta por defecto de los artículos",
   "settingLabelStockPriceRounding": "Redondeo de precios",
@@ -21123,6 +21143,89 @@
   "stockEmpty": "Todavía no hay nada en existencias.",
   "stockEmptyFiltered": "Nada coincide con estos filtros.",
   "stockEnteredLabel": "Introducido",
+  "stockExpiryAny": "Cualquiera",
+  "@stockExpiryAny": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryCut": "El informe se corta en {rows} filas: acote la fecha, el lugar o el grupo.",
+  "@stockExpiryCut": {
+    "description": "#4431 the expiry report",
+    "placeholders": {
+      "rows": {
+        "type": "String"
+      }
+    }
+  },
+  "stockExpiryDate": "Fecha de referencia",
+  "@stockExpiryDate": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryDaysAhead": "en {days} d",
+  "@stockExpiryDaysAhead": {
+    "description": "#4431 the expiry report",
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "stockExpiryDaysPast": "hace {days} d",
+  "@stockExpiryDaysPast": {
+    "description": "#4431 the expiry report",
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "stockExpiryGroup": "Grupo de artículos",
+  "@stockExpiryGroup": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryHorizon": "Horizonte (días)",
+  "@stockExpiryHorizon": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryHorizonHint": "Vacío: el ajuste de la empresa.",
+  "@stockExpiryHorizonHint": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryNone": "En esta fecha nada del stock está caducado ni a punto de caducar.",
+  "@stockExpiryNone": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryPlace": "Lugar",
+  "@stockExpiryPlace": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryPrint": "Imprimir el informe",
+  "@stockExpiryPrint": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryReadFailed": "No se pudo leer el informe de caducidad.",
+  "@stockExpiryReadFailed": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryScope": "Qué listar",
+  "@stockExpiryScope": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryScopeBoth": "Caducado y por caducar",
+  "@stockExpiryScopeBoth": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryScopeExpired": "Caducado",
+  "@stockExpiryScopeExpired": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryScopeExpiring": "Por caducar",
+  "@stockExpiryScopeExpiring": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryTitle": "Informe de caducidad",
+  "@stockExpiryTitle": {
+    "description": "#4431 the expiry report"
+  },
   "stockFirstRunBody": "Empiece por una ubicación donde se guarda la mercancía, luego los artículos que mantiene. Después, reciba una entrega o mueva mercancía.",
   "stockFirstRunItem": "Añadir su primer artículo",
   "stockFirstRunNext": "Después reciba una entrega de un pedido, o mueva mercancía desde Movimientos.",

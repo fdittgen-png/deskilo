@@ -16417,6 +16417,14 @@
   "@featureStockCycleCountsTitle": {
     "description": "#4295 feature name"
   },
+  "featureStockExpiryReportDesc": "Prints, at a date you choose, every lot or piece in stock that is expired at that date or expires after it, with a layout you can edit like the other reports.",
+  "@featureStockExpiryReportDesc": {
+    "description": "#4431 the expiry report feature: what it does"
+  },
+  "featureStockExpiryReportTitle": "The expiry report",
+  "@featureStockExpiryReportTitle": {
+    "description": "#4431 the expiry report feature: its name"
+  },
   "featureStockItemGroupsDesc": "Group items so that their settings are shared: tracking, shelf life, tag mode, units, VAT, the till and more. An item inherits its group's value unless it keeps its own; a change to a group shows how many items it reaches before it is saved.",
   "@featureStockItemGroupsDesc": {
     "description": "#4361 feature description"
@@ -38956,6 +38964,10 @@
   "@reportDocStatus": {
     "description": "#934 workspace status / repartition wizard: reportDocStatus"
   },
+  "reportDocStockExpiry": "Expiry report",
+  "@reportDocStockExpiry": {
+    "description": "#4431 the expiry report"
+  },
   "reportDocTrialBalance": "Trial balance",
   "@reportDocTrialBalance": {
     "description": "Report kind (#2376): the trial balance with its auxiliary balance"
@@ -41989,6 +42001,10 @@
   "@settingHintStockCycleCountOverdueDays": {
     "description": "#4295 settings: Setting hint."
   },
+  "settingHintStockExpiryHorizonDays": "How many days after the reference date the expiry report looks ahead for what is about to expire, when no horizon is named when it is printed.",
+  "@settingHintStockExpiryHorizonDays": {
+    "description": "#4431 setting hint"
+  },
   "settingHintStockGroupDefaultCountDays": "Every how many days an item that no group and no own setting speaks for is proposed for a cycle count. 0 means not scheduled.",
   "@settingHintStockGroupDefaultCountDays": {
     "description": "#4361 setting label/hint"
@@ -42416,6 +42432,10 @@
   "settingLabelStockCycleCountOverdueDays": "Cycle count: overdue after",
   "@settingLabelStockCycleCountOverdueDays": {
     "description": "#4295 settings: Setting label."
+  },
+  "settingLabelStockExpiryHorizonDays": "Expiry report: look ahead",
+  "@settingLabelStockExpiryHorizonDays": {
+    "description": "#4431 setting label"
   },
   "settingLabelStockGroupDefaultCountDays": "Default count cycle (days)",
   "@settingLabelStockGroupDefaultCountDays": {
@@ -46800,6 +46820,89 @@
   "stockEnteredLabel": "Entered",
   "@stockEnteredLabel": {
     "description": "#4161 the quantity and unit as entered"
+  },
+  "stockExpiryAny": "Any",
+  "@stockExpiryAny": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryCut": "The report is cut at {rows} rows: narrow the date, the place or the group.",
+  "@stockExpiryCut": {
+    "description": "#4431 the expiry report",
+    "placeholders": {
+      "rows": {
+        "type": "String"
+      }
+    }
+  },
+  "stockExpiryDate": "Reference date",
+  "@stockExpiryDate": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryDaysAhead": "in {days} d",
+  "@stockExpiryDaysAhead": {
+    "description": "#4431 the expiry report",
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "stockExpiryDaysPast": "{days} d past",
+  "@stockExpiryDaysPast": {
+    "description": "#4431 the expiry report",
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "stockExpiryGroup": "Item group",
+  "@stockExpiryGroup": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryHorizon": "Look ahead (days)",
+  "@stockExpiryHorizon": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryHorizonHint": "Empty: the business's own setting.",
+  "@stockExpiryHorizonHint": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryNone": "Nothing in stock is expired or about to expire at this date.",
+  "@stockExpiryNone": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryPlace": "Place",
+  "@stockExpiryPlace": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryPrint": "Print the report",
+  "@stockExpiryPrint": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryReadFailed": "The expiry report could not be read.",
+  "@stockExpiryReadFailed": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryScope": "What to list",
+  "@stockExpiryScope": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryScopeBoth": "Expired and expiring",
+  "@stockExpiryScopeBoth": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryScopeExpired": "Expired",
+  "@stockExpiryScopeExpired": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryScopeExpiring": "Expiring",
+  "@stockExpiryScopeExpiring": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryTitle": "Expiry report",
+  "@stockExpiryTitle": {
+    "description": "#4431 the expiry report"
   },
   "stockFirstRunBody": "Start with a place where goods are kept, then the items you keep. After that, receive a delivery or move goods in.",
   "@stockFirstRunBody": {

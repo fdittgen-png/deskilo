@@ -807,6 +807,8 @@
  "stockCycleHighValueHint": "Il valore, in unità minori della valuta dell’azienda, da cui ciò che un luogo contiene di un articolo è di alto valore per un piano senza soglia propria. Si imposta nelle impostazioni dell’app.",
  "stockCycleOverdue": "Inventario ciclico: in ritardo dopo",
  "stockCycleOverdueHint": "Quanti giorni un compito di inventario ciclico può restare aperto dopo la scadenza prima di essere dichiarato in ritardo. Si imposta nelle impostazioni dell’app.",
+ "stockExpiryHorizon": "Rapporto di scadenza: orizzonte",
+ "stockExpiryHorizonHint": "Quanti giorni dopo la data di riferimento il rapporto di scadenza guarda ciò che sta per scadere. Impostato nelle impostazioni dell'app.",
  "optMinorUnits": "{n} (unità minori)",
  "businessKind_shop": "Negozio — acquista, tiene a magazzino e vende merce",
  "businessShopType": "Tipo di negozio",
