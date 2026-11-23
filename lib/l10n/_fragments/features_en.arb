@@ -938,6 +938,14 @@
   "@featureCounterTillSessionsDesc": {
     "description": "#4367 feature description"
   },
+  "featureStockExpiryReportTitle": "The expiry report",
+  "featureStockExpiryReportDesc": "Prints, at a date you choose, every lot or piece in stock that is expired at that date or expires after it, with a layout you can edit like the other reports.",
+  "@featureStockExpiryReportTitle": {
+    "description": "#4431 the expiry report feature: its name"
+  },
+  "@featureStockExpiryReportDesc": {
+    "description": "#4431 the expiry report feature: what it does"
+  },
   "featureStockTagReadsTitle": "Reading many tags",
   "featureStockTagReadsDesc": "A UHF reader in keyboard mode reads many tags at once to receive, move and count: the tags are collected, de-duplicated and resolved, and nothing is sent until the user confirms.",
   "@featureStockTagReadsTitle": {

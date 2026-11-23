@@ -198,6 +198,8 @@ abstract final class SettingDefaults {
   static const int stockCycleCountHighValueMinor = 50000;
   /// `stock.cycle_count_overdue_days`
   static const int stockCycleCountOverdueDays = 7;
+  /// `stock.expiry_horizon_days`
+  static const int stockExpiryHorizonDays = 30;
   /// `stock.group_default_count_days`
   static const int stockGroupDefaultCountDays = 0;
   /// `stock.group_default_tag_mode`

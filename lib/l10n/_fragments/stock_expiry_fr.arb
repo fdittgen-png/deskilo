@@ -1,0 +1,89 @@
+{
+  "reportDocStockExpiry": "Rapport de péremption",
+  "@reportDocStockExpiry": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryTitle": "Rapport de péremption",
+  "@stockExpiryTitle": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryScopeExpired": "Périmé",
+  "@stockExpiryScopeExpired": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryScopeExpiring": "Bientôt périmé",
+  "@stockExpiryScopeExpiring": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryScopeBoth": "Périmé et bientôt périmé",
+  "@stockExpiryScopeBoth": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryScope": "Ce qu'il faut lister",
+  "@stockExpiryScope": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryDate": "Date de référence",
+  "@stockExpiryDate": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryHorizon": "Horizon (jours)",
+  "@stockExpiryHorizon": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryHorizonHint": "Vide : le réglage de l'entreprise.",
+  "@stockExpiryHorizonHint": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryPlace": "Emplacement",
+  "@stockExpiryPlace": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryGroup": "Groupe d'articles",
+  "@stockExpiryGroup": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryAny": "Tous",
+  "@stockExpiryAny": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryPrint": "Imprimer le rapport",
+  "@stockExpiryPrint": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryNone": "À cette date, rien en stock n'est périmé ni sur le point de l'être.",
+  "@stockExpiryNone": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryDaysPast": "il y a {days} j",
+  "@stockExpiryDaysPast": {
+    "description": "#4431 the expiry report",
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "stockExpiryDaysAhead": "dans {days} j",
+  "@stockExpiryDaysAhead": {
+    "description": "#4431 the expiry report",
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "stockExpiryCut": "Le rapport est coupé à {rows} lignes : restreignez la date, l'emplacement ou le groupe.",
+  "@stockExpiryCut": {
+    "description": "#4431 the expiry report",
+    "placeholders": {
+      "rows": {
+        "type": "String"
+      }
+    }
+  },
+  "stockExpiryReadFailed": "Le rapport de péremption n'a pas pu être lu.",
+  "@stockExpiryReadFailed": {
+    "description": "#4431 the expiry report"
+  }
+}

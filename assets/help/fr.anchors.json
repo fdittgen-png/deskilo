@@ -138,6 +138,7 @@
   "user.money.stock.nfc": "Puces avec le NFC du téléphone",
   "user.money.till": "Caisse",
   "user.money.stock.rfid": "Puces RFID : une par lot ou une par pièce",
+  "user.money.stock.expiry": "Le rapport de péremption",
   "user.money.stock.bulkread": "Lecture de nombreuses étiquettes",
   "user.money.stock.whereis": "Où est-ce",
   "user.money.stock.value": "Valeur du stock et origine des marchandises",

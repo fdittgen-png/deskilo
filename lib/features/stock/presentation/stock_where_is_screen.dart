@@ -20,12 +20,6 @@ import '../../workspace/providers/workspace_providers.dart';
 import '../domain/stock_where_is.dart';
 import '../providers/stock_providers.dart';
 
-/// What a day holds up to its last second: the item as it stood when the day was over.
-const _endOfDay = Duration(hours: 23, minutes: 59, seconds: 59);
-
-/// How far back a day may be looked at: ten years.
-const _lookBack = Duration(days: 3650);
-
 class StockWhereIsScreen extends ConsumerStatefulWidget {
   const StockWhereIsScreen({required this.itemId, this.lotId, super.key});
 
@@ -40,10 +34,10 @@ class _State extends ConsumerState<StockWhereIsScreen> {
   /// The end of the day chosen, or null for now.
   DateTime? _at;
 
-  /// What the item held when the day typed or picked was over; today (or nothing readable) is now, never a time to come.
+  /// What the item held when the day typed or picked was over (the start of the next day); today (or nothing readable) is now, never a time to come.
   void _day(DateRead read, DateTime today) {
     final day = read.date;
-    setState(() => _at = day == null || !day.isBefore(today) ? null : day.add(_endOfDay));
+    setState(() => _at = day == null || !day.isBefore(today) ? null : DateUtils.addDaysToDate(day, 1));
   }
 
   @override
@@ -161,7 +155,7 @@ class _DateChips extends StatelessWidget {
             key: const ValueKey('stock-where-date'),
             label: l10n.stockWhereIsPickDate,
             value: at,
-            first: today.subtract(_lookBack),
+            first: DateUtils.addMonthsToMonthDate(today, -120),
             last: today,
             onChanged: onDay,
           ),

@@ -3026,6 +3026,22 @@ Avec la fonction *Puces* activée, un article a un **mode de puce**, posé sur s
 - Le mode d'un article qui a déjà des puces ne change pas tant que ses puces ne sont pas retirées ou que son stock n'est pas nul ; le changement d'un groupe saute alors l'article et le liste comme conservé. Une puce sur un emplacement désigne toujours un seul emplacement.
 - Un code de puce est une étiquette UHF (EPC ; un SGTIN-96 est lu par le serveur comme GTIN et numéro de série) ou une puce NFC, enregistré en hexadécimal majuscule et unique dans l'entreprise entre articles, pièces et emplacements. Lier et retirer demandent le droit de gérer le stock ; lire demande celui de le voir.
 
+### Le rapport de péremption
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous voulez savoir, à une date choisie, ce qui est périmé en stock et ce qui est sur le point de l'être, et l'imprimer.
+
+Avec la fonction *Rapport de péremption* activée, ouvrez **Stock → Rapport de péremption**. Il liste chaque lot en stock, et chaque pièce d'un article suivi pièce par pièce, **périmé** à la date de référence (sa date limite est antérieure) ou qui **périme** à partir de cette date, une ligne chacun avec l'article, le lot, l'emplacement, la quantité dans son unité et l'écart de sa date à la date de référence (*il y a 6 j*, *aujourd'hui*, *dans 9 j*). La liste est triée par date puis par emplacement ; un lot dont il ne reste rien n'y figure pas, et une pièce montre sa puce.
+
+- **Date de référence.** Aujourd'hui dans le calendrier de l'entreprise, jusqu'à ce que vous choisissiez un autre jour.
+- **Ce qu'il faut lister.** *Périmé*, *Bientôt périmé* ou *Périmé et bientôt périmé*.
+- **Horizon.** Combien de jours après la date comptent comme « bientôt périmé ». Vide, le réglage de l'entreprise s'applique (30 jours sauf changement).
+- **Emplacement et groupe d'articles.** Ne garder que ce qu'un emplacement contient, ou les articles d'un groupe (sous-groupes compris).
+
+- **Imprimer le rapport** ouvre le moteur de rapports : aperçu rapide, enregistrer ou partager. Le rapport est le document `stock_expiry` : sa mise en page se modifie comme celle de tout rapport dans le concepteur de rapports, qui liste aussi ses mots et ses champs de données.
+- Une liste de plus de 2 000 lignes est coupée et le dit : restreignez la date, l'emplacement ou le groupe. Pouvoir voir le stock suffit pour le consulter et l'imprimer.
+
 ### Lecture de nombreuses étiquettes
 
 **Public:** Membre

@@ -1,0 +1,89 @@
+{
+  "reportDocStockExpiry": "Expiry report",
+  "@reportDocStockExpiry": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryTitle": "Expiry report",
+  "@stockExpiryTitle": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryScopeExpired": "Expired",
+  "@stockExpiryScopeExpired": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryScopeExpiring": "Expiring",
+  "@stockExpiryScopeExpiring": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryScopeBoth": "Expired and expiring",
+  "@stockExpiryScopeBoth": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryScope": "What to list",
+  "@stockExpiryScope": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryDate": "Reference date",
+  "@stockExpiryDate": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryHorizon": "Look ahead (days)",
+  "@stockExpiryHorizon": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryHorizonHint": "Empty: the business's own setting.",
+  "@stockExpiryHorizonHint": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryPlace": "Place",
+  "@stockExpiryPlace": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryGroup": "Item group",
+  "@stockExpiryGroup": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryAny": "Any",
+  "@stockExpiryAny": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryPrint": "Print the report",
+  "@stockExpiryPrint": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryNone": "Nothing in stock is expired or about to expire at this date.",
+  "@stockExpiryNone": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryDaysPast": "{days} d past",
+  "@stockExpiryDaysPast": {
+    "description": "#4431 the expiry report",
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "stockExpiryDaysAhead": "in {days} d",
+  "@stockExpiryDaysAhead": {
+    "description": "#4431 the expiry report",
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "stockExpiryCut": "The report is cut at {rows} rows: narrow the date, the place or the group.",
+  "@stockExpiryCut": {
+    "description": "#4431 the expiry report",
+    "placeholders": {
+      "rows": {
+        "type": "String"
+      }
+    }
+  },
+  "stockExpiryReadFailed": "The expiry report could not be read.",
+  "@stockExpiryReadFailed": {
+    "description": "#4431 the expiry report"
+  }
+}

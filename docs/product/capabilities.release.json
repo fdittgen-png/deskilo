@@ -2302,6 +2302,12 @@
       "capabilities": []
     },
     {
+      "key": "stockExpiryReport",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "stockItemGroups",
       "maturity": "beta",
       "lifecycle": "active",

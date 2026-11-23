@@ -1,6 +1,14 @@
 {
   "settingLabelStockCycleCountHighValueMinor": "Inventaire tournant : seuil de forte valeur",
   "settingHintStockCycleCountHighValueMinor": "La valeur, en unités mineures de la devise de l’entreprise, à partir de laquelle ce qu’un lieu contient d’un article est de forte valeur pour un plan d’inventaire tournant sans seuil propre.",
+  "settingLabelStockExpiryHorizonDays": "Rapport de péremption : horizon",
+  "@settingLabelStockExpiryHorizonDays": {
+    "description": "#4431 setting label"
+  },
+  "settingHintStockExpiryHorizonDays": "Combien de jours après la date de référence le rapport de péremption regarde ce qui va bientôt périmer, quand aucun horizon n'est donné à l'impression.",
+  "@settingHintStockExpiryHorizonDays": {
+    "description": "#4431 setting hint"
+  },
   "settingLabelStockCycleCountOverdueDays": "Inventaire tournant : en retard après",
   "settingHintStockCycleCountOverdueDays": "Combien de jours une tâche d’inventaire tournant peut rester ouverte après son échéance avant que la boîte de réception la dise en retard."
 }

@@ -1,6 +1,14 @@
 {
   "settingLabelStockCycleCountHighValueMinor": "Recuento cíclico: umbral de alto valor",
   "settingHintStockCycleCountHighValueMinor": "El valor, en unidades menores de la moneda de la empresa, a partir del cual lo que un lugar contiene de un artículo se considera de alto valor para un plan de recuento sin umbral propio.",
+  "settingLabelStockExpiryHorizonDays": "Informe de caducidad: horizonte",
+  "@settingLabelStockExpiryHorizonDays": {
+    "description": "#4431 setting label"
+  },
+  "settingHintStockExpiryHorizonDays": "Cuántos días después de la fecha de referencia mira el informe de caducidad lo que está por caducar, cuando no se indica un horizonte al imprimirlo.",
+  "@settingHintStockExpiryHorizonDays": {
+    "description": "#4431 setting hint"
+  },
   "settingLabelStockCycleCountOverdueDays": "Recuento cíclico: vencido tras",
   "settingHintStockCycleCountOverdueDays": "Cuántos días puede seguir abierta una tarea de recuento cíclico después de su fecha antes de que la bandeja la declare vencida."
 }

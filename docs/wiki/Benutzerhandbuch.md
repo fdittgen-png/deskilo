@@ -3167,6 +3167,23 @@ Mit der Funktion *Tags* hat ein Artikel einen **Tag-Modus**, der an seiner Grupp
 - Der Modus eines Artikels, der schon Tags hat, ändert sich erst, wenn die Tags zurückgegeben sind oder der Bestand null ist; eine Änderung der Gruppe überspringt den Artikel dann und führt ihn als beibehalten auf. Ein Tag an einem Lagerplatz bezeichnet immer genau einen Platz.
 - Ein Tag-Code ist ein UHF-Etikett (EPC; ein SGTIN-96 liest der Server als GTIN und Seriennummer) oder ein NFC-Chip, in Großbuchstaben-Hex gespeichert und im Betrieb über Artikel, Stücke und Plätze eindeutig. Zum Binden und Zurückgeben braucht es das Recht, das Lager zu verwalten, zum Lesen das Recht, es zu sehen.
 
+<!-- anchor: user.money.stock.expiry -->
+### Der Verfallsbericht
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie möchten zu einem gewählten Datum wissen, was im Bestand abgelaufen ist und was bald abläuft, und es drucken.
+
+Mit der Funktion *Verfallsbericht* öffnen Sie **Lager → Verfallsbericht**. Er listet jede Charge im Bestand und jedes Stück eines stückweise geführten Artikels, die zum Stichtag **abgelaufen** sind (ihr Mindesthaltbarkeitsdatum liegt davor) oder ab dann **ablaufen**, je eine Zeile mit Artikel, Charge, Lagerplatz, Menge in ihrer Einheit und dem Abstand ihres Datums zum Stichtag (*vor 6 T.*, *heute*, *in 9 T.*). Die Liste ist nach Datum, dann nach Lagerplatz sortiert; eine Charge ohne Bestand fehlt, ein Stück zeigt sein Tag.
+
+- **Stichtag.** Heute im Kalender des Betriebs, bis Sie einen anderen Tag wählen.
+- **Was aufgelistet wird.** *Abgelaufen*, *Läuft ab* oder *Abgelaufen und ablaufend*.
+- **Vorausschau.** Wie viele Tage nach dem Datum als ablaufend gelten. Leer gilt die Einstellung des Betriebs (30 Tage, wenn nicht geändert).
+- **Lagerplatz und Artikelgruppe.** Nur, was ein Platz enthält, oder die Artikel einer Gruppe (mit ihren Untergruppen).
+
+- **Bericht drucken** öffnet die Berichtsmaschine: Schnellansicht, Speichern oder Teilen. Der Bericht ist das Dokument `stock_expiry`: Sein Layout bearbeiten Sie wie jeden anderen Bericht im Berichtsdesigner; dort stehen auch die Wörter und die Datenfelder.
+- Eine Liste mit mehr als 2.000 Zeilen wird abgeschnitten und sagt es: Datum, Lagerplatz oder Gruppe eingrenzen. Zum Sehen und Drucken genügt das Recht, den Bestand zu sehen.
+
 <!-- anchor: user.money.stock.bulkread -->
 ### Viele Etiketten lesen
 

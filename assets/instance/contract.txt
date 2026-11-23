@@ -3285,7 +3285,7 @@ routine public.feature_effective(p_workspace_id uuid, p_key text) -> boolean | f
 routine public.feature_effective_in(p_flags jsonb, p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:f36e5aa82a04
 routine public.feature_operation_allowed(p_workspace uuid, p_feature text, p_operation text) -> boolean | function | definer | stable | exec:service_role | body:084f4cf0e3a0
 routine public.feature_raw(p_flags jsonb, p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:3f29a2e68fc1
-routine public.feature_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:92a1793596f2
+routine public.feature_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:755f2897c576
 routine public.federation_answer_wait() -> interval | function | definer | stable | exec: | body:ecc7c683d6e9
 routine public.federation_envelope_headers(p_purpose text, p_target uuid, p_event uuid, p_path text, p_body jsonb) -> jsonb | function | definer | volatile | exec: | body:dc4baaa18342
 routine public.federation_inbox_accept(p_method text, p_path text, p_headers jsonb, p_body_b64 text) -> jsonb | function | definer | volatile | exec:service_role | body:9eb383212bb9
@@ -4376,7 +4376,7 @@ routine public.setup_current_levels(p_flags jsonb, p_country text) -> jsonb | fu
 routine public.setup_hours_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:4f359045c81a
 routine public.setup_invitation_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:5852379a5e56
 routine public.setup_level_arguments() -> text[] | function | invoker | immutable | exec:service_role | body:7f746fc5ea32
-routine public.setup_level_catalogue() -> jsonb | function | invoker | immutable | exec:service_role | body:91386106c2a1
+routine public.setup_level_catalogue() -> jsonb | function | invoker | immutable | exec:service_role | body:946571cf6db9
 routine public.setup_level_rank(p_process text, p_level text) -> integer | function | invoker | immutable | exec:service_role | body:a54edb860b1c
 routine public.setup_levels_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:c01c658a9993
 routine public.setup_member_rights_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:fa33dc1d0dfa
@@ -4434,6 +4434,7 @@ routine public.stock_cycle_places(p_workspace_id uuid, p_location_ids uuid[]) ->
 routine public.stock_cycle_scope_lines(p_plan_id uuid) -> TABLE(item_id uuid, variant_id uuid, lot_id uuid, location_id uuid) | function | definer | stable | exec:service_role | body:42741f2f21d6
 routine public.stock_cycle_skip_line_v1(p_workspace_id uuid, p_request_id uuid, p_line_id uuid, p_reason text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:549c85615fd2
 routine public.stock_document_goods_v1(p_workspace_id uuid, p_kind text, p_id uuid, p_limit integer, p_after jsonb) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:29237a814200
+routine public.stock_expiry_report_v1(p_workspace_id uuid, p_on date, p_scope text, p_horizon_days integer, p_location_id uuid, p_group_id uuid, p_limit integer, p_after jsonb) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:f27fb84acf01
 routine public.stock_fefo_proposal_v1(p_workspace_id uuid, p_item_id uuid, p_variant_id uuid, p_location_id uuid, p_quantity numeric) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:f11900768530
 routine public.stock_goods_trace_v1(p_workspace_id uuid, p_movement_id uuid, p_lot_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:c4ddf0a77a52
 routine public.stock_gtin_check_digit(p_body text) -> integer | function | invoker | immutable | exec:service_role | body:af80192ad887
@@ -4556,7 +4557,7 @@ routine public.tell_owners_kiosk_device(p_workspace_id uuid, p_change text, p_de
 routine public.template_blocked_validations(p_tables jsonb, p_selected text[]) -> jsonb | function | invoker | immutable | exec:service_role | body:c094ee38e47a
 routine public.template_compatibility(p_template workspace_templates, p_groups text[]) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:99d317191047
 routine public.template_customizations(p_workspace_id uuid, p_template workspace_templates, p_groups jsonb) -> jsonb | function | definer | stable | exec:service_role | body:9906b0d4a427
-routine public.template_field_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:791b08629b35
+routine public.template_field_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:1a332f8f806d
 routine public.template_local_needs(p_template_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:680fc4d8017c
 routine public.template_local_slot_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:41d51bce65a7
 routine public.template_outline(p_template_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e7a5648e8753

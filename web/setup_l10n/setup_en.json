@@ -807,6 +807,8 @@
  "stockCycleHighValueHint": "The value, in minor units of the business currency, from which what a place holds of an item counts as high value for a cycle count plan that has no threshold of its own. Set in the app's settings.",
  "stockCycleOverdue": "Cycle count: overdue after",
  "stockCycleOverdueHint": "How many days a cycle count task may stay open past its due date before the inbox says it is overdue. Set in the app's settings.",
+ "stockExpiryHorizon": "Expiry report: look ahead",
+ "stockExpiryHorizonHint": "How many days after the reference date the expiry report looks ahead for what is about to expire. Set in the app's settings.",
  "optMinorUnits": "{n} (minor units)",
  "businessKind_shop": "Shop — buys, keeps in stock and sells goods",
  "businessShopType": "Type of shop",

@@ -779,6 +779,23 @@ Con la función *Etiquetas* activada, un artículo tiene un **modo de etiqueta**
 - El modo de un artículo que ya tiene etiquetas no cambia hasta retirarlas o hasta que su stock sea cero; un cambio del grupo salta entonces el artículo y lo lista como conservado. Una etiqueta de un lugar designa siempre un solo lugar.
 - Un código de etiqueta es una etiqueta UHF (EPC; el servidor lee un SGTIN-96 como GTIN y número de serie) o un chip NFC, guardado en hexadecimal mayúsculo y único en la empresa entre artículos, piezas y lugares. Vincular y retirar exigen el derecho a gestionar el stock; leer, el de verlo.
 
+<!-- anchor: user.money.stock.expiry -->
+### El informe de caducidad
+
+**Público:** Administrador/a · Propietario
+
+Quiere saber, en una fecha elegida, qué hay caducado en el stock y qué está a punto de caducar, e imprimirlo.
+
+Con la función *Informe de caducidad* activada, abra **Stock → Informe de caducidad**. Lista cada lote en stock, y cada pieza de un artículo seguido pieza a pieza, que esté **caducado** en la fecha de referencia (su fecha de consumo preferente es anterior) o que **caduque** a partir de ella, una línea cada uno con el artículo, el lote, el lugar, la cantidad en su unidad y la distancia de su fecha a la de referencia (*hace 6 d*, *hoy*, *en 9 d*). La lista va por fecha y luego por lugar; un lote sin existencias no aparece, y una pieza muestra su etiqueta.
+
+- **Fecha de referencia.** Hoy en el calendario de la empresa, hasta que elija otro día.
+- **Qué listar.** *Caducado*, *Por caducar* o *Caducado y por caducar*.
+- **Horizonte.** Cuántos días después de la fecha cuentan como por caducar. Vacío, vale el ajuste de la empresa (30 días salvo cambio).
+- **Lugar y grupo de artículos.** Solo lo que contiene un lugar, o los artículos de un grupo (con sus subgrupos).
+
+- **Imprimir el informe** abre el motor de informes: vista rápida, guardar o compartir. El informe es el documento `stock_expiry`: su diseño se edita como el de cualquier informe en el diseñador de informes, que también lista sus palabras y sus campos de datos.
+- Una lista de más de 2000 líneas se corta y lo dice: acote la fecha, el lugar o el grupo. Basta con poder ver el stock para consultarlo e imprimirlo.
+
 <!-- anchor: user.money.stock.bulkread -->
 ### Lectura de muchas etiquetas
 

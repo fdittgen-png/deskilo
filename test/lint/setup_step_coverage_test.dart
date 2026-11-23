@@ -70,6 +70,8 @@ const _switches = <WorkspaceFeature>{
   WorkspaceFeature.counterTillSessions,
   // #4364 — asked for on its own screens, not in the setup guide.
   WorkspaceFeature.stockTagReads,
+  // #4431 — asked for on its own screen, not in the setup guide.
+  WorkspaceFeature.stockExpiryReport,
   // Booking and the plan read what is already set up.
   WorkspaceFeature.seriesBooking,
   WorkspaceFeature.seatDayTimeline,

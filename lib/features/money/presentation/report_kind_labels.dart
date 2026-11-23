@@ -40,9 +40,10 @@ String reportKindLabel(AppLocalizations l10n, ReportKind kind) {
   };
 }
 
-/// The documents a business sends in trading: a purchase order, a quote.
+/// The documents a business sends in trading: a purchase order, a quote; and the stock's expiry report.
 String? _tradingDocumentLabel(AppLocalizations l10n, String id) => switch (id) {
   'purchase_order' => l10n.reportDocPurchaseOrder,
   'quote' => l10n.reportDocQuote,
+  'stock_expiry' => l10n.reportDocStockExpiry,
   _ => null,
 };

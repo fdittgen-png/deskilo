@@ -779,6 +779,23 @@ With the *Tags* feature on, an item carries a **tag mode**, set on its group and
 - The mode of an item that already has tags cannot change until its tags are retired or its stock is zero; a group's change then skips the item and lists it as kept. A tag on a place always names one place.
 - A tag code is a UHF label (EPC, an SGTIN-96 is read as its GTIN and serial by the server) or an NFC chip, stored in upper-case hex and unique in the business across items, pieces and places. Binding and retiring need the right to manage the stock; reading needs the right to see it.
 
+<!-- anchor: user.money.stock.expiry -->
+### The expiry report
+
+**Audience:** Administrator · Owner
+
+You want to know, at a date you choose, what in stock has expired and what is about to, and to print it.
+
+With the *Expiry report* feature on, open **Stock → Expiry report**. It lists every lot on hand, and every piece of an item tracked piece by piece, that is **expired** at the reference date (its best-before date is before it) or **expiring** from it, one line each with the item, the lot, the place, the quantity in its unit and how far its date is from the reference date (*6 d past*, *today*, *in 9 d*). The list is sorted by date, then by place; a lot with nothing left on hand is not listed, and a piece shows its tag.
+
+- **Reference date.** Today on the business's calendar until you choose another day.
+- **What to list.** *Expired*, *Expiring* or *Expired and expiring*.
+- **Look ahead.** How many days after the date counts as expiring. Empty takes the business's own setting (30 days unless changed in the settings).
+- **Place and item group.** Keep only what one place holds, or one group's items (its sub-groups included).
+
+- **Print the report** opens the report engine: quick view, save or share. The report is the `stock_expiry` document: edit its layout like every other report in the report designer; the words and the data fields it offers are listed there.
+- A list longer than 2,000 lines is cut and says so: narrow the date, the place or the group. Reading the stock is enough to see and print it.
+
 <!-- anchor: user.money.stock.bulkread -->
 ### Reading many tags
 

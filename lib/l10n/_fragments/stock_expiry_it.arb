@@ -1,0 +1,89 @@
+{
+  "reportDocStockExpiry": "Rapporto di scadenza",
+  "@reportDocStockExpiry": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryTitle": "Rapporto di scadenza",
+  "@stockExpiryTitle": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryScopeExpired": "Scaduto",
+  "@stockExpiryScopeExpired": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryScopeExpiring": "In scadenza",
+  "@stockExpiryScopeExpiring": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryScopeBoth": "Scaduto e in scadenza",
+  "@stockExpiryScopeBoth": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryScope": "Che cosa elencare",
+  "@stockExpiryScope": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryDate": "Data di riferimento",
+  "@stockExpiryDate": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryHorizon": "Orizzonte (giorni)",
+  "@stockExpiryHorizon": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryHorizonHint": "Vuoto: l'impostazione dell'azienda.",
+  "@stockExpiryHorizonHint": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryPlace": "Luogo",
+  "@stockExpiryPlace": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryGroup": "Gruppo di articoli",
+  "@stockExpiryGroup": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryAny": "Qualsiasi",
+  "@stockExpiryAny": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryPrint": "Stampa il rapporto",
+  "@stockExpiryPrint": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryNone": "A questa data nulla in magazzino è scaduto o sta per scadere.",
+  "@stockExpiryNone": {
+    "description": "#4431 the expiry report"
+  },
+  "stockExpiryDaysPast": "{days} g fa",
+  "@stockExpiryDaysPast": {
+    "description": "#4431 the expiry report",
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "stockExpiryDaysAhead": "tra {days} g",
+  "@stockExpiryDaysAhead": {
+    "description": "#4431 the expiry report",
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "stockExpiryCut": "Il rapporto è tagliato a {rows} righe: restringa la data, il luogo o il gruppo.",
+  "@stockExpiryCut": {
+    "description": "#4431 the expiry report",
+    "placeholders": {
+      "rows": {
+        "type": "String"
+      }
+    }
+  },
+  "stockExpiryReadFailed": "Non è stato possibile leggere il rapporto di scadenza.",
+  "@stockExpiryReadFailed": {
+    "description": "#4431 the expiry report"
+  }
+}
