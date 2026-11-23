@@ -13,6 +13,20 @@ Deno.test("#4412 an empty or swallowing catch is seen; one that logs, rethrows o
   assertEquals(unaccountedCatches("const s = \"} catch {\"; const o = { a: 1 };"), []);
 });
 
+Deno.test("#4412 a promise catch is a catch; text inside a string or a comment is not code", () => {
+  assertEquals(unaccountedCatches("p.catch(() => {});").length, 1);
+  assertEquals(unaccountedCatches("p.catch(() => ({}));").length, 1);
+  assertEquals(unaccountedCatches("p.catch((e) => logLine('warn', 'f', 'c', { e }));"), []);
+  assertEquals(unaccountedCatches("p.catch((e) => { throw e; });"), []);
+  assertEquals(unaccountedCatches("p.catch(() => null /* handled: the default is the answer */);"), []);
+  // a logger named only in a string or a comment does not account for the catch
+  assertEquals(unaccountedCatches("try { a(); } catch (e) { const t = 'logLine('; }").length, 1);
+  assertEquals(unaccountedCatches("try { a(); } catch (e) { // logLine(e) later\n }").length, 1);
+  assertEquals(unaccountedCatches("try { a(); } catch (e) { const t = 'throw'; }").length, 1);
+  // a catch written inside a comment or a string is not one
+  assertEquals(unaccountedCatches("// try {} catch (e) {}\nconst s = 'catch (e) {}';"), []);
+});
+
 Deno.test("#4412 the CI check fails on a fixture with an empty catch, and a baseline holds what predates it", () => {
   const dir = Deno.makeTempDirSync();
   try {
