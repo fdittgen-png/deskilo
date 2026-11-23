@@ -60,6 +60,30 @@ class DemoStockTags implements StockTags {
         StockTag(id: t.id, code: t.code, kind: t.kind, ownerKind: t.pieceId == null ? t.owner.kind : 'piece', unit: t.owner.unit, pieceId: t.pieceId),
   ];
 
+  /// #4379 -- the pieces a put-away makes ([allocation] of it): one per tag, each tag bound to its own piece, as
+  /// 0889 does. A tag read twice in the allocation, or in force anywhere, is refused DKG22 with the allocation and
+  /// the tag's place among them (from 1); nothing is bound then. [check] only says whether they would bind.
+  void addPieces(String itemId, List<String> codes, {required int allocation, bool check = false}) {
+    final seen = <String>{};
+    for (var n = 0; n < codes.length; n++) {
+      final code = normalise(codes[n]);
+      final held = _active.where((t) => t.code == code).firstOrNull;
+      if (!seen.add(code) || held != null) {
+        throw StockTagRefused(DkCode.dkg22, {
+          'allocation': allocation,
+          'unit': n + 1,
+          'code': code,
+          'owner': held?.owner.locationId ?? held?.owner.itemId ?? itemId,
+        });
+      }
+    }
+    if (check) return;
+    for (final code in seen) {
+      final n = _next++;
+      _active.add(_Bound('demo-tag-$n', code, TagOwner.item(itemId), kind: code.length >= 24 ? 'epc' : 'uid', pieceId: 'demo-piece-$n'));
+    }
+  }
+
   @override
   Future<TagBound> bind(String workspaceId, {required String requestId, required String code, required TagOwner owner}) async {
     final first = _answers[requestId];

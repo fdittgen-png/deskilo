@@ -241,7 +241,7 @@ class PutAwayDraft {
     if (current != null) part.place = current.id;
     final tracking = context.items[part.line.lineNo]?.tracking ?? 'none';
     final lot = line.lotCode;
-    if (tracking != 'none' && lot != null && lot.isNotEmpty) part.lot.text = lot;
+    if ((tracking == 'lot' || tracking == 'expiry') && lot != null && lot.isNotEmpty) part.lot.text = lot;
     final expiry = tracking == 'expiry' && line.expiresOn != null ? DateTime.tryParse(line.expiresOn!) : null;
     if (expiry != null) part.expiry = (date: expiry, problem: null);
   }
@@ -356,7 +356,8 @@ class PutAwayDraft {
           },
         ),
       if (this.context.perUnit.contains(n)) ..._tagFields(context, l10n, p),
-      if (item.tracking != 'none')
+      // a lot is asked of goods tracked by lot or expiry (0840); a piece is its own identity
+      if (item.tracking == 'lot' || item.tracking == 'expiry')
         AppTextField(
           key: ValueKey('putaway-$n-lot'),
           controller: p.lot,

@@ -98,22 +98,17 @@ List<Widget> pieceTagFields(
   return [
   Text(l10n.stockPutAwayTagsTitle, style: Theme.of(context).textTheme.labelLarge),
   if (needed != null) Text(l10n.stockPutAwayTagsCount(tags.codes.length, needed), key: ValueKey('putaway-$lineNo-tags-count')),
-  Row(
-    children: [
-      Expanded(
-        child: AppTextField(
-          key: ValueKey('putaway-$lineNo-tag'),
-          controller: tags.next,
-          fieldKey: 'putaway-$lineNo-tags',
-          label: l10n.stockPutAwayTagField,
-          error: tags.problem,
-          textInputAction: TextInputAction.done,
-          onSubmitted: onRead,
-        ),
-      ),
-      StockNfcButton(onUid: onRead),
-    ],
+  AppTextField(
+    key: ValueKey('putaway-$lineNo-tag'),
+    controller: tags.next,
+    fieldKey: 'putaway-$lineNo-tags',
+    label: l10n.stockPutAwayTagField,
+    error: tags.problem,
+    textInputAction: TextInputAction.done,
+    onSubmitted: onRead,
   ),
+  // on its own line: the button grows with its "reading" sentence, which a row beside the field cannot size
+  StockNfcButton(onUid: onRead),
   Wrap(
     spacing: 8,
     children: [
