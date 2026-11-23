@@ -186,17 +186,17 @@ class _Tags implements StockTags {
     distinct: codes.length,
     limit: 500,
     truncated: false,
-    invalid: const [],
     codes: [
       for (final c in codes)
-        c.startsWith('E2')
-            ? BulkCode(
+        if (c.startsWith('E2'))
+          BulkCode(
                 input: c,
                 kind: 'tag',
                 itemName: 'Mugs',
                 piece: BulkPiece(id: 'p-$c', state: 'in_stock', itemId: 'i-mugs', place: const BulkPlace(id: 'demo-place-main', code: 'MAIN', name: 'Main store')),
-              )
-            : BulkCode(input: c, kind: 'unknown'),
+          )
+        else
+          BulkCode(input: c, kind: 'unknown'),
     ],
   );
 
