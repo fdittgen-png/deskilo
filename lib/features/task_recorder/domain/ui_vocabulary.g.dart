@@ -14228,6 +14228,7 @@ const Set<String> uiLabelKeys = {
   'settingUnitRequests',
   'settingUnitRows',
   'settingUnitSeconds',
+  'settingUnitTags',
   'settingUnitUrl',
   'settingUnitUrlTemplate',
   'settingUnitYears',

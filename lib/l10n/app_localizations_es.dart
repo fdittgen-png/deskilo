@@ -32994,6 +32994,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get settingUnitSeconds => 'segundos';
 
   @override
+  String get settingUnitTags => 'etiquetas';
+
+  @override
   String get settingUnitUrl => 'dirección';
 
   @override

@@ -19581,6 +19581,7 @@
   "@settingUnitSeconds": {
     "description": "#2484 settings: Unit."
   },
+  "settingUnitTags": "etiquetas",
   "settingUnitUrl": "dirección",
   "settingUnitUrlTemplate": "plantilla de dirección",
   "settingUnitYears": "años",
