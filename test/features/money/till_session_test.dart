@@ -7,6 +7,8 @@ import 'dart:async';
 
 import 'package:deskilo/features/money/domain/counter_till.dart';
 import 'package:deskilo/features/money/presentation/till_session.dart';
+import 'package:deskilo/features/money/providers/till_providers.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
@@ -165,6 +167,62 @@ void main() {
     expect(s.state.value.sold?.number, 'R-1');
     expect(s.state.value.unconfirmed, isFalse);
     expect(s.state.value.problem, isNull);
+  });
+
+  test('the session of a business is kept: opened again while a sale waits, it is the same one, and confirming sells once', () async {
+    final port = _Port()..failNextFinalize = Exception('connection lost');
+    final container = ProviderContainer(overrides: [tillPortProvider.overrideWithValue(port)]);
+    addTearDown(container.dispose);
+    final first = container.read(tillSessionProvider('ws'));
+    await _ring(first, 'milk');
+    await first.payCash(100);
+    first.leave();
+    final again = container.read(tillSessionProvider('ws'));
+    expect(identical(again, first), isTrue);
+    expect(again.state.value.unconfirmed, isTrue);
+    expect(identical(container.read(tillSessionProvider('other')), first), isFalse);
+    await again.confirmSale();
+    expect(port.finals, hasLength(2));
+    expect(again.state.value.sold?.number, 'R-1');
+  });
+
+  test('a sale the server answered with a refusal of its own is definite: nothing waits to be confirmed', () async {
+    final port = _Port();
+    final s = _session(port);
+    await _ring(s, 'milk');
+    port.refuseNextFinalize = const PostgrestException(message: 'bad', code: '22023');
+    await s.payCash(100);
+    expect(s.state.value.unconfirmed, isFalse);
+    expect(s.state.value.problem, isA<PostgrestException>());
+    expect(s.state.value.sold, isNull);
+  });
+
+  test('paying while a sale waits confirms it as it was sent, with the cash typed before', () async {
+    final port = _Port()..failNextFinalize = Exception('connection lost');
+    final s = _session(port);
+    await _ring(s, 'milk');
+    await s.payCash(500);
+    expect(s.state.value.unconfirmed, isTrue);
+    await s.payCash(100);
+    expect(port.finals, hasLength(2));
+    expect(port.finals[1].requestId, port.finals[0].requestId);
+    expect(s.state.value.sold?.number, 'R-1');
+    expect(s.state.value.change, 400);
+  });
+
+  test('leaving the till keeps a sale that waits and drops a basket nobody pays', () async {
+    final port = _Port()..failNextFinalize = Exception('connection lost');
+    final s = _session(port);
+    await _ring(s, 'milk');
+    s.leave();
+    expect(s.state.value.lines, isEmpty);
+    await _ring(s, 'milk');
+    await s.payCash(100);
+    s.leave();
+    expect(s.state.value.unconfirmed, isTrue);
+    expect(s.state.value.lines, hasLength(1));
+    await s.confirmSale();
+    expect(s.state.value.sold?.number, 'R-1');
   });
 
   test('a sale refused as moved or closed is priced again: no dead end', () async {

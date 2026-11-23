@@ -261,6 +261,10 @@ const Map<String, KnownRefusal> _codedRefusals = {
 ({String? code, String? details}) refusalCodeOf(Object error) =>
     (code: serverErrorCode(error), details: serverErrorDetails(error));
 
+/// Whether the server ANSWERED with [error] (a refusal, even one with no sentence of its own), as against no answer
+/// at all (a timeout, a lost connection): what an act that may have been made needs to know.
+bool serverAnswered(Object error) => serverErrorCode(error) != null || serverErrorMessage(error) != null;
+
 /// Which family [error] belongs to, or null when it is none of them.
 KnownRefusal? knownRefusalOf(Object error) {
   // #3278 — a 42501 that carries its own words: read before the generic one.

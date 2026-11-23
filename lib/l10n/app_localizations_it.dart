@@ -40040,6 +40040,19 @@ class AppLocalizationsIt extends AppLocalizations {
   String get tillKeysTitle => 'Articoli da battere';
 
   @override
+  String get tillLeaveBody =>
+      'La vendita è stata inviata e la risposta non è arrivata. Uscendo resta in attesa: riapra la cassa e la confermi. Non la registri di nuovo.';
+
+  @override
+  String get tillLeaveGo => 'Uscire';
+
+  @override
+  String get tillLeaveStay => 'Restare';
+
+  @override
+  String get tillLeaveTitle => 'La vendita non è confermata';
+
+  @override
   String get tillNextCustomer => 'Cliente successivo';
 
   @override

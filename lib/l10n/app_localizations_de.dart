@@ -40116,6 +40116,19 @@ class AppLocalizationsDe extends AppLocalizations {
   String get tillKeysTitle => 'Artikel zum Kassieren';
 
   @override
+  String get tillLeaveBody =>
+      'Der Verkauf wurde gesendet, die Antwort blieb aus. Beim Verlassen bleibt er offen: Öffnen Sie die Kasse erneut und bestätigen Sie ihn. Buchen Sie ihn nicht noch einmal.';
+
+  @override
+  String get tillLeaveGo => 'Verlassen';
+
+  @override
+  String get tillLeaveStay => 'Bleiben';
+
+  @override
+  String get tillLeaveTitle => 'Der Verkauf ist nicht bestätigt';
+
+  @override
   String get tillNextCustomer => 'Nächster Kunde';
 
   @override

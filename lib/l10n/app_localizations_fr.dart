@@ -40161,6 +40161,19 @@ class AppLocalizationsFr extends AppLocalizations {
   String get tillKeysTitle => 'Articles à encaisser';
 
   @override
+  String get tillLeaveBody =>
+      'La vente a été envoyée et la réponse n\'est pas venue. En quittant, elle reste en attente : rouvrez la caisse et confirmez-la. Ne la ressaisissez pas.';
+
+  @override
+  String get tillLeaveGo => 'Quitter';
+
+  @override
+  String get tillLeaveStay => 'Rester';
+
+  @override
+  String get tillLeaveTitle => 'La vente n\'est pas confirmée';
+
+  @override
   String get tillNextCustomer => 'Client suivant';
 
   @override

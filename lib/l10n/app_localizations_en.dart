@@ -39660,6 +39660,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tillKeysTitle => 'Items to ring up';
 
   @override
+  String get tillLeaveBody =>
+      'The sale was sent and its answer did not come. Leaving keeps it waiting: open the till again and confirm it. Do not ring it up again.';
+
+  @override
+  String get tillLeaveGo => 'Leave';
+
+  @override
+  String get tillLeaveStay => 'Stay';
+
+  @override
+  String get tillLeaveTitle => 'The sale is not confirmed';
+
+  @override
   String get tillNextCustomer => 'Next customer';
 
   @override

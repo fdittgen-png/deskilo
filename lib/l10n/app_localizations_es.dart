@@ -39982,6 +39982,19 @@ class AppLocalizationsEs extends AppLocalizations {
   String get tillKeysTitle => 'Artículos para cobrar';
 
   @override
+  String get tillLeaveBody =>
+      'La venta se envió y no llegó la respuesta. Al salir queda en espera: abra la caja de nuevo y confírmela. No la registre otra vez.';
+
+  @override
+  String get tillLeaveGo => 'Salir';
+
+  @override
+  String get tillLeaveStay => 'Quedarse';
+
+  @override
+  String get tillLeaveTitle => 'La venta no está confirmada';
+
+  @override
   String get tillNextCustomer => 'Siguiente cliente';
 
   @override

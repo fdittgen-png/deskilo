@@ -51567,6 +51567,22 @@
   "@tillKeysTitle": {
     "description": "#4366 the till"
   },
+  "tillLeaveBody": "The sale was sent and its answer did not come. Leaving keeps it waiting: open the till again and confirm it. Do not ring it up again.",
+  "@tillLeaveBody": {
+    "description": "#4366 the till: what leaving with a sale waiting to be confirmed does"
+  },
+  "tillLeaveGo": "Leave",
+  "@tillLeaveGo": {
+    "description": "#4366 the till: leave the till with the sale still waiting"
+  },
+  "tillLeaveStay": "Stay",
+  "@tillLeaveStay": {
+    "description": "#4366 the till: stay on the till"
+  },
+  "tillLeaveTitle": "The sale is not confirmed",
+  "@tillLeaveTitle": {
+    "description": "#4366 the till: title of the question asked when leaving with a sale waiting to be confirmed"
+  },
   "tillNextCustomer": "Next customer",
   "@tillNextCustomer": {
     "description": "#4366 the till"

@@ -23359,6 +23359,22 @@
   "tillFailed": "La caisse n'a pas pu le faire. Réessayez.",
   "tillKeysEmpty": "Il n'y a encore rien à vendre. Ajoutez d'abord des articles dans le stock.",
   "tillKeysTitle": "Articles à encaisser",
+  "tillLeaveBody": "La vente a été envoyée et la réponse n'est pas venue. En quittant, elle reste en attente : rouvrez la caisse et confirmez-la. Ne la ressaisissez pas.",
+  "@tillLeaveBody": {
+    "description": "#4366 the till: what leaving with a sale waiting to be confirmed does"
+  },
+  "tillLeaveGo": "Quitter",
+  "@tillLeaveGo": {
+    "description": "#4366 the till: leave the till with the sale still waiting"
+  },
+  "tillLeaveStay": "Rester",
+  "@tillLeaveStay": {
+    "description": "#4366 the till: stay on the till"
+  },
+  "tillLeaveTitle": "La vente n'est pas confirmée",
+  "@tillLeaveTitle": {
+    "description": "#4366 the till: title of the question asked when leaving with a sale waiting to be confirmed"
+  },
   "tillNextCustomer": "Client suivant",
   "tillNotReady": "Pas encore prêt dans votre pays : {operation}",
   "tillNotReadyHint": "Rien n'est numéroté ni encaissé tant que l'opération du pays n'est pas prise en charge.",

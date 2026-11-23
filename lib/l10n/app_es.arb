@@ -23359,6 +23359,22 @@
   "tillFailed": "La caja no pudo hacerlo. Inténtelo de nuevo.",
   "tillKeysEmpty": "Todavía no hay nada que vender. Añada primero artículos en el stock.",
   "tillKeysTitle": "Artículos para cobrar",
+  "tillLeaveBody": "La venta se envió y no llegó la respuesta. Al salir queda en espera: abra la caja de nuevo y confírmela. No la registre otra vez.",
+  "@tillLeaveBody": {
+    "description": "#4366 the till: what leaving with a sale waiting to be confirmed does"
+  },
+  "tillLeaveGo": "Salir",
+  "@tillLeaveGo": {
+    "description": "#4366 the till: leave the till with the sale still waiting"
+  },
+  "tillLeaveStay": "Quedarse",
+  "@tillLeaveStay": {
+    "description": "#4366 the till: stay on the till"
+  },
+  "tillLeaveTitle": "La venta no está confirmada",
+  "@tillLeaveTitle": {
+    "description": "#4366 the till: title of the question asked when leaving with a sale waiting to be confirmed"
+  },
   "tillNextCustomer": "Siguiente cliente",
   "tillNotReady": "Aún no está listo en su país: {operation}",
   "tillNotReadyHint": "No se numera ni se cobra nada mientras la operación del país no esté admitida.",

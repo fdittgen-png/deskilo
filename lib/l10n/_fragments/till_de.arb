@@ -35,5 +35,21 @@
   "@tillConfirmSale": {
     "description": "#4366 the till: the sale was sent and its answer was lost; send it again under the same request"
   },
+  "tillLeaveTitle": "Der Verkauf ist nicht bestätigt",
+  "@tillLeaveTitle": {
+    "description": "#4366 the till: title of the question asked when leaving with a sale waiting to be confirmed"
+  },
+  "tillLeaveBody": "Der Verkauf wurde gesendet, die Antwort blieb aus. Beim Verlassen bleibt er offen: Öffnen Sie die Kasse erneut und bestätigen Sie ihn. Buchen Sie ihn nicht noch einmal.",
+  "@tillLeaveBody": {
+    "description": "#4366 the till: what leaving with a sale waiting to be confirmed does"
+  },
+  "tillLeaveStay": "Bleiben",
+  "@tillLeaveStay": {
+    "description": "#4366 the till: stay on the till"
+  },
+  "tillLeaveGo": "Verlassen",
+  "@tillLeaveGo": {
+    "description": "#4366 the till: leave the till with the sale still waiting"
+  },
   "tillFailed": "Die Kasse konnte das nicht ausführen. Versuchen Sie es erneut."
 }

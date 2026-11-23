@@ -23359,6 +23359,22 @@
   "tillFailed": "La cassa non ha potuto eseguirlo. Riprovi.",
   "tillKeysEmpty": "Non c'è ancora nulla da vendere. Aggiunga prima degli articoli nel magazzino.",
   "tillKeysTitle": "Articoli da battere",
+  "tillLeaveBody": "La vendita è stata inviata e la risposta non è arrivata. Uscendo resta in attesa: riapra la cassa e la confermi. Non la registri di nuovo.",
+  "@tillLeaveBody": {
+    "description": "#4366 the till: what leaving with a sale waiting to be confirmed does"
+  },
+  "tillLeaveGo": "Uscire",
+  "@tillLeaveGo": {
+    "description": "#4366 the till: leave the till with the sale still waiting"
+  },
+  "tillLeaveStay": "Restare",
+  "@tillLeaveStay": {
+    "description": "#4366 the till: stay on the till"
+  },
+  "tillLeaveTitle": "La vendita non è confermata",
+  "@tillLeaveTitle": {
+    "description": "#4366 the till: title of the question asked when leaving with a sale waiting to be confirmed"
+  },
   "tillNextCustomer": "Cliente successivo",
   "tillNotReady": "Non ancora pronto nel Suo paese: {operation}",
   "tillNotReadyHint": "Non viene numerato né incassato nulla finché l'operazione del paese non è supportata.",

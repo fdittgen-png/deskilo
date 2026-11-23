@@ -220,6 +220,8 @@ class TillSession {
   Future<void> payCash(int givenMinor) => _serial(() async {
     final draft = _now.draft;
     if (draft == null || _now.sold != null) return;
+    // A sale that may have been made is confirmed as it was sent, whatever the cash typed now.
+    if (_now.unconfirmed) return _finalize(draft);
     final total = draft.totals.grossMinor;
     if (givenMinor < total) {
       _set(_now.copyWith(problem: () => const TillCashShort()));
@@ -263,19 +265,20 @@ class TillSession {
     } on Object catch (e, st) {
       TraceLogger.instance.error('money', 'till sale not confirmed', error: e, stackTrace: st);
       final refusal = knownRefusalOf(e);
-      if (refusal == KnownRefusal.counterChanged || refusal == KnownRefusal.counterNotOpen) {
-        // A definite refusal: this receipt is not the one to sell. The basket is priced again as it is.
-        _finalAttempt = null;
-        _last = null;
-        _set(_now.withUnconfirmed(value: false));
-        await _price(_now.lines);
-        _set(_now.copyWith(problem: () => e));
-      } else if (refusal != null) {
-        _finalAttempt = null;
-        _set(_now.copyWith(problem: () => e).withUnconfirmed(value: false));
-      } else {
-        // No answer, or an answer that says nothing about the sale: it may have been made.
+      if (!serverAnswered(e)) {
+        // No answer (a timeout, a lost connection): the sale may have been made.
         _set(_now.copyWith(problem: () => e).withUnconfirmed(value: true));
+        return;
+      }
+      // The server answered: the sale was not made, whatever it said.
+      _finalAttempt = null;
+      _set(_now.copyWith(problem: () => e).withUnconfirmed(value: false));
+      if (refusal == KnownRefusal.counterChanged || refusal == KnownRefusal.counterNotOpen) {
+        // This receipt is not the one to sell: the basket is priced again as it is, and says why if that fails too.
+        _last = null;
+        if (_disposed) return;
+        await _price(_now.lines);
+        if (_now.problem == null) _set(_now.copyWith(problem: () => e));
       }
     }
   }
@@ -290,6 +293,13 @@ class TillSession {
     _finalAttempt = null;
     _last = null;
     _set(const TillState());
+  }
+
+  /// The till is left: a basket nobody is paying is dropped, a sale that may have been made (or is being made) stays
+  /// here, to be confirmed when the till is opened again.
+  void leave() {
+    if (_queued > 0 || _now.unconfirmed) return;
+    next();
   }
 
   void dispose() {

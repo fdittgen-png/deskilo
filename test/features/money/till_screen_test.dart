@@ -185,6 +185,19 @@ void main() {
         expect(find.text(_en.tillReceiptNumber('R-00001')), findsOneWidget);
       });
 
+      testWidgets('leaving while a sale waits asks first; staying keeps the till as it is', (tester) async {
+        await _open(tester, _LostAnswer(), size);
+        await _tap(tester, 'till-key-demo-item-milk');
+        await _tap(tester, 'till-pay');
+        await _tap(tester, 'till-cash-exact');
+        expect(find.byKey(const ValueKey('till-confirm')), findsOneWidget);
+        await tester.binding.handlePopRoute();
+        await _settle(tester);
+        expect(find.text(_en.tillLeaveTitle), findsOneWidget);
+        await _tap(tester, 'till-leave-stay');
+        expect(find.byKey(const ValueKey('till-confirm')), findsOneWidget);
+      });
+
       testWidgets('a readiness that cannot be read says so and reads again on a tap', (tester) async {
         final till = _FlakyReadiness();
         await _open(tester, till, size);

@@ -35,5 +35,21 @@
   "@tillConfirmSale": {
     "description": "#4366 the till: the sale was sent and its answer was lost; send it again under the same request"
   },
+  "tillLeaveTitle": "La venta no está confirmada",
+  "@tillLeaveTitle": {
+    "description": "#4366 the till: title of the question asked when leaving with a sale waiting to be confirmed"
+  },
+  "tillLeaveBody": "La venta se envió y no llegó la respuesta. Al salir queda en espera: abra la caja de nuevo y confírmela. No la registre otra vez.",
+  "@tillLeaveBody": {
+    "description": "#4366 the till: what leaving with a sale waiting to be confirmed does"
+  },
+  "tillLeaveStay": "Quedarse",
+  "@tillLeaveStay": {
+    "description": "#4366 the till: stay on the till"
+  },
+  "tillLeaveGo": "Salir",
+  "@tillLeaveGo": {
+    "description": "#4366 the till: leave the till with the sale still waiting"
+  },
   "tillFailed": "La caja no pudo hacerlo. Inténtelo de nuevo."
 }

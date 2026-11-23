@@ -63940,6 +63940,30 @@ abstract class AppLocalizations {
   /// **'Items to ring up'**
   String get tillKeysTitle;
 
+  /// #4366 the till: what leaving with a sale waiting to be confirmed does
+  ///
+  /// In en, this message translates to:
+  /// **'The sale was sent and its answer did not come. Leaving keeps it waiting: open the till again and confirm it. Do not ring it up again.'**
+  String get tillLeaveBody;
+
+  /// #4366 the till: leave the till with the sale still waiting
+  ///
+  /// In en, this message translates to:
+  /// **'Leave'**
+  String get tillLeaveGo;
+
+  /// #4366 the till: stay on the till
+  ///
+  /// In en, this message translates to:
+  /// **'Stay'**
+  String get tillLeaveStay;
+
+  /// #4366 the till: title of the question asked when leaving with a sale waiting to be confirmed
+  ///
+  /// In en, this message translates to:
+  /// **'The sale is not confirmed'**
+  String get tillLeaveTitle;
+
   /// #4366 the till
   ///
   /// In en, this message translates to:

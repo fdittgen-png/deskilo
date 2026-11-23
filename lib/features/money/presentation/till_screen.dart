@@ -64,7 +64,7 @@ class _Readiness extends ConsumerWidget {
             onRetry: () => ref.invalidate(tillReadinessProvider(workspaceId)),
           ),
           data: (readiness) => readiness.ready
-              ? _Till(workspaceId: workspaceId, keys: keys)
+              ? _Till(key: ValueKey('till-$workspaceId'), workspaceId: workspaceId, keys: keys)
               : _Notice(
                   key: const ValueKey('till-not-ready'),
                   text: l10n.tillNotReady(
@@ -103,7 +103,7 @@ class _Notice extends StatelessWidget {
 }
 
 class _Till extends ConsumerStatefulWidget {
-  const _Till({required this.workspaceId, required this.keys});
+  const _Till({super.key, required this.workspaceId, required this.keys});
 
   final String workspaceId;
   final AsyncValue<List<TillKey>> keys;
@@ -113,12 +113,29 @@ class _Till extends ConsumerStatefulWidget {
 }
 
 class _TillState extends ConsumerState<_Till> {
-  late final TillSession _session = TillSession(port: ref.read(tillPortProvider), workspaceId: widget.workspaceId);
+  late final TillSession _session = ref.read(tillSessionProvider(widget.workspaceId));
 
   @override
   void dispose() {
-    _session.dispose();
+    _session.leave();
     super.dispose();
+  }
+
+  /// Leaving with a sale that may have been made asks first: it stays waiting, and is not to be rung up again.
+  Future<void> _asked(BuildContext context) async {
+    final l10n = context.l10n;
+    final go = await showDialog<bool>(
+      context: context,
+      builder: (c) => AlertDialog(
+        title: Text(l10n.tillLeaveTitle),
+        content: Text(l10n.tillLeaveBody),
+        actions: [
+          TextButton(key: const ValueKey('till-leave-stay'), onPressed: () => Navigator.of(c).pop(false), child: Text(l10n.tillLeaveStay)),
+          FilledButton(key: const ValueKey('till-leave-go'), onPressed: () => Navigator.of(c).pop(true), child: Text(l10n.tillLeaveGo)),
+        ],
+      ),
+    );
+    if (go == true && context.mounted) Navigator.of(context).pop();
   }
 
   Future<void> _pay(TillState state) async {
@@ -138,7 +155,16 @@ class _TillState extends ConsumerState<_Till> {
 
   @override
   Widget build(BuildContext context) {
-        return LayoutBuilder(
+        return ValueListenableBuilder<TillState>(
+      valueListenable: _session.state,
+      builder: (context, state, child) => PopScope(
+        canPop: !state.unconfirmed,
+        onPopInvokedWithResult: (didPop, _) {
+          if (!didPop) unawaited(_asked(context));
+        },
+        child: child!,
+      ),
+      child: LayoutBuilder(
       builder: (context, box) {
         final keys = _Keys(
           key: const ValueKey('till-keys'),
@@ -175,6 +201,7 @@ class _TillState extends ConsumerState<_Till> {
           ],
         );
       },
+    ),
     );
   }
 }

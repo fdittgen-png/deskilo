@@ -23359,6 +23359,22 @@
   "tillFailed": "Die Kasse konnte das nicht ausführen. Versuchen Sie es erneut.",
   "tillKeysEmpty": "Es gibt noch nichts zu verkaufen. Legen Sie zuerst Artikel im Lager an.",
   "tillKeysTitle": "Artikel zum Kassieren",
+  "tillLeaveBody": "Der Verkauf wurde gesendet, die Antwort blieb aus. Beim Verlassen bleibt er offen: Öffnen Sie die Kasse erneut und bestätigen Sie ihn. Buchen Sie ihn nicht noch einmal.",
+  "@tillLeaveBody": {
+    "description": "#4366 the till: what leaving with a sale waiting to be confirmed does"
+  },
+  "tillLeaveGo": "Verlassen",
+  "@tillLeaveGo": {
+    "description": "#4366 the till: leave the till with the sale still waiting"
+  },
+  "tillLeaveStay": "Bleiben",
+  "@tillLeaveStay": {
+    "description": "#4366 the till: stay on the till"
+  },
+  "tillLeaveTitle": "Der Verkauf ist nicht bestätigt",
+  "@tillLeaveTitle": {
+    "description": "#4366 the till: title of the question asked when leaving with a sale waiting to be confirmed"
+  },
   "tillNextCustomer": "Nächster Kunde",
   "tillNotReady": "In Ihrem Land noch nicht bereit: {operation}",
   "tillNotReadyHint": "Es wird nichts nummeriert und nichts kassiert, solange der Vorgang des Landes nicht unterstützt wird.",
