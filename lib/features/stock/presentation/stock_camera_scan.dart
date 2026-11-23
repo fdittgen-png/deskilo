@@ -24,7 +24,7 @@ import '../domain/stock_scan_session.dart';
 import 'stock_scan_feed.dart';
 
 /// Whether this device can host the camera scanner (a phone or a tablet; a desktop and the browser say so).
-bool get stockCameraSupported => qrScanSupported;
+bool get _cameraSupported => qrScanSupported;
 
 /// Opens the camera scanner over [feed]; the dialog stays until it is closed.
 Future<void> showStockCameraScan(BuildContext context, StockScanFeed feed) =>
@@ -97,7 +97,7 @@ class _CameraDialogState extends ConsumerState<_CameraDialog> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (stockCameraSupported)
+            if (_cameraSupported)
               GoodsCameraBox(onCode: _onCode)
             else
               Text(scanNoCameraSentence(l10n), key: const ValueKey('stock-camera-unavailable')),
