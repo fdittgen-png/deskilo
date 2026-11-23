@@ -4,6 +4,11 @@
 // writes nothing, Save writes the kind and the confirmed features through
 // the feature-write path, and a feature that is not yet stable is written
 // only when ticked.
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:deskilo/core/demo/data/settings_repository.dart';
+import 'package:deskilo/core/settings/settings.dart';
 import 'package:deskilo/features/workspace/domain/business_kind.dart';
 import 'package:deskilo/features/workspace/domain/business_profile.dart';
 import 'package:deskilo/features/workspace/domain/feature_operation.dart';
@@ -11,6 +16,7 @@ import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/presentation/widgets/business_kind_sheet.dart';
 import 'package:deskilo/features/workspace/providers/business_kind_providers.dart';
+import 'package:deskilo/features/workspace/providers/settings_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -38,6 +44,7 @@ class _Kinds implements BusinessKindRepository {
       profileVersion: freelancerVersion,
       profileDigest: 'v$freelancerVersion',
     ),
+    const BusinessKind(code: 'shop', sortOrder: 47, profile: _shop),
     const BusinessKind(code: 'service', sortOrder: 50, profile: _noPlaces),
   ];
 
@@ -69,6 +76,23 @@ const _freelancer = {
   'purchases': true,
 };
 
+/// The profile 0890 seeds for the shop: the stock, the catalogue and the purchases, no places.
+const _shop = {
+  'placeBooking': false,
+  'moneyTab': true,
+  'services': true,
+  'invoicing': true,
+  'purchases': true,
+  'purchaseOrders': true,
+  'stockManagement': true,
+  'stockReceiving': true,
+  'stockTakeOut': true,
+  'stockLots': true,
+  'stockReorder': true,
+  'stockItemGroups': true,
+  'stockScanning': true,
+};
+
 /// The profile 0709 seeds for the kinds without places.
 const _noPlaces = {
   'placeBooking': false,
@@ -83,6 +107,7 @@ const _noPlaces = {
 Future<(_Kinds, FakeWorkspaceRepository)> _open(
   WidgetTester tester, {
   Map<String, dynamic> flags = const {},
+  FakeSettingsRepository? settings,
 }) async {
   tester.view.physicalSize = const Size(900, 3000);
   tester.view.devicePixelRatio = 1;
@@ -95,6 +120,7 @@ Future<(_Kinds, FakeWorkspaceRepository)> _open(
     overrides: [
       ...standardTestOverrides(workspace: workspace),
       businessKindRepositoryProvider.overrideWithValue(kinds),
+      settingsRepositoryProvider.overrideWithValue(settings ?? FakeSettingsRepository(const [])),
       businessProfileProvider.overrideWith(
         (ref) async => const BusinessProfile(kind: 'coworking'),
       ),
@@ -219,6 +245,28 @@ void main() {
     expect(kinds.writes.single.$1, 'freelancer');
     expect(workspace.flagWrites.last['placeBooking'], isFalse);
     expect(workspace.flagWrites.last.containsKey('onlinePayments'), isFalse);
+  });
+
+  testWidgets('Shop is offered between Freelancer and Service; it proposes the stock, asks the type and writes it', (tester) async {
+    final registry = (jsonDecode(File('assets/instance/settings_registry.json').readAsStringSync()) as List)
+        .map((row) => SettingDefinition.fromJson(row as Map<String, Object?>));
+    final settings = FakeSettingsRepository(registry);
+    final (kinds, workspace) = await _open(tester, settings: settings);
+    expect(find.byKey(const ValueKey('business-kind-shop')), findsOneWidget);
+    expect(find.byKey(const ValueKey('business-kind-shop-type')), findsNothing, reason: 'no type until the business is a shop');
+    await _tap(tester, 'business-kind-shop');
+    expect(find.byKey(const ValueKey('business-kind-shop-type')), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('business-kind-shop-type')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Bakery').last);
+    await tester.pumpAndSettle();
+    // the stock asks for consent: the owner ticks it, and it is written
+    await _tap(tester, 'business-kind-consent-stockManagement');
+    await _tap(tester, 'business-kind-save');
+    expect(kinds.writes.single.$1, 'shop');
+    expect(workspace.flagWrites.last['stockManagement'], isTrue, reason: 'the shop proposes the stock');
+    expect(workspace.flagWrites.last['placeBooking'], isFalse);
+    expect((settings.writes.single.key, settings.writes.single.value), ('business.shop_type', 'bakery'));
   });
 
   testWidgets('a profile that changed after the owner opened the sheet is '

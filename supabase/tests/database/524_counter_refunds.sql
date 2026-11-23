@@ -3,7 +3,7 @@
 -- never exceeds what the correction credits (counting the refunds already made), replays under its request id, and is
 -- never edited. The correction credits; it does not refund. Rolled back.
 begin;
-select plan(9);
+select plan(10);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -79,6 +79,12 @@ insert into public.vat_rates (id, workspace_id, label, percent, category, is_def
 select pg_temp.u(800 + w), pg_temp.u(100 + w), 'Standard', 20, 'S', true, 'standard' from generate_series(1, 4) w;
 insert into public.setting_values (scope, workspace_id, key, value)
 select 'workspace', pg_temp.u(100 + w), 'counter.fiscal_obligation', '"none"'::jsonb from generate_series(1, 4) w;
+-- another business, with its own owner: its people have no say in this one
+insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
+values (pg_temp.u(4), '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', 'cother-4@deskilo.test', '', now(), now(), now());
+insert into public.workspaces (id, name, country_code, currency_code, timezone, created_by, vat_regime, feature_flags, role_permissions)
+values (pg_temp.u(105), 'Counter other', 'FR', 'EUR', 'Europe/Paris', pg_temp.u(4), 'vat_registered', '{"services": true, "invoicing": true, "standaloneInvoicing": true, "counterReceipts": true, "stockManagement": true}', '{}');
+insert into public.members (id, workspace_id, user_id, is_owner, is_admin, status) values (pg_temp.u(205), pg_temp.u(105), pg_temp.u(4), true, true, 'active');
 
 
 
@@ -89,14 +95,16 @@ select set_config('t.line', (select id::text from public.counter_receipt_lines w
 select set_config('t.c', pg_temp.corr(1, 101, 1103, current_setting('t.r')::uuid, format('{"lines": [{"corrects_line_id": "%s", "quantity": "1"}]}', current_setting('t.line'))), false);
 select set_config('t.cid', pg_temp.f(current_setting('t.c'), 'receipt_id'), false);
 select is((select count(*)::int from public.counter_refunds), 0, 'a correction refunds nothing by itself');
-select is(left(pg_temp.refund(1, 1104, current_setting('t.cid')::uuid, '[{"kind": "cash", "amount_minor": 1300}]'), 9), 'ERR DKT08', 'a refund beyond what the correction credits is refused');
+select is(left(pg_temp.refund(1, 1104, current_setting('t.cid')::uuid, '[{"kind": "cash", "amount_minor": 1300}]'), 9), 'ERR DKL08', 'a refund beyond what the correction credits is refused');
 select is(pg_temp.f(pg_temp.refund(1, 1105, current_setting('t.cid')::uuid, '[{"kind": "cash", "amount_minor": 500}]'), 'left_minor'), '700', 'part of it is refunded, with what is left');
 select is(pg_temp.f(pg_temp.refund(1, 1105, current_setting('t.cid')::uuid, '[{"kind": "cash", "amount_minor": 500}]'), 'replayed'), 'true', 'a lost answer retried under the same id answers the same and refunds nothing twice');
-select is(pg_temp.refund(1, 1106, current_setting('t.cid')::uuid, '[{"kind": "cash", "amount_minor": 800}]'), 'ERR DKT08 {"left": "700", "reason": "refund_beyond"}', 'the next refund is bounded by what is left');
+select is(pg_temp.refund(1, 1106, current_setting('t.cid')::uuid, '[{"kind": "cash", "amount_minor": 800}]'), 'ERR DKL08 {"left": "700", "reason": "refund_beyond"}', 'the next refund is bounded by what is left');
 select is(pg_temp.f(pg_temp.refund(1, 1107, current_setting('t.cid')::uuid, '[{"kind": "cash", "amount_minor": 700}]'), 'left_minor'), '0', 'the rest is refunded');
-select is(left(pg_temp.refund(1, 1108, current_setting('t.r')::uuid, '[{"kind": "cash", "amount_minor": 1}]'), 9), 'ERR DKT04', 'only a correction is refunded, never the sale itself');
+select is(left(pg_temp.refund(1, 1108, current_setting('t.r')::uuid, '[{"kind": "cash", "amount_minor": 1}]'), 9), 'ERR DKL04', 'only a correction is refunded, never the sale itself');
 select is(pg_temp.run_as(pg_temp.u(1), 'update public.counter_refunds set amount_minor = 1'), 'ERR 42501 ' , 'a refund is not edited (no write grant)');
 select is(left(pg_temp.refund(2, 1109, current_setting('t.cid')::uuid, '[{"kind": "cash", "amount_minor": 1}]'), 9), 'ERR DKN01', 'a member without the right to issue refunds nothing');
+
+select is(left(pg_temp.refund(4, 1110, current_setting('t.cid')::uuid, '[{"kind": "cash", "amount_minor": 1}]'), 9), 'ERR DKN01', 'a person of another business refunds nothing here');
 
 select * from finish();
 rollback;

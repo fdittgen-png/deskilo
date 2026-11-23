@@ -6,7 +6,7 @@
 -- refused; a frozen receipt survives a change of the rates; a correction is a new receipt citing the original, bounded
 -- by what each original line has left; amounts are exact in 0, 2 and 3 decimal currencies. Rolled back.
 begin;
-select plan(24);
+select plan(27);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -77,21 +77,21 @@ select is(pg_temp.f(pg_temp.draft(1, 101, 901, null, null, '{"source_ref": "orde
   pg_temp.f(current_setting('t.d1'), 'receipt_id'), 'a lost answer retried under the same request id answers the same draft');
 select is((select count(*)::int from public.counter_receipts where workspace_id = pg_temp.u(101)), 1, 'and makes no second one');
 select is(pg_temp.f(pg_temp.draft(1, 101, 902, pg_temp.f(current_setting('t.d1'), 'receipt_id')::uuid, 1, '{"source_ref": "order-1", "lines": [' || pg_temp.line('Haircut', '1', '12.00') || ']}'), 'revision'), '2', 'the draft is replaced at its revision');
-select is(left(pg_temp.draft(1, 101, 903, pg_temp.f(current_setting('t.d1'), 'receipt_id')::uuid, 1, '{"lines": [' || pg_temp.line('Haircut', '1', '12.00') || ']}'), 9), 'ERR DKT10', 'a revision that moved is refused (stale)');
-select is(pg_temp.draft(1, 101, 904, null, null, '{"lines": [{"quantity": "1", "unit_price": "1.00", "supply": "general", "unit": {"code": "u", "label": "u"}}]}'), 'ERR DKT02 line_1_description', 'a line without a description is refused, naming it');
-select is(pg_temp.draft(1, 101, 905, null, null, '{"lines": [' || pg_temp.line('Odd', '1', '1.00', format(', "vat_rate_id": "%s"', pg_temp.u(802))) || ']}'), 'ERR DKT02 line_1_vat_rate', 'a rate of another business is refused');
+select is(left(pg_temp.draft(1, 101, 903, pg_temp.f(current_setting('t.d1'), 'receipt_id')::uuid, 1, '{"lines": [' || pg_temp.line('Haircut', '1', '12.00') || ']}'), 9), 'ERR DKL10', 'a revision that moved is refused (stale)');
+select is(pg_temp.draft(1, 101, 904, null, null, '{"lines": [{"quantity": "1", "unit_price": "1.00", "supply": "general", "unit": {"code": "u", "label": "u"}}]}'), 'ERR DKL02 line_1_description', 'a line without a description is refused, naming it');
+select is(pg_temp.draft(1, 101, 905, null, null, '{"lines": [' || pg_temp.line('Odd', '1', '1.00', format(', "vat_rate_id": "%s"', pg_temp.u(802))) || ']}'), 'ERR DKL02 line_1_vat_rate', 'a rate of another business is refused');
 select is((select count(*)::int from public.counter_receipts where workspace_id = pg_temp.u(101)), 1, 'and a refused draft leaves no row');
 select is(left(pg_temp.draft(2, 101, 906, null, null, '{"lines": [' || pg_temp.line('Haircut', '1', '12.00') || ']}'), 9), 'ERR DKN01', 'a member without the right to issue works no counter');
 select is(left(pg_temp.draft(1, 101, 907, null, null, '{"lines": [' || pg_temp.line('Haircut', '1', '12.00') || ']}', true), 9), 'ERR DKN01', 'nor does an assistant session');
 
 -- ── finalize refuses before it numbers ──
 select set_config('t.r1', pg_temp.f(current_setting('t.d1'), 'receipt_id'), false);
-select is(left(pg_temp.fin(1, 101, 910, current_setting('t.r1')::uuid, 2, '[{"kind": "cash", "amount_minor": 1100}]'), 15), 'ERR DKT06 tende', 'tenders that do not add up to the total are refused');
-select is(left(pg_temp.fin(1, 101, 911, current_setting('t.r1')::uuid, 2, '[{"kind": "card", "amount_minor": 1200}]'), 15), 'ERR DKT06 tende', 'a card tender is not taken by this command');
-select is(left(pg_temp.fin(1, 101, 912, current_setting('t.r1')::uuid, 1, '[{"kind": "cash", "amount_minor": 1200}]'), 9), 'ERR DKT10', 'a stale revision is refused');
+select is(left(pg_temp.fin(1, 101, 910, current_setting('t.r1')::uuid, 2, '[{"kind": "cash", "amount_minor": 1100}]'), 15), 'ERR DKL06 tende', 'tenders that do not add up to the total are refused');
+select is(left(pg_temp.fin(1, 101, 911, current_setting('t.r1')::uuid, 2, '[{"kind": "card", "amount_minor": 1200}]'), 15), 'ERR DKL06 tende', 'a card tender is not taken by this command');
+select is(left(pg_temp.fin(1, 101, 912, current_setting('t.r1')::uuid, 1, '[{"kind": "cash", "amount_minor": 1200}]'), 9), 'ERR DKL10', 'a stale revision is refused');
 select set_config('t.d_it', pg_temp.draft(1, 102, 920, null, null, '{"lines": [' || pg_temp.line('Haircut', '1', '12.00') || ']}'), false);
 select is(pg_temp.f(current_setting('t.d_it'), 'issue_receipt'), 'unavailable', 'an Italian draft previews that the operation is unavailable');
-select is(left(pg_temp.fin(1, 102, 921, pg_temp.f(current_setting('t.d_it'), 'receipt_id')::uuid, 1, '[{"kind": "cash", "amount_minor": 1200}]'), 9), 'ERR DKT01', 'and its finalize is refused (DKT01) by the country operation');
+select is(left(pg_temp.fin(1, 102, 921, pg_temp.f(current_setting('t.d_it'), 'receipt_id')::uuid, 1, '[{"kind": "cash", "amount_minor": 1200}]'), 9), 'ERR DKL01', 'and its finalize is refused (DKL01) by the country operation');
 select is(pg_temp.seq(), 'none', 'none of these consumed a number');
 
 -- ── finalize ──
@@ -102,12 +102,19 @@ select is((select state || ' ' || (frozen ->> 'version') || ' ' || (frozen #>> '
 select is(pg_temp.f(pg_temp.fin(1, 101, 913, current_setting('t.r1')::uuid, 2, '[{"kind": "cash", "amount_minor": 1200}]'), 'number') || ' ' || pg_temp.seq(),
   pg_temp.f(current_setting('t.f1'), 'number') || ' 2', 'a lost answer retried under the same request id answers the same receipt and draws no second number');
 select is(left(pg_temp.fin(1, 101, 913, current_setting('t.r1')::uuid, 2, '[{"kind": "other", "amount_minor": 1200}]'), 9), 'ERR P0001', 'the same id with other content is refused');
-select is(left(pg_temp.fin(1, 101, 914, current_setting('t.r1')::uuid, 2, '[{"kind": "cash", "amount_minor": 1200}]'), 9), 'ERR DKT04', 'a second operator finalizing the same receipt is refused, with its number not drawn again');
+select is(left(pg_temp.fin(1, 101, 914, current_setting('t.r1')::uuid, 2, '[{"kind": "cash", "amount_minor": 1200}]'), 9), 'ERR DKL04', 'a second operator finalizing the same receipt is refused, with its number not drawn again');
 select set_config('t.d2', pg_temp.draft(1, 101, 915, null, null, '{"source_ref": "order-1", "lines": [' || pg_temp.line('Haircut', '1', '12.00') || ']}'), false);
-select is(left(pg_temp.fin(1, 101, 916, pg_temp.f(current_setting('t.d2'), 'receipt_id')::uuid, 1, '[{"kind": "cash", "amount_minor": 1200}]'), 9), 'ERR DKT04', 'the same source cannot be issued twice under another request id');
+select is(left(pg_temp.fin(1, 101, 916, pg_temp.f(current_setting('t.d2'), 'receipt_id')::uuid, 1, '[{"kind": "cash", "amount_minor": 1200}]'), 9), 'ERR DKL04', 'the same source cannot be issued twice under another request id');
 update public.vat_rates set percent = 5 where id = pg_temp.u(801);
 select is((select public.counter_receipt_decode(frozen) #>> '{totals,gross_minor}' from public.counter_receipts where id = current_setting('t.r1')::uuid) || ' ' || (select public.counter_receipt_decode(frozen) #>> '{lines,0,vat_percent}' from public.counter_receipts where id = current_setting('t.r1')::uuid),
   '1200 20.000000', 'a frozen receipt survives a change of the rates');
+
+-- ── the business's own currency; a customer named on every sale where asked ──
+select is(pg_temp.draft(1, 101, 930, null, null, '{"currency": "JPY", "lines": [' || pg_temp.line('Haircut', '1', '1500') || ']}'), 'ERR DKL02 currency', 'a sale in another currency than the business''s is refused');
+select is(pg_temp.draft(1, 101, 931, null, null, '{"currency": "ZZZ", "lines": [' || pg_temp.line('Haircut', '1', '1.00') || ']}'), 'ERR DKL02 currency', 'and so is a currency that does not exist');
+insert into public.setting_values (scope, workspace_id, key, value) values ('workspace', pg_temp.u(101), 'counter.customerless_sales', '"refused"'::jsonb);
+select set_config('t.d3', pg_temp.draft(1, 101, 932, null, null, '{"source_ref": "nocust", "lines": [' || pg_temp.line('Haircut', '1', '12.00') || ']}'), false);
+select is(left(pg_temp.fin(1, 101, 933, pg_temp.f(current_setting('t.d3'), 'receipt_id')::uuid, 1, '[{"kind": "cash", "amount_minor": 1200}]'), 9), 'ERR DKL05', 'where the business names a customer on every sale, one with none is refused (DKL05)');
 
 select * from finish();
 rollback;

@@ -63,5 +63,126 @@
   "stockReasonTagOwnerInactive": "This item or place is deactivated: bring it back before a tag is bound to it.",
   "@stockReasonTagOwnerInactive": {
     "description": "#4362 reason"
+  },
+  "stockTagsTitle": "Tags: {name}",
+  "@stockTagsTitle": {
+    "description": "#4363 G14 tags: stockTagsTitle",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTagsOpen": "Tags",
+  "@stockTagsOpen": {
+    "description": "#4363 G14 tags: stockTagsOpen"
+  },
+  "stockTagsNone": "No tag is bound yet.",
+  "@stockTagsNone": {
+    "description": "#4363 G14 tags: stockTagsNone"
+  },
+  "stockTagKindNfc": "NFC chip",
+  "@stockTagKindNfc": {
+    "description": "#4363 G14 tags: stockTagKindNfc"
+  },
+  "stockTagKindUhf": "UHF label",
+  "@stockTagKindUhf": {
+    "description": "#4363 G14 tags: stockTagKindUhf"
+  },
+  "stockTagsUhfOnly": "This item uses UHF tags — use the RFID reader.",
+  "@stockTagsUhfOnly": {
+    "description": "#4363 G14 tags: stockTagsUhfOnly"
+  },
+  "stockTagsBound": "Tag {code} bound.",
+  "@stockTagsBound": {
+    "description": "#4363 G14 tags: stockTagsBound",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTagsAlready": "Tag {code} was already bound here.",
+  "@stockTagsAlready": {
+    "description": "#4363 G14 tags: stockTagsAlready",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTagsRetire": "Retire",
+  "@stockTagsRetire": {
+    "description": "#4363 G14 tags: stockTagsRetire"
+  },
+  "stockTagsRetireWhy": "Why is it retired?",
+  "@stockTagsRetireWhy": {
+    "description": "#4363 G14 tags: stockTagsRetireWhy"
+  },
+  "stockTagsRetired": "Tag {code} retired.",
+  "@stockTagsRetired": {
+    "description": "#4363 G14 tags: stockTagsRetired",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTagReasonLost": "Lost",
+  "@stockTagReasonLost": {
+    "description": "#4363 G14 tags: stockTagReasonLost"
+  },
+  "stockTagReasonDamaged": "Damaged",
+  "@stockTagReasonDamaged": {
+    "description": "#4363 G14 tags: stockTagReasonDamaged"
+  },
+  "stockTagReasonReplaced": "Replaced",
+  "@stockTagReasonReplaced": {
+    "description": "#4363 G14 tags: stockTagReasonReplaced"
+  },
+  "stockTagsFailed": "The tags could not be read.",
+  "@stockTagsFailed": {
+    "description": "#4363 G14 tags: stockTagsFailed"
+  },
+  "stockTagsClose": "Close",
+  "@stockTagsClose": {
+    "description": "#4363 G14 tags: stockTagsClose"
+  },
+  "stockTagBoundElsewhere": "This tag is already bound to {owner}.",
+  "@stockTagBoundElsewhere": {
+    "description": "#4363 G14 tags: stockTagBoundElsewhere",
+    "placeholders": {
+      "owner": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTagRetiredLately": "This tag was retired recently; it can be bound again after the waiting time set in the stock settings.",
+  "@stockTagRetiredLately": {
+    "description": "#4363 G14 tags: stockTagRetiredLately"
+  },
+  "stockTagOnPiece": "This tag is on a piece that is still in stock.",
+  "@stockTagOnPiece": {
+    "description": "#4363 G14 tags: stockTagOnPiece"
+  },
+  "stockTagNotInForce": "This is not a tag in force here.",
+  "@stockTagNotInForce": {
+    "description": "#4363 G14 tags: stockTagNotInForce"
+  },
+  "stockTagMalformed": "That is not a valid tag code.",
+  "@stockTagMalformed": {
+    "description": "#4363 G14 tags: stockTagMalformed"
+  },
+  "stockTagOwnerUnknown": "This item or place is not known.",
+  "@stockTagOwnerUnknown": {
+    "description": "#4363 G14 tags: stockTagOwnerUnknown"
+  },
+  "stockTagModeNone": "This item does not use tags.",
+  "@stockTagModeNone": {
+    "description": "#4363 G14 tags: stockTagModeNone"
+  },
+  "stockTagPerUnit": "This item is tagged piece by piece: tag its pieces when they are received.",
+  "@stockTagPerUnit": {
+    "description": "#4363 G14 tags: stockTagPerUnit"
   }
 }

@@ -19,6 +19,23 @@ const demoNoPlacesProfile = {
   'publicListings': true,
 };
 
+/// #4365 — the shop's profile: the stock, the catalogue and the purchases, no places, no provider, no public page.
+const _demoShopProfile = {
+  'placeBooking': false,
+  'moneyTab': true,
+  'services': true,
+  'invoicing': true,
+  'purchases': true,
+  'purchaseOrders': true,
+  'stockManagement': true,
+  'stockReceiving': true,
+  'stockTakeOut': true,
+  'stockLots': true,
+  'stockReorder': true,
+  'stockItemGroups': true,
+  'stockScanning': true,
+};
+
 /// #4168 — the freelancer's profile: the money side of a one-person service
 /// business, no places, no provider, no messages, no public page.
 const demoFreelancerProfile = {
@@ -45,6 +62,7 @@ class DemoBusinessKindRepository implements BusinessKindRepository {
     BusinessKind(code: 'practice', sortOrder: 30, profile: demoNoPlacesProfile),
     BusinessKind(code: 'salon', sortOrder: 40, profile: demoNoPlacesProfile),
     BusinessKind(code: 'freelancer', sortOrder: 45, profile: demoFreelancerProfile),
+    BusinessKind(code: 'shop', sortOrder: 47, profile: _demoShopProfile),
     BusinessKind(code: 'service', sortOrder: 50, profile: demoNoPlacesProfile),
   ];
 

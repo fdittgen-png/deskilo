@@ -12,10 +12,10 @@ import 'lint_sources.dart';
 /// Codes the app does not read, each with its reason. A name here must be
 /// raised by some migration and read by no app file.
 const _notForTheApp = <String, String>{
-  'DKT03':
+  'DKL03':
       'the server\'s guard that a finalized counter receipt, its lines and a tender\'s amount are never edited: '
       'no screen edits them, and a correction is a new receipt (0893)',
-  'DKT09':
+  'DKL09':
       'the versioned reader of a frozen counter receipt refusing a version it does not know: a reader\'s guard, '
       'never a user action (0893)',
   'DKGZZ':

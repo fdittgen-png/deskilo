@@ -12,9 +12,14 @@
 --     in its own transaction, under its own request id, so a replay moves nothing twice and a line that cannot leave
 --     rolls the sale back; a correction (a credit document) moves nothing; a physical return is its own command (0897).
 
+-- audience: all row readers
 alter table public.stock_movements add column counter_receipt_id uuid;
+-- audience: all row readers
+alter table public.stock_movements add column counter_line_id uuid;
 alter table public.stock_movements add constraint stock_movements_counter_receipt_fkey
   foreign key (workspace_id, counter_receipt_id) references public.counter_receipts (workspace_id, id);
+alter table public.stock_movements add constraint stock_movements_counter_line_fkey
+  foreign key (workspace_id, counter_line_id) references public.counter_receipt_lines (workspace_id, id);
 create index stock_movements_counter_receipt on public.stock_movements (counter_receipt_id) where counter_receipt_id is not null;
 
 
@@ -34,8 +39,8 @@ declare
     E'event_id, invoice_id,\n     entered_factor_num',
     E'nullif(p_links ->> \'invoice_id\', \'\')::uuid,\n     v_num, v_den)'];
   v_news text[] := array[
-    E'event_id, invoice_id, counter_receipt_id,\n     entered_factor_num',
-    E'nullif(p_links ->> \'invoice_id\', \'\')::uuid, nullif(p_links ->> \'counter_receipt_id\', \'\')::uuid,\n     v_num, v_den)'];
+    E'event_id, invoice_id, counter_receipt_id, counter_line_id,\n     entered_factor_num',
+    E'nullif(p_links ->> \'invoice_id\', \'\')::uuid, nullif(p_links ->> \'counter_receipt_id\', \'\')::uuid, nullif(p_links ->> \'counter_line_id\', \'\')::uuid,\n     v_num, v_den)'];
 begin
   for k in 1 .. array_length(v_olds, 1) loop
     if pg_temp.occurrences(v_def, v_olds[k]) <> 1 then
@@ -54,10 +59,12 @@ declare
   v_next text := v_def;
   v_olds text[] := array[
     E'(p_links ? \'event_id\' or p_links ? \'invoice_id\')',
-    E'v_from.kind = \'customer\' and not v_tv and p_links ? \'invoice_id\''];
+    E'v_from.kind = \'customer\' and not v_tv and p_links ? \'invoice_id\'',
+    E'then jsonb_build_object(\'receipt_line_id\', e ->> \'receipt_line_id\') else \'{}\'::jsonb end;'];
   v_news text[] := array[
     E'(p_links ? \'event_id\' or p_links ? \'invoice_id\' or p_links ? \'counter_receipt_id\')',
-    E'v_from.kind = \'customer\' and not v_tv and (p_links ? \'invoice_id\' or p_links ? \'counter_receipt_id\')'];
+    E'v_from.kind = \'customer\' and not v_tv and (p_links ? \'invoice_id\' or p_links ? \'counter_receipt_id\')',
+    E'then jsonb_build_object(\'receipt_line_id\', e ->> \'receipt_line_id\') else \'{}\'::jsonb end\n      || case when nullif(e ->> \'counter_line_id\', \'\') is not null then jsonb_build_object(\'counter_line_id\', e ->> \'counter_line_id\') else \'{}\'::jsonb end;\n    -- a counter link is the counter commands\' own: the generic door never names one\n    if (v_links ? \'counter_receipt_id\' or v_links ? \'counter_line_id\') and coalesce(current_setting(\'deskilo.counter_links\', true), \'\') <> \'on\' then\n      perform public.stock_config_refuse(format(\'lines[%s]\', v_no - 1), \'malformed\');\n    end if;'];
 begin
   for k in 1 .. array_length(v_olds, 1) loop
     if pg_temp.occurrences(v_def, v_olds[k]) <> 1 then

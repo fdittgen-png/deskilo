@@ -60,6 +60,8 @@ const Map<String, Set<WorkspacePermission>> routePermissions = {
   // #4295 — who counts (the right countStock implies nothing else) or manages the stock.
   '/stock/cycle-counts': {_P.countStock, _P.manageStock},
   '/stock/cycle-counts/:taskId': {_P.countStock, _P.manageStock},
+  // #4361 — the item groups read like the stock; changing one is for who manages it (the server asks the same).
+  '/stock/groups': {_P.viewStock, _P.manageStock},
   // #4299 — the item registry and the places read like the stock; its settings
   // are for who manages the stock or the configuration.
   '/stock/items': {_P.viewStock, _P.manageStock},

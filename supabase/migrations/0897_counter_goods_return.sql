@@ -32,7 +32,7 @@ begin
     raise exception 'not allowed to take goods back into stock' using errcode = 'DKN01';
   end if;
   if not public.feature_effective(p_workspace_id, 'stockManagement') then
-    raise exception 'goods are not sold here: the goods ledger is off' using errcode = 'DKT07', detail = 'goods_off';
+    raise exception 'goods are not sold here: the goods ledger is off' using errcode = 'DKL07', detail = 'goods_off';
   end if;
   if p_request_id is null or p_correction_id is null or coalesce(jsonb_typeof(p_lines), '') <> 'array' or jsonb_array_length(p_lines) = 0 then
     raise exception 'a return is recorded with a request id, the correction and its lines' using errcode = '22023';
@@ -44,7 +44,7 @@ begin
   end if;
   select * into v_rec from public.counter_receipts x where x.id = p_correction_id and x.workspace_id = p_workspace_id for update;
   if v_rec.id is null or v_rec.kind <> 'correction' or v_rec.state <> 'finalized' then
-    raise exception 'a return follows a finalized correction' using errcode = 'DKT04';
+    raise exception 'a return follows a finalized correction' using errcode = 'DKL04';
   end if;
   perform public.counter_require_operation(p_workspace_id, 'correct_receipt');
   for e in select value from jsonb_array_elements(p_lines) loop
@@ -52,31 +52,34 @@ begin
     select * into v_line from public.counter_receipt_lines l
      where l.workspace_id = p_workspace_id and l.receipt_id = v_rec.id and l.id = nullif(e ->> 'corrects_line_id', '')::uuid;
     if v_line.id is null or v_line.id = any (v_seen) or (v_line.frozen ->> 'supply') <> 'goods' or v_line.item_id is null then
-      raise exception 'this is not a goods line of the correction' using errcode = 'DKT08', detail = jsonb_build_object('line', v_idx, 'reason', 'line_unknown')::text;
+      raise exception 'this is not a goods line of the correction' using errcode = 'DKL08', detail = jsonb_build_object('line', v_idx, 'reason', 'line_unknown')::text;
     end if;
     v_seen := v_seen || v_line.id;
     if coalesce(e ->> 'quantity', '') !~ '^[0-9]{1,12}(\.[0-9]{1,6})?$' or (e ->> 'quantity')::numeric <= 0 then
-      raise exception 'this quantity is not a quantity' using errcode = 'DKT08', detail = jsonb_build_object('line', v_idx, 'reason', 'quantity')::text;
+      raise exception 'this quantity is not a quantity' using errcode = 'DKL08', detail = jsonb_build_object('line', v_idx, 'reason', 'quantity')::text;
     end if;
     v_qty := (e ->> 'quantity')::numeric;
+    -- per line of the correction: the line's own id is in the movement's links
     select coalesce(sum(m.entered_quantity), 0) into v_back from public.stock_movements m
-     where m.workspace_id = p_workspace_id and m.counter_receipt_id = v_rec.id and m.reason = 'return_in'
-       and m.item_id = v_line.item_id and m.variant_id is not distinct from v_line.variant_id;
+     where m.workspace_id = p_workspace_id and m.counter_line_id = v_line.id and m.reason = 'return_in';
     if v_qty > v_line.quantity - v_back then
-      raise exception 'more is taken back than the correction credits' using errcode = 'DKT08',
+      raise exception 'more is taken back than the correction credits' using errcode = 'DKL08',
         detail = jsonb_build_object('line', v_idx, 'reason', 'return_beyond', 'left', trim_scale(v_line.quantity - v_back)::text)::text;
     end if;
     v_to := coalesce(nullif(e ->> 'to_location_id', '')::uuid,
                      (select l.id from public.stock_locations l where l.workspace_id = p_workspace_id and l.code = 'MAIN' limit 1));
     if v_to is null then
-      raise exception 'no place to put the goods back' using errcode = 'DKT07', detail = 'to_place';
+      raise exception 'no place to put the goods back' using errcode = 'DKL07', detail = 'to_place';
     end if;
     v_move := v_move || jsonb_build_array(jsonb_strip_nulls(jsonb_build_object(
       'item_id', v_line.item_id, 'variant_id', v_line.variant_id, 'quantity', trim_scale(v_qty)::text,
-      'unit', v_line.frozen #>> '{commercial,unit,code}', 'from', public.stock_place(p_workspace_id, 'customer'), 'to', v_to)));
+      'unit', v_line.frozen #>> '{commercial,unit,code}', 'from', public.stock_place(p_workspace_id, 'customer'), 'to', v_to,
+      'counter_line_id', v_line.id)));
   end loop;
+  perform set_config('deskilo.counter_links', 'on', true);
   v_moved := public.stock_apply_lines(p_workspace_id, v_me, p_request_id, v_move, 'return_in', now(),
                                       jsonb_build_object('counter_receipt_id', v_rec.id), 'generic');
+  perform set_config('deskilo.counter_links', 'off', true);
   v_result := jsonb_build_object('correction_id', v_rec.id, 'movements', jsonb_array_length(v_moved), 'replayed', false);
   return public.purchase_request_end(p_workspace_id, p_request_id, 'counter_goods_return', v_digest, v_result);
 end;

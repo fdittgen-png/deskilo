@@ -73,7 +73,7 @@ select is((select (frozen #>> '{totals,gross_minor}')::bigint = (select sum(gros
 select set_config('t.k', pg_temp.draft(1, 104, 953, null, null, '{"lines": [' || pg_temp.line('Cut', '3', '1.234') || ', ' || pg_temp.line('Wash', '1', '0.001') || ']}'), false);
 select is(current_setting('t.k')::jsonb #>> '{totals,gross_minor}', '3703', 'in dinar (three decimals) 3 x 1.234 + 0.001 is 3703 minor units');
 select is((current_setting('t.k')::jsonb #>> '{totals,net_minor}')::bigint + (current_setting('t.k')::jsonb #>> '{totals,tax_minor}')::bigint, 3703::bigint, 'and net plus tax is the gross, to the last unit');
-select is(left(pg_temp.fin(1, 104, 954, pg_temp.f(current_setting('t.k'), 'receipt_id')::uuid, 1, '[{"kind": "cash", "amount_minor": 3700}]'), 9), 'ERR DKT06', 'a tender short by 3 units is refused');
+select is(left(pg_temp.fin(1, 104, 954, pg_temp.f(current_setting('t.k'), 'receipt_id')::uuid, 1, '[{"kind": "cash", "amount_minor": 3700}]'), 9), 'ERR DKL06', 'a tender short by 3 units is refused');
 select is(pg_temp.f(pg_temp.fin(1, 104, 955, pg_temp.f(current_setting('t.k'), 'receipt_id')::uuid, 1, '[{"kind": "cash", "amount_minor": 3000}, {"kind": "other", "amount_minor": 703}]'), 'tenders'), '2', 'two tenders adding to the total exactly settle it');
 select set_config('t.e', pg_temp.draft(1, 101, 956, null, null, '{"lines": [' || pg_temp.line('Cut', '3', '12.34') || ', ' || pg_temp.line('Wash', '1', '0.01') || ']}'), false);
 select is(current_setting('t.e')::jsonb #>> '{totals,gross_minor}', '3703', 'in euro 3 x 12.34 + 0.01 is 3703 minor units');

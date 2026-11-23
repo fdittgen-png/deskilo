@@ -8,7 +8,7 @@
 --     draft, under a request id, with a provider key that is the request id (so a recovery lookup names the same
 --     request): state `requested`. `counter_tender_resolve_v1` records the answer: accepted, refused, or unknown (a
 --     timeout, a lost answer). From `unknown` only the provider's own answer moves the tender, and no new request is
---     made for the sale while one is unknown (DKT11): the same-request recovery is the only way on. A declined or
+--     made for the sale while one is unknown (DKL11): the same-request recovery is the only way on. A declined or
 --     unknown tender is never "paid".
 --   * An authorization accepted after the offer moved (the draft was replaced since it was asked, or the receipt is no
 --     longer an open draft) is money taken for another offer: it is recorded `accepted` with reconciliation `needed`,
@@ -42,15 +42,15 @@ begin
   end if;
   select * into v_rec from public.counter_receipts x where x.id = p_receipt_id and x.workspace_id = p_workspace_id for update;
   if v_rec.id is null or v_rec.state <> 'draft' or v_rec.kind <> 'sale' then
-    raise exception 'this receipt is not an open draft' using errcode = 'DKT04';
+    raise exception 'this receipt is not an open draft' using errcode = 'DKL04';
   end if;
   perform public.counter_require_operation(p_workspace_id, 'reconcile_tender');
   if exists (select 1 from public.counter_tenders t where t.receipt_id = v_rec.id and t.state = 'unknown') then
-    raise exception 'an authorization of this sale is unknown: ask the provider about it, do not ask again' using errcode = 'DKT11';
+    raise exception 'an authorization of this sale is unknown: ask the provider about it, do not ask again' using errcode = 'DKL11';
   end if;
   select coalesce(sum(t.amount_minor), 0) into v_held from public.counter_tenders t where t.receipt_id = v_rec.id and t.state in ('requested', 'accepted');
   if v_held + p_amount_minor > coalesce(v_rec.total_minor, 0) then
-    raise exception 'the tenders would exceed the total' using errcode = 'DKT06', detail = 'tender_sum';
+    raise exception 'the tenders would exceed the total' using errcode = 'DKL06', detail = 'tender_sum';
   end if;
   select coalesce(max(t.part), 0) + 1 into v_part from public.counter_tenders t where t.receipt_id = v_rec.id;
   insert into public.counter_tenders (workspace_id, receipt_id, part, kind, amount_minor, state, provider_key, request_id, offered_revision, recorded_by_member_id)
@@ -87,7 +87,7 @@ begin
   end if;
   select * into v_tender from public.counter_tenders t where t.id = p_tender_id and t.workspace_id = p_workspace_id and t.kind = 'card' for update;
   if v_tender.id is null then
-    raise exception 'not a card tender of this business' using errcode = 'DKT04';
+    raise exception 'not a card tender of this business' using errcode = 'DKL04';
   end if;
   perform public.counter_require_operation(p_workspace_id, 'reconcile_tender');
   -- from `unknown` only a person who may see the finances settles it: the cashier's own word is not the way out of a
@@ -96,10 +96,10 @@ begin
     raise exception 'an unknown authorization is settled by someone who may see the finances' using errcode = 'DKN01';
   end if;
   if v_tender.state not in ('requested', 'unknown') then
-    raise exception 'this authorization is already settled' using errcode = 'DKT11';
+    raise exception 'this authorization is already settled' using errcode = 'DKL11';
   end if;
   if v_tender.state = 'unknown' and p_outcome = 'unknown' then
-    raise exception 'this authorization is already unknown' using errcode = 'DKT11';
+    raise exception 'this authorization is already unknown' using errcode = 'DKL11';
   end if;
   select * into v_rec from public.counter_receipts x where x.id = v_tender.receipt_id for update;
   v_recon := null;
@@ -134,6 +134,7 @@ begin
   if p_request_id is null or p_tender_id is null then
     raise exception 'a tender is reconciled with a request id' using errcode = '22023';
   end if;
+  perform public.counter_require_operation(p_workspace_id, 'reconcile_tender');
   v_digest := md5(p_tender_id::text);
   v_done := public.purchase_request_begin(p_workspace_id, p_request_id, 'counter_tender_reconcile', v_digest);
   if v_done is not null then
@@ -141,7 +142,7 @@ begin
   end if;
   select * into v_tender from public.counter_tenders t where t.id = p_tender_id and t.workspace_id = p_workspace_id for update;
   if v_tender.id is null or v_tender.state <> 'accepted' or v_tender.reconciliation is distinct from 'needed' then
-    raise exception 'this tender does not wait for a reconciliation' using errcode = 'DKT11';
+    raise exception 'this tender does not wait for a reconciliation' using errcode = 'DKL11';
   end if;
   update public.counter_tenders set reconciliation = 'done' where id = v_tender.id;
   v_result := jsonb_build_object('tender_id', v_tender.id, 'reconciliation', 'done', 'replayed', false);
@@ -178,7 +179,11 @@ create policy mcp_delegated_deny on public.counter_refunds as restrictive for al
 create or replace function public.counter_refunds_frozen()
 returns trigger language plpgsql set search_path = public as $fn$
 begin
-  raise exception 'a refund is never edited or deleted' using errcode = 'DKT03';
+  -- only the cascade of a business's own deletion is let through (its row is already gone), never an update
+  if tg_op = 'DELETE' and pg_trigger_depth() > 1 and not exists (select 1 from public.workspaces w where w.id = old.workspace_id) then
+    return old;
+  end if;
+  raise exception 'a refund is never edited or deleted' using errcode = 'DKL03';
 end;
 $fn$;
 revoke execute on function public.counter_refunds_frozen() from public, anon, authenticated;
@@ -212,18 +217,18 @@ begin
   end if;
   select * into v_rec from public.counter_receipts x where x.id = p_correction_id and x.workspace_id = p_workspace_id for update;
   if v_rec.id is null or v_rec.kind <> 'correction' or v_rec.state <> 'finalized' then
-    raise exception 'a refund follows a finalized correction' using errcode = 'DKT04';
+    raise exception 'a refund follows a finalized correction' using errcode = 'DKL04';
   end if;
   perform public.counter_require_operation(p_workspace_id, 'reconcile_tender');
   for v_t in select value from jsonb_array_elements(p_refunds) loop
     if coalesce(v_t ->> 'kind', '') not in ('cash', 'other') or coalesce(v_t ->> 'amount_minor', '') !~ '^[0-9]{1,12}$' or (v_t ->> 'amount_minor')::bigint <= 0 then
-      raise exception 'this refund is not taken here' using errcode = 'DKT06', detail = 'refund_part';
+      raise exception 'this refund is not taken here' using errcode = 'DKL06', detail = 'refund_part';
     end if;
     v_sum := v_sum + (v_t ->> 'amount_minor')::bigint;
   end loop;
   select coalesce(sum(r.amount_minor), 0), coalesce(max(r.part), 0) into v_given, v_part from public.counter_refunds r where r.receipt_id = v_rec.id;
   if v_given + v_sum > v_rec.total_minor then
-    raise exception 'more is refunded than the correction credits' using errcode = 'DKT08',
+    raise exception 'more is refunded than the correction credits' using errcode = 'DKL08',
       detail = jsonb_build_object('reason', 'refund_beyond', 'left', (v_rec.total_minor - v_given)::text)::text;
   end if;
   for v_t in select value from jsonb_array_elements(p_refunds) loop

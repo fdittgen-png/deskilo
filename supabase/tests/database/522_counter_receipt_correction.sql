@@ -4,7 +4,7 @@
 -- original's frozen document is unchanged afterwards; only a finalized sale is corrected; a correction is not corrected;
 -- it needs the operation supported. Rolled back.
 begin;
-select plan(14);
+select plan(15);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -65,6 +65,12 @@ insert into public.vat_rates (id, workspace_id, label, percent, category, is_def
 select pg_temp.u(800 + w), pg_temp.u(100 + w), 'Standard', 20, 'S', true, 'standard' from generate_series(1, 4) w;
 insert into public.setting_values (scope, workspace_id, key, value)
 select 'workspace', pg_temp.u(100 + w), 'counter.fiscal_obligation', '"none"'::jsonb from generate_series(1, 4) w;
+-- another business, with its own owner: its people have no say in this one
+insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
+values (pg_temp.u(4), '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', 'cother-4@deskilo.test', '', now(), now(), now());
+insert into public.workspaces (id, name, country_code, currency_code, timezone, created_by, vat_regime, feature_flags, role_permissions)
+values (pg_temp.u(105), 'Counter other', 'FR', 'EUR', 'Europe/Paris', pg_temp.u(4), 'vat_registered', '{"services": true, "invoicing": true, "standaloneInvoicing": true, "counterReceipts": true, "stockManagement": true}', '{}');
+insert into public.members (id, workspace_id, user_id, is_owner, is_admin, status) values (pg_temp.u(205), pg_temp.u(105), pg_temp.u(4), true, true, 'active');
 
 
 select set_config('t.d', pg_temp.draft(1, 101, 961, null, null, '{"source_ref": "o-1", "lines": [' || pg_temp.line('Haircut', '2', '12.00') || ']}'), false);
@@ -79,17 +85,19 @@ select is(pg_temp.f(current_setting('t.c1'), 'number') <> pg_temp.f(current_sett
 select is((select md5(frozen::text) from public.counter_receipts where id = current_setting('t.r')::uuid), current_setting('t.before'), 'the original''s frozen document is unchanged');
 select is(pg_temp.f(pg_temp.corr(1, 101, 963, current_setting('t.r')::uuid, format('{"reason": "one cut was not done", "lines": [{"corrects_line_id": "%s", "quantity": "1"}]}', current_setting('t.line'))), 'number'), pg_temp.f(current_setting('t.c1'), 'number'), 'a lost answer retried under the same request id answers the same correction');
 select is((select count(*)::int from public.counter_receipts where corrects_receipt_id = current_setting('t.r')::uuid), 1, 'and makes no second one');
-select is(pg_temp.corr(1, 101, 964, current_setting('t.r')::uuid, format('{"lines": [{"corrects_line_id": "%s", "quantity": "2"}]}', current_setting('t.line'))), 'ERR DKT08 {"left": "1", "line": 1, "reason": "beyond_original"}', 'correcting more than the line has left is refused, saying what is left');
+select is(pg_temp.corr(1, 101, 964, current_setting('t.r')::uuid, format('{"lines": [{"corrects_line_id": "%s", "quantity": "2"}]}', current_setting('t.line'))), 'ERR DKL08 {"left": "1", "line": 1, "reason": "beyond_original"}', 'correcting more than the line has left is refused, saying what is left');
 update public.vat_rates set percent = 5 where id = pg_temp.u(801);
 select set_config('t.c2', pg_temp.corr(1, 101, 965, current_setting('t.r')::uuid, format('{"lines": [{"corrects_line_id": "%s", "quantity": "1"}]}', current_setting('t.line'))), false);
 select is(current_setting('t.c2') like '{%', true, 'the remaining one is corrected');
 select is((current_setting('t.c2')::jsonb #>> '{totals,tax_minor}') || ' ' || (current_setting('t.c2')::jsonb #>> '{totals,gross_minor}'), '200 1200', 'with the ORIGINAL line''s tax (20%) though the rate is 5% today: the corrections add up to the original exactly');
-select is(left(pg_temp.corr(1, 101, 966, current_setting('t.r')::uuid, format('{"lines": [{"corrects_line_id": "%s", "quantity": "1"}]}', current_setting('t.line'))), 12), 'ERR DKT08 {"', 'and the line is then fully corrected');
-select is(left(pg_temp.corr(1, 101, 967, pg_temp.f(current_setting('t.c1'), 'receipt_id')::uuid, '{"lines": []}'), 9), 'ERR DKT04', 'a correction is not corrected');
-select is(pg_temp.corr(1, 101, 968, current_setting('t.r')::uuid, '{"lines": [{"corrects_line_id": "00000000-0000-4000-8000-0000000000ff", "quantity": "1"}]}'), 'ERR DKT08 {"line": 1, "reason": "line_unknown"}', 'a line that is not the original''s is refused');
+select is(left(pg_temp.corr(1, 101, 966, current_setting('t.r')::uuid, format('{"lines": [{"corrects_line_id": "%s", "quantity": "1"}]}', current_setting('t.line'))), 12), 'ERR DKL08 {"', 'and the line is then fully corrected');
+select is(left(pg_temp.corr(1, 101, 967, pg_temp.f(current_setting('t.c1'), 'receipt_id')::uuid, '{"lines": []}'), 9), 'ERR DKL04', 'a correction is not corrected');
+select is(pg_temp.corr(1, 101, 968, current_setting('t.r')::uuid, '{"lines": [{"corrects_line_id": "00000000-0000-4000-8000-0000000000ff", "quantity": "1"}]}'), 'ERR DKL08 {"line": 1, "reason": "line_unknown"}', 'a line that is not the original''s is refused');
 select is(left(pg_temp.corr(2, 101, 969, current_setting('t.r')::uuid, format('{"lines": [{"corrects_line_id": "%s", "quantity": "1"}]}', current_setting('t.line'))), 9), 'ERR DKN01', 'a member without the right to issue corrects nothing');
 select set_config('t.d_it', pg_temp.draft(1, 102, 970, null, null, '{"lines": [' || pg_temp.line('Haircut', '1', '12.00') || ']}'), false);
 select is((select count(*)::int from public.counter_receipts where workspace_id = pg_temp.u(102) and state = 'finalized'), 0, 'an unsupported country has no finalized receipt to correct');
+
+select is(left(pg_temp.corr(4, 101, 969, current_setting('t.r')::uuid, format('{"lines": [{"corrects_line_id": "%s", "quantity": "1"}]}', current_setting('t.line'))), 9), 'ERR DKN01', 'a person of another business corrects nothing here');
 
 select * from finish();
 rollback;

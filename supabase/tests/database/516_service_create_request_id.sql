@@ -4,7 +4,7 @@
 -- another business neither replays nor reads it; a member without manageServices, an assistant and a caller with no
 -- session are refused; an unknown field and an empty name are refused. Rolled back.
 begin;
-select plan(13);
+select plan(17);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -62,6 +62,19 @@ select is(pg_temp.create_as(1, 704, '{"name": "Assistant"}', 101, true), 'ERR DK
 select is(pg_temp.create_as(0, 705, '{"name": "No session"}'), 'ERR DKN01', 'a caller with no session is refused');
 select is(pg_temp.create_as(1, 706, '{"name": "Odd", "colour": "red"}'), 'ERR 22023', 'an unknown field is refused');
 select is(pg_temp.create_as(1, 707, '{"name": "   "}'), 'ERR 22023', 'an empty name is refused');
+
+-- ── a service's VAT rate belongs to its business ──
+insert into public.vat_rates (id, workspace_id, label, percent, category, is_default, group_key) values
+  (pg_temp.u(801), pg_temp.u(101), 'Own 20', 20, 'S', false, 'standard'),
+  (pg_temp.u(802), pg_temp.u(102), 'Other 20', 20, 'S', false, 'standard');
+select is(pg_temp.f(pg_temp.create_as(1, 708, format('{"name": "With own rate", "vat_rate_id": "%s"}', pg_temp.u(801))), 'vat_rate_id'), pg_temp.u(801)::text, 'a rate of the business is taken');
+select is(left(pg_temp.create_as(1, 709, format('{"name": "With a foreign rate", "vat_rate_id": "%s"}', pg_temp.u(802))), 9), 'ERR DKG11', 'a rate of another business is refused by the command');
+select is((select count(*)::int from public.services where workspace_id = pg_temp.u(101) and name = 'With a foreign rate'), 0, 'and no service is made');
+create or replace function pg_temp.sqlstate_of(p_sql text) returns text language plpgsql as $f$
+begin execute p_sql; return 'none'; exception when others then return sqlstate; end
+$f$;
+select is(pg_temp.sqlstate_of(format('insert into public.services (workspace_id, name, price_cents, vat_rate_id) values (%L, %L, 100, %L)', pg_temp.u(101), 'Direct foreign rate', pg_temp.u(802))),
+  '23503', 'and so is a direct insert naming it');
 
 select * from finish();
 rollback;

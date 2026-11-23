@@ -1,0 +1,15 @@
+{
+  "@@locale": "es",
+  "businessKindNameShop": "Tienda",
+  "businessKindDescShop": "Mercancías compradas, guardadas en stock y vendidas: una tienda de comestibles, una panadería, una carnicería, una floristería o una tienda de barrio.",
+  "discoveryKindShops": "Tiendas",
+  "shopTypeGrocery": "Tienda de comestibles",
+  "shopTypeBakery": "Panadería",
+  "shopTypeButcher": "Carnicería",
+  "shopTypeFlorist": "Floristería",
+  "shopTypeCornerShop": "Tienda de barrio",
+  "settingLabelBusinessShopType": "Tipo de tienda",
+  "settingHintBusinessShopType": "Tienda de comestibles, panadería, carnicería, floristería o tienda de barrio. Cambia las palabras y los ejemplos de la aplicación, nunca lo que hace.",
+  "settingLabelStockWeighedGoods": "Las mercancías se venden al peso",
+  "settingHintStockWeighedGoods": "Activado: un artículo de stock nuevo se propone en kilogramos en lugar de piezas (carnicería, panadería, mostrador). Cualquier artículo puede tener otra unidad."
+}

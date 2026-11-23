@@ -12,7 +12,9 @@
 // features applied, or the kind saved and its features refused because the
 // flags moved meanwhile: a saved kind is not a fully applied recipe.
 import '../../../core/ids/request_id.dart';
+import '../../../core/settings/settings.dart';
 import '../domain/business_kind.dart';
+import '../domain/business_profile.dart';
 import '../domain/feature_flags_write.dart';
 import '../domain/workspace_feature.dart';
 import '../domain/workspace_repository.dart';
@@ -38,10 +40,18 @@ class BusinessKindProfileChanged implements Exception {
 }
 
 class BusinessKindCommands {
-  const BusinessKindCommands(this._kinds, this._workspaces);
+  const BusinessKindCommands(this._kinds, this._workspaces, this._settings);
 
   final BusinessKindRepository _kinds;
   final WorkspaceRepository _workspaces;
+  final SettingsAdmin _settings;
+
+  /// #4365 -- the type of shop of a business that is a shop: words and examples only.
+  Future<void> saveShopType(String workspaceId, String type) => _settings.setValue(
+    workspaceId: workspaceId,
+    key: businessShopTypeKey,
+    value: type,
+  );
 
   /// Saves [kind] and [moreKinds] for [workspaceId], then writes [flags]
   /// (the confirmed part of the proposal) conditioned on [raw], the stored

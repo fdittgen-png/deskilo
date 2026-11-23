@@ -5894,6 +5894,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Cualquier otro negocio que vende sus servicios.';
 
   @override
+  String get businessKindDescShop =>
+      'Mercancías compradas, guardadas en stock y vendidas: una tienda de comestibles, una panadería, una carnicería, una floristería o una tienda de barrio.';
+
+  @override
   String get businessKindDescStudio =>
       'Clases y cursos: yoga, danza, música, arte.';
 
@@ -5914,6 +5918,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get businessKindNameService => 'Empresa de servicios';
+
+  @override
+  String get businessKindNameShop => 'Tienda';
 
   @override
   String get businessKindNameStudio => 'Estudio';
@@ -8600,6 +8607,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get discoveryKindServices => 'Otros servicios';
+
+  @override
+  String get discoveryKindShops => 'Tiendas';
 
   @override
   String get discoveryKindStudios => 'Estudios';
@@ -18530,6 +18540,210 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get invoicingViewCustomers => 'Clientes';
+
+  @override
+  String get itemGroupAssignNone => 'Sin grupo';
+
+  @override
+  String get itemGroupAssignOpen => 'Grupo y ajustes heredados';
+
+  @override
+  String itemGroupAssignTitle(String item) {
+    return 'Grupo de $item';
+  }
+
+  @override
+  String get itemGroupClose => 'Cerrar';
+
+  @override
+  String get itemGroupConfirm =>
+      'Compruebe lo que alcanza y guarde de nuevo para aplicarlo.';
+
+  @override
+  String get itemGroupCountEvery => 'Contar cada (días)';
+
+  @override
+  String get itemGroupDelete => 'Eliminar el grupo';
+
+  @override
+  String get itemGroupDeleted => 'Grupo eliminado.';
+
+  @override
+  String get itemGroupFailed => 'No se pudieron leer los grupos de artículos.';
+
+  @override
+  String itemGroupFrom(String group) {
+    return 'Del grupo $group';
+  }
+
+  @override
+  String itemGroupFromSince(String group, String date) {
+    return 'Del grupo $group desde el $date';
+  }
+
+  @override
+  String get itemGroupHistory => 'Historial';
+
+  @override
+  String itemGroupHistoryLine(
+    String parameter,
+    String from,
+    String to,
+    int affected,
+  ) {
+    String _temp0 = intl.Intl.pluralLogic(
+      affected,
+      locale: localeName,
+      other: 'alcanzó $affected artículos',
+      one: 'alcanzó 1 artículo',
+    );
+    return '$parameter: $from → $to, $_temp0';
+  }
+
+  @override
+  String get itemGroupHistoryNone => 'Aún no hay ningún cambio registrado.';
+
+  @override
+  String get itemGroupMinAge => 'Edad mínima para una venta';
+
+  @override
+  String get itemGroupMove => 'Mover';
+
+  @override
+  String itemGroupMoveReaches(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Moverlo cambia $count ajustes.',
+      one: 'Moverlo cambia 1 ajuste.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get itemGroupMoved => 'El artículo está en su nuevo grupo.';
+
+  @override
+  String get itemGroupName => 'Nombre';
+
+  @override
+  String get itemGroupNo => 'No';
+
+  @override
+  String get itemGroupNoParent => 'Nivel superior';
+
+  @override
+  String get itemGroupNotSet => 'Sin definir';
+
+  @override
+  String get itemGroupOwn => 'Valor propio';
+
+  @override
+  String get itemGroupParent => 'Dentro del grupo';
+
+  @override
+  String itemGroupPreviewLine(
+    String parameter,
+    int affected,
+    int kept,
+    int skipped,
+  ) {
+    String _temp0 = intl.Intl.pluralLogic(
+      affected,
+      locale: localeName,
+      other: 'se aplica a $affected artículos',
+      one: 'se aplica a 1 artículo',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      kept,
+      locale: localeName,
+      other: '$kept conservan su propio valor',
+      one: '1 conserva su propio valor',
+    );
+    String _temp2 = intl.Intl.pluralLogic(
+      skipped,
+      locale: localeName,
+      other: '$skipped no se pueden alcanzar',
+      one: '1 no se puede alcanzar',
+    );
+    return '$parameter: $_temp0, $_temp1, $_temp2';
+  }
+
+  @override
+  String get itemGroupPreviewNothing => 'No se alcanza ningún artículo.';
+
+  @override
+  String get itemGroupPreviewTitle => 'Lo que alcanza este cambio';
+
+  @override
+  String get itemGroupReasonDepth => 'Un subgrupo no puede tener subgrupos.';
+
+  @override
+  String get itemGroupReasonGroupUnknown => 'Este grupo no existe.';
+
+  @override
+  String get itemGroupReasonHasMovements => 'ya tiene movimientos';
+
+  @override
+  String get itemGroupReasonHasSubgroups =>
+      'Este grupo tiene subgrupos: elimínelos primero.';
+
+  @override
+  String get itemGroupReasonInUse =>
+      'Este grupo lo usan artículos: muévalos primero.';
+
+  @override
+  String get itemGroupReasonNameDuplicate => 'Otro grupo ya tiene este nombre.';
+
+  @override
+  String get itemGroupReasonNeedsSerial =>
+      'Las etiquetas por pieza necesitan seguimiento por pieza.';
+
+  @override
+  String get itemGroupReasonNotOverridable =>
+      'Este ajuste no puede tener un valor propio.';
+
+  @override
+  String itemGroupSkippedLine(String item, String parameter, String reason) {
+    return '$item: $parameter ($reason)';
+  }
+
+  @override
+  String get itemGroupSkippedTitle => 'No alcanzados';
+
+  @override
+  String get itemGroupSoldByWeight => 'Se vende al peso';
+
+  @override
+  String get itemGroupTagBatch => 'Una etiqueta por lote';
+
+  @override
+  String get itemGroupTagMode => 'Modo de etiqueta';
+
+  @override
+  String get itemGroupTagNone => 'Sin etiquetas';
+
+  @override
+  String get itemGroupTagUnit => 'Una etiqueta por pieza';
+
+  @override
+  String get itemGroupTrackingSerial => 'Por pieza (serie)';
+
+  @override
+  String get itemGroupUseGroup => 'Usar el valor del grupo';
+
+  @override
+  String get itemGroupYes => 'Sí';
+
+  @override
+  String get itemGroupsAdd => 'Añadir un grupo';
+
+  @override
+  String get itemGroupsEmpty =>
+      'Aún no hay ningún grupo. Un grupo reúne ajustes que sus artículos comparten.';
+
+  @override
+  String get itemGroupsTitle => 'Grupos de artículos';
 
   @override
   String journalBlocked(String roles) {
@@ -31865,6 +32079,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Otros tipos que el negocio también es, si los hay, además del principal.';
 
   @override
+  String get settingHintBusinessShopType =>
+      'Tienda de comestibles, panadería, carnicería, floristería o tienda de barrio. Cambia las palabras y los ejemplos de la aplicación, nunca lo que hace.';
+
+  @override
   String get settingHintCalendarRangeDays =>
       'Fijado por la plataforma: el periodo más largo que puede pedir una consulta del calendario. Acota la consulta.';
 
@@ -32161,6 +32379,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Cuántos días después de retirarla puede volver a vincularse un código de etiqueta. 0 significa de inmediato. Una etiqueta vigente nunca se vincula dos veces.';
 
   @override
+  String get settingHintStockWeighedGoods =>
+      'Activado: un artículo de stock nuevo se propone en kilogramos en lugar de piezas (carnicería, panadería, mostrador). Cualquier artículo puede tener otra unidad.';
+
+  @override
   String get settingHintVatViesEvidenceDays =>
       'Días que una comprobación válida del NIF-IVA sigue siendo lo bastante reciente para servir de prueba en una nueva factura. Un valor más corto pide una nueva comprobación antes; no prueba que una operación sea válida.';
 
@@ -32249,6 +32471,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get settingLabelBusinessMoreKinds => 'También un tipo de negocio';
+
+  @override
+  String get settingLabelBusinessShopType => 'Tipo de tienda';
 
   @override
   String get settingLabelCalendarRangeDays => 'Periodo del calendario';
@@ -32535,6 +32760,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingLabelStockTagRebindGraceDays =>
       'Días antes de reutilizar una etiqueta retirada';
+
+  @override
+  String get settingLabelStockWeighedGoods =>
+      'Las mercancías se venden al peso';
 
   @override
   String get settingLabelVatViesEvidenceDays =>
@@ -34792,6 +35021,21 @@ class AppLocalizationsEs extends AppLocalizations {
       'Deslice la barra hacia abajo para la vista de pantalla completa. Deslice hacia arriba, o mantenga pulsado el botón Reservar, para recuperarla.';
 
   @override
+  String get shopTypeBakery => 'Panadería';
+
+  @override
+  String get shopTypeButcher => 'Carnicería';
+
+  @override
+  String get shopTypeCornerShop => 'Tienda de barrio';
+
+  @override
+  String get shopTypeFlorist => 'Floristería';
+
+  @override
+  String get shopTypeGrocery => 'Tienda de comestibles';
+
+  @override
   String get shortcutClose => 'Cerrar';
 
   @override
@@ -36730,6 +36974,96 @@ class AppLocalizationsEs extends AppLocalizations {
   String get stockReversalSupplierTitle => 'Devolución al proveedor';
 
   @override
+  String stockScanAlreadyRead(String code) {
+    return 'La etiqueta $code ya se leyó.';
+  }
+
+  @override
+  String get stockScanFailed =>
+      'No se pudo leer el código escaneado. Compruebe la conexión y vuelva a escanearlo.';
+
+  @override
+  String get stockScanHelp => 'Trabajar con un escáner';
+
+  @override
+  String get stockScanHint =>
+      '¿Usa un escáner de códigos de barras? Active «Escaneo»';
+
+  @override
+  String get stockScanInterval =>
+      'Intervalo máximo entre dos teclas de un escaneo (milisegundos)';
+
+  @override
+  String get stockScanIntervalInvalid =>
+      'Introduzca un número entero de milisegundos dentro del intervalo permitido.';
+
+  @override
+  String stockScanLast(String item, String quantity, String unit) {
+    return '$item: $quantity $unit';
+  }
+
+  @override
+  String get stockScanNfc => 'Leer una etiqueta';
+
+  @override
+  String get stockScanNfcFailed =>
+      'El teléfono no pudo iniciar la lectura. Compruebe que el NFC esté activado.';
+
+  @override
+  String get stockScanNfcReading =>
+      'Acerque la etiqueta a la parte trasera del teléfono…';
+
+  @override
+  String stockScanPlacing(String place) {
+    return 'Colocando en $place';
+  }
+
+  @override
+  String stockScanRefusedCode(String code) {
+    return 'El código $code no designa nada que este formulario pueda usar.';
+  }
+
+  @override
+  String stockScanRefusedPlace(String place) {
+    return '$place no puede recibir mercancías.';
+  }
+
+  @override
+  String get stockScanSave => 'Guardar los ajustes del escáner';
+
+  @override
+  String get stockScanSettingsHint =>
+      'Un escáner en modo teclado escribe el código y pulsa Intro. Estos dos ajustes son de este dispositivo: un código escrito más rápido que el intervalo de abajo se toma por un escaneo.';
+
+  @override
+  String get stockScanSettingsTitle => 'Escáner';
+
+  @override
+  String get stockScanTerminator => 'Qué termina un código escaneado';
+
+  @override
+  String get stockScanTerminatorEither => 'Intro o Tab';
+
+  @override
+  String get stockScanTerminatorEnter => 'Intro';
+
+  @override
+  String get stockScanTerminatorTab => 'Tab';
+
+  @override
+  String stockScanUnknown(String code) {
+    return 'Código $code desconocido: ¿añadirlo a un artículo?';
+  }
+
+  @override
+  String get stockScanUnknownAdd => 'Abrir los artículos';
+
+  @override
+  String stockScanUnknownTag(String code) {
+    return 'Etiqueta $code desconocida';
+  }
+
+  @override
   String get stockSettingsElsewhere =>
       'Los ajustes de existencias se mantienen en la página Ajustes de existencias.';
 
@@ -36753,6 +37087,92 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get stockTabOnHand => 'En existencias';
+
+  @override
+  String stockTagBoundElsewhere(String owner) {
+    return 'Esta etiqueta ya está asociada a $owner.';
+  }
+
+  @override
+  String get stockTagKindNfc => 'Chip NFC';
+
+  @override
+  String get stockTagKindUhf => 'Etiqueta UHF';
+
+  @override
+  String get stockTagMalformed => 'Ese no es un código de etiqueta válido.';
+
+  @override
+  String get stockTagModeNone => 'Este artículo no usa etiquetas.';
+
+  @override
+  String get stockTagNotInForce => 'Esta no es una etiqueta en uso aquí.';
+
+  @override
+  String get stockTagOnPiece =>
+      'Esta etiqueta está en una pieza que sigue en stock.';
+
+  @override
+  String get stockTagOwnerUnknown => 'Este artículo o ubicación no se conoce.';
+
+  @override
+  String get stockTagPerUnit =>
+      'Este artículo se etiqueta pieza a pieza: etiquete sus piezas al recibirlas.';
+
+  @override
+  String get stockTagReasonDamaged => 'Dañada';
+
+  @override
+  String get stockTagReasonLost => 'Perdida';
+
+  @override
+  String get stockTagReasonReplaced => 'Sustituida';
+
+  @override
+  String get stockTagRetiredLately =>
+      'Esta etiqueta se retiró hace poco; podrá asociarse de nuevo tras la espera fijada en los ajustes del stock.';
+
+  @override
+  String stockTagsAlready(String code) {
+    return 'La etiqueta $code ya estaba asociada aquí.';
+  }
+
+  @override
+  String stockTagsBound(String code) {
+    return 'Etiqueta $code asociada.';
+  }
+
+  @override
+  String get stockTagsClose => 'Cerrar';
+
+  @override
+  String get stockTagsFailed => 'No se pudieron leer las etiquetas.';
+
+  @override
+  String get stockTagsNone => 'Aún no hay ninguna etiqueta asociada.';
+
+  @override
+  String get stockTagsOpen => 'Etiquetas';
+
+  @override
+  String get stockTagsRetire => 'Retirar';
+
+  @override
+  String get stockTagsRetireWhy => '¿Por qué se retira?';
+
+  @override
+  String stockTagsRetired(String code) {
+    return 'Etiqueta $code retirada.';
+  }
+
+  @override
+  String stockTagsTitle(String name) {
+    return 'Etiquetas: $name';
+  }
+
+  @override
+  String get stockTagsUhfOnly =>
+      'Este artículo usa etiquetas UHF: use el lector RFID.';
 
   @override
   String get stockTakeOutLoss => 'Perdido o dado de baja';
