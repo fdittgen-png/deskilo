@@ -16,7 +16,6 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_typography.dart';
-import '../../../../core/time/clock.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -25,6 +24,7 @@ import '../../domain/billing_customer.dart';
 import '../../domain/customer_quote.dart';
 import '../../domain/standalone_invoice.dart';
 import '../../providers/billing_customer_providers.dart';
+import '../../providers/business_day_provider.dart';
 import '../../providers/customer_quote_providers.dart';
 import '../../providers/money_providers.dart' show vatRatesProvider;
 import '../quotes/quote_text.dart';
@@ -267,7 +267,7 @@ class _EditorState extends ConsumerState<CustomerQuoteEditorScreen> {
     final customers = ref.watch(billingCustomersProvider(workspaceId)).value ?? const <BillingParty>[]; // empty-ok: no customer list means nothing to choose
     // empty-ok: the rates only offer a choice; none leaves the business's default
     final rates = ref.watch(vatRatesProvider).value ?? const <VatRate>[]; // empty-ok: the rates only offer a choice
-    final today = ref.watch(clockProvider).now();
+    final today = ref.watch(businessDayProvider);
     final validity = ref.watch(quoteValidityProvider);
     return ListView(
       padding: const EdgeInsets.all(16),
