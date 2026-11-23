@@ -319,6 +319,7 @@ List<Override> _moneyPortOverrides(FakeMoneyRepository Function(Ref ref) money, 
       ref.watch(purchaseOrderRepositoryProvider) as FakePurchaseOrderRepository,
       stocks.of(ref).config,
       stocks.of(ref).ledger,
+      tags: stocks.of(ref).tags,
     ),
   ),
   // #4173 — and traces its goods to the orders they were put away from, and values them.

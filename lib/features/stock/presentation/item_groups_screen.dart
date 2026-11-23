@@ -18,6 +18,7 @@ import '../../workspace/domain/workspace_permission.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/item_groups.dart';
 import '../domain/stock_config.dart';
+import '../domain/stock_service_creator.dart';
 import '../providers/stock_providers.dart';
 import 'item_group_sheet.dart';
 import 'item_group_text.dart';
@@ -76,8 +77,12 @@ class _GroupList extends ConsumerWidget {
     } on Object catch (e, st) {
       TraceLogger.instance.warn('stock', 'the places could not be read for a group: $e', stackTrace: st);
     }
+    // what an item costs or sells for: only for someone who may manage services AND see the finances
+    final held = ref.read(myPermissionsProvider);
+    final finance = held.contains(WorkspacePermission.manageServices) && held.contains(WorkspacePermission.viewFinances);
+    final vat = finance ? await ref.read(stockServiceCreatorProvider)?.vatChoices(workspaceId) ?? const <StockVatChoice>[] : const <StockVatChoice>[];
     if (!context.mounted) return;
-    final saved = await showItemGroupSheet(context, ref.read(itemGroupsProvider), workspaceId: workspaceId, group: group, groups: groups, places: places);
+    final saved = await showItemGroupSheet(context, ref.read(itemGroupsProvider), workspaceId: workspaceId, group: group, groups: groups, choices: (places: places, vat: vat, finance: finance));
     if (saved) ref.invalidate(itemGroupListProvider(workspaceId));
   }
 
