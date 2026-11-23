@@ -8,6 +8,7 @@ import '../../../features/stock/domain/stock_bulk_read.dart';
 import '../../../features/stock/domain/stock_config.dart';
 import '../../../features/stock/domain/stock_tags.dart';
 import '../../codes/dk_code.dart';
+import '../../settings/setting_defaults.g.dart';
 
 class _Bound {
   _Bound(this.id, this.code, this.owner, {this.kind = 'uid', this.pieceId});
@@ -159,6 +160,6 @@ class DemoStockTags implements StockTags {
         results.add(BulkCode(input: typed, kind: 'tag', itemName: held.owner.itemId == null ? null : await nameOf?.call(held.owner.itemId!)));
       }
     }
-    return BulkResolution(received: codes.length, distinct: distinct.length, limit: 500, truncated: false, codes: results, invalid: invalid);
+    return BulkResolution(received: codes.length, distinct: distinct.length, limit: SettingDefaults.stockTagReadMaxTags, truncated: false, codes: results, invalid: invalid);
   }
 }

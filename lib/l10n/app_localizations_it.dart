@@ -35782,8 +35782,14 @@ class AppLocalizationsIt extends AppLocalizations {
   String get stockBulkReadConfirm => 'Compila il conteggio';
 
   @override
-  String stockBulkReadCount(int count, int limit) {
-    return '$count di al massimo $limit etichette lette';
+  String stockBulkReadCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count etichette lette',
+      one: '1 etichetta letta',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -35814,6 +35820,17 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get stockBulkReadHint =>
       'Legga le etichette con il suo lettore. Ogni etichetta conta una volta, per quante volte sia letta.';
+
+  @override
+  String stockBulkReadLimit(int limit) {
+    String _temp0 = intl.Intl.pluralLogic(
+      limit,
+      locale: localeName,
+      other: '$limit etichette',
+      one: '1 etichetta',
+    );
+    return 'Al massimo $_temp0 per lettura';
+  }
 
   @override
   String get stockBulkReadNotInStock => 'Pezzi che non sono in giacenza';

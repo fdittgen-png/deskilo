@@ -138,6 +138,7 @@
   "user.money.stock.nfc": "Tags with the phone's NFC",
   "user.money.till": "Till",
   "user.money.stock.rfid": "RFID tags: one per batch or one per piece",
+  "user.money.stock.bulkread": "Reading many tags",
   "user.money.stock.value": "Stock value and where goods came from",
   "user.money.stock.reversals": "Returns, corrections and counts",
   "user.money.stock.cycle": "Cycle counts",

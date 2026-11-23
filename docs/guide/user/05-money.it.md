@@ -782,14 +782,14 @@ Con la funzione *Tag* attiva, un articolo ha una **modalità del tag**, impostat
 <!-- anchor: user.money.stock.bulkread -->
 ### Lettura di molte etichette
 
-**Pubblico:** Membro · Responsabile di magazzino
+**Destinatari:** Membro
 
 Con le funzioni *Etichette* e *Lettura di etichette* attive, un'attività di conteggio offre **Leggi molte etichette**. Punti un lettore UHF (digita come una tastiera) verso lo scaffale: ogni etichetta è tenuta una volta, per quante volte sia letta, fino al massimo di etichette di una lettura (**500**, salvo altro valore fissato dal suo amministratore). Il foglio mostra, durante la lettura, quanti pezzi di ogni articolo sono stati trovati; le etichette sconosciute, i pezzi che non sono in giacenza e le etichette senza pezzo sono elencati a parte.
 
 - Prema **Interrompi la lettura** per fissare il totale, poi **Compila il conteggio**. Prima non cambia nulla, e un nuovo tentativo risponde una sola volta.
 - Una riga di un articolo seguito a pezzi è contata con i pezzi del suo articolo letti nel suo luogo; le altre righe restano aperte. La prima lettura di una riga è definitiva: l'etichetta di una riga già contata è esclusa.
 - Chi può solo contare vede ciò che è stato letto, mai ciò che era atteso. Chi gestisce il magazzino vede anche quali pezzi attesi non sono stati letti.
-- Il conteggio attende poi la sua approvazione come ogni conteggio; nessun saldo si muove. (#4364)
+- Il conteggio attende poi la sua approvazione come ogni conteggio; nessun saldo si muove.
 
 <!-- anchor: user.money.stock.value -->
 ### Valore del magazzino e origine della merce

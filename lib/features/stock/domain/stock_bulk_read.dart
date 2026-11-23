@@ -6,11 +6,8 @@
 // is pure: the collector, the tally of what the server resolved, and the comparison of a delivery with what was read.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show JsonReader;
 
-/// A UHF tag as a reader types it: hexadecimal of 24 characters or more (an EPC), told apart from a barcode by its form.
-bool looksLikeUhfTag(String code) => RegExp(r'^[0-9A-Fa-f]{24,128}$').hasMatch(code.trim());
-
 /// The code as the server normalises it: upper case, without spaces, `:` or `-`.
-String normaliseTag(String code) => code.replaceAll(RegExp(r'[\s:\-]'), '').toUpperCase();
+String _normaliseTag(String code) => code.replaceAll(RegExp(r'[\s:\-]'), '').toUpperCase();
 
 /// What adding one typed code did.
 enum BulkAdd {
@@ -61,7 +58,7 @@ class BulkReadSession {
     final code = typed.trim();
     if (code.isEmpty) return BulkAdd.blank;
     if (_stopped) return BulkAdd.stopped;
-    final key = normaliseTag(code);
+    final key = _normaliseTag(code);
     if (_seen.contains(key)) {
       _repeats += 1;
       return BulkAdd.repeat;
@@ -225,7 +222,13 @@ class BulkTally {
   final List<BulkCode> notPieces;
 
   /// The pieces read and in stock.
-  int get pieces => lines.fold(0, (sum, l) => sum + l.count);
+  int get pieces {
+    var n = 0;
+    for (final l in lines) {
+      n += l.count;
+    }
+    return n;
+  }
 
   factory BulkTally.of(BulkResolution resolution) {
     final byKey = <String, BulkTallyLine>{};

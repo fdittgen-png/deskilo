@@ -311,7 +311,7 @@ void main() {
         await tester.pump();
         await tester.pump(const Duration(seconds: 1));
         await _frames(tester);
-        expect(find.text(_en.stockBulkReadCount(3, 500)), findsOneWidget);
+        expect(find.text(_en.stockBulkReadCount(3)), findsOneWidget);
         expect(find.text(_en.stockBulkReadRepeats(1)), findsOneWidget);
         expect(find.text(_en.stockBulkReadPieces('Mugs', 2)), findsOneWidget);
         expect(find.byKey(const ValueKey('stock-bulk-apart-unknown')), findsOneWidget);

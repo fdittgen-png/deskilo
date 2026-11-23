@@ -782,14 +782,14 @@ With the *Tags* feature on, an item carries a **tag mode**, set on its group and
 <!-- anchor: user.money.stock.bulkread -->
 ### Reading many tags
 
-**Audience:** Member · Stock manager
+**Audience:** Member
 
 With the *Tags* and *Tag reads* features on, a count task offers **Read many tags**. Point a UHF reader (it types like a keyboard) at the shelf: each tag is kept once, however often it is read, up to the most tags one read keeps (**500** unless your administrator set another number). The sheet shows, as you read, how many pieces of each item were found; tags nobody knows, pieces that are not in stock and tags that name no piece are listed apart.
 
 - Press **Stop reading** to freeze the tally, then **Fill the count**. Nothing changes before that, and a retry answers once.
 - A line of an item tracked by piece is counted by the pieces of its own item read at its own place; other lines stay open. The first read of a line is final: a tag of a line already counted is left out.
 - Someone who may only count sees what was read and never what was expected. Someone who manages stock also sees which expected pieces were not read.
-- The count then waits for its approval like any count; no balance moves. (#4364)
+- The count then waits for its approval like any count; no balance moves.
 
 <!-- anchor: user.money.stock.value -->
 ### Stock value and where goods came from

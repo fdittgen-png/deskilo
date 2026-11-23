@@ -56858,8 +56858,8 @@ abstract class AppLocalizations {
   /// #4364 reading many tags
   ///
   /// In en, this message translates to:
-  /// **'{count} of at most {limit} tags read'**
-  String stockBulkReadCount(int count, int limit);
+  /// **'{count, plural, one{1 tag read} other{{count} tags read}}'**
+  String stockBulkReadCount(int count);
 
   /// #4364 reading many tags
   ///
@@ -56884,6 +56884,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Read the tags with your reader. Each tag counts once, however often it is read.'**
   String get stockBulkReadHint;
+
+  /// #4364 reading many tags
+  ///
+  /// In en, this message translates to:
+  /// **'At most {limit, plural, one{1 tag} other{{limit} tags}} per read'**
+  String stockBulkReadLimit(int limit);
 
   /// #4364 reading many tags
   ///

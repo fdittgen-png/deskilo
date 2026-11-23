@@ -16,6 +16,7 @@ import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/refusal_text.dart';
 import '../../../core/trace/trace_logger.dart';
+import '../../../core/ui/form_kit.dart';
 import '../domain/stock_bulk_read.dart';
 import '../providers/stock_providers.dart';
 
@@ -84,24 +85,31 @@ class _State extends ConsumerState<StockBulkReadSheet> {
 
   Future<void> _resolve() async {
     if (_session.codes.isEmpty || !mounted) return;
+    final l10n = context.l10n;
     setState(() {
       _resolving = true;
       _problem = null;
     });
+    BulkResolution? resolved;
+    String? problem;
     try {
-      final r = await ref.read(stockTagsStoreProvider).resolveCodes(widget.workspaceId, _session.codes);
-      if (mounted) setState(() => _resolution = r);
+      resolved = await ref.read(stockTagsStoreProvider).resolveCodes(widget.workspaceId, _session.codes);
     } on Object catch (e, st) {
       TraceLogger.instance.warn('stock', 'a bulk read could not be resolved: $e', stackTrace: st);
-      if (mounted) setState(() => _problem = knownRefusalText(context.l10n, e) ?? context.l10n.stockReadFailed);
-    } finally {
-      if (mounted) setState(() => _resolving = false);
+      problem = knownRefusalText(l10n, e) ?? l10n.stockReadFailed;
     }
+    if (!mounted) return;
+    setState(() {
+      _resolving = false;
+      _resolution = resolved ?? _resolution;
+      _problem = problem;
+    });
   }
 
+  /// Freezes the tally: the next question to the server is the last one, and the rebuild shows the frozen sheet.
   Future<void> _stop() async {
     _timer?.cancel();
-    setState(_session.stop);
+    _session.stop();
     await _resolve();
   }
 
@@ -116,12 +124,12 @@ class _State extends ConsumerState<StockBulkReadSheet> {
     if (!mounted) return;
     if (problem == null) {
       Navigator.of(context).pop(true);
-    } else {
-      setState(() {
-        _confirming = false;
-        _problem = problem;
-      });
+      return;
     }
+    setState(() {
+      _confirming = false;
+      _problem = problem;
+    });
   }
 
   @override
@@ -147,26 +155,27 @@ class _State extends ConsumerState<StockBulkReadSheet> {
               Text(l10n.stockBulkReadHint, style: theme.textTheme.bodySmall),
               const SizedBox(height: AppSpacing.md),
               if (!_session.stopped)
-                TextField(
+                AppTextField(
                   key: const ValueKey('stock-bulk-input'),
                   controller: _input,
                   focusNode: _focus,
                   autofocus: true,
-                  minLines: 1,
                   maxLines: 3,
-                  decoration: InputDecoration(labelText: l10n.stockBulkReadField, prefixIcon: const Icon(Icons.sensors), border: const OutlineInputBorder()),
+                  label: l10n.stockBulkReadField,
+                  prefixIcon: const Icon(Icons.sensors),
                   onSubmitted: _typed,
+                  // a reader that ends a tag with a line break types it into the field
                   onChanged: (t) {
-                    // a reader that ends a tag with a line break types it into the field
                     if (t.contains('\n')) _typed(t);
                   },
                 ),
               const SizedBox(height: AppSpacing.sm),
               Text(
-                l10n.stockBulkReadCount(_session.codes.length, _session.limit),
+                l10n.stockBulkReadCount(_session.codes.length),
                 key: const ValueKey('stock-bulk-count'),
                 style: theme.textTheme.titleSmall,
               ),
+              Text(l10n.stockBulkReadLimit(_session.limit), key: const ValueKey('stock-bulk-limit'), style: theme.textTheme.bodySmall),
               if (_session.repeats > 0) Text(l10n.stockBulkReadRepeats(_session.repeats), key: const ValueKey('stock-bulk-repeats'), style: theme.textTheme.bodySmall),
               if (_session.dropped > 0) Text(l10n.stockBulkReadDropped(_session.dropped), key: const ValueKey('stock-bulk-dropped'), style: theme.textTheme.bodySmall),
               if (_resolving) Padding(padding: const EdgeInsets.only(top: AppSpacing.xs), child: Text(l10n.stockBulkReadResolving, style: theme.textTheme.bodySmall)),

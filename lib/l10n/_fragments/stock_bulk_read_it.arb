@@ -3,7 +3,7 @@
   "stockBulkReadTitle": "Lettura di molte etichette",
   "stockBulkReadField": "Input del lettore di etichette",
   "stockBulkReadHint": "Legga le etichette con il suo lettore. Ogni etichetta conta una volta, per quante volte sia letta.",
-  "stockBulkReadCount": "{count} di al massimo {limit} etichette lette",
+  "stockBulkReadCount": "{count, plural, one{1 etichetta letta} other{{count} etichette lette}}",
   "stockBulkReadRepeats": "{n} letture ripetute ignorate",
   "stockBulkReadDropped": "{n} etichette escluse: la lettura è piena",
   "stockBulkReadPieces": "{item} · {count, plural, one{1 pezzo} other{{count} pezzi}}",
@@ -21,5 +21,6 @@
   "stockBulkReadReasonInvalid": "illeggibile",
   "stockBulkReadReasonNotCounted": "non contata",
   "stockBulkReadReasonNotInStock": "non in giacenza",
-  "stockBulkReadReasonOtherPlace": "appartiene a un altro luogo"
+  "stockBulkReadReasonOtherPlace": "appartiene a un altro luogo",
+  "stockBulkReadLimit": "Al massimo {limit, plural, one{1 etichetta} other{{limit} etichette}} per lettura"
 }

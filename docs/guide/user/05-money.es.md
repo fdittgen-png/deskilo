@@ -782,14 +782,14 @@ Con la función *Etiquetas* activada, un artículo tiene un **modo de etiqueta**
 <!-- anchor: user.money.stock.bulkread -->
 ### Lectura de muchas etiquetas
 
-**Público:** Miembro · Responsable de stock
+**Público:** Miembro
 
 Con las funciones *Etiquetas* y *Lectura de etiquetas* activadas, una tarea de recuento ofrece **Leer muchas etiquetas**. Apunte un lector UHF (escribe como un teclado) hacia el estante: cada etiqueta se guarda una vez, por muchas veces que se lea, hasta el máximo de etiquetas de una lectura (**500**, salvo otro valor fijado por su administrador). La hoja muestra, mientras lee, cuántas piezas de cada artículo se encontraron; las etiquetas desconocidas, las piezas que no están en stock y las etiquetas sin pieza se listan aparte.
 
 - Pulse **Detener la lectura** para congelar el total y luego **Rellenar el recuento**. Nada cambia antes, y un reintento responde una sola vez.
 - Una línea de un artículo seguido por pieza se cuenta con las piezas de su artículo leídas en su lugar; las demás líneas siguen abiertas. La primera lectura de una línea es definitiva: la etiqueta de una línea ya contada se descarta.
 - Quien solo puede contar ve lo leído, nunca lo esperado. Quien gestiona el stock ve además qué piezas esperadas no se leyeron.
-- El recuento espera después su aprobación como cualquier recuento; ningún saldo se mueve. (#4364)
+- El recuento espera después su aprobación como cualquier recuento; ningún saldo se mueve.
 
 <!-- anchor: user.money.stock.value -->
 ### Valor de las existencias y origen de la mercancía

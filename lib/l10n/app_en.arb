@@ -46020,14 +46020,11 @@
   "@stockBulkReadConfirm": {
     "description": "#4364 reading many tags"
   },
-  "stockBulkReadCount": "{count} of at most {limit} tags read",
+  "stockBulkReadCount": "{count, plural, one{1 tag read} other{{count} tags read}}",
   "@stockBulkReadCount": {
     "description": "#4364 reading many tags",
     "placeholders": {
       "count": {
-        "type": "int"
-      },
-      "limit": {
         "type": "int"
       }
     }
@@ -46060,6 +46057,15 @@
   "stockBulkReadHint": "Read the tags with your reader. Each tag counts once, however often it is read.",
   "@stockBulkReadHint": {
     "description": "#4364 reading many tags"
+  },
+  "stockBulkReadLimit": "At most {limit, plural, one{1 tag} other{{limit} tags}} per read",
+  "@stockBulkReadLimit": {
+    "description": "#4364 reading many tags",
+    "placeholders": {
+      "limit": {
+        "type": "int"
+      }
+    }
   },
   "stockBulkReadNotInStock": "Pieces that are not in stock",
   "@stockBulkReadNotInStock": {

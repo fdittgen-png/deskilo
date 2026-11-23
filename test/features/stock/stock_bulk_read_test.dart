@@ -25,12 +25,11 @@ Map<String, Object?> _piece(String code, {String item = 'i1', String state = 'in
 };
 
 void main() {
-  test('a UHF tag is told from a barcode by its form: hexadecimal of 24 characters or more', () {
-    expect(looksLikeUhfTag(_a), isTrue);
-    expect(looksLikeUhfTag(' ${_a.toLowerCase()} '), isTrue);
-    expect(looksLikeUhfTag('4006381333931'), isFalse);
-    expect(looksLikeUhfTag('E2806894'), isFalse);
-    expect(normaliseTag('e2:80-68 94'), 'E2806894');
+  test('a tag typed in lower case, with spaces, colons or dashes is the tag the server knows: a repeat', () {
+    final s = BulkReadSession(limit: 10);
+    expect(s.add('E2806894'), BulkAdd.added);
+    expect(s.add('e2:80-68 94'), BulkAdd.repeat);
+    expect(s.codes, ['E2806894']);
   });
 
   test('a tag read five hundred times counts once; the order is the order first read', () {
