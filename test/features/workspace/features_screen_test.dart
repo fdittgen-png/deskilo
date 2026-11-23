@@ -90,7 +90,8 @@ void main() {
     // #4294 — stockReorder: reorder points are asked for.
     // #4172 — stockReturns: returns and corrections are asked for; stockCounts: counts; stockCycleCounts: cycle counts.
     // #4362 — stockTags: RFID tags are asked for; #4359 — stockScanning: scanning is asked for.
-    expect(onCount, featureManifest.length - 72);
+    // #4364 — stockTagReads: reading many tags at once is asked for.
+    expect(onCount, featureManifest.length - 73);
   });
 
   testWidgets(

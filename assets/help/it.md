@@ -3026,6 +3026,17 @@ Con la funzione *Tag* attiva, un articolo ha una **modalità del tag**, impostat
 - La modalità di un articolo che ha già dei tag non cambia finché i tag non sono ritirati o la giacenza non è zero; la modifica di un gruppo salta allora l'articolo e lo elenca come mantenuto. Un tag su un luogo indica sempre un solo luogo.
 - Un codice tag è un'etichetta UHF (EPC; il server legge un SGTIN-96 come GTIN e numero di serie) o un chip NFC, salvato in esadecimale maiuscolo e unico nell'azienda tra articoli, pezzi e luoghi. Collegare e ritirare richiedono il diritto di gestire il magazzino; leggere, quello di vederlo.
 
+### Lettura di molte etichette
+
+**Destinatari:** Membro
+
+Con le funzioni *Etichette* e *Lettura di etichette* attive, un'attività di conteggio offre **Leggi molte etichette**. Punti un lettore UHF (digita come una tastiera) verso lo scaffale: ogni etichetta è tenuta una volta, per quante volte sia letta, fino al massimo di etichette di una lettura (**500**, salvo altro valore fissato dal suo amministratore). Il foglio mostra, durante la lettura, quanti pezzi di ogni articolo sono stati trovati; le etichette sconosciute, i pezzi che non sono in giacenza e le etichette senza pezzo sono elencati a parte.
+
+- Prema **Interrompi la lettura** per fissare il totale, poi **Compila il conteggio**. Prima non cambia nulla, e un nuovo tentativo risponde una sola volta.
+- Una riga di un articolo seguito a pezzi è contata con i pezzi del suo articolo letti nel suo luogo; le altre righe restano aperte. La prima lettura di una riga è definitiva: l'etichetta di una riga già contata è esclusa.
+- Chi può solo contare vede ciò che è stato letto, mai ciò che era atteso. Chi gestisce il magazzino vede anche quali pezzi attesi non sono stati letti.
+- Il conteggio attende poi la sua approvazione come ogni conteggio; nessun saldo si muove.
+
 ### Valore del magazzino e origine della merce
 
 **Destinatari:** Amministratore · Proprietario

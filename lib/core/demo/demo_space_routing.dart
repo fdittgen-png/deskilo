@@ -345,6 +345,7 @@ List<Override> _moneyPortOverrides(FakeMoneyRepository Function(Ref ref) money, 
       stocks.of(ref).ledger,
       stocks.of(ref).reversals,
       stocks.of(ref).registry,
+      stocks.of(ref).tags,
       () => ref.read(myPermissionsProvider),
       (ref.watch(purchaseOrderRepositoryProvider) as FakePurchaseOrderRepository).now,
     ),
@@ -383,7 +384,10 @@ class _DemoStock {
     operations = DemoStockOperations(ledger, config);
     reversals = DemoStockReversals(ledger);
     itemGroups = DemoItemGroups(id, config, now);
-    tags = DemoStockTags(tagModeOf: (item) async => (await itemGroups.effective(id, item)).params['tag_mode']?.value as String?);
+    tags = DemoStockTags(
+      tagModeOf: (item) async => (await itemGroups.effective(id, item)).params['tag_mode']?.value as String?,
+      nameOf: (item) async => DemoStockLedger.items.where((i) => i.id == item).firstOrNull?.name,
+    );
     codeResolver = DemoStockCodeResolver(id, config, registry, tags);
   }
 
