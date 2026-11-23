@@ -21265,6 +21265,7 @@
   "@stockPutAwayNothing": {
     "description": "#4171 receiving into stock: a label or message"
   },
+  "stockPutAwayPieceProblem": "Pièce {piece} : {problem}",
   "stockPutAwayPlace": "Emplacement",
   "@stockPutAwayPlace": {
     "description": "#4171 receiving into stock: a label or message"
@@ -21297,6 +21298,12 @@
   "@stockPutAwayRemaining": {
     "description": "#4171 receiving into stock: a label or message"
   },
+  "stockPutAwayTagAllRead": "Les {needed} pièces de cette ligne ont déjà une puce.",
+  "stockPutAwayTagField": "Puce de la pièce suivante",
+  "stockPutAwayTagRemove": "Retirer la puce {code}",
+  "stockPutAwayTagsCount": "{read} pièces lues sur {needed}",
+  "stockPutAwayTagsMissing": "Lisez une puce par pièce : {needed} attendues, {read} lues.",
+  "stockPutAwayTagsTitle": "Puces des pièces",
   "stockPutAwayTitle": "Ranger {order}",
   "@stockPutAwayTitle": {
     "description": "#4171 receiving into stock: a label or message",

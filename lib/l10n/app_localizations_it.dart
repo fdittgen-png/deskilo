@@ -36457,6 +36457,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get stockPutAwayNothing => 'Non resta nulla da collocare.';
 
   @override
+  String stockPutAwayPieceProblem(int piece, String problem) {
+    return 'Pezzo $piece: $problem';
+  }
+
+  @override
   String get stockPutAwayPlace => 'Ubicazione';
 
   @override
@@ -36471,6 +36476,32 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get stockPutAwayRemaining => 'Collocare il resto';
+
+  @override
+  String stockPutAwayTagAllRead(int needed) {
+    return 'Tutti i $needed pezzi di questa riga hanno già un tag.';
+  }
+
+  @override
+  String get stockPutAwayTagField => 'Tag del pezzo successivo';
+
+  @override
+  String stockPutAwayTagRemove(String code) {
+    return 'Rimuovere il tag $code';
+  }
+
+  @override
+  String stockPutAwayTagsCount(int read, int needed) {
+    return '$read pezzi letti su $needed';
+  }
+
+  @override
+  String stockPutAwayTagsMissing(int needed, int read) {
+    return 'Un tag per pezzo: $needed necessari, $read letti.';
+  }
+
+  @override
+  String get stockPutAwayTagsTitle => 'Tag dei pezzi';
 
   @override
   String stockPutAwayTitle(String order) {

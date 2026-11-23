@@ -1,0 +1,65 @@
+{
+  "@@locale": "en",
+  "stockPutAwayTagsTitle": "Tags of the pieces",
+  "@stockPutAwayTagsTitle": {
+    "description": "#4379 G13b put-away by piece"
+  },
+  "stockPutAwayTagsCount": "{read} of {needed} pieces read",
+  "@stockPutAwayTagsCount": {
+    "description": "#4379 G13b put-away by piece",
+    "placeholders": {
+      "read": {
+        "type": "int"
+      },
+      "needed": {
+        "type": "int"
+      }
+    }
+  },
+  "stockPutAwayTagField": "Tag of the next piece",
+  "@stockPutAwayTagField": {
+    "description": "#4379 G13b put-away by piece"
+  },
+  "stockPutAwayTagAllRead": "All {needed} pieces of this line already have a tag.",
+  "@stockPutAwayTagAllRead": {
+    "description": "#4379 G13b put-away by piece",
+    "placeholders": {
+      "needed": {
+        "type": "int"
+      }
+    }
+  },
+  "stockPutAwayTagsMissing": "Read one tag per piece: {needed} needed, {read} read.",
+  "@stockPutAwayTagsMissing": {
+    "description": "#4379 G13b put-away by piece",
+    "placeholders": {
+      "needed": {
+        "type": "int"
+      },
+      "read": {
+        "type": "int"
+      }
+    }
+  },
+  "stockPutAwayPieceProblem": "Piece {piece}: {problem}",
+  "@stockPutAwayPieceProblem": {
+    "description": "#4379 G13b put-away by piece",
+    "placeholders": {
+      "piece": {
+        "type": "int"
+      },
+      "problem": {
+        "type": "String"
+      }
+    }
+  },
+  "stockPutAwayTagRemove": "Remove tag {code}",
+  "@stockPutAwayTagRemove": {
+    "description": "#4379 G13b put-away by piece",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  }
+}

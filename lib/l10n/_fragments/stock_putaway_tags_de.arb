@@ -1,0 +1,10 @@
+{
+  "@@locale": "de",
+  "stockPutAwayTagsTitle": "Tags der Stücke",
+  "stockPutAwayTagsCount": "{read} von {needed} Stücken gelesen",
+  "stockPutAwayTagField": "Tag des nächsten Stücks",
+  "stockPutAwayTagAllRead": "Alle {needed} Stücke dieser Zeile haben schon einen Tag.",
+  "stockPutAwayTagsMissing": "Ein Tag pro Stück lesen: {needed} nötig, {read} gelesen.",
+  "stockPutAwayPieceProblem": "Stück {piece}: {problem}",
+  "stockPutAwayTagRemove": "Tag {code} entfernen"
+}

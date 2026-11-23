@@ -1,0 +1,10 @@
+{
+  "@@locale": "fr",
+  "stockPutAwayTagsTitle": "Puces des pièces",
+  "stockPutAwayTagsCount": "{read} pièces lues sur {needed}",
+  "stockPutAwayTagField": "Puce de la pièce suivante",
+  "stockPutAwayTagAllRead": "Les {needed} pièces de cette ligne ont déjà une puce.",
+  "stockPutAwayTagsMissing": "Lisez une puce par pièce : {needed} attendues, {read} lues.",
+  "stockPutAwayPieceProblem": "Pièce {piece} : {problem}",
+  "stockPutAwayTagRemove": "Retirer la puce {code}"
+}

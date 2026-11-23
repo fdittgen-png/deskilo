@@ -1,0 +1,10 @@
+{
+  "@@locale": "es",
+  "stockPutAwayTagsTitle": "Etiquetas de las piezas",
+  "stockPutAwayTagsCount": "{read} de {needed} piezas leídas",
+  "stockPutAwayTagField": "Etiqueta de la pieza siguiente",
+  "stockPutAwayTagAllRead": "Las {needed} piezas de esta línea ya tienen etiqueta.",
+  "stockPutAwayTagsMissing": "Lea una etiqueta por pieza: {needed} necesarias, {read} leídas.",
+  "stockPutAwayPieceProblem": "Pieza {piece}: {problem}",
+  "stockPutAwayTagRemove": "Quitar la etiqueta {code}"
+}

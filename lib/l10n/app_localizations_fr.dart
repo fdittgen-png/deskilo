@@ -36573,6 +36573,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get stockPutAwayNothing => 'Il n’y a plus rien à ranger.';
 
   @override
+  String stockPutAwayPieceProblem(int piece, String problem) {
+    return 'Pièce $piece : $problem';
+  }
+
+  @override
   String get stockPutAwayPlace => 'Emplacement';
 
   @override
@@ -36587,6 +36592,32 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get stockPutAwayRemaining => 'Ranger le reste';
+
+  @override
+  String stockPutAwayTagAllRead(int needed) {
+    return 'Les $needed pièces de cette ligne ont déjà une puce.';
+  }
+
+  @override
+  String get stockPutAwayTagField => 'Puce de la pièce suivante';
+
+  @override
+  String stockPutAwayTagRemove(String code) {
+    return 'Retirer la puce $code';
+  }
+
+  @override
+  String stockPutAwayTagsCount(int read, int needed) {
+    return '$read pièces lues sur $needed';
+  }
+
+  @override
+  String stockPutAwayTagsMissing(int needed, int read) {
+    return 'Lisez une puce par pièce : $needed attendues, $read lues.';
+  }
+
+  @override
+  String get stockPutAwayTagsTitle => 'Puces des pièces';
 
   @override
   String stockPutAwayTitle(String order) {

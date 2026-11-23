@@ -87,7 +87,7 @@ class SupabaseStockReceivingCommands implements StockReceivingCommands {
       );
     } on PostgrestException catch (e, stack) {
       TraceLogger.instance.warn('stock', 'a stock command was refused: ${e.code}', stackTrace: stack);
-      throwStockFailure(e, stack);
+      throwStockFailure(e, stack, pieces: true);
     }
   }
 }

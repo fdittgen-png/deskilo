@@ -36512,6 +36512,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get stockPutAwayNothing => 'Es ist nichts mehr einzulagern.';
 
   @override
+  String stockPutAwayPieceProblem(int piece, String problem) {
+    return 'Stück $piece: $problem';
+  }
+
+  @override
   String get stockPutAwayPlace => 'Lagerort';
 
   @override
@@ -36526,6 +36531,32 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get stockPutAwayRemaining => 'Rest einlagern';
+
+  @override
+  String stockPutAwayTagAllRead(int needed) {
+    return 'Alle $needed Stücke dieser Zeile haben schon einen Tag.';
+  }
+
+  @override
+  String get stockPutAwayTagField => 'Tag des nächsten Stücks';
+
+  @override
+  String stockPutAwayTagRemove(String code) {
+    return 'Tag $code entfernen';
+  }
+
+  @override
+  String stockPutAwayTagsCount(int read, int needed) {
+    return '$read von $needed Stücken gelesen';
+  }
+
+  @override
+  String stockPutAwayTagsMissing(int needed, int read) {
+    return 'Ein Tag pro Stück lesen: $needed nötig, $read gelesen.';
+  }
+
+  @override
+  String get stockPutAwayTagsTitle => 'Tags der Stücke';
 
   @override
   String stockPutAwayTitle(String order) {
