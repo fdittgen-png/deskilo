@@ -182,7 +182,7 @@ create policy counter_till_sessions_select on public.counter_till_sessions for s
               or (workspace_id in (select public.workspaces_permitting(array['issueInvoices']))
                   and state = 'open'
                   and opened_by_member_id in (select m.id from public.members m
-                                               where m.workspace_id = counter_till_sessions.workspace_id and m.user_id = auth.uid() and m.status = 'active'))));
+                                               where m.workspace_id = counter_till_sessions.workspace_id and m.user_id = (select auth.uid()) and m.status = 'active'))));
 create policy counter_cash_entries_select on public.counter_cash_entries for select to authenticated
   using (public.feature_effective(workspace_id, 'counterTillSessions')
          and (workspace_id in (select public.workspaces_permitting(array['viewFinances']))
