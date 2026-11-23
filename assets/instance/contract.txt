@@ -3104,10 +3104,11 @@ routine public.cost_allocation_rule_json(r bi_cost_allocation_rules) -> jsonb | 
 routine public.cost_allocation_rules_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:789cffb7df60
 routine public.counter_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:66c1d614d21a
 routine public.counter_adapters() -> text[] | function | invoker | immutable | exec:service_role | body:eea3a873b58c
-routine public.counter_cash_entry_v1(p_workspace_id uuid, p_request_id uuid, p_session_id uuid, p_kind text, p_amount_minor bigint, p_reason text, p_purchase_document_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:80084981d857
-routine public.counter_day_close_v1(p_workspace_id uuid, p_request_id uuid, p_site_id uuid, p_business_date date) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:a4570d491fae
+routine public.counter_cash_entry_v1(p_workspace_id uuid, p_request_id uuid, p_session_id uuid, p_kind text, p_amount_minor bigint, p_reason text, p_purchase_document_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:a1e8fe41e9b3
+routine public.counter_day_close_v1(p_workspace_id uuid, p_request_id uuid, p_site_id uuid, p_business_date date) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:412b1bf22e39
 routine public.counter_day_report_v1(p_workspace_id uuid, p_day_close_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:6e7ad269ace0
 routine public.counter_denominations_total(p_denominations jsonb) -> bigint | function | invoker | immutable | exec:service_role | body:fe05c177ae65
+routine public.counter_finance_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:95d8874f4ca3
 routine public.counter_frozen_guard() -> trigger | function | invoker | volatile | exec:service_role | body:a9c6b6fdca6f
 routine public.counter_goods_return_v1(p_workspace_id uuid, p_request_id uuid, p_correction_id uuid, p_lines jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:d83f1a38055e
 routine public.counter_line_compute(p_workspace_id uuid, p_line jsonb, p_index integer, p_currency text, p_tax_point date) -> jsonb | function | definer | stable | exec:service_role | body:36efd33a36e8
@@ -3124,15 +3125,16 @@ routine public.counter_refund_v1(p_workspace_id uuid, p_request_id uuid, p_corre
 routine public.counter_refunds_frozen() -> trigger | function | invoker | volatile | exec:service_role | body:581cb131a084
 routine public.counter_require_operation(p_workspace_id uuid, p_operation text) -> counter_country_operations | function | definer | stable | exec:service_role | body:d1fc60a0d6e8
 routine public.counter_session_cash(p_session_id uuid) -> jsonb | function | definer | stable | exec:service_role | body:15d25eaa207f
-routine public.counter_session_close_v1(p_workspace_id uuid, p_request_id uuid, p_session_id uuid, p_counted_minor bigint, p_denominations jsonb, p_difference_reason text, p_banked_minor bigint) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:0c6407fd058e
-routine public.counter_session_expected_v1(p_workspace_id uuid, p_session_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:f44b63c3ae31
-routine public.counter_session_open_v1(p_workspace_id uuid, p_request_id uuid, p_till_id uuid, p_float_minor bigint, p_denominations jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:883e86b1ef6f
+routine public.counter_session_close_v1(p_workspace_id uuid, p_request_id uuid, p_session_id uuid, p_counted_minor bigint, p_denominations jsonb, p_difference_reason text, p_banked_minor bigint) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:cdb2af9826a1
+routine public.counter_session_expected_v1(p_workspace_id uuid, p_session_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:41c554e70aa8
+routine public.counter_session_open_v1(p_workspace_id uuid, p_request_id uuid, p_till_id uuid, p_float_minor bigint, p_denominations jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:d159f292e13b
 routine public.counter_tender_reconcile_v1(p_workspace_id uuid, p_request_id uuid, p_tender_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:405814ff2609
 routine public.counter_tender_request_v1(p_workspace_id uuid, p_request_id uuid, p_receipt_id uuid, p_kind text, p_amount_minor bigint) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:7abb8d7623ef
 routine public.counter_tender_resolve_v1(p_workspace_id uuid, p_request_id uuid, p_tender_id uuid, p_outcome text, p_provider_ref text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:5f6c84c49864
 routine public.counter_till_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:55c0e9ee1de4
 routine public.counter_till_frozen_guard() -> trigger | function | invoker | volatile | exec:service_role | body:230c75b0f4d8
-routine public.counter_till_save_v1(p_workspace_id uuid, p_request_id uuid, p_till_id uuid, p_name text, p_site_id uuid, p_active boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:27aef2514cee
+routine public.counter_till_or_finance_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:0afc22875fa6
+routine public.counter_till_save_v1(p_workspace_id uuid, p_request_id uuid, p_till_id uuid, p_name text, p_site_id uuid, p_active boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:98c2a4d6aa78
 routine public.country_papers(p_country text, p_on date) -> jsonb | function | definer | stable | exec:service_role | body:e88ec4f4583e
 routine public.courtesy_word(p_code text, p_lang text) -> text | function | invoker | immutable | exec:authenticated,service_role | body:6ee8d303b265
 routine public.create_account_group(p_title text, p_users uuid[], p_expected_account uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:8824f7fdaaa1
