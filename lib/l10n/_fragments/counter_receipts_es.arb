@@ -24,5 +24,6 @@
   "settingHintCounterCashReasons": "Los motivos que una persona puede dar para el dinero que entra o sale del cajón, separados por comas (por ejemplo cambio, gasto, otro).",
   "refusalCounterTill": "La caja no está lista para esto: ábrala primero, o ya está abierta o cerrada.",
   "refusalCounterCashEntry": "Este apunte de efectivo no se acepta: el motivo no está en la lista, el importe supera su límite, o las cuentas no suman.",
-  "refusalCounterDayClose": "No se puede cerrar el día: una caja sigue abierta, o el día ya está cerrado."
+  "refusalCounterDayClose": "No se puede cerrar el día: una caja sigue abierta, o el día ya está cerrado.",
+  "refusalCounterDayOpen": "El día de esta caja ya está cerrado: se abrirá de nuevo mañana."
 }

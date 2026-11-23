@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- #4367 (0905-0907, CS5): a till is opened with its float (one open session per till, a lost answer recovers the same one), takes paid-in and paid-out entries with a reason from the business's list (a paid-out above the limit needs the right to record outgoing payments), the expected cash is derived and hidden from a blind count, the close records the counted amount, the difference and its reason, and a closed session is frozen. Rolled back.
 begin;
-select plan(19);
+select plan(27);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -103,6 +103,25 @@ select is(left(pg_temp.sclose(2, 7013, pg_temp.f(current_setting('t.s'), 'sessio
 select is(pg_temp.entry(2, 7011, pg_temp.f(current_setting('t.s'), 'session_id')::uuid, 'paid_in', 100, 'change'), 'ERR DKL12 {"reason": "closed"}', 'and takes no more entries: a correction goes to the next session');
 select is(left(pg_temp.sopen(4, 7012, current_setting('t.till')::uuid, 100), 9), 'ERR DKN01', 'a person of another business opens nothing here');
 select is((select count(*)::int from public.counter_tills where workspace_id = pg_temp.u(105)), 0, 'and another business has no till of this one');
+
+-- ── the raw errors, the other business, the assistant, and who reads what ──
+select is(pg_temp.till(1, 7020, null, 'Till 1'), 'ERR DKL12 {"reason": "name_taken"}', 'a second till with the same name is a refusal of the counter, not a raw database error');
+select is(left(pg_temp.entry(1, 7021, pg_temp.f(current_setting('t.s'), 'session_id')::uuid, null, 100, 'change'), 9), 'ERR 22023', 'an entry without a kind is refused at the guard');
+select set_config('t.till5', pg_temp.f(pg_temp.run_as(pg_temp.u(4), format('select public.counter_till_save_v1(%L, %L, null, %L, null, true)::text', pg_temp.u(105), pg_temp.u(7022), 'Other')), 'till_id'), false);
+select set_config('t.s5', pg_temp.f(pg_temp.run_as(pg_temp.u(4), format('select public.counter_session_open_v1(%L, %L, %L, 100, null::jsonb)::text', pg_temp.u(105), pg_temp.u(7023), current_setting('t.till5'))), 'session_id'), false);
+select is(pg_temp.entry(1, 7024, current_setting('t.s5')::uuid, 'paid_in', 100, 'change'), 'ERR DKL12 {"reason": "session_unknown"}', 'a session of another business takes no entry from this one');
+select is(pg_temp.sclose(1, 7025, current_setting('t.s5')::uuid, 100), 'ERR DKL12 {"reason": "session_unknown"}', 'and is not closed from this one');
+select is(concat_ws(',',
+  left(pg_temp.run_as(pg_temp.u(1), format('select public.counter_till_save_v1(%L, %L, null, %L, null, true)::text', pg_temp.u(101), pg_temp.u(7026), 'Assistant till'), true), 9),
+  left(pg_temp.run_as(pg_temp.u(1), format('select public.counter_session_open_v1(%L, %L, %L, 100, null::jsonb)::text', pg_temp.u(101), pg_temp.u(7027), current_setting('t.till')), true), 9),
+  left(pg_temp.run_as(pg_temp.u(1), format('select public.counter_cash_entry_v1(%L, %L, %L, %L, 100, %L, null)::text', pg_temp.u(101), pg_temp.u(7028), pg_temp.f(current_setting('t.s'), 'session_id'), 'paid_in', 'change'), true), 9),
+  left(pg_temp.run_as(pg_temp.u(1), format('select public.counter_session_close_v1(%L, %L, %L, 1, null::jsonb, null, 0)::text', pg_temp.u(101), pg_temp.u(7029), pg_temp.f(current_setting('t.s'), 'session_id')), true), 9)),
+  'ERR DKN01,ERR DKN01,ERR DKN01,ERR DKN01', 'an assistant session saves no till, opens no session, records no entry and closes nothing');
+select set_config('t.s2', pg_temp.f(pg_temp.sopen(2, 7030, current_setting('t.till')::uuid, 5000), 'session_id'), false);
+select is(pg_temp.run_as(pg_temp.u(2), 'select count(*)::text from public.counter_till_sessions') || ' ' || pg_temp.run_as(pg_temp.u(2), 'select count(*)::text from public.counter_cash_entries'), '1 0',
+  'the counter reads its own open session only: the closed session, with its expected cash and difference, and the entries of it are not its to read');
+select is(pg_temp.run_as(pg_temp.u(3), 'select count(*)::text from public.counter_till_sessions'), '2', 'the finances read every session');
+select is(pg_temp.run_as(pg_temp.u(3), 'select count(*)::text from public.counter_cash_entries'), '2', 'and every entry');
 
 select * from finish();
 rollback;

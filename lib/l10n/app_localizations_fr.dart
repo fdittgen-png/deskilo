@@ -29093,6 +29093,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'La journée ne peut pas être clôturée : une caisse est encore ouverte, ou la journée est déjà clôturée.';
 
   @override
+  String get refusalCounterDayOpen =>
+      'La journée de cette caisse est déjà clôturée : elle sera ouverte à nouveau demain.';
+
+  @override
   String get refusalCounterEssentials =>
       'Il manque quelque chose à ce ticket ou ce n\'est pas acceptable : rien n\'a été numéroté et rien n\'a été encaissé.';
 

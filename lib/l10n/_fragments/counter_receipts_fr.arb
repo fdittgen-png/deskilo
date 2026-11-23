@@ -24,5 +24,6 @@
   "settingHintCounterCashReasons": "Les motifs qu'une personne peut donner pour de l'argent versé dans le tiroir ou retiré, séparés par des virgules (par exemple monnaie, dépense, autre).",
   "refusalCounterTill": "La caisse n'est pas prête pour cela : ouvrez-la d'abord, ou elle est déjà ouverte ou fermée.",
   "refusalCounterCashEntry": "Cette écriture d'espèces n'est pas acceptée : le motif n'est pas dans la liste, le montant dépasse votre limite, ou les nombres ne correspondent pas.",
-  "refusalCounterDayClose": "La journée ne peut pas être clôturée : une caisse est encore ouverte, ou la journée est déjà clôturée."
+  "refusalCounterDayClose": "La journée ne peut pas être clôturée : une caisse est encore ouverte, ou la journée est déjà clôturée.",
+  "refusalCounterDayOpen": "La journée de cette caisse est déjà clôturée : elle sera ouverte à nouveau demain."
 }

@@ -24,5 +24,6 @@
   "settingHintCounterCashReasons": "I motivi che una persona può indicare per il denaro versato nel cassetto o prelevato, separati da virgole (per esempio resto, spesa, altro).",
   "refusalCounterTill": "La cassa non è pronta per questo: la apra prima, oppure è già aperta o chiusa.",
   "refusalCounterCashEntry": "Questa registrazione di contante non è accettata: il motivo non è nell'elenco, l'importo supera il Suo limite, oppure i conteggi non tornano.",
-  "refusalCounterDayClose": "La giornata non può essere chiusa: una cassa è ancora aperta, oppure la giornata è già chiusa."
+  "refusalCounterDayClose": "La giornata non può essere chiusa: una cassa è ancora aperta, oppure la giornata è già chiusa.",
+  "refusalCounterDayOpen": "La giornata di questa cassa è già chiusa: si riapre domani."
 }

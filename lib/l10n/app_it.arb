@@ -16521,6 +16521,7 @@
   "refusalCounterCorrectionBeyond": "Una correzione non può superare ciò che resta della riga originale.",
   "refusalCounterCustomerNeeded": "Questa attività indica un cliente in ogni vendita: ne scelga uno prima di concludere.",
   "refusalCounterDayClose": "La giornata non può essere chiusa: una cassa è ancora aperta, oppure la giornata è già chiusa.",
+  "refusalCounterDayOpen": "La giornata di questa cassa è già chiusa: si riapre domani.",
   "refusalCounterEssentials": "A questo scontrino manca qualcosa o non è accettabile: non è stato numerato nulla e non è stato incassato nulla.",
   "refusalCounterGoods": "Qui le merci non si possono vendere né riprendere: il registro delle merci è spento, oppure non c'è un luogo da cui prenderle o in cui rimetterle.",
   "refusalCounterNotOpen": "Questo scontrino non è più una bozza aperta, oppure per la stessa vendita ne è già stato emesso uno.",

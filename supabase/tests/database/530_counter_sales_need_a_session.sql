@@ -1,7 +1,8 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
+-- #4367 (0908): (the close-versus-sale case below runs in the order the commits take; the two concurrent connections are proven by scripts/stock_transfer_race.sh, sections P and Q)
 -- #4367 (0908): with the sessions on a sale needs an open session on its till; the expected cash counts its cash tenders and cash refunds; a card whose outcome is unknown at the close is listed as unresolved, not as cash; a sale cannot be finalized into a closed session. Rolled back.
 begin;
-select plan(13);
+select plan(15);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -107,6 +108,13 @@ select is(pg_temp.f(current_setting('t.cl'), 'unresolved_card_minor') || ' ' || 
 select is(left(pg_temp.draft(1, 7114, current_setting('t.till')::uuid, '{"lines": [{"description": "Item", "quantity": "1", "unit_price": "1.00", "supply": "general", "unit": {"code": "unit", "label": "unit"}}]}'), 9), 'ERR DKL12', 'a new sale on the closed till is refused');
 select is(left(pg_temp.fin(1, 7116, pg_temp.f(current_setting('t.d2'), 'receipt_id')::uuid, 1, '[{"kind": "cash", "amount_minor": 500}]'), 9), 'ERR DKL12', 'and a draft made before the close cannot be finalized into the closed session (DKL12 closed)');
 select is((select count(*)::int from public.counter_tenders t join public.counter_receipts r on r.id = t.receipt_id where r.till_session_id = current_setting('t.s')::uuid and t.state = 'accepted' and t.kind = 'cash'), 1, 'only the sale that committed before the close is in the session');
+
+-- a cash refund needs a session that is open: a closed one and a till that never opened one both refuse it
+select is(left(pg_temp.run_as(pg_temp.u(1), format('select public.counter_refund_v1(%L, %L, %L, %L::jsonb)::text', pg_temp.u(101), pg_temp.u(7120), pg_temp.f(current_setting('t.correction'), 'receipt_id')::uuid,
+  format('[{"kind": "cash", "amount_minor": 100, "till_id": "%s"}]', current_setting('t.till')))), 9), 'ERR DKL12', 'a cash refund against a closed session is refused');
+select set_config('t.till9', pg_temp.f(pg_temp.till(1, 7121, null, 'Never opened'), 'till_id'), false);
+select is(left(pg_temp.run_as(pg_temp.u(1), format('select public.counter_refund_v1(%L, %L, %L, %L::jsonb)::text', pg_temp.u(101), pg_temp.u(7122), pg_temp.f(current_setting('t.correction'), 'receipt_id')::uuid,
+  format('[{"kind": "cash", "amount_minor": 100, "till_id": "%s"}]', current_setting('t.till9')))), 9), 'ERR DKL12', 'and against a till that has no session at all');
 
 select * from finish();
 rollback;

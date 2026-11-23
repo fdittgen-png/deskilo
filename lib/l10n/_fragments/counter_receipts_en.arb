@@ -102,5 +102,9 @@
   "refusalCounterDayClose": "The day cannot be closed: a till is still open, or the day is already closed.",
   "@refusalCounterDayClose": {
     "description": "#4367 setting label/hint or refusal"
+  },
+  "refusalCounterDayOpen": "The day of this till is already closed: it is opened again tomorrow.",
+  "@refusalCounterDayOpen": {
+    "description": "#4367 setting label/hint or refusal"
   }
 }

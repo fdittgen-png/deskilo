@@ -46146,6 +46146,12 @@ abstract class AppLocalizations {
   /// **'The day cannot be closed: a till is still open, or the day is already closed.'**
   String get refusalCounterDayClose;
 
+  /// #4367 setting label/hint or refusal
+  ///
+  /// In en, this message translates to:
+  /// **'The day of this till is already closed: it is opened again tomorrow.'**
+  String get refusalCounterDayOpen;
+
   /// #4185 refusal
   ///
   /// In en, this message translates to:

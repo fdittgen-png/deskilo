@@ -30,10 +30,7 @@ declare
   v_tz text;
   v_result jsonb;
 begin
-  v_me := public.counter_till_actor(p_workspace_id);
-  if not public.has_permission(p_workspace_id, 'viewFinances') then
-    raise exception 'the day is closed by someone who may see the finances' using errcode = 'DKN01';
-  end if;
+  v_me := public.counter_finance_actor(p_workspace_id);
   if p_request_id is null or p_business_date is null then
     raise exception 'a day is closed with a request id and its date' using errcode = '22023';
   end if;
@@ -94,12 +91,18 @@ begin
     'sales_total_minor', (select coalesce(sum(r.total_minor), 0)::text from public.counter_receipts r where r.till_session_id = any (v_sessions) and r.state = 'finalized' and r.kind = 'sale'),
     'receipts', (select jsonb_build_object('count', count(*), 'first', min(r.number), 'last', max(r.number))
         from public.counter_receipts r where r.till_session_id = any (v_sessions) and r.state = 'finalized' and r.kind = 'sale'),
+    -- scoped to THESE sessions: a correction and a refund of another way than cash belong to the session the original receipt was sold in
+    -- (a cash refund carries its own session); what is refunded of a receipt after its day was closed is in no closed report
+    'scope', jsonb_build_object('sales', 'sessions', 'cash_refunds', 'sessions', 'other_refunds', 'original_receipt_session', 'corrections', 'original_receipt_session'),
     'corrections', (select jsonb_build_object('count', count(*), 'total_minor', coalesce(sum(r.total_minor), 0)::text)
-        from public.counter_receipts r where r.workspace_id = p_workspace_id and r.kind = 'correction' and r.state = 'finalized'
-         and (r.finalized_at at time zone v_tz)::date = p_business_date),
+        from public.counter_receipts r join public.counter_receipts o on o.id = r.corrects_receipt_id and o.workspace_id = r.workspace_id
+        where r.workspace_id = p_workspace_id and r.kind = 'correction' and r.state = 'finalized' and o.till_session_id = any (v_sessions)),
     'refunds', (select coalesce(jsonb_object_agg(g.kind, g.amount::text), '{}'::jsonb)
         from (select f.kind, sum(f.amount_minor) amount from public.counter_refunds f
-               where f.workspace_id = p_workspace_id and (f.created_datetime at time zone v_tz)::date = p_business_date group by 1) g),
+               left join public.counter_receipts o on o.id = f.receipt_id and o.workspace_id = f.workspace_id
+               where f.workspace_id = p_workspace_id
+                 and ((f.kind = 'cash' and f.till_session_id = any (v_sessions))
+                      or (f.kind <> 'cash' and o.till_session_id = any (v_sessions))) group by 1) g),
     'paid_in_minor', (select coalesce(sum(e.amount_minor), 0)::text from public.counter_cash_entries e where e.session_id = any (v_sessions) and e.kind = 'paid_in'),
     'paid_out_minor', (select coalesce(sum(e.amount_minor), 0)::text from public.counter_cash_entries e where e.session_id = any (v_sessions) and e.kind = 'paid_out'),
     'cash_entries', (select coalesce(jsonb_agg(jsonb_build_object('kind', e.kind, 'amount_minor', e.amount_minor::text, 'reason', e.reason,

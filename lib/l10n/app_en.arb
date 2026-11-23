@@ -37766,6 +37766,10 @@
   "@refusalCounterDayClose": {
     "description": "#4367 setting label/hint or refusal"
   },
+  "refusalCounterDayOpen": "The day of this till is already closed: it is opened again tomorrow.",
+  "@refusalCounterDayOpen": {
+    "description": "#4367 setting label/hint or refusal"
+  },
   "refusalCounterEssentials": "Something this receipt needs is missing or not acceptable: nothing was numbered and nothing was taken.",
   "@refusalCounterEssentials": {
     "description": "#4185 refusal"

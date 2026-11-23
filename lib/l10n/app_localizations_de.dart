@@ -29056,6 +29056,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Der Tag kann nicht abgeschlossen werden: Eine Kasse ist noch offen, oder der Tag ist schon abgeschlossen.';
 
   @override
+  String get refusalCounterDayOpen =>
+      'Der Tag dieser Kasse ist schon abgeschlossen: Sie wird morgen wieder geöffnet.';
+
+  @override
   String get refusalCounterEssentials =>
       'Für diesen Beleg fehlt etwas oder es ist nicht zulässig: Es wurde nichts nummeriert und nichts angenommen.';
 

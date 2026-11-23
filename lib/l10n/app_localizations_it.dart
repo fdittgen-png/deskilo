@@ -29007,6 +29007,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'La giornata non può essere chiusa: una cassa è ancora aperta, oppure la giornata è già chiusa.';
 
   @override
+  String get refusalCounterDayOpen =>
+      'La giornata di questa cassa è già chiusa: si riapre domani.';
+
+  @override
   String get refusalCounterEssentials =>
       'A questo scontrino manca qualcosa o non è accettabile: non è stato numerato nulla e non è stato incassato nulla.';
 

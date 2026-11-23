@@ -28970,6 +28970,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'No se puede cerrar el día: una caja sigue abierta, o el día ya está cerrado.';
 
   @override
+  String get refusalCounterDayOpen =>
+      'El día de esta caja ya está cerrado: se abrirá de nuevo mañana.';
+
+  @override
   String get refusalCounterEssentials =>
       'A este ticket le falta algo o no es aceptable: no se numeró nada y no se cobró nada.';
 

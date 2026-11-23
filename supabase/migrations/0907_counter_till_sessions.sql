@@ -174,12 +174,20 @@ grant select on public.counter_tills, public.counter_till_sessions, public.count
 create policy counter_tills_select on public.counter_tills for select to authenticated
   using (workspace_id in (select public.workspaces_permitting(array['issueInvoices', 'viewFinances']))
          and public.feature_effective(workspace_id, 'counterTillSessions'));
+-- a session carries what the count is compared with (expected cash, difference, banked): the finances read every session; the counter
+-- reads only its own open session, which holds none of that yet, and the entries of it
 create policy counter_till_sessions_select on public.counter_till_sessions for select to authenticated
-  using (workspace_id in (select public.workspaces_permitting(array['issueInvoices', 'viewFinances']))
-         and public.feature_effective(workspace_id, 'counterTillSessions'));
+  using (public.feature_effective(workspace_id, 'counterTillSessions')
+         and (workspace_id in (select public.workspaces_permitting(array['viewFinances']))
+              or (workspace_id in (select public.workspaces_permitting(array['issueInvoices']))
+                  and state = 'open'
+                  and opened_by_member_id in (select m.id from public.members m
+                                               where m.workspace_id = counter_till_sessions.workspace_id and m.user_id = auth.uid() and m.status = 'active'))));
 create policy counter_cash_entries_select on public.counter_cash_entries for select to authenticated
-  using (workspace_id in (select public.workspaces_permitting(array['issueInvoices', 'viewFinances']))
-         and public.feature_effective(workspace_id, 'counterTillSessions'));
+  using (public.feature_effective(workspace_id, 'counterTillSessions')
+         and (workspace_id in (select public.workspaces_permitting(array['viewFinances']))
+              or (workspace_id in (select public.workspaces_permitting(array['issueInvoices']))
+                  and session_id in (select s.id from public.counter_till_sessions s))));
 create policy counter_day_closes_select on public.counter_day_closes for select to authenticated
   using (workspace_id in (select public.workspaces_permitting(array['viewFinances']))
          and public.feature_effective(workspace_id, 'counterTillSessions'));
@@ -206,6 +214,39 @@ begin
 end;
 $fn$;
 revoke execute on function public.counter_till_actor(uuid) from public, anon, authenticated;
+
+-- the member who sees the finances (the day close, another person's session): not the counter's actor, who needs issueInvoices first
+create or replace function public.counter_finance_actor(p_workspace_id uuid)
+returns uuid language plpgsql stable security definer set search_path = public as $fn$
+declare
+  v_me uuid;
+begin
+  if auth.uid() is null or public.mcp_is_delegated() then
+    raise exception 'not allowed to see the finances of the counter' using errcode = 'DKN01';
+  end if;
+  select m.id into v_me from public.members m where m.workspace_id = p_workspace_id and m.user_id = auth.uid() and m.status = 'active';
+  if v_me is null or not public.has_permission(p_workspace_id, 'viewFinances') then
+    raise exception 'not allowed to see the finances of the counter' using errcode = 'DKN01';
+  end if;
+  if not public.feature_effective(p_workspace_id, 'counterTillSessions') then
+    raise exception 'till sessions are off in this business' using errcode = 'DKG01';
+  end if;
+  return v_me;
+end;
+$fn$;
+revoke execute on function public.counter_finance_actor(uuid) from public, anon, authenticated;
+
+-- whoever works the counter, or else whoever sees the finances
+create or replace function public.counter_till_or_finance_actor(p_workspace_id uuid)
+returns uuid language plpgsql stable security definer set search_path = public as $fn$
+begin
+  if public.has_permission(p_workspace_id, 'issueInvoices') then
+    return public.counter_till_actor(p_workspace_id);
+  end if;
+  return public.counter_finance_actor(p_workspace_id);
+end;
+$fn$;
+revoke execute on function public.counter_till_or_finance_actor(uuid) from public, anon, authenticated;
 
 -- a counted amount by denomination: {"5000": 2, "100": 7}: minor units of each note or coin, and how many; adds to the total
 create or replace function public.counter_denominations_total(p_denominations jsonb)
@@ -276,6 +317,7 @@ begin
   if v_done is not null then
     return v_done || jsonb_build_object('replayed', true);
   end if;
+  begin
   if p_till_id is null then
     insert into public.counter_tills (workspace_id, site_id, name, active) values (p_workspace_id, p_site_id, btrim(p_name), coalesce(p_active, true)) returning * into v_till;
   else
@@ -289,6 +331,9 @@ begin
         detail = jsonb_build_object('reason', 'already_open', 'till_id', v_till.id)::text;
     end if;
   end if;
+  exception when unique_violation then
+    raise exception 'a till of this business already has this name' using errcode = 'DKL12', detail = jsonb_build_object('reason', 'name_taken')::text;
+  end;
   v_result := jsonb_build_object('till_id', v_till.id, 'name', v_till.name, 'active', v_till.active, 'site_id', v_till.site_id, 'replayed', false);
   return public.purchase_request_end(p_workspace_id, p_request_id, 'counter_till_save', v_digest, v_result);
 end;
@@ -325,6 +370,11 @@ begin
   if v_till.id is null or not v_till.active then
     raise exception 'not an active till of this business' using errcode = 'DKL12', detail = jsonb_build_object('reason', 'till_unknown')::text;
   end if;
+  -- a day closed for the site (or for the business as a whole) takes no session: it could never be part of that close
+  if exists (select 1 from public.counter_day_closes c where c.workspace_id = p_workspace_id and c.business_date = public.workspace_today(p_workspace_id)
+                and c.site_key in ('', coalesce(v_till.site_id::text, ''))) then
+    raise exception 'the day of this till is already closed' using errcode = 'DKL15', detail = jsonb_build_object('reason', 'day_closed', 'till_id', v_till.id)::text;
+  end if;
   begin
     insert into public.counter_till_sessions (workspace_id, till_id, opened_by_member_id, float_minor, float_denominations)
     values (p_workspace_id, v_till.id, v_me, p_float_minor, case when v_by_denomination then p_denominations end)
@@ -357,7 +407,7 @@ declare
   v_result jsonb;
 begin
   v_me := public.counter_till_actor(p_workspace_id);
-  if p_request_id is null or p_session_id is null or p_kind not in ('paid_in', 'paid_out') or p_amount_minor is null or p_amount_minor <= 0 then
+  if p_request_id is null or p_session_id is null or p_kind is null or p_kind not in ('paid_in', 'paid_out') or p_amount_minor is null or p_amount_minor <= 0 then
     raise exception 'an entry is recorded with a request id, a session, a kind and an amount' using errcode = '22023';
   end if;
   v_reasons := array(select btrim(x) from unnest(string_to_array(coalesce(public.setting_value(p_workspace_id, 'counter.cash_reasons') #>> '{}', 'change,expense,other'), ',')) x where btrim(x) <> '');
@@ -400,7 +450,7 @@ returns jsonb language plpgsql stable security definer set search_path = public 
 declare
   v_session public.counter_till_sessions;
 begin
-  perform public.counter_till_actor(p_workspace_id);
+  perform public.counter_till_or_finance_actor(p_workspace_id);
   select * into v_session from public.counter_till_sessions s where s.id = p_session_id and s.workspace_id = p_workspace_id;
   if v_session.id is null then
     raise exception 'not a session of this business' using errcode = 'DKL12', detail = jsonb_build_object('reason', 'session_unknown')::text;
@@ -429,7 +479,7 @@ declare
   v_by_denomination boolean;
   v_result jsonb;
 begin
-  v_me := public.counter_till_actor(p_workspace_id);
+  v_me := public.counter_till_or_finance_actor(p_workspace_id);
   if p_request_id is null or p_session_id is null or p_counted_minor is null or p_counted_minor < 0
      or coalesce(p_banked_minor, 0) < 0 or coalesce(p_banked_minor, 0) > p_counted_minor then
     raise exception 'a session is closed with a request id, its counted amount and what is banked' using errcode = '22023';

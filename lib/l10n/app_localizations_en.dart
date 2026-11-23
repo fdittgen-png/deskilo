@@ -28764,6 +28764,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'The day cannot be closed: a till is still open, or the day is already closed.';
 
   @override
+  String get refusalCounterDayOpen =>
+      'The day of this till is already closed: it is opened again tomorrow.';
+
+  @override
   String get refusalCounterEssentials =>
       'Something this receipt needs is missing or not acceptable: nothing was numbered and nothing was taken.';
 
