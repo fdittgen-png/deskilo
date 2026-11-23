@@ -4,15 +4,17 @@
 // value in force comes from ("From Drinks since 3 Dec", or "Own value" with a way back to the group's). Moving the
 // item into or out of a group first PREVIEWS how many settings that changes, and a second tap makes the move; the
 // move carries the item's revision and its own request id. Giving a setting back to the group changes only that
-// item.
+// item. What the dialog shows is one immutable view held in a notifier, replaced as things happen.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/dropdown_field.dart';
+import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/item_groups.dart';
 import '../providers/stock_providers.dart';
@@ -24,6 +26,27 @@ Future<void> showItemGroupAssign(BuildContext context, {required String workspac
       context: context,
       builder: (_) => _AssignDialog(workspaceId: workspaceId, itemId: itemId, itemName: itemName),
     );
+
+typedef _Loaded = ({List<ItemGroup> groups, ItemEffective effective, int revision});
+
+/// What the dialog shows now: what was read, the group chosen (not yet made), the move being previewed and what
+/// it reaches, and a line to say.
+class _View {
+  const _View({required this.read, this.target, this.chosen = false, this.previewOf, this.reaches, this.problem});
+
+  final Future<_Loaded> read;
+  final String? target;
+  final bool chosen;
+  final String? previewOf;
+  final int? reaches;
+  final String? problem;
+
+  _View said(String? text) => _View(read: read, target: target, chosen: chosen, previewOf: previewOf, reaches: reaches, problem: text);
+
+  _View choosing(String? group) => _View(read: read, target: group, chosen: true);
+
+  _View previewing(String? key, int? count) => _View(read: read, target: target, chosen: chosen, previewOf: key, reaches: count);
+}
 
 class _AssignDialog extends ConsumerStatefulWidget {
   const _AssignDialog({required this.workspaceId, required this.itemId, required this.itemName});
@@ -37,14 +60,15 @@ class _AssignDialog extends ConsumerStatefulWidget {
 }
 
 class _AssignDialogState extends ConsumerState<_AssignDialog> {
-  late Future<({List<ItemGroup> groups, ItemEffective effective, int revision})> _read = _load();
-  String? _target;
-  bool _targetChosen = false;
-  String? _previewOf;
-  int? _reaches;
-  String? _problem;
+  late final ValueNotifier<_View> _view = ValueNotifier(_View(read: _load()));
 
-  Future<({List<ItemGroup> groups, ItemEffective effective, int revision})> _load() async {
+  @override
+  void dispose() {
+    _view.dispose();
+    super.dispose();
+  }
+
+  Future<_Loaded> _load() async {
     final port = ref.read(itemGroupsProvider);
     final groups = await port.groups(widget.workspaceId);
     final effective = await port.effective(widget.workspaceId, widget.itemId);
@@ -52,53 +76,40 @@ class _AssignDialogState extends ConsumerState<_AssignDialog> {
     return (groups: groups, effective: effective, revision: config?.revision ?? 0);
   }
 
-  void _reload() => setState(() {
-    _read = _load();
-    _previewOf = null;
-    _reaches = null;
-    _targetChosen = false;
-  });
+  void _reload({String? say}) {
+    if (mounted) _view.value = _View(read: _load(), problem: say);
+  }
 
   Future<void> _move(int revision, String? current) async {
     final l10n = context.l10n;
     final port = ref.read(itemGroupsProvider);
-    final target = _targetChosen ? _target : current;
+    final now = _view.value;
+    final target = now.chosen ? now.target : current;
     final key = target ?? '';
     try {
-      if (_previewOf != key) {
+      if (now.previewOf != key) {
         final preview = await port.assign(widget.workspaceId, requestId: newRequestId(), itemId: widget.itemId, expectedRevision: revision, groupId: target, apply: false);
-        if (!mounted) return;
-        setState(() {
-          _problem = null;
-          if (preview.unchanged) {
-            _previewOf = null;
-            _reaches = null;
-          } else {
-            _previewOf = key;
-            _reaches = preview.affected;
-          }
-        });
+        if (mounted) _view.value = _view.value.said(null).previewing(preview.unchanged ? null : key, preview.unchanged ? null : preview.affected);
         return;
       }
       await port.assign(widget.workspaceId, requestId: newRequestId(), itemId: widget.itemId, expectedRevision: revision, groupId: target);
       if (!mounted) return;
       ref.invalidate(itemGroupListProvider(widget.workspaceId));
-      setState(() => _problem = l10n.itemGroupMoved);
-      _reload();
+      _reload(say: l10n.itemGroupMoved);
     } on Object catch (e, st) {
       TraceLogger.instance.warn('stock', 'an item was not moved to a group: $e', stackTrace: st);
-      if (mounted) setState(() => _problem = itemGroupProblem(l10n, e));
+      if (mounted) _view.value = _view.value.said(itemGroupProblem(l10n, e));
     }
   }
 
   Future<void> _useGroup(int revision, String parameter) async {
     final l10n = context.l10n;
     try {
-      await ref.read(itemGroupsProvider).setOverride(widget.workspaceId, requestId: newRequestId(), itemId: widget.itemId, expectedRevision: revision, parameter: parameter, mode: 'inherit');
-      if (mounted) _reload();
+      await ref.read(itemGroupsProvider).setOverride(widget.workspaceId, newRequestId(), (itemId: widget.itemId, expectedRevision: revision, parameter: parameter, mode: 'inherit', value: null));
+      _reload();
     } on Object catch (e, st) {
       TraceLogger.instance.warn('stock', 'an item was not given back to its group: $e', stackTrace: st);
-      if (mounted) setState(() => _problem = itemGroupProblem(l10n, e));
+      if (mounted) _view.value = _view.value.said(itemGroupProblem(l10n, e));
     }
   }
 
@@ -110,78 +121,70 @@ class _AssignDialogState extends ConsumerState<_AssignDialog> {
       title: Text(l10n.itemGroupAssignTitle(widget.itemName)),
       content: SizedBox(
         width: 460,
-        child: FutureBuilder<({List<ItemGroup> groups, ItemEffective effective, int revision})>(
-          future: _read,
-          builder: (context, snapshot) {
-            if (snapshot.hasError) return Text(l10n.itemGroupFailed, key: const ValueKey('item-group-assign-failed'));
-            final data = snapshot.data;
-            if (data == null) return const SizedBox(height: 60, child: Center(child: CircularProgressIndicator()));
-            final current = data.effective.groupId;
-            return SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  AppDropdownField<String?>(
-                    key: ValueKey('item-group-assign-field-${_targetChosen ? _target : current}'),
-                    label: l10n.itemGroupAssignField,
-                    value: _targetChosen ? _target : current,
-                    items: [(null, l10n.itemGroupAssignNone), for (final g in data.groups) (g.id, g.name)],
-                    onChanged: (v) => setState(() {
-                      _target = v;
-                      _targetChosen = true;
-                      _previewOf = null;
-                      _reaches = null;
-                    }),
-                  ),
-                  const SizedBox(height: AppSpacing.xs),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: OutlinedButton(
-                      key: const ValueKey('item-group-move'),
-                      onPressed: () => _move(data.revision, current),
-                      child: Text(l10n.itemGroupMove),
-                    ),
-                  ),
-                  if (_reaches != null) Text(l10n.itemGroupMoveReaches(_reaches!), key: const ValueKey('item-group-move-reaches')),
-                  const Divider(),
-                  for (final p in itemGroupEditable)
-                    if (data.effective.params[p] != null)
-                      Padding(
-                        key: ValueKey('item-group-param-$p'),
-                        padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('${itemGroupParamLabel(l10n, p)}: ${itemGroupValueText(l10n, p, data.effective.params[p]!.value)}'),
-                            Text(_source(l10n, data.effective.params[p]!), style: Theme.of(context).textTheme.bodySmall),
-                            if (data.effective.params[p]!.own && current != null)
-                              TextButton(
-                                key: ValueKey('item-group-use-$p'),
-                                onPressed: () => _useGroup(data.revision, p),
-                                child: Text(l10n.itemGroupUseGroup),
-                              ),
-                          ],
-                        ),
-                      ),
-                  if (_problem != null) Text(_problem!, key: const ValueKey('item-group-assign-problem')),
-                ],
-              ),
-            );
-          },
+        child: ValueListenableBuilder<_View>(
+          valueListenable: _view,
+          builder: (context, view, _) => FutureBuilder<_Loaded>(
+            future: view.read,
+            builder: (context, snapshot) {
+              if (snapshot.hasError) return Text(l10n.itemGroupFailed, key: const ValueKey('item-group-assign-failed'));
+              final data = snapshot.data;
+              if (data == null) return const LoadingView();
+              return SingleChildScrollView(child: _body(context, l10n, view, data));
+            },
+          ),
         ),
       ),
       actions: [TextButton(key: const ValueKey('item-group-assign-close'), onPressed: () => Navigator.of(context).pop(), child: Text(l10n.itemGroupClose))],
     );
   }
 
-  String _source(AppLocalizations l10n, EffectiveParam p) {
+  Widget _body(BuildContext context, AppLocalizations l10n, _View view, _Loaded data) {
+    final current = data.effective.groupId;
+    final shown = view.chosen ? view.target : current;
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        AppDropdownField<String?>(
+          key: ValueKey('item-group-assign-field-$shown'),
+          label: l10n.taxRefGroup,
+          value: shown,
+          items: [(null, l10n.itemGroupAssignNone), for (final g in data.groups) (g.id, g.name)],
+          onChanged: (v) => _view.value = view.choosing(v),
+        ),
+        const SizedBox(height: AppSpacing.xs),
+        Align(
+          alignment: Alignment.centerLeft,
+          child: OutlinedButton(key: const ValueKey('item-group-move'), onPressed: () => _move(data.revision, current), child: Text(l10n.itemGroupMove)),
+        ),
+        if (view.reaches != null) Text(l10n.itemGroupMoveReaches(view.reaches!), key: const ValueKey('item-group-move-reaches')),
+        const Divider(),
+        for (final p in itemGroupEditable)
+          if (data.effective.params[p] != null) _param(context, l10n, p, data.effective.params[p]!, canGiveBack: current != null, revision: data.revision),
+        if (view.problem != null) Text(view.problem!, key: const ValueKey('item-group-assign-problem')),
+      ],
+    );
+  }
+
+  Widget _param(BuildContext context, AppLocalizations l10n, String p, EffectiveParam param, {required bool canGiveBack, required int revision}) => Padding(
+    key: ValueKey('item-group-param-$p'),
+    padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('${itemGroupParamLabel(l10n, p)}: ${itemGroupValueText(l10n, p, param.value)}'),
+        Text(_source(context, l10n, param), style: Theme.of(context).textTheme.bodySmall),
+        if (param.own && canGiveBack)
+          TextButton(key: ValueKey('item-group-use-$p'), onPressed: () => _useGroup(revision, p), child: Text(l10n.itemGroupUseGroup)),
+      ],
+    ),
+  );
+
+  String _source(BuildContext context, AppLocalizations l10n, EffectiveParam p) {
     if (p.own) return l10n.itemGroupOwn;
     final group = p.group;
     if (group == null) return '';
     final since = p.since;
-    return since == null
-        ? l10n.itemGroupFrom(group)
-        : l10n.itemGroupFromSince(group, MaterialLocalizations.of(context).formatMediumDate(since.toLocal()));
+    return since == null ? l10n.itemGroupFrom(group) : l10n.itemGroupFromSince(group, appFormatOf(context).date(since));
   }
 }

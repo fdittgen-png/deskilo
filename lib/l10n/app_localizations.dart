@@ -29275,12 +29275,6 @@ abstract class AppLocalizations {
   /// **'Customers'**
   String get invoicingViewCustomers;
 
-  /// #4361 G12 item groups: itemGroupAssignField
-  ///
-  /// In en, this message translates to:
-  /// **'Group'**
-  String get itemGroupAssignField;
-
   /// #4361 G12 item groups: itemGroupAssignNone
   ///
   /// In en, this message translates to:
@@ -29329,12 +29323,6 @@ abstract class AppLocalizations {
   /// **'Group deleted.'**
   String get itemGroupDeleted;
 
-  /// #4361 G12 item groups: itemGroupEditTitle
-  ///
-  /// In en, this message translates to:
-  /// **'Group'**
-  String get itemGroupEditTitle;
-
   /// #4361 G12 item groups: itemGroupFailed
   ///
   /// In en, this message translates to:
@@ -29362,7 +29350,7 @@ abstract class AppLocalizations {
   /// #4361 G12 item groups: itemGroupHistoryLine
   ///
   /// In en, this message translates to:
-  /// **'{parameter}: {from} → {to}, reached {affected}'**
+  /// **'{parameter}: {from} → {to}, {affected, plural, one{reached 1 item} other{reached {affected} items}}'**
   String itemGroupHistoryLine(
     String parameter,
     String from,
@@ -29375,12 +29363,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No change recorded yet.'**
   String get itemGroupHistoryNone;
-
-  /// #4361 G12 item groups: itemGroupItemsCount
-  ///
-  /// In en, this message translates to:
-  /// **'{count, plural, one{1 item} other{{count} items}}'**
-  String itemGroupItemsCount(int count);
 
   /// #4361 G12 item groups: itemGroupMinAge
   ///
@@ -29397,7 +29379,7 @@ abstract class AppLocalizations {
   /// #4361 G12 item groups: itemGroupMoveReaches
   ///
   /// In en, this message translates to:
-  /// **'Moving it changes {count} settings.'**
+  /// **'{count, plural, one{Moving it changes 1 setting.} other{Moving it changes {count} settings.}}'**
   String itemGroupMoveReaches(int count);
 
   /// #4361 G12 item groups: itemGroupMoved
@@ -29411,12 +29393,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Name'**
   String get itemGroupName;
-
-  /// #4361 G12 item groups: itemGroupNewTitle
-  ///
-  /// In en, this message translates to:
-  /// **'New group'**
-  String get itemGroupNewTitle;
 
   /// #4361 G12 item groups: itemGroupNo
   ///
@@ -29451,7 +29427,7 @@ abstract class AppLocalizations {
   /// #4361 G12 item groups: itemGroupPreviewLine
   ///
   /// In en, this message translates to:
-  /// **'{parameter}: applies to {affected}, {kept} keep their own value, {skipped} cannot be reached'**
+  /// **'{parameter}: {affected, plural, one{applies to 1 item} other{applies to {affected} items}}, {kept, plural, one{1 keeps its own value} other{{kept} keep their own value}}, {skipped, plural, one{1 cannot be reached} other{{skipped} cannot be reached}}'**
   String itemGroupPreviewLine(
     String parameter,
     int affected,

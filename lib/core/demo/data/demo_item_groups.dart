@@ -79,9 +79,28 @@ class DemoItemGroups implements ItemGroups {
     final replay = apply ? _answers[requestId] : null;
     if (replay is GroupSaved) return replay;
     final old = _groups[groupId];
-    final creating = old == null;
-    if (creating && expectedRevision != 0) throw const StockConfigRefused('group_id', 'group_unknown');
-    if (!creating && old.revision != expectedRevision) throw const StockConfigStale();
+    final change = _checked(groupId, expectedRevision, body, old);
+    final reached = old == null ? const <String>[] : _itemsOf(groupId);
+    final effect = _effectOf(old, change.changes, change.next, reached);
+    final revision = (old?.revision ?? 0) + 1;
+    final result = GroupSaved(groupId: groupId, revision: revision, created: old == null, applied: apply, items: reached.length, impact: effect.impact, skipped: effect.skipped);
+    if (!apply) return result;
+    (old ?? (_groups[groupId] = _Group(groupId, change.parentId, change.name, {})))
+      ..name = change.name
+      ..parentId = change.parentId
+      ..revision = revision
+      ..setParams(change.next);
+    for (final e in effect.impact.entries) {
+      _history.insert(0, GroupHistoryRow(at: _now(), groupId: groupId, parameter: e.key, oldValue: old?.params[e.key], newValue: change.changes[e.key], affected: e.value.affected, keptOwn: e.value.keptOwn, skipped: e.value.skipped));
+    }
+    return _answers[requestId] = result;
+  }
+
+  /// The save's content, refused as the server refuses it: a stale revision, no name, a name in use, a group
+  /// that does not exist or nests too deep, per-piece tags without tracking by piece.
+  ({String name, String? parentId, Map<String, Object?> changes, Map<String, Object?> next}) _checked(String groupId, int expectedRevision, Map<String, Object?> body, _Group? old) {
+    if (old == null && expectedRevision != 0) throw const StockConfigRefused('group_id', 'group_unknown');
+    if (old != null && old.revision != expectedRevision) throw const StockConfigStale();
     final name = (body['name'] as String?)?.trim() ?? old?.name;
     if (name == null || name.isEmpty) throw const StockConfigRefused('name', 'required');
     if (_groups.values.any((g) => g.id != groupId && g.name.toLowerCase() == name.toLowerCase())) throw const StockConfigRefused('name', 'name_duplicate');
@@ -94,56 +113,45 @@ class DemoItemGroups implements ItemGroups {
     final changes = Map<String, Object?>.from((body['parameters'] as Map?) ?? const {});
     final next = {...?old?.params};
     for (final e in changes.entries) {
-      if (e.value == null) {
-        next.remove(e.key);
-      } else {
-        next[e.key] = e.value;
-      }
+      e.value == null ? next.remove(e.key) : next[e.key] = e.value;
     }
     if (next['tag_mode'] == 'per_unit' && (next['tracking'] ?? _groups[parentId]?.params['tracking']) != 'serial') {
       throw const StockConfigRefused('tag_mode', 'needs_serial');
     }
-    final impact = <String, GroupImpact>{};
-    final skipped = <SkippedItem>[];
-    final reached = creating ? const <String>[] : _itemsOf(groupId);
-    // what each item reads of each changed setting, with the group as it is and as it would be (an item whose
-    // group or sub-group already says otherwise is not reached)
-    final before = {for (final item in reached) item: {for (final k in changes.keys) k: _pick(item, k).value}};
+    return (name: name, parentId: parentId, changes: changes, next: next);
+  }
+
+  /// What the change reaches, per changed setting: read through the group as it is and as it would be, so an
+  /// item whose sub-group already says otherwise is not reached, an item with its own value keeps it, and a
+  /// unit on an item that has movements cannot be reached.
+  ({Map<String, GroupImpact> impact, List<SkippedItem> skipped}) _effectOf(_Group? old, Map<String, Object?> changes, Map<String, Object?> next, List<String> reached) {
+    final reads = {for (final k in changes.keys) k: {for (final item in reached) item: _pick(item, k).value}};
     final saved = old == null ? null : Map<String, Object?>.of(old.params);
     old?.setParams(next);
-    final after = {for (final item in reached) item: {for (final k in changes.keys) k: _pick(item, k).value}};
+    final after = {for (final k in changes.keys) k: {for (final item in reached) item: _pick(item, k).value}};
     if (saved != null) old?.setParams(saved);
+    final impact = <String, GroupImpact>{};
+    final skipped = <SkippedItem>[];
     for (final k in changes.keys) {
+      if (old?.params[k] == changes[k]) continue;
       var affected = 0;
       var kept = 0;
       var skip = 0;
       for (final item in reached) {
         final own = _own[item]?.containsKey(k) ?? false;
-        if (before[item]![k] == after[item]![k] && !own) continue;
+        if (!own && reads[k]![item] == after[k]![item]) continue;
         if (own) {
-          if (before[item]![k] != after[item]![k] || old?.params[k] != changes[k]) kept++;
-        } else if (k == 'inventory_unit' && after[item]![k] != null) {
+          kept++;
+        } else if (k == 'inventory_unit' && after[k]![item] != null) {
           skip++;
           skipped.add(SkippedItem(itemId: item, parameter: k, reason: 'has_movements'));
         } else {
           affected++;
         }
       }
-      if (old?.params[k] == changes[k] && affected == 0 && kept == 0 && skip == 0) continue;
       impact[k] = GroupImpact(affected: affected, keptOwn: kept, skipped: skip);
     }
-    final revision = (old?.revision ?? 0) + 1;
-    final result = GroupSaved(groupId: groupId, revision: revision, created: creating, applied: apply, items: reached.length, impact: impact, skipped: skipped);
-    if (!apply) return result;
-    (old ?? (_groups[groupId] = _Group(groupId, parentId, name, {})))
-      ..name = name
-      ..parentId = parentId
-      ..revision = revision
-      ..setParams(next);
-    for (final e in impact.entries) {
-      _history.insert(0, GroupHistoryRow(at: _now(), groupId: groupId, parameter: e.key, oldValue: old?.params[e.key], newValue: changes[e.key], affected: e.value.affected, keptOwn: e.value.keptOwn, skipped: e.value.skipped));
-    }
-    return _answers[requestId] = result;
+    return (impact: impact, skipped: skipped);
   }
 
   @override
@@ -163,18 +171,19 @@ class DemoItemGroups implements ItemGroups {
   }
 
   @override
-  Future<void> setOverride(String workspaceId, {required String requestId, required String itemId, required int expectedRevision, required String parameter, required String mode, Object? value}) async {
+  Future<void> setOverride(String workspaceId, String requestId, ItemOverride change) async {
+    final parameter = change.parameter;
     if (!_params.contains(parameter)) throw StockConfigRefused(parameter, 'not_overridable');
-    final revision = (await _config.item(workspaceId, itemId))?.revision;
-    if (revision != expectedRevision) throw const StockConfigStale();
-    final before = _pick(itemId, parameter).value;
-    if (mode == 'set') {
-      if (value == null) throw StockConfigRefused(parameter, 'value_required');
-      (_own[itemId] ??= {})[parameter] = value;
+    final revision = (await _config.item(workspaceId, change.itemId))?.revision;
+    if (revision != change.expectedRevision) throw const StockConfigStale();
+    final before = _pick(change.itemId, parameter).value;
+    if (change.mode == 'set') {
+      if (change.value == null) throw StockConfigRefused(parameter, 'value_required');
+      (_own[change.itemId] ??= {})[parameter] = change.value;
     } else {
-      _own[itemId]?.remove(parameter);
+      _own[change.itemId]?.remove(parameter);
     }
-    _history.insert(0, GroupHistoryRow(at: _now(), itemId: itemId, parameter: parameter, oldValue: before, newValue: _pick(itemId, parameter).value, affected: 1, keptOwn: 0, skipped: 0));
+    _history.insert(0, GroupHistoryRow(at: _now(), itemId: change.itemId, parameter: parameter, oldValue: before, newValue: _pick(change.itemId, parameter).value, affected: 1, keptOwn: 0, skipped: 0));
   }
 
   @override

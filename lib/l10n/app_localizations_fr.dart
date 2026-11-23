@@ -18596,9 +18596,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get invoicingViewCustomers => 'Clients';
 
   @override
-  String get itemGroupAssignField => 'Groupe';
-
-  @override
   String get itemGroupAssignNone => 'Aucun groupe';
 
   @override
@@ -18626,9 +18623,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get itemGroupDeleted => 'Groupe supprimé.';
 
   @override
-  String get itemGroupEditTitle => 'Groupe';
-
-  @override
   String get itemGroupFailed => 'Les groupes d’articles n’ont pas pu être lus.';
 
   @override
@@ -18651,23 +18645,18 @@ class AppLocalizationsFr extends AppLocalizations {
     String to,
     int affected,
   ) {
-    return '$parameter : $from → $to, atteint $affected';
+    String _temp0 = intl.Intl.pluralLogic(
+      affected,
+      locale: localeName,
+      other: '$affected articles atteints',
+      one: '$affected article atteint',
+    );
+    return '$parameter : $from → $to, $_temp0';
   }
 
   @override
   String get itemGroupHistoryNone =>
       'Aucun changement enregistré pour l’instant.';
-
-  @override
-  String itemGroupItemsCount(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count articles',
-      one: '$count article',
-    );
-    return '$_temp0';
-  }
 
   @override
   String get itemGroupMinAge => 'Âge minimum pour une vente';
@@ -18677,7 +18666,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String itemGroupMoveReaches(int count) {
-    return 'Le déplacement change $count réglages.';
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Le déplacement change $count réglages.',
+      one: 'Le déplacement change $count réglage.',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -18685,9 +18680,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get itemGroupName => 'Nom';
-
-  @override
-  String get itemGroupNewTitle => 'Nouveau groupe';
 
   @override
   String get itemGroupNo => 'Non';
@@ -18711,7 +18703,25 @@ class AppLocalizationsFr extends AppLocalizations {
     int kept,
     int skipped,
   ) {
-    return '$parameter : s’applique à $affected, $kept gardent leur propre valeur, $skipped ne peuvent pas être atteints';
+    String _temp0 = intl.Intl.pluralLogic(
+      affected,
+      locale: localeName,
+      other: 's’applique à $affected articles',
+      one: 's’applique à $affected article',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      kept,
+      locale: localeName,
+      other: '$kept gardent leur propre valeur',
+      one: '$kept garde sa propre valeur',
+    );
+    String _temp2 = intl.Intl.pluralLogic(
+      skipped,
+      locale: localeName,
+      other: '$skipped ne peuvent pas être atteints',
+      one: '$skipped ne peut pas être atteint',
+    );
+    return '$parameter : $_temp0, $_temp1, $_temp2';
   }
 
   @override

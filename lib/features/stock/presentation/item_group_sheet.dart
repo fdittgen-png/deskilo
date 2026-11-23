@@ -14,6 +14,7 @@ import 'package:flutter/services.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/trace/trace_logger.dart';
+import '../../../core/ui/app_snack.dart';
 import '../../../core/ui/dropdown_field.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../l10n/app_localizations.dart';
@@ -21,7 +22,7 @@ import '../domain/item_groups.dart';
 import 'item_group_text.dart';
 
 /// The units a group may set for its items (the registry's units of count, mass and volume).
-const itemGroupUnits = ['piece', 'g', 'kg', 'ml', 'cl', 'l'];
+const _units = ['piece', 'g', 'kg', 'ml', 'cl', 'l'];
 
 /// Opens the sheet of [group] (null: a new group); true when something was saved or deleted.
 Future<bool> showItemGroupSheet(
@@ -36,7 +37,7 @@ Future<bool> showItemGroupSheet(
   return showAppFormSheet(
     context,
     AppFormSheet(
-      title: group == null ? l10n.itemGroupNewTitle : l10n.itemGroupEditTitle,
+      title: group == null ? l10n.meGroupAdd : l10n.taxRefGroup,
       submitLabel: l10n.stockEditSave,
       submitKey: const ValueKey('item-group-save'),
       onDispose: draft.fields.dispose,
@@ -178,7 +179,7 @@ class _GroupDraft {
         key: const ValueKey('item-group-unit'),
         label: l10n.stockEditInventoryUnit,
         value: unit,
-        items: [(null, l10n.itemGroupNotSet), for (final u in itemGroupUnits) (u, u)],
+        items: [(null, l10n.itemGroupNotSet), for (final u in _units) (u, u)],
         onChanged: (v) => edit(() => unit = v),
       ),
       const FormGap(),
@@ -229,14 +230,13 @@ class _GroupDraft {
   Future<void> _delete(BuildContext context) async {
     final l10n = context.l10n;
     final navigator = Navigator.of(context);
-    final messenger = ScaffoldMessenger.of(context);
     try {
       await port.delete(workspaceId, requestId: newRequestId(), groupId: group!.id, expectedRevision: group!.revision);
-      messenger.showSnackBar(SnackBar(content: Text(l10n.itemGroupDeleted)));
+      if (context.mounted) AppSnack.info(context, l10n.itemGroupDeleted);
       navigator.pop(true);
     } on Object catch (e, st) {
       TraceLogger.instance.warn('stock', 'an item group was not deleted: $e', stackTrace: st);
-      messenger.showSnackBar(SnackBar(content: Text(itemGroupProblem(l10n, e))));
+      if (context.mounted) AppSnack.error(context, itemGroupProblem(l10n, e));
     }
   }
 }
@@ -259,7 +259,7 @@ class _PreviewCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(l10n.itemGroupPreviewTitle, style: Theme.of(context).textTheme.titleSmall),
-            const SizedBox(height: 4),
+            const FormGap.small(),
             if (preview.impact.isEmpty) Text(l10n.itemGroupPreviewNothing),
             for (final e in preview.impact.entries)
               Text(
@@ -267,7 +267,7 @@ class _PreviewCard extends StatelessWidget {
                 key: ValueKey('item-group-preview-${e.key}'),
               ),
             if (preview.skipped.isNotEmpty) ...[
-              const SizedBox(height: 4),
+              const FormGap.small(),
               Text(l10n.itemGroupSkippedTitle, style: Theme.of(context).textTheme.labelLarge),
               for (final s in preview.skipped) Text(l10n.itemGroupSkippedLine(s.itemId, itemGroupParamLabel(l10n, s.parameter), itemGroupReasonText(l10n, s.reason))),
             ],

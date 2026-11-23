@@ -67,7 +67,7 @@ void main() {
       testWidgets('the groups are listed with their items and settings', (tester) async {
         await _open(tester, size);
         expect(find.text('Drinks'), findsOneWidget);
-        expect(find.textContaining(_en.itemGroupItemsCount(2)), findsOneWidget);
+        expect(find.textContaining(_en.stockCyclePlanItemsCount(2)), findsOneWidget);
         expect(find.text('Hot drinks'), findsOneWidget);
         expect(find.text('Homeware'), findsOneWidget);
       });

@@ -24048,10 +24048,6 @@
   "@invoicingViewCustomers": {
     "description": "#3587 list view: one line per customer"
   },
-  "itemGroupAssignField": "Group",
-  "@itemGroupAssignField": {
-    "description": "#4361 G12 item groups: itemGroupAssignField"
-  },
   "itemGroupAssignNone": "No group",
   "@itemGroupAssignNone": {
     "description": "#4361 G12 item groups: itemGroupAssignNone"
@@ -24089,10 +24085,6 @@
   "@itemGroupDeleted": {
     "description": "#4361 G12 item groups: itemGroupDeleted"
   },
-  "itemGroupEditTitle": "Group",
-  "@itemGroupEditTitle": {
-    "description": "#4361 G12 item groups: itemGroupEditTitle"
-  },
   "itemGroupFailed": "The item groups could not be read.",
   "@itemGroupFailed": {
     "description": "#4361 G12 item groups: itemGroupFailed"
@@ -24122,7 +24114,7 @@
   "@itemGroupHistory": {
     "description": "#4361 G12 item groups: itemGroupHistory"
   },
-  "itemGroupHistoryLine": "{parameter}: {from} → {to}, reached {affected}",
+  "itemGroupHistoryLine": "{parameter}: {from} → {to}, {affected, plural, one{reached 1 item} other{reached {affected} items}}",
   "@itemGroupHistoryLine": {
     "description": "#4361 G12 item groups: itemGroupHistoryLine",
     "placeholders": {
@@ -24144,15 +24136,6 @@
   "@itemGroupHistoryNone": {
     "description": "#4361 G12 item groups: itemGroupHistoryNone"
   },
-  "itemGroupItemsCount": "{count, plural, one{1 item} other{{count} items}}",
-  "@itemGroupItemsCount": {
-    "description": "#4361 G12 item groups: itemGroupItemsCount",
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "itemGroupMinAge": "Minimum age for a sale",
   "@itemGroupMinAge": {
     "description": "#4361 G12 item groups: itemGroupMinAge"
@@ -24161,7 +24144,7 @@
   "@itemGroupMove": {
     "description": "#4361 G12 item groups: itemGroupMove"
   },
-  "itemGroupMoveReaches": "Moving it changes {count} settings.",
+  "itemGroupMoveReaches": "{count, plural, one{Moving it changes 1 setting.} other{Moving it changes {count} settings.}}",
   "@itemGroupMoveReaches": {
     "description": "#4361 G12 item groups: itemGroupMoveReaches",
     "placeholders": {
@@ -24177,10 +24160,6 @@
   "itemGroupName": "Name",
   "@itemGroupName": {
     "description": "#4361 G12 item groups: itemGroupName"
-  },
-  "itemGroupNewTitle": "New group",
-  "@itemGroupNewTitle": {
-    "description": "#4361 G12 item groups: itemGroupNewTitle"
   },
   "itemGroupNo": "No",
   "@itemGroupNo": {
@@ -24202,7 +24181,7 @@
   "@itemGroupParent": {
     "description": "#4361 G12 item groups: itemGroupParent"
   },
-  "itemGroupPreviewLine": "{parameter}: applies to {affected}, {kept} keep their own value, {skipped} cannot be reached",
+  "itemGroupPreviewLine": "{parameter}: {affected, plural, one{applies to 1 item} other{applies to {affected} items}}, {kept, plural, one{1 keeps its own value} other{{kept} keep their own value}}, {skipped, plural, one{1 cannot be reached} other{{skipped} cannot be reached}}",
   "@itemGroupPreviewLine": {
     "description": "#4361 G12 item groups: itemGroupPreviewLine",
     "placeholders": {

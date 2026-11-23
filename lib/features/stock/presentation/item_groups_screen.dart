@@ -94,7 +94,7 @@ class _GroupList extends ConsumerWidget {
             contentPadding: EdgeInsets.only(left: g.parentId == null ? 0 : 32),
             leading: Icon(g.parentId == null ? Icons.folder_outlined : Icons.subdirectory_arrow_right),
             title: Text(g.name),
-            subtitle: Text([l10n.itemGroupItemsCount(g.items), itemGroupSummary(l10n, g)].where((t) => t.isNotEmpty).join(' · ')),
+            subtitle: Text([l10n.stockCyclePlanItemsCount(g.items), itemGroupSummary(l10n, g)].where((t) => t.isNotEmpty).join(' · ')),
             onTap: mayManage ? () => _open(context, ref, g) : null,
           ),
       ],

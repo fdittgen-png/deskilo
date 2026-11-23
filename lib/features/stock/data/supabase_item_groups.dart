@@ -51,15 +51,15 @@ class SupabaseItemGroups implements ItemGroups {
       }));
 
   @override
-  Future<void> setOverride(String workspaceId, {required String requestId, required String itemId, required int expectedRevision, required String parameter, required String mode, Object? value}) async {
+  Future<void> setOverride(String workspaceId, String requestId, ItemOverride change) async {
     await _call('item_override_save_v1', {
       'p_workspace_id': workspaceId,
       'p_request_id': requestId,
-      'p_item_id': itemId,
-      'p_expected_revision': expectedRevision,
-      'p_parameter': parameter,
-      'p_mode': mode,
-      'p_value': value,
+      'p_item_id': change.itemId,
+      'p_expected_revision': change.expectedRevision,
+      'p_parameter': change.parameter,
+      'p_mode': change.mode,
+      'p_value': change.value,
     });
   }
 

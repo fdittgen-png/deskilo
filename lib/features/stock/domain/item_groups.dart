@@ -204,6 +204,10 @@ class GroupHistoryRow {
   }
 }
 
+/// An item's own value of one setting, or its way back to the group's: the item and the revision read, the
+/// parameter, `mode` (`set` with [value], or `inherit`).
+typedef ItemOverride = ({String itemId, int expectedRevision, String parameter, String mode, Object? value});
+
 /// The item groups of a business.
 abstract interface class ItemGroups {
   Future<List<ItemGroup>> groups(String workspaceId);
@@ -214,7 +218,7 @@ abstract interface class ItemGroups {
   Future<GroupAssigned> assign(String workspaceId, {required String requestId, required String itemId, required int expectedRevision, required String? groupId, bool apply = true});
 
   /// `mode` is `set` (with [value]) or `inherit` (back to the group's value).
-  Future<void> setOverride(String workspaceId, {required String requestId, required String itemId, required int expectedRevision, required String parameter, required String mode, Object? value});
+  Future<void> setOverride(String workspaceId, String requestId, ItemOverride change);
 
   Future<void> delete(String workspaceId, {required String requestId, required String groupId, required int expectedRevision});
 
