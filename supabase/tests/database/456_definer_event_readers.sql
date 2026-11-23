@@ -64,6 +64,8 @@ insert into listed (sig, reason) values
    'amounts of invoices under its own right; no event'),
   ('record_payment(uuid,uuid,integer,text,text,date,text,uuid[],uuid)',
    'writes or checks: returns an id, nothing, or a refusal about the object the caller acts on (a repeat under the same request id returns the id of the caller''s own first declaration)'),
+  ('record_standalone_payment_v1(uuid,uuid,integer,text,text,date,uuid[],uuid)',
+   'writes or checks: returns an id, nothing, or a refusal about the object the caller acts on (a repeat under the same request id returns the id of the caller''s own first declaration)'),
   ('record_badge_auth_failure(text,uuid,uuid,uuid)',
    'callable by the service role only'),
   ('release_invoice_payment(uuid)',

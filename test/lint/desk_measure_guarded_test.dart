@@ -18,6 +18,7 @@ import 'lint_sources.dart';
 /// Measured routes no desk guard opens yet, each with the issue that will
 /// guard it (or why it never draws a page of its own).
 const _notGuardedYet = <String, String>{
+  '/app-update': '#3726 a notice with one way out, shown only when the installation refuses this app: test/app/app_floor_gate_test.dart draws it; it needs an installation floor above the app to open in a desk guard',
   '/stock/counts': '#4172 a list of cards: its widget tests measure it at phone and desk widths; joins the guards with the stock guard',
   '/stock/reorder': '#4294 two lists of rows and cards: its widget tests measure it at phone and desk widths; joins the guards with the stock guard',
   '/stock/value': '#4173 a total, a list of unpriced goods and a list of priced goods: its widget tests measure it at phone and desk widths; joins the guards with the stock guard',
