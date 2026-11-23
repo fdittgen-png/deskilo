@@ -4399,7 +4399,7 @@ routine public.standalone_invoice_line_v1(p_line jsonb, p_index integer, p_curre
 routine public.standalone_invoice_subject(p_workspace_id uuid, p_subject uuid) -> members | function | definer | stable | exec:service_role | body:03bed41502dd
 routine public.start_space_inquiry(p_workspace uuid, p_body text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:24335253d564
 routine public.start_space_inquiry_v1(p_workspace uuid, p_body text, p_request_id uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:307a68c96e0f
-routine public.stock_apply_lines(p_workspace_id uuid, p_actor uuid, p_request_id uuid, p_lines jsonb, p_reason text, p_at timestamp with time zone, p_links jsonb, p_mode text) -> jsonb | function | definer | volatile | exec:service_role | body:bc91af318609
+routine public.stock_apply_lines(p_workspace_id uuid, p_actor uuid, p_request_id uuid, p_lines jsonb, p_reason text, p_at timestamp with time zone, p_links jsonb, p_mode text) -> jsonb | function | definer | volatile | exec:service_role | body:22d3d15bd8ee
 routine public.stock_bits_value(p_bits bit varying) -> numeric | function | invoker | immutable | exec:service_role | body:fbdb23474211
 routine public.stock_blind_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:8d7f9c93e191
 routine public.stock_command_args(p_request_id uuid, p_lines jsonb) -> void | function | invoker | immutable | exec:service_role | body:2c0224c1f582
