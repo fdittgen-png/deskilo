@@ -3,9 +3,8 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/data/server_names.dart';
-import '../../../core/trace/trace_logger.dart';
 import '../domain/stock_operations.dart';
-import 'stock_refusals.dart';
+import 'stock_rpc.dart';
 
 /// #4170 (B) -- the stock commands behind the port: `stock_transfer_v1`,
 /// `stock_transfer_load_v1`, `stock_transfer_receive_v1`, `stock_consume_v1`,
@@ -159,7 +158,7 @@ class SupabaseStockOperations implements StockOperations {
     required String quantity,
     String? variantId,
   }) async {
-    try {
+    return StockRpc(_client).guard('a lot proposal', () async {
       final answer = await _client.rpc<Object?>(
         'stock_fefo_proposal_v1',
         params: {
@@ -178,10 +177,7 @@ class SupabaseStockOperations implements StockOperations {
         ],
         short: ExactQuantity.parse(r.string('short')),
       );
-    } on PostgrestException catch (e, stack) {
-      TraceLogger.instance.warn('stock', 'a lot proposal was refused: ${e.code}', stackTrace: stack);
-      throwStockFailure(e, stack);
-    }
+    });
   }
 
   StockLotProposal _lot(JsonReader r) => StockLotProposal(
@@ -194,7 +190,7 @@ class SupabaseStockOperations implements StockOperations {
   );
 
   Future<StockCommandResult> _command(String rpc, Map<String, Object?> params) async {
-    try {
+    return StockRpc(_client).guard('a stock command', () async {
       final answer = await _client.rpc<Object?>(rpc, params: params);
       final r = JsonReader.of(answer, context: rpc);
       return (
@@ -203,9 +199,6 @@ class SupabaseStockOperations implements StockOperations {
         transferId: r.stringOrNull('transfer_id'),
         status: r.stringOrNull('status'),
       );
-    } on PostgrestException catch (e, stack) {
-      TraceLogger.instance.warn('stock', 'a stock command was refused: ${e.code}', stackTrace: stack);
-      throwStockFailure(e, stack);
-    }
+    });
   }
 }
