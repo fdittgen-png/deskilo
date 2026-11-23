@@ -20,7 +20,7 @@ const demoNoPlacesProfile = {
 };
 
 /// #4365 — the shop's profile: the stock, the catalogue and the purchases, no places, no provider, no public page.
-const _demoShopProfile = {
+const demoShopProfile = {
   'placeBooking': false,
   'moneyTab': true,
   'services': true,
@@ -62,7 +62,7 @@ class DemoBusinessKindRepository implements BusinessKindRepository {
     BusinessKind(code: 'practice', sortOrder: 30, profile: demoNoPlacesProfile),
     BusinessKind(code: 'salon', sortOrder: 40, profile: demoNoPlacesProfile),
     BusinessKind(code: 'freelancer', sortOrder: 45, profile: demoFreelancerProfile),
-    BusinessKind(code: 'shop', sortOrder: 47, profile: _demoShopProfile),
+    BusinessKind(code: 'shop', sortOrder: 47, profile: demoShopProfile),
     BusinessKind(code: 'service', sortOrder: 50, profile: demoNoPlacesProfile),
   ];
 

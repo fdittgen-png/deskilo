@@ -12,6 +12,7 @@ import 'demo_london_space.dart';
 import 'demo_new_york_space.dart';
 import 'demo_practice_space.dart';
 import 'demo_second_space.dart';
+import 'demo_shop_space.dart';
 import 'demo_trade_city_space.dart';
 import 'demo_twin_space.dart';
 import 'seed/demo_trade_city_seed.dart';
@@ -33,9 +34,10 @@ import 'seed/demo_trade_city_seed.dart';
     practice: DemoPracticeData.list(home: home),
     house: DemoHouseData.list(home: home),
     freelancer: DemoFreelancerData.list(home: home),
+    shop: DemoShopData.list(home: home),
   );
   final twin = DemoTwinData.list(home: home, productionPlan: floorPlan, productionRoles: roles);
-  for (final listing in [listings.leipzig, listings.london, listings.newYork, listings.zurich, listings.milan, listings.practice, listings.house, listings.freelancer, twin.listing]) {
+  for (final listing in [listings.leipzig, listings.london, listings.newYork, listings.zurich, listings.milan, listings.practice, listings.house, listings.freelancer, listings.shop, twin.listing]) {
     listing.viewAs(memberId);
   }
   return (listings, twin);

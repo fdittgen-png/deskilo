@@ -19,7 +19,7 @@ const _id = 'demo-organisation-atelier';
 
 /// The Demo's businesses that belong to no organisation (the twin is a
 /// development environment and is left out by its environment).
-const _outside = {DemoSpaceKey.practice, DemoSpaceKey.freelancer};
+const _outside = {DemoSpaceKey.practice, DemoSpaceKey.freelancer, DemoSpaceKey.shop};
 
 HouseRole _roleOf(Member m) {
   if (m.isOwner) return HouseRole.owner;

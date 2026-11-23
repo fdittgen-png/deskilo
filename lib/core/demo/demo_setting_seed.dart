@@ -24,4 +24,19 @@ const List<SettingVersion> demoSettingSeed = [
     value: 'freelancer',
     validFrom: 'v1',
   ),
+  // #4365 — the Épicerie du Marché is a shop, a grocery.
+  SettingVersion(
+    scope: SettingScope.workspace,
+    workspaceId: demoShopSpaceId,
+    key: businessKindKey,
+    value: 'shop',
+    validFrom: 'v1',
+  ),
+  SettingVersion(
+    scope: SettingScope.workspace,
+    workspaceId: demoShopSpaceId,
+    key: businessShopTypeKey,
+    value: 'grocery',
+    validFrom: 'v1',
+  ),
 ];
