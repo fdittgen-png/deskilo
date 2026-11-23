@@ -240,7 +240,7 @@ as $registry$
     {"id":"workspace.feature_flags.configurableSettings","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","process":"operations"},
     {"id":"workspace.feature_flags.configurationTransfer","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","depends_on":["workspace.feature_flags.dataExport"],"process":"operations"},
     {"id":"workspace.feature_flags.counterReceipts","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","depends_on":["workspace.feature_flags.standaloneInvoicing"],"process":"membershipCommerce"},
-    {"id":"workspace.feature_flags.counterTillSessions","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","depends_on":["workspace.feature_flags.stockManagement"],"process":"membershipCommerce"},
+    {"id":"workspace.feature_flags.counterTillSessions","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","depends_on":["workspace.feature_flags.counterReceipts"],"process":"membershipCommerce"},
     {"id":"workspace.feature_flags.customFields","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","process":"workspaceAccess"},
     {"id":"workspace.feature_flags.customRoles","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","process":"workspaceAccess"},
     {"id":"workspace.feature_flags.customerQuotes","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","depends_on":["workspace.feature_flags.invoicing"],"process":"billingPayments"},
