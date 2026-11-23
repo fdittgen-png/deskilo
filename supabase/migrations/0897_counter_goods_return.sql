@@ -76,8 +76,10 @@ begin
       'unit', v_line.frozen #>> '{commercial,unit,code}', 'from', public.stock_place(p_workspace_id, 'customer'), 'to', v_to,
       'counter_line_id', v_line.id)));
   end loop;
+  perform set_config('deskilo.counter_links', 'on', true);
   v_moved := public.stock_apply_lines(p_workspace_id, v_me, p_request_id, v_move, 'return_in', now(),
                                       jsonb_build_object('counter_receipt_id', v_rec.id), 'generic');
+  perform set_config('deskilo.counter_links', 'off', true);
   v_result := jsonb_build_object('correction_id', v_rec.id, 'movements', jsonb_array_length(v_moved), 'replayed', false);
   return public.purchase_request_end(p_workspace_id, p_request_id, 'counter_goods_return', v_digest, v_result);
 end;

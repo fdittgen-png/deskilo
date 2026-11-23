@@ -4,7 +4,7 @@
 -- included; a correction moves nothing; the physical return is its own command by someone who may manage the stock, bounded
 -- by what the correction credits, and refunds and credits nothing; stock-only people cannot sell. Rolled back.
 begin;
-select plan(24);
+select plan(25);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -163,6 +163,11 @@ select set_config('t.c5', pg_temp.corr(1, 101, 1335, current_setting('t.r5')::uu
 select set_config('t.c5l', (select id::text from public.counter_receipt_lines where receipt_id = pg_temp.f(current_setting('t.c5'), 'receipt_id')::uuid and line_no = 1), false);
 update public.stock_locations set code = 'MAINX' where workspace_id = pg_temp.u(101) and code = 'MAIN';
 select is(pg_temp.ret(1, 1332, pg_temp.f(current_setting('t.c5'), 'receipt_id')::uuid, format('[{"corrects_line_id": "%s", "quantity": "1"}]', current_setting('t.c5l'))), 'ERR DKL07 to_place', 'with no place MAIN a return finds no place to put the goods back (DKL07 to_place)');
+
+-- ── the generic stock door never names a counter link ──
+update public.stock_locations set code = 'MAIN' where workspace_id = pg_temp.u(101) and code = 'MAINX';
+select is(left(pg_temp.run_as(pg_temp.u(1), format($q$select public.stock_move_v1(%L, %L, jsonb_build_array(jsonb_build_object('item_id', %L, 'quantity', 1, 'from', (select id from public.stock_locations where workspace_id = %L and code = 'MAIN'), 'to', (select id from public.stock_locations where workspace_id = %L and kind = 'customer'))), 'sale', null, jsonb_build_object('counter_receipt_id', %L))::text$q$,
+  pg_temp.u(101), pg_temp.u(1340), pg_temp.u(301), pg_temp.u(101), pg_temp.u(101), current_setting('t.r')::uuid)), 9), 'ERR DKG11', 'the generic door refuses a counter link: only the counter''s own commands name one');
 
 select * from finish();
 rollback;

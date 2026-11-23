@@ -64,7 +64,7 @@ declare
   v_news text[] := array[
     E'(p_links ? \'event_id\' or p_links ? \'invoice_id\' or p_links ? \'counter_receipt_id\')',
     E'v_from.kind = \'customer\' and not v_tv and (p_links ? \'invoice_id\' or p_links ? \'counter_receipt_id\')',
-    E'then jsonb_build_object(\'receipt_line_id\', e ->> \'receipt_line_id\') else \'{}\'::jsonb end\n      || case when nullif(e ->> \'counter_line_id\', \'\') is not null then jsonb_build_object(\'counter_line_id\', e ->> \'counter_line_id\') else \'{}\'::jsonb end;'];
+    E'then jsonb_build_object(\'receipt_line_id\', e ->> \'receipt_line_id\') else \'{}\'::jsonb end\n      || case when nullif(e ->> \'counter_line_id\', \'\') is not null then jsonb_build_object(\'counter_line_id\', e ->> \'counter_line_id\') else \'{}\'::jsonb end;\n    -- a counter link is the counter commands\' own: the generic door never names one\n    if (v_links ? \'counter_receipt_id\' or v_links ? \'counter_line_id\') and coalesce(current_setting(\'deskilo.counter_links\', true), \'\') <> \'on\' then\n      perform public.stock_config_refuse(format(\'lines[%s]\', v_no - 1), \'malformed\');\n    end if;'];
 begin
   for k in 1 .. array_length(v_olds, 1) loop
     if pg_temp.occurrences(v_def, v_olds[k]) <> 1 then

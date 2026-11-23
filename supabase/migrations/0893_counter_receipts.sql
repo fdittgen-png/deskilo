@@ -204,9 +204,12 @@ declare
   v_new jsonb;
   v_state text;
 begin
-  -- the cascade of a workspace's deletion or of an erasure runs as a trigger of the key's action: it is not an edit
-  if pg_trigger_depth() > 1 then
-    return coalesce(new, old);
+  -- only the cascade of a business's own deletion is let through: a DELETE run by the key's action while the business
+  -- row is already gone. An update is refused at every depth, and a delete of a row of a business that still exists is
+  -- an edit. (Deleting a business deletes what is its own; what must be kept for a retention period is the operator's
+  -- decision before the deletion, as for the other records of the business.)
+  if tg_op = 'DELETE' and pg_trigger_depth() > 1 and not exists (select 1 from public.workspaces w where w.id = old.workspace_id) then
+    return old;
   end if;
   if tg_table_name = 'counter_receipts' then
     if tg_op = 'DELETE' then

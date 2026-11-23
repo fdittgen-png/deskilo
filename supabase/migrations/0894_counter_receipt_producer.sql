@@ -490,8 +490,10 @@ begin
     end if;
   end loop;
   if jsonb_array_length(v_goods) > 0 then
+    perform set_config('deskilo.counter_links', 'on', true);
     perform public.stock_apply_lines(p_workspace_id, v_me, p_request_id, v_goods, 'sale', now(),
                                      jsonb_build_object('counter_receipt_id', v_rec.id), 'generic');
+    perform set_config('deskilo.counter_links', 'off', true);
   end if;
   v_result := jsonb_build_object('receipt_id', v_rec.id, 'number', v_number, 'currency', v_rec.currency,
     'totals', v_calc -> 'totals', 'tenders', (select count(*) from public.counter_tenders t where t.receipt_id = v_rec.id and t.state = 'accepted'), 'replayed', false);

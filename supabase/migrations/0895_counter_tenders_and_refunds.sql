@@ -179,9 +179,9 @@ create policy mcp_delegated_deny on public.counter_refunds as restrictive for al
 create or replace function public.counter_refunds_frozen()
 returns trigger language plpgsql set search_path = public as $fn$
 begin
-  -- the cascade of a workspace's deletion or of an erasure is not an edit
-  if pg_trigger_depth() > 1 then
-    return coalesce(new, old);
+  -- only the cascade of a business's own deletion is let through (its row is already gone), never an update
+  if tg_op = 'DELETE' and pg_trigger_depth() > 1 and not exists (select 1 from public.workspaces w where w.id = old.workspace_id) then
+    return old;
   end if;
   raise exception 'a refund is never edited or deleted' using errcode = 'DKL03';
 end;
