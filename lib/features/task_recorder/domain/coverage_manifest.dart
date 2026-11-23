@@ -15,7 +15,6 @@
 // step both ways: a new route without a row fails, a row without a route
 // fails, and every registered action must be named by some recorded
 // route and called from some seam.
-
 import 'action_registry.dart';
 
 enum CoverageStatus { recorded, recorder, excluded, planned }
@@ -405,6 +404,7 @@ const List<RouteCoverage> routeCoverage = [
   RouteCoverage('/stock/items', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/stock/places', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/stock/settings', CoverageStatus.planned, owner: '#1884'),
+  RouteCoverage('/till', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/money/quotes', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/money/quotes/:id', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/money/quotes/:id/edit', CoverageStatus.planned, owner: '#1884'),

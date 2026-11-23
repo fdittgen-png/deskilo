@@ -1,0 +1,55 @@
+{
+  "tillTitle": "Kasse",
+  "tillNotReady": "In Ihrem Land noch nicht bereit: {operation}",
+  "tillNotReadyHint": "Es wird nichts nummeriert und nichts kassiert, solange der Vorgang des Landes nicht unterstützt wird.",
+  "tillOpIssueReceipt": "Beleg ausstellen",
+  "tillOpCorrectReceipt": "Beleg korrigieren",
+  "tillOpReconcileTender": "Kartenzahlung abgleichen",
+  "tillOpSignFiscal": "fiskalischen Beleg signieren",
+  "tillOpExportFiscal": "Fiskaldaten exportieren",
+  "tillKeysTitle": "Artikel zum Kassieren",
+  "tillKeysEmpty": "Es gibt noch nichts zu verkaufen. Legen Sie zuerst Artikel im Lager an.",
+  "tillBasketTitle": "Warenkorb",
+  "tillBasketEmpty": "Tippen Sie auf einen Artikel, um einen Verkauf zu beginnen.",
+  "tillQuantityTitle": "Verkaufte Menge",
+  "tillQuantityHint": "Eine genaue Menge, zum Beispiel 1 oder 0,350.",
+  "tillQuantityRefused": "Geben Sie eine Menge über null mit höchstens sechs Dezimalstellen ein.",
+  "tillRemoveLine": "{name} aus dem Warenkorb nehmen",
+  "tillTotalDue": "Zu zahlender Betrag: {amount}",
+  "tillTaxIncluded": "davon Steuer {amount}",
+  "tillPricing": "Warenkorb wird berechnet …",
+  "tillPayCash": "Bar kassieren",
+  "tillCashGiven": "Gegeben",
+  "tillCashExact": "Passend",
+  "tillCashShort": "Der gegebene Betrag ist kleiner als die Summe.",
+  "tillCashInvalid": "Geben Sie den gegebenen Betrag als Zahl ein.",
+  "tillSoldTitle": "Verkauft",
+  "tillReceiptNumber": "Beleg {number}",
+  "tillChangeDue": "Rückgeld: {amount}",
+  "tillNextCustomer": "Nächster Kunde",
+  "tillRetry": "Erneut versuchen",
+  "@tillRetry": {
+    "description": "#4366 the till: ask the server again"
+  },
+  "tillConfirmSale": "Verkauf bestätigen",
+  "@tillConfirmSale": {
+    "description": "#4366 the till: the sale was sent and its answer was lost; send it again under the same request"
+  },
+  "tillLeaveTitle": "Der Verkauf ist nicht bestätigt",
+  "@tillLeaveTitle": {
+    "description": "#4366 the till: title of the question asked when leaving with a sale waiting to be confirmed"
+  },
+  "tillLeaveBody": "Der Verkauf wurde gesendet, die Antwort blieb aus. Beim Verlassen bleibt er offen: Öffnen Sie die Kasse erneut und bestätigen Sie ihn. Buchen Sie ihn nicht noch einmal.",
+  "@tillLeaveBody": {
+    "description": "#4366 the till: what leaving with a sale waiting to be confirmed does"
+  },
+  "tillLeaveStay": "Bleiben",
+  "@tillLeaveStay": {
+    "description": "#4366 the till: stay on the till"
+  },
+  "tillLeaveGo": "Verlassen",
+  "@tillLeaveGo": {
+    "description": "#4366 the till: leave the till with the sale still waiting"
+  },
+  "tillFailed": "Die Kasse konnte das nicht ausführen. Versuchen Sie es erneut."
+}
