@@ -44,14 +44,12 @@ class StandaloneLine {
   /// One of the business's own VAT rates; null takes its default.
   final String? vatRateId;
 
-  /// The same line with only [description], [quantity], [unitCode], [unitLabel], [unEceCode], [unitPrice], [grossPrice]
-  /// or [vatRateId] changed: the supply kind and the base quantity it was read with are kept.
+  /// The same line with only [description], [quantity], [unit] (code, label and UN/ECE code together), [unitPrice],
+  /// [grossPrice] or [vatRateId] changed: the supply kind and the base quantity it was read with are kept.
   StandaloneLine copyWith({
     String? description,
     String? quantity,
-    String? unitCode,
-    String? unitLabel,
-    String? unEceCode,
+    ({String code, String label, String un})? unit,
     String? unitPrice,
     bool? grossPrice,
     String? Function()? vatRateId,
@@ -59,9 +57,9 @@ class StandaloneLine {
     lineId: lineId,
     description: description ?? this.description,
     quantity: quantity ?? this.quantity,
-    unitCode: unitCode ?? this.unitCode,
-    unitLabel: unitLabel ?? this.unitLabel,
-    unEceCode: unEceCode ?? this.unEceCode,
+    unitCode: unit?.code ?? unitCode,
+    unitLabel: unit?.label ?? unitLabel,
+    unEceCode: unit?.un ?? unEceCode,
     unitPrice: unitPrice ?? this.unitPrice,
     grossPrice: grossPrice ?? this.grossPrice,
     baseQuantity: baseQuantity,

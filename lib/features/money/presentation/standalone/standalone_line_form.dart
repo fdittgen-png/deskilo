@@ -77,9 +77,7 @@ class StandaloneLineForm {
     return base.copyWith(
       description: description.text.trim(),
       quantity: decimalTextFromInput(quantity.text, locale: locale, grouping: false) ?? quantity.text.trim(),
-      unitCode: unit,
-      unitLabel: keep ? unlisted.label : _unitLabel(context, unit),
-      unEceCode: keep ? from!.unEceCode : (listed.isEmpty ? '' : listed.first.un),
+      unit: (code: unit, label: keep ? unlisted.label : _unitLabel(context, unit), un: keep ? from!.unEceCode : (listed.isEmpty ? '' : listed.first.un)),
       unitPrice: decimalTextFromInput(price.text, locale: locale) ?? price.text.trim(),
       grossPrice: gross,
       vatRateId: () => rateId,
