@@ -220,7 +220,7 @@ select is((select string_agg(r.sig || ':' || r.tier, ', ' order by r.sig) from p
   'a reader is found whatever its name''s form and however it became definer; each rule is seen in its source');
 select ok((select count(*) from pg_temp.readers() where tier = 'service') > 50, 'the service-only readers are read');
 select ok((select count(*) from pg_temp.readers() where tier in ('own row', 'status gate')) > 100, 'the own-row and status-gated readers are read');
-select ok((select count(*) from listed) = 63, 'the list holds 63 reasoned exceptions');
+select ok((select count(*) from listed) = 64, 'the list holds 64 reasoned exceptions');
 
 select * from finish();
 rollback;
