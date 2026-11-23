@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+// #4400 -- the invariant: the action a request names is looked up in the table by its own name only; a name the
+// table does not hold, or one Object.prototype holds, is answered as a send is, gates included.
 import { assertEquals, assertStrictEquals } from "jsr:@std/assert@1";
 import { ACTIONS, actionFor, SEND } from "./actions/index.ts";
 import { handle } from "./handler.ts";
