@@ -1078,6 +1078,25 @@ class AppLocalizationsFr extends AppLocalizations {
   String get appTitle => 'DesKilo';
 
   @override
+  String get appUpdateBody =>
+      'Cette installation n\'accepte qu\'une application DesKilo plus récente. Vos données sont en sécurité : rien de ce que vous avez saisi n\'est perdu, et tout est de nouveau là une fois l\'application mise à jour.';
+
+  @override
+  String get appUpdateDesktop =>
+      'Installez le dernier paquet DesKilo pour cet ordinateur, puis rouvrez-le.';
+
+  @override
+  String get appUpdateStore =>
+      'Mettez DesKilo à jour depuis le store où vous l\'avez installé, puis rouvrez-le.';
+
+  @override
+  String get appUpdateTitle => 'Cette application doit être mise à jour';
+
+  @override
+  String get appUpdateWeb =>
+      'Rechargez cette page pour charger la dernière version de l\'application.';
+
+  @override
   String get applicationAcceptedVote => 'A accepté cette demande';
 
   @override
@@ -35791,6 +35810,31 @@ class AppLocalizationsFr extends AppLocalizations {
   String get statusTo => 'Au';
 
   @override
+  String stockCameraCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count codes lus',
+      one: '$count code lu',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get stockCameraDenied =>
+      'La caméra n’a pas pu démarrer. Autorisez l’accès à la caméra pour DesKilo dans les réglages de l’appareil, puis réessayez.';
+
+  @override
+  String get stockCameraMisread =>
+      'Ce code n’a pas été lu correctement — scannez à nouveau.';
+
+  @override
+  String get stockCameraOpen => 'Scanner avec la caméra';
+
+  @override
+  String get stockCameraTitle => 'Scanner caméra';
+
+  @override
   String get stockCostLabel => 'Coût par unité';
 
   @override
@@ -37193,6 +37237,18 @@ class AppLocalizationsFr extends AppLocalizations {
   String stockScanAlreadyRead(String code) {
     return 'La puce $code a déjà été lue.';
   }
+
+  @override
+  String get stockScanConfirm => 'Quand la caméra lit un code';
+
+  @override
+  String get stockScanConfirmClick => 'Faire un clic';
+
+  @override
+  String get stockScanConfirmNone => 'Ne rien faire';
+
+  @override
+  String get stockScanConfirmVibrate => 'Vibrer';
 
   @override
   String get stockScanFailed =>

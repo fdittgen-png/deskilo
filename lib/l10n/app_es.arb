@@ -469,6 +469,11 @@
     }
   },
   "appTitle": "DesKilo",
+  "appUpdateBody": "Esta instalación solo acepta una aplicación DesKilo más reciente. Sus datos están seguros: no se pierde nada de lo que ha introducido, y todo vuelve a estar ahí cuando la aplicación esté actualizada.",
+  "appUpdateDesktop": "Instale el paquete más reciente de DesKilo para este ordenador y vuelva a abrirlo.",
+  "appUpdateStore": "Actualice DesKilo desde la tienda en la que lo instaló y vuelva a abrirlo.",
+  "appUpdateTitle": "Esta aplicación necesita una actualización",
+  "appUpdateWeb": "Recargue esta página para cargar la versión más reciente de la aplicación.",
   "applicationAcceptedVote": "Ha aprobado esta solicitud",
   "@applicationAcceptedVote": {
     "description": "Workspace admission history and discussion (#1791)"
@@ -20762,6 +20767,11 @@
   "@statusTo": {
     "description": "#934 workspace status / repartition wizard: statusTo"
   },
+  "stockCameraCount": "{count, plural, one{1 código leído} other{{count} códigos leídos}}",
+  "stockCameraDenied": "La cámara no pudo iniciarse. Permita el acceso a la cámara para DesKilo en los ajustes del dispositivo y vuelva a intentarlo.",
+  "stockCameraMisread": "Ese código no se leyó bien: vuelva a escanear.",
+  "stockCameraOpen": "Escanear con la cámara",
+  "stockCameraTitle": "Escáner de cámara",
   "stockCostLabel": "Coste por unidad",
   "stockCostNotShown": "Coste no mostrado",
   "stockCostUnknown": "Coste no registrado",
@@ -21660,6 +21670,10 @@
   "stockReversalSupplierOpen": "Devolución al proveedor",
   "stockReversalSupplierTitle": "Devolución al proveedor",
   "stockScanAlreadyRead": "La etiqueta {code} ya se leyó.",
+  "stockScanConfirm": "Cuando la cámara lee un código",
+  "stockScanConfirmClick": "Hacer clic",
+  "stockScanConfirmNone": "No hacer nada",
+  "stockScanConfirmVibrate": "Vibrar",
   "stockScanFailed": "No se pudo leer el código escaneado. Compruebe la conexión y vuelva a escanearlo.",
   "stockScanHelp": "Trabajar con un escáner",
   "stockScanHint": "¿Usa un escáner de códigos de barras? Active «Escaneo»",

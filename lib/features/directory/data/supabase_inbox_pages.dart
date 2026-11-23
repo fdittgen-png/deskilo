@@ -24,6 +24,7 @@ mixin SupabaseInboxPages {
     try {
       raw = await connections.use(
         source,
+        // consumer-contract: my_account_inbox_v1, my_workspace_inbox_v1
         (client) => client.rpc<Object?>(
           role.reader,
           params: {'p_before_at': before?.at, 'p_before_key': before?.key},

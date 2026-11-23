@@ -51,6 +51,7 @@ const Map<String, String> _noLayoutOfItsOwn = {
   '/server/new-instance/first-start': 'forwards to /server without an instance',
   '/consent': 'forwards to the reserve hub: consent is already given',
   '/server-update': 'forwards to the reserve hub unless the schema is old',
+  '/app-update': 'forwards to the reserve hub unless the floor is above this app',
   '/money/sales': 'forwards to /invoices (an owner, an administrator)',
 };
 

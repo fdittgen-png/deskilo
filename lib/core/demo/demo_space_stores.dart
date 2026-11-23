@@ -134,6 +134,7 @@ DemoSpaceStores buildDemoSpaceStores(DemoFixture fixture, DemoSpaceKey key) =>
       DemoSpaceKey.practice => _practice(fixture),
       DemoSpaceKey.house => _house(fixture),
       DemoSpaceKey.freelancer => _freelancer(fixture),
+      DemoSpaceKey.shop => _shop(fixture),
       DemoSpaceKey.twin => _twin(fixture),
     };
 
@@ -198,31 +199,26 @@ DemoSpaceStores _practice(DemoFixture fixture) {
   );
 }
 
-/// #4168 — Kessler Conseil's purchases: the printer's bill it has not paid.
-DemoSpaceStores _freelancer(DemoFixture fixture) {
+/// #4168 / #4365 — a business outside the organisation with purchases of its own: Kessler Conseil's (the printer's
+/// unpaid bill) and the Épicerie du Marché's (none yet).
+DemoSpaceStores _withPurchases(DemoFixture fixture, DemoSpaceKey key, {void Function(FakePurchaseRepository)? seed}) {
   final buying = DemoPurchasing(
     suppliers: FakeSupplierRepository(),
     inbox: FakeEInvoiceInboxRepository(),
-    purchases: FakePurchaseRepository(
-      actor: () => fixture.activeMemberId,
-      workspaceId: demoFreelancerSpaceId,
-    ),
+    purchases: FakePurchaseRepository(actor: () => fixture.activeMemberId, workspaceId: key.id),
   );
-  seedFreelancerPurchases(buying.purchases, fixture.seededAt);
-  return _empty(
-    fixture,
-    DemoSpaceKey.freelancer,
-    buying,
-    _emptyBooks(
-      fixture,
-      FakeBookProfileRepository(
-        money: fixture.space(DemoSpaceKey.freelancer).money,
-        purchases: buying.purchases,
-      ),
-    ),
-    fixture.space(DemoSpaceKey.freelancer).money,
-  );
+  seed?.call(buying.purchases);
+  final money = fixture.space(key).money;
+  return _empty(fixture, key, buying, _emptyBooks(fixture, FakeBookProfileRepository(money: money, purchases: buying.purchases)), money);
 }
+
+DemoSpaceStores _freelancer(DemoFixture fixture) => _withPurchases(
+  fixture,
+  DemoSpaceKey.freelancer,
+  seed: (purchases) => seedFreelancerPurchases(purchases, fixture.seededAt),
+);
+
+DemoSpaceStores _shop(DemoFixture fixture) => _withPurchases(fixture, DemoSpaceKey.shop);
 
 /// #4005 — the house abroad's own purchases and books, empty: it is new.
 DemoSpaceStores _house(DemoFixture fixture) {

@@ -1416,6 +1416,26 @@
   "@appTitle": {
     "description": "Application name shown in the task switcher and app bar. Brand name — identical in all locales."
   },
+  "appUpdateBody": "This installation accepts only a newer DesKilo app. Your data is safe: nothing you entered is lost, and it is there again once the app is updated.",
+  "@appUpdateBody": {
+    "description": "#3726 What happened, on the app-update screen"
+  },
+  "appUpdateDesktop": "Install the newest DesKilo package for this computer, then open it again.",
+  "@appUpdateDesktop": {
+    "description": "#3726 How to update on a desktop computer"
+  },
+  "appUpdateStore": "Update DesKilo from the store you installed it from, then open it again.",
+  "@appUpdateStore": {
+    "description": "#3726 How to update on a phone or tablet"
+  },
+  "appUpdateTitle": "This app needs an update",
+  "@appUpdateTitle": {
+    "description": "#3726 Title of the screen shown when the installation accepts only newer apps"
+  },
+  "appUpdateWeb": "Reload this page to load the newest version of the app.",
+  "@appUpdateWeb": {
+    "description": "#3726 How to update in a web browser"
+  },
   "applicationAcceptedVote": "Approved this request",
   "@applicationAcceptedVote": {
     "description": "Workspace admission history and discussion (#1791)"
@@ -45891,6 +45911,31 @@
   "@statusTo": {
     "description": "#934 workspace status / repartition wizard: statusTo"
   },
+  "stockCameraCount": "{count, plural, one{1 code read} other{{count} codes read}}",
+  "@stockCameraCount": {
+    "description": "#4360 G11 camera: stockCameraCount",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "stockCameraDenied": "The camera could not start. Allow camera access for DesKilo in the device’s settings, then try again.",
+  "@stockCameraDenied": {
+    "description": "#4360 G11 camera: stockCameraDenied"
+  },
+  "stockCameraMisread": "That code did not read cleanly — scan again.",
+  "@stockCameraMisread": {
+    "description": "#4360 G11 camera: stockCameraMisread"
+  },
+  "stockCameraOpen": "Scan with the camera",
+  "@stockCameraOpen": {
+    "description": "#4360 G11 camera: stockCameraOpen"
+  },
+  "stockCameraTitle": "Camera scanner",
+  "@stockCameraTitle": {
+    "description": "#4360 G11 camera: stockCameraTitle"
+  },
   "stockCostLabel": "Cost per unit",
   "@stockCostLabel": {
     "description": "#4161 the cost per unit of a movement"
@@ -47743,6 +47788,22 @@
         "type": "String"
       }
     }
+  },
+  "stockScanConfirm": "When the camera reads a code",
+  "@stockScanConfirm": {
+    "description": "#4360 G11 camera: stockScanConfirm"
+  },
+  "stockScanConfirmClick": "Click",
+  "@stockScanConfirmClick": {
+    "description": "#4360 G11 camera: stockScanConfirmClick"
+  },
+  "stockScanConfirmNone": "Do nothing",
+  "@stockScanConfirmNone": {
+    "description": "#4360 G11 camera: stockScanConfirmNone"
+  },
+  "stockScanConfirmVibrate": "Vibrate",
+  "@stockScanConfirmVibrate": {
+    "description": "#4360 G11 camera: stockScanConfirmVibrate"
   },
   "stockScanFailed": "The scanned code could not be read. Check the connection and scan it again.",
   "@stockScanFailed": {

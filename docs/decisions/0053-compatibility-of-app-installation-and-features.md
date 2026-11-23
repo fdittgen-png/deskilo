@@ -25,7 +25,7 @@ named below print them.
 |---|---|---|---|---|
 | **built against** | the app | schema number | yes | `requiredSchemaVersion`, `lib/core/instance/schema_compatibility.dart`; pinned to the last migration by `test/lint/migration_version_marker_test.dart` |
 | **needs at least** | the app, and each feature | schema number | **no.** The app has only the built-against number (it is used as "needs"). A per-feature "since" exists for four features, `featureOperationSince` in `lib/features/workspace/domain/feature_operation.dart`, but it is compared with the build's number, not the installation's | K2 (#3729) |
-| **accepts at least** | the installation | the app's **compatibility number** | **no.** Neither the number in the app nor the server's statement of it | K1 (#3726) |
+| **accepts at least** | the installation | the app's **compatibility number** | **partly.** The app carries the number (`appCompatibilityNumber`, `lib/core/instance/app_compatibility.dart`) and reads the floor (`appFloorProvider`, `lib/core/backend/app_floor.dart`); the server's `deskilo_app_floor()` arrives in a later migration, and until then an installation without it answers "no floor" | K1 (#3726) |
 
 Three terms are fixed here because three readers have confused them:
 
@@ -71,7 +71,7 @@ screens, the help, the privacy page and the Demo to `/server-update`;
 | installation older than the app needs | one screen for that installation: it needs an update; an administrator sees which migrations | partly: `behind` blocks the whole app, not only that installation; the migrations list is the doctor's |
 | installation older than a feature needs | the app works; that feature is not offered; an administrator sees why | no (K2) |
 | installation newer than the app | the app works and ignores what it does not know; a soft notice | works (`ahead` gates nothing); the notice does not exist |
-| app older than the installation accepts | blocked for that installation, with the way to update | no (K1) |
+| app older than the installation accepts | blocked for that installation, with the way to update | partly (K1): the installation the app is signed in to, with the update screen and the way out; connected installations follow with K2's per-installation reads |
 
 Other installations are never affected by one installation's verdict. Today
 the verdict is one per process, for the app's own client; making it per
@@ -127,11 +127,18 @@ Next to `-- risk:` (second line, AGENT_RULES) the file carries one line:
 least" in the same file. `additive` is the default claim and is the one a
 reviewer checks against rules 2 to 4. The line is **required from the next
 migration after this record**; earlier migrations are classified by the
-consumer-contract comparison, not by a header. It is **not yet enforced**:
-the lint beside `test/lint/migration_version_marker_test.dart` is K4
-(#3731), and so is the comparison that proves the last released app's
-calls still exist with the meaning it expects (the two committed copies of
-`assets/instance/contract.txt`, at the release tag and at master).
+consumer-contract comparison, not by a header. It is **enforced from
+migration 0898** by `test/lint/consumer_contract_test.dart` (K4, #3731).
+The comparison that proves a released app's calls still exist is the
+**consumer contract**: what the app calls (functions with the parameters
+it sends, tables with the columns it reads and writes), extracted from the
+release tag's source by `tool/consumer_contract.dart` into
+`contracts/consumer/releases/<tag>.json`, and checked against the schema
+after all migrations by `scripts/consumer_contract_check.sh` in the
+database job. A call that reads a missing function as an answer
+(`isMissingFunction`) is listed as optional. This proves structure, not
+behaviour: a function that keeps its signature and changes its meaning is
+still the review's to catch (rules 2 and 3).
 
 ### 5. Everything that has a version of its own
 Measured in the code on master `55fc2cd68`; each row's *field* is the wire

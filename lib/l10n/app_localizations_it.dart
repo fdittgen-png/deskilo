@@ -1074,6 +1074,25 @@ class AppLocalizationsIt extends AppLocalizations {
   String get appTitle => 'DesKilo';
 
   @override
+  String get appUpdateBody =>
+      'Questa installazione accetta solo un\'app DesKilo più recente. I Suoi dati sono al sicuro: nulla di ciò che ha inserito va perso, e tutto torna disponibile quando l\'app è aggiornata.';
+
+  @override
+  String get appUpdateDesktop =>
+      'Installi il pacchetto DesKilo più recente per questo computer, poi lo riapra.';
+
+  @override
+  String get appUpdateStore =>
+      'Aggiorni DesKilo dallo store da cui l\'ha installata, poi la riapra.';
+
+  @override
+  String get appUpdateTitle => 'Questa app deve essere aggiornata';
+
+  @override
+  String get appUpdateWeb =>
+      'Ricarichi questa pagina per caricare la versione più recente dell\'app.';
+
+  @override
   String get applicationAcceptedVote => 'Ha approvato questa richiesta';
 
   @override
@@ -35676,6 +35695,31 @@ class AppLocalizationsIt extends AppLocalizations {
   String get statusTo => 'Al';
 
   @override
+  String stockCameraCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count codici letti',
+      one: '1 codice letto',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get stockCameraDenied =>
+      'La fotocamera non è riuscita ad avviarsi. Consenta l’accesso alla fotocamera per DesKilo nelle impostazioni del dispositivo, poi riprovi.';
+
+  @override
+  String get stockCameraMisread =>
+      'Quel codice non è stato letto bene: scansioni di nuovo.';
+
+  @override
+  String get stockCameraOpen => 'Scansiona con la fotocamera';
+
+  @override
+  String get stockCameraTitle => 'Scanner fotocamera';
+
+  @override
   String get stockCostLabel => 'Costo per unità';
 
   @override
@@ -37077,6 +37121,18 @@ class AppLocalizationsIt extends AppLocalizations {
   String stockScanAlreadyRead(String code) {
     return 'Il tag $code è già stato letto.';
   }
+
+  @override
+  String get stockScanConfirm => 'Quando la fotocamera legge un codice';
+
+  @override
+  String get stockScanConfirmClick => 'Fai clic';
+
+  @override
+  String get stockScanConfirmNone => 'Non fare nulla';
+
+  @override
+  String get stockScanConfirmVibrate => 'Vibra';
 
   @override
   String get stockScanFailed =>

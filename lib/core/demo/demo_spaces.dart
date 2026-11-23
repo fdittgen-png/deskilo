@@ -39,6 +39,8 @@ enum DemoSpaceKey {
   house(demoHouseSpaceId, 'Kraków', 'PLN'),
   // #4168 — a freelancer's business, outside the organisation (no places).
   freelancer(demoFreelancerSpaceId, 'Kessler Conseil', 'EUR'),
+  // #4365 — a shop, outside the organisation (no places, a goods ledger).
+  shop(demoShopSpaceId, 'Épicerie du Marché', 'EUR'),
   twin(demoTwinSpaceId, 'the development twin', 'EUR');
 
   const DemoSpaceKey(this.id, this.label, this.currency);
@@ -48,7 +50,7 @@ enum DemoSpaceKey {
   /// freelancer's business (#4168), which only its owner, Bruno, belongs to.
   static List<DemoSpaceKey> get listedAtStart => [
     for (final key in values)
-      if (key != house && key != freelancer) key,
+      if (key != house && key != freelancer && key != shop) key,
   ];
 
   final String id;
@@ -113,6 +115,7 @@ class DemoSpaces<T> {
   T get practice => at(DemoSpaceKey.practice);
   T get house => at(DemoSpaceKey.house);
   T get freelancer => at(DemoSpaceKey.freelancer);
+  T get shop => at(DemoSpaceKey.shop);
   T get twin => at(DemoSpaceKey.twin);
 }
 

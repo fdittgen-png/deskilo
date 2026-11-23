@@ -469,6 +469,11 @@
     }
   },
   "appTitle": "DesKilo",
+  "appUpdateBody": "Questa installazione accetta solo un'app DesKilo più recente. I Suoi dati sono al sicuro: nulla di ciò che ha inserito va perso, e tutto torna disponibile quando l'app è aggiornata.",
+  "appUpdateDesktop": "Installi il pacchetto DesKilo più recente per questo computer, poi lo riapra.",
+  "appUpdateStore": "Aggiorni DesKilo dallo store da cui l'ha installata, poi la riapra.",
+  "appUpdateTitle": "Questa app deve essere aggiornata",
+  "appUpdateWeb": "Ricarichi questa pagina per caricare la versione più recente dell'app.",
   "applicationAcceptedVote": "Ha approvato questa richiesta",
   "@applicationAcceptedVote": {
     "description": "Workspace admission history and discussion (#1791)"
@@ -20762,6 +20767,11 @@
   "@statusTo": {
     "description": "#934 workspace status / repartition wizard: statusTo"
   },
+  "stockCameraCount": "{count, plural, one{1 codice letto} other{{count} codici letti}}",
+  "stockCameraDenied": "La fotocamera non è riuscita ad avviarsi. Consenta l’accesso alla fotocamera per DesKilo nelle impostazioni del dispositivo, poi riprovi.",
+  "stockCameraMisread": "Quel codice non è stato letto bene: scansioni di nuovo.",
+  "stockCameraOpen": "Scansiona con la fotocamera",
+  "stockCameraTitle": "Scanner fotocamera",
   "stockCostLabel": "Costo per unità",
   "stockCostNotShown": "Costo non mostrato",
   "stockCostUnknown": "Costo non registrato",
@@ -21660,6 +21670,10 @@
   "stockReversalSupplierOpen": "Reso al fornitore",
   "stockReversalSupplierTitle": "Reso al fornitore",
   "stockScanAlreadyRead": "Il tag {code} è già stato letto.",
+  "stockScanConfirm": "Quando la fotocamera legge un codice",
+  "stockScanConfirmClick": "Fai clic",
+  "stockScanConfirmNone": "Non fare nulla",
+  "stockScanConfirmVibrate": "Vibra",
   "stockScanFailed": "Non è stato possibile leggere il codice scansionato. Controlli la connessione e lo scansioni di nuovo.",
   "stockScanHelp": "Lavorare con uno scanner",
   "stockScanHint": "Usa uno scanner di codici a barre? Attivi «Scansione»",

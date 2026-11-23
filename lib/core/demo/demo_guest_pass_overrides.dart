@@ -60,6 +60,7 @@ List<GuestPassOffer> _offers(DemoSpaceKey key) => switch (key) {
   DemoSpaceKey.house ||
   // #4168 — a freelancer's business has no places either.
   DemoSpaceKey.freelancer ||
+  DemoSpaceKey.shop ||
   DemoSpaceKey.twin => const [],
 };
 

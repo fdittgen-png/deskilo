@@ -1814,6 +1814,36 @@ abstract class AppLocalizations {
   /// **'DesKilo'**
   String get appTitle;
 
+  /// #3726 What happened, on the app-update screen
+  ///
+  /// In en, this message translates to:
+  /// **'This installation accepts only a newer DesKilo app. Your data is safe: nothing you entered is lost, and it is there again once the app is updated.'**
+  String get appUpdateBody;
+
+  /// #3726 How to update on a desktop computer
+  ///
+  /// In en, this message translates to:
+  /// **'Install the newest DesKilo package for this computer, then open it again.'**
+  String get appUpdateDesktop;
+
+  /// #3726 How to update on a phone or tablet
+  ///
+  /// In en, this message translates to:
+  /// **'Update DesKilo from the store you installed it from, then open it again.'**
+  String get appUpdateStore;
+
+  /// #3726 Title of the screen shown when the installation accepts only newer apps
+  ///
+  /// In en, this message translates to:
+  /// **'This app needs an update'**
+  String get appUpdateTitle;
+
+  /// #3726 How to update in a web browser
+  ///
+  /// In en, this message translates to:
+  /// **'Reload this page to load the newest version of the app.'**
+  String get appUpdateWeb;
+
   /// Workspace admission history and discussion (#1791)
   ///
   /// In en, this message translates to:
@@ -56669,6 +56699,36 @@ abstract class AppLocalizations {
   /// **'To'**
   String get statusTo;
 
+  /// #4360 G11 camera: stockCameraCount
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{1 code read} other{{count} codes read}}'**
+  String stockCameraCount(int count);
+
+  /// #4360 G11 camera: stockCameraDenied
+  ///
+  /// In en, this message translates to:
+  /// **'The camera could not start. Allow camera access for DesKilo in the device’s settings, then try again.'**
+  String get stockCameraDenied;
+
+  /// #4360 G11 camera: stockCameraMisread
+  ///
+  /// In en, this message translates to:
+  /// **'That code did not read cleanly — scan again.'**
+  String get stockCameraMisread;
+
+  /// #4360 G11 camera: stockCameraOpen
+  ///
+  /// In en, this message translates to:
+  /// **'Scan with the camera'**
+  String get stockCameraOpen;
+
+  /// #4360 G11 camera: stockCameraTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Camera scanner'**
+  String get stockCameraTitle;
+
   /// #4161 the cost per unit of a movement
   ///
   /// In en, this message translates to:
@@ -58984,6 +59044,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Tag {code} was already read.'**
   String stockScanAlreadyRead(String code);
+
+  /// #4360 G11 camera: stockScanConfirm
+  ///
+  /// In en, this message translates to:
+  /// **'When the camera reads a code'**
+  String get stockScanConfirm;
+
+  /// #4360 G11 camera: stockScanConfirmClick
+  ///
+  /// In en, this message translates to:
+  /// **'Click'**
+  String get stockScanConfirmClick;
+
+  /// #4360 G11 camera: stockScanConfirmNone
+  ///
+  /// In en, this message translates to:
+  /// **'Do nothing'**
+  String get stockScanConfirmNone;
+
+  /// #4360 G11 camera: stockScanConfirmVibrate
+  ///
+  /// In en, this message translates to:
+  /// **'Vibrate'**
+  String get stockScanConfirmVibrate;
 
   /// #4359 G10 scanner: stockScanFailed
   ///

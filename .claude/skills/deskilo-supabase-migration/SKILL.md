@@ -26,8 +26,11 @@ behaviour; a changed signature is a new function); no second meaning for a colum
 status; an object the app writes whole is merged, never replaced; remove or narrow
 nothing until the installation's floor allows it (it does not exist yet: remove
 nothing). From the next migration the line after `-- risk:` is
-`-- apps: additive | needs app at least N | breaks apps below N` (checked by a reviewer
-until the K4 lint, #3731, exists). Rules: AGENT_RULES, "Every migration ends with its version".
+`-- apps: additive | needs app at least N | breaks apps below N`, required from 0898 by
+`test/lint/consumer_contract_test.dart` (an `additive` file drops and renames nothing). The
+database job proves every released app's calls and columns are still served
+(`scripts/consumer_contract_check.sh`); say in the ready line what an app of the last
+release does after the change. Rules: AGENT_RULES, "Every migration ends with its version".
 
 ## 1. The number
 - Dev project `zwzbynivewivvjmripeb` (never the tankstellen project). Files are
