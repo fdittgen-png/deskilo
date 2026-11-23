@@ -14,9 +14,12 @@ import '../../../core/codes/dk_code.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/stock_config.dart';
 
-/// Throws the typed failure [e] stands for, with its stack, or rethrows it.
-Never throwStockFailure(PostgrestException e, StackTrace stack) {
+/// Throws the typed failure [e] stands for, with its stack, or rethrows it. [pieces]: the command names pieces
+/// (#4379 put-away), so a refusal of a named piece (DKG25, DKG26) is typed with the piece it names.
+Never throwStockFailure(PostgrestException e, StackTrace stack, {bool pieces = false}) {
   switch (e.code) {
+    case DkCode.dkg25 || DkCode.dkg26 when pieces:
+      Error.throwWithStackTrace(StockTagRefused(e.code!, _detail(e.details)), stack);
     case DkCode.dkg10:
       Error.throwWithStackTrace(const StockConfigStale(), stack);
     case DkCode.dkg08:

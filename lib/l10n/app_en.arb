@@ -46978,6 +46978,18 @@
   "@stockPutAwayNothing": {
     "description": "#4171 receiving into stock: a label or message"
   },
+  "stockPutAwayPieceProblem": "Piece {piece}: {problem}",
+  "@stockPutAwayPieceProblem": {
+    "description": "#4379 G13b put-away by piece [not a count: piece] -- the piece's place among the line's tags",
+    "placeholders": {
+      "piece": {
+        "type": "int"
+      },
+      "problem": {
+        "type": "String"
+      }
+    }
+  },
   "stockPutAwayPlace": "Place",
   "@stockPutAwayPlace": {
     "description": "#4171 receiving into stock: a label or message"
@@ -47009,6 +47021,56 @@
   "stockPutAwayRemaining": "Put away what remains",
   "@stockPutAwayRemaining": {
     "description": "#4171 receiving into stock: a label or message"
+  },
+  "stockPutAwayTagAllRead": "{needed, plural, one{The {needed} piece of this line already has a tag.} other{All {needed} pieces of this line already have a tag.}}",
+  "@stockPutAwayTagAllRead": {
+    "description": "#4379 G13b put-away by piece",
+    "placeholders": {
+      "needed": {
+        "type": "int"
+      }
+    }
+  },
+  "stockPutAwayTagField": "Tag of the next piece",
+  "@stockPutAwayTagField": {
+    "description": "#4379 G13b put-away by piece"
+  },
+  "stockPutAwayTagRemove": "Remove tag {code}",
+  "@stockPutAwayTagRemove": {
+    "description": "#4379 G13b put-away by piece",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "stockPutAwayTagsCount": "{read, plural, one{{read} piece} other{{read} pieces}} read of {needed, plural, one{{needed}} other{{needed}}}",
+  "@stockPutAwayTagsCount": {
+    "description": "#4379 G13b put-away by piece",
+    "placeholders": {
+      "read": {
+        "type": "int"
+      },
+      "needed": {
+        "type": "int"
+      }
+    }
+  },
+  "stockPutAwayTagsMissing": "Read one tag per piece: {needed, plural, one{{needed} needed} other{{needed} needed}}, {read, plural, one{{read} read} other{{read} read}}.",
+  "@stockPutAwayTagsMissing": {
+    "description": "#4379 G13b put-away by piece",
+    "placeholders": {
+      "needed": {
+        "type": "int"
+      },
+      "read": {
+        "type": "int"
+      }
+    }
+  },
+  "stockPutAwayTagsTitle": "Tags of the pieces",
+  "@stockPutAwayTagsTitle": {
+    "description": "#4379 G13b put-away by piece"
   },
   "stockPutAwayTitle": "Put away {order}",
   "@stockPutAwayTitle": {

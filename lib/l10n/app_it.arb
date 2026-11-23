@@ -21299,6 +21299,7 @@
   "@stockPutAwayNothing": {
     "description": "#4171 receiving into stock: a label or message"
   },
+  "stockPutAwayPieceProblem": "Pezzo {piece}: {problem}",
   "stockPutAwayPlace": "Ubicazione",
   "@stockPutAwayPlace": {
     "description": "#4171 receiving into stock: a label or message"
@@ -21331,6 +21332,12 @@
   "@stockPutAwayRemaining": {
     "description": "#4171 receiving into stock: a label or message"
   },
+  "stockPutAwayTagAllRead": "{needed, plural, one{L'unico pezzo di questa riga ({needed}) ha già un tag.} other{Tutti i {needed} pezzi di questa riga hanno già un tag.}}",
+  "stockPutAwayTagField": "Tag del pezzo successivo",
+  "stockPutAwayTagRemove": "Rimuovere il tag {code}",
+  "stockPutAwayTagsCount": "{read, plural, one{{read} pezzo letto} other{{read} pezzi letti}} su {needed, plural, one{{needed}} other{{needed}}}",
+  "stockPutAwayTagsMissing": "Un tag per pezzo: {needed, plural, one{{needed} necessario} other{{needed} necessari}}, {read, plural, one{{read} letto} other{{read} letti}}.",
+  "stockPutAwayTagsTitle": "Tag dei pezzi",
   "stockPutAwayTitle": "Collocare {order}",
   "@stockPutAwayTitle": {
     "description": "#4171 receiving into stock: a label or message",

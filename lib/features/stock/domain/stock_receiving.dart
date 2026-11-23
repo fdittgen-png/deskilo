@@ -78,6 +78,7 @@ class PutAwayAllocation {
     this.lotCode,
     this.expiresOn,
     this.cost = const PutAwayCost.unknown(),
+    this.tags = const [],
   });
 
   /// The number of the order line the delivery brought.
@@ -94,6 +95,10 @@ class PutAwayAllocation {
   final String? expiresOn;
   final PutAwayCost cost;
 
+  /// #4379 -- the tag of each piece, for an item tagged piece by piece: as many as the allocation holds in the
+  /// item's inventory unit. The server makes one piece per tag at the place, with the movement (0889).
+  final List<String> tags;
+
   Map<String, Object?> toJson() => {
     'line_no': lineNo,
     'quantity': quantity,
@@ -103,6 +108,7 @@ class PutAwayAllocation {
     if (lotCode != null || expiresOn != null)
       'lot': {'code': ?lotCode, 'expires_on': ?expiresOn},
     'cost': cost.toJson(),
+    if (tags.isNotEmpty) 'units': [for (final t in tags) {'tag': t}],
   };
 }
 

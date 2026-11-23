@@ -76,7 +76,8 @@ class SupabaseStockReceivingCommands implements StockReceivingCommands {
   });
 
   Future<PutAwayResult> _call(String rpc, Map<String, Object?> params) async {
-    return StockRpc(_client).guard('a stock command', () async {
+    // the put-away names pieces: a refused piece (DKG25, DKG26) is typed with the piece it names (#4379)
+    return StockRpc(_client).guard('a stock command', pieces: true, () async {
       final answer = await _client.rpc<Object?>(rpc, params: params);
       final r = JsonReader.of(answer, context: rpc);
       return (
