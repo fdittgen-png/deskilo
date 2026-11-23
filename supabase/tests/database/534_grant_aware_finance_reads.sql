@@ -41,9 +41,9 @@ begin
          (ws, s2, m_o, 'GV-S2', 'S2', '[]'::jsonb, 2000, 'EUR', 'Client SARL', 'Grant reads', 'Owner', 'sig', null, d - 3, 'full', 'standalone', d - 3, d + 10),
          (ws, m_m, m_o, 'GV-M1', 'M1', '[]'::jsonb, 500, 'EUR', 'Mia', 'Grant reads', 'Owner', 'sig', '2026-10', '2026-10-01', 'full', 'monthly', null, null);
   -- Two accepted grants of the same account, as 0910's accept leaves them.
-  insert into public.billing_access_grants (workspace_id, financial_subject_id, request_id, invited_by, principal_user_id, accepted_at)
-  values (ws, s1, '00000000-0000-4000-8000-00000416b001', m_o, u_c, now()),
-         (ws, s2, '00000000-0000-4000-8000-00000416b002', m_o, u_c, now());
+  insert into public.billing_access_grants (workspace_id, financial_subject_id, request_id, inviter_user_id, principal_user_id, accepted_at)
+  values (ws, s1, '00000000-0000-4000-8000-00000416b001', u_o, u_c, now()),
+         (ws, s2, '00000000-0000-4000-8000-00000416b002', u_o, u_c, now());
   perform set_config('t.ws', ws::text, true);
   perform set_config('t.s1', s1::text, true);
   perform set_config('t.s2', s2::text, true);

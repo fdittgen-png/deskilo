@@ -1,15 +1,16 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: transforming
 -- apps: additive
--- (one table, seven functions, one policy restated)
+-- (one table, four functions, one policy restated)
 --
 -- #4164 B1 -- a billing customer may read and pay their own documents from their own account, without becoming a
 -- member. The seller issues an invitation for ONE financial subject (the seller-local `members.id` of a billing-only
 -- customer, 0821); the account that accepts it holds a billing-access grant: the documents and the payments of that
 -- subject in that business, and nothing else -- no booking, directory, community, management or subscription right
 -- follows, and no `members` row is created or changed. One account may hold grants for several subjects (a person
--- buying personally and for a company keeps two debtors), and a subject's grant moves to another account only by a
--- new invitation: the debt never moves with a login.
+-- buying personally and for a company keeps two debtors), and one subject may be read by several accounts the seller
+-- invited (the customer's owner and their bookkeeper); each grant is revoked on its own. Another account reaches a
+-- subject only by a new invitation: the debt never moves with a login.
 --
 --   * `billing_access_grants`: the seller workspace, the financial subject, the purpose (`billing_documents`), the
 --     invitation code, who issued it and when, who accepted it and when, who revoked it, when and why. A revocation
@@ -18,9 +19,8 @@
 --     `billing_access_preview_v1` (what a code names, before accepting), `billing_access_accept_v1` (the account
 --     accepting; a replay by the same account answers the same grant), `billing_access_revoke_v1` (the seller, or
 --     the account itself).
---   * `billing_subject_granted(workspace, subject)`: whether the caller holds a live grant for that subject -- the
---     one predicate every grant-aware reader uses; `invoices_select` is restated with it, so the customer reads the
---     rows of their own subject's invoices and no other.
+--   * `invoices_select` (0131's finance gate) also admits the subjects of the caller's live grants: the customer reads
+--     the rows of their own subject's invoices, and the originals that follow them, and no other.
 --
 -- An assistant never invites, accepts or revokes (`mcp_require_native` / the manage guard): a grant is a person's
 -- decision in the app.
@@ -33,7 +33,7 @@ create table if not exists public.billing_access_grants (
   purpose text not null default 'billing_documents' check (purpose in ('billing_documents')),
   code text not null unique default public.gen_invite_code(),
   request_id uuid not null,
-  invited_by uuid not null references public.members(id),
+  inviter_user_id uuid not null,
   invited_at timestamptz not null default now(),
   expires_at timestamptz not null default now() + interval '14 days',
   principal_user_id uuid references auth.users(id) on delete cascade,
@@ -68,22 +68,12 @@ create policy mcp_delegated_deny on public.billing_access_grants as restrictive 
 revoke all on public.billing_access_grants from anon, authenticated;
 -- Every column but the code: a code is handed out once, by billing_access_invite_v1 to whoever may invite, and a
 -- reader of the business's customers who may not invite never learns one (and so cannot accept it).
-grant select (id, workspace_id, financial_subject_id, purpose, request_id, invited_by, invited_at, expires_at,
-              principal_user_id, accepted_at, revoked_at, revoked_by_user_id, revoke_reason,
+grant select (id, workspace_id, financial_subject_id, purpose, request_id, invited_at, expires_at,
+              principal_user_id, accepted_at, revoked_at, revoked_by_user_id, revoke_reason, inviter_user_id,
               created_datetime, modified_datetime, company_id, site_id, created_by_user, modified_by_user)
   on public.billing_access_grants to authenticated;
 
--- ── 2. the predicate ─────────────────────────────────────────────────────
-create or replace function public.billing_subject_granted(p_workspace uuid, p_subject uuid)
-returns boolean language sql stable security definer set search_path = public as $fn$
-  select auth.uid() is not null and exists (
-    select 1 from public.billing_access_grants g
-     where g.workspace_id = p_workspace and g.financial_subject_id = p_subject
-       and g.principal_user_id = auth.uid() and g.revoked_at is null);
-$fn$;
-revoke execute on function public.billing_subject_granted(uuid, uuid) from public, anon;
-grant execute on function public.billing_subject_granted(uuid, uuid) to authenticated;
-
+-- ── 2. the customer's reading ───────────────────────────────────────────
 -- The customer reads the rows of their own subject's invoices; the rest of the policy is 0131's
 -- (may_view_member_finances: the member's own, or viewFinances).
 drop policy if exists invoices_select on public.invoices;
@@ -98,7 +88,6 @@ create policy invoices_select on public.invoices for select using (
 create or replace function public.billing_access_invite_v1(p_workspace uuid, p_subject uuid, p_request_id uuid)
 returns jsonb language plpgsql security definer set search_path = public as $fn$
 declare
-  v_me uuid;
   v_old public.billing_access_grants;
   v_new public.billing_access_grants;
 begin
@@ -120,10 +109,8 @@ begin
                   where m.id = p_subject and m.workspace_id = p_workspace and m.status = 'customer') then
     raise exception 'an access invitation is for a billing customer of this business' using errcode = 'DKH02';
   end if;
-  select m.id into v_me from public.members m
-   where m.workspace_id = p_workspace and m.user_id = auth.uid() and m.status = 'active';
-  insert into public.billing_access_grants (workspace_id, financial_subject_id, request_id, invited_by)
-  values (p_workspace, p_subject, p_request_id, v_me)
+  insert into public.billing_access_grants (workspace_id, financial_subject_id, request_id, inviter_user_id)
+  values (p_workspace, p_subject, p_request_id, auth.uid())
   returning * into v_new;
   return jsonb_build_object('grant_id', v_new.id, 'code', v_new.code, 'expires_at', v_new.expires_at,
                             'replayed', false);
@@ -180,7 +167,10 @@ begin
     raise exception 'this invitation cannot be used' using errcode = 'DKH01';
   end if;
   -- An account holds one live grant per subject: a second invitation of the same subject to the same account is
-  -- answered by the grant it already holds, and the newer code is spent.
+  -- answered by the grant it already holds, and the newer code is spent. Two codes of one subject accepted at once
+  -- by one account wait for each other here.
+  perform pg_advisory_xact_lock(hashtextextended(
+    'billing_access:' || v_g.workspace_id::text || ':' || v_g.financial_subject_id::text || ':' || auth.uid()::text, 0));
   if exists (select 1 from public.billing_access_grants o
               where o.workspace_id = v_g.workspace_id and o.financial_subject_id = v_g.financial_subject_id
                 and o.principal_user_id = auth.uid() and o.revoked_at is null) then
