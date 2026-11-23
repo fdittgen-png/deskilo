@@ -46,10 +46,11 @@ create table public.counter_tills (
   site_id uuid references public.sites (id),
   name text not null check (char_length(btrim(name)) between 1 and 60),
   active boolean not null default true,
-  unique (workspace_id, name),
   unique (workspace_id, id)
 );
 select public.ensure_system_columns('counter_tills');
+-- a name is unique whatever its case and its spaces
+create unique index counter_tills_name on public.counter_tills (workspace_id, lower(btrim(name)));
 
 create table public.counter_till_sessions (
   id uuid primary key default gen_random_uuid(),
@@ -240,7 +241,7 @@ revoke execute on function public.counter_finance_actor(uuid) from public, anon,
 create or replace function public.counter_till_or_finance_actor(p_workspace_id uuid)
 returns uuid language plpgsql stable security definer set search_path = public as $fn$
 begin
-  if public.has_permission(p_workspace_id, 'issueInvoices') then
+  if public.has_permission(p_workspace_id, 'issueInvoices') and public.feature_effective(p_workspace_id, 'counterReceipts') then
     return public.counter_till_actor(p_workspace_id);
   end if;
   return public.counter_finance_actor(p_workspace_id);
@@ -370,6 +371,9 @@ begin
   if v_till.id is null or not v_till.active then
     raise exception 'not an active till of this business' using errcode = 'DKL12', detail = jsonb_build_object('reason', 'till_unknown')::text;
   end if;
+  -- the day close holds this key exclusively while it builds its report: an open waits for it, then sees the day closed; a close
+  -- waits for an open that took the key first, then sees the till open
+  perform pg_advisory_xact_lock_shared(hashtextextended('counter_day_close:' || p_workspace_id::text, 0));
   -- a day closed for the site (or for the business as a whole) takes no session: it could never be part of that close
   if exists (select 1 from public.counter_day_closes c where c.workspace_id = p_workspace_id and c.business_date = public.workspace_today(p_workspace_id)
                 and c.site_key in ('', coalesce(v_till.site_id::text, ''))) then
@@ -425,6 +429,9 @@ begin
   select * into v_session from public.counter_till_sessions s where s.id = p_session_id and s.workspace_id = p_workspace_id for update;
   if v_session.id is null or v_session.state <> 'open' then
     raise exception 'this session is not open' using errcode = 'DKL12', detail = jsonb_build_object('reason', case when v_session.id is null then 'session_unknown' else 'closed' end)::text;
+  end if;
+  if v_session.opened_by_member_id is distinct from v_me and not public.has_permission(p_workspace_id, 'viewFinances') then
+    raise exception 'an entry goes into the session of whoever opened it, or is made by someone who may see the finances' using errcode = 'DKN01';
   end if;
   v_limit := coalesce((public.setting_value(p_workspace_id, 'counter.paid_out_limit_minor') #>> '{}')::bigint, 0);
   if p_kind = 'paid_out' and v_limit > 0 and p_amount_minor > v_limit then
@@ -511,7 +518,10 @@ begin
   v_cash := public.counter_session_cash(v_session.id);
   v_diff := p_counted_minor - (v_cash ->> 'expected_minor')::bigint;
   if v_diff <> 0 and btrim(coalesce(p_difference_reason, '')) = '' then
-    raise exception 'a difference is closed with its reason' using errcode = 'DKL13', detail = jsonb_build_object('reason', 'difference_reason', 'difference_minor', v_diff::text)::text;
+    -- the figure is the expected cash seen through the counted one: only the finances are given it before the close is committed
+    raise exception 'a difference is closed with its reason' using errcode = 'DKL13',
+      detail = (jsonb_build_object('reason', 'difference_reason')
+                || case when public.has_permission(p_workspace_id, 'viewFinances') then jsonb_build_object('difference_minor', v_diff::text) else '{}'::jsonb end)::text;
   end if;
   update public.counter_till_sessions set state = 'closed', closed_by_member_id = v_me, closed_at = now(), counted_minor = p_counted_minor,
          counted_denominations = case when v_by_denomination then p_denominations end, expected_minor = (v_cash ->> 'expected_minor')::bigint,
@@ -601,6 +611,10 @@ begin
       using errcode = 'DKN01';
   end if;
   foreach v_table in array v_tables loop
+    -- the sessions, their entries and the day closes carry the expected cash and the differences: the finances' to export
+    if v_table in ('counter_till_sessions', 'counter_cash_entries', 'counter_day_closes') and not public.has_permission(p_workspace_id, 'viewFinances') then
+      continue;
+    end if;
     select array_agg(c.column_name::text order by c.ordinal_position) into v_columns
       from information_schema.columns c
      where c.table_schema = 'public' and c.table_name = v_table

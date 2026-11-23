@@ -51,17 +51,18 @@ begin
   if exists (select 1 from public.counter_day_closes c where c.workspace_id = p_workspace_id and c.site_key = v_site_key and c.business_date = p_business_date) then
     raise exception 'this day is already closed' using errcode = 'DKL14', detail = jsonb_build_object('reason', 'day_closed')::text;
   end if;
-  -- a till of the site that is still open refuses it, naming the till
+  select w.timezone into v_tz from public.workspaces w where w.id = p_workspace_id;
+  v_tz := coalesce(nullif(v_tz, ''), 'UTC');
+  -- a till of the site that is still open since that day or before refuses it, naming the till (a session opened later is another day's)
   select t.id, t.name into v_open from public.counter_tills t
    join public.counter_till_sessions s on s.till_id = t.id and s.state = 'open'
    where t.workspace_id = p_workspace_id and (p_site_id is null or t.site_id = p_site_id)
+     and (s.opened_at at time zone v_tz)::date <= p_business_date
    order by t.name limit 1;
   if v_open.id is not null then
     raise exception 'a till is still open' using errcode = 'DKL14',
       detail = jsonb_build_object('reason', 'till_open', 'till_id', v_open.id, 'name', v_open.name)::text;
   end if;
-  select w.timezone into v_tz from public.workspaces w where w.id = p_workspace_id;
-  v_tz := coalesce(nullif(v_tz, ''), 'UTC');
   select array_agg(s.id order by s.closed_at) into v_sessions
     from public.counter_till_sessions s join public.counter_tills t on t.id = s.till_id
    where s.workspace_id = p_workspace_id and s.state = 'closed' and s.day_close_id is null
@@ -99,7 +100,8 @@ begin
         where r.workspace_id = p_workspace_id and r.kind = 'correction' and r.state = 'finalized' and o.till_session_id = any (v_sessions)),
     'refunds', (select coalesce(jsonb_object_agg(g.kind, g.amount::text), '{}'::jsonb)
         from (select f.kind, sum(f.amount_minor) amount from public.counter_refunds f
-               left join public.counter_receipts o on o.id = f.receipt_id and o.workspace_id = f.workspace_id
+               left join public.counter_receipts c on c.id = f.receipt_id and c.workspace_id = f.workspace_id
+               left join public.counter_receipts o on o.id = c.corrects_receipt_id and o.workspace_id = f.workspace_id
                where f.workspace_id = p_workspace_id
                  and ((f.kind = 'cash' and f.till_session_id = any (v_sessions))
                       or (f.kind <> 'cash' and o.till_session_id = any (v_sessions))) group by 1) g),

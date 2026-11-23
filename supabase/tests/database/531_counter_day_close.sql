@@ -1,7 +1,8 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
+-- #4367 (0909): (the day close against a session opened at once is serialised by one advisory key, shared by the open and exclusive for the close; the order the commits take is proven here, the two connections at once are the key's own guarantee)
 -- #4367 (0909): the day close refuses a till still open (naming it), is made by someone who may see the finances, is numbered and immutable, its report totals agree with the receipts (by tax rate and tender, the range of numbers, the differences), a lost answer recovers the same close, a day closed once is closed, an assistant reads it with the right to see the finances and nothing else does. Rolled back.
 begin;
-select plan(21);
+select plan(22);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -70,6 +71,10 @@ $f$;
 create or replace function pg_temp.sitedayclose(p_user int, p_req int, p_site uuid, p_date date) returns text language sql as $f$
   select pg_temp.run_as(pg_temp.u(p_user), format('select public.counter_day_close_v1(%L, %L, %L, %L)::text', pg_temp.u(101), pg_temp.u(p_req), p_site, p_date))
 $f$;
+create or replace function pg_temp.refund_other(p_user int, p_req int, p_receipt uuid, p_amount bigint) returns text language sql as $f$
+  select pg_temp.run_as(pg_temp.u(p_user), format('select public.counter_refund_v1(%L, %L, %L, %L::jsonb)::text', pg_temp.u(101), pg_temp.u(p_req), p_receipt,
+    format('[{"kind": "other", "amount_minor": %s}]', p_amount)))
+$f$;
 grant execute on all functions in schema pg_temp to authenticated, anon;
 
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
@@ -103,15 +108,16 @@ select set_config('t.rb', pg_temp.sale(1, 7307, current_setting('t.tb')::uuid, '
 select set_config('t.ca', pg_temp.corr(1, 7309, pg_temp.f(current_setting('t.ra'), 'receipt_id')::uuid), false);
 select set_config('t.cb', pg_temp.corr(1, 7310, pg_temp.f(current_setting('t.rb'), 'receipt_id')::uuid), false);
 select set_config('t.fa', pg_temp.refund(1, 7311, pg_temp.f(current_setting('t.ca'), 'receipt_id')::uuid, current_setting('t.ta')::uuid, 400), false);
+select set_config('t.oa', pg_temp.refund_other(1, 7321, pg_temp.f(current_setting('t.ca'), 'receipt_id')::uuid, 300), false);
 select set_config('t.fb', pg_temp.refund(1, 7312, pg_temp.f(current_setting('t.cb'), 'receipt_id')::uuid, current_setting('t.tb')::uuid, 700), false);
 select set_config('t.xa', pg_temp.sclose(1, 7313, current_setting('t.sa')::uuid, 1600), false);
 select set_config('t.xb', pg_temp.sclose(1, 7314, current_setting('t.sb')::uuid, 2300), false);
 select set_config('t.da', pg_temp.sitedayclose(5, 7315, pg_temp.u(701), current_setting('t.today')::date), false);
 select is(pg_temp.f(current_setting('t.da'), 'number') is not null, true, 'someone who sees the finances and does not work the counter closes the day of a site');
-select is((current_setting('t.da')::jsonb #>> '{report,sales_total_minor}') || ' ' || (current_setting('t.da')::jsonb #>> '{report,refunds,cash}') || ' ' || (current_setting('t.da')::jsonb #>> '{report,corrections,count}'), '1000 400 1',
+select is((current_setting('t.da')::jsonb #>> '{report,sales_total_minor}') || ' ' || (current_setting('t.da')::jsonb #>> '{report,refunds,cash}') || ' ' || coalesce(current_setting('t.da')::jsonb #>> '{report,refunds,other}', '-') || ' ' || (current_setting('t.da')::jsonb #>> '{report,corrections,count}'), '1000 400 300 1',
   'the report of site A counts its own sale, its own refund and its own correction');
 select set_config('t.db', pg_temp.sitedayclose(3, 7316, pg_temp.u(702), current_setting('t.today')::date), false);
-select is((current_setting('t.db')::jsonb #>> '{report,sales_total_minor}') || ' ' || (current_setting('t.db')::jsonb #>> '{report,refunds,cash}') || ' ' || (current_setting('t.db')::jsonb #>> '{report,corrections,count}'), '2000 700 1',
+select is((current_setting('t.db')::jsonb #>> '{report,sales_total_minor}') || ' ' || (current_setting('t.db')::jsonb #>> '{report,refunds,cash}') || ' ' || coalesce(current_setting('t.db')::jsonb #>> '{report,refunds,other}', '-') || ' ' || (current_setting('t.db')::jsonb #>> '{report,corrections,count}'), '2000 700 - 1',
   'and the report of site B on the same day counts only its own: the refund of site A is not in it');
 select is(pg_temp.sopen(1, 7317, current_setting('t.ta')::uuid, 100), 'ERR DKL15 {"reason": "day_closed", "till_id": "' || current_setting('t.ta') || '"}', 'a till of a site whose day is closed opens no session: it could never be part of that close');
 select set_config('t.tc', pg_temp.f(pg_temp.till(1, 7318, null, 'TC'), 'till_id'), false);
@@ -126,6 +132,7 @@ select set_config('t.r1', pg_temp.sale(1, 7204, current_setting('t.till')::uuid,
 select set_config('t.r2', pg_temp.sale(1, 7206, current_setting('t.till2')::uuid, 'd-2', '30.00', 3000), false);
 select set_config('t.c1', pg_temp.sclose(1, 7208, current_setting('t.s1')::uuid, 11200), false);
 select is(pg_temp.dayclose(3, 7209, current_setting('t.today')::date), 'ERR DKL14 {"name": "Till 2", "reason": "till_open", "till_id": "' || current_setting('t.till2') || '"}', 'closing the day with a till still open is refused, with the till named');
+select is(pg_temp.dayclose(3, 7230, (current_setting('t.today')::date - 1)), 'ERR DKL14 {"reason": "nothing_to_close"}', 'a till open today does not hold back the close of a past day');
 select set_config('t.c2', pg_temp.sclose(1, 7210, current_setting('t.s2')::uuid, 8000), false);
 select is(left(pg_temp.dayclose(2, 7211, current_setting('t.today')::date), 9), 'ERR DKN01', 'the day is closed by someone who may see the finances, not by the counter');
 select set_config('t.dc', pg_temp.dayclose(3, 7212, current_setting('t.today')::date), false);

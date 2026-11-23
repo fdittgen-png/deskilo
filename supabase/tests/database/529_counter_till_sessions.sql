@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- #4367 (0905-0907, CS5): a till is opened with its float (one open session per till, a lost answer recovers the same one), takes paid-in and paid-out entries with a reason from the business's list (a paid-out above the limit needs the right to record outgoing payments), the expected cash is derived and hidden from a blind count, the close records the counted amount, the difference and its reason, and a closed session is frozen. Rolled back.
 begin;
-select plan(28);
+select plan(34);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -62,11 +62,11 @@ $f$;
 grant execute on all functions in schema pg_temp to authenticated, anon;
 
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
-select pg_temp.u(n), '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', 'ctill-' || n || '@deskilo.test', '', now(), now(), now() from generate_series(1, 4) n;
+select pg_temp.u(n), '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', 'ctill-' || n || '@deskilo.test', '', now(), now(), now() from generate_series(1, 5) n;
 insert into public.workspaces (id, name, country_code, currency_code, timezone, created_by, vat_regime, feature_flags, role_permissions) values
   (pg_temp.u(101), 'Till FR', 'FR', 'EUR', 'Europe/Paris', pg_temp.u(1), 'vat_registered',
    '{"services": true, "invoicing": true, "standaloneInvoicing": true, "counterReceipts": true, "counterTillSessions": true}',
-   '{"member": ["issueInvoices"], "admin": ["issueInvoices", "viewFinances", "recordOutgoingPayments"]}'),
+   '{"member": ["issueInvoices"], "admin": ["issueInvoices", "viewFinances", "recordOutgoingPayments"], "co_owner": ["exportData"]}'),
   (pg_temp.u(105), 'Till other', 'FR', 'EUR', 'Europe/Paris', pg_temp.u(4), 'vat_registered',
    '{"services": true, "invoicing": true, "standaloneInvoicing": true, "counterReceipts": true, "counterTillSessions": true}', '{}');
 insert into public.members (id, workspace_id, user_id, is_owner, is_admin, status) values
@@ -74,6 +74,7 @@ insert into public.members (id, workspace_id, user_id, is_owner, is_admin, statu
   (pg_temp.u(202), pg_temp.u(101), pg_temp.u(2), false, false, 'active'),
   (pg_temp.u(203), pg_temp.u(101), pg_temp.u(3), false, true, 'active'),
   (pg_temp.u(205), pg_temp.u(105), pg_temp.u(4), true, true, 'active');
+insert into public.members (id, workspace_id, user_id, is_owner, is_admin, co_owner, status) values (pg_temp.u(206), pg_temp.u(101), pg_temp.u(5), false, false, 'active', 'active');
 insert into public.vat_rates (id, workspace_id, label, percent, category, is_default, group_key)
 values (pg_temp.u(801), pg_temp.u(101), 'Standard', 20, 'S', true, 'standard');
 insert into public.setting_values (scope, workspace_id, key, value) values ('workspace', pg_temp.u(101), 'counter.fiscal_obligation', '"none"'::jsonb);
@@ -81,9 +82,9 @@ select set_config('t.till', pg_temp.f(pg_temp.till(1, 7001, null, 'Till 1'), 'ti
 select set_config('t.today', public.workspace_today(pg_temp.u(101))::text, false);
 
 -- ── open, one open session per till, entries, the derived expected cash, blind, close ──
-select set_config('t.s', pg_temp.sopen(1, 7002, current_setting('t.till')::uuid, 15000), false);
+select set_config('t.s', pg_temp.sopen(2, 7002, current_setting('t.till')::uuid, 15000), false);
 select is(pg_temp.f(current_setting('t.s'), 'float_minor'), '15000', 'a session is opened with its float');
-select is(pg_temp.f(pg_temp.sopen(1, 7002, current_setting('t.till')::uuid, 15000), 'replayed'), 'true', 'a lost answer retried under the same id answers the same session');
+select is(pg_temp.f(pg_temp.sopen(2, 7002, current_setting('t.till')::uuid, 15000), 'replayed'), 'true', 'a lost answer retried under the same id answers the same session');
 select is(pg_temp.sopen(2, 7003, current_setting('t.till')::uuid, 100), 'ERR DKL12 {"reason": "already_open", "till_id": "' || current_setting('t.till') || '", "session_id": "' || pg_temp.f(current_setting('t.s'), 'session_id') || '"}', 'a second open of the same till is refused, naming the session: one open session per till');
 select is(pg_temp.f(pg_temp.entry(2, 7004, pg_temp.f(current_setting('t.s'), 'session_id')::uuid, 'paid_in', 500, 'change'), 'amount_minor'), '500', 'a paid-in is recorded with a reason of the list');
 select is(pg_temp.entry(2, 7005, pg_temp.f(current_setting('t.s'), 'session_id')::uuid, 'paid_out', 100, 'whim'), 'ERR DKL13 {"reason": "reason_unknown"}', 'a reason that is not on the list is refused');
@@ -123,6 +124,17 @@ select is(pg_temp.run_as(pg_temp.u(2), 'select count(*)::text from public.counte
 select is(pg_temp.run_as(pg_temp.u(3), 'select count(*)::text from public.counter_till_sessions'), '2', 'the finances read every session');
 select is(pg_temp.run_as(pg_temp.u(3), 'select count(*)::text from public.counter_cash_entries'), '2', 'and every entry');
 select is(left(pg_temp.sexp(2, pg_temp.f(current_setting('t.s'), 'session_id')::uuid), 9), 'ERR DKN01', 'the counter does not read the expected cash of a closed session either, nor of one it did not open');
+
+-- the blind count: the refusal of a difference carries no figure for the counter; an entry goes into the opener's session; names; the export
+select is(pg_temp.sclose(2, 7040, pg_temp.f(current_setting('t.s2'), 'session_id')::uuid, 1), 'ERR DKL13 {"reason": "difference_reason"}', 'a close that lacks its reason is refused without saying how far off the count was: the figure is the expected cash seen through the counted one');
+select set_config('t.tb', pg_temp.f(pg_temp.till(1, 7041, null, 'Till B'), 'till_id'), false);
+select set_config('t.sb', pg_temp.f(pg_temp.sopen(1, 7042, current_setting('t.tb')::uuid, 100), 'session_id'), false);
+select is(left(pg_temp.entry(2, 7043, current_setting('t.sb')::uuid, 'paid_in', 100, 'change'), 9), 'ERR DKN01', 'an entry does not go into the session of another cashier');
+select is(pg_temp.f(pg_temp.entry(3, 7044, current_setting('t.sb')::uuid, 'paid_in', 100, 'change'), 'amount_minor'), '100', 'unless it is made by someone who may see the finances');
+select is(pg_temp.till(1, 7045, null, '  till b '), 'ERR DKL12 {"reason": "name_taken"}', 'a till name is unique whatever its case and its spaces');
+select is(pg_temp.run_as(pg_temp.u(5), $q$select (select string_agg(e ->> 'table', ',' order by e ->> 'table') from jsonb_array_elements(public.export_workspace_records('$q$ || pg_temp.u(101) || $q$')) e where e ->> 'table' like 'counter_%')$q$),
+  'counter_receipt_lines,counter_receipts,counter_refunds,counter_tenders,counter_tills', 'an export without the right to see the finances leaves out the sessions, their entries and the day closes');
+select is((select count(*)::int from jsonb_array_elements((select pg_temp.run_as(pg_temp.u(1), format('select public.export_workspace_records(%L)::text', pg_temp.u(101)))::jsonb)) e where e ->> 'table' in ('counter_till_sessions', 'counter_cash_entries', 'counter_day_closes')), 3, 'and with that right it carries them');
 
 select * from finish();
 rollback;
