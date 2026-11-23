@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: transforming
 -- apps: additive
--- (two columns with a constant default, one trigger, three new functions, eight functions patched; no row changes)
+-- (two columns with a constant default, one trigger, three new functions, two restated, six patched; no row changes)
 --
 -- #4165 B1 -- paying standalone invoices. A standalone invoice has no month, so it cannot be paid through the monthly
 -- claim (check_payment_claim keys a payment to one month). Two versioned adapters take a standalone selection under an
@@ -279,6 +279,7 @@ grant execute on function public.record_standalone_payment_v1(uuid, uuid, intege
 -- ── 5. the capture posts an explicit payment in the month it arrived ─────
 -- Restated from 0797 with one branch: an explicit intent's credit carries its mode and is dated by the capture, in the
 -- business's calendar; a legacy one is posted as before, in the intent's month.
+-- restates 0797
 create or replace function public.settle_online_payment(p_provider text, p_order_id text, p_capture_id text, p_amount_cents integer)
 returns void language plpgsql security definer set search_path = public as $fn$
 declare
@@ -323,6 +324,124 @@ end;
 $fn$;
 revoke execute on function public.settle_online_payment(text, text, text, integer) from public, anon, authenticated;
 
+-- ── 5b. a moved credit keeps its mode ─────────────────────────────────────
+-- Restated from the live definition (0690) with three changes: the moved credit and its reversal carry the credit's
+-- mode, and the invoiced-month guards (a month's bill deducted it, or would never reach it) bind legacy credits only.
+-- restates 0690
+create or replace function public.move_payment_credit_v1(p_credit_id uuid, p_to_member_id uuid, p_reason text, p_request_id uuid)
+ RETURNS jsonb
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $fn$
+declare
+  v_ws uuid;
+  v_me uuid;
+  v_credit public.ledger_entries;
+  v_done public.ledger_credit_moves;
+  v_reason text := left(btrim(coalesce(p_reason, '')), 300);
+  v_to public.members;
+  v_to_name text;
+  v_reversal uuid;
+  v_new uuid;
+  v_move uuid;
+  v_day date;
+begin
+  -- Authorised first, locked after: an unknown credit reads as one the
+  -- caller may not act on.
+  select workspace_id into v_ws from public.ledger_entries where id = p_credit_id;
+  if v_ws is null then raise exception 'you may not move this credit' using errcode = '42501'; end if;
+  v_me := public.bank_import_actor(v_ws, 'issueInvoices');
+  if p_request_id is null then
+    raise exception 'a request id is required' using errcode = '22023';
+  end if;
+  select * into v_credit from public.ledger_entries where id = p_credit_id for update;
+  -- The same request again answers what it answered and changes nothing.
+  select * into v_done from public.ledger_credit_moves
+   where workspace_id = v_ws and request_id = p_request_id;
+  if v_done.id is not null then
+    if v_done.from_credit_id <> p_credit_id or v_done.to_member_id <> p_to_member_id then
+      raise exception 'this request id was already used for a different request' using errcode = '22023';
+    end if;
+    return jsonb_build_object('id', v_done.id, 'reversal_id', v_done.reversal_ledger_id,
+      'credit_id', v_done.to_credit_id, 'replayed', true);
+  end if;
+  if v_reason = '' then raise exception 'a reason is required' using errcode = '22023'; end if;
+  if v_credit.kind <> 'credit' or v_credit.category <> 'payment' then
+    raise exception 'only a payment credit is moved' using errcode = '22023';
+  end if;
+  if exists (select 1 from public.ledger_credit_moves m where m.from_credit_id = p_credit_id
+                                                       or m.reversal_ledger_id = p_credit_id) then
+    raise exception 'this credit was already moved' using errcode = '22023';
+  end if;
+  if exists (select 1 from public.invoice_match_payments p
+              where p.payment_ledger_id = p_credit_id or p.credit_ledger_id = p_credit_id)
+     or exists (select 1 from public.invoice_matches m
+                 where m.payment_ledger_id = p_credit_id or m.credit_ledger_id = p_credit_id) then
+    raise exception 'this credit pays an invoice: undo the match first' using errcode = '22023';
+  end if;
+  if p_to_member_id = v_credit.member_id then
+    raise exception 'the credit is already on this member' using errcode = '22023';
+  end if;
+  select * into v_to from public.members
+   where id = p_to_member_id and workspace_id = v_ws;
+  if v_to.id is null or v_to.status = 'exited' then
+    raise exception 'unknown or departed member' using errcode = '22023';
+  end if;
+  -- #3346 — the biller never moves money onto, or off, their own account:
+  -- the reason they write is the only trace, and it is theirs to write.
+  if p_to_member_id = v_me or v_credit.member_id = v_me then
+    raise exception 'you may not move a payment to or from your own account'
+      using errcode = '42501';
+  end if;
+  if exists (select 1 from public.invoices i
+              where v_credit.allocation_mode = 'legacy' and i.member_id = v_credit.member_id and i.period = v_credit.period
+                and i.voided_at is null) then
+    raise exception 'this month is already invoiced to the member: correct that invoice first'
+      using errcode = '22023';
+  end if;
+  -- #3346 — the month must be open on the receiving side too: a credit
+  -- landing in an invoiced month reaches the balance but never an invoice.
+  if exists (select 1 from public.invoices i
+              where v_credit.allocation_mode = 'legacy' and i.member_id = p_to_member_id and i.period = v_credit.period
+                and i.voided_at is null) then
+    raise exception 'this month is already invoiced to the receiving member: correct that invoice first'
+      using errcode = '22023';
+  end if;
+  v_day := coalesce(v_credit.occurred_on, public.book_local_day(v_ws, v_credit.created_at));
+  if public.book_period_closed(v_ws, v_day) then
+    raise exception 'this credit is dated inside a closed period of the books' using errcode = '22023';
+  end if;
+
+  v_to_name := coalesce(nullif(v_to.managed_name, ''),
+                        (select nullif(btrim(concat_ws(' ', p.first_name, p.last_name)), '')
+                           from public.profiles p where p.id = v_to.user_id), '');
+  insert into public.ledger_entries
+    (workspace_id, member_id, kind, category, amount_cents, description, period, occurred_on, allocation_mode)
+  values (v_ws, v_credit.member_id, 'charge', 'adjustment', v_credit.amount_cents,
+          left('Payment moved to ' || coalesce(nullif(v_to_name, ''), 'another member') || ': ' || v_reason, 200),
+          v_credit.period, v_day, v_credit.allocation_mode)
+  returning id into v_reversal;
+  insert into public.ledger_entries
+    (workspace_id, member_id, kind, category, amount_cents, description, period, occurred_on, allocation_mode)
+  values (v_ws, p_to_member_id, 'credit', 'payment', v_credit.amount_cents,
+          v_credit.description, v_credit.period, v_day, v_credit.allocation_mode)
+  returning id into v_new;
+  insert into public.ledger_credit_moves
+    (workspace_id, from_credit_id, reversal_ledger_id, to_credit_id, from_member_id, to_member_id,
+     amount_cents, reason, request_id, actor_member_id)
+  values (v_ws, p_credit_id, v_reversal, v_new, v_credit.member_id, p_to_member_id,
+          v_credit.amount_cents, v_reason, p_request_id, v_me)
+  returning id into v_move;
+  -- The bank line that brought this money now names the right credit.
+  update public.bank_statement_lines set payment_ledger_id = v_new
+   where workspace_id = v_ws and payment_ledger_id = p_credit_id;
+  return jsonb_build_object('id', v_move, 'reversal_id', v_reversal, 'credit_id', v_new, 'replayed', false);
+end;
+$fn$;
+revoke execute on function public.move_payment_credit_v1(uuid, uuid, text, uuid) from public, anon;
+grant execute on function public.move_payment_credit_v1(uuid, uuid, text, uuid) to authenticated;
+
 -- ── 6. the month heuristics apply to legacy credits only ─────────────────
 create or replace function pg_temp.anchor_replace(p_def text, p_old text, p_new text)
 returns text
@@ -355,17 +474,17 @@ begin
   v_new := pg_temp.anchor_replace(v_def,
     E'where i.member_id = v_invoice.member_id\n      and i.period = v_payment.period',
     E'where v_payment.allocation_mode = ''legacy'' and i.member_id = v_invoice.member_id\n      and i.period = v_payment.period');
-  if v_new is null then raise exception '0901: match_invoice_part heuristic anchor missing'; end if;
+  if v_new is null then raise exception '0901: match_invoice_part heuristic anchor missing' using errcode = 'P0001'; end if;
   v_def := v_new;
   v_new := pg_temp.anchor_replace(v_def,
     E'description, period)',
     E'description, period, allocation_mode)');
-  if v_new is null then raise exception '0901: match_invoice_part credit columns anchor missing'; end if;
+  if v_new is null then raise exception '0901: match_invoice_part credit columns anchor missing' using errcode = 'P0001'; end if;
   v_def := v_new;
   v_new := pg_temp.anchor_replace(v_def,
     E'''YYYY-MM''))\n    returning id into v_credit_id;',
     E'''YYYY-MM''), v_payment.allocation_mode)\n    returning id into v_credit_id;');
-  if v_new is null then raise exception '0901: match_invoice_part credit values anchor missing'; end if;
+  if v_new is null then raise exception '0901: match_invoice_part credit values anchor missing' using errcode = 'P0001'; end if;
   execute v_new;
 
   -- customer_statement_items: a credit hidden as "deducted on a later issued invoice of its month" is a legacy one.
@@ -373,7 +492,7 @@ begin
   v_new := pg_temp.anchor_replace(v_def,
     E'where i.workspace_id = p_workspace_id and i.member_id = p_member_id\n                            and i.period = le.period',
     E'where le.allocation_mode = ''legacy'' and i.workspace_id = p_workspace_id and i.member_id = p_member_id\n                            and i.period = le.period');
-  if v_new is null then raise exception '0901: customer_statement_items anchor missing'; end if;
+  if v_new is null then raise exception '0901: customer_statement_items anchor missing' using errcode = 'P0001'; end if;
   execute v_new;
 
   -- invoice_lines_for: a month's bill deducts the legacy credits of its month; an explicit credit is spent only by
@@ -382,7 +501,7 @@ begin
   v_new := pg_temp.anchor_replace(v_def,
     E'and le.period = p_period\n',
     E'and le.period = p_period\n       and (le.kind <> ''credit'' or le.allocation_mode = ''legacy'')\n');
-  if v_new is null then raise exception '0901: invoice_lines_for anchor missing'; end if;
+  if v_new is null then raise exception '0901: invoice_lines_for anchor missing' using errcode = 'P0001'; end if;
   execute v_new;
 
   -- member_account: an explicit credit left over is credit on account at once, whatever its month, and no monthly
@@ -391,12 +510,12 @@ begin
   v_new := pg_temp.anchor_replace(v_def,
     E'and (le.category = ''adjustment''\n         or le.period < to_char(now(), ''YYYY-MM''))',
     E'and (le.category = ''adjustment'' or le.allocation_mode = ''explicit''\n         or le.period < to_char(now(), ''YYYY-MM''))');
-  if v_new is null then raise exception '0901: member_account spare anchor missing'; end if;
+  if v_new is null then raise exception '0901: member_account spare anchor missing' using errcode = 'P0001'; end if;
   v_def := v_new;
   v_new := pg_temp.anchor_replace(v_def,
     E'where i.member_id = p_member_id\n        and i.period = le.period',
     E'where le.allocation_mode = ''legacy'' and i.member_id = p_member_id\n        and i.period = le.period');
-  if v_new is null then raise exception '0901: member_account deducted anchor missing'; end if;
+  if v_new is null then raise exception '0901: member_account deducted anchor missing' using errcode = 'P0001'; end if;
   execute v_new;
 
   -- member_statement: a month's balance counts the legacy rows of its month, as its bill deducts them: an explicit credit
@@ -405,36 +524,7 @@ begin
   v_new := pg_temp.anchor_replace(v_def,
     E'and (le.kind <> ''credit'' or le.amount_cents > public.payment_used_cents(le.id));',
     E'and (le.kind <> ''credit'' or le.amount_cents > public.payment_used_cents(le.id))\n    and le.allocation_mode = ''legacy'';');
-  if v_new is null then raise exception '0901: member_statement anchor missing'; end if;
-  execute v_new;
-
-  -- move_payment_credit_v1: a moved credit keeps its mode, and the invoiced-month guards (a month's bill deducted
-  -- it, or would never reach it) bind legacy credits only.
-  select pg_get_functiondef('public.move_payment_credit_v1(uuid, uuid, text, uuid)'::regprocedure) into v_def;
-  v_new := pg_temp.anchor_replace(v_def,
-    E'where i.member_id = v_credit.member_id and i.period = v_credit.period',
-    E'where v_credit.allocation_mode = ''legacy'' and i.member_id = v_credit.member_id and i.period = v_credit.period');
-  if v_new is null then raise exception '0901: move_payment_credit_v1 source guard anchor missing'; end if;
-  v_def := v_new;
-  v_new := pg_temp.anchor_replace(v_def,
-    E'where i.member_id = p_to_member_id and i.period = v_credit.period',
-    E'where v_credit.allocation_mode = ''legacy'' and i.member_id = p_to_member_id and i.period = v_credit.period');
-  if v_new is null then raise exception '0901: move_payment_credit_v1 target guard anchor missing'; end if;
-  v_def := v_new;
-  v_new := pg_temp.anchor_replace(v_def,
-    E'occurred_on)\n  values (v_ws, v_credit.member_id, ''charge'', ''adjustment''',
-    E'occurred_on, allocation_mode)\n  values (v_ws, v_credit.member_id, ''charge'', ''adjustment''');
-  if v_new is null then raise exception '0901: move_payment_credit_v1 reversal columns anchor missing'; end if;
-  v_def := v_new;
-  v_new := pg_temp.anchor_replace(v_def,
-    E'v_credit.period, v_day)\n  returning id into v_reversal;',
-    E'v_credit.period, v_day, v_credit.allocation_mode)\n  returning id into v_reversal;');
-  if v_new is null then raise exception '0901: move_payment_credit_v1 reversal values anchor missing'; end if;
-  v_def := v_new;
-  v_new := pg_temp.anchor_replace(v_def,
-    E'occurred_on)\n  values (v_ws, p_to_member_id, ''credit'', ''payment'', v_credit.amount_cents,\n          v_credit.description, v_credit.period, v_day)',
-    E'occurred_on, allocation_mode)\n  values (v_ws, p_to_member_id, ''credit'', ''payment'', v_credit.amount_cents,\n          v_credit.description, v_credit.period, v_day, v_credit.allocation_mode)');
-  if v_new is null then raise exception '0901: move_payment_credit_v1 anchor missing'; end if;
+  if v_new is null then raise exception '0901: member_statement anchor missing' using errcode = 'P0001'; end if;
   execute v_new;
 
   -- check_payment_claim: the monthly path names the standalone invoices it leaves to their own payment.
@@ -442,7 +532,7 @@ begin
   v_new := pg_temp.anchor_replace(v_def,
     E'''a standalone invoice is not paid through a month-keyed claim yet''',
     E'''monthly and standalone invoices are paid separately: pay the standalone ones on their own''');
-  if v_new is null then raise exception '0901: check_payment_claim anchor missing'; end if;
+  if v_new is null then raise exception '0901: check_payment_claim anchor missing' using errcode = 'P0001'; end if;
   execute v_new;
 end;
 $patch$;

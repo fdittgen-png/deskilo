@@ -110,6 +110,8 @@ insert into listed (sig, reason) values
    'integrity check: rows of another workspace; reads and changes nothing for a caller'),
   ('record_rights_request(uuid,uuid,text,text,timestamp with time zone)',
    'a personal-data rights request about one subject id: a customer is a person the business holds data on, so it is a legitimate target'),
+  ('record_standalone_payment_v1(uuid,uuid,integer,text,text,date,uuid[],uuid)',
+   'by one subject id, for oneself or under an explicit finance right: a customer-only subject is a legitimate target, the seller bills it'),
   ('request_subscription_change(uuid,integer)',
    'a community attribute of one subject id: refused for a customer-only row by members_customer_frozen (role, plan, door, limits) or by the grant-table triggers'),
   ('revoke_handover(uuid)',
