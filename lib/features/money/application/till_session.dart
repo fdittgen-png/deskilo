@@ -143,6 +143,9 @@ class TillSession {
     }
   }
 
+  /// The till's own refusal of what was typed, said on the screen: [problem] is the sentence.
+  void reject(String problem) => state.value = _now.copyWith(problem: () => problem);
+
   /// The next customer: an empty basket and nothing left of the last sale.
   void next() {
     _generation++;

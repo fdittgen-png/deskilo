@@ -63138,6 +63138,180 @@ abstract class AppLocalizations {
   /// **'References in'**
   String get threadRefsIn;
 
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'Tap an item to start a sale.'**
+  String get tillBasketEmpty;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'Basket'**
+  String get tillBasketTitle;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'Exact amount'**
+  String get tillCashExact;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'Cash given'**
+  String get tillCashGiven;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the amount given as a number.'**
+  String get tillCashInvalid;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'The cash given is less than the total.'**
+  String get tillCashShort;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'Change due: {amount}'**
+  String tillChangeDue(String amount);
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'The till could not do that. Try again.'**
+  String get tillFailed;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'There is nothing to sell yet. Add items in the stock first.'**
+  String get tillKeysEmpty;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'Items to ring up'**
+  String get tillKeysTitle;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'Next customer'**
+  String get tillNextCustomer;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'Not ready in your country: {operation}'**
+  String tillNotReady(String operation);
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing is numbered and nothing is taken until the country\'s operation is supported.'**
+  String get tillNotReadyHint;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'correcting a receipt'**
+  String get tillOpCorrectReceipt;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'exporting fiscal records'**
+  String get tillOpExportFiscal;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'issuing a receipt'**
+  String get tillOpIssueReceipt;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'reconciling a card payment'**
+  String get tillOpReconcileTender;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'signing a fiscal receipt'**
+  String get tillOpSignFiscal;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'Take cash'**
+  String get tillPayCash;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'Pricing the basket…'**
+  String get tillPricing;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'An exact quantity, for example 1 or 0.350.'**
+  String get tillQuantityHint;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a quantity above zero with at most six decimals.'**
+  String get tillQuantityRefused;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity sold'**
+  String get tillQuantityTitle;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt {number}'**
+  String tillReceiptNumber(String number);
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'Take {name} out of the basket'**
+  String tillRemoveLine(String name);
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'Sold'**
+  String get tillSoldTitle;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'of which tax {amount}'**
+  String tillTaxIncluded(String amount);
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'Till'**
+  String get tillTitle;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'Total to pay'**
+  String get tillTotalDue;
+
   /// Tip (#2313) on the availability surface: a scenario "To …: …".
   ///
   /// In en, this message translates to:
