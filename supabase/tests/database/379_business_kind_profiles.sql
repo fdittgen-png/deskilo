@@ -19,9 +19,9 @@ $$;
 select is((select feature_profile from public.business_kinds where code = 'coworking'),
           '{}'::jsonb, 'coworking proposes nothing: today''s defaults');
 select is((select count(*)::int from public.business_kinds
-            where code in ('studio', 'practice', 'salon', 'freelancer', 'service')
+            where code in ('studio', 'practice', 'salon', 'freelancer', 'shop', 'service')
               and feature_profile -> 'placeBooking' = 'false'::jsonb),
-          5, 'the five other kinds switch the places off');
+          6, 'the six other kinds switch the places off');
 select is((select count(*)::int from public.business_kinds k, jsonb_object_keys(k.feature_profile) key
             where not (public.feature_registry() ? key)),
           0, 'every key of every seeded profile is a registered flag');

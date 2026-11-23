@@ -3091,6 +3091,50 @@ Apra **Magazzino → Articoli**. Ogni riga mostra il **codice a barre**, l’**u
 - **Cerchi** per nome, codice a barre o indirizzo. Digitare o scansionare un codice a barre nella ricerca e confermare apre quell’articolo.
 - Le liste lunghe si caricano a pagine: scelga *Mostra altri*.
 
+<!-- anchor: user.money.stock.groups -->
+### Gruppi di articoli
+
+**Destinatari:** Amministratore · Proprietario
+
+Vuole dire una volta ciò che una famiglia di articoli ha in comune — quanto dura, come viene tracciata, ogni quanto viene contata — e che ogni articolo la segua.
+
+Apra **Magazzino → Gruppi di articoli** (serve la funzione *Gruppi di articoli* sotto la gestione del magazzino). Un gruppo ha un nome, sta in alto o dentro un altro gruppo (un solo livello di sottogruppi) e porta le impostazioni che sceglie: **tracciamento**, **durata di conservazione**, **modalità tag**, **unità di magazzino**, **conta ogni n giorni**, **età minima** e **venduto a peso**. Un’impostazione lasciata *Non impostato* non è decisa a questo livello.
+
+- **Un articolo segue il suo gruppo finché non ha un valore proprio.** Vale il valore dell’articolo se ce l’ha, altrimenti quello del suo sottogruppo, altrimenti quello del suo gruppo. Apra **Gruppo e impostazioni ereditate** di un articolo (l’icona della cartella sulla sua riga in **Magazzino → Articoli**) per vedere da dove viene ogni impostazione (*Dal gruppo Bevande dal 3 dic.* o *Valore proprio*), spostarlo in un altro gruppo e restituire un valore proprio con **Usa il valore del gruppo**.
+- **Ogni modifica è mostrata in anteprima.** Salvando un gruppo vede prima cosa raggiunge la modifica: *si applica a 1, 1 mantengono il proprio valore, 0 non sono raggiungibili*. Nulla viene applicato finché non salva una seconda volta; ogni modifica intermedia chiede una nuova anteprima. Un articolo che la modifica non può raggiungere (ad esempio un’unità su un articolo che ha già movimenti) viene elencato, e la modifica del gruppo viene salvata per gli altri.
+- **Cronologia.** Il foglio del gruppo elenca ogni modifica con quanti articoli ha raggiunto; la riga di origine di un articolo dice da quando.
+- Un sottogruppo non può avere sottogruppi; i tag per pezzo richiedono il tracciamento per pezzo; un gruppo ancora usato da articoli non si elimina (li sposti prima). Ciò che è già registrato — fatture, ricezioni, movimenti — non cambia mai.
+- Modificare i gruppi richiede il diritto di gestire il magazzino; leggerli, quello di vederlo.
+<!-- anchor: user.money.stock.scanning -->
+### Lavorare con uno scanner
+
+**Destinatari:** Amministratore · Proprietario
+
+Vuole ricevere, spostare e scaricare merce scansionando, senza toccare un campo.
+
+Uno scanner di codici a barre in modalità tastiera (digita il codice e preme Invio) funziona nei fogli di spostamento e di prelievo, nello stoccaggio di una consegna e in **Magazzino → Articoli** e **Magazzino → Posizioni**. Non serve toccare prima un campo. Un campo di testo con il focus mantiene la propria digitazione: ciò che scrive non viene mai scambiato per una scansione.
+
+- **Scansioni la posizione, poi gli articoli.** Un codice di posizione imposta la posizione corrente; resta finché non ne scansiona un’altra ed è mostrata in alto (*Sistemazione in …*). In uno spostamento la prima posizione è l’origine e la seconda la destinazione. Un codice di articolo, variante o confezione indica l’articolo e lo conta: un codice di cartone aggiunge la quantità esatta del cartone (ad esempio 12 pezzi) e un’etichetta di lotto imposta il lotto.
+- **Una scansione ripetuta** ne aggiunge una in più oppure, se la sua attività l’ha scelto nelle impostazioni del magazzino (*Scansione ripetuta*), la porta sul campo della quantità.
+- **Un codice che non indica nulla** dice *Codice … sconosciuto: aggiungerlo a un articolo?*; chi può gestire il magazzino apre gli articoli e lo assegna a uno. Una posizione che non può ricevere merce, o un articolo non tenuto a magazzino, viene rifiutato a parole e non si compila nulla.
+- **Una scansione non invia nulla.** Compila solo il modulo; il pulsante che preme esegue lo stesso comando, con gli stessi diritti, che senza scanner.
+- **Impostazioni.** L’uso dello scanner dipende dalla funzione *Scanner* dell’attività, sotto la gestione del magazzino. L’intervallo massimo tra due tasti di una scansione (una persona scrive più lentamente di uno scanner) e ciò che termina un codice (Invio, Tab o entrambi) sono del dispositivo, in **Magazzino → Impostazioni del magazzino → Scanner**.
+
+<!-- anchor: user.money.stock.nfc -->
+### Tag con l’NFC del telefono
+
+**Destinatari:** Amministratore · Proprietario
+
+Vuole associare un chip NFC a un articolo o a una posizione e leggere chip mentre lavora, con il telefono che ha già.
+
+Con la funzione *Tag* attiva e un telefono che legge l’NFC, **Magazzino → Articoli** e **Magazzino → Posizioni** mostrano un pulsante dei tag su ogni riga, e la barra di scansione di un foglio di merce mostra **Leggi un tag**. Il pulsante manca su un dispositivo senza NFC (un computer, la maggior parte dei tablet, un telefono con l’NFC spento): lì usi uno scanner o un lettore portatile.
+
+- **Associare un tag.** Apra i tag di un articolo o di una posizione, tocchi **Leggi un tag** e avvicini il chip al retro del telefono. Una lettura associa un tag. Rileggere lo stesso chip dice che era già associato qui e non associa nulla di nuovo; un chip associato a qualcos’altro viene rifiutato e dice a cosa. Un proprietario può avere più tag. Il server accetta il codice in maiuscolo o minuscolo, con spazi, due punti o trattini.
+- **Ritirare un tag** perso, danneggiato o sostituito: scelga il motivo. Un tag ritirato da poco non può essere associato di nuovo subito (l’attesa è un’impostazione del magazzino) e un tag su un pezzo ancora a magazzino non può essere ritirato.
+- **Leggere in un foglio di merce.** Un chip si legge come un codice scansionato: un tag di posizione imposta la posizione corrente, uno di articolo conta l’articolo. Un chip letto due volte in un foglio viene ignorato (*già letto*); un chip che non indica nulla dice *Tag sconosciuto*.
+- **Le etichette UHF** non sono leggibili da un telefono. Un articolo che ha solo quelle dice *usi il lettore RFID*.
+- Associare richiede il diritto di gestire il magazzino; leggere, quello di vederlo.
+
 <!-- anchor: user.money.stock.value -->
 ### Valore del magazzino e origine della merce
 
@@ -3732,6 +3776,7 @@ Gestisce uno studio, un ambulatorio o un salone invece di uno spazio di coworkin
 - Il coworking non propone nulla, e disattivare i posti non cancella nulla: li riattivi e planimetria e prenotazioni tornano.
 
 - **Libero professionista** è per una persona che vende servizi ai clienti: tiene disattivati i luoghi e attiva la fatturazione, i clienti di fatturazione, i preventivi e gli acquisti, mai un fornitore, i messaggi o una pagina pubblica. È un tipo a sé: **Servizio** resta com’era.
+- **Negozio** è per un’attività che acquista, tiene a magazzino e vende merce. Tiene disattivati i luoghi e propone il magazzino (ricezione, prelievo, lotti per data, punti di riordino), i servizi come catalogo, gli acquisti e gli ordini. Sceglie anche il **tipo di negozio** — alimentari, panificio, macelleria, fiorista o negozio di quartiere: cambia le parole e gli esempi, mai ciò che fa l’app. Se vende a peso, attivi **La merce si vende a peso** nelle impostazioni del magazzino: un nuovo articolo viene allora proposto in chilogrammi. La vendita al banco verrà proposta quando esisterà; i tag RFID sono offerti, mai proposti.
 - Me indica il tipo che ciascuna delle sue attività ha scelto, accanto al paese e alla valuta.
 
 **Vedi anche:** [Funzioni](#attivare-o-disattivare-interi-processi)

@@ -36,8 +36,10 @@ const STEPS=[
  build(st=this){const{lbl,input,selectEl,helpIcon}=ui(st);return[
   input(T('identityName'),'name',T('identityNameHint'),'text','','identity'),
   // #3549 — what kind of business it is; set in the app, where it proposes the features.
-  selectEl(T('identityBusinessKind'),'businessKind',[['coworking',T('businessKind_coworking')],['studio',T('businessKind_studio')],['practice',T('businessKind_practice')],['salon',T('businessKind_salon')],['freelancer',T('businessKind_freelancer')],['service',T('businessKind_service')]],T('identityBusinessKindHint'),null,'businessKind'),
+  selectEl(T('identityBusinessKind'),'businessKind',[['coworking',T('businessKind_coworking')],['studio',T('businessKind_studio')],['practice',T('businessKind_practice')],['salon',T('businessKind_salon')],['freelancer',T('businessKind_freelancer')],['shop',T('businessKind_shop')],['service',T('businessKind_service')]],T('identityBusinessKindHint'),null,'businessKind'),
   ...(S.businessKind&&S.businessKind!=='coworking'?[h('p',{class:'hint'},T('businessKindNoBookingYet'))]:[]),
+  // #4365 — the type of shop: words and examples only.
+  ...(S.businessKind==='shop'?[selectEl(T('businessShopType'),'business.shopType',opts(SHOP_TYPES),T('businessShopTypeHint'),null,'business.shopType')]:[]),
   selectEl(T('identityEnvironment'),'environment',opts(ENVIRONMENTS),T('identityEnvironmentHint'),null,'identity'),
   h('div',{class:'row'},selectEl(T('identityCountry'),'country',COUNTRIES.map(c=>[c[0],countryName(c[0])+(INVOICING_COUNTRIES.includes(c[0])?' · '+T('identityCountryInvoices'):'')]),T('identityCountryHint')+' '+T('identityCountryInvoicesHint',{list:INVOICING_COUNTRIES.map(countryName).join(T('listSep'))}),onCountry,'region'),
    selectEl(T('identityCurrency'),'currency',CURRENCIES.map(c=>[c,c]),T('identityCurrencyHint'),null,'region')),
@@ -268,6 +270,8 @@ const STEPS=[
   // #3824 — the goods ledger's one rule a business decides before its first move.
   if(on('stockManagement'))k.push(checkbox(T('stockAllowNegative'),T('stockAllowNegativeHint'),S.stock.allowNegative,v=>set('stock.allowNegative',v)));
   // #4293 — how a place address (site, zone, aisle, bay, shelf) is written.
+  // #4365 — goods sold by weight: a new item is proposed in kilograms.
+  if(on('stockManagement'))k.push(checkbox(T('stockWeighedGoods'),T('stockWeighedGoodsHint'),S.stock.weighedGoods,v=>set('stock.weighedGoods',v)));
   if(on('stockManagement'))k.push(selectEl(T('stockAddressSeparator'),'stock.addressSeparator',opts(STOCK_SEP),T('stockAddressSeparatorHint'),null,'services'));
   if(on('stockTags'))k.push(selectEl(T('stockTagGrace'),'stock.tagGrace',opts(STOCK_TAG_GRACE),T('stockTagGraceHint'),null,'services'));
   if(on('stockScanning'))k.push(selectEl(T('stockRepeatedScan'),'stock.repeatedScan',opts(STOCK_REPEAT),T('stockRepeatedScanHint'),null,'services'));

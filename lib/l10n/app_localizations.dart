@@ -9251,6 +9251,12 @@ abstract class AppLocalizations {
   /// **'Any other business that sells its services.'**
   String get businessKindDescService;
 
+  /// #4365 G16 the shop business kind
+  ///
+  /// In en, this message translates to:
+  /// **'Goods bought, kept in stock and sold: an épicerie, a bakery, a butcher, a florist or a corner shop.'**
+  String get businessKindDescShop;
+
   /// #3550 the one-line description of the business kind 'studio'
   ///
   /// In en, this message translates to:
@@ -9292,6 +9298,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Service business'**
   String get businessKindNameService;
+
+  /// #4365 G16 the shop business kind
+  ///
+  /// In en, this message translates to:
+  /// **'Shop'**
+  String get businessKindNameShop;
 
   /// #3550 the name of the business kind 'studio'
   ///
@@ -13598,6 +13610,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Other services'**
   String get discoveryKindServices;
+
+  /// #4365 G16 the shop business kind
+  ///
+  /// In en, this message translates to:
+  /// **'Shops'**
+  String get discoveryKindShops;
 
   /// #3554 Discover: chip narrowing the search to studios
   ///
@@ -29310,6 +29328,304 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Customers'**
   String get invoicingViewCustomers;
+
+  /// #4361 G12 item groups: itemGroupAssignNone
+  ///
+  /// In en, this message translates to:
+  /// **'No group'**
+  String get itemGroupAssignNone;
+
+  /// #4361 G12 item groups: itemGroupAssignOpen
+  ///
+  /// In en, this message translates to:
+  /// **'Group and inherited settings'**
+  String get itemGroupAssignOpen;
+
+  /// #4361 G12 item groups: itemGroupAssignTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Group of {item}'**
+  String itemGroupAssignTitle(String item);
+
+  /// #4361 G12 item groups: itemGroupClose
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get itemGroupClose;
+
+  /// #4361 G12 item groups: itemGroupConfirm
+  ///
+  /// In en, this message translates to:
+  /// **'Check what this reaches, then save again to apply it.'**
+  String get itemGroupConfirm;
+
+  /// #4361 G12 item groups: itemGroupCountEvery
+  ///
+  /// In en, this message translates to:
+  /// **'Count every (days)'**
+  String get itemGroupCountEvery;
+
+  /// #4361 G12 item groups: itemGroupDelete
+  ///
+  /// In en, this message translates to:
+  /// **'Delete the group'**
+  String get itemGroupDelete;
+
+  /// #4361 G12 item groups: itemGroupDeleted
+  ///
+  /// In en, this message translates to:
+  /// **'Group deleted.'**
+  String get itemGroupDeleted;
+
+  /// #4361 G12 item groups: itemGroupFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The item groups could not be read.'**
+  String get itemGroupFailed;
+
+  /// #4361 G12 item groups: itemGroupFrom
+  ///
+  /// In en, this message translates to:
+  /// **'From {group}'**
+  String itemGroupFrom(String group);
+
+  /// #4361 G12 item groups: itemGroupFromSince
+  ///
+  /// In en, this message translates to:
+  /// **'From {group} since {date}'**
+  String itemGroupFromSince(String group, String date);
+
+  /// #4361 G12 item groups: itemGroupHistory
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get itemGroupHistory;
+
+  /// #4361 G12 item groups: itemGroupHistoryLine
+  ///
+  /// In en, this message translates to:
+  /// **'{parameter}: {from} → {to}, {affected, plural, one{reached 1 item} other{reached {affected} items}}'**
+  String itemGroupHistoryLine(
+    String parameter,
+    String from,
+    String to,
+    int affected,
+  );
+
+  /// #4361 G12 item groups: itemGroupHistoryNone
+  ///
+  /// In en, this message translates to:
+  /// **'No change recorded yet.'**
+  String get itemGroupHistoryNone;
+
+  /// #4361 G12 item groups: itemGroupMinAge
+  ///
+  /// In en, this message translates to:
+  /// **'Minimum age for a sale'**
+  String get itemGroupMinAge;
+
+  /// #4361 G12 item groups: itemGroupMove
+  ///
+  /// In en, this message translates to:
+  /// **'Move'**
+  String get itemGroupMove;
+
+  /// #4361 G12 item groups: itemGroupMoveReaches
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{Moving it changes 1 setting.} other{Moving it changes {count} settings.}}'**
+  String itemGroupMoveReaches(int count);
+
+  /// #4361 G12 item groups: itemGroupMoved
+  ///
+  /// In en, this message translates to:
+  /// **'The item is in its new group.'**
+  String get itemGroupMoved;
+
+  /// #4361 G12 item groups: itemGroupName
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get itemGroupName;
+
+  /// #4361 G12 item groups: itemGroupNo
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get itemGroupNo;
+
+  /// #4361 G12 item groups: itemGroupNoParent
+  ///
+  /// In en, this message translates to:
+  /// **'Top level'**
+  String get itemGroupNoParent;
+
+  /// #4361 G12 item groups: itemGroupNotSet
+  ///
+  /// In en, this message translates to:
+  /// **'Not set'**
+  String get itemGroupNotSet;
+
+  /// #4361 G12 item groups: itemGroupOwn
+  ///
+  /// In en, this message translates to:
+  /// **'Own value'**
+  String get itemGroupOwn;
+
+  /// #4361 G12 item groups: itemGroupParent
+  ///
+  /// In en, this message translates to:
+  /// **'Inside group'**
+  String get itemGroupParent;
+
+  /// #4361 G12 item groups: itemGroupPreviewLine
+  ///
+  /// In en, this message translates to:
+  /// **'{parameter}: {affected, plural, one{applies to 1 item} other{applies to {affected} items}}, {kept, plural, one{1 keeps its own value} other{{kept} keep their own value}}, {skipped, plural, one{1 cannot be reached} other{{skipped} cannot be reached}}'**
+  String itemGroupPreviewLine(
+    String parameter,
+    int affected,
+    int kept,
+    int skipped,
+  );
+
+  /// #4361 G12 item groups: itemGroupPreviewNothing
+  ///
+  /// In en, this message translates to:
+  /// **'No item is reached.'**
+  String get itemGroupPreviewNothing;
+
+  /// #4361 G12 item groups: itemGroupPreviewTitle
+  ///
+  /// In en, this message translates to:
+  /// **'What this change reaches'**
+  String get itemGroupPreviewTitle;
+
+  /// #4361 G12 item groups: itemGroupReasonDepth
+  ///
+  /// In en, this message translates to:
+  /// **'A sub-group cannot have sub-groups.'**
+  String get itemGroupReasonDepth;
+
+  /// #4361 G12 item groups: itemGroupReasonGroupUnknown
+  ///
+  /// In en, this message translates to:
+  /// **'This group does not exist.'**
+  String get itemGroupReasonGroupUnknown;
+
+  /// #4361 G12 item groups: itemGroupReasonHasMovements
+  ///
+  /// In en, this message translates to:
+  /// **'it already has movements'**
+  String get itemGroupReasonHasMovements;
+
+  /// #4361 G12 item groups: itemGroupReasonHasSubgroups
+  ///
+  /// In en, this message translates to:
+  /// **'This group has sub-groups: delete them first.'**
+  String get itemGroupReasonHasSubgroups;
+
+  /// #4361 G12 item groups: itemGroupReasonInUse
+  ///
+  /// In en, this message translates to:
+  /// **'This group is used by items: move them first.'**
+  String get itemGroupReasonInUse;
+
+  /// #4361 G12 item groups: itemGroupReasonNameDuplicate
+  ///
+  /// In en, this message translates to:
+  /// **'Another group already has this name.'**
+  String get itemGroupReasonNameDuplicate;
+
+  /// #4361 G12 item groups: itemGroupReasonNeedsSerial
+  ///
+  /// In en, this message translates to:
+  /// **'Per-piece tags need tracking by piece.'**
+  String get itemGroupReasonNeedsSerial;
+
+  /// #4361 G12 item groups: itemGroupReasonNotOverridable
+  ///
+  /// In en, this message translates to:
+  /// **'This setting cannot be given its own value.'**
+  String get itemGroupReasonNotOverridable;
+
+  /// #4361 G12 item groups: itemGroupSkippedLine
+  ///
+  /// In en, this message translates to:
+  /// **'{item}: {parameter} ({reason})'**
+  String itemGroupSkippedLine(String item, String parameter, String reason);
+
+  /// #4361 G12 item groups: itemGroupSkippedTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Not reached'**
+  String get itemGroupSkippedTitle;
+
+  /// #4361 G12 item groups: itemGroupSoldByWeight
+  ///
+  /// In en, this message translates to:
+  /// **'Sold by weight'**
+  String get itemGroupSoldByWeight;
+
+  /// #4361 G12 item groups: itemGroupTagBatch
+  ///
+  /// In en, this message translates to:
+  /// **'One tag per batch'**
+  String get itemGroupTagBatch;
+
+  /// #4361 G12 item groups: itemGroupTagMode
+  ///
+  /// In en, this message translates to:
+  /// **'Tag mode'**
+  String get itemGroupTagMode;
+
+  /// #4361 G12 item groups: itemGroupTagNone
+  ///
+  /// In en, this message translates to:
+  /// **'No tags'**
+  String get itemGroupTagNone;
+
+  /// #4361 G12 item groups: itemGroupTagUnit
+  ///
+  /// In en, this message translates to:
+  /// **'One tag per piece'**
+  String get itemGroupTagUnit;
+
+  /// #4361 G12 item groups: itemGroupTrackingSerial
+  ///
+  /// In en, this message translates to:
+  /// **'By piece (serial)'**
+  String get itemGroupTrackingSerial;
+
+  /// #4361 G12 item groups: itemGroupUseGroup
+  ///
+  /// In en, this message translates to:
+  /// **'Use the group’s value'**
+  String get itemGroupUseGroup;
+
+  /// #4361 G12 item groups: itemGroupYes
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get itemGroupYes;
+
+  /// #4361 G12 item groups: itemGroupsAdd
+  ///
+  /// In en, this message translates to:
+  /// **'Add a group'**
+  String get itemGroupsAdd;
+
+  /// #4361 G12 item groups: itemGroupsEmpty
+  ///
+  /// In en, this message translates to:
+  /// **'No group yet. A group holds settings that its items share.'**
+  String get itemGroupsEmpty;
+
+  /// #4361 G12 item groups: itemGroupsTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Item groups'**
+  String get itemGroupsTitle;
 
   /// Journal export (#2370): roles the posting engine could not resolve
   ///
@@ -50762,6 +51078,12 @@ abstract class AppLocalizations {
   /// **'Further kinds the business also is, if any, besides the main one.'**
   String get settingHintBusinessMoreKinds;
 
+  /// #4365 G16 the shop business kind
+  ///
+  /// In en, this message translates to:
+  /// **'Grocery, bakery, butcher, florist or corner shop. It changes the words and examples the app shows, never what it does.'**
+  String get settingHintBusinessShopType;
+
   /// #2487 settings: Setting hint.
   ///
   /// In en, this message translates to:
@@ -51206,6 +51528,12 @@ abstract class AppLocalizations {
   /// **'How many days after it was retired a tag code may be bound again. 0 means at once. A tag in force is never bound twice.'**
   String get settingHintStockTagRebindGraceDays;
 
+  /// #4365 G16 the shop business kind
+  ///
+  /// In en, this message translates to:
+  /// **'On: a new stock item is proposed in kilograms instead of pieces (a butcher, a bakery, a grocery counter). Any item can still be given another unit.'**
+  String get settingHintStockWeighedGoods;
+
   /// #2487 retention settings
   ///
   /// In en, this message translates to:
@@ -51355,6 +51683,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Also a kind of business'**
   String get settingLabelBusinessMoreKinds;
+
+  /// #4365 G16 the shop business kind
+  ///
+  /// In en, this message translates to:
+  /// **'Type of shop'**
+  String get settingLabelBusinessShopType;
 
   /// #2487 settings: Setting label.
   ///
@@ -51799,6 +52133,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Days before a retired tag is bound again'**
   String get settingLabelStockTagRebindGraceDays;
+
+  /// #4365 G16 the shop business kind
+  ///
+  /// In en, this message translates to:
+  /// **'Goods are sold by weight'**
+  String get settingLabelStockWeighedGoods;
 
   /// #2487 retention settings
   ///
@@ -55237,6 +55577,36 @@ abstract class AppLocalizations {
   /// **'Swipe the bar down for a full-screen view. Swipe up, or long-press the Reserve button, to bring it back.'**
   String get shellSwipeCoachMark;
 
+  /// #4365 G16 the shop business kind
+  ///
+  /// In en, this message translates to:
+  /// **'Bakery'**
+  String get shopTypeBakery;
+
+  /// #4365 G16 the shop business kind
+  ///
+  /// In en, this message translates to:
+  /// **'Butcher'**
+  String get shopTypeButcher;
+
+  /// #4365 G16 the shop business kind
+  ///
+  /// In en, this message translates to:
+  /// **'Corner shop'**
+  String get shopTypeCornerShop;
+
+  /// #4365 G16 the shop business kind
+  ///
+  /// In en, this message translates to:
+  /// **'Florist'**
+  String get shopTypeFlorist;
+
+  /// #4365 G16 the shop business kind
+  ///
+  /// In en, this message translates to:
+  /// **'Grocery'**
+  String get shopTypeGrocery;
+
   /// #3610 a line of the keys overlay: what the key does
   ///
   /// In en, this message translates to:
@@ -58525,6 +58895,144 @@ abstract class AppLocalizations {
   /// **'Return to the supplier'**
   String get stockReversalSupplierTitle;
 
+  /// #4363 G14: stockScanAlreadyRead
+  ///
+  /// In en, this message translates to:
+  /// **'Tag {code} was already read.'**
+  String stockScanAlreadyRead(String code);
+
+  /// #4359 G10 scanner: stockScanFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The scanned code could not be read. Check the connection and scan it again.'**
+  String get stockScanFailed;
+
+  /// #4359 G10 scanner: stockScanHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Working with a scanner'**
+  String get stockScanHelp;
+
+  /// #4359 G10: the line that sends a business using a scanner to the Scanning feature
+  ///
+  /// In en, this message translates to:
+  /// **'Using a barcode scanner? Turn on Scanning'**
+  String get stockScanHint;
+
+  /// #4359 G10 scanner: stockScanInterval
+  ///
+  /// In en, this message translates to:
+  /// **'Longest gap between two keys of a scan (milliseconds)'**
+  String get stockScanInterval;
+
+  /// #4359 G10: the interval is not within the range
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a whole number of milliseconds within the allowed range.'**
+  String get stockScanIntervalInvalid;
+
+  /// #4359 G10 scanner: stockScanLast
+  ///
+  /// In en, this message translates to:
+  /// **'{item}: {quantity} {unit}'**
+  String stockScanLast(String item, String quantity, String unit);
+
+  /// #4363 G14: stockScanNfc
+  ///
+  /// In en, this message translates to:
+  /// **'Read a tag'**
+  String get stockScanNfc;
+
+  /// #4363 G14: stockScanNfcFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The phone could not start reading. Check that NFC is on.'**
+  String get stockScanNfcFailed;
+
+  /// #4363 G14: stockScanNfcReading
+  ///
+  /// In en, this message translates to:
+  /// **'Hold the tag to the back of the phone…'**
+  String get stockScanNfcReading;
+
+  /// #4359 G10 scanner: stockScanPlacing
+  ///
+  /// In en, this message translates to:
+  /// **'Placing into {place}'**
+  String stockScanPlacing(String place);
+
+  /// #4359 G10 scanner: stockScanRefusedCode
+  ///
+  /// In en, this message translates to:
+  /// **'The code {code} names nothing this form can use.'**
+  String stockScanRefusedCode(String code);
+
+  /// #4359 G10 scanner: stockScanRefusedPlace
+  ///
+  /// In en, this message translates to:
+  /// **'{place} cannot take goods.'**
+  String stockScanRefusedPlace(String place);
+
+  /// #4359 G10 scanner: stockScanSave
+  ///
+  /// In en, this message translates to:
+  /// **'Save the scanner settings'**
+  String get stockScanSave;
+
+  /// #4359 G10 scanner: stockScanSettingsHint
+  ///
+  /// In en, this message translates to:
+  /// **'A scanner in keyboard mode types the code and presses Enter. These two settings belong to this device: a code typed faster than the gap below is taken for a scan.'**
+  String get stockScanSettingsHint;
+
+  /// #4359 G10 scanner: stockScanSettingsTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Scanner'**
+  String get stockScanSettingsTitle;
+
+  /// #4359 G10 scanner: stockScanTerminator
+  ///
+  /// In en, this message translates to:
+  /// **'What ends a scanned code'**
+  String get stockScanTerminator;
+
+  /// #4359 G10 scanner: stockScanTerminatorEither
+  ///
+  /// In en, this message translates to:
+  /// **'Enter or Tab'**
+  String get stockScanTerminatorEither;
+
+  /// #4359 G10 scanner: stockScanTerminatorEnter
+  ///
+  /// In en, this message translates to:
+  /// **'Enter'**
+  String get stockScanTerminatorEnter;
+
+  /// #4359 G10 scanner: stockScanTerminatorTab
+  ///
+  /// In en, this message translates to:
+  /// **'Tab'**
+  String get stockScanTerminatorTab;
+
+  /// #4359 G10 scanner: stockScanUnknown
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown code {code} — add it to an item?'**
+  String stockScanUnknown(String code);
+
+  /// #4359 G10 scanner: stockScanUnknownAdd
+  ///
+  /// In en, this message translates to:
+  /// **'Open the items'**
+  String get stockScanUnknownAdd;
+
+  /// #4363 G14: stockScanUnknownTag
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown tag {code}'**
+  String stockScanUnknownTag(String code);
+
   /// the stock pages and group (#4299)
   ///
   /// In en, this message translates to:
@@ -58572,6 +59080,150 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'On hand'**
   String get stockTabOnHand;
+
+  /// #4363 G14 tags: stockTagBoundElsewhere
+  ///
+  /// In en, this message translates to:
+  /// **'This tag is already bound to {owner}.'**
+  String stockTagBoundElsewhere(String owner);
+
+  /// #4363 G14 tags: stockTagKindNfc
+  ///
+  /// In en, this message translates to:
+  /// **'NFC chip'**
+  String get stockTagKindNfc;
+
+  /// #4363 G14 tags: stockTagKindUhf
+  ///
+  /// In en, this message translates to:
+  /// **'UHF label'**
+  String get stockTagKindUhf;
+
+  /// #4363 G14 tags: stockTagMalformed
+  ///
+  /// In en, this message translates to:
+  /// **'That is not a valid tag code.'**
+  String get stockTagMalformed;
+
+  /// #4363 G14 tags: stockTagModeNone
+  ///
+  /// In en, this message translates to:
+  /// **'This item does not use tags.'**
+  String get stockTagModeNone;
+
+  /// #4363 G14 tags: stockTagNotInForce
+  ///
+  /// In en, this message translates to:
+  /// **'This is not a tag in force here.'**
+  String get stockTagNotInForce;
+
+  /// #4363 G14 tags: stockTagOnPiece
+  ///
+  /// In en, this message translates to:
+  /// **'This tag is on a piece that is still in stock.'**
+  String get stockTagOnPiece;
+
+  /// #4363 G14 tags: stockTagOwnerUnknown
+  ///
+  /// In en, this message translates to:
+  /// **'This item or place is not known.'**
+  String get stockTagOwnerUnknown;
+
+  /// #4363 G14 tags: stockTagPerUnit
+  ///
+  /// In en, this message translates to:
+  /// **'This item is tagged piece by piece: tag its pieces when they are received.'**
+  String get stockTagPerUnit;
+
+  /// #4363 G14 tags: stockTagReasonDamaged
+  ///
+  /// In en, this message translates to:
+  /// **'Damaged'**
+  String get stockTagReasonDamaged;
+
+  /// #4363 G14 tags: stockTagReasonLost
+  ///
+  /// In en, this message translates to:
+  /// **'Lost'**
+  String get stockTagReasonLost;
+
+  /// #4363 G14 tags: stockTagReasonReplaced
+  ///
+  /// In en, this message translates to:
+  /// **'Replaced'**
+  String get stockTagReasonReplaced;
+
+  /// #4363 G14 tags: stockTagRetiredLately
+  ///
+  /// In en, this message translates to:
+  /// **'This tag was retired recently; it can be bound again after the waiting time set in the stock settings.'**
+  String get stockTagRetiredLately;
+
+  /// #4363 G14 tags: stockTagsAlready
+  ///
+  /// In en, this message translates to:
+  /// **'Tag {code} was already bound here.'**
+  String stockTagsAlready(String code);
+
+  /// #4363 G14 tags: stockTagsBound
+  ///
+  /// In en, this message translates to:
+  /// **'Tag {code} bound.'**
+  String stockTagsBound(String code);
+
+  /// #4363 G14 tags: stockTagsClose
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get stockTagsClose;
+
+  /// #4363 G14 tags: stockTagsFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The tags could not be read.'**
+  String get stockTagsFailed;
+
+  /// #4363 G14 tags: stockTagsNone
+  ///
+  /// In en, this message translates to:
+  /// **'No tag is bound yet.'**
+  String get stockTagsNone;
+
+  /// #4363 G14 tags: stockTagsOpen
+  ///
+  /// In en, this message translates to:
+  /// **'Tags'**
+  String get stockTagsOpen;
+
+  /// #4363 G14 tags: stockTagsRetire
+  ///
+  /// In en, this message translates to:
+  /// **'Retire'**
+  String get stockTagsRetire;
+
+  /// #4363 G14 tags: stockTagsRetireWhy
+  ///
+  /// In en, this message translates to:
+  /// **'Why is it retired?'**
+  String get stockTagsRetireWhy;
+
+  /// #4363 G14 tags: stockTagsRetired
+  ///
+  /// In en, this message translates to:
+  /// **'Tag {code} retired.'**
+  String stockTagsRetired(String code);
+
+  /// #4363 G14 tags: stockTagsTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Tags: {name}'**
+  String stockTagsTitle(String name);
+
+  /// #4363 G14 tags: stockTagsUhfOnly
+  ///
+  /// In en, this message translates to:
+  /// **'This item uses UHF tags — use the RFID reader.'**
+  String get stockTagsUhfOnly;
 
   /// #4170 transfers and take-out: a label or message
   ///

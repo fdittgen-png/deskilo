@@ -75,6 +75,7 @@ Sie möchten, dass die App zu Ihrem Unternehmen passt, bevor Sie etwas einrichte
 | **Praxis** | Termine: Massage, Therapie, Coaching, Beratung. |
 | **Salon** | Kosmetik, Friseur, Nägel, Tattoo. |
 | **Freiberufler:in** | Eine Person, die ihre eigenen Leistungen verkauft und abrechnet: Kunden, Angebote und Rechnungen, ohne Räume. |
+| **Laden** | Ware, die eingekauft, gelagert und verkauft wird: ein Feinkostladen, eine Bäckerei, eine Metzgerei, ein Blumenladen oder ein Späti. |
 | **Dienstleistungsunternehmen** | Jedes andere Unternehmen, das seine Leistungen verkauft. |
 
 **Schritte**

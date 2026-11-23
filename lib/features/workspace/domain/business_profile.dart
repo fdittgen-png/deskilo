@@ -11,12 +11,18 @@ import '../../../core/settings/settings.dart';
 /// The setting holding the primary kind.
 const String businessKindKey = 'business.kind';
 
+/// #4365 -- the type of shop a business of the kind shop is.
+const String businessShopTypeKey = 'business.shop_type';
+
+/// The types of shop, in the order the owner is offered them.
+const List<String> shopTypes = ['grocery', 'bakery', 'butcher', 'florist', 'corner_shop'];
+
 /// The setting holding the further kinds, comma-separated.
 const String businessMoreKindsKey = 'business.more_kinds';
 
 @immutable
 class BusinessProfile {
-  const BusinessProfile({required this.kind, this.moreKinds = const []});
+  const BusinessProfile({required this.kind, this.moreKinds = const [], this.shopType = SettingDefaults.businessShopType});
 
   /// The profile [settings] state. A registry that predates the keys (an
   /// older server) reads as the default kind, so nothing changes for it.
@@ -33,6 +39,7 @@ class BusinessProfile {
         for (final code in read(businessMoreKindsKey, SettingDefaults.businessMoreKinds).split(','))
           if (code.trim().isNotEmpty && code.trim() != primary) code.trim(),
       ],
+      shopType: read(businessShopTypeKey, SettingDefaults.businessShopType),
     );
   }
 
@@ -42,6 +49,9 @@ class BusinessProfile {
 
   /// The further kinds' codes, never the primary one.
   final List<String> moreKinds;
+
+  /// The type of shop (#4365): words and examples only; meaningful for a business that is a shop.
+  final String shopType;
 
   /// Every kind of the business, the primary one first.
   List<String> get kinds => [kind, ...moreKinds];

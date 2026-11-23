@@ -67,6 +67,9 @@ extension StockEntries on DrawerEntries {
           () => go('/stock/cycle-counts'),
           route: '/stock/cycle-counts',
         ),
+      // #4361 — item groups: shared settings, for who reads the stock.
+      if (features.contains(WorkspaceFeature.stockItemGroups) && reads)
+        DrawerEntry('drawer-stock-groups', Icons.folder_copy_outlined, l10n.itemGroupsTitle, () => go('/stock/groups'), route: '/stock/groups'),
       if (may(WorkspacePermission.manageStock) || may(WorkspacePermission.manageConfiguration))
         DrawerEntry(
           'drawer-stock-settings',

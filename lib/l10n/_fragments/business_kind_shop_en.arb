@@ -1,0 +1,51 @@
+{
+  "@@locale": "en",
+  "businessKindNameShop": "Shop",
+  "@businessKindNameShop": {
+    "description": "#4365 G16 the shop business kind"
+  },
+  "businessKindDescShop": "Goods bought, kept in stock and sold: an épicerie, a bakery, a butcher, a florist or a corner shop.",
+  "@businessKindDescShop": {
+    "description": "#4365 G16 the shop business kind"
+  },
+  "discoveryKindShops": "Shops",
+  "@discoveryKindShops": {
+    "description": "#4365 G16 the shop business kind"
+  },
+  "shopTypeGrocery": "Grocery",
+  "@shopTypeGrocery": {
+    "description": "#4365 G16 the shop business kind"
+  },
+  "shopTypeBakery": "Bakery",
+  "@shopTypeBakery": {
+    "description": "#4365 G16 the shop business kind"
+  },
+  "shopTypeButcher": "Butcher",
+  "@shopTypeButcher": {
+    "description": "#4365 G16 the shop business kind"
+  },
+  "shopTypeFlorist": "Florist",
+  "@shopTypeFlorist": {
+    "description": "#4365 G16 the shop business kind"
+  },
+  "shopTypeCornerShop": "Corner shop",
+  "@shopTypeCornerShop": {
+    "description": "#4365 G16 the shop business kind"
+  },
+  "settingLabelBusinessShopType": "Type of shop",
+  "@settingLabelBusinessShopType": {
+    "description": "#4365 G16 the shop business kind"
+  },
+  "settingHintBusinessShopType": "Grocery, bakery, butcher, florist or corner shop. It changes the words and examples the app shows, never what it does.",
+  "@settingHintBusinessShopType": {
+    "description": "#4365 G16 the shop business kind"
+  },
+  "settingLabelStockWeighedGoods": "Goods are sold by weight",
+  "@settingLabelStockWeighedGoods": {
+    "description": "#4365 G16 the shop business kind"
+  },
+  "settingHintStockWeighedGoods": "On: a new stock item is proposed in kilograms instead of pieces (a butcher, a bakery, a grocery counter). Any item can still be given another unit.",
+  "@settingHintStockWeighedGoods": {
+    "description": "#4365 G16 the shop business kind"
+  }
+}

@@ -130,6 +130,8 @@ String _recordsSettingLabel(AppLocalizations l10n, String key) => switch (key) {
       'security.badge_signin_where' => l10n.settingLabelSecurityBadgeSigninWhere,
       'stock.allow_negative' => l10n.settingLabelStockAllowNegative,
       'stock.address_separator' => l10n.settingLabelStockAddressSeparator,
+      'business.shop_type' => l10n.settingLabelBusinessShopType,
+      'stock.weighed_goods' => l10n.settingLabelStockWeighedGoods,
       'stock.cycle_count_high_value_minor' => l10n.settingLabelStockCycleCountHighValueMinor,
       'stock.cycle_count_overdue_days' => l10n.settingLabelStockCycleCountOverdueDays,
       'security.badge_identify_per_tag_limit' => l10n.settingLabelSecurityBadgeIdentifyPerTagLimit,
@@ -272,7 +274,7 @@ String? _bankSettingHint(AppLocalizations l10n, String key) => switch (key) {
       'security.badge_identify_per_source_limit' => l10n.settingHintSecurityBadgeIdentifyPerSourceLimit,
       'privacy.member_self_service' => l10n.settingHintPrivacyMemberSelfService,
       'purchase.item_cost_method' => l10n.settingHintPurchaseItemCostMethod,
-      _ => _liveUpdateSettingHint(l10n, key),
+      _ => _shopSettingHint(l10n, key),
     };
 
 /// #2488 -- the map's tile server and the directory's geocoder.
@@ -284,6 +286,13 @@ String? _regionSettingHint(AppLocalizations l10n, String key) => switch (key) {
       'locale.default_locale' => l10n.settingHintLocaleDefaultLocale,
       'locale.default_week_start' => l10n.settingHintLocaleDefaultWeekStart,
       _ => _paymentSettingHint(l10n, key),
+    };
+
+/// #4365 -- the shop's settings.
+String? _shopSettingHint(AppLocalizations l10n, String key) => switch (key) {
+      'business.shop_type' => l10n.settingHintBusinessShopType,
+      'stock.weighed_goods' => l10n.settingHintStockWeighedGoods,
+      _ => _liveUpdateSettingHint(l10n, key),
     };
 
 String? _liveUpdateSettingHint(AppLocalizations l10n, String key) => switch (key) {

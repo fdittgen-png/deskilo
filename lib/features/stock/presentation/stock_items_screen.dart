@@ -17,6 +17,7 @@ import '../../../core/help/help_anchors.dart';
 import '../../../core/help/help_dot.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
+import '../../../core/scan/scan_scope.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/dropdown_field.dart';
@@ -26,14 +27,19 @@ import '../../../core/ui/loading_view.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/domain/workspace_permission.dart';
 import '../../workspace/providers/workspace_providers.dart';
+import '../domain/stock_code_resolver.dart';
 import '../domain/stock_config.dart';
 import '../domain/stock_page.dart';
 import '../domain/stock_registry.dart';
+import '../domain/stock_tags.dart';
 import '../providers/stock_providers.dart';
+import 'item_group_assign_dialog.dart';
 import 'stock_home_sheet.dart';
 import 'stock_item_add.dart';
 import 'stock_item_editor.dart';
 import 'stock_mapping_editor.dart';
+import 'stock_screen_scan.dart';
+import 'stock_tags_dialog.dart';
 import 'stock_variants_editor.dart';
 
 class StockItemsScreen extends ConsumerWidget {
@@ -169,10 +175,40 @@ class _ItemsState extends ConsumerState<_Items> {
     );
   }
 
+  /// A scanner's code (#4359): an item opens, a place filters the list by it.
+  Future<void> _fromScanner(String code, bool mayManage) async {
+    final answer = await StockScreenScan(ref).resolve(context, widget.workspaceId, code);
+    if (answer == null || !mounted) return;
+    final item = answer.item;
+    final place = answer.place;
+    if (answer.kind == ScannedKind.place && place != null && !_noHome) {
+      _place = place.id;
+      await _load(reset: true);
+    } else if (item != null && item.id.isNotEmpty && mayManage) {
+      final lotsOn = ref.read(enabledFeaturesSyncProvider).contains(WorkspaceFeature.stockLots);
+      await showStockItemEditor(
+        context,
+        ref.read(stockConfigCommandsProvider),
+        workspaceId: widget.workspaceId,
+        itemId: item.id,
+        itemName: item.name,
+        options: (lots: lotsOn, keep: false),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final l10n = context.l10n;
     final mayManage = ref.watch(myPermissionsProvider).contains(WorkspacePermission.manageStock);
+    return ScanScope(
+      enabled: StockScreenScan(ref).on,
+      onScan: (code) => unawaited(_fromScanner(code, mayManage)),
+      child: _content(context, mayManage),
+    );
+  }
+
+  Widget _content(BuildContext context, bool mayManage) {
+    final l10n = context.l10n;
     final separator = ref.watch(stockAddressSeparatorProvider);
     final places = ref.watch(stockPlaceConfigsProvider(widget.workspaceId)).value ?? const <StockPlaceConfig>[]; // empty-ok: the places only feed a filter and a choice
     if (_failed) {
@@ -352,6 +388,25 @@ class _RegistryRow extends ConsumerWidget {
                     if (saved) onHomeChanged();
                   },
                 ),
+                if (ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.stockItemGroups))
+                  IconButton(
+                    key: ValueKey('stock-item-group-${row.itemId}'),
+                    icon: const Icon(Icons.folder_copy_outlined),
+                    tooltip: l10n.itemGroupAssignOpen,
+                    onPressed: () => showItemGroupAssign(context, workspaceId: workspaceId, itemId: row.itemId, itemName: row.itemName),
+                  ),
+                if (ref.watch(stockTagsProvider))
+                  IconButton(
+                    key: ValueKey('stock-tags-${row.itemId}'),
+                    icon: const Icon(Icons.nfc),
+                    tooltip: l10n.stockTagsOpen,
+                    onPressed: () => showStockTagsDialog(
+                      context,
+                      workspaceId: workspaceId,
+                      owner: TagOwner.item(row.itemId),
+                      name: row.itemName,
+                    ),
+                  ),
                 if (showTools) ...[
                   IconButton(
                     key: ValueKey('stock-edit-item-${row.itemId}'),

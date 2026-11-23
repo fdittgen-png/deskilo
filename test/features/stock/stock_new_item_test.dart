@@ -79,7 +79,7 @@ class _Registry implements StockRegistry {
   dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
-Future<(_Creator, _Commands, _Registry)> _open(WidgetTester tester, Size size) async {
+Future<(_Creator, _Commands, _Registry)> _open(WidgetTester tester, Size size, {bool weighed = false}) async {
   final creator = _Creator();
   final commands = _Commands();
   final registry = _Registry();
@@ -100,6 +100,7 @@ Future<(_Creator, _Commands, _Registry)> _open(WidgetTester tester, Size size) a
               ],
               separator: '-',
               currency: 'EUR',
+              unit: weighed ? 'kg' : 'piece',
             ),
           ),
           child: const Text('open'),
@@ -137,6 +138,15 @@ void main() {
         expect(find.text(_en.stockItemNewPriceInvalid), findsOneWidget);
         expect(creator.created, isEmpty);
         expect(commands.saved, isEmpty);
+      });
+
+      testWidgets('a business that sells by weight is proposed kilograms, any other pieces', (tester) async {
+        final (creator, commands, _) = await _open(tester, size, weighed: true);
+        await tester.enterText(find.byKey(const ValueKey('stock-new-item-name')), 'Ham');
+        await tester.tap(find.byKey(const ValueKey('stock-new-item-save')));
+        await _frames(tester);
+        expect(creator.created.single.name, 'Ham');
+        expect(commands.saved.single.config.inventoryUnit, 'kg');
       });
 
       testWidgets('saving makes the service, its stock settings and its home once, each with its own request id', (tester) async {

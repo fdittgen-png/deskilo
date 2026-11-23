@@ -703,6 +703,50 @@ Ouvrez **Stock → Articles**. Chaque ligne montre le **code-barres**, l’**uni
 - **Recherchez** par nom, code-barres ou adresse. Saisir ou scanner un code-barres dans la recherche et valider ouvre cet article.
 - Les longues listes se chargent par pages : choisissez *Afficher plus*.
 
+<!-- anchor: user.money.stock.groups -->
+### Groupes d’articles
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous voulez dire une fois ce qu’une famille d’articles a en commun — combien de temps elle se garde, comment elle est suivie, à quelle fréquence elle est comptée — et que chaque article suive.
+
+Ouvrez **Stock → Groupes d’articles** (il faut la fonction *Groupes d’articles* sous la gestion du stock). Un groupe a un nom, se place au sommet ou dans un autre groupe (un seul niveau de sous-groupes) et porte les réglages que vous choisissez : **suivi**, **durée de conservation**, **mode de puce**, **unité de stock**, **compter tous les n jours**, **âge minimum** et **vendu au poids**. Un réglage laissé *Non défini* n’est pas décidé à ce niveau.
+
+- **Un article suit son groupe tant qu’il n’a pas sa propre valeur.** La valeur en vigueur est celle de l’article s’il en a une, sinon celle de son sous-groupe, sinon celle de son groupe. Ouvrez **Groupe et réglages hérités** d’un article (l’icône de dossier sur sa ligne dans **Stock → Articles**) pour voir d’où vient chaque réglage (*Du groupe Boissons depuis le 3 déc.* ou *Valeur propre*), le déplacer dans un autre groupe et rendre une valeur propre avec **Utiliser la valeur du groupe**.
+- **Chaque changement est prévisualisé.** En enregistrant un groupe, vous voyez d’abord ce que le changement atteint : *s’applique à 1, 1 gardent leur propre valeur, 0 ne peuvent pas être atteints*. Rien n’est appliqué avant un deuxième enregistrement ; toute modification entre-temps demande un nouvel aperçu. Un article que le changement ne peut pas atteindre (par exemple une unité sur un article qui a déjà des mouvements) est listé, et le changement du groupe est enregistré pour les autres.
+- **Historique.** La feuille du groupe liste chaque changement avec le nombre d’articles atteints ; la ligne d’origine d’un article dit depuis quand.
+- Un sous-groupe ne peut pas avoir de sous-groupes ; les puces par pièce demandent un suivi à la pièce ; un groupe encore utilisé par des articles ne se supprime pas (déplacez-les d’abord). Ce qui est déjà enregistré — factures, réceptions, mouvements — ne change jamais.
+- Modifier les groupes demande le droit de gérer le stock ; les lire, celui de le voir.
+<!-- anchor: user.money.stock.scanning -->
+### Travailler avec un scanner
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous voulez recevoir, déplacer et sortir des marchandises en scannant, sans toucher un champ.
+
+Un scanner de codes-barres en mode clavier (il saisit le code puis appuie sur Entrée) fonctionne dans les feuilles de déplacement et de sortie, au rangement d’une livraison, et sous **Stock → Articles** et **Stock → Emplacements**. Il n’est pas nécessaire de toucher un champ d’abord. Un champ de texte qui a le focus garde sa propre saisie : ce que vous tapez n’est jamais pris pour un scan.
+
+- **Scannez l’emplacement, puis les articles.** Un code d’emplacement fixe l’emplacement courant ; il reste jusqu’à ce que vous en scanniez un autre et s’affiche en haut (*Rangement dans …*). Pour un déplacement, le premier emplacement est la source et le second la destination. Un code d’article, de variante ou de conditionnement désigne l’article et le compte : un code de carton ajoute la quantité exacte du carton (par exemple 12 pièces), une étiquette de lot fixe le lot.
+- **Un scan répété** en ajoute un de plus ou, si votre entreprise l’a choisi dans les réglages du stock (*Scan répété*), vous place sur le champ de quantité.
+- **Un code qui ne désigne rien** affiche *Code … inconnu — l’ajouter à un article ?* ; qui peut gérer le stock ouvre les articles et le donne à l’un d’eux. Un emplacement qui ne peut pas recevoir de marchandises, ou un article non tenu en stock, est refusé en toutes lettres et rien n’est rempli.
+- **Un scan n’envoie rien.** Il remplit seulement le formulaire ; le bouton que vous pressez exécute la même commande, avec les mêmes droits, que sans scanner.
+- **Réglages.** L’usage du scanner dépend de la fonction *Scanner* de l’entreprise, sous la gestion du stock. Le plus long intervalle entre deux touches d’un scan (une personne tape moins vite qu’un scanner) et ce qui termine un code (Entrée, Tab ou les deux) sont propres à l’appareil, sous **Stock → Réglages du stock → Scanner**.
+
+<!-- anchor: user.money.stock.nfc -->
+### Puces avec le NFC du téléphone
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous voulez associer une puce NFC à un article ou à un emplacement, et lire des puces en travaillant, avec le téléphone que vous avez déjà.
+
+Avec la fonction *Puces* activée et un téléphone qui lit le NFC, **Stock → Articles** et **Stock → Emplacements** affichent un bouton de puces sur chaque ligne, et la barre de scan d’une feuille de marchandises affiche **Lire une puce**. Le bouton est absent sur un appareil sans NFC (un ordinateur, la plupart des tablettes, un téléphone dont le NFC est coupé) : utilisez-y un scanner ou un lecteur portable.
+
+- **Associer une puce.** Ouvrez les puces d’un article ou d’un emplacement, touchez **Lire une puce** et approchez la puce du dos du téléphone. Une lecture associe une puce. Relire la même puce indique qu’elle était déjà associée ici et n’associe rien de nouveau ; une puce associée à autre chose est refusée et dit à quoi. Un propriétaire peut porter plusieurs puces. Le serveur accepte le code en majuscules ou minuscules, avec espaces, deux-points ou tirets.
+- **Retirer une puce** perdue, abîmée ou remplacée : choisissez le motif. Une puce retirée récemment ne peut pas être associée de nouveau tout de suite (le délai est un réglage du stock), et une puce sur une pièce encore en stock ne peut pas être retirée.
+- **Lire dans une feuille de marchandises.** Une puce se lit comme un code scanné : une puce d’emplacement fixe l’emplacement courant, une puce d’article compte l’article. Une puce lue deux fois dans une feuille est ignorée (*déjà lue*) ; une puce qui ne désigne rien dit *Puce inconnue*.
+- **Les étiquettes UHF** ne sont pas lisibles par un téléphone. Un article qui n’en a que de telles dit *utilisez le lecteur RFID*.
+- Associer demande le droit de gérer le stock ; lire, celui de le voir.
+
 <!-- anchor: user.money.stock.value -->
 ### Valeur du stock et origine des marchandises
 
