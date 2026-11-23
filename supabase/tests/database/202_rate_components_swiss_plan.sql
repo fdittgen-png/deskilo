@@ -1,4 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
+-- utc-date-file: the dates of global reference rows (tax and rate registries): no business day is involved, the database's own date is the one meant (#4384)
 -- #2539 / 0455: the Canadian tax components and the Swiss planned rate change
 -- are reference data. (1) vat_percent_components reads `rate_component` rows
 -- (the seeded ones answer exactly as the old `case` did; a row added in the

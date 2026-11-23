@@ -1,4 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
+-- utc-date-file: the two lines that use it are refused before any date is read (DKN01): the business's day of this file is t.today (workspace_today) everywhere else (#4384)
 -- #3858 (0766): a member's plan share and pause carry their dates, on one
 -- clock, and an invoice freezes its period. Each money case states its
 -- amounts and its invoice count:

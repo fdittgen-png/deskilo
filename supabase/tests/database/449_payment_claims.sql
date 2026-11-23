@@ -1,4 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
+-- utc-date-file: the assertions hold with the business's day one day ahead of and one day behind the database's (workspace_today forced to current_date +/- 1 on the dev project, #4384)
 -- #3556 (1a): a payment names the invoices it pays (its claim). With a claim
 -- the amount is what they still owe; another member's invoice, an unknown id
 -- and another business's invoice get one answer; one month per payment; an

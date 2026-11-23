@@ -1,4 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
+-- utc-date-file: the assertions hold with the business's day one day ahead of and one day behind the database's (workspace_today forced to current_date +/- 1 on the dev project, #4384)
 -- #3070: the aggregate matches authoritative obligation readback, and a
 -- supplier-scoped cursor neither leaks another tenant nor truncates at 2000.
 begin;

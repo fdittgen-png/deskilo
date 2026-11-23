@@ -1,4 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
+-- utc-date-file: the assertions hold with the business's day one day ahead of and one day behind the database's (workspace_today forced to current_date +/- 1 on the dev project, #4384)
 -- #1916: an invoice is not issued while its essentials are unknown. The
 -- checks run on the parties the invoice is about to freeze; create_invoice
 -- refuses (SQLSTATE DKI01, the missing keys in DETAIL) BEFORE a number is
