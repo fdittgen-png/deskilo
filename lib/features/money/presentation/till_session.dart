@@ -6,9 +6,8 @@
 // a refusal is the server's, kept as it came so the screen can say it in words.
 import 'package:flutter/foundation.dart';
 
-import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
-
 import '../../../core/ids/request_id.dart';
+import '../../../core/trace/refusal_text.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/counter_till.dart';
 import '../domain/till_quantity.dart';
@@ -169,9 +168,10 @@ class TillSession {
       final draft = await call(receiptId, revision, same: reuse);
       _last = draft;
       return draft;
-    } on Object catch (e) {
+    } on Object catch (e, st) {
       // The receipt moved or is no longer open: price the basket once more as a receipt of its own.
-      if (receiptId != null && e is PostgrestException && (e.code == 'DKL10' || e.code == 'DKL04')) {
+      if (receiptId != null && const {KnownRefusal.counterChanged, KnownRefusal.counterNotOpen}.contains(knownRefusalOf(e))) {
+        TraceLogger.instance.warn('money', 'till receipt moved, priced again', error: e, stackTrace: st);
         final draft = await call(null, null);
         _last = draft;
         return draft;
