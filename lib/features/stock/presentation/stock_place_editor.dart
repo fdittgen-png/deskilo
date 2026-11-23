@@ -15,6 +15,7 @@ import '../../../core/files/file_delivery.dart';
 import '../../../core/files/file_delivery_notice.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
+import '../../../core/scan/scan_scope.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
@@ -26,8 +27,11 @@ import '../domain/place_labels_pdf.dart';
 import '../domain/stock_config.dart';
 import '../domain/stock_config_check.dart';
 import '../domain/stock_config_commands.dart';
+import '../domain/stock_tags.dart';
 import '../providers/stock_providers.dart';
 import 'stock_config_text.dart';
+import 'stock_screen_scan.dart';
+import 'stock_tags_dialog.dart';
 
 String _kindLabel(AppLocalizations l10n, String kind) => switch (kind) {
   'site' => l10n.stockPlaceKindSite,
@@ -47,7 +51,7 @@ String _roleLabel(AppLocalizations l10n, String role) =>
 
 /// One place of the list: its address (as the person reads it), then its kind, name, whether
 /// a site receives from suppliers, and its use.
-Widget _placeTile(AppLocalizations l10n, StockPlaceConfig p, String separator, VoidCallback? onTap) {
+Widget _placeTile(AppLocalizations l10n, StockPlaceConfig p, String separator, VoidCallback? onTap, {VoidCallback? onTags}) {
   final site = stockKindLevel(p.kind) == 1;
   return ListTile(
     key: ValueKey('stock-place-${p.id}'),
@@ -67,6 +71,9 @@ Widget _placeTile(AppLocalizations l10n, StockPlaceConfig p, String separator, V
             ].join(' · '),
     ),
     onTap: onTap,
+    trailing: onTags == null
+        ? null
+        : IconButton(key: ValueKey('stock-place-tags-${p.id}'), icon: const Icon(Icons.nfc), tooltip: l10n.stockTagsOpen, onPressed: onTags),
   );
 }
 
@@ -178,8 +185,24 @@ class _PlacesSheetState extends ConsumerState<StockPlacesBody> {
     }
   }
 
+  /// A scanner's code (#4359): a place opens its editor.
+  Future<void> _fromScanner(String code) async {
+    final answer = await StockScreenScan(ref).resolve(context, widget.workspaceId, code);
+    final scanned = answer?.place;
+    if (scanned == null || !mounted || !widget.canEdit) return;
+    final all = await _places;
+    final place = all.where((p) => p.id == scanned.id).firstOrNull;
+    if (place != null && mounted) await _edit(all, place);
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) => ScanScope(
+    enabled: StockScreenScan(ref).on,
+    onScan: (code) => unawaited(_fromScanner(code)),
+    child: _content(context),
+  );
+
+  Widget _content(BuildContext context) {
     final l10n = context.l10n;
     return Padding(
         padding: const EdgeInsets.all(AppSpacing.md),
@@ -229,6 +252,14 @@ class _PlacesSheetState extends ConsumerState<StockPlacesBody> {
                           p,
                           separator,
                           p.virtual || !widget.canEdit ? null : () => _edit(all, p),
+                          onTags: p.virtual || !widget.canEdit || !ref.watch(stockTagsProvider)
+                              ? null
+                              : () => showStockTagsDialog(
+                                  context,
+                                  workspaceId: widget.workspaceId,
+                                  owner: TagOwner.place(p.id),
+                                  name: _placeTitle(p),
+                                ),
                         ),
                     ],
                   ),

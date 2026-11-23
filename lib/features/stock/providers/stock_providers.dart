@@ -4,8 +4,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/settings/active_settings.dart';
 import '../../../core/settings/setting_defaults.g.dart';
 import '../../money/providers/purchase_order_providers.dart';
-import '../../workspace/providers/operation_context_providers.dart';
+import '../../workspace/domain/workspace_feature.dart';
+import '../../workspace/providers/workspace_providers.dart';
 import '../application/stock_walk.dart';
+import '../data/supabase_stock_code_resolver.dart';
 import '../data/supabase_stock_config_commands.dart';
 import '../data/supabase_stock_cycle_counts.dart';
 import '../data/supabase_stock_operations.dart';
@@ -14,7 +16,9 @@ import '../data/supabase_stock_receiving_commands.dart';
 import '../data/supabase_stock_registry.dart';
 import '../data/supabase_stock_reorder.dart';
 import '../data/supabase_stock_reversals.dart';
+import '../data/supabase_stock_tags.dart';
 import '../data/supabase_stock_trace.dart';
+import '../domain/stock_code_resolver.dart';
 import '../domain/stock_config.dart';
 import '../domain/stock_config_commands.dart';
 import '../domain/stock_cycle_counts.dart';
@@ -26,6 +30,7 @@ import '../domain/stock_registry.dart';
 import '../domain/stock_reorder.dart';
 import '../domain/stock_reversals.dart';
 import '../domain/stock_service_creator.dart';
+import '../domain/stock_tags.dart';
 import '../domain/stock_trace.dart';
 
 /// #4161 -- the stock reads of the selected business. The Demo and the tests
@@ -134,6 +139,34 @@ final stockReplenishmentProvider = FutureProvider.autoDispose.family<Replenishme
   (ref, workspaceId) => ref.watch(stockReorderProvider).replenishment(workspaceId),
   retry: (_, _) => null,
 );
+
+/// #4359 -- what a scanned code names, for the selected workspace (the Demo answers from its own ledger).
+final stockCodeResolverProvider = Provider<StockCodeResolver>(
+  (ref) => SupabaseStockCodeResolver(ref.watch(selectedWorkspaceClientProvider)),
+);
+
+/// #4359 -- whether a goods sheet listens to a scanner in keyboard mode: the `stockScanning` feature of the
+/// business. The app wires it to the feature; a test or the Demo can switch it.
+final stockScanningProvider = Provider<bool>((ref) => ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.stockScanning));
+
+/// #4363 -- the tags of the selected workspace's stock (the Demo keeps its own in memory).
+final stockTagsStoreProvider = Provider<StockTags>(
+  (ref) => SupabaseStockTags(ref.watch(selectedWorkspaceClientProvider)),
+);
+
+/// #4363 -- whether tags (RFID/NFC) are used: the `stockTags` feature of the business. The tag sheets and the
+/// NFC button show only with it on.
+final stockTagsProvider = Provider<bool>((ref) => ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.stockTags));
+
+/// #4359 -- whether a repeated scan adds one (the default) or asks for the quantity: the business's
+/// `stock.repeated_scan` setting (`add_one` | `ask_quantity`).
+final stockScanAddsOneProvider = Provider<bool>((ref) {
+  final settings = ref.watch(activeSettingsProvider);
+  final value = settings != null && settings.definitions.containsKey('stock.repeated_scan')
+      ? settings.read<String>('stock.repeated_scan')
+      : SettingDefaults.stockRepeatedScan;
+  return value != 'ask_quantity';
+});
 
 /// #4173 -- the trace of goods to their documents and the operational value, for the selected
 /// business. The Demo and the tests replace it.

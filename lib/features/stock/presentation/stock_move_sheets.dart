@@ -10,6 +10,7 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show ExactQuanti
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/format/decimal_input.dart';
 import '../../../core/ids/request_id.dart';
@@ -20,10 +21,14 @@ import '../../../l10n/app_localizations.dart';
 import '../domain/stock_config.dart';
 import '../domain/stock_operations.dart';
 import '../domain/stock_page.dart';
+import '../domain/stock_scan_session.dart';
 import '../domain/stock_sites.dart';
 import '../providers/stock_providers.dart';
 import 'stock_config_text.dart';
 import 'stock_place_text.dart';
+import 'stock_scan_bar.dart';
+import 'stock_scan_feed.dart';
+import 'stock_scan_hint.dart';
 
 
 /// Moves goods ([takeOut] false) or takes them out ([takeOut] true); true when
@@ -37,15 +42,31 @@ Future<bool> showStockMoveSheet(
   bool takeOut = false,
 }) {
   final l10n = context.l10n;
-  final separator = ProviderScope.containerOf(context).read(stockAddressSeparatorProvider);
-  final draft = _MoveDraft(items, places, takeOut: takeOut, locale: Localizations.localeOf(context).toString(), separator: separator);
+  final container = ProviderScope.containerOf(context);
+  final draft = _MoveDraft(
+    items,
+    places,
+    takeOut: takeOut,
+    locale: Localizations.localeOf(context).toString(),
+    separator: container.read(stockAddressSeparatorProvider),
+  );
+  if (container.read(stockScanningProvider)) {
+    draft.scanner = StockScanFeed(
+      resolver: LazyStockCodeResolver(() => container.read(stockCodeResolverProvider)),
+      workspaceId: workspaceId,
+      session: StockScanSession(addsOne: container.read(stockScanAddsOneProvider)),
+      onResult: draft.scanned,
+      placeAllowed: (p) => draft.places.any((x) => x.id == p.id),
+      itemAllowed: (i) => items.any((x) => x.id == i.id),
+    );
+  }
   return showAppFormSheet(
     context,
     AppFormSheet(
       title: takeOut ? l10n.stockTakeOutOpen : l10n.stockMoveOpen,
       submitLabel: takeOut ? l10n.stockTakeOutSubmit : l10n.stockMoveSubmit,
       submitKey: const ValueKey('stock-move-submit'),
-      onDispose: draft.fields.dispose,
+      onDispose: draft.dispose,
       validate: () => draft.validate(l10n),
       onSubmit: () => draft.submit(l10n, operations, workspaceId),
       builder: draft.build,
@@ -74,6 +95,40 @@ class _MoveDraft {
   String? to;
   StockTakeOutReason reason = StockTakeOutReason.consumption;
 
+  /// The scanner of this sheet (#4359), when the business uses one.
+  StockScanFeed? scanner;
+  final FocusNode _quantityFocus = FocusNode();
+  VoidCallback? _refresh;
+
+  void dispose() {
+    scanner?.dispose();
+    _quantityFocus.dispose();
+    fields.dispose();
+  }
+
+  /// What a scan did: a place is where the goods are taken from (a second one is where they go), an item is the
+  /// item with the scanned quantity.
+  void scanned(ScanResult result) {
+    final place = result.place;
+    final line = result.line;
+    if (result.outcome == ScanOutcome.place && place != null) {
+      if (takeOut || from == null) {
+        from = place.id;
+      } else {
+        to = place.id;
+      }
+    } else if (result.outcome == ScanOutcome.line && line != null) {
+      scanner?.session.lines.removeWhere((l) => l != line);
+      item = line.itemId;
+      if (result.asksQuantity) {
+        _quantityFocus.requestFocus();
+      } else {
+        fields['quantity'].text = line.quantityText;
+      }
+    }
+    _refresh?.call();
+  }
+
   StockItem? get chosen => items.where((i) => i.id == item).firstOrNull;
 
   bool get betweenSites => from != null && to != null && stockSiteOf(from!, all) != stockSiteOf(to!, all);
@@ -95,6 +150,7 @@ class _MoveDraft {
       toLocationId: takeOut ? null : to,
     );
     try {
+      scanner?.pause();
       if (takeOut) {
         await operations.takeOut(workspaceId, reason, [line], requestId);
       } else if (betweenSites) {
@@ -106,6 +162,8 @@ class _MoveDraft {
     } on Object catch (e, st) {
       TraceLogger.instance.warn('stock', 'goods were not moved: $e', stackTrace: st);
       return stockSaveProblem(l10n, e);
+    } finally {
+      scanner?.resume();
     }
   }
 
@@ -113,7 +171,9 @@ class _MoveDraft {
     final l10n = context.l10n;
     final unit = chosen?.unit ?? '';
     final options = [for (final p in places) (p.id, stockPlaceTitle(p, separator))];
+    _refresh = refresh;
     return [
+      if (scanner != null) StockScanBar(feed: scanner!, onOpenItems: () => _openItems(context)) else const StockScanHint(insideSheet: true),
       if (takeOut) ...[
         SegmentedButton<StockTakeOutReason>(
           key: const ValueKey('stock-takeout-reason'),
@@ -178,10 +238,17 @@ class _MoveDraft {
         controller: fields['quantity'],
         fieldKey: 'quantity',
         label: l10n.stockMoveQuantity(unit),
+        focusNode: _quantityFocus,
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
         inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]'))],
       ),
     ];
+  }
+
+  void _openItems(BuildContext context) {
+    final router = GoRouter.of(context);
+    Navigator.of(context).pop();
+    router.go('/stock/items');
   }
 }
 
@@ -204,12 +271,16 @@ class StockPickField extends StatelessWidget {
   final ValueChanged<String?> onPicked;
 
   @override
-  Widget build(BuildContext context) => DropdownButtonFormField<String?>(
-    key: ValueKey('stock-move-$keyName'),
-    initialValue: value,
-    isExpanded: true,
-    decoration: InputDecoration(labelText: label, errorText: FormErrorsScope.maybeOf(context)?.errors[keyName]),
-    items: [for (final (id, text) in options) DropdownMenuItem<String?>(value: id, child: Text(text))],
-    onChanged: onPicked,
+  Widget build(BuildContext context) => KeyedSubtree(
+    // a scan sets the value from outside: the field starts again from it
+    key: ValueKey('$keyName-$value'),
+    child: DropdownButtonFormField<String?>(
+      key: ValueKey('stock-move-$keyName'),
+      initialValue: value,
+      isExpanded: true,
+      decoration: InputDecoration(labelText: label, errorText: FormErrorsScope.maybeOf(context)?.errors[keyName]),
+      items: [for (final (id, text) in options) DropdownMenuItem<String?>(value: id, child: Text(text))],
+      onChanged: onPicked,
+    ),
   );
 }

@@ -133,6 +133,8 @@
   "user.money.stock.places": "Ubicaciones y direcciones",
   "user.money.stock.reorder": "Reposición: lo que está bajo y lo que hay que pedir",
   "user.money.stock.registry": "El registro de artículos",
+  "user.money.stock.scanning": "Trabajar con un escáner",
+  "user.money.stock.nfc": "Etiquetas con el NFC del teléfono",
   "user.money.stock.value": "Valor de las existencias y origen de la mercancía",
   "user.money.stock.reversals": "Devoluciones, correcciones y recuentos",
   "user.money.stock.cycle": "Recuentos cíclicos",

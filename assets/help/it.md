@@ -2954,6 +2954,34 @@ Apra **Magazzino → Articoli**. Ogni riga mostra il **codice a barre**, l’**u
 - **Cerchi** per nome, codice a barre o indirizzo. Digitare o scansionare un codice a barre nella ricerca e confermare apre quell’articolo.
 - Le liste lunghe si caricano a pagine: scelga *Mostra altri*.
 
+### Lavorare con uno scanner
+
+**Destinatari:** Amministratore · Proprietario
+
+Vuole ricevere, spostare e scaricare merce scansionando, senza toccare un campo.
+
+Uno scanner di codici a barre in modalità tastiera (digita il codice e preme Invio) funziona nei fogli di spostamento e di prelievo, nello stoccaggio di una consegna e in **Magazzino → Articoli** e **Magazzino → Posizioni**. Non serve toccare prima un campo. Un campo di testo con il focus mantiene la propria digitazione: ciò che scrive non viene mai scambiato per una scansione.
+
+- **Scansioni la posizione, poi gli articoli.** Un codice di posizione imposta la posizione corrente; resta finché non ne scansiona un’altra ed è mostrata in alto (*Sistemazione in …*). In uno spostamento la prima posizione è l’origine e la seconda la destinazione. Un codice di articolo, variante o confezione indica l’articolo e lo conta: un codice di cartone aggiunge la quantità esatta del cartone (ad esempio 12 pezzi) e un’etichetta di lotto imposta il lotto.
+- **Una scansione ripetuta** ne aggiunge una in più oppure, se la sua attività l’ha scelto nelle impostazioni del magazzino (*Scansione ripetuta*), la porta sul campo della quantità.
+- **Un codice che non indica nulla** dice *Codice … sconosciuto: aggiungerlo a un articolo?*; chi può gestire il magazzino apre gli articoli e lo assegna a uno. Una posizione che non può ricevere merce, o un articolo non tenuto a magazzino, viene rifiutato a parole e non si compila nulla.
+- **Una scansione non invia nulla.** Compila solo il modulo; il pulsante che preme esegue lo stesso comando, con gli stessi diritti, che senza scanner.
+- **Impostazioni.** L’uso dello scanner dipende dalla funzione *Scanner* dell’attività, sotto la gestione del magazzino. L’intervallo massimo tra due tasti di una scansione (una persona scrive più lentamente di uno scanner) e ciò che termina un codice (Invio, Tab o entrambi) sono del dispositivo, in **Magazzino → Impostazioni del magazzino → Scanner**.
+
+### Tag con l’NFC del telefono
+
+**Destinatari:** Amministratore · Proprietario
+
+Vuole associare un chip NFC a un articolo o a una posizione e leggere chip mentre lavora, con il telefono che ha già.
+
+Con la funzione *Tag* attiva e un telefono che legge l’NFC, **Magazzino → Articoli** e **Magazzino → Posizioni** mostrano un pulsante dei tag su ogni riga, e la barra di scansione di un foglio di merce mostra **Leggi un tag**. Il pulsante manca su un dispositivo senza NFC (un computer, la maggior parte dei tablet, un telefono con l’NFC spento): lì usi uno scanner o un lettore portatile.
+
+- **Associare un tag.** Apra i tag di un articolo o di una posizione, tocchi **Leggi un tag** e avvicini il chip al retro del telefono. Una lettura associa un tag. Rileggere lo stesso chip dice che era già associato qui e non associa nulla di nuovo; un chip associato a qualcos’altro viene rifiutato e dice a cosa. Un proprietario può avere più tag. Il server accetta il codice in maiuscolo o minuscolo, con spazi, due punti o trattini.
+- **Ritirare un tag** perso, danneggiato o sostituito: scelga il motivo. Un tag ritirato da poco non può essere associato di nuovo subito (l’attesa è un’impostazione del magazzino) e un tag su un pezzo ancora a magazzino non può essere ritirato.
+- **Leggere in un foglio di merce.** Un chip si legge come un codice scansionato: un tag di posizione imposta la posizione corrente, uno di articolo conta l’articolo. Un chip letto due volte in un foglio viene ignorato (*già letto*); un chip che non indica nulla dice *Tag sconosciuto*.
+- **Le etichette UHF** non sono leggibili da un telefono. Un articolo che ha solo quelle dice *usi il lettore RFID*.
+- Associare richiede il diritto di gestire il magazzino; leggere, quello di vederlo.
+
 ### Valore del magazzino e origine della merce
 
 **Destinatari:** Amministratore · Proprietario

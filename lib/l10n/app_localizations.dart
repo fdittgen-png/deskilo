@@ -58423,6 +58423,144 @@ abstract class AppLocalizations {
   /// **'Return to the supplier'**
   String get stockReversalSupplierTitle;
 
+  /// #4363 G14: stockScanAlreadyRead
+  ///
+  /// In en, this message translates to:
+  /// **'Tag {code} was already read.'**
+  String stockScanAlreadyRead(String code);
+
+  /// #4359 G10 scanner: stockScanFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The scanned code could not be read. Check the connection and scan it again.'**
+  String get stockScanFailed;
+
+  /// #4359 G10 scanner: stockScanHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Working with a scanner'**
+  String get stockScanHelp;
+
+  /// #4359 G10: the line that sends a business using a scanner to the Scanning feature
+  ///
+  /// In en, this message translates to:
+  /// **'Using a barcode scanner? Turn on Scanning'**
+  String get stockScanHint;
+
+  /// #4359 G10 scanner: stockScanInterval
+  ///
+  /// In en, this message translates to:
+  /// **'Longest gap between two keys of a scan (milliseconds)'**
+  String get stockScanInterval;
+
+  /// #4359 G10: the interval is not within the range
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a whole number of milliseconds within the allowed range.'**
+  String get stockScanIntervalInvalid;
+
+  /// #4359 G10 scanner: stockScanLast
+  ///
+  /// In en, this message translates to:
+  /// **'{item}: {quantity} {unit}'**
+  String stockScanLast(String item, String quantity, String unit);
+
+  /// #4363 G14: stockScanNfc
+  ///
+  /// In en, this message translates to:
+  /// **'Read a tag'**
+  String get stockScanNfc;
+
+  /// #4363 G14: stockScanNfcFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The phone could not start reading. Check that NFC is on.'**
+  String get stockScanNfcFailed;
+
+  /// #4363 G14: stockScanNfcReading
+  ///
+  /// In en, this message translates to:
+  /// **'Hold the tag to the back of the phone…'**
+  String get stockScanNfcReading;
+
+  /// #4359 G10 scanner: stockScanPlacing
+  ///
+  /// In en, this message translates to:
+  /// **'Placing into {place}'**
+  String stockScanPlacing(String place);
+
+  /// #4359 G10 scanner: stockScanRefusedCode
+  ///
+  /// In en, this message translates to:
+  /// **'The code {code} names nothing this form can use.'**
+  String stockScanRefusedCode(String code);
+
+  /// #4359 G10 scanner: stockScanRefusedPlace
+  ///
+  /// In en, this message translates to:
+  /// **'{place} cannot take goods.'**
+  String stockScanRefusedPlace(String place);
+
+  /// #4359 G10 scanner: stockScanSave
+  ///
+  /// In en, this message translates to:
+  /// **'Save the scanner settings'**
+  String get stockScanSave;
+
+  /// #4359 G10 scanner: stockScanSettingsHint
+  ///
+  /// In en, this message translates to:
+  /// **'A scanner in keyboard mode types the code and presses Enter. These two settings belong to this device: a code typed faster than the gap below is taken for a scan.'**
+  String get stockScanSettingsHint;
+
+  /// #4359 G10 scanner: stockScanSettingsTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Scanner'**
+  String get stockScanSettingsTitle;
+
+  /// #4359 G10 scanner: stockScanTerminator
+  ///
+  /// In en, this message translates to:
+  /// **'What ends a scanned code'**
+  String get stockScanTerminator;
+
+  /// #4359 G10 scanner: stockScanTerminatorEither
+  ///
+  /// In en, this message translates to:
+  /// **'Enter or Tab'**
+  String get stockScanTerminatorEither;
+
+  /// #4359 G10 scanner: stockScanTerminatorEnter
+  ///
+  /// In en, this message translates to:
+  /// **'Enter'**
+  String get stockScanTerminatorEnter;
+
+  /// #4359 G10 scanner: stockScanTerminatorTab
+  ///
+  /// In en, this message translates to:
+  /// **'Tab'**
+  String get stockScanTerminatorTab;
+
+  /// #4359 G10 scanner: stockScanUnknown
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown code {code} — add it to an item?'**
+  String stockScanUnknown(String code);
+
+  /// #4359 G10 scanner: stockScanUnknownAdd
+  ///
+  /// In en, this message translates to:
+  /// **'Open the items'**
+  String get stockScanUnknownAdd;
+
+  /// #4363 G14: stockScanUnknownTag
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown tag {code}'**
+  String stockScanUnknownTag(String code);
+
   /// the stock pages and group (#4299)
   ///
   /// In en, this message translates to:
@@ -58470,6 +58608,150 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'On hand'**
   String get stockTabOnHand;
+
+  /// #4363 G14 tags: stockTagBoundElsewhere
+  ///
+  /// In en, this message translates to:
+  /// **'This tag is already bound to {owner}.'**
+  String stockTagBoundElsewhere(String owner);
+
+  /// #4363 G14 tags: stockTagKindNfc
+  ///
+  /// In en, this message translates to:
+  /// **'NFC chip'**
+  String get stockTagKindNfc;
+
+  /// #4363 G14 tags: stockTagKindUhf
+  ///
+  /// In en, this message translates to:
+  /// **'UHF label'**
+  String get stockTagKindUhf;
+
+  /// #4363 G14 tags: stockTagMalformed
+  ///
+  /// In en, this message translates to:
+  /// **'That is not a valid tag code.'**
+  String get stockTagMalformed;
+
+  /// #4363 G14 tags: stockTagModeNone
+  ///
+  /// In en, this message translates to:
+  /// **'This item does not use tags.'**
+  String get stockTagModeNone;
+
+  /// #4363 G14 tags: stockTagNotInForce
+  ///
+  /// In en, this message translates to:
+  /// **'This is not a tag in force here.'**
+  String get stockTagNotInForce;
+
+  /// #4363 G14 tags: stockTagOnPiece
+  ///
+  /// In en, this message translates to:
+  /// **'This tag is on a piece that is still in stock.'**
+  String get stockTagOnPiece;
+
+  /// #4363 G14 tags: stockTagOwnerUnknown
+  ///
+  /// In en, this message translates to:
+  /// **'This item or place is not known.'**
+  String get stockTagOwnerUnknown;
+
+  /// #4363 G14 tags: stockTagPerUnit
+  ///
+  /// In en, this message translates to:
+  /// **'This item is tagged piece by piece: tag its pieces when they are received.'**
+  String get stockTagPerUnit;
+
+  /// #4363 G14 tags: stockTagReasonDamaged
+  ///
+  /// In en, this message translates to:
+  /// **'Damaged'**
+  String get stockTagReasonDamaged;
+
+  /// #4363 G14 tags: stockTagReasonLost
+  ///
+  /// In en, this message translates to:
+  /// **'Lost'**
+  String get stockTagReasonLost;
+
+  /// #4363 G14 tags: stockTagReasonReplaced
+  ///
+  /// In en, this message translates to:
+  /// **'Replaced'**
+  String get stockTagReasonReplaced;
+
+  /// #4363 G14 tags: stockTagRetiredLately
+  ///
+  /// In en, this message translates to:
+  /// **'This tag was retired recently; it can be bound again after the waiting time set in the stock settings.'**
+  String get stockTagRetiredLately;
+
+  /// #4363 G14 tags: stockTagsAlready
+  ///
+  /// In en, this message translates to:
+  /// **'Tag {code} was already bound here.'**
+  String stockTagsAlready(String code);
+
+  /// #4363 G14 tags: stockTagsBound
+  ///
+  /// In en, this message translates to:
+  /// **'Tag {code} bound.'**
+  String stockTagsBound(String code);
+
+  /// #4363 G14 tags: stockTagsClose
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get stockTagsClose;
+
+  /// #4363 G14 tags: stockTagsFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The tags could not be read.'**
+  String get stockTagsFailed;
+
+  /// #4363 G14 tags: stockTagsNone
+  ///
+  /// In en, this message translates to:
+  /// **'No tag is bound yet.'**
+  String get stockTagsNone;
+
+  /// #4363 G14 tags: stockTagsOpen
+  ///
+  /// In en, this message translates to:
+  /// **'Tags'**
+  String get stockTagsOpen;
+
+  /// #4363 G14 tags: stockTagsRetire
+  ///
+  /// In en, this message translates to:
+  /// **'Retire'**
+  String get stockTagsRetire;
+
+  /// #4363 G14 tags: stockTagsRetireWhy
+  ///
+  /// In en, this message translates to:
+  /// **'Why is it retired?'**
+  String get stockTagsRetireWhy;
+
+  /// #4363 G14 tags: stockTagsRetired
+  ///
+  /// In en, this message translates to:
+  /// **'Tag {code} retired.'**
+  String stockTagsRetired(String code);
+
+  /// #4363 G14 tags: stockTagsTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Tags: {name}'**
+  String stockTagsTitle(String name);
+
+  /// #4363 G14 tags: stockTagsUhfOnly
+  ///
+  /// In en, this message translates to:
+  /// **'This item uses UHF tags — use the RFID reader.'**
+  String get stockTagsUhfOnly;
 
   /// #4170 transfers and take-out: a label or message
   ///

@@ -10,6 +10,8 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show isoDay;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/format/decimal_input.dart';
 import '../../../core/ids/request_id.dart';
@@ -21,13 +23,19 @@ import '../../../l10n/app_localizations.dart';
 import '../../money/domain/purchase_order.dart';
 import '../../money/domain/purchase_order_receipt.dart';
 import '../domain/put_away_progress.dart';
+import '../domain/stock_code_resolver.dart';
 import '../domain/stock_config.dart';
 import '../domain/stock_config_commands.dart';
 import '../domain/stock_page.dart';
 import '../domain/stock_queries.dart';
 import '../domain/stock_receiving.dart';
+import '../domain/stock_scan_session.dart';
 import '../domain/stock_variants.dart';
+import '../providers/stock_providers.dart';
 import 'stock_config_text.dart';
+import 'stock_scan_bar.dart';
+import 'stock_scan_feed.dart';
+import 'stock_scan_hint.dart';
 
 /// What the put-away asks of the stock and of the business, read from the
 /// providers by the pane and handed over whole.
@@ -99,13 +107,20 @@ class _Part {
     : qty = TextEditingController(text: quantity),
       lot = TextEditingController(),
       total = TextEditingController(),
-      rate = TextEditingController();
+      rate = TextEditingController(),
+      focus = FocusNode();
 
   final DeliveredLineProgress line;
   final TextEditingController qty;
   final TextEditingController lot;
   final TextEditingController total;
   final TextEditingController rate;
+
+  /// The quantity field's focus: a repeated scan that asks for the quantity puts the person there.
+  final FocusNode focus;
+
+  /// A scan counted this line (the first scan replaces the quantity the form started with).
+  bool scanned = false;
   String? place;
   String? variant;
   DateRead expiry = (date: null, problem: null);
@@ -118,6 +133,7 @@ class _Part {
     lot.dispose();
     total.dispose();
     rate.dispose();
+    focus.dispose();
   }
 }
 
@@ -176,9 +192,72 @@ class PutAwayDraft {
   };
 
   void dispose() {
+    scanner?.dispose();
     for (final p in _parts) {
       p.dispose();
     }
+  }
+
+  /// The scanner of this sheet (#4359), when the business uses one.
+  StockScanFeed? scanner;
+  VoidCallback? _refresh;
+
+  /// Records the put-away; scans wait while it is in flight. Null when done, else what to say.
+  Future<String?> submit(AppLocalizations l10n, PutAwayServices services, {required String workspaceId, required String receiptId}) async {
+    try {
+      scanner?.pause();
+      await services.commands.putAway(workspaceId, receiptId, toAllocations(), requestId);
+      return null;
+    } on Object catch (e, st) {
+      TraceLogger.instance.warn('stock', 'a put-away was not recorded: $e', stackTrace: st);
+      return stockSaveProblem(l10n, e);
+    } finally {
+      scanner?.resume();
+    }
+  }
+
+  /// Starts listening to a scanner when the business uses one (#4359).
+  void listen(ProviderContainer container, {required String workspaceId, required List<StockPlace> places}) {
+    if (!container.read(stockScanningProvider)) return;
+    scanner = StockScanFeed(
+      resolver: LazyStockCodeResolver(() => container.read(stockCodeResolverProvider)),
+      workspaceId: workspaceId,
+      session: StockScanSession(addsOne: container.read(stockScanAddsOneProvider)),
+      onResult: scanned,
+      placeAllowed: (p) => places.any((x) => x.id == p.id),
+      itemAllowed: carries,
+    );
+  }
+
+  /// Whether a scanned item is on this delivery.
+  bool carries(ScannedItem item) => _parts.any((p) => context.items[p.line.lineNo]?.itemId == item.id);
+
+  /// What a scan did: a place becomes the place of the lines not counted yet, an item counts its line (the
+  /// first scan replaces the quantity the form started with) and puts it into the current place, a lot label
+  /// sets the lot.
+  void scanned(ScanResult result) {
+    final place = result.place;
+    final line = result.line;
+    if (result.outcome == ScanOutcome.place && place != null) {
+      for (final p in _parts) {
+        if (!p.scanned) p.place = place.id;
+      }
+    } else if (result.outcome == ScanOutcome.line && line != null) {
+      final part = _parts.where((p) => context.items[p.line.lineNo]?.itemId == line.itemId).firstOrNull;
+      if (part != null) {
+        part.scanned = true;
+        if (result.asksQuantity) {
+          part.focus.requestFocus();
+        } else {
+          part.qty.text = line.quantityText;
+        }
+        final current = scanner?.session.current;
+        if (current != null) part.place = current.id;
+        final lot = line.lotCode;
+        if (lot != null && lot.isNotEmpty) part.lot.text = lot;
+      }
+    }
+    _refresh?.call();
   }
 
   /// The quantity of a part: what was typed, or (empty, while recording a
@@ -224,7 +303,9 @@ class PutAwayDraft {
 
   List<Widget> build(BuildContext context, VoidCallback refresh) {
     final l10n = context.l10n;
+    _refresh = refresh;
     return [
+      if (scanner != null) StockScanBar(feed: scanner!, onOpenItems: () => _openItems(context)) else const StockScanHint(insideSheet: true),
       for (final l in _lines)
         if (!this.context.items.containsKey(l.lineNo))
           Padding(
@@ -248,24 +329,29 @@ class PutAwayDraft {
       AppTextField(
         key: ValueKey('putaway-$n-qty'),
         controller: p.qty,
+        focusNode: p.focus,
         fieldKey: 'putaway-$n-qty',
         label: l10n.stockPutAwayQuantity(p.line.unit.isEmpty ? item.inventoryUnit : p.line.unit),
         helper: followsDelivery ? l10n.stockPutAwayAll : null,
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
         inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.]'))],
       ),
-      DropdownButtonFormField<String?>(
-        key: ValueKey('putaway-$n-place'),
-        initialValue: p.place,
-        isExpanded: true,
-        decoration: InputDecoration(labelText: l10n.stockPutAwayPlace),
-        items: [
-          for (final pl in this.context.places) DropdownMenuItem<String?>(value: pl.id, child: Text(pl.label)),
-        ],
-        onChanged: (v) {
-          p.place = v;
-          refresh();
-        },
+      KeyedSubtree(
+        // a scan sets the place from outside: the field starts again from it
+        key: ValueKey('putaway-$n-place-${p.place}'),
+        child: DropdownButtonFormField<String?>(
+          key: ValueKey('putaway-$n-place'),
+          initialValue: p.place,
+          isExpanded: true,
+          decoration: InputDecoration(labelText: l10n.stockPutAwayPlace),
+          items: [
+            for (final pl in this.context.places) DropdownMenuItem<String?>(value: pl.id, child: Text(pl.label)),
+          ],
+          onChanged: (v) {
+            p.place = v;
+            refresh();
+          },
+        ),
       ),
       if (variants.isNotEmpty)
         DropdownButtonFormField<String?>(
@@ -336,6 +422,12 @@ class PutAwayDraft {
   }
 }
 
+void _openItems(BuildContext context) {
+  final router = GoRouter.of(context);
+  Navigator.of(context).pop();
+  router.go('/stock/items');
+}
+
 /// "Put away what remains" of one delivery, in its own sheet; [onDone] is
 /// called after a put-away that was recorded.
 Future<bool> showPutAwaySheet(
@@ -355,6 +447,7 @@ Future<bool> showPutAwaySheet(
     AppSnack.info(context, l10n.stockPutAwayNothing);
     return false;
   }
+  draft.listen(ProviderScope.containerOf(context), workspaceId: workspaceId, places: loaded.places);
   final saved = await showAppFormSheet(
     context,
     AppFormSheet(
@@ -363,15 +456,7 @@ Future<bool> showPutAwaySheet(
       submitKey: const ValueKey('putaway-confirm'),
       onDispose: draft.dispose,
       validate: () => draft.validate(l10n),
-      onSubmit: () async {
-        try {
-          await services.commands.putAway(workspaceId, receipt.id, draft.toAllocations(), draft.requestId);
-          return null;
-        } on Object catch (e, st) {
-          TraceLogger.instance.warn('stock', 'a put-away was not recorded: $e', stackTrace: st);
-          return stockSaveProblem(l10n, e);
-        }
-      },
+      onSubmit: () => draft.submit(l10n, services, workspaceId: workspaceId, receiptId: receipt.id),
       builder: draft.build,
     ),
   );

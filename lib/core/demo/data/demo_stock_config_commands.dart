@@ -35,8 +35,14 @@ class DemoStockConfigCommands implements StockConfigCommands {
     'demo-item-mugs': const StockItemConfig(
       itemId: 'demo-item-mugs', revision: 1, stockable: true, purchasable: true, sellable: true,
       inventoryUnit: 'piece', tracking: 'none', shelfLifeDays: null,
-      units: [StockUnitDraft(unit: 'box', factorNum: 6, factorDen: 1, defaultPurchase: true)],
-      codes: [StockCodeDraft(code: 'MUG-001', kind: 'own')],
+      units: [
+        StockUnitDraft(unit: 'box', factorNum: 6, factorDen: 1, defaultPurchase: true),
+        StockUnitDraft(unit: 'carton', factorNum: 12, factorDen: 1),
+      ],
+      codes: [
+        StockCodeDraft(code: 'MUG-001', kind: 'own'),
+        StockCodeDraft(code: 'MUG-CARTON', kind: 'own', unit: 'carton'),
+      ],
     ),
     'demo-item-shirt': const StockItemConfig(
       itemId: 'demo-item-shirt', revision: 1, stockable: true, purchasable: true, sellable: true,
