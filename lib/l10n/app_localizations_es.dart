@@ -36867,6 +36867,96 @@ class AppLocalizationsEs extends AppLocalizations {
   String get stockReversalSupplierTitle => 'Devolución al proveedor';
 
   @override
+  String stockScanAlreadyRead(String code) {
+    return 'La etiqueta $code ya se leyó.';
+  }
+
+  @override
+  String get stockScanFailed =>
+      'No se pudo leer el código escaneado. Compruebe la conexión y vuelva a escanearlo.';
+
+  @override
+  String get stockScanHelp => 'Trabajar con un escáner';
+
+  @override
+  String get stockScanHint =>
+      '¿Usa un escáner de códigos de barras? Active «Escaneo»';
+
+  @override
+  String get stockScanInterval =>
+      'Intervalo máximo entre dos teclas de un escaneo (milisegundos)';
+
+  @override
+  String get stockScanIntervalInvalid =>
+      'Introduzca un número entero de milisegundos dentro del intervalo permitido.';
+
+  @override
+  String stockScanLast(String item, String quantity, String unit) {
+    return '$item: $quantity $unit';
+  }
+
+  @override
+  String get stockScanNfc => 'Leer una etiqueta';
+
+  @override
+  String get stockScanNfcFailed =>
+      'El teléfono no pudo iniciar la lectura. Compruebe que el NFC esté activado.';
+
+  @override
+  String get stockScanNfcReading =>
+      'Acerque la etiqueta a la parte trasera del teléfono…';
+
+  @override
+  String stockScanPlacing(String place) {
+    return 'Colocando en $place';
+  }
+
+  @override
+  String stockScanRefusedCode(String code) {
+    return 'El código $code no designa nada que este formulario pueda usar.';
+  }
+
+  @override
+  String stockScanRefusedPlace(String place) {
+    return '$place no puede recibir mercancías.';
+  }
+
+  @override
+  String get stockScanSave => 'Guardar los ajustes del escáner';
+
+  @override
+  String get stockScanSettingsHint =>
+      'Un escáner en modo teclado escribe el código y pulsa Intro. Estos dos ajustes son de este dispositivo: un código escrito más rápido que el intervalo de abajo se toma por un escaneo.';
+
+  @override
+  String get stockScanSettingsTitle => 'Escáner';
+
+  @override
+  String get stockScanTerminator => 'Qué termina un código escaneado';
+
+  @override
+  String get stockScanTerminatorEither => 'Intro o Tab';
+
+  @override
+  String get stockScanTerminatorEnter => 'Intro';
+
+  @override
+  String get stockScanTerminatorTab => 'Tab';
+
+  @override
+  String stockScanUnknown(String code) {
+    return 'Código $code desconocido: ¿añadirlo a un artículo?';
+  }
+
+  @override
+  String get stockScanUnknownAdd => 'Abrir los artículos';
+
+  @override
+  String stockScanUnknownTag(String code) {
+    return 'Etiqueta $code desconocida';
+  }
+
+  @override
   String get stockSettingsElsewhere =>
       'Los ajustes de existencias se mantienen en la página Ajustes de existencias.';
 
@@ -36890,6 +36980,92 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get stockTabOnHand => 'En existencias';
+
+  @override
+  String stockTagBoundElsewhere(String owner) {
+    return 'Esta etiqueta ya está asociada a $owner.';
+  }
+
+  @override
+  String get stockTagKindNfc => 'Chip NFC';
+
+  @override
+  String get stockTagKindUhf => 'Etiqueta UHF';
+
+  @override
+  String get stockTagMalformed => 'Ese no es un código de etiqueta válido.';
+
+  @override
+  String get stockTagModeNone => 'Este artículo no usa etiquetas.';
+
+  @override
+  String get stockTagNotInForce => 'Esta no es una etiqueta en uso aquí.';
+
+  @override
+  String get stockTagOnPiece =>
+      'Esta etiqueta está en una pieza que sigue en stock.';
+
+  @override
+  String get stockTagOwnerUnknown => 'Este artículo o ubicación no se conoce.';
+
+  @override
+  String get stockTagPerUnit =>
+      'Este artículo se etiqueta pieza a pieza: etiquete sus piezas al recibirlas.';
+
+  @override
+  String get stockTagReasonDamaged => 'Dañada';
+
+  @override
+  String get stockTagReasonLost => 'Perdida';
+
+  @override
+  String get stockTagReasonReplaced => 'Sustituida';
+
+  @override
+  String get stockTagRetiredLately =>
+      'Esta etiqueta se retiró hace poco; podrá asociarse de nuevo tras la espera fijada en los ajustes del stock.';
+
+  @override
+  String stockTagsAlready(String code) {
+    return 'La etiqueta $code ya estaba asociada aquí.';
+  }
+
+  @override
+  String stockTagsBound(String code) {
+    return 'Etiqueta $code asociada.';
+  }
+
+  @override
+  String get stockTagsClose => 'Cerrar';
+
+  @override
+  String get stockTagsFailed => 'No se pudieron leer las etiquetas.';
+
+  @override
+  String get stockTagsNone => 'Aún no hay ninguna etiqueta asociada.';
+
+  @override
+  String get stockTagsOpen => 'Etiquetas';
+
+  @override
+  String get stockTagsRetire => 'Retirar';
+
+  @override
+  String get stockTagsRetireWhy => '¿Por qué se retira?';
+
+  @override
+  String stockTagsRetired(String code) {
+    return 'Etiqueta $code retirada.';
+  }
+
+  @override
+  String stockTagsTitle(String name) {
+    return 'Etiquetas: $name';
+  }
+
+  @override
+  String get stockTagsUhfOnly =>
+      'Este artículo usa etiquetas UHF: use el lector RFID.';
 
   @override
   String get stockTakeOutLoss => 'Perdido o dado de baja';

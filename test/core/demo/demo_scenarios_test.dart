@@ -22,6 +22,7 @@ import 'package:deskilo/core/demo/data/book_period_repository.dart';
 import 'package:deskilo/core/demo/data/book_profile_repository.dart';
 import 'package:deskilo/core/demo/data/demo_item_groups.dart';
 import 'package:deskilo/core/demo/data/demo_kiosk_devices.dart';
+import 'package:deskilo/core/demo/data/demo_stock_code_resolver.dart';
 import 'package:deskilo/core/demo/data/demo_stock_config_commands.dart';
 import 'package:deskilo/core/demo/data/demo_stock_cycle_counts.dart';
 import 'package:deskilo/core/demo/data/demo_stock_ledger.dart';
@@ -31,6 +32,7 @@ import 'package:deskilo/core/demo/data/demo_stock_receiving_commands.dart';
 import 'package:deskilo/core/demo/data/demo_stock_registry.dart';
 import 'package:deskilo/core/demo/data/demo_stock_reorder.dart';
 import 'package:deskilo/core/demo/data/demo_stock_reversals.dart';
+import 'package:deskilo/core/demo/data/demo_stock_tags.dart';
 import 'package:deskilo/core/demo/data/fake_organisation_repository.dart';
 import 'package:deskilo/core/demo/data/kpi_repositories.dart';
 import 'package:deskilo/core/demo/data/lease_commitment_repository.dart';
@@ -74,11 +76,13 @@ import 'package:deskilo/features/money/domain/service_fulfilment.dart';
 import 'package:deskilo/features/money/domain/workspace_asset.dart';
 import 'package:deskilo/features/plan/domain/seat.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
+import 'package:deskilo/features/stock/domain/stock_code_resolver.dart';
 import 'package:deskilo/features/stock/domain/stock_config.dart';
 import 'package:deskilo/features/stock/domain/stock_cycle_counts.dart';
 import 'package:deskilo/features/stock/domain/stock_operations.dart';
 import 'package:deskilo/features/stock/domain/stock_receiving.dart';
 import 'package:deskilo/features/stock/domain/stock_reversals.dart';
+import 'package:deskilo/features/stock/domain/stock_tags.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/member_badge.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
@@ -1492,6 +1496,42 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
       final milk = await groups.effective(demoFirstSpaceId, 'demo-item-milk');
       final history = await groups.history(demoFirstSpaceId, groupId: drinks.id);
       return milk.params['shelf_life_days']!.value == 120 && history.length == 1;
+    },
+  ),
+  // #4359 — a scanner that types: the place goods are put into, then an item by its barcode and again by its
+  // carton code, which counts the carton's exact twelve pieces.
+  WorkspaceFeature.stockScanning: _action(
+    _owner,
+    'Ada scans the main store, then the mugs by their barcode and by their carton code (12 pieces)',
+    (w) async {
+      final config = DemoStockConfigCommands(demoFirstSpaceId);
+      final resolver = DemoStockCodeResolver(demoFirstSpaceId, config, DemoStockRegistry(demoFirstSpaceId, DemoStockLedger(demoFirstSpaceId, config), config));
+      final place = await resolver.resolve(demoFirstSpaceId, 'MAIN');
+      final item = await resolver.resolve(demoFirstSpaceId, '4006381333931');
+      final carton = await resolver.resolve(demoFirstSpaceId, 'MUG-CARTON');
+      return place.kind == ScannedKind.place &&
+          item.item?.id == 'demo-item-mugs' &&
+          carton.unit?.factorNum == 12 &&
+          (await resolver.resolve(demoFirstSpaceId, '9999999999')).kind == ScannedKind.unknown;
+    },
+  ),
+  // #4363 — a tag read by the phone's NFC is bound to the shelf and then names it, and the same chip is
+  // never bound twice to another owner.
+  WorkspaceFeature.stockTags: _action(
+    _owner,
+    'Ada binds an NFC chip to a shelf; the scanner then reads that chip as the shelf and refuses it for another place',
+    (w) async {
+      final config = DemoStockConfigCommands(demoFirstSpaceId);
+      final tags = DemoStockTags();
+      final resolver = DemoStockCodeResolver(demoFirstSpaceId, config, DemoStockRegistry(demoFirstSpaceId, DemoStockLedger(demoFirstSpaceId, config), config), tags);
+      await tags.bind(demoFirstSpaceId, requestId: 'r1', code: '04aa11bb', owner: const TagOwner.place('demo-place-back'));
+      final read = await resolver.resolve(demoFirstSpaceId, '04AA11BB');
+      try {
+        await tags.bind(demoFirstSpaceId, requestId: 'r2', code: '04aa11bb', owner: const TagOwner.place('demo-place-shelf'));
+        return false;
+      } on StockTagRefused catch (e) {
+        return read.kind == ScannedKind.tag && read.place?.id == 'demo-place-back' && e.code == 'DKG22';
+      }
     },
   ),
   // #4164 — the owner keeps a customer with no account: a business is added

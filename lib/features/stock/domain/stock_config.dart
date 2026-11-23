@@ -206,6 +206,19 @@ final class StockConfigInUse extends StockConfigFailure {
 
 /// Less is held than was asked: nothing moved (DKG03). [detail] is what the
 /// server said it held, when it said.
+/// #4363 -- a tag command refused for a reason of its own: `DKG22` the tag is bound elsewhere (detail: code,
+/// owner), `DKG23` it was retired lately (detail: code, days), `DKG24` it is on a piece still in stock, `DKG04`
+/// it is not a tag in force here.
+final class StockTagRefused extends StockConfigFailure {
+  const StockTagRefused(this.code, [this.detail = const {}]);
+
+  final String code;
+  final Map<String, Object?> detail;
+
+  @override
+  String toString() => 'StockTagRefused($code)';
+}
+
 final class StockNotEnough extends StockConfigFailure {
   const StockNotEnough([this.detail = '']);
 

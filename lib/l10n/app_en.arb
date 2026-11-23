@@ -47563,6 +47563,139 @@
   "@stockReversalSupplierTitle": {
     "description": "#4172 stock returns and counts screens"
   },
+  "stockScanAlreadyRead": "Tag {code} was already read.",
+  "@stockScanAlreadyRead": {
+    "description": "#4363 G14: stockScanAlreadyRead",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "stockScanFailed": "The scanned code could not be read. Check the connection and scan it again.",
+  "@stockScanFailed": {
+    "description": "#4359 G10 scanner: stockScanFailed"
+  },
+  "stockScanHelp": "Working with a scanner",
+  "@stockScanHelp": {
+    "description": "#4359 G10 scanner: stockScanHelp"
+  },
+  "stockScanHint": "Using a barcode scanner? Turn on Scanning",
+  "@stockScanHint": {
+    "description": "#4359 G10: the line that sends a business using a scanner to the Scanning feature"
+  },
+  "stockScanInterval": "Longest gap between two keys of a scan (milliseconds)",
+  "@stockScanInterval": {
+    "description": "#4359 G10 scanner: stockScanInterval"
+  },
+  "stockScanIntervalInvalid": "Enter a whole number of milliseconds within the allowed range.",
+  "@stockScanIntervalInvalid": {
+    "description": "#4359 G10: the interval is not within the range"
+  },
+  "stockScanLast": "{item}: {quantity} {unit}",
+  "@stockScanLast": {
+    "description": "#4359 G10 scanner: stockScanLast",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "stockScanNfc": "Read a tag",
+  "@stockScanNfc": {
+    "description": "#4363 G14: stockScanNfc"
+  },
+  "stockScanNfcFailed": "The phone could not start reading. Check that NFC is on.",
+  "@stockScanNfcFailed": {
+    "description": "#4363 G14: stockScanNfcFailed"
+  },
+  "stockScanNfcReading": "Hold the tag to the back of the phone…",
+  "@stockScanNfcReading": {
+    "description": "#4363 G14: stockScanNfcReading"
+  },
+  "stockScanPlacing": "Placing into {place}",
+  "@stockScanPlacing": {
+    "description": "#4359 G10 scanner: stockScanPlacing",
+    "placeholders": {
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "stockScanRefusedCode": "The code {code} names nothing this form can use.",
+  "@stockScanRefusedCode": {
+    "description": "#4359 G10 scanner: stockScanRefusedCode",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "stockScanRefusedPlace": "{place} cannot take goods.",
+  "@stockScanRefusedPlace": {
+    "description": "#4359 G10 scanner: stockScanRefusedPlace",
+    "placeholders": {
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "stockScanSave": "Save the scanner settings",
+  "@stockScanSave": {
+    "description": "#4359 G10 scanner: stockScanSave"
+  },
+  "stockScanSettingsHint": "A scanner in keyboard mode types the code and presses Enter. These two settings belong to this device: a code typed faster than the gap below is taken for a scan.",
+  "@stockScanSettingsHint": {
+    "description": "#4359 G10 scanner: stockScanSettingsHint"
+  },
+  "stockScanSettingsTitle": "Scanner",
+  "@stockScanSettingsTitle": {
+    "description": "#4359 G10 scanner: stockScanSettingsTitle"
+  },
+  "stockScanTerminator": "What ends a scanned code",
+  "@stockScanTerminator": {
+    "description": "#4359 G10 scanner: stockScanTerminator"
+  },
+  "stockScanTerminatorEither": "Enter or Tab",
+  "@stockScanTerminatorEither": {
+    "description": "#4359 G10 scanner: stockScanTerminatorEither"
+  },
+  "stockScanTerminatorEnter": "Enter",
+  "@stockScanTerminatorEnter": {
+    "description": "#4359 G10 scanner: stockScanTerminatorEnter"
+  },
+  "stockScanTerminatorTab": "Tab",
+  "@stockScanTerminatorTab": {
+    "description": "#4359 G10 scanner: stockScanTerminatorTab"
+  },
+  "stockScanUnknown": "Unknown code {code} — add it to an item?",
+  "@stockScanUnknown": {
+    "description": "#4359 G10 scanner: stockScanUnknown",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "stockScanUnknownAdd": "Open the items",
+  "@stockScanUnknownAdd": {
+    "description": "#4359 G10 scanner: stockScanUnknownAdd"
+  },
+  "stockScanUnknownTag": "Unknown tag {code}",
+  "@stockScanUnknownTag": {
+    "description": "#4363 G14: stockScanUnknownTag",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
   "stockSettingsElsewhere": "Stock settings are kept on the Stock settings page.",
   "@stockSettingsElsewhere": {
     "description": "the stock pages and group (#4299)"
@@ -47594,6 +47727,127 @@
   "stockTabOnHand": "On hand",
   "@stockTabOnHand": {
     "description": "#4161 the Stock screen: the tab of what is on hand"
+  },
+  "stockTagBoundElsewhere": "This tag is already bound to {owner}.",
+  "@stockTagBoundElsewhere": {
+    "description": "#4363 G14 tags: stockTagBoundElsewhere",
+    "placeholders": {
+      "owner": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTagKindNfc": "NFC chip",
+  "@stockTagKindNfc": {
+    "description": "#4363 G14 tags: stockTagKindNfc"
+  },
+  "stockTagKindUhf": "UHF label",
+  "@stockTagKindUhf": {
+    "description": "#4363 G14 tags: stockTagKindUhf"
+  },
+  "stockTagMalformed": "That is not a valid tag code.",
+  "@stockTagMalformed": {
+    "description": "#4363 G14 tags: stockTagMalformed"
+  },
+  "stockTagModeNone": "This item does not use tags.",
+  "@stockTagModeNone": {
+    "description": "#4363 G14 tags: stockTagModeNone"
+  },
+  "stockTagNotInForce": "This is not a tag in force here.",
+  "@stockTagNotInForce": {
+    "description": "#4363 G14 tags: stockTagNotInForce"
+  },
+  "stockTagOnPiece": "This tag is on a piece that is still in stock.",
+  "@stockTagOnPiece": {
+    "description": "#4363 G14 tags: stockTagOnPiece"
+  },
+  "stockTagOwnerUnknown": "This item or place is not known.",
+  "@stockTagOwnerUnknown": {
+    "description": "#4363 G14 tags: stockTagOwnerUnknown"
+  },
+  "stockTagPerUnit": "This item is tagged piece by piece: tag its pieces when they are received.",
+  "@stockTagPerUnit": {
+    "description": "#4363 G14 tags: stockTagPerUnit"
+  },
+  "stockTagReasonDamaged": "Damaged",
+  "@stockTagReasonDamaged": {
+    "description": "#4363 G14 tags: stockTagReasonDamaged"
+  },
+  "stockTagReasonLost": "Lost",
+  "@stockTagReasonLost": {
+    "description": "#4363 G14 tags: stockTagReasonLost"
+  },
+  "stockTagReasonReplaced": "Replaced",
+  "@stockTagReasonReplaced": {
+    "description": "#4363 G14 tags: stockTagReasonReplaced"
+  },
+  "stockTagRetiredLately": "This tag was retired recently; it can be bound again after the waiting time set in the stock settings.",
+  "@stockTagRetiredLately": {
+    "description": "#4363 G14 tags: stockTagRetiredLately"
+  },
+  "stockTagsAlready": "Tag {code} was already bound here.",
+  "@stockTagsAlready": {
+    "description": "#4363 G14 tags: stockTagsAlready",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTagsBound": "Tag {code} bound.",
+  "@stockTagsBound": {
+    "description": "#4363 G14 tags: stockTagsBound",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTagsClose": "Close",
+  "@stockTagsClose": {
+    "description": "#4363 G14 tags: stockTagsClose"
+  },
+  "stockTagsFailed": "The tags could not be read.",
+  "@stockTagsFailed": {
+    "description": "#4363 G14 tags: stockTagsFailed"
+  },
+  "stockTagsNone": "No tag is bound yet.",
+  "@stockTagsNone": {
+    "description": "#4363 G14 tags: stockTagsNone"
+  },
+  "stockTagsOpen": "Tags",
+  "@stockTagsOpen": {
+    "description": "#4363 G14 tags: stockTagsOpen"
+  },
+  "stockTagsRetire": "Retire",
+  "@stockTagsRetire": {
+    "description": "#4363 G14 tags: stockTagsRetire"
+  },
+  "stockTagsRetireWhy": "Why is it retired?",
+  "@stockTagsRetireWhy": {
+    "description": "#4363 G14 tags: stockTagsRetireWhy"
+  },
+  "stockTagsRetired": "Tag {code} retired.",
+  "@stockTagsRetired": {
+    "description": "#4363 G14 tags: stockTagsRetired",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTagsTitle": "Tags: {name}",
+  "@stockTagsTitle": {
+    "description": "#4363 G14 tags: stockTagsTitle",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "stockTagsUhfOnly": "This item uses UHF tags — use the RFID reader.",
+  "@stockTagsUhfOnly": {
+    "description": "#4363 G14 tags: stockTagsUhfOnly"
   },
   "stockTakeOutLoss": "Lost or written off",
   "@stockTakeOutLoss": {

@@ -36569,6 +36569,94 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockReversalSupplierTitle => 'Return to the supplier';
 
   @override
+  String stockScanAlreadyRead(String code) {
+    return 'Tag $code was already read.';
+  }
+
+  @override
+  String get stockScanFailed =>
+      'The scanned code could not be read. Check the connection and scan it again.';
+
+  @override
+  String get stockScanHelp => 'Working with a scanner';
+
+  @override
+  String get stockScanHint => 'Using a barcode scanner? Turn on Scanning';
+
+  @override
+  String get stockScanInterval =>
+      'Longest gap between two keys of a scan (milliseconds)';
+
+  @override
+  String get stockScanIntervalInvalid =>
+      'Enter a whole number of milliseconds within the allowed range.';
+
+  @override
+  String stockScanLast(String item, String quantity, String unit) {
+    return '$item: $quantity $unit';
+  }
+
+  @override
+  String get stockScanNfc => 'Read a tag';
+
+  @override
+  String get stockScanNfcFailed =>
+      'The phone could not start reading. Check that NFC is on.';
+
+  @override
+  String get stockScanNfcReading => 'Hold the tag to the back of the phone…';
+
+  @override
+  String stockScanPlacing(String place) {
+    return 'Placing into $place';
+  }
+
+  @override
+  String stockScanRefusedCode(String code) {
+    return 'The code $code names nothing this form can use.';
+  }
+
+  @override
+  String stockScanRefusedPlace(String place) {
+    return '$place cannot take goods.';
+  }
+
+  @override
+  String get stockScanSave => 'Save the scanner settings';
+
+  @override
+  String get stockScanSettingsHint =>
+      'A scanner in keyboard mode types the code and presses Enter. These two settings belong to this device: a code typed faster than the gap below is taken for a scan.';
+
+  @override
+  String get stockScanSettingsTitle => 'Scanner';
+
+  @override
+  String get stockScanTerminator => 'What ends a scanned code';
+
+  @override
+  String get stockScanTerminatorEither => 'Enter or Tab';
+
+  @override
+  String get stockScanTerminatorEnter => 'Enter';
+
+  @override
+  String get stockScanTerminatorTab => 'Tab';
+
+  @override
+  String stockScanUnknown(String code) {
+    return 'Unknown code $code — add it to an item?';
+  }
+
+  @override
+  String get stockScanUnknownAdd => 'Open the items';
+
+  @override
+  String stockScanUnknownTag(String code) {
+    return 'Unknown tag $code';
+  }
+
+  @override
   String get stockSettingsElsewhere =>
       'Stock settings are kept on the Stock settings page.';
 
@@ -36592,6 +36680,92 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get stockTabOnHand => 'On hand';
+
+  @override
+  String stockTagBoundElsewhere(String owner) {
+    return 'This tag is already bound to $owner.';
+  }
+
+  @override
+  String get stockTagKindNfc => 'NFC chip';
+
+  @override
+  String get stockTagKindUhf => 'UHF label';
+
+  @override
+  String get stockTagMalformed => 'That is not a valid tag code.';
+
+  @override
+  String get stockTagModeNone => 'This item does not use tags.';
+
+  @override
+  String get stockTagNotInForce => 'This is not a tag in force here.';
+
+  @override
+  String get stockTagOnPiece =>
+      'This tag is on a piece that is still in stock.';
+
+  @override
+  String get stockTagOwnerUnknown => 'This item or place is not known.';
+
+  @override
+  String get stockTagPerUnit =>
+      'This item is tagged piece by piece: tag its pieces when they are received.';
+
+  @override
+  String get stockTagReasonDamaged => 'Damaged';
+
+  @override
+  String get stockTagReasonLost => 'Lost';
+
+  @override
+  String get stockTagReasonReplaced => 'Replaced';
+
+  @override
+  String get stockTagRetiredLately =>
+      'This tag was retired recently; it can be bound again after the waiting time set in the stock settings.';
+
+  @override
+  String stockTagsAlready(String code) {
+    return 'Tag $code was already bound here.';
+  }
+
+  @override
+  String stockTagsBound(String code) {
+    return 'Tag $code bound.';
+  }
+
+  @override
+  String get stockTagsClose => 'Close';
+
+  @override
+  String get stockTagsFailed => 'The tags could not be read.';
+
+  @override
+  String get stockTagsNone => 'No tag is bound yet.';
+
+  @override
+  String get stockTagsOpen => 'Tags';
+
+  @override
+  String get stockTagsRetire => 'Retire';
+
+  @override
+  String get stockTagsRetireWhy => 'Why is it retired?';
+
+  @override
+  String stockTagsRetired(String code) {
+    return 'Tag $code retired.';
+  }
+
+  @override
+  String stockTagsTitle(String name) {
+    return 'Tags: $name';
+  }
+
+  @override
+  String get stockTagsUhfOnly =>
+      'This item uses UHF tags — use the RFID reader.';
 
   @override
   String get stockTakeOutLoss => 'Lost or written off';

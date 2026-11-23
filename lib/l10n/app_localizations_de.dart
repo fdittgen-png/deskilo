@@ -36974,6 +36974,96 @@ class AppLocalizationsDe extends AppLocalizations {
   String get stockReversalSupplierTitle => 'Rückgabe an den Lieferanten';
 
   @override
+  String stockScanAlreadyRead(String code) {
+    return 'Der Tag $code wurde bereits gelesen.';
+  }
+
+  @override
+  String get stockScanFailed =>
+      'Der gescannte Code konnte nicht gelesen werden. Prüfen Sie die Verbindung und scannen Sie erneut.';
+
+  @override
+  String get stockScanHelp => 'Mit einem Scanner arbeiten';
+
+  @override
+  String get stockScanHint =>
+      'Sie verwenden einen Barcode-Scanner? Schalten Sie „Scannen“ ein';
+
+  @override
+  String get stockScanInterval =>
+      'Längste Lücke zwischen zwei Tasten eines Scans (Millisekunden)';
+
+  @override
+  String get stockScanIntervalInvalid =>
+      'Geben Sie eine ganze Zahl von Millisekunden im erlaubten Bereich ein.';
+
+  @override
+  String stockScanLast(String item, String quantity, String unit) {
+    return '$item: $quantity $unit';
+  }
+
+  @override
+  String get stockScanNfc => 'Tag lesen';
+
+  @override
+  String get stockScanNfcFailed =>
+      'Das Telefon konnte das Lesen nicht starten. Prüfen Sie, ob NFC eingeschaltet ist.';
+
+  @override
+  String get stockScanNfcReading =>
+      'Halten Sie den Tag an die Rückseite des Telefons …';
+
+  @override
+  String stockScanPlacing(String place) {
+    return 'Einlagern in $place';
+  }
+
+  @override
+  String stockScanRefusedCode(String code) {
+    return 'Der Code $code bezeichnet nichts, was dieses Formular verwenden kann.';
+  }
+
+  @override
+  String stockScanRefusedPlace(String place) {
+    return '$place kann keine Ware aufnehmen.';
+  }
+
+  @override
+  String get stockScanSave => 'Scanner-Einstellungen speichern';
+
+  @override
+  String get stockScanSettingsHint =>
+      'Ein Scanner im Tastaturmodus tippt den Code und drückt die Eingabetaste. Diese beiden Einstellungen gelten für dieses Gerät: Ein Code, der schneller als die Lücke unten getippt wird, gilt als Scan.';
+
+  @override
+  String get stockScanSettingsTitle => 'Scanner';
+
+  @override
+  String get stockScanTerminator => 'Was einen gescannten Code beendet';
+
+  @override
+  String get stockScanTerminatorEither => 'Eingabe oder Tab';
+
+  @override
+  String get stockScanTerminatorEnter => 'Eingabe';
+
+  @override
+  String get stockScanTerminatorTab => 'Tab';
+
+  @override
+  String stockScanUnknown(String code) {
+    return 'Unbekannter Code $code — einem Artikel zuordnen?';
+  }
+
+  @override
+  String get stockScanUnknownAdd => 'Artikel öffnen';
+
+  @override
+  String stockScanUnknownTag(String code) {
+    return 'Unbekannter Tag $code';
+  }
+
+  @override
   String get stockSettingsElsewhere =>
       'Die Lagereinstellungen werden auf der Seite Lagereinstellungen geführt.';
 
@@ -36997,6 +37087,93 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get stockTabOnHand => 'Bestand';
+
+  @override
+  String stockTagBoundElsewhere(String owner) {
+    return 'Dieser Tag ist schon $owner zugeordnet.';
+  }
+
+  @override
+  String get stockTagKindNfc => 'NFC-Chip';
+
+  @override
+  String get stockTagKindUhf => 'UHF-Etikett';
+
+  @override
+  String get stockTagMalformed => 'Das ist kein gültiger Tag-Code.';
+
+  @override
+  String get stockTagModeNone => 'Dieser Artikel verwendet keine Tags.';
+
+  @override
+  String get stockTagNotInForce => 'Das ist hier kein gültiger Tag.';
+
+  @override
+  String get stockTagOnPiece =>
+      'Dieser Tag sitzt an einem Stück, das noch auf Lager ist.';
+
+  @override
+  String get stockTagOwnerUnknown =>
+      'Dieser Artikel oder Lagerplatz ist nicht bekannt.';
+
+  @override
+  String get stockTagPerUnit =>
+      'Dieser Artikel wird stückweise getaggt: Taggen Sie die Stücke beim Wareneingang.';
+
+  @override
+  String get stockTagReasonDamaged => 'Beschädigt';
+
+  @override
+  String get stockTagReasonLost => 'Verloren';
+
+  @override
+  String get stockTagReasonReplaced => 'Ersetzt';
+
+  @override
+  String get stockTagRetiredLately =>
+      'Dieser Tag wurde kürzlich außer Betrieb genommen; er kann nach der in den Lagereinstellungen festgelegten Wartezeit wieder zugeordnet werden.';
+
+  @override
+  String stockTagsAlready(String code) {
+    return 'Tag $code war hier schon zugeordnet.';
+  }
+
+  @override
+  String stockTagsBound(String code) {
+    return 'Tag $code zugeordnet.';
+  }
+
+  @override
+  String get stockTagsClose => 'Schließen';
+
+  @override
+  String get stockTagsFailed => 'Die Tags konnten nicht gelesen werden.';
+
+  @override
+  String get stockTagsNone => 'Noch kein Tag zugeordnet.';
+
+  @override
+  String get stockTagsOpen => 'Tags';
+
+  @override
+  String get stockTagsRetire => 'Außer Betrieb nehmen';
+
+  @override
+  String get stockTagsRetireWhy => 'Warum wird er außer Betrieb genommen?';
+
+  @override
+  String stockTagsRetired(String code) {
+    return 'Tag $code außer Betrieb genommen.';
+  }
+
+  @override
+  String stockTagsTitle(String name) {
+    return 'Tags: $name';
+  }
+
+  @override
+  String get stockTagsUhfOnly =>
+      'Dieser Artikel verwendet UHF-Tags – nutzen Sie das RFID-Lesegerät.';
 
   @override
   String get stockTakeOutLoss => 'Verloren oder abgeschrieben';
