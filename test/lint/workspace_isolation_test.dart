@@ -11,6 +11,8 @@
 // that does none of these would return every workspace the person belongs to
 // at once.
 
+import 'dart:io';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'lint_sources.dart';
 
@@ -48,6 +50,19 @@ const Map<String, String> _scopedByParent = {
       'by pair id: the dev and prod of one pair',
 };
 
+/// [source] with the shared table constants (`ServerTable.offices`, #4423) written as the literals they stand for.
+String _withNames(String source) {
+  final names = <String, String>{
+    for (final m in RegExp(r"static const (\w+) = '([^']+)';")
+        .allMatches(File('lib/core/data/server_names.dart').readAsStringSync()))
+      m.group(1)!: m.group(2)!,
+  };
+  return source.replaceAllMapped(
+    RegExp(r'ServerTable\.(\w+)'),
+    (m) => "'${names[m.group(1)] ?? m.group(1)}'",
+  );
+}
+
 void main() {
   test('every data call on a workspace table names its workspace or its row', () {
     final tables = _workspaceTables();
@@ -60,7 +75,7 @@ void main() {
     final offenders = <String>[];
     final used = <String>{};
     for (final f in filesWithExtension('lib', '.dart', recursive: true)) {
-      final src = f.readAsStringSync();
+      final src = _withNames(f.readAsStringSync());
       for (final m in call.allMatches(src)) {
         final table = m.group(1)!;
         if (!tables.contains(table)) continue;

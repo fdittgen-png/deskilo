@@ -8,6 +8,7 @@ import '../../../core/cache/cache_store.dart';
 import '../../../core/cache/cached_fetch.dart';
 import '../../../core/data/enum_wire.dart';
 import '../../../core/data/paged_fetch.dart';
+import '../../../core/data/server_names.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/desk.dart';
@@ -66,7 +67,7 @@ class SupabaseFloorPlanRepository
         fetchRaw: () => fetchAllPages(
           table: 'levels',
           build: () => _client
-              .from('levels')
+              .from(ServerTable.levels)
               .select()
               .eq('workspace_id', workspaceId)
               .order('sort_order', ascending: true)
@@ -90,7 +91,7 @@ class SupabaseFloorPlanRepository
     int sortOrder,
   ) async {
     final row = await _client
-        .from('levels')
+        .from(ServerTable.levels)
         .insert({
           'workspace_id': workspaceId,
           'name': name,
@@ -111,7 +112,7 @@ class SupabaseFloorPlanRepository
 
   @override
   Future<void> renameLevel(String levelId, String name) async {
-    await _client.from('levels').update({'name': name}).eq('id', levelId);
+    await _client.from(ServerTable.levels).update({'name': name}).eq('id', levelId);
     await _bust();
   }
 
@@ -122,7 +123,7 @@ class SupabaseFloorPlanRepository
     required int priceCents,
   }) async {
     // Owner-only levels RLS (0003); the 0050 check keeps the price >= 0.
-    await _client.from('levels').update({
+    await _client.from(ServerTable.levels).update({
       'bookable_as_whole': bookableAsWhole,
       'price_cents': priceCents,
     }).eq('id', levelId);
@@ -157,7 +158,7 @@ class SupabaseFloorPlanRepository
 
   Future<String?> _backgroundPath(String levelId) async =>
       (await _client
-              .from('levels')
+              .from(ServerTable.levels)
               .select('background_path')
               .eq('id', levelId)
               .maybeSingle())?['background_path'] as String?;
@@ -168,7 +169,7 @@ class SupabaseFloorPlanRepository
           for (final p in await _client.rpc<List<dynamic>>('plan_media_orphans',
               params: {'p_workspace_id': workspaceId})) p as String,
         ],
-        remove: (paths) => _client.storage.from('floor-plans').remove(paths),
+        remove: (paths) => _client.storage.from(ServerBucket.floorPlans).remove(paths),
       );
 
   PlanMediaSteps _media({
@@ -177,15 +178,15 @@ class SupabaseFloorPlanRepository
     String? contentType,
   }) =>
       PlanMediaSteps(
-        upload: (path) => _client.storage.from('floor-plans').uploadBinary(
+        upload: (path) => _client.storage.from(ServerBucket.floorPlans).uploadBinary(
               path,
               bytes!,
               fileOptions: FileOptions(contentType: contentType),
             ),
         publish: (path) => _client
-            .from('levels')
+            .from(ServerTable.levels)
             .update({'background_path': path}).eq('id', levelId),
-        remove: (path) => _client.storage.from('floor-plans').remove([path]),
+        remove: (path) => _client.storage.from(ServerBucket.floorPlans).remove([path]),
       );
 
   @override
@@ -224,13 +225,13 @@ class SupabaseFloorPlanRepository
     String levelId,
   ) async {
     final row = await _client
-        .from('levels')
+        .from(ServerTable.levels)
         .select('background_path')
         .eq('id', levelId)
         .maybeSingle();
     final path = row?['background_path'] as String?;
     if (path == null) return null;
-    return _client.storage.from('floor-plans').download(path);
+    return _client.storage.from(ServerBucket.floorPlans).download(path);
   }
 
   @override
@@ -248,7 +249,7 @@ class SupabaseFloorPlanRepository
   @override
   Future<SeatContext?> fetchSeatContext(String seatId) async {
     final seatRow = await _client
-        .from('seats')
+        .from(ServerTable.seats)
         .select('name, desk_id')
         .eq('id', seatId)
         .maybeSingle();
@@ -274,13 +275,13 @@ class SupabaseFloorPlanRepository
   @override
   Future<SeatContext?> fetchOfficeContext(String officeId) async {
     final officeRow = await _client
-        .from('offices')
+        .from(ServerTable.offices)
         .select('name, level_id')
         .eq('id', officeId)
         .maybeSingle();
     if (officeRow == null) return null;
     final levelRow = await _client
-        .from('levels')
+        .from(ServerTable.levels)
         .select('id, name')
         .eq('id', officeRow['level_id'] as String)
         .maybeSingle();
@@ -314,7 +315,7 @@ class SupabaseFloorPlanRepository
     final officeRows = await fetchAllPages(
       table: 'offices',
       build: () => _client
-          .from('offices')
+          .from(ServerTable.offices)
           .select()
           .eq('level_id', levelId)
           .order('id', ascending: true),
@@ -335,14 +336,14 @@ class SupabaseFloorPlanRepository
         seatRows = await fetchAllIn(
           table: 'seats',
           ids: deskIds,
-          build: (chunk) => _client.from('seats').select().inFilter('desk_id', chunk).order('id'),
+          build: (chunk) => _client.from(ServerTable.seats).select().inFilter('desk_id', chunk).order('id'),
         );
       }
     }
     final imageRows = await fetchAllPages(
       table: 'plan_images',
       build: () => _client
-          .from('plan_images')
+          .from(ServerTable.planImages)
           .select()
           .eq('level_id', levelId)
           .order('id', ascending: true),
@@ -388,12 +389,12 @@ class SupabaseFloorPlanRepository
     final id = imageId ?? newRequestId();
     final path = _imgPath(workspaceId, id);
     await PlanMediaSteps(
-      upload: (path) => _client.storage.from('floor-plans').uploadBinary(
+      upload: (path) => _client.storage.from(ServerBucket.floorPlans).uploadBinary(
             path,
             bytes,
             fileOptions: FileOptions(contentType: contentType, upsert: true),
           ),
-      publish: (path) => _client.from('plan_images').upsert(
+      publish: (path) => _client.from(ServerTable.planImages).upsert(
         {
           'id': id,
           'workspace_id': workspaceId,
@@ -407,19 +408,19 @@ class SupabaseFloorPlanRepository
         onConflict: 'id',
         ignoreDuplicates: true,
       ),
-      remove: (path) => _client.storage.from('floor-plans').remove([path]),
+      remove: (path) => _client.storage.from(ServerBucket.floorPlans).remove([path]),
     ).replace(candidate: path);
     await _bust();
     await _sweep(workspaceId);
     // Read back: the row a first attempt committed is the answer.
     final row =
-        await _client.from('plan_images').select().eq('id', id).single();
+        await _client.from(ServerTable.planImages).select().eq('id', id).single();
     return planImageFromRow(row);
   }
 
   @override
   Future<void> updatePlanImageRect(String imageId, GridRect rect) async {
-    await _client.from('plan_images').update({
+    await _client.from(ServerTable.planImages).update({
       'x': rect.x,
       'y': rect.y,
       'w': rect.w,
@@ -431,17 +432,17 @@ class SupabaseFloorPlanRepository
   @override
   Future<void> deletePlanImage(String imageId) async {
     final row = await _client
-        .from('plan_images')
+        .from(ServerTable.planImages)
         .select('storage_path')
         .eq('id', imageId)
         .maybeSingle();
     final path = row?['storage_path'] as String?;
     // #2012 — the row first (no reference to a removed object), then the
     // object, best effort.
-    await _client.from('plan_images').delete().eq('id', imageId);
+    await _client.from(ServerTable.planImages).delete().eq('id', imageId);
     if (path != null && path != 'pending') {
       try {
-        await _client.storage.from('floor-plans').remove([path]);
+        await _client.storage.from(ServerBucket.floorPlans).remove([path]);
       } on Object catch (e, st) {
         TraceLogger.instance.warn('plan', 'plan image object left for cleanup',
             error: e, stackTrace: st);
@@ -453,13 +454,13 @@ class SupabaseFloorPlanRepository
   @override
   Future<Uint8List?> fetchPlanImageBytes(String imageId) async {
     final row = await _client
-        .from('plan_images')
+        .from(ServerTable.planImages)
         .select('storage_path')
         .eq('id', imageId)
         .maybeSingle();
     final path = row?['storage_path'] as String?;
     if (path == null || path == 'pending') return null;
-    return _client.storage.from('floor-plans').download(path);
+    return _client.storage.from(ServerBucket.floorPlans).download(path);
   }
 
   @override
@@ -472,7 +473,7 @@ class SupabaseFloorPlanRepository
     required GridRect rect,
   }) async {
     final row = await _client
-        .from('offices')
+        .from(ServerTable.offices)
         .insert({
           'workspace_id': workspaceId,
           'level_id': levelId,
@@ -492,7 +493,7 @@ class SupabaseFloorPlanRepository
 
   @override
   Future<void> updateOffice(Office office) async {
-    await _client.from('offices').update({
+    await _client.from(ServerTable.offices).update({
       'name': office.name,
       'color': office.color,
       'bookable_as_whole': office.bookableAsWhole,
@@ -567,7 +568,7 @@ class SupabaseFloorPlanRepository
     required SeatOrientation orientation,
   }) async {
     final row = await _client
-        .from('seats')
+        .from(ServerTable.seats)
         .insert({
           'workspace_id': workspaceId,
           'desk_id': deskId,
@@ -584,7 +585,7 @@ class SupabaseFloorPlanRepository
 
   @override
   Future<void> updateSeat(Seat seat) async {
-    await _client.from('seats').update({
+    await _client.from(ServerTable.seats).update({
       'name': seat.name,
       'x': seat.x,
       'y': seat.y,
@@ -602,7 +603,7 @@ class SupabaseFloorPlanRepository
   @override
   Future<String?> seatIdForNfcUid(String workspaceId, String uid) async {
     final rows = await _client
-        .from('seats')
+        .from(ServerTable.seats)
         .select('id')
         .eq('workspace_id', workspaceId)
         .eq('nfc_uid', uid)

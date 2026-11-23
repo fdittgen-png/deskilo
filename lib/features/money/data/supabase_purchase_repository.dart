@@ -3,6 +3,7 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/data/paged_fetch.dart';
+import '../../../core/data/server_names.dart';
 import '../domain/purchase.dart';
 
 /// The purchase documents and their RPCs (0461). The tables are read under
@@ -286,13 +287,13 @@ class SupabasePurchaseRepository implements PurchaseRepository {
   @override
   Future<List<PurchasePlace>> fetchPlaces(String workspaceId) async {
     final sites = await _client
-        .from('sites')
+        .from(ServerTable.sites)
         .select('id, name')
         .eq('workspace_id', workspaceId)
         .order('sort_order')
         .order('name');
     final levels = await _client
-        .from('levels')
+        .from(ServerTable.levels)
         .select('id, name, offices(id, name)')
         .eq('workspace_id', workspaceId)
         .order('sort_order')

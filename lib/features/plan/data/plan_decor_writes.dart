@@ -6,6 +6,7 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/server_names.dart';
 import '../../../core/ids/request_id.dart';
 import '../domain/grid_geometry.dart';
 import '../domain/plan_image.dart';
@@ -24,7 +25,7 @@ mixin PlanDecorWrites {
     String? imageId,
   }) async {
     final id = imageId ?? newRequestId();
-    await decorClient.from('plan_images').upsert(
+    await decorClient.from(ServerTable.planImages).upsert(
       {
         'id': id,
         'workspace_id': workspaceId,
@@ -40,13 +41,13 @@ mixin PlanDecorWrites {
     );
     await bustPlanCache();
     final row =
-        await decorClient.from('plan_images').select().eq('id', id).single();
+        await decorClient.from(ServerTable.planImages).select().eq('id', id).single();
     return planImageFromRow(row);
   }
 
   Future<void> setPlanDecorTurns(String imageId, int quarterTurns) async {
     await decorClient
-        .from('plan_images')
+        .from(ServerTable.planImages)
         .update({'quarter_turns': quarterTurns})
         .eq('id', imageId);
     await bustPlanCache();

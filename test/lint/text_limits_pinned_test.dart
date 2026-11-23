@@ -117,7 +117,7 @@ void main() {
   });
 
   test('the edge handler clips a declared value at the database width', () {
-    final ts = File('supabase/functions/send-e-invoice/handler.ts')
+    final ts = File('supabase/functions/send-e-invoice/common.ts')
         .readAsStringSync();
     final dart = int.parse(
       RegExp(r'const DECLARED_WIDTH = (\d+);').firstMatch(ts)!.group(1)!,

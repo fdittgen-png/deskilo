@@ -2,6 +2,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/backend/connected_installations.dart';
+import '../../../core/data/server_names.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/account_group.dart';
 import '../domain/group_details.dart';
@@ -441,7 +442,7 @@ class SupabaseMessengerRepository with SupabaseInboxPages implements MessengerRe
   @override
   Future<String> sendAccountMessage(String recipient, String body) => _use(
     (client) async => (await client.rpc<dynamic>(
-      'send_account_message',
+      ServerRpc.sendAccountMessage,
       params: {
         'p_recipient': recipient,
         'p_body': body,
@@ -471,13 +472,13 @@ class SupabaseMessengerRepository with SupabaseInboxPages implements MessengerRe
             : {
                 for (final row
                     in await client
-                        .from('members')
+                        .from(ServerTable.members)
                         .select('id')
                         .eq('user_id', user))
                   row['id'] as String,
               };
         final rows = await client
-            .from('member_notes')
+            .from(ServerTable.memberNotes)
             .select()
             .eq('conversation_id', conversation)
             .order('created_at', ascending: false)

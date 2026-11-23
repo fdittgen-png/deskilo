@@ -30,7 +30,7 @@ insert into public.workspaces (id, name, country_code, currency_code, timezone, 
 values ('$ws', 'Settlement race', 'FR', 'EUR', 'Europe/Paris', '$owner');
 insert into public.members (workspace_id, user_id, is_owner, is_admin, status) values ('$ws', '$owner', true, true, 'active');
 SQL
-q() { psql "$url" -X -qAt -v ON_ERROR_STOP=1 -c "$1"; }
+. "$(dirname "${BASH_SOURCE[0]}")/lib/race.sh"
 record="select public.record_provider_settlement_v1('$ws', 'mollie', '$stl', 34000, 'EUR', date '2026-03-15', 'paid',
   '[{\"period\":\"2026-03\",\"method\":\"ideal\",\"description\":\"iDEAL\",\"cost_count\":3,\"amount_net_cents\":120},
     {\"period\":\"2026-03\",\"method\":\"creditcard\",\"description\":\"Credit card\",\"cost_count\":1,\"amount_net_cents\":55}]') ->> 'outcome'"

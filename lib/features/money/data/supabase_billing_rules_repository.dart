@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/server_names.dart';
 import '../domain/billing_rules.dart';
 import '../domain/billing_rules_repository.dart';
 import '../domain/workspace_status.dart';
@@ -16,7 +17,7 @@ class SupabaseBillingRulesRepository implements BillingRulesRepository {
   @override
   Future<BillingRules> fetchBillingRules(String workspaceId) async {
     final row = await _client
-        .from('workspaces')
+        .from(ServerTable.workspaces)
         .select('billing_rules')
         .eq('id', workspaceId)
         .single();
@@ -41,7 +42,7 @@ class SupabaseBillingRulesRepository implements BillingRulesRepository {
   @override
   Future<RepartitionRule> fetchRepartitionRule(String workspaceId) async {
     final row = await _client
-        .from('workspaces')
+        .from(ServerTable.workspaces)
         .select('billing_rules')
         .eq('id', workspaceId)
         .single();
