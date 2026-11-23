@@ -821,5 +821,12 @@
  "optRoundNone": "Keine Rundung",
  "optRound005": "Auf 0,05",
  "optRound010": "Auf 0,10",
- "optRound099": "Endend auf 0,99"
+ "optRound099": "Endend auf 0,99",
+ "stockTagGrace": "Tage, bevor ein entferntes Etikett neu vergeben wird",
+ "stockTagGraceHint": "Wie viele Tage nach dem Entfernen ein Etikettencode wieder gebunden werden darf. Einstellbar in den Einstellungen der App.",
+ "stockRepeatedScan": "Ein erneut gescannter Code",
+ "stockRepeatedScanHint": "Was ein Warenblatt tut, wenn derselbe Code noch einmal gescannt wird: eins mehr hinzufügen oder die Menge erfragen. Einstellbar in den Einstellungen der App.",
+ "optAtOnce": "Sofort",
+ "optAddOne": "Eins mehr hinzufügen",
+ "optAskQuantity": "Menge erfragen"
 }

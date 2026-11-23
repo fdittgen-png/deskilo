@@ -1,0 +1,19 @@
+{
+  "@@locale": "de",
+  "settingLabelStockTagRebindGraceDays": "Tage, bevor ein entferntes Etikett neu vergeben wird",
+  "settingHintStockTagRebindGraceDays": "Wie viele Tage nach dem Entfernen ein Etikettencode wieder gebunden werden darf. 0 heißt sofort. Ein gültiges Etikett wird nie doppelt gebunden.",
+  "settingLabelStockRepeatedScan": "Ein erneut gescannter Code",
+  "settingHintStockRepeatedScan": "Was ein Warenblatt tut, wenn derselbe Code noch einmal gescannt wird: eins mehr zur Zeile hinzufügen oder die Menge erfragen.",
+  "refusalStockTagBound": "Dieses Etikett ist bereits einem anderen Artikel, Ort oder Stück zugeordnet. Geben Sie es dort zuerst frei.",
+  "refusalStockTagRetiredLately": "Dieses Etikett wurde erst kürzlich freigegeben und kann noch nicht erneut zugeordnet werden. Die Wartezeit ist eine Einstellung des Betriebs.",
+  "refusalStockPieceInStock": "Dieses Stück ist auf Lager. Buchen Sie es aus oder schreiben Sie es ab, bevor sein Etikett freigegeben wird.",
+  "refusalStockNamePieces": "Dieser Artikel wird stückweise verfolgt: Benennen Sie jedes Stück, so viele wie die Menge.",
+  "refusalStockPieceWhere": "Ein benanntes Stück liegt nicht dort, wo diese Bewegung es entnimmt. Prüfen Sie den Ort oder das Stück.",
+  "stockReasonHasTags": "Hier sind Etiketten zugeordnet: Geben Sie sie frei, bevor der Etikettenmodus geändert wird.",
+  "stockReasonTagModeNone": "Dieser Artikel trägt keine Etiketten: Sein Etikettenmodus ist keiner.",
+  "stockReasonTagPerUnitItem": "Ein Etikett je Einheit gehört an ein Stück, nicht an den Artikel: Ordnen Sie es einem Stück zu.",
+  "stockReasonTagMalformed": "Dieser Code ist kein lesbarer Etikettencode.",
+  "stockReasonTagOwnerUnknown": "Der Artikel, Ort oder das Stück, für den dieses Etikett gedacht ist, ist hier nicht bekannt.",
+  "stockReasonUnitsNotTracked": "Stücke werden nur für einen stückweise verfolgten Artikel benannt.",
+  "stockReasonTagOwnerInactive": "Dieser Artikel oder Ort ist deaktiviert: Aktivieren Sie ihn wieder, bevor ihm ein Etikett zugeordnet wird."
+}

@@ -135,6 +135,17 @@ enum KnownRefusal {
   /// counted it, while there is someone else who may.
   stockCountSelf,
 
+  /// #4362 (0886) — DKG22: a tag already bound elsewhere; DKG23: a tag retired
+  /// lately, within the grace days; DKG24: a piece in stock cannot retire its tag.
+  stockTagBound,
+  stockTagRetiredLately,
+  stockPieceInStock,
+
+  /// #4362 (0887) — DKG25: the pieces of a piece-tracked item must be named;
+  /// DKG26: a named piece is not where the movement takes it from.
+  stockNamePieces,
+  stockPieceWhere,
+
   /// #4008 (0782) — DKM01: a member who left comes back as a new member,
   /// never by changing their old row (for instance to paused).
   memberReturnsAsNew,
@@ -207,6 +218,11 @@ const Map<String, KnownRefusal> _codedRefusals = {
   'DKG19': KnownRefusal.stockCountDecided,
   'DKG20': KnownRefusal.stockCountStale,
   'DKG21': KnownRefusal.stockCountSelf,
+  'DKG22': KnownRefusal.stockTagBound,
+  'DKG23': KnownRefusal.stockTagRetiredLately,
+  'DKG24': KnownRefusal.stockPieceInStock,
+  'DKG25': KnownRefusal.stockNamePieces,
+  'DKG26': KnownRefusal.stockPieceWhere,
   // #4008 — a member who left (0782).
   'DKM01': KnownRefusal.memberReturnsAsNew,
 };
@@ -309,6 +325,16 @@ String? _stockRefusalText(AppLocalizations l10n, KnownRefusal refusal) =>
       KnownRefusal.stockCountStale => l10n.refusalStockCountStale,
       KnownRefusal.stockCountSelf => l10n.refusalStockCountSelf,
       KnownRefusal.memberReturnsAsNew => l10n.refusalMemberReturnsAsNew,
+      _ => _tagRefusalText(l10n, refusal),
+    };
+
+/// #4362 -- the tags and the named pieces.
+String? _tagRefusalText(AppLocalizations l10n, KnownRefusal refusal) => switch (refusal) {
+      KnownRefusal.stockTagBound => l10n.refusalStockTagBound,
+      KnownRefusal.stockTagRetiredLately => l10n.refusalStockTagRetiredLately,
+      KnownRefusal.stockPieceInStock => l10n.refusalStockPieceInStock,
+      KnownRefusal.stockNamePieces => l10n.refusalStockNamePieces,
+      KnownRefusal.stockPieceWhere => l10n.refusalStockPieceWhere,
       _ => null,
     };
 

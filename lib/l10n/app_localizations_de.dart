@@ -12605,6 +12605,20 @@ class AppLocalizationsDe extends AppLocalizations {
   String get featureStockReturnsTitle => 'Lagerrückgaben und Korrekturen';
 
   @override
+  String get featureStockScanningDesc =>
+      'Ein tippender Barcode-Scanner oder die Handykamera füllt jedes Warenblatt: ein Code wird als Barcode, Ortsetikett, Chargenetikett oder RFID-Etikett gelesen. Mit dem Warenbuch eingeschaltet.';
+
+  @override
+  String get featureStockScanningTitle => 'Scannen';
+
+  @override
+  String get featureStockTagsDesc =>
+      'Artikel, Einheiten, Chargen und Orte mit RFID- oder NFC-Etiketten versehen, wie ein Barcode gespeichert und im Betrieb eindeutig. Ein Etikett kann eine Charge oder ein Stück benennen, wie es die Gruppe des Artikels sagt; ein gelesenes Etikett wird überall erkannt, wo ein Barcode erkannt wird.';
+
+  @override
+  String get featureStockTagsTitle => 'RFID-Etiketten';
+
+  @override
   String get featureStockTakeOutDesc =>
       'Waren für den Verbrauch oder als Verlust aus dem Lager nehmen, mit Grund und Charge. Aus: weder Verbrauch noch Verlust werden angeboten; Umlagerungen und Wareneingang bleiben unberührt.';
 
@@ -29070,6 +29084,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Diese Bewegung kann so nicht gebucht werden: eine Menge über null, ein bekannter Grund und eine bis zweihundert Zeilen, oder dieselbe Anfrage unverändert erneut. Nichts wurde bewegt.';
 
   @override
+  String get refusalStockNamePieces =>
+      'Dieser Artikel wird stückweise verfolgt: Benennen Sie jedes Stück, so viele wie die Menge.';
+
+  @override
   String get refusalStockNotEnough =>
       'So viel ist an diesem Ort nicht vorhanden. Nichts wurde bewegt.';
 
@@ -29086,6 +29104,14 @@ class AppLocalizationsDe extends AppLocalizations {
       'Diese Seitenanfrage ist ungültig: Fordern Sie 1 bis 200 Zeilen an und setzen Sie nur an der Position fort, die eine Seite geliefert hat.';
 
   @override
+  String get refusalStockPieceInStock =>
+      'Dieses Stück ist auf Lager. Buchen Sie es aus oder schreiben Sie es ab, bevor sein Etikett freigegeben wird.';
+
+  @override
+  String get refusalStockPieceWhere =>
+      'Ein benanntes Stück liegt nicht dort, wo diese Bewegung es entnimmt. Prüfen Sie den Ort oder das Stück.';
+
+  @override
   String get refusalStockReturnBeyond =>
       'Es kann nicht mehr zurückgegeben werden, als diese Bewegung enthielt: ein Teil wurde bereits zurückgegeben oder korrigiert.';
 
@@ -29100,6 +29126,14 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get refusalStockStale =>
       'Jemand anderes hat dies geändert, seit Sie es geöffnet haben. Lesen Sie es erneut und nehmen Sie Ihre Änderung noch einmal vor.';
+
+  @override
+  String get refusalStockTagBound =>
+      'Dieses Etikett ist bereits einem anderen Artikel, Ort oder Stück zugeordnet. Geben Sie es dort zuerst frei.';
+
+  @override
+  String get refusalStockTagRetiredLately =>
+      'Dieses Etikett wurde erst kürzlich freigegeben und kann noch nicht erneut zugeordnet werden. Die Wartezeit ist eine Einstellung des Betriebs.';
 
   @override
   String get refusalStockUnit =>
@@ -32362,6 +32396,14 @@ class AppLocalizationsDe extends AppLocalizations {
       'Wie ein vorgeschlagener Verkaufspreis gerundet wird: auf 0,05 oder 0,10 oder auf einen Preis, der auf 0,99 endet. Sie dient nur dazu, einen Preis vorzuschlagen.';
 
   @override
+  String get settingHintStockRepeatedScan =>
+      'Was ein Warenblatt tut, wenn derselbe Code noch einmal gescannt wird: eins mehr zur Zeile hinzufügen oder die Menge erfragen.';
+
+  @override
+  String get settingHintStockTagRebindGraceDays =>
+      'Wie viele Tage nach dem Entfernen ein Etikettencode wieder gebunden werden darf. 0 heißt sofort. Ein gültiges Etikett wird nie doppelt gebunden.';
+
+  @override
   String get settingHintVatViesEvidenceDays =>
       'Tage, die eine gültige Prüfung der USt-IdNr. aktuell genug bleibt, um auf einer neuen Rechnung als Nachweis zu dienen. Ein kürzerer Wert verlangt früher eine neue Prüfung; er beweist nicht, dass ein Geschäft gültig ist.';
 
@@ -32703,6 +32745,13 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingLabelStockPriceRounding => 'Preisrundung';
+
+  @override
+  String get settingLabelStockRepeatedScan => 'Ein erneut gescannter Code';
+
+  @override
+  String get settingLabelStockTagRebindGraceDays =>
+      'Tage, bevor ein entferntes Etikett neu vergeben wird';
 
   @override
   String get settingLabelVatViesEvidenceDays =>
@@ -36402,6 +36451,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get stockReasonGtinLength => 'Ein Barcode hat 8 bis 14 Ziffern.';
 
   @override
+  String get stockReasonHasTags =>
+      'Hier sind Etiketten zugeordnet: Geben Sie sie frei, bevor der Etikettenmodus geändert wird.';
+
+  @override
   String get stockReasonHomeInvalid =>
       'Wählen Sie einen Lagerort dieses Unternehmens, der in Gebrauch ist und kein Lieferanten-, Kunden-, Verlust- oder Transitort ist.';
 
@@ -36572,6 +36625,26 @@ class AppLocalizationsDe extends AppLocalizations {
       'Dieser Lieferant gehört nicht zu diesem Betrieb.';
 
   @override
+  String get stockReasonTagMalformed =>
+      'Dieser Code ist kein lesbarer Etikettencode.';
+
+  @override
+  String get stockReasonTagModeNone =>
+      'Dieser Artikel trägt keine Etiketten: Sein Etikettenmodus ist keiner.';
+
+  @override
+  String get stockReasonTagOwnerInactive =>
+      'Dieser Artikel oder Ort ist deaktiviert: Aktivieren Sie ihn wieder, bevor ihm ein Etikett zugeordnet wird.';
+
+  @override
+  String get stockReasonTagOwnerUnknown =>
+      'Der Artikel, Ort oder das Stück, für den dieses Etikett gedacht ist, ist hier nicht bekannt.';
+
+  @override
+  String get stockReasonTagPerUnitItem =>
+      'Ein Etikett je Einheit gehört an ein Stück, nicht an den Artikel: Ordnen Sie es einem Stück zu.';
+
+  @override
   String get stockReasonTargetBelowPoint =>
       'Das Auffüllniveau muss über dem Meldebestand liegen.';
 
@@ -36612,6 +36685,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get stockReasonUnitUnmapped =>
       'Die Einheit dieser Zeile gehört nicht zum Artikel: fügen Sie sie zuerst dem Artikel hinzu.';
+
+  @override
+  String get stockReasonUnitsNotTracked =>
+      'Stücke werden nur für einen stückweise verfolgten Artikel benannt.';
 
   @override
   String get stockReasonValueForeign =>

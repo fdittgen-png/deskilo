@@ -905,5 +905,21 @@
   },
   "@featureStockItemGroupsDesc": {
     "description": "#4361 feature description"
+  },
+  "featureStockTagsTitle": "RFID tags",
+  "featureStockTagsDesc": "Tag items, units, batches and places with RFID or NFC tags, stored like a barcode and unique in the business. A tag may name one batch or one piece, as the item's group says; a tag read is recognised wherever a barcode is.",
+  "@featureStockTagsTitle": {
+    "description": "#4362 feature name"
+  },
+  "@featureStockTagsDesc": {
+    "description": "#4362 feature description"
+  },
+  "featureStockScanningTitle": "Scanning",
+  "featureStockScanningDesc": "A barcode scanner that types, or the phone camera, fills any goods sheet: a code is read as a barcode, a place label, a lot label or an RFID tag. On with the goods ledger.",
+  "@featureStockScanningTitle": {
+    "description": "#4359 feature name"
+  },
+  "@featureStockScanningDesc": {
+    "description": "#4359 feature description"
   }
 }

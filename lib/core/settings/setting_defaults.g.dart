@@ -188,6 +188,10 @@ abstract final class SettingDefaults {
   static const String stockGroupDefaultTagMode = 'none';
   /// `stock.price_rounding`
   static const String stockPriceRounding = 'none';
+  /// `stock.repeated_scan`
+  static const String stockRepeatedScan = 'add_one';
+  /// `stock.tag_rebind_grace_days`
+  static const int stockTagRebindGraceDays = 30;
   /// `vat.vies_evidence_days`
   static const int vatViesEvidenceDays = 90;
 }

@@ -88,6 +88,8 @@ String _itemGroupSettingLabel(AppLocalizations l10n, String key) => switch (key)
       'stock.group_default_tag_mode' => l10n.settingLabelStockGroupDefaultTagMode,
       'stock.group_default_count_days' => l10n.settingLabelStockGroupDefaultCountDays,
       'stock.price_rounding' => l10n.settingLabelStockPriceRounding,
+      'stock.tag_rebind_grace_days' => l10n.settingLabelStockTagRebindGraceDays,
+      'stock.repeated_scan' => l10n.settingLabelStockRepeatedScan,
       _ => _bankSettingLabel(l10n, key),
     };
 
@@ -227,6 +229,8 @@ String? _itemGroupSettingHint(AppLocalizations l10n, String key) => switch (key)
       'stock.group_default_tag_mode' => l10n.settingHintStockGroupDefaultTagMode,
       'stock.group_default_count_days' => l10n.settingHintStockGroupDefaultCountDays,
       'stock.price_rounding' => l10n.settingHintStockPriceRounding,
+      'stock.tag_rebind_grace_days' => l10n.settingHintStockTagRebindGraceDays,
+      'stock.repeated_scan' => l10n.settingHintStockRepeatedScan,
       _ => _bankSettingHint(l10n, key),
     };
 

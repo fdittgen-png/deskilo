@@ -821,5 +821,12 @@
  "optRoundNone": "Pas d'arrondi",
  "optRound005": "Au 0,05",
  "optRound010": "Au 0,10",
- "optRound099": "Finissant par 0,99"
+ "optRound099": "Finissant par 0,99",
+ "stockTagGrace": "Jours avant de réutiliser une étiquette retirée",
+ "stockTagGraceHint": "Combien de jours après son retrait un code d'étiquette peut être lié de nouveau. Se règle dans les paramètres de l'app.",
+ "stockRepeatedScan": "Un code scanné de nouveau",
+ "stockRepeatedScanHint": "Ce que fait une feuille de marchandises quand le même code est scanné de nouveau : ajouter un de plus, ou demander la quantité. Se règle dans les paramètres de l'app.",
+ "optAtOnce": "Tout de suite",
+ "optAddOne": "Ajouter un de plus",
+ "optAskQuantity": "Demander la quantité"
 }

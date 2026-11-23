@@ -12587,6 +12587,20 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featureStockReturnsTitle => 'Resi e correzioni di magazzino';
 
   @override
+  String get featureStockScanningDesc =>
+      'Un lettore che digita, o la fotocamera del telefono, compila qualsiasi foglio di merci: un codice è letto come codice a barre, etichetta di luogo, etichetta di lotto o etichetta RFID. Attivo con il registro delle merci.';
+
+  @override
+  String get featureStockScanningTitle => 'Scansione';
+
+  @override
+  String get featureStockTagsDesc =>
+      'Etichetti articoli, unità, lotti e luoghi con etichette RFID o NFC, registrate come un codice a barre e uniche nell\'attività. Un\'etichetta può indicare un lotto o un pezzo, secondo il gruppo dell\'articolo; la lettura di un\'etichetta è riconosciuta ovunque lo sia un codice a barre.';
+
+  @override
+  String get featureStockTagsTitle => 'Etichette RFID';
+
+  @override
   String get featureStockTakeOutDesc =>
       'Prelevare merci dal magazzino per uso o come perdita, con motivo e lotto. Disattivato: non sono offerti consumo né perdita; i trasferimenti e la ricezione restano invariati.';
 
@@ -29021,6 +29035,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questo movimento non può essere registrato così: una quantità sopra zero, un motivo noto e da una a duecento righe, oppure la stessa richiesta inviata di nuovo invariata. Non è stato spostato nulla.';
 
   @override
+  String get refusalStockNamePieces =>
+      'Questo articolo è tracciato pezzo per pezzo: indichi ogni pezzo, tanti quanti la quantità.';
+
+  @override
   String get refusalStockNotEnough =>
       'In questo luogo non ce n\'è così tanto. Non è stato spostato nulla.';
 
@@ -29037,6 +29055,14 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questa richiesta di pagina non è valida: richiedere da 1 a 200 righe e proseguire solo dalla posizione indicata da una pagina.';
 
   @override
+  String get refusalStockPieceInStock =>
+      'Questo pezzo è in magazzino. Lo scarichi o lo cancelli prima di ritirare la sua etichetta.';
+
+  @override
+  String get refusalStockPieceWhere =>
+      'Un pezzo indicato non si trova dove questo movimento lo preleva. Controlli il luogo o il pezzo.';
+
+  @override
   String get refusalStockReturnBeyond =>
       'Non si può restituire più di quanto questo movimento conteneva: una parte è già stata restituita o corretta.';
 
@@ -29051,6 +29077,14 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get refusalStockStale =>
       'Qualcun altro lo ha modificato da quando lo ha aperto. Lo rilegga e rifaccia la sua modifica.';
+
+  @override
+  String get refusalStockTagBound =>
+      'Questa etichetta è già su un altro articolo, luogo o pezzo. La ritiri prima lì.';
+
+  @override
+  String get refusalStockTagRetiredLately =>
+      'Questa etichetta è stata ritirata da poco e non può ancora essere associata di nuovo. Il tempo di attesa è un\'impostazione dell\'attività.';
 
   @override
   String get refusalStockUnit =>
@@ -32310,6 +32344,14 @@ class AppLocalizationsIt extends AppLocalizations {
       'Come si arrotonda un prezzo di vendita proposto: al 0,05 o 0,10 più vicino, o a un prezzo che finisce per 0,99. Serve solo a proporre un prezzo.';
 
   @override
+  String get settingHintStockRepeatedScan =>
+      'Cosa fa un foglio di merci quando lo stesso codice è scansionato ancora: aggiungere uno alla riga o chiedere la quantità.';
+
+  @override
+  String get settingHintStockTagRebindGraceDays =>
+      'Quanti giorni dopo il ritiro un codice di etichetta può essere associato di nuovo. 0 significa subito. Un\'etichetta in uso non è mai associata due volte.';
+
+  @override
   String get settingHintVatViesEvidenceDays =>
       'Giorni in cui un controllo valido della partita IVA resta abbastanza recente da fungere da prova su una nuova fattura. Un valore più breve richiede prima un nuovo controllo; non prova che un’operazione sia valida.';
 
@@ -32666,6 +32708,13 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get settingLabelStockPriceRounding => 'Arrotondamento dei prezzi';
+
+  @override
+  String get settingLabelStockRepeatedScan => 'Un codice scansionato di nuovo';
+
+  @override
+  String get settingLabelStockTagRebindGraceDays =>
+      'Giorni prima di riutilizzare un\'etichetta ritirata';
 
   @override
   String get settingLabelVatViesEvidenceDays =>
@@ -36346,6 +36395,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get stockReasonGtinLength => 'Un codice a barre ha da 8 a 14 cifre.';
 
   @override
+  String get stockReasonHasTags =>
+      'Qui ci sono etichette associate: le ritiri prima di cambiare la modalità etichetta.';
+
+  @override
   String get stockReasonHomeInvalid =>
       'Scelga un’ubicazione di questa azienda in uso che non sia di fornitore, cliente, perdita o transito.';
 
@@ -36514,6 +36567,26 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questo fornitore non appartiene a questa attività.';
 
   @override
+  String get stockReasonTagMalformed =>
+      'Questo codice non è un codice di etichetta leggibile.';
+
+  @override
+  String get stockReasonTagModeNone =>
+      'Questo articolo non porta etichette: la sua modalità etichetta è nessuna.';
+
+  @override
+  String get stockReasonTagOwnerInactive =>
+      'Questo articolo o luogo è disattivato: lo riattivi prima di associargli un\'etichetta.';
+
+  @override
+  String get stockReasonTagOwnerUnknown =>
+      'L\'articolo, il luogo o il pezzo a cui è destinata questa etichetta non è noto qui.';
+
+  @override
+  String get stockReasonTagPerUnitItem =>
+      'Un\'etichetta per unità va su un pezzo, non sull\'articolo: la associ a un pezzo.';
+
+  @override
   String get stockReasonTargetBelowPoint =>
       'Il livello fino a cui ordinare deve essere sopra il punto di riordino.';
 
@@ -36552,6 +36625,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get stockReasonUnitUnmapped =>
       'L’unità di questa riga non è un’unità dell’articolo: aggiungerla prima all’articolo.';
+
+  @override
+  String get stockReasonUnitsNotTracked =>
+      'I pezzi si indicano solo per un articolo tracciato pezzo per pezzo.';
 
   @override
   String get stockReasonValueForeign =>

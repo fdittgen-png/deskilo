@@ -826,7 +826,14 @@ window.SETUP_L10N={
    "optRoundNone": "No rounding",
    "optRound005": "To 0.05",
    "optRound010": "To 0.10",
-   "optRound099": "Ending in 0.99"
+   "optRound099": "Ending in 0.99",
+   "stockTagGrace": "Days before a retired tag is bound again",
+   "stockTagGraceHint": "How many days after it was retired a tag code may be bound again. Set in the app's settings.",
+   "stockRepeatedScan": "A code scanned again",
+   "stockRepeatedScanHint": "What a goods sheet does when the same code is scanned again: add one more, or ask the quantity. Set in the app's settings.",
+   "optAtOnce": "At once",
+   "optAddOne": "Add one more",
+   "optAskQuantity": "Ask the quantity"
   },
   "feature": {
    "calendarTab": [
@@ -1512,6 +1519,14 @@ window.SETUP_L10N={
    "stockItemGroups": [
     "Item groups",
     "Group items so that their settings are shared: tracking, shelf life, tag mode, units, VAT, the till and more. An item inherits its group's value unless it keeps its own; a change to a group shows how many items it reaches before it is saved."
+   ],
+   "stockTags": [
+    "RFID tags",
+    "Tag items, units, batches and places with RFID or NFC tags, stored like a barcode and unique in the business. A tag may name one batch or one piece, as the item's group says; a tag read is recognised wherever a barcode is."
+   ],
+   "stockScanning": [
+    "Scanning",
+    "A barcode scanner that types, or the phone camera, fills any goods sheet: a code is read as a barcode, a place label, a lot label or an RFID tag. On with the goods ledger."
    ]
   },
   "process": {
@@ -2735,7 +2750,14 @@ window.SETUP_L10N={
    "optRoundNone": "Pas d'arrondi",
    "optRound005": "Au 0,05",
    "optRound010": "Au 0,10",
-   "optRound099": "Finissant par 0,99"
+   "optRound099": "Finissant par 0,99",
+   "stockTagGrace": "Jours avant de réutiliser une étiquette retirée",
+   "stockTagGraceHint": "Combien de jours après son retrait un code d'étiquette peut être lié de nouveau. Se règle dans les paramètres de l'app.",
+   "stockRepeatedScan": "Un code scanné de nouveau",
+   "stockRepeatedScanHint": "Ce que fait une feuille de marchandises quand le même code est scanné de nouveau : ajouter un de plus, ou demander la quantité. Se règle dans les paramètres de l'app.",
+   "optAtOnce": "Tout de suite",
+   "optAddOne": "Ajouter un de plus",
+   "optAskQuantity": "Demander la quantité"
   },
   "feature": {
    "calendarTab": [
@@ -3421,6 +3443,14 @@ window.SETUP_L10N={
    "stockItemGroups": [
     "Groupes d'articles",
     "Regroupez les articles pour partager leurs réglages : suivi, durée de conservation, mode d'étiquette, unités, TVA, caisse et plus. Un article hérite de la valeur de son groupe sauf s'il garde la sienne ; un changement de groupe montre combien d'articles il touche avant d'être enregistré."
+   ],
+   "stockTags": [
+    "Étiquettes RFID",
+    "Étiquetez articles, unités, lots et lieux avec des étiquettes RFID ou NFC, enregistrées comme un code-barres et uniques dans l'entreprise. Une étiquette peut désigner un lot ou une pièce, selon le groupe de l'article ; la lecture d'une étiquette est reconnue partout où un code-barres l'est."
+   ],
+   "stockScanning": [
+    "Scan",
+    "Une douchette qui tape, ou la caméra du téléphone, remplit toute feuille de marchandises : un code est lu comme un code-barres, une étiquette de lieu, une étiquette de lot ou une étiquette RFID. Activé avec le registre des marchandises."
    ]
   },
   "process": {
@@ -4644,7 +4674,14 @@ window.SETUP_L10N={
    "optRoundNone": "Keine Rundung",
    "optRound005": "Auf 0,05",
    "optRound010": "Auf 0,10",
-   "optRound099": "Endend auf 0,99"
+   "optRound099": "Endend auf 0,99",
+   "stockTagGrace": "Tage, bevor ein entferntes Etikett neu vergeben wird",
+   "stockTagGraceHint": "Wie viele Tage nach dem Entfernen ein Etikettencode wieder gebunden werden darf. Einstellbar in den Einstellungen der App.",
+   "stockRepeatedScan": "Ein erneut gescannter Code",
+   "stockRepeatedScanHint": "Was ein Warenblatt tut, wenn derselbe Code noch einmal gescannt wird: eins mehr hinzufügen oder die Menge erfragen. Einstellbar in den Einstellungen der App.",
+   "optAtOnce": "Sofort",
+   "optAddOne": "Eins mehr hinzufügen",
+   "optAskQuantity": "Menge erfragen"
   },
   "feature": {
    "calendarTab": [
@@ -5330,6 +5367,14 @@ window.SETUP_L10N={
    "stockItemGroups": [
     "Artikelgruppen",
     "Artikel gruppieren, damit ihre Einstellungen geteilt werden: Nachverfolgung, Haltbarkeit, Etikettenmodus, Einheiten, Mehrwertsteuer, Kasse und mehr. Ein Artikel erbt den Wert seiner Gruppe, außer er behält seinen eigenen; eine Änderung an der Gruppe zeigt vor dem Speichern, wie viele Artikel sie erreicht."
+   ],
+   "stockTags": [
+    "RFID-Etiketten",
+    "Artikel, Einheiten, Chargen und Orte mit RFID- oder NFC-Etiketten versehen, wie ein Barcode gespeichert und im Betrieb eindeutig. Ein Etikett kann eine Charge oder ein Stück benennen, wie es die Gruppe des Artikels sagt; ein gelesenes Etikett wird überall erkannt, wo ein Barcode erkannt wird."
+   ],
+   "stockScanning": [
+    "Scannen",
+    "Ein tippender Barcode-Scanner oder die Handykamera füllt jedes Warenblatt: ein Code wird als Barcode, Ortsetikett, Chargenetikett oder RFID-Etikett gelesen. Mit dem Warenbuch eingeschaltet."
    ]
   },
   "process": {
@@ -6553,7 +6598,14 @@ window.SETUP_L10N={
    "optRoundNone": "Sin redondeo",
    "optRound005": "A 0,05",
    "optRound010": "A 0,10",
-   "optRound099": "Terminando en 0,99"
+   "optRound099": "Terminando en 0,99",
+   "stockTagGrace": "Días antes de reutilizar una etiqueta retirada",
+   "stockTagGraceHint": "Cuántos días después de retirarla puede volver a vincularse un código de etiqueta. Se ajusta en los ajustes de la app.",
+   "stockRepeatedScan": "Un código escaneado de nuevo",
+   "stockRepeatedScanHint": "Qué hace una hoja de mercancías cuando se escanea otra vez el mismo código: añadir uno más o preguntar la cantidad. Se ajusta en los ajustes de la app.",
+   "optAtOnce": "De inmediato",
+   "optAddOne": "Añadir uno más",
+   "optAskQuantity": "Preguntar la cantidad"
   },
   "feature": {
    "calendarTab": [
@@ -7239,6 +7291,14 @@ window.SETUP_L10N={
    "stockItemGroups": [
     "Grupos de artículos",
     "Agrupe artículos para compartir sus ajustes: seguimiento, caducidad, modo de etiqueta, unidades, IVA, caja y más. Un artículo hereda el valor de su grupo salvo que conserve el suyo; un cambio de grupo muestra a cuántos artículos llega antes de guardarse."
+   ],
+   "stockTags": [
+    "Etiquetas RFID",
+    "Etiquete artículos, unidades, lotes y lugares con etiquetas RFID o NFC, guardadas como un código de barras y únicas en el negocio. Una etiqueta puede nombrar un lote o una pieza, según el grupo del artículo; la lectura de una etiqueta se reconoce donde se reconoce un código de barras."
+   ],
+   "stockScanning": [
+    "Escaneo",
+    "Un lector que teclea, o la cámara del móvil, rellena cualquier hoja de mercancías: un código se lee como código de barras, etiqueta de lugar, etiqueta de lote o etiqueta RFID. Activado con el registro de mercancías."
    ]
   },
   "process": {
@@ -8462,7 +8522,14 @@ window.SETUP_L10N={
    "optRoundNone": "Nessun arrotondamento",
    "optRound005": "A 0,05",
    "optRound010": "A 0,10",
-   "optRound099": "Che finisce per 0,99"
+   "optRound099": "Che finisce per 0,99",
+   "stockTagGrace": "Giorni prima di riutilizzare un'etichetta ritirata",
+   "stockTagGraceHint": "Quanti giorni dopo il ritiro un codice di etichetta può essere associato di nuovo. Si imposta nelle impostazioni dell'app.",
+   "stockRepeatedScan": "Un codice scansionato di nuovo",
+   "stockRepeatedScanHint": "Cosa fa un foglio di merci quando lo stesso codice è scansionato ancora: aggiungere uno o chiedere la quantità. Si imposta nelle impostazioni dell'app.",
+   "optAtOnce": "Subito",
+   "optAddOne": "Aggiungi uno",
+   "optAskQuantity": "Chiedi la quantità"
   },
   "feature": {
    "calendarTab": [
@@ -9148,6 +9215,14 @@ window.SETUP_L10N={
    "stockItemGroups": [
     "Gruppi di articoli",
     "Raggruppi gli articoli per condividerne le impostazioni: tracciabilità, scadenza, modalità etichetta, unità, IVA, cassa e altro. Un articolo eredita il valore del suo gruppo salvo che mantenga il proprio; una modifica al gruppo mostra quanti articoli raggiunge prima di essere salvata."
+   ],
+   "stockTags": [
+    "Etichette RFID",
+    "Etichetti articoli, unità, lotti e luoghi con etichette RFID o NFC, registrate come un codice a barre e uniche nell'attività. Un'etichetta può indicare un lotto o un pezzo, secondo il gruppo dell'articolo; la lettura di un'etichetta è riconosciuta ovunque lo sia un codice a barre."
+   ],
+   "stockScanning": [
+    "Scansione",
+    "Un lettore che digita, o la fotocamera del telefono, compila qualsiasi foglio di merci: un codice è letto come codice a barre, etichetta di luogo, etichetta di lotto o etichetta RFID. Attivo con il registro delle merci."
    ]
   },
   "process": {

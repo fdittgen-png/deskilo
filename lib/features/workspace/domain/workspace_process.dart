@@ -156,6 +156,10 @@ const workspaceProcesses = <WorkspaceProcess>[
       WorkspaceFeature.stockCycleCounts,
       // #4361
       WorkspaceFeature.stockItemGroups,
+      // #4362 — RFID tags.
+      WorkspaceFeature.stockTags,
+      // #4359 — scanning.
+      WorkspaceFeature.stockScanning,
     ]),
   ]),
   WorkspaceProcess('billingPayments', [

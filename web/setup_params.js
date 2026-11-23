@@ -84,6 +84,9 @@ const SUP_LOOKUP_WAIT=[['5','optSeconds',{n:5}],['10','optSeconds',{n:10}],['15'
 const STOCK_TAG=[['none','optTagNone'],['per_batch','optTagPerBatch'],['per_unit','optTagPerUnit']];
 const STOCK_COUNT_DAYS=[['0','optNotScheduled'],['7','optDays',{n:7}],['14','optDays',{n:14}],['30','optDays',{n:30}],['90','optDays',{n:90}]];
 const STOCK_ROUNDING=[['none','optRoundNone'],['0.05','optRound005'],['0.10','optRound010'],['0.99','optRound099']];
+// #4362/#4359 — the days before a retired tag code is bound again (stock.tag_rebind_grace_days) and what a repeated scan does (stock.repeated_scan).
+const STOCK_TAG_GRACE=[['0','optAtOnce'],['7','optDays',{n:7}],['30','optDays',{n:30}],['90','optDays',{n:90}]];
+const STOCK_REPEAT=[['add_one','optAddOne'],['ask_quantity','optAskQuantity']];
 // #4295 — cycle counts: the value from which a place's holding of an item is high value (workspace
 // setting stock.cycle_count_high_value_minor, in minor units) and the days a task may stay open
 // past its due date before the inbox says it is overdue (stock.cycle_count_overdue_days).
@@ -171,6 +174,7 @@ const PARAM_META=[
  ['stock.allowNegative','stockAllowNegative','bool',null,{needs:'stockManagement'}],
  // #4293 — the character between the levels of a place address (workspace setting stock.address_separator).
  ['stock.addressSeparator','stockAddressSeparator','enum',()=>STOCK_SEP.map(x=>x[0]),{needs:'stockManagement'}],
+ ['stock.tagGrace','stockTagGrace','enum',()=>STOCK_TAG_GRACE.map(x=>x[0]),{needs:'stockTags'}],['stock.repeatedScan','stockRepeatedScan','enum',()=>STOCK_REPEAT.map(x=>x[0]),{needs:'stockScanning'}],
  ['stock.tagMode','stockGroupTagMode','enum',()=>STOCK_TAG.map(x=>x[0]),{needs:'stockItemGroups'}],['stock.countDays','stockGroupCountDays','enum',()=>STOCK_COUNT_DAYS.map(x=>x[0]),{needs:'stockItemGroups'}],['stock.priceRounding','stockGroupRounding','enum',()=>STOCK_ROUNDING.map(x=>x[0]),{needs:'stockItemGroups'}],
  ['stock.cycleHighValue','stockCycleHighValue','enum',()=>STOCK_CYCLE_VALUE.map(x=>x[0]),{needs:'stockCycleCounts'}],['stock.cycleOverdue','stockCycleOverdue','enum',()=>STOCK_CYCLE_OVERDUE.map(x=>x[0]),{needs:'stockCycleCounts'}],
  ['supplierLookup.timeout','supLookupWait','enum',()=>SUP_LOOKUP_WAIT.map(x=>x[0])],
