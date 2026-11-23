@@ -22,6 +22,10 @@ select plan(7);
 
 create temp table listed (sig text primary key, reason text not null check (length(reason) > 0));
 insert into listed (sig, reason) values
+  ('my_finance_overview_v2()',
+   'the caller''s own financial subjects only: their member rows and the subjects of their live billing grants (my_finance_subjects)'),
+  ('my_financial_activity_v2(text,timestamp with time zone,uuid)',
+   'the caller''s own financial subjects only: their member rows and the subjects of their live billing grants (my_finance_subjects)'),
   ('who_can_access_me(uuid)',
    'the caller''s own row by id, and the active owners and admins it lists by status: a customer-only subject is neither'),
   ('billing_customers_v1(uuid)',
@@ -52,6 +56,8 @@ insert into listed (sig, reason) values
    'by one subject id, under an explicit finance or customer right: a customer-only subject is a legitimate target, the seller bills it'),
   ('assign_workspace_role(uuid,uuid,boolean)',
    'assigns a custom role to one subject id: refused for a customer-only row by the role-members table''s trigger'),
+  ('billing_access_invite_v1(uuid,uuid,uuid)',
+   'invites one billing customer to billing access under manageBillingCustomers (status customer only; a member subject is refused)'),
   ('billing_party_save_v1(uuid,uuid,jsonb,integer,text)',
    'edits the billing identity of one billing customer under manageBillingCustomers (status customer only; any other id answers as unknown)'),
   ('member_emails(uuid)',
@@ -222,7 +228,7 @@ select is((select string_agg(r.sig || ':' || r.tier, ', ' order by r.sig) from p
   'a reader is found whatever its name''s form and however it became definer; each rule is seen in its source');
 select ok((select count(*) from pg_temp.readers() where tier = 'service') > 50, 'the service-only readers are read');
 select ok((select count(*) from pg_temp.readers() where tier in ('own row', 'status gate')) > 100, 'the own-row and status-gated readers are read');
-select ok((select count(*) from listed) = 64, 'the list holds 64 reasoned exceptions');
+select ok((select count(*) from listed) = 68, 'the list holds 68 reasoned exceptions');
 
 select * from finish();
 rollback;
