@@ -21,5 +21,14 @@
   "stockScanNfcReading": "Approchez la puce du dos du téléphone…",
   "stockScanNfcFailed": "Le téléphone n’a pas pu démarrer la lecture. Vérifiez que le NFC est activé.",
   "stockScanAlreadyRead": "La puce {code} a déjà été lue.",
-  "stockScanUnknownTag": "Puce {code} inconnue"
+  "stockScanUnknownTag": "Puce {code} inconnue",
+  "stockCameraOpen": "Scanner avec la caméra",
+  "stockCameraTitle": "Scanner caméra",
+  "stockCameraCount": "{count, plural, one{{count} code lu} other{{count} codes lus}}",
+  "stockCameraMisread": "Ce code n’a pas été lu correctement — scannez à nouveau.",
+  "stockCameraDenied": "La caméra n’a pas pu démarrer. Autorisez l’accès à la caméra pour DesKilo dans les réglages de l’appareil, puis réessayez.",
+  "stockScanConfirm": "Quand la caméra lit un code",
+  "stockScanConfirmNone": "Ne rien faire",
+  "stockScanConfirmVibrate": "Vibrer",
+  "stockScanConfirmClick": "Faire un clic"
 }

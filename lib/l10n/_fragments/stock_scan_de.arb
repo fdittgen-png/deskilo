@@ -21,5 +21,14 @@
   "stockScanNfcReading": "Halten Sie den Tag an die Rückseite des Telefons …",
   "stockScanNfcFailed": "Das Telefon konnte das Lesen nicht starten. Prüfen Sie, ob NFC eingeschaltet ist.",
   "stockScanAlreadyRead": "Der Tag {code} wurde bereits gelesen.",
-  "stockScanUnknownTag": "Unbekannter Tag {code}"
+  "stockScanUnknownTag": "Unbekannter Tag {code}",
+  "stockCameraOpen": "Mit der Kamera scannen",
+  "stockCameraTitle": "Kamera-Scanner",
+  "stockCameraCount": "{count, plural, one{1 Code gelesen} other{{count} Codes gelesen}}",
+  "stockCameraMisread": "Dieser Code wurde nicht sauber gelesen – scannen Sie erneut.",
+  "stockCameraDenied": "Die Kamera konnte nicht starten. Erlauben Sie DesKilo den Kamerazugriff in den Geräteeinstellungen und versuchen Sie es erneut.",
+  "stockScanConfirm": "Wenn die Kamera einen Code liest",
+  "stockScanConfirmNone": "Nichts tun",
+  "stockScanConfirmVibrate": "Vibrieren",
+  "stockScanConfirmClick": "Klicken"
 }

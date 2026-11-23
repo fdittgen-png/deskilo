@@ -62,13 +62,15 @@ class StockScanFeed extends ChangeNotifier {
     unawaited(_drain());
   }
 
-  /// A code was scanned.
-  void scan(String code) {
+  /// A code was scanned; [gs1] is what a GS1 element string carried besides the GTIN that [code] is.
+  void scan(String code, {({String? lot, String? expiresOn})? gs1}) {
+    if (gs1 != null) _gs1[code] = gs1;
     _queue.add(code);
     unawaited(_drain());
   }
 
   final Set<String> _tags = {};
+  final Map<String, ({String? lot, String? expiresOn})> _gs1 = {};
 
   /// A tag was read by NFC ([uid] as the tag's upper-case hex): the same resolution as a scan, but a tag read a
   /// second time in this sheet is ignored and said so.
@@ -102,7 +104,7 @@ class StockScanFeed extends ChangeNotifier {
           final answer = await resolver.resolve(workspaceId, code);
           if (_closed) return;
           problem = null;
-          last = session.apply(answer, placeAllowed: placeAllowed, itemAllowed: itemAllowed, fromTag: _fromTag.remove(code));
+          last = session.apply(answer, placeAllowed: placeAllowed, itemAllowed: itemAllowed, fromTag: _fromTag.remove(code), gs1: _gs1.remove(code));
           onResult(last!);
         } on Object catch (e, st) {
           TraceLogger.instance.warn('stock', 'a scanned code could not be resolved: $e', stackTrace: st);
