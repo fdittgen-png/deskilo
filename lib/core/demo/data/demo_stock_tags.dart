@@ -4,9 +4,11 @@
 // owner (an item, a place or a package unit), the same read again is `replayed`, a tag bound elsewhere is refused
 // with the owner, a retired tag is out of use. Two tags are bound from the start (Shelf A and the Mugs), so a scan
 // or a read finds something. The scanner resolver reads the same store.
+import '../../../features/stock/domain/stock_bulk_read.dart';
 import '../../../features/stock/domain/stock_config.dart';
 import '../../../features/stock/domain/stock_tags.dart';
 import '../../codes/dk_code.dart';
+import '../../settings/setting_defaults.g.dart';
 
 class _Bound {
   _Bound(this.id, this.code, this.owner, {this.kind = 'uid', this.pieceId});
@@ -25,7 +27,7 @@ class _Bound {
 class DemoStockTags implements StockTags {
   /// [tagModeOf] answers an item's effective tag mode (`none`, `per_batch`, `per_unit`) as the server reads it; without it
   /// every owner binds, which is what the tests that bind chips without items rely on.
-  DemoStockTags({this.tagModeOf}) {
+  DemoStockTags({this.tagModeOf, this.nameOf}) {
     _active
       ..add(_Bound('demo-tag-1', 'A1B2C3D4', const TagOwner.place('demo-place-shelf')))
       ..add(_Bound('demo-tag-2', '04E5F6A7B8C9D0', const TagOwner.item('demo-item-mugs')))
@@ -38,6 +40,14 @@ class DemoStockTags implements StockTags {
   }
 
   final Future<String?> Function(String itemId)? tagModeOf;
+
+  /// An item's name, for the answers of a bulk read.
+  final Future<String?> Function(String itemId)? nameOf;
+
+  /// The item a piece tag names (already normalised), or null: the Demo's pieces are all in the main store.
+  String? pieceItemOf(String code) => _active.where((t) => t.code == code && t.pieceId != null).firstOrNull?.owner.itemId;
+
+  static const _mainPlace = BulkPlace(id: 'demo-place-main', code: 'MAIN', name: 'Main store');
 
   final List<_Bound> _active = [];
   final Map<String, TagBound> _answers = {};
@@ -119,5 +129,37 @@ class DemoStockTags implements StockTags {
     // a piece is retired with its tag only when it is not in stock: the Demo's pieces are in stock
     if (held.pieceId != null) throw const StockTagRefused(DkCode.dkg24);
     _active.remove(held);
+  }
+
+  @override
+  Future<BulkResolution> resolveCodes(String workspaceId, List<String> codes) async {
+    final distinct = <String, String>{};
+    final invalid = <String>[];
+    for (final raw in codes) {
+      final typed = raw.trim();
+      if (typed.isEmpty || raw.length > 200) {
+        invalid.add(typed.length > 60 ? typed.substring(0, 60) : typed);
+        continue;
+      }
+      distinct.putIfAbsent(normalise(typed), () => typed);
+    }
+    final results = <BulkCode>[];
+    for (final MapEntry(key: code, value: typed) in distinct.entries) {
+      final held = _active.where((t) => t.code == code).firstOrNull;
+      if (held == null) {
+        results.add(BulkCode(input: typed, kind: 'unknown'));
+      } else if (held.pieceId != null) {
+        final item = held.owner.itemId!;
+        results.add(BulkCode(
+          input: typed,
+          kind: 'tag',
+          itemName: await nameOf?.call(item),
+          piece: BulkPiece(id: held.pieceId!, state: 'in_stock', itemId: item, place: _mainPlace),
+        ));
+      } else {
+        results.add(BulkCode(input: typed, kind: 'tag', itemName: held.owner.itemId == null ? null : await nameOf?.call(held.owner.itemId!)));
+      }
+    }
+    return BulkResolution(received: codes.length, distinct: distinct.length, limit: SettingDefaults.stockTagReadMaxTags, truncated: false, codes: results, invalid: invalid);
   }
 }

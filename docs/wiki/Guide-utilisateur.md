@@ -3167,6 +3167,18 @@ Avec la fonction *Puces* activée, un article a un **mode de puce**, posé sur s
 - Le mode d'un article qui a déjà des puces ne change pas tant que ses puces ne sont pas retirées ou que son stock n'est pas nul ; le changement d'un groupe saute alors l'article et le liste comme conservé. Une puce sur un emplacement désigne toujours un seul emplacement.
 - Un code de puce est une étiquette UHF (EPC ; un SGTIN-96 est lu par le serveur comme GTIN et numéro de série) ou une puce NFC, enregistré en hexadécimal majuscule et unique dans l'entreprise entre articles, pièces et emplacements. Lier et retirer demandent le droit de gérer le stock ; lire demande celui de le voir.
 
+<!-- anchor: user.money.stock.bulkread -->
+### Lecture de nombreuses étiquettes
+
+**Public:** Membre
+
+Avec les fonctions *Étiquettes* et *Lecture d'étiquettes* activées, une tâche de comptage propose **Lire de nombreuses étiquettes**. Dirigez un lecteur UHF (il tape comme un clavier) vers l'étagère : chaque étiquette est gardée une fois, même lue souvent, jusqu'au nombre maximal d'étiquettes d'une lecture (**500** sauf autre valeur fixée par votre administrateur). La feuille montre, pendant la lecture, combien de pièces de chaque article ont été trouvées ; les étiquettes inconnues, les pièces qui ne sont pas en stock et les étiquettes qui ne désignent aucune pièce sont listées à part.
+
+- Appuyez sur **Arrêter la lecture** pour figer le total, puis sur **Remplir le comptage**. Rien ne change avant, et une nouvelle tentative ne répond qu'une fois.
+- Une ligne d'un article suivi à la pièce est comptée par les pièces de son article lues à son emplacement ; les autres lignes restent ouvertes. La première lecture d'une ligne est définitive : l'étiquette d'une ligne déjà comptée est écartée.
+- Qui ne peut que compter voit ce qui a été lu, jamais ce qui était attendu. Qui gère le stock voit aussi quelles pièces attendues n'ont pas été lues.
+- Le comptage attend ensuite son approbation comme tout comptage ; aucun solde ne bouge.
+
 <!-- anchor: user.money.stock.value -->
 ### Valeur du stock et origine des marchandises
 

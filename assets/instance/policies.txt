@@ -546,6 +546,8 @@ public.stock_locations.mcp_delegated_deny
 public.stock_locations.stock_locations_select
 public.stock_lots.mcp_delegated_deny
 public.stock_lots.stock_lots_select
+public.stock_movement_units.mcp_delegated_deny
+public.stock_movement_units.stock_movement_units_select
 public.stock_movements.mcp_delegated_deny
 public.stock_movements.stock_movements_select
 public.stock_reasons.mcp_delegated_deny

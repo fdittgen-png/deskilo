@@ -70,8 +70,12 @@ final _posture = RegExp(
 );
 
 /// The names a migration creates (plain or `or replace`).
-Set<String> createdNames(String sql) =>
-    _create.allMatches(sql).map((m) => _bare(m.group(1)!)).toSet();
+/// The functions [sql] creates in a real schema: a `pg_temp.` helper lives in the migration's session only (#4413).
+Set<String> createdNames(String sql) => _create
+    .allMatches(sql)
+    .where((m) => !m.group(1)!.toLowerCase().startsWith('pg_temp.'))
+    .map((m) => _bare(m.group(1)!))
+    .toSet();
 
 /// Functions [sql] introduces — created and not in [known], or dropped and
 /// created again, which loses the ACL — without a grant or a revoke that
@@ -226,5 +230,6 @@ create or replace function pg_temp.patch(p text) returns text language sql as \$
 create or replace function public.patch_me(p text) returns text language sql as \$\$ select p \$\$;
 ''';
     expect(missingRevokes(sql), {'patch_me'});
+    expect(missingAuthenticatedPosture(sql, const {}), {'patch_me'}, reason: 'nor a posture for authenticated');
   });
 }

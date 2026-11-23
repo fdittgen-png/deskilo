@@ -6,6 +6,8 @@
 // with a reason. A refusal arrives as a typed failure (`StockTagRefused`, `StockConfigRefused`).
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show JsonReader;
 
+import 'stock_bulk_read.dart';
+
 /// What a tag is bound to: an item, a place, or a package unit of an item.
 class TagOwner {
   const TagOwner.item(String this.itemId) : kind = 'item', unit = null, locationId = null;
@@ -97,4 +99,8 @@ abstract interface class StockTags {
   Future<TagBound> bind(String workspaceId, {required String requestId, required String code, required TagOwner owner});
 
   Future<void> retire(String workspaceId, {required String requestId, required String code, required String reason});
+
+  /// #4364 -- a bulk read resolved in one call (`stock_resolve_codes_v1`): each distinct tag as the one resolver of a
+  /// scan answers it, with the piece's place and state; unknown tags answer unknown, never an error.
+  Future<BulkResolution> resolveCodes(String workspaceId, List<String> codes);
 }

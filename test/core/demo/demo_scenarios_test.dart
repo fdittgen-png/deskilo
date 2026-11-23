@@ -1460,6 +1460,7 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
         ledger,
         reversals,
         DemoStockRegistry(demoFirstSpaceId, ledger, config),
+        DemoStockTags(),
         () => {WorkspacePermission.countStock},
         () => DateTime(2026, 5, 13),
       );

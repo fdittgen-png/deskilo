@@ -454,6 +454,7 @@ const List<ExportSource> workspaceExportSources = [
   // #4362 — the tags bound to items, places and pieces, and the named pieces.
   ExportSource.everyColumn('stock_tags'),
   ExportSource.everyColumn('stock_tagged_units'),
+  ExportSource.everyColumn('stock_movement_units'),
   // #4172 — the returns, and what each line reversed.
   ExportSource.everyColumn('stock_returns'),
   ExportSource.everyColumn('stock_reversals'),
