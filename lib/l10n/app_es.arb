@@ -11274,6 +11274,10 @@
   "itemGroupSoldByWeight": "Se vende al peso",
   "itemGroupTagBatch": "Una etiqueta por lote",
   "itemGroupTagMode": "Modo de etiqueta",
+  "itemGroupTagModeOwn": "Etiqueta de este artículo",
+  "@itemGroupTagModeOwn": {
+    "description": "#4362 G13: the item's own value of the tag mode (none, one per batch, one per piece), over its group's"
+  },
   "itemGroupTagNone": "Sin etiquetas",
   "itemGroupTagUnit": "Una etiqueta por pieza",
   "itemGroupTrackingSerial": "Por pieza (serie)",
@@ -21732,6 +21736,15 @@
   "stockTagOnPiece": "Esta etiqueta está en una pieza que sigue en stock.",
   "stockTagOwnerUnknown": "Este artículo o ubicación no se conoce.",
   "stockTagPerUnit": "Este artículo se etiqueta pieza a pieza: etiquete sus piezas al recibirlas.",
+  "stockTagPiece": "Pieza {n}",
+  "@stockTagPiece": {
+    "description": "#4362 G13 tags: the name of one piece in the list of pieces",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "stockTagReasonDamaged": "Dañada",
   "stockTagReasonLost": "Perdida",
   "stockTagReasonReplaced": "Sustituida",
@@ -21742,6 +21755,15 @@
   "stockTagsFailed": "No se pudieron leer las etiquetas.",
   "stockTagsNone": "Aún no hay ninguna etiqueta asociada.",
   "stockTagsOpen": "Etiquetas",
+  "stockTagsPieces": "Piezas etiquetadas una a una ({count})",
+  "@stockTagsPieces": {
+    "description": "#4362 G13 tags: heading of the pieces of an item that carries one tag per piece",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "stockTagsRetire": "Retirar",
   "stockTagsRetireWhy": "¿Por qué se retira?",
   "stockTagsRetired": "Etiqueta {code} retirada.",

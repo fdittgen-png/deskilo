@@ -24334,6 +24334,10 @@
   "@itemGroupTagMode": {
     "description": "#4361 G12 item groups: itemGroupTagMode"
   },
+  "itemGroupTagModeOwn": "Tag on this item",
+  "@itemGroupTagModeOwn": {
+    "description": "#4362 G13: the item's own value of the tag mode (none, one per batch, one per piece), over its group's"
+  },
   "itemGroupTagNone": "No tags",
   "@itemGroupTagNone": {
     "description": "#4361 G12 item groups: itemGroupTagNone"
@@ -48006,6 +48010,15 @@
   "@stockTagPerUnit": {
     "description": "#4363 G14 tags: stockTagPerUnit"
   },
+  "stockTagPiece": "Piece {n}",
+  "@stockTagPiece": {
+    "description": "#4362 G13 tags: the name of one piece in the list of pieces",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "stockTagReasonDamaged": "Damaged",
   "@stockTagReasonDamaged": {
     "description": "#4363 G14 tags: stockTagReasonDamaged"
@@ -48055,6 +48068,15 @@
   "stockTagsOpen": "Tags",
   "@stockTagsOpen": {
     "description": "#4363 G14 tags: stockTagsOpen"
+  },
+  "stockTagsPieces": "Pieces tagged one by one ({count})",
+  "@stockTagsPieces": {
+    "description": "#4362 G13 tags: heading of the pieces of an item that carries one tag per piece",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "stockTagsRetire": "Retire",
   "@stockTagsRetire": {

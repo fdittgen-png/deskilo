@@ -18,6 +18,24 @@
   "stockReasonTagOwnerInactive": "Dieser Artikel oder Ort ist deaktiviert: Aktivieren Sie ihn wieder, bevor ihm ein Etikett zugeordnet wird.",
   "stockTagsTitle": "Tags: {name}",
   "stockTagsOpen": "Tags",
+  "stockTagsPieces": "Einzeln etikettierte Stücke ({count})",
+  "@stockTagsPieces": {
+    "description": "#4362 G13 tags: heading of the pieces of an item that carries one tag per piece",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "stockTagPiece": "Stück {n}",
+  "@stockTagPiece": {
+    "description": "#4362 G13 tags: the name of one piece in the list of pieces",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "stockTagsNone": "Noch kein Tag zugeordnet.",
   "stockTagKindNfc": "NFC-Chip",
   "stockTagKindUhf": "UHF-Etikett",

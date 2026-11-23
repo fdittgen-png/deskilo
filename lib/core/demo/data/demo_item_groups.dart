@@ -31,6 +31,9 @@ class DemoItemGroups implements ItemGroups {
     _groups['demo-group-home'] = _Group('demo-group-home', null, 'Homeware', {'tracking': 'none'});
     _member.addAll({'demo-item-milk': 'demo-group-drinks', 'demo-item-syrup': 'demo-group-drinks', 'demo-item-beans': 'demo-group-hot', 'demo-item-mugs': 'demo-group-home'});
     _own['demo-item-syrup'] = {'shelf_life_days': 365};
+    // #4362 -- the gift basket carries a tag per piece, the crate of apples one tag per crate.
+    _own['demo-item-basket'] = {'tracking': 'serial', 'tag_mode': 'per_unit'};
+    _own['demo-item-apples'] = {'tracking': 'lot', 'tag_mode': 'per_batch'};
   }
 
   final String _workspaceId;
@@ -179,6 +182,11 @@ class DemoItemGroups implements ItemGroups {
     final before = _pick(change.itemId, parameter).value;
     if (change.mode == 'set') {
       if (change.value == null) throw StockConfigRefused(parameter, 'value_required');
+      // as the server: a tag per piece needs the item tracked by piece
+      if (parameter == 'tag_mode' && change.value == 'per_unit') {
+        final tracking = _pick(change.itemId, 'tracking').value ?? (await _config.item(workspaceId, change.itemId))?.tracking;
+        if (tracking != 'serial') throw const StockConfigRefused('tag_mode', 'needs_serial');
+      }
       (_own[change.itemId] ??= {})[parameter] = change.value;
     } else {
       _own[change.itemId]?.remove(parameter);

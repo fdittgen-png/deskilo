@@ -33,6 +33,10 @@
   "itemGroupAssignNone": "Aucun groupe",
   "itemGroupFrom": "Du groupe {group}",
   "itemGroupFromSince": "Du groupe {group} depuis le {date}",
+  "itemGroupTagModeOwn": "Étiquette sur cet article",
+  "@itemGroupTagModeOwn": {
+    "description": "#4362 G13: the item's own value of the tag mode (none, one per batch, one per piece), over its group's"
+  },
   "itemGroupOwn": "Valeur propre",
   "itemGroupUseGroup": "Utiliser la valeur du groupe",
   "itemGroupMove": "Déplacer",

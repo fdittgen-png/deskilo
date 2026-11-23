@@ -18836,6 +18836,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get itemGroupTagMode => 'Mode de puce';
 
   @override
+  String get itemGroupTagModeOwn => 'Étiquette sur cet article';
+
+  @override
   String get itemGroupTagNone => 'Pas de puce';
 
   @override
@@ -37395,6 +37398,11 @@ class AppLocalizationsFr extends AppLocalizations {
       'Cet article est étiqueté pièce par pièce : étiquetez ses pièces à la réception.';
 
   @override
+  String stockTagPiece(int n) {
+    return 'Pièce $n';
+  }
+
+  @override
   String get stockTagReasonDamaged => 'Abîmée';
 
   @override
@@ -37428,6 +37436,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get stockTagsOpen => 'Puces';
+
+  @override
+  String stockTagsPieces(int count) {
+    return 'Pièces étiquetées une à une ($count)';
+  }
 
   @override
   String get stockTagsRetire => 'Retirer';

@@ -101,6 +101,24 @@ class _TagsDialogState extends ConsumerState<_TagsDialog> {
     _ => l10n.stockTagReasonReplaced,
   };
 
+  /// One tag as a row; [title] names a piece (the code then sits under it), else the code is the title.
+  Widget _tagTile(AppLocalizations l10n, StockTag t, {String? title}) => ListTile(
+        key: ValueKey('${title == null ? 'stock-tag' : 'stock-piece'}-${t.code}'),
+        contentPadding: EdgeInsets.zero,
+        leading: Icon(t.isUhf ? Icons.sensors : Icons.nfc),
+        title: Text(title ?? t.code),
+        subtitle: Text(title == null ? (t.isUhf ? l10n.stockTagKindUhf : l10n.stockTagKindNfc) : '${t.code} · ${t.isUhf ? l10n.stockTagKindUhf : l10n.stockTagKindNfc}'),
+        trailing: PopupMenuButton<String>(
+          key: ValueKey('stock-tag-retire-${t.code}'),
+          tooltip: l10n.stockTagsRetireWhy,
+          icon: const Icon(Icons.link_off),
+          onSelected: (reason) => _retire(t, reason),
+          itemBuilder: (_) => [
+            for (final reason in stockTagRetireReasons) PopupMenuItem(value: reason, child: Text(_reasonLabel(l10n, reason))),
+          ],
+        ),
+    );
+
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
@@ -119,30 +137,24 @@ class _TagsDialogState extends ConsumerState<_TagsDialog> {
           builder: (context, snapshot) {
             if (snapshot.hasError) return Text(l10n.stockTagsFailed, key: const ValueKey('stock-tags-failed'));
             final tags = snapshot.data;
-            return Column(
+            return SingleChildScrollView(
+              child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 if (tags != null && tags.isEmpty) Text(l10n.stockTagsNone, key: const ValueKey('stock-tags-none')),
                 if (tags != null && tags.isNotEmpty && tags.every((t) => t.isUhf))
                   Text(l10n.stockTagsUhfOnly, key: const ValueKey('stock-tags-uhf-only')),
-                for (final t in tags ?? const <StockTag>[])
-                  ListTile(
-                    key: ValueKey('stock-tag-${t.code}'),
-                    contentPadding: EdgeInsets.zero,
-                    leading: Icon(t.isUhf ? Icons.sensors : Icons.nfc),
-                    title: Text(t.code),
-                    subtitle: Text(t.isUhf ? l10n.stockTagKindUhf : l10n.stockTagKindNfc),
-                    trailing: PopupMenuButton<String>(
-                      key: ValueKey('stock-tag-retire-${t.code}'),
-                      tooltip: l10n.stockTagsRetireWhy,
-                      icon: const Icon(Icons.link_off),
-                      onSelected: (reason) => _retire(t, reason),
-                      itemBuilder: (_) => [
-                        for (final reason in stockTagRetireReasons) PopupMenuItem(value: reason, child: Text(_reasonLabel(l10n, reason))),
-                      ],
-                    ),
+                for (final t in (tags ?? const <StockTag>[]).where((t) => !t.isPiece)) _tagTile(l10n, t),
+                if (tags != null && tags.any((t) => t.isPiece)) ...[
+                  const SizedBox(height: AppSpacing.sm),
+                  Text(
+                    l10n.stockTagsPieces(tags.where((t) => t.isPiece).length),
+                    key: const ValueKey('stock-tags-pieces'),
+                    style: Theme.of(context).textTheme.titleSmall,
                   ),
+                  for (final (i, t) in tags.where((t) => t.isPiece).indexed) _tagTile(l10n, t, title: l10n.stockTagPiece(i + 1)),
+                ],
                 const SizedBox(height: AppSpacing.sm),
                 StockNfcButton(onUid: _bind),
                 if (_status != null) ...[
@@ -154,6 +166,7 @@ class _TagsDialogState extends ConsumerState<_TagsDialog> {
                   Text(_problem!, key: const ValueKey('stock-tags-problem'), style: TextStyle(color: Theme.of(context).colorScheme.error)),
                 ],
               ],
+            ),
             );
           },
         ),

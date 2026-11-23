@@ -3009,6 +3009,22 @@ Appuyez sur **Encaisser en espèces** et saisissez les **Espèces remises** (ou 
 
 Là où votre pays n'autorise pas encore la caisse, elle nomme l'opération manquante et ne propose rien : rien n'est numéroté ni encaissé. Une ligne de marchandise demande la gestion de stock ; un refus du serveur est dit en mots. Paiements par carte, remises, remboursements et retours ne font pas partie de cette première caisse.
 
+### Puces RFID : une par lot ou une par pièce
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous décidez si une puce sur un article désigne un lot ou une pièce, et ce que compte une lecture en masse.
+
+Avec la fonction *Puces* activée, un article a un **mode de puce**, posé sur son groupe et gardé par l'article tant qu'il n'a pas de valeur propre. Ouvrez les réglages de groupe d'un article (**Stock → Articles**, l'icône de dossier sur sa ligne) et lisez **Étiquette sur cet article** : elle dit d'où vient la valeur (*De Boissons depuis le 3 déc.* ou *Valeur propre*), laisse donner à l'article une valeur propre, et **Reprendre la valeur du groupe** la rend.
+
+- **Pas de puce.** L'article ne porte pas de puce.
+- **Une puce par lot.** Une puce désigne un lot ou un colis : une caisse, un seau, un carton. La lire compte un lot, jamais une pièce.
+- **Une puce par pièce.** Une puce désigne une pièce, ce qui demande que l'article soit suivi pièce par pièce. Sous **Puces** de l'article, **Pièces étiquetées une à une (n)** liste chaque pièce avec sa puce.
+
+- Une lecture en masse ne compte des pièces que pour les articles à une puce par pièce. Pour un article à une puce par lot, elle compte des lots et montre la quantité enregistrée du lot à côté du compte, jamais comme un chiffre compté.
+- Le mode d'un article qui a déjà des puces ne change pas tant que ses puces ne sont pas retirées ou que son stock n'est pas nul ; le changement d'un groupe saute alors l'article et le liste comme conservé. Une puce sur un emplacement désigne toujours un seul emplacement.
+- Un code de puce est une étiquette UHF (EPC ; un SGTIN-96 est lu par le serveur comme GTIN et numéro de série) ou une puce NFC, enregistré en hexadécimal majuscule et unique dans l'entreprise entre articles, pièces et emplacements. Lier et retirer demandent le droit de gérer le stock ; lire demande celui de le voir.
+
 ### Valeur du stock et origine des marchandises
 
 **Public:** Administrateur·rice · Propriétaire

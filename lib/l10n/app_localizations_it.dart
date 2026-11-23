@@ -18771,6 +18771,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get itemGroupTagMode => 'Modalità tag';
 
   @override
+  String get itemGroupTagModeOwn => 'Etichetta su questo articolo';
+
+  @override
   String get itemGroupTagNone => 'Nessun tag';
 
   @override
@@ -37279,6 +37282,11 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questo articolo è etichettato pezzo per pezzo: etichetti i pezzi alla ricezione.';
 
   @override
+  String stockTagPiece(int n) {
+    return 'Pezzo $n';
+  }
+
+  @override
   String get stockTagReasonDamaged => 'Danneggiato';
 
   @override
@@ -37312,6 +37320,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get stockTagsOpen => 'Tag';
+
+  @override
+  String stockTagsPieces(int count) {
+    return 'Pezzi etichettati uno a uno ($count)';
+  }
 
   @override
   String get stockTagsRetire => 'Ritira';

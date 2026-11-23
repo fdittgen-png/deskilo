@@ -48,6 +48,14 @@ class DemoStockConfigCommands implements StockConfigCommands {
       itemId: 'demo-item-shirt', revision: 1, stockable: true, purchasable: true, sellable: true,
       inventoryUnit: 'piece', tracking: 'none', shelfLifeDays: null, units: [], codes: [],
     ),
+    'demo-item-basket': const StockItemConfig(
+      itemId: 'demo-item-basket', revision: 1, stockable: true, purchasable: true, sellable: true,
+      inventoryUnit: 'piece', tracking: 'serial', shelfLifeDays: null, units: [], codes: [],
+    ),
+    'demo-item-apples': const StockItemConfig(
+      itemId: 'demo-item-apples', revision: 1, stockable: true, purchasable: true, sellable: true,
+      inventoryUnit: 'piece', tracking: 'lot', shelfLifeDays: 21, units: [], codes: [],
+    ),
     'demo-item-syrup': const StockItemConfig(
       itemId: 'demo-item-syrup', revision: 1, stockable: true, purchasable: true, sellable: true,
       inventoryUnit: 'l', tracking: 'none', shelfLifeDays: null,

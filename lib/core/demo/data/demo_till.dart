@@ -13,7 +13,7 @@ import 'demo_stock_registry.dart';
 PostgrestException _refused(String code, String message) => PostgrestException(message: message, code: code);
 
 /// The prices of Demo items the stock registry does not carry (the T-shirt the variants are edited on), in cents.
-const _unstocked = <String, int>{'demo-item-shirt': 1900};
+const _unstocked = <String, int>{'demo-item-shirt': 1900, 'demo-item-basket': 3900, 'demo-item-apples': 1800};
 
 class DemoTill implements TillPort {
   DemoTill({required this.country, required this.currency, required this.vatPercent, this.ready = true, this.minorDigits = 2});

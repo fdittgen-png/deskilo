@@ -18622,6 +18622,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get itemGroupTagMode => 'Tag mode';
 
   @override
+  String get itemGroupTagModeOwn => 'Tag on this item';
+
+  @override
   String get itemGroupTagNone => 'No tags';
 
   @override
@@ -36931,6 +36934,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'This item is tagged piece by piece: tag its pieces when they are received.';
 
   @override
+  String stockTagPiece(int n) {
+    return 'Piece $n';
+  }
+
+  @override
   String get stockTagReasonDamaged => 'Damaged';
 
   @override
@@ -36964,6 +36972,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get stockTagsOpen => 'Tags';
+
+  @override
+  String stockTagsPieces(int count) {
+    return 'Pieces tagged one by one ($count)';
+  }
 
   @override
   String get stockTagsRetire => 'Retire';

@@ -3542,6 +3542,7 @@ Map<String, _Getter> _part8() => {
   'invoicingOwed': (l) => l.invoicingOwed,
   'invoicingStatusPaidUndated': (l) => l.invoicingStatusPaidUndated,
   'itemGroupAssignOpen': (l) => l.itemGroupAssignOpen,
+  'itemGroupTagModeOwn': (l) => l.itemGroupTagModeOwn,
   'itemGroupsTitle': (l) => l.itemGroupsTitle,
   'journeyHowPaymentWorkspace': (l) => l.journeyHowPaymentWorkspace,
   'jpkKrPdGapJournalSequenceUnverified': (l) => l.jpkKrPdGapJournalSequenceUnverified,

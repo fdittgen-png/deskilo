@@ -118,6 +118,40 @@ void main() {
         expect((await w.groups('ws-1')).map((g) => g.name), isNot(contains('Gift baskets')));
       });
 
+      testWidgets('the tag mode of an item comes from its group, is overridden on the item and goes back; a tag per piece needs tracking by piece', (tester) async {
+        final w = await _open(
+          tester,
+          size,
+          home: Builder(
+            builder: (context) => Scaffold(
+              body: TextButton(
+                key: const ValueKey('open'),
+                onPressed: () => showItemGroupAssign(context, workspaceId: 'ws-1', itemId: 'demo-item-milk', itemName: 'Milk'),
+                child: const Text('open'),
+              ),
+            ),
+          ),
+        );
+        final drinks = (await w.groups('ws-1')).firstWhere((g) => g.id == 'demo-group-drinks');
+        await w.save('ws-1', requestId: 'r-1', groupId: drinks.id, expectedRevision: drinks.revision, body: {'parameters': {'tag_mode': 'per_batch'}});
+        await tester.tap(find.byKey(const ValueKey('open')));
+        await _frames(tester);
+        final row = find.byKey(const ValueKey('item-group-param-tag_mode'));
+        expect(find.descendant(of: row, matching: find.textContaining('Drinks')), findsOneWidget, reason: 'inherited from the group, and said where from');
+        expect((await w.effective('ws-1', 'demo-item-milk')).params['tag_mode']!.value, 'per_batch');
+        // a tag per piece is refused for an item tracked by lot, in words, and nothing changes
+        await _choose(tester, 'item-group-tag-mode', _en.itemGroupTagUnit);
+        expect(find.text(_en.itemGroupReasonNeedsSerial), findsOneWidget);
+        expect((await w.effective('ws-1', 'demo-item-milk')).params['tag_mode']!.value, 'per_batch');
+        // no tag at all is the item's own value, shown inline as its own, and given back to the group
+        await _choose(tester, 'item-group-tag-mode', _en.itemGroupTagNone);
+        expect((await w.effective('ws-1', 'demo-item-milk')).params['tag_mode']!.own, isTrue);
+        expect(find.descendant(of: row, matching: find.text(_en.itemGroupOwn)), findsOneWidget);
+        await _tap(tester, 'item-group-use-tag_mode');
+        expect((await w.effective('ws-1', 'demo-item-milk')).params['tag_mode']!.value, 'per_batch');
+        expect(find.descendant(of: row, matching: find.textContaining('Drinks')), findsOneWidget);
+      });
+
       testWidgets('an item shows where each setting comes from, an own value goes back to the group, a move is previewed', (tester) async {
         final w = await _open(
           tester,

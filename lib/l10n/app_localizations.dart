@@ -29621,6 +29621,12 @@ abstract class AppLocalizations {
   /// **'Tag mode'**
   String get itemGroupTagMode;
 
+  /// #4362 G13: the item's own value of the tag mode (none, one per batch, one per piece), over its group's
+  ///
+  /// In en, this message translates to:
+  /// **'Tag on this item'**
+  String get itemGroupTagModeOwn;
+
   /// #4361 G12 item groups: itemGroupTagNone
   ///
   /// In en, this message translates to:
@@ -59309,6 +59315,12 @@ abstract class AppLocalizations {
   /// **'This item is tagged piece by piece: tag its pieces when they are received.'**
   String get stockTagPerUnit;
 
+  /// #4362 G13 tags: the name of one piece in the list of pieces
+  ///
+  /// In en, this message translates to:
+  /// **'Piece {n}'**
+  String stockTagPiece(int n);
+
   /// #4363 G14 tags: stockTagReasonDamaged
   ///
   /// In en, this message translates to:
@@ -59368,6 +59380,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Tags'**
   String get stockTagsOpen;
+
+  /// #4362 G13 tags: heading of the pieces of an item that carries one tag per piece
+  ///
+  /// In en, this message translates to:
+  /// **'Pieces tagged one by one ({count})'**
+  String stockTagsPieces(int count);
 
   /// #4363 G14 tags: stockTagsRetire
   ///

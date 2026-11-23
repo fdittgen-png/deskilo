@@ -3009,6 +3009,22 @@ Press **Take cash** and type the **Cash given** (or **Exact amount**). Less than
 
 Where your country does not yet allow the counter, the till says which operation is missing and offers nothing: nothing is numbered and nothing is taken. A goods line needs stock management on; a refusal of the server is shown in words. Card payments, discounts, refunds and returns are not part of this first till.
 
+### RFID tags: one per batch or one per piece
+
+**Audience:** Administrator · Owner
+
+You decide whether a tag on an item names one batch or one piece, and what a bulk read counts.
+
+With the *Tags* feature on, an item carries a **tag mode**, set on its group and kept by the item unless it has an own value. Open an item's group settings (**Stock → Items**, the folder icon on its line) and read **Tag on this item**: it says where the value comes from (*From Drinks since 3 Dec* or *Own value*), lets you give the item its own value, and **Use the group's value** gives it back.
+
+- **No tags.** The item carries no tag.
+- **One tag per batch.** One tag names one lot or one package: a crate, a bucket, a carton. Reading it counts one batch, never one piece.
+- **One tag per piece.** One tag names one piece, which needs the item to be tracked by piece. Under **Tags** of the item, **Pieces tagged one by one (n)** lists each piece with its tag.
+
+- A bulk read counts pieces only for per-piece items. For a per-batch item it counts batches and shows the lot's recorded quantity beside the count, never as a counted figure.
+- The mode of an item that already has tags cannot change until its tags are retired or its stock is zero; a group's change then skips the item and lists it as kept. A tag on a place always names one place.
+- A tag code is a UHF label (EPC, an SGTIN-96 is read as its GTIN and serial by the server) or an NFC chip, stored in upper-case hex and unique in the business across items, pieces and places. Binding and retiring need the right to manage the stock; reading needs the right to see it.
+
 ### Stock value and where goods came from
 
 **Audience:** Administrator · Owner

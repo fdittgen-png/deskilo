@@ -25,6 +25,9 @@ const _mugs = StockItem(id: 'demo-item-mugs', name: 'Mugs', unit: 'piece');
 const _syrup = StockItem(id: 'demo-item-syrup', name: 'Syrup', unit: 'l');
 // A T-shirt with no stock yet: the item the Demo's variants are edited on.
 const _shirt = StockItem(id: 'demo-item-shirt', name: 'T-shirt', unit: 'piece');
+// #4362 -- a gift basket, each piece tagged one by one, and a crate of apples, one tag per crate.
+const _basket = StockItem(id: 'demo-item-basket', name: 'Gift basket', unit: 'piece');
+const _apples = StockItem(id: 'demo-item-apples', name: 'Apples, crate', unit: 'piece');
 
 const _main = 'demo-place-main';
 const _shelf = 'demo-place-shelf';
@@ -151,7 +154,7 @@ class DemoStockLedger {
   /// What a retried request id answered.
   final Map<String, StockCommandResult> answers = {};
 
-  static const items = [_beans, _milk, _mugs, _syrup, _shirt];
+  static const items = [_beans, _milk, _mugs, _syrup, _shirt, _basket, _apples];
 
   /// #4350 -- the services turned into items in this session.
   final DemoStockCandidates? candidates;

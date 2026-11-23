@@ -189,6 +189,10 @@
       }
     }
   },
+  "itemGroupTagModeOwn": "Tag on this item",
+  "@itemGroupTagModeOwn": {
+    "description": "#4362 G13: the item's own value of the tag mode (none, one per batch, one per piece), over its group's"
+  },
   "itemGroupOwn": "Own value",
   "@itemGroupOwn": {
     "description": "#4361 G12 item groups: itemGroupOwn"

@@ -137,6 +137,7 @@
   "user.money.stock.scanning": "Travailler avec un scanner",
   "user.money.stock.nfc": "Puces avec le NFC du téléphone",
   "user.money.till": "Caisse",
+  "user.money.stock.rfid": "Puces RFID : une par lot ou une par pièce",
   "user.money.stock.value": "Valeur du stock et origine des marchandises",
   "user.money.stock.reversals": "Retours, corrections et comptages",
   "user.money.stock.cycle": "Inventaires tournants",

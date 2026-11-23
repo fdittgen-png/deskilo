@@ -8,23 +8,35 @@ import '../../../features/stock/domain/stock_config.dart';
 import '../../../features/stock/domain/stock_tags.dart';
 
 class _Bound {
-  _Bound(this.id, this.code, this.owner);
+  _Bound(this.id, this.code, this.owner, {this.kind = 'uid', this.pieceId});
 
   final String id;
   final String code;
   final TagOwner owner;
+
+  /// `uid` (an NFC chip) or `epc` (a UHF label).
+  final String kind;
+
+  /// The piece a per-piece tag names; null for every other tag.
+  final String? pieceId;
 }
 
 class DemoStockTags implements StockTags {
   DemoStockTags() {
     _active
       ..add(_Bound('demo-tag-1', 'A1B2C3D4', const TagOwner.place('demo-place-shelf')))
-      ..add(_Bound('demo-tag-2', '04E5F6A7B8C9D0', const TagOwner.item('demo-item-mugs')));
+      ..add(_Bound('demo-tag-2', '04E5F6A7B8C9D0', const TagOwner.item('demo-item-mugs')))
+      // #4362 -- a second place tag, a crate of apples tagged per batch, and a gift basket of five pieces, each with a tag
+      ..add(_Bound('demo-tag-3', 'A1B2C3D5', const TagOwner.place('demo-place-back')))
+      ..add(_Bound('demo-tag-4', 'E2801160600002054AF3D001', const TagOwner.item('demo-item-apples'), kind: 'epc'));
+    for (var i = 1; i <= 5; i++) {
+      _active.add(_Bound('demo-tag-${4 + i}', 'E2801160600002054AF3E00$i', const TagOwner.item('demo-item-basket'), kind: 'epc', pieceId: 'demo-piece-$i'));
+    }
   }
 
   final List<_Bound> _active = [];
   final Map<String, TagBound> _answers = {};
-  int _next = 3;
+  int _next = 10;
 
   static final _hex = RegExp(r'^[0-9A-F]{4,64}$');
 
@@ -40,7 +52,7 @@ class DemoStockTags implements StockTags {
   Future<List<StockTag>> tags(String workspaceId, TagOwner owner) async => [
     for (final t in _active)
       if ((owner.locationId != null && t.owner.locationId == owner.locationId) || (owner.itemId != null && t.owner.itemId == owner.itemId))
-        StockTag(id: t.id, code: t.code, kind: 'uid', ownerKind: t.owner.kind, unit: t.owner.unit),
+        StockTag(id: t.id, code: t.code, kind: t.kind, ownerKind: t.pieceId == null ? t.owner.kind : 'piece', unit: t.owner.unit, pieceId: t.pieceId),
   ];
 
   @override

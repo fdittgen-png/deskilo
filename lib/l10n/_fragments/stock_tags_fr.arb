@@ -18,6 +18,24 @@
   "stockReasonTagOwnerInactive": "Cet article ou ce lieu est désactivé : réactivez-le avant d'y associer une étiquette.",
   "stockTagsTitle": "Puces : {name}",
   "stockTagsOpen": "Puces",
+  "stockTagsPieces": "Pièces étiquetées une à une ({count})",
+  "@stockTagsPieces": {
+    "description": "#4362 G13 tags: heading of the pieces of an item that carries one tag per piece",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "stockTagPiece": "Pièce {n}",
+  "@stockTagPiece": {
+    "description": "#4362 G13 tags: the name of one piece in the list of pieces",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "stockTagsNone": "Aucune puce n’est encore associée.",
   "stockTagKindNfc": "Puce NFC",
   "stockTagKindUhf": "Étiquette UHF",
