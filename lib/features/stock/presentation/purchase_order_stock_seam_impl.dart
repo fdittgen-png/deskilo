@@ -6,7 +6,7 @@
 // delivery's lines say what is put away and what is still to put away, with a
 // button for what remains, and the delivery form may also put the goods away
 // in the same command.
-import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show isoDay;
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show ExactQuantity, isoDay;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -27,9 +27,6 @@ import '../providers/stock_providers.dart';
 import 'purchase_order_putaway.dart';
 import 'stock_config_text.dart';
 import 'stock_document_goods_block.dart';
-
-/// A quantity as a person reads it: no trailing ".0".
-String _qty(double q) => q == q.truncateToDouble() ? q.truncate().toString() : '$q';
 
 /// Whether a buyer who also manages the stock may put a delivery away here:
 /// the goods ledger and the receiving asked for, and the right to manage it.
@@ -90,8 +87,8 @@ class StockPurchaseOrderSeam implements PurchaseOrderStockSeam {
             description: l.description,
             unit: l.unit,
             serviceId: l.serviceId,
-            received: l.remaining,
-            putAway: 0,
+            received: exactOfReceived(l.remaining),
+            putAway: ExactQuantity.zero,
           ),
     ];
     final loaded = await loadPutAwayContext(context, _services(ref), workspaceId: workspaceId, lines: lines);
@@ -137,7 +134,7 @@ class _ReceiptPutAway implements ReceiptPutAway {
           receivedOn: isoDay(delivery.receivedOn),
           lines: [
             for (final e in delivery.delivered.entries)
-              if (e.value > 0) (lineNo: e.key, quantity: _qty(e.value)),
+              if (e.value > 0) (lineNo: e.key, quantity: exactOfReceived(e.value).text),
           ],
           note: delivery.note.trim(),
         ),
@@ -190,10 +187,10 @@ class _DeliveryActions extends ConsumerWidget {
     return [
       for (final p in lines)
         Text(
-          l10n.stockPutAwayProgress(p.description, _qty(p.putAway), _qty(p.remaining)),
+          l10n.stockPutAwayProgress(p.description, p.putAway.text, p.remaining.text),
           key: ValueKey('purchase-order-putaway-${order.reference}-${delivery.id}-${p.lineNo}'),
         ),
-      if (lines.any((p) => p.remaining > 0))
+      if (lines.any((p) => p.remaining > ExactQuantity.zero))
         TextButton.icon(
           key: ValueKey('purchase-order-putaway-${order.reference}-${delivery.id}'),
           onPressed: () => showPutAwaySheet(

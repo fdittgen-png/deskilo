@@ -66,7 +66,7 @@ class StockScanBar extends ConsumerWidget {
                 Text(l10n.stockScanFailed, key: const ValueKey('stock-scan-failed'), style: TextStyle(color: Theme.of(context).colorScheme.error)),
               if (last != null && last.outcome == ScanOutcome.line && last.line != null)
                 Text(
-                  l10n.stockScanLast(last.line!.itemName, last.line!.quantityText, last.line!.unit),
+                  l10n.stockScanLast(last.line!.itemName, last.line!.shownQuantity, last.line!.unit),
                   key: const ValueKey('stock-scan-last'),
                   style: style.bodySmall,
                 ),

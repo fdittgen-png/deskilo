@@ -13243,6 +13243,7 @@ const Set<String> uiLabelKeys = {
   'refusalCounterCorrectionBeyond',
   'refusalCounterCustomerNeeded',
   'refusalCounterDayClose',
+  'refusalCounterDayOpen',
   'refusalCounterEssentials',
   'refusalCounterGoods',
   'refusalCounterNotOpen',

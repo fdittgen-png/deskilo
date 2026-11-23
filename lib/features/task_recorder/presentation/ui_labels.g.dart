@@ -2403,6 +2403,7 @@ Map<String, _Getter> _part5() => {
   'readinessStateNeedsOperator': (l) => l.readinessStateNeedsOperator,
   'recordsLocationCraOutside': (l) => l.recordsLocationCraOutside,
   'refusalBankMatchBeyondLink': (l) => l.refusalBankMatchBeyondLink,
+  'refusalCounterDayOpen': (l) => l.refusalCounterDayOpen,
   'refusalCounterGoods': (l) => l.refusalCounterGoods,
   'refusalStockTagRetiredLately': (l) => l.refusalStockTagRetiredLately,
   'regionalFormatLocale': (l) => l.regionalFormatLocale,
