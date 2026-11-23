@@ -548,8 +548,8 @@ expect "(I) the item stays in its group with the saved value" "$(q "select (grou
 # (J) two sessions bind the same tag code to two different items: the second waits for the code's lock, then is
 # refused (DKG22, bound elsewhere); one active tag exists, on the first item.
 q "update public.workspaces set feature_flags = coalesce(feature_flags, '{}'::jsonb) || '{\"stockTags\": true}' where id = '$ws'" >/dev/null
-jitem1=$(q "insert into public.services (workspace_id, name, price_cents, active, inventory_unit, tracking, stockable) values ('$ws', 'Race tag item one', 100, true, 'piece', 'none', true) returning id" | head -1)
-jitem2=$(q "insert into public.services (workspace_id, name, price_cents, active, inventory_unit, tracking, stockable) values ('$ws', 'Race tag item two', 100, true, 'piece', 'none', true) returning id" | head -1)
+jitem1=$(q "insert into public.services (workspace_id, name, price_cents, active, inventory_unit, tracking, stockable, tag_mode) values ('$ws', 'Race tag item one', 100, true, 'piece', 'none', true, 'per_batch') returning id" | head -1)
+jitem2=$(q "insert into public.services (workspace_id, name, price_cents, active, inventory_unit, tracking, stockable, tag_mode) values ('$ws', 'Race tag item two', 100, true, 'piece', 'none', true, 'per_batch') returning id" | head -1)
 psql "$url" -X -qAt -v ON_ERROR_STOP=1 >"$scratch/holder13" 2>&1 <<SQL &
 begin;
 $as_owner
