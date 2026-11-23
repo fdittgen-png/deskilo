@@ -16,10 +16,10 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_typography.dart';
+import '../../../../core/time/business_day_provider.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
-import '../../../workspace/providers/business_date_provider.dart';
 import '../../application/customer_quote_commands.dart';
 import '../../domain/billing_customer.dart';
 import '../../domain/customer_quote.dart';
