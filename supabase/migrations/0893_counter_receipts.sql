@@ -63,6 +63,9 @@ grant select on public.counter_country_operations to authenticated;
 create policy counter_country_operations_select on public.counter_country_operations for select to authenticated using (true);
 create policy mcp_delegated_deny on public.counter_country_operations as restrictive for all to authenticated
   using (not public.mcp_is_delegated()) with check (not public.mcp_is_delegated());
+-- a reference table without a workspace is a surface of every session: only a native one reads it (268)
+create policy personal_native_session on public.counter_country_operations as restrictive for all to public
+  using ((select public.personal_native_session())) with check ((select public.personal_native_session()));
 comment on table public.counter_country_operations is
   'Reference data, written by migrations: what a counter receipt may do in each country, under which declared case, on which specification, with which adapter and evidence (#4184). A row says supported only for an operation an adapter implements and a test proves.';
 
