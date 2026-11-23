@@ -94,6 +94,13 @@ Set<String> raisedIn(String sql) => {
   for (final m in _raised.allMatches(sql)) (m.group(1) ?? m.group(2))!,
 };
 final _read = RegExp(r"'(DK[A-Z0-9]{3})'");
+final _readConstant = RegExp(r'\bDkCode\.(dk[a-z0-9]{3})\b');
+
+/// The DK codes [source] reads: quoted, or by their `DkCode` constant (#4417).
+Set<String> readIn(String source) => {
+  for (final m in _read.allMatches(source)) m.group(1)!,
+  for (final m in _readConstant.allMatches(source)) m.group(1)!.toUpperCase(),
+};
 
 void main() {
   final raised = <String>{
@@ -104,7 +111,7 @@ void main() {
     for (final f in handWrittenDartFiles('lib'))
       // the generated constants file names every code: it is no reader (#4417)
       if (!f.path.endsWith('lib/core/codes/dk_code.dart'))
-        for (final m in _read.allMatches(f.readAsStringSync())) m.group(1)!,
+        ...readIn(f.readAsStringSync()),
   };
 
   test('DkCode holds exactly the codes the migrations raise (SQL and Dart cannot differ)', () {
@@ -125,6 +132,12 @@ void main() {
       reason: 'DkCode holds a code no migration raises: dart run tool/build_dk_codes.dart',
     );
     expect(generated, dkCodeSource(fromSql), reason: 'dk_code.dart is not the generator\'s output');
+  });
+
+  test('a code is read quoted or by its constant', () {
+    expect(readIn("case 'DKN01':"), {'DKN01'});
+    expect(readIn('case DkCode.dkn01: x(DkCode.dkg07);'), {'DKN01', 'DKG07'});
+    expect(readIn('final DkCodex = 1;'), isEmpty);
   });
 
   test('a code is raised by errcode or through the refusal helper', () {
