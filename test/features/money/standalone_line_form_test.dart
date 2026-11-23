@@ -51,10 +51,14 @@ void main() {
     await tester.enterText(find.byKey(const ValueKey('standalone-line-0-description')), 'Rent of the shop, November');
     final saved = await _save(tester, form);
     expect(saved.description, 'Rent of the shop, November');
+    expect(
+      saved.toWire(),
+      _property.copyWith(description: 'Rent of the shop, November').toWire(),
+      reason: 'the saved line is the opened one but for its description',
+    );
     expect(saved.supply, 'property');
     expect(saved.baseQuantity, '100');
     expect(saved.lineId, 'l-1');
-    expect(saved.toWire()['supply'], 'property');
   });
 
   testWidgets('a unit the composer does not list still opens, by its stored label, and is saved unchanged', (tester) async {
@@ -63,9 +67,25 @@ void main() {
     );
     final saved = await _save(tester, form);
     expect(find.text('tonne (stored)'), findsOneWidget);
-    expect(saved.unitCode, 'tonne');
-    expect(saved.unitLabel, 'tonne (stored)');
-    expect(saved.unEceCode, 'TNE');
+    expect(saved.toWire(), form.toLine(tester.element(find.byType(StandaloneLineEditor))).toWire());
+    expect(saved.toWire()['unit'], {'code': 'tonne', 'label': 'tonne (stored)', 'un_ece_code': 'TNE'});
+    expect(saved.toWire()['quantity'], '2');
+    expect(saved.toWire()['unit_price'], '10');
+  });
+
+  testWidgets('a listed unit is saved as it was stored: a label written in another language is not rewritten', (tester) async {
+    final form = StandaloneLineForm(
+      from: const StandaloneLine(description: 'Beratung', quantity: '2', unitCode: 'hour', unitLabel: 'Stunde', unEceCode: 'HUR', unitPrice: '80'),
+    );
+    final saved = await _save(tester, form);
+    expect(saved.unitLabel, 'Stunde', reason: 'opened under en, saved as written');
+    expect(saved.unEceCode, 'HUR');
+    // Only a unit the person changes is read from the table.
+    tester.widget<DropdownButtonFormField<String>>(find.byKey(const ValueKey('standalone-line-0-unit'))).onChanged!('day');
+    final changed = form.toLine(tester.element(find.byType(StandaloneLineEditor)));
+    expect(changed.unitCode, 'day');
+    expect(changed.unitLabel, 'day');
+    expect(changed.unEceCode, 'DAY');
   });
 
   testWidgets('a quantity and a price typed with a decimal comma are read through the shared input', (tester) async {
@@ -76,6 +96,24 @@ void main() {
     final saved = await _save(tester, form, locale: const Locale('de'));
     expect(saved.quantity, '1.5');
     expect(saved.unitPrice, '1234.50');
+  });
+
+  group('the ids the server gave are attached by position, and only to an answer that lines up', () {
+    List<StandaloneLineForm> forms() => [StandaloneLineForm(), StandaloneLineForm()];
+    StandaloneLine answered(String id) => StandaloneLine(lineId: id, description: '', quantity: '1', unitCode: 'hour', unitLabel: 'hour', unitPrice: '1');
+
+    test('an answer with as many lines attaches each id to its form (both screens call this)', () {
+      final f = forms();
+      expect(attachLineIds(f, [answered('a'), answered('b')]), isTrue);
+      expect(f.map((x) => x.lineId), ['a', 'b']);
+    });
+
+    test('an answer with another number of lines attaches nothing', () {
+      final f = forms();
+      expect(attachLineIds(f, [answered('a')]), isFalse);
+      expect(attachLineIds(f, [answered('a'), answered('b'), answered('c')]), isFalse);
+      expect(f.map((x) => x.lineId), [null, null]);
+    });
   });
 
   testWidgets('a new line starts from one default: hour, general supply, base quantity one', (tester) async {

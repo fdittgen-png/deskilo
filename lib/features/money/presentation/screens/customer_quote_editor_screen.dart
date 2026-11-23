@@ -147,13 +147,7 @@ class _EditorState extends ConsumerState<CustomerQuoteEditorScreen> {
           ..version = value.version
           ..revision = value.revision;
         final read = await commands.read(workspaceId, value.quoteId);
-        // The server answers the lines in the order they were sent: only an answer that lines up is attached.
-        final answered = read?.draft?.lines ?? const <StandaloneLine>[];
-        if (answered.length == _form.lines.length) {
-          for (final (i, line) in answered.indexed) {
-            _form.lines[i].lineId = line.lineId;
-          }
-        }
+        attachLineIds(_form.lines, read?.draft?.lines ?? const <StandaloneLine>[]);
         ref.invalidate(customerQuotesProvider(workspaceId));
         return true;
       case QuoteRefused(:final refusal):

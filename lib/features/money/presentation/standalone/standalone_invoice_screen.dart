@@ -101,12 +101,7 @@ class _State extends ConsumerState<StandaloneInvoiceScreen> {
     try {
       final saved = await commands.saveDraft(workspaceId: workspaceId, draft: draft);
       if (!mounted) return;
-      // The server answers the lines in the order they were sent: only an answer that lines up is attached.
-      if (saved.lines.length == _lines.length) {
-        for (final (i, line) in saved.lines.indexed) {
-          _lines[i].lineId = line.lineId;
-        }
-      }
+      attachLineIds(_lines, saved.lines);
       final preview = await commands.preview(
         workspaceId: workspaceId,
         draftId: saved.draftId,
