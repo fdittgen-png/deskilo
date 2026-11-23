@@ -5,7 +5,7 @@
 -- invoices and no other's, without becoming a member; one account holds two subjects apart; a revocation by the
 -- account or the seller ends the reading and erases nothing. Rolled back.
 begin;
-select plan(21);
+select plan(23);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -110,6 +110,11 @@ select is(public.billing_access_accept_v1(current_setting('t.code2')) ->> 'finan
 select is(pg_temp.seen(), 2, 'it now reads both subjects'' invoices, each its own');
 select pg_temp.act('a2');
 select is((select count(*)::int from public.billing_access_grants), 0, 'a coworker reads no grant');
+select is((select string_agg(number, ',') from public.invoices where workspace_id = current_setting('t.ws')::uuid),
+  'GR-M1', 'a coworker still reads their own invoice only');
+select pg_temp.act('a1');
+select is(pg_temp.refusal_code($$select code from public.billing_access_grants limit 1$$), '42501',
+  'nobody reads a code from the table: it is handed out by the invitation alone');
 
 -- ── Revocation ───────────────────────────────────────────────────────────
 select pg_temp.act('a3');

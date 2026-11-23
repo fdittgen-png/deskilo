@@ -66,7 +66,12 @@ drop policy if exists mcp_delegated_deny on public.billing_access_grants;
 create policy mcp_delegated_deny on public.billing_access_grants as restrictive for all to authenticated
   using (not public.mcp_is_delegated()) with check (not public.mcp_is_delegated());
 revoke all on public.billing_access_grants from anon, authenticated;
-grant select on public.billing_access_grants to authenticated;
+-- Every column but the code: a code is handed out once, by billing_access_invite_v1 to whoever may invite, and a
+-- reader of the business's customers who may not invite never learns one (and so cannot accept it).
+grant select (id, workspace_id, financial_subject_id, purpose, request_id, invited_by, invited_at, expires_at,
+              principal_user_id, accepted_at, revoked_at, revoked_by_user_id, revoke_reason,
+              created_datetime, modified_datetime, company_id, site_id, created_by_user, modified_by_user)
+  on public.billing_access_grants to authenticated;
 
 -- ── 2. the predicate ─────────────────────────────────────────────────────
 create or replace function public.billing_subject_granted(p_workspace uuid, p_subject uuid)
@@ -79,12 +84,11 @@ $fn$;
 revoke execute on function public.billing_subject_granted(uuid, uuid) from public, anon;
 grant execute on function public.billing_subject_granted(uuid, uuid) to authenticated;
 
--- The customer reads the rows of their own subject's invoices; the rest of the policy is 0060's.
+-- The customer reads the rows of their own subject's invoices; the rest of the policy is 0131's
+-- (may_view_member_finances: the member's own, or viewFinances).
 drop policy if exists invoices_select on public.invoices;
 create policy invoices_select on public.invoices for select using (
-  public.is_admin_of(workspace_id)
-  or exists (select 1 from public.members m
-              where m.id = invoices.member_id and m.user_id = auth.uid())
+  public.may_view_member_finances(member_id)
   -- one set per query, not a call per row: the caller's live grants (their own rows of the grants table)
   or member_id in (select g.financial_subject_id from public.billing_access_grants g
                     where g.principal_user_id = (select auth.uid()) and g.revoked_at is null)
