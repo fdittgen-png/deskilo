@@ -851,5 +851,14 @@
  "optChannelPrint": "Imprimer",
  "optChannelBoth": "Partager et imprimer",
  "optCustomerlessAllowed": "Autorisées",
- "optCustomerlessRefused": "Un client est toujours nommé"
+ "optCustomerlessRefused": "Un client est toujours nommé",
+ "counterBlind": "Compter le tiroir à l'aveugle",
+ "counterBlindHint": "La caisse ne voit pas les espèces attendues avant d'avoir compté le tiroir. Réglé dans les paramètres de l'app.",
+ "counterByDenomination": "Compter par coupures",
+ "counterByDenominationHint": "Le fond de caisse et le tiroir compté sont donnés billet par billet et pièce par pièce. Réglé dans les paramètres de l'app.",
+ "counterPaidOutLimit": "Plus grand retrait sans autorisation",
+ "counterPaidOutLimitHint": "Un retrait au-delà exige une personne pouvant enregistrer des paiements sortants. Réglé dans les paramètres de l'app.",
+ "counterCashReasons": "Motifs des entrées et sorties d'espèces",
+ "counterCashReasonsHint": "Séparés par des virgules, par exemple monnaie, dépense, autre. Réglé dans les paramètres de l'app.",
+ "optNoLimit": "Aucune limite"
 }

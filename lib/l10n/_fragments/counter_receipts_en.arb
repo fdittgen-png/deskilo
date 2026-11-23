@@ -58,5 +58,49 @@
   "refusalCounterTenderState": "This card authorization is still open, unknown or already settled: ask the provider about it instead of asking again.",
   "@refusalCounterTenderState": {
     "description": "#4185 refusal"
+  },
+  "settingLabelCounterBlindCount": "Count the drawer blind",
+  "@settingLabelCounterBlindCount": {
+    "description": "#4367 setting label/hint or refusal"
+  },
+  "settingHintCounterBlindCount": "While a session is open the counter does not see the expected cash: they count the drawer and see the difference after the close. Someone who may see the finances always sees it.",
+  "@settingHintCounterBlindCount": {
+    "description": "#4367 setting label/hint or refusal"
+  },
+  "settingLabelCounterCountByDenomination": "Count by denomination",
+  "@settingLabelCounterCountByDenomination": {
+    "description": "#4367 setting label/hint or refusal"
+  },
+  "settingHintCounterCountByDenomination": "The float and the counted drawer are given by denomination (how many of each note and coin) rather than as a total. The counts must add up to the amount.",
+  "@settingHintCounterCountByDenomination": {
+    "description": "#4367 setting label/hint or refusal"
+  },
+  "settingLabelCounterPaidOutLimit": "Largest paid-out without approval",
+  "@settingLabelCounterPaidOutLimit": {
+    "description": "#4367 setting label/hint or refusal"
+  },
+  "settingHintCounterPaidOutLimit": "The largest amount, in minor units of the business currency (cents), that a paid-out from the drawer may be without someone who may record outgoing payments. 0 means no limit.",
+  "@settingHintCounterPaidOutLimit": {
+    "description": "#4367 setting label/hint or refusal"
+  },
+  "settingLabelCounterCashReasons": "Reasons for cash in and out",
+  "@settingLabelCounterCashReasons": {
+    "description": "#4367 setting label/hint or refusal"
+  },
+  "settingHintCounterCashReasons": "The reasons a person may give for money paid into or out of the drawer, separated by commas (for example change, expense, other).",
+  "@settingHintCounterCashReasons": {
+    "description": "#4367 setting label/hint or refusal"
+  },
+  "refusalCounterTill": "The till is not ready for this: open it first, or it is already open or closed.",
+  "@refusalCounterTill": {
+    "description": "#4367 setting label/hint or refusal"
+  },
+  "refusalCounterCashEntry": "This cash entry is not accepted: the reason is not on the list, the amount is above the limit for you, or the counts do not add up.",
+  "@refusalCounterCashEntry": {
+    "description": "#4367 setting label/hint or refusal"
+  },
+  "refusalCounterDayClose": "The day cannot be closed: a till is still open, or the day is already closed.",
+  "@refusalCounterDayClose": {
+    "description": "#4367 setting label/hint or refusal"
   }
 }

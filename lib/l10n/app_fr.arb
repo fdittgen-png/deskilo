@@ -7200,6 +7200,8 @@
   },
   "featureCounterReceiptsDesc": "Une vente au comptoir donne un ticket immuable, numéroté une seule fois, avec le règlement reçu. Il n'est proposé que là où l'opération du pays est prise en charge, et dit clairement quand elle ne l'est pas.",
   "featureCounterReceiptsTitle": "Tickets de caisse",
+  "featureCounterTillSessionsDesc": "Ouvrez une caisse avec son fond, comptez le tiroir à la fermeture et clôturez la journée avec son rapport. Une vente exige une caisse ouverte ; les espèces attendues se déduisent de ce qui a été encaissé, jamais saisies.",
+  "featureCounterTillSessionsTitle": "Sessions de caisse et clôture de journée",
   "featureCountriesEuName": "l'Union européenne",
   "@featureCountriesEuName": {
     "description": "#2454 feature availability by country"
@@ -16514,14 +16516,17 @@
     "description": "#2380 (0660) Refusal DKB07: the first payment of an invoice is undone after its later payments."
   },
   "refusalChangedMeanwhile": "Cet élément a changé entre-temps. Rouvrez-le pour voir où il en est.",
+  "refusalCounterCashEntry": "Cette écriture d'espèces n'est pas acceptée : le motif n'est pas dans la liste, le montant dépasse votre limite, ou les nombres ne correspondent pas.",
   "refusalCounterChanged": "Ce ticket a changé entre-temps : rouvrez-le.",
   "refusalCounterCorrectionBeyond": "Une correction ne peut pas dépasser ce qu'il reste de la ligne d'origine.",
   "refusalCounterCustomerNeeded": "Cette entreprise nomme un client à chaque vente : choisissez-en un avant de terminer.",
+  "refusalCounterDayClose": "La journée ne peut pas être clôturée : une caisse est encore ouverte, ou la journée est déjà clôturée.",
   "refusalCounterEssentials": "Il manque quelque chose à ce ticket ou ce n'est pas acceptable : rien n'a été numéroté et rien n'a été encaissé.",
   "refusalCounterGoods": "Les marchandises ne peuvent pas être vendues ou reprises ici : le registre des marchandises est désactivé, ou il n'y a pas de lieu d'où les prendre ou où les remettre.",
   "refusalCounterNotOpen": "Ce ticket n'est plus un brouillon ouvert, ou un ticket a déjà été émis pour la même vente.",
   "refusalCounterTenderState": "Cette autorisation par carte est encore ouverte, inconnue ou déjà réglée : interrogez le prestataire au lieu de redemander.",
   "refusalCounterTenders": "Les règlements ne soldent pas exactement cette vente, ou l'un d'eux n'est pas pris en charge ici.",
+  "refusalCounterTill": "La caisse n'est pas prête pour cela : ouvrez-la d'abord, ou elle est déjà ouverte ou fermée.",
   "refusalCounterUnsupported": "Cette opération n'est pas prise en charge pour votre pays dans le cas que vous avez déclaré dans les paramètres : rien n'a été numéroté et rien n'a été encaissé.",
   "refusalMainStoreExpired": "Le magasin principal ne contient que {held} sur les {asked} que cette vente demande qui soient vendables : le reste a dépassé sa date. Rien n’a été prélevé et la vente n’a pas été confirmée.",
   "@refusalMainStoreExpired": {
@@ -18992,9 +18997,13 @@
   "@settingHintCalendarRangeDays": {
     "description": "#2487 settings: Setting hint."
   },
+  "settingHintCounterBlindCount": "Tant qu'une session est ouverte, la caisse ne voit pas les espèces attendues : elle compte le tiroir et voit l'écart après la fermeture. Qui peut voir les finances le voit toujours.",
+  "settingHintCounterCashReasons": "Les motifs qu'une personne peut donner pour de l'argent versé dans le tiroir ou retiré, séparés par des virgules (par exemple monnaie, dépense, autre).",
+  "settingHintCounterCountByDenomination": "Le fond de caisse et le tiroir compté sont donnés par coupures (combien de chaque billet et pièce) plutôt qu'en total. Les nombres doivent correspondre au montant.",
   "settingHintCounterCustomerlessSales": "Autorisées : une vente peut se faire sans nommer de client. Refusées : chaque vente en nomme un. Une vente sans client ne crée jamais de compte, de membre ni d'abonnement.",
   "settingHintCounterDocumentChannel": "Partagé (message ou courriel), imprimé, ou les deux. Le ticket est le même document immuable dans tous les cas.",
   "settingHintCounterFiscalObligation": "Ce que vous déclarez sur les règles fiscales d'une vente au comptoir : aucune signifie qu'aucune obligation fiscale de caisse ne s'applique à votre entreprise (votre propre déclaration, inscrite sur chaque ticket) ; caisse requise signifie qu'une obligation s'applique. Un ticket n'est émis que là où l'opération de votre pays est prise en charge dans le cas que vous déclarez.",
+  "settingHintCounterPaidOutLimit": "Le plus grand montant, en unités mineures de la devise de l'entreprise (centimes), d'un retrait du tiroir sans une personne pouvant enregistrer des paiements sortants. 0 signifie aucune limite.",
   "settingHintDirectoryGeocoderUrl": "Le service compatible Photon qui place une adresse publiée sur la carte de découverte : une adresse https sur l'internet public, sans nom d'utilisateur, mot de passe, requête ni #. Laissez vide pour utiliser l'adresse avec laquelle cette version de l'application a été construite, sinon le service public Photon.",
   "settingHintDirectoryTileUrlTemplate": "Le serveur de tuiles qui dessine la carte de découverte, avec les marqueurs z, x et y entre accolades dans son adresse (s entre accolades pour un sous-domaine est permis) : https, sur l'internet public, sans nom d'utilisateur, mot de passe ni #. Laissez vide pour utiliser le serveur de cette version de l'application, sinon OpenStreetMap. Un nouvel hôte redemande l'accord de chacun avant que la carte ne se charge.",
   "settingHintDirectoryUpcomingWindowDays": "Combien de jours à l'avance l'annuaire affiche la prochaine réservation d'un membre.",
@@ -19222,9 +19231,13 @@
   "@settingLabelCalendarRangeDays": {
     "description": "#2487 settings: Setting label."
   },
+  "settingLabelCounterBlindCount": "Compter le tiroir à l'aveugle",
+  "settingLabelCounterCashReasons": "Motifs des entrées et sorties d'espèces",
+  "settingLabelCounterCountByDenomination": "Compter par coupures",
   "settingLabelCounterCustomerlessSales": "Ventes sans client nommé",
   "settingLabelCounterDocumentChannel": "Comment le ticket quitte le comptoir",
   "settingLabelCounterFiscalObligation": "Règles fiscales des ventes au comptoir",
+  "settingLabelCounterPaidOutLimit": "Plus grand retrait sans autorisation",
   "settingLabelDirectoryGeocoderUrl": "Service de recherche d'adresse",
   "settingLabelDirectoryTileUrlTemplate": "Serveur de tuiles de la carte",
   "settingLabelDirectoryUpcomingWindowDays": "Aperçu de l'annuaire",

@@ -11647,6 +11647,14 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featureCounterReceiptsTitle => 'Scontrini di cassa';
 
   @override
+  String get featureCounterTillSessionsDesc =>
+      'Apra una cassa con il suo fondo, conti il cassetto alla chiusura e chiuda la giornata con il suo rapporto. Una vendita richiede una cassa aperta; il contante atteso si ricava da quanto incassato, mai digitato.';
+
+  @override
+  String get featureCounterTillSessionsTitle =>
+      'Sessioni di cassa e chiusura della giornata';
+
+  @override
   String get featureCountriesEuName => 'l\'Unione europea';
 
   @override
@@ -28979,6 +28987,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Nel frattempo è cambiato. Lo riapra per vedere a che punto è.';
 
   @override
+  String get refusalCounterCashEntry =>
+      'Questa registrazione di contante non è accettata: il motivo non è nell\'elenco, l\'importo supera il Suo limite, oppure i conteggi non tornano.';
+
+  @override
   String get refusalCounterChanged =>
       'Questo scontrino è cambiato nel frattempo: lo riapra.';
 
@@ -28989,6 +29001,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get refusalCounterCustomerNeeded =>
       'Questa attività indica un cliente in ogni vendita: ne scelga uno prima di concludere.';
+
+  @override
+  String get refusalCounterDayClose =>
+      'La giornata non può essere chiusa: una cassa è ancora aperta, oppure la giornata è già chiusa.';
 
   @override
   String get refusalCounterEssentials =>
@@ -29009,6 +29025,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get refusalCounterTenders =>
       'I pagamenti non saldano esattamente questa vendita, oppure uno di essi non è accettato qui.';
+
+  @override
+  String get refusalCounterTill =>
+      'La cassa non è pronta per questo: la apra prima, oppure è già aperta o chiusa.';
 
   @override
   String get refusalCounterUnsupported =>
@@ -32129,6 +32149,18 @@ class AppLocalizationsIt extends AppLocalizations {
       'Fissato dalla piattaforma: il periodo più lungo che una richiesta del calendario può chiedere. Delimita la richiesta.';
 
   @override
+  String get settingHintCounterBlindCount =>
+      'Finché una sessione è aperta la cassa non vede il contante atteso: conta il cassetto e vede la differenza dopo la chiusura. Chi può vedere le finanze lo vede sempre.';
+
+  @override
+  String get settingHintCounterCashReasons =>
+      'I motivi che una persona può indicare per il denaro versato nel cassetto o prelevato, separati da virgole (per esempio resto, spesa, altro).';
+
+  @override
+  String get settingHintCounterCountByDenomination =>
+      'Il fondo e il cassetto contato si indicano per tagli (quanti di ogni banconota e moneta) invece che come totale. I conteggi devono dare l\'importo.';
+
+  @override
   String get settingHintCounterCustomerlessSales =>
       'Consentite: si può vendere senza indicare un cliente. Rifiutate: ogni vendita ne indica uno. Una vendita senza cliente non crea mai un account, un socio o un abbonamento.';
 
@@ -32139,6 +32171,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settingHintCounterFiscalObligation =>
       'Ciò che dichiara sulle regole fiscali di una vendita al banco: nessuna significa che al Suo esercizio non si applica alcun obbligo fiscale di registratore (una Sua dichiarazione, annotata su ogni scontrino); registratore richiesto significa che si applica. Lo scontrino è emesso solo dove l\'operazione del Suo paese è supportata nel caso dichiarato.';
+
+  @override
+  String get settingHintCounterPaidOutLimit =>
+      'L\'importo massimo, in unità minori della valuta dell\'attività (centesimi), di un prelievo dal cassetto senza qualcuno che possa registrare pagamenti in uscita. 0 significa nessun limite.';
 
   @override
   String get settingHintDirectoryGeocoderUrl =>
@@ -32520,6 +32556,16 @@ class AppLocalizationsIt extends AppLocalizations {
   String get settingLabelCalendarRangeDays => 'Periodo del calendario';
 
   @override
+  String get settingLabelCounterBlindCount => 'Contare il cassetto alla cieca';
+
+  @override
+  String get settingLabelCounterCashReasons =>
+      'Motivi di entrate e uscite di contante';
+
+  @override
+  String get settingLabelCounterCountByDenomination => 'Contare per tagli';
+
+  @override
   String get settingLabelCounterCustomerlessSales =>
       'Vendite senza cliente indicato';
 
@@ -32530,6 +32576,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settingLabelCounterFiscalObligation =>
       'Regole fiscali delle vendite al banco';
+
+  @override
+  String get settingLabelCounterPaidOutLimit =>
+      'Prelievo massimo senza autorizzazione';
 
   @override
   String get settingLabelDirectoryGeocoderUrl =>
