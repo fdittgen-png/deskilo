@@ -3,17 +3,12 @@
 // #1881 — the frozen coverage manifest: every route the router
 // registers, and what the task recorder does on it.
 //
-//   recorded  — instrumented: its own seams name the steps;
-//   recorder  — the recorder's own screens: never recorded;
-//   excluded  — a protected screen: one marker, its category, nothing of
-//               its contents (sign-in, payment, messages, providers,
-//               secrets, identity, the installation operator);
-//   planned   — an ordinary or administrative form with no seams of its
-//               own YET: since #2142 the generic layer notes it (the
-//               screen, keyed taps, fields left, guarded commands), and
-//               its precise steps are owned by the rollout named in
-//               [RouteCoverage.owner] (#1881 A/B/C, #1884). A path no
-//               row names is a visible "cannot describe" step.
+//   recorded — instrumented: its own seams name the steps; recorder — the
+//   recorder's own screens, never recorded; excluded — a protected screen
+//   (sign-in, payment, messages, providers, secrets, identity, operator):
+//   one marker, its category, nothing of its contents; planned — a form
+//   with no seams of its own YET, noted by the generic layer (#2142), its
+//   steps owned by [RouteCoverage.owner]. An unnamed path cannot describe.
 //
 // test/features/task_recorder/coverage_manifest_test.dart keeps this list
 // and lib/app/route_classes.dart (itself kept in step with the router) in
@@ -123,6 +118,11 @@ const List<RouteCoverage> routeCoverage = [
     '/server',
     CoverageStatus.excluded,
     category: ProtectedSurface.secrets,
+  ),
+  RouteCoverage(
+    '/app-update',
+    CoverageStatus.excluded,
+    category: ProtectedSurface.operator,
   ),
   RouteCoverage(
     '/server-update',

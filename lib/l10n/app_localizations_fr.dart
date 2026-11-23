@@ -1078,6 +1078,25 @@ class AppLocalizationsFr extends AppLocalizations {
   String get appTitle => 'DesKilo';
 
   @override
+  String get appUpdateBody =>
+      'Cette installation n\'accepte qu\'une application DesKilo plus récente. Vos données sont en sécurité : rien de ce que vous avez saisi n\'est perdu, et tout est de nouveau là une fois l\'application mise à jour.';
+
+  @override
+  String get appUpdateDesktop =>
+      'Installez le dernier paquet DesKilo pour cet ordinateur, puis rouvrez-le.';
+
+  @override
+  String get appUpdateStore =>
+      'Mettez DesKilo à jour depuis le store où vous l\'avez installé, puis rouvrez-le.';
+
+  @override
+  String get appUpdateTitle => 'Cette application doit être mise à jour';
+
+  @override
+  String get appUpdateWeb =>
+      'Rechargez cette page pour charger la dernière version de l\'application.';
+
+  @override
   String get applicationAcceptedVote => 'A accepté cette demande';
 
   @override

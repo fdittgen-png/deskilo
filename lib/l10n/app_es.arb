@@ -469,6 +469,11 @@
     }
   },
   "appTitle": "DesKilo",
+  "appUpdateBody": "Esta instalación solo acepta una aplicación DesKilo más reciente. Sus datos están seguros: no se pierde nada de lo que ha introducido, y todo vuelve a estar ahí cuando la aplicación esté actualizada.",
+  "appUpdateDesktop": "Instale el paquete más reciente de DesKilo para este ordenador y vuelva a abrirlo.",
+  "appUpdateStore": "Actualice DesKilo desde la tienda en la que lo instaló y vuelva a abrirlo.",
+  "appUpdateTitle": "Esta aplicación necesita una actualización",
+  "appUpdateWeb": "Recargue esta página para cargar la versión más reciente de la aplicación.",
   "applicationAcceptedVote": "Ha aprobado esta solicitud",
   "@applicationAcceptedVote": {
     "description": "Workspace admission history and discussion (#1791)"

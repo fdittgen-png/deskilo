@@ -469,6 +469,11 @@
     }
   },
   "appTitle": "DesKilo",
+  "appUpdateBody": "Diese Installation nimmt nur eine neuere DesKilo-App an. Ihre Daten sind sicher: Nichts, was Sie eingegeben haben, geht verloren, und alles ist wieder da, sobald die App aktualisiert ist.",
+  "appUpdateDesktop": "Installieren Sie das neueste DesKilo-Paket für diesen Computer und öffnen Sie es dann erneut.",
+  "appUpdateStore": "Aktualisieren Sie DesKilo in dem Store, aus dem Sie es installiert haben, und öffnen Sie es dann erneut.",
+  "appUpdateTitle": "Diese App braucht ein Update",
+  "appUpdateWeb": "Laden Sie diese Seite neu, um die neueste Version der App zu laden.",
   "applicationAcceptedVote": "Hat diese Anfrage genehmigt",
   "@applicationAcceptedVote": {
     "description": "Workspace admission history and discussion (#1791)"

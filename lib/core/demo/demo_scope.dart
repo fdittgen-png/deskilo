@@ -108,6 +108,7 @@ import '../../features/workspace/providers/workspace_files_providers.dart';
 import '../../features/workspace/providers/workspace_host_providers.dart';
 import '../../features/workspace/providers/workspace_import_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
+import '../backend/app_floor.dart';
 import '../backend/backend_settings.dart';
 import '../backend/schema_version.dart';
 import '../badge/app_badge.dart';
@@ -345,10 +346,10 @@ List<Override> demoOverrides(DemoFixture fixture) {
       pushEndpointRepositoryProvider
           .overrideWithValue(fixture.outward.pushEndpoints),
 
-      // #1564 — the schema probe the ROUTER watches. Left live, an old
-      // configured backend could send an independent demonstration to
-      // the server-update screen.
+      // #1564, #3726 — the schema probe and the app floor the ROUTER watches:
+      // left live, a configured backend could gate an independent Demo.
       schemaVersionSourceProvider.overrideWithValue(fixture.outward.schema),
+      appFloorSourceProvider.overrideWithValue(fixture.outward.appFloor),
 
       // #1564 — every per-device preference, owned by the session.
       //

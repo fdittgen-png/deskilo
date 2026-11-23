@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart' show WidgetsBinding;
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../core/backend/app_floor.dart';
 import '../core/backend/schema_version.dart';
 import '../core/demo/demo_reload_marker.dart';
 import '../core/demo/demo_reload_marker_provider.dart';
@@ -74,6 +75,7 @@ GoRouter router(Ref ref) {
     ..listen(myProfileProvider, (_, _) => reask())
     ..listen(requiredPrivacyVersionProvider, (_, _) => reask()) // #1914
     ..listen(schemaCompatibilityProvider, (_, _) => reask()) // #1312
+    ..listen(appFloorProvider, (_, _) => reask()) // #3726
     // #1650 — the continuation restored from the device, or captured on
     // the way to sign-in: its destination is where sign-in returns to.
     ..listen(entryIntentsProvider, (_, _) => reask())

@@ -6,6 +6,7 @@
 import 'package:go_router/go_router.dart';
 
 import '../../core/backend/backend_uri.dart';
+import '../../features/auth/presentation/screens/app_update_screen.dart';
 import '../../features/me/presentation/me_data_tab.dart';
 import '../../features/me/providers/personal_shell_providers.dart';
 import '../../features/profile/presentation/screens/backend_screen.dart';
@@ -128,6 +129,12 @@ List<RouteBase> profileRoutes(RouteEnv env) {
     GoRoute(
       path: kSchemaUpdateRoute,
       builder: (context, state) => const SchemaUpdateScreen(),
+    ),
+    // #3726 — where an installation that accepts only newer apps sends
+    // every route.
+    GoRoute(
+      path: kAppUpdateRoute,
+      builder: (context, state) => const AppUpdateScreen(),
     ),
   ];
 }
