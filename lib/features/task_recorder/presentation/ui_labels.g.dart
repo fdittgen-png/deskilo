@@ -5393,6 +5393,7 @@ Map<String, _Getter> _part12() => {
   'settingHintPurchasePaymentChecker': (l) => l.settingHintPurchasePaymentChecker,
   'settingLabelCounterCountByDenomination': (l) => l.settingLabelCounterCountByDenomination,
   'settingLabelPersonalReservationMaxWindowDays': (l) => l.settingLabelPersonalReservationMaxWindowDays,
+  'settingUnitTags': (l) => l.settingUnitTags,
   'settingUnitUrlTemplate': (l) => l.settingUnitUrlTemplate,
   'settlementAnnexWith': (l) => l.settlementAnnexWith,
   'setupDraftReload': (l) => l.setupDraftReload,
