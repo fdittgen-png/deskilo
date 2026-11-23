@@ -11714,6 +11714,14 @@ class AppLocalizationsFr extends AppLocalizations {
   String get featureCounterReceiptsTitle => 'Tickets de caisse';
 
   @override
+  String get featureCounterTillSessionsDesc =>
+      'Ouvrez une caisse avec son fond, comptez le tiroir à la fermeture et clôturez la journée avec son rapport. Une vente exige une caisse ouverte ; les espèces attendues se déduisent de ce qui a été encaissé, jamais saisies.';
+
+  @override
+  String get featureCounterTillSessionsTitle =>
+      'Sessions de caisse et clôture de journée';
+
+  @override
   String get featureCountriesEuName => 'l\'Union européenne';
 
   @override
@@ -29084,6 +29092,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Cet élément a changé entre-temps. Rouvrez-le pour voir où il en est.';
 
   @override
+  String get refusalCounterCashEntry =>
+      'Cette écriture d\'espèces n\'est pas acceptée : le motif n\'est pas dans la liste, le montant dépasse votre limite, ou les nombres ne correspondent pas.';
+
+  @override
   String get refusalCounterChanged =>
       'Ce ticket a changé entre-temps : rouvrez-le.';
 
@@ -29094,6 +29106,14 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get refusalCounterCustomerNeeded =>
       'Cette entreprise nomme un client à chaque vente : choisissez-en un avant de terminer.';
+
+  @override
+  String get refusalCounterDayClose =>
+      'La journée ne peut pas être clôturée : une caisse est encore ouverte, ou la journée est déjà clôturée.';
+
+  @override
+  String get refusalCounterDayOpen =>
+      'La journée de cette caisse est déjà clôturée : elle sera ouverte à nouveau demain.';
 
   @override
   String get refusalCounterEssentials =>
@@ -29114,6 +29134,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get refusalCounterTenders =>
       'Les règlements ne soldent pas exactement cette vente, ou l\'un d\'eux n\'est pas pris en charge ici.';
+
+  @override
+  String get refusalCounterTill =>
+      'La caisse n\'est pas prête pour cela : ouvrez-la d\'abord, ou elle est déjà ouverte ou fermée.';
 
   @override
   String get refusalCounterUnsupported =>
@@ -32246,6 +32270,18 @@ class AppLocalizationsFr extends AppLocalizations {
       'Fixée par la plateforme : la période la plus longue qu’une requête de calendrier peut demander. Elle borne la requête.';
 
   @override
+  String get settingHintCounterBlindCount =>
+      'Tant qu\'une session est ouverte, la caisse ne voit pas les espèces attendues : elle compte le tiroir et voit l\'écart après la fermeture. Qui peut voir les finances le voit toujours.';
+
+  @override
+  String get settingHintCounterCashReasons =>
+      'Les motifs qu\'une personne peut donner pour de l\'argent versé dans le tiroir ou retiré, séparés par des virgules (par exemple monnaie, dépense, autre).';
+
+  @override
+  String get settingHintCounterCountByDenomination =>
+      'Le fond de caisse et le tiroir compté sont donnés par coupures (combien de chaque billet et pièce) plutôt qu\'en total. Les nombres doivent correspondre au montant.';
+
+  @override
   String get settingHintCounterCustomerlessSales =>
       'Autorisées : une vente peut se faire sans nommer de client. Refusées : chaque vente en nomme un. Une vente sans client ne crée jamais de compte, de membre ni d\'abonnement.';
 
@@ -32256,6 +32292,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingHintCounterFiscalObligation =>
       'Ce que vous déclarez sur les règles fiscales d\'une vente au comptoir : aucune signifie qu\'aucune obligation fiscale de caisse ne s\'applique à votre entreprise (votre propre déclaration, inscrite sur chaque ticket) ; caisse requise signifie qu\'une obligation s\'applique. Un ticket n\'est émis que là où l\'opération de votre pays est prise en charge dans le cas que vous déclarez.';
+
+  @override
+  String get settingHintCounterPaidOutLimit =>
+      'Le plus grand montant, en unités mineures de la devise de l\'entreprise (centimes), d\'un retrait du tiroir sans une personne pouvant enregistrer des paiements sortants. 0 signifie aucune limite.';
 
   @override
   String get settingHintDirectoryGeocoderUrl =>
@@ -32638,6 +32678,16 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingLabelCalendarRangeDays => 'Période du calendrier';
 
   @override
+  String get settingLabelCounterBlindCount => 'Compter le tiroir à l\'aveugle';
+
+  @override
+  String get settingLabelCounterCashReasons =>
+      'Motifs des entrées et sorties d\'espèces';
+
+  @override
+  String get settingLabelCounterCountByDenomination => 'Compter par coupures';
+
+  @override
   String get settingLabelCounterCustomerlessSales => 'Ventes sans client nommé';
 
   @override
@@ -32647,6 +32697,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingLabelCounterFiscalObligation =>
       'Règles fiscales des ventes au comptoir';
+
+  @override
+  String get settingLabelCounterPaidOutLimit =>
+      'Plus grand retrait sans autorisation';
 
   @override
   String get settingLabelDirectoryGeocoderUrl =>

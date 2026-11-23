@@ -11655,6 +11655,14 @@ class AppLocalizationsEs extends AppLocalizations {
   String get featureCounterReceiptsTitle => 'Tickets de caja';
 
   @override
+  String get featureCounterTillSessionsDesc =>
+      'Abra una caja con su fondo, cuente el cajón al cierre y cierre el día con su informe. Una venta necesita una caja abierta; el efectivo esperado se deriva de lo cobrado, nunca se escribe.';
+
+  @override
+  String get featureCounterTillSessionsTitle =>
+      'Sesiones de caja y cierre del día';
+
+  @override
   String get featureCountriesEuName => 'la Unión Europea';
 
   @override
@@ -28961,6 +28969,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Esto ha cambiado mientras tanto. Vuelva a abrirlo para ver cómo está.';
 
   @override
+  String get refusalCounterCashEntry =>
+      'Este apunte de efectivo no se acepta: el motivo no está en la lista, el importe supera su límite, o las cuentas no suman.';
+
+  @override
   String get refusalCounterChanged =>
       'Este ticket cambió mientras tanto: ábralo de nuevo.';
 
@@ -28971,6 +28983,14 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get refusalCounterCustomerNeeded =>
       'Este negocio nombra un cliente en cada venta: elija uno antes de terminar.';
+
+  @override
+  String get refusalCounterDayClose =>
+      'No se puede cerrar el día: una caja sigue abierta, o el día ya está cerrado.';
+
+  @override
+  String get refusalCounterDayOpen =>
+      'El día de esta caja ya está cerrado: se abrirá de nuevo mañana.';
 
   @override
   String get refusalCounterEssentials =>
@@ -28991,6 +29011,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get refusalCounterTenders =>
       'Los cobros no saldan exactamente esta venta, o uno de ellos no se acepta aquí.';
+
+  @override
+  String get refusalCounterTill =>
+      'La caja no está lista para esto: ábrala primero, o ya está abierta o cerrada.';
 
   @override
   String get refusalCounterUnsupported =>
@@ -32106,6 +32130,18 @@ class AppLocalizationsEs extends AppLocalizations {
       'Fijado por la plataforma: el periodo más largo que puede pedir una consulta del calendario. Acota la consulta.';
 
   @override
+  String get settingHintCounterBlindCount =>
+      'Mientras una sesión está abierta, la caja no ve el efectivo esperado: cuenta el cajón y ve la diferencia después del cierre. Quien puede ver las finanzas siempre lo ve.';
+
+  @override
+  String get settingHintCounterCashReasons =>
+      'Los motivos que una persona puede dar para el dinero que entra o sale del cajón, separados por comas (por ejemplo cambio, gasto, otro).';
+
+  @override
+  String get settingHintCounterCountByDenomination =>
+      'El fondo y el cajón contado se dan por denominaciones (cuántos de cada billete y moneda) en lugar de un total. Las cuentas deben sumar el importe.';
+
+  @override
   String get settingHintCounterCustomerlessSales =>
       'Permitidas: se puede vender sin nombrar un cliente. Rechazadas: cada venta nombra uno. Una venta sin cliente nunca crea una cuenta, un miembro ni una suscripción.';
 
@@ -32116,6 +32152,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingHintCounterFiscalObligation =>
       'Lo que declara sobre las normas fiscales de una venta en mostrador: ninguna significa que no se aplica ninguna obligación fiscal de caja a su negocio (su propia declaración, anotada en cada ticket); caja obligatoria significa que sí se aplica. Solo se emite un ticket donde la operación de su país está soportada en el caso que declara.';
+
+  @override
+  String get settingHintCounterPaidOutLimit =>
+      'El mayor importe, en unidades menores de la moneda del negocio (céntimos), de una salida del cajón sin alguien que pueda registrar pagos salientes. 0 significa sin límite.';
 
   @override
   String get settingHintDirectoryGeocoderUrl =>
@@ -32498,6 +32538,17 @@ class AppLocalizationsEs extends AppLocalizations {
   String get settingLabelCalendarRangeDays => 'Periodo del calendario';
 
   @override
+  String get settingLabelCounterBlindCount => 'Contar el cajón a ciegas';
+
+  @override
+  String get settingLabelCounterCashReasons =>
+      'Motivos de entradas y salidas de efectivo';
+
+  @override
+  String get settingLabelCounterCountByDenomination =>
+      'Contar por denominaciones';
+
+  @override
   String get settingLabelCounterCustomerlessSales =>
       'Ventas sin cliente nombrado';
 
@@ -32508,6 +32559,9 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingLabelCounterFiscalObligation =>
       'Normas fiscales de las ventas en mostrador';
+
+  @override
+  String get settingLabelCounterPaidOutLimit => 'Mayor salida sin autorización';
 
   @override
   String get settingLabelDirectoryGeocoderUrl =>

@@ -11684,6 +11684,14 @@ class AppLocalizationsDe extends AppLocalizations {
   String get featureCounterReceiptsTitle => 'Kassenbelege';
 
   @override
+  String get featureCounterTillSessionsDesc =>
+      'Eine Kasse mit ihrem Wechselgeld eröffnen, die Schublade beim Abschluss zählen und den Tag mit seinem Bericht abschließen. Ein Verkauf braucht eine geöffnete Kasse; das erwartete Bargeld wird aus dem Eingenommenen abgeleitet, nie eingetippt.';
+
+  @override
+  String get featureCounterTillSessionsTitle =>
+      'Kassensitzungen und Tagesabschluss';
+
+  @override
   String get featureCountriesEuName => 'der Europäischen Union';
 
   @override
@@ -29047,6 +29055,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Das hat sich inzwischen geändert. Öffnen Sie es erneut, um den aktuellen Stand zu sehen.';
 
   @override
+  String get refusalCounterCashEntry =>
+      'Diese Bargeldbuchung wird nicht angenommen: Der Grund steht nicht auf der Liste, der Betrag liegt über Ihrer Grenze, oder die Zahlen ergeben nicht den Betrag.';
+
+  @override
   String get refusalCounterChanged =>
       'Dieser Beleg hat sich inzwischen geändert: Öffnen Sie ihn erneut.';
 
@@ -29057,6 +29069,14 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get refusalCounterCustomerNeeded =>
       'Dieser Betrieb nennt bei jedem Verkauf einen Kunden: Wählen Sie vor dem Abschluss einen aus.';
+
+  @override
+  String get refusalCounterDayClose =>
+      'Der Tag kann nicht abgeschlossen werden: Eine Kasse ist noch offen, oder der Tag ist schon abgeschlossen.';
+
+  @override
+  String get refusalCounterDayOpen =>
+      'Der Tag dieser Kasse ist schon abgeschlossen: Sie wird morgen wieder geöffnet.';
 
   @override
   String get refusalCounterEssentials =>
@@ -29077,6 +29097,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get refusalCounterTenders =>
       'Die Zahlungen begleichen diesen Verkauf nicht genau, oder eine davon wird hier nicht angenommen.';
+
+  @override
+  String get refusalCounterTill =>
+      'Die Kasse ist dafür nicht bereit: Öffnen Sie sie zuerst, oder sie ist schon offen oder geschlossen.';
 
   @override
   String get refusalCounterUnsupported =>
@@ -32200,6 +32224,18 @@ class AppLocalizationsDe extends AppLocalizations {
       'Von der Plattform festgelegt: der längste Zeitraum, den eine Kalenderabfrage anfordern darf. Er begrenzt die Abfrage.';
 
   @override
+  String get settingHintCounterBlindCount =>
+      'Solange eine Sitzung offen ist, sieht die Kasse das erwartete Bargeld nicht: Sie zählt die Schublade und sieht die Differenz nach dem Abschluss. Wer die Finanzen sehen darf, sieht es immer.';
+
+  @override
+  String get settingHintCounterCashReasons =>
+      'Die Gründe, die jemand für Geld angeben kann, das in die Schublade eingezahlt oder entnommen wird, durch Kommas getrennt (zum Beispiel Wechselgeld, Ausgabe, sonstiges).';
+
+  @override
+  String get settingHintCounterCountByDenomination =>
+      'Wechselgeld und gezählte Schublade werden nach Stückelung angegeben (wie viele von jedem Schein und jeder Münze) statt als Summe. Die Zahlen müssen den Betrag ergeben.';
+
+  @override
   String get settingHintCounterCustomerlessSales =>
       'Erlaubt: Ein Verkauf kann ohne Kundennamen erfolgen. Abgelehnt: Jeder Verkauf nennt einen Kunden. Ein Verkauf ohne Kunden legt nie ein Konto, ein Mitglied oder ein Abonnement an.';
 
@@ -32210,6 +32246,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get settingHintCounterFiscalObligation =>
       'Was Sie zu den steuerlichen Vorgaben für einen Verkauf an der Kasse erklären: keine bedeutet, dass für Ihren Betrieb keine Kassenpflicht gilt (Ihre eigene Erklärung, auf jedem Beleg festgehalten); Kasse erforderlich bedeutet, dass eine gilt. Ein Beleg wird nur ausgestellt, wo der Vorgang Ihres Landes für den erklärten Fall unterstützt wird.';
+
+  @override
+  String get settingHintCounterPaidOutLimit =>
+      'Der größte Betrag in Untereinheiten der Betriebswährung (Cent), den eine Entnahme aus der Schublade ohne jemanden haben darf, der ausgehende Zahlungen erfassen darf. 0 heißt keine Grenze.';
 
   @override
   String get settingHintDirectoryGeocoderUrl =>
@@ -32586,6 +32626,15 @@ class AppLocalizationsDe extends AppLocalizations {
   String get settingLabelCalendarRangeDays => 'Kalenderzeitraum';
 
   @override
+  String get settingLabelCounterBlindCount => 'Die Schublade blind zählen';
+
+  @override
+  String get settingLabelCounterCashReasons => 'Gründe für Bargeld ein und aus';
+
+  @override
+  String get settingLabelCounterCountByDenomination => 'Nach Stückelung zählen';
+
+  @override
   String get settingLabelCounterCustomerlessSales =>
       'Verkäufe ohne genannten Kunden';
 
@@ -32596,6 +32645,9 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get settingLabelCounterFiscalObligation =>
       'Steuerliche Vorgaben für Kassenverkäufe';
+
+  @override
+  String get settingLabelCounterPaidOutLimit => 'Größte Entnahme ohne Freigabe';
 
   @override
   String get settingLabelDirectoryGeocoderUrl => 'Adresssuchdienst';

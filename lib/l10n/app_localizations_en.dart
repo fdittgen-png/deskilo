@@ -11579,6 +11579,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureCounterReceiptsTitle => 'Counter receipts';
 
   @override
+  String get featureCounterTillSessionsDesc =>
+      'Open a till with its float, count the drawer at the close, and close the day with its report. A sale needs an open till; the expected cash is derived from what was taken, never typed.';
+
+  @override
+  String get featureCounterTillSessionsTitle => 'Till sessions and day close';
+
+  @override
   String get featureCountriesEuName => 'the European Union';
 
   @override
@@ -28756,6 +28763,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'This changed in the meantime. Reopen it to see where it stands.';
 
   @override
+  String get refusalCounterCashEntry =>
+      'This cash entry is not accepted: the reason is not on the list, the amount is above the limit for you, or the counts do not add up.';
+
+  @override
   String get refusalCounterChanged =>
       'This receipt changed meanwhile: open it again.';
 
@@ -28766,6 +28777,14 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get refusalCounterCustomerNeeded =>
       'This business names a customer on every sale: choose one before finishing.';
+
+  @override
+  String get refusalCounterDayClose =>
+      'The day cannot be closed: a till is still open, or the day is already closed.';
+
+  @override
+  String get refusalCounterDayOpen =>
+      'The day of this till is already closed: it is opened again tomorrow.';
 
   @override
   String get refusalCounterEssentials =>
@@ -28786,6 +28805,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get refusalCounterTenders =>
       'The payments do not settle this sale exactly, or one of them is not taken here.';
+
+  @override
+  String get refusalCounterTill =>
+      'The till is not ready for this: open it first, or it is already open or closed.';
 
   @override
   String get refusalCounterUnsupported =>
@@ -31870,6 +31893,18 @@ class AppLocalizationsEn extends AppLocalizations {
       'Fixed by the platform: the longest range one calendar request may ask for. It bounds the query.';
 
   @override
+  String get settingHintCounterBlindCount =>
+      'While a session is open the counter does not see the expected cash: they count the drawer and see the difference after the close. Someone who may see the finances always sees it.';
+
+  @override
+  String get settingHintCounterCashReasons =>
+      'The reasons a person may give for money paid into or out of the drawer, separated by commas (for example change, expense, other).';
+
+  @override
+  String get settingHintCounterCountByDenomination =>
+      'The float and the counted drawer are given by denomination (how many of each note and coin) rather than as a total. The counts must add up to the amount.';
+
+  @override
   String get settingHintCounterCustomerlessSales =>
       'Allowed: a sale may be made without naming a customer. Refused: every sale names one. A sale without a customer never creates an account, a member or a subscription.';
 
@@ -31880,6 +31915,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get settingHintCounterFiscalObligation =>
       'What you declare about the fiscal rules for a sale at the counter: none means no fiscal cash-register obligation applies to your business (your own declaration, recorded on each receipt); register required means one does. A receipt is issued only where your country\'s operation is supported under the case you declare.';
+
+  @override
+  String get settingHintCounterPaidOutLimit =>
+      'The largest amount, in minor units of the business currency (cents), that a paid-out from the drawer may be without someone who may record outgoing payments. 0 means no limit.';
 
   @override
   String get settingHintDirectoryGeocoderUrl =>
@@ -32254,6 +32293,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingLabelCalendarRangeDays => 'Calendar range';
 
   @override
+  String get settingLabelCounterBlindCount => 'Count the drawer blind';
+
+  @override
+  String get settingLabelCounterCashReasons => 'Reasons for cash in and out';
+
+  @override
+  String get settingLabelCounterCountByDenomination => 'Count by denomination';
+
+  @override
   String get settingLabelCounterCustomerlessSales =>
       'Sales without a named customer';
 
@@ -32264,6 +32312,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get settingLabelCounterFiscalObligation =>
       'Fiscal rules for counter sales';
+
+  @override
+  String get settingLabelCounterPaidOutLimit =>
+      'Largest paid-out without approval';
 
   @override
   String get settingLabelDirectoryGeocoderUrl => 'Address lookup service';
