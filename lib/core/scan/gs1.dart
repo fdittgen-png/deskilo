@@ -40,7 +40,8 @@ Gs1? parseGs1(String raw) {
   final elements = text.contains('(') ? _bracketed(text) : _flat(text);
   final gtin = elements['01'];
   if (gtin == null || !gtinValid(gtin) || gtin.length != 14) return null;
-  final expiry = elements['17'];
+  // the expiry is AI 17; a label that has only the best-before date (AI 15) is read by that
+  final expiry = elements['17'] ?? elements['15'];
   return Gs1(gtin: gtin, lot: elements['10'], expiry: expiry == null ? null : _day(expiry), serial: elements['21']);
 }
 
@@ -54,9 +55,11 @@ Map<String, String> _flat(String text) {
   while (i + 2 <= text.length) {
     final ai = text.substring(i, i + 2);
     i += 2;
+    // the fixed-length elements a food label carries beside the lot: GTIN, and the dates (production 11, due 12,
+    // packaging 13, best before 15, sell by 16, expiry 17), each six digits; the lot and serial run to the separator
     final int? fixed = switch (ai) {
       '01' => 14,
-      '17' => 6,
+      '11' || '12' || '13' || '15' || '16' || '17' => 6,
       _ => null,
     };
     if (fixed == null && ai != '10' && ai != '21') break;
@@ -68,10 +71,11 @@ Map<String, String> _flat(String text) {
   return out;
 }
 
+/// A variable-length element ends at the separator, or at the end of the text: where the next element starts is
+/// never guessed.
 int _endOfVariable(String text, int from) {
   final gs = text.indexOf(_gs, from);
-  final end = gs < 0 ? text.length : gs;
-  return end - from > 20 ? from + 20 : end;
+  return gs < 0 ? text.length : gs;
 }
 
 String? _day(String yymmdd) {
@@ -80,7 +84,9 @@ String? _day(String yymmdd) {
   final month = int.parse(yymmdd.substring(2, 4));
   var day = int.parse(yymmdd.substring(4, 6));
   if (month < 1 || month > 12) return null;
-  if (day == 0) day = DateTime(year, month + 1, 0).day;
+  final last = DateTime(year, month + 1, 0).day;
+  if (day == 0) day = last;
+  if (day > last) return null;
   return '${year.toString().padLeft(4, '0')}-${month.toString().padLeft(2, '0')}-${day.toString().padLeft(2, '0')}';
 }
 
@@ -89,7 +95,8 @@ enum GoodsCodeKind {
   /// A GTIN with a valid check digit: resolved as typed.
   gtin,
 
-  /// A digit string of a GTIN's length whose check digit is wrong: a misread, said and not resolved.
+  /// A digit string of a GTIN's length whose check digit is wrong: resolved as typed (it may be one of the
+  /// business's own codes), and said to be a misread only when nothing is found.
   misread,
 
   /// A GS1 element string with a valid GTIN: resolved by its GTIN, its lot and expiry kept.

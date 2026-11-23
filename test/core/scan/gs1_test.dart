@@ -42,4 +42,28 @@ void main() {
     expect(classifyGoodsCode('MUG-CARTON').kind, GoodsCodeKind.other);
     expect(classifyGoodsCode('MAG1-S4').kind, GoodsCodeKind.other);
   });
+
+  test('an expiry day that is not a day of its month is refused, not rolled over', () {
+    expect(parseGs1('(01)04006381333931(17)260231')?.expiry, isNull, reason: '31 February');
+    expect(parseGs1('(01)04006381333931(17)261301')?.expiry, isNull, reason: 'month 13');
+    expect(parseGs1('(01)04006381333931(17)260200')?.expiry, '2026-02-28', reason: 'day 00 is the last day: 28 days');
+    expect(parseGs1('(01)04006381333931(17)240200')?.expiry, '2024-02-29', reason: 'and 29 in a leap year');
+    expect(parseGs1('(01)04006381333931(17)260431')?.expiry, isNull, reason: '31 April');
+    expect(parseGs1('(01)04006381333931(17)260231')?.gtin, '04006381333931', reason: 'the GTIN still reads');
+  });
+
+  test('a food label with dates before the lot keeps its lot and its expiry', () {
+    // production date (11), packaging date (13) and best before (15) come before the lot
+    final ok = parseGs1('0104006381333931112601011327010215261231' '10LOT7');
+    expect(ok?.lot, 'LOT7');
+    expect(ok?.expiry, '2026-12-31', reason: 'best before (15) is the expiry when 17 is absent');
+    final both = parseGs1('0104006381333931152612311727010110LOT7');
+    expect(both?.expiry, '2027-01-01', reason: '17 wins over 15');
+    expect(both?.lot, 'LOT7');
+  });
+
+  test('a variable element runs to the separator or to the end, never cut at a guessed length', () {
+    final g = parseGs1('01040063813339311727010110ABCDEFGHIJKLMNOPQRSTUVWXYZ');
+    expect(g?.lot, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', reason: '26 characters, all kept');
+  });
 }

@@ -37,7 +37,7 @@ class ScanLine {
   final String? lotCode;
 
   /// The expiry day (`YYYY-MM-DD`) a GS1 code carried, when it did.
-  final String? expiresOn;
+  String? expiresOn;
 
   /// The quantity so far, as `num / den` of [unit].
   int num = 0;
@@ -157,6 +157,8 @@ class StockScanSession {
           expiresOn: gs1?.expiresOn,
         );
         final existing = lines.where(candidate.same).firstOrNull;
+        // a repeat scan of a labelled unit gives an expiry to a line that had none
+        if (existing != null && existing.expiresOn == null) existing.expiresOn = candidate.expiresOn;
         if (existing != null && !addsOne) {
           return ScanResult(ScanOutcome.line, line: existing, code: resolution.code, asksQuantity: true, fromTag: fromTag);
         }

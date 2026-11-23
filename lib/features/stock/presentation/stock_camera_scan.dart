@@ -40,7 +40,8 @@ class _CameraDialog extends ConsumerStatefulWidget {
 }
 
 class _CameraDialogState extends ConsumerState<_CameraDialog> {
-  final ValueNotifier<({int reads, bool misread})> _state = ValueNotifier((reads: 0, misread: false));
+  /// [misread]: the last scanned text whose check digit failed; said only if the resolver finds nothing for it.
+  final ValueNotifier<({int reads, String? misread})> _state = ValueNotifier((reads: 0, misread: null));
   String? _lastCode;
   DateTime? _lastAt;
 
@@ -69,10 +70,6 @@ class _CameraDialogState extends ConsumerState<_CameraDialog> {
     _lastCode = text;
     _lastAt = now;
     final read = classifyGoodsCode(text);
-    if (read.kind == GoodsCodeKind.misread) {
-      _state.value = (reads: _state.value.reads, misread: true);
-      return;
-    }
     final gs1 = read.gs1;
     // a GS1 element string is resolved by its GTIN (an EAN-13 is a GTIN-14 with a leading zero), its lot and expiry kept
     if (gs1 != null) {
@@ -81,7 +78,8 @@ class _CameraDialogState extends ConsumerState<_CameraDialog> {
     } else {
       widget.feed.scan(text.trim());
     }
-    _state.value = (reads: _state.value.reads + 1, misread: false);
+    // a failed check digit is still resolved as typed (it may be the business's own code)
+    _state.value = (reads: _state.value.reads + 1, misread: read.kind == GoodsCodeKind.misread ? text.trim() : null);
     unawaited(_confirm());
   }
 
@@ -112,7 +110,7 @@ class _CameraDialogState extends ConsumerState<_CameraDialog> {
                   children: [
                     Text(l10n.stockCameraCount(_state.value.reads), key: const ValueKey('stock-camera-count')),
                     if (line != null) Text(l10n.stockScanLast(line.itemName, line.quantityText, line.unit), key: const ValueKey('stock-camera-last')),
-                    if (_state.value.misread)
+                    if (last != null && last.outcome == ScanOutcome.unknown && last.code == _state.value.misread)
                       Text(l10n.stockCameraMisread, key: const ValueKey('stock-camera-misread'), style: TextStyle(color: Theme.of(context).colorScheme.error)),
                   ],
                 );

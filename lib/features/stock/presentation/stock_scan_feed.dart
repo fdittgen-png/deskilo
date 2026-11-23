@@ -49,7 +49,9 @@ class StockScanFeed extends ChangeNotifier {
   /// Set when a code could not be resolved at all (a refusal or no connection): said, never "unknown".
   Object? problem;
 
-  final List<String> _queue = [];
+  /// The scans in the order they arrived, each with what its GS1 label carried: a record per scan, so a plain
+  /// scan of the same code never inherits another scan's lot or expiry.
+  final List<({String code, ({String? lot, String? expiresOn})? gs1})> _queue = [];
   bool _paused = false;
   bool _running = false;
   bool _closed = false;
@@ -64,13 +66,11 @@ class StockScanFeed extends ChangeNotifier {
 
   /// A code was scanned; [gs1] is what a GS1 element string carried besides the GTIN that [code] is.
   void scan(String code, {({String? lot, String? expiresOn})? gs1}) {
-    if (gs1 != null) _gs1[code] = gs1;
-    _queue.add(code);
+    _queue.add((code: code, gs1: gs1));
     unawaited(_drain());
   }
 
   final Set<String> _tags = {};
-  final Map<String, ({String? lot, String? expiresOn})> _gs1 = {};
 
   /// A tag was read by NFC ([uid] as the tag's upper-case hex): the same resolution as a scan, but a tag read a
   /// second time in this sheet is ignored and said so.
@@ -81,7 +81,7 @@ class StockScanFeed extends ChangeNotifier {
       notifyListeners();
       return;
     }
-    _queue.add(code);
+    _queue.add((code: code, gs1: null));
     _fromTag.add(code);
     unawaited(_drain());
   }
@@ -99,12 +99,14 @@ class StockScanFeed extends ChangeNotifier {
     _running = true;
     try {
       while (!_paused && !_closed && _queue.isNotEmpty) {
-        final code = _queue.removeAt(0);
+        final scan = _queue.removeAt(0);
+        final code = scan.code;
+        final fromTag = _fromTag.remove(code);
         try {
           final answer = await resolver.resolve(workspaceId, code);
           if (_closed) return;
           problem = null;
-          last = session.apply(answer, placeAllowed: placeAllowed, itemAllowed: itemAllowed, fromTag: _fromTag.remove(code), gs1: _gs1.remove(code));
+          last = session.apply(answer, placeAllowed: placeAllowed, itemAllowed: itemAllowed, fromTag: fromTag, gs1: scan.gs1);
           onResult(last!);
         } on Object catch (e, st) {
           TraceLogger.instance.warn('stock', 'a scanned code could not be resolved: $e', stackTrace: st);
