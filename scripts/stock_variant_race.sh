@@ -35,7 +35,7 @@ SQL
   exit "$original_status"
 }
 trap cleanup EXIT
-q() { psql "$url" -X -qAt -v ON_ERROR_STOP=1 -c "$1"; }
+. "$(dirname "${BASH_SOURCE[0]}")/lib/race.sh"
 as_owner="select set_config('request.jwt.claims', '{\"sub\":\"$owner\",\"role\":\"authenticated\",\"aal\":\"aal2\"}', true); set local role authenticated;"
 fixture=$(psql "$url" -X -qAt -v ON_ERROR_STOP=1 <<SQL | tail -1
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
@@ -84,7 +84,6 @@ read -r ws item vred vblue main customer <<<"$fixture"
 for v in "$ws" "$item" "$vred" "$vblue" "$main" "$customer"; do
   [[ "$v" =~ ^[0-9a-f-]{36}$ ]] || { echo "::error::fixture incomplete: '$fixture'" >&2; exit 1; }
 done
-expect() { [[ "$2" == "$3" ]] || { echo "::error::$1: expected '$3', got '$2'" >&2; exit 1; }; }
 balance() { q "select coalesce(sum(quantity), 0)::int from public.stock_balances where item_id = '$item' and variant_id = '$1' and location_id = '$main'"; }
 movements() { q "select count(*) from public.stock_movements where request_id = '$1'"; }
 expect "the fixture: 4 red and 4 blue at MAIN" "$(balance "$vred")/$(balance "$vblue")" "4/4"

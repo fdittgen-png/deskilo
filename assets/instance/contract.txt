@@ -4072,6 +4072,7 @@ routine public.record_workspace_export(p_workspace_id uuid, p_sha256 text, p_row
 routine public.refresh_public_person_card(p_user uuid) -> void | function | definer | volatile | exec:service_role | body:92b2d2dba224
 routine public.refresh_public_profile_cards() -> trigger | function | definer | volatile | exec:service_role | body:7f06cc08be01
 routine public.refresh_public_workspace_card(p_workspace uuid) -> void | function | definer | volatile | exec:service_role | body:892cbaf73476
+routine public.refuse(p_code text, p_detail jsonb, p_message text) -> void | function | invoker | immutable | exec:service_role | body:de85b1ee3ba6
 routine public.refuse_match_of_moved_credit() -> trigger | function | definer | volatile | exec:service_role | body:785020e28721
 routine public.register_asset_candidate_v1(p_workspace_id uuid, p_purchase_id uuid, p_line_no integer, p_description text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:b5137c57cdf6
 routine public.register_asset_candidate_v1(p_workspace_id uuid, p_purchase_line_id uuid, p_description text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:c55d031a8ede
@@ -4157,7 +4158,7 @@ routine public.retention_hold_writer(p_workspace_id uuid) -> void | function | d
 routine public.retention_holds(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:d6e366e7db3a
 routine public.retention_holds_json(p_hold retention_holds) -> jsonb | function | invoker | stable | exec:service_role | body:9337c95d7061
 routine public.retention_member_records(p_workspace_id uuid, p_member_id uuid, p_store text) -> jsonb | function | definer | stable | exec:service_role | body:d4d8735ab24a
-routine public.retention_refuse_unless_eligible(p_what text, p_assessment jsonb) -> void | function | definer | stable | exec:service_role | body:37f9c36bded7
+routine public.retention_refuse_unless_eligible(p_what text, p_assessment jsonb) -> void | function | definer | stable | exec:service_role | body:c32504357756
 routine public.retention_rule(p_workspace_id uuid, p_class text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:74a6c55c8f47
 routine public.retention_rule_for(p_workspace_id uuid, p_class text) -> jsonb | function | definer | stable | exec:service_role | body:205606e2d87f
 routine public.retention_rule_of(p_country text, p_class text) -> jsonb | function | definer | stable | exec:service_role | body:9018c3af5615
@@ -4393,7 +4394,7 @@ routine public.standalone_invoice_line_v1(p_line jsonb, p_index integer, p_curre
 routine public.standalone_invoice_subject(p_workspace_id uuid, p_subject uuid) -> members | function | definer | stable | exec:service_role | body:03bed41502dd
 routine public.start_space_inquiry(p_workspace uuid, p_body text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:24335253d564
 routine public.start_space_inquiry_v1(p_workspace uuid, p_body text, p_request_id uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:307a68c96e0f
-routine public.stock_apply_lines(p_workspace_id uuid, p_actor uuid, p_request_id uuid, p_lines jsonb, p_reason text, p_at timestamp with time zone, p_links jsonb, p_mode text) -> jsonb | function | definer | volatile | exec:service_role | body:58c63264c6fc
+routine public.stock_apply_lines(p_workspace_id uuid, p_actor uuid, p_request_id uuid, p_lines jsonb, p_reason text, p_at timestamp with time zone, p_links jsonb, p_mode text) -> jsonb | function | definer | volatile | exec:service_role | body:c7c75a46792a
 routine public.stock_bits_value(p_bits bit varying) -> numeric | function | invoker | immutable | exec:service_role | body:fbdb23474211
 routine public.stock_blind_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:8d7f9c93e191
 routine public.stock_command_args(p_request_id uuid, p_lines jsonb) -> void | function | invoker | immutable | exec:service_role | body:2c0224c1f582
@@ -4401,7 +4402,7 @@ routine public.stock_command_outcome_v1(p_workspace_id uuid, p_request_id uuid) 
 routine public.stock_config_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:2138595cf366
 routine public.stock_config_bool(p_obj jsonb, p_key text, p_field text, p_default boolean) -> boolean | function | invoker | immutable | exec:service_role | body:9e767539fd7b
 routine public.stock_config_int(p_obj jsonb, p_key text, p_field text) -> integer | function | invoker | immutable | exec:service_role | body:4d79fbde3696
-routine public.stock_config_refuse(p_field text, p_reason text) -> void | function | invoker | immutable | exec:service_role | body:2998ad53b2b4
+routine public.stock_config_refuse(p_field text, p_reason text) -> void | function | invoker | immutable | exec:service_role | body:7df4c900e26f
 routine public.stock_config_uuid(p_obj jsonb, p_key text, p_field text) -> uuid | function | invoker | immutable | exec:service_role | body:44939cbcaa4c
 routine public.stock_consume_v1(p_workspace_id uuid, p_request_id uuid, p_lines jsonb, p_occurred_at timestamp with time zone) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:fec6db5939ae
 routine public.stock_correction_root_reason(p_workspace_id uuid, p_movement_id uuid) -> text | function | definer | stable | exec:service_role | body:214292572d0e
