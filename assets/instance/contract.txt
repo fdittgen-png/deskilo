@@ -4472,7 +4472,7 @@ routine public.stock_reorder_quantity(p_obj jsonb, p_key text, p_default numeric
 routine public.stock_reorder_reader(p_workspace_id uuid) -> void | function | definer | stable | exec:service_role | body:4e84c60e590e
 routine public.stock_replenishment_v1(p_workspace_id uuid, p_site_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:b71e455d57e3
 routine public.stock_resolve_code_v1(p_workspace_id uuid, p_code text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:c259b66eed14
-routine public.stock_resolve_codes_v1(p_workspace_id uuid, p_codes text[]) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:1f847b62b135
+routine public.stock_resolve_codes_v1(p_workspace_id uuid, p_codes text[]) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:0ac89888b20a
 routine public.stock_return_v1(p_workspace_id uuid, p_request_id uuid, p_return_id uuid, p_kind text, p_lines jsonb, p_occurred_at timestamp with time zone) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:6746c086b09f
 routine public.stock_returns_append_only() -> trigger | function | invoker | volatile | exec:service_role | body:20ba809ab789
 routine public.stock_reversible_v1(p_workspace_id uuid, p_movement_ids uuid[]) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:d76f54fb6135

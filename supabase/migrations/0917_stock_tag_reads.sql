@@ -109,7 +109,7 @@ declare
 begin
   perform public.stock_read_actor(p_workspace_id);
   if p_codes is null then
-    raise exception 'a read names its codes' using errcode = '22023';
+    raise exception 'a read names its codes' using errcode = 'DKG07';
   end if;
   v_limit := coalesce((public.setting_value(p_workspace_id, 'stock.tag_read_max_tags') #>> '{}')::int, 500);
   select * into v_d from public.stock_read_distinct(p_codes, v_limit);
