@@ -141,6 +141,10 @@
   "@tillNextCustomer": {
     "description": "#4366 the till"
   },
+  "tillRetry": "Try again",
+  "@tillRetry": {
+    "description": "#4366 the till: ask the server again"
+  },
   "tillFailed": "The till could not do that. Try again.",
   "@tillFailed": {
     "description": "#4366 the till"

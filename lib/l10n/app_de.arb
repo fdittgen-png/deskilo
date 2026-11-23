@@ -23370,6 +23370,10 @@
   "tillQuantityTitle": "Verkaufte Menge",
   "tillReceiptNumber": "Beleg {number}",
   "tillRemoveLine": "{name} aus dem Warenkorb nehmen",
+  "tillRetry": "Erneut versuchen",
+  "@tillRetry": {
+    "description": "#4366 the till: ask the server again"
+  },
   "tillSoldTitle": "Verkauft",
   "tillTaxIncluded": "davon Steuer {amount}",
   "tillTitle": "Kasse",

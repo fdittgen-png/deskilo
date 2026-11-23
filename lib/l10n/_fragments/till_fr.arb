@@ -27,5 +27,9 @@
   "tillReceiptNumber": "Ticket {number}",
   "tillChangeDue": "Monnaie à rendre : {amount}",
   "tillNextCustomer": "Client suivant",
+  "tillRetry": "Réessayer",
+  "@tillRetry": {
+    "description": "#4366 the till: ask the server again"
+  },
   "tillFailed": "La caisse n'a pas pu le faire. Réessayez."
 }

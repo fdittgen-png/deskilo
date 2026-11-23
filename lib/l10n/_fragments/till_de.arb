@@ -27,5 +27,9 @@
   "tillReceiptNumber": "Beleg {number}",
   "tillChangeDue": "Rückgeld: {amount}",
   "tillNextCustomer": "Nächster Kunde",
+  "tillRetry": "Erneut versuchen",
+  "@tillRetry": {
+    "description": "#4366 the till: ask the server again"
+  },
   "tillFailed": "Die Kasse konnte das nicht ausführen. Versuchen Sie es erneut."
 }

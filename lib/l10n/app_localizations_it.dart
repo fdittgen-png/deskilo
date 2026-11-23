@@ -40092,6 +40092,9 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get tillRetry => 'Riprova';
+
+  @override
   String get tillSoldTitle => 'Venduto';
 
   @override

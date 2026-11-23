@@ -59,7 +59,10 @@ class _Readiness extends ConsumerWidget {
         .watch(tillReadinessProvider(workspaceId))
         .when(
           loading: () => const LoadingView(),
-          error: (e, _) => _Notice(text: tillProblemText(l10n, e)),
+          error: (e, _) => _Notice(
+            text: tillProblemText(l10n, e),
+            onRetry: () => ref.invalidate(tillReadinessProvider(workspaceId)),
+          ),
           data: (readiness) => readiness.ready
               ? _Till(workspaceId: workspaceId, keys: keys)
               : _Notice(
@@ -74,10 +77,11 @@ class _Readiness extends ConsumerWidget {
 }
 
 class _Notice extends StatelessWidget {
-  const _Notice({super.key, required this.text, this.hint});
+  const _Notice({super.key, required this.text, this.hint, this.onRetry});
 
   final String text;
   final String? hint;
+  final VoidCallback? onRetry;
 
   @override
   Widget build(BuildContext context) => Center(
@@ -88,6 +92,10 @@ class _Notice extends StatelessWidget {
         children: [
           Text(text, style: Theme.of(context).textTheme.titleMedium, textAlign: TextAlign.center),
           if (hint != null) ...[const FormGap(), Text(hint!, textAlign: TextAlign.center)],
+          if (onRetry != null) ...[
+            const FormGap(),
+            FilledButton(key: const ValueKey('till-retry'), onPressed: onRetry, child: Text(context.l10n.tillRetry)),
+          ],
         ],
       ),
     ),
@@ -146,6 +154,7 @@ class _TillState extends ConsumerState<_Till> {
             onRemove: (i) => unawaited(_session.remove(i)),
             onPay: () => unawaited(_pay(state)),
             onNext: _session.next,
+            onRetry: () => unawaited(_session.retry()),
           ),
         );
         if (WindowClass.ofWidth(box.maxWidth).atLeast(WindowClass.medium)) {

@@ -11,6 +11,7 @@ import 'package:deskilo/core/demo/data/demo_stock_queries.dart';
 import 'package:deskilo/core/demo/data/demo_till.dart';
 import 'package:deskilo/features/money/domain/counter_till.dart';
 import 'package:deskilo/features/money/providers/till_providers.dart';
+import 'package:deskilo/features/stock/domain/stock_page.dart';
 import 'package:deskilo/features/stock/providers/stock_providers.dart';
 import 'package:deskilo/l10n/app_localizations_en.dart';
 import 'package:flutter/material.dart';
@@ -33,15 +34,38 @@ class _RefusingTill extends DemoTill {
       Future.error(PostgrestException(message: 'tender_open', code: code));
 }
 
-Future<void> _open(WidgetTester tester, TillPort till, Size size) async {
+/// The Demo stock whose item read is replaced: nothing to sell, or a read that fails.
+class _Items extends DemoStockQueries {
+  // ignore: use_super_parameters, the super parameter is private and cannot be named here
+  _Items(DemoStockLedger ledger, this._items) : super(ledger);
+
+  final Future<List<StockItem>> Function() _items;
+
+  @override
+  Future<List<StockItem>> items(String workspaceId) => _items();
+}
+
+/// A till whose readiness cannot be read the first time.
+class _FlakyReadiness extends DemoTill {
+  _FlakyReadiness() : super(country: 'FR', currency: 'EUR', vatPercent: 20);
+
+  int reads = 0;
+
+  @override
+  Future<TillReadiness> readiness(String workspaceId) =>
+      ++reads == 1 ? Future.error(const PostgrestException(message: 'down', code: '08006')) : super.readiness(workspaceId);
+}
+
+Future<void> _open(WidgetTester tester, TillPort till, Size size, {Future<List<StockItem>> Function()? items}) async {
   final config = DemoStockConfigCommands('ws-1');
+  final ledger = DemoStockLedger('ws-1', config);
   await pumpApp(
     tester,
     const TillRoute(),
     size: size,
     overrides: [
       ...standardTestOverrides(),
-      stockQueriesProvider.overrideWithValue(DemoStockQueries(DemoStockLedger('ws-1', config))),
+      stockQueriesProvider.overrideWithValue(items == null ? DemoStockQueries(ledger) : _Items(ledger, items)),
       tillPortProvider.overrideWithValue(till),
     ],
   );
@@ -131,6 +155,23 @@ void main() {
         expect(find.byKey(const ValueKey('till-not-ready')), findsOneWidget);
         expect(find.text(_en.tillNotReady('${_en.tillOpIssueReceipt}, ${_en.tillOpReconcileTender}')), findsOneWidget);
         expect(find.byKey(const ValueKey('till-key-demo-item-milk')), findsNothing);
+      });
+
+      testWidgets('a readiness that cannot be read says so and reads again on a tap', (tester) async {
+        final till = _FlakyReadiness();
+        await _open(tester, till, size);
+        expect(find.byKey(const ValueKey('till-retry')), findsOneWidget);
+        expect(find.byKey(const ValueKey('till-key-demo-item-milk')), findsNothing);
+        await _tap(tester, 'till-retry');
+        expect(find.byKey(const ValueKey('till-key-demo-item-milk')), findsOneWidget);
+        expect(till.reads, 2);
+      });
+
+      testWidgets('no item to sell says so, and a failing item read is said in words', (tester) async {
+        await _open(tester, _ready(), size, items: () async => const []);
+        expect(find.text(_en.tillKeysEmpty), findsOneWidget);
+        await _open(tester, _ready(), size, items: () => Future.error(const PostgrestException(message: 'down', code: '08006')));
+        expect(find.text(_en.tillFailed), findsOneWidget);
       });
 
       testWidgets('a refusal of the server is said in words under the basket', (tester) async {

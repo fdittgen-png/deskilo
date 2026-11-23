@@ -22,6 +22,7 @@ class TillBasket extends StatelessWidget {
     required this.onRemove,
     required this.onPay,
     required this.onNext,
+    required this.onRetry,
   });
 
   final TillState state;
@@ -29,6 +30,7 @@ class TillBasket extends StatelessWidget {
   final void Function(int index) onRemove;
   final VoidCallback onPay;
   final VoidCallback onNext;
+  final VoidCallback onRetry;
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +65,7 @@ class TillBasket extends StatelessWidget {
           padding: const EdgeInsets.all(AppSpacing.md),
           child: sold != null
               ? _Sold(sold: sold, change: state.change, money: money, onNext: onNext)
-              : _Footer(state: state, money: money, onPay: onPay),
+              : _Footer(state: state, money: money, onPay: onPay, onRetry: onRetry),
         ),
       ],
     );
@@ -104,11 +106,12 @@ class _Line extends StatelessWidget {
 }
 
 class _Footer extends StatelessWidget {
-  const _Footer({required this.state, required this.money, required this.onPay});
+  const _Footer({required this.state, required this.money, required this.onPay, required this.onRetry});
 
   final TillState state;
   final MoneyFormat money;
   final VoidCallback onPay;
+  final VoidCallback onRetry;
 
   @override
   Widget build(BuildContext context) {
@@ -132,6 +135,10 @@ class _Footer extends StatelessWidget {
         if (problem != null) ...[
           const FormGap.small(),
           Text(tillProblemText(l10n, problem), key: const ValueKey('till-problem'), style: TextStyle(color: theme.colorScheme.error)),
+        ],
+        if (draft == null && problem != null && !state.busy && !state.empty) ...[
+          const FormGap.small(),
+          OutlinedButton(key: const ValueKey('till-reprice'), onPressed: onRetry, child: Text(l10n.tillRetry)),
         ],
         const FormGap(),
         FilledButton(

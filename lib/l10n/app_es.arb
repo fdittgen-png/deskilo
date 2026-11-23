@@ -23370,6 +23370,10 @@
   "tillQuantityTitle": "Cantidad vendida",
   "tillReceiptNumber": "Ticket {number}",
   "tillRemoveLine": "Quitar {name} de la cesta",
+  "tillRetry": "Reintentar",
+  "@tillRetry": {
+    "description": "#4366 the till: ask the server again"
+  },
   "tillSoldTitle": "Vendido",
   "tillTaxIncluded": "de los cuales impuesto {amount}",
   "tillTitle": "Caja",

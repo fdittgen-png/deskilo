@@ -39710,6 +39710,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get tillRetry => 'Try again';
+
+  @override
   String get tillSoldTitle => 'Sold';
 
   @override

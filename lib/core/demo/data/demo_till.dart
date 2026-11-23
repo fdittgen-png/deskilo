@@ -25,6 +25,7 @@ class DemoTill implements TillPort {
   int _sales = 0;
   final Map<String, TillDraft> _drafts = {};
   final Map<String, TillSold> _done = {};
+  final Map<String, TillDraft> _answered = {};
 
   @override
   Future<TillReadiness> readiness(String workspaceId) async => TillReadiness(
@@ -39,6 +40,8 @@ class DemoTill implements TillPort {
 
   @override
   Future<TillDraft> draft(String workspaceId, {required String requestId, required List<TillLine> lines, String? receiptId, int? expectedRevision}) async {
+    final replay = _answered[requestId];
+    if (replay != null) return replay;
     final id = receiptId ?? 'demo-receipt-${_drafts.length + _sales + 1}';
     final known = _drafts[id];
     if (receiptId != null && (known == null || known.revision != expectedRevision)) {
@@ -64,6 +67,7 @@ class DemoTill implements TillPort {
       issueReceipt: ready ? 'supported' : 'unavailable',
     );
     _drafts[id] = draft;
+    _answered[requestId] = draft;
     return draft;
   }
 

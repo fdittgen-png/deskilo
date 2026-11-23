@@ -27,5 +27,9 @@
   "tillReceiptNumber": "Scontrino {number}",
   "tillChangeDue": "Resto da dare: {amount}",
   "tillNextCustomer": "Cliente successivo",
+  "tillRetry": "Riprova",
+  "@tillRetry": {
+    "description": "#4366 the till: ask the server again"
+  },
   "tillFailed": "La cassa non ha potuto eseguirlo. Riprovi."
 }

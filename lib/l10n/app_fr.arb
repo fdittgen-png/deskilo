@@ -23370,6 +23370,10 @@
   "tillQuantityTitle": "Quantité vendue",
   "tillReceiptNumber": "Ticket {number}",
   "tillRemoveLine": "Retirer {name} du panier",
+  "tillRetry": "Réessayer",
+  "@tillRetry": {
+    "description": "#4366 the till: ask the server again"
+  },
   "tillSoldTitle": "Vendu",
   "tillTaxIncluded": "dont taxe {amount}",
   "tillTitle": "Caisse",

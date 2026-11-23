@@ -64024,6 +64024,12 @@ abstract class AppLocalizations {
   /// **'Take {name} out of the basket'**
   String tillRemoveLine(String name);
 
+  /// #4366 the till: ask the server again
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get tillRetry;
+
   /// #4366 the till
   ///
   /// In en, this message translates to:

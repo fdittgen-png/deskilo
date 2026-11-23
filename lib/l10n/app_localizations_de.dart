@@ -40167,6 +40167,9 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get tillRetry => 'Erneut versuchen';
+
+  @override
   String get tillSoldTitle => 'Verkauft';
 
   @override

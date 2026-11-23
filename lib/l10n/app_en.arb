@@ -51638,6 +51638,10 @@
       }
     }
   },
+  "tillRetry": "Try again",
+  "@tillRetry": {
+    "description": "#4366 the till: ask the server again"
+  },
   "tillSoldTitle": "Sold",
   "@tillSoldTitle": {
     "description": "#4366 the till"

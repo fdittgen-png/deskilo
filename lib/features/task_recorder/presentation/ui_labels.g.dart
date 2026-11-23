@@ -8716,6 +8716,7 @@ Map<String, _Getter> _part20() => {
   'threadRefsIn': (l) => l.threadRefsIn,
   'tillCashInvalid': (l) => l.tillCashInvalid,
   'tillKeysTitle': (l) => l.tillKeysTitle,
+  'tillRetry': (l) => l.tillRetry,
   'tipMoneyMonth': (l) => l.tipMoneyMonth,
   'tipReserveLevel': (l) => l.tipReserveLevel,
   'uxFinanceAlertsFailed': (l) => l.uxFinanceAlertsFailed,
