@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- risk: additive
+-- risk: transforming
 -- apps: additive
 -- (one function; two per-domain refusal helpers restated to call it)
 --
