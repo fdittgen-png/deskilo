@@ -35811,7 +35811,13 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String stockBulkReadDropped(int n) {
-    return '$n etichette escluse: la lettura è piena';
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n etichette escluse: la lettura è piena',
+      one: '1 etichetta esclusa: la lettura è piena',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -35873,7 +35879,13 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String stockBulkReadRepeats(int n) {
-    return '$n letture ripetute ignorate';
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n letture ripetute ignorate',
+      one: '1 lettura ripetuta ignorata',
+    );
+    return '$_temp0';
   }
 
   @override

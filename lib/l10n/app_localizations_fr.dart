@@ -35903,7 +35903,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count étiquettes lues',
-      one: '1 étiquette lue',
+      one: '$count étiquette lue',
     );
     return '$_temp0';
   }
@@ -35914,20 +35914,26 @@ class AppLocalizationsFr extends AppLocalizations {
       lines,
       locale: localeName,
       other: '$lines lignes comptées',
-      one: '1 ligne comptée',
+      one: '$lines ligne comptée',
     );
     String _temp1 = intl.Intl.pluralLogic(
       left,
       locale: localeName,
       other: '$left étiquettes écartées',
-      one: '1 étiquette écartée',
+      one: '$left étiquette écartée',
     );
     return '$_temp0, $_temp1';
   }
 
   @override
   String stockBulkReadDropped(int n) {
-    return '$n étiquettes écartées : la lecture est pleine';
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n étiquettes écartées : la lecture est pleine',
+      one: '$n étiquette écartée : la lecture est pleine',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -35943,7 +35949,7 @@ class AppLocalizationsFr extends AppLocalizations {
       limit,
       locale: localeName,
       other: '$limit étiquettes',
-      one: '1 étiquette',
+      one: '$limit étiquette',
     );
     return '$_temp0 au plus par lecture';
   }
@@ -35964,7 +35970,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count pièces',
-      one: '1 pièce',
+      one: '$count pièce',
     );
     return '$item · $_temp0';
   }
@@ -35991,7 +35997,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String stockBulkReadRepeats(int n) {
-    return '$n lectures répétées ignorées';
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n lectures répétées ignorées',
+      one: '$n lecture répétée ignorée',
+    );
+    return '$_temp0';
   }
 
   @override

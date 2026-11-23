@@ -46041,7 +46041,7 @@
       }
     }
   },
-  "stockBulkReadDropped": "{n} tags left out: the read is full",
+  "stockBulkReadDropped": "{n, plural, one{1 tag left out: the read is full} other{{n} tags left out: the read is full}}",
   "@stockBulkReadDropped": {
     "description": "#4364 reading many tags",
     "placeholders": {
@@ -46115,7 +46115,7 @@
   "@stockBulkReadReasonOtherPlace": {
     "description": "#4364 reading many tags"
   },
-  "stockBulkReadRepeats": "{n} repeated reads ignored",
+  "stockBulkReadRepeats": "{n, plural, one{1 repeated read ignored} other{{n} repeated reads ignored}}",
   "@stockBulkReadRepeats": {
     "description": "#4364 reading many tags",
     "placeholders": {

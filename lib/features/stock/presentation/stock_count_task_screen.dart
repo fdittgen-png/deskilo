@@ -18,7 +18,7 @@ import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/refusal_text.dart';
 import '../../../core/trace/trace_logger.dart';
-import '../../../core/ui/app_sheet.dart';
+import '../../../core/ui/adaptive/task_surface.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../core/ui/kit/page_title.dart';
@@ -106,10 +106,9 @@ class _State extends ConsumerState<StockCountTaskScreen> {
     final l10n = context.l10n;
     final requestId = newRequestId();
     BulkCountResult? answer;
-    final done = await showAppSheet<bool>(
-      context: context,
-      isScrollControlled: true,
-      useSafeArea: true,
+    final done = await showTask<bool>(
+      context,
+      size: TaskSize.standard,
       builder: (c) => StockBulkReadSheet(
         workspaceId: workspaceId,
         confirmLabel: l10n.stockBulkReadConfirm,

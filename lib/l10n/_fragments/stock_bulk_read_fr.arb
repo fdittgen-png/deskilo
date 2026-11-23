@@ -3,10 +3,10 @@
   "stockBulkReadTitle": "Lecture de nombreuses étiquettes",
   "stockBulkReadField": "Saisie du lecteur d'étiquettes",
   "stockBulkReadHint": "Lisez les étiquettes avec votre lecteur. Chaque étiquette compte une fois, même lue souvent.",
-  "stockBulkReadCount": "{count, plural, one{1 étiquette lue} other{{count} étiquettes lues}}",
-  "stockBulkReadRepeats": "{n} lectures répétées ignorées",
-  "stockBulkReadDropped": "{n} étiquettes écartées : la lecture est pleine",
-  "stockBulkReadPieces": "{item} · {count, plural, one{1 pièce} other{{count} pièces}}",
+  "stockBulkReadCount": "{count, plural, one{{count} étiquette lue} other{{count} étiquettes lues}}",
+  "stockBulkReadRepeats": "{n, plural, one{{n} lecture répétée ignorée} other{{n} lectures répétées ignorées}}",
+  "stockBulkReadDropped": "{n, plural, one{{n} étiquette écartée : la lecture est pleine} other{{n} étiquettes écartées : la lecture est pleine}}",
+  "stockBulkReadPieces": "{item} · {count, plural, one{{count} pièce} other{{count} pièces}}",
   "stockBulkReadUnknown": "Étiquettes inconnues",
   "stockBulkReadNotInStock": "Pièces qui ne sont pas en stock",
   "stockBulkReadNotPieces": "Étiquettes qui ne désignent aucune pièce",
@@ -14,7 +14,7 @@
   "stockBulkReadAgain": "Lire à nouveau",
   "stockBulkReadOpen": "Lire de nombreuses étiquettes",
   "stockBulkReadConfirm": "Remplir le comptage",
-  "stockBulkReadDone": "{lines, plural, one{1 ligne comptée} other{{lines} lignes comptées}}, {left, plural, one{1 étiquette écartée} other{{left} étiquettes écartées}}",
+  "stockBulkReadDone": "{lines, plural, one{{lines} ligne comptée} other{{lines} lignes comptées}}, {left, plural, one{{left} étiquette écartée} other{{left} étiquettes écartées}}",
   "stockBulkReadResolving": "Vérification des étiquettes…",
   "stockBulkReadReasonNotAPiece": "ne désigne aucune pièce",
   "stockBulkReadReasonAlready": "déjà comptée : la première lecture d'une ligne est définitive",
@@ -22,5 +22,5 @@
   "stockBulkReadReasonNotCounted": "non comptée",
   "stockBulkReadReasonNotInStock": "pas en stock",
   "stockBulkReadReasonOtherPlace": "appartient à un autre emplacement",
-  "stockBulkReadLimit": "{limit, plural, one{1 étiquette} other{{limit} étiquettes}} au plus par lecture"
+  "stockBulkReadLimit": "{limit, plural, one{{limit} étiquette} other{{limit} étiquettes}} au plus par lecture"
 }

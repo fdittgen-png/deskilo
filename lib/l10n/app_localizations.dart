@@ -56870,7 +56870,7 @@ abstract class AppLocalizations {
   /// #4364 reading many tags
   ///
   /// In en, this message translates to:
-  /// **'{n} tags left out: the read is full'**
+  /// **'{n, plural, one{1 tag left out: the read is full} other{{n} tags left out: the read is full}}'**
   String stockBulkReadDropped(int n);
 
   /// #4364 reading many tags
@@ -56954,7 +56954,7 @@ abstract class AppLocalizations {
   /// #4364 reading many tags
   ///
   /// In en, this message translates to:
-  /// **'{n} repeated reads ignored'**
+  /// **'{n, plural, one{1 repeated read ignored} other{{n} repeated reads ignored}}'**
   String stockBulkReadRepeats(int n);
 
   /// #4364 reading many tags
