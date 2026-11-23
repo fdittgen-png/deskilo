@@ -42567,6 +42567,10 @@
   "@settingUnitSeconds": {
     "description": "#2484 settings: Unit."
   },
+  "settingUnitTags": "tags",
+  "@settingUnitTags": {
+    "description": "#4364 setting unit"
+  },
   "settingUnitUrl": "address",
   "@settingUnitUrl": {
     "description": "#2488 Unit suffix of a URL setting."

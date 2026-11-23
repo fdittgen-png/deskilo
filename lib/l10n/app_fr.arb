@@ -19581,6 +19581,7 @@
   "@settingUnitSeconds": {
     "description": "#2484 settings: Unit."
   },
+  "settingUnitTags": "étiquettes",
   "settingUnitUrl": "adresse",
   "settingUnitUrlTemplate": "modèle d'adresse",
   "settingUnitYears": "années",

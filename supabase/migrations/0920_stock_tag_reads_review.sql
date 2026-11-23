@@ -16,9 +16,8 @@
 --   * `stock_read_actor` asks for what the resolver needs (viewStock or manageStock), so the refusal comes first and names it; the
 --     count read keeps the counting right.
 --
+-- restates 0917 (every function below)
 -- restates 0917
-drop function if exists public.stock_read_distinct(text[], int);
-
 create or replace function public.stock_read_actor(p_workspace_id uuid)
 returns uuid language plpgsql stable security definer set search_path = public as $fn$
 declare
@@ -40,10 +39,9 @@ end;
 $fn$;
 revoke execute on function public.stock_read_actor(uuid) from public, anon, authenticated;
 
--- ── the codes of a read: the distinct ones, bounded, and the ones that cannot be read ──
--- p_invalid: [{code, reason: 'invalid'}] for a blank code or one over 200 characters (the first 50 of them); p_more: a further
--- distinct code was left out.
-create or replace function public.stock_read_distinct(p_codes text[], p_limit int, out p_distinct text[], out p_invalid jsonb, out p_more boolean)
+-- ── the codes of a read: the distinct ones, bounded; and the ones that cannot be read ──
+-- restates 0917
+create or replace function public.stock_read_distinct(p_codes text[], p_limit int, out p_distinct text[], out p_more boolean)
 language plpgsql immutable set search_path = public as $fn$
 declare
   v_raw text;
@@ -53,14 +51,10 @@ declare
   v_n int := 0;
 begin
   p_distinct := array[]::text[];
-  p_invalid := '[]'::jsonb;
   p_more := false;
   foreach v_raw in array coalesce(p_codes, array[]::text[]) loop
-    -- the length is read on the raw text, before any trimming
+    -- the length is read on the raw text, before any trimming; what cannot be read is told by stock_read_invalid
     if v_raw is null or char_length(v_raw) > 200 or btrim(v_raw) = '' then
-      if jsonb_array_length(p_invalid) < 50 then
-        p_invalid := p_invalid || jsonb_build_array(jsonb_build_object('code', left(coalesce(v_raw, ''), 60), 'reason', 'invalid'));
-      end if;
       continue;
     end if;
     v_code := btrim(v_raw);
@@ -80,7 +74,25 @@ end;
 $fn$;
 revoke execute on function public.stock_read_distinct(text[], int) from public, anon, authenticated;
 
+-- [{code, reason: 'invalid'}] for a blank code or one over 200 characters (the first 50 of them)
+create or replace function public.stock_read_invalid(p_codes text[])
+returns jsonb language plpgsql immutable set search_path = public as $fn$
+declare
+  v_raw text;
+  v_out jsonb := '[]'::jsonb;
+begin
+  foreach v_raw in array coalesce(p_codes, array[]::text[]) loop
+    if (v_raw is null or char_length(v_raw) > 200 or btrim(v_raw) = '') and jsonb_array_length(v_out) < 50 then
+      v_out := v_out || jsonb_build_array(jsonb_build_object('code', left(coalesce(v_raw, ''), 60), 'reason', 'invalid'));
+    end if;
+  end loop;
+  return v_out;
+end;
+$fn$;
+revoke execute on function public.stock_read_invalid(text[]) from public, anon, authenticated;
+
 -- ── a read resolved ────────────────────────────────────────────────────
+-- restates 0917
 create or replace function public.stock_resolve_codes_v1(p_workspace_id uuid, p_codes text[])
 returns jsonb language plpgsql stable security definer set search_path = public as $fn$
 declare
@@ -119,7 +131,7 @@ begin
     v_out := v_out || jsonb_build_array(v_r);
   end loop;
   return jsonb_build_object('received', coalesce(array_length(p_codes, 1), 0), 'distinct', coalesce(array_length(v_d.p_distinct, 1), 0),
-    'limit', v_limit, 'truncated', v_d.p_more, 'results', v_out, 'invalid', v_d.p_invalid);
+    'limit', v_limit, 'truncated', v_d.p_more, 'results', v_out, 'invalid', public.stock_read_invalid(p_codes));
 end;
 $fn$;
 revoke execute on function public.stock_resolve_codes_v1(uuid, text[]) from public, anon;
@@ -130,6 +142,7 @@ grant execute on function public.stock_resolve_codes_v1(uuid, text[]) to authent
 --  left_out: [{code, reason}], missing: [{piece_id, code, location_id}]}. A line is counted when a piece of its own item, variant and
 -- lot was read at its place; the first read of a line is final (`already_counted`); `missing` only for whoever may see what the
 -- ledger holds; a blind counter's other reasons are `not_counted`.
+-- restates 0917
 create or replace function public.stock_count_tag_read_v1(p_workspace_id uuid, p_request_id uuid, p_task_id uuid, p_codes text[])
 returns jsonb language plpgsql volatile security definer set search_path = public as $fn$
 declare
@@ -184,7 +197,7 @@ begin
     raise exception 'this task is no longer open' using errcode = 'DKG19';
   end if;
   v_sees := public.has_permission(p_workspace_id, 'manageStock') or public.has_permission(p_workspace_id, 'approveStockAdjustments');
-  v_left := v_d.p_invalid;
+  v_left := public.stock_read_invalid(p_codes);
 
   -- each code to its piece: read (a pending line of its own item, variant, lot and place), already counted, or left out
   foreach v_code in array v_d.p_distinct loop

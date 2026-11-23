@@ -4413,7 +4413,7 @@ routine public.stock_count_history_v1(p_workspace_id uuid, p_item_id uuid, p_loc
 routine public.stock_count_plan_save_v1(p_workspace_id uuid, p_request_id uuid, p_plan_id uuid, p_body jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:88610495c880
 routine public.stock_count_record_core(p_workspace_id uuid, p_request_id uuid, p_count_id uuid, p_scope jsonb, p_observed text, p_reason text, p_member uuid) -> jsonb | function | definer | volatile | exec:service_role | body:9d4fbe7df126
 routine public.stock_count_record_v1(p_workspace_id uuid, p_request_id uuid, p_count_id uuid, p_scope jsonb, p_observed text, p_reason text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:412ddc6a50b6
-routine public.stock_count_tag_read_v1(p_workspace_id uuid, p_request_id uuid, p_task_id uuid, p_codes text[]) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:7df558fc225f
+routine public.stock_count_tag_read_v1(p_workspace_id uuid, p_request_id uuid, p_task_id uuid, p_codes text[]) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:4e954b2811be
 routine public.stock_count_task_close(p_task_id uuid) -> void | function | definer | volatile | exec:service_role | body:6c0a1b0c5569
 routine public.stock_count_task_ends_notice() -> trigger | function | definer | volatile | exec:service_role | body:0cdbf6bd61df
 routine public.stock_count_task_v1(p_workspace_id uuid, p_task_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:a7fb160538fe
@@ -4461,7 +4461,8 @@ routine public.stock_place_is_virtual(p_location_id uuid) -> boolean | function 
 routine public.stock_place_tree(p_workspace_id uuid, p_root uuid) -> TABLE(id uuid, depth integer) | function | definer | stable | exec:service_role | body:5b3743876319
 routine public.stock_put_away_apply(p_workspace_id uuid, p_actor uuid, p_command uuid, p_receipt_id uuid, p_allocations jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:902a7617ac92
 routine public.stock_read_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:91e0d63c0a45
-routine public.stock_read_distinct(p_codes text[], p_limit integer, OUT p_distinct text[], OUT p_invalid jsonb, OUT p_more boolean) -> record | function | invoker | immutable | exec:service_role | body:6294f12a4926
+routine public.stock_read_distinct(p_codes text[], p_limit integer, OUT p_distinct text[], OUT p_more boolean) -> record | function | invoker | immutable | exec:service_role | body:6c27105a19df
+routine public.stock_read_invalid(p_codes text[]) -> jsonb | function | invoker | immutable | exec:service_role | body:2aa088002d5d
 routine public.stock_reader(p_workspace_id uuid) -> void | function | definer | stable | exec:service_role | body:9b17f67f1969
 routine public.stock_real_site(p_location_id uuid) -> uuid | function | definer | stable | exec:service_role | body:22dfe760af5d
 routine public.stock_receiving_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:02f36cd0aeb5
@@ -4472,7 +4473,7 @@ routine public.stock_reorder_quantity(p_obj jsonb, p_key text, p_default numeric
 routine public.stock_reorder_reader(p_workspace_id uuid) -> void | function | definer | stable | exec:service_role | body:4e84c60e590e
 routine public.stock_replenishment_v1(p_workspace_id uuid, p_site_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:b71e455d57e3
 routine public.stock_resolve_code_v1(p_workspace_id uuid, p_code text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:c259b66eed14
-routine public.stock_resolve_codes_v1(p_workspace_id uuid, p_codes text[]) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:93ff7368078e
+routine public.stock_resolve_codes_v1(p_workspace_id uuid, p_codes text[]) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:6815bbd1a0a1
 routine public.stock_return_v1(p_workspace_id uuid, p_request_id uuid, p_return_id uuid, p_kind text, p_lines jsonb, p_occurred_at timestamp with time zone) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:6746c086b09f
 routine public.stock_returns_append_only() -> trigger | function | invoker | volatile | exec:service_role | body:20ba809ab789
 routine public.stock_reversible_v1(p_workspace_id uuid, p_movement_ids uuid[]) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:d76f54fb6135

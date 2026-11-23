@@ -33130,6 +33130,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingUnitSeconds => 'secondes';
 
   @override
+  String get settingUnitTags => 'étiquettes';
+
+  @override
   String get settingUnitUrl => 'adresse';
 
   @override

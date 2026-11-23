@@ -350,6 +350,7 @@ String settingUnitLabel(AppLocalizations l10n, String unit) => switch (unit) {
       'characters' => l10n.settingUnitCharacters,
       'pages' => l10n.settingUnitPages,
       'cards' => l10n.settingUnitCards,
+      'tags' => l10n.settingUnitTags,
       'bytes' => l10n.settingUnitBytes,
       'url' => l10n.settingUnitUrl,
       'url template' => l10n.settingUnitUrlTemplate,

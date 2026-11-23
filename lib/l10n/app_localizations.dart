@@ -52536,6 +52536,12 @@ abstract class AppLocalizations {
   /// **'seconds'**
   String get settingUnitSeconds;
 
+  /// #4364 setting unit
+  ///
+  /// In en, this message translates to:
+  /// **'tags'**
+  String get settingUnitTags;
+
   /// #2488 Unit suffix of a URL setting.
   ///
   /// In en, this message translates to:
