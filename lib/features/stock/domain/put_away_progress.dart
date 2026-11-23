@@ -38,13 +38,17 @@ class DeliveredLineProgress {
   }
 }
 
-/// #4393 -- a delivered quantity as the purchase order reads it (the order's
-/// numbers are its own, #4177) brought into the exact type once, here: a
-/// stored `numeric(18,6)` always has an exact six-decimal text, and anything
-/// else is refused with a typed [ExactQuantityException], never rounded.
-ExactQuantity exactOfReceived(num delivered) => ExactQuantity.parse(
-  delivered == delivered.truncate() ? delivered.truncate().toString() : delivered.toString(),
-);
+/// #4393 -- a delivered quantity as the purchase order holds it (a binary
+/// float: the order's numbers are its own, #4177) brought into the exact type
+/// once, here. A stored `numeric(18,6)` has six decimals at most, so the
+/// float's noise past the sixth (`0.3 - 0.1` = 0.19999999999999998) is
+/// rounded off, as the column would; a value outside the column's range,
+/// which no order line can hold, reads as zero. Never throws: the delivery
+/// form opens whatever the order's arithmetic left.
+ExactQuantity exactOfReceived(num delivered) {
+  final text = delivered.toStringAsFixed(6);
+  return ExactQuantity.tryParse(text).value ?? ExactQuantity.zero;
+}
 
 /// The lines of [receipt], each with the allocations that name its receipt
 /// line (by id, or by the line number when the id was not read).

@@ -128,6 +128,7 @@ void main() {
       expect(ExactQuantity.parse('-2').scaled(1, 3, round: true).value?.text, '-0.666667');
       expect(ExactQuantity.parse('0.000001').scaled(1, 2, round: true).value?.text, '0.000001');
       expect(ExactQuantity.parse('3').scaled(1, 3, round: true).value?.text, '1');
+      expect(ExactQuantity.parse('-0.000003').scaled(1, 2, round: true).value?.text, '-0.000002');
     });
     test('a zero denominator and an overflow are problems', () {
       expect(s('1', 1, 0).problem, ExactQuantityProblem.zeroDenominator);

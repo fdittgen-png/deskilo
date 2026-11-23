@@ -423,7 +423,8 @@ class PutAwayDraft {
           fieldKey: 'putaway-$n-rate',
           label: l10n.stockPutAwayCostRate(this.context.currency),
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
-          inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]'))],
+          // the rate is sent as typed and the server reads a dot only (0840): no comma here
+          inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.]'))],
         ),
       const FormGap(),
     ];

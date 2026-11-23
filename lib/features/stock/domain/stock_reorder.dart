@@ -255,7 +255,7 @@ abstract interface class StockReorder {
 /// not one, a level to order up to that is not above the point. [value] empty: the point only flags.
 Map<String, String> checkReorderPoint({required String point, required String value, required bool upTo}) {
   // #4393 -- the kernel's quantity grammar, not a copy of it: a number of at most six decimals, never negative.
-  bool isQuantity(String t) => switch (ExactQuantity.tryParse(t).value) { final q? => !q.isNegative, null => false };
+  bool isQuantity(String t) => !t.startsWith('-') && ExactQuantity.tryParse(t).value != null;
   final errors = <String, String>{};
   final level = point.trim();
   if (!isQuantity(level)) errors['reorder_point'] = 'quantity_invalid';

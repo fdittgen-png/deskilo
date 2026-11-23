@@ -14,7 +14,7 @@ import 'lint_sources.dart';
 final _patterns = <String, RegExp>{
   'double.parse': RegExp(r'\bdouble\.(try)?[Pp]arse\('),
   'a double quantity': RegExp(r'\bdouble\??\s+(received|putAway|remaining|qty|quantity|delivered)\b'),
-  'a float sum': RegExp(r'\.fold\(\s*0\.0\b'),
+  'a float sum': RegExp(r'\.fold(<double>)?\(\s*0(\.0)?\s*,'),
 };
 
 Iterable<File> _files() => [
@@ -43,6 +43,7 @@ void main() {
     expect(floatQuantities('final q = double.tryParse(text);'), ['double.parse: 1']);
     expect(floatQuantities('  final double received;'), ['a double quantity: 1']);
     expect(floatQuantities('xs.fold(0.0, (s, x) => s + x)'), ['a float sum: 1']);
+    expect(floatQuantities('xs.fold<double>(0, (s, x) => s + x)'), ['a float sum: 1']);
     expect(floatQuantities('// double.parse is refused here'), isEmpty);
   });
 }
