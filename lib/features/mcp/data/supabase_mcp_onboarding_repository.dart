@@ -3,6 +3,7 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/backend/schema_version.dart';
+import '../../../core/data/server_names.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/mcp_onboarding.dart';
 
@@ -19,7 +20,7 @@ class SupabaseMcpOnboardingRepository implements McpOnboardingRepository {
   Future<ConsentStatus> consentStatus(String authorizationId) async =>
       ConsentStatus.fromJson(
         await _client.rpc<Object?>(
-          'mcp_consent_options',
+          ServerRpc.mcpConsentOptions,
           params: {'p_authorization_id': authorizationId},
         ),
       );

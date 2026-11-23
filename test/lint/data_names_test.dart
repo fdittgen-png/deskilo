@@ -18,8 +18,12 @@ final _table = RegExp(r'''(?<!storage)(?<!storage\s)\.from(?:<[^>(]*>)?\(\s*['"]
 
 /// The names [pattern] finds in [source].
 Set<String> namesIn(String source, RegExp pattern) => {
-  for (final m in pattern.allMatches(source)) m.group(1)!,
+  for (final m in pattern.allMatches(_withoutLineComments(source))) m.group(1)!,
 };
+
+/// [source] without its `//` and `///` comment lines: an example in a doc comment is no caller.
+String _withoutLineComments(String source) =>
+    source.split('\n').where((l) => !l.trimLeft().startsWith('//')).join('\n');
 
 /// For each name, the files that quote it: only the names of two or more files.
 Map<String, Set<String>> sharedNames(
@@ -59,6 +63,7 @@ void main() {
     expect(sharedNames(files, _table).keys, isEmpty);
     expect(sharedNames(files, _bucket).keys, ['plans']);
     expect(namesIn('x.rpc("with_double")', _rpc), {'with_double'});
+    expect(namesIn("/// db.from('seats')\n// db.rpc('x')", _table), isEmpty);
   });
 
   test('the RPC, table and bucket names shared by two files only fall', () {

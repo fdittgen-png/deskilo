@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/server_names.dart';
 import '../domain/invoice_pdf_template.dart';
 import '../domain/report_template_repository.dart';
 import 'report_image_read.dart';
@@ -18,7 +19,7 @@ class SupabaseReportTemplateRepository implements ReportTemplateRepository {
   @override
   Future<InvoicePdfTemplate> fetchInvoicePdfTemplate(String workspaceId) async {
     final row = await _client
-        .from('workspaces')
+        .from(ServerTable.workspaces)
         .select('invoice_pdf_template')
         .eq('id', workspaceId)
         .single();
@@ -46,7 +47,7 @@ class SupabaseReportTemplateRepository implements ReportTemplateRepository {
     // in the private floor-plans bucket; the 0036 RLS (first path
     // segment = workspace) covers it member-read / owner-write.
     final entries = await _client.storage
-        .from('floor-plans')
+        .from(ServerBucket.floorPlans)
         .list(path: '$workspaceId/report');
     return [
       for (final entry in entries)
@@ -57,7 +58,7 @@ class SupabaseReportTemplateRepository implements ReportTemplateRepository {
   @override
   Future<Map<String, int>> reportImageWeights(String workspaceId) async {
     final entries = await _client.storage
-        .from('floor-plans')
+        .from(ServerBucket.floorPlans)
         .list(path: '$workspaceId/report');
     return {
       for (final entry in entries)
@@ -74,7 +75,7 @@ class SupabaseReportTemplateRepository implements ReportTemplateRepository {
     required String contentType,
   }) async {
     await _client.storage
-        .from('floor-plans')
+        .from(ServerBucket.floorPlans)
         .uploadBinary(
           '$workspaceId/report/$name',
           Uint8List.fromList(bytes),
@@ -87,7 +88,7 @@ class SupabaseReportTemplateRepository implements ReportTemplateRepository {
       readReportImage(
         name,
         () => _client.storage
-            .from('floor-plans')
+            .from(ServerBucket.floorPlans)
             .download('$workspaceId/report/$name'),
       );
 }

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/server_names.dart';
 import '../domain/conversation.dart';
 import '../domain/member_note.dart';
 
@@ -118,7 +119,7 @@ mixin SupabaseConversations {
     // thousand messages used to be fetched on every rebuild. Older
     // pages come through [before]; the caller keeps them.
     var query = conversationClient
-        .from('member_notes')
+        .from(ServerTable.memberNotes)
         .select()
         .eq('conversation_id', conversationId);
     if (before != null) {
@@ -166,7 +167,7 @@ mixin SupabaseConversations {
     // workspace between keystrokes.
     if (trimmed.isEmpty) return const [];
     final rows = await conversationClient
-        .from('member_notes')
+        .from(ServerTable.memberNotes)
         .select()
         .eq('workspace_id', workspaceId)
         // 'simple' matches the index built in 0125; a different config
@@ -213,7 +214,7 @@ mixin SupabaseConversations {
 
 
     Future<void> deleteMemberNote(String noteId) async {
-    await conversationClient.from('member_notes').delete().eq('id', noteId);
+    await conversationClient.from(ServerTable.memberNotes).delete().eq('id', noteId);
   }
 
 
@@ -228,7 +229,7 @@ mixin SupabaseConversations {
 
     Future<List<MemberNote>> fetchMyNotes(String workspaceId) async {
     final rows = await conversationClient
-        .from('member_notes')
+        .from(ServerTable.memberNotes)
         .select()
         .eq('workspace_id', workspaceId)
         .order('created_at', ascending: false)

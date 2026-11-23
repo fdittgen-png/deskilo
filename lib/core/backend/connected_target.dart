@@ -5,6 +5,7 @@
 // the target's own server before anything is saved.
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../data/server_names.dart';
 import 'backend_settings.dart';
 import 'connection_outcome.dart';
 import 'federation_authority.dart' show deskiloSubjectOf;
@@ -58,7 +59,7 @@ inspectConnectedTarget(
     throw ConnectionFailure(source, ConnectionFailureReason.changedIdentity);
   }
   final identity = await client
-      .from('installation_identity')
+      .from(ServerTable.installationIdentity)
       .select('installation_id')
       .single();
   final installation = identity['installation_id'];

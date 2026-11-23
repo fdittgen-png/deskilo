@@ -6,6 +6,7 @@
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/server_names.dart';
 import '../domain/site.dart';
 import '../domain/site_repository.dart';
 
@@ -16,7 +17,7 @@ mixin SupabaseSites implements SiteRepository {
   @override
   Future<List<Site>> fetchSites(String workspaceId) async {
     final rows = await client
-        .from('sites')
+        .from(ServerTable.sites)
         .select()
         .eq('workspace_id', workspaceId)
         .order('is_default', ascending: false)

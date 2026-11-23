@@ -2,6 +2,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/calendar/calendar_item.dart';
+import '../../../core/data/server_names.dart';
 import '../domain/calendar_repository.dart';
 
 /// The wire for `calendar_items` and the GDPR self-service RPCs (0133).
@@ -45,7 +46,7 @@ class SupabaseCalendarRepository implements CalendarRepository {
 
   @override
   Future<Map<String, dynamic>> exportMyData(String workspaceId) async {
-    final result = await _client.rpc<dynamic>('export_my_data', params: {
+    final result = await _client.rpc<dynamic>(ServerRpc.exportMyData, params: {
       'p_workspace_id': workspaceId,
     });
     return Map<String, dynamic>.from(result as Map);

@@ -16,6 +16,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../core/backend/connected_target.dart';
 import '../../../core/backend/connection_outcome.dart';
 import '../../../core/backend/context_clients.dart';
+import '../../../core/data/server_names.dart';
 import '../../../core/settings/settings.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/my_reservations.dart';
@@ -194,7 +195,7 @@ class HostMyReservationsRepository implements MyReservationsRepository {
     if (ids.isEmpty) return const {};
     try {
       final rows = await client
-          .from('workspaces')
+          .from(ServerTable.workspaces)
           .select('id, timezone')
           .inFilter('id', ids);
       return {

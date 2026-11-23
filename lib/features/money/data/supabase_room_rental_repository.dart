@@ -2,6 +2,7 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/server_names.dart';
 import '../domain/room_level_kind.dart';
 import '../domain/room_rental.dart';
 
@@ -100,7 +101,7 @@ class SupabaseRoomRentalRepository implements RoomRentalRepository {
   Future<RoomOffer> fetchOffer(String workspaceId, String officeId) async =>
       RoomOffer.fromJson(
         await _client.rpc<Object?>(
-          'room_offer_v1',
+          ServerRpc.roomOfferV1,
           params: {'p_workspace_id': workspaceId, 'p_office_id': officeId},
         ),
       );

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/server_names.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/deployment.dart';
 
@@ -47,7 +48,7 @@ class SupabaseDeploymentRepository implements DeploymentRepository {
       final to = '${job['to'] ?? ''}';
       if (from.isEmpty || to.isEmpty) continue;
       try {
-        await _client.storage.from('floor-plans').copy(from, to);
+        await _client.storage.from(ServerBucket.floorPlans).copy(from, to);
       } on Object catch (e, st) {
         TraceLogger.instance.warn(
             'workspace', 'plan image copy $from -> $to failed',

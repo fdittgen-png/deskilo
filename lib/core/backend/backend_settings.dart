@@ -9,6 +9,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../l10n/app_localizations.dart';
 import '../cache/cache_scope.dart';
+import '../data/server_names.dart';
 import '../instance/schema_compatibility.dart';
 import '../trace/trace_logger.dart';
 import 'backend_config.dart';
@@ -380,7 +381,7 @@ class SupabaseProbeTransport implements BackendProbeTransport {
 
   @override
   Future<void> readOneWorkspace() => _client
-      .from('workspaces')
+      .from(ServerTable.workspaces)
       .select('id')
       .limit(1)
       .timeout(const Duration(seconds: 12));

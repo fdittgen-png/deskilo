@@ -14,6 +14,7 @@
 // host.
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../data/server_names.dart';
 import 'connected_pool_clients.dart' show PinnedClient;
 
 /// No verified client exists for this installation id.
@@ -29,7 +30,7 @@ typedef InstallationIdReader = Future<String> Function(SupabaseClient client);
 
 Future<String> readInstallationId(SupabaseClient client) async {
   final row = await client
-      .from('installation_identity')
+      .from(ServerTable.installationIdentity)
       .select('installation_id')
       .single();
   final id = row['installation_id'];

@@ -29,6 +29,7 @@ import 'package:http/http.dart' as http;
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../data/server_names.dart';
 import '../trace/trace_logger.dart';
 import 'auth_callback_dispatch.dart';
 import 'auth_callback_guard.dart';
@@ -51,7 +52,7 @@ Future<CanonicalIdentity?> _canonicalIdentityOf(SupabaseClient active) async {
   final user = active.auth.currentUser;
   if (user == null) return null;
   final authority = FederationAuthority.parse(
-    await active.rpc<Object?>('public_identity_authority'),
+    await active.rpc<Object?>(ServerRpc.publicIdentityAuthority),
   );
   if (authority != null) {
     // A federated server: the person's subject is their Deskilo identity.
@@ -193,7 +194,7 @@ class SecondaryFederation implements IdentityConnector {
       }
       final authority = FederationAuthority.parse(
         await client
-            .rpc<Object?>('public_identity_authority')
+            .rpc<Object?>(ServerRpc.publicIdentityAuthority)
             .timeout(const Duration(seconds: 12)),
       );
       if (authority == null) {
@@ -324,7 +325,7 @@ class SecondaryFederation implements IdentityConnector {
         throw const _Refused(FederationFailure.wrongAccount);
       }
       final authority = FederationAuthority.parse(
-        await client.rpc<Object?>('public_identity_authority'),
+        await client.rpc<Object?>(ServerRpc.publicIdentityAuthority),
       );
       if (authority?.issuer != pending.readiness.authority.issuer ||
           authority?.installationId !=
@@ -335,7 +336,7 @@ class SecondaryFederation implements IdentityConnector {
       if (deskiloSubjectOf(user) != pending.readiness.identity.subject) {
         throw const _Refused(FederationFailure.wrongAccount);
       }
-      final binding = await client.rpc<Object?>('finalize_identity_binding');
+      final binding = await client.rpc<Object?>(ServerRpc.finalizeIdentityBinding);
       final refusal = federationFailureFromBinding(binding);
       if (refusal != null) throw _Refused(refusal);
       if (binding is! Map ||
