@@ -77,18 +77,37 @@ const _notForTheApp = <String, String>{
       '(0565)',
 };
 
-final _raised = RegExp(r"errcode\s*=\s*'(DK[A-Z0-9]{3})'");
+/// #4415 -- RATCHET: how many codes a person never meets in the app. A new
+/// refusal arrives with its words; this list only shortens.
+const _notForTheAppCeiling = 20;
+
+final _raised = RegExp(
+  r"errcode\s*=\s*'(DK[A-Z0-9]{3})'"
+  r"|\brefuse\(\s*'(DK[A-Z0-9]{3})'",
+);
+
+/// The DK codes [sql] raises: with `errcode = 'DK…'`, or through `public.refuse('DK…', …)` (#4415).
+Set<String> raisedIn(String sql) => {
+  for (final m in _raised.allMatches(sql)) (m.group(1) ?? m.group(2))!,
+};
 final _read = RegExp(r"'(DK[A-Z0-9]{3})'");
 
 void main() {
   final raised = <String>{
     for (final f in sqlFiles('supabase/migrations'))
-      for (final m in _raised.allMatches(f.readAsStringSync())) m.group(1)!,
+      ...raisedIn(f.readAsStringSync()),
   };
   final read = <String>{
     for (final f in handWrittenDartFiles('lib'))
       for (final m in _read.allMatches(f.readAsStringSync())) m.group(1)!,
   };
+
+  test('a code is raised by errcode or through the refusal helper', () {
+    expect(raisedIn("raise exception 'x' using errcode = 'DKG07';"), {'DKG07'});
+    expect(raisedIn("perform public.refuse('DKG11', '{}'::jsonb, 'w');"), {'DKG11'});
+    expect(raisedIn("perform refuse(\n  'DKL12', null);"), {'DKL12'});
+    expect(raisedIn("select 'DKG99' as note;"), isEmpty);
+  });
 
   test('every DK code a migration raises is read by the app or named', () {
     final unread = [
@@ -102,6 +121,19 @@ void main() {
           'map the code to its words in the app (refusal_text.dart, '
           'booking_error_text.dart), or name it in _notForTheApp with '
           'the reason a person never meets it there',
+    );
+  });
+
+  test('the list of codes the app does not read holds its ceiling', () {
+    expect(
+      _notForTheApp.length,
+      lessThanOrEqualTo(_notForTheAppCeiling),
+      reason: 'give the new refusal its words instead of naming it here (#4415)',
+    );
+    expect(
+      _notForTheApp.length,
+      _notForTheAppCeiling,
+      reason: 'it fell: lower _notForTheAppCeiling to ${_notForTheApp.length}',
     );
   });
 
