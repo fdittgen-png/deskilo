@@ -2978,7 +2978,7 @@ routine public.bi_views_team_writer(p_workspace_id uuid) -> boolean | function |
 routine public.billing_access_accept_v1(p_code text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:b8a62f798142
 routine public.billing_access_invite_v1(p_workspace uuid, p_subject uuid, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:51aa5f49b215
 routine public.billing_access_preview_v1(p_code text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:bbee23010629
-routine public.billing_access_revoke_v1(p_grant_id uuid, p_reason text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:854f1c6b935d
+routine public.billing_access_revoke_v1(p_grant_id uuid, p_reason text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:424033b9b914
 routine public.billing_customer_create_v1(p_workspace uuid, p_party jsonb, p_capacity text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:ee7740d9b980
 routine public.billing_customer_ok(p_workspace uuid, p_subject uuid) -> boolean | function | definer | stable | exec:service_role | body:9612fb05f753
 routine public.billing_customers_readable(p_workspace uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:bb0b3783b008

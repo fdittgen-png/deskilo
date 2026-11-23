@@ -33,6 +33,8 @@ const _notForTheApp = <String, String>{
       'for billing customers only; the refusal is the server\'s guard (0910)',
   'DKH03':
       'revoking an unknown grant: the B2 screens name only grants they listed; the server\'s guard (0910)',
+  'DKH04':
+      'a revocation reason over 500 characters: the B2 form limits the field to that width; the server\'s guard (0910)',
   'DKH05':
       'a request id reused for another invitation: the app draws a fresh id per invitation; the server\'s guard (0910)',
   'DKC16':

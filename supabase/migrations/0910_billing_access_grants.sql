@@ -210,8 +210,12 @@ begin
   if v_g.revoked_at is not null then
     return jsonb_build_object('grant_id', v_g.id, 'revoked_at', v_g.revoked_at, 'replayed', true);
   end if;
+  -- refused, never clipped: the reason is kept as written
+  if char_length(btrim(coalesce(p_reason, ''))) > 500 then
+    raise exception 'a reason is at most 500 characters' using errcode = 'DKH04';
+  end if;
   update public.billing_access_grants
-     set revoked_at = now(), revoked_by_user_id = auth.uid(), revoke_reason = left(btrim(coalesce(p_reason, '')), 500)
+     set revoked_at = now(), revoked_by_user_id = auth.uid(), revoke_reason = btrim(coalesce(p_reason, ''))
    where id = v_g.id
   returning * into v_g;
   return jsonb_build_object('grant_id', v_g.id, 'revoked_at', v_g.revoked_at, 'replayed', false);
