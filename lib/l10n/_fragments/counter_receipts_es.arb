@@ -5,5 +5,11 @@
   "settingHintCounterDocumentChannel": "Compartido (mensaje o correo), impreso o ambos. El ticket es el mismo documento inmutable en todos los casos.",
   "settingLabelCounterCustomerlessSales": "Ventas sin cliente nombrado",
   "settingHintCounterCustomerlessSales": "Permitidas: se puede vender sin nombrar un cliente. Rechazadas: cada venta nombra uno. Una venta sin cliente nunca crea una cuenta, un miembro ni una suscripción.",
-  "refusalCounterUnsupported": "Esta operación no está soportada para su país en el caso que declaró en los ajustes: no se numeró nada y no se cobró nada."
+  "refusalCounterUnsupported": "Esta operación no está soportada para su país en el caso que declaró en los ajustes: no se numeró nada y no se cobró nada.",
+  "refusalCounterEssentials": "A este ticket le falta algo o no es aceptable: no se numeró nada y no se cobró nada.",
+  "refusalCounterNotOpen": "Este ticket ya no es un borrador abierto, o ya se emitió un ticket para la misma venta.",
+  "refusalCounterCustomerNeeded": "Este negocio nombra un cliente en cada venta: elija uno antes de terminar.",
+  "refusalCounterTenders": "Los cobros no saldan exactamente esta venta, o uno de ellos no se acepta aquí.",
+  "refusalCounterCorrectionBeyond": "Una corrección no puede ir más allá de lo que queda de la línea original.",
+  "refusalCounterChanged": "Este ticket cambió mientras tanto: ábralo de nuevo."
 }

@@ -28848,6 +28848,30 @@ class AppLocalizationsFr extends AppLocalizations {
       'Cet élément a changé entre-temps. Rouvrez-le pour voir où il en est.';
 
   @override
+  String get refusalCounterChanged =>
+      'Ce ticket a changé entre-temps : rouvrez-le.';
+
+  @override
+  String get refusalCounterCorrectionBeyond =>
+      'Une correction ne peut pas dépasser ce qu\'il reste de la ligne d\'origine.';
+
+  @override
+  String get refusalCounterCustomerNeeded =>
+      'Cette entreprise nomme un client à chaque vente : choisissez-en un avant de terminer.';
+
+  @override
+  String get refusalCounterEssentials =>
+      'Il manque quelque chose à ce ticket ou ce n\'est pas acceptable : rien n\'a été numéroté et rien n\'a été encaissé.';
+
+  @override
+  String get refusalCounterNotOpen =>
+      'Ce ticket n\'est plus un brouillon ouvert, ou un ticket a déjà été émis pour la même vente.';
+
+  @override
+  String get refusalCounterTenders =>
+      'Les règlements ne soldent pas exactement cette vente, ou l\'un d\'eux n\'est pas pris en charge ici.';
+
+  @override
   String get refusalCounterUnsupported =>
       'Cette opération n\'est pas prise en charge pour votre pays dans le cas que vous avez déclaré dans les paramètres : rien n\'a été numéroté et rien n\'a été encaissé.';
 

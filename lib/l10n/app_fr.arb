@@ -16463,6 +16463,12 @@
     "description": "#2380 (0660) Refusal DKB07: the first payment of an invoice is undone after its later payments."
   },
   "refusalChangedMeanwhile": "Cet élément a changé entre-temps. Rouvrez-le pour voir où il en est.",
+  "refusalCounterChanged": "Ce ticket a changé entre-temps : rouvrez-le.",
+  "refusalCounterCorrectionBeyond": "Une correction ne peut pas dépasser ce qu'il reste de la ligne d'origine.",
+  "refusalCounterCustomerNeeded": "Cette entreprise nomme un client à chaque vente : choisissez-en un avant de terminer.",
+  "refusalCounterEssentials": "Il manque quelque chose à ce ticket ou ce n'est pas acceptable : rien n'a été numéroté et rien n'a été encaissé.",
+  "refusalCounterNotOpen": "Ce ticket n'est plus un brouillon ouvert, ou un ticket a déjà été émis pour la même vente.",
+  "refusalCounterTenders": "Les règlements ne soldent pas exactement cette vente, ou l'un d'eux n'est pas pris en charge ici.",
   "refusalCounterUnsupported": "Cette opération n'est pas prise en charge pour votre pays dans le cas que vous avez déclaré dans les paramètres : rien n'a été numéroté et rien n'a été encaissé.",
   "refusalMainStoreExpired": "Le magasin principal ne contient que {held} sur les {asked} que cette vente demande qui soient vendables : le reste a dépassé sa date. Rien n’a été prélevé et la vente n’a pas été confirmée.",
   "@refusalMainStoreExpired": {

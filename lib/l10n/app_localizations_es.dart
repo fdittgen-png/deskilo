@@ -28728,6 +28728,30 @@ class AppLocalizationsEs extends AppLocalizations {
       'Esto ha cambiado mientras tanto. Vuelva a abrirlo para ver cómo está.';
 
   @override
+  String get refusalCounterChanged =>
+      'Este ticket cambió mientras tanto: ábralo de nuevo.';
+
+  @override
+  String get refusalCounterCorrectionBeyond =>
+      'Una corrección no puede ir más allá de lo que queda de la línea original.';
+
+  @override
+  String get refusalCounterCustomerNeeded =>
+      'Este negocio nombra un cliente en cada venta: elija uno antes de terminar.';
+
+  @override
+  String get refusalCounterEssentials =>
+      'A este ticket le falta algo o no es aceptable: no se numeró nada y no se cobró nada.';
+
+  @override
+  String get refusalCounterNotOpen =>
+      'Este ticket ya no es un borrador abierto, o ya se emitió un ticket para la misma venta.';
+
+  @override
+  String get refusalCounterTenders =>
+      'Los cobros no saldan exactamente esta venta, o uno de ellos no se acepta aquí.';
+
+  @override
   String get refusalCounterUnsupported =>
       'Esta operación no está soportada para su país en el caso que declaró en los ajustes: no se numeró nada y no se cobró nada.';
 

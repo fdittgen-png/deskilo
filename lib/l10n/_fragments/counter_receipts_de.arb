@@ -5,5 +5,11 @@
   "settingHintCounterDocumentChannel": "Geteilt (Nachricht oder Mail), gedruckt oder beides. Der Beleg ist in jedem Fall dasselbe unveränderliche Dokument.",
   "settingLabelCounterCustomerlessSales": "Verkäufe ohne genannten Kunden",
   "settingHintCounterCustomerlessSales": "Erlaubt: Ein Verkauf kann ohne Kundennamen erfolgen. Abgelehnt: Jeder Verkauf nennt einen Kunden. Ein Verkauf ohne Kunden legt nie ein Konto, ein Mitglied oder ein Abonnement an.",
-  "refusalCounterUnsupported": "Dieser Vorgang wird für Ihr Land in dem in den Einstellungen erklärten Fall nicht unterstützt: Es wurde nichts nummeriert und nichts angenommen."
+  "refusalCounterUnsupported": "Dieser Vorgang wird für Ihr Land in dem in den Einstellungen erklärten Fall nicht unterstützt: Es wurde nichts nummeriert und nichts angenommen.",
+  "refusalCounterEssentials": "Für diesen Beleg fehlt etwas oder es ist nicht zulässig: Es wurde nichts nummeriert und nichts angenommen.",
+  "refusalCounterNotOpen": "Dieser Beleg ist kein offener Entwurf mehr, oder für denselben Verkauf wurde schon ein Beleg ausgestellt.",
+  "refusalCounterCustomerNeeded": "Dieser Betrieb nennt bei jedem Verkauf einen Kunden: Wählen Sie vor dem Abschluss einen aus.",
+  "refusalCounterTenders": "Die Zahlungen begleichen diesen Verkauf nicht genau, oder eine davon wird hier nicht angenommen.",
+  "refusalCounterCorrectionBeyond": "Eine Korrektur kann nicht über das hinausgehen, was von der ursprünglichen Zeile übrig ist.",
+  "refusalCounterChanged": "Dieser Beleg hat sich inzwischen geändert: Öffnen Sie ihn erneut."
 }

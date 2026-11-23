@@ -145,6 +145,17 @@ enum KnownRefusal {
   /// does not support (nothing was numbered, nothing handed over).
   counterUnsupported,
 
+  /// #4185 (0894) -- DKT02: something a receipt needs is missing or not acceptable; DKT04: not an open draft, or
+  /// already issued for its source; DKT05: the business names a customer on every sale; DKT06: the tenders do not
+  /// settle the sale, or one is not taken here; DKT08: a correction beyond what the original has left; DKT10: the
+  /// receipt changed meanwhile.
+  counterEssentials,
+  counterNotOpen,
+  counterCustomerNeeded,
+  counterTenders,
+  counterCorrectionBeyond,
+  counterChanged,
+
   /// #4362 (0887) — DKG25: the pieces of a piece-tracked item must be named;
   /// DKG26: a named piece is not where the movement takes it from.
   stockNamePieces,
@@ -228,6 +239,12 @@ const Map<String, KnownRefusal> _codedRefusals = {
   'DKG25': KnownRefusal.stockNamePieces,
   'DKG26': KnownRefusal.stockPieceWhere,
   'DKT01': KnownRefusal.counterUnsupported,
+  'DKT02': KnownRefusal.counterEssentials,
+  'DKT04': KnownRefusal.counterNotOpen,
+  'DKT05': KnownRefusal.counterCustomerNeeded,
+  'DKT06': KnownRefusal.counterTenders,
+  'DKT08': KnownRefusal.counterCorrectionBeyond,
+  'DKT10': KnownRefusal.counterChanged,
   // #4008 — a member who left (0782).
   'DKM01': KnownRefusal.memberReturnsAsNew,
 };
@@ -340,7 +357,18 @@ String? _tagRefusalText(AppLocalizations l10n, KnownRefusal refusal) => switch (
       KnownRefusal.stockPieceInStock => l10n.refusalStockPieceInStock,
       KnownRefusal.stockNamePieces => l10n.refusalStockNamePieces,
       KnownRefusal.stockPieceWhere => l10n.refusalStockPieceWhere,
+      _ => _counterRefusalText(l10n, refusal),
+    };
+
+/// #4184, #4185 -- the counter's refusals.
+String? _counterRefusalText(AppLocalizations l10n, KnownRefusal refusal) => switch (refusal) {
       KnownRefusal.counterUnsupported => l10n.refusalCounterUnsupported,
+      KnownRefusal.counterEssentials => l10n.refusalCounterEssentials,
+      KnownRefusal.counterNotOpen => l10n.refusalCounterNotOpen,
+      KnownRefusal.counterCustomerNeeded => l10n.refusalCounterCustomerNeeded,
+      KnownRefusal.counterTenders => l10n.refusalCounterTenders,
+      KnownRefusal.counterCorrectionBeyond => l10n.refusalCounterCorrectionBeyond,
+      KnownRefusal.counterChanged => l10n.refusalCounterChanged,
       _ => null,
     };
 

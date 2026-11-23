@@ -28811,6 +28811,30 @@ class AppLocalizationsDe extends AppLocalizations {
       'Das hat sich inzwischen geändert. Öffnen Sie es erneut, um den aktuellen Stand zu sehen.';
 
   @override
+  String get refusalCounterChanged =>
+      'Dieser Beleg hat sich inzwischen geändert: Öffnen Sie ihn erneut.';
+
+  @override
+  String get refusalCounterCorrectionBeyond =>
+      'Eine Korrektur kann nicht über das hinausgehen, was von der ursprünglichen Zeile übrig ist.';
+
+  @override
+  String get refusalCounterCustomerNeeded =>
+      'Dieser Betrieb nennt bei jedem Verkauf einen Kunden: Wählen Sie vor dem Abschluss einen aus.';
+
+  @override
+  String get refusalCounterEssentials =>
+      'Für diesen Beleg fehlt etwas oder es ist nicht zulässig: Es wurde nichts nummeriert und nichts angenommen.';
+
+  @override
+  String get refusalCounterNotOpen =>
+      'Dieser Beleg ist kein offener Entwurf mehr, oder für denselben Verkauf wurde schon ein Beleg ausgestellt.';
+
+  @override
+  String get refusalCounterTenders =>
+      'Die Zahlungen begleichen diesen Verkauf nicht genau, oder eine davon wird hier nicht angenommen.';
+
+  @override
   String get refusalCounterUnsupported =>
       'Dieser Vorgang wird für Ihr Land in dem in den Einstellungen erklärten Fall nicht unterstützt: Es wurde nichts nummeriert und nichts angenommen.';
 

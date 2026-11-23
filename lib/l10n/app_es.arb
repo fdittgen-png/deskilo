@@ -16463,6 +16463,12 @@
     "description": "#2380 (0660) Refusal DKB07: the first payment of an invoice is undone after its later payments."
   },
   "refusalChangedMeanwhile": "Esto ha cambiado mientras tanto. Vuelva a abrirlo para ver cómo está.",
+  "refusalCounterChanged": "Este ticket cambió mientras tanto: ábralo de nuevo.",
+  "refusalCounterCorrectionBeyond": "Una corrección no puede ir más allá de lo que queda de la línea original.",
+  "refusalCounterCustomerNeeded": "Este negocio nombra un cliente en cada venta: elija uno antes de terminar.",
+  "refusalCounterEssentials": "A este ticket le falta algo o no es aceptable: no se numeró nada y no se cobró nada.",
+  "refusalCounterNotOpen": "Este ticket ya no es un borrador abierto, o ya se emitió un ticket para la misma venta.",
+  "refusalCounterTenders": "Los cobros no saldan exactamente esta venta, o uno de ellos no se acepta aquí.",
   "refusalCounterUnsupported": "Esta operación no está soportada para su país en el caso que declaró en los ajustes: no se numeró nada y no se cobró nada.",
   "refusalMainStoreExpired": "El almacén principal solo tiene {held} de los {asked} que pide esta venta aptos para vender: el resto ha caducado. No se retiró nada y la venta no se confirmó.",
   "@refusalMainStoreExpired": {

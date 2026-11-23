@@ -37472,6 +37472,30 @@
   "@refusalChangedMeanwhile": {
     "description": "#1305 Shown when an invoice changed state before the action reached the server"
   },
+  "refusalCounterChanged": "This receipt changed meanwhile: open it again.",
+  "@refusalCounterChanged": {
+    "description": "#4185 refusal"
+  },
+  "refusalCounterCorrectionBeyond": "A correction cannot go beyond what the original line has left.",
+  "@refusalCounterCorrectionBeyond": {
+    "description": "#4185 refusal"
+  },
+  "refusalCounterCustomerNeeded": "This business names a customer on every sale: choose one before finishing.",
+  "@refusalCounterCustomerNeeded": {
+    "description": "#4185 refusal"
+  },
+  "refusalCounterEssentials": "Something this receipt needs is missing or not acceptable: nothing was numbered and nothing was taken.",
+  "@refusalCounterEssentials": {
+    "description": "#4185 refusal"
+  },
+  "refusalCounterNotOpen": "This receipt is no longer an open draft, or a receipt was already issued for the same sale.",
+  "@refusalCounterNotOpen": {
+    "description": "#4185 refusal"
+  },
+  "refusalCounterTenders": "The payments do not settle this sale exactly, or one of them is not taken here.",
+  "@refusalCounterTenders": {
+    "description": "#4185 refusal"
+  },
   "refusalCounterUnsupported": "This operation is not supported for your country under the case you declared in the settings: nothing was numbered and nothing was taken.",
   "@refusalCounterUnsupported": {
     "description": "#4184 refusal"

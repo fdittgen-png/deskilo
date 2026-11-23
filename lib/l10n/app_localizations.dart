@@ -45788,6 +45788,42 @@ abstract class AppLocalizations {
   /// **'This changed in the meantime. Reopen it to see where it stands.'**
   String get refusalChangedMeanwhile;
 
+  /// #4185 refusal
+  ///
+  /// In en, this message translates to:
+  /// **'This receipt changed meanwhile: open it again.'**
+  String get refusalCounterChanged;
+
+  /// #4185 refusal
+  ///
+  /// In en, this message translates to:
+  /// **'A correction cannot go beyond what the original line has left.'**
+  String get refusalCounterCorrectionBeyond;
+
+  /// #4185 refusal
+  ///
+  /// In en, this message translates to:
+  /// **'This business names a customer on every sale: choose one before finishing.'**
+  String get refusalCounterCustomerNeeded;
+
+  /// #4185 refusal
+  ///
+  /// In en, this message translates to:
+  /// **'Something this receipt needs is missing or not acceptable: nothing was numbered and nothing was taken.'**
+  String get refusalCounterEssentials;
+
+  /// #4185 refusal
+  ///
+  /// In en, this message translates to:
+  /// **'This receipt is no longer an open draft, or a receipt was already issued for the same sale.'**
+  String get refusalCounterNotOpen;
+
+  /// #4185 refusal
+  ///
+  /// In en, this message translates to:
+  /// **'The payments do not settle this sale exactly, or one of them is not taken here.'**
+  String get refusalCounterTenders;
+
   /// #4184 refusal
   ///
   /// In en, this message translates to:

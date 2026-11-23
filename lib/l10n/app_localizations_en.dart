@@ -28522,6 +28522,30 @@ class AppLocalizationsEn extends AppLocalizations {
       'This changed in the meantime. Reopen it to see where it stands.';
 
   @override
+  String get refusalCounterChanged =>
+      'This receipt changed meanwhile: open it again.';
+
+  @override
+  String get refusalCounterCorrectionBeyond =>
+      'A correction cannot go beyond what the original line has left.';
+
+  @override
+  String get refusalCounterCustomerNeeded =>
+      'This business names a customer on every sale: choose one before finishing.';
+
+  @override
+  String get refusalCounterEssentials =>
+      'Something this receipt needs is missing or not acceptable: nothing was numbered and nothing was taken.';
+
+  @override
+  String get refusalCounterNotOpen =>
+      'This receipt is no longer an open draft, or a receipt was already issued for the same sale.';
+
+  @override
+  String get refusalCounterTenders =>
+      'The payments do not settle this sale exactly, or one of them is not taken here.';
+
+  @override
   String get refusalCounterUnsupported =>
       'This operation is not supported for your country under the case you declared in the settings: nothing was numbered and nothing was taken.';
 

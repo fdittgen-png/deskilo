@@ -16463,6 +16463,12 @@
     "description": "#2380 (0660) Refusal DKB07: the first payment of an invoice is undone after its later payments."
   },
   "refusalChangedMeanwhile": "Nel frattempo è cambiato. Lo riapra per vedere a che punto è.",
+  "refusalCounterChanged": "Questo scontrino è cambiato nel frattempo: lo riapra.",
+  "refusalCounterCorrectionBeyond": "Una correzione non può superare ciò che resta della riga originale.",
+  "refusalCounterCustomerNeeded": "Questa attività indica un cliente in ogni vendita: ne scelga uno prima di concludere.",
+  "refusalCounterEssentials": "A questo scontrino manca qualcosa o non è accettabile: non è stato numerato nulla e non è stato incassato nulla.",
+  "refusalCounterNotOpen": "Questo scontrino non è più una bozza aperta, oppure per la stessa vendita ne è già stato emesso uno.",
+  "refusalCounterTenders": "I pagamenti non saldano esattamente questa vendita, oppure uno di essi non è accettato qui.",
   "refusalCounterUnsupported": "Questa operazione non è supportata per il Suo paese nel caso dichiarato nelle impostazioni: non è stato numerato nulla e non è stato incassato nulla.",
   "refusalMainStoreExpired": "Il magazzino principale contiene solo {held} dei {asked} richiesti da questa vendita che siano vendibili: il resto è scaduto. Nulla è stato prelevato e la vendita non è stata confermata.",
   "@refusalMainStoreExpired": {

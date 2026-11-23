@@ -28762,6 +28762,30 @@ class AppLocalizationsIt extends AppLocalizations {
       'Nel frattempo è cambiato. Lo riapra per vedere a che punto è.';
 
   @override
+  String get refusalCounterChanged =>
+      'Questo scontrino è cambiato nel frattempo: lo riapra.';
+
+  @override
+  String get refusalCounterCorrectionBeyond =>
+      'Una correzione non può superare ciò che resta della riga originale.';
+
+  @override
+  String get refusalCounterCustomerNeeded =>
+      'Questa attività indica un cliente in ogni vendita: ne scelga uno prima di concludere.';
+
+  @override
+  String get refusalCounterEssentials =>
+      'A questo scontrino manca qualcosa o non è accettabile: non è stato numerato nulla e non è stato incassato nulla.';
+
+  @override
+  String get refusalCounterNotOpen =>
+      'Questo scontrino non è più una bozza aperta, oppure per la stessa vendita ne è già stato emesso uno.';
+
+  @override
+  String get refusalCounterTenders =>
+      'I pagamenti non saldano esattamente questa vendita, oppure uno di essi non è accettato qui.';
+
+  @override
   String get refusalCounterUnsupported =>
       'Questa operazione non è supportata per il Suo paese nel caso dichiarato nelle impostazioni: non è stato numerato nulla e non è stato incassato nulla.';
 

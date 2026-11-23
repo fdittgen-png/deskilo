@@ -153,6 +153,7 @@ create table public.counter_receipt_lines (
   line_no int not null check (line_no >= 1),
   item_id uuid,
   variant_id uuid,
+  corrects_line_id uuid,
   quantity numeric not null check (quantity > 0),
   frozen jsonb not null,
   net_minor bigint not null check (net_minor >= 0),
@@ -162,7 +163,8 @@ create table public.counter_receipt_lines (
   unique (workspace_id, id),
   foreign key (workspace_id, receipt_id) references public.counter_receipts (workspace_id, id) on delete cascade,
   foreign key (workspace_id, item_id) references public.services (workspace_id, id),
-  foreign key (workspace_id, variant_id) references public.item_variants (workspace_id, id)
+  foreign key (workspace_id, variant_id) references public.item_variants (workspace_id, id),
+  foreign key (workspace_id, corrects_line_id) references public.counter_receipt_lines (workspace_id, id)
 );
 select public.ensure_system_columns('counter_receipt_lines');
 
