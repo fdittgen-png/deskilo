@@ -22,6 +22,9 @@ export interface PaymentOrderRequest {
   requestId: string | null;
   /** #3556 — the invoices this payment pays (its claim); null without. */
   invoiceIds: string[] | null;
+  /** #4165 — a payment of standalone invoices: no month, a claim and a
+   * request id required, opened by `open_standalone_payment_intent_v1`. */
+  standalone: boolean;
 }
 
 export type ParsedRequest =
@@ -47,7 +50,9 @@ export function parsePaymentOrderRequest(
   const provider = body.provider;
   const memberId = body.member_id as string;
   const amountCents = body.amount_cents as number;
-  const period = body.period as string;
+  const standalone = body.standalone === true;
+  // #4165 — a standalone payment has no month: the database dates it.
+  const period = standalone ? "" : body.period as string;
   const requestId = body.request_id == null ? null : String(body.request_id);
   // #3556 — absent: a payment of the account, as before. Present: a
   // non-empty list of invoice ids; the database checks whose and which.
@@ -60,8 +65,9 @@ export function parsePaymentOrderRequest(
   );
   if (
     !isProvider(provider) || !memberId ||
-    !Number.isInteger(amountCents) || amountCents <= 0 || !period ||
-    (requestId !== null && !UUID_RE.test(requestId)) || !idsValid
+    !Number.isInteger(amountCents) || amountCents <= 0 || (!standalone && !period) ||
+    (requestId !== null && !UUID_RE.test(requestId)) || !idsValid ||
+    (standalone && (requestId === null || invoiceIds === null))
   ) {
     return { ok: false, status: 400, body: { error: "invalid_request" } };
   }
@@ -74,6 +80,7 @@ export function parsePaymentOrderRequest(
       period,
       requestId,
       invoiceIds: invoiceIds as string[] | null,
+      standalone,
     },
   };
 }

@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/server_names.dart';
 import '../../../core/i18n/format_prefs.dart';
 import '../../../core/phone/phone_entry.dart';
 import '../domain/personal_info.dart';
@@ -26,7 +27,7 @@ class SupabaseProfileRepository implements ProfileRepository {
     final userId = _client.auth.currentUser?.id;
     if (userId == null) return null;
     final row = await _client
-        .from('profiles')
+        .from(ServerTable.profiles)
         .select()
         .eq('id', userId)
         .maybeSingle();
@@ -75,7 +76,7 @@ class SupabaseProfileRepository implements ProfileRepository {
     // self, and the 0028 column check re-validates the '+digits' shape.
     // #3650 — the validated form, and what was typed beside it (0752).
     await _client
-        .from('profiles')
+        .from(ServerTable.profiles)
         .update({
           'whatsapp': number.e164 ?? '',
           'whatsapp_typed': number.isEmpty ? '' : number.typed.trim(),
@@ -94,7 +95,7 @@ class SupabaseProfileRepository implements ProfileRepository {
     // Defensive re-normalization: the cap must hold even for a caller
     // that skipped normalizeStatusText.
     await _client
-        .from('profiles')
+        .from(ServerTable.profiles)
         .update({'status_text': normalizeStatusText(statusText)})
         .eq('id', userId);
   }
@@ -111,7 +112,7 @@ class SupabaseProfileRepository implements ProfileRepository {
     // every field. Stored normalized, so what prints is what was typed
     // minus the whitespace and with the country in capitals.
     await _client
-        .from('profiles')
+        .from(ServerTable.profiles)
         .update(info.normalized().toDb())
         .eq('id', userId);
   }
@@ -238,7 +239,7 @@ class SupabaseProfileRepository implements ProfileRepository {
     // calls a failure on the second billed the member at their new
     // address under their old VAT identity (#1532).
     await _client
-        .from('profiles')
+        .from(ServerTable.profiles)
         .update({
           'address': address.trim(),
           'country_code': countryCode.trim().toUpperCase(),
@@ -252,7 +253,7 @@ class SupabaseProfileRepository implements ProfileRepository {
     final userId = _client.auth.currentUser?.id;
     if (userId == null) throw StateError('not signed in');
     await _client
-        .from('profiles')
+        .from(ServerTable.profiles)
         .update({'preferred_locale': locale})
         .eq('id', userId);
   }
@@ -261,7 +262,7 @@ class SupabaseProfileRepository implements ProfileRepository {
   Future<void> setFormatPrefs(FormatPrefs prefs) async {
     final userId = _client.auth.currentUser?.id;
     if (userId == null) throw StateError('not signed in');
-    await _client.from('profiles').update(prefs.toDb()).eq('id', userId);
+    await _client.from(ServerTable.profiles).update(prefs.toDb()).eq('id', userId);
   }
 
   @override
@@ -362,7 +363,7 @@ class SupabaseProfileRepository implements ProfileRepository {
       rethrow;
     }
     await _client
-        .from('profiles')
+        .from(ServerTable.profiles)
         .update({'avatar_path': path})
         .eq('id', userId);
   }
@@ -375,7 +376,7 @@ class SupabaseProfileRepository implements ProfileRepository {
     }
     await _client.storage.from('avatars').remove([_avatarPath(userId)]);
     await _client
-        .from('profiles')
+        .from(ServerTable.profiles)
         .update({'avatar_path': null})
         .eq('id', userId);
   }

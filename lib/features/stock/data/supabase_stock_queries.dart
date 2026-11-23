@@ -2,6 +2,7 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/server_names.dart';
 import '../domain/stock_page.dart';
 import '../domain/stock_queries.dart';
 
@@ -59,7 +60,7 @@ class SupabaseStockQueries implements StockQueries {
   @override
   Future<List<StockPlace>> places(String workspaceId) async {
     final rows = await _client
-        .from('stock_locations')
+        .from(ServerTable.stockLocations)
         .select('id, code, name')
         .eq('workspace_id', workspaceId)
         .eq('active', true)
@@ -70,8 +71,8 @@ class SupabaseStockQueries implements StockQueries {
   @override
   Future<List<StockItem>> items(String workspaceId) async {
     final rows = await _client
-        .from('services')
-        .select('id, name, inventory_unit')
+        .from(ServerTable.services)
+        .select('id, name, inventory_unit, active')
         .eq('workspace_id', workspaceId)
         .eq('stockable', true)
         .order('name');
@@ -81,7 +82,7 @@ class SupabaseStockQueries implements StockQueries {
   @override
   Future<List<StockItem>> unstocked(String workspaceId) async {
     final rows = await _client
-        .from('services')
+        .from(ServerTable.services)
         .select('id, name, inventory_unit')
         .eq('workspace_id', workspaceId)
         .eq('stockable', false)

@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../data/server_names.dart';
 import '../trace/trace_logger.dart';
 import 'auth_callback_guard.dart';
 import 'auth_secret_store.dart';
@@ -149,13 +150,13 @@ class NativeFederationFlow {
         throw const _ProofRefused(FederationFailure.wrongAccount);
       }
       final authority = FederationAuthority.parse(
-        await client.rpc<Object?>('public_identity_authority'),
+        await client.rpc<Object?>(ServerRpc.publicIdentityAuthority),
       );
       if (authority?.issuer != issuer ||
           authority?.installationId != installation) {
         throw const _ProofRefused(FederationFailure.incompatibleServer);
       }
-      final binding = await client.rpc<Object?>('finalize_identity_binding');
+      final binding = await client.rpc<Object?>(ServerRpc.finalizeIdentityBinding);
       final refusal = federationFailureFromBinding(binding);
       if (refusal != null) throw _ProofRefused(refusal);
       if (binding is! Map ||

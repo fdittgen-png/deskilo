@@ -7205,6 +7205,8 @@
   },
   "featureCounterReceiptsDesc": "Una venta en el mostrador da un ticket inmutable, numerado una sola vez, con el cobro recibido. Solo se ofrece donde la operación del país está soportada, y dice claramente cuándo no lo está.",
   "featureCounterReceiptsTitle": "Tickets de caja",
+  "featureCounterTillSessionsDesc": "Abra una caja con su fondo, cuente el cajón al cierre y cierre el día con su informe. Una venta necesita una caja abierta; el efectivo esperado se deriva de lo cobrado, nunca se escribe.",
+  "featureCounterTillSessionsTitle": "Sesiones de caja y cierre del día",
   "featureCountriesEuName": "la Unión Europea",
   "@featureCountriesEuName": {
     "description": "#2454 feature availability by country"
@@ -7838,6 +7840,8 @@
   },
   "featureStockScanningDesc": "Un lector que teclea, o la cámara del móvil, rellena cualquier hoja de mercancías: un código se lee como código de barras, etiqueta de lugar, etiqueta de lote o etiqueta RFID. Activado con el registro de mercancías.",
   "featureStockScanningTitle": "Escaneo",
+  "featureStockTagReadsDesc": "Un lector UHF en modo teclado lee muchas etiquetas a la vez para recibir, mover y contar: las etiquetas se reúnen, se eliminan duplicados y se resuelven, y no se envía nada hasta que la persona confirma.",
+  "featureStockTagReadsTitle": "Lectura de muchas etiquetas",
   "featureStockTagsDesc": "Etiquete artículos, unidades, lotes y lugares con etiquetas RFID o NFC, guardadas como un código de barras y únicas en el negocio. Una etiqueta puede nombrar un lote o una pieza, según el grupo del artículo; la lectura de una etiqueta se reconoce donde se reconoce un código de barras.",
   "featureStockTagsTitle": "Etiquetas RFID",
   "featureStockTakeOutDesc": "Sacar mercancías de las existencias para uso o como pérdida, con el motivo y el lote. Desactivado: no se ofrece consumo ni pérdida; las transferencias y la recepción no cambian.",
@@ -16519,14 +16523,18 @@
     "description": "#2380 (0660) Refusal DKB07: the first payment of an invoice is undone after its later payments."
   },
   "refusalChangedMeanwhile": "Esto ha cambiado mientras tanto. Vuelva a abrirlo para ver cómo está.",
+  "refusalCounterCashEntry": "Este apunte de efectivo no se acepta: el motivo no está en la lista, el importe supera su límite, o las cuentas no suman.",
   "refusalCounterChanged": "Este ticket cambió mientras tanto: ábralo de nuevo.",
   "refusalCounterCorrectionBeyond": "Una corrección no puede ir más allá de lo que queda de la línea original.",
   "refusalCounterCustomerNeeded": "Este negocio nombra un cliente en cada venta: elija uno antes de terminar.",
+  "refusalCounterDayClose": "No se puede cerrar el día: una caja sigue abierta, o el día ya está cerrado.",
+  "refusalCounterDayOpen": "El día de esta caja ya está cerrado: se abrirá de nuevo mañana.",
   "refusalCounterEssentials": "A este ticket le falta algo o no es aceptable: no se numeró nada y no se cobró nada.",
   "refusalCounterGoods": "Aquí no se pueden vender ni recuperar mercancías: el libro de mercancías está desactivado, o no hay un lugar de donde tomarlas o donde devolverlas.",
   "refusalCounterNotOpen": "Este ticket ya no es un borrador abierto, o ya se emitió un ticket para la misma venta.",
   "refusalCounterTenderState": "Esta autorización de tarjeta sigue abierta, es desconocida o ya está resuelta: consulte al proveedor en lugar de pedirla otra vez.",
   "refusalCounterTenders": "Los cobros no saldan exactamente esta venta, o uno de ellos no se acepta aquí.",
+  "refusalCounterTill": "La caja no está lista para esto: ábrala primero, o ya está abierta o cerrada.",
   "refusalCounterUnsupported": "Esta operación no está soportada para su país en el caso que declaró en los ajustes: no se numeró nada y no se cobró nada.",
   "refusalMainStoreExpired": "El almacén principal solo tiene {held} de los {asked} que pide esta venta aptos para vender: el resto ha caducado. No se retiró nada y la venta no se confirmó.",
   "@refusalMainStoreExpired": {
@@ -18997,9 +19005,13 @@
   "@settingHintCalendarRangeDays": {
     "description": "#2487 settings: Setting hint."
   },
+  "settingHintCounterBlindCount": "Mientras una sesión está abierta, la caja no ve el efectivo esperado: cuenta el cajón y ve la diferencia después del cierre. Quien puede ver las finanzas siempre lo ve.",
+  "settingHintCounterCashReasons": "Los motivos que una persona puede dar para el dinero que entra o sale del cajón, separados por comas (por ejemplo cambio, gasto, otro).",
+  "settingHintCounterCountByDenomination": "El fondo y el cajón contado se dan por denominaciones (cuántos de cada billete y moneda) en lugar de un total. Las cuentas deben sumar el importe.",
   "settingHintCounterCustomerlessSales": "Permitidas: se puede vender sin nombrar un cliente. Rechazadas: cada venta nombra uno. Una venta sin cliente nunca crea una cuenta, un miembro ni una suscripción.",
   "settingHintCounterDocumentChannel": "Compartido (mensaje o correo), impreso o ambos. El ticket es el mismo documento inmutable en todos los casos.",
   "settingHintCounterFiscalObligation": "Lo que declara sobre las normas fiscales de una venta en mostrador: ninguna significa que no se aplica ninguna obligación fiscal de caja a su negocio (su propia declaración, anotada en cada ticket); caja obligatoria significa que sí se aplica. Solo se emite un ticket donde la operación de su país está soportada en el caso que declara.",
+  "settingHintCounterPaidOutLimit": "El mayor importe, en unidades menores de la moneda del negocio (céntimos), de una salida del cajón sin alguien que pueda registrar pagos salientes. 0 significa sin límite.",
   "settingHintDirectoryGeocoderUrl": "El servicio compatible con Photon que sitúa una dirección publicada en el mapa de descubrimiento: una dirección https en la internet pública, sin nombre de usuario, contraseña, consulta ni #. Déjelo vacío para usar la dirección con la que se construyó esta versión de la aplicación; si no, el servicio público Photon.",
   "settingHintDirectoryTileUrlTemplate": "El servidor de teselas con el que se dibuja el mapa de descubrimiento, con los marcadores z, x e y entre llaves en su dirección (se admite s entre llaves para un subdominio): https, en la internet pública, sin nombre de usuario, contraseña ni #. Déjelo vacío para usar el servidor de esta versión de la aplicación; si no, OpenStreetMap. Un nuevo host vuelve a preguntar a cada persona antes de cargar el mapa.",
   "settingHintDirectoryUpcomingWindowDays": "Cuántos días antes muestra el directorio la próxima reserva de un miembro.",
@@ -19150,6 +19162,8 @@
   "settingHintStockGroupDefaultTagMode": "Si un artículo que ni un grupo ni un ajuste propio contempla lleva una etiqueta RFID: ninguna, una etiqueta que nombra un lote o una etiqueta por unidad (que exige seguimiento por pieza).",
   "settingHintStockPriceRounding": "Cómo se redondea un precio de venta propuesto: al 0,05 o 0,10 más cercano, o a un precio que termina en 0,99. Solo sirve para proponer un precio.",
   "settingHintStockRepeatedScan": "Qué hace una hoja de mercancías cuando se escanea otra vez el mismo código: añadir uno más a la línea o preguntar la cantidad.",
+  "settingHintStockTagReadMaxTags": "Cuántas etiquetas distintas conserva una lectura masiva antes de no aceptar más. La misma etiqueta leída varias veces cuenta una vez.",
+  "settingHintStockTagReadUnitAsQuantity": "En un traslado masivo, la etiqueta de una pieza de un artículo no seguido pieza a pieza se añade como cantidad 1 de ese artículo. Desactivado: esa etiqueta se deja fuera y se lista.",
   "settingHintStockTagRebindGraceDays": "Cuántos días después de retirarla puede volver a vincularse un código de etiqueta. 0 significa de inmediato. Una etiqueta vigente nunca se vincula dos veces.",
   "settingHintStockWeighedGoods": "Activado: un artículo de stock nuevo se propone en kilogramos en lugar de piezas (carnicería, panadería, mostrador). Cualquier artículo puede tener otra unidad.",
   "settingHintVatViesEvidenceDays": "Días que una comprobación válida del NIF-IVA sigue siendo lo bastante reciente para servir de prueba en una nueva factura. Un valor más corto pide una nueva comprobación antes; no prueba que una operación sea válida.",
@@ -19227,9 +19241,13 @@
   "@settingLabelCalendarRangeDays": {
     "description": "#2487 settings: Setting label."
   },
+  "settingLabelCounterBlindCount": "Contar el cajón a ciegas",
+  "settingLabelCounterCashReasons": "Motivos de entradas y salidas de efectivo",
+  "settingLabelCounterCountByDenomination": "Contar por denominaciones",
   "settingLabelCounterCustomerlessSales": "Ventas sin cliente nombrado",
   "settingLabelCounterDocumentChannel": "Cómo sale el ticket del mostrador",
   "settingLabelCounterFiscalObligation": "Normas fiscales de las ventas en mostrador",
+  "settingLabelCounterPaidOutLimit": "Mayor salida sin autorización",
   "settingLabelDirectoryGeocoderUrl": "Servicio de búsqueda de direcciones",
   "settingLabelDirectoryTileUrlTemplate": "Servidor de teselas del mapa",
   "settingLabelDirectoryUpcomingWindowDays": "Vista previa del directorio",
@@ -19380,6 +19398,8 @@
   "settingLabelStockGroupDefaultTagMode": "Modo de etiqueta por defecto de los artículos",
   "settingLabelStockPriceRounding": "Redondeo de precios",
   "settingLabelStockRepeatedScan": "Un código escaneado de nuevo",
+  "settingLabelStockTagReadMaxTags": "Máximo de etiquetas por lectura masiva",
+  "settingLabelStockTagReadUnitAsQuantity": "Una pieza leída en un traslado cuenta como una de su artículo",
   "settingLabelStockTagRebindGraceDays": "Días antes de reutilizar una etiqueta retirada",
   "settingLabelStockWeighedGoods": "Las mercancías se venden al peso",
   "settingLabelVatViesEvidenceDays": "Vigencia de la comprobación del NIF-IVA",
@@ -20817,6 +20837,10 @@
   "stockCyclePlanValueSetting": "valor mínimo el límite de la empresa",
   "stockCycleScan": "Escanear o escribir un código de barras",
   "stockCycleScanNone": "Ninguna línea por contar tiene este código.",
+  "stockCycleScanWhich": "Varias líneas por contar tienen este código: elija la que está contando.",
+  "@stockCycleScanWhich": {
+    "description": "#4395 cycle counts: a code that fits several pending lines asks which one"
+  },
   "stockCycleScopeHighValue": "Alto valor",
   "stockCycleScopePlaces": "Ubicaciones",
   "stockCycleSkipReason": "Por qué se omite",
@@ -23345,6 +23369,59 @@
   "@threadRefsIn": {
     "description": "Me thread: which workspace the references speak about"
   },
+  "tillBasketEmpty": "Toque un artículo para empezar una venta.",
+  "tillBasketTitle": "Cesta",
+  "tillCashExact": "Importe exacto",
+  "tillCashGiven": "Efectivo entregado",
+  "tillCashInvalid": "Introduzca el importe entregado como número.",
+  "tillCashShort": "El efectivo entregado es inferior al total.",
+  "tillChangeDue": "Cambio a devolver: {amount}",
+  "tillConfirmSale": "Confirmar la venta",
+  "@tillConfirmSale": {
+    "description": "#4366 the till: the sale was sent and its answer was lost; send it again under the same request"
+  },
+  "tillFailed": "La caja no pudo hacerlo. Inténtelo de nuevo.",
+  "tillKeysEmpty": "Todavía no hay nada que vender. Añada primero artículos en el stock.",
+  "tillKeysTitle": "Artículos para cobrar",
+  "tillLeaveBody": "La venta se envió y no llegó la respuesta. Al salir queda en espera: abra la caja de nuevo y confírmela. No la registre otra vez.",
+  "@tillLeaveBody": {
+    "description": "#4366 the till: what leaving with a sale waiting to be confirmed does"
+  },
+  "tillLeaveGo": "Salir",
+  "@tillLeaveGo": {
+    "description": "#4366 the till: leave the till with the sale still waiting"
+  },
+  "tillLeaveStay": "Quedarse",
+  "@tillLeaveStay": {
+    "description": "#4366 the till: stay on the till"
+  },
+  "tillLeaveTitle": "La venta no está confirmada",
+  "@tillLeaveTitle": {
+    "description": "#4366 the till: title of the question asked when leaving with a sale waiting to be confirmed"
+  },
+  "tillNextCustomer": "Siguiente cliente",
+  "tillNotReady": "Aún no está listo en su país: {operation}",
+  "tillNotReadyHint": "No se numera ni se cobra nada mientras la operación del país no esté admitida.",
+  "tillOpCorrectReceipt": "corrección de un ticket",
+  "tillOpExportFiscal": "exportación de datos fiscales",
+  "tillOpIssueReceipt": "emisión de un ticket",
+  "tillOpReconcileTender": "conciliación de un pago con tarjeta",
+  "tillOpSignFiscal": "firma de un ticket fiscal",
+  "tillPayCash": "Cobrar en efectivo",
+  "tillPricing": "Calculando la cesta…",
+  "tillQuantityHint": "Una cantidad exacta, por ejemplo 1 o 0,350.",
+  "tillQuantityRefused": "Introduzca una cantidad superior a cero con un máximo de seis decimales.",
+  "tillQuantityTitle": "Cantidad vendida",
+  "tillReceiptNumber": "Ticket {number}",
+  "tillRemoveLine": "Quitar {name} de la cesta",
+  "tillRetry": "Reintentar",
+  "@tillRetry": {
+    "description": "#4366 the till: ask the server again"
+  },
+  "tillSoldTitle": "Vendido",
+  "tillTaxIncluded": "de los cuales impuesto {amount}",
+  "tillTitle": "Caja",
+  "tillTotalDue": "Total a pagar: {amount}",
   "tipAvailabilityClosure": "Para cerrar un día que nadie podrá reservar: toque «Añadir día de cierre» e indique un motivo si quiere.",
   "tipAvailabilityDays": "Para fijar los días de apertura: marca los días bajo «Días de apertura».",
   "tipAvailabilityGrid": "Para elegir cómo se dividen las reservas: escoge una «Granularidad de las reservas»: periodos libres, franjas, medias jornadas o jornadas completas.",

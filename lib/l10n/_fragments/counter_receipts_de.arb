@@ -13,5 +13,17 @@
   "refusalCounterCorrectionBeyond": "Eine Korrektur kann nicht über das hinausgehen, was von der ursprünglichen Zeile übrig ist.",
   "refusalCounterChanged": "Dieser Beleg hat sich inzwischen geändert: Öffnen Sie ihn erneut.",
   "refusalCounterGoods": "Waren können hier nicht verkauft oder zurückgenommen werden: Das Warenbuch ist aus, oder es gibt keinen Ort, von dem sie genommen oder an den sie zurückgelegt werden.",
-  "refusalCounterTenderState": "Diese Kartenfreigabe ist noch offen, unbekannt oder schon abgeschlossen: Fragen Sie beim Anbieter nach, statt erneut anzufragen."
+  "refusalCounterTenderState": "Diese Kartenfreigabe ist noch offen, unbekannt oder schon abgeschlossen: Fragen Sie beim Anbieter nach, statt erneut anzufragen.",
+  "settingLabelCounterBlindCount": "Die Schublade blind zählen",
+  "settingHintCounterBlindCount": "Solange eine Sitzung offen ist, sieht die Kasse das erwartete Bargeld nicht: Sie zählt die Schublade und sieht die Differenz nach dem Abschluss. Wer die Finanzen sehen darf, sieht es immer.",
+  "settingLabelCounterCountByDenomination": "Nach Stückelung zählen",
+  "settingHintCounterCountByDenomination": "Wechselgeld und gezählte Schublade werden nach Stückelung angegeben (wie viele von jedem Schein und jeder Münze) statt als Summe. Die Zahlen müssen den Betrag ergeben.",
+  "settingLabelCounterPaidOutLimit": "Größte Entnahme ohne Freigabe",
+  "settingHintCounterPaidOutLimit": "Der größte Betrag in Untereinheiten der Betriebswährung (Cent), den eine Entnahme aus der Schublade ohne jemanden haben darf, der ausgehende Zahlungen erfassen darf. 0 heißt keine Grenze.",
+  "settingLabelCounterCashReasons": "Gründe für Bargeld ein und aus",
+  "settingHintCounterCashReasons": "Die Gründe, die jemand für Geld angeben kann, das in die Schublade eingezahlt oder entnommen wird, durch Kommas getrennt (zum Beispiel Wechselgeld, Ausgabe, sonstiges).",
+  "refusalCounterTill": "Die Kasse ist dafür nicht bereit: Öffnen Sie sie zuerst, oder sie ist schon offen oder geschlossen.",
+  "refusalCounterCashEntry": "Diese Bargeldbuchung wird nicht angenommen: Der Grund steht nicht auf der Liste, der Betrag liegt über Ihrer Grenze, oder die Zahlen ergeben nicht den Betrag.",
+  "refusalCounterDayClose": "Der Tag kann nicht abgeschlossen werden: Eine Kasse ist noch offen, oder der Tag ist schon abgeschlossen.",
+  "refusalCounterDayOpen": "Der Tag dieser Kasse ist schon abgeschlossen: Sie wird morgen wieder geöffnet."
 }

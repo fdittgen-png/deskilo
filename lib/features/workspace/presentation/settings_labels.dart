@@ -88,6 +88,10 @@ String _counterSettingLabel(AppLocalizations l10n, String key) => switch (key) {
       'counter.fiscal_obligation' => l10n.settingLabelCounterFiscalObligation,
       'counter.document_channel' => l10n.settingLabelCounterDocumentChannel,
       'counter.customerless_sales' => l10n.settingLabelCounterCustomerlessSales,
+      'counter.blind_count' => l10n.settingLabelCounterBlindCount,
+      'counter.count_by_denomination' => l10n.settingLabelCounterCountByDenomination,
+      'counter.paid_out_limit_minor' => l10n.settingLabelCounterPaidOutLimit,
+      'counter.cash_reasons' => l10n.settingLabelCounterCashReasons,
       _ => _itemGroupSettingLabel(l10n, key),
     };
 
@@ -241,6 +245,10 @@ String? _counterSettingHint(AppLocalizations l10n, String key) => switch (key) {
       'counter.fiscal_obligation' => l10n.settingHintCounterFiscalObligation,
       'counter.document_channel' => l10n.settingHintCounterDocumentChannel,
       'counter.customerless_sales' => l10n.settingHintCounterCustomerlessSales,
+      'counter.blind_count' => l10n.settingHintCounterBlindCount,
+      'counter.count_by_denomination' => l10n.settingHintCounterCountByDenomination,
+      'counter.paid_out_limit_minor' => l10n.settingHintCounterPaidOutLimit,
+      'counter.cash_reasons' => l10n.settingHintCounterCashReasons,
       _ => _itemGroupSettingHint(l10n, key),
     };
 

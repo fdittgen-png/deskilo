@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/server_names.dart';
 import '../domain/vies_check.dart';
 import '../domain/vies_repository.dart';
 
@@ -13,7 +14,7 @@ class SupabaseViesRepository implements ViesRepository {
   @override
   Future<ViesCheck> fetchViesCheck(String memberId) async {
     final row = await _client
-        .from('members')
+        .from(ServerTable.members)
         .select(
           'vies_vat_id, vies_status, vies_consultation, vies_checked_at, '
           'vies_detail',

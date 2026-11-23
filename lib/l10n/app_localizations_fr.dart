@@ -11714,6 +11714,14 @@ class AppLocalizationsFr extends AppLocalizations {
   String get featureCounterReceiptsTitle => 'Tickets de caisse';
 
   @override
+  String get featureCounterTillSessionsDesc =>
+      'Ouvrez une caisse avec son fond, comptez le tiroir à la fermeture et clôturez la journée avec son rapport. Une vente exige une caisse ouverte ; les espèces attendues se déduisent de ce qui a été encaissé, jamais saisies.';
+
+  @override
+  String get featureCounterTillSessionsTitle =>
+      'Sessions de caisse et clôture de journée';
+
+  @override
   String get featureCountriesEuName => 'l\'Union européenne';
 
   @override
@@ -12681,6 +12689,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get featureStockScanningTitle => 'Scan';
+
+  @override
+  String get featureStockTagReadsDesc =>
+      'Un lecteur UHF en mode clavier lit de nombreuses étiquettes d\'un coup pour recevoir, déplacer et compter : les étiquettes sont rassemblées, dédoublonnées et résolues, et rien n\'est envoyé avant la confirmation de l\'utilisateur.';
+
+  @override
+  String get featureStockTagReadsTitle => 'Lecture de nombreuses étiquettes';
 
   @override
   String get featureStockTagsDesc =>
@@ -29084,6 +29099,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Cet élément a changé entre-temps. Rouvrez-le pour voir où il en est.';
 
   @override
+  String get refusalCounterCashEntry =>
+      'Cette écriture d\'espèces n\'est pas acceptée : le motif n\'est pas dans la liste, le montant dépasse votre limite, ou les nombres ne correspondent pas.';
+
+  @override
   String get refusalCounterChanged =>
       'Ce ticket a changé entre-temps : rouvrez-le.';
 
@@ -29094,6 +29113,14 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get refusalCounterCustomerNeeded =>
       'Cette entreprise nomme un client à chaque vente : choisissez-en un avant de terminer.';
+
+  @override
+  String get refusalCounterDayClose =>
+      'La journée ne peut pas être clôturée : une caisse est encore ouverte, ou la journée est déjà clôturée.';
+
+  @override
+  String get refusalCounterDayOpen =>
+      'La journée de cette caisse est déjà clôturée : elle sera ouverte à nouveau demain.';
 
   @override
   String get refusalCounterEssentials =>
@@ -29114,6 +29141,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get refusalCounterTenders =>
       'Les règlements ne soldent pas exactement cette vente, ou l\'un d\'eux n\'est pas pris en charge ici.';
+
+  @override
+  String get refusalCounterTill =>
+      'La caisse n\'est pas prête pour cela : ouvrez-la d\'abord, ou elle est déjà ouverte ou fermée.';
 
   @override
   String get refusalCounterUnsupported =>
@@ -32246,6 +32277,18 @@ class AppLocalizationsFr extends AppLocalizations {
       'Fixée par la plateforme : la période la plus longue qu’une requête de calendrier peut demander. Elle borne la requête.';
 
   @override
+  String get settingHintCounterBlindCount =>
+      'Tant qu\'une session est ouverte, la caisse ne voit pas les espèces attendues : elle compte le tiroir et voit l\'écart après la fermeture. Qui peut voir les finances le voit toujours.';
+
+  @override
+  String get settingHintCounterCashReasons =>
+      'Les motifs qu\'une personne peut donner pour de l\'argent versé dans le tiroir ou retiré, séparés par des virgules (par exemple monnaie, dépense, autre).';
+
+  @override
+  String get settingHintCounterCountByDenomination =>
+      'Le fond de caisse et le tiroir compté sont donnés par coupures (combien de chaque billet et pièce) plutôt qu\'en total. Les nombres doivent correspondre au montant.';
+
+  @override
   String get settingHintCounterCustomerlessSales =>
       'Autorisées : une vente peut se faire sans nommer de client. Refusées : chaque vente en nomme un. Une vente sans client ne crée jamais de compte, de membre ni d\'abonnement.';
 
@@ -32256,6 +32299,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingHintCounterFiscalObligation =>
       'Ce que vous déclarez sur les règles fiscales d\'une vente au comptoir : aucune signifie qu\'aucune obligation fiscale de caisse ne s\'applique à votre entreprise (votre propre déclaration, inscrite sur chaque ticket) ; caisse requise signifie qu\'une obligation s\'applique. Un ticket n\'est émis que là où l\'opération de votre pays est prise en charge dans le cas que vous déclarez.';
+
+  @override
+  String get settingHintCounterPaidOutLimit =>
+      'Le plus grand montant, en unités mineures de la devise de l\'entreprise (centimes), d\'un retrait du tiroir sans une personne pouvant enregistrer des paiements sortants. 0 signifie aucune limite.';
 
   @override
   String get settingHintDirectoryGeocoderUrl =>
@@ -32534,6 +32581,14 @@ class AppLocalizationsFr extends AppLocalizations {
       'Ce que fait une feuille de marchandises quand le même code est scanné de nouveau : ajouter un de plus à la ligne, ou demander la quantité.';
 
   @override
+  String get settingHintStockTagReadMaxTags =>
+      'Combien d\'étiquettes différentes une lecture en masse conserve avant de ne plus en prendre. Une même étiquette lue plusieurs fois compte une fois.';
+
+  @override
+  String get settingHintStockTagReadUnitAsQuantity =>
+      'Dans un transfert en masse, une étiquette posée sur une pièce d\'un article non suivi pièce par pièce est ajoutée comme quantité 1 de cet article. Désactivé : cette étiquette est écartée et listée.';
+
+  @override
   String get settingHintStockTagRebindGraceDays =>
       'Combien de jours après son retrait un code d\'étiquette peut être lié de nouveau. 0 : tout de suite. Une étiquette en vigueur n\'est jamais liée deux fois.';
 
@@ -32638,6 +32693,16 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingLabelCalendarRangeDays => 'Période du calendrier';
 
   @override
+  String get settingLabelCounterBlindCount => 'Compter le tiroir à l\'aveugle';
+
+  @override
+  String get settingLabelCounterCashReasons =>
+      'Motifs des entrées et sorties d\'espèces';
+
+  @override
+  String get settingLabelCounterCountByDenomination => 'Compter par coupures';
+
+  @override
   String get settingLabelCounterCustomerlessSales => 'Ventes sans client nommé';
 
   @override
@@ -32647,6 +32712,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingLabelCounterFiscalObligation =>
       'Règles fiscales des ventes au comptoir';
+
+  @override
+  String get settingLabelCounterPaidOutLimit =>
+      'Plus grand retrait sans autorisation';
 
   @override
   String get settingLabelDirectoryGeocoderUrl =>
@@ -32910,6 +32979,14 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get settingLabelStockRepeatedScan => 'Un code scanné de nouveau';
+
+  @override
+  String get settingLabelStockTagReadMaxTags =>
+      'Nombre maximal d\'étiquettes par lecture en masse';
+
+  @override
+  String get settingLabelStockTagReadUnitAsQuantity =>
+      'Une pièce lue dans un transfert compte pour un de son article';
 
   @override
   String get settingLabelStockTagRebindGraceDays =>
@@ -36021,6 +36098,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get stockCycleScanNone =>
       'Aucune ligne restant à compter n’a ce code.';
+
+  @override
+  String get stockCycleScanWhich =>
+      'Plusieurs lignes encore à compter ont ce code : choisissez celle que vous comptez.';
 
   @override
   String get stockCycleScopeHighValue => 'Forte valeur';
@@ -40122,6 +40203,128 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get threadRefsIn => 'Références dans';
+
+  @override
+  String get tillBasketEmpty => 'Touchez un article pour commencer une vente.';
+
+  @override
+  String get tillBasketTitle => 'Panier';
+
+  @override
+  String get tillCashExact => 'Compte juste';
+
+  @override
+  String get tillCashGiven => 'Espèces remises';
+
+  @override
+  String get tillCashInvalid =>
+      'Saisissez le montant remis sous forme de nombre.';
+
+  @override
+  String get tillCashShort => 'Les espèces remises sont inférieures au total.';
+
+  @override
+  String tillChangeDue(String amount) {
+    return 'Monnaie à rendre : $amount';
+  }
+
+  @override
+  String get tillConfirmSale => 'Confirmer la vente';
+
+  @override
+  String get tillFailed => 'La caisse n\'a pas pu le faire. Réessayez.';
+
+  @override
+  String get tillKeysEmpty =>
+      'Il n\'y a encore rien à vendre. Ajoutez d\'abord des articles dans le stock.';
+
+  @override
+  String get tillKeysTitle => 'Articles à encaisser';
+
+  @override
+  String get tillLeaveBody =>
+      'La vente a été envoyée et la réponse n\'est pas venue. En quittant, elle reste en attente : rouvrez la caisse et confirmez-la. Ne la ressaisissez pas.';
+
+  @override
+  String get tillLeaveGo => 'Quitter';
+
+  @override
+  String get tillLeaveStay => 'Rester';
+
+  @override
+  String get tillLeaveTitle => 'La vente n\'est pas confirmée';
+
+  @override
+  String get tillNextCustomer => 'Client suivant';
+
+  @override
+  String tillNotReady(String operation) {
+    return 'Pas encore prêt dans votre pays : $operation';
+  }
+
+  @override
+  String get tillNotReadyHint =>
+      'Rien n\'est numéroté ni encaissé tant que l\'opération du pays n\'est pas prise en charge.';
+
+  @override
+  String get tillOpCorrectReceipt => 'correction d\'un ticket';
+
+  @override
+  String get tillOpExportFiscal => 'export des données fiscales';
+
+  @override
+  String get tillOpIssueReceipt => 'émission d\'un ticket';
+
+  @override
+  String get tillOpReconcileTender => 'rapprochement d\'un paiement par carte';
+
+  @override
+  String get tillOpSignFiscal => 'signature d\'un ticket fiscal';
+
+  @override
+  String get tillPayCash => 'Encaisser en espèces';
+
+  @override
+  String get tillPricing => 'Calcul du panier…';
+
+  @override
+  String get tillQuantityHint => 'Une quantité exacte, par exemple 1 ou 0,350.';
+
+  @override
+  String get tillQuantityRefused =>
+      'Saisissez une quantité supérieure à zéro, avec au plus six décimales.';
+
+  @override
+  String get tillQuantityTitle => 'Quantité vendue';
+
+  @override
+  String tillReceiptNumber(String number) {
+    return 'Ticket $number';
+  }
+
+  @override
+  String tillRemoveLine(String name) {
+    return 'Retirer $name du panier';
+  }
+
+  @override
+  String get tillRetry => 'Réessayer';
+
+  @override
+  String get tillSoldTitle => 'Vendu';
+
+  @override
+  String tillTaxIncluded(String amount) {
+    return 'dont taxe $amount';
+  }
+
+  @override
+  String get tillTitle => 'Caisse';
+
+  @override
+  String tillTotalDue(String amount) {
+    return 'Total à payer: $amount';
+  }
 
   @override
   String get tipAvailabilityClosure =>

@@ -3136,6 +3136,19 @@ Con la función *Etiquetas* activada y un teléfono que lee NFC, **Stock → Art
 - **Las etiquetas UHF** no las puede leer un teléfono. Un artículo que solo las tiene dice *use el lector RFID*.
 - Asociar requiere el derecho de gestionar el stock; leer, el de verlo.
 
+<!-- anchor: user.money.till -->
+### Caja
+
+**Público:** Administrador/a · Propietario
+
+Atiende a clientes en el mostrador y quiere cada venta en segundos, numerada y cobrada en efectivo.
+
+Abra **Caja** en el menú de ventas (necesita la función de tickets de caja y el derecho a emitir facturas). Los artículos son teclas: un toque registra uno, un segundo toque añade otro. Toque una línea para escribir exactamente la **Cantidad vendida**, por ejemplo 0,350 para un artículo pesado (una coma se lee como punto; la cantidad debe ser mayor que cero, con seis decimales como máximo). El servidor valora la cesta, con el impuesto incluido, y la caja muestra **Total a pagar**; nada se calcula en el teléfono.
+
+Pulse **Cobrar en efectivo** y escriba el **Efectivo entregado** (o **Importe exacto**). Menos que el total se rechaza antes de enviar nada. El servidor numera la venta y la caja indica el cambio; **Siguiente cliente** empieza una cesta vacía. Enviar dos veces la misma venta nunca la vende dos veces.
+
+Donde su país aún no permite la caja, esta nombra la operación que falta y no ofrece nada: nada se numera ni se cobra. Una línea de mercancía necesita la gestión de stock; el rechazo del servidor se dice con palabras. Los pagos con tarjeta, descuentos, reembolsos y devoluciones no forman parte de esta primera caja.
+
 <!-- anchor: user.money.stock.value -->
 ### Valor de las existencias y origen de la mercancía
 

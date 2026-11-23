@@ -856,5 +856,14 @@
  "optChannelPrint": "Imprimir",
  "optChannelBoth": "Compartir e imprimir",
  "optCustomerlessAllowed": "Permitidas",
- "optCustomerlessRefused": "Siempre se nombra un cliente"
+ "optCustomerlessRefused": "Siempre se nombra un cliente",
+ "counterBlind": "Contar el cajón a ciegas",
+ "counterBlindHint": "La caja no ve el efectivo esperado hasta contar el cajón. Se ajusta en los ajustes de la app.",
+ "counterByDenomination": "Contar por denominaciones",
+ "counterByDenominationHint": "El fondo y el cajón contado se dan billete a billete y moneda a moneda. Se ajusta en los ajustes de la app.",
+ "counterPaidOutLimit": "Mayor salida sin autorización",
+ "counterPaidOutLimitHint": "Una salida por encima necesita a alguien que pueda registrar pagos salientes. Se ajusta en los ajustes de la app.",
+ "counterCashReasons": "Motivos de entradas y salidas de efectivo",
+ "counterCashReasonsHint": "Separados por comas, por ejemplo cambio, gasto, otro. Se ajusta en los ajustes de la app.",
+ "optNoLimit": "Sin límite"
 }

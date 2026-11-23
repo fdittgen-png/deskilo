@@ -18796,6 +18796,18 @@ abstract class AppLocalizations {
   /// **'Counter receipts'**
   String get featureCounterReceiptsTitle;
 
+  /// #4367 feature description
+  ///
+  /// In en, this message translates to:
+  /// **'Open a till with its float, count the drawer at the close, and close the day with its report. A sale needs an open till; the expected cash is derived from what was taken, never typed.'**
+  String get featureCounterTillSessionsDesc;
+
+  /// #4367 feature name
+  ///
+  /// In en, this message translates to:
+  /// **'Till sessions and day close'**
+  String get featureCounterTillSessionsTitle;
+
   /// #2454 feature availability by country
   ///
   /// In en, this message translates to:
@@ -20415,6 +20427,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Scanning'**
   String get featureStockScanningTitle;
+
+  /// #4364 feature description
+  ///
+  /// In en, this message translates to:
+  /// **'A UHF reader in keyboard mode reads many tags at once to receive, move and count: the tags are collected, de-duplicated and resolved, and nothing is sent until the user confirms.'**
+  String get featureStockTagReadsDesc;
+
+  /// #4364 feature name
+  ///
+  /// In en, this message translates to:
+  /// **'Reading many tags'**
+  String get featureStockTagReadsTitle;
 
   /// #4362 feature description
   ///
@@ -46134,6 +46158,12 @@ abstract class AppLocalizations {
   /// **'This changed in the meantime. Reopen it to see where it stands.'**
   String get refusalChangedMeanwhile;
 
+  /// #4367 setting label/hint or refusal
+  ///
+  /// In en, this message translates to:
+  /// **'This cash entry is not accepted: the reason is not on the list, the amount is above the limit for you, or the counts do not add up.'**
+  String get refusalCounterCashEntry;
+
   /// #4185 refusal
   ///
   /// In en, this message translates to:
@@ -46151,6 +46181,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This business names a customer on every sale: choose one before finishing.'**
   String get refusalCounterCustomerNeeded;
+
+  /// #4367 setting label/hint or refusal
+  ///
+  /// In en, this message translates to:
+  /// **'The day cannot be closed: a till is still open, or the day is already closed.'**
+  String get refusalCounterDayClose;
+
+  /// #4367 setting label/hint or refusal
+  ///
+  /// In en, this message translates to:
+  /// **'The day of this till is already closed: it is opened again tomorrow.'**
+  String get refusalCounterDayOpen;
 
   /// #4185 refusal
   ///
@@ -46181,6 +46223,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The payments do not settle this sale exactly, or one of them is not taken here.'**
   String get refusalCounterTenders;
+
+  /// #4367 setting label/hint or refusal
+  ///
+  /// In en, this message translates to:
+  /// **'The till is not ready for this: open it first, or it is already open or closed.'**
+  String get refusalCounterTill;
 
   /// #4184 refusal
   ///
@@ -51120,6 +51168,24 @@ abstract class AppLocalizations {
   /// **'Fixed by the platform: the longest range one calendar request may ask for. It bounds the query.'**
   String get settingHintCalendarRangeDays;
 
+  /// #4367 setting label/hint or refusal
+  ///
+  /// In en, this message translates to:
+  /// **'While a session is open the counter does not see the expected cash: they count the drawer and see the difference after the close. Someone who may see the finances always sees it.'**
+  String get settingHintCounterBlindCount;
+
+  /// #4367 setting label/hint or refusal
+  ///
+  /// In en, this message translates to:
+  /// **'The reasons a person may give for money paid into or out of the drawer, separated by commas (for example change, expense, other).'**
+  String get settingHintCounterCashReasons;
+
+  /// #4367 setting label/hint or refusal
+  ///
+  /// In en, this message translates to:
+  /// **'The float and the counted drawer are given by denomination (how many of each note and coin) rather than as a total. The counts must add up to the amount.'**
+  String get settingHintCounterCountByDenomination;
+
   /// #4184 setting label/hint
   ///
   /// In en, this message translates to:
@@ -51137,6 +51203,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'What you declare about the fiscal rules for a sale at the counter: none means no fiscal cash-register obligation applies to your business (your own declaration, recorded on each receipt); register required means one does. A receipt is issued only where your country\'s operation is supported under the case you declare.'**
   String get settingHintCounterFiscalObligation;
+
+  /// #4367 setting label/hint or refusal
+  ///
+  /// In en, this message translates to:
+  /// **'The largest amount, in minor units of the business currency (cents), that a paid-out from the drawer may be without someone who may record outgoing payments. 0 means no limit.'**
+  String get settingHintCounterPaidOutLimit;
 
   /// #2488 Setting hint.
   ///
@@ -51552,6 +51624,18 @@ abstract class AppLocalizations {
   /// **'What a goods sheet does when the same code is scanned again: add one more to the line, or ask the quantity.'**
   String get settingHintStockRepeatedScan;
 
+  /// #4364 setting label/hint
+  ///
+  /// In en, this message translates to:
+  /// **'How many different tags one bulk read keeps before it takes no more. The same tag read many times counts once.'**
+  String get settingHintStockTagReadMaxTags;
+
+  /// #4364 setting label/hint
+  ///
+  /// In en, this message translates to:
+  /// **'In a bulk move, a tag on a piece of an item that is not tracked piece by piece is added as quantity 1 of that item. Off: such a tag is left out and listed.'**
+  String get settingHintStockTagReadUnitAsQuantity;
+
   /// #4362/#4359 setting label/hint
   ///
   /// In en, this message translates to:
@@ -51726,6 +51810,24 @@ abstract class AppLocalizations {
   /// **'Calendar range'**
   String get settingLabelCalendarRangeDays;
 
+  /// #4367 setting label/hint or refusal
+  ///
+  /// In en, this message translates to:
+  /// **'Count the drawer blind'**
+  String get settingLabelCounterBlindCount;
+
+  /// #4367 setting label/hint or refusal
+  ///
+  /// In en, this message translates to:
+  /// **'Reasons for cash in and out'**
+  String get settingLabelCounterCashReasons;
+
+  /// #4367 setting label/hint or refusal
+  ///
+  /// In en, this message translates to:
+  /// **'Count by denomination'**
+  String get settingLabelCounterCountByDenomination;
+
   /// #4184 setting label/hint
   ///
   /// In en, this message translates to:
@@ -51743,6 +51845,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Fiscal rules for counter sales'**
   String get settingLabelCounterFiscalObligation;
+
+  /// #4367 setting label/hint or refusal
+  ///
+  /// In en, this message translates to:
+  /// **'Largest paid-out without approval'**
+  String get settingLabelCounterPaidOutLimit;
 
   /// #2488 Setting label.
   ///
@@ -52157,6 +52265,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'A code scanned again'**
   String get settingLabelStockRepeatedScan;
+
+  /// #4364 setting label/hint
+  ///
+  /// In en, this message translates to:
+  /// **'Most tags in one bulk read'**
+  String get settingLabelStockTagReadMaxTags;
+
+  /// #4364 setting label/hint
+  ///
+  /// In en, this message translates to:
+  /// **'A piece read in a move counts as one of its item'**
+  String get settingLabelStockTagReadUnitAsQuantity;
 
   /// #4362/#4359 setting label/hint
   ///
@@ -57004,6 +57124,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No line still to count has this code.'**
   String get stockCycleScanNone;
+
+  /// #4395 cycle counts: a code that fits several pending lines asks which one
+  ///
+  /// In en, this message translates to:
+  /// **'Several lines still to count have this code: choose the one you are counting.'**
+  String get stockCycleScanWhich;
 
   /// #4295 cycle counts
   ///
@@ -63873,6 +63999,216 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'References in'**
   String get threadRefsIn;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'Tap an item to start a sale.'**
+  String get tillBasketEmpty;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'Basket'**
+  String get tillBasketTitle;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'Exact amount'**
+  String get tillCashExact;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'Cash given'**
+  String get tillCashGiven;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the amount given as a number.'**
+  String get tillCashInvalid;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'The cash given is less than the total.'**
+  String get tillCashShort;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'Change due: {amount}'**
+  String tillChangeDue(String amount);
+
+  /// #4366 the till: the sale was sent and its answer was lost; send it again under the same request
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm the sale'**
+  String get tillConfirmSale;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'The till could not do that. Try again.'**
+  String get tillFailed;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'There is nothing to sell yet. Add items in the stock first.'**
+  String get tillKeysEmpty;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'Items to ring up'**
+  String get tillKeysTitle;
+
+  /// #4366 the till: what leaving with a sale waiting to be confirmed does
+  ///
+  /// In en, this message translates to:
+  /// **'The sale was sent and its answer did not come. Leaving keeps it waiting: open the till again and confirm it. Do not ring it up again.'**
+  String get tillLeaveBody;
+
+  /// #4366 the till: leave the till with the sale still waiting
+  ///
+  /// In en, this message translates to:
+  /// **'Leave'**
+  String get tillLeaveGo;
+
+  /// #4366 the till: stay on the till
+  ///
+  /// In en, this message translates to:
+  /// **'Stay'**
+  String get tillLeaveStay;
+
+  /// #4366 the till: title of the question asked when leaving with a sale waiting to be confirmed
+  ///
+  /// In en, this message translates to:
+  /// **'The sale is not confirmed'**
+  String get tillLeaveTitle;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'Next customer'**
+  String get tillNextCustomer;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'Not ready in your country: {operation}'**
+  String tillNotReady(String operation);
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing is numbered and nothing is taken until the country\'s operation is supported.'**
+  String get tillNotReadyHint;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'correcting a receipt'**
+  String get tillOpCorrectReceipt;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'exporting fiscal records'**
+  String get tillOpExportFiscal;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'issuing a receipt'**
+  String get tillOpIssueReceipt;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'reconciling a card payment'**
+  String get tillOpReconcileTender;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'signing a fiscal receipt'**
+  String get tillOpSignFiscal;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'Take cash'**
+  String get tillPayCash;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'Pricing the basket…'**
+  String get tillPricing;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'An exact quantity, for example 1 or 0.350.'**
+  String get tillQuantityHint;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a quantity above zero with at most six decimals.'**
+  String get tillQuantityRefused;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity sold'**
+  String get tillQuantityTitle;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt {number}'**
+  String tillReceiptNumber(String number);
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'Take {name} out of the basket'**
+  String tillRemoveLine(String name);
+
+  /// #4366 the till: ask the server again
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get tillRetry;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'Sold'**
+  String get tillSoldTitle;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'of which tax {amount}'**
+  String tillTaxIncluded(String amount);
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'Till'**
+  String get tillTitle;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'Total to pay: {amount}'**
+  String tillTotalDue(String amount);
 
   /// Tip (#2313) on the availability surface: a scenario "To …: …".
   ///

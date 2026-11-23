@@ -930,6 +930,14 @@
   "@featureCounterReceiptsDesc": {
     "description": "#4184 feature description"
   },
+  "featureCounterTillSessionsTitle": "Till sessions and day close",
+  "featureCounterTillSessionsDesc": "Open a till with its float, count the drawer at the close, and close the day with its report. A sale needs an open till; the expected cash is derived from what was taken, never typed.",
+  "@featureCounterTillSessionsTitle": {
+    "description": "#4367 feature name"
+  },
+  "@featureCounterTillSessionsDesc": {
+    "description": "#4367 feature description"
+  },
   "featureStockTagReadsTitle": "Reading many tags",
   "featureStockTagReadsDesc": "A UHF reader in keyboard mode reads many tags at once to receive, move and count: the tags are collected, de-duplicated and resolved, and nothing is sent until the user confirms.",
   "@featureStockTagReadsTitle": {

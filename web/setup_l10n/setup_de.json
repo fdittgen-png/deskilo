@@ -856,5 +856,14 @@
  "optChannelPrint": "Drucken",
  "optChannelBoth": "Teilen und drucken",
  "optCustomerlessAllowed": "Erlaubt",
- "optCustomerlessRefused": "Ein Kunde wird immer genannt"
+ "optCustomerlessRefused": "Ein Kunde wird immer genannt",
+ "counterBlind": "Die Schublade blind zählen",
+ "counterBlindHint": "Die Kasse sieht das erwartete Bargeld erst nach dem Zählen der Schublade. Einzustellen in den Einstellungen der App.",
+ "counterByDenomination": "Nach Stückelung zählen",
+ "counterByDenominationHint": "Wechselgeld und gezählte Schublade werden Schein für Schein und Münze für Münze angegeben. Einzustellen in den Einstellungen der App.",
+ "counterPaidOutLimit": "Größte Entnahme ohne Freigabe",
+ "counterPaidOutLimitHint": "Eine Entnahme darüber braucht jemanden, der ausgehende Zahlungen erfassen darf. Einzustellen in den Einstellungen der App.",
+ "counterCashReasons": "Gründe für Bargeld ein und aus",
+ "counterCashReasonsHint": "Durch Kommas getrennt, zum Beispiel Wechselgeld, Ausgabe, sonstiges. Einzustellen in den Einstellungen der App.",
+ "optNoLimit": "Keine Grenze"
 }

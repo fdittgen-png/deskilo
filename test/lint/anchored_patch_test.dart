@@ -29,6 +29,16 @@ import 'lint_sources.dart';
 /// `function` re-created after being patched, each verified by hand.
 /// Recorded as `function@recreating-migration`.
 const _reviewed = {
+  // #4165/0901 restates settle_online_payment from the LIVE dev definition
+  // (pg_get_functiondef, the 0797 body with 0393's gate and 0757's
+  // captured/reversed return) and adds only the explicit branch: the
+  // credit's posting day and mode. pgTAP 449, 419 and 527.
+  'settle_online_payment@0901',
+  // #4165/0901 restates move_payment_credit_v1 from the LIVE dev definition
+  // (the 0690 body) and changes only the mode the moved credit and its
+  // reversal carry and the invoiced-month guards for explicit credits.
+  // pgTAP 364, 366 and 528.
+  'move_payment_credit_v1@0901',
   // #4153/0809 carries the live mcp_read_v1 definition, including its
   // place, feature, consent-ceiling and event-type guards. Only booking
   // event visibility is added to validation reads; pgTAP 463 executes them.

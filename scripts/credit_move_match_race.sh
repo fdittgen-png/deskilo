@@ -44,7 +44,7 @@ insert into public.invoices (workspace_id, member_id, issuer_member_id, number, 
 select '$ws', p.id, o.id, 'RACE-' || substr('$ws', 1, 8), '2031-02', '2031-02', '[]', 0, 'EUR', 'P', 'W', 'O', repeat('s', 64), 'full'
   from public.members p, public.members o where p.user_id = '$payer' and o.user_id = '$owner';
 SQL
-q() { psql "$url" -X -qAt -v ON_ERROR_STOP=1 -c "$1"; }
+. "$(dirname "${BASH_SOURCE[0]}")/lib/race.sh"
 c1=$(q "select id from public.ledger_entries where workspace_id = '$ws' and amount_cents = 1001")
 c2=$(q "select id from public.ledger_entries where workspace_id = '$ws' and amount_cents = 1002")
 to=$(q "select id from public.members where workspace_id = '$ws' and user_id = '$receiver'")

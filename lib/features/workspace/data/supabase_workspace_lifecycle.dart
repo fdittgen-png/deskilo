@@ -6,6 +6,7 @@
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/server_names.dart';
 import '../domain/feature_flags_write.dart';
 import '../domain/workspace.dart';
 import '../domain/workspace_feature.dart';
@@ -18,7 +19,7 @@ mixin SupabaseWorkspaceLifecycle on SupabaseWorkspaceRows
     implements WorkspaceLifecycleRepository {
   @override
   Future<List<Workspace>> fetchMyWorkspaces() async {
-    final rows = await client.from('workspaces').select();
+    final rows = await client.from(ServerTable.workspaces).select();
     return rows.map(workspaceFromRow).toList();
   }
 
@@ -168,7 +169,7 @@ mixin SupabaseWorkspaceLifecycle on SupabaseWorkspaceRows
     final userId = client.auth.currentUser?.id;
     if (userId == null) return null;
     final row = await client
-        .from('profiles')
+        .from(ServerTable.profiles)
         .select('default_workspace_id')
         .eq('id', userId)
         .maybeSingle();
@@ -180,7 +181,7 @@ mixin SupabaseWorkspaceLifecycle on SupabaseWorkspaceRows
     final userId = client.auth.currentUser?.id;
     if (userId == null) return;
     await client
-        .from('profiles')
+        .from(ServerTable.profiles)
         .update({'default_workspace_id': workspaceId})
         .eq('id', userId);
   }

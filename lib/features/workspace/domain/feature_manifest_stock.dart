@@ -123,6 +123,14 @@ const Map<WorkspaceFeature, FeatureManifestEntry> stockFeatureManifest = {
     requires: WorkspaceFeature.standaloneInvoicing,
     defaultOn: false,
   ),
+  // #4367 — till sessions: a till is opened with its float, counted at the close, and the day is closed with its report. Asked for, under counter receipts. Off: sales need no session.
+  WorkspaceFeature.counterTillSessions: FeatureManifestEntry(
+    feature: WorkspaceFeature.counterTillSessions,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.counterReceipts,
+    defaultOn: false,
+  ),
   // #4364 — UHF bulk reads: many tags read at once to receive, move and count, resolved in batches; nothing is sent until the user confirms. Asked for, under RFID tags. Off: tags are read one at a time.
   WorkspaceFeature.stockTagReads: FeatureManifestEntry(
     feature: WorkspaceFeature.stockTagReads,

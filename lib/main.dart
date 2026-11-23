@@ -15,6 +15,7 @@ import 'app/private_values_wiring.dart';
 import 'app/realtime_invalidations.dart';
 import 'app/recorder_target_wiring.dart';
 import 'app/server_choice_app.dart';
+import 'app/till_wiring.dart';
 import 'core/cache/read_retry.dart';
 import 'core/files/file_saver.dart';
 import 'core/instance/tax_reference_bundle_asset.dart';
@@ -140,6 +141,7 @@ Future<void> main() async {
         financeHomeFromMe, // #3556
         financeWorkspaceEntryFromApp, // #3556 1b
         businessWorkspacesFromApp, // #4167
+        tillPortFromApp, // #4366
         privateValuesFromAccount, // #2552
         eventSourceOpenersFromMoney, // #2573
         ...realtimeWiringFromApp, // #2495

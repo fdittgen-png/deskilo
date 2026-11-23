@@ -13,5 +13,17 @@
   "refusalCounterCorrectionBeyond": "Una corrección no puede ir más allá de lo que queda de la línea original.",
   "refusalCounterChanged": "Este ticket cambió mientras tanto: ábralo de nuevo.",
   "refusalCounterGoods": "Aquí no se pueden vender ni recuperar mercancías: el libro de mercancías está desactivado, o no hay un lugar de donde tomarlas o donde devolverlas.",
-  "refusalCounterTenderState": "Esta autorización de tarjeta sigue abierta, es desconocida o ya está resuelta: consulte al proveedor en lugar de pedirla otra vez."
+  "refusalCounterTenderState": "Esta autorización de tarjeta sigue abierta, es desconocida o ya está resuelta: consulte al proveedor en lugar de pedirla otra vez.",
+  "settingLabelCounterBlindCount": "Contar el cajón a ciegas",
+  "settingHintCounterBlindCount": "Mientras una sesión está abierta, la caja no ve el efectivo esperado: cuenta el cajón y ve la diferencia después del cierre. Quien puede ver las finanzas siempre lo ve.",
+  "settingLabelCounterCountByDenomination": "Contar por denominaciones",
+  "settingHintCounterCountByDenomination": "El fondo y el cajón contado se dan por denominaciones (cuántos de cada billete y moneda) en lugar de un total. Las cuentas deben sumar el importe.",
+  "settingLabelCounterPaidOutLimit": "Mayor salida sin autorización",
+  "settingHintCounterPaidOutLimit": "El mayor importe, en unidades menores de la moneda del negocio (céntimos), de una salida del cajón sin alguien que pueda registrar pagos salientes. 0 significa sin límite.",
+  "settingLabelCounterCashReasons": "Motivos de entradas y salidas de efectivo",
+  "settingHintCounterCashReasons": "Los motivos que una persona puede dar para el dinero que entra o sale del cajón, separados por comas (por ejemplo cambio, gasto, otro).",
+  "refusalCounterTill": "La caja no está lista para esto: ábrala primero, o ya está abierta o cerrada.",
+  "refusalCounterCashEntry": "Este apunte de efectivo no se acepta: el motivo no está en la lista, el importe supera su límite, o las cuentas no suman.",
+  "refusalCounterDayClose": "No se puede cerrar el día: una caja sigue abierta, o el día ya está cerrado.",
+  "refusalCounterDayOpen": "El día de esta caja ya está cerrado: se abrirá de nuevo mañana."
 }

@@ -11,6 +11,8 @@
 //   // consumer-contract: fn_one, fn_two
 // An unnamed one is listed in [ConsumerContract.unresolved], and the lint
 // fails on it, so a call never leaves the contract silently.
+import 'dart:io';
+
 import 'package:analyzer/dart/analysis/utilities.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/visitor.dart';
@@ -251,7 +253,9 @@ class _Collector extends RecursiveAstVisitor<void> {
     final args = node.argumentList.arguments;
     if (args.isEmpty) return;
     final first = args.first.argumentExpression;
-    final literal = first is StringLiteral ? first.stringValue : null;
+    final literal = first is StringLiteral
+        ? first.stringValue
+        : serverNameOf(first.toSource());
     final names = literal != null ? [literal] : _declaredAt(node);
     if (names == null) {
       if (!_bySpec(first)) pendingRpc.add('$path:${_line(node)}');
@@ -283,8 +287,11 @@ class _Collector extends RecursiveAstVisitor<void> {
     final args = node.argumentList.arguments;
     if (args.length != 1) return;
     final first = args.first.argumentExpression;
+    final shared = serverNameOf(first.toSource());
     final names = first is SimpleStringLiteral
         ? [first.value]
+        : shared != null
+        ? [shared]
         : first is StringLiteral
         ? null
         : _declaredAt(node);
@@ -438,4 +445,25 @@ Set<String>? selectColumns(String select) {
   }
   flush();
   return cols.contains('*') ? null : cols;
+}
+
+Map<String, String>? _serverNames;
+
+/// The literal a shared-name constant stands for (`ServerRpc.exportMyData` ->
+/// `export_my_data`), read from `lib/core/data/server_names.dart` (#4423); null
+/// for anything else.
+String? serverNameOf(String source) {
+  _serverNames ??= {
+    for (final m in RegExp(
+      r"static const (\w+) = '([^']+)';",
+    ).allMatches(_serverNamesSource()))
+      m.group(1)!: m.group(2)!,
+  };
+  final m = RegExp(r'^Server(?:Rpc|Table|Bucket)\.(\w+)$').firstMatch(source);
+  return m == null ? null : _serverNames![m.group(1)!];
+}
+
+String _serverNamesSource() {
+  final file = File('lib/core/data/server_names.dart');
+  return file.existsSync() ? file.readAsStringSync() : '';
 }

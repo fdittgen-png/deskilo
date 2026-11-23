@@ -32,6 +32,13 @@ enum ExactQuantityProblem {
 
   /// A magnitude above `999999999999.999999`.
   outOfRange,
+
+  /// A ratio (#4393: a quantity times a unit conversion) whose exact value
+  /// has more than six decimals, such as one third: refused, never rounded.
+  notRepresentable,
+
+  /// A ratio whose denominator is zero.
+  zeroDenominator,
 }
 
 /// A quantity that cannot be represented.
@@ -64,7 +71,7 @@ class ExactQuantity implements Comparable<ExactQuantity> {
   static ExactQuantityResult tryParse(String text) {
     ExactQuantityResult refuse(ExactQuantityProblem p) =>
         (value: null, problem: p);
-    if (!RegExp(r'^-?\d+(\.\d+)?$').hasMatch(text)) {
+    if (!exactDecimalGrammar.hasMatch(text)) {
       return refuse(ExactQuantityProblem.malformed);
     }
     final decimal = ExactDecimal.parse(text);
@@ -94,6 +101,32 @@ class ExactQuantity implements Comparable<ExactQuantity> {
       );
     }
     return ExactQuantity._(micro);
+  }
+
+  /// #4393 -- this quantity times [numerator] / [denominator] (a unit
+  /// conversion), exactly, or the reason it has no six-decimal value: a third
+  /// of a unit is [ExactQuantityProblem.notRepresentable]. With [round] the
+  /// value is rounded to six decimals, half away from zero, as the stock
+  /// ledger's `round(q * num / den, 6)` records an entered quantity (0840).
+  ExactQuantityResult scaled(int numerator, int denominator, {bool round = false}) {
+    ExactQuantityResult refuse(ExactQuantityProblem p) =>
+        (value: null, problem: p);
+    if (denominator == 0) return refuse(ExactQuantityProblem.zeroDenominator);
+    final product = micro * BigInt.from(numerator);
+    final divisor = BigInt.from(denominator);
+    final exact = product.remainder(divisor) == BigInt.zero;
+    if (!exact && !round) return refuse(ExactQuantityProblem.notRepresentable);
+    final result = exact ? product ~/ divisor : _halfAwayFromZero(product, divisor);
+    if (result.abs() > _maxMicro) return refuse(ExactQuantityProblem.outOfRange);
+    return (value: ExactQuantity._(result), problem: null);
+  }
+
+  static BigInt _halfAwayFromZero(BigInt n, BigInt d) {
+    final negative = n.isNegative != d.isNegative;
+    final a = n.abs();
+    final b = d.abs();
+    final q = (a * BigInt.two + b) ~/ (b * BigInt.two);
+    return negative ? -q : q;
   }
 
   bool get isZero => micro == BigInt.zero;

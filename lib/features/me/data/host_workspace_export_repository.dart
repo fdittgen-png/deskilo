@@ -14,6 +14,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../core/backend/connected_target.dart';
 import '../../../core/backend/connection_outcome.dart';
 import '../../../core/backend/context_clients.dart';
+import '../../../core/data/server_names.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../domain/workspace_export.dart';
 
@@ -101,7 +102,7 @@ class HostWorkspaceExportRepository implements WorkspaceExportRepository {
       final Object? raw;
       try {
         raw = await host.client.rpc<Object?>(
-          'export_my_data',
+          ServerRpc.exportMyData,
           params: {'p_workspace_id': source.workspaceId},
         );
       } on PostgrestException catch (e, st) {
@@ -126,7 +127,7 @@ class HostWorkspaceExportRepository implements WorkspaceExportRepository {
     WorkspaceExportSource source,
   ) async {
     final row = await client
-        .from('workspaces')
+        .from(ServerTable.workspaces)
         .select('feature_flags, country_code')
         .eq('id', source.workspaceId)
         .maybeSingle();

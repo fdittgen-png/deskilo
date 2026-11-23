@@ -96,6 +96,7 @@
         "configurableSettings": false,
         "configurationTransfer": false,
         "counterReceipts": false,
+        "counterTillSessions": false,
         "customFields": false,
         "customRoles": true,
         "customerQuotes": false,

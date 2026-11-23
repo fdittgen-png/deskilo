@@ -92,6 +92,13 @@ BigInt _divide(BigInt numerator, BigInt denominator, RoundingPolicy policy) {
   return negative ? -q : q;
 }
 
+/// #4406 -- the one grammar of a plain decimal text in the packages: an
+/// optional minus, digits, an optional dot and digits; no plus, no exponent,
+/// no grouping, no comma, no bare dot. Groups: 1 the sign, 2 the integer
+/// digits, 3 the fraction digits. [ExactDecimal], `ExactQuantity` and the
+/// invoice model's commercial decimals all read through it.
+final RegExp exactDecimalGrammar = RegExp(r'^(-?)(\d+)(?:\.(\d+))?$');
+
 /// An exact decimal: [units] / 10^[scale]. Rates, percentages and
 /// exchange rates are carried this way, never as a double.
 class ExactDecimal {
@@ -100,7 +107,7 @@ class ExactDecimal {
   /// `9.975`, `0.90`, `-12`: plain decimal digits only.
   factory ExactDecimal.parse(String text) {
     final s = text.trim();
-    final m = RegExp(r'^(-?)(\d+)(?:\.(\d+))?$').firstMatch(s);
+    final m = exactDecimalGrammar.firstMatch(s);
     if (m == null) {
       throw AccountingException(AccountingError.malformedDecimal, text);
     }

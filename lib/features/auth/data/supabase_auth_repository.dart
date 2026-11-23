@@ -12,6 +12,7 @@ import '../../../core/backend/auth_secret_store.dart';
 import '../../../core/backend/federation_authority.dart';
 import '../../../core/backend/native_federation_flow.dart';
 import '../../../core/backend/schema_version.dart';
+import '../../../core/data/server_names.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/auth_outcome.dart';
 import '../domain/auth_repository.dart';
@@ -40,8 +41,7 @@ class SupabaseAuthRepository implements AuthRepository {
 
   Future<FederationAuthority?> _authority() async {
     try {
-      return FederationAuthority.parse(await (authorityRead?.call() ??
-          _client.rpc<Object?>('public_identity_authority')));
+      return FederationAuthority.parse(await (authorityRead?.call() ?? _client.rpc<Object?>(ServerRpc.publicIdentityAuthority)));
     } on PostgrestException catch (error, stack) {
       // trace-exempt: an older standalone installation retains native login.
       if (isMissingFunction(error)) return null;

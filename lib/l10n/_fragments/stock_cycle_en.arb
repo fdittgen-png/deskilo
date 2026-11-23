@@ -214,6 +214,10 @@
   "@stockCycleScan": {
     "description": "#4295 cycle counts"
   },
+  "stockCycleScanWhich": "Several lines still to count have this code: choose the one you are counting.",
+  "@stockCycleScanWhich": {
+    "description": "#4395 cycle counts: a code that fits several pending lines asks which one"
+  },
   "stockCycleScanNone": "No line still to count has this code.",
   "@stockCycleScanNone": {
     "description": "#4295 cycle counts"

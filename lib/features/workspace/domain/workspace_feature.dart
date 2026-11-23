@@ -447,6 +447,7 @@ enum WorkspaceFeature {
   stockTags,
   stockScanning,
   counterReceipts,
+  counterTillSessions,
   stockTagReads;
 
   /// The key of this feature inside `workspaces.feature_flags`.

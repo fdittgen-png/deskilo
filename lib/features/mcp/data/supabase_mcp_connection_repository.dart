@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/server_names.dart';
 import '../domain/mcp_connection.dart';
 import '../domain/mcp_usage.dart';
 
@@ -31,7 +32,7 @@ class SupabaseMcpConnectionRepository implements McpConnectionRepository {
 
   @override
   Future<ConsentOptions> options() async => ConsentOptions.fromJson(
-    await _client.rpc<Object?>('mcp_consent_options'),
+    await _client.rpc<Object?>(ServerRpc.mcpConsentOptions),
   );
 
   @override

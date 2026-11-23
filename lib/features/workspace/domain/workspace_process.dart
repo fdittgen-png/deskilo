@@ -162,6 +162,8 @@ const workspaceProcesses = <WorkspaceProcess>[
       WorkspaceFeature.stockScanning,
       // #4184
       WorkspaceFeature.counterReceipts,
+      // #4367
+      WorkspaceFeature.counterTillSessions,
       // #4364
       WorkspaceFeature.stockTagReads,
     ]),

@@ -57,7 +57,20 @@ class StockRegistryRow {
   String get label => variantLabel == null ? itemName : '$itemName · $variantLabel';
 
   /// The last known cost in minor units, rounded; null when unknown or not shown.
-  int? get costMinor => !costVisible || cost == null ? null : double.tryParse(cost!)?.round();
+  int? get costMinor {
+    if (!costVisible || cost == null) return null;
+    // #4393 -- the server's unit cost is numeric division text of any length (`1000/3` = 333.33333333333333,
+    // 0860): read exactly at its own scale and rounded half away from zero, with no binary float between.
+    final ExactDecimal d;
+    try {
+      d = ExactDecimal.parse(cost!);
+    } on AccountingException {
+      return null;
+    }
+    final twice = d.units.abs() * BigInt.two + d.denominator;
+    final whole = twice ~/ (d.denominator * BigInt.two);
+    return (d.units.isNegative ? -whole : whole).toInt();
+  }
 
   factory StockRegistryRow.fromJson(Object? json) {
     final r = JsonReader.of(json, context: 'stock_registry_page_v1');

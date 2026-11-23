@@ -88,6 +88,7 @@ const STOCK_ROUNDING=[['none','optRoundNone'],['0.05','optRound005'],['0.10','op
 // #4362/#4359 — the days before a retired tag code is bound again (stock.tag_rebind_grace_days) and what a repeated scan does (stock.repeated_scan).
 // #4184 — the counter's settings (workspace settings counter.fiscal_obligation, counter.document_channel,
 // counter.customerless_sales).
+const COUNTER_LIMIT=[['0','optNoLimit'],['1000','optMinorUnits',{n:1000}],['5000','optMinorUnits',{n:5000}],['10000','optMinorUnits',{n:10000}],['50000','optMinorUnits',{n:50000}]];
 const COUNTER_FISCAL=[['register_required','optFiscalRequired'],['none','optFiscalNone']];
 const COUNTER_CHANNEL=[['share','optChannelShare'],['print','optChannelPrint'],['both','optChannelBoth']];
 const COUNTER_CUSTOMERLESS=[['allowed','optCustomerlessAllowed'],['refused','optCustomerlessRefused']];
@@ -186,7 +187,8 @@ const PARAM_META=[
  ['stock.addressSeparator','stockAddressSeparator','enum',()=>STOCK_SEP.map(x=>x[0]),{needs:'stockManagement'}],
  ['stock.tagGrace','stockTagGrace','enum',()=>STOCK_TAG_GRACE.map(x=>x[0]),{needs:'stockTags'}],['stock.repeatedScan','stockRepeatedScan','enum',()=>STOCK_REPEAT.map(x=>x[0]),{needs:'stockScanning'}],['stock.tagReadMax','stockTagReadMax','enum',()=>STOCK_TAG_READ.map(x=>x[0]),{needs:'stockTagReads'}],['stock.tagReadQuantity','stockTagReadQuantity','bool',null,{needs:'stockTagReads'}],
  ['stock.tagMode','stockGroupTagMode','enum',()=>STOCK_TAG.map(x=>x[0]),{needs:'stockItemGroups'}],['stock.countDays','stockGroupCountDays','enum',()=>STOCK_COUNT_DAYS.map(x=>x[0]),{needs:'stockItemGroups'}],['stock.priceRounding','stockGroupRounding','enum',()=>STOCK_ROUNDING.map(x=>x[0]),{needs:'stockItemGroups'}],
- ['counter.fiscalObligation','counterFiscal','enum',()=>COUNTER_FISCAL.map(x=>x[0]),{needs:'counterReceipts'}],['counter.documentChannel','counterChannel','enum',()=>COUNTER_CHANNEL.map(x=>x[0]),{needs:'counterReceipts'}],['counter.customerless','counterCustomerless','enum',()=>COUNTER_CUSTOMERLESS.map(x=>x[0]),{needs:'counterReceipts'}],
+ ['counter.fiscalObligation','counterFiscal','enum',()=>COUNTER_FISCAL.map(x=>x[0]),{needs:'counterReceipts'}],
+ ['counter.blindCount','counterBlind','bool',null,{needs:'counterTillSessions'}],['counter.byDenomination','counterByDenomination','bool',null,{needs:'counterTillSessions'}],['counter.paidOutLimit','counterPaidOutLimit','enum',()=>COUNTER_LIMIT.map(x=>x[0]),{needs:'counterTillSessions'}],['counter.cashReasons','counterCashReasons','text',null,{needs:'counterTillSessions'}],['counter.documentChannel','counterChannel','enum',()=>COUNTER_CHANNEL.map(x=>x[0]),{needs:'counterReceipts'}],['counter.customerless','counterCustomerless','enum',()=>COUNTER_CUSTOMERLESS.map(x=>x[0]),{needs:'counterReceipts'}],
  ['stock.cycleHighValue','stockCycleHighValue','enum',()=>STOCK_CYCLE_VALUE.map(x=>x[0]),{needs:'stockCycleCounts'}],['stock.cycleOverdue','stockCycleOverdue','enum',()=>STOCK_CYCLE_OVERDUE.map(x=>x[0]),{needs:'stockCycleCounts'}],
  ['supplierLookup.timeout','supLookupWait','enum',()=>SUP_LOOKUP_WAIT.map(x=>x[0])],
  ['supplierLookup.perMinute','supLookupRate','enum',()=>SUP_LOOKUP_RATE.map(x=>x[0])],
