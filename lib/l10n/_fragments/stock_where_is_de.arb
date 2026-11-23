@@ -5,7 +5,6 @@
   "stockWhereIsOnHand": "{quantity} insgesamt",
   "stockWhereIsNow": "Jetzt",
   "stockWhereIsPickDate": "An einem Tag…",
-  "stockWhereIsAsOf": "Am {date}",
   "stockWhereIsNowhere": "An diesem Datum liegt nichts davon an einem Platz.",
   "stockWhereIsTransit": "Unterwegs",
   "stockWhereIsTransitLine": "Von {from} nach {to}",

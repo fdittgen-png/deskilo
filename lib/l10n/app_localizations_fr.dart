@@ -37946,11 +37946,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get stockWhenLabel => 'Quand';
 
   @override
-  String stockWhereIsAsOf(String date) {
-    return 'Au $date';
-  }
-
-  @override
   String get stockWhereIsAway => 'Sorti ou venu de l\'extérieur';
 
   @override

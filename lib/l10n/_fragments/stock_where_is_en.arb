@@ -25,15 +25,6 @@
   "@stockWhereIsPickDate": {
     "description": "#4434 where is it"
   },
-  "stockWhereIsAsOf": "As of {date}",
-  "@stockWhereIsAsOf": {
-    "description": "#4434 where is it",
-    "placeholders": {
-      "date": {
-        "type": "String"
-      }
-    }
-  },
   "stockWhereIsNowhere": "None of it is held at a place at this date.",
   "@stockWhereIsNowhere": {
     "description": "#4434 where is it"

@@ -60055,12 +60055,6 @@ abstract class AppLocalizations {
   /// #4434 where is it
   ///
   /// In en, this message translates to:
-  /// **'As of {date}'**
-  String stockWhereIsAsOf(String date);
-
-  /// #4434 where is it
-  ///
-  /// In en, this message translates to:
   /// **'Left or came from outside'**
   String get stockWhereIsAway;
 

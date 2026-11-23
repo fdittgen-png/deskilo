@@ -48711,15 +48711,6 @@
   "@stockWhenLabel": {
     "description": "#4161 when a movement happened"
   },
-  "stockWhereIsAsOf": "As of {date}",
-  "@stockWhereIsAsOf": {
-    "description": "#4434 where is it",
-    "placeholders": {
-      "date": {
-        "type": "String"
-      }
-    }
-  },
   "stockWhereIsAway": "Left or came from outside",
   "@stockWhereIsAway": {
     "description": "#4434 where is it"

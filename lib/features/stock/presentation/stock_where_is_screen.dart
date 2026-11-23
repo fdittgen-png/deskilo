@@ -12,7 +12,7 @@ import '../../../core/help/help_dot.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
-import '../../../core/ui/app_date_picker.dart';
+import '../../../core/ui/date_field.dart';
 import '../../../core/ui/kit/page_title.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../money/providers/business_day_provider.dart';
@@ -34,17 +34,10 @@ class _State extends ConsumerState<StockWhereIsScreen> {
   /// The end of the day chosen, or null for now.
   DateTime? _at;
 
-  Future<void> _pick() async {
-    final today = ref.read(businessDayProvider);
-    final day = await showAppDatePicker(
-      context: context,
-      initialDate: _at == null ? today : DateTime(_at!.year, _at!.month, _at!.day),
-      firstDate: DateTime(today.year - 10),
-      lastDate: today,
-    );
-    if (day == null || !mounted) return;
-    // what the item held when that day was over; today is now (never a time to come)
-    setState(() => _at = DateUtils.isSameDay(day, today) ? null : DateTime.utc(day.year, day.month, day.day, 23, 59, 59));
+  /// What the item held when the day typed or picked was over; today (or nothing readable) is now, never a time to come.
+  void _day(DateRead read, DateTime today) {
+    final day = read.date;
+    setState(() => _at = day == null || !day.isBefore(today) ? null : day.add(const Duration(hours: 23, minutes: 59, seconds: 59)));
   }
 
   @override
@@ -77,17 +70,24 @@ class _State extends ConsumerState<StockWhereIsScreen> {
               ],
             ),
           ),
-          data: (a) => _Answer(answer: a, at: _at, onPick: _pick, onNow: () => setState(() => _at = null)),
+          data: (a) => _Answer(
+            answer: a,
+            at: _at,
+            today: ref.watch(businessDayProvider),
+            onDay: (read) => _day(read, ref.read(businessDayProvider)),
+            onNow: () => setState(() => _at = null),
+          ),
         );
   }
 }
 
 class _Answer extends StatelessWidget {
-  const _Answer({required this.answer, required this.at, required this.onPick, required this.onNow});
+  const _Answer({required this.answer, required this.at, required this.today, required this.onDay, required this.onNow});
 
   final WhereIsAnswer answer;
   final DateTime? at;
-  final VoidCallback onPick;
+  final DateTime today;
+  final ValueChanged<DateRead> onDay;
   final VoidCallback onNow;
 
   @override
@@ -109,7 +109,7 @@ class _Answer extends StatelessWidget {
               style: theme.textTheme.titleMedium,
             ),
             const SizedBox(height: AppSpacing.sm),
-            _DateChips(at: at, onPick: onPick, onNow: onNow),
+            _DateChips(at: at, today: today, onDay: onDay, onNow: onNow),
             const SizedBox(height: AppSpacing.md),
             ..._places(context, answer),
             ..._transit(context, answer),
@@ -133,10 +133,11 @@ String _what(BuildContext context, WhereIsPlace p) {
 String _placeTitle(WhereIsPlace p) => p.locationName.isEmpty ? p.locationCode : '${p.locationCode} \u00b7 ${p.locationName}';
 
 class _DateChips extends StatelessWidget {
-  const _DateChips({required this.at, required this.onPick, required this.onNow});
+  const _DateChips({required this.at, required this.today, required this.onDay, required this.onNow});
 
   final DateTime? at;
-  final VoidCallback onPick;
+  final DateTime today;
+  final ValueChanged<DateRead> onDay;
   final VoidCallback onNow;
 
   @override
@@ -148,10 +149,16 @@ class _DateChips extends StatelessWidget {
       crossAxisAlignment: WrapCrossAlignment.center,
       children: [
         ChoiceChip(key: const ValueKey('stock-where-now'), label: Text(l10n.stockWhereIsNow), selected: at == null, onSelected: (_) => onNow()),
-        ActionChip(
-          key: const ValueKey('stock-where-pick'),
-          label: Text(at == null ? l10n.stockWhereIsPickDate : l10n.stockWhereIsAsOf(appFormatOf(context).date(at!))),
-          onPressed: onPick,
+        SizedBox(
+          width: 240,
+          child: AppDateField(
+            key: const ValueKey('stock-where-date'),
+            label: l10n.stockWhereIsPickDate,
+            value: at,
+            first: today.subtract(const Duration(days: 3650)),
+            last: today,
+            onChanged: onDay,
+          ),
         ),
       ],
     );

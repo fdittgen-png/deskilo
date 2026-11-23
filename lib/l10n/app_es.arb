@@ -22033,7 +22033,6 @@
     }
   },
   "stockWhenLabel": "Cuándo",
-  "stockWhereIsAsOf": "A {date}",
   "stockWhereIsAway": "Salido o venido de fuera",
   "stockWhereIsNow": "Ahora",
   "stockWhereIsNowhere": "Nada de esto está en un lugar en esa fecha.",
