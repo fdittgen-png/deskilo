@@ -19,6 +19,9 @@
 import { refuseDelegated } from "../_shared/delegated.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
 import { CORS, preflight } from "../_shared/cors.ts";
+import { logLine } from "../_shared/log.ts";
+import { ok, refuse } from "../_shared/respond.ts";
+import { guard } from "../_shared/serve.ts";
 import type { Adapter, LookupRequest } from "./contract.ts";
 import { viesAdapter } from "./vies.ts";
 
@@ -92,12 +95,6 @@ export class RateLimiter {
   }
 }
 
-const json = (body: unknown, status = 200) =>
-  new Response(JSON.stringify(body), {
-    status,
-    headers: { ...CORS, "Content-Type": "application/json" },
-  });
-
 /** The bearer token, hashed, as the rate limiter's key: never the token itself. */
 async function callerKey(authorization: string): Promise<string> {
   const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(authorization));
@@ -137,20 +134,21 @@ export async function handle(req: Request, deps: Deps): Promise<Response> {
   if (delegated) return delegated;
 
   const authorization = req.headers.get("Authorization") ?? "";
-  if (!authorization) return json({ error: "not signed in" }, 401);
+  if (!authorization) return refuse("not signed in", 401);
   if (Number(req.headers.get("content-length") ?? "0") > MAX_BODY_BYTES) {
-    return json({ error: "body too large" }, 400);
+    return refuse("body too large", 400);
   }
   const text = await req.text();
-  if (text.length > MAX_BODY_BYTES) return json({ error: "body too large" }, 400);
+  if (text.length > MAX_BODY_BYTES) return refuse("body too large", 400);
   let payload: unknown;
   try {
     payload = JSON.parse(text);
   } catch {
-    return json({ error: "invalid body" }, 400);
+    // handled: a body that is not JSON is a refusal, answered here
+    return refuse("invalid body", 400);
   }
   const parsed = parseLookupRequest(payload);
-  if ("error" in parsed) return json({ error: parsed.error }, 400);
+  if ("error" in parsed) return refuse(parsed.error, 400);
 
   // WHO is asking, decided by the database before anything leaves: the
   // caller's own token answers has_permission and feature_effective, for
@@ -164,13 +162,13 @@ export async function handle(req: Request, deps: Deps): Promise<Response> {
     caller.rpc("feature_effective", { p_workspace_id: ws, p_key: "viesVerification" }),
   ]);
   if (permission.error || permission.data !== true) {
-    return json({ error: "not allowed to manage suppliers" }, 403);
+    return refuse("not allowed to manage suppliers", 403);
   }
   if (suppliers.error || suppliers.data !== true) {
-    return json({ error: "supplier management is switched off in this space" }, 403);
+    return refuse("supplier management is switched off in this space", 403);
   }
   if (verification.error || verification.data !== true) {
-    return json({ error: "vat verification is off in this workspace" }, 403);
+    return refuse("vat verification is off in this workspace", 403);
   }
 
   const [timeout, perMinute] = await Promise.all([
@@ -181,13 +179,13 @@ export async function handle(req: Request, deps: Deps): Promise<Response> {
   const limit = settingNumber(perMinute);
   if (seconds === null || limit === null) {
     // A server without the settings cannot bound the call: it is not made.
-    console.warn("supplier-lookup: the lookup settings could not be read");
-    return json({ error: "lookup settings unavailable" }, 503);
+    logLine("warn", "supplier-lookup", "settings_unavailable");
+    return refuse("lookup settings unavailable", 503);
   }
   if (!deps.limiter.allow(await callerKey(authorization), limit)) {
-    return json({ error: "too many lookups" }, 429);
+    return refuse("too many lookups", 429);
   }
-  return json(
+  return ok(
     await parsed.adapter.lookup(parsed.request, {
       timeoutMs: seconds * 1000,
       fetcher: deps.fetcher,
@@ -206,5 +204,5 @@ if (import.meta.main) {
       ),
     limiter: new RateLimiter(),
   };
-  Deno.serve((req) => handle(req, deps));
+  Deno.serve(guard("supplier-lookup", (req) => handle(req, deps)));
 }
