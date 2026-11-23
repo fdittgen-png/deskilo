@@ -61,6 +61,51 @@
   "@itemGroupProposalHint": {
     "description": "#4361 G12 proposals: said under a proposal, which reaches no existing item"
   },
+  "itemGroupSet": "Gesetzt",
+  "@itemGroupSet": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupSupply": "Leistungsart",
+  "@itemGroupSupply": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupSupplyGeneral": "Allgemein",
+  "@itemGroupSupplyGeneral": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupSupplyProperty": "Grundstück",
+  "@itemGroupSupplyProperty": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupRounding": "Preisrundung",
+  "@itemGroupRounding": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupRoundingNone": "Keine Rundung",
+  "@itemGroupRoundingNone": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupMargin": "Zielmarge auf die Kosten (%)",
+  "@itemGroupMargin": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupFinanceHint": "Diese Einstellungen brauchen das Recht, Leistungen zu verwalten und die Finanzen zu sehen.",
+  "@itemGroupFinanceHint": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupHidden": "Für Sie nicht sichtbar",
+  "@itemGroupHidden": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupMarginValue": "{percent} %",
+  "@itemGroupMarginValue": {
+    "description": "#4361 G12: a target margin as the group shows it; the percent arrives formatted",
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
   "itemGroupOwn": "Eigener Wert",
   "itemGroupUseGroup": "Wert der Gruppe verwenden",
   "itemGroupMove": "Verschieben",

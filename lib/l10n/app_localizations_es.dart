@@ -18606,6 +18606,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get itemGroupFailed => 'No se pudieron leer los grupos de artículos.';
 
   @override
+  String get itemGroupFinanceHint =>
+      'Estos ajustes requieren el derecho a gestionar servicios y a ver las finanzas.';
+
+  @override
   String itemGroupFrom(String group) {
     return 'Del grupo $group';
   }
@@ -18614,6 +18618,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String itemGroupFromSince(String group, String date) {
     return 'Del grupo $group desde el $date';
   }
+
+  @override
+  String get itemGroupHidden => 'No visible para usted';
 
   @override
   String get itemGroupHistory => 'Historial';
@@ -18639,6 +18646,14 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get itemGroupHomeZone => 'Zona de almacén por defecto';
+
+  @override
+  String get itemGroupMargin => 'Margen objetivo sobre el coste (%)';
+
+  @override
+  String itemGroupMarginValue(String percent) {
+    return '$percent %';
+  }
 
   @override
   String get itemGroupMinAge => 'Edad mínima para una venta';
@@ -18757,6 +18772,15 @@ class AppLocalizationsEs extends AppLocalizations {
   String get itemGroupReorderQty => 'Cantidad de pedido por defecto';
 
   @override
+  String get itemGroupRounding => 'Redondeo del precio';
+
+  @override
+  String get itemGroupRoundingNone => 'Sin redondeo';
+
+  @override
+  String get itemGroupSet => 'Definido';
+
+  @override
   String itemGroupSkippedLine(String item, String parameter, String reason) {
     return '$item: $parameter ($reason)';
   }
@@ -18766,6 +18790,15 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get itemGroupSoldByWeight => 'Se vende al peso';
+
+  @override
+  String get itemGroupSupply => 'Clase de operación';
+
+  @override
+  String get itemGroupSupplyGeneral => 'General';
+
+  @override
+  String get itemGroupSupplyProperty => 'Inmueble';
 
   @override
   String get itemGroupTagBatch => 'Una etiqueta por lote';

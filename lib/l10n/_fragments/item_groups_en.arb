@@ -217,6 +217,51 @@
   "@itemGroupProposalHint": {
     "description": "#4361 G12 proposals: said under a proposal, which reaches no existing item"
   },
+  "itemGroupSet": "Set",
+  "@itemGroupSet": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupSupply": "Supply class",
+  "@itemGroupSupply": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupSupplyGeneral": "General",
+  "@itemGroupSupplyGeneral": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupSupplyProperty": "Property",
+  "@itemGroupSupplyProperty": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupRounding": "Price rounding",
+  "@itemGroupRounding": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupRoundingNone": "No rounding",
+  "@itemGroupRoundingNone": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupMargin": "Target margin on cost (%)",
+  "@itemGroupMargin": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupFinanceHint": "These settings need the right to manage services and to see the finances.",
+  "@itemGroupFinanceHint": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupHidden": "Not shown to you",
+  "@itemGroupHidden": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupMarginValue": "{percent} %",
+  "@itemGroupMarginValue": {
+    "description": "#4361 G12: a target margin as the group shows it; the percent arrives formatted",
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
   "itemGroupOwn": "Own value",
   "@itemGroupOwn": {
     "description": "#4361 G12 item groups: itemGroupOwn"

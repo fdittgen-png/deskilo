@@ -61,6 +61,51 @@
   "@itemGroupProposalHint": {
     "description": "#4361 G12 proposals: said under a proposal, which reaches no existing item"
   },
+  "itemGroupSet": "Impostato",
+  "@itemGroupSet": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupSupply": "Tipo di operazione",
+  "@itemGroupSupply": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupSupplyGeneral": "Generale",
+  "@itemGroupSupplyGeneral": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupSupplyProperty": "Immobile",
+  "@itemGroupSupplyProperty": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupRounding": "Arrotondamento del prezzo",
+  "@itemGroupRounding": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupRoundingNone": "Nessun arrotondamento",
+  "@itemGroupRoundingNone": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupMargin": "Margine obiettivo sul costo (%)",
+  "@itemGroupMargin": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupFinanceHint": "Queste impostazioni richiedono il diritto di gestire i servizi e di vedere le finanze.",
+  "@itemGroupFinanceHint": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupHidden": "Non visibile a lei",
+  "@itemGroupHidden": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupMarginValue": "{percent} %",
+  "@itemGroupMarginValue": {
+    "description": "#4361 G12: a target margin as the group shows it; the percent arrives formatted",
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
   "itemGroupOwn": "Valore proprio",
   "itemGroupUseGroup": "Usa il valore del gruppo",
   "itemGroupMove": "Sposta",

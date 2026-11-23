@@ -29437,6 +29437,12 @@ abstract class AppLocalizations {
   /// **'The item groups could not be read.'**
   String get itemGroupFailed;
 
+  /// #4361 G12 finance parameters of an item group
+  ///
+  /// In en, this message translates to:
+  /// **'These settings need the right to manage services and to see the finances.'**
+  String get itemGroupFinanceHint;
+
   /// #4361 G12 item groups: itemGroupFrom
   ///
   /// In en, this message translates to:
@@ -29448,6 +29454,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'From {group} since {date}'**
   String itemGroupFromSince(String group, String date);
+
+  /// #4361 G12 finance parameters of an item group
+  ///
+  /// In en, this message translates to:
+  /// **'Not shown to you'**
+  String get itemGroupHidden;
 
   /// #4361 G12 item groups: itemGroupHistory
   ///
@@ -29477,6 +29489,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Default home zone'**
   String get itemGroupHomeZone;
+
+  /// #4361 G12 finance parameters of an item group
+  ///
+  /// In en, this message translates to:
+  /// **'Target margin on cost (%)'**
+  String get itemGroupMargin;
+
+  /// #4361 G12: a target margin as the group shows it; the percent arrives formatted
+  ///
+  /// In en, this message translates to:
+  /// **'{percent} %'**
+  String itemGroupMarginValue(String percent);
 
   /// #4361 G12 item groups: itemGroupMinAge
   ///
@@ -29639,6 +29663,24 @@ abstract class AppLocalizations {
   /// **'Default reorder quantity'**
   String get itemGroupReorderQty;
 
+  /// #4361 G12 finance parameters of an item group
+  ///
+  /// In en, this message translates to:
+  /// **'Price rounding'**
+  String get itemGroupRounding;
+
+  /// #4361 G12 finance parameters of an item group
+  ///
+  /// In en, this message translates to:
+  /// **'No rounding'**
+  String get itemGroupRoundingNone;
+
+  /// #4361 G12 finance parameters of an item group
+  ///
+  /// In en, this message translates to:
+  /// **'Set'**
+  String get itemGroupSet;
+
   /// #4361 G12 item groups: itemGroupSkippedLine
   ///
   /// In en, this message translates to:
@@ -29656,6 +29698,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sold by weight'**
   String get itemGroupSoldByWeight;
+
+  /// #4361 G12 finance parameters of an item group
+  ///
+  /// In en, this message translates to:
+  /// **'Supply class'**
+  String get itemGroupSupply;
+
+  /// #4361 G12 finance parameters of an item group
+  ///
+  /// In en, this message translates to:
+  /// **'General'**
+  String get itemGroupSupplyGeneral;
+
+  /// #4361 G12 finance parameters of an item group
+  ///
+  /// In en, this message translates to:
+  /// **'Property'**
+  String get itemGroupSupplyProperty;
 
   /// #4361 G12 item groups: itemGroupTagBatch
   ///

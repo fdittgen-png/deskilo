@@ -17,6 +17,8 @@ const itemGroupEditable = [
   'count_every_days',
   'min_age',
   'sold_by_weight',
+  'vat_rate_id',
+  'supply_class',
 ];
 
 /// The proposals a group carries: copied into a new item as a starting point, never inherited and never linked, so a
@@ -28,6 +30,8 @@ const itemGroupProposals = [
   'reorder_point_default',
   'reorder_quantity_default',
   'home_zone_id',
+  'price_rounding',
+  'target_margin_bps',
 ];
 
 /// A group: its name, its parent (a group nests one level), the parameters it sets (a parameter it does not set
@@ -236,4 +240,23 @@ abstract interface class ItemGroups {
   Future<ItemEffective> effective(String workspaceId, String itemId);
 
   Future<List<GroupHistoryRow>> history(String workspaceId, {String? groupId, String? itemId, int limit = 50});
+}
+
+/// The roundings a group may propose for a price, as the server accepts them.
+const itemGroupRoundings = ['none', '0.05', '0.10', '0.99'];
+
+/// [percent] (a decimal text, at most two decimals) as basis points, or null when it is not one: `35` is 3500, `12.5` 1250.
+int? marginBpsOfPercent(String percent) {
+  final m = RegExp(r'^([0-9]{1,4})(?:\.([0-9]{1,2}))?$').firstMatch(percent.trim());
+  if (m == null) return null;
+  final bps = int.parse(m[1]!) * 100 + int.parse((m[2] ?? '').padRight(2, '0'));
+  return bps > 100000 ? null : bps;
+}
+
+/// Basis points as a percent text: 3500 is `35`, 1250 is `12.5`.
+String percentOfMarginBps(int bps) {
+  final whole = bps ~/ 100;
+  final frac = bps % 100;
+  if (frac == 0) return '$whole';
+  return '$whole.${frac.toString().padLeft(2, '0').replaceFirst(RegExp(r'0$'), '')}';
 }

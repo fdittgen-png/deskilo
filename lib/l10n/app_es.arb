@@ -11245,14 +11245,35 @@
   "itemGroupDelete": "Eliminar el grupo",
   "itemGroupDeleted": "Grupo eliminado.",
   "itemGroupFailed": "No se pudieron leer los grupos de artículos.",
+  "itemGroupFinanceHint": "Estos ajustes requieren el derecho a gestionar servicios y a ver las finanzas.",
+  "@itemGroupFinanceHint": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
   "itemGroupFrom": "Del grupo {group}",
   "itemGroupFromSince": "Del grupo {group} desde el {date}",
+  "itemGroupHidden": "No visible para usted",
+  "@itemGroupHidden": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
   "itemGroupHistory": "Historial",
   "itemGroupHistoryLine": "{parameter}: {from} → {to}, {affected, plural, one{alcanzó 1 artículo} other{alcanzó {affected} artículos}}",
   "itemGroupHistoryNone": "Aún no hay ningún cambio registrado.",
   "itemGroupHomeZone": "Zona de almacén por defecto",
   "@itemGroupHomeZone": {
     "description": "#4361 G12 proposals: the home zone a group proposes to an item"
+  },
+  "itemGroupMargin": "Margen objetivo sobre el coste (%)",
+  "@itemGroupMargin": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupMarginValue": "{percent} %",
+  "@itemGroupMarginValue": {
+    "description": "#4361 G12: a target margin as the group shows it; the percent arrives formatted",
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
   },
   "itemGroupMinAge": "Edad mínima para una venta",
   "itemGroupMove": "Mover",
@@ -11295,9 +11316,33 @@
   "@itemGroupReorderQty": {
     "description": "#4361 G12 proposals: the reorder quantity a group proposes to an item that has none"
   },
+  "itemGroupRounding": "Redondeo del precio",
+  "@itemGroupRounding": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupRoundingNone": "Sin redondeo",
+  "@itemGroupRoundingNone": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupSet": "Definido",
+  "@itemGroupSet": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
   "itemGroupSkippedLine": "{item}: {parameter} ({reason})",
   "itemGroupSkippedTitle": "No alcanzados",
   "itemGroupSoldByWeight": "Se vende al peso",
+  "itemGroupSupply": "Clase de operación",
+  "@itemGroupSupply": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupSupplyGeneral": "General",
+  "@itemGroupSupplyGeneral": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupSupplyProperty": "Inmueble",
+  "@itemGroupSupplyProperty": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
   "itemGroupTagBatch": "Una etiqueta por lote",
   "itemGroupTagMode": "Modo de etiqueta",
   "itemGroupTagModeOwn": "Etiqueta de este artículo",

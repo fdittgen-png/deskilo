@@ -24161,6 +24161,10 @@
   "@itemGroupFailed": {
     "description": "#4361 G12 item groups: itemGroupFailed"
   },
+  "itemGroupFinanceHint": "These settings need the right to manage services and to see the finances.",
+  "@itemGroupFinanceHint": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
   "itemGroupFrom": "From {group}",
   "@itemGroupFrom": {
     "description": "#4361 G12 item groups: itemGroupFrom",
@@ -24181,6 +24185,10 @@
         "type": "String"
       }
     }
+  },
+  "itemGroupHidden": "Not shown to you",
+  "@itemGroupHidden": {
+    "description": "#4361 G12 finance parameters of an item group"
   },
   "itemGroupHistory": "History",
   "@itemGroupHistory": {
@@ -24211,6 +24219,19 @@
   "itemGroupHomeZone": "Default home zone",
   "@itemGroupHomeZone": {
     "description": "#4361 G12 proposals: the home zone a group proposes to an item"
+  },
+  "itemGroupMargin": "Target margin on cost (%)",
+  "@itemGroupMargin": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupMarginValue": "{percent} %",
+  "@itemGroupMarginValue": {
+    "description": "#4361 G12: a target margin as the group shows it; the percent arrives formatted",
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
   },
   "itemGroupMinAge": "Minimum age for a sale",
   "@itemGroupMinAge": {
@@ -24335,6 +24356,18 @@
   "@itemGroupReorderQty": {
     "description": "#4361 G12 proposals: the reorder quantity a group proposes to an item that has none"
   },
+  "itemGroupRounding": "Price rounding",
+  "@itemGroupRounding": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupRoundingNone": "No rounding",
+  "@itemGroupRoundingNone": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupSet": "Set",
+  "@itemGroupSet": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
   "itemGroupSkippedLine": "{item}: {parameter} ({reason})",
   "@itemGroupSkippedLine": {
     "description": "#4361 G12 item groups: itemGroupSkippedLine",
@@ -24357,6 +24390,18 @@
   "itemGroupSoldByWeight": "Sold by weight",
   "@itemGroupSoldByWeight": {
     "description": "#4361 G12 item groups: itemGroupSoldByWeight"
+  },
+  "itemGroupSupply": "Supply class",
+  "@itemGroupSupply": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupSupplyGeneral": "General",
+  "@itemGroupSupplyGeneral": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupSupplyProperty": "Property",
+  "@itemGroupSupplyProperty": {
+    "description": "#4361 G12 finance parameters of an item group"
   },
   "itemGroupTagBatch": "One tag per batch",
   "@itemGroupTagBatch": {
