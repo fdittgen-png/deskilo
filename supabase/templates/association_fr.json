@@ -212,6 +212,8 @@
         "stockReceiving": false,
         "stockReorder": false,
         "stockReturns": false,
+        "stockScanning": false,
+        "stockTags": false,
         "stockTakeOut": false,
         "subscriptionInvoices": false,
         "supplyClassification": false,

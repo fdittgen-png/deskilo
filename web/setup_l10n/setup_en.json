@@ -821,5 +821,12 @@
  "optRoundNone": "No rounding",
  "optRound005": "To 0.05",
  "optRound010": "To 0.10",
- "optRound099": "Ending in 0.99"
+ "optRound099": "Ending in 0.99",
+ "stockTagGrace": "Days before a retired tag is bound again",
+ "stockTagGraceHint": "How many days after it was retired a tag code may be bound again. Set in the app's settings.",
+ "stockRepeatedScan": "A code scanned again",
+ "stockRepeatedScanHint": "What a goods sheet does when the same code is scanned again: add one more, or ask the quantity. Set in the app's settings.",
+ "optAtOnce": "At once",
+ "optAddOne": "Add one more",
+ "optAskQuantity": "Ask the quantity"
 }

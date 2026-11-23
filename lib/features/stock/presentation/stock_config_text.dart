@@ -13,6 +13,7 @@ String stockReasonText(AppLocalizations l10n, String reason) =>
     _receivingReason(l10n, reason) ??
     _operationReason(l10n, reason) ??
     _groupReason(l10n, reason) ??
+    _tagReason(l10n, reason) ??
     l10n.stockReasonOther;
 
 String? _itemReason(AppLocalizations l10n, String reason) => switch (reason) {
@@ -137,5 +138,16 @@ String? _groupReason(AppLocalizations l10n, String reason) => switch (reason) {
   'place_unknown' => l10n.stockReasonGroupPlaceUnknown,
   'item_unknown' => l10n.stockReasonGroupItemUnknown,
   'has_movements' => l10n.stockReasonGroupHasMovements,
+  _ => null,
+};
+
+/// #4362 -- the reasons of the tags and the named pieces.
+String? _tagReason(AppLocalizations l10n, String reason) => switch (reason) {
+  'has_tags' => l10n.stockReasonHasTags,
+  'tag_mode_none' => l10n.stockReasonTagModeNone,
+  'tag_per_unit_item' => l10n.stockReasonTagPerUnitItem,
+  'tag_malformed' => l10n.stockReasonTagMalformed,
+  'tag_owner_unknown' => l10n.stockReasonTagOwnerUnknown,
+  'units_not_tracked' => l10n.stockReasonUnitsNotTracked,
   _ => null,
 };

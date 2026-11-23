@@ -12576,6 +12576,20 @@ class AppLocalizationsEs extends AppLocalizations {
   String get featureStockReturnsTitle => 'Devoluciones y correcciones de stock';
 
   @override
+  String get featureStockScanningDesc =>
+      'Un lector que teclea, o la cámara del móvil, rellena cualquier hoja de mercancías: un código se lee como código de barras, etiqueta de lugar, etiqueta de lote o etiqueta RFID. Activado con el registro de mercancías.';
+
+  @override
+  String get featureStockScanningTitle => 'Escaneo';
+
+  @override
+  String get featureStockTagsDesc =>
+      'Etiquete artículos, unidades, lotes y lugares con etiquetas RFID o NFC, guardadas como un código de barras y únicas en el negocio. Una etiqueta puede nombrar un lote o una pieza, según el grupo del artículo; la lectura de una etiqueta se reconoce donde se reconoce un código de barras.';
+
+  @override
+  String get featureStockTagsTitle => 'Etiquetas RFID';
+
+  @override
   String get featureStockTakeOutDesc =>
       'Sacar mercancías de las existencias para uso o como pérdida, con el motivo y el lote. Desactivado: no se ofrece consumo ni pérdida; las transferencias y la recepción no cambian.';
 
@@ -28780,6 +28794,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Este movimiento no puede registrarse así: una cantidad mayor que cero, un motivo conocido y de una a doscientas líneas, o la misma solicitud reenviada sin cambios. No se ha movido nada.';
 
   @override
+  String get refusalStockNamePieces =>
+      'Este artículo se sigue pieza a pieza: nombre cada pieza, tantas como la cantidad.';
+
+  @override
   String get refusalStockNotEnough =>
       'No hay tanto en este lugar. No se ha movido nada.';
 
@@ -28796,6 +28814,14 @@ class AppLocalizationsEs extends AppLocalizations {
       'Esta petición de página no es válida: pida de 1 a 200 filas y continúe solo desde la posición que dio una página.';
 
   @override
+  String get refusalStockPieceInStock =>
+      'Esta pieza está en stock. Sáquela o désela de baja antes de retirar su etiqueta.';
+
+  @override
+  String get refusalStockPieceWhere =>
+      'Una pieza nombrada no está donde este movimiento la toma. Compruebe el lugar o la pieza.';
+
+  @override
   String get refusalStockReturnBeyond =>
       'No se puede devolver más de lo que contenía este movimiento: una parte ya se devolvió o se corrigió.';
 
@@ -28810,6 +28836,14 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get refusalStockStale =>
       'Otra persona lo ha modificado desde que lo abrió. Vuelva a leerlo y haga de nuevo su cambio.';
+
+  @override
+  String get refusalStockTagBound =>
+      'Esta etiqueta ya está en otro artículo, lugar o pieza. Retírela primero allí.';
+
+  @override
+  String get refusalStockTagRetiredLately =>
+      'Esta etiqueta se retiró hace poco y todavía no se puede asociar de nuevo. El plazo de espera es un ajuste del negocio.';
 
   @override
   String get refusalStockUnit =>
@@ -32064,6 +32098,14 @@ class AppLocalizationsEs extends AppLocalizations {
       'Cómo se redondea un precio de venta propuesto: al 0,05 o 0,10 más cercano, o a un precio que termina en 0,99. Solo sirve para proponer un precio.';
 
   @override
+  String get settingHintStockRepeatedScan =>
+      'Qué hace una hoja de mercancías cuando se escanea otra vez el mismo código: añadir uno más a la línea o preguntar la cantidad.';
+
+  @override
+  String get settingHintStockTagRebindGraceDays =>
+      'Cuántos días después de retirarla puede volver a vincularse un código de etiqueta. 0 significa de inmediato. Una etiqueta vigente nunca se vincula dos veces.';
+
+  @override
   String get settingHintVatViesEvidenceDays =>
       'Días que una comprobación válida del NIF-IVA sigue siendo lo bastante reciente para servir de prueba en una nueva factura. Un valor más corto pide una nueva comprobación antes; no prueba que una operación sea válida.';
 
@@ -32419,6 +32461,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get settingLabelStockPriceRounding => 'Redondeo de precios';
+
+  @override
+  String get settingLabelStockRepeatedScan => 'Un código escaneado de nuevo';
+
+  @override
+  String get settingLabelStockTagRebindGraceDays =>
+      'Días antes de reutilizar una etiqueta retirada';
 
   @override
   String get settingLabelVatViesEvidenceDays =>
@@ -36099,6 +36148,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Un código de barras tiene de 8 a 14 dígitos.';
 
   @override
+  String get stockReasonHasTags =>
+      'Aquí hay etiquetas asociadas: retírelas antes de cambiar el modo de etiqueta.';
+
+  @override
   String get stockReasonHomeInvalid =>
       'Elija una ubicación de esta empresa en uso que no sea de proveedor, cliente, pérdida ni tránsito.';
 
@@ -36263,6 +36316,22 @@ class AppLocalizationsEs extends AppLocalizations {
       'Este proveedor no es de este negocio.';
 
   @override
+  String get stockReasonTagMalformed =>
+      'Este código no es un código de etiqueta legible.';
+
+  @override
+  String get stockReasonTagModeNone =>
+      'Este artículo no lleva etiquetas: su modo de etiqueta es ninguno.';
+
+  @override
+  String get stockReasonTagOwnerUnknown =>
+      'El artículo, lugar o pieza al que va esta etiqueta no se conoce aquí.';
+
+  @override
+  String get stockReasonTagPerUnitItem =>
+      'Una etiqueta por unidad va en una pieza, no en el artículo: asóciela a una pieza.';
+
+  @override
   String get stockReasonTargetBelowPoint =>
       'El nivel hasta el que pedir debe estar por encima del punto de reposición.';
 
@@ -36301,6 +36370,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get stockReasonUnitUnmapped =>
       'La unidad de esta línea no es una unidad del artículo: añádala primero al artículo.';
+
+  @override
+  String get stockReasonUnitsNotTracked =>
+      'Las piezas solo se nombran para un artículo seguido pieza a pieza.';
 
   @override
   String get stockReasonValueForeign =>

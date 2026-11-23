@@ -7826,6 +7826,10 @@
   "@featureStockReturnsTitle": {
     "description": "#4172 feature name"
   },
+  "featureStockScanningDesc": "Ein tippender Barcode-Scanner oder die Handykamera füllt jedes Warenblatt: ein Code wird als Barcode, Ortsetikett, Chargenetikett oder RFID-Etikett gelesen. Mit dem Warenbuch eingeschaltet.",
+  "featureStockScanningTitle": "Scannen",
+  "featureStockTagsDesc": "Artikel, Einheiten, Chargen und Orte mit RFID- oder NFC-Etiketten versehen, wie ein Barcode gespeichert und im Betrieb eindeutig. Ein Etikett kann eine Charge oder ein Stück benennen, wie es die Gruppe des Artikels sagt; ein gelesenes Etikett wird überall erkannt, wo ein Barcode erkannt wird.",
+  "featureStockTagsTitle": "RFID-Etiketten",
   "featureStockTakeOutDesc": "Waren für den Verbrauch oder als Verlust aus dem Lager nehmen, mit Grund und Charge. Aus: weder Verbrauch noch Verlust werden angeboten; Umlagerungen und Wareneingang bleiben unberührt.",
   "@featureStockTakeOutDesc": {
     "description": "#4170 what the taking goods out feature does, and what off means"
@@ -16518,6 +16522,7 @@
   "refusalStockLocation": "Dieser Ort gehört nicht zu diesem Unternehmen, wird nicht mehr genutzt oder ist zugleich Start und Ziel der Bewegung. Nichts wurde bewegt.",
   "refusalStockLot": "Diese Charge gehört zu einem anderen Artikel, oder der Artikel wird chargenweise geführt und keine wurde angegeben. Nichts wurde bewegt.",
   "refusalStockMove": "Diese Bewegung kann so nicht gebucht werden: eine Menge über null, ein bekannter Grund und eine bis zweihundert Zeilen, oder dieselbe Anfrage unverändert erneut. Nichts wurde bewegt.",
+  "refusalStockNamePieces": "Dieser Artikel wird stückweise verfolgt: Benennen Sie jedes Stück, so viele wie die Menge.",
   "refusalStockNotEnough": "So viel ist an diesem Ort nicht vorhanden. Nichts wurde bewegt.",
   "refusalStockOff": "Die Lagerverwaltung ist in diesem Unternehmen ausgeschaltet. Nichts wurde bewegt.",
   "refusalStockOnlyExpired": "Was im Hauptlager noch liegt, ist abgelaufen und wird nie verkauft. Die Bestätigung wurde abgelehnt; nichts wurde entnommen.",
@@ -16525,6 +16530,8 @@
     "description": "#4170 (0847) DKG15: only expired stock is left for a sale."
   },
   "refusalStockPage": "Diese Seitenanfrage ist ungültig: Fordern Sie 1 bis 200 Zeilen an und setzen Sie nur an der Position fort, die eine Seite geliefert hat.",
+  "refusalStockPieceInStock": "Dieses Stück ist auf Lager. Buchen Sie es aus oder schreiben Sie es ab, bevor sein Etikett freigegeben wird.",
+  "refusalStockPieceWhere": "Ein benanntes Stück liegt nicht dort, wo diese Bewegung es entnimmt. Prüfen Sie den Ort oder das Stück.",
   "refusalStockReturnBeyond": "Es kann nicht mehr zurückgegeben werden, als diese Bewegung enthielt: ein Teil wurde bereits zurückgegeben oder korrigiert.",
   "@refusalStockReturnBeyond": {
     "description": "#4172 refusal"
@@ -16538,6 +16545,8 @@
     "description": "#4172 refusal"
   },
   "refusalStockStale": "Jemand anderes hat dies geändert, seit Sie es geöffnet haben. Lesen Sie es erneut und nehmen Sie Ihre Änderung noch einmal vor.",
+  "refusalStockTagBound": "Dieses Etikett ist bereits einem anderen Artikel, Ort oder Stück zugeordnet. Geben Sie es dort zuerst frei.",
+  "refusalStockTagRetiredLately": "Dieses Etikett wurde erst kürzlich freigegeben und kann noch nicht erneut zugeordnet werden. Die Wartezeit ist eine Einstellung des Betriebs.",
   "refusalStockUnit": "Dieser Artikel hat diese Einheit nicht. Fügen Sie die Einheit dem Artikel hinzu oder geben Sie die Menge in einer seiner Einheiten ein.",
   "refusalStockVariant": "Dieser Artikel hat Varianten: Geben Sie an, welche (Farbe, Größe) bewegt, verkauft oder gezählt wird. Nichts wurde geändert.",
   "@refusalStockVariant": {
@@ -19069,6 +19078,8 @@
   "settingHintStockGroupDefaultCountDays": "Nach wie vielen Tagen ein Artikel, den weder eine Gruppe noch eine eigene Einstellung betrifft, zur Zyklus-Zählung vorgeschlagen wird. 0 heißt nicht geplant.",
   "settingHintStockGroupDefaultTagMode": "Ob ein Artikel, den weder eine Gruppe noch eine eigene Einstellung betrifft, ein RFID-Etikett trägt: keines, ein Etikett für eine Charge oder ein Etikett je Stück (das eine Verfolgung je Stück braucht).",
   "settingHintStockPriceRounding": "Wie ein vorgeschlagener Verkaufspreis gerundet wird: auf 0,05 oder 0,10 oder auf einen Preis, der auf 0,99 endet. Sie dient nur dazu, einen Preis vorzuschlagen.",
+  "settingHintStockRepeatedScan": "Was ein Warenblatt tut, wenn derselbe Code noch einmal gescannt wird: eins mehr zur Zeile hinzufügen oder die Menge erfragen.",
+  "settingHintStockTagRebindGraceDays": "Wie viele Tage nach dem Entfernen ein Etikettencode wieder gebunden werden darf. 0 heißt sofort. Ein gültiges Etikett wird nie doppelt gebunden.",
   "settingHintVatViesEvidenceDays": "Tage, die eine gültige Prüfung der USt-IdNr. aktuell genug bleibt, um auf einer neuen Rechnung als Nachweis zu dienen. Ein kürzerer Wert verlangt früher eine neue Prüfung; er beweist nicht, dass ein Geschäft gültig ist.",
   "@settingHintVatViesEvidenceDays": {
     "description": "#2487 retention settings"
@@ -19292,6 +19303,8 @@
   "settingLabelStockGroupDefaultCountDays": "Standard-Zählzyklus (Tage)",
   "settingLabelStockGroupDefaultTagMode": "Standard-Etikettenmodus der Artikel",
   "settingLabelStockPriceRounding": "Preisrundung",
+  "settingLabelStockRepeatedScan": "Ein erneut gescannter Code",
+  "settingLabelStockTagRebindGraceDays": "Tage, bevor ein entferntes Etikett neu vergeben wird",
   "settingLabelVatViesEvidenceDays": "Aktualität der USt-IdNr.-Prüfung",
   "@settingLabelVatViesEvidenceDays": {
     "description": "#2487 retention settings"
@@ -21265,6 +21278,7 @@
   "@stockReasonGtinLength": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonHasTags": "Hier sind Etiketten zugeordnet: Geben Sie sie frei, bevor der Etikettenmodus geändert wird.",
   "stockReasonHomeInvalid": "Wählen Sie einen Lagerort dieses Unternehmens, der in Gebrauch ist und kein Lieferanten-, Kunden-, Verlust- oder Transitort ist.",
   "stockReasonItemForeign": "Dieser Artikel gehört nicht zu diesem Betrieb.",
   "@stockReasonItemForeign": {
@@ -21411,6 +21425,10 @@
   "@stockReasonSupplierForeign": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonTagMalformed": "Dieser Code ist kein lesbarer Etikettencode.",
+  "stockReasonTagModeNone": "Dieser Artikel trägt keine Etiketten: Sein Etikettenmodus ist keiner.",
+  "stockReasonTagOwnerUnknown": "Der Artikel, Ort oder das Stück, für den dieses Etikett gedacht ist, ist hier nicht bekannt.",
+  "stockReasonTagPerUnitItem": "Ein Etikett je Einheit gehört an ein Stück, nicht an den Artikel: Ordnen Sie es einem Stück zu.",
   "stockReasonTargetBelowPoint": "Das Auffüllniveau muss über dem Meldebestand liegen.",
   "stockReasonTooLong": "Dieser Text ist zu lang.",
   "@stockReasonTooLong": {
@@ -21452,6 +21470,7 @@
   "@stockReasonUnitUnmapped": {
     "description": "#4171 receiving into stock: a text under a field the server refused"
   },
+  "stockReasonUnitsNotTracked": "Stücke werden nur für einen stückweise verfolgten Artikel benannt.",
   "stockReasonValueForeign": "Dieser Wert gehört nicht zu dieser Dimension.",
   "@stockReasonValueForeign": {
     "description": "#4169 the stock editors: a text under a field the server refused"

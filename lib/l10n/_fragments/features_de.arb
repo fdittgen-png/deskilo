@@ -339,5 +339,9 @@
     "description": "#4295 feature description"
   },
   "featureStockItemGroupsTitle": "Artikelgruppen",
-  "featureStockItemGroupsDesc": "Artikel gruppieren, damit ihre Einstellungen geteilt werden: Nachverfolgung, Haltbarkeit, Etikettenmodus, Einheiten, Mehrwertsteuer, Kasse und mehr. Ein Artikel erbt den Wert seiner Gruppe, außer er behält seinen eigenen; eine Änderung an der Gruppe zeigt vor dem Speichern, wie viele Artikel sie erreicht."
+  "featureStockItemGroupsDesc": "Artikel gruppieren, damit ihre Einstellungen geteilt werden: Nachverfolgung, Haltbarkeit, Etikettenmodus, Einheiten, Mehrwertsteuer, Kasse und mehr. Ein Artikel erbt den Wert seiner Gruppe, außer er behält seinen eigenen; eine Änderung an der Gruppe zeigt vor dem Speichern, wie viele Artikel sie erreicht.",
+  "featureStockTagsTitle": "RFID-Etiketten",
+  "featureStockTagsDesc": "Artikel, Einheiten, Chargen und Orte mit RFID- oder NFC-Etiketten versehen, wie ein Barcode gespeichert und im Betrieb eindeutig. Ein Etikett kann eine Charge oder ein Stück benennen, wie es die Gruppe des Artikels sagt; ein gelesenes Etikett wird überall erkannt, wo ein Barcode erkannt wird.",
+  "featureStockScanningTitle": "Scannen",
+  "featureStockScanningDesc": "Ein tippender Barcode-Scanner oder die Handykamera füllt jedes Warenblatt: ein Code wird als Barcode, Ortsetikett, Chargenetikett oder RFID-Etikett gelesen. Mit dem Warenbuch eingeschaltet."
 }

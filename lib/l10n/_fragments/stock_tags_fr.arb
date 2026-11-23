@@ -1,0 +1,18 @@
+{
+  "@@locale": "fr",
+  "settingLabelStockTagRebindGraceDays": "Jours avant de réutiliser une étiquette retirée",
+  "settingHintStockTagRebindGraceDays": "Combien de jours après son retrait un code d'étiquette peut être lié de nouveau. 0 : tout de suite. Une étiquette en vigueur n'est jamais liée deux fois.",
+  "settingLabelStockRepeatedScan": "Un code scanné de nouveau",
+  "settingHintStockRepeatedScan": "Ce que fait une feuille de marchandises quand le même code est scanné de nouveau : ajouter un de plus à la ligne, ou demander la quantité.",
+  "refusalStockTagBound": "Cette étiquette est déjà posée sur un autre article, lieu ou exemplaire. Retirez-la d'abord à cet endroit.",
+  "refusalStockTagRetiredLately": "Cette étiquette a été retirée il y a peu et ne peut pas encore être associée de nouveau. Le délai d'attente est un réglage de l'entreprise.",
+  "refusalStockPieceInStock": "Cet exemplaire est en stock. Sortez-le ou passez-le en perte avant de retirer son étiquette.",
+  "refusalStockNamePieces": "Cet article est suivi pièce par pièce : nommez chaque exemplaire, autant que la quantité.",
+  "refusalStockPieceWhere": "Un exemplaire nommé n'est pas à l'endroit d'où ce mouvement le prend. Vérifiez le lieu ou l'exemplaire.",
+  "stockReasonHasTags": "Des étiquettes sont associées ici : retirez-les avant de changer le mode d'étiquette.",
+  "stockReasonTagModeNone": "Cet article ne porte pas d'étiquettes : son mode d'étiquette est aucun.",
+  "stockReasonTagPerUnitItem": "Une étiquette par unité se pose sur un exemplaire, pas sur l'article : associez-la à un exemplaire.",
+  "stockReasonTagMalformed": "Ce code n'est pas un code d'étiquette lisible.",
+  "stockReasonTagOwnerUnknown": "L'article, le lieu ou l'exemplaire visé par cette étiquette n'est pas connu ici.",
+  "stockReasonUnitsNotTracked": "Les exemplaires ne sont nommés que pour un article suivi pièce par pièce."
+}
