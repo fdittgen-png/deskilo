@@ -9,20 +9,18 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 
+import 'lint_sources.dart';
+
 final _patterns = <String, RegExp>{
   'double.parse': RegExp(r'\bdouble\.(try)?[Pp]arse\('),
   'a double quantity': RegExp(r'\bdouble\??\s+(received|putAway|remaining|qty|quantity|delivered)\b'),
   'a float sum': RegExp(r'\.fold\(\s*0\.0\b'),
 };
 
-Iterable<File> _files() sync* {
-  for (final f in Directory('lib/features/stock').listSync(recursive: true).whereType<File>()) {
-    if (f.path.endsWith('.dart')) yield f;
-  }
-  for (final f in Directory('lib/core/demo/data').listSync().whereType<File>()) {
-    if (f.uri.pathSegments.last.startsWith('demo_stock_') && f.path.endsWith('.dart')) yield f;
-  }
-}
+Iterable<File> _files() => [
+  ...handWrittenDartFiles('lib/features/stock'),
+  ...handWrittenDartFiles('lib/core/demo/data').where((f) => f.uri.pathSegments.last.startsWith('demo_stock_')),
+];
 
 /// The offences of [source], as `pattern: line`.
 List<String> floatQuantities(String source) => [
