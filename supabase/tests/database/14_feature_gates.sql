@@ -1,4 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
+-- utc-date-file: the date is a filler value or the start of a record the test does not compare with the business's day: the gates under test do not read it (#4384)
 --
 -- #1335 — a feature the client treats as OFF must be off on the server.
 --

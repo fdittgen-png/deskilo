@@ -1,4 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
+-- utc-date-file: the assertions hold with the business's day one day ahead of and one day behind the database's (workspace_today forced to current_date +/- 1 on the dev project, #4384)
 -- #2365 / 0502-0504: closing a book period and the export log. Real roles;
 -- every refusal is followed by a readback. Hand-written expectations: the
 -- year 2025 is closed; an invoice issued 2025-06-15 cannot be voided, one

@@ -1,4 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
+-- utc-date-file: the assertions hold with the business's day one day ahead of and one day behind the database's (workspace_today forced to current_date +/- 1 on the dev project, #4384)
 -- #2362 (0439): the sales-tax summary of a period, from invoices a real
 -- create_invoice froze. Two customers of one New York space buy the same
 -- taxable service (USD 100.00) and a desk licence (USD 200.00); one holds a

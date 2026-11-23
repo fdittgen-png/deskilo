@@ -1,4 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
+-- utc-date-file: the assertions hold with the business's day one day ahead of and one day behind the database's (workspace_today forced to current_date +/- 1 on the dev project, #4384)
 -- #3673 (0731): the customer statement, open items as of a date. Each
 -- document and each payment counts once per currency: an invoice shows what
 -- is still due after its allocated parts, a payment appears only as those

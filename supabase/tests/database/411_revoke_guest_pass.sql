@@ -1,4 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
+-- utc-date-file: the assertions hold with the business's day one day ahead of and one day behind the database's (workspace_today forced to current_date +/- 1 on the dev project, #4384)
 --
 -- #3829 (0749) -- a sold guest pass revoked: its bookings not started yet
 -- are cancelled, the one already started stays, the pass is marked revoked

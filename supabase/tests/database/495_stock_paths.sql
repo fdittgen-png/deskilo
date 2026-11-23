@@ -1,4 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
+-- utc-date-file: the assertions hold with the business's day one day ahead of and one day behind the database's (workspace_today forced to current_date +/- 1 on the dev project, #4384)
 -- #4170 (0847-0849, A): one authoritative stock path. The generic move checks its reason
 -- against the places; a transfer inside a site is one step (exact, fractional, converted by
 -- its factor), between sites it is loaded into transit and received in part with the sum
