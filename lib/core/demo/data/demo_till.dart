@@ -7,7 +7,7 @@
 import 'package:deskilo/features/money/domain/counter_till.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
-import '../../data/dk_code.dart';
+import '../../codes/dk_code.dart';
 import 'demo_stock_registry.dart';
 
 /// The server's refusal: its SQLSTATE as the code, its words as the message.

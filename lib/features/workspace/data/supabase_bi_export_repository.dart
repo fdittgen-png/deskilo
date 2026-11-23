@@ -4,7 +4,7 @@
 // typed. Nothing is retried here: an export is asked once per click.
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../core/data/pg_code.dart';
+import '../../../core/codes/pg_code.dart';
 import '../domain/bi_batch.dart';
 import '../domain/bi_report_snapshot.dart';
 

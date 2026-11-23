@@ -2,7 +2,7 @@
 //
 // #1329 — what a feature-flag write can answer besides "done".
 
-import '../../../core/data/dk_code.dart';
+import '../../../core/codes/dk_code.dart';
 
 /// The flags changed on the server since the preview read them: nothing
 /// was written (`set_feature_flags`, 0245, SQLSTATE DK409). The caller

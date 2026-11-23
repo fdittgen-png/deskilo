@@ -4,7 +4,7 @@ import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
-import '../../../data/dk_code.dart';
+import '../../../codes/dk_code.dart';
 import '../money_repository.dart';
 import 'demo_document_numbering.dart';
 

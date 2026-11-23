@@ -2,7 +2,7 @@
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../core/data/pg_code.dart';
+import '../../../core/codes/pg_code.dart';
 import '../domain/business_receivables.dart';
 
 /// Reads the complete per-currency aggregate on the server rather than summing

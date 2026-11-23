@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../data/pg_code.dart';
+import '../codes/pg_code.dart';
 import '../instance/schema_compatibility.dart';
 import '../lifecycle/app_foreground.dart';
 import '../trace/trace_logger.dart';

@@ -6,7 +6,7 @@
 // its request, so a retry after a lost answer is answered once (#2579).
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../core/data/pg_code.dart';
+import '../../../core/codes/pg_code.dart';
 import '../domain/bi_saved_view.dart';
 
 class SupabaseBiViewRepository implements BiViewRepository {

@@ -4,7 +4,7 @@
 // lately (and for how long), on a piece still in stock, not in force here; or the content is not valid (a code
 // that is no tag, an item that uses no tags or tags its pieces one by one). Anything else falls back to the
 // stock's own wording.
-import '../../../core/data/dk_code.dart';
+import '../../../core/codes/dk_code.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/stock_config.dart';
 import 'stock_config_text.dart';

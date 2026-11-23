@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #4417 -- writes lib/core/data/dk_code.dart: every `DK…` refusal code the migrations raise
+// #4417 -- writes lib/core/codes/dk_code.dart: every `DK…` refusal code the migrations raise
 // (`using errcode = 'DK…'` or `public.refuse('DK…', …)`), one constant each, so the app spells a
 // code once and a typing error is a compile error. The same scan `dk_codes_test` reads: SQL
 // and Dart cannot differ (the test fails when a code exists in one and not the other).
@@ -44,11 +44,11 @@ String dkCodeSource(List<String> codes) {
 
 void main(List<String> args) {
   final text = dkCodeSource(raisedCodes('supabase/migrations'));
-  final file = File('lib/core/data/dk_code.dart');
+  final file = File('lib/core/codes/dk_code.dart');
   if (args.contains('--check')) {
     final same = file.existsSync() && file.readAsStringSync() == text;
     if (!same) {
-      stderr.writeln('lib/core/data/dk_code.dart is not what the migrations raise: run dart run tool/build_dk_codes.dart');
+      stderr.writeln('lib/core/codes/dk_code.dart is not what the migrations raise: run dart run tool/build_dk_codes.dart');
     }
     exit(same ? 0 : 1);
   }

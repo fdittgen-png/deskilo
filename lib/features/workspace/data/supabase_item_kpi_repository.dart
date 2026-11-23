@@ -3,7 +3,7 @@
 // #3294 step 4 — the item figures over Supabase (`kpi_item_margins`, 0675).
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../core/data/pg_code.dart';
+import '../../../core/codes/pg_code.dart';
 import '../domain/kpi_contract.dart';
 import '../domain/kpi_items.dart';
 

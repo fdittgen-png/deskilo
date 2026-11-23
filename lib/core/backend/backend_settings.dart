@@ -9,7 +9,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../l10n/app_localizations.dart';
 import '../cache/cache_scope.dart';
-import '../data/pg_code.dart';
+import '../codes/pg_code.dart';
 import '../instance/schema_compatibility.dart';
 import '../trace/trace_logger.dart';
 import 'backend_config.dart';
@@ -492,8 +492,7 @@ BackendProbeReport classifyProbeError(PostgrestException e) {
     );
   }
   if (code == '401' ||
-      code == PgCode.pgrstJwtExpired ||
-      code == PgCode.pgrstJwtInvalid ||
+      code == PgCode.pgrstJwtExpired || code == PgCode.pgrstJwtInvalid ||
       message.contains('api key') ||
       message.contains('jwt')) {
     return const BackendProbeReport(

@@ -16,7 +16,7 @@ library;
 
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
-import '../../../core/data/pg_code.dart';
+import '../../../core/codes/pg_code.dart';
 import 'bi_batch.dart';
 import 'bi_query.dart';
 import 'bi_report_definition.dart';

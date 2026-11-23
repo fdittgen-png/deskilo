@@ -3,7 +3,7 @@
 // #3294 step 3 — the sales figures over Supabase (`kpi_sales_quality`, 0674).
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../core/data/pg_code.dart';
+import '../../../core/codes/pg_code.dart';
 import '../domain/kpi_contract.dart';
 import '../domain/kpi_sales.dart';
 

@@ -11,7 +11,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/backend/context_clients.dart';
-import '../../../core/data/pg_code.dart';
+import '../../../core/codes/pg_code.dart';
 import '../domain/my_reservations.dart';
 import 'host_my_reservations_repository.dart';
 import 'reservation_refusal_boundary.dart';

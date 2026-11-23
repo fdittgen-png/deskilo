@@ -6,7 +6,7 @@
 // of another installation they hold a membership fact in force for; any
 // other reference is refused and nothing is written.
 
-import '../../../core/data/pg_code.dart';
+import '../../../core/codes/pg_code.dart';
 
 /// Why the personal home did not keep a favourite.
 enum AccountFavoriteRefusal {

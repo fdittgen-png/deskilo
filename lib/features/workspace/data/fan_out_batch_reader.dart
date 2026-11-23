@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import '../../../core/data/pg_code.dart';
+import '../../../core/codes/pg_code.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/bi_batch.dart';
 import '../domain/kpi_contract.dart';

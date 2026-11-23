@@ -102,11 +102,13 @@ void main() {
   };
   final read = <String>{
     for (final f in handWrittenDartFiles('lib'))
-      for (final m in _read.allMatches(f.readAsStringSync())) m.group(1)!,
+      // the generated constants file names every code: it is no reader (#4417)
+      if (!f.path.endsWith('lib/core/codes/dk_code.dart'))
+        for (final m in _read.allMatches(f.readAsStringSync())) m.group(1)!,
   };
 
   test('DkCode holds exactly the codes the migrations raise (SQL and Dart cannot differ)', () {
-    final generated = File('lib/core/data/dk_code.dart').readAsStringSync();
+    final generated = File('lib/core/codes/dk_code.dart').readAsStringSync();
     final fromSql = raisedCodes('supabase/migrations');
     final inDart = RegExp(r"static const \w+ = '(DK[A-Z0-9]{3})';")
         .allMatches(generated)

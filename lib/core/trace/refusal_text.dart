@@ -5,8 +5,8 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show JsonReader;
 import 'package:meta/meta.dart';
 
 import '../../l10n/app_localizations.dart';
-import '../data/dk_code.dart';
-import '../data/pg_code.dart';
+import '../codes/dk_code.dart';
+import '../codes/pg_code.dart';
 import '../data/server_error.dart';
 
 /// #1305 S2 — the refusals every surface can meet, whatever it was doing.

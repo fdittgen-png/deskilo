@@ -2,7 +2,7 @@
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../core/data/pg_code.dart';
+import '../../../core/codes/pg_code.dart';
 import '../domain/business_payables.dart';
 import '../domain/supplier_balance.dart';
 import '../domain/supplier_payables_page.dart';

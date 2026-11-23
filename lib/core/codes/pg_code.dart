@@ -35,6 +35,18 @@ abstract final class PgCode {
   /// PostgREST: the function is not in the schema cache.
   static const pgrstFunctionNotFound = 'PGRST202';
 
+  /// PostgREST: it could not connect to the database.
+  static const pgrstNoConnection = 'PGRST000';
+
+  /// PostgREST: an internal connection error.
+  static const pgrstInternalConnection = 'PGRST001';
+
+  /// PostgREST: it could not connect to the database for the schema cache.
+  static const pgrstSchemaCacheConnection = 'PGRST002';
+
+  /// PostgREST: a timeout acquiring a connection from the pool.
+  static const pgrstPoolTimeout = 'PGRST003';
+
   /// PostgREST: the JWT is expired or invalid.
   static const pgrstJwtExpired = 'PGRST301';
 

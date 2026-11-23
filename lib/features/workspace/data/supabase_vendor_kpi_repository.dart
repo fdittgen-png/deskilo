@@ -3,7 +3,7 @@
 // #3294 step 2 — the vendor figures over Supabase (`kpi_vendor_quality`, 0673).
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../core/data/pg_code.dart';
+import '../../../core/codes/pg_code.dart';
 import '../domain/kpi_contract.dart';
 import '../domain/kpi_vendors.dart';
 

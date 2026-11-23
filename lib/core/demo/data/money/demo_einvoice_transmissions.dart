@@ -5,7 +5,7 @@ import 'package:deskilo_invoice_model/deskilo_invoice_model.dart'
     show EInvoiceFormat;
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
-import '../../../data/dk_code.dart';
+import '../../../codes/dk_code.dart';
 import '../money_repository.dart';
 
 /// #2591 — the demo's e-invoice transmission and its channel credentials,

@@ -10,8 +10,8 @@ import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import '../../../features/events/domain/workspace_event.dart';
 import '../../../features/money/domain/bank/bank_records.dart';
-import '../../data/dk_code.dart';
-import '../../data/pg_code.dart';
+import '../../codes/dk_code.dart';
+import '../../codes/pg_code.dart';
 import 'money_repository.dart';
 
 /// A match undone, as the server records it.

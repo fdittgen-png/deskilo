@@ -4,7 +4,7 @@
 // allocation, the rules with every revision, and appending one.
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../core/data/pg_code.dart';
+import '../../../core/codes/pg_code.dart';
 import '../domain/cost_allocation_rules.dart';
 import '../domain/kpi_contract.dart';
 

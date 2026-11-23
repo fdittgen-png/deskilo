@@ -6,7 +6,7 @@
 // the fifth left four committed. The server applies this payload in one
 // transaction (`save_workspace_settings`, 0241) against the version the
 // form was opened on.
-import '../../../core/data/dk_code.dart';
+import '../../../core/codes/dk_code.dart';
 import 'new_member_defaults.dart';
 
 /// Everything the Workspace settings form saves at once.

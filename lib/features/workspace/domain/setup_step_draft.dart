@@ -6,7 +6,7 @@
 // command applies what the owner confirms, and readiness is computed from
 // what was applied. Every write is made against the version it read.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
-import '../../../core/data/pg_code.dart';
+import '../../../core/codes/pg_code.dart';
 
 /// The draft the server holds for one step.
 class SetupStepDraft {

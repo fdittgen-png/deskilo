@@ -8,8 +8,8 @@ import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
-import '../../data/dk_code.dart';
-import '../../data/pg_code.dart';
+import '../../codes/dk_code.dart';
+import '../../codes/pg_code.dart';
 import 'event_visibility.dart';
 import 'fixture_clock.dart';
 

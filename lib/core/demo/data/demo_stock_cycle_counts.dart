@@ -15,7 +15,7 @@ import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../data/dk_code.dart';
+import '../../codes/dk_code.dart';
 import 'demo_stock_ledger.dart';
 
 PostgrestException _refused(String code, String message) => PostgrestException(message: message, code: code);

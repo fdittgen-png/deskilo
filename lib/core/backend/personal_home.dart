@@ -11,7 +11,7 @@
 // explicit [PersonalHomeUnavailable], never a quiet fallback.
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../data/pg_code.dart';
+import '../codes/pg_code.dart';
 import 'backend_settings.dart';
 
 /// What an installation declared about the personal home of its people.

@@ -8,7 +8,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/backend/connected_installations.dart';
-import '../../../core/data/pg_code.dart';
+import '../../../core/codes/pg_code.dart';
 import '../domain/inbox_sources.dart';
 
 mixin SupabaseInboxPages {

@@ -2,7 +2,7 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../core/data/pg_code.dart';
+import '../../../core/codes/pg_code.dart';
 import '../../../core/data/unreadable_rows.dart';
 import '../domain/book_chart.dart';
 import '../domain/book_profile_repository.dart';

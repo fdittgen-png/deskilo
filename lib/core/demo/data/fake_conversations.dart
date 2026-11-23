@@ -12,7 +12,7 @@ import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/member_note.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
-import '../../data/pg_code.dart';
+import '../../codes/pg_code.dart';
 import 'conversation_visibility.dart';
 
 mixin FakeConversations implements ConversationRepository {

@@ -6,7 +6,7 @@
 // or a read finds something. The scanner resolver reads the same store.
 import '../../../features/stock/domain/stock_config.dart';
 import '../../../features/stock/domain/stock_tags.dart';
-import '../../data/dk_code.dart';
+import '../../codes/dk_code.dart';
 
 class _Bound {
   _Bound(this.id, this.code, this.owner);

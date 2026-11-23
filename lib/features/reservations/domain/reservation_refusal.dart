@@ -14,7 +14,7 @@
 // This is the server's refusal, distinct from the client-side `BookingRefusal`
 // gate (`booking_gate.dart`), which foresees one before asking.
 import 'dart:convert';
-import '../../../core/data/dk_code.dart';
+import '../../../core/codes/dk_code.dart';
 
 /// A refusal's kind: a code the server issues, or one of the legacy readings.
 enum ReservationRefusalKind {

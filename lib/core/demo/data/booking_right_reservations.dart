@@ -13,8 +13,8 @@
 import '../../../features/reservations/domain/reservation_refusal.dart';
 import '../../../features/reservations/domain/reservation_repository.dart';
 import '../../../features/workspace/domain/booking_policies.dart';
-import '../../data/dk_code.dart';
-import '../../data/pg_code.dart';
+import '../../codes/dk_code.dart';
+import '../../codes/pg_code.dart';
 import 'demo_booking_refusal.dart';
 import 'reservation_repository.dart';
 import 'workspace_repository.dart';

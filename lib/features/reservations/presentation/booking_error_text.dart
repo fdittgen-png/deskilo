@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import '../../../core/data/dk_code.dart';
+import '../../../core/codes/dk_code.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../workspace/domain/booking_policies.dart';

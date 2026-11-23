@@ -10,7 +10,7 @@ import 'dart:convert';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../core/data/dk_code.dart';
+import '../../../core/codes/dk_code.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/stock_config.dart';
 

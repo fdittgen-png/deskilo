@@ -6,8 +6,8 @@
 // makes a retry safe, and the screen offers it).
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../core/data/dk_code.dart';
-import '../../../core/data/pg_code.dart';
+import '../../../core/codes/dk_code.dart';
+import '../../../core/codes/pg_code.dart';
 import '../../../core/data/unreadable_rows.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/service_fulfilment.dart';

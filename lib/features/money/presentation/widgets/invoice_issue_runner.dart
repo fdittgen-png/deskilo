@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
-import '../../../../core/data/dk_code.dart';
+import '../../../../core/codes/dk_code.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/refusal_text.dart';
 import '../../../../core/trace/trace_logger.dart';

@@ -14,7 +14,7 @@ import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
-import '../../data/dk_code.dart';
+import '../../codes/dk_code.dart';
 import 'fake_workspace_state.dart';
 
 mixin FakeWorkspaceMembers on FakeWorkspaceState

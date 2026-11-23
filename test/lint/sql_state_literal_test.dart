@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #4417 -- a refusal code is spelled once. A DK code of the server is `DkCode.x` (generated
-// from the migrations, lib/core/data/dk_code.dart); a standard Postgres or PostgREST code the
-// app reacts to is `PgCode.x` (lib/core/data/pg_code.dart). A quoted code anywhere else in
+// from the migrations, lib/core/codes/dk_code.dart); a standard Postgres or PostgREST code the
+// app reacts to is `PgCode.x` (lib/core/codes/pg_code.dart). A quoted code anywhere else in
 // `lib/` is a typing error the app would fail to recognise at run time. The budget only falls.
 import 'package:flutter_test/flutter_test.dart';
 
@@ -13,8 +13,8 @@ final _quotedCode = RegExp(
 );
 
 const _constantFiles = {
-  'lib/core/data/dk_code.dart',
-  'lib/core/data/pg_code.dart',
+  'lib/core/codes/dk_code.dart',
+  'lib/core/codes/pg_code.dart',
 };
 
 /// RATCHET: the quoted codes left outside the two constants files. Only falls.

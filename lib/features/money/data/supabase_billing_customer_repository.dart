@@ -5,7 +5,7 @@
 // untouched (a write is never retried here: the editor offers the retry).
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../core/data/dk_code.dart';
+import '../../../core/codes/dk_code.dart';
 import '../domain/billing_customer.dart';
 
 class SupabaseBillingCustomerRepository implements BillingCustomerRepository {

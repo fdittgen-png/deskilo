@@ -13,7 +13,7 @@ import 'package:deskilo/features/stock/domain/stock_reversals.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../data/dk_code.dart';
+import '../../codes/dk_code.dart';
 import 'demo_stock_ledger.dart';
 
 const _loss = 'demo-place-loss';

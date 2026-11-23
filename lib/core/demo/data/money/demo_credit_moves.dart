@@ -3,7 +3,7 @@ import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import '../../../../features/money/domain/credit_move.dart';
-import '../../../data/pg_code.dart';
+import '../../../codes/pg_code.dart';
 import '../money_repository.dart';
 
 /// #2380 — move_payment_credit_v1 (0688) in the demo: over one space's

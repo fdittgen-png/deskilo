@@ -5,7 +5,7 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../core/data/pg_code.dart';
+import '../../../core/codes/pg_code.dart';
 import '../domain/bi_batch.dart';
 import '../domain/kpi_contract.dart';
 import '../domain/kpi_purchases.dart';

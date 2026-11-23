@@ -17,7 +17,7 @@ import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 import '../../../features/money/domain/purchase_order.dart';
 import '../../../features/money/domain/purchase_order_receipt.dart';
 import '../../../features/money/domain/service_item.dart';
-import '../../data/pg_code.dart';
+import '../../codes/pg_code.dart';
 
 class FakePurchaseOrderRepository implements PurchaseOrderRepository {
   FakePurchaseOrderRepository({

@@ -2,7 +2,7 @@
 import 'package:meta/meta.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../core/data/pg_code.dart';
+import '../../../core/codes/pg_code.dart';
 import '../domain/account_favorite.dart';
 import '../domain/me_repository.dart';
 import '../domain/personal_export.dart';

@@ -5,7 +5,7 @@
 // which holds the key.
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../core/data/pg_code.dart';
+import '../../../core/codes/pg_code.dart';
 import '../domain/reminder_mail.dart';
 
 class SupabaseReminderMail implements ReminderMail {

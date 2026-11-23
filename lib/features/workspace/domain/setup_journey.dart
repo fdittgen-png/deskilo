@@ -10,7 +10,7 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:xml/xml.dart';
 
-import '../../../core/data/pg_code.dart';
+import '../../../core/codes/pg_code.dart';
 import 'setup_levels.dart';
 
 /// The level of each process in [levels] (process name → level id) that

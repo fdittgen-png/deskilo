@@ -5,7 +5,7 @@
 // recorded: each refusal has its code (DKC01–DKC15) and the app answers
 // each by its own sentence, never as a failure of the app.
 
-import '../../../core/data/dk_code.dart';
+import '../../../core/codes/dk_code.dart';
 
 /// Why a claim was refused, by the server's code.
 enum ClaimRefusal {

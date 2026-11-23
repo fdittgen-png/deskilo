@@ -3,7 +3,7 @@
 // #3294 — the customer figures over Supabase (`kpi_customer_quality`, 0671).
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../core/data/pg_code.dart';
+import '../../../core/codes/pg_code.dart';
 import '../domain/kpi_contract.dart';
 import '../domain/kpi_customers.dart';
 

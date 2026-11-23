@@ -7,7 +7,7 @@ import 'package:deskilo/features/reservations/domain/reservation_repository.dart
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
 import 'package:deskilo/features/workspace/domain/booking_policies.dart';
 
-import '../../data/dk_code.dart';
+import '../../codes/dk_code.dart';
 import 'demo_booking_refusal.dart';
 import 'fixture_clock.dart';
 
@@ -101,8 +101,7 @@ class FakeReservationRepository with ReadsLeaveNothingOut implements Reservation
     // 06:00 walk-in passes too). Pinned substrings like the server.
     if (_touchesOutside(startsAt, endsAt)) {
       if (outsideHoursMode == OutsideHoursMode.off) {
-        throw demoBookingRefusal(
-            message: 'bookings outside the opening hours are not allowed', code: DkCode.dkk16);
+        throw demoBookingRefusal(message: 'bookings outside the opening hours are not allowed', code: DkCode.dkk16);
       }
       if (outsideHoursMode == OutsideHoursMode.walkupOnly && !walkUp) {
         throw demoBookingRefusal(

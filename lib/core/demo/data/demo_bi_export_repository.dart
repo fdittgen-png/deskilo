@@ -14,7 +14,7 @@ import '../../../core/trace/trace_logger.dart';
 import '../../../features/workspace/domain/bi_batch.dart';
 import '../../../features/workspace/domain/bi_report_snapshot.dart';
 import '../../../features/workspace/domain/kpi_contract.dart';
-import '../../data/pg_code.dart';
+import '../../codes/pg_code.dart';
 
 class DemoBiExportRepository implements BiExportRepository {
   DemoBiExportRepository({

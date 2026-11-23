@@ -6,7 +6,7 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show JsonReader;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../core/data/pg_code.dart';
+import '../../../core/codes/pg_code.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/my_business_kinds.dart';
 

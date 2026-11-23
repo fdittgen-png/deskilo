@@ -7,7 +7,7 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show isoDay;
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
-import '../../../core/data/pg_code.dart';
+import '../../../core/codes/pg_code.dart';
 import '../../../core/validation/pending_validation.dart';
 import '../domain/invitation_answer.dart';
 import '../domain/member.dart';

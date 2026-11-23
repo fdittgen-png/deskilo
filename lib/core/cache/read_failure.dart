@@ -4,7 +4,7 @@ import 'dart:io';
 
 import 'package:http/http.dart' as http;
 
-import '../data/pg_code.dart';
+import '../codes/pg_code.dart';
 import '../data/server_error.dart';
 
 /// Why a network read failed, as far as the cache may care (#1849).
@@ -52,7 +52,7 @@ ReadFailure classifyReadFailure(Object error) {
     // PostgREST connectivity family: the service is unavailable, not wrong.
     if (code.startsWith('5') ||
         code.startsWith('08') ||
-        const {'PGRST000', 'PGRST001', 'PGRST002', 'PGRST003'}.contains(code)) {
+        const {PgCode.pgrstNoConnection, PgCode.pgrstInternalConnection, PgCode.pgrstSchemaCacheConnection, PgCode.pgrstPoolTimeout}.contains(code)) {
       return ReadFailure.transient;
     }
   }

@@ -16,7 +16,7 @@ import 'dart:async';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../data/pg_code.dart';
+import '../codes/pg_code.dart';
 import '../public_network/public_network_negotiator.dart';
 import '../public_network/public_network_operations.dart';
 import '../trace/trace_logger.dart';
