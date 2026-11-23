@@ -40004,6 +40004,108 @@ class AppLocalizationsIt extends AppLocalizations {
   String get threadRefsIn => 'Riferimenti in';
 
   @override
+  String get tillBasketEmpty => 'Tocchi un articolo per iniziare una vendita.';
+
+  @override
+  String get tillBasketTitle => 'Carrello';
+
+  @override
+  String get tillCashExact => 'Importo esatto';
+
+  @override
+  String get tillCashGiven => 'Contanti dati';
+
+  @override
+  String get tillCashInvalid => 'Inserisca l\'importo dato come numero.';
+
+  @override
+  String get tillCashShort => 'I contanti dati sono inferiori al totale.';
+
+  @override
+  String tillChangeDue(String amount) {
+    return 'Resto da dare: $amount';
+  }
+
+  @override
+  String get tillFailed => 'La cassa non ha potuto eseguirlo. Riprovi.';
+
+  @override
+  String get tillKeysEmpty =>
+      'Non c\'è ancora nulla da vendere. Aggiunga prima degli articoli nel magazzino.';
+
+  @override
+  String get tillKeysTitle => 'Articoli da battere';
+
+  @override
+  String get tillNextCustomer => 'Cliente successivo';
+
+  @override
+  String tillNotReady(String operation) {
+    return 'Non ancora pronto nel Suo paese: $operation';
+  }
+
+  @override
+  String get tillNotReadyHint =>
+      'Non viene numerato né incassato nulla finché l\'operazione del paese non è supportata.';
+
+  @override
+  String get tillOpCorrectReceipt => 'correzione di uno scontrino';
+
+  @override
+  String get tillOpExportFiscal => 'esportazione dei dati fiscali';
+
+  @override
+  String get tillOpIssueReceipt => 'emissione di uno scontrino';
+
+  @override
+  String get tillOpReconcileTender =>
+      'riconciliazione di un pagamento con carta';
+
+  @override
+  String get tillOpSignFiscal => 'firma di uno scontrino fiscale';
+
+  @override
+  String get tillPayCash => 'Incassare in contanti';
+
+  @override
+  String get tillPricing => 'Calcolo del carrello…';
+
+  @override
+  String get tillQuantityHint =>
+      'Una quantità esatta, per esempio 1 oppure 0,350.';
+
+  @override
+  String get tillQuantityRefused =>
+      'Inserisca una quantità superiore a zero con al massimo sei decimali.';
+
+  @override
+  String get tillQuantityTitle => 'Quantità venduta';
+
+  @override
+  String tillReceiptNumber(String number) {
+    return 'Scontrino $number';
+  }
+
+  @override
+  String tillRemoveLine(String name) {
+    return 'Togliere $name dal carrello';
+  }
+
+  @override
+  String get tillSoldTitle => 'Venduto';
+
+  @override
+  String tillTaxIncluded(String amount) {
+    return 'di cui imposta $amount';
+  }
+
+  @override
+  String get tillTitle => 'Cassa';
+
+  @override
+  String get tillTotalDue => 'Totale da pagare';
+
+  @override
   String get tipAvailabilityClosure =>
       'Per chiudere un giorno che nessuno potrà prenotare: tocchi «Aggiungi giorno di chiusura» e indichi un motivo, se vuole.';
 

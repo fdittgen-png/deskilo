@@ -41,6 +41,7 @@ import '../../features/money/presentation/screens/vat_return_page.dart';
 import '../../features/money/presentation/screens/vat_screen.dart';
 import '../../features/money/presentation/screens/workspace_status_screen.dart';
 import '../../features/money/presentation/standalone/standalone_invoice_screen.dart';
+import '../../features/money/presentation/till_screen.dart';
 import '../../features/money/presentation/widgets/expense_repartition_sheet.dart'
     show expenseRepartitionPage;
 import '../../features/money/presentation/widgets/purchase_order_record.dart';
@@ -83,6 +84,14 @@ List<RouteBase> _invoicingRoutes(RouteEnv env) {
         ),
       ),
       builder: (context, state) => const BillingScreen(),
+    ),
+    // #4366 — the till: a full-screen basket served in seconds, on the counter receipt of #4184.
+    GoRoute(
+      path: '/till',
+      redirect: env.guard(
+        const RouteAccess(features: [WorkspaceFeature.counterReceipts], to: '/money'),
+      ),
+      builder: (context, state) => const TillScreen(),
     ),
     GoRoute(
       path: '/invoices',

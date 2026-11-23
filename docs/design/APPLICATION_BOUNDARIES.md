@@ -70,6 +70,7 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 - `money -> events`
 - `money -> plan`
 - `money -> profile`
+- `money -> stock`
 - `money -> workspace`
 - `plan -> money`
 - `plan -> profile`
@@ -110,6 +111,7 @@ Reciprocal:
 - `events <-> money`
 - `events <-> workspace`
 - `money <-> plan`
+- `money <-> stock`
 - `money <-> workspace`
 - `plan <-> reservations`
 - `plan <-> workspace`
@@ -122,7 +124,7 @@ Reciprocal:
 
 Mutual pairs are only the shortest cycles; a component is a set of features that can all reach each other through imports. The architecture is acyclic only when this list is empty.
 
-- `calendar`, `directory`, `events`, `mcp`, `money`, `plan`, `profile`, `reservations`, `task_recorder`, `workspace` — e.g. `calendar -> reservations -> calendar`
+- `calendar`, `directory`, `events`, `mcp`, `money`, `plan`, `profile`, `reservations`, `stock`, `task_recorder`, `workspace` — e.g. `calendar -> reservations -> calendar`
 
 ## Hand-written files over 600 lines
 

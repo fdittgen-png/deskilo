@@ -40124,6 +40124,107 @@ class AppLocalizationsFr extends AppLocalizations {
   String get threadRefsIn => 'Références dans';
 
   @override
+  String get tillBasketEmpty => 'Touchez un article pour commencer une vente.';
+
+  @override
+  String get tillBasketTitle => 'Panier';
+
+  @override
+  String get tillCashExact => 'Compte juste';
+
+  @override
+  String get tillCashGiven => 'Espèces remises';
+
+  @override
+  String get tillCashInvalid =>
+      'Saisissez le montant remis sous forme de nombre.';
+
+  @override
+  String get tillCashShort => 'Les espèces remises sont inférieures au total.';
+
+  @override
+  String tillChangeDue(String amount) {
+    return 'Monnaie à rendre : $amount';
+  }
+
+  @override
+  String get tillFailed => 'La caisse n\'a pas pu le faire. Réessayez.';
+
+  @override
+  String get tillKeysEmpty =>
+      'Il n\'y a encore rien à vendre. Ajoutez d\'abord des articles dans le stock.';
+
+  @override
+  String get tillKeysTitle => 'Articles à encaisser';
+
+  @override
+  String get tillNextCustomer => 'Client suivant';
+
+  @override
+  String tillNotReady(String operation) {
+    return 'Pas encore prêt dans votre pays : $operation';
+  }
+
+  @override
+  String get tillNotReadyHint =>
+      'Rien n\'est numéroté ni encaissé tant que l\'opération du pays n\'est pas prise en charge.';
+
+  @override
+  String get tillOpCorrectReceipt => 'correction d\'un ticket';
+
+  @override
+  String get tillOpExportFiscal => 'export des données fiscales';
+
+  @override
+  String get tillOpIssueReceipt => 'émission d\'un ticket';
+
+  @override
+  String get tillOpReconcileTender => 'rapprochement d\'un paiement par carte';
+
+  @override
+  String get tillOpSignFiscal => 'signature d\'un ticket fiscal';
+
+  @override
+  String get tillPayCash => 'Encaisser en espèces';
+
+  @override
+  String get tillPricing => 'Calcul du panier…';
+
+  @override
+  String get tillQuantityHint => 'Une quantité exacte, par exemple 1 ou 0,350.';
+
+  @override
+  String get tillQuantityRefused =>
+      'Saisissez une quantité supérieure à zéro, avec au plus six décimales.';
+
+  @override
+  String get tillQuantityTitle => 'Quantité vendue';
+
+  @override
+  String tillReceiptNumber(String number) {
+    return 'Ticket $number';
+  }
+
+  @override
+  String tillRemoveLine(String name) {
+    return 'Retirer $name du panier';
+  }
+
+  @override
+  String get tillSoldTitle => 'Vendu';
+
+  @override
+  String tillTaxIncluded(String amount) {
+    return 'dont taxe $amount';
+  }
+
+  @override
+  String get tillTitle => 'Caisse';
+
+  @override
+  String get tillTotalDue => 'Total à payer';
+
+  @override
   String get tipAvailabilityClosure =>
       'Pour fermer un jour que personne ne pourra réserver : touchez « Ajouter un jour de fermeture » et indiquez une raison si vous voulez.';
 
