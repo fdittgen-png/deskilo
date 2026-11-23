@@ -2,9 +2,8 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../core/trace/trace_logger.dart';
 import '../domain/stock_receiving.dart';
-import 'stock_refusals.dart';
+import 'stock_rpc.dart';
 
 /// #4171 (A) -- `put_away_receipt_v1` and `record_receipt_and_put_away_v1`
 /// behind the port, and the allocation read. A refusal of the server becomes
@@ -77,7 +76,8 @@ class SupabaseStockReceivingCommands implements StockReceivingCommands {
   });
 
   Future<PutAwayResult> _call(String rpc, Map<String, Object?> params) async {
-    try {
+    // the put-away names pieces: a refused piece (DKG25, DKG26) is typed with the piece it names (#4379)
+    return StockRpc(_client).guard('a stock command', pieces: true, () async {
       final answer = await _client.rpc<Object?>(rpc, params: params);
       final r = JsonReader.of(answer, context: rpc);
       return (
@@ -85,9 +85,6 @@ class SupabaseStockReceivingCommands implements StockReceivingCommands {
         replayed: r.boolOr('replayed', fallback: false),
         allocations: [for (final a in r.list('allocations')) ReceiptAllocation.fromJson(a)],
       );
-    } on PostgrestException catch (e, stack) {
-      TraceLogger.instance.warn('stock', 'a stock command was refused: ${e.code}', stackTrace: stack);
-      throwStockFailure(e, stack);
-    }
+    });
   }
 }

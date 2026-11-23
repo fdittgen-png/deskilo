@@ -18,6 +18,24 @@
   "stockReasonTagOwnerInactive": "Este artículo o lugar está desactivado: vuelva a activarlo antes de asociarle una etiqueta.",
   "stockTagsTitle": "Etiquetas: {name}",
   "stockTagsOpen": "Etiquetas",
+  "stockTagsPieces": "{count, plural, one{1 pieza etiquetada una a una} other{{count} piezas etiquetadas una a una}}",
+  "@stockTagsPieces": {
+    "description": "#4362 G13 tags: heading of the pieces of an item that carries one tag per piece",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "stockTagPiece": "Pieza {number}",
+  "@stockTagPiece": {
+    "description": "#4362 G13 tags: the name of one piece in the list of pieces",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
   "stockTagsNone": "Aún no hay ninguna etiqueta asociada.",
   "stockTagKindNfc": "Chip NFC",
   "stockTagKindUhf": "Etiqueta UHF",
@@ -39,5 +57,10 @@
   "stockTagMalformed": "Ese no es un código de etiqueta válido.",
   "stockTagOwnerUnknown": "Este artículo o ubicación no se conoce.",
   "stockTagModeNone": "Este artículo no usa etiquetas.",
-  "stockTagPerUnit": "Este artículo se etiqueta pieza a pieza: etiquete sus piezas al recibirlas."
+  "stockTagPerUnit": "Este artículo se etiqueta pieza a pieza: etiquete sus piezas al recibirlas.",
+  "settingLabelStockTagReadMaxTags": "Máximo de etiquetas por lectura masiva",
+  "settingHintStockTagReadMaxTags": "Cuántas etiquetas distintas conserva una lectura masiva antes de no aceptar más. La misma etiqueta leída varias veces cuenta una vez.",
+  "settingLabelStockTagReadUnitAsQuantity": "Una pieza leída en un traslado cuenta como una de su artículo",
+  "settingHintStockTagReadUnitAsQuantity": "En un traslado masivo, la etiqueta de una pieza de un artículo no seguido pieza a pieza se añade como cantidad 1 de ese artículo. Desactivado: esa etiqueta se deja fuera y se lista.",
+  "settingUnitTags": "etiquetas"
 }

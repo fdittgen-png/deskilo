@@ -33,6 +33,79 @@
   "itemGroupAssignNone": "Sin grupo",
   "itemGroupFrom": "Del grupo {group}",
   "itemGroupFromSince": "Del grupo {group} desde el {date}",
+  "itemGroupTagModeOwn": "Etiqueta de este artículo",
+  "@itemGroupTagModeOwn": {
+    "description": "#4362 G13: the item's own value of the tag mode (none, one per batch, one per piece), over its group's"
+  },
+  "itemGroupPurchaseUnit": "Unidad de compra por defecto",
+  "@itemGroupPurchaseUnit": {
+    "description": "#4361 G12 proposals: the purchase unit a group proposes to a new item"
+  },
+  "itemGroupPurchaseFactor": "Factor: cuántas unidades de inventario contiene una unidad de compra (12, 0,5 o 1/3)",
+  "@itemGroupPurchaseFactor": {
+    "description": "#4361 G12 proposals: the factor of the proposed purchase unit, one number or a fraction"
+  },
+  "itemGroupReorderPoint": "Punto de pedido por defecto",
+  "@itemGroupReorderPoint": {
+    "description": "#4361 G12 proposals: the reorder point a group proposes to an item that has none"
+  },
+  "itemGroupReorderQty": "Cantidad de pedido por defecto",
+  "@itemGroupReorderQty": {
+    "description": "#4361 G12 proposals: the reorder quantity a group proposes to an item that has none"
+  },
+  "itemGroupHomeZone": "Zona de almacén por defecto",
+  "@itemGroupHomeZone": {
+    "description": "#4361 G12 proposals: the home zone a group proposes to an item"
+  },
+  "itemGroupProposalHint": "Se propone a un artículo nuevo",
+  "@itemGroupProposalHint": {
+    "description": "#4361 G12 proposals: said under a proposal, which reaches no existing item"
+  },
+  "itemGroupSet": "Definido",
+  "@itemGroupSet": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupSupply": "Clase de operación",
+  "@itemGroupSupply": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupSupplyGeneral": "General",
+  "@itemGroupSupplyGeneral": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupSupplyProperty": "Inmueble",
+  "@itemGroupSupplyProperty": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupRounding": "Redondeo del precio",
+  "@itemGroupRounding": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupRoundingNone": "Sin redondeo",
+  "@itemGroupRoundingNone": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupMargin": "Margen objetivo sobre el coste (%)",
+  "@itemGroupMargin": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupFinanceHint": "Estos ajustes requieren el derecho a gestionar servicios y a ver las finanzas.",
+  "@itemGroupFinanceHint": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupHidden": "No visible para usted",
+  "@itemGroupHidden": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupMarginValue": "{percent} %",
+  "@itemGroupMarginValue": {
+    "description": "#4361 G12: a target margin as the group shows it; the percent arrives formatted",
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
   "itemGroupOwn": "Valor propio",
   "itemGroupUseGroup": "Usar el valor del grupo",
   "itemGroupMove": "Mover",

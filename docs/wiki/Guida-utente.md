@@ -3102,6 +3102,7 @@ Apra **Magazzino → Gruppi di articoli** (serve la funzione *Gruppi di articoli
 
 - **Un articolo segue il suo gruppo finché non ha un valore proprio.** Vale il valore dell’articolo se ce l’ha, altrimenti quello del suo sottogruppo, altrimenti quello del suo gruppo. Apra **Gruppo e impostazioni ereditate** di un articolo (l’icona della cartella sulla sua riga in **Magazzino → Articoli**) per vedere da dove viene ogni impostazione (*Dal gruppo Bevande dal 3 dic.* o *Valore proprio*), spostarlo in un altro gruppo e restituire un valore proprio con **Usa il valore del gruppo**.
 - **Ogni modifica è mostrata in anteprima.** Salvando un gruppo vede prima cosa raggiunge la modifica: *si applica a 1, 1 mantengono il proprio valore, 0 non sono raggiungibili*. Nulla viene applicato finché non salva una seconda volta; ogni modifica intermedia chiede una nuova anteprima. Un articolo che la modifica non può raggiungere (ad esempio un’unità su un articolo che ha già movimenti) viene elencato, e la modifica del gruppo viene salvata per gli altri.
+- **Proposte e prezzi.** Un gruppo può proporre a un nuovo articolo un'**unità di acquisto predefinita** con il suo fattore (un numero o una frazione come 1/3), un **punto e una quantità di riordino** e una **zona di giacenza**: vengono copiati in un nuovo articolo come punto di partenza e non raggiungono nessun articolo esistente. L'**aliquota IVA**, il **tipo di operazione**, l'**arrotondamento del prezzo** e il **margine obiettivo sul costo** li mostra e li imposta solo chi può gestire i servizi e vedere le finanze; per tutti gli altri non sono né mostrati né modificati da un salvataggio.
 - **Cronologia.** Il foglio del gruppo elenca ogni modifica con quanti articoli ha raggiunto; la riga di origine di un articolo dice da quando.
 - Un sottogruppo non può avere sottogruppi; i tag per pezzo richiedono il tracciamento per pezzo; un gruppo ancora usato da articoli non si elimina (li sposti prima). Ciò che è già registrato — fatture, ricezioni, movimenti — non cambia mai.
 - Modificare i gruppi richiede il diritto di gestire il magazzino; leggerli, quello di vederlo.
@@ -3148,6 +3149,23 @@ Apra **Cassa** nel menu delle vendite (richiede la funzione scontrini di cassa e
 Prema **Incassare in contanti** e digiti i **Contanti dati** (o **Importo esatto**). Meno del totale viene rifiutato prima di inviare qualsiasi cosa. Il server numera la vendita e la cassa dice il resto; **Cliente successivo** riparte da un carrello vuoto. Inviare due volte la stessa vendita non la vende mai due volte.
 
 Dove il suo paese non consente ancora la cassa, questa indica l'operazione mancante e non offre nulla: nulla viene numerato né incassato. Una riga di merce richiede la gestione del magazzino; un rifiuto del server è detto a parole. Pagamenti con carta, sconti, rimborsi e resi non fanno parte di questa prima cassa.
+
+<!-- anchor: user.money.stock.rfid -->
+### Tag RFID: uno per lotto o uno per pezzo
+
+**Destinatari:** Amministratore · Proprietario
+
+Lei decide se un tag su un articolo indica un lotto o un singolo pezzo, e che cosa conta una lettura massiva.
+
+Con la funzione *Tag* attiva, un articolo ha una **modalità del tag**, impostata sul suo gruppo e mantenuta dall'articolo finché non ha un valore proprio. Apra le impostazioni di gruppo di un articolo (**Magazzino → Articoli**, l'icona della cartella sulla sua riga) e legga **Etichetta su questo articolo**: dice da dove viene il valore (*Da Bevande dal 3 dic.* oppure *Valore proprio*), permette di dare all'articolo un valore proprio, e **Usa il valore del gruppo** lo restituisce.
+
+- **Nessun tag.** L'articolo non porta tag.
+- **Un tag per lotto.** Un tag indica un lotto o una confezione: una cassa, un secchio, uno scatolone. Leggerlo conta un lotto, mai un pezzo.
+- **Un tag per pezzo.** Un tag indica un pezzo, il che richiede che l'articolo sia tracciato pezzo per pezzo. Sotto **Tag** dell'articolo, **Pezzi etichettati uno a uno (n)** elenca ogni pezzo con il suo tag.
+
+- Una lettura massiva conta pezzi solo per gli articoli con un tag per pezzo. Per un articolo con un tag per lotto conta lotti e mostra la quantità registrata del lotto accanto al conteggio, mai come cifra contata.
+- La modalità di un articolo che ha già dei tag non cambia finché i tag non sono ritirati o la giacenza non è zero; la modifica di un gruppo salta allora l'articolo e lo elenca come mantenuto. Un tag su un luogo indica sempre un solo luogo.
+- Un codice tag è un'etichetta UHF (EPC; il server legge un SGTIN-96 come GTIN e numero di serie) o un chip NFC, salvato in esadecimale maiuscolo e unico nell'azienda tra articoli, pezzi e luoghi. Collegare e ritirare richiedono il diritto di gestire il magazzino; leggere, quello di vederlo.
 
 <!-- anchor: user.money.stock.value -->
 ### Valore del magazzino e origine della merce

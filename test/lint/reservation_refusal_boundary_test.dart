@@ -23,7 +23,10 @@ void main() {
     final value = File(
       'lib/features/reservations/domain/reservation_refusal.dart',
     );
-    expect(_imports(value).toList(), ['dart:convert']);
+    expect(_imports(value).toList(), [
+      'dart:convert',
+      '../../../core/codes/dk_code.dart', // pure constants (#4417)
+    ]);
   });
 
   test('reservation application code imports no SDK, localisation or logger '

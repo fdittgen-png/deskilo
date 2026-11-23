@@ -3,6 +3,7 @@ import 'package:meta/meta.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../codes/pg_code.dart';
 import '../instance/schema_compatibility.dart';
 import '../lifecycle/app_foreground.dart';
 import '../trace/trace_logger.dart';
@@ -29,8 +30,8 @@ abstract interface class SchemaVersionSource {
 
 /// Whether a PostgREST answer means "this function does not exist here".
 bool isMissingFunction(PostgrestException e) =>
-    e.code == 'PGRST202' ||
-    e.code == '42883' ||
+    e.code == PgCode.pgrstFunctionNotFound ||
+    e.code == PgCode.undefinedFunction ||
     e.message.toLowerCase().contains('could not find the function');
 
 /// Asks [client] — the app's own, or a throwaway probe client.

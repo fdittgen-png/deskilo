@@ -12656,6 +12656,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get featureStockScanningTitle => 'Scannen';
 
   @override
+  String get featureStockTagReadsDesc =>
+      'Ein UHF-Lesegerät im Tastaturmodus liest viele Etiketten auf einmal zum Wareneingang, Umlagern und Zählen: Die Etiketten werden gesammelt, entdoppelt und aufgelöst, und nichts wird gesendet, bevor die Person bestätigt.';
+
+  @override
+  String get featureStockTagReadsTitle => 'Viele Etiketten lesen';
+
+  @override
   String get featureStockTagsDesc =>
       'Artikel, Einheiten, Chargen und Orte mit RFID- oder NFC-Etiketten versehen, wie ein Barcode gespeichert und im Betrieb eindeutig. Ein Etikett kann eine Charge oder ein Stück benennen, wie es die Gruppe des Artikels sagt; ein gelesenes Etikett wird überall erkannt, wo ein Barcode erkannt wird.';
 
@@ -18653,6 +18660,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Artikelgruppen konnten nicht gelesen werden.';
 
   @override
+  String get itemGroupFinanceHint =>
+      'Diese Einstellungen brauchen das Recht, Leistungen zu verwalten und die Finanzen zu sehen.';
+
+  @override
   String itemGroupFrom(String group) {
     return 'Von $group';
   }
@@ -18661,6 +18672,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String itemGroupFromSince(String group, String date) {
     return 'Von $group seit $date';
   }
+
+  @override
+  String get itemGroupHidden => 'Für Sie nicht sichtbar';
 
   @override
   String get itemGroupHistory => 'Verlauf';
@@ -18683,6 +18697,17 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get itemGroupHistoryNone => 'Noch keine Änderung festgehalten.';
+
+  @override
+  String get itemGroupHomeZone => 'Standard-Lagerzone';
+
+  @override
+  String get itemGroupMargin => 'Zielmarge auf die Kosten (%)';
+
+  @override
+  String itemGroupMarginValue(String percent) {
+    return '$percent %';
+  }
 
   @override
   String get itemGroupMinAge => 'Mindestalter für einen Verkauf';
@@ -18757,6 +18782,16 @@ class AppLocalizationsDe extends AppLocalizations {
   String get itemGroupPreviewTitle => 'Was diese Änderung erreicht';
 
   @override
+  String get itemGroupProposalHint => 'Wird einem neuen Artikel vorgeschlagen';
+
+  @override
+  String get itemGroupPurchaseFactor =>
+      'Faktor: wie viele Lagereinheiten eine Einkaufseinheit enthält (12, 0,5 oder 1/3)';
+
+  @override
+  String get itemGroupPurchaseUnit => 'Standard-Einkaufseinheit';
+
+  @override
   String get itemGroupReasonDepth =>
       'Eine Untergruppe kann keine Untergruppen haben.';
 
@@ -18787,6 +18822,21 @@ class AppLocalizationsDe extends AppLocalizations {
       'Für diese Einstellung gibt es keinen eigenen Wert.';
 
   @override
+  String get itemGroupReorderPoint => 'Standard-Meldebestand';
+
+  @override
+  String get itemGroupReorderQty => 'Standard-Nachbestellmenge';
+
+  @override
+  String get itemGroupRounding => 'Preisrundung';
+
+  @override
+  String get itemGroupRoundingNone => 'Keine Rundung';
+
+  @override
+  String get itemGroupSet => 'Gesetzt';
+
+  @override
   String itemGroupSkippedLine(String item, String parameter, String reason) {
     return '$item: $parameter ($reason)';
   }
@@ -18798,10 +18848,22 @@ class AppLocalizationsDe extends AppLocalizations {
   String get itemGroupSoldByWeight => 'Nach Gewicht verkauft';
 
   @override
+  String get itemGroupSupply => 'Leistungsart';
+
+  @override
+  String get itemGroupSupplyGeneral => 'Allgemein';
+
+  @override
+  String get itemGroupSupplyProperty => 'Grundstück';
+
+  @override
   String get itemGroupTagBatch => 'Ein Tag pro Charge';
 
   @override
   String get itemGroupTagMode => 'Tag-Modus';
+
+  @override
+  String get itemGroupTagModeOwn => 'Etikett an diesem Artikel';
 
   @override
   String get itemGroupTagNone => 'Keine Tags';
@@ -32528,6 +32590,14 @@ class AppLocalizationsDe extends AppLocalizations {
       'Was ein Warenblatt tut, wenn derselbe Code noch einmal gescannt wird: eins mehr zur Zeile hinzufügen oder die Menge erfragen.';
 
   @override
+  String get settingHintStockTagReadMaxTags =>
+      'Wie viele verschiedene Etiketten eine Massenlesung behält, bevor sie keine weiteren annimmt. Dieselbe Etikette, mehrfach gelesen, zählt einmal.';
+
+  @override
+  String get settingHintStockTagReadUnitAsQuantity =>
+      'Bei einer Massenumlagerung wird eine Etikette auf einem Stück eines nicht stückweise geführten Artikels als Menge 1 dieses Artikels aufgenommen. Aus: Eine solche Etikette wird ausgelassen und aufgelistet.';
+
+  @override
   String get settingHintStockTagRebindGraceDays =>
       'Wie viele Tage nach dem Entfernen ein Etikettencode wieder gebunden werden darf. 0 heißt sofort. Ein gültiges Etikett wird nie doppelt gebunden.';
 
@@ -32909,6 +32979,14 @@ class AppLocalizationsDe extends AppLocalizations {
   String get settingLabelStockRepeatedScan => 'Ein erneut gescannter Code';
 
   @override
+  String get settingLabelStockTagReadMaxTags =>
+      'Höchstzahl Etiketten je Massenlesung';
+
+  @override
+  String get settingLabelStockTagReadUnitAsQuantity =>
+      'Ein gelesenes Stück in einer Umlagerung zählt als eins seines Artikels';
+
+  @override
   String get settingLabelStockTagRebindGraceDays =>
       'Tage, bevor ein entferntes Etikett neu vergeben wird';
 
@@ -33024,6 +33102,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingUnitSeconds => 'Sekunden';
+
+  @override
+  String get settingUnitTags => 'Etiketten';
 
   @override
   String get settingUnitUrl => 'Adresse';
@@ -36512,6 +36593,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get stockPutAwayNothing => 'Es ist nichts mehr einzulagern.';
 
   @override
+  String stockPutAwayPieceProblem(int piece, String problem) {
+    return 'Stück $piece: $problem';
+  }
+
+  @override
   String get stockPutAwayPlace => 'Lagerort';
 
   @override
@@ -36526,6 +36612,62 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get stockPutAwayRemaining => 'Rest einlagern';
+
+  @override
+  String stockPutAwayTagAllRead(int needed) {
+    String _temp0 = intl.Intl.pluralLogic(
+      needed,
+      locale: localeName,
+      other: 'Alle $needed Stücke dieser Zeile haben schon einen Tag.',
+      one: 'Das $needed Stück dieser Zeile hat schon einen Tag.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get stockPutAwayTagField => 'Tag des nächsten Stücks';
+
+  @override
+  String stockPutAwayTagRemove(String code) {
+    return 'Tag $code entfernen';
+  }
+
+  @override
+  String stockPutAwayTagsCount(int read, int needed) {
+    String _temp0 = intl.Intl.pluralLogic(
+      read,
+      locale: localeName,
+      other: '$read Stücke',
+      one: '$read Stück',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      needed,
+      locale: localeName,
+      other: '$needed',
+      one: '$needed',
+    );
+    return '$_temp0 von $_temp1 gelesen';
+  }
+
+  @override
+  String stockPutAwayTagsMissing(int needed, int read) {
+    String _temp0 = intl.Intl.pluralLogic(
+      needed,
+      locale: localeName,
+      other: '$needed nötig',
+      one: '$needed nötig',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      read,
+      locale: localeName,
+      other: '$read gelesen',
+      one: '$read gelesen',
+    );
+    return 'Ein Tag pro Stück lesen: $_temp0, $_temp1.';
+  }
+
+  @override
+  String get stockPutAwayTagsTitle => 'Tags der Stücke';
 
   @override
   String stockPutAwayTitle(String order) {
@@ -37339,6 +37481,11 @@ class AppLocalizationsDe extends AppLocalizations {
       'Dieser Artikel wird stückweise getaggt: Taggen Sie die Stücke beim Wareneingang.';
 
   @override
+  String stockTagPiece(String number) {
+    return 'Stück $number';
+  }
+
+  @override
   String get stockTagReasonDamaged => 'Beschädigt';
 
   @override
@@ -37372,6 +37519,17 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get stockTagsOpen => 'Tags';
+
+  @override
+  String stockTagsPieces(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count einzeln etikettierte Stücke',
+      one: '1 einzeln etikettiertes Stück',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get stockTagsRetire => 'Außer Betrieb nehmen';

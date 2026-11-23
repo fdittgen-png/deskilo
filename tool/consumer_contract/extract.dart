@@ -243,13 +243,23 @@ class _Collector extends RecursiveAstVisitor<void> {
     switch (node.methodName.name) {
       case 'rpc':
         _rpc(node);
+      // #4401 -- the stock data layer calls through `StockRpc(client).run('fn', params)`
+      // (and `.object` / `.list`): the function is named by the first argument, the params
+      // are the second, positional.
+      case 'run' || 'object' || 'list' when _isStockRpc(node):
+        _rpc(node);
       case 'from':
         _from(node);
     }
     super.visitMethodInvocation(node);
   }
 
+  static bool _isStockRpc(MethodInvocation node) =>
+      (node.target?.toSource() ?? '').startsWith('StockRpc(');
+
   void _rpc(MethodInvocation node) {
+    // the helper itself passes its caller's name on: its callers are what the contract reads (#4401)
+    if (path.endsWith('features/stock/data/stock_rpc.dart')) return;
     final args = node.argumentList.arguments;
     if (args.isEmpty) return;
     final first = args.first.argumentExpression;
@@ -261,11 +271,13 @@ class _Collector extends RecursiveAstVisitor<void> {
       if (!_bySpec(first)) pendingRpc.add('$path:${_line(node)}');
       return;
     }
-    final params = args
-        .whereType<NamedArgument>()
-        .where((a) => a.name.lexeme == 'params')
-        .map((a) => a.argumentExpression)
-        .firstOrNull;
+    final params = _isStockRpc(node)
+        ? (args.length > 1 ? args[1].argumentExpression : null)
+        : args
+            .whereType<NamedArgument>()
+            .where((a) => a.name.lexeme == 'params')
+            .map((a) => a.argumentExpression)
+            .firstOrNull;
     final tolerant = _toleratesAbsence(node);
     for (final name in names) {
       final f = into.functions.putIfAbsent(name, () => CalledFunction(name));

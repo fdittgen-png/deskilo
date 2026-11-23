@@ -83,13 +83,17 @@ select pg_temp.run_as(pg_temp.u(1), format('select public.stock_tag_bind_v1(%L, 
 -- ── refusals first: nothing is made by a put-away that is refused ──
 select is(left(pg_temp.putaway(710, '[' || pg_temp.alloc(1, 3) || ']'), 9), 'ERR DKG25', 'a per-unit item put away with no units is refused (the pieces must be named)');
 select is(pg_temp.putaway(711, '[' || pg_temp.alloc(1, 3, pg_temp.tags(1, 2)) || ']'), 'ERR DKG25 {"line": 1, "allocation": 0}', 'two tags for three units are refused, naming the allocation');
-select is(pg_temp.putaway(712, '[' || pg_temp.alloc(1, 3, '[{"tag": "E28068940000401561D68C01"}, {"tag": "E28068940000401561D68C02"}, {"tag": "E28068940000401561D68C01"}]') || ']'),
-  'ERR DKG26 {"line": 1, "unit": 3, "allocation": 0}', 'a tag repeated in the allocation is refused at its unit (the piece is already named)');
+-- the detail names the unit and the allocation (0889); 0917 adds the piece and its place beside them
+select ok(r like 'ERR DKG26 %' and substr(r, 11)::jsonb @> '{"line": 1, "unit": 3, "allocation": 0}'::jsonb,
+  'a tag repeated in the allocation is refused at its unit (the piece is already named)')
+  from (select pg_temp.putaway(712, '[' || pg_temp.alloc(1, 3, '[{"tag": "E28068940000401561D68C01"}, {"tag": "E28068940000401561D68C02"}, {"tag": "E28068940000401561D68C01"}]') || ']') r) x;
 select is(pg_temp.putaway(713, '[' || pg_temp.alloc(1, 1, '[{"tag": "E28068940000401561D68CF0"}]') || ']'),
   'ERR DKG22 {"line": 1, "unit": 1, "allocation": 0}', 'a tag already bound elsewhere in the business is refused at its unit');
 select is(left(pg_temp.putaway(714, '[' || pg_temp.alloc(2, 1, pg_temp.tags(20, 1)) || ']'), 9), 'ERR DKG11', 'a per-batch item refuses units');
-select is(pg_temp.putaway(732, '[' || pg_temp.alloc(1, 1, '[{"piece_id": "' || pg_temp.u(950) || '"}]') || ']'), 'ERR DKG26 {"line": 1, "unit": 1, "allocation": 0}',
-  'a piece of another business named by its id is refused');
+select ok(r like 'ERR DKG26 %' and substr(r, 11)::jsonb @> '{"line": 1, "unit": 1, "allocation": 0}'::jsonb
+          and (substr(r, 11)::jsonb ->> 'piece_id') is null,
+  'a piece of another business named by its id is refused, and nothing of it is named')
+  from (select pg_temp.putaway(732, '[' || pg_temp.alloc(1, 1, '[{"piece_id": "' || pg_temp.u(950) || '"}]') || ']') r) x;
 select is(pg_temp.pieces(), 0::bigint, 'and no piece was made by any of them');
 
 -- ── the put-away that names its pieces ──

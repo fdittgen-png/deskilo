@@ -18,6 +18,24 @@
   "stockReasonTagOwnerInactive": "Cet article ou ce lieu est désactivé : réactivez-le avant d'y associer une étiquette.",
   "stockTagsTitle": "Puces : {name}",
   "stockTagsOpen": "Puces",
+  "stockTagsPieces": "{count, plural, one{{count} pièce étiquetée à l'unité} other{{count} pièces étiquetées à l'unité}}",
+  "@stockTagsPieces": {
+    "description": "#4362 G13 tags: heading of the pieces of an item that carries one tag per piece",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "stockTagPiece": "Pièce {number}",
+  "@stockTagPiece": {
+    "description": "#4362 G13 tags: the name of one piece in the list of pieces",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
   "stockTagsNone": "Aucune puce n’est encore associée.",
   "stockTagKindNfc": "Puce NFC",
   "stockTagKindUhf": "Étiquette UHF",
@@ -39,5 +57,10 @@
   "stockTagMalformed": "Ce n’est pas un code de puce valide.",
   "stockTagOwnerUnknown": "Cet article ou cet emplacement est inconnu.",
   "stockTagModeNone": "Cet article n’utilise pas de puces.",
-  "stockTagPerUnit": "Cet article est étiqueté pièce par pièce : étiquetez ses pièces à la réception."
+  "stockTagPerUnit": "Cet article est étiqueté pièce par pièce : étiquetez ses pièces à la réception.",
+  "settingLabelStockTagReadMaxTags": "Nombre maximal d'étiquettes par lecture en masse",
+  "settingHintStockTagReadMaxTags": "Combien d'étiquettes différentes une lecture en masse conserve avant de ne plus en prendre. Une même étiquette lue plusieurs fois compte une fois.",
+  "settingLabelStockTagReadUnitAsQuantity": "Une pièce lue dans un transfert compte pour un de son article",
+  "settingHintStockTagReadUnitAsQuantity": "Dans un transfert en masse, une étiquette posée sur une pièce d'un article non suivi pièce par pièce est ajoutée comme quantité 1 de cet article. Désactivé : cette étiquette est écartée et listée.",
+  "settingUnitTags": "étiquettes"
 }

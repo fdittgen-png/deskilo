@@ -714,6 +714,7 @@ Sie möchten einmal festlegen, was eine Familie von Artikeln gemeinsam hat – w
 
 - **Ein Artikel folgt seiner Gruppe, solange er keinen eigenen Wert hat.** Es gilt der eigene Wert des Artikels, sonst der seiner Untergruppe, sonst der seiner Gruppe. Öffnen Sie **Gruppe und geerbte Einstellungen** eines Artikels (das Ordner-Symbol in seiner Zeile unter **Lager → Artikel**), um zu sehen, woher jede Einstellung kommt (*Von Getränke seit 3. Dez.* oder *Eigener Wert*), ihn in eine andere Gruppe zu verschieben und einen eigenen Wert mit **Wert der Gruppe verwenden** zurückzugeben.
 - **Jede Änderung wird vorab gezeigt.** Beim Speichern einer Gruppe sehen Sie zuerst, was die Änderung erreicht: *gilt für 1, 1 behalten ihren eigenen Wert, 0 sind nicht erreichbar*. Erst das zweite Speichern wendet sie an; jede Änderung dazwischen verlangt eine neue Vorschau. Ein Artikel, den die Änderung nicht erreichen kann (etwa eine Einheit bei einem Artikel mit Bewegungen), wird aufgeführt, und die Änderung der Gruppe wird für die anderen trotzdem gespeichert.
+- **Vorschläge und Preise.** Eine Gruppe kann einem neuen Artikel eine **Standard-Einkaufseinheit** mit ihrem Faktor (eine Zahl oder ein Bruch wie 1/3), einen **Meldebestand und eine Nachbestellmenge** und eine **Lagerzone** vorschlagen: Sie werden als Ausgangswert in einen neuen Artikel kopiert und erreichen keinen bestehenden. **Steuersatz**, **Leistungsart**, **Preisrundung** und **Zielmarge auf die Kosten** zeigt und setzt nur, wer Leistungen verwalten und die Finanzen sehen darf; für alle anderen werden sie weder angezeigt noch durch ein Speichern geändert.
 - **Verlauf.** Das Blatt der Gruppe listet jede Änderung mit der Zahl der erreichten Artikel; die Herkunftszeile eines Artikels nennt, seit wann.
 - Eine Untergruppe kann keine Untergruppen haben; Tags pro Stück brauchen Nachverfolgung pro Stück; eine Gruppe, die noch Artikel verwenden, wird nicht gelöscht (verschieben Sie sie zuerst). Bereits Festgehaltenes – Rechnungen, Wareneingänge, Bewegungen – ändert sich nie.
 - Gruppen ändern braucht das Recht, das Lager zu verwalten; sie lesen das Recht, es einzusehen.
@@ -760,6 +761,23 @@ Sie bedienen Kundschaft an der Theke und möchten jeden Verkauf in Sekunden, num
 Drücken Sie **Bar kassieren** und geben Sie **Gegeben** ein (oder **Passend**). Weniger als der Gesamtbetrag wird abgelehnt, bevor etwas gesendet wird. Der Server nummeriert den Verkauf, und die Kasse nennt das Rückgeld; **Nächster Kunde** beginnt einen leeren Warenkorb. Derselbe Verkauf, zweimal gesendet, verkauft nie doppelt.
 
 Wo Ihr Land die Kasse noch nicht erlaubt, nennt die Kasse den fehlenden Vorgang und bietet nichts an: nichts wird nummeriert und nichts kassiert. Eine Warenzeile braucht die Lagerverwaltung; eine Ablehnung des Servers erscheint in Worten. Kartenzahlung, Rabatte, Erstattungen und Rückgaben gehören nicht zu dieser ersten Kasse.
+
+<!-- anchor: user.money.stock.rfid -->
+### RFID-Tags: eines pro Charge oder eines pro Stück
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie entscheiden, ob ein Tag an einem Artikel eine Charge oder ein einzelnes Stück bezeichnet und was ein Massenlesen zählt.
+
+Mit der Funktion *Tags* hat ein Artikel einen **Tag-Modus**, der an seiner Gruppe steht und beim Artikel bleibt, solange er keinen eigenen Wert hat. Öffnen Sie die Gruppeneinstellungen eines Artikels (**Lager → Artikel**, das Ordnersymbol in seiner Zeile) und lesen Sie **Etikett an diesem Artikel**: Es sagt, woher der Wert kommt (*Von Drinks seit 3. Dez.* oder *Eigener Wert*), lässt dem Artikel einen eigenen Wert geben, und **Wert der Gruppe verwenden** gibt ihn zurück.
+
+- **Keine Tags.** Der Artikel trägt kein Tag.
+- **Ein Tag pro Charge.** Ein Tag bezeichnet eine Charge oder eine Verpackung: eine Kiste, einen Eimer, einen Karton. Beim Lesen zählt eine Charge, nie ein Stück.
+- **Ein Tag pro Stück.** Ein Tag bezeichnet ein Stück; der Artikel muss dafür stückweise geführt werden. Unter **Tags** des Artikels listet **Einzeln etikettierte Stücke (n)** jedes Stück mit seinem Tag.
+
+- Ein Massenlesen zählt Stücke nur bei Artikeln mit einem Tag pro Stück. Bei einem Artikel mit einem Tag pro Charge zählt es Chargen und zeigt die erfasste Menge der Charge neben der Zählung, nie als gezählte Zahl.
+- Der Modus eines Artikels, der schon Tags hat, ändert sich erst, wenn die Tags zurückgegeben sind oder der Bestand null ist; eine Änderung der Gruppe überspringt den Artikel dann und führt ihn als beibehalten auf. Ein Tag an einem Lagerplatz bezeichnet immer genau einen Platz.
+- Ein Tag-Code ist ein UHF-Etikett (EPC; ein SGTIN-96 liest der Server als GTIN und Seriennummer) oder ein NFC-Chip, in Großbuchstaben-Hex gespeichert und im Betrieb über Artikel, Stücke und Plätze eindeutig. Zum Binden und Zurückgeben braucht es das Recht, das Lager zu verwalten, zum Lesen das Recht, es zu sehen.
 
 <!-- anchor: user.money.stock.value -->
 ### Lagerwert und Herkunft der Ware

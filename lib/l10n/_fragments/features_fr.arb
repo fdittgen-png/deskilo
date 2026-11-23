@@ -347,5 +347,7 @@
   "featureCounterReceiptsTitle": "Tickets de caisse",
   "featureCounterReceiptsDesc": "Une vente au comptoir donne un ticket immuable, numéroté une seule fois, avec le règlement reçu. Il n'est proposé que là où l'opération du pays est prise en charge, et dit clairement quand elle ne l'est pas.",
   "featureCounterTillSessionsTitle": "Sessions de caisse et clôture de journée",
-  "featureCounterTillSessionsDesc": "Ouvrez une caisse avec son fond, comptez le tiroir à la fermeture et clôturez la journée avec son rapport. Une vente exige une caisse ouverte ; les espèces attendues se déduisent de ce qui a été encaissé, jamais saisies."
+  "featureCounterTillSessionsDesc": "Ouvrez une caisse avec son fond, comptez le tiroir à la fermeture et clôturez la journée avec son rapport. Une vente exige une caisse ouverte ; les espèces attendues se déduisent de ce qui a été encaissé, jamais saisies.",
+  "featureStockTagReadsTitle": "Lecture de nombreuses étiquettes",
+  "featureStockTagReadsDesc": "Un lecteur UHF en mode clavier lit de nombreuses étiquettes d'un coup pour recevoir, déplacer et compter : les étiquettes sont rassemblées, dédoublonnées et résolues, et rien n'est envoyé avant la confirmation de l'utilisateur."
 }

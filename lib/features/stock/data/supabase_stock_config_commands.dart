@@ -4,11 +4,10 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/data/server_names.dart';
-import '../../../core/trace/trace_logger.dart';
 import '../domain/stock_config.dart';
 import '../domain/stock_config_commands.dart';
 import '../domain/stock_variants.dart';
-import 'stock_refusals.dart';
+import 'stock_rpc.dart';
 
 /// #4169 (A1) -- `save_stock_item_v1` and `save_stock_location_v1` behind the
 /// port, and the table reads that fill the editors. A refusal of the server
@@ -257,7 +256,7 @@ class SupabaseStockConfigCommands implements StockConfigCommands {
     Map<String, Object?> params,
     String idKey,
   ) async {
-    try {
+    return StockRpc(_client).guard('a stock command', () async {
       final answer = await _client.rpc<Object?>(rpc, params: params);
       final r = JsonReader.of(answer, context: rpc);
       return (
@@ -265,9 +264,6 @@ class SupabaseStockConfigCommands implements StockConfigCommands {
         revision: r.integer('revision'),
         replayed: r.boolOr('replayed', fallback: false),
       );
-    } on PostgrestException catch (e, stack) {
-      TraceLogger.instance.warn('stock', 'a stock command was refused: ${e.code}', stackTrace: stack);
-      throwStockFailure(e, stack);
-    }
+    });
   }
 }

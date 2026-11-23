@@ -2964,6 +2964,7 @@ Open **Stock → Item groups** (it needs the *Item groups* feature under stock m
 
 - **An item follows its group unless it keeps its own value.** The value in force is the item's own if it has one, else its sub-group's, else its group's. Open an item's **Group and inherited settings** (the folder icon on its line in **Stock → Items**) to see where each setting comes from (*From Drinks since 3 Dec* or *Own value*), to move it into another group, and to give an own value back with **Use the group's value**.
 - **Every change is previewed.** Saving a group first shows what the change reaches: *applies to 1, 1 keep their own value, 0 cannot be reached*. Nothing is applied until you save a second time; editing anything in between asks for a new preview. An item the change cannot reach (for example a unit on an item that already has movements) is listed, and the group's change still saves for the others.
+- **Proposals and prices.** A group can propose to a new item a **default purchase unit** with its factor (a number or a fraction such as 1/3), a **reorder point and quantity** and a **home zone**: they are copied into a new item as a starting point and reach no existing item. **VAT rate**, **supply class**, **price rounding** and **target margin on cost** are shown and set only by someone who may manage services and see the finances; for anyone else they are neither shown nor changed by a save.
 - **History.** The group's sheet lists every change with how many items it reached; an item's source line says since when.
 - A sub-group cannot have sub-groups; per-piece tags need tracking by piece; a group still used by items cannot be deleted (move them first). Facts already recorded — invoices, receipts, movements — never change.
 - Changing groups needs the right to manage the stock; reading them needs the right to see it.
@@ -3008,6 +3009,22 @@ Open **Till** in the sales menu (it needs the counter receipts feature and the r
 Press **Take cash** and type the **Cash given** (or **Exact amount**). Less than the total is refused before anything is sent. The sale is numbered by the server and the till says the change due; **Next customer** starts a clean basket. Sending the same sale twice never sells twice.
 
 Where your country does not yet allow the counter, the till says which operation is missing and offers nothing: nothing is numbered and nothing is taken. A goods line needs stock management on; a refusal of the server is shown in words. Card payments, discounts, refunds and returns are not part of this first till.
+
+### RFID tags: one per batch or one per piece
+
+**Audience:** Administrator · Owner
+
+You decide whether a tag on an item names one batch or one piece, and what a bulk read counts.
+
+With the *Tags* feature on, an item carries a **tag mode**, set on its group and kept by the item unless it has an own value. Open an item's group settings (**Stock → Items**, the folder icon on its line) and read **Tag on this item**: it says where the value comes from (*From Drinks since 3 Dec* or *Own value*), lets you give the item its own value, and **Use the group's value** gives it back.
+
+- **No tags.** The item carries no tag.
+- **One tag per batch.** One tag names one lot or one package: a crate, a bucket, a carton. Reading it counts one batch, never one piece.
+- **One tag per piece.** One tag names one piece, which needs the item to be tracked by piece. Under **Tags** of the item, **Pieces tagged one by one (n)** lists each piece with its tag.
+
+- A bulk read counts pieces only for per-piece items. For a per-batch item it counts batches and shows the lot's recorded quantity beside the count, never as a counted figure.
+- The mode of an item that already has tags cannot change until its tags are retired or its stock is zero; a group's change then skips the item and lists it as kept. A tag on a place always names one place.
+- A tag code is a UHF label (EPC, an SGTIN-96 is read as its GTIN and serial by the server) or an NFC chip, stored in upper-case hex and unique in the business across items, pieces and places. Binding and retiring need the right to manage the stock; reading needs the right to see it.
 
 ### Stock value and where goods came from
 

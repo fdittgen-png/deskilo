@@ -3102,6 +3102,7 @@ Abra **Stock → Grupos de artículos** (requiere la función *Grupos de artícu
 
 - **Un artículo sigue a su grupo mientras no tenga un valor propio.** Rige el valor del propio artículo si lo tiene, si no el de su subgrupo, si no el de su grupo. Abra **Grupo y ajustes heredados** de un artículo (el icono de carpeta en su línea de **Stock → Artículos**) para ver de dónde viene cada ajuste (*Del grupo Bebidas desde el 3 dic.* o *Valor propio*), moverlo a otro grupo y devolver un valor propio con **Usar el valor del grupo**.
 - **Cada cambio se previsualiza.** Al guardar un grupo se muestra primero lo que el cambio alcanza: *se aplica a 1, 1 conservan su propio valor, 0 no se pueden alcanzar*. No se aplica nada hasta guardar por segunda vez; cualquier edición intermedia pide una nueva vista previa. Un artículo que el cambio no puede alcanzar (por ejemplo una unidad en un artículo que ya tiene movimientos) se lista, y el cambio del grupo se guarda para los demás.
+- **Propuestas y precios.** Un grupo puede proponer a un artículo nuevo una **unidad de compra por defecto** con su factor (un número o una fracción como 1/3), un **punto y una cantidad de pedido** y una **zona de almacén**: se copian en un artículo nuevo como punto de partida y no alcanzan a ningún artículo existente. El **tipo de IVA**, la **clase de operación**, el **redondeo del precio** y el **margen objetivo sobre el coste** solo los muestra y fija quien puede gestionar servicios y ver las finanzas; para los demás ni se muestran ni los cambia un guardado.
 - **Historial.** La hoja del grupo lista cada cambio con cuántos artículos alcanzó; la línea de origen de un artículo dice desde cuándo.
 - Un subgrupo no puede tener subgrupos; las etiquetas por pieza necesitan seguimiento por pieza; un grupo que aún usan artículos no se elimina (muévalos primero). Lo ya registrado — facturas, recepciones, movimientos — nunca cambia.
 - Cambiar los grupos requiere el derecho de gestionar el stock; leerlos, el de verlo.
@@ -3148,6 +3149,23 @@ Abra **Caja** en el menú de ventas (necesita la función de tickets de caja y e
 Pulse **Cobrar en efectivo** y escriba el **Efectivo entregado** (o **Importe exacto**). Menos que el total se rechaza antes de enviar nada. El servidor numera la venta y la caja indica el cambio; **Siguiente cliente** empieza una cesta vacía. Enviar dos veces la misma venta nunca la vende dos veces.
 
 Donde su país aún no permite la caja, esta nombra la operación que falta y no ofrece nada: nada se numera ni se cobra. Una línea de mercancía necesita la gestión de stock; el rechazo del servidor se dice con palabras. Los pagos con tarjeta, descuentos, reembolsos y devoluciones no forman parte de esta primera caja.
+
+<!-- anchor: user.money.stock.rfid -->
+### Etiquetas RFID: una por lote o una por pieza
+
+**Público:** Administrador/a · Propietario
+
+Usted decide si una etiqueta de un artículo designa un lote o una pieza, y qué cuenta una lectura masiva.
+
+Con la función *Etiquetas* activada, un artículo tiene un **modo de etiqueta**, fijado en su grupo y conservado por el artículo mientras no tenga valor propio. Abra los ajustes de grupo de un artículo (**Stock → Artículos**, el icono de carpeta en su línea) y lea **Etiqueta de este artículo**: dice de dónde viene el valor (*De Bebidas desde el 3 dic.* o *Valor propio*), permite dar al artículo un valor propio, y **Usar el valor del grupo** se lo devuelve.
+
+- **Sin etiquetas.** El artículo no lleva etiqueta.
+- **Una etiqueta por lote.** Una etiqueta designa un lote o un bulto: una caja, un cubo, un cartón. Leerla cuenta un lote, nunca una pieza.
+- **Una etiqueta por pieza.** Una etiqueta designa una pieza, lo que exige que el artículo se siga pieza a pieza. Bajo **Etiquetas** del artículo, **Piezas etiquetadas una a una (n)** lista cada pieza con su etiqueta.
+
+- Una lectura masiva solo cuenta piezas en los artículos de una etiqueta por pieza. En un artículo de una etiqueta por lote cuenta lotes y muestra la cantidad registrada del lote junto al recuento, nunca como cifra contada.
+- El modo de un artículo que ya tiene etiquetas no cambia hasta retirarlas o hasta que su stock sea cero; un cambio del grupo salta entonces el artículo y lo lista como conservado. Una etiqueta de un lugar designa siempre un solo lugar.
+- Un código de etiqueta es una etiqueta UHF (EPC; el servidor lee un SGTIN-96 como GTIN y número de serie) o un chip NFC, guardado en hexadecimal mayúsculo y único en la empresa entre artículos, piezas y lugares. Vincular y retirar exigen el derecho a gestionar el stock; leer, el de verlo.
 
 <!-- anchor: user.money.stock.value -->
 ### Valor de las existencias y origen de la mercancía

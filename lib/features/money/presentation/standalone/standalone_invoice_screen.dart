@@ -15,15 +15,14 @@ import '../../../../core/features/enabled_feature_keys.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
-import '../../../../core/settings/setting_defaults.g.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../core/time/calendar_days.dart';
-import '../../../../core/time/clock.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../application/issue_standalone_invoice.dart';
 import '../../domain/standalone_invoice.dart';
+import '../../providers/business_day_provider.dart';
 import '../../providers/money_providers.dart'
     show invoicingBusinessProvider, memberLabelsProvider, vatRatesProvider;
 import '../../providers/standalone_invoice_providers.dart';
@@ -76,7 +75,7 @@ class _State extends ConsumerState<StandaloneInvoiceScreen> {
 
   /// The due date proposed until a person sets one: the registered default term.
   DateTime _due(DateTime today) =>
-      _dueOn ?? addCalendarDays(_service(today), SettingDefaults.dunningFirstAfterDays);
+      _dueOn ?? addCalendarDays(_service(today), ref.read(invoiceDueDaysProvider));
 
   StandaloneDraft? _draft(DateTime today) {
     final customer = _customer;
@@ -94,7 +93,7 @@ class _State extends ConsumerState<StandaloneInvoiceScreen> {
   }
 
   Future<void> _check(String workspaceId) async {
-    final draft = _draft(ref.read(clockProvider).now());
+    final draft = _draft(ref.read(businessDayProvider));
     if (draft == null) return;
     final commands = ref.read(standaloneInvoiceCommandsProvider);
     setState(() => _busy = true);
@@ -223,7 +222,8 @@ class _State extends ConsumerState<StandaloneInvoiceScreen> {
     final names = ref.watch(memberLabelsProvider);
     final customers = names.entries.toList()
       ..sort((a, b) => a.value.compareTo(b.value));
-    final today = ref.watch(clockProvider).now();
+    final today = ref.watch(businessDayProvider);
+    ref.watch(invoiceDueDaysProvider); // the due date offered follows the payment term when it is read
     return [
       DropdownButtonFormField<String>(
         key: const ValueKey('standalone-customer'),

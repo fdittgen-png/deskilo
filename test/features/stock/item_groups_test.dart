@@ -8,6 +8,9 @@
 // an item previews how many settings change.
 import 'package:deskilo/core/demo/data/demo_item_groups.dart';
 import 'package:deskilo/core/demo/data/demo_stock_config_commands.dart';
+import 'package:deskilo/core/ui/dropdown_field.dart';
+import 'package:deskilo/features/money/providers/money_providers.dart';
+import 'package:deskilo/features/stock/domain/stock_config.dart';
 import 'package:deskilo/features/stock/presentation/item_group_assign_dialog.dart';
 import 'package:deskilo/features/stock/presentation/item_groups_screen.dart';
 import 'package:deskilo/features/stock/providers/stock_providers.dart';
@@ -15,7 +18,9 @@ import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo/l10n/app_localizations_en.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
@@ -30,8 +35,16 @@ Future<void> _frames(WidgetTester tester) async {
   }
 }
 
-Future<DemoItemGroups> _open(WidgetTester tester, Size size, {Widget? home}) async {
-  final config = DemoStockConfigCommands('ws-1');
+/// The Demo's stock settings whose read of the places fails.
+class _NoPlaces extends DemoStockConfigCommands {
+  _NoPlaces() : super('ws-1');
+
+  @override
+  Future<List<StockPlaceConfig>> places(String workspaceId) => Future.error(Exception('places down'));
+}
+
+Future<DemoItemGroups> _open(WidgetTester tester, Size size, {Widget? home, bool places = true, bool finance = false}) async {
+  final config = places ? DemoStockConfigCommands('ws-1') : _NoPlaces();
   final groups = DemoItemGroups('ws-1', config, () => DateTime(2026, 11, 22));
   await pumpApp(
     tester,
@@ -41,7 +54,8 @@ Future<DemoItemGroups> _open(WidgetTester tester, Size size, {Widget? home}) asy
       ...standardTestOverrides(),
       itemGroupsProvider.overrideWithValue(groups),
       stockConfigCommandsProvider.overrideWithValue(config),
-      myPermissionsProvider.overrideWithValue({WorkspacePermission.viewStock, WorkspacePermission.manageStock}),
+      myPermissionsProvider.overrideWithValue({WorkspacePermission.viewStock, WorkspacePermission.manageStock, if (finance) ...{WorkspacePermission.manageServices, WorkspacePermission.viewFinances}}),
+      vatRatesProvider.overrideWith((ref) async => const [VatRate(id: 'vat-std', label: 'Standard 20 %', percent: 20, isDefault: true), VatRate(id: 'vat-red', label: 'Reduced 5.5 %', percent: 5.5)]),
       enabledFeaturesSyncProvider.overrideWithValue({WorkspaceFeature.stockManagement, WorkspaceFeature.stockItemGroups}),
     ],
   );
@@ -105,6 +119,109 @@ void main() {
         expect(find.text(_en.itemGroupReasonNeedsSerial), findsOneWidget);
       });
 
+      testWidgets('a group carries what it proposes to a new item: the purchase unit with its factor, the reorder point and quantity, the home zone', (tester) async {
+        final w = await _open(tester, size);
+        await _tap(tester, 'item-group-add');
+        await tester.enterText(find.byKey(const ValueKey('item-group-name')), 'Dry goods');
+        await tester.enterText(find.byKey(const ValueKey('item-group-purchase-unit')), 'carton');
+        await tester.enterText(find.byKey(const ValueKey('item-group-factor')), '12');
+        await tester.enterText(find.byKey(const ValueKey('item-group-reorder-point')), '5.5');
+        await tester.enterText(find.byKey(const ValueKey('item-group-reorder-qty')), '20');
+        await _choose(tester, 'item-group-home-zone', 'Back room');
+        await _tap(tester, 'item-group-save');
+        final saved = (await w.groups('ws-1')).firstWhere((g) => g.name == 'Dry goods');
+        expect(saved.params['default_purchase_unit'], 'carton');
+        expect((saved.params['default_purchase_factor_num'], saved.params['default_purchase_factor_den']), (12, 1));
+        expect(saved.params['reorder_point_default'], '5.5');
+        expect(saved.params['reorder_quantity_default'], '20');
+        expect(saved.params['home_zone_id'], 'demo-place-back');
+        expect(find.textContaining('carton'), findsWidgets, reason: 'the group line says what it proposes');
+      });
+
+      testWidgets('a purchase unit needs its factor, a factor is one number or a fraction above zero, and a third is exact', (tester) async {
+        final w = await _open(tester, size);
+        await _tap(tester, 'item-group-add');
+        await tester.enterText(find.byKey(const ValueKey('item-group-name')), 'Syrups');
+        await tester.enterText(find.byKey(const ValueKey('item-group-purchase-unit')), 'bottle');
+        await _tap(tester, 'item-group-save');
+        expect(find.text(_en.stockReasonOutOfRange), findsOneWidget, reason: 'a unit without a factor');
+        await tester.enterText(find.byKey(const ValueKey('item-group-factor')), '1/0');
+        await _tap(tester, 'item-group-save');
+        expect(find.text(_en.stockReasonOutOfRange), findsOneWidget, reason: 'a zero denominator');
+        await tester.enterText(find.byKey(const ValueKey('item-group-factor')), '1/3');
+        await _tap(tester, 'item-group-save');
+        final saved = (await w.groups('ws-1')).firstWhere((g) => g.name == 'Syrups');
+        expect((saved.params['default_purchase_factor_num'], saved.params['default_purchase_factor_den']), (1, 3));
+      });
+
+      testWidgets('a reorder quantity of zero or below six decimals is refused, a point or a comma reads the same', (tester) async {
+        await _open(tester, size);
+        await _tap(tester, 'item-group-add');
+        await tester.enterText(find.byKey(const ValueKey('item-group-name')), 'Quantities');
+        for (final bad in ['0.0', '0,00', '0.0000004']) {
+          await tester.enterText(find.byKey(const ValueKey('item-group-reorder-qty')), bad);
+          await _tap(tester, 'item-group-save');
+          expect(find.text(_en.stockReasonOutOfRange), findsOneWidget, reason: bad);
+        }
+        await tester.enterText(find.byKey(const ValueKey('item-group-reorder-qty')), '2,5');
+        await _tap(tester, 'item-group-save');
+      });
+
+      testWidgets('a failed read of the places still opens the group sheet, without home zones', (tester) async {
+        await _open(tester, size, places: false);
+        await _tap(tester, 'item-group-add');
+        expect(find.byKey(const ValueKey('item-group-name')), findsOneWidget);
+      });
+
+      testWidgets('what an item costs or sells for is set by someone who may manage services and see the finances', (tester) async {
+        final w = await _open(tester, size, finance: true);
+        await _tap(tester, 'item-group-add');
+        await tester.enterText(find.byKey(const ValueKey('item-group-name')), 'Fresh');
+        await _choose(tester, 'item-group-vat', 'Reduced 5.5 %');
+        await _choose(tester, 'item-group-supply', _en.itemGroupSupplyGeneral);
+        await _choose(tester, 'item-group-rounding', '0.05');
+        await tester.enterText(find.byKey(const ValueKey('item-group-margin')), '35,5');
+        await _tap(tester, 'item-group-save');
+        // a setting that reaches items is previewed first: the second save applies it
+        await _tap(tester, 'item-group-save');
+        final saved = (await w.groups('ws-1')).firstWhere((g) => g.name == 'Fresh');
+        expect(saved.params['vat_rate_id'], 'vat-red');
+        expect(saved.params['supply_class'], 'general');
+        expect(saved.params['price_rounding'], '0.05');
+        expect(saved.params['target_margin_bps'], 3550);
+      });
+
+      testWidgets('someone without the finances is not shown them and never changes them', (tester) async {
+        final w = await _open(tester, size);
+        final groups = await w.groups('ws-1');
+        final drinks = groups.firstWhere((g) => g.id == 'demo-group-drinks');
+        await w.save('ws-1', requestId: 'r-fin', groupId: drinks.id, expectedRevision: drinks.revision, body: {'parameters': {'vat_rate_id': 'vat-std', 'target_margin_bps': 2500}});
+        ProviderScope.containerOf(tester.element(find.byType(Scaffold).first)).invalidate(itemGroupListProvider('ws-1'));
+        await _frames(tester);
+        expect(find.byKey(const ValueKey('item-group-vat')), findsNothing);
+        await tester.tap(find.byKey(const ValueKey('item-group-demo-group-drinks')));
+        await _frames(tester);
+        expect(find.byKey(const ValueKey('item-group-vat')), findsNothing);
+        expect(find.byKey(const ValueKey('item-group-margin')), findsNothing);
+        await tester.enterText(find.byKey(const ValueKey('item-group-name')), 'Drinks and more');
+        await _tap(tester, 'item-group-save');
+        final after = (await w.groups('ws-1')).firstWhere((g) => g.id == 'demo-group-drinks');
+        expect(after.name, 'Drinks and more');
+        expect(after.params['vat_rate_id'], 'vat-std', reason: 'a save without the finances leaves them as they were');
+        expect(after.params['target_margin_bps'], 2500);
+      });
+
+      testWidgets('a margin that is not a percent with two decimals at most is refused', (tester) async {
+        await _open(tester, size, finance: true);
+        await _tap(tester, 'item-group-add');
+        await tester.enterText(find.byKey(const ValueKey('item-group-name')), 'Margins');
+        for (final bad in ['12.345', '1001', '1.2.3']) {
+          await tester.enterText(find.byKey(const ValueKey('item-group-margin')), bad);
+          await _tap(tester, 'item-group-save');
+          expect(find.text(_en.stockReasonOutOfRange), findsOneWidget, reason: bad);
+        }
+      });
+
       testWidgets('an empty group is created, then deleted', (tester) async {
         final w = await _open(tester, size);
         await _tap(tester, 'item-group-add');
@@ -116,6 +233,41 @@ void main() {
         await _frames(tester);
         await _tap(tester, 'item-group-delete');
         expect((await w.groups('ws-1')).map((g) => g.name), isNot(contains('Gift baskets')));
+      });
+
+      testWidgets('the tag mode of an item comes from its group, is overridden on the item and goes back; a tag per piece needs tracking by piece', (tester) async {
+        final w = await _open(
+          tester,
+          size,
+          home: Builder(
+            builder: (context) => Scaffold(
+              body: TextButton(
+                key: const ValueKey('open'),
+                onPressed: () => showItemGroupAssign(context, workspaceId: 'ws-1', itemId: 'demo-item-milk', itemName: 'Milk'),
+                child: const Text('open'),
+              ),
+            ),
+          ),
+        );
+        final drinks = (await w.groups('ws-1')).firstWhere((g) => g.id == 'demo-group-drinks');
+        await w.save('ws-1', requestId: 'r-1', groupId: drinks.id, expectedRevision: drinks.revision, body: {'parameters': {'tag_mode': 'per_batch'}});
+        await tester.tap(find.byKey(const ValueKey('open')));
+        await _frames(tester);
+        final row = find.byKey(const ValueKey('item-group-param-tag_mode'));
+        expect(find.descendant(of: row, matching: find.textContaining('Drinks')), findsOneWidget, reason: 'inherited from the group, and said where from');
+        expect((await w.effective('ws-1', 'demo-item-milk')).params['tag_mode']!.value, 'per_batch');
+        // a tag per piece is refused for an item tracked by lot, in words, and nothing changes
+        await _choose(tester, 'item-group-tag-mode', _en.itemGroupTagUnit);
+        expect(find.text(_en.itemGroupReasonNeedsSerial), findsOneWidget);
+        expect((await w.effective('ws-1', 'demo-item-milk')).params['tag_mode']!.value, 'per_batch');
+        expect(tester.widget<AppDropdownField<String?>>(find.byKey(const ValueKey('item-group-tag-mode'))).value, 'per_batch', reason: 'the field shows the value in force, not the refused choice');
+        // no tag at all is the item's own value, shown inline as its own, and given back to the group
+        await _choose(tester, 'item-group-tag-mode', _en.itemGroupTagNone);
+        expect((await w.effective('ws-1', 'demo-item-milk')).params['tag_mode']!.own, isTrue);
+        expect(find.descendant(of: row, matching: find.text(_en.itemGroupOwn)), findsOneWidget);
+        await _tap(tester, 'item-group-use-tag_mode');
+        expect((await w.effective('ws-1', 'demo-item-milk')).params['tag_mode']!.value, 'per_batch');
+        expect(find.descendant(of: row, matching: find.textContaining('Drinks')), findsOneWidget);
       });
 
       testWidgets('an item shows where each setting comes from, an own value goes back to the group, a move is previewed', (tester) async {

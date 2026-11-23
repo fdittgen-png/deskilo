@@ -9,11 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
-import '../../../../core/time/clock.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/customer_quote_commands.dart';
 import '../../domain/customer_quote.dart';
+import '../../providers/business_day_provider.dart';
 import '../../providers/customer_quote_providers.dart';
 import 'quote_text.dart';
 
@@ -53,8 +53,7 @@ abstract final class QuoteDecisionSheet {
     final revision = quote.current;
     if (revision == null) return Future.value(false);
     final l10n = context.l10n;
-    final today = ref.read(clockProvider).now();
-    final state = _Answer(DateTime(today.year, today.month, today.day));
+    final state = _Answer();
     return showAppFormSheet(
       context,
       AppFormSheet(
@@ -69,7 +68,7 @@ abstract final class QuoteDecisionSheet {
             QuoteDecisionInput(
               accepted: state.accepted,
               revision: revision.revision,
-              decidedOn: state.decidedOn,
+              decidedOn: state.decidedOn ?? ref.read(businessDayProvider),
               source: state.source,
               evidence: state.evidence.text.trim(),
             ),
@@ -86,7 +85,7 @@ abstract final class QuoteDecisionSheet {
             QuoteUnreached() => l10n.quoteUnreached,
           };
         },
-        builder: (context, refresh) => _fields(context, state, refresh, revision),
+        builder: (context, refresh) => _fields(context, state, refresh, revision, ref.read(businessDayProvider)),
       ),
     );
   }
@@ -94,10 +93,10 @@ abstract final class QuoteDecisionSheet {
 
 /// What the issuer has entered so far.
 class _Answer {
-  _Answer(this.decidedOn);
-
   bool accepted = true;
-  DateTime decidedOn;
+
+  /// The day the person chose; null until they do, and then the business's day is read when it is used.
+  DateTime? decidedOn;
   String source = 'received_outside_app';
   final evidence = TextEditingController();
 }
@@ -107,6 +106,7 @@ List<Widget> _fields(
   _Answer state,
   VoidCallback refresh,
   QuoteRevision revision,
+  DateTime today,
 ) {
   final l10n = context.l10n;
   return [
@@ -140,7 +140,7 @@ List<Widget> _fields(
     AppDateField(
       key: const ValueKey('quote-decided-on'),
       label: l10n.quoteFieldDecidedOn,
-      value: state.decidedOn,
+      value: state.decidedOn ?? today,
       first: revision.issuedOn,
       onChanged: (d) {
         state.decidedOn = d.date ?? state.decidedOn;

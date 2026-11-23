@@ -13,6 +13,7 @@ import 'package:deskilo/features/stock/domain/stock_reversals.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../codes/dk_code.dart';
 import 'demo_stock_ledger.dart';
 
 const _loss = 'demo-place-loss';
@@ -67,10 +68,10 @@ class DemoStockReversals implements StockReversals {
     String requestId,
   ) async {
     if (_answers[requestId] case final done?) return done;
-    if (!_ledger.mine(workspaceId) || lines.isEmpty) throw _refused('DKG07', 'a return has lines');
+    if (!_ledger.mine(workspaceId) || lines.isEmpty) throw _refused(DkCode.dkg07, 'a return has lines');
     final digest = '${kind.wire}|${[for (final l in lines) '${l.lineId}:${l.sourceMovementId}:${l.quantity}:${l.locationId}'].join(',')}';
     if (_returns[returnId] case final known?) {
-      if (known.digest != digest) throw _refused('DKG16', 'this return was already recorded with other content');
+      if (known.digest != digest) throw _refused(DkCode.dkg16, 'this return was already recorded with other content');
       return _answers[requestId] = known.result;
     }
     // everything is checked before anything moves: a refusal moves nothing
@@ -78,7 +79,7 @@ class DemoStockReversals implements StockReversals {
     final movementIds = <String>[];
     var remaining = ExactQuantity.zero;
     final item = _ledger.itemOf(planned.first.source.itemId);
-    if (item == null) throw _refused('DKG04', 'not a stock item of this business');
+    if (item == null) throw _refused(DkCode.dkg04, 'not a stock item of this business');
     for (final p in planned) {
       final from = kind == StockReturnKind.supplier ? p.line.locationId! : p.source.toLocationId;
       final to = p.source.fromLocationId;
@@ -111,12 +112,12 @@ class DemoStockReversals implements StockReversals {
     final taken = <String, ExactQuantity>{};
     for (final l in lines) {
       final source = _movement(l.sourceMovementId);
-      if (source == null) throw _refused('DKG04', 'a line names a movement of another business or none');
+      if (source == null) throw _refused(DkCode.dkg04, 'a line names a movement of another business or none');
       final quantity = _quantity(l.quantity);
       _kindAllows(kind, source, l);
       final already = taken[source.id] ?? ExactQuantity.zero;
       final left = source.quantity - _reversed(source.id) - already;
-      if (quantity > left) throw _refused('DKG17', 'only ${left.text} can still be reversed on this movement');
+      if (quantity > left) throw _refused(DkCode.dkg17, 'only ${left.text} can still be reversed on this movement');
       taken[source.id] = already + quantity;
       planned.add((source: source, quantity: quantity, line: l));
     }
@@ -128,21 +129,21 @@ class DemoStockReversals implements StockReversals {
     try {
       quantity = ExactQuantity.parse(text);
     } on ExactQuantityException {
-      throw _refused('DKG07', 'a quantity above zero');
+      throw _refused(DkCode.dkg07, 'a quantity above zero');
     }
-    if (quantity <= ExactQuantity.zero) throw _refused('DKG07', 'a quantity above zero');
+    if (quantity <= ExactQuantity.zero) throw _refused(DkCode.dkg07, 'a quantity above zero');
     return quantity;
   }
 
   void _kindAllows(StockReturnKind kind, StockMovementRow source, StockReturnLineDraft l) {
     switch (kind) {
       case StockReturnKind.customer:
-        throw _refused('DKG18', 'a customer return follows a sale');
+        throw _refused(DkCode.dkg18, 'a customer return follows a sale');
       case StockReturnKind.supplier:
-        if (source.reason != 'receipt') throw _refused('DKG18', 'a supplier return follows a receipt');
-        if (l.locationId == null) throw _refused('DKG05', 'the goods leave from a real place');
+        if (source.reason != 'receipt') throw _refused(DkCode.dkg18, 'a supplier return follows a receipt');
+        if (l.locationId == null) throw _refused(DkCode.dkg05, 'the goods leave from a real place');
       case StockReturnKind.correction:
-        if (source.reason == 'opening') throw _refused('DKG18', 'this movement is not corrected here');
+        if (source.reason == 'opening') throw _refused(DkCode.dkg18, 'this movement is not corrected here');
     }
   }
 
@@ -156,20 +157,20 @@ class DemoStockReversals implements StockReversals {
 
   @override
   Future<void> recordCount(String workspaceId, StockCountDraft draft) async {
-    if (!_ledger.mine(workspaceId)) throw _refused('DKG07', 'a count has an identity and a scope');
+    if (!_ledger.mine(workspaceId)) throw _refused(DkCode.dkg07, 'a count has an identity and a scope');
     final ExactQuantity observed;
     try {
       observed = ExactQuantity.parse(draft.observed);
     } on ExactQuantityException {
-      throw _refused('DKG07', 'a count has a quantity');
+      throw _refused(DkCode.dkg07, 'a count has a quantity');
     }
     if (observed < ExactQuantity.zero || _ledger.itemOf(draft.itemId) == null) {
-      throw _refused('DKG07', 'a count has an identity and a scope');
+      throw _refused(DkCode.dkg07, 'a count has an identity and a scope');
     }
     final known = _counts.where((c) => c.countId == draft.countId).firstOrNull;
     if (known != null) {
       if (known.itemId != draft.itemId || known.locationId != draft.locationId || known.observed != observed) {
-        throw _refused('DKG16', 'this count was already recorded with other content');
+        throw _refused(DkCode.dkg16, 'this count was already recorded with other content');
       }
       return;
     }
@@ -195,7 +196,7 @@ class DemoStockReversals implements StockReversals {
     String note = '',
   }) async {
     final c = _counts.where((x) => x.countId == countId).firstOrNull;
-    if (!_ledger.mine(workspaceId) || c == null) throw _refused('DKG04', 'not a count of this business');
+    if (!_ledger.mine(workspaceId) || c == null) throw _refused(DkCode.dkg04, 'not a count of this business');
     final state = switch (decision) {
       StockCountDecision.apply => StockCountState.applied,
       StockCountDecision.reject => StockCountState.rejected,
@@ -203,10 +204,10 @@ class DemoStockReversals implements StockReversals {
     };
     if (c.state != StockCountState.recorded) {
       if (c.state == state) return;
-      throw _refused('DKG19', 'this count was already decided');
+      throw _refused(DkCode.dkg19, 'this count was already decided');
     }
     if (decision == StockCountDecision.apply) {
-      if (_moves(c.itemId, c.locationId) != c.baselineMoves) throw _refused('DKG20', 'the stock moved since it was counted: count it again');
+      if (_moves(c.itemId, c.locationId) != c.baselineMoves) throw _refused(DkCode.dkg20, 'the stock moved since it was counted: count it again');
       final diff = c.observed - c.baseline;
       final item = _ledger.itemOf(c.itemId)!;
       if (diff > ExactQuantity.zero) {

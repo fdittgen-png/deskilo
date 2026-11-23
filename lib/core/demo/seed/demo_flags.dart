@@ -31,6 +31,9 @@ const Map<WorkspaceFeature, String> demoFeaturesLeftOff = {
   WorkspaceFeature.counterTillSessions:
       '#4367: the server side is delivered first; its Demo scenario arrives with the screens, '
       'which turn the feature on and add it',
+  WorkspaceFeature.stockTagReads:
+      '#4364: the server side is delivered first; its Demo scenario arrives with the screens, '
+      'which turn the feature on and add it',
   WorkspaceFeature.counterReceipts:
       '#4184: the server side is delivered first; its Demo scenario arrives with the screens, '
       'which turn the feature on and add it',

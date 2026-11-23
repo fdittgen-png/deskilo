@@ -8,6 +8,8 @@ import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
+import '../../codes/dk_code.dart';
+import '../../codes/pg_code.dart';
 import 'event_visibility.dart';
 import 'fixture_clock.dart';
 
@@ -125,12 +127,12 @@ class FakeEventRepository implements EventRepository {
     if (i < 0) throw StateError('unknown event');
     final event = events[i];
     if (event.status != EventStatus.pending) {
-      throw const PostgrestException(message: 'already decided', code: 'DKD01');
+      throw const PostgrestException(message: 'already decided', code: DkCode.dkd01);
     }
     if (decisions.any(
       (d) => d.eventId == eventId && d.memberId == respondingMemberId,
     )) {
-      throw const PostgrestException(message: 'you already decided this event', code: 'DKD01');
+      throw const PostgrestException(message: 'you already decided this event', code: DkCode.dkd01);
     }
     final me = decider?.call();
     // #4146 (0804) — as respond_to_event: a decision needs the right to read
@@ -142,7 +144,7 @@ class FakeEventRepository implements EventRepository {
         !_mayRead(event, ownCounts: event.type != EventType.memberJoin)) {
       throw const PostgrestException(
         message: 'you are not an eligible validator for this event',
-        code: 'DKN01',
+        code: DkCode.dkn01,
       );
     }
     if (decider != null &&
@@ -155,7 +157,7 @@ class FakeEventRepository implements EventRepository {
       // rule's scope and a former member never decide.
       throw const PostgrestException(
         message: 'not allowed to decide this event',
-        code: '42501',
+        code: PgCode.insufficientPrivilege,
       );
     }
     decisions.add(

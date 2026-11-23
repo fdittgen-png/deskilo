@@ -3,6 +3,8 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
+
+import '../codes/pg_code.dart';
 import '../data/server_error.dart';
 
 /// Why a network read failed, as far as the cache may care (#1849).
@@ -39,18 +41,18 @@ ReadFailure classifyReadFailure(Object error) {
   }
   final code = serverErrorCode(error);
   if (code != null) {
-    if (code == '42501' ||
+    if (code == PgCode.insufficientPrivilege ||
         code == '401' ||
         code == '403' ||
-        code == 'PGRST301' ||
-        code == 'PGRST302') {
+        code == PgCode.pgrstJwtExpired ||
+        code == PgCode.pgrstJwtInvalid) {
       return ReadFailure.denied;
     }
     // 5xx from the gateway or a database connection class (08xxx) or the
     // PostgREST connectivity family: the service is unavailable, not wrong.
     if (code.startsWith('5') ||
         code.startsWith('08') ||
-        const {'PGRST000', 'PGRST001', 'PGRST002', 'PGRST003'}.contains(code)) {
+        const {PgCode.pgrstNoConnection, PgCode.pgrstInternalConnection, PgCode.pgrstSchemaCacheConnection, PgCode.pgrstPoolTimeout}.contains(code)) {
       return ReadFailure.transient;
     }
   }

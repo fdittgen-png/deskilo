@@ -18,6 +18,24 @@
   "stockReasonTagOwnerInactive": "Questo articolo o luogo è disattivato: lo riattivi prima di associargli un'etichetta.",
   "stockTagsTitle": "Tag: {name}",
   "stockTagsOpen": "Tag",
+  "stockTagsPieces": "{count, plural, one{1 pezzo etichettato singolarmente} other{{count} pezzi etichettati singolarmente}}",
+  "@stockTagsPieces": {
+    "description": "#4362 G13 tags: heading of the pieces of an item that carries one tag per piece",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "stockTagPiece": "Pezzo {number}",
+  "@stockTagPiece": {
+    "description": "#4362 G13 tags: the name of one piece in the list of pieces",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
   "stockTagsNone": "Nessun tag è ancora associato.",
   "stockTagKindNfc": "Chip NFC",
   "stockTagKindUhf": "Etichetta UHF",
@@ -39,5 +57,10 @@
   "stockTagMalformed": "Questo non è un codice tag valido.",
   "stockTagOwnerUnknown": "Questo articolo o questa posizione non è noto.",
   "stockTagModeNone": "Questo articolo non usa tag.",
-  "stockTagPerUnit": "Questo articolo è etichettato pezzo per pezzo: etichetti i pezzi alla ricezione."
+  "stockTagPerUnit": "Questo articolo è etichettato pezzo per pezzo: etichetti i pezzi alla ricezione.",
+  "settingLabelStockTagReadMaxTags": "Massimo di etichette per lettura di massa",
+  "settingHintStockTagReadMaxTags": "Quante etichette diverse conserva una lettura di massa prima di non accettarne altre. La stessa etichetta letta più volte conta una volta.",
+  "settingLabelStockTagReadUnitAsQuantity": "Un pezzo letto in uno spostamento conta come uno del suo articolo",
+  "settingHintStockTagReadUnitAsQuantity": "In uno spostamento di massa, l'etichetta su un pezzo di un articolo non tracciato pezzo per pezzo viene aggiunta come quantità 1 di quell'articolo. Disattivato: tale etichetta viene esclusa ed elencata.",
+  "settingUnitTags": "etichette"
 }

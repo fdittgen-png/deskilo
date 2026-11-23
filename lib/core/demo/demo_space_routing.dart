@@ -14,6 +14,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
 
+import '../../app/business_day_wiring.dart';
 import '../../app/finance_hosts_wiring.dart';
 import '../../app/private_values_wiring.dart';
 import '../../features/calendar/providers/calendar_providers.dart';
@@ -181,6 +182,8 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
     financeHostsFromMe, financeHomeFromMe, demoFinanceCommands(fixture),
     // #4167 — My businesses names the person's production spaces.
     businessWorkspacesFromApp,
+    // #4426 — the money screens offer the business's day.
+    businessDayFromApp,
     // #2552 XPRIV-01 — the persona's mask choice, as the app reads it.
     privateValuesFromAccount,
     // #2575
@@ -316,6 +319,7 @@ List<Override> _moneyPortOverrides(FakeMoneyRepository Function(Ref ref) money, 
       ref.watch(purchaseOrderRepositoryProvider) as FakePurchaseOrderRepository,
       stocks.of(ref).config,
       stocks.of(ref).ledger,
+      tags: stocks.of(ref).tags,
     ),
   ),
   // #4173 — and traces its goods to the orders they were put away from, and values them.
@@ -379,7 +383,7 @@ class _DemoStock {
     operations = DemoStockOperations(ledger, config);
     reversals = DemoStockReversals(ledger);
     itemGroups = DemoItemGroups(id, config, now);
-    tags = DemoStockTags();
+    tags = DemoStockTags(tagModeOf: (item) async => (await itemGroups.effective(id, item)).params['tag_mode']?.value as String?);
     codeResolver = DemoStockCodeResolver(id, config, registry, tags);
   }
 

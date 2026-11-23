@@ -251,6 +251,7 @@ const Map<WorkspaceFeature, FeatureAssessment> featureAssessments = {
   WorkspaceFeature.stockScanning: _ownerBeta,
   WorkspaceFeature.counterReceipts: _ownerBeta,
   WorkspaceFeature.counterTillSessions: _ownerBeta,
+  WorkspaceFeature.stockTagReads: _ownerBeta,
   WorkspaceFeature.organisation: _ownerBeta,
   WorkspaceFeature.standaloneInvoicing: _ownerBeta,
   WorkspaceFeature.billingCustomers: _ownerBeta,

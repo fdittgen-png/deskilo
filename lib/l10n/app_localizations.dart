@@ -20428,6 +20428,18 @@ abstract class AppLocalizations {
   /// **'Scanning'**
   String get featureStockScanningTitle;
 
+  /// #4364 feature description
+  ///
+  /// In en, this message translates to:
+  /// **'A UHF reader in keyboard mode reads many tags at once to receive, move and count: the tags are collected, de-duplicated and resolved, and nothing is sent until the user confirms.'**
+  String get featureStockTagReadsDesc;
+
+  /// #4364 feature name
+  ///
+  /// In en, this message translates to:
+  /// **'Reading many tags'**
+  String get featureStockTagReadsTitle;
+
   /// #4362 feature description
   ///
   /// In en, this message translates to:
@@ -29425,6 +29437,12 @@ abstract class AppLocalizations {
   /// **'The item groups could not be read.'**
   String get itemGroupFailed;
 
+  /// #4361 G12 finance parameters of an item group
+  ///
+  /// In en, this message translates to:
+  /// **'These settings need the right to manage services and to see the finances.'**
+  String get itemGroupFinanceHint;
+
   /// #4361 G12 item groups: itemGroupFrom
   ///
   /// In en, this message translates to:
@@ -29436,6 +29454,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'From {group} since {date}'**
   String itemGroupFromSince(String group, String date);
+
+  /// #4361 G12 finance parameters of an item group
+  ///
+  /// In en, this message translates to:
+  /// **'Not shown to you'**
+  String get itemGroupHidden;
 
   /// #4361 G12 item groups: itemGroupHistory
   ///
@@ -29459,6 +29483,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No change recorded yet.'**
   String get itemGroupHistoryNone;
+
+  /// #4361 G12 proposals: the home zone a group proposes to an item
+  ///
+  /// In en, this message translates to:
+  /// **'Default home zone'**
+  String get itemGroupHomeZone;
+
+  /// #4361 G12 finance parameters of an item group
+  ///
+  /// In en, this message translates to:
+  /// **'Target margin on cost (%)'**
+  String get itemGroupMargin;
+
+  /// #4361 G12: a target margin as the group shows it; the percent arrives formatted
+  ///
+  /// In en, this message translates to:
+  /// **'{percent} %'**
+  String itemGroupMarginValue(String percent);
 
   /// #4361 G12 item groups: itemGroupMinAge
   ///
@@ -29543,6 +29585,24 @@ abstract class AppLocalizations {
   /// **'What this change reaches'**
   String get itemGroupPreviewTitle;
 
+  /// #4361 G12 proposals: said under a proposal, which reaches no existing item
+  ///
+  /// In en, this message translates to:
+  /// **'Proposed into a new item'**
+  String get itemGroupProposalHint;
+
+  /// #4361 G12 proposals: the factor of the proposed purchase unit, one number or a fraction
+  ///
+  /// In en, this message translates to:
+  /// **'Factor: how many inventory units one purchase unit holds (12, 0.5 or 1/3)'**
+  String get itemGroupPurchaseFactor;
+
+  /// #4361 G12 proposals: the purchase unit a group proposes to a new item
+  ///
+  /// In en, this message translates to:
+  /// **'Default purchase unit'**
+  String get itemGroupPurchaseUnit;
+
   /// #4361 G12 item groups: itemGroupReasonDepth
   ///
   /// In en, this message translates to:
@@ -29591,6 +29651,36 @@ abstract class AppLocalizations {
   /// **'This setting cannot be given its own value.'**
   String get itemGroupReasonNotOverridable;
 
+  /// #4361 G12 proposals: the reorder point a group proposes to an item that has none
+  ///
+  /// In en, this message translates to:
+  /// **'Default reorder point'**
+  String get itemGroupReorderPoint;
+
+  /// #4361 G12 proposals: the reorder quantity a group proposes to an item that has none
+  ///
+  /// In en, this message translates to:
+  /// **'Default reorder quantity'**
+  String get itemGroupReorderQty;
+
+  /// #4361 G12 finance parameters of an item group
+  ///
+  /// In en, this message translates to:
+  /// **'Price rounding'**
+  String get itemGroupRounding;
+
+  /// #4361 G12 finance parameters of an item group
+  ///
+  /// In en, this message translates to:
+  /// **'No rounding'**
+  String get itemGroupRoundingNone;
+
+  /// #4361 G12 finance parameters of an item group
+  ///
+  /// In en, this message translates to:
+  /// **'Set'**
+  String get itemGroupSet;
+
   /// #4361 G12 item groups: itemGroupSkippedLine
   ///
   /// In en, this message translates to:
@@ -29609,6 +29699,24 @@ abstract class AppLocalizations {
   /// **'Sold by weight'**
   String get itemGroupSoldByWeight;
 
+  /// #4361 G12 finance parameters of an item group
+  ///
+  /// In en, this message translates to:
+  /// **'Supply class'**
+  String get itemGroupSupply;
+
+  /// #4361 G12 finance parameters of an item group
+  ///
+  /// In en, this message translates to:
+  /// **'General'**
+  String get itemGroupSupplyGeneral;
+
+  /// #4361 G12 finance parameters of an item group
+  ///
+  /// In en, this message translates to:
+  /// **'Property'**
+  String get itemGroupSupplyProperty;
+
   /// #4361 G12 item groups: itemGroupTagBatch
   ///
   /// In en, this message translates to:
@@ -29620,6 +29728,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Tag mode'**
   String get itemGroupTagMode;
+
+  /// #4362 G13: the item's own value of the tag mode (none, one per batch, one per piece), over its group's
+  ///
+  /// In en, this message translates to:
+  /// **'Tag on this item'**
+  String get itemGroupTagModeOwn;
 
   /// #4361 G12 item groups: itemGroupTagNone
   ///
@@ -51612,6 +51726,18 @@ abstract class AppLocalizations {
   /// **'What a goods sheet does when the same code is scanned again: add one more to the line, or ask the quantity.'**
   String get settingHintStockRepeatedScan;
 
+  /// #4364 setting label/hint
+  ///
+  /// In en, this message translates to:
+  /// **'How many different tags one bulk read keeps before it takes no more. The same tag read many times counts once.'**
+  String get settingHintStockTagReadMaxTags;
+
+  /// #4364 setting label/hint
+  ///
+  /// In en, this message translates to:
+  /// **'In a bulk move, a tag on a piece of an item that is not tracked piece by piece is added as quantity 1 of that item. Off: such a tag is left out and listed.'**
+  String get settingHintStockTagReadUnitAsQuantity;
+
   /// #4362/#4359 setting label/hint
   ///
   /// In en, this message translates to:
@@ -52242,6 +52368,18 @@ abstract class AppLocalizations {
   /// **'A code scanned again'**
   String get settingLabelStockRepeatedScan;
 
+  /// #4364 setting label/hint
+  ///
+  /// In en, this message translates to:
+  /// **'Most tags in one bulk read'**
+  String get settingLabelStockTagReadMaxTags;
+
+  /// #4364 setting label/hint
+  ///
+  /// In en, this message translates to:
+  /// **'A piece read in a move counts as one of its item'**
+  String get settingLabelStockTagReadUnitAsQuantity;
+
   /// #4362/#4359 setting label/hint
   ///
   /// In en, this message translates to:
@@ -52457,6 +52595,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'seconds'**
   String get settingUnitSeconds;
+
+  /// #4364 setting unit
+  ///
+  /// In en, this message translates to:
+  /// **'tags'**
+  String get settingUnitTags;
 
   /// #2488 Unit suffix of a URL setting.
   ///
@@ -57995,6 +58139,12 @@ abstract class AppLocalizations {
   /// **'Nothing is left to put away.'**
   String get stockPutAwayNothing;
 
+  /// #4379 G13b put-away by piece [not a count: piece] -- the piece's place among the line's tags
+  ///
+  /// In en, this message translates to:
+  /// **'Piece {piece}: {problem}'**
+  String stockPutAwayPieceProblem(int piece, String problem);
+
   /// #4171 receiving into stock: a label or message
   ///
   /// In en, this message translates to:
@@ -58018,6 +58168,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Put away what remains'**
   String get stockPutAwayRemaining;
+
+  /// #4379 G13b put-away by piece
+  ///
+  /// In en, this message translates to:
+  /// **'{needed, plural, one{The {needed} piece of this line already has a tag.} other{All {needed} pieces of this line already have a tag.}}'**
+  String stockPutAwayTagAllRead(int needed);
+
+  /// #4379 G13b put-away by piece
+  ///
+  /// In en, this message translates to:
+  /// **'Tag of the next piece'**
+  String get stockPutAwayTagField;
+
+  /// #4379 G13b put-away by piece
+  ///
+  /// In en, this message translates to:
+  /// **'Remove tag {code}'**
+  String stockPutAwayTagRemove(String code);
+
+  /// #4379 G13b put-away by piece
+  ///
+  /// In en, this message translates to:
+  /// **'{read, plural, one{{read} piece} other{{read} pieces}} read of {needed, plural, one{{needed}} other{{needed}}}'**
+  String stockPutAwayTagsCount(int read, int needed);
+
+  /// #4379 G13b put-away by piece
+  ///
+  /// In en, this message translates to:
+  /// **'Read one tag per piece: {needed, plural, one{{needed} needed} other{{needed} needed}}, {read, plural, one{{read} read} other{{read} read}}.'**
+  String stockPutAwayTagsMissing(int needed, int read);
+
+  /// #4379 G13b put-away by piece
+  ///
+  /// In en, this message translates to:
+  /// **'Tags of the pieces'**
+  String get stockPutAwayTagsTitle;
 
   /// #4171 receiving into stock: a label or message
   ///
@@ -59309,6 +59495,12 @@ abstract class AppLocalizations {
   /// **'This item is tagged piece by piece: tag its pieces when they are received.'**
   String get stockTagPerUnit;
 
+  /// #4362 G13 tags: the name of one piece in the list of pieces
+  ///
+  /// In en, this message translates to:
+  /// **'Piece {number}'**
+  String stockTagPiece(String number);
+
   /// #4363 G14 tags: stockTagReasonDamaged
   ///
   /// In en, this message translates to:
@@ -59368,6 +59560,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Tags'**
   String get stockTagsOpen;
+
+  /// #4362 G13 tags: heading of the pieces of an item that carries one tag per piece
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{1 piece tagged one by one} other{{count} pieces tagged one by one}}'**
+  String stockTagsPieces(int count);
 
   /// #4363 G14 tags: stockTagsRetire
   ///

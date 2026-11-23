@@ -39,6 +39,7 @@
 #       is refused (DKG22); one tag, on the piece.
 #   (L) two put-aways of one receipt line naming 3 tags each of the 4 delivered piece by piece: the second
 #       waits for the line's lock and is refused as over-allocated; one set of 3 pieces.
+#   (R) two bulk moves of the same three pieces at once: the second waits, then is refused naming the pieces' new place (DKG26).
 #   (M) two operators finalize one counter draft under different request ids: the second waits for the receipt's lock
 #       and is refused (DKL04); one number, one tender.
 #   (N) two refunds of one correction at once: the second waits for the correction's lock and is refused; one refund.
@@ -666,6 +667,41 @@ wait "$contender15" || true
 grep -qx putaway "$scratch/holder15" || { echo "::error::the first piece put-away did not complete: $(tr '\n' ' ' < "$scratch/holder15")" >&2; exit 1; }
 grep -q "over_allocated" "$scratch/contender15" || { echo "::error::the second piece put-away was not refused as over_allocated: $(tr '\n' ' ' < "$scratch/contender15")" >&2; exit 1; }
 expect "(L) three pieces exist, with their tags, once" "$(q "select count(*) || '/' || (select count(*) from public.stock_tags where workspace_id = '$ws' and owner_kind = 'piece' and state = 'active' and item_id = '$pitem') from public.stock_tagged_units where workspace_id = '$ws' and item_id = '$pitem'")" "3/3"
+
+# (R) two bulk moves of the same three pieces at once (the UHF read of #4364): the second waits for the pieces' lock, then is
+# refused naming where they are now (DKG26); the pieces moved once, never twice.
+rlot=$(q "select lot_id from public.stock_tagged_units where item_id = '$pitem' and location_id = '$main' and state = 'in_stock' limit 1")
+rmove() { # REQUEST
+  echo "$as_owner select 'moved' from (select public.stock_transfer_v1('$ws', '$1', jsonb_build_array(jsonb_build_object('item_id', '$pitem', 'lot_id', '$rlot', 'quantity', 3, 'from', '$main', 'to', '$shelf', 'units', jsonb_build_array(jsonb_build_object('tag', 'E28068940000401561D69A01'), jsonb_build_object('tag', 'E28068940000401561D69A02'), jsonb_build_object('tag', 'E28068940000401561D69A03'))))) ) t;"
+}
+mv1=$(uid); mv2=$(uid)
+psql "$url" -X -qAt -v ON_ERROR_STOP=1 >"$scratch/holder21" 2>&1 <<SQL &
+begin;
+$(rmove "$mv1")
+reset role;
+\\! touch '$scratch/ready21'
+select pg_sleep(4);
+commit;
+SQL
+holder21=$!
+wait_marker "$scratch/ready21" "$scratch/holder21"
+PGAPPNAME="transfer-race-bulk-move" psql "$url" -X -qAt -v ON_ERROR_STOP=1 >"$scratch/contender21" 2>&1 <<SQL &
+begin;
+$(rmove "$mv2")
+commit;
+SQL
+contender21=$!
+wait_lock "transfer-race-bulk-move"
+wait "$holder21" || { echo "::error::the first bulk move failed: $(tr '\n' ' ' < "$scratch/holder21")" >&2; exit 1; }
+wait "$contender21" || true
+grep -qx moved "$scratch/holder21" || { echo "::error::the first bulk move did not complete: $(tr '\n' ' ' < "$scratch/holder21")" >&2; exit 1; }
+# refused either way: the pieces are no longer where it takes them from (DKG26) or the place no longer holds them (DKG03)
+grep -qE "DKG26|DKG03|not that much on hand" "$scratch/contender21" || { echo "::error::the second bulk move was not refused: $(tr '\n' ' ' < "$scratch/contender21")" >&2; exit 1; }
+# a piece refusal names the piece's new place (the quantity refusal, when it comes first, has none: #4364 follow-up)
+if grep -q "DKG26" "$scratch/contender21"; then
+  grep -q "\"place\"" "$scratch/contender21" || { echo "::error::the refusal does not name the new place: $(tr '\n' ' ' < "$scratch/contender21")" >&2; exit 1; }
+fi
+expect "(R) the three pieces moved once" "$(q "select count(*) from public.stock_tagged_units where item_id = '$pitem' and location_id = '$shelf' and state = 'in_stock'")" "3"
 
 # (M) two operators finalize the same counter draft under different request ids: the second waits for the receipt's
 # lock, then is refused (DKL04, no longer an open draft); one number is drawn, one set of tenders exists.

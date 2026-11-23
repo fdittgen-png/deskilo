@@ -32,7 +32,7 @@ class TagOwner {
 
 /// An active tag.
 class StockTag {
-  const StockTag({required this.id, required this.code, required this.kind, required this.ownerKind, this.unit});
+  const StockTag({required this.id, required this.code, required this.kind, required this.ownerKind, this.unit, this.pieceId});
 
   final String id;
 
@@ -44,6 +44,12 @@ class StockTag {
   final String ownerKind;
   final String? unit;
 
+  /// The piece this tag names, for an item tracked piece by piece (`owner_kind` `piece`); null otherwise.
+  final String? pieceId;
+
+  /// A tag that names one piece of the item.
+  bool get isPiece => ownerKind == 'piece';
+
   bool get isUhf => kind == 'epc';
 
   factory StockTag.fromJson(Object? json) {
@@ -54,6 +60,7 @@ class StockTag {
       kind: r.string('tag_kind'),
       ownerKind: r.string('owner_kind'),
       unit: r.stringOrNull('unit'),
+      pieceId: r.stringOrNull('piece_id'),
     );
   }
 }

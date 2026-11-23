@@ -1,9 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../core/trace/trace_logger.dart';
 import '../domain/stock_tags.dart';
-import 'stock_refusals.dart';
+import 'stock_rpc.dart';
 
 /// #4363 -- `stock_tags_v1`, `stock_tag_bind_v1` and `stock_tag_retire_v1` behind the port. An answer of the
 /// wrong shape throws: it is never shown as "no tags".
@@ -12,14 +11,7 @@ class SupabaseStockTags implements StockTags {
 
   final SupabaseClient _client;
 
-  Future<Object?> _call(String fn, Map<String, Object?> params) async {
-    try {
-      return await _client.rpc<Object?>(fn, params: params);
-    } on PostgrestException catch (e, stack) {
-      TraceLogger.instance.warn('stock', 'a tag command was refused: ${e.code}', stackTrace: stack);
-      throwStockFailure(e, stack);
-    }
-  }
+  Future<Object?> _call(String fn, Map<String, Object?> params) => StockRpc(_client).run(fn, params);
 
   @override
   Future<List<StockTag>> tags(String workspaceId, TagOwner owner) async {

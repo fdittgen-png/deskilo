@@ -7840,6 +7840,8 @@
   },
   "featureStockScanningDesc": "Une douchette qui tape, ou la caméra du téléphone, remplit toute feuille de marchandises : un code est lu comme un code-barres, une étiquette de lieu, une étiquette de lot ou une étiquette RFID. Activé avec le registre des marchandises.",
   "featureStockScanningTitle": "Scan",
+  "featureStockTagReadsDesc": "Un lecteur UHF en mode clavier lit de nombreuses étiquettes d'un coup pour recevoir, déplacer et compter : les étiquettes sont rassemblées, dédoublonnées et résolues, et rien n'est envoyé avant la confirmation de l'utilisateur.",
+  "featureStockTagReadsTitle": "Lecture de nombreuses étiquettes",
   "featureStockTagsDesc": "Étiquetez articles, unités, lots et lieux avec des étiquettes RFID ou NFC, enregistrées comme un code-barres et uniques dans l'entreprise. Une étiquette peut désigner un lot ou une pièce, selon le groupe de l'article ; la lecture d'une étiquette est reconnue partout où un code-barres l'est.",
   "featureStockTagsTitle": "Étiquettes RFID",
   "featureStockTakeOutDesc": "Sortir des marchandises du stock pour usage ou comme perte, avec le motif et le lot. Désactivé : ni consommation ni perte n’est proposée ; les transferts et la réception ne changent pas.",
@@ -11243,11 +11245,36 @@
   "itemGroupDelete": "Supprimer le groupe",
   "itemGroupDeleted": "Groupe supprimé.",
   "itemGroupFailed": "Les groupes d’articles n’ont pas pu être lus.",
+  "itemGroupFinanceHint": "Ces réglages demandent le droit de gérer les services et de voir les finances.",
+  "@itemGroupFinanceHint": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
   "itemGroupFrom": "Du groupe {group}",
   "itemGroupFromSince": "Du groupe {group} depuis le {date}",
+  "itemGroupHidden": "Non visible pour vous",
+  "@itemGroupHidden": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
   "itemGroupHistory": "Historique",
   "itemGroupHistoryLine": "{parameter} : {from} → {to}, {affected, plural, one{{affected} article atteint} other{{affected} articles atteints}}",
   "itemGroupHistoryNone": "Aucun changement enregistré pour l’instant.",
+  "itemGroupHomeZone": "Zone de rangement par défaut",
+  "@itemGroupHomeZone": {
+    "description": "#4361 G12 proposals: the home zone a group proposes to an item"
+  },
+  "itemGroupMargin": "Marge cible sur le coût (%)",
+  "@itemGroupMargin": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupMarginValue": "{percent} %",
+  "@itemGroupMarginValue": {
+    "description": "#4361 G12: a target margin as the group shows it; the percent arrives formatted",
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
   "itemGroupMinAge": "Âge minimum pour une vente",
   "itemGroupMove": "Déplacer",
   "itemGroupMoveReaches": "{count, plural, one{Le déplacement change {count} réglage.} other{Le déplacement change {count} réglages.}}",
@@ -11261,6 +11288,18 @@
   "itemGroupPreviewLine": "{parameter} : {affected, plural, one{s’applique à {affected} article} other{s’applique à {affected} articles}}, {kept, plural, one{{kept} garde sa propre valeur} other{{kept} gardent leur propre valeur}}, {skipped, plural, one{{skipped} ne peut pas être atteint} other{{skipped} ne peuvent pas être atteints}}",
   "itemGroupPreviewNothing": "Aucun article n’est atteint.",
   "itemGroupPreviewTitle": "Ce que ce changement atteint",
+  "itemGroupProposalHint": "Proposé à un nouvel article",
+  "@itemGroupProposalHint": {
+    "description": "#4361 G12 proposals: said under a proposal, which reaches no existing item"
+  },
+  "itemGroupPurchaseFactor": "Facteur : combien d'unités de stock contient une unité d'achat (12, 0,5 ou 1/3)",
+  "@itemGroupPurchaseFactor": {
+    "description": "#4361 G12 proposals: the factor of the proposed purchase unit, one number or a fraction"
+  },
+  "itemGroupPurchaseUnit": "Unité d'achat par défaut",
+  "@itemGroupPurchaseUnit": {
+    "description": "#4361 G12 proposals: the purchase unit a group proposes to a new item"
+  },
   "itemGroupReasonDepth": "Un sous-groupe ne peut pas avoir de sous-groupes.",
   "itemGroupReasonGroupUnknown": "Ce groupe n’existe pas.",
   "itemGroupReasonHasMovements": "il a déjà des mouvements",
@@ -11269,11 +11308,47 @@
   "itemGroupReasonNameDuplicate": "Un autre groupe porte déjà ce nom.",
   "itemGroupReasonNeedsSerial": "Les puces par pièce demandent un suivi à la pièce.",
   "itemGroupReasonNotOverridable": "Ce réglage ne peut pas avoir de valeur propre.",
+  "itemGroupReorderPoint": "Seuil de réapprovisionnement par défaut",
+  "@itemGroupReorderPoint": {
+    "description": "#4361 G12 proposals: the reorder point a group proposes to an item that has none"
+  },
+  "itemGroupReorderQty": "Quantité de réapprovisionnement par défaut",
+  "@itemGroupReorderQty": {
+    "description": "#4361 G12 proposals: the reorder quantity a group proposes to an item that has none"
+  },
+  "itemGroupRounding": "Arrondi du prix",
+  "@itemGroupRounding": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupRoundingNone": "Aucun arrondi",
+  "@itemGroupRoundingNone": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupSet": "Définie",
+  "@itemGroupSet": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
   "itemGroupSkippedLine": "{item} : {parameter} ({reason})",
   "itemGroupSkippedTitle": "Non atteints",
   "itemGroupSoldByWeight": "Vendu au poids",
+  "itemGroupSupply": "Nature de la prestation",
+  "@itemGroupSupply": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupSupplyGeneral": "Générale",
+  "@itemGroupSupplyGeneral": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupSupplyProperty": "Immobilier",
+  "@itemGroupSupplyProperty": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
   "itemGroupTagBatch": "Une puce par lot",
   "itemGroupTagMode": "Mode de puce",
+  "itemGroupTagModeOwn": "Étiquette sur cet article",
+  "@itemGroupTagModeOwn": {
+    "description": "#4362 G13: the item's own value of the tag mode (none, one per batch, one per piece), over its group's"
+  },
   "itemGroupTagNone": "Pas de puce",
   "itemGroupTagUnit": "Une puce par pièce",
   "itemGroupTrackingSerial": "À la pièce (série)",
@@ -19160,6 +19235,8 @@
   "settingHintStockGroupDefaultTagMode": "Si un article que ni un groupe ni un réglage propre ne concerne porte une étiquette RFID : aucune, une étiquette qui désigne un lot, ou une étiquette par unité (ce qui exige un suivi à la pièce).",
   "settingHintStockPriceRounding": "Comment un prix de vente proposé est arrondi : au 0,05 ou 0,10 le plus proche, ou à un prix qui finit par 0,99. Il ne sert qu'à proposer un prix.",
   "settingHintStockRepeatedScan": "Ce que fait une feuille de marchandises quand le même code est scanné de nouveau : ajouter un de plus à la ligne, ou demander la quantité.",
+  "settingHintStockTagReadMaxTags": "Combien d'étiquettes différentes une lecture en masse conserve avant de ne plus en prendre. Une même étiquette lue plusieurs fois compte une fois.",
+  "settingHintStockTagReadUnitAsQuantity": "Dans un transfert en masse, une étiquette posée sur une pièce d'un article non suivi pièce par pièce est ajoutée comme quantité 1 de cet article. Désactivé : cette étiquette est écartée et listée.",
   "settingHintStockTagRebindGraceDays": "Combien de jours après son retrait un code d'étiquette peut être lié de nouveau. 0 : tout de suite. Une étiquette en vigueur n'est jamais liée deux fois.",
   "settingHintStockWeighedGoods": "Activé : un nouvel article de stock est proposé en kilogrammes plutôt qu’en pièces (boucherie, boulangerie, comptoir d’épicerie). Tout article peut garder une autre unité.",
   "settingHintVatViesEvidenceDays": "Jours pendant lesquels un contrôle valide du numéro de TVA reste assez récent pour servir de preuve sur une nouvelle facture. Une valeur plus courte demande un nouveau contrôle plus tôt ; ce n’est pas la preuve qu’une opération est valable.",
@@ -19394,6 +19471,8 @@
   "settingLabelStockGroupDefaultTagMode": "Mode d'étiquette par défaut des articles",
   "settingLabelStockPriceRounding": "Arrondi des prix",
   "settingLabelStockRepeatedScan": "Un code scanné de nouveau",
+  "settingLabelStockTagReadMaxTags": "Nombre maximal d'étiquettes par lecture en masse",
+  "settingLabelStockTagReadUnitAsQuantity": "Une pièce lue dans un transfert compte pour un de son article",
   "settingLabelStockTagRebindGraceDays": "Jours avant de réutiliser une étiquette retirée",
   "settingLabelStockWeighedGoods": "Les marchandises se vendent au poids",
   "settingLabelVatViesEvidenceDays": "Fraîcheur du contrôle du numéro de TVA",
@@ -19547,6 +19626,7 @@
   "@settingUnitSeconds": {
     "description": "#2484 settings: Unit."
   },
+  "settingUnitTags": "étiquettes",
   "settingUnitUrl": "adresse",
   "settingUnitUrlTemplate": "modèle d'adresse",
   "settingUnitYears": "années",
@@ -21265,6 +21345,7 @@
   "@stockPutAwayNothing": {
     "description": "#4171 receiving into stock: a label or message"
   },
+  "stockPutAwayPieceProblem": "Pièce {piece} : {problem}",
   "stockPutAwayPlace": "Emplacement",
   "@stockPutAwayPlace": {
     "description": "#4171 receiving into stock: a label or message"
@@ -21297,6 +21378,12 @@
   "@stockPutAwayRemaining": {
     "description": "#4171 receiving into stock: a label or message"
   },
+  "stockPutAwayTagAllRead": "{needed, plural, one{La {needed} pièce de cette ligne a déjà une puce.} other{Les {needed} pièces de cette ligne ont déjà une puce.}}",
+  "stockPutAwayTagField": "Puce de la pièce suivante",
+  "stockPutAwayTagRemove": "Retirer la puce {code}",
+  "stockPutAwayTagsCount": "{read, plural, one{{read} pièce lue} other{{read} pièces lues}} sur {needed, plural, one{{needed}} other{{needed}}}",
+  "stockPutAwayTagsMissing": "Lisez une puce par pièce : {needed, plural, one{{needed} attendue} other{{needed} attendues}}, {read, plural, one{{read} lue} other{{read} lues}}.",
+  "stockPutAwayTagsTitle": "Puces des pièces",
   "stockPutAwayTitle": "Ranger {order}",
   "@stockPutAwayTitle": {
     "description": "#4171 receiving into stock: a label or message",
@@ -21732,6 +21819,15 @@
   "stockTagOnPiece": "Cette puce est sur une pièce encore en stock.",
   "stockTagOwnerUnknown": "Cet article ou cet emplacement est inconnu.",
   "stockTagPerUnit": "Cet article est étiqueté pièce par pièce : étiquetez ses pièces à la réception.",
+  "stockTagPiece": "Pièce {number}",
+  "@stockTagPiece": {
+    "description": "#4362 G13 tags: the name of one piece in the list of pieces",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
   "stockTagReasonDamaged": "Abîmée",
   "stockTagReasonLost": "Perdue",
   "stockTagReasonReplaced": "Remplacée",
@@ -21742,6 +21838,15 @@
   "stockTagsFailed": "Les puces n’ont pas pu être lues.",
   "stockTagsNone": "Aucune puce n’est encore associée.",
   "stockTagsOpen": "Puces",
+  "stockTagsPieces": "{count, plural, one{{count} pièce étiquetée à l'unité} other{{count} pièces étiquetées à l'unité}}",
+  "@stockTagsPieces": {
+    "description": "#4362 G13 tags: heading of the pieces of an item that carries one tag per piece",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "stockTagsRetire": "Retirer",
   "stockTagsRetireWhy": "Pourquoi la retirer ?",
   "stockTagsRetired": "Puce {code} retirée.",

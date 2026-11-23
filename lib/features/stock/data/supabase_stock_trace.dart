@@ -1,9 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../core/trace/trace_logger.dart';
 import '../domain/stock_trace.dart';
-import 'stock_refusals.dart';
+import 'stock_rpc.dart';
 
 /// #4173 -- `stock_goods_trace_v1`, `stock_document_goods_v1` and `stock_valuation_v1` behind the
 /// port. An answer of the wrong shape throws: it is never shown as an empty trace.
@@ -12,14 +11,7 @@ class SupabaseStockTrace implements StockTraceReader {
 
   final SupabaseClient _client;
 
-  Future<Object?> _call(String fn, Map<String, Object?> params) async {
-    try {
-      return await _client.rpc<Object?>(fn, params: params);
-    } on PostgrestException catch (e, stack) {
-      TraceLogger.instance.warn('stock', 'a stock trace read was refused: ${e.code}', stackTrace: stack);
-      throwStockFailure(e, stack);
-    }
-  }
+  Future<Object?> _call(String fn, Map<String, Object?> params) => StockRpc(_client).run(fn, params);
 
   @override
   Future<StockTraceAnswer> trace(String workspaceId, String movementId) async => StockTraceAnswer.fromJson(

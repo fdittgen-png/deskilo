@@ -38,6 +38,7 @@ abstract final class HelpAnchor {
   static const moneyStockCycleCounts = 'user.money.stock.cycle';
   static const moneyStockScanning = 'user.money.stock.scanning';
   static const moneyStockNfc = 'user.money.stock.nfc';
+  static const moneyStockRfid = 'user.money.stock.rfid';
   static const moneyTill = 'user.money.till';
 
   /// #3527 — the Sales, Purchases and Cash pages.

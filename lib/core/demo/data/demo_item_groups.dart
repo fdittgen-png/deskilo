@@ -31,6 +31,11 @@ class DemoItemGroups implements ItemGroups {
     _groups['demo-group-home'] = _Group('demo-group-home', null, 'Homeware', {'tracking': 'none'});
     _member.addAll({'demo-item-milk': 'demo-group-drinks', 'demo-item-syrup': 'demo-group-drinks', 'demo-item-beans': 'demo-group-hot', 'demo-item-mugs': 'demo-group-home'});
     _own['demo-item-syrup'] = {'shelf_life_days': 365};
+    // #4362 -- the gift basket carries a tag per piece, the crate of apples one tag per crate.
+    // the mugs carry a tag per batch (the Demo binds a chip to them)
+    _own['demo-item-mugs'] = {'tag_mode': 'per_batch'};
+    _own['demo-item-basket'] = {'tracking': 'serial', 'tag_mode': 'per_unit'};
+    _own['demo-item-apples'] = {'tracking': 'lot', 'tag_mode': 'per_batch'};
   }
 
   final String _workspaceId;
@@ -115,6 +120,9 @@ class DemoItemGroups implements ItemGroups {
     for (final e in changes.entries) {
       e.value == null ? next.remove(e.key) : next[e.key] = e.value;
     }
+    if ((next['default_purchase_factor_num'] == null) != (next['default_purchase_factor_den'] == null)) {
+      throw const StockConfigRefused('default_purchase_factor_num', 'factor_both');
+    }
     if (next['tag_mode'] == 'per_unit' && (next['tracking'] ?? _groups[parentId]?.params['tracking']) != 'serial') {
       throw const StockConfigRefused('tag_mode', 'needs_serial');
     }
@@ -133,6 +141,8 @@ class DemoItemGroups implements ItemGroups {
     final impact = <String, GroupImpact>{};
     final skipped = <SkippedItem>[];
     for (final k in changes.keys) {
+      // a proposal reaches no item: it is copied into a new one, never inherited
+      if (itemGroupProposals.contains(k)) continue;
       if (old?.params[k] == changes[k]) continue;
       var affected = 0;
       var kept = 0;
@@ -179,6 +189,11 @@ class DemoItemGroups implements ItemGroups {
     final before = _pick(change.itemId, parameter).value;
     if (change.mode == 'set') {
       if (change.value == null) throw StockConfigRefused(parameter, 'value_required');
+      // as the server: a tag per piece needs the item tracked by piece
+      if (parameter == 'tag_mode' && change.value == 'per_unit') {
+        final tracking = _pick(change.itemId, 'tracking').value ?? (await _config.item(workspaceId, change.itemId))?.tracking;
+        if (tracking != 'serial') throw const StockConfigRefused('tag_mode', 'needs_serial');
+      }
       (_own[change.itemId] ??= {})[parameter] = change.value;
     } else {
       _own[change.itemId]?.remove(parameter);

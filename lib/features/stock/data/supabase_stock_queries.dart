@@ -5,6 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../core/data/server_names.dart';
 import '../domain/stock_page.dart';
 import '../domain/stock_queries.dart';
+import 'stock_rpc.dart';
 
 /// #4161 (A1) -- `stock_on_hand_page_v1` and `stock_movements_page_v1` behind
 /// the port. A page whose shape is wrong, whose continuation is missing or
@@ -110,7 +111,7 @@ class SupabaseStockQueries implements StockQueries {
     Map<String, Object?> params,
     T Function(Object? row) read,
   ) async {
-    final answer = await _client.rpc<Object?>(rpc, params: params);
+    final answer = await StockRpc(_client).run(rpc, params);
     final reader = JsonReader.of(answer, context: rpc);
     final complete = reader.boolOr('complete', fallback: false);
     final next = reader.objectOrNull('next')?.json;

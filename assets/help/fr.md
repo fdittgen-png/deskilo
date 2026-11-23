@@ -2964,6 +2964,7 @@ Ouvrez **Stock → Groupes d’articles** (il faut la fonction *Groupes d’arti
 
 - **Un article suit son groupe tant qu’il n’a pas sa propre valeur.** La valeur en vigueur est celle de l’article s’il en a une, sinon celle de son sous-groupe, sinon celle de son groupe. Ouvrez **Groupe et réglages hérités** d’un article (l’icône de dossier sur sa ligne dans **Stock → Articles**) pour voir d’où vient chaque réglage (*Du groupe Boissons depuis le 3 déc.* ou *Valeur propre*), le déplacer dans un autre groupe et rendre une valeur propre avec **Utiliser la valeur du groupe**.
 - **Chaque changement est prévisualisé.** En enregistrant un groupe, vous voyez d’abord ce que le changement atteint : *s’applique à 1, 1 gardent leur propre valeur, 0 ne peuvent pas être atteints*. Rien n’est appliqué avant un deuxième enregistrement ; toute modification entre-temps demande un nouvel aperçu. Un article que le changement ne peut pas atteindre (par exemple une unité sur un article qui a déjà des mouvements) est listé, et le changement du groupe est enregistré pour les autres.
+- **Propositions et prix.** Un groupe peut proposer à un nouvel article une **unité d'achat par défaut** avec son facteur (un nombre ou une fraction comme 1/3), un **seuil et une quantité de réapprovisionnement** et une **zone de rangement** : ils sont copiés dans un nouvel article comme point de départ et n'atteignent aucun article existant. Le **taux de TVA**, la **nature de la prestation**, l'**arrondi du prix** et la **marge cible sur le coût** ne sont montrés et réglés que par qui peut gérer les services et voir les finances ; pour tous les autres, ils ne sont ni montrés ni modifiés par un enregistrement.
 - **Historique.** La feuille du groupe liste chaque changement avec le nombre d’articles atteints ; la ligne d’origine d’un article dit depuis quand.
 - Un sous-groupe ne peut pas avoir de sous-groupes ; les puces par pièce demandent un suivi à la pièce ; un groupe encore utilisé par des articles ne se supprime pas (déplacez-les d’abord). Ce qui est déjà enregistré — factures, réceptions, mouvements — ne change jamais.
 - Modifier les groupes demande le droit de gérer le stock ; les lire, celui de le voir.
@@ -3008,6 +3009,22 @@ Ouvrez **Caisse** dans le menu des ventes (elle demande la fonction tickets de c
 Appuyez sur **Encaisser en espèces** et saisissez les **Espèces remises** (ou **Compte juste**). Moins que le total est refusé avant tout envoi. Le serveur numérote la vente et la caisse indique la monnaie à rendre ; **Client suivant** repart d'un panier vide. Envoyer deux fois la même vente ne la vend jamais deux fois.
 
 Là où votre pays n'autorise pas encore la caisse, elle nomme l'opération manquante et ne propose rien : rien n'est numéroté ni encaissé. Une ligne de marchandise demande la gestion de stock ; un refus du serveur est dit en mots. Paiements par carte, remises, remboursements et retours ne font pas partie de cette première caisse.
+
+### Puces RFID : une par lot ou une par pièce
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous décidez si une puce sur un article désigne un lot ou une pièce, et ce que compte une lecture en masse.
+
+Avec la fonction *Puces* activée, un article a un **mode de puce**, posé sur son groupe et gardé par l'article tant qu'il n'a pas de valeur propre. Ouvrez les réglages de groupe d'un article (**Stock → Articles**, l'icône de dossier sur sa ligne) et lisez **Étiquette sur cet article** : elle dit d'où vient la valeur (*De Boissons depuis le 3 déc.* ou *Valeur propre*), laisse donner à l'article une valeur propre, et **Reprendre la valeur du groupe** la rend.
+
+- **Pas de puce.** L'article ne porte pas de puce.
+- **Une puce par lot.** Une puce désigne un lot ou un colis : une caisse, un seau, un carton. La lire compte un lot, jamais une pièce.
+- **Une puce par pièce.** Une puce désigne une pièce, ce qui demande que l'article soit suivi pièce par pièce. Sous **Puces** de l'article, **Pièces étiquetées une à une (n)** liste chaque pièce avec sa puce.
+
+- Une lecture en masse ne compte des pièces que pour les articles à une puce par pièce. Pour un article à une puce par lot, elle compte des lots et montre la quantité enregistrée du lot à côté du compte, jamais comme un chiffre compté.
+- Le mode d'un article qui a déjà des puces ne change pas tant que ses puces ne sont pas retirées ou que son stock n'est pas nul ; le changement d'un groupe saute alors l'article et le liste comme conservé. Une puce sur un emplacement désigne toujours un seul emplacement.
+- Un code de puce est une étiquette UHF (EPC ; un SGTIN-96 est lu par le serveur comme GTIN et numéro de série) ou une puce NFC, enregistré en hexadécimal majuscule et unique dans l'entreprise entre articles, pièces et emplacements. Lier et retirer demandent le droit de gérer le stock ; lire demande celui de le voir.
 
 ### Valeur du stock et origine des marchandises
 

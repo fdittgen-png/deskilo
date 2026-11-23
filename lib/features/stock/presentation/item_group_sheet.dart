@@ -11,6 +11,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../core/format/decimal_input.dart';
+import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/trace/trace_logger.dart';
@@ -19,10 +21,17 @@ import '../../../core/ui/dropdown_field.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/item_groups.dart';
+import '../domain/purchase_factor.dart';
+import '../domain/stock_config.dart';
+import '../domain/stock_service_creator.dart';
 import 'item_group_text.dart';
 
 /// The units a group may set for its items (the registry's units of count, mass and volume).
 const _units = ['piece', 'g', 'kg', 'ml', 'cl', 'l'];
+
+/// What a sheet offers beside the group itself: the places a home zone is chosen from, the VAT rates, and whether the
+/// person may see and set what an item costs or sells for (manageServices and viewFinances).
+typedef GroupChoices = ({List<StockPlaceConfig> places, List<StockVatChoice> vat, bool finance});
 
 /// Opens the sheet of [group] (null: a new group); true when something was saved or deleted.
 Future<bool> showItemGroupSheet(
@@ -31,9 +40,10 @@ Future<bool> showItemGroupSheet(
   required String workspaceId,
   required ItemGroup? group,
   required List<ItemGroup> groups,
+  GroupChoices choices = const (places: <StockPlaceConfig>[], vat: <StockVatChoice>[], finance: false),
 }) {
   final l10n = context.l10n;
-  final draft = _GroupDraft(port, workspaceId, group, groups);
+  final draft = _GroupDraft(port, workspaceId, group, groups, choices, appFormatOf(context).locale);
   return showAppFormSheet(
     context,
     AppFormSheet(
@@ -49,24 +59,43 @@ Future<bool> showItemGroupSheet(
 }
 
 class _GroupDraft {
-  _GroupDraft(this.port, this.workspaceId, this.group, this.groups)
+  _GroupDraft(this.port, this.workspaceId, this.group, this.groups, this.choices, this.locale)
     : _id = group?.id ?? newRequestId(),
       parentId = group?.parentId,
       tracking = group?.params['tracking'] as String?,
       tagMode = group?.params['tag_mode'] as String?,
       unit = group?.params['inventory_unit'] as String?,
       sold = group?.params['sold_by_weight'] as bool?,
+      zone = group?.params['home_zone_id'] as String?,
+      vat = group?.params['vat_rate_id'] as String?,
+      supply = group?.params['supply_class'] as String?,
+      rounding = group?.params['price_rounding'] as String?,
       fields = FormControllers({
         'name': group?.name ?? '',
         'shelf': '${group?.params['shelf_life_days'] ?? ''}',
         'count': '${group?.params['count_every_days'] ?? ''}',
         'age': '${group?.params['min_age'] ?? ''}',
+        'purchaseUnit': '${group?.params['default_purchase_unit'] ?? ''}',
+        'factor': group?.params['default_purchase_factor_num'] == null
+            ? ''
+            : purchaseFactorText((group!.params['default_purchase_factor_num']! as num).toInt(), ((group.params['default_purchase_factor_den'] ?? 1) as num).toInt()),
+        'reorderPoint': '${group?.params['reorder_point_default'] ?? ''}',
+        'reorderQty': '${group?.params['reorder_quantity_default'] ?? ''}',
+        'margin': group?.params['target_margin_bps'] == null ? '' : percentOfMarginBps((group!.params['target_margin_bps']! as num).toInt()),
       });
 
   final ItemGroups port;
   final String workspaceId;
   final ItemGroup? group;
   final List<ItemGroup> groups;
+  final GroupChoices choices;
+  final String locale;
+
+  List<StockPlaceConfig> get places => choices.places;
+  List<StockVatChoice> get vatChoices => choices.vat;
+
+  /// Whether the person may see and set what an item costs or sells for (manageServices and viewFinances).
+  bool get financeAllowed => choices.finance;
   final FormControllers fields;
   final String _id;
 
@@ -77,11 +106,28 @@ class _GroupDraft {
   String? tagMode;
   String? unit;
   bool? sold;
+  String? zone;
+  String? vat;
+  String? supply;
+  String? rounding;
 
   GroupSaved? _preview;
   String? _previewOf;
 
   int? _int(String key) => int.tryParse(fields.text(key));
+
+  /// A decimal typed with the member's own separators, as the dot-decimal text the server reads; null when empty or not one.
+  String? _decimal(String key) {
+    if (fields.text(key).isEmpty) return null;
+    final text = decimalTextFromInput(fields.text(key), locale: locale, grouping: false);
+    // a numeric(18,6): at most six decimals, never rounded
+    return text != null && RegExp(r'^[0-9]{1,12}(\.[0-9]{1,6})?$').hasMatch(text) ? text : null;
+  }
+
+  /// Whether [text] (a dot-decimal text) is zero: `0`, `0.0`, `0.000000`.
+  bool _isZero(String text) => !RegExp(r'[1-9]').hasMatch(text);
+
+  PurchaseFactor? get _factor => fields.text('factor').isEmpty ? null : parsePurchaseFactor(fields.text('factor'));
 
   Map<String, Object?> body() => {
     'name': fields.text('name'),
@@ -94,6 +140,19 @@ class _GroupDraft {
       'count_every_days': _int('count'),
       'min_age': _int('age'),
       'sold_by_weight': sold,
+      'default_purchase_unit': fields.text('purchaseUnit').isEmpty ? null : fields.text('purchaseUnit'),
+      'default_purchase_factor_num': _factor?.num,
+      'default_purchase_factor_den': _factor?.den,
+      'reorder_point_default': _decimal('reorderPoint'),
+      'reorder_quantity_default': _decimal('reorderQty'),
+      'home_zone_id': zone,
+      // what an item costs or sells for is sent only by someone who may see it: absent, the server leaves it as it is
+      if (financeAllowed) ...{
+        'vat_rate_id': vat,
+        'supply_class': supply,
+        'price_rounding': rounding,
+        'target_margin_bps': fields.text('margin').isEmpty ? null : marginBpsOfPercent(decimalTextFromInput(fields.text('margin'), locale: locale, grouping: false) ?? ''),
+      },
     },
   };
 
@@ -101,6 +160,13 @@ class _GroupDraft {
     if (fields.text('name').isEmpty) 'name': l10n.stockReasonNameMalformed,
     for (final (key, field) in [('shelf', 'shelf'), ('count', 'count'), ('age', 'age')])
       if (fields.text(key).isNotEmpty && (_int(key) ?? 0) < 1) field: l10n.stockReasonOutOfRange,
+    // a purchase unit and its factor go together, and the factor is one number or a fraction above zero
+    if (fields.text('factor').isNotEmpty && _factor == null) 'factor': l10n.stockReasonOutOfRange,
+    if (fields.text('purchaseUnit').isNotEmpty && fields.text('factor').isEmpty) 'factor': l10n.stockReasonOutOfRange,
+    if (fields.text('purchaseUnit').isEmpty && fields.text('factor').isNotEmpty) 'purchaseUnit': l10n.stockReasonNameMalformed,
+    if (fields.text('reorderPoint').isNotEmpty && _decimal('reorderPoint') == null) 'reorderPoint': l10n.stockReasonOutOfRange,
+    if (fields.text('reorderQty').isNotEmpty && (_decimal('reorderQty') == null || _isZero(_decimal('reorderQty')!))) 'reorderQty': l10n.stockReasonOutOfRange,
+    if (financeAllowed && fields.text('margin').isNotEmpty && marginBpsOfPercent(decimalTextFromInput(fields.text('margin'), locale: locale, grouping: false) ?? '') == null) 'margin': l10n.stockReasonOutOfRange,
   };
 
   Future<String?> submit(AppLocalizations l10n) async {
@@ -139,6 +205,14 @@ class _GroupDraft {
         if (g.parentId == null && g.id != group?.id) g,
     ];
     return [
+      ..._basicFields(l10n, edit, parents),
+      ..._proposalFields(context, l10n, edit),
+      ..._financeFields(context, l10n, edit),
+      ..._footer(context, l10n),
+    ];
+  }
+
+  List<Widget> _basicFields(AppLocalizations l10n, void Function(void Function()) edit, List<ItemGroup> parents) => [
       AppTextField(key: const ValueKey('item-group-name'), controller: fields['name'], fieldKey: 'name', label: l10n.itemGroupName, onChanged: (_) => _preview = null),
       const FormGap(),
       AppDropdownField<String?>(
@@ -209,7 +283,89 @@ class _GroupDraft {
         value: sold,
         items: [(null, l10n.itemGroupNotSet), (true, l10n.itemGroupYes), (false, l10n.itemGroupNo)],
         onChanged: (v) => edit(() => sold = v),
+      )
+  ];
+
+  List<Widget> _proposalFields(BuildContext context, AppLocalizations l10n, void Function(void Function()) edit) => [
+      const FormGap(),
+      Text(l10n.itemGroupProposalHint, key: const ValueKey('item-group-proposals'), style: Theme.of(context).textTheme.bodySmall),
+      const FormGap.small(),
+      AppTextField(key: const ValueKey('item-group-purchase-unit'), controller: fields['purchaseUnit'], fieldKey: 'purchaseUnit', label: l10n.itemGroupPurchaseUnit, onChanged: (_) => _preview = null),
+      const FormGap(),
+      AppTextField(key: const ValueKey('item-group-factor'), controller: fields['factor'], fieldKey: 'factor', label: l10n.itemGroupPurchaseFactor, onChanged: (_) => _preview = null),
+      const FormGap(),
+      AppTextField(
+        key: const ValueKey('item-group-reorder-point'),
+        controller: fields['reorderPoint'],
+        fieldKey: 'reorderPoint',
+        label: l10n.itemGroupReorderPoint,
+        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+        inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]'))],
+        onChanged: (_) => _preview = null,
       ),
+      const FormGap(),
+      AppTextField(
+        key: const ValueKey('item-group-reorder-qty'),
+        controller: fields['reorderQty'],
+        fieldKey: 'reorderQty',
+        label: l10n.itemGroupReorderQty,
+        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+        inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]'))],
+        onChanged: (_) => _preview = null,
+      ),
+      const FormGap(),
+      AppDropdownField<String?>(
+        key: const ValueKey('item-group-home-zone'),
+        label: l10n.itemGroupHomeZone,
+        value: zone,
+        items: [(null, l10n.itemGroupNotSet), for (final p in places) (p.id, p.name)],
+        onChanged: (v) => edit(() => zone = v),
+      ),
+  ];
+
+  List<Widget> _financeFields(BuildContext context, AppLocalizations l10n, void Function(void Function()) edit) => [
+      if (financeAllowed) ...[
+        const FormGap(),
+        Text(l10n.itemGroupFinanceHint, key: const ValueKey('item-group-finance'), style: Theme.of(context).textTheme.bodySmall),
+        const FormGap.small(),
+        if (vatChoices.isNotEmpty)
+          AppDropdownField<String?>(
+            key: const ValueKey('item-group-vat'),
+            label: l10n.vatServiceRate,
+            value: vat,
+            items: [(null, l10n.itemGroupNotSet), for (final v in vatChoices) (v.id, v.label)],
+            onChanged: (v) => edit(() => vat = v),
+          ),
+        const FormGap(),
+        AppDropdownField<String?>(
+          key: const ValueKey('item-group-supply'),
+          label: l10n.itemGroupSupply,
+          value: supply,
+          items: [(null, l10n.itemGroupNotSet), ('general', l10n.itemGroupSupplyGeneral), ('property', l10n.itemGroupSupplyProperty)],
+          onChanged: (v) => edit(() => supply = v),
+        ),
+        const FormGap(),
+        AppDropdownField<String?>(
+          key: const ValueKey('item-group-rounding'),
+          label: l10n.itemGroupRounding,
+          value: rounding,
+          items: [(null, l10n.itemGroupNotSet), for (final r in itemGroupRoundings) (r, r == 'none' ? l10n.itemGroupRoundingNone : r)],
+          onChanged: (v) => edit(() => rounding = v),
+        ),
+        const FormGap(),
+        AppTextField(
+          key: const ValueKey('item-group-margin'),
+          controller: fields['margin'],
+          fieldKey: 'margin',
+          label: l10n.itemGroupMargin,
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]'))],
+          onChanged: (_) => _preview = null,
+        ),
+      ],
+  ];
+
+  List<Widget> _footer(BuildContext context, AppLocalizations l10n) => [
       if (_preview != null) _PreviewCard(preview: _preview!),
       if (group != null) ...[
         const FormGap(),
@@ -224,8 +380,7 @@ class _GroupDraft {
             ),
           ),
       ],
-    ];
-  }
+  ];
 
   Future<void> _delete(BuildContext context) async {
     final l10n = context.l10n;

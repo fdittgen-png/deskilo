@@ -102,6 +102,8 @@ String _itemGroupSettingLabel(AppLocalizations l10n, String key) => switch (key)
       'stock.price_rounding' => l10n.settingLabelStockPriceRounding,
       'stock.tag_rebind_grace_days' => l10n.settingLabelStockTagRebindGraceDays,
       'stock.repeated_scan' => l10n.settingLabelStockRepeatedScan,
+      'stock.tag_read_max_tags' => l10n.settingLabelStockTagReadMaxTags,
+      'stock.tag_read_unit_as_quantity' => l10n.settingLabelStockTagReadUnitAsQuantity,
       _ => _bankSettingLabel(l10n, key),
     };
 
@@ -257,6 +259,8 @@ String? _itemGroupSettingHint(AppLocalizations l10n, String key) => switch (key)
       'stock.price_rounding' => l10n.settingHintStockPriceRounding,
       'stock.tag_rebind_grace_days' => l10n.settingHintStockTagRebindGraceDays,
       'stock.repeated_scan' => l10n.settingHintStockRepeatedScan,
+      'stock.tag_read_max_tags' => l10n.settingHintStockTagReadMaxTags,
+      'stock.tag_read_unit_as_quantity' => l10n.settingHintStockTagReadUnitAsQuantity,
       _ => _bankSettingHint(l10n, key),
     };
 
@@ -346,6 +350,7 @@ String settingUnitLabel(AppLocalizations l10n, String unit) => switch (unit) {
       'characters' => l10n.settingUnitCharacters,
       'pages' => l10n.settingUnitPages,
       'cards' => l10n.settingUnitCards,
+      'tags' => l10n.settingUnitTags,
       'bytes' => l10n.settingUnitBytes,
       'url' => l10n.settingUnitUrl,
       'url template' => l10n.settingUnitUrlTemplate,

@@ -13,6 +13,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+
 import '../../../core/format/decimal_input.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
@@ -24,80 +25,18 @@ import '../../money/domain/purchase_order.dart';
 import '../../money/domain/purchase_order_receipt.dart';
 import '../domain/put_away_progress.dart';
 import '../domain/stock_code_resolver.dart';
-import '../domain/stock_config.dart';
-import '../domain/stock_config_commands.dart';
 import '../domain/stock_page.dart';
-import '../domain/stock_queries.dart';
 import '../domain/stock_receiving.dart';
 import '../domain/stock_scan_session.dart';
-import '../domain/stock_variants.dart';
 import '../providers/stock_providers.dart';
+import 'put_away_context.dart';
+import 'put_away_tags.dart';
 import 'stock_config_text.dart';
 import 'stock_scan_bar.dart';
 import 'stock_scan_feed.dart';
 import 'stock_scan_hint.dart';
 
-/// What the put-away asks of the stock and of the business, read from the
-/// providers by the pane and handed over whole.
-class PutAwayServices {
-  const PutAwayServices({
-    required this.commands,
-    required this.config,
-    required this.queries,
-    required this.currency,
-  });
-
-  final StockReceivingCommands commands;
-  final StockConfigCommands config;
-  final StockQueries queries;
-
-  /// The business's currency, for the rate of an order in another one.
-  final String currency;
-}
-
-/// What the form needs of the stock side, read before it opens.
-class PutAwayContext {
-  const PutAwayContext({required this.places, required this.items, required this.variants, required this.currency});
-
-  final List<StockPlace> places;
-
-  /// The stock configuration of the item each line names (by line number),
-  /// when it is a stock item the business keeps.
-  final Map<int, StockItemConfig> items;
-  final Map<int, List<StockVariant>> variants;
-
-  /// The business's currency, for the rate of an order in another one.
-  final String currency;
-}
-
-/// Reads what the form needs for [lines]; null when the stock side could not
-/// be read (the caller says so).
-Future<PutAwayContext?> loadPutAwayContext(
-  BuildContext context,
-  PutAwayServices services, {
-  required String workspaceId,
-  required List<DeliveredLineProgress> lines,
-}) async {
-  final config = services.config;
-  try {
-    final places = await services.queries.places(workspaceId);
-    final items = <int, StockItemConfig>{};
-    final variants = <int, List<StockVariant>>{};
-    for (final l in lines) {
-      final id = l.serviceId;
-      if (id == null) continue;
-      final item = await config.item(workspaceId, id);
-      if (item == null || !item.stockable) continue;
-      items[l.lineNo] = item;
-      variants[l.lineNo] = [for (final v in await config.variants(workspaceId, id)) if (v.active) v];
-    }
-    return PutAwayContext(places: places, items: items, variants: variants, currency: services.currency);
-  } on Object catch (e, st) {
-    TraceLogger.instance.error('stock', 'the put-away could not read the stock side', error: e, stackTrace: st);
-    if (context.mounted) AppSnack.error(context, context.l10n.stockReadFailed);
-    return null;
-  }
-}
+export 'put_away_context.dart' show PutAwayContext, PutAwayServices, loadPutAwayContext;
 
 /// A typed quantity, read exactly as the person typed it (no grouping; `.` or `,`).
 ExactQuantity? _exact(String text) => exactQuantityFromInput(text, grouping: false).value;
@@ -113,6 +52,9 @@ class _Part {
   final DeliveredLineProgress line;
   final TextEditingController qty;
   final TextEditingController lot;
+
+  /// #4379 -- the tags read, for an item tagged piece by piece.
+  final PieceTags tags = PieceTags();
   final TextEditingController total;
   final TextEditingController rate;
 
@@ -131,6 +73,7 @@ class _Part {
   void dispose() {
     qty.dispose();
     lot.dispose();
+    tags.dispose();
     total.dispose();
     rate.dispose();
     focus.dispose();
@@ -146,7 +89,8 @@ class PutAwayDraft {
       _parts = [
         for (final l in lines)
           if (context.items.containsKey(l.lineNo) && l.remaining > ExactQuantity.zero)
-            _Part(l, followsDelivery ? '' : l.remaining.text),
+            // a line tagged piece by piece counts what was read: it starts at none
+            _Part(l, followsDelivery ? '' : (context.perUnit.contains(l.lineNo) ? '0' : l.remaining.text)),
       ] {
     for (final p in _parts) {
       p.place = context.places.isEmpty ? null : context.places.first.id;
@@ -188,7 +132,41 @@ class PutAwayDraft {
     for (final p in _parts)
       if ((_exact(_quantityOf(p, delivered)) ?? ExactQuantity.zero) > exactOfReceived(delivered[p.line.lineNo] ?? 0))
         'putaway-${p.line.lineNo}-qty': stockReasonText(l10n, 'over_allocated'),
+    ..._tagErrors(l10n, delivered),
   };
+
+  /// A line tagged piece by piece needs exactly one tag per piece it puts away.
+  FieldErrors _tagErrors(AppLocalizations l10n, Map<int, double>? delivered) => {
+    for (final p in _parts)
+      if (_neededTags(p, delivered) case final needed? when needed != p.tags.codes.length)
+        'putaway-${p.line.lineNo}-tags': l10n.stockPutAwayTagsMissing(needed, p.tags.codes.length),
+  };
+
+  /// How many tags the part's quantity needs; null for a line not tagged piece by piece, or a quantity that is no
+  /// whole number of pieces (the quantity's own check says so).
+  int? _neededTags(_Part p, Map<int, double>? delivered) {
+    if (!context.perUnit.contains(p.line.lineNo)) return null;
+    final q = _exact(_quantityOf(p, delivered));
+    if (q == null || q.isNegative) return null;
+    return piecesOf(context.items[p.line.lineNo]!, p.line.unit, q);
+  }
+
+  void _readTag(_Part p, String raw, AppLocalizations l10n) {
+    final cap = followsDelivery ? null : piecesOf(context.items[p.line.lineNo]!, p.line.unit, p.line.remaining);
+    if (p.tags.read(raw, l10n, readElsewhere: (c) => _parts.any((x) => x.tags.codes.contains(c)), cap: cap)) _followTags(p);
+    _refresh?.call();
+  }
+
+  void _dropTag(_Part p, String code) {
+    p.tags.drop(code);
+    _followTags(p);
+    _refresh?.call();
+  }
+
+  /// A line counted in the item's own unit takes the number of tags read as its quantity.
+  void _followTags(_Part p) {
+    if (countsInPieces(context.items[p.line.lineNo]!, p.line.unit)) p.qty.text = '${p.tags.codes.length}';
+  }
 
   void dispose() {
     scanner?.dispose();
@@ -209,7 +187,7 @@ class PutAwayDraft {
       return null;
     } on Object catch (e, st) {
       TraceLogger.instance.warn('stock', 'a put-away was not recorded: $e', stackTrace: st);
-      return stockSaveProblem(l10n, e);
+      return putAwayProblem(l10n, e);
     } finally {
       scanner?.resume();
     }
@@ -263,7 +241,7 @@ class PutAwayDraft {
     if (current != null) part.place = current.id;
     final tracking = context.items[part.line.lineNo]?.tracking ?? 'none';
     final lot = line.lotCode;
-    if (tracking != 'none' && lot != null && lot.isNotEmpty) part.lot.text = lot;
+    if ((tracking == 'lot' || tracking == 'expiry') && lot != null && lot.isNotEmpty) part.lot.text = lot;
     final expiry = tracking == 'expiry' && line.expiresOn != null ? DateTime.tryParse(line.expiresOn!) : null;
     if (expiry != null) part.expiry = (date: expiry, problem: null);
   }
@@ -286,6 +264,7 @@ class PutAwayDraft {
           variantId: p.variant,
           lotCode: p.lot.text.trim().isEmpty ? null : p.lot.text.trim(),
           expiresOn: p.expiry.date == null ? null : isoDay(p.expiry.date!),
+          tags: context.perUnit.contains(p.line.lineNo) ? List.unmodifiable(p.tags.codes) : const [],
           cost: switch (p.cost) {
             'entered' => PutAwayCost.known(totalMinor: int.tryParse(p.total.text.trim()) ?? -1),
             'order' => PutAwayCost.orderPrice(
@@ -306,6 +285,7 @@ class PutAwayDraft {
       }
       if (p.place == null && q != null && q > ExactQuantity.zero) errors['putaway-${p.line.lineNo}-place'] = stockReasonText(l10n, 'location_foreign');
     }
+    if (!followsDelivery) errors.addAll(_tagErrors(l10n, null));
     return errors;
   }
 
@@ -375,7 +355,9 @@ class PutAwayDraft {
             refresh();
           },
         ),
-      if (item.tracking != 'none')
+      if (this.context.perUnit.contains(n)) ..._tagFields(context, l10n, p),
+      // a lot is asked of goods tracked by lot or expiry (0840); a piece is its own identity
+      if (item.tracking == 'lot' || item.tracking == 'expiry')
         AppTextField(
           key: ValueKey('putaway-$n-lot'),
           controller: p.lot,
@@ -428,6 +410,21 @@ class PutAwayDraft {
         ),
       const FormGap(),
     ];
+  }
+}
+
+extension on PutAwayDraft {
+  /// A line counted in pieces shows what is read of what remains; otherwise of what its quantity needs.
+  List<Widget> _tagFields(BuildContext context, AppLocalizations l10n, _Part p) {
+    final item = this.context.items[p.line.lineNo]!;
+    return pieceTagFields(
+      context,
+      lineNo: p.line.lineNo,
+      tags: p.tags,
+      needed: countsInPieces(item, p.line.unit) ? piecesOf(item, p.line.unit, p.line.remaining) : _neededTags(p, null),
+      onRead: (v) => _readTag(p, v, l10n),
+      onDrop: (t) => _dropTag(p, t),
+    );
   }
 }
 

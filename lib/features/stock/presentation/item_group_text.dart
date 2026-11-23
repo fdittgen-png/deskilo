@@ -5,6 +5,7 @@
 // still in use...). Anything else falls back to the stock's own wording.
 import '../../../l10n/app_localizations.dart';
 import '../domain/item_groups.dart';
+import '../domain/purchase_factor.dart';
 import '../domain/stock_config.dart';
 import 'stock_config_text.dart';
 
@@ -16,6 +17,15 @@ String itemGroupParamLabel(AppLocalizations l10n, String param) => switch (param
   'count_every_days' => l10n.itemGroupCountEvery,
   'min_age' => l10n.itemGroupMinAge,
   'sold_by_weight' => l10n.itemGroupSoldByWeight,
+  'default_purchase_unit' => l10n.itemGroupPurchaseUnit,
+  'default_purchase_factor_num' || 'default_purchase_factor_den' => l10n.itemGroupPurchaseFactor,
+  'reorder_point_default' => l10n.itemGroupReorderPoint,
+  'reorder_quantity_default' => l10n.itemGroupReorderQty,
+  'home_zone_id' => l10n.itemGroupHomeZone,
+  'vat_rate_id' => l10n.vatServiceRate,
+  'supply_class' => l10n.itemGroupSupply,
+  'price_rounding' => l10n.itemGroupRounding,
+  'target_margin_bps' => l10n.itemGroupMargin,
   _ => param,
 };
 
@@ -35,6 +45,10 @@ String itemGroupValueText(AppLocalizations l10n, String param, Object? value) {
       _ => l10n.itemGroupTagNone,
     },
     'sold_by_weight' => value == true ? l10n.itemGroupYes : l10n.itemGroupNo,
+    'supply_class' => value == 'property' ? l10n.itemGroupSupplyProperty : l10n.itemGroupSupplyGeneral,
+    'price_rounding' => value == 'none' ? l10n.itemGroupRoundingNone : '$value',
+    'target_margin_bps' => l10n.itemGroupMarginValue(percentOfMarginBps((value as num).toInt())),
+    'vat_rate_id' || 'home_zone_id' => l10n.itemGroupSet,
     _ => '$value',
   };
 }
@@ -43,7 +57,17 @@ String itemGroupValueText(AppLocalizations l10n, String param, Object? value) {
 String itemGroupSummary(AppLocalizations l10n, ItemGroup g) => [
   for (final p in itemGroupEditable)
     if (g.params[p] != null) '${itemGroupParamLabel(l10n, p)}: ${itemGroupValueText(l10n, p, g.params[p])}',
+  for (final p in itemGroupProposals)
+    // the factor is one number: its numerator speaks for the pair
+    if (g.params[p] != null && p != 'default_purchase_factor_den') '${itemGroupParamLabel(l10n, p)}: ${_proposalText(l10n, g, p)}',
 ].join(' · ');
+
+/// A proposal of [g] as a person reads it: the factor as one number or a fraction, the home zone as set.
+String _proposalText(AppLocalizations l10n, ItemGroup g, String p) => switch (p) {
+  'default_purchase_factor_num' => purchaseFactorText((g.params[p]! as num).toInt(), ((g.params['default_purchase_factor_den'] ?? 1) as num).toInt()),
+  'home_zone_id' || 'target_margin_bps' || 'price_rounding' => itemGroupValueText(l10n, p, g.params[p]),
+  _ => '${g.params[p]}',
+};
 
 /// What a skipped item's reason says.
 String itemGroupReasonText(AppLocalizations l10n, String reason) => switch (reason) {

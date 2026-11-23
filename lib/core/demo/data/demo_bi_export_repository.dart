@@ -14,6 +14,7 @@ import '../../../core/trace/trace_logger.dart';
 import '../../../features/workspace/domain/bi_batch.dart';
 import '../../../features/workspace/domain/bi_report_snapshot.dart';
 import '../../../features/workspace/domain/kpi_contract.dart';
+import '../../codes/pg_code.dart';
 
 class DemoBiExportRepository implements BiExportRepository {
   DemoBiExportRepository({
@@ -83,12 +84,12 @@ class DemoBiExportRepository implements BiExportRepository {
         error: e,
         stackTrace: st,
       );
-      return {...base, 'ok': false, 'code': '22023', 'message': e.reason};
+      return {...base, 'ok': false, 'code': PgCode.invalidParameterValue, 'message': e.reason};
     }
     return {
       ...base,
       'ok': false,
-      'code': '0A000',
+      'code': PgCode.featureNotSupported,
       'message': 'the Demo does not answer this figure',
     };
   }

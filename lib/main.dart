@@ -9,6 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'app/app.dart';
 import 'app/app_initializer.dart';
 import 'app/bootstrap.dart';
+import 'app/business_day_wiring.dart';
 import 'app/feature_sheets_wiring.dart';
 import 'app/finance_hosts_wiring.dart';
 import 'app/private_values_wiring.dart';
@@ -142,6 +143,7 @@ Future<void> main() async {
         financeWorkspaceEntryFromApp, // #3556 1b
         businessWorkspacesFromApp, // #4167
         tillPortFromApp, // #4366
+        businessDayFromApp, // #4426
         privateValuesFromAccount, // #2552
         eventSourceOpenersFromMoney, // #2573
         ...realtimeWiringFromApp, // #2495

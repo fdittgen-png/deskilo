@@ -189,6 +189,79 @@
       }
     }
   },
+  "itemGroupTagModeOwn": "Tag on this item",
+  "@itemGroupTagModeOwn": {
+    "description": "#4362 G13: the item's own value of the tag mode (none, one per batch, one per piece), over its group's"
+  },
+  "itemGroupPurchaseUnit": "Default purchase unit",
+  "@itemGroupPurchaseUnit": {
+    "description": "#4361 G12 proposals: the purchase unit a group proposes to a new item"
+  },
+  "itemGroupPurchaseFactor": "Factor: how many inventory units one purchase unit holds (12, 0.5 or 1/3)",
+  "@itemGroupPurchaseFactor": {
+    "description": "#4361 G12 proposals: the factor of the proposed purchase unit, one number or a fraction"
+  },
+  "itemGroupReorderPoint": "Default reorder point",
+  "@itemGroupReorderPoint": {
+    "description": "#4361 G12 proposals: the reorder point a group proposes to an item that has none"
+  },
+  "itemGroupReorderQty": "Default reorder quantity",
+  "@itemGroupReorderQty": {
+    "description": "#4361 G12 proposals: the reorder quantity a group proposes to an item that has none"
+  },
+  "itemGroupHomeZone": "Default home zone",
+  "@itemGroupHomeZone": {
+    "description": "#4361 G12 proposals: the home zone a group proposes to an item"
+  },
+  "itemGroupProposalHint": "Proposed into a new item",
+  "@itemGroupProposalHint": {
+    "description": "#4361 G12 proposals: said under a proposal, which reaches no existing item"
+  },
+  "itemGroupSet": "Set",
+  "@itemGroupSet": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupSupply": "Supply class",
+  "@itemGroupSupply": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupSupplyGeneral": "General",
+  "@itemGroupSupplyGeneral": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupSupplyProperty": "Property",
+  "@itemGroupSupplyProperty": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupRounding": "Price rounding",
+  "@itemGroupRounding": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupRoundingNone": "No rounding",
+  "@itemGroupRoundingNone": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupMargin": "Target margin on cost (%)",
+  "@itemGroupMargin": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupFinanceHint": "These settings need the right to manage services and to see the finances.",
+  "@itemGroupFinanceHint": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupHidden": "Not shown to you",
+  "@itemGroupHidden": {
+    "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupMarginValue": "{percent} %",
+  "@itemGroupMarginValue": {
+    "description": "#4361 G12: a target margin as the group shows it; the percent arrives formatted",
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
   "itemGroupOwn": "Own value",
   "@itemGroupOwn": {
     "description": "#4361 G12 item groups: itemGroupOwn"

@@ -6,6 +6,7 @@
 // later, in parts. Nothing is put away that did not arrive, a line that is not
 // a stock item is named, a tracked item needs its lot, and a retried request
 // answers the same ids. Nothing leaves the process.
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/features/money/domain/purchase_order.dart';
 import 'package:deskilo/features/money/domain/purchase_order_receipt.dart';
 import 'package:deskilo/features/stock/domain/put_away_progress.dart' show exactOfReceived;
@@ -15,11 +16,15 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 import 'demo_stock_config_commands.dart';
 import 'demo_stock_ledger.dart';
+import 'demo_stock_tags.dart';
 import 'purchase_order_repository.dart';
 
 /// The in-memory put-away of the reference business.
 class DemoStockReceivingCommands implements StockReceivingCommands {
-  DemoStockReceivingCommands(this.workspaceId, this._orders, this._config, this._ledger);
+  DemoStockReceivingCommands(this.workspaceId, this._orders, this._config, this._ledger, {this.tags});
+
+  /// #4379 -- where the pieces of an item tagged piece by piece are made; null: no item is tagged.
+  final DemoStockTags? tags;
 
   final String workspaceId;
   final FakePurchaseOrderRepository _orders;
@@ -109,6 +114,7 @@ class DemoStockReceivingCommands implements StockReceivingCommands {
     for (var i = 0; i < allocations.length; i++) {
       planned.add(await _plan(receipt, order, places, running, i, allocations[i]));
     }
+    await _checkPieces(planned, allocations);
     // booked on the ledger the Stock screen reads: one movement per part, from the supplier
     final written = <ReceiptAllocation>[];
     for (var i = 0; i < planned.length; i++) {
@@ -129,6 +135,7 @@ class DemoStockReceivingCommands implements StockReceivingCommands {
           enteredUnit: row.enteredUnit,
         ),
       );
+      if (part.tags.isNotEmpty) tags?.addPieces(row.itemId, part.tags, allocation: i);
       written.add(
         ReceiptAllocation(
           id: row.id,
@@ -155,6 +162,24 @@ class DemoStockReceivingCommands implements StockReceivingCommands {
   }
 
   /// One part, refused as the server refuses it, or the allocation it makes.
+  /// As 0889: an item tagged piece by piece needs one tag per piece of what is put away (DKG25), each tag new
+  /// (DKG22, naming the allocation and the tag); tags on any other item are refused (units_not_tracked).
+  Future<void> _checkPieces(List<ReceiptAllocation> planned, List<PutAwayAllocation> allocations) async {
+    for (var i = 0; i < planned.length; i++) {
+      final read = allocations[i].tags;
+      final store = tags;
+      final mode = await store?.tagModeOf?.call(planned[i].itemId);
+      if (store == null || mode != 'per_unit') {
+        if (read.isNotEmpty) throw _refused('units', 'units_not_tracked');
+        continue;
+      }
+      if (planned[i].inventoryQuantity != ExactQuantity.parse('${read.length}')) {
+        throw StockTagRefused(DkCode.dkg25, {'allocation': i});
+      }
+      store.addPieces(planned[i].itemId, read, allocation: i, check: true);
+    }
+  }
+
   Future<ReceiptAllocation> _plan(
     PurchaseOrderReceipt receipt,
     PurchaseOrder order,
@@ -209,7 +234,7 @@ class DemoStockReceivingCommands implements StockReceivingCommands {
   Future<void> _checkVariantAndLot(StockItemConfig item, PutAwayAllocation a, int i) async {
     final variants = (await _config.variants(workspaceId, item.itemId)).where((v) => v.active);
     if (variants.isNotEmpty && a.variantId == null) throw _refused('allocations[$i].variant_id', 'variant_required');
-    if (item.tracking != 'none' && (a.lotCode ?? '').isEmpty) throw _refused('allocations[$i].lot.code', 'lot_code_required');
+    if ((item.tracking == 'lot' || item.tracking == 'expiry') && (a.lotCode ?? '').isEmpty) throw _refused('allocations[$i].lot.code', 'lot_code_required');
     if (item.tracking == 'expiry' && a.expiresOn == null) throw _refused('allocations[$i].lot.expires_on', 'expiry_required');
   }
 }
