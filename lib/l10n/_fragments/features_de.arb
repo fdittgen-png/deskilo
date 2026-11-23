@@ -347,5 +347,7 @@
   "featureCounterReceiptsTitle": "Kassenbelege",
   "featureCounterReceiptsDesc": "Ein Verkauf an der Kasse ergibt einen unveränderlichen, einmal nummerierten Beleg mit der erhaltenen Zahlung. Er wird nur angeboten, wo der Vorgang des Landes unterstützt wird, und sagt klar, wenn nicht.",
   "featureCounterTillSessionsTitle": "Kassensitzungen und Tagesabschluss",
-  "featureCounterTillSessionsDesc": "Eine Kasse mit ihrem Wechselgeld eröffnen, die Schublade beim Abschluss zählen und den Tag mit seinem Bericht abschließen. Ein Verkauf braucht eine geöffnete Kasse; das erwartete Bargeld wird aus dem Eingenommenen abgeleitet, nie eingetippt."
+  "featureCounterTillSessionsDesc": "Eine Kasse mit ihrem Wechselgeld eröffnen, die Schublade beim Abschluss zählen und den Tag mit seinem Bericht abschließen. Ein Verkauf braucht eine geöffnete Kasse; das erwartete Bargeld wird aus dem Eingenommenen abgeleitet, nie eingetippt.",
+  "featureStockTagReadsTitle": "Viele Etiketten lesen",
+  "featureStockTagReadsDesc": "Ein UHF-Lesegerät im Tastaturmodus liest viele Etiketten auf einmal zum Wareneingang, Umlagern und Zählen: Die Etiketten werden gesammelt, entdoppelt und aufgelöst, und nichts wird gesendet, bevor die Person bestätigt."
 }

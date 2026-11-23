@@ -12638,6 +12638,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featureStockScanningTitle => 'Scansione';
 
   @override
+  String get featureStockTagReadsDesc =>
+      'Un lettore UHF in modalità tastiera legge molte etichette insieme per ricevere, spostare e contare: le etichette sono raccolte, deduplicate e risolte, e nulla viene inviato finché la persona non conferma.';
+
+  @override
+  String get featureStockTagReadsTitle => 'Lettura di molte etichette';
+
+  @override
   String get featureStockTagsDesc =>
       'Etichetti articoli, unità, lotti e luoghi con etichette RFID o NFC, registrate come un codice a barre e uniche nell\'attività. Un\'etichetta può indicare un lotto o un pezzo, secondo il gruppo dell\'articolo; la lettura di un\'etichetta è riconosciuta ovunque lo sia un codice a barre.';
 
@@ -32498,6 +32505,14 @@ class AppLocalizationsIt extends AppLocalizations {
       'Cosa fa un foglio di merci quando lo stesso codice è scansionato ancora: aggiungere uno alla riga o chiedere la quantità.';
 
   @override
+  String get settingHintStockTagReadMaxTags =>
+      'Quante etichette diverse conserva una lettura di massa prima di non accettarne altre. La stessa etichetta letta più volte conta una volta.';
+
+  @override
+  String get settingHintStockTagReadUnitAsQuantity =>
+      'In uno spostamento di massa, l\'etichetta su un pezzo di un articolo non tracciato pezzo per pezzo viene aggiunta come quantità 1 di quell\'articolo. Disattivato: tale etichetta viene esclusa ed elencata.';
+
+  @override
   String get settingHintStockTagRebindGraceDays =>
       'Quanti giorni dopo il ritiro un codice di etichetta può essere associato di nuovo. 0 significa subito. Un\'etichetta in uso non è mai associata due volte.';
 
@@ -32894,6 +32909,14 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get settingLabelStockRepeatedScan => 'Un codice scansionato di nuovo';
+
+  @override
+  String get settingLabelStockTagReadMaxTags =>
+      'Massimo di etichette per lettura di massa';
+
+  @override
+  String get settingLabelStockTagReadUnitAsQuantity =>
+      'Un pezzo letto in uno spostamento conta come uno del suo articolo';
 
   @override
   String get settingLabelStockTagRebindGraceDays =>

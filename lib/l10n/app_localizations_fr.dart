@@ -12691,6 +12691,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get featureStockScanningTitle => 'Scan';
 
   @override
+  String get featureStockTagReadsDesc =>
+      'Un lecteur UHF en mode clavier lit de nombreuses étiquettes d\'un coup pour recevoir, déplacer et compter : les étiquettes sont rassemblées, dédoublonnées et résolues, et rien n\'est envoyé avant la confirmation de l\'utilisateur.';
+
+  @override
+  String get featureStockTagReadsTitle => 'Lecture de nombreuses étiquettes';
+
+  @override
   String get featureStockTagsDesc =>
       'Étiquetez articles, unités, lots et lieux avec des étiquettes RFID ou NFC, enregistrées comme un code-barres et uniques dans l\'entreprise. Une étiquette peut désigner un lot ou une pièce, selon le groupe de l\'article ; la lecture d\'une étiquette est reconnue partout où un code-barres l\'est.';
 
@@ -32597,6 +32604,14 @@ class AppLocalizationsFr extends AppLocalizations {
       'Ce que fait une feuille de marchandises quand le même code est scanné de nouveau : ajouter un de plus à la ligne, ou demander la quantité.';
 
   @override
+  String get settingHintStockTagReadMaxTags =>
+      'Combien d\'étiquettes différentes une lecture en masse conserve avant de ne plus en prendre. Une même étiquette lue plusieurs fois compte une fois.';
+
+  @override
+  String get settingHintStockTagReadUnitAsQuantity =>
+      'Dans un transfert en masse, une étiquette posée sur une pièce d\'un article non suivi pièce par pièce est ajoutée comme quantité 1 de cet article. Désactivé : cette étiquette est écartée et listée.';
+
+  @override
   String get settingHintStockTagRebindGraceDays =>
       'Combien de jours après son retrait un code d\'étiquette peut être lié de nouveau. 0 : tout de suite. Une étiquette en vigueur n\'est jamais liée deux fois.';
 
@@ -32987,6 +33002,14 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get settingLabelStockRepeatedScan => 'Un code scanné de nouveau';
+
+  @override
+  String get settingLabelStockTagReadMaxTags =>
+      'Nombre maximal d\'étiquettes par lecture en masse';
+
+  @override
+  String get settingLabelStockTagReadUnitAsQuantity =>
+      'Une pièce lue dans un transfert compte pour un de son article';
 
   @override
   String get settingLabelStockTagRebindGraceDays =>

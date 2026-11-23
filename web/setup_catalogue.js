@@ -702,6 +702,10 @@ window.SETUP_REGISTRY={
   [
    "counterTillSessions",
    false
+  ],
+  [
+   "stockTagReads",
+   false
   ]
  ],
  "requires": {
@@ -826,7 +830,8 @@ window.SETUP_REGISTRY={
   "stockTags": "stockManagement",
   "stockScanning": "stockManagement",
   "counterReceipts": "standaloneInvoicing",
-  "counterTillSessions": "counterReceipts"
+  "counterTillSessions": "counterReceipts",
+  "stockTagReads": "stockTags"
  },
  "availableIn": {
   "recapitulativeStatement": [
@@ -1555,7 +1560,8 @@ window.SETUP_PROCESSES=[
      "stockTags",
      "stockScanning",
      "counterReceipts",
-     "counterTillSessions"
+     "counterTillSessions",
+     "stockTagReads"
     ]
    }
   ]
@@ -2052,7 +2058,8 @@ window.SETUP_LEVELS={
       "stockTags",
       "stockScanning",
       "counterReceipts",
-      "counterTillSessions"
+      "counterTillSessions",
+      "stockTagReads"
      ],
      "needs": {
       "money": "invoices"

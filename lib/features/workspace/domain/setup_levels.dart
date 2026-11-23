@@ -291,6 +291,8 @@ const Map<SetupProcess, List<SetupLevel>> setupLevels = {
         WorkspaceFeature.counterReceipts,
         // #4367
         WorkspaceFeature.counterTillSessions,
+        // #4364
+        WorkspaceFeature.stockTagReads,
       },
     ),
   ],

@@ -84,6 +84,7 @@ const Set<WorkspaceFeature> defaultOffFeatures = {
   WorkspaceFeature.stockScanning,
   WorkspaceFeature.counterReceipts,
   WorkspaceFeature.counterTillSessions,
+  WorkspaceFeature.stockTagReads,
   // #4165 — a customer invoice without a member-month is asked for.
   WorkspaceFeature.standaloneInvoicing,
   // #1598 — renaming the gear a member sees is asked for, never
@@ -272,6 +273,7 @@ void main() {
       'stockScanning': true,
       'counterReceipts': true,
       'counterTillSessions': true,
+      'stockTagReads': true,
       'standaloneInvoicing': true,
       'billingCustomers': true,
       'customerQuotes': true,
