@@ -8,6 +8,7 @@
 import 'package:go_router/go_router.dart';
 
 import '../../features/stock/application/stock_view.dart';
+import '../../features/stock/presentation/item_groups_screen.dart';
 import '../../features/stock/presentation/stock_count_task_screen.dart';
 import '../../features/stock/presentation/stock_counts_screen.dart';
 import '../../features/stock/presentation/stock_cycle_counts_screen.dart';
@@ -40,6 +41,10 @@ List<RouteBase> stockRoutes(RouteEnv env) {
   );
   const cycleAccess = RouteAccess(
     features: [WorkspaceFeature.stockManagement, WorkspaceFeature.stockCounts, WorkspaceFeature.stockCycleCounts],
+    to: '/reserve',
+  );
+  const groupsAccess = RouteAccess(
+    features: [WorkspaceFeature.stockManagement, WorkspaceFeature.stockItemGroups],
     to: '/reserve',
   );
   return [
@@ -104,6 +109,12 @@ List<RouteBase> stockRoutes(RouteEnv env) {
               builder: (context, state) => StockCountTaskScreen(taskId: state.pathParameters['taskId'] ?? ''),
             ),
           ],
+        ),
+        // #4361 — item groups: shared settings that items inherit and may override.
+        GoRoute(
+          path: 'groups',
+          redirect: env.guard(groupsAccess),
+          builder: (context, state) => const ItemGroupsScreen(),
         ),
         GoRoute(
           path: 'movements/:id',

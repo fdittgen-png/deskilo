@@ -399,6 +399,7 @@ const List<RouteCoverage> routeCoverage = [
   RouteCoverage('/stock/value', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/stock/transfers', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/stock/counts', CoverageStatus.planned, owner: '#1884'),
+  RouteCoverage('/stock/groups', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/stock/cycle-counts', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/stock/cycle-counts/:taskId', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/stock/items', CoverageStatus.planned, owner: '#1884'),

@@ -144,6 +144,7 @@ signed-out on  /stock -> /auth
 signed-out on  /stock/counts -> /auth
 signed-out on  /stock/cycle-counts -> /auth
 signed-out on  /stock/cycle-counts/:taskId -> /auth
+signed-out on  /stock/groups -> /auth
 signed-out on  /stock/items -> /auth
 signed-out on  /stock/movements -> /auth
 signed-out on  /stock/movements/:id -> /auth
@@ -314,6 +315,7 @@ signed-out off /stock -> /auth
 signed-out off /stock/counts -> /auth
 signed-out off /stock/cycle-counts -> /auth
 signed-out off /stock/cycle-counts/:taskId -> /auth
+signed-out off /stock/groups -> /auth
 signed-out off /stock/items -> /auth
 signed-out off /stock/movements -> /auth
 signed-out off /stock/movements/:id -> /auth
@@ -484,6 +486,7 @@ no-space on  /stock -> /me
 no-space on  /stock/counts -> /me
 no-space on  /stock/cycle-counts -> /me
 no-space on  /stock/cycle-counts/:taskId -> /me
+no-space on  /stock/groups -> /me
 no-space on  /stock/items -> /me
 no-space on  /stock/movements -> /me
 no-space on  /stock/movements/:id -> /me
@@ -654,6 +657,7 @@ no-space off /stock -> /me
 no-space off /stock/counts -> /me
 no-space off /stock/cycle-counts -> /me
 no-space off /stock/cycle-counts/:taskId -> /me
+no-space off /stock/groups -> /me
 no-space off /stock/items -> /me
 no-space off /stock/movements -> /me
 no-space off /stock/movements/:id -> /me
@@ -824,6 +828,7 @@ member on  /stock -> /calendar
 member on  /stock/counts -> /calendar
 member on  /stock/cycle-counts -> /calendar
 member on  /stock/cycle-counts/:taskId -> /calendar
+member on  /stock/groups -> /calendar
 member on  /stock/items -> /calendar
 member on  /stock/movements -> /calendar
 member on  /stock/movements/:id -> /calendar
@@ -994,6 +999,7 @@ member off /stock -> /messages
 member off /stock/counts -> /messages
 member off /stock/cycle-counts -> /messages
 member off /stock/cycle-counts/:taskId -> /messages
+member off /stock/groups -> /messages
 member off /stock/items -> /messages
 member off /stock/movements -> /messages
 member off /stock/movements/:id -> /messages
@@ -1164,6 +1170,7 @@ admin on  /stock -> /calendar
 admin on  /stock/counts -> /calendar
 admin on  /stock/cycle-counts -> /calendar
 admin on  /stock/cycle-counts/:taskId -> /calendar
+admin on  /stock/groups -> /calendar
 admin on  /stock/items -> /calendar
 admin on  /stock/movements -> /calendar
 admin on  /stock/movements/:id -> /calendar
@@ -1335,6 +1342,7 @@ admin off /stock -> /messages
 admin off /stock/counts -> /messages
 admin off /stock/cycle-counts -> /messages
 admin off /stock/cycle-counts/:taskId -> /messages
+admin off /stock/groups -> /messages
 admin off /stock/items -> /messages
 admin off /stock/movements -> /messages
 admin off /stock/movements/:id -> /messages
@@ -1505,6 +1513,7 @@ owner on  /stock -> /reserve
 owner on  /stock/counts -> /reserve
 owner on  /stock/cycle-counts -> /reserve
 owner on  /stock/cycle-counts/:taskId -> /reserve
+owner on  /stock/groups -> /reserve
 owner on  /stock/items -> /reserve
 owner on  /stock/movements -> /reserve
 owner on  /stock/movements/:id -> /reserve
@@ -1676,6 +1685,7 @@ owner off /stock -> /messages
 owner off /stock/counts -> /messages
 owner off /stock/cycle-counts -> /messages
 owner off /stock/cycle-counts/:taskId -> /messages
+owner off /stock/groups -> /messages
 owner off /stock/items -> /messages
 owner off /stock/movements -> /messages
 owner off /stock/movements/:id -> /messages

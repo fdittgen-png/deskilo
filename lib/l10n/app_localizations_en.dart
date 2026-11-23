@@ -18399,6 +18399,211 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoicingViewCustomers => 'Customers';
 
   @override
+  String get itemGroupAssignNone => 'No group';
+
+  @override
+  String get itemGroupAssignOpen => 'Group and inherited settings';
+
+  @override
+  String itemGroupAssignTitle(String item) {
+    return 'Group of $item';
+  }
+
+  @override
+  String get itemGroupClose => 'Close';
+
+  @override
+  String get itemGroupConfirm =>
+      'Check what this reaches, then save again to apply it.';
+
+  @override
+  String get itemGroupCountEvery => 'Count every (days)';
+
+  @override
+  String get itemGroupDelete => 'Delete the group';
+
+  @override
+  String get itemGroupDeleted => 'Group deleted.';
+
+  @override
+  String get itemGroupFailed => 'The item groups could not be read.';
+
+  @override
+  String itemGroupFrom(String group) {
+    return 'From $group';
+  }
+
+  @override
+  String itemGroupFromSince(String group, String date) {
+    return 'From $group since $date';
+  }
+
+  @override
+  String get itemGroupHistory => 'History';
+
+  @override
+  String itemGroupHistoryLine(
+    String parameter,
+    String from,
+    String to,
+    int affected,
+  ) {
+    String _temp0 = intl.Intl.pluralLogic(
+      affected,
+      locale: localeName,
+      other: 'reached $affected items',
+      one: 'reached 1 item',
+    );
+    return '$parameter: $from → $to, $_temp0';
+  }
+
+  @override
+  String get itemGroupHistoryNone => 'No change recorded yet.';
+
+  @override
+  String get itemGroupMinAge => 'Minimum age for a sale';
+
+  @override
+  String get itemGroupMove => 'Move';
+
+  @override
+  String itemGroupMoveReaches(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Moving it changes $count settings.',
+      one: 'Moving it changes 1 setting.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get itemGroupMoved => 'The item is in its new group.';
+
+  @override
+  String get itemGroupName => 'Name';
+
+  @override
+  String get itemGroupNo => 'No';
+
+  @override
+  String get itemGroupNoParent => 'Top level';
+
+  @override
+  String get itemGroupNotSet => 'Not set';
+
+  @override
+  String get itemGroupOwn => 'Own value';
+
+  @override
+  String get itemGroupParent => 'Inside group';
+
+  @override
+  String itemGroupPreviewLine(
+    String parameter,
+    int affected,
+    int kept,
+    int skipped,
+  ) {
+    String _temp0 = intl.Intl.pluralLogic(
+      affected,
+      locale: localeName,
+      other: 'applies to $affected items',
+      one: 'applies to 1 item',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      kept,
+      locale: localeName,
+      other: '$kept keep their own value',
+      one: '1 keeps its own value',
+    );
+    String _temp2 = intl.Intl.pluralLogic(
+      skipped,
+      locale: localeName,
+      other: '$skipped cannot be reached',
+      one: '1 cannot be reached',
+    );
+    return '$parameter: $_temp0, $_temp1, $_temp2';
+  }
+
+  @override
+  String get itemGroupPreviewNothing => 'No item is reached.';
+
+  @override
+  String get itemGroupPreviewTitle => 'What this change reaches';
+
+  @override
+  String get itemGroupReasonDepth => 'A sub-group cannot have sub-groups.';
+
+  @override
+  String get itemGroupReasonGroupUnknown => 'This group does not exist.';
+
+  @override
+  String get itemGroupReasonHasMovements => 'it already has movements';
+
+  @override
+  String get itemGroupReasonHasSubgroups =>
+      'This group has sub-groups: delete them first.';
+
+  @override
+  String get itemGroupReasonInUse =>
+      'This group is used by items: move them first.';
+
+  @override
+  String get itemGroupReasonNameDuplicate =>
+      'Another group already has this name.';
+
+  @override
+  String get itemGroupReasonNeedsSerial =>
+      'Per-piece tags need tracking by piece.';
+
+  @override
+  String get itemGroupReasonNotOverridable =>
+      'This setting cannot be given its own value.';
+
+  @override
+  String itemGroupSkippedLine(String item, String parameter, String reason) {
+    return '$item: $parameter ($reason)';
+  }
+
+  @override
+  String get itemGroupSkippedTitle => 'Not reached';
+
+  @override
+  String get itemGroupSoldByWeight => 'Sold by weight';
+
+  @override
+  String get itemGroupTagBatch => 'One tag per batch';
+
+  @override
+  String get itemGroupTagMode => 'Tag mode';
+
+  @override
+  String get itemGroupTagNone => 'No tags';
+
+  @override
+  String get itemGroupTagUnit => 'One tag per piece';
+
+  @override
+  String get itemGroupTrackingSerial => 'By piece (serial)';
+
+  @override
+  String get itemGroupUseGroup => 'Use the group’s value';
+
+  @override
+  String get itemGroupYes => 'Yes';
+
+  @override
+  String get itemGroupsAdd => 'Add a group';
+
+  @override
+  String get itemGroupsEmpty =>
+      'No group yet. A group holds settings that its items share.';
+
+  @override
+  String get itemGroupsTitle => 'Item groups';
+
+  @override
   String journalBlocked(String roles) {
     return 'Map these roles in the book chart first: $roles';
   }
@@ -36364,6 +36569,94 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockReversalSupplierTitle => 'Return to the supplier';
 
   @override
+  String stockScanAlreadyRead(String code) {
+    return 'Tag $code was already read.';
+  }
+
+  @override
+  String get stockScanFailed =>
+      'The scanned code could not be read. Check the connection and scan it again.';
+
+  @override
+  String get stockScanHelp => 'Working with a scanner';
+
+  @override
+  String get stockScanHint => 'Using a barcode scanner? Turn on Scanning';
+
+  @override
+  String get stockScanInterval =>
+      'Longest gap between two keys of a scan (milliseconds)';
+
+  @override
+  String get stockScanIntervalInvalid =>
+      'Enter a whole number of milliseconds within the allowed range.';
+
+  @override
+  String stockScanLast(String item, String quantity, String unit) {
+    return '$item: $quantity $unit';
+  }
+
+  @override
+  String get stockScanNfc => 'Read a tag';
+
+  @override
+  String get stockScanNfcFailed =>
+      'The phone could not start reading. Check that NFC is on.';
+
+  @override
+  String get stockScanNfcReading => 'Hold the tag to the back of the phone…';
+
+  @override
+  String stockScanPlacing(String place) {
+    return 'Placing into $place';
+  }
+
+  @override
+  String stockScanRefusedCode(String code) {
+    return 'The code $code names nothing this form can use.';
+  }
+
+  @override
+  String stockScanRefusedPlace(String place) {
+    return '$place cannot take goods.';
+  }
+
+  @override
+  String get stockScanSave => 'Save the scanner settings';
+
+  @override
+  String get stockScanSettingsHint =>
+      'A scanner in keyboard mode types the code and presses Enter. These two settings belong to this device: a code typed faster than the gap below is taken for a scan.';
+
+  @override
+  String get stockScanSettingsTitle => 'Scanner';
+
+  @override
+  String get stockScanTerminator => 'What ends a scanned code';
+
+  @override
+  String get stockScanTerminatorEither => 'Enter or Tab';
+
+  @override
+  String get stockScanTerminatorEnter => 'Enter';
+
+  @override
+  String get stockScanTerminatorTab => 'Tab';
+
+  @override
+  String stockScanUnknown(String code) {
+    return 'Unknown code $code — add it to an item?';
+  }
+
+  @override
+  String get stockScanUnknownAdd => 'Open the items';
+
+  @override
+  String stockScanUnknownTag(String code) {
+    return 'Unknown tag $code';
+  }
+
+  @override
   String get stockSettingsElsewhere =>
       'Stock settings are kept on the Stock settings page.';
 
@@ -36387,6 +36680,92 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get stockTabOnHand => 'On hand';
+
+  @override
+  String stockTagBoundElsewhere(String owner) {
+    return 'This tag is already bound to $owner.';
+  }
+
+  @override
+  String get stockTagKindNfc => 'NFC chip';
+
+  @override
+  String get stockTagKindUhf => 'UHF label';
+
+  @override
+  String get stockTagMalformed => 'That is not a valid tag code.';
+
+  @override
+  String get stockTagModeNone => 'This item does not use tags.';
+
+  @override
+  String get stockTagNotInForce => 'This is not a tag in force here.';
+
+  @override
+  String get stockTagOnPiece =>
+      'This tag is on a piece that is still in stock.';
+
+  @override
+  String get stockTagOwnerUnknown => 'This item or place is not known.';
+
+  @override
+  String get stockTagPerUnit =>
+      'This item is tagged piece by piece: tag its pieces when they are received.';
+
+  @override
+  String get stockTagReasonDamaged => 'Damaged';
+
+  @override
+  String get stockTagReasonLost => 'Lost';
+
+  @override
+  String get stockTagReasonReplaced => 'Replaced';
+
+  @override
+  String get stockTagRetiredLately =>
+      'This tag was retired recently; it can be bound again after the waiting time set in the stock settings.';
+
+  @override
+  String stockTagsAlready(String code) {
+    return 'Tag $code was already bound here.';
+  }
+
+  @override
+  String stockTagsBound(String code) {
+    return 'Tag $code bound.';
+  }
+
+  @override
+  String get stockTagsClose => 'Close';
+
+  @override
+  String get stockTagsFailed => 'The tags could not be read.';
+
+  @override
+  String get stockTagsNone => 'No tag is bound yet.';
+
+  @override
+  String get stockTagsOpen => 'Tags';
+
+  @override
+  String get stockTagsRetire => 'Retire';
+
+  @override
+  String get stockTagsRetireWhy => 'Why is it retired?';
+
+  @override
+  String stockTagsRetired(String code) {
+    return 'Tag $code retired.';
+  }
+
+  @override
+  String stockTagsTitle(String name) {
+    return 'Tags: $name';
+  }
+
+  @override
+  String get stockTagsUhfOnly =>
+      'This item uses UHF tags — use the RFID reader.';
 
   @override
   String get stockTakeOutLoss => 'Lost or written off';
