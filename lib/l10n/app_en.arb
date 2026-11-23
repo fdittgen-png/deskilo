@@ -15336,6 +15336,14 @@
   "@featureCounterReceiptsTitle": {
     "description": "#4184 feature name"
   },
+  "featureCounterTillSessionsDesc": "Open a till with its float, count the drawer at the close, and close the day with its report. A sale needs an open till; the expected cash is derived from what was taken, never typed.",
+  "@featureCounterTillSessionsDesc": {
+    "description": "#4367 feature description"
+  },
+  "featureCounterTillSessionsTitle": "Till sessions and day close",
+  "@featureCounterTillSessionsTitle": {
+    "description": "#4367 feature name"
+  },
   "featureCountriesEuName": "the European Union",
   "@featureCountriesEuName": {
     "description": "#2454 feature availability by country"
@@ -37758,6 +37766,10 @@
   "@refusalChangedMeanwhile": {
     "description": "#1305 Shown when an invoice changed state before the action reached the server"
   },
+  "refusalCounterCashEntry": "This cash entry is not accepted: the reason is not on the list, the amount is above the limit for you, or the counts do not add up.",
+  "@refusalCounterCashEntry": {
+    "description": "#4367 setting label/hint or refusal"
+  },
   "refusalCounterChanged": "This receipt changed meanwhile: open it again.",
   "@refusalCounterChanged": {
     "description": "#4185 refusal"
@@ -37769,6 +37781,14 @@
   "refusalCounterCustomerNeeded": "This business names a customer on every sale: choose one before finishing.",
   "@refusalCounterCustomerNeeded": {
     "description": "#4185 refusal"
+  },
+  "refusalCounterDayClose": "The day cannot be closed: a till is still open, or the day is already closed.",
+  "@refusalCounterDayClose": {
+    "description": "#4367 setting label/hint or refusal"
+  },
+  "refusalCounterDayOpen": "The day of this till is already closed: it is opened again tomorrow.",
+  "@refusalCounterDayOpen": {
+    "description": "#4367 setting label/hint or refusal"
   },
   "refusalCounterEssentials": "Something this receipt needs is missing or not acceptable: nothing was numbered and nothing was taken.",
   "@refusalCounterEssentials": {
@@ -37789,6 +37809,10 @@
   "refusalCounterTenders": "The payments do not settle this sale exactly, or one of them is not taken here.",
   "@refusalCounterTenders": {
     "description": "#4185 refusal"
+  },
+  "refusalCounterTill": "The till is not ready for this: open it first, or it is already open or closed.",
+  "@refusalCounterTill": {
+    "description": "#4367 setting label/hint or refusal"
   },
   "refusalCounterUnsupported": "This operation is not supported for your country under the case you declared in the settings: nothing was numbered and nothing was taken.",
   "@refusalCounterUnsupported": {
@@ -41596,6 +41620,18 @@
   "@settingHintCalendarRangeDays": {
     "description": "#2487 settings: Setting hint."
   },
+  "settingHintCounterBlindCount": "While a session is open the counter does not see the expected cash: they count the drawer and see the difference after the close. Someone who may see the finances always sees it.",
+  "@settingHintCounterBlindCount": {
+    "description": "#4367 setting label/hint or refusal"
+  },
+  "settingHintCounterCashReasons": "The reasons a person may give for money paid into or out of the drawer, separated by commas (for example change, expense, other).",
+  "@settingHintCounterCashReasons": {
+    "description": "#4367 setting label/hint or refusal"
+  },
+  "settingHintCounterCountByDenomination": "The float and the counted drawer are given by denomination (how many of each note and coin) rather than as a total. The counts must add up to the amount.",
+  "@settingHintCounterCountByDenomination": {
+    "description": "#4367 setting label/hint or refusal"
+  },
   "settingHintCounterCustomerlessSales": "Allowed: a sale may be made without naming a customer. Refused: every sale names one. A sale without a customer never creates an account, a member or a subscription.",
   "@settingHintCounterCustomerlessSales": {
     "description": "#4184 setting label/hint"
@@ -41607,6 +41643,10 @@
   "settingHintCounterFiscalObligation": "What you declare about the fiscal rules for a sale at the counter: none means no fiscal cash-register obligation applies to your business (your own declaration, recorded on each receipt); register required means one does. A receipt is issued only where your country's operation is supported under the case you declare.",
   "@settingHintCounterFiscalObligation": {
     "description": "#4184 setting label/hint"
+  },
+  "settingHintCounterPaidOutLimit": "The largest amount, in minor units of the business currency (cents), that a paid-out from the drawer may be without someone who may record outgoing payments. 0 means no limit.",
+  "@settingHintCounterPaidOutLimit": {
+    "description": "#4367 setting label/hint or refusal"
   },
   "settingHintDirectoryGeocoderUrl": "The Photon-compatible service that places a published address on the discovery map: an https address on the public internet, without a user name, password, query or #. Leave it empty to use the address this app version was built with, else the public Photon service.",
   "@settingHintDirectoryGeocoderUrl": {
@@ -42000,6 +42040,18 @@
   "@settingLabelCalendarRangeDays": {
     "description": "#2487 settings: Setting label."
   },
+  "settingLabelCounterBlindCount": "Count the drawer blind",
+  "@settingLabelCounterBlindCount": {
+    "description": "#4367 setting label/hint or refusal"
+  },
+  "settingLabelCounterCashReasons": "Reasons for cash in and out",
+  "@settingLabelCounterCashReasons": {
+    "description": "#4367 setting label/hint or refusal"
+  },
+  "settingLabelCounterCountByDenomination": "Count by denomination",
+  "@settingLabelCounterCountByDenomination": {
+    "description": "#4367 setting label/hint or refusal"
+  },
   "settingLabelCounterCustomerlessSales": "Sales without a named customer",
   "@settingLabelCounterCustomerlessSales": {
     "description": "#4184 setting label/hint"
@@ -42011,6 +42063,10 @@
   "settingLabelCounterFiscalObligation": "Fiscal rules for counter sales",
   "@settingLabelCounterFiscalObligation": {
     "description": "#4184 setting label/hint"
+  },
+  "settingLabelCounterPaidOutLimit": "Largest paid-out without approval",
+  "@settingLabelCounterPaidOutLimit": {
+    "description": "#4367 setting label/hint or refusal"
   },
   "settingLabelDirectoryGeocoderUrl": "Address lookup service",
   "@settingLabelDirectoryGeocoderUrl": {

@@ -13,5 +13,17 @@
   "refusalCounterCorrectionBeyond": "Une correction ne peut pas dépasser ce qu'il reste de la ligne d'origine.",
   "refusalCounterChanged": "Ce ticket a changé entre-temps : rouvrez-le.",
   "refusalCounterGoods": "Les marchandises ne peuvent pas être vendues ou reprises ici : le registre des marchandises est désactivé, ou il n'y a pas de lieu d'où les prendre ou où les remettre.",
-  "refusalCounterTenderState": "Cette autorisation par carte est encore ouverte, inconnue ou déjà réglée : interrogez le prestataire au lieu de redemander."
+  "refusalCounterTenderState": "Cette autorisation par carte est encore ouverte, inconnue ou déjà réglée : interrogez le prestataire au lieu de redemander.",
+  "settingLabelCounterBlindCount": "Compter le tiroir à l'aveugle",
+  "settingHintCounterBlindCount": "Tant qu'une session est ouverte, la caisse ne voit pas les espèces attendues : elle compte le tiroir et voit l'écart après la fermeture. Qui peut voir les finances le voit toujours.",
+  "settingLabelCounterCountByDenomination": "Compter par coupures",
+  "settingHintCounterCountByDenomination": "Le fond de caisse et le tiroir compté sont donnés par coupures (combien de chaque billet et pièce) plutôt qu'en total. Les nombres doivent correspondre au montant.",
+  "settingLabelCounterPaidOutLimit": "Plus grand retrait sans autorisation",
+  "settingHintCounterPaidOutLimit": "Le plus grand montant, en unités mineures de la devise de l'entreprise (centimes), d'un retrait du tiroir sans une personne pouvant enregistrer des paiements sortants. 0 signifie aucune limite.",
+  "settingLabelCounterCashReasons": "Motifs des entrées et sorties d'espèces",
+  "settingHintCounterCashReasons": "Les motifs qu'une personne peut donner pour de l'argent versé dans le tiroir ou retiré, séparés par des virgules (par exemple monnaie, dépense, autre).",
+  "refusalCounterTill": "La caisse n'est pas prête pour cela : ouvrez-la d'abord, ou elle est déjà ouverte ou fermée.",
+  "refusalCounterCashEntry": "Cette écriture d'espèces n'est pas acceptée : le motif n'est pas dans la liste, le montant dépasse votre limite, ou les nombres ne correspondent pas.",
+  "refusalCounterDayClose": "La journée ne peut pas être clôturée : une caisse est encore ouverte, ou la journée est déjà clôturée.",
+  "refusalCounterDayOpen": "La journée de cette caisse est déjà clôturée : elle sera ouverte à nouveau demain."
 }

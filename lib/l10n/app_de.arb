@@ -7205,6 +7205,8 @@
   },
   "featureCounterReceiptsDesc": "Ein Verkauf an der Kasse ergibt einen unveränderlichen, einmal nummerierten Beleg mit der erhaltenen Zahlung. Er wird nur angeboten, wo der Vorgang des Landes unterstützt wird, und sagt klar, wenn nicht.",
   "featureCounterReceiptsTitle": "Kassenbelege",
+  "featureCounterTillSessionsDesc": "Eine Kasse mit ihrem Wechselgeld eröffnen, die Schublade beim Abschluss zählen und den Tag mit seinem Bericht abschließen. Ein Verkauf braucht eine geöffnete Kasse; das erwartete Bargeld wird aus dem Eingenommenen abgeleitet, nie eingetippt.",
+  "featureCounterTillSessionsTitle": "Kassensitzungen und Tagesabschluss",
   "featureCountriesEuName": "der Europäischen Union",
   "@featureCountriesEuName": {
     "description": "#2454 feature availability by country"
@@ -16519,14 +16521,18 @@
     "description": "#2380 (0660) Refusal DKB07: the first payment of an invoice is undone after its later payments."
   },
   "refusalChangedMeanwhile": "Das hat sich inzwischen geändert. Öffnen Sie es erneut, um den aktuellen Stand zu sehen.",
+  "refusalCounterCashEntry": "Diese Bargeldbuchung wird nicht angenommen: Der Grund steht nicht auf der Liste, der Betrag liegt über Ihrer Grenze, oder die Zahlen ergeben nicht den Betrag.",
   "refusalCounterChanged": "Dieser Beleg hat sich inzwischen geändert: Öffnen Sie ihn erneut.",
   "refusalCounterCorrectionBeyond": "Eine Korrektur kann nicht über das hinausgehen, was von der ursprünglichen Zeile übrig ist.",
   "refusalCounterCustomerNeeded": "Dieser Betrieb nennt bei jedem Verkauf einen Kunden: Wählen Sie vor dem Abschluss einen aus.",
+  "refusalCounterDayClose": "Der Tag kann nicht abgeschlossen werden: Eine Kasse ist noch offen, oder der Tag ist schon abgeschlossen.",
+  "refusalCounterDayOpen": "Der Tag dieser Kasse ist schon abgeschlossen: Sie wird morgen wieder geöffnet.",
   "refusalCounterEssentials": "Für diesen Beleg fehlt etwas oder es ist nicht zulässig: Es wurde nichts nummeriert und nichts angenommen.",
   "refusalCounterGoods": "Waren können hier nicht verkauft oder zurückgenommen werden: Das Warenbuch ist aus, oder es gibt keinen Ort, von dem sie genommen oder an den sie zurückgelegt werden.",
   "refusalCounterNotOpen": "Dieser Beleg ist kein offener Entwurf mehr, oder für denselben Verkauf wurde schon ein Beleg ausgestellt.",
   "refusalCounterTenderState": "Diese Kartenfreigabe ist noch offen, unbekannt oder schon abgeschlossen: Fragen Sie beim Anbieter nach, statt erneut anzufragen.",
   "refusalCounterTenders": "Die Zahlungen begleichen diesen Verkauf nicht genau, oder eine davon wird hier nicht angenommen.",
+  "refusalCounterTill": "Die Kasse ist dafür nicht bereit: Öffnen Sie sie zuerst, oder sie ist schon offen oder geschlossen.",
   "refusalCounterUnsupported": "Dieser Vorgang wird für Ihr Land in dem in den Einstellungen erklärten Fall nicht unterstützt: Es wurde nichts nummeriert und nichts angenommen.",
   "refusalMainStoreExpired": "Das Hauptlager enthält nur {held} von den {asked}, die dieser Verkauf verlangt, die verkäuflich sind: der Rest ist abgelaufen. Nichts wurde entnommen und der Verkauf wurde nicht bestätigt.",
   "@refusalMainStoreExpired": {
@@ -18997,9 +19003,13 @@
   "@settingHintCalendarRangeDays": {
     "description": "#2487 settings: Setting hint."
   },
+  "settingHintCounterBlindCount": "Solange eine Sitzung offen ist, sieht die Kasse das erwartete Bargeld nicht: Sie zählt die Schublade und sieht die Differenz nach dem Abschluss. Wer die Finanzen sehen darf, sieht es immer.",
+  "settingHintCounterCashReasons": "Die Gründe, die jemand für Geld angeben kann, das in die Schublade eingezahlt oder entnommen wird, durch Kommas getrennt (zum Beispiel Wechselgeld, Ausgabe, sonstiges).",
+  "settingHintCounterCountByDenomination": "Wechselgeld und gezählte Schublade werden nach Stückelung angegeben (wie viele von jedem Schein und jeder Münze) statt als Summe. Die Zahlen müssen den Betrag ergeben.",
   "settingHintCounterCustomerlessSales": "Erlaubt: Ein Verkauf kann ohne Kundennamen erfolgen. Abgelehnt: Jeder Verkauf nennt einen Kunden. Ein Verkauf ohne Kunden legt nie ein Konto, ein Mitglied oder ein Abonnement an.",
   "settingHintCounterDocumentChannel": "Geteilt (Nachricht oder Mail), gedruckt oder beides. Der Beleg ist in jedem Fall dasselbe unveränderliche Dokument.",
   "settingHintCounterFiscalObligation": "Was Sie zu den steuerlichen Vorgaben für einen Verkauf an der Kasse erklären: keine bedeutet, dass für Ihren Betrieb keine Kassenpflicht gilt (Ihre eigene Erklärung, auf jedem Beleg festgehalten); Kasse erforderlich bedeutet, dass eine gilt. Ein Beleg wird nur ausgestellt, wo der Vorgang Ihres Landes für den erklärten Fall unterstützt wird.",
+  "settingHintCounterPaidOutLimit": "Der größte Betrag in Untereinheiten der Betriebswährung (Cent), den eine Entnahme aus der Schublade ohne jemanden haben darf, der ausgehende Zahlungen erfassen darf. 0 heißt keine Grenze.",
   "settingHintDirectoryGeocoderUrl": "Der Photon-kompatible Dienst, der eine veröffentlichte Adresse auf der Entdecken-Karte platziert: eine https-Adresse im öffentlichen Internet, ohne Benutzername, Passwort, Abfrage oder #. Leer lassen, um die Adresse zu verwenden, mit der diese App-Version gebaut wurde, sonst den öffentlichen Photon-Dienst.",
   "settingHintDirectoryTileUrlTemplate": "Der Kachelserver, aus dem die Entdecken-Karte gezeichnet wird, mit den Platzhaltern z, x und y in geschweiften Klammern in der Adresse (s in geschweiften Klammern für eine Subdomain ist erlaubt): https, im öffentlichen Internet, ohne Benutzername, Passwort oder #. Leer lassen, um den Server dieser App-Version zu verwenden, sonst OpenStreetMap. Ein neuer Host fragt jede Person erneut, bevor die Karte lädt.",
   "settingHintDirectoryUpcomingWindowDays": "Wie viele Tage im Voraus das Mitgliederverzeichnis die nächste Buchung eines Mitglieds zeigt.",
@@ -19227,9 +19237,13 @@
   "@settingLabelCalendarRangeDays": {
     "description": "#2487 settings: Setting label."
   },
+  "settingLabelCounterBlindCount": "Die Schublade blind zählen",
+  "settingLabelCounterCashReasons": "Gründe für Bargeld ein und aus",
+  "settingLabelCounterCountByDenomination": "Nach Stückelung zählen",
   "settingLabelCounterCustomerlessSales": "Verkäufe ohne genannten Kunden",
   "settingLabelCounterDocumentChannel": "Wie ein Kassenbeleg die Kasse verlässt",
   "settingLabelCounterFiscalObligation": "Steuerliche Vorgaben für Kassenverkäufe",
+  "settingLabelCounterPaidOutLimit": "Größte Entnahme ohne Freigabe",
   "settingLabelDirectoryGeocoderUrl": "Adresssuchdienst",
   "settingLabelDirectoryTileUrlTemplate": "Kachelserver der Karte",
   "settingLabelDirectoryUpcomingWindowDays": "Vorschau im Verzeichnis",

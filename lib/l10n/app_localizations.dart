@@ -18796,6 +18796,18 @@ abstract class AppLocalizations {
   /// **'Counter receipts'**
   String get featureCounterReceiptsTitle;
 
+  /// #4367 feature description
+  ///
+  /// In en, this message translates to:
+  /// **'Open a till with its float, count the drawer at the close, and close the day with its report. A sale needs an open till; the expected cash is derived from what was taken, never typed.'**
+  String get featureCounterTillSessionsDesc;
+
+  /// #4367 feature name
+  ///
+  /// In en, this message translates to:
+  /// **'Till sessions and day close'**
+  String get featureCounterTillSessionsTitle;
+
   /// #2454 feature availability by country
   ///
   /// In en, this message translates to:
@@ -46134,6 +46146,12 @@ abstract class AppLocalizations {
   /// **'This changed in the meantime. Reopen it to see where it stands.'**
   String get refusalChangedMeanwhile;
 
+  /// #4367 setting label/hint or refusal
+  ///
+  /// In en, this message translates to:
+  /// **'This cash entry is not accepted: the reason is not on the list, the amount is above the limit for you, or the counts do not add up.'**
+  String get refusalCounterCashEntry;
+
   /// #4185 refusal
   ///
   /// In en, this message translates to:
@@ -46151,6 +46169,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This business names a customer on every sale: choose one before finishing.'**
   String get refusalCounterCustomerNeeded;
+
+  /// #4367 setting label/hint or refusal
+  ///
+  /// In en, this message translates to:
+  /// **'The day cannot be closed: a till is still open, or the day is already closed.'**
+  String get refusalCounterDayClose;
+
+  /// #4367 setting label/hint or refusal
+  ///
+  /// In en, this message translates to:
+  /// **'The day of this till is already closed: it is opened again tomorrow.'**
+  String get refusalCounterDayOpen;
 
   /// #4185 refusal
   ///
@@ -46181,6 +46211,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The payments do not settle this sale exactly, or one of them is not taken here.'**
   String get refusalCounterTenders;
+
+  /// #4367 setting label/hint or refusal
+  ///
+  /// In en, this message translates to:
+  /// **'The till is not ready for this: open it first, or it is already open or closed.'**
+  String get refusalCounterTill;
 
   /// #4184 refusal
   ///
@@ -51120,6 +51156,24 @@ abstract class AppLocalizations {
   /// **'Fixed by the platform: the longest range one calendar request may ask for. It bounds the query.'**
   String get settingHintCalendarRangeDays;
 
+  /// #4367 setting label/hint or refusal
+  ///
+  /// In en, this message translates to:
+  /// **'While a session is open the counter does not see the expected cash: they count the drawer and see the difference after the close. Someone who may see the finances always sees it.'**
+  String get settingHintCounterBlindCount;
+
+  /// #4367 setting label/hint or refusal
+  ///
+  /// In en, this message translates to:
+  /// **'The reasons a person may give for money paid into or out of the drawer, separated by commas (for example change, expense, other).'**
+  String get settingHintCounterCashReasons;
+
+  /// #4367 setting label/hint or refusal
+  ///
+  /// In en, this message translates to:
+  /// **'The float and the counted drawer are given by denomination (how many of each note and coin) rather than as a total. The counts must add up to the amount.'**
+  String get settingHintCounterCountByDenomination;
+
   /// #4184 setting label/hint
   ///
   /// In en, this message translates to:
@@ -51137,6 +51191,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'What you declare about the fiscal rules for a sale at the counter: none means no fiscal cash-register obligation applies to your business (your own declaration, recorded on each receipt); register required means one does. A receipt is issued only where your country\'s operation is supported under the case you declare.'**
   String get settingHintCounterFiscalObligation;
+
+  /// #4367 setting label/hint or refusal
+  ///
+  /// In en, this message translates to:
+  /// **'The largest amount, in minor units of the business currency (cents), that a paid-out from the drawer may be without someone who may record outgoing payments. 0 means no limit.'**
+  String get settingHintCounterPaidOutLimit;
 
   /// #2488 Setting hint.
   ///
@@ -51726,6 +51786,24 @@ abstract class AppLocalizations {
   /// **'Calendar range'**
   String get settingLabelCalendarRangeDays;
 
+  /// #4367 setting label/hint or refusal
+  ///
+  /// In en, this message translates to:
+  /// **'Count the drawer blind'**
+  String get settingLabelCounterBlindCount;
+
+  /// #4367 setting label/hint or refusal
+  ///
+  /// In en, this message translates to:
+  /// **'Reasons for cash in and out'**
+  String get settingLabelCounterCashReasons;
+
+  /// #4367 setting label/hint or refusal
+  ///
+  /// In en, this message translates to:
+  /// **'Count by denomination'**
+  String get settingLabelCounterCountByDenomination;
+
   /// #4184 setting label/hint
   ///
   /// In en, this message translates to:
@@ -51743,6 +51821,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Fiscal rules for counter sales'**
   String get settingLabelCounterFiscalObligation;
+
+  /// #4367 setting label/hint or refusal
+  ///
+  /// In en, this message translates to:
+  /// **'Largest paid-out without approval'**
+  String get settingLabelCounterPaidOutLimit;
 
   /// #2488 Setting label.
   ///

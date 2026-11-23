@@ -161,6 +161,13 @@ enum KnownRefusal {
   counterGoods,
   counterTenderState,
 
+  /// #4367 (0907, 0909) -- DKL12: the till or its session is not in the state the act needs; DKL13: a cash entry or a count
+  /// that is not accepted; DKL14: the day cannot be closed; DKL15: a till is not opened on a day already closed.
+  counterTill,
+  counterCashEntry,
+  counterDayClose,
+  counterDayOpen,
+
   /// #4362 (0887) — DKG25: the pieces of a piece-tracked item must be named;
   /// DKG26: a named piece is not where the movement takes it from.
   stockNamePieces,
@@ -252,6 +259,10 @@ const Map<String, KnownRefusal> _codedRefusals = {
   'DKL07': KnownRefusal.counterGoods,
   'DKL10': KnownRefusal.counterChanged,
   'DKL11': KnownRefusal.counterTenderState,
+  'DKL12': KnownRefusal.counterTill,
+  'DKL13': KnownRefusal.counterCashEntry,
+  'DKL14': KnownRefusal.counterDayClose,
+  'DKL15': KnownRefusal.counterDayOpen,
   // #4008 — a member who left (0782).
   'DKM01': KnownRefusal.memberReturnsAsNew,
 };
@@ -378,6 +389,10 @@ String? _counterRefusalText(AppLocalizations l10n, KnownRefusal refusal) => swit
       KnownRefusal.counterChanged => l10n.refusalCounterChanged,
       KnownRefusal.counterGoods => l10n.refusalCounterGoods,
       KnownRefusal.counterTenderState => l10n.refusalCounterTenderState,
+      KnownRefusal.counterTill => l10n.refusalCounterTill,
+      KnownRefusal.counterCashEntry => l10n.refusalCounterCashEntry,
+      KnownRefusal.counterDayClose => l10n.refusalCounterDayClose,
+      KnownRefusal.counterDayOpen => l10n.refusalCounterDayOpen,
       _ => null,
     };
 
