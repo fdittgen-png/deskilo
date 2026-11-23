@@ -20875,6 +20875,14 @@
   "stockCameraMisread": "Quel codice non è stato letto bene: scansioni di nuovo.",
   "stockCameraOpen": "Scansiona con la fotocamera",
   "stockCameraTitle": "Scanner fotocamera",
+  "stockChainDelivery": "Consegna {label} da {supplier}",
+  "stockChainEmpty": "Nessun altro movimento registrato.",
+  "stockChainInvoice": "Fattura {label}",
+  "stockChainPieces": "{count, plural, one{{count} pezzo} other{{count} pezzi}}",
+  "stockChainReceipt": "Scontrino {label}",
+  "stockChainTitle": "Tutti i movimenti di questo lotto",
+  "stockChainTruncated": "Sono mostrati solo i primi movimenti.",
+  "stockChainUnavailable": "Un documento che non è consultabile",
   "stockCostLabel": "Costo per unità",
   "stockCostNotShown": "Costo non mostrato",
   "stockCostUnknown": "Costo non registrato",
@@ -21216,6 +21224,15 @@
       }
     }
   },
+  "stockMoveReasonAdjustment": "Inventario rettificato",
+  "stockMoveReasonConsumption": "Consumato",
+  "stockMoveReasonLoss": "Eliminato",
+  "stockMoveReasonOpening": "Giacenza iniziale",
+  "stockMoveReasonReceipt": "Ricevuto",
+  "stockMoveReasonReturnIn": "Reso dal cliente",
+  "stockMoveReasonReturnOut": "Reso al fornitore",
+  "stockMoveReasonSale": "Venduto",
+  "stockMoveReasonTransfer": "Spostato",
   "stockMoveSameSite": "I due luoghi sono nella stessa sede: la merce viene spostata subito.",
   "@stockMoveSameSite": {
     "description": "#4170 transfers and take-out: a label or message"

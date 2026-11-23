@@ -46165,6 +46165,61 @@
   "@stockCameraTitle": {
     "description": "#4360 G11 camera: stockCameraTitle"
   },
+  "stockChainDelivery": "Delivery {label} from {supplier}",
+  "@stockChainDelivery": {
+    "description": "#4432 G18 trace chain",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "supplier": {
+        "type": "String"
+      }
+    }
+  },
+  "stockChainEmpty": "No other movement is recorded.",
+  "@stockChainEmpty": {
+    "description": "#4432 G18 trace chain"
+  },
+  "stockChainInvoice": "Invoice {label}",
+  "@stockChainInvoice": {
+    "description": "#4432 G18 trace chain",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "stockChainPieces": "{count, plural, one{{count} piece} other{{count} pieces}}",
+  "@stockChainPieces": {
+    "description": "#4432 G18 trace chain",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "stockChainReceipt": "Receipt {label}",
+  "@stockChainReceipt": {
+    "description": "#4432 G18 trace chain",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "stockChainTitle": "Every movement of this lot",
+  "@stockChainTitle": {
+    "description": "#4432 G18 trace chain"
+  },
+  "stockChainTruncated": "Only the first movements are shown.",
+  "@stockChainTruncated": {
+    "description": "#4432 G18 trace chain"
+  },
+  "stockChainUnavailable": "A document you may not see",
+  "@stockChainUnavailable": {
+    "description": "#4432 G18 trace chain"
+  },
   "stockCostLabel": "Cost per unit",
   "@stockCostLabel": {
     "description": "#4161 the cost per unit of a movement"
@@ -46948,6 +47003,42 @@
         "type": "String"
       }
     }
+  },
+  "stockMoveReasonAdjustment": "Count adjusted",
+  "@stockMoveReasonAdjustment": {
+    "description": "#4432 G18 trace chain"
+  },
+  "stockMoveReasonConsumption": "Used",
+  "@stockMoveReasonConsumption": {
+    "description": "#4432 G18 trace chain"
+  },
+  "stockMoveReasonLoss": "Written off",
+  "@stockMoveReasonLoss": {
+    "description": "#4432 G18 trace chain"
+  },
+  "stockMoveReasonOpening": "Opening stock",
+  "@stockMoveReasonOpening": {
+    "description": "#4432 G18 trace chain"
+  },
+  "stockMoveReasonReceipt": "Received",
+  "@stockMoveReasonReceipt": {
+    "description": "#4432 G18 trace chain"
+  },
+  "stockMoveReasonReturnIn": "Returned by the customer",
+  "@stockMoveReasonReturnIn": {
+    "description": "#4432 G18 trace chain"
+  },
+  "stockMoveReasonReturnOut": "Returned to the supplier",
+  "@stockMoveReasonReturnOut": {
+    "description": "#4432 G18 trace chain"
+  },
+  "stockMoveReasonSale": "Sold",
+  "@stockMoveReasonSale": {
+    "description": "#4432 G18 trace chain"
+  },
+  "stockMoveReasonTransfer": "Moved",
+  "@stockMoveReasonTransfer": {
+    "description": "#4432 G18 trace chain"
   },
   "stockMoveSameSite": "Both places are in one site: the goods move at once.",
   "@stockMoveSameSite": {

@@ -57011,6 +57011,54 @@ abstract class AppLocalizations {
   /// **'Camera scanner'**
   String get stockCameraTitle;
 
+  /// #4432 G18 trace chain
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery {label} from {supplier}'**
+  String stockChainDelivery(String label, String supplier);
+
+  /// #4432 G18 trace chain
+  ///
+  /// In en, this message translates to:
+  /// **'No other movement is recorded.'**
+  String get stockChainEmpty;
+
+  /// #4432 G18 trace chain
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice {label}'**
+  String stockChainInvoice(String label);
+
+  /// #4432 G18 trace chain
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{{count} piece} other{{count} pieces}}'**
+  String stockChainPieces(int count);
+
+  /// #4432 G18 trace chain
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt {label}'**
+  String stockChainReceipt(String label);
+
+  /// #4432 G18 trace chain
+  ///
+  /// In en, this message translates to:
+  /// **'Every movement of this lot'**
+  String get stockChainTitle;
+
+  /// #4432 G18 trace chain
+  ///
+  /// In en, this message translates to:
+  /// **'Only the first movements are shown.'**
+  String get stockChainTruncated;
+
+  /// #4432 G18 trace chain
+  ///
+  /// In en, this message translates to:
+  /// **'A document you may not see'**
+  String get stockChainUnavailable;
+
   /// #4161 the cost per unit of a movement
   ///
   /// In en, this message translates to:
@@ -57982,6 +58030,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Quantity ({unit})'**
   String stockMoveQuantity(String unit);
+
+  /// #4432 G18 trace chain
+  ///
+  /// In en, this message translates to:
+  /// **'Count adjusted'**
+  String get stockMoveReasonAdjustment;
+
+  /// #4432 G18 trace chain
+  ///
+  /// In en, this message translates to:
+  /// **'Used'**
+  String get stockMoveReasonConsumption;
+
+  /// #4432 G18 trace chain
+  ///
+  /// In en, this message translates to:
+  /// **'Written off'**
+  String get stockMoveReasonLoss;
+
+  /// #4432 G18 trace chain
+  ///
+  /// In en, this message translates to:
+  /// **'Opening stock'**
+  String get stockMoveReasonOpening;
+
+  /// #4432 G18 trace chain
+  ///
+  /// In en, this message translates to:
+  /// **'Received'**
+  String get stockMoveReasonReceipt;
+
+  /// #4432 G18 trace chain
+  ///
+  /// In en, this message translates to:
+  /// **'Returned by the customer'**
+  String get stockMoveReasonReturnIn;
+
+  /// #4432 G18 trace chain
+  ///
+  /// In en, this message translates to:
+  /// **'Returned to the supplier'**
+  String get stockMoveReasonReturnOut;
+
+  /// #4432 G18 trace chain
+  ///
+  /// In en, this message translates to:
+  /// **'Sold'**
+  String get stockMoveReasonSale;
+
+  /// #4432 G18 trace chain
+  ///
+  /// In en, this message translates to:
+  /// **'Moved'**
+  String get stockMoveReasonTransfer;
 
   /// #4170 transfers and take-out: a label or message
   ///
