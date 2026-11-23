@@ -110,3 +110,12 @@ Deno.test("#4412 a request id is a UUID or a short safe string; client text is n
     assertEquals(/^[0-9a-f-]{36}$/.test(made), true);
   }
 });
+
+Deno.test("#4412 a huge text costs a bounded scrub and is clipped", () => {
+  const started = performance.now();
+  const huge = "a".repeat(2_000_000) + "@";
+  const out = redactFields({ note: huge, list: [huge] });
+  assertEquals((out.note as string).length, 303);
+  assert(performance.now() - started < 500, "a large field is bounded before it is scrubbed");
+  assertEquals(describeError(new Error(huge)).message.length, 303);
+});

@@ -37,7 +37,7 @@ function redactObject(
 }
 
 function redactValue(value: unknown, depth: number, seen: WeakSet<object>): unknown {
-  if (typeof value === "string") return clip(scrub(value));
+  if (typeof value === "string") return keep(value);
   if (typeof value === "bigint") return value.toString();
   if (typeof value === "function" || typeof value === "symbol") return `[${typeof value}]`;
   if (value === null || typeof value !== "object") return value;
@@ -54,7 +54,7 @@ function redactValue(value: unknown, depth: number, seen: WeakSet<object>): unkn
 export function scrub(text: string): string {
   return text
     .replace(/eyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]*/g, "[jwt]")
-    .replace(/[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)+/g, "[email]")
+    .replace(/[A-Za-z0-9._%+-]{1,64}@[A-Za-z0-9-]{1,63}(?:\.[A-Za-z0-9-]{1,63}){1,8}/g, "[email]")
     .replace(/Bearer\s+[A-Za-z0-9._~+\/=-]+/gi, "Bearer [redacted]")
     .replace(
       /([?&](?:api[_-]?key|token|secret|key|password|signature)=)[^&\s]+/gi,
@@ -65,12 +65,15 @@ export function scrub(text: string): string {
 const clip = (text: string) =>
   text.length > LOG_WIDTH ? text.slice(0, LOG_WIDTH) + "..." : text;
 
+/** What a log line keeps of a text: the text is bounded BEFORE it is scrubbed, so what a client sends costs a fixed amount of work. */
+const keep = (text: string) => clip(scrub(text.slice(0, LOG_WIDTH * 4)));
+
 /** What an error is, for a log: its name and its message, scrubbed and clipped. Never for an answer. */
 export function describeError(error: unknown): { type: string; message: string } {
   if (error instanceof Error) {
-    return { type: error.name, message: clip(scrub(error.message)) };
+    return { type: error.name, message: keep(error.message) };
   }
-  return { type: typeof error, message: clip(scrub(String(error))) };
+  return { type: typeof error, message: keep(String(error)) };
 }
 
 /** A request id a client may name: a UUID, or up to 64 characters of letters, digits and . _ : - ; anything else is not echoed. */
