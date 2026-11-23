@@ -97,18 +97,16 @@ class _StockScanSettingsState extends ConsumerState<StockScanSettings> {
           onChanged: (v) => setState(() => _terminator = v),
         ),
         const FormGap(),
-        Text(l10n.stockScanConfirm, style: Theme.of(context).textTheme.labelLarge),
-        const SizedBox(height: AppSpacing.xs),
-        SegmentedButton<ScanConfirm>(
+        AppDropdownField<ScanConfirm>(
           key: const ValueKey('stock-scan-confirm'),
-          showSelectedIcon: false,
-          segments: [
-            ButtonSegment(value: ScanConfirm.none, label: Text(l10n.stockScanConfirmNone)),
-            ButtonSegment(value: ScanConfirm.vibrate, label: Text(l10n.stockScanConfirmVibrate)),
-            ButtonSegment(value: ScanConfirm.click, label: Text(l10n.stockScanConfirmClick)),
+          label: l10n.stockScanConfirm,
+          value: _confirm ?? prefs.confirm,
+          items: [
+            (ScanConfirm.none, l10n.stockScanConfirmNone),
+            (ScanConfirm.vibrate, l10n.stockScanConfirmVibrate),
+            (ScanConfirm.click, l10n.stockScanConfirmClick),
           ],
-          selected: {_confirm ?? prefs.confirm},
-          onSelectionChanged: (s) => setState(() => _confirm = s.first),
+          onChanged: (v) => setState(() => _confirm = v),
         ),
         const FormGap(),
         Align(
