@@ -36,6 +36,10 @@
   "stockCycleHistoryAccuracy": "{count, plural, one{1 Zählung} other{{count} Zählungen}}, {percent} % exakt",
   "stockCycleTaskTitle": "Zählen",
   "stockCycleScan": "Barcode scannen oder eingeben",
+  "stockCycleScanWhich": "Mehrere noch zu zählende Zeilen haben diesen Code: Wählen Sie die, die Sie zählen.",
+  "@stockCycleScanWhich": {
+    "description": "#4395 cycle counts: a code that fits several pending lines asks which one"
+  },
   "stockCycleScanNone": "Keine noch zu zählende Zeile hat diesen Code.",
   "stockCycleBlind": "Sie zählen, was Sie vorfinden: Die Zahl des Systems wird nicht gezeigt und kann die Zählung nicht beeinflussen.",
   "stockCycleLineCount": "Zählen",

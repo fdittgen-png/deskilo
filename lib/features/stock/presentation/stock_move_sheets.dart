@@ -120,10 +120,12 @@ class _MoveDraft {
     } else if (result.outcome == ScanOutcome.line && line != null) {
       scanner?.session.lines.removeWhere((l) => l != line);
       item = line.itemId;
-      if (result.asksQuantity) {
+      // A quantity with no six-decimal value is asked of the person (#4393).
+      final text = line.quantityText;
+      if (result.asksQuantity || text == null) {
         _quantityFocus.requestFocus();
       } else {
-        fields['quantity'].text = line.quantityText;
+        fields['quantity'].text = text;
       }
     }
     _refresh?.call();

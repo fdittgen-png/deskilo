@@ -6,6 +6,8 @@
 // in the unit of the order line, as the delivery counted them.
 library;
 
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show ExactQuantity;
+
 import '../../money/domain/purchase_order.dart';
 import '../../money/domain/purchase_order_receipt.dart';
 import 'stock_receiving.dart';
@@ -25,11 +27,27 @@ class DeliveredLineProgress {
   final String description;
   final String unit;
   final String? serviceId;
-  final double received;
-  final double putAway;
+  final ExactQuantity received;
+  final ExactQuantity putAway;
 
-  /// What is still to put away; never below zero.
-  double get remaining => (received - putAway).clamp(0, received);
+  /// What is still to put away; never below zero nor above what was received.
+  ExactQuantity get remaining {
+    final left = received - putAway;
+    if (left.isNegative) return ExactQuantity.zero;
+    return left > received ? received : left;
+  }
+}
+
+/// #4393 -- a delivered quantity as the purchase order holds it (a binary
+/// float: the order's numbers are its own, #4177) brought into the exact type
+/// once, here. A stored `numeric(18,6)` has six decimals at most, so the
+/// float's noise past the sixth (`0.3 - 0.1` = 0.19999999999999998) is
+/// rounded off, as the column would; a value outside the column's range,
+/// which no order line can hold, reads as zero. Never throws: the delivery
+/// form opens whatever the order's arithmetic left.
+ExactQuantity exactOfReceived(num delivered) {
+  final text = delivered.toStringAsFixed(6);
+  return ExactQuantity.tryParse(text).value ?? ExactQuantity.zero;
 }
 
 /// The lines of [receipt], each with the allocations that name its receipt
@@ -46,9 +64,9 @@ List<DeliveredLineProgress> progressOfDelivery(
         description: line.description,
         unit: line.unit,
         serviceId: line.serviceId,
-        received: receipt.lines[line.lineNo]!,
+        received: exactOfReceived(receipt.lines[line.lineNo]!),
         putAway: allocations
             .where((a) => a.receiptLineId == receipt.lineIds[line.lineNo])
-            .fold(0.0, (sum, a) => sum + (double.tryParse(a.enteredQuantity.text) ?? 0)),
+            .fold(ExactQuantity.zero, (sum, a) => sum + a.enteredQuantity),
       ),
 ];

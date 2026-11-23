@@ -147,9 +147,7 @@ class _EditorState extends ConsumerState<CustomerQuoteEditorScreen> {
           ..version = value.version
           ..revision = value.revision;
         final read = await commands.read(workspaceId, value.quoteId);
-        for (final (i, line) in (read?.draft?.lines ?? const <StandaloneLine>[]).indexed) {
-          if (i < _form.lines.length) _form.lines[i].lineId = line.lineId;
-        }
+        attachLineIds(_form.lines, read?.draft?.lines ?? const <StandaloneLine>[]);
         ref.invalidate(customerQuotesProvider(workspaceId));
         return true;
       case QuoteRefused(:final refusal):

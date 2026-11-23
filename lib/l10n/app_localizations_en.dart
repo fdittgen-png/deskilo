@@ -35629,6 +35629,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockCycleScanNone => 'No line still to count has this code.';
 
   @override
+  String get stockCycleScanWhich =>
+      'Several lines still to count have this code: choose the one you are counting.';
+
+  @override
   String get stockCycleScopeHighValue => 'High value';
 
   @override

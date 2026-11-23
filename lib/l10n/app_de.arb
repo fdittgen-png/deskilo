@@ -20831,6 +20831,10 @@
   "stockCyclePlanValueSetting": "Wert mindestens die Grenze des Unternehmens",
   "stockCycleScan": "Barcode scannen oder eingeben",
   "stockCycleScanNone": "Keine noch zu zählende Zeile hat diesen Code.",
+  "stockCycleScanWhich": "Mehrere noch zu zählende Zeilen haben diesen Code: Wählen Sie die, die Sie zählen.",
+  "@stockCycleScanWhich": {
+    "description": "#4395 cycle counts: a code that fits several pending lines asks which one"
+  },
   "stockCycleScopeHighValue": "Hoher Wert",
   "stockCycleScopePlaces": "Orte",
   "stockCycleSkipReason": "Warum sie übersprungen wird",

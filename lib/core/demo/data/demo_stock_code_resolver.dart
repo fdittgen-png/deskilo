@@ -7,6 +7,7 @@
 import '../../../features/stock/domain/stock_code_resolver.dart';
 import '../../../features/stock/domain/stock_config.dart';
 import '../../../features/stock/domain/stock_config_commands.dart';
+import '../../../features/stock/domain/stock_page.dart';
 import '../../../features/stock/domain/stock_registry.dart';
 import '../../../features/stock/domain/stock_tags.dart';
 import 'demo_stock_tags.dart';
@@ -48,8 +49,21 @@ class DemoStockCodeResolver implements StockCodeResolver {
 
   /// An item by its tag, barcode or one of its own codes (a package-unit code carries its factor).
   Future<StockCodeResolution?> _item(String typed, TagOwner? held) async {
-    final page = await _registry.page(_workspaceId, limit: 200);
-    for (final row in page.rows) {
+    StockCursor? after;
+    var complete = false;
+    while (!complete) {
+      final page = await _registry.page(_workspaceId, limit: 200, after: after);
+      final found = await _inPage(page.rows, typed, held);
+      if (found != null) return found;
+      complete = page.complete || page.next == null;
+      after = page.next;
+    }
+    return null;
+  }
+
+  /// The row of [rows] that [typed] names, if any.
+  Future<StockCodeResolution?> _inPage(List<StockRegistryRow> rows, String typed, TagOwner? held) async {
+    for (final row in rows) {
       final item = ScannedItem(id: row.itemId, name: row.itemName, unit: row.unit);
       if (held?.itemId == row.itemId) {
         return StockCodeResolution(kind: ScannedKind.tag, code: DemoStockTags.normalise(typed), matchedBy: 'tag', item: item, tagBound: true);
