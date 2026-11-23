@@ -4,6 +4,7 @@ signed-out on  /account-activity/history -> /auth
 signed-out on  /account-messages -> /auth
 signed-out on  /account-messages/thread -> /auth
 signed-out on  /accounting/connected -> /auth
+signed-out on  /app-update -> /auth
 signed-out on  /applications -> /auth
 signed-out on  /assistants -> /auth
 signed-out on  /assistants/connect -> /auth
@@ -162,6 +163,7 @@ signed-out on  /task-workbench -> (open)
 signed-out on  /task-workbench/storyboard -> /task-workbench
 signed-out on  /templates/compare -> /auth
 signed-out on  /templates/detail -> /auth
+signed-out on  /till -> /auth
 signed-out on  /validation -> /auth
 signed-out on  /vat -> /auth
 signed-out on  /vat-declarations -> /auth
@@ -175,6 +177,7 @@ signed-out off /account-activity/history -> /auth
 signed-out off /account-messages -> /auth
 signed-out off /account-messages/thread -> /auth
 signed-out off /accounting/connected -> /auth
+signed-out off /app-update -> /auth
 signed-out off /applications -> /auth
 signed-out off /assistants -> /auth
 signed-out off /assistants/connect -> /auth
@@ -333,6 +336,7 @@ signed-out off /task-workbench -> (open)
 signed-out off /task-workbench/storyboard -> /task-workbench
 signed-out off /templates/compare -> /auth
 signed-out off /templates/detail -> /auth
+signed-out off /till -> /auth
 signed-out off /validation -> /auth
 signed-out off /vat -> /auth
 signed-out off /vat-declarations -> /auth
@@ -346,6 +350,7 @@ no-space on  /account-activity/history -> (open)
 no-space on  /account-messages -> (open)
 no-space on  /account-messages/thread -> /account-messages
 no-space on  /accounting/connected -> /me
+no-space on  /app-update -> /me
 no-space on  /applications -> (open)
 no-space on  /assistants -> (open)
 no-space on  /assistants/connect -> /me
@@ -504,6 +509,7 @@ no-space on  /task-workbench -> (open)
 no-space on  /task-workbench/storyboard -> /task-workbench
 no-space on  /templates/compare -> /onboarding
 no-space on  /templates/detail -> /onboarding
+no-space on  /till -> /me
 no-space on  /validation -> /me
 no-space on  /vat -> /me
 no-space on  /vat-declarations -> /me
@@ -517,6 +523,7 @@ no-space off /account-activity/history -> (open)
 no-space off /account-messages -> (open)
 no-space off /account-messages/thread -> /account-messages
 no-space off /accounting/connected -> /me
+no-space off /app-update -> /me
 no-space off /applications -> (open)
 no-space off /assistants -> (open)
 no-space off /assistants/connect -> /me
@@ -675,6 +682,7 @@ no-space off /task-workbench -> (open)
 no-space off /task-workbench/storyboard -> /task-workbench
 no-space off /templates/compare -> /onboarding
 no-space off /templates/detail -> /onboarding
+no-space off /till -> /me
 no-space off /validation -> /me
 no-space off /vat -> /me
 no-space off /vat-declarations -> /me
@@ -688,6 +696,7 @@ member on  /account-activity/history -> (open)
 member on  /account-messages -> (open)
 member on  /account-messages/thread -> /account-messages
 member on  /accounting/connected -> /calendar
+member on  /app-update -> /reserve
 member on  /applications -> (open)
 member on  /assistants -> (open)
 member on  /assistants/connect -> /assistants
@@ -846,6 +855,7 @@ member on  /task-workbench -> (open)
 member on  /task-workbench/storyboard -> /task-workbench
 member on  /templates/compare -> /onboarding
 member on  /templates/detail -> /onboarding
+member on  /till -> /calendar
 member on  /validation -> /calendar
 member on  /vat -> /calendar
 member on  /vat-declarations -> /calendar
@@ -859,6 +869,7 @@ member off /account-activity/history -> (open)
 member off /account-messages -> (open)
 member off /account-messages/thread -> /account-messages
 member off /accounting/connected -> /messages
+member off /app-update -> /messages
 member off /applications -> (open)
 member off /assistants -> (open)
 member off /assistants/connect -> /assistants
@@ -1017,6 +1028,7 @@ member off /task-workbench -> (open)
 member off /task-workbench/storyboard -> /task-workbench
 member off /templates/compare -> /onboarding
 member off /templates/detail -> /onboarding
+member off /till -> /messages
 member off /validation -> /messages
 member off /vat -> /messages
 member off /vat-declarations -> /messages
@@ -1030,6 +1042,7 @@ admin on  /account-activity/history -> (open)
 admin on  /account-messages -> (open)
 admin on  /account-messages/thread -> /account-messages
 admin on  /accounting/connected -> /money/accounting
+admin on  /app-update -> /reserve
 admin on  /applications -> (open)
 admin on  /assistants -> (open)
 admin on  /assistants/connect -> /assistants
@@ -1188,6 +1201,7 @@ admin on  /task-workbench -> (open)
 admin on  /task-workbench/storyboard -> /task-workbench
 admin on  /templates/compare -> /onboarding
 admin on  /templates/detail -> /onboarding
+admin on  /till -> /calendar
 admin on  /validation -> /calendar
 admin on  /vat -> /calendar
 admin on  /vat-declarations -> /money
@@ -1202,6 +1216,7 @@ admin off /account-activity/history -> (open)
 admin off /account-messages -> (open)
 admin off /account-messages/thread -> /account-messages
 admin off /accounting/connected -> /messages
+admin off /app-update -> /messages
 admin off /applications -> (open)
 admin off /assistants -> (open)
 admin off /assistants/connect -> /assistants
@@ -1360,6 +1375,7 @@ admin off /task-workbench -> (open)
 admin off /task-workbench/storyboard -> /task-workbench
 admin off /templates/compare -> /onboarding
 admin off /templates/detail -> /onboarding
+admin off /till -> /messages
 admin off /validation -> /messages
 admin off /vat -> /messages
 admin off /vat-declarations -> /messages
@@ -1373,6 +1389,7 @@ owner on  /account-activity/history -> (open)
 owner on  /account-messages -> (open)
 owner on  /account-messages/thread -> /account-messages
 owner on  /accounting/connected -> /money/accounting
+owner on  /app-update -> /reserve
 owner on  /applications -> (open)
 owner on  /assistants -> (open)
 owner on  /assistants/connect -> /assistants
@@ -1531,6 +1548,7 @@ owner on  /task-workbench -> (open)
 owner on  /task-workbench/storyboard -> /task-workbench
 owner on  /templates/compare -> /onboarding
 owner on  /templates/detail -> /onboarding
+owner on  /till -> /money
 owner on  /validation -> (open)
 owner on  /vat -> (open)
 owner on  /vat-declarations -> (open)
@@ -1545,6 +1563,7 @@ owner off /account-activity/history -> (open)
 owner off /account-messages -> (open)
 owner off /account-messages/thread -> /account-messages
 owner off /accounting/connected -> /messages
+owner off /app-update -> /messages
 owner off /applications -> (open)
 owner off /assistants -> (open)
 owner off /assistants/connect -> /assistants
@@ -1703,6 +1722,7 @@ owner off /task-workbench -> (open)
 owner off /task-workbench/storyboard -> /task-workbench
 owner off /templates/compare -> /onboarding
 owner off /templates/detail -> /onboarding
+owner off /till -> /messages
 owner off /validation -> (open)
 owner off /vat -> /messages
 owner off /vat-declarations -> /messages

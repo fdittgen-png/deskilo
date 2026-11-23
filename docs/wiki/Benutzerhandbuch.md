@@ -3118,6 +3118,7 @@ Ein Barcode-Scanner im Tastaturmodus (er tippt den Code und drückt die Eingabet
 - **Ein wiederholter Scan** addiert eins, oder – wenn Ihr Betrieb es in den Lagereinstellungen so gewählt hat (*Wiederholter Scan*) – führt Sie ins Mengenfeld.
 - **Ein Code, der nichts bezeichnet,** meldet *Unbekannter Code … — einem Artikel zuordnen?*; wer das Lager verwalten darf, kann die Artikel öffnen und ihn einem zuordnen. Ein Platz, der keine Ware aufnehmen kann, oder ein Artikel, der nicht auf Lager geführt wird, wird in Worten abgelehnt, und nichts wird ausgefüllt.
 - **Ein Scan sendet nichts.** Er füllt nur das Formular; die Taste, die Sie drücken, führt denselben Befehl mit denselben Rechten aus wie ohne Scanner.
+- **Die Kamera.** Auf einem Telefon oder Tablet öffnet **Mit der Kamera scannen** (in der Scan-Leiste eines Warenblatts) die Kamera als Scanner: Produkt-Barcodes (EAN-13, EAN-8, UPC-A/E, Code 128) und die 2D-Etiketten von Lagerplätzen und GS1-Produkten (DataMatrix, QR). Jeder Code nimmt denselben Weg wie bei einem tippenden Scanner, und die Kamera bleibt für wiederholte Scans offen; sie nennt, wie viele Codes sie gelesen hat, und die letzte Zeile. Ein Barcode mit falscher Prüfziffer wurde *nicht sauber gelesen*: Scannen Sie erneut, es wird nichts gesendet. Ein GS1-Etikett setzt den Artikel und, wo der Artikel Chargen oder Verfall nachverfolgt, Charge und Verfallsdatum. Wie ein Lesen bestätigt wird (nichts, Vibration, Klick), ist eine Geräteeinstellung unter **Lager → Lagereinstellungen → Scanner**. Startet die Kamera nicht, erlauben Sie DesKilo den Kamerazugriff in den Geräteeinstellungen; im Browser oder auf einem Desktop tippen Sie den Code oder nutzen einen Hardware-Scanner.
 - **Einstellungen.** Ob gescannt wird, bestimmt die Funktion *Scanner* des Betriebs unter der Lagerverwaltung. Die längste Lücke zwischen zwei Tasten eines Scans (ein Mensch tippt langsamer als ein Scanner) und was einen Code beendet (Eingabe, Tab oder beides) gehören dem Gerät, unter **Lager → Lagereinstellungen → Scanner**.
 
 <!-- anchor: user.money.stock.nfc -->
@@ -3134,6 +3135,19 @@ Ist die Funktion *Tags* eingeschaltet und liest Ihr Telefon NFC, zeigen **Lager 
 - **Lesen in einem Warenblatt.** Ein Chip wird wie ein gescannter Code gelesen: Ein Platz-Tag setzt den aktuellen Platz, ein Artikel-Tag zählt den Artikel. Ein Chip, der in einem Blatt zweimal gelesen wird, wird ignoriert (*bereits gelesen*); ein Chip, der nichts bezeichnet, meldet *Unbekannter Tag*.
 - **UHF-Etiketten** kann ein Telefon nicht lesen. Ein Artikel, der nur solche hat, sagt *nutzen Sie das RFID-Lesegerät*.
 - Zuordnen braucht das Recht, das Lager zu verwalten; Lesen das Recht, es einzusehen.
+
+<!-- anchor: user.money.till -->
+### Kasse
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie bedienen Kundschaft an der Theke und möchten jeden Verkauf in Sekunden, nummeriert und bar abschließen.
+
+Öffnen Sie **Kasse** im Verkaufsmenü (sie braucht die Funktion Kassenbons und das Recht, Rechnungen auszustellen). Die Artikel sind Tasten: ein Tipp bucht einen, ein weiterer Tipp einen mehr. Tippen Sie auf eine Zeile, um die **Verkaufte Menge** genau einzugeben, zum Beispiel 0,350 für Wiegeware (ein Komma wird als Punkt gelesen; die Menge muss über null liegen, mit höchstens sechs Dezimalstellen). Der Server bepreist den Warenkorb inklusive Steuer, und die Kasse zeigt **Zu zahlender Betrag**; auf dem Telefon wird nichts berechnet.
+
+Drücken Sie **Bar kassieren** und geben Sie **Gegeben** ein (oder **Passend**). Weniger als der Gesamtbetrag wird abgelehnt, bevor etwas gesendet wird. Der Server nummeriert den Verkauf, und die Kasse nennt das Rückgeld; **Nächster Kunde** beginnt einen leeren Warenkorb. Derselbe Verkauf, zweimal gesendet, verkauft nie doppelt.
+
+Wo Ihr Land die Kasse noch nicht erlaubt, nennt die Kasse den fehlenden Vorgang und bietet nichts an: nichts wird nummeriert und nichts kassiert. Eine Warenzeile braucht die Lagerverwaltung; eine Ablehnung des Servers erscheint in Worten. Kartenzahlung, Rabatte, Erstattungen und Rückgaben gehören nicht zu dieser ersten Kasse.
 
 <!-- anchor: user.money.stock.value -->
 ### Lagerwert und Herkunft der Ware

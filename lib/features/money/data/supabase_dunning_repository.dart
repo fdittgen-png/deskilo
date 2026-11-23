@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/server_names.dart';
 import '../domain/dunning.dart';
 import '../domain/dunning_repository.dart';
 
@@ -15,7 +16,7 @@ class SupabaseDunningRepository implements DunningRepository {
   @override
   Future<DunningRules> fetchDunningRules(String workspaceId) async {
     final row = await _client
-        .from('workspaces')
+        .from(ServerTable.workspaces)
         .select('dunning_rules')
         .eq('id', workspaceId)
         .single();

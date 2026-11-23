@@ -2980,6 +2980,7 @@ Uno scanner di codici a barre in modalità tastiera (digita il codice e preme In
 - **Una scansione ripetuta** ne aggiunge una in più oppure, se la sua attività l’ha scelto nelle impostazioni del magazzino (*Scansione ripetuta*), la porta sul campo della quantità.
 - **Un codice che non indica nulla** dice *Codice … sconosciuto: aggiungerlo a un articolo?*; chi può gestire il magazzino apre gli articoli e lo assegna a uno. Una posizione che non può ricevere merce, o un articolo non tenuto a magazzino, viene rifiutato a parole e non si compila nulla.
 - **Una scansione non invia nulla.** Compila solo il modulo; il pulsante che preme esegue lo stesso comando, con gli stessi diritti, che senza scanner.
+- **La fotocamera.** Su un telefono o un tablet, **Scansiona con la fotocamera** (nella barra di scansione di un foglio di merce) apre la fotocamera come scanner: codici a barre dei prodotti (EAN-13, EAN-8, UPC-A/E, Code 128) ed etichette 2D di posizioni e prodotti GS1 (DataMatrix, QR). Ogni codice segue lo stesso percorso di uno scanner che digita, e la fotocamera resta aperta per scansioni ripetute, dicendo quanti codici ha letto e l’ultima riga. Un codice a barre con la cifra di controllo errata *non è stato letto bene*: scansioni di nuovo, non viene inviato nulla. Un’etichetta GS1 imposta l’articolo e, dove l’articolo traccia lotti o scadenza, il lotto e la data di scadenza. Come si conferma una lettura (nulla, una vibrazione, un clic) è un’impostazione del dispositivo in **Magazzino → Impostazioni del magazzino → Scanner**. Se la fotocamera non si avvia, consenta l’accesso alla fotocamera per DesKilo nelle impostazioni del dispositivo; in un browser o su un computer, digiti il codice o usi uno scanner hardware.
 - **Impostazioni.** L’uso dello scanner dipende dalla funzione *Scanner* dell’attività, sotto la gestione del magazzino. L’intervallo massimo tra due tasti di una scansione (una persona scrive più lentamente di uno scanner) e ciò che termina un codice (Invio, Tab o entrambi) sono del dispositivo, in **Magazzino → Impostazioni del magazzino → Scanner**.
 
 ### Tag con l’NFC del telefono
@@ -2995,6 +2996,18 @@ Con la funzione *Tag* attiva e un telefono che legge l’NFC, **Magazzino → Ar
 - **Leggere in un foglio di merce.** Un chip si legge come un codice scansionato: un tag di posizione imposta la posizione corrente, uno di articolo conta l’articolo. Un chip letto due volte in un foglio viene ignorato (*già letto*); un chip che non indica nulla dice *Tag sconosciuto*.
 - **Le etichette UHF** non sono leggibili da un telefono. Un articolo che ha solo quelle dice *usi il lettore RFID*.
 - Associare richiede il diritto di gestire il magazzino; leggere, quello di vederlo.
+
+### Cassa
+
+**Destinatari:** Amministratore · Proprietario
+
+Serve clienti al banco e vuole ogni vendita in pochi secondi, numerata e pagata in contanti.
+
+Apra **Cassa** nel menu delle vendite (richiede la funzione scontrini di cassa e il diritto di emettere fatture). Gli articoli sono tasti: un tocco ne registra uno, un secondo tocco ne aggiunge un altro. Tocchi una riga per digitare esattamente la **Quantità venduta**, ad esempio 0,350 per un articolo a peso (una virgola è letta come punto; la quantità deve essere maggiore di zero, con al massimo sei decimali). Il server calcola il prezzo del carrello, imposta inclusa, e la cassa mostra **Totale da pagare**; sul telefono non si calcola nulla.
+
+Prema **Incassare in contanti** e digiti i **Contanti dati** (o **Importo esatto**). Meno del totale viene rifiutato prima di inviare qualsiasi cosa. Il server numera la vendita e la cassa dice il resto; **Cliente successivo** riparte da un carrello vuoto. Inviare due volte la stessa vendita non la vende mai due volte.
+
+Dove il suo paese non consente ancora la cassa, questa indica l'operazione mancante e non offre nulla: nulla viene numerato né incassato. Una riga di merce richiede la gestione del magazzino; un rifiuto del server è detto a parole. Pagamenti con carta, sconti, rimborsi e resi non fanno parte di questa prima cassa.
 
 ### Valore del magazzino e origine della merce
 

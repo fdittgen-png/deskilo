@@ -86,7 +86,7 @@ read -r ws o1 o2 i1 i2 <<<"$fixture"
 for v in "$ws" "$o1" "$o2" "$i1" "$i2"; do
   [[ "$v" =~ ^[0-9a-f-]{36}$ ]] || { echo "::error::fixture incomplete: '$fixture'" >&2; exit 1; }
 done
-q() { psql "$url" -X -qAt -v ON_ERROR_STOP=1 -c "$1"; }
+. "$(dirname "${BASH_SOURCE[0]}")/lib/race.sh"
 as_owner="select set_config('request.jwt.claims', '{\"sub\":\"$owner\",\"role\":\"authenticated\",\"aal\":\"aal2\"}', true); set local role authenticated;"
 # reimburse OBLIGATION CENTS REVISION REQUEST / offset OBLIGATION INVOICE CENTS REVISION REQUEST
 reimburse() { echo "$as_owner select 'consumed' from (select public.record_member_reimbursement_v1('$ws', '$1', $2, $3, '$4', current_date - 1, 'bank_transfer', 'race ref')) x;"; }
@@ -105,7 +105,6 @@ due() { q "select public.invoice_still_due_cents('$1')"; }
 paid_out() { q "select coalesce(sum(p.amount_cents), 0) from public.outgoing_payments p
                  join public.purchase_settlement_allocations a on a.payment_id = p.id and a.workspace_id = p.workspace_id
                 where p.workspace_id = '$ws' and a.obligation_id = '$1'"; }
-expect() { [[ "$2" == "$3" ]] || { echo "::error::$1: expected '$3', got '$2'" >&2; exit 1; }; }
 
 # the seed of each claim: 50.00 reimbursed, then 30.00 offset against its invoice
 seed() { # OBLIGATION INVOICE -> prints "reimbursement-delta offset-delta"

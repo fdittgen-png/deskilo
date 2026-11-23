@@ -5,6 +5,7 @@
 // look sees no editor; a mistake is shown under its field before anything is
 // sent; a save sends the complete lists at the revision it read; a stale
 // revision and a refusal are said, in the sheet, and nothing is shown saved.
+import 'package:deskilo/features/stock/domain/stock_code_resolver.dart';
 import 'package:deskilo/features/stock/domain/stock_config.dart';
 import 'package:deskilo/features/stock/domain/stock_config_commands.dart';
 import 'package:deskilo/features/stock/domain/stock_page.dart';
@@ -141,6 +142,14 @@ class _Config implements StockConfigCommands {
   Future<StockSaved> saveMapping(String workspaceId, {required Map<String, Object?> mapping, required String requestId, String? mappingId, int? expectedRevision}) => throw UnimplementedError();
 }
 
+/// Resolves the Tea's barcode the way the server does.
+class _Resolver implements StockCodeResolver {
+  @override
+  Future<StockCodeResolution> resolve(String workspaceId, String code) async => code == '4006381333931'
+      ? StockCodeResolution(kind: ScannedKind.item, code: code, item: const ScannedItem(id: 'i-Tea', name: 'Tea', unit: 'piece'))
+      : StockCodeResolution.unknown(code);
+}
+
 Future<void> _open(
   WidgetTester tester,
   _Config config,
@@ -160,6 +169,7 @@ Future<void> _open(
       stockQueriesProvider.overrideWithValue(_Queries()),
       stockConfigCommandsProvider.overrideWithValue(config),
       stockRegistryProvider.overrideWithValue(registry ?? _Registry()),
+      stockCodeResolverProvider.overrideWithValue(_Resolver()),
       myPermissionsProvider.overrideWithValue(held),
       if (separator != null) stockAddressSeparatorProvider.overrideWithValue(separator),
       if (lots) enabledFeaturesSyncProvider.overrideWithValue({WorkspaceFeature.stockManagement, WorkspaceFeature.stockLots}),
@@ -219,6 +229,16 @@ void main() {
         await tester.testTextInput.receiveAction(TextInputAction.done);
         await _settle(tester);
         expect(find.byKey(const ValueKey('stock-item-save')), findsOneWidget, reason: 'the item editor of Tea opened');
+      });
+
+      testWidgets('Enter on a search that still shows rows is a search, not an unknown code', (tester) async {
+        await _open(tester, _Config(), size, held: _manage);
+        await tester.enterText(find.byKey(const ValueKey('stock-registry-search')), 'Tea');
+        await tester.testTextInput.receiveAction(TextInputAction.done);
+        await _settle(tester);
+        expect(find.byKey(const ValueKey('stock-item-i-Tea')), findsOneWidget);
+        expect(find.textContaining('Tea'), findsWidgets);
+        expect(find.byType(SnackBar), findsNothing, reason: 'no "unknown code" over a list that is filled');
       });
 
       testWidgets('a home place is chosen from the places and sent with its request', (tester) async {

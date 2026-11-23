@@ -1069,6 +1069,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appTitle => 'DesKilo';
 
   @override
+  String get appUpdateBody =>
+      'This installation accepts only a newer DesKilo app. Your data is safe: nothing you entered is lost, and it is there again once the app is updated.';
+
+  @override
+  String get appUpdateDesktop =>
+      'Install the newest DesKilo package for this computer, then open it again.';
+
+  @override
+  String get appUpdateStore =>
+      'Update DesKilo from the store you installed it from, then open it again.';
+
+  @override
+  String get appUpdateTitle => 'This app needs an update';
+
+  @override
+  String get appUpdateWeb =>
+      'Reload this page to load the newest version of the app.';
+
+  @override
   String get applicationAcceptedVote => 'Approved this request';
 
   @override
@@ -11551,6 +11570,20 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get featureConfigurationTransferDesc =>
       'The space file (XML) carries the whole configuration — tariffs, legal identity, booking and validation rules, roles, document designs, sites, closure days — and importing it applies it, even on a space that already has bookings. Off: the file carries settings and floor plan only.';
+
+  @override
+  String get featureCounterReceiptsDesc =>
+      'A sale at the counter gives an immutable receipt of its own, numbered once, with the tender it was paid with. It is offered only where the country\'s operation is supported, and says plainly where it is not.';
+
+  @override
+  String get featureCounterReceiptsTitle => 'Counter receipts';
+
+  @override
+  String get featureCounterTillSessionsDesc =>
+      'Open a till with its float, count the drawer at the close, and close the day with its report. A sale needs an open till; the expected cash is derived from what was taken, never typed.';
+
+  @override
+  String get featureCounterTillSessionsTitle => 'Till sessions and day close';
 
   @override
   String get featureCountriesEuName => 'the European Union';
@@ -28730,6 +28763,58 @@ class AppLocalizationsEn extends AppLocalizations {
       'This changed in the meantime. Reopen it to see where it stands.';
 
   @override
+  String get refusalCounterCashEntry =>
+      'This cash entry is not accepted: the reason is not on the list, the amount is above the limit for you, or the counts do not add up.';
+
+  @override
+  String get refusalCounterChanged =>
+      'This receipt changed meanwhile: open it again.';
+
+  @override
+  String get refusalCounterCorrectionBeyond =>
+      'A correction cannot go beyond what the original line has left.';
+
+  @override
+  String get refusalCounterCustomerNeeded =>
+      'This business names a customer on every sale: choose one before finishing.';
+
+  @override
+  String get refusalCounterDayClose =>
+      'The day cannot be closed: a till is still open, or the day is already closed.';
+
+  @override
+  String get refusalCounterDayOpen =>
+      'The day of this till is already closed: it is opened again tomorrow.';
+
+  @override
+  String get refusalCounterEssentials =>
+      'Something this receipt needs is missing or not acceptable: nothing was numbered and nothing was taken.';
+
+  @override
+  String get refusalCounterGoods =>
+      'Goods cannot be sold or taken back here: the goods ledger is off, or there is no place to take them from or put them back.';
+
+  @override
+  String get refusalCounterNotOpen =>
+      'This receipt is no longer an open draft, or a receipt was already issued for the same sale.';
+
+  @override
+  String get refusalCounterTenderState =>
+      'This card authorization is still open, unknown or already settled: ask the provider about it instead of asking again.';
+
+  @override
+  String get refusalCounterTenders =>
+      'The payments do not settle this sale exactly, or one of them is not taken here.';
+
+  @override
+  String get refusalCounterTill =>
+      'The till is not ready for this: open it first, or it is already open or closed.';
+
+  @override
+  String get refusalCounterUnsupported =>
+      'This operation is not supported for your country under the case you declared in the settings: nothing was numbered and nothing was taken.';
+
+  @override
   String refusalMainStoreExpired(String held, String asked) {
     return 'The main store holds only $held of the $asked this sale asks for that is fit to sell: the rest is past its date. Nothing was taken and the sale was not confirmed.';
   }
@@ -31808,6 +31893,34 @@ class AppLocalizationsEn extends AppLocalizations {
       'Fixed by the platform: the longest range one calendar request may ask for. It bounds the query.';
 
   @override
+  String get settingHintCounterBlindCount =>
+      'While a session is open the counter does not see the expected cash: they count the drawer and see the difference after the close. Someone who may see the finances always sees it.';
+
+  @override
+  String get settingHintCounterCashReasons =>
+      'The reasons a person may give for money paid into or out of the drawer, separated by commas (for example change, expense, other).';
+
+  @override
+  String get settingHintCounterCountByDenomination =>
+      'The float and the counted drawer are given by denomination (how many of each note and coin) rather than as a total. The counts must add up to the amount.';
+
+  @override
+  String get settingHintCounterCustomerlessSales =>
+      'Allowed: a sale may be made without naming a customer. Refused: every sale names one. A sale without a customer never creates an account, a member or a subscription.';
+
+  @override
+  String get settingHintCounterDocumentChannel =>
+      'Shared (a message or a mail), printed, or both. The receipt is the same immutable document in every case.';
+
+  @override
+  String get settingHintCounterFiscalObligation =>
+      'What you declare about the fiscal rules for a sale at the counter: none means no fiscal cash-register obligation applies to your business (your own declaration, recorded on each receipt); register required means one does. A receipt is issued only where your country\'s operation is supported under the case you declare.';
+
+  @override
+  String get settingHintCounterPaidOutLimit =>
+      'The largest amount, in minor units of the business currency (cents), that a paid-out from the drawer may be without someone who may record outgoing payments. 0 means no limit.';
+
+  @override
   String get settingHintDirectoryGeocoderUrl =>
       'The Photon-compatible service that places a published address on the discovery map: an https address on the public internet, without a user name, password, query or #. Leave it empty to use the address this app version was built with, else the public Photon service.';
 
@@ -32178,6 +32291,31 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingLabelCalendarRangeDays => 'Calendar range';
+
+  @override
+  String get settingLabelCounterBlindCount => 'Count the drawer blind';
+
+  @override
+  String get settingLabelCounterCashReasons => 'Reasons for cash in and out';
+
+  @override
+  String get settingLabelCounterCountByDenomination => 'Count by denomination';
+
+  @override
+  String get settingLabelCounterCustomerlessSales =>
+      'Sales without a named customer';
+
+  @override
+  String get settingLabelCounterDocumentChannel =>
+      'How a counter receipt leaves the counter';
+
+  @override
+  String get settingLabelCounterFiscalObligation =>
+      'Fiscal rules for counter sales';
+
+  @override
+  String get settingLabelCounterPaidOutLimit =>
+      'Largest paid-out without approval';
 
   @override
   String get settingLabelDirectoryGeocoderUrl => 'Address lookup service';
@@ -35226,6 +35364,31 @@ class AppLocalizationsEn extends AppLocalizations {
   String get statusTo => 'To';
 
   @override
+  String stockCameraCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count codes read',
+      one: '1 code read',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get stockCameraDenied =>
+      'The camera could not start. Allow camera access for DesKilo in the device’s settings, then try again.';
+
+  @override
+  String get stockCameraMisread =>
+      'That code did not read cleanly — scan again.';
+
+  @override
+  String get stockCameraOpen => 'Scan with the camera';
+
+  @override
+  String get stockCameraTitle => 'Camera scanner';
+
+  @override
   String get stockCostLabel => 'Cost per unit';
 
   @override
@@ -35464,6 +35627,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get stockCycleScanNone => 'No line still to count has this code.';
+
+  @override
+  String get stockCycleScanWhich =>
+      'Several lines still to count have this code: choose the one you are counting.';
 
   @override
   String get stockCycleScopeHighValue => 'High value';
@@ -36611,6 +36778,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String stockScanAlreadyRead(String code) {
     return 'Tag $code was already read.';
   }
+
+  @override
+  String get stockScanConfirm => 'When the camera reads a code';
+
+  @override
+  String get stockScanConfirmClick => 'Click';
+
+  @override
+  String get stockScanConfirmNone => 'Do nothing';
+
+  @override
+  String get stockScanConfirmVibrate => 'Vibrate';
 
   @override
   String get stockScanFailed =>
@@ -39499,6 +39678,127 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get threadRefsIn => 'References in';
+
+  @override
+  String get tillBasketEmpty => 'Tap an item to start a sale.';
+
+  @override
+  String get tillBasketTitle => 'Basket';
+
+  @override
+  String get tillCashExact => 'Exact amount';
+
+  @override
+  String get tillCashGiven => 'Cash given';
+
+  @override
+  String get tillCashInvalid => 'Enter the amount given as a number.';
+
+  @override
+  String get tillCashShort => 'The cash given is less than the total.';
+
+  @override
+  String tillChangeDue(String amount) {
+    return 'Change due: $amount';
+  }
+
+  @override
+  String get tillConfirmSale => 'Confirm the sale';
+
+  @override
+  String get tillFailed => 'The till could not do that. Try again.';
+
+  @override
+  String get tillKeysEmpty =>
+      'There is nothing to sell yet. Add items in the stock first.';
+
+  @override
+  String get tillKeysTitle => 'Items to ring up';
+
+  @override
+  String get tillLeaveBody =>
+      'The sale was sent and its answer did not come. Leaving keeps it waiting: open the till again and confirm it. Do not ring it up again.';
+
+  @override
+  String get tillLeaveGo => 'Leave';
+
+  @override
+  String get tillLeaveStay => 'Stay';
+
+  @override
+  String get tillLeaveTitle => 'The sale is not confirmed';
+
+  @override
+  String get tillNextCustomer => 'Next customer';
+
+  @override
+  String tillNotReady(String operation) {
+    return 'Not ready in your country: $operation';
+  }
+
+  @override
+  String get tillNotReadyHint =>
+      'Nothing is numbered and nothing is taken until the country\'s operation is supported.';
+
+  @override
+  String get tillOpCorrectReceipt => 'correcting a receipt';
+
+  @override
+  String get tillOpExportFiscal => 'exporting fiscal records';
+
+  @override
+  String get tillOpIssueReceipt => 'issuing a receipt';
+
+  @override
+  String get tillOpReconcileTender => 'reconciling a card payment';
+
+  @override
+  String get tillOpSignFiscal => 'signing a fiscal receipt';
+
+  @override
+  String get tillPayCash => 'Take cash';
+
+  @override
+  String get tillPricing => 'Pricing the basket…';
+
+  @override
+  String get tillQuantityHint => 'An exact quantity, for example 1 or 0.350.';
+
+  @override
+  String get tillQuantityRefused =>
+      'Enter a quantity above zero with at most six decimals.';
+
+  @override
+  String get tillQuantityTitle => 'Quantity sold';
+
+  @override
+  String tillReceiptNumber(String number) {
+    return 'Receipt $number';
+  }
+
+  @override
+  String tillRemoveLine(String name) {
+    return 'Take $name out of the basket';
+  }
+
+  @override
+  String get tillRetry => 'Try again';
+
+  @override
+  String get tillSoldTitle => 'Sold';
+
+  @override
+  String tillTaxIncluded(String amount) {
+    return 'of which tax $amount';
+  }
+
+  @override
+  String get tillTitle => 'Till';
+
+  @override
+  String tillTotalDue(String amount) {
+    return 'Total to pay: $amount';
+  }
 
   @override
   String get tipAvailabilityClosure =>

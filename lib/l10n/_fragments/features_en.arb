@@ -921,5 +921,21 @@
   },
   "@featureStockScanningDesc": {
     "description": "#4359 feature description"
+  },
+  "featureCounterReceiptsTitle": "Counter receipts",
+  "featureCounterReceiptsDesc": "A sale at the counter gives an immutable receipt of its own, numbered once, with the tender it was paid with. It is offered only where the country's operation is supported, and says plainly where it is not.",
+  "@featureCounterReceiptsTitle": {
+    "description": "#4184 feature name"
+  },
+  "@featureCounterReceiptsDesc": {
+    "description": "#4184 feature description"
+  },
+  "featureCounterTillSessionsTitle": "Till sessions and day close",
+  "featureCounterTillSessionsDesc": "Open a till with its float, count the drawer at the close, and close the day with its report. A sale needs an open till; the expected cash is derived from what was taken, never typed.",
+  "@featureCounterTillSessionsTitle": {
+    "description": "#4367 feature name"
+  },
+  "@featureCounterTillSessionsDesc": {
+    "description": "#4367 feature description"
   }
 }

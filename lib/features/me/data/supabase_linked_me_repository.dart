@@ -2,6 +2,7 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 import '../../../core/backend/connected_installations.dart';
+import '../../../core/data/server_names.dart';
 import '../../workspace/domain/workspace.dart';
 import '../domain/linked_me_repository.dart';
 import '../domain/my_spaces.dart';
@@ -37,9 +38,9 @@ class SupabaseLinkedMeRepository implements LinkedMeRepository {
     if (user == null) return const <LinkedSpace>[];
     // RLS answers with the spaces this account may read there; the
     // membership rows say how it stands in each.
-    final spaces = await client.from('workspaces').select();
+    final spaces = await client.from(ServerTable.workspaces).select();
     final members = await client
-        .from('members')
+        .from(ServerTable.members)
         .select('workspace_id, status, is_owner, is_admin')
         .eq('user_id', user);
     final byWorkspace = {

@@ -42,8 +42,14 @@ String _bare(String name) =>
     name.trim().toLowerCase().replaceAll('"', '').split('.').last;
 
 /// Functions [sql] creates without revoking execute on them in the same text.
+///
+/// #4413 -- a `pg_temp.` function is exempt: it lives in the migration's own session only and no client can
+/// ever reach it (0918's anchored-patch helpers revoke nothing and need nothing revoked).
 Set<String> missingRevokes(String sql) {
-  final created = _create.allMatches(sql).map((m) => _bare(m.group(1)!));
+  final created = _create
+      .allMatches(sql)
+      .where((m) => !m.group(1)!.toLowerCase().startsWith('pg_temp.'))
+      .map((m) => _bare(m.group(1)!));
   final revoked = _revoke.allMatches(sql).map((m) => _bare(m.group(1)!)).toSet();
   return created.where((c) => !revoked.contains(c)).toSet();
 }
@@ -212,5 +218,13 @@ create function beta() returns void language sql as \$\$ select 1 \$\$;
 revoke execute on function alpha() from public, anon;
 ''';
     expect(missingRevokes(sql), {'beta'});
+  });
+
+  test('a pg_temp helper needs no revoke, and a public one of the same name still does', () {
+    const sql = '''
+create or replace function pg_temp.patch(p text) returns text language sql as \$\$ select p \$\$;
+create or replace function public.patch_me(p text) returns text language sql as \$\$ select p \$\$;
+''';
+    expect(missingRevokes(sql), {'patch_me'});
   });
 }

@@ -2980,6 +2980,7 @@ Un scanner de codes-barres en mode clavier (il saisit le code puis appuie sur En
 - **Un scan répété** en ajoute un de plus ou, si votre entreprise l’a choisi dans les réglages du stock (*Scan répété*), vous place sur le champ de quantité.
 - **Un code qui ne désigne rien** affiche *Code … inconnu — l’ajouter à un article ?* ; qui peut gérer le stock ouvre les articles et le donne à l’un d’eux. Un emplacement qui ne peut pas recevoir de marchandises, ou un article non tenu en stock, est refusé en toutes lettres et rien n’est rempli.
 - **Un scan n’envoie rien.** Il remplit seulement le formulaire ; le bouton que vous pressez exécute la même commande, avec les mêmes droits, que sans scanner.
+- **La caméra.** Sur un téléphone ou une tablette, **Scanner avec la caméra** (dans la barre de scan d’une feuille de marchandises) ouvre la caméra comme scanner : codes-barres de produits (EAN-13, EAN-8, UPC-A/E, Code 128) et étiquettes 2D des emplacements et des produits GS1 (DataMatrix, QR). Chaque code suit le même chemin qu’avec un scanner qui tape, et la caméra reste ouverte pour des scans répétés, en disant combien de codes elle a lus et la dernière ligne. Un code-barres dont la clé de contrôle est fausse est *mal lu* : scannez à nouveau, rien n’est envoyé. Une étiquette GS1 fixe l’article et, quand l’article suit les lots ou la péremption, le lot et la date de péremption. La confirmation d’une lecture (rien, une vibration, un clic) est un réglage de l’appareil sous **Stock → Réglages du stock → Scanner**. Si la caméra ne démarre pas, autorisez l’accès à la caméra pour DesKilo dans les réglages de l’appareil ; dans un navigateur ou sur un ordinateur, saisissez le code ou utilisez un scanner matériel.
 - **Réglages.** L’usage du scanner dépend de la fonction *Scanner* de l’entreprise, sous la gestion du stock. Le plus long intervalle entre deux touches d’un scan (une personne tape moins vite qu’un scanner) et ce qui termine un code (Entrée, Tab ou les deux) sont propres à l’appareil, sous **Stock → Réglages du stock → Scanner**.
 
 ### Puces avec le NFC du téléphone
@@ -2995,6 +2996,18 @@ Avec la fonction *Puces* activée et un téléphone qui lit le NFC, **Stock → 
 - **Lire dans une feuille de marchandises.** Une puce se lit comme un code scanné : une puce d’emplacement fixe l’emplacement courant, une puce d’article compte l’article. Une puce lue deux fois dans une feuille est ignorée (*déjà lue*) ; une puce qui ne désigne rien dit *Puce inconnue*.
 - **Les étiquettes UHF** ne sont pas lisibles par un téléphone. Un article qui n’en a que de telles dit *utilisez le lecteur RFID*.
 - Associer demande le droit de gérer le stock ; lire, celui de le voir.
+
+### Caisse
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous servez des clients au comptoir et voulez que chaque vente soit faite en quelques secondes, numérotée et payée en espèces.
+
+Ouvrez **Caisse** dans le menu des ventes (elle demande la fonction tickets de caisse et le droit d'émettre des factures). Les articles sont des touches : un appui en enregistre un, un second en ajoute un. Touchez une ligne pour saisir exactement la **Quantité vendue**, par exemple 0,350 pour un article pesé (une virgule est lue comme un point ; la quantité doit être supérieure à zéro, avec six décimales au plus). Le serveur tarife le panier, taxe comprise, et la caisse affiche **Total à payer** ; rien n'est calculé sur le téléphone.
+
+Appuyez sur **Encaisser en espèces** et saisissez les **Espèces remises** (ou **Compte juste**). Moins que le total est refusé avant tout envoi. Le serveur numérote la vente et la caisse indique la monnaie à rendre ; **Client suivant** repart d'un panier vide. Envoyer deux fois la même vente ne la vend jamais deux fois.
+
+Là où votre pays n'autorise pas encore la caisse, elle nomme l'opération manquante et ne propose rien : rien n'est numéroté ni encaissé. Une ligne de marchandise demande la gestion de stock ; un refus du serveur est dit en mots. Paiements par carte, remises, remboursements et retours ne font pas partie de cette première caisse.
 
 ### Valeur du stock et origine des marchandises
 

@@ -1332,6 +1332,8 @@ jobs:
         run: |
           rc=0
           bash scripts/contract_check.sh "$DB_URL" || rc=1
+          # #3731 (K4) — every released app's calls and columns are still served.
+          bash scripts/consumer_contract_check.sh "$DB_URL" || rc=1
           bash scripts/db_dictionary.sh "$DB_URL" --advisory || rc=1
           exit $rc
 

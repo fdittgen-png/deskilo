@@ -448,6 +448,9 @@ const List<ExportSource> workspaceExportSources = [
   ExportSource.everyColumn('supplier_item_mappings'),
   // #4171 — what was put away from a delivery.
   ExportSource.everyColumn('stock_receipt_allocations'),
+  // #4184, #4185, #4367 — the counter: receipts, lines, tenders, refunds, tills, sessions, cash entries, day closes.
+  ExportSource.everyColumn('counter_receipts'), ExportSource.everyColumn('counter_receipt_lines'), ExportSource.everyColumn('counter_tenders'), ExportSource.everyColumn('counter_refunds'),
+  ExportSource.everyColumn('counter_tills'), ExportSource.everyColumn('counter_till_sessions'), ExportSource.everyColumn('counter_cash_entries'), ExportSource.everyColumn('counter_day_closes'),
   // #4362 — the tags bound to items, places and pieces, and the named pieces.
   ExportSource.everyColumn('stock_tags'),
   ExportSource.everyColumn('stock_tagged_units'),

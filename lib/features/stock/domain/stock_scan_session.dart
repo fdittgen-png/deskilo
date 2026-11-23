@@ -5,6 +5,8 @@
 // variant or package-unit code adds a line -- or one more to the line it already has -- in the exact factor of
 // the package unit, and a code that names nothing, or that this sheet cannot use, is said in words. It is pure: the
 // sheet decides what a place or a line is, so the same rules serve the move, take-out, put-away and count sheets.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show ExactQuantity, ExactQuantityResult;
+
 import 'stock_code_resolver.dart';
 
 /// What one scan did.
@@ -27,7 +29,7 @@ enum ScanOutcome {
 
 /// A counted line: an item (and variant) with an exact quantity in its inventory unit, as a fraction.
 class ScanLine {
-  ScanLine({required this.itemId, required this.itemName, required this.unit, this.variantId, this.variantLabel, this.lotCode});
+  ScanLine({required this.itemId, required this.itemName, required this.unit, this.variantId, this.variantLabel, this.lotCode, this.expiresOn});
 
   final String itemId;
   final String itemName;
@@ -35,6 +37,9 @@ class ScanLine {
   final String? variantId;
   final String? variantLabel;
   final String? lotCode;
+
+  /// The expiry day (`YYYY-MM-DD`) a GS1 code carried, when it did.
+  String? expiresOn;
 
   /// The quantity so far, as `num / den` of [unit].
   int num = 0;
@@ -61,32 +66,17 @@ class ScanLine {
 
   static int _gcd(int a, int b) => b == 0 ? (a == 0 ? 1 : a) : _gcd(b, a % b);
 
-  /// The quantity as an exact decimal text when it has one (thirds do not: `1/3`), for a quantity field.
-  String get quantityText {
-    if (den == 1) return '$num';
-    var d = den;
-    var twos = 0;
-    var fives = 0;
-    while (d % 2 == 0) {
-      d ~/= 2;
-      twos++;
-    }
-    while (d % 5 == 0) {
-      d ~/= 5;
-      fives++;
-    }
-    if (d != 1) return '$num/$den';
-    final scale = twos > fives ? twos : fives;
-    var pow = 1;
-    for (var i = 0; i < scale; i++) {
-      pow *= 10;
-    }
-    final scaled = num * (pow ~/ den);
-    final text = scaled.abs().toString().padLeft(scale + 1, '0');
-    final whole = text.substring(0, text.length - scale);
-    final frac = text.substring(text.length - scale).replaceFirst(RegExp(r'0+$'), '');
-    return '${scaled < 0 ? '-' : ''}$whole${frac.isEmpty ? '' : '.$frac'}';
-  }
+  /// #4393 -- the quantity, exactly, or the reason it has none: three scans of
+  /// a third of a box are one box; one scan of it has no six-decimal value.
+  ExactQuantityResult get quantity => ExactQuantity.parse('$num').scaled(1, den);
+
+  /// The quantity for a quantity field: exact decimal text, or null when it
+  /// has none (the sheet then asks the person for the quantity). Never `n/d`.
+  String? get quantityText => quantity.value?.text;
+
+  /// The quantity for a banner: exact, or rounded as the ledger rounds an
+  /// entered quantity, marked as such.
+  String get shownQuantity => quantityText ?? '≈ ${ExactQuantity.parse('$num').scaled(1, den, round: true).value?.text ?? ''}';
 }
 
 /// The result of one scan, for the sheet to show.
@@ -124,6 +114,7 @@ class StockScanSession {
     bool Function(ScannedPlace place)? placeAllowed,
     bool Function(ScannedItem item)? itemAllowed,
     bool fromTag = false,
+    ({String? lot, String? expiresOn})? gs1,
   }) {
     // a tag bound to a place names that place, like its barcode does
     final place = resolution.place;
@@ -149,9 +140,12 @@ class StockScanSession {
           unit: item.unit,
           variantId: resolution.variantId,
           variantLabel: resolution.variantLabel,
-          lotCode: resolution.lotCode,
+          lotCode: gs1?.lot ?? resolution.lotCode,
+          expiresOn: gs1?.expiresOn,
         );
         final existing = lines.where(candidate.same).firstOrNull;
+        // a repeat scan of a labelled unit gives an expiry to a line that had none
+        if (existing != null && existing.expiresOn == null) existing.expiresOn = candidate.expiresOn;
         if (existing != null && !addsOne) {
           return ScanResult(ScanOutcome.line, line: existing, code: resolution.code, asksQuantity: true, fromTag: fromTag);
         }

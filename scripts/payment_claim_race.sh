@@ -71,7 +71,7 @@ select '$ws', p.id, o.id, 'CLAIM-' || m || '-' || k || '-' || substr('$ws', 1, 8
                ('2031-05', 'full'), ('2031-06', 'full')) v(m, k)
  where p.user_id = '$payer' and o.user_id = '$owner';
 SQL
-q() { psql "$url" -X -qAt -v ON_ERROR_STOP=1 -c "$1"; }
+. "$(dirname "${BASH_SOURCE[0]}")/lib/race.sh"
 member=$(q "select id from public.members where workspace_id = '$ws' and user_id = '$payer'")
 inv() { q "select id from public.invoices where workspace_id = '$ws' and period = '$1' and kind = '$2'"; }
 x=$(inv 2031-02 full); y=$(inv 2031-02 usage); z=$(inv 2031-02 subscription)

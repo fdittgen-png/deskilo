@@ -2980,6 +2980,7 @@ A barcode scanner in keyboard mode (it types the code and presses Enter) works i
 - **A repeated scan** adds one more, or, when your business chose so in the stock settings (*Repeated scan*), puts you on the quantity field instead.
 - **A code that names nothing** says *Unknown code … — add it to an item?*; whoever may manage the stock can open the items and give it to one. A place that cannot take goods, or an item that is not kept in stock, is refused in words and nothing is filled.
 - **Nothing is sent by a scan.** It only fills the form; the button you press runs the same command, with the same rights, as without a scanner.
+- **The camera.** On a phone or tablet, **Scan with the camera** (in the scan bar of a goods sheet) opens the camera as a scanner: product barcodes (EAN-13, EAN-8, UPC-A/E, Code 128) and the 2D labels of places and GS1 products (DataMatrix, QR). Every code goes through the same path as a scanner that types, and the camera stays open for repeated scans, saying how many codes it read and the last line. A barcode whose check digit is wrong is *not read cleanly*: scan again, nothing is sent. A GS1 label sets the item and, where the item tracks lots or expiry, the lot and expiry date. How a read is confirmed (nothing, a vibration, a click) is a device setting in **Stock → Stock settings → Scanner**. If the camera cannot start, allow camera access for DesKilo in the device's settings; in a browser or on a desktop, type the code or use a hardware scanner.
 - **Settings.** Whether scanning is used is the business's *Scanner* feature under stock management. The longest gap between two keys of one scan (a person types slower than a scanner) and what ends a code (Enter, Tab or either) belong to the device, in **Stock → Stock settings → Scanner**.
 
 ### Tags with the phone's NFC
@@ -2995,6 +2996,18 @@ With the *Tags* feature on and a phone that reads NFC, **Stock → Items** and *
 - **Read in a goods sheet.** A chip is read like a scanned code: a place tag sets the current place, an item tag counts the item. A chip read twice in one sheet is ignored (*already read*); a chip that names nothing says *Unknown tag*.
 - **UHF labels** cannot be read by a phone. An item that only has them says *use the RFID reader*.
 - Binding needs the right to manage the stock; reading needs the right to see it.
+
+### Till
+
+**Audience:** Administrator · Owner
+
+You serve customers at the counter and want each sale made in seconds, numbered, and paid in cash.
+
+Open **Till** in the sales menu (it needs the counter receipts feature and the right to issue invoices). The items are keys: a tap rings one up, a second tap adds one more. Tap a line to type its **Quantity sold** exactly, for example 0.350 for a weighed item (a comma is read as a point; the quantity must be above zero, with at most six decimals). The server prices the basket, with the tax included, and the till shows **Total to pay**; nothing is priced on the phone.
+
+Press **Take cash** and type the **Cash given** (or **Exact amount**). Less than the total is refused before anything is sent. The sale is numbered by the server and the till says the change due; **Next customer** starts a clean basket. Sending the same sale twice never sells twice.
+
+Where your country does not yet allow the counter, the till says which operation is missing and offers nothing: nothing is numbered and nothing is taken. A goods line needs stock management on; a refusal of the server is shown in words. Card payments, discounts, refunds and returns are not part of this first till.
 
 ### Stock value and where goods came from
 

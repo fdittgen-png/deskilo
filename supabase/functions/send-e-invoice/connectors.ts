@@ -155,6 +155,9 @@ export type Provider = string;
 
 export const isProvider = (value: string): boolean => PROVIDERS.includes(value);
 
+/** The environment a sandbox test document is sent in and asked about: the connector's documented sandbox (#3883, #4400). */
+export const SANDBOX_ENVIRONMENT = "uat" as const;
+
 /** The documented test environments. A French accredited platform has
  * none shared — its URLs are the platform's own. */
 export const SANDBOX: Record<string, Config> = Object.fromEntries(

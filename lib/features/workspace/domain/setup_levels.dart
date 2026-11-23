@@ -287,6 +287,10 @@ const Map<SetupProcess, List<SetupLevel>> setupLevels = {
         WorkspaceFeature.stockTags,
         // #4359 — scanning.
         WorkspaceFeature.stockScanning,
+        // #4184
+        WorkspaceFeature.counterReceipts,
+        // #4367
+        WorkspaceFeature.counterTillSessions,
       },
     ),
   ],

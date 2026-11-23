@@ -6,6 +6,7 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/server_names.dart';
 import '../domain/workspace.dart';
 
 mixin SupabaseWorkspaceRows {
@@ -24,7 +25,7 @@ mixin SupabaseWorkspaceRows {
     Map<String, Object?> values,
   ) async {
     final rows = await client
-        .from('workspaces')
+        .from(ServerTable.workspaces)
         .update(values)
         .eq('id', workspaceId)
         .select('id');

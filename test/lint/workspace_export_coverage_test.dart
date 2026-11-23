@@ -77,6 +77,7 @@ final Set<String> _exported = {
 /// quietly becomes partial, so each one is an argument somebody has to
 /// disagree with in review.
 const Map<String, String> _notExported = {
+  'billing_access_grants': 'an account\'s access to one billing customer\'s documents (#4164): a login of this installation and a one-time code, which identify nobody outside it and must never leave it in a workbook; the billing customers themselves are exported (billing_parties), and access is granted again only by a new invitation',
   'configuration_choice_events': 'the server\'s record of what each confirmation of a business kind did (#4168): append-only provenance of a configuration choice, never a business record; the settings and features it concerns are exported with the workspace, and the person who confirmed is a user id returned to them by their own rights request',
   'plans': 'retired (#4042): a business\'s tariffs are its fee bands; no screen writes a plan and the table waits to be dropped',
   'member_term_changes': 'a member\'s dated plan changes and pauses (#3858): the history of their terms, personal data returned by export_my_data to the member it belongs to; the workbook carries each member\'s current share and status',
@@ -666,6 +667,9 @@ const Map<String, Set<String>> _notExportedColumns = {
     'kind',
   },
   'payment_intents': {
+    // #4165 B1 — the allocation mode is the server's rule of how a payment is spent; the
+    // Payments sheet states it once the app reads it (#4165 B2 removes this).
+    'allocation_mode',
     // #2380 — the provider's settlement facts of a payment (its fee, net,
     // their currency, its transaction and payout): what the provider
     // reports and keeps; the export carries the payment itself.
@@ -695,6 +699,9 @@ const Map<String, Set<String>> _notExportedColumns = {
     'source_xml',
   },
   'ledger_entries': {
+    // #4165 B1 — the allocation mode is the server's rule of how a payment is spent; the
+    // Payments sheet states it once the app reads it (#4165 B2 removes this).
+    'allocation_mode',
     // A description as frozen facts (#3809): what a document prints in its
     // own language. The export carries the description itself, the fallback
     // text that says the same.

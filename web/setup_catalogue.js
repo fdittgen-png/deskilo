@@ -694,6 +694,14 @@ window.SETUP_REGISTRY={
   [
    "stockScanning",
    false
+  ],
+  [
+   "counterReceipts",
+   false
+  ],
+  [
+   "counterTillSessions",
+   false
   ]
  ],
  "requires": {
@@ -816,7 +824,9 @@ window.SETUP_REGISTRY={
   "stockCycleCounts": "stockCounts",
   "stockItemGroups": "stockManagement",
   "stockTags": "stockManagement",
-  "stockScanning": "stockManagement"
+  "stockScanning": "stockManagement",
+  "counterReceipts": "standaloneInvoicing",
+  "counterTillSessions": "counterReceipts"
  },
  "availableIn": {
   "recapitulativeStatement": [
@@ -1543,7 +1553,9 @@ window.SETUP_PROCESSES=[
      "stockCycleCounts",
      "stockItemGroups",
      "stockTags",
-     "stockScanning"
+     "stockScanning",
+     "counterReceipts",
+     "counterTillSessions"
     ]
    }
   ]
@@ -2038,7 +2050,9 @@ window.SETUP_LEVELS={
       "stockCycleCounts",
       "stockItemGroups",
       "stockTags",
-      "stockScanning"
+      "stockScanning",
+      "counterReceipts",
+      "counterTillSessions"
      ],
      "needs": {
       "money": "invoices"

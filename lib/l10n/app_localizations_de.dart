@@ -1076,6 +1076,25 @@ class AppLocalizationsDe extends AppLocalizations {
   String get appTitle => 'DesKilo';
 
   @override
+  String get appUpdateBody =>
+      'Diese Installation nimmt nur eine neuere DesKilo-App an. Ihre Daten sind sicher: Nichts, was Sie eingegeben haben, geht verloren, und alles ist wieder da, sobald die App aktualisiert ist.';
+
+  @override
+  String get appUpdateDesktop =>
+      'Installieren Sie das neueste DesKilo-Paket für diesen Computer und öffnen Sie es dann erneut.';
+
+  @override
+  String get appUpdateStore =>
+      'Aktualisieren Sie DesKilo in dem Store, aus dem Sie es installiert haben, und öffnen Sie es dann erneut.';
+
+  @override
+  String get appUpdateTitle => 'Diese App braucht ein Update';
+
+  @override
+  String get appUpdateWeb =>
+      'Laden Sie diese Seite neu, um die neueste Version der App zu laden.';
+
+  @override
   String get applicationAcceptedVote => 'Hat diese Anfrage genehmigt';
 
   @override
@@ -11656,6 +11675,21 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get featureConfigurationTransferDesc =>
       'Die Raumdatei (XML) trägt die gesamte Konfiguration — Tarife, rechtliche Identität, Buchungs- und Freigaberegeln, Rollen, Dokumentvorlagen, Standorte, Schließtage — und der Import wendet sie an, auch auf einen Raum, der schon Buchungen hat. Aus: die Datei trägt nur Einstellungen und Grundriss.';
+
+  @override
+  String get featureCounterReceiptsDesc =>
+      'Ein Verkauf an der Kasse ergibt einen unveränderlichen, einmal nummerierten Beleg mit der erhaltenen Zahlung. Er wird nur angeboten, wo der Vorgang des Landes unterstützt wird, und sagt klar, wenn nicht.';
+
+  @override
+  String get featureCounterReceiptsTitle => 'Kassenbelege';
+
+  @override
+  String get featureCounterTillSessionsDesc =>
+      'Eine Kasse mit ihrem Wechselgeld eröffnen, die Schublade beim Abschluss zählen und den Tag mit seinem Bericht abschließen. Ein Verkauf braucht eine geöffnete Kasse; das erwartete Bargeld wird aus dem Eingenommenen abgeleitet, nie eingetippt.';
+
+  @override
+  String get featureCounterTillSessionsTitle =>
+      'Kassensitzungen und Tagesabschluss';
 
   @override
   String get featureCountriesEuName => 'der Europäischen Union';
@@ -29021,6 +29055,58 @@ class AppLocalizationsDe extends AppLocalizations {
       'Das hat sich inzwischen geändert. Öffnen Sie es erneut, um den aktuellen Stand zu sehen.';
 
   @override
+  String get refusalCounterCashEntry =>
+      'Diese Bargeldbuchung wird nicht angenommen: Der Grund steht nicht auf der Liste, der Betrag liegt über Ihrer Grenze, oder die Zahlen ergeben nicht den Betrag.';
+
+  @override
+  String get refusalCounterChanged =>
+      'Dieser Beleg hat sich inzwischen geändert: Öffnen Sie ihn erneut.';
+
+  @override
+  String get refusalCounterCorrectionBeyond =>
+      'Eine Korrektur kann nicht über das hinausgehen, was von der ursprünglichen Zeile übrig ist.';
+
+  @override
+  String get refusalCounterCustomerNeeded =>
+      'Dieser Betrieb nennt bei jedem Verkauf einen Kunden: Wählen Sie vor dem Abschluss einen aus.';
+
+  @override
+  String get refusalCounterDayClose =>
+      'Der Tag kann nicht abgeschlossen werden: Eine Kasse ist noch offen, oder der Tag ist schon abgeschlossen.';
+
+  @override
+  String get refusalCounterDayOpen =>
+      'Der Tag dieser Kasse ist schon abgeschlossen: Sie wird morgen wieder geöffnet.';
+
+  @override
+  String get refusalCounterEssentials =>
+      'Für diesen Beleg fehlt etwas oder es ist nicht zulässig: Es wurde nichts nummeriert und nichts angenommen.';
+
+  @override
+  String get refusalCounterGoods =>
+      'Waren können hier nicht verkauft oder zurückgenommen werden: Das Warenbuch ist aus, oder es gibt keinen Ort, von dem sie genommen oder an den sie zurückgelegt werden.';
+
+  @override
+  String get refusalCounterNotOpen =>
+      'Dieser Beleg ist kein offener Entwurf mehr, oder für denselben Verkauf wurde schon ein Beleg ausgestellt.';
+
+  @override
+  String get refusalCounterTenderState =>
+      'Diese Kartenfreigabe ist noch offen, unbekannt oder schon abgeschlossen: Fragen Sie beim Anbieter nach, statt erneut anzufragen.';
+
+  @override
+  String get refusalCounterTenders =>
+      'Die Zahlungen begleichen diesen Verkauf nicht genau, oder eine davon wird hier nicht angenommen.';
+
+  @override
+  String get refusalCounterTill =>
+      'Die Kasse ist dafür nicht bereit: Öffnen Sie sie zuerst, oder sie ist schon offen oder geschlossen.';
+
+  @override
+  String get refusalCounterUnsupported =>
+      'Dieser Vorgang wird für Ihr Land in dem in den Einstellungen erklärten Fall nicht unterstützt: Es wurde nichts nummeriert und nichts angenommen.';
+
+  @override
   String refusalMainStoreExpired(String held, String asked) {
     return 'Das Hauptlager enthält nur $held von den $asked, die dieser Verkauf verlangt, die verkäuflich sind: der Rest ist abgelaufen. Nichts wurde entnommen und der Verkauf wurde nicht bestätigt.';
   }
@@ -32138,6 +32224,34 @@ class AppLocalizationsDe extends AppLocalizations {
       'Von der Plattform festgelegt: der längste Zeitraum, den eine Kalenderabfrage anfordern darf. Er begrenzt die Abfrage.';
 
   @override
+  String get settingHintCounterBlindCount =>
+      'Solange eine Sitzung offen ist, sieht die Kasse das erwartete Bargeld nicht: Sie zählt die Schublade und sieht die Differenz nach dem Abschluss. Wer die Finanzen sehen darf, sieht es immer.';
+
+  @override
+  String get settingHintCounterCashReasons =>
+      'Die Gründe, die jemand für Geld angeben kann, das in die Schublade eingezahlt oder entnommen wird, durch Kommas getrennt (zum Beispiel Wechselgeld, Ausgabe, sonstiges).';
+
+  @override
+  String get settingHintCounterCountByDenomination =>
+      'Wechselgeld und gezählte Schublade werden nach Stückelung angegeben (wie viele von jedem Schein und jeder Münze) statt als Summe. Die Zahlen müssen den Betrag ergeben.';
+
+  @override
+  String get settingHintCounterCustomerlessSales =>
+      'Erlaubt: Ein Verkauf kann ohne Kundennamen erfolgen. Abgelehnt: Jeder Verkauf nennt einen Kunden. Ein Verkauf ohne Kunden legt nie ein Konto, ein Mitglied oder ein Abonnement an.';
+
+  @override
+  String get settingHintCounterDocumentChannel =>
+      'Geteilt (Nachricht oder Mail), gedruckt oder beides. Der Beleg ist in jedem Fall dasselbe unveränderliche Dokument.';
+
+  @override
+  String get settingHintCounterFiscalObligation =>
+      'Was Sie zu den steuerlichen Vorgaben für einen Verkauf an der Kasse erklären: keine bedeutet, dass für Ihren Betrieb keine Kassenpflicht gilt (Ihre eigene Erklärung, auf jedem Beleg festgehalten); Kasse erforderlich bedeutet, dass eine gilt. Ein Beleg wird nur ausgestellt, wo der Vorgang Ihres Landes für den erklärten Fall unterstützt wird.';
+
+  @override
+  String get settingHintCounterPaidOutLimit =>
+      'Der größte Betrag in Untereinheiten der Betriebswährung (Cent), den eine Entnahme aus der Schublade ohne jemanden haben darf, der ausgehende Zahlungen erfassen darf. 0 heißt keine Grenze.';
+
+  @override
   String get settingHintDirectoryGeocoderUrl =>
       'Der Photon-kompatible Dienst, der eine veröffentlichte Adresse auf der Entdecken-Karte platziert: eine https-Adresse im öffentlichen Internet, ohne Benutzername, Passwort, Abfrage oder #. Leer lassen, um die Adresse zu verwenden, mit der diese App-Version gebaut wurde, sonst den öffentlichen Photon-Dienst.';
 
@@ -32510,6 +32624,30 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingLabelCalendarRangeDays => 'Kalenderzeitraum';
+
+  @override
+  String get settingLabelCounterBlindCount => 'Die Schublade blind zählen';
+
+  @override
+  String get settingLabelCounterCashReasons => 'Gründe für Bargeld ein und aus';
+
+  @override
+  String get settingLabelCounterCountByDenomination => 'Nach Stückelung zählen';
+
+  @override
+  String get settingLabelCounterCustomerlessSales =>
+      'Verkäufe ohne genannten Kunden';
+
+  @override
+  String get settingLabelCounterDocumentChannel =>
+      'Wie ein Kassenbeleg die Kasse verlässt';
+
+  @override
+  String get settingLabelCounterFiscalObligation =>
+      'Steuerliche Vorgaben für Kassenverkäufe';
+
+  @override
+  String get settingLabelCounterPaidOutLimit => 'Größte Entnahme ohne Freigabe';
 
   @override
   String get settingLabelDirectoryGeocoderUrl => 'Adresssuchdienst';
@@ -35612,6 +35750,31 @@ class AppLocalizationsDe extends AppLocalizations {
   String get statusTo => 'Bis';
 
   @override
+  String stockCameraCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Codes gelesen',
+      one: '1 Code gelesen',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get stockCameraDenied =>
+      'Die Kamera konnte nicht starten. Erlauben Sie DesKilo den Kamerazugriff in den Geräteeinstellungen und versuchen Sie es erneut.';
+
+  @override
+  String get stockCameraMisread =>
+      'Dieser Code wurde nicht sauber gelesen – scannen Sie erneut.';
+
+  @override
+  String get stockCameraOpen => 'Mit der Kamera scannen';
+
+  @override
+  String get stockCameraTitle => 'Kamera-Scanner';
+
+  @override
   String get stockCostLabel => 'Kosten je Einheit';
 
   @override
@@ -35851,6 +36014,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get stockCycleScanNone =>
       'Keine noch zu zählende Zeile hat diesen Code.';
+
+  @override
+  String get stockCycleScanWhich =>
+      'Mehrere noch zu zählende Zeilen haben diesen Code: Wählen Sie die, die Sie zählen.';
 
   @override
   String get stockCycleScopeHighValue => 'Hoher Wert';
@@ -37016,6 +37183,18 @@ class AppLocalizationsDe extends AppLocalizations {
   String stockScanAlreadyRead(String code) {
     return 'Der Tag $code wurde bereits gelesen.';
   }
+
+  @override
+  String get stockScanConfirm => 'Wenn die Kamera einen Code liest';
+
+  @override
+  String get stockScanConfirmClick => 'Klicken';
+
+  @override
+  String get stockScanConfirmNone => 'Nichts tun';
+
+  @override
+  String get stockScanConfirmVibrate => 'Vibrieren';
 
   @override
   String get stockScanFailed =>
@@ -39953,6 +40132,130 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get threadRefsIn => 'Verweise in';
+
+  @override
+  String get tillBasketEmpty =>
+      'Tippen Sie auf einen Artikel, um einen Verkauf zu beginnen.';
+
+  @override
+  String get tillBasketTitle => 'Warenkorb';
+
+  @override
+  String get tillCashExact => 'Passend';
+
+  @override
+  String get tillCashGiven => 'Gegeben';
+
+  @override
+  String get tillCashInvalid => 'Geben Sie den gegebenen Betrag als Zahl ein.';
+
+  @override
+  String get tillCashShort => 'Der gegebene Betrag ist kleiner als die Summe.';
+
+  @override
+  String tillChangeDue(String amount) {
+    return 'Rückgeld: $amount';
+  }
+
+  @override
+  String get tillConfirmSale => 'Verkauf bestätigen';
+
+  @override
+  String get tillFailed =>
+      'Die Kasse konnte das nicht ausführen. Versuchen Sie es erneut.';
+
+  @override
+  String get tillKeysEmpty =>
+      'Es gibt noch nichts zu verkaufen. Legen Sie zuerst Artikel im Lager an.';
+
+  @override
+  String get tillKeysTitle => 'Artikel zum Kassieren';
+
+  @override
+  String get tillLeaveBody =>
+      'Der Verkauf wurde gesendet, die Antwort blieb aus. Beim Verlassen bleibt er offen: Öffnen Sie die Kasse erneut und bestätigen Sie ihn. Buchen Sie ihn nicht noch einmal.';
+
+  @override
+  String get tillLeaveGo => 'Verlassen';
+
+  @override
+  String get tillLeaveStay => 'Bleiben';
+
+  @override
+  String get tillLeaveTitle => 'Der Verkauf ist nicht bestätigt';
+
+  @override
+  String get tillNextCustomer => 'Nächster Kunde';
+
+  @override
+  String tillNotReady(String operation) {
+    return 'In Ihrem Land noch nicht bereit: $operation';
+  }
+
+  @override
+  String get tillNotReadyHint =>
+      'Es wird nichts nummeriert und nichts kassiert, solange der Vorgang des Landes nicht unterstützt wird.';
+
+  @override
+  String get tillOpCorrectReceipt => 'Beleg korrigieren';
+
+  @override
+  String get tillOpExportFiscal => 'Fiskaldaten exportieren';
+
+  @override
+  String get tillOpIssueReceipt => 'Beleg ausstellen';
+
+  @override
+  String get tillOpReconcileTender => 'Kartenzahlung abgleichen';
+
+  @override
+  String get tillOpSignFiscal => 'fiskalischen Beleg signieren';
+
+  @override
+  String get tillPayCash => 'Bar kassieren';
+
+  @override
+  String get tillPricing => 'Warenkorb wird berechnet …';
+
+  @override
+  String get tillQuantityHint =>
+      'Eine genaue Menge, zum Beispiel 1 oder 0,350.';
+
+  @override
+  String get tillQuantityRefused =>
+      'Geben Sie eine Menge über null mit höchstens sechs Dezimalstellen ein.';
+
+  @override
+  String get tillQuantityTitle => 'Verkaufte Menge';
+
+  @override
+  String tillReceiptNumber(String number) {
+    return 'Beleg $number';
+  }
+
+  @override
+  String tillRemoveLine(String name) {
+    return '$name aus dem Warenkorb nehmen';
+  }
+
+  @override
+  String get tillRetry => 'Erneut versuchen';
+
+  @override
+  String get tillSoldTitle => 'Verkauft';
+
+  @override
+  String tillTaxIncluded(String amount) {
+    return 'davon Steuer $amount';
+  }
+
+  @override
+  String get tillTitle => 'Kasse';
+
+  @override
+  String tillTotalDue(String amount) {
+    return 'Zu zahlender Betrag: $amount';
+  }
 
   @override
   String get tipAvailabilityClosure =>

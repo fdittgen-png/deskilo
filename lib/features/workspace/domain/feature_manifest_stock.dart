@@ -115,4 +115,20 @@ const Map<WorkspaceFeature, FeatureManifestEntry> stockFeatureManifest = {
     requires: WorkspaceFeature.stockManagement,
     defaultOn: false,
   ),
+  // #4184 — counter receipts: an immutable receipt of a sale at the counter, numbered once, with its tender. Asked for, under standalone invoicing. Off: nothing changes.
+  WorkspaceFeature.counterReceipts: FeatureManifestEntry(
+    feature: WorkspaceFeature.counterReceipts,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.standaloneInvoicing,
+    defaultOn: false,
+  ),
+  // #4367 — till sessions: a till is opened with its float, counted at the close, and the day is closed with its report. Asked for, under counter receipts. Off: sales need no session.
+  WorkspaceFeature.counterTillSessions: FeatureManifestEntry(
+    feature: WorkspaceFeature.counterTillSessions,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.counterReceipts,
+    defaultOn: false,
+  ),
 };

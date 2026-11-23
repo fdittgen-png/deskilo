@@ -7,7 +7,7 @@
 // purpose. A line that is not a stock item is named, not dropped. The same
 // form serves "put away what remains" and "also put away" while recording a
 // delivery; the server decides, and its refusal is said in the sheet.
-import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show isoDay;
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show ExactQuantity, isoDay;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -99,8 +99,8 @@ Future<PutAwayContext?> loadPutAwayContext(
   }
 }
 
-/// A typed quantity, read as the person typed it (no grouping).
-double? _number(String text) => parseDecimalInput(text.trim(), grouping: false)?.toDouble();
+/// A typed quantity, read exactly as the person typed it (no grouping; `.` or `,`).
+ExactQuantity? _exact(String text) => exactQuantityFromInput(text, grouping: false).value;
 
 class _Part {
   _Part(this.line, String quantity)
@@ -145,7 +145,8 @@ class PutAwayDraft {
     : _lines = lines,
       _parts = [
         for (final l in lines)
-          if (context.items.containsKey(l.lineNo) && l.remaining > 0) _Part(l, followsDelivery ? '' : _text(l.remaining)),
+          if (context.items.containsKey(l.lineNo) && l.remaining > ExactQuantity.zero)
+            _Part(l, followsDelivery ? '' : l.remaining.text),
       ] {
     for (final p in _parts) {
       p.place = context.places.isEmpty ? null : context.places.first.id;
@@ -160,8 +161,6 @@ class PutAwayDraft {
 
   /// One per form: a retry of the same put-away answers once.
   final String requestId = newRequestId();
-
-  static String _text(double q) => q == q.truncateToDouble() ? q.truncate().toString() : '$q';
 
   bool get isEmpty => _parts.isEmpty;
 
@@ -187,7 +186,7 @@ class PutAwayDraft {
   /// The put-away may not exceed what the delivery being recorded brings.
   FieldErrors validateAgainst(AppLocalizations l10n, Map<int, double> delivered) => {
     for (final p in _parts)
-      if ((_number(_quantityOf(p, delivered)) ?? 0) > (delivered[p.line.lineNo] ?? 0))
+      if ((_exact(_quantityOf(p, delivered)) ?? ExactQuantity.zero) > exactOfReceived(delivered[p.line.lineNo] ?? 0))
         'putaway-${p.line.lineNo}-qty': stockReasonText(l10n, 'over_allocated'),
   };
 
@@ -244,36 +243,45 @@ class PutAwayDraft {
       }
     } else if (result.outcome == ScanOutcome.line && line != null) {
       final part = _parts.where((p) => context.items[p.line.lineNo]?.itemId == line.itemId).firstOrNull;
-      if (part != null) {
-        part.scanned = true;
-        if (result.asksQuantity) {
-          part.focus.requestFocus();
-        } else {
-          part.qty.text = line.quantityText;
-        }
-        final current = scanner?.session.current;
-        if (current != null) part.place = current.id;
-        final lot = line.lotCode;
-        if (lot != null && lot.isNotEmpty) part.lot.text = lot;
-      }
+      if (part != null) _countOn(part, line, asksQuantity: result.asksQuantity);
     }
     _refresh?.call();
+  }
+
+  /// A scanned item counts on its line: the first scan replaces the quantity the form started with, the current
+  /// place is its place, and a lot label or a GS1 lot and expiry set what the item tracks.
+  void _countOn(_Part part, ScanLine line, {required bool asksQuantity}) {
+    part.scanned = true;
+    // A quantity with no six-decimal value (a third of a box) is asked of the person, as a scan that asks does.
+    final text = line.quantityText;
+    if (asksQuantity || text == null) {
+      part.focus.requestFocus();
+    } else {
+      part.qty.text = text;
+    }
+    final current = scanner?.session.current;
+    if (current != null) part.place = current.id;
+    final tracking = context.items[part.line.lineNo]?.tracking ?? 'none';
+    final lot = line.lotCode;
+    if (tracking != 'none' && lot != null && lot.isNotEmpty) part.lot.text = lot;
+    final expiry = tracking == 'expiry' && line.expiresOn != null ? DateTime.tryParse(line.expiresOn!) : null;
+    if (expiry != null) part.expiry = (date: expiry, problem: null);
   }
 
   /// The quantity of a part: what was typed, or (empty, while recording a
   /// delivery) everything that delivery brings of the line.
   String _quantityOf(_Part p, Map<int, double>? delivered) {
     final typed = p.qty.text.trim();
-    return typed.isEmpty && followsDelivery ? _text(delivered?[p.line.lineNo] ?? 0) : typed;
+    return typed.isEmpty && followsDelivery ? exactOfReceived(delivered?[p.line.lineNo] ?? 0).text : typed;
   }
 
   /// [delivered]: the delivery being recorded, by line number.
   List<PutAwayAllocation> toAllocations({Map<int, double>? delivered}) => [
     for (final p in _parts)
-      if ((_number(_quantityOf(p, delivered)) ?? 0) > 0)
+      if (_exact(_quantityOf(p, delivered)) case final q? when q > ExactQuantity.zero)
         PutAwayAllocation(
           lineNo: p.line.lineNo,
-          quantity: _quantityOf(p, delivered),
+          quantity: q.text,
           locationId: p.place ?? '',
           variantId: p.variant,
           lotCode: p.lot.text.trim().isEmpty ? null : p.lot.text.trim(),
@@ -292,11 +300,11 @@ class PutAwayDraft {
     final errors = <String, String>{};
     for (final p in _parts) {
       if (followsDelivery && p.qty.text.trim().isEmpty) continue;
-      final q = _number(p.qty.text);
-      if (q == null || q < 0 || q > p.line.remaining) {
-        errors['putaway-${p.line.lineNo}-qty'] = stockReasonText(l10n, q == null || q < 0 ? 'quantity_invalid' : 'over_allocated');
+      final q = _exact(p.qty.text);
+      if (q == null || q.isNegative || q > p.line.remaining) {
+        errors['putaway-${p.line.lineNo}-qty'] = stockReasonText(l10n, q == null || q.isNegative ? 'quantity_invalid' : 'over_allocated');
       }
-      if (p.place == null && (q ?? 0) > 0) errors['putaway-${p.line.lineNo}-place'] = stockReasonText(l10n, 'location_foreign');
+      if (p.place == null && q != null && q > ExactQuantity.zero) errors['putaway-${p.line.lineNo}-place'] = stockReasonText(l10n, 'location_foreign');
     }
     return errors;
   }
@@ -334,7 +342,7 @@ class PutAwayDraft {
         label: l10n.stockPutAwayQuantity(p.line.unit.isEmpty ? item.inventoryUnit : p.line.unit),
         helper: followsDelivery ? l10n.stockPutAwayAll : null,
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
-        inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.]'))],
+        inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]'))],
       ),
       KeyedSubtree(
         // a scan sets the place from outside: the field starts again from it
@@ -415,6 +423,7 @@ class PutAwayDraft {
           fieldKey: 'putaway-$n-rate',
           label: l10n.stockPutAwayCostRate(this.context.currency),
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          // the rate is sent as typed and the server reads a dot only (0840): no comma here
           inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.]'))],
         ),
       const FormGap(),

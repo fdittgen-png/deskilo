@@ -1416,6 +1416,26 @@
   "@appTitle": {
     "description": "Application name shown in the task switcher and app bar. Brand name — identical in all locales."
   },
+  "appUpdateBody": "This installation accepts only a newer DesKilo app. Your data is safe: nothing you entered is lost, and it is there again once the app is updated.",
+  "@appUpdateBody": {
+    "description": "#3726 What happened, on the app-update screen"
+  },
+  "appUpdateDesktop": "Install the newest DesKilo package for this computer, then open it again.",
+  "@appUpdateDesktop": {
+    "description": "#3726 How to update on a desktop computer"
+  },
+  "appUpdateStore": "Update DesKilo from the store you installed it from, then open it again.",
+  "@appUpdateStore": {
+    "description": "#3726 How to update on a phone or tablet"
+  },
+  "appUpdateTitle": "This app needs an update",
+  "@appUpdateTitle": {
+    "description": "#3726 Title of the screen shown when the installation accepts only newer apps"
+  },
+  "appUpdateWeb": "Reload this page to load the newest version of the app.",
+  "@appUpdateWeb": {
+    "description": "#3726 How to update in a web browser"
+  },
   "applicationAcceptedVote": "Approved this request",
   "@applicationAcceptedVote": {
     "description": "Workspace admission history and discussion (#1791)"
@@ -15307,6 +15327,22 @@
   "featureConfigurationTransferDesc": "The space file (XML) carries the whole configuration — tariffs, legal identity, booking and validation rules, roles, document designs, sites, closure days — and importing it applies it, even on a space that already has bookings. Off: the file carries settings and floor plan only.",
   "@featureConfigurationTransferDesc": {
     "description": "#916 configuration transfer: featureConfigurationTransferDesc"
+  },
+  "featureCounterReceiptsDesc": "A sale at the counter gives an immutable receipt of its own, numbered once, with the tender it was paid with. It is offered only where the country's operation is supported, and says plainly where it is not.",
+  "@featureCounterReceiptsDesc": {
+    "description": "#4184 feature description"
+  },
+  "featureCounterReceiptsTitle": "Counter receipts",
+  "@featureCounterReceiptsTitle": {
+    "description": "#4184 feature name"
+  },
+  "featureCounterTillSessionsDesc": "Open a till with its float, count the drawer at the close, and close the day with its report. A sale needs an open till; the expected cash is derived from what was taken, never typed.",
+  "@featureCounterTillSessionsDesc": {
+    "description": "#4367 feature description"
+  },
+  "featureCounterTillSessionsTitle": "Till sessions and day close",
+  "@featureCounterTillSessionsTitle": {
+    "description": "#4367 feature name"
   },
   "featureCountriesEuName": "the European Union",
   "@featureCountriesEuName": {
@@ -37730,6 +37766,58 @@
   "@refusalChangedMeanwhile": {
     "description": "#1305 Shown when an invoice changed state before the action reached the server"
   },
+  "refusalCounterCashEntry": "This cash entry is not accepted: the reason is not on the list, the amount is above the limit for you, or the counts do not add up.",
+  "@refusalCounterCashEntry": {
+    "description": "#4367 setting label/hint or refusal"
+  },
+  "refusalCounterChanged": "This receipt changed meanwhile: open it again.",
+  "@refusalCounterChanged": {
+    "description": "#4185 refusal"
+  },
+  "refusalCounterCorrectionBeyond": "A correction cannot go beyond what the original line has left.",
+  "@refusalCounterCorrectionBeyond": {
+    "description": "#4185 refusal"
+  },
+  "refusalCounterCustomerNeeded": "This business names a customer on every sale: choose one before finishing.",
+  "@refusalCounterCustomerNeeded": {
+    "description": "#4185 refusal"
+  },
+  "refusalCounterDayClose": "The day cannot be closed: a till is still open, or the day is already closed.",
+  "@refusalCounterDayClose": {
+    "description": "#4367 setting label/hint or refusal"
+  },
+  "refusalCounterDayOpen": "The day of this till is already closed: it is opened again tomorrow.",
+  "@refusalCounterDayOpen": {
+    "description": "#4367 setting label/hint or refusal"
+  },
+  "refusalCounterEssentials": "Something this receipt needs is missing or not acceptable: nothing was numbered and nothing was taken.",
+  "@refusalCounterEssentials": {
+    "description": "#4185 refusal"
+  },
+  "refusalCounterGoods": "Goods cannot be sold or taken back here: the goods ledger is off, or there is no place to take them from or put them back.",
+  "@refusalCounterGoods": {
+    "description": "#4185 refusal"
+  },
+  "refusalCounterNotOpen": "This receipt is no longer an open draft, or a receipt was already issued for the same sale.",
+  "@refusalCounterNotOpen": {
+    "description": "#4185 refusal"
+  },
+  "refusalCounterTenderState": "This card authorization is still open, unknown or already settled: ask the provider about it instead of asking again.",
+  "@refusalCounterTenderState": {
+    "description": "#4185 refusal"
+  },
+  "refusalCounterTenders": "The payments do not settle this sale exactly, or one of them is not taken here.",
+  "@refusalCounterTenders": {
+    "description": "#4185 refusal"
+  },
+  "refusalCounterTill": "The till is not ready for this: open it first, or it is already open or closed.",
+  "@refusalCounterTill": {
+    "description": "#4367 setting label/hint or refusal"
+  },
+  "refusalCounterUnsupported": "This operation is not supported for your country under the case you declared in the settings: nothing was numbered and nothing was taken.",
+  "@refusalCounterUnsupported": {
+    "description": "#4184 refusal"
+  },
   "refusalMainStoreExpired": "The main store holds only {held} of the {asked} this sale asks for that is fit to sell: the rest is past its date. Nothing was taken and the sale was not confirmed.",
   "@refusalMainStoreExpired": {
     "description": "#4170 a sale refused for what the main store holds",
@@ -41532,6 +41620,34 @@
   "@settingHintCalendarRangeDays": {
     "description": "#2487 settings: Setting hint."
   },
+  "settingHintCounterBlindCount": "While a session is open the counter does not see the expected cash: they count the drawer and see the difference after the close. Someone who may see the finances always sees it.",
+  "@settingHintCounterBlindCount": {
+    "description": "#4367 setting label/hint or refusal"
+  },
+  "settingHintCounterCashReasons": "The reasons a person may give for money paid into or out of the drawer, separated by commas (for example change, expense, other).",
+  "@settingHintCounterCashReasons": {
+    "description": "#4367 setting label/hint or refusal"
+  },
+  "settingHintCounterCountByDenomination": "The float and the counted drawer are given by denomination (how many of each note and coin) rather than as a total. The counts must add up to the amount.",
+  "@settingHintCounterCountByDenomination": {
+    "description": "#4367 setting label/hint or refusal"
+  },
+  "settingHintCounterCustomerlessSales": "Allowed: a sale may be made without naming a customer. Refused: every sale names one. A sale without a customer never creates an account, a member or a subscription.",
+  "@settingHintCounterCustomerlessSales": {
+    "description": "#4184 setting label/hint"
+  },
+  "settingHintCounterDocumentChannel": "Shared (a message or a mail), printed, or both. The receipt is the same immutable document in every case.",
+  "@settingHintCounterDocumentChannel": {
+    "description": "#4184 setting label/hint"
+  },
+  "settingHintCounterFiscalObligation": "What you declare about the fiscal rules for a sale at the counter: none means no fiscal cash-register obligation applies to your business (your own declaration, recorded on each receipt); register required means one does. A receipt is issued only where your country's operation is supported under the case you declare.",
+  "@settingHintCounterFiscalObligation": {
+    "description": "#4184 setting label/hint"
+  },
+  "settingHintCounterPaidOutLimit": "The largest amount, in minor units of the business currency (cents), that a paid-out from the drawer may be without someone who may record outgoing payments. 0 means no limit.",
+  "@settingHintCounterPaidOutLimit": {
+    "description": "#4367 setting label/hint or refusal"
+  },
   "settingHintDirectoryGeocoderUrl": "The Photon-compatible service that places a published address on the discovery map: an https address on the public internet, without a user name, password, query or #. Leave it empty to use the address this app version was built with, else the public Photon service.",
   "@settingHintDirectoryGeocoderUrl": {
     "description": "#2488 Setting hint."
@@ -41923,6 +42039,34 @@
   "settingLabelCalendarRangeDays": "Calendar range",
   "@settingLabelCalendarRangeDays": {
     "description": "#2487 settings: Setting label."
+  },
+  "settingLabelCounterBlindCount": "Count the drawer blind",
+  "@settingLabelCounterBlindCount": {
+    "description": "#4367 setting label/hint or refusal"
+  },
+  "settingLabelCounterCashReasons": "Reasons for cash in and out",
+  "@settingLabelCounterCashReasons": {
+    "description": "#4367 setting label/hint or refusal"
+  },
+  "settingLabelCounterCountByDenomination": "Count by denomination",
+  "@settingLabelCounterCountByDenomination": {
+    "description": "#4367 setting label/hint or refusal"
+  },
+  "settingLabelCounterCustomerlessSales": "Sales without a named customer",
+  "@settingLabelCounterCustomerlessSales": {
+    "description": "#4184 setting label/hint"
+  },
+  "settingLabelCounterDocumentChannel": "How a counter receipt leaves the counter",
+  "@settingLabelCounterDocumentChannel": {
+    "description": "#4184 setting label/hint"
+  },
+  "settingLabelCounterFiscalObligation": "Fiscal rules for counter sales",
+  "@settingLabelCounterFiscalObligation": {
+    "description": "#4184 setting label/hint"
+  },
+  "settingLabelCounterPaidOutLimit": "Largest paid-out without approval",
+  "@settingLabelCounterPaidOutLimit": {
+    "description": "#4367 setting label/hint or refusal"
   },
   "settingLabelDirectoryGeocoderUrl": "Address lookup service",
   "@settingLabelDirectoryGeocoderUrl": {
@@ -45767,6 +45911,31 @@
   "@statusTo": {
     "description": "#934 workspace status / repartition wizard: statusTo"
   },
+  "stockCameraCount": "{count, plural, one{1 code read} other{{count} codes read}}",
+  "@stockCameraCount": {
+    "description": "#4360 G11 camera: stockCameraCount",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "stockCameraDenied": "The camera could not start. Allow camera access for DesKilo in the device’s settings, then try again.",
+  "@stockCameraDenied": {
+    "description": "#4360 G11 camera: stockCameraDenied"
+  },
+  "stockCameraMisread": "That code did not read cleanly — scan again.",
+  "@stockCameraMisread": {
+    "description": "#4360 G11 camera: stockCameraMisread"
+  },
+  "stockCameraOpen": "Scan with the camera",
+  "@stockCameraOpen": {
+    "description": "#4360 G11 camera: stockCameraOpen"
+  },
+  "stockCameraTitle": "Camera scanner",
+  "@stockCameraTitle": {
+    "description": "#4360 G11 camera: stockCameraTitle"
+  },
   "stockCostLabel": "Cost per unit",
   "@stockCostLabel": {
     "description": "#4161 the cost per unit of a movement"
@@ -46090,6 +46259,10 @@
   "stockCycleScanNone": "No line still to count has this code.",
   "@stockCycleScanNone": {
     "description": "#4295 cycle counts"
+  },
+  "stockCycleScanWhich": "Several lines still to count have this code: choose the one you are counting.",
+  "@stockCycleScanWhich": {
+    "description": "#4395 cycle counts: a code that fits several pending lines asks which one"
   },
   "stockCycleScopeHighValue": "High value",
   "@stockCycleScopeHighValue": {
@@ -47619,6 +47792,22 @@
         "type": "String"
       }
     }
+  },
+  "stockScanConfirm": "When the camera reads a code",
+  "@stockScanConfirm": {
+    "description": "#4360 G11 camera: stockScanConfirm"
+  },
+  "stockScanConfirmClick": "Click",
+  "@stockScanConfirmClick": {
+    "description": "#4360 G11 camera: stockScanConfirmClick"
+  },
+  "stockScanConfirmNone": "Do nothing",
+  "@stockScanConfirmNone": {
+    "description": "#4360 G11 camera: stockScanConfirmNone"
+  },
+  "stockScanConfirmVibrate": "Vibrate",
+  "@stockScanConfirmVibrate": {
+    "description": "#4360 G11 camera: stockScanConfirmVibrate"
   },
   "stockScanFailed": "The scanned code could not be read. Check the connection and scan it again.",
   "@stockScanFailed": {
@@ -51388,6 +51577,176 @@
   "threadRefsIn": "References in",
   "@threadRefsIn": {
     "description": "Me thread: which workspace the references speak about"
+  },
+  "tillBasketEmpty": "Tap an item to start a sale.",
+  "@tillBasketEmpty": {
+    "description": "#4366 the till"
+  },
+  "tillBasketTitle": "Basket",
+  "@tillBasketTitle": {
+    "description": "#4366 the till"
+  },
+  "tillCashExact": "Exact amount",
+  "@tillCashExact": {
+    "description": "#4366 the till"
+  },
+  "tillCashGiven": "Cash given",
+  "@tillCashGiven": {
+    "description": "#4366 the till"
+  },
+  "tillCashInvalid": "Enter the amount given as a number.",
+  "@tillCashInvalid": {
+    "description": "#4366 the till"
+  },
+  "tillCashShort": "The cash given is less than the total.",
+  "@tillCashShort": {
+    "description": "#4366 the till"
+  },
+  "tillChangeDue": "Change due: {amount}",
+  "@tillChangeDue": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "tillConfirmSale": "Confirm the sale",
+  "@tillConfirmSale": {
+    "description": "#4366 the till: the sale was sent and its answer was lost; send it again under the same request"
+  },
+  "tillFailed": "The till could not do that. Try again.",
+  "@tillFailed": {
+    "description": "#4366 the till"
+  },
+  "tillKeysEmpty": "There is nothing to sell yet. Add items in the stock first.",
+  "@tillKeysEmpty": {
+    "description": "#4366 the till"
+  },
+  "tillKeysTitle": "Items to ring up",
+  "@tillKeysTitle": {
+    "description": "#4366 the till"
+  },
+  "tillLeaveBody": "The sale was sent and its answer did not come. Leaving keeps it waiting: open the till again and confirm it. Do not ring it up again.",
+  "@tillLeaveBody": {
+    "description": "#4366 the till: what leaving with a sale waiting to be confirmed does"
+  },
+  "tillLeaveGo": "Leave",
+  "@tillLeaveGo": {
+    "description": "#4366 the till: leave the till with the sale still waiting"
+  },
+  "tillLeaveStay": "Stay",
+  "@tillLeaveStay": {
+    "description": "#4366 the till: stay on the till"
+  },
+  "tillLeaveTitle": "The sale is not confirmed",
+  "@tillLeaveTitle": {
+    "description": "#4366 the till: title of the question asked when leaving with a sale waiting to be confirmed"
+  },
+  "tillNextCustomer": "Next customer",
+  "@tillNextCustomer": {
+    "description": "#4366 the till"
+  },
+  "tillNotReady": "Not ready in your country: {operation}",
+  "@tillNotReady": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "operation": {
+        "type": "String"
+      }
+    }
+  },
+  "tillNotReadyHint": "Nothing is numbered and nothing is taken until the country's operation is supported.",
+  "@tillNotReadyHint": {
+    "description": "#4366 the till"
+  },
+  "tillOpCorrectReceipt": "correcting a receipt",
+  "@tillOpCorrectReceipt": {
+    "description": "#4366 the till"
+  },
+  "tillOpExportFiscal": "exporting fiscal records",
+  "@tillOpExportFiscal": {
+    "description": "#4366 the till"
+  },
+  "tillOpIssueReceipt": "issuing a receipt",
+  "@tillOpIssueReceipt": {
+    "description": "#4366 the till"
+  },
+  "tillOpReconcileTender": "reconciling a card payment",
+  "@tillOpReconcileTender": {
+    "description": "#4366 the till"
+  },
+  "tillOpSignFiscal": "signing a fiscal receipt",
+  "@tillOpSignFiscal": {
+    "description": "#4366 the till"
+  },
+  "tillPayCash": "Take cash",
+  "@tillPayCash": {
+    "description": "#4366 the till"
+  },
+  "tillPricing": "Pricing the basket…",
+  "@tillPricing": {
+    "description": "#4366 the till"
+  },
+  "tillQuantityHint": "An exact quantity, for example 1 or 0.350.",
+  "@tillQuantityHint": {
+    "description": "#4366 the till"
+  },
+  "tillQuantityRefused": "Enter a quantity above zero with at most six decimals.",
+  "@tillQuantityRefused": {
+    "description": "#4366 the till"
+  },
+  "tillQuantityTitle": "Quantity sold",
+  "@tillQuantityTitle": {
+    "description": "#4366 the till"
+  },
+  "tillReceiptNumber": "Receipt {number}",
+  "@tillReceiptNumber": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "tillRemoveLine": "Take {name} out of the basket",
+  "@tillRemoveLine": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "tillRetry": "Try again",
+  "@tillRetry": {
+    "description": "#4366 the till: ask the server again"
+  },
+  "tillSoldTitle": "Sold",
+  "@tillSoldTitle": {
+    "description": "#4366 the till"
+  },
+  "tillTaxIncluded": "of which tax {amount}",
+  "@tillTaxIncluded": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "tillTitle": "Till",
+  "@tillTitle": {
+    "description": "#4366 the till"
+  },
+  "tillTotalDue": "Total to pay: {amount}",
+  "@tillTotalDue": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
   },
   "tipAvailabilityClosure": "To close a day nobody can book: tap “Add closure day” and give a reason if you like.",
   "@tipAvailabilityClosure": {

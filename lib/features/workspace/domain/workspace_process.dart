@@ -160,6 +160,10 @@ const workspaceProcesses = <WorkspaceProcess>[
       WorkspaceFeature.stockTags,
       // #4359 — scanning.
       WorkspaceFeature.stockScanning,
+      // #4184
+      WorkspaceFeature.counterReceipts,
+      // #4367
+      WorkspaceFeature.counterTillSessions,
     ]),
   ]),
   WorkspaceProcess('billingPayments', [

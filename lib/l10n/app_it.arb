@@ -469,6 +469,11 @@
     }
   },
   "appTitle": "DesKilo",
+  "appUpdateBody": "Questa installazione accetta solo un'app DesKilo più recente. I Suoi dati sono al sicuro: nulla di ciò che ha inserito va perso, e tutto torna disponibile quando l'app è aggiornata.",
+  "appUpdateDesktop": "Installi il pacchetto DesKilo più recente per questo computer, poi lo riapra.",
+  "appUpdateStore": "Aggiorni DesKilo dallo store da cui l'ha installata, poi la riapra.",
+  "appUpdateTitle": "Questa app deve essere aggiornata",
+  "appUpdateWeb": "Ricarichi questa pagina per caricare la versione più recente dell'app.",
   "applicationAcceptedVote": "Ha approvato questa richiesta",
   "@applicationAcceptedVote": {
     "description": "Workspace admission history and discussion (#1791)"
@@ -7198,6 +7203,10 @@
   "@featureConfigurationTransferDesc": {
     "description": "#916 configuration transfer: featureConfigurationTransferDesc"
   },
+  "featureCounterReceiptsDesc": "Una vendita al banco dà uno scontrino immutabile, numerato una sola volta, con il pagamento ricevuto. È offerto solo dove l'operazione del paese è supportata e dice chiaramente quando non lo è.",
+  "featureCounterReceiptsTitle": "Scontrini di cassa",
+  "featureCounterTillSessionsDesc": "Apra una cassa con il suo fondo, conti il cassetto alla chiusura e chiuda la giornata con il suo rapporto. Una vendita richiede una cassa aperta; il contante atteso si ricava da quanto incassato, mai digitato.",
+  "featureCounterTillSessionsTitle": "Sessioni di cassa e chiusura della giornata",
   "featureCountriesEuName": "l'Unione europea",
   "@featureCountriesEuName": {
     "description": "#2454 feature availability by country"
@@ -16512,6 +16521,19 @@
     "description": "#2380 (0660) Refusal DKB07: the first payment of an invoice is undone after its later payments."
   },
   "refusalChangedMeanwhile": "Nel frattempo è cambiato. Lo riapra per vedere a che punto è.",
+  "refusalCounterCashEntry": "Questa registrazione di contante non è accettata: il motivo non è nell'elenco, l'importo supera il Suo limite, oppure i conteggi non tornano.",
+  "refusalCounterChanged": "Questo scontrino è cambiato nel frattempo: lo riapra.",
+  "refusalCounterCorrectionBeyond": "Una correzione non può superare ciò che resta della riga originale.",
+  "refusalCounterCustomerNeeded": "Questa attività indica un cliente in ogni vendita: ne scelga uno prima di concludere.",
+  "refusalCounterDayClose": "La giornata non può essere chiusa: una cassa è ancora aperta, oppure la giornata è già chiusa.",
+  "refusalCounterDayOpen": "La giornata di questa cassa è già chiusa: si riapre domani.",
+  "refusalCounterEssentials": "A questo scontrino manca qualcosa o non è accettabile: non è stato numerato nulla e non è stato incassato nulla.",
+  "refusalCounterGoods": "Qui le merci non si possono vendere né riprendere: il registro delle merci è spento, oppure non c'è un luogo da cui prenderle o in cui rimetterle.",
+  "refusalCounterNotOpen": "Questo scontrino non è più una bozza aperta, oppure per la stessa vendita ne è già stato emesso uno.",
+  "refusalCounterTenderState": "Questa autorizzazione della carta è ancora aperta, sconosciuta o già conclusa: chieda al fornitore invece di richiederla di nuovo.",
+  "refusalCounterTenders": "I pagamenti non saldano esattamente questa vendita, oppure uno di essi non è accettato qui.",
+  "refusalCounterTill": "La cassa non è pronta per questo: la apra prima, oppure è già aperta o chiusa.",
+  "refusalCounterUnsupported": "Questa operazione non è supportata per il Suo paese nel caso dichiarato nelle impostazioni: non è stato numerato nulla e non è stato incassato nulla.",
   "refusalMainStoreExpired": "Il magazzino principale contiene solo {held} dei {asked} richiesti da questa vendita che siano vendibili: il resto è scaduto. Nulla è stato prelevato e la vendita non è stata confermata.",
   "@refusalMainStoreExpired": {
     "description": "#4170 a sale refused for what the main store holds",
@@ -18981,6 +19003,13 @@
   "@settingHintCalendarRangeDays": {
     "description": "#2487 settings: Setting hint."
   },
+  "settingHintCounterBlindCount": "Finché una sessione è aperta la cassa non vede il contante atteso: conta il cassetto e vede la differenza dopo la chiusura. Chi può vedere le finanze lo vede sempre.",
+  "settingHintCounterCashReasons": "I motivi che una persona può indicare per il denaro versato nel cassetto o prelevato, separati da virgole (per esempio resto, spesa, altro).",
+  "settingHintCounterCountByDenomination": "Il fondo e il cassetto contato si indicano per tagli (quanti di ogni banconota e moneta) invece che come totale. I conteggi devono dare l'importo.",
+  "settingHintCounterCustomerlessSales": "Consentite: si può vendere senza indicare un cliente. Rifiutate: ogni vendita ne indica uno. Una vendita senza cliente non crea mai un account, un socio o un abbonamento.",
+  "settingHintCounterDocumentChannel": "Condiviso (messaggio o posta), stampato o entrambi. Lo scontrino è lo stesso documento immutabile in ogni caso.",
+  "settingHintCounterFiscalObligation": "Ciò che dichiara sulle regole fiscali di una vendita al banco: nessuna significa che al Suo esercizio non si applica alcun obbligo fiscale di registratore (una Sua dichiarazione, annotata su ogni scontrino); registratore richiesto significa che si applica. Lo scontrino è emesso solo dove l'operazione del Suo paese è supportata nel caso dichiarato.",
+  "settingHintCounterPaidOutLimit": "L'importo massimo, in unità minori della valuta dell'attività (centesimi), di un prelievo dal cassetto senza qualcuno che possa registrare pagamenti in uscita. 0 significa nessun limite.",
   "settingHintDirectoryGeocoderUrl": "Il servizio compatibile con Photon che colloca un indirizzo pubblicato sulla mappa di scoperta: un indirizzo https sull'internet pubblica, senza nome utente, password, query né #. Lasci vuoto per usare l'indirizzo con cui è stata costruita questa versione dell'app, altrimenti il servizio pubblico Photon.",
   "settingHintDirectoryTileUrlTemplate": "Il server delle tessere da cui è disegnata la mappa di scoperta, con i segnaposto z, x e y tra parentesi graffe nell'indirizzo (s tra parentesi graffe per un sottodominio è ammesso): https, sull'internet pubblica, senza nome utente, password né #. Lasci vuoto per usare il server di questa versione dell'app, altrimenti OpenStreetMap. Un nuovo host chiede di nuovo a ogni persona prima che la mappa si carichi.",
   "settingHintDirectoryUpcomingWindowDays": "Quanti giorni prima l'elenco mostra la prossima prenotazione di un membro.",
@@ -19208,6 +19237,13 @@
   "@settingLabelCalendarRangeDays": {
     "description": "#2487 settings: Setting label."
   },
+  "settingLabelCounterBlindCount": "Contare il cassetto alla cieca",
+  "settingLabelCounterCashReasons": "Motivi di entrate e uscite di contante",
+  "settingLabelCounterCountByDenomination": "Contare per tagli",
+  "settingLabelCounterCustomerlessSales": "Vendite senza cliente indicato",
+  "settingLabelCounterDocumentChannel": "Come lo scontrino lascia il banco",
+  "settingLabelCounterFiscalObligation": "Regole fiscali delle vendite al banco",
+  "settingLabelCounterPaidOutLimit": "Prelievo massimo senza autorizzazione",
   "settingLabelDirectoryGeocoderUrl": "Servizio di ricerca indirizzi",
   "settingLabelDirectoryTileUrlTemplate": "Server delle tessere della mappa",
   "settingLabelDirectoryUpcomingWindowDays": "Anteprima dell'elenco",
@@ -20731,6 +20767,11 @@
   "@statusTo": {
     "description": "#934 workspace status / repartition wizard: statusTo"
   },
+  "stockCameraCount": "{count, plural, one{1 codice letto} other{{count} codici letti}}",
+  "stockCameraDenied": "La fotocamera non è riuscita ad avviarsi. Consenta l’accesso alla fotocamera per DesKilo nelle impostazioni del dispositivo, poi riprovi.",
+  "stockCameraMisread": "Quel codice non è stato letto bene: scansioni di nuovo.",
+  "stockCameraOpen": "Scansiona con la fotocamera",
+  "stockCameraTitle": "Scanner fotocamera",
   "stockCostLabel": "Costo per unità",
   "stockCostNotShown": "Costo non mostrato",
   "stockCostUnknown": "Costo non registrato",
@@ -20790,6 +20831,10 @@
   "stockCyclePlanValueSetting": "valore minimo il limite dell’azienda",
   "stockCycleScan": "Scansiona o digita un codice a barre",
   "stockCycleScanNone": "Nessuna riga ancora da contare ha questo codice.",
+  "stockCycleScanWhich": "Più righe ancora da contare hanno questo codice: scelga quella che sta contando.",
+  "@stockCycleScanWhich": {
+    "description": "#4395 cycle counts: a code that fits several pending lines asks which one"
+  },
   "stockCycleScopeHighValue": "Alto valore",
   "stockCycleScopePlaces": "Posizioni",
   "stockCycleSkipReason": "Perché viene saltata",
@@ -21629,6 +21674,10 @@
   "stockReversalSupplierOpen": "Reso al fornitore",
   "stockReversalSupplierTitle": "Reso al fornitore",
   "stockScanAlreadyRead": "Il tag {code} è già stato letto.",
+  "stockScanConfirm": "Quando la fotocamera legge un codice",
+  "stockScanConfirmClick": "Fai clic",
+  "stockScanConfirmNone": "Non fare nulla",
+  "stockScanConfirmVibrate": "Vibra",
   "stockScanFailed": "Non è stato possibile leggere il codice scansionato. Controlli la connessione e lo scansioni di nuovo.",
   "stockScanHelp": "Lavorare con uno scanner",
   "stockScanHint": "Usa uno scanner di codici a barre? Attivi «Scansione»",
@@ -23314,6 +23363,59 @@
   "@threadRefsIn": {
     "description": "Me thread: which workspace the references speak about"
   },
+  "tillBasketEmpty": "Tocchi un articolo per iniziare una vendita.",
+  "tillBasketTitle": "Carrello",
+  "tillCashExact": "Importo esatto",
+  "tillCashGiven": "Contanti dati",
+  "tillCashInvalid": "Inserisca l'importo dato come numero.",
+  "tillCashShort": "I contanti dati sono inferiori al totale.",
+  "tillChangeDue": "Resto da dare: {amount}",
+  "tillConfirmSale": "Confermare la vendita",
+  "@tillConfirmSale": {
+    "description": "#4366 the till: the sale was sent and its answer was lost; send it again under the same request"
+  },
+  "tillFailed": "La cassa non ha potuto eseguirlo. Riprovi.",
+  "tillKeysEmpty": "Non c'è ancora nulla da vendere. Aggiunga prima degli articoli nel magazzino.",
+  "tillKeysTitle": "Articoli da battere",
+  "tillLeaveBody": "La vendita è stata inviata e la risposta non è arrivata. Uscendo resta in attesa: riapra la cassa e la confermi. Non la registri di nuovo.",
+  "@tillLeaveBody": {
+    "description": "#4366 the till: what leaving with a sale waiting to be confirmed does"
+  },
+  "tillLeaveGo": "Uscire",
+  "@tillLeaveGo": {
+    "description": "#4366 the till: leave the till with the sale still waiting"
+  },
+  "tillLeaveStay": "Restare",
+  "@tillLeaveStay": {
+    "description": "#4366 the till: stay on the till"
+  },
+  "tillLeaveTitle": "La vendita non è confermata",
+  "@tillLeaveTitle": {
+    "description": "#4366 the till: title of the question asked when leaving with a sale waiting to be confirmed"
+  },
+  "tillNextCustomer": "Cliente successivo",
+  "tillNotReady": "Non ancora pronto nel Suo paese: {operation}",
+  "tillNotReadyHint": "Non viene numerato né incassato nulla finché l'operazione del paese non è supportata.",
+  "tillOpCorrectReceipt": "correzione di uno scontrino",
+  "tillOpExportFiscal": "esportazione dei dati fiscali",
+  "tillOpIssueReceipt": "emissione di uno scontrino",
+  "tillOpReconcileTender": "riconciliazione di un pagamento con carta",
+  "tillOpSignFiscal": "firma di uno scontrino fiscale",
+  "tillPayCash": "Incassare in contanti",
+  "tillPricing": "Calcolo del carrello…",
+  "tillQuantityHint": "Una quantità esatta, per esempio 1 oppure 0,350.",
+  "tillQuantityRefused": "Inserisca una quantità superiore a zero con al massimo sei decimali.",
+  "tillQuantityTitle": "Quantità venduta",
+  "tillReceiptNumber": "Scontrino {number}",
+  "tillRemoveLine": "Togliere {name} dal carrello",
+  "tillRetry": "Riprova",
+  "@tillRetry": {
+    "description": "#4366 the till: ask the server again"
+  },
+  "tillSoldTitle": "Venduto",
+  "tillTaxIncluded": "di cui imposta {amount}",
+  "tillTitle": "Cassa",
+  "tillTotalDue": "Totale da pagare: {amount}",
   "tipAvailabilityClosure": "Per chiudere un giorno che nessuno potrà prenotare: tocchi «Aggiungi giorno di chiusura» e indichi un motivo, se vuole.",
   "tipAvailabilityDays": "Per impostare i giorni di apertura: selezioni i giorni sotto «Giorni di apertura».",
   "tipAvailabilityGrid": "Per scegliere come si dividono le prenotazioni: scelga una «Granularità delle prenotazioni» — periodi liberi, fasce, mezze giornate o giornate intere.",

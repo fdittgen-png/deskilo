@@ -730,6 +730,7 @@ Un escáner de códigos de barras en modo teclado (escribe el código y pulsa In
 - **Un escaneo repetido** añade uno más o, si su negocio lo eligió en los ajustes del stock (*Escaneo repetido*), le lleva al campo de cantidad.
 - **Un código que no designa nada** dice *Código … desconocido: ¿añadirlo a un artículo?*; quien puede gestionar el stock abre los artículos y se lo asigna a uno. Una ubicación que no puede recibir mercancías, o un artículo que no se lleva en stock, se rechaza con palabras y no se rellena nada.
 - **Un escaneo no envía nada.** Solo rellena el formulario; el botón que pulsa ejecuta el mismo comando, con los mismos derechos, que sin escáner.
+- **La cámara.** En un teléfono o una tableta, **Escanear con la cámara** (en la barra de escaneo de una hoja de mercancías) abre la cámara como escáner: códigos de barras de productos (EAN-13, EAN-8, UPC-A/E, Code 128) y etiquetas 2D de ubicaciones y productos GS1 (DataMatrix, QR). Cada código sigue el mismo camino que con un escáner que escribe, y la cámara sigue abierta para escaneos repetidos, diciendo cuántos códigos leyó y la última línea. Un código de barras con el dígito de control erróneo *no se leyó bien*: vuelva a escanear, no se envía nada. Una etiqueta GS1 fija el artículo y, si el artículo controla lotes o caducidad, el lote y la fecha de caducidad. Cómo se confirma una lectura (nada, una vibración, un clic) es un ajuste del dispositivo en **Stock → Ajustes del stock → Escáner**. Si la cámara no puede iniciarse, permita el acceso a la cámara para DesKilo en los ajustes del dispositivo; en un navegador o un ordenador, escriba el código o use un escáner de hardware.
 - **Ajustes.** El uso del escáner depende de la función *Escáner* del negocio, bajo la gestión del stock. El intervalo máximo entre dos teclas de un escaneo (una persona escribe más despacio que un escáner) y lo que termina un código (Intro, Tab o ambos) son del dispositivo, en **Stock → Ajustes del stock → Escáner**.
 
 <!-- anchor: user.money.stock.nfc -->
@@ -746,6 +747,19 @@ Con la función *Etiquetas* activada y un teléfono que lee NFC, **Stock → Art
 - **Leer en una hoja de mercancías.** Un chip se lee como un código escaneado: una etiqueta de ubicación fija la ubicación actual, una de artículo cuenta el artículo. Un chip leído dos veces en una hoja se ignora (*ya leído*); un chip que no designa nada dice *Etiqueta desconocida*.
 - **Las etiquetas UHF** no las puede leer un teléfono. Un artículo que solo las tiene dice *use el lector RFID*.
 - Asociar requiere el derecho de gestionar el stock; leer, el de verlo.
+
+<!-- anchor: user.money.till -->
+### Caja
+
+**Público:** Administrador/a · Propietario
+
+Atiende a clientes en el mostrador y quiere cada venta en segundos, numerada y cobrada en efectivo.
+
+Abra **Caja** en el menú de ventas (necesita la función de tickets de caja y el derecho a emitir facturas). Los artículos son teclas: un toque registra uno, un segundo toque añade otro. Toque una línea para escribir exactamente la **Cantidad vendida**, por ejemplo 0,350 para un artículo pesado (una coma se lee como punto; la cantidad debe ser mayor que cero, con seis decimales como máximo). El servidor valora la cesta, con el impuesto incluido, y la caja muestra **Total a pagar**; nada se calcula en el teléfono.
+
+Pulse **Cobrar en efectivo** y escriba el **Efectivo entregado** (o **Importe exacto**). Menos que el total se rechaza antes de enviar nada. El servidor numera la venta y la caja indica el cambio; **Siguiente cliente** empieza una cesta vacía. Enviar dos veces la misma venta nunca la vende dos veces.
+
+Donde su país aún no permite la caja, esta nombra la operación que falta y no ofrece nada: nada se numera ni se cobra. Una línea de mercancía necesita la gestión de stock; el rechazo del servidor se dice con palabras. Los pagos con tarjeta, descuentos, reembolsos y devoluciones no forman parte de esta primera caja.
 
 <!-- anchor: user.money.stock.value -->
 ### Valor de las existencias y origen de la mercancía

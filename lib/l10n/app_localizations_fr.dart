@@ -1078,6 +1078,25 @@ class AppLocalizationsFr extends AppLocalizations {
   String get appTitle => 'DesKilo';
 
   @override
+  String get appUpdateBody =>
+      'Cette installation n\'accepte qu\'une application DesKilo plus récente. Vos données sont en sécurité : rien de ce que vous avez saisi n\'est perdu, et tout est de nouveau là une fois l\'application mise à jour.';
+
+  @override
+  String get appUpdateDesktop =>
+      'Installez le dernier paquet DesKilo pour cet ordinateur, puis rouvrez-le.';
+
+  @override
+  String get appUpdateStore =>
+      'Mettez DesKilo à jour depuis le store où vous l\'avez installé, puis rouvrez-le.';
+
+  @override
+  String get appUpdateTitle => 'Cette application doit être mise à jour';
+
+  @override
+  String get appUpdateWeb =>
+      'Rechargez cette page pour charger la dernière version de l\'application.';
+
+  @override
   String get applicationAcceptedVote => 'A accepté cette demande';
 
   @override
@@ -11686,6 +11705,21 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get featureConfigurationTransferDesc =>
       'Le fichier de l\'espace (XML) emporte toute la configuration — tarifs, identité légale, règles de réservation et de validation, rôles, maquettes de documents, sites, jours de fermeture — et l\'import l\'applique, même sur un espace qui a déjà des réservations. Désactivé : le fichier n\'emporte que les réglages et le plan.';
+
+  @override
+  String get featureCounterReceiptsDesc =>
+      'Une vente au comptoir donne un ticket immuable, numéroté une seule fois, avec le règlement reçu. Il n\'est proposé que là où l\'opération du pays est prise en charge, et dit clairement quand elle ne l\'est pas.';
+
+  @override
+  String get featureCounterReceiptsTitle => 'Tickets de caisse';
+
+  @override
+  String get featureCounterTillSessionsDesc =>
+      'Ouvrez une caisse avec son fond, comptez le tiroir à la fermeture et clôturez la journée avec son rapport. Une vente exige une caisse ouverte ; les espèces attendues se déduisent de ce qui a été encaissé, jamais saisies.';
+
+  @override
+  String get featureCounterTillSessionsTitle =>
+      'Sessions de caisse et clôture de journée';
 
   @override
   String get featureCountriesEuName => 'l\'Union européenne';
@@ -29058,6 +29092,58 @@ class AppLocalizationsFr extends AppLocalizations {
       'Cet élément a changé entre-temps. Rouvrez-le pour voir où il en est.';
 
   @override
+  String get refusalCounterCashEntry =>
+      'Cette écriture d\'espèces n\'est pas acceptée : le motif n\'est pas dans la liste, le montant dépasse votre limite, ou les nombres ne correspondent pas.';
+
+  @override
+  String get refusalCounterChanged =>
+      'Ce ticket a changé entre-temps : rouvrez-le.';
+
+  @override
+  String get refusalCounterCorrectionBeyond =>
+      'Une correction ne peut pas dépasser ce qu\'il reste de la ligne d\'origine.';
+
+  @override
+  String get refusalCounterCustomerNeeded =>
+      'Cette entreprise nomme un client à chaque vente : choisissez-en un avant de terminer.';
+
+  @override
+  String get refusalCounterDayClose =>
+      'La journée ne peut pas être clôturée : une caisse est encore ouverte, ou la journée est déjà clôturée.';
+
+  @override
+  String get refusalCounterDayOpen =>
+      'La journée de cette caisse est déjà clôturée : elle sera ouverte à nouveau demain.';
+
+  @override
+  String get refusalCounterEssentials =>
+      'Il manque quelque chose à ce ticket ou ce n\'est pas acceptable : rien n\'a été numéroté et rien n\'a été encaissé.';
+
+  @override
+  String get refusalCounterGoods =>
+      'Les marchandises ne peuvent pas être vendues ou reprises ici : le registre des marchandises est désactivé, ou il n\'y a pas de lieu d\'où les prendre ou où les remettre.';
+
+  @override
+  String get refusalCounterNotOpen =>
+      'Ce ticket n\'est plus un brouillon ouvert, ou un ticket a déjà été émis pour la même vente.';
+
+  @override
+  String get refusalCounterTenderState =>
+      'Cette autorisation par carte est encore ouverte, inconnue ou déjà réglée : interrogez le prestataire au lieu de redemander.';
+
+  @override
+  String get refusalCounterTenders =>
+      'Les règlements ne soldent pas exactement cette vente, ou l\'un d\'eux n\'est pas pris en charge ici.';
+
+  @override
+  String get refusalCounterTill =>
+      'La caisse n\'est pas prête pour cela : ouvrez-la d\'abord, ou elle est déjà ouverte ou fermée.';
+
+  @override
+  String get refusalCounterUnsupported =>
+      'Cette opération n\'est pas prise en charge pour votre pays dans le cas que vous avez déclaré dans les paramètres : rien n\'a été numéroté et rien n\'a été encaissé.';
+
+  @override
   String refusalMainStoreExpired(String held, String asked) {
     return 'Le magasin principal ne contient que $held sur les $asked que cette vente demande qui soient vendables : le reste a dépassé sa date. Rien n’a été prélevé et la vente n’a pas été confirmée.';
   }
@@ -32184,6 +32270,34 @@ class AppLocalizationsFr extends AppLocalizations {
       'Fixée par la plateforme : la période la plus longue qu’une requête de calendrier peut demander. Elle borne la requête.';
 
   @override
+  String get settingHintCounterBlindCount =>
+      'Tant qu\'une session est ouverte, la caisse ne voit pas les espèces attendues : elle compte le tiroir et voit l\'écart après la fermeture. Qui peut voir les finances le voit toujours.';
+
+  @override
+  String get settingHintCounterCashReasons =>
+      'Les motifs qu\'une personne peut donner pour de l\'argent versé dans le tiroir ou retiré, séparés par des virgules (par exemple monnaie, dépense, autre).';
+
+  @override
+  String get settingHintCounterCountByDenomination =>
+      'Le fond de caisse et le tiroir compté sont donnés par coupures (combien de chaque billet et pièce) plutôt qu\'en total. Les nombres doivent correspondre au montant.';
+
+  @override
+  String get settingHintCounterCustomerlessSales =>
+      'Autorisées : une vente peut se faire sans nommer de client. Refusées : chaque vente en nomme un. Une vente sans client ne crée jamais de compte, de membre ni d\'abonnement.';
+
+  @override
+  String get settingHintCounterDocumentChannel =>
+      'Partagé (message ou courriel), imprimé, ou les deux. Le ticket est le même document immuable dans tous les cas.';
+
+  @override
+  String get settingHintCounterFiscalObligation =>
+      'Ce que vous déclarez sur les règles fiscales d\'une vente au comptoir : aucune signifie qu\'aucune obligation fiscale de caisse ne s\'applique à votre entreprise (votre propre déclaration, inscrite sur chaque ticket) ; caisse requise signifie qu\'une obligation s\'applique. Un ticket n\'est émis que là où l\'opération de votre pays est prise en charge dans le cas que vous déclarez.';
+
+  @override
+  String get settingHintCounterPaidOutLimit =>
+      'Le plus grand montant, en unités mineures de la devise de l\'entreprise (centimes), d\'un retrait du tiroir sans une personne pouvant enregistrer des paiements sortants. 0 signifie aucune limite.';
+
+  @override
   String get settingHintDirectoryGeocoderUrl =>
       'Le service compatible Photon qui place une adresse publiée sur la carte de découverte : une adresse https sur l\'internet public, sans nom d\'utilisateur, mot de passe, requête ni #. Laissez vide pour utiliser l\'adresse avec laquelle cette version de l\'application a été construite, sinon le service public Photon.';
 
@@ -32562,6 +32676,31 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get settingLabelCalendarRangeDays => 'Période du calendrier';
+
+  @override
+  String get settingLabelCounterBlindCount => 'Compter le tiroir à l\'aveugle';
+
+  @override
+  String get settingLabelCounterCashReasons =>
+      'Motifs des entrées et sorties d\'espèces';
+
+  @override
+  String get settingLabelCounterCountByDenomination => 'Compter par coupures';
+
+  @override
+  String get settingLabelCounterCustomerlessSales => 'Ventes sans client nommé';
+
+  @override
+  String get settingLabelCounterDocumentChannel =>
+      'Comment le ticket quitte le comptoir';
+
+  @override
+  String get settingLabelCounterFiscalObligation =>
+      'Règles fiscales des ventes au comptoir';
+
+  @override
+  String get settingLabelCounterPaidOutLimit =>
+      'Plus grand retrait sans autorisation';
 
   @override
   String get settingLabelDirectoryGeocoderUrl =>
@@ -35671,6 +35810,31 @@ class AppLocalizationsFr extends AppLocalizations {
   String get statusTo => 'Au';
 
   @override
+  String stockCameraCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count codes lus',
+      one: '$count code lu',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get stockCameraDenied =>
+      'La caméra n’a pas pu démarrer. Autorisez l’accès à la caméra pour DesKilo dans les réglages de l’appareil, puis réessayez.';
+
+  @override
+  String get stockCameraMisread =>
+      'Ce code n’a pas été lu correctement — scannez à nouveau.';
+
+  @override
+  String get stockCameraOpen => 'Scanner avec la caméra';
+
+  @override
+  String get stockCameraTitle => 'Scanner caméra';
+
+  @override
   String get stockCostLabel => 'Coût par unité';
 
   @override
@@ -35911,6 +36075,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get stockCycleScanNone =>
       'Aucune ligne restant à compter n’a ce code.';
+
+  @override
+  String get stockCycleScanWhich =>
+      'Plusieurs lignes encore à compter ont ce code : choisissez celle que vous comptez.';
 
   @override
   String get stockCycleScopeHighValue => 'Forte valeur';
@@ -37073,6 +37241,18 @@ class AppLocalizationsFr extends AppLocalizations {
   String stockScanAlreadyRead(String code) {
     return 'La puce $code a déjà été lue.';
   }
+
+  @override
+  String get stockScanConfirm => 'Quand la caméra lit un code';
+
+  @override
+  String get stockScanConfirmClick => 'Faire un clic';
+
+  @override
+  String get stockScanConfirmNone => 'Ne rien faire';
+
+  @override
+  String get stockScanConfirmVibrate => 'Vibrer';
 
   @override
   String get stockScanFailed =>
@@ -40000,6 +40180,128 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get threadRefsIn => 'Références dans';
+
+  @override
+  String get tillBasketEmpty => 'Touchez un article pour commencer une vente.';
+
+  @override
+  String get tillBasketTitle => 'Panier';
+
+  @override
+  String get tillCashExact => 'Compte juste';
+
+  @override
+  String get tillCashGiven => 'Espèces remises';
+
+  @override
+  String get tillCashInvalid =>
+      'Saisissez le montant remis sous forme de nombre.';
+
+  @override
+  String get tillCashShort => 'Les espèces remises sont inférieures au total.';
+
+  @override
+  String tillChangeDue(String amount) {
+    return 'Monnaie à rendre : $amount';
+  }
+
+  @override
+  String get tillConfirmSale => 'Confirmer la vente';
+
+  @override
+  String get tillFailed => 'La caisse n\'a pas pu le faire. Réessayez.';
+
+  @override
+  String get tillKeysEmpty =>
+      'Il n\'y a encore rien à vendre. Ajoutez d\'abord des articles dans le stock.';
+
+  @override
+  String get tillKeysTitle => 'Articles à encaisser';
+
+  @override
+  String get tillLeaveBody =>
+      'La vente a été envoyée et la réponse n\'est pas venue. En quittant, elle reste en attente : rouvrez la caisse et confirmez-la. Ne la ressaisissez pas.';
+
+  @override
+  String get tillLeaveGo => 'Quitter';
+
+  @override
+  String get tillLeaveStay => 'Rester';
+
+  @override
+  String get tillLeaveTitle => 'La vente n\'est pas confirmée';
+
+  @override
+  String get tillNextCustomer => 'Client suivant';
+
+  @override
+  String tillNotReady(String operation) {
+    return 'Pas encore prêt dans votre pays : $operation';
+  }
+
+  @override
+  String get tillNotReadyHint =>
+      'Rien n\'est numéroté ni encaissé tant que l\'opération du pays n\'est pas prise en charge.';
+
+  @override
+  String get tillOpCorrectReceipt => 'correction d\'un ticket';
+
+  @override
+  String get tillOpExportFiscal => 'export des données fiscales';
+
+  @override
+  String get tillOpIssueReceipt => 'émission d\'un ticket';
+
+  @override
+  String get tillOpReconcileTender => 'rapprochement d\'un paiement par carte';
+
+  @override
+  String get tillOpSignFiscal => 'signature d\'un ticket fiscal';
+
+  @override
+  String get tillPayCash => 'Encaisser en espèces';
+
+  @override
+  String get tillPricing => 'Calcul du panier…';
+
+  @override
+  String get tillQuantityHint => 'Une quantité exacte, par exemple 1 ou 0,350.';
+
+  @override
+  String get tillQuantityRefused =>
+      'Saisissez une quantité supérieure à zéro, avec au plus six décimales.';
+
+  @override
+  String get tillQuantityTitle => 'Quantité vendue';
+
+  @override
+  String tillReceiptNumber(String number) {
+    return 'Ticket $number';
+  }
+
+  @override
+  String tillRemoveLine(String name) {
+    return 'Retirer $name du panier';
+  }
+
+  @override
+  String get tillRetry => 'Réessayer';
+
+  @override
+  String get tillSoldTitle => 'Vendu';
+
+  @override
+  String tillTaxIncluded(String amount) {
+    return 'dont taxe $amount';
+  }
+
+  @override
+  String get tillTitle => 'Caisse';
+
+  @override
+  String tillTotalDue(String amount) {
+    return 'Total à payer: $amount';
+  }
 
   @override
   String get tipAvailabilityClosure =>

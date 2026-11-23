@@ -51,9 +51,10 @@ class DemoStockOperations implements StockOperations {
     final config = await _config.item(_ledger.workspaceId, item.id);
     final factor = config?.units.where((u) => u.unit == unit).firstOrNull;
     if (factor == null) throw _refused('lines[$i].unit', 'unit_unmapped');
-    final micro = entered.micro * BigInt.from(factor.factorNum);
-    final den = BigInt.from(factor.factorDen);
-    return (item: item, quantity: ExactQuantity.fromMicro((micro * BigInt.two + den) ~/ (den * BigInt.two)));
+    // as the server records it: round(q * num / den, 6) (0840)
+    final converted = entered.scaled(factor.factorNum, factor.factorDen, round: true).value;
+    if (converted == null) throw _refused('lines[$i].quantity', 'quantity_invalid');
+    return (item: item, quantity: converted);
   }
 
   /// Every place of a line is a real place of the business.

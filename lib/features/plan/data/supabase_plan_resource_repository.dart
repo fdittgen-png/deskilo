@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/server_names.dart';
 import '../domain/floor_plan_repository.dart';
 import '../domain/grid_geometry.dart';
 import '../domain/office.dart';
@@ -22,7 +23,7 @@ class SupabasePlanResourceRepository implements PlanResourceRepository {
     required SeatOrientation orientation,
     required NewResource resource,
   }) async {
-    await _client.from('seats').insert({
+    await _client.from(ServerTable.seats).insert({
       'workspace_id': workspaceId,
       'desk_id': deskId,
       'name': name,
@@ -44,7 +45,7 @@ class SupabasePlanResourceRepository implements PlanResourceRepository {
     required int color,
     required GridRect rect,
   }) async {
-    await _client.from('offices').insert({
+    await _client.from(ServerTable.offices).insert({
       'workspace_id': workspaceId,
       'level_id': levelId,
       'name': name,

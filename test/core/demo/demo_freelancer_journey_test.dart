@@ -359,7 +359,8 @@ void main() {
         s.workspaceId,
     };
 
-    expect(answered.keys.toSet(), {demoFreelancerSpaceId, demoLondonSpaceId});
+    // his business, the shop he also owns (#4365), and London's finance-read role
+    expect(answered.keys.toSet(), {demoFreelancerSpaceId, demoShopSpaceId, demoLondonSpaceId});
     expect(
       refused,
       isNot(contains(demoFreelancerSpaceId)),

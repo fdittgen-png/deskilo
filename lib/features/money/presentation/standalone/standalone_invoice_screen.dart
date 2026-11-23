@@ -101,9 +101,7 @@ class _State extends ConsumerState<StandaloneInvoiceScreen> {
     try {
       final saved = await commands.saveDraft(workspaceId: workspaceId, draft: draft);
       if (!mounted) return;
-      for (final (i, line) in saved.lines.indexed) {
-        if (i < _lines.length) _lines[i].lineId = line.lineId;
-      }
+      attachLineIds(_lines, saved.lines);
       final preview = await commands.preview(
         workspaceId: workspaceId,
         draftId: saved.draftId,

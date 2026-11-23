@@ -343,5 +343,9 @@
   "featureStockTagsTitle": "Etiquetas RFID",
   "featureStockTagsDesc": "Etiquete artículos, unidades, lotes y lugares con etiquetas RFID o NFC, guardadas como un código de barras y únicas en el negocio. Una etiqueta puede nombrar un lote o una pieza, según el grupo del artículo; la lectura de una etiqueta se reconoce donde se reconoce un código de barras.",
   "featureStockScanningTitle": "Escaneo",
-  "featureStockScanningDesc": "Un lector que teclea, o la cámara del móvil, rellena cualquier hoja de mercancías: un código se lee como código de barras, etiqueta de lugar, etiqueta de lote o etiqueta RFID. Activado con el registro de mercancías."
+  "featureStockScanningDesc": "Un lector que teclea, o la cámara del móvil, rellena cualquier hoja de mercancías: un código se lee como código de barras, etiqueta de lugar, etiqueta de lote o etiqueta RFID. Activado con el registro de mercancías.",
+  "featureCounterReceiptsTitle": "Tickets de caja",
+  "featureCounterReceiptsDesc": "Una venta en el mostrador da un ticket inmutable, numerado una sola vez, con el cobro recibido. Solo se ofrece donde la operación del país está soportada, y dice claramente cuándo no lo está.",
+  "featureCounterTillSessionsTitle": "Sesiones de caja y cierre del día",
+  "featureCounterTillSessionsDesc": "Abra una caja con su fondo, cuente el cajón al cierre y cierre el día con su informe. Una venta necesita una caja abierta; el efectivo esperado se deriva de lo cobrado, nunca se escribe."
 }

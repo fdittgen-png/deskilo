@@ -34,6 +34,10 @@ const _allowed = <String, Map<String, Allowed>>{
       1,
       'a developer audit message naming a contrast ratio, never shown to a member',
     ),
+    'lib/features/stock/domain/put_away_progress.dart': (
+      1,
+      'a delivered float brought to the six-decimal text of a numeric(18,6) column (exactOfReceived, #4393), read by the exact parser, not a display',
+    ),
     'lib/core/format/cents.dart': (
       1,
       'the point-decimal text of an amount typed into a field (`centsToMajor`), read back by the input parser, not a display',

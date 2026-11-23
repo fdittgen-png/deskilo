@@ -131,5 +131,46 @@
         "type": "String"
       }
     }
+  },
+  "stockCameraOpen": "Scan with the camera",
+  "@stockCameraOpen": {
+    "description": "#4360 G11 camera: stockCameraOpen"
+  },
+  "stockCameraTitle": "Camera scanner",
+  "@stockCameraTitle": {
+    "description": "#4360 G11 camera: stockCameraTitle"
+  },
+  "stockCameraCount": "{count, plural, one{1 code read} other{{count} codes read}}",
+  "@stockCameraCount": {
+    "description": "#4360 G11 camera: stockCameraCount",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "stockCameraMisread": "That code did not read cleanly — scan again.",
+  "@stockCameraMisread": {
+    "description": "#4360 G11 camera: stockCameraMisread"
+  },
+  "stockCameraDenied": "The camera could not start. Allow camera access for DesKilo in the device’s settings, then try again.",
+  "@stockCameraDenied": {
+    "description": "#4360 G11 camera: stockCameraDenied"
+  },
+  "stockScanConfirm": "When the camera reads a code",
+  "@stockScanConfirm": {
+    "description": "#4360 G11 camera: stockScanConfirm"
+  },
+  "stockScanConfirmNone": "Do nothing",
+  "@stockScanConfirmNone": {
+    "description": "#4360 G11 camera: stockScanConfirmNone"
+  },
+  "stockScanConfirmVibrate": "Vibrate",
+  "@stockScanConfirmVibrate": {
+    "description": "#4360 G11 camera: stockScanConfirmVibrate"
+  },
+  "stockScanConfirmClick": "Click",
+  "@stockScanConfirmClick": {
+    "description": "#4360 G11 camera: stockScanConfirmClick"
   }
 }

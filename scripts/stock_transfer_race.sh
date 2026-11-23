@@ -39,6 +39,12 @@
 #       is refused (DKG22); one tag, on the piece.
 #   (L) two put-aways of one receipt line naming 3 tags each of the 4 delivered piece by piece: the second
 #       waits for the line's lock and is refused as over-allocated; one set of 3 pieces.
+#   (M) two operators finalize one counter draft under different request ids: the second waits for the receipt's lock
+#       and is refused (DKL04); one number, one tender.
+#   (N) two refunds of one correction at once: the second waits for the correction's lock and is refused; one refund.
+#   (O) a card authorization answered while the sale is finalized: the finalize waits, then settles with the accepted tender.
+#   (P) two sessions open one till at once: one session, the other refused (DKL12).
+#   (Q) a sale finalized and the close of its session at once: the close waits for the sale and counts it.
 # A holder that never took its lock, or a contender that never waited, fails the
 # script: nothing here can pass empty. A single pgTAP transaction cannot show a
 # race, so each contender is its own psql process on CI's disposable database.
@@ -59,7 +65,7 @@ SQL
   exit "$original_status"
 }
 trap cleanup EXIT
-q() { psql "$url" -X -qAt -v ON_ERROR_STOP=1 -c "$1"; }
+. "$(dirname "${BASH_SOURCE[0]}")/lib/race.sh"
 as_owner="select set_config('request.jwt.claims', '{\"sub\":\"$owner\",\"role\":\"authenticated\",\"aal\":\"aal2\"}', true); set local role authenticated;"
 fixture=$(psql "$url" -X -qAt -v ON_ERROR_STOP=1 <<SQL | tail -1
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
@@ -180,7 +186,6 @@ count_item=$c
 for v in "$ws" "$x" "$y" "$z" "$main" "$shelf" "$loss" "$customer" "$w" "$inv" "$ev1" "$ev2" "$supplier" "$p" "$r" "$rcpt" "$q" "$sale" "$c" "$cnt" "$plan" "$e1" "$e2" "$plan2"; do
   [[ "$v" =~ ^[0-9a-f-]{36}$ ]] || { echo "::error::fixture incomplete: '$fixture'" >&2; exit 1; }
 done
-expect() { [[ "$2" == "$3" ]] || { echo "::error::$1: expected '$3', got '$2'" >&2; exit 1; }; }
 total() { q "select coalesce(sum(quantity), 0)::int from public.stock_balances where item_id = '$1' and location_id in ('$main', '$shelf')"; }
 # wait_marker MARKER HOLDER-LOG: the holder's own output is shown when it never took its lock
 wait_marker() {
@@ -448,7 +453,7 @@ commit;
 SQL
 wait "$holder9" || { echo "::error::the first run failed: $(tr '\n' ' ' < "$scratch/holder9")" >&2; exit 1; }
 # both plans of the fixture business are due: the first run makes their two tasks, the second skips both
-grep -qx "made 2" "$scratch/holder9" || { echo "::error::the first run did not make the two tasks: $(tr '\n' ' ' < "$scratch/holder9")" >&2; exit 1; }
+grep -qx "made 2" "$scratch/holder9" || { echo "::error::the first run did not make the two tasks: $(tr '\n' ' ' < "$scratch/holder9") | plans (id:active:next_due_on:today:feature): $(q "select string_agg(p.id || ':' || p.active || ':' || p.next_due_on || ':' || public.workspace_today(p.workspace_id) || ':' || public.feature_effective(p.workspace_id, 'stockCycleCounts'), ' ') from public.stock_count_plans p where p.workspace_id = '$ws'") | tuple locks: $(q "select count(*) from pg_locks where locktype = 'tuple'")" >&2; exit 1; }
 grep -qx "made 0" "$scratch/contender9" || { echo "::error::the second run did not skip the plan: $(tr '\n' ' ' < "$scratch/contender9")" >&2; exit 1; }
 expect "(H) one task with its lines exists for the plan" "$(q "select count(*) || '/' || (select count(*) from public.stock_count_task_lines x join public.stock_count_tasks t2 on t2.id = x.task_id where t2.plan_id = '$plan') from public.stock_count_tasks where plan_id = '$plan'")" "1/1"
 
@@ -661,5 +666,160 @@ wait "$contender15" || true
 grep -qx putaway "$scratch/holder15" || { echo "::error::the first piece put-away did not complete: $(tr '\n' ' ' < "$scratch/holder15")" >&2; exit 1; }
 grep -q "over_allocated" "$scratch/contender15" || { echo "::error::the second piece put-away was not refused as over_allocated: $(tr '\n' ' ' < "$scratch/contender15")" >&2; exit 1; }
 expect "(L) three pieces exist, with their tags, once" "$(q "select count(*) || '/' || (select count(*) from public.stock_tags where workspace_id = '$ws' and owner_kind = 'piece' and state = 'active' and item_id = '$pitem') from public.stock_tagged_units where workspace_id = '$ws' and item_id = '$pitem'")" "3/3"
+
+# (M) two operators finalize the same counter draft under different request ids: the second waits for the receipt's
+# lock, then is refused (DKL04, no longer an open draft); one number is drawn, one set of tenders exists.
+q "update public.workspaces set vat_regime = 'vat_registered', feature_flags = coalesce(feature_flags, '{}'::jsonb) || '{\"invoicing\": true, \"standaloneInvoicing\": true, \"counterReceipts\": true}' where id = '$ws'" >/dev/null
+q "insert into public.vat_rates (workspace_id, label, percent, category, is_default, group_key) select '$ws', 'Standard', 20, 'S', true, 'standard' where not exists (select 1 from public.vat_rates where workspace_id = '$ws' and is_default)" >/dev/null
+q "insert into public.setting_values (scope, workspace_id, key, value) values ('workspace', '$ws', 'counter.fiscal_obligation', '\"none\"'::jsonb) on conflict do nothing" >/dev/null
+cdraft=$(psql "$url" -X -qAt -v ON_ERROR_STOP=1 -c "begin; select set_config('request.jwt.claims', '{\"sub\":\"$owner\",\"role\":\"authenticated\",\"aal\":\"aal2\"}', true); set local role authenticated; select (public.counter_receipt_draft_v1('$ws', gen_random_uuid(), null, null, '{\"lines\": [{\"description\": \"Race service\", \"quantity\": \"1\", \"unit_price\": \"12.00\", \"supply\": \"general\", \"unit\": {\"code\": \"unit\", \"label\": \"unit\", \"un_ece_code\": \"C62\"}}]}'::jsonb) ->> 'receipt_id'); commit;" | grep -E '^[0-9a-f-]{36}$' | head -1)
+[[ -n "$cdraft" ]] || { echo "::error::the counter draft was not made" >&2; exit 1; }
+cf() { echo "$as_owner select 'finalized' from (select public.counter_receipt_finalize_v1('$ws', '$1', '$cdraft', 1, '[{\"kind\": \"cash\", \"amount_minor\": 1200}]'::jsonb)) t;"; }
+cf1=$(uid); cf2=$(uid)
+psql "$url" -X -qAt -v ON_ERROR_STOP=1 >"$scratch/holder16" 2>&1 <<SQL &
+begin;
+$(cf "$cf1")
+reset role;
+\\! touch '$scratch/ready16'
+select pg_sleep(4);
+commit;
+SQL
+holder16=$!
+wait_marker "$scratch/ready16" "$scratch/holder16"
+PGAPPNAME="transfer-race-counter" psql "$url" -X -qAt -v ON_ERROR_STOP=1 >"$scratch/contender16" 2>&1 <<SQL &
+\\set VERBOSITY verbose
+begin;
+$(cf "$cf2")
+commit;
+SQL
+contender16=$!
+wait_lock "transfer-race-counter"
+wait "$holder16" || { echo "::error::the first finalize failed: $(tr '\n' ' ' < "$scratch/holder16")" >&2; exit 1; }
+wait "$contender16" || true
+grep -qx finalized "$scratch/holder16" || { echo "::error::the first finalize did not complete: $(tr '\n' ' ' < "$scratch/holder16")" >&2; exit 1; }
+grep -q "DKL04" "$scratch/contender16" || { echo "::error::the second finalize was not refused as no longer open: $(tr '\n' ' ' < "$scratch/contender16")" >&2; exit 1; }
+expect "(M) one receipt number and one tender" "$(q "select count(distinct r.number) || '/' || (select count(*) from public.counter_tenders t where t.receipt_id = r.id) from public.counter_receipts r where r.id = '$cdraft' group by r.id")" "1/1"
+
+# (N) two refunds of the whole correction at once: the second waits for the correction's lock and is refused (DKL08, beyond
+# what the correction credits); one refund exists.
+cline=$(q "select id from public.counter_receipt_lines where receipt_id = '$cdraft' and line_no = 1" | head -1)
+ccorr=$(psql "$url" -X -qAt -v ON_ERROR_STOP=1 -c "begin; select set_config('request.jwt.claims', '{\"sub\":\"$owner\",\"role\":\"authenticated\",\"aal\":\"aal2\"}', true); set local role authenticated; select (public.counter_receipt_correct_v1('$ws', gen_random_uuid(), '$cdraft', jsonb_build_object('reason', 'race', 'lines', jsonb_build_array(jsonb_build_object('corrects_line_id', '$cline', 'quantity', '1'))))) ->> 'receipt_id'; commit;" | grep -E '^[0-9a-f-]{36}$' | head -1)
+[[ -n "$ccorr" ]] || { echo "::error::the correction was not made" >&2; exit 1; }
+rf() { echo "$as_owner select 'refunded' from (select public.counter_refund_v1('$ws', '$1', '$ccorr', '[{\"kind\": \"cash\", \"amount_minor\": 1200}]'::jsonb)) t;"; }
+rf1=$(uid); rf2=$(uid)
+psql "$url" -X -qAt -v ON_ERROR_STOP=1 >"$scratch/holder17" 2>&1 <<SQL &
+begin;
+$(rf "$rf1")
+reset role;
+\\! touch '$scratch/ready17'
+select pg_sleep(4);
+commit;
+SQL
+holder17=$!
+wait_marker "$scratch/ready17" "$scratch/holder17"
+PGAPPNAME="transfer-race-refund" psql "$url" -X -qAt -v ON_ERROR_STOP=1 >"$scratch/contender17" 2>&1 <<SQL &
+\\set VERBOSITY verbose
+begin;
+$(rf "$rf2")
+commit;
+SQL
+contender17=$!
+wait_lock "transfer-race-refund"
+wait "$holder17" || { echo "::error::the first refund failed: $(tr '\n' ' ' < "$scratch/holder17")" >&2; exit 1; }
+wait "$contender17" || true
+grep -qx refunded "$scratch/holder17" || { echo "::error::the first refund did not complete: $(tr '\n' ' ' < "$scratch/holder17")" >&2; exit 1; }
+grep -q "DKL08" "$scratch/contender17" || { echo "::error::the second refund was not refused as beyond: $(tr '\n' ' ' < "$scratch/contender17")" >&2; exit 1; }
+expect "(N) one refund of 12.00 exists" "$(q "select count(*) || '/' || coalesce(sum(amount_minor), 0) from public.counter_refunds where receipt_id = '$ccorr'")" "1/1200"
+
+# (O) a card authorization is answered while the sale is finalized: the finalize waits for the answer's lock on the receipt,
+# then settles the sale with the accepted tender; or, asked first, refuses it as still open. Never both a tender and a
+# finalize that disagree: one number, one accepted card tender.
+odraft=$(psql "$url" -X -qAt -v ON_ERROR_STOP=1 -c "begin; select set_config('request.jwt.claims', '{\"sub\":\"$owner\",\"role\":\"authenticated\",\"aal\":\"aal2\"}', true); set local role authenticated; select (public.counter_receipt_draft_v1('$ws', gen_random_uuid(), null, null, '{\"lines\": [{\"description\": \"Race card\", \"quantity\": \"1\", \"unit_price\": \"12.00\", \"supply\": \"general\", \"unit\": {\"code\": \"unit\", \"label\": \"unit\", \"un_ece_code\": \"C62\"}}]}'::jsonb) ->> 'receipt_id'); commit;" | grep -E '^[0-9a-f-]{36}$' | head -1)
+otender=$(psql "$url" -X -qAt -v ON_ERROR_STOP=1 -c "begin; select set_config('request.jwt.claims', '{\"sub\":\"$owner\",\"role\":\"authenticated\",\"aal\":\"aal2\"}', true); set local role authenticated; select (public.counter_tender_request_v1('$ws', gen_random_uuid(), '$odraft', 'card', 1200)) ->> 'tender_id'; commit;" | grep -E '^[0-9a-f-]{36}$' | head -1)
+[[ -n "$odraft" && -n "$otender" ]] || { echo "::error::the card draft was not made" >&2; exit 1; }
+psql "$url" -X -qAt -v ON_ERROR_STOP=1 >"$scratch/holder18" 2>&1 <<SQL &
+begin;
+$as_owner
+select 'answered ' || (public.counter_tender_resolve_v1('$ws', gen_random_uuid(), '$otender', 'accepted', 'prov-race') ->> 'state');
+reset role;
+\\! touch '$scratch/ready18'
+select pg_sleep(4);
+commit;
+SQL
+holder18=$!
+wait_marker "$scratch/ready18" "$scratch/holder18"
+PGAPPNAME="transfer-race-resolve" psql "$url" -X -qAt -v ON_ERROR_STOP=1 >"$scratch/contender18" 2>&1 <<SQL &
+begin;
+$as_owner
+select 'finalized ' || (public.counter_receipt_finalize_v1('$ws', gen_random_uuid(), '$odraft', 1, jsonb_build_array(jsonb_build_object('tender_id', '$otender'))) ->> 'tenders');
+commit;
+SQL
+contender18=$!
+wait_lock "transfer-race-resolve"
+wait "$holder18" || { echo "::error::the answer failed: $(tr '\n' ' ' < "$scratch/holder18")" >&2; exit 1; }
+wait "$contender18" || { echo "::error::the finalize failed: $(tr '\n' ' ' < "$scratch/contender18")" >&2; exit 1; }
+grep -qx "answered accepted" "$scratch/holder18" || { echo "::error::the answer was not recorded: $(tr '\n' ' ' < "$scratch/holder18")" >&2; exit 1; }
+grep -qx "finalized 1" "$scratch/contender18" || { echo "::error::the finalize did not settle with the accepted tender: $(tr '\n' ' ' < "$scratch/contender18")" >&2; exit 1; }
+expect "(O) one number, one accepted card tender" "$(q "select (r.number is not null)::text || '/' || (select count(*) from public.counter_tenders t where t.receipt_id = r.id and t.state = 'accepted' and t.kind = 'card') from public.counter_receipts r where r.id = '$odraft'")" "true/1"
+
+# (P) two sessions open the same till at once: one session, the other refused (DKL12 already_open).
+q "update public.workspaces set feature_flags = coalesce(feature_flags, '{}'::jsonb) || '{\"counterTillSessions\": true}' where id = '$ws'" >/dev/null
+tillid=$(psql "$url" -X -qAt -v ON_ERROR_STOP=1 -c "begin; select set_config('request.jwt.claims', '{\"sub\":\"$owner\",\"role\":\"authenticated\",\"aal\":\"aal2\"}', true); set local role authenticated; select (public.counter_till_save_v1('$ws', gen_random_uuid(), null, 'Race till', null, true)) ->> 'till_id'; commit;" | grep -E '^[0-9a-f-]{36}$' | head -1)
+[[ -n "$tillid" ]] || { echo "::error::the till was not made" >&2; exit 1; }
+op() { echo "$as_owner select 'opened' from (select public.counter_session_open_v1('$ws', '$1', '$tillid', 10000, null)) t;"; }
+op1=$(uid); op2=$(uid)
+psql "$url" -X -qAt -v ON_ERROR_STOP=1 >"$scratch/holder19" 2>&1 <<SQL &
+begin;
+$(op "$op1")
+reset role;
+\\! touch '$scratch/ready19'
+select pg_sleep(4);
+commit;
+SQL
+holder19=$!
+wait_marker "$scratch/ready19" "$scratch/holder19"
+PGAPPNAME="transfer-race-open" psql "$url" -X -qAt -v ON_ERROR_STOP=1 >"$scratch/contender19" 2>&1 <<SQL &
+\\set VERBOSITY verbose
+begin;
+$(op "$op2")
+commit;
+SQL
+contender19=$!
+wait_lock "transfer-race-open"
+wait "$holder19" || { echo "::error::the first open failed: $(tr '\n' ' ' < "$scratch/holder19")" >&2; exit 1; }
+wait "$contender19" || true
+grep -qx opened "$scratch/holder19" || { echo "::error::the first open did not complete: $(tr '\n' ' ' < "$scratch/holder19")" >&2; exit 1; }
+grep -q "DKL12" "$scratch/contender19" || { echo "::error::the second open was not refused as already open: $(tr '\n' ' ' < "$scratch/contender19")" >&2; exit 1; }
+expect "(P) one open session on the till" "$(q "select count(*) from public.counter_till_sessions where till_id = '$tillid' and state = 'open'")" "1"
+
+# (Q) a sale finalized and the close of its session at once: the sale holds the session for share, the close takes it for
+# update and waits; the close then counts the sale (one ordering: the sale committed first).
+qsession=$(q "select id from public.counter_till_sessions where till_id = '$tillid' and state = 'open'" | head -1)
+qdraft=$(psql "$url" -X -qAt -v ON_ERROR_STOP=1 -c "begin; select set_config('request.jwt.claims', '{\"sub\":\"$owner\",\"role\":\"authenticated\",\"aal\":\"aal2\"}', true); set local role authenticated; select (public.counter_receipt_draft_v1('$ws', gen_random_uuid(), null, null, '{\"till_id\": \"$tillid\", \"lines\": [{\"description\": \"Race sale\", \"quantity\": \"1\", \"unit_price\": \"12.00\", \"supply\": \"general\", \"unit\": {\"code\": \"unit\", \"label\": \"unit\", \"un_ece_code\": \"C62\"}}]}'::jsonb) ->> 'receipt_id'); commit;" | grep -E '^[0-9a-f-]{36}$' | head -1)
+[[ -n "$qdraft" ]] || { echo "::error::the sale draft was not made" >&2; exit 1; }
+psql "$url" -X -qAt -v ON_ERROR_STOP=1 >"$scratch/holder20" 2>&1 <<SQL &
+begin;
+$as_owner
+select 'sold ' || (public.counter_receipt_finalize_v1('$ws', gen_random_uuid(), '$qdraft', 1, '[{"kind": "cash", "amount_minor": 1200}]'::jsonb) ->> 'number');
+reset role;
+\\! touch '$scratch/ready20'
+select pg_sleep(4);
+commit;
+SQL
+holder20=$!
+wait_marker "$scratch/ready20" "$scratch/holder20"
+PGAPPNAME="transfer-race-close" psql "$url" -X -qAt -v ON_ERROR_STOP=1 >"$scratch/contender20" 2>&1 <<SQL &
+begin;
+$as_owner
+select 'closed ' || (public.counter_session_close_v1('$ws', gen_random_uuid(), '$qsession', 11200, null, 'race', 0) ->> 'expected_minor');
+commit;
+SQL
+contender20=$!
+wait_lock "transfer-race-close"
+wait "$holder20" || { echo "::error::the sale failed: $(tr '\n' ' ' < "$scratch/holder20")" >&2; exit 1; }
+wait "$contender20" || { echo "::error::the close failed: $(tr '\n' ' ' < "$scratch/contender20")" >&2; exit 1; }
+grep -q "^sold " "$scratch/holder20" || { echo "::error::the sale did not complete: $(tr '\n' ' ' < "$scratch/holder20")" >&2; exit 1; }
+grep -qx "closed 11200" "$scratch/contender20" || { echo "::error::the close did not count the sale (expected 11200): $(tr '\n' ' ' < "$scratch/contender20")" >&2; exit 1; }
+expect "(Q) the sale is in the closed session" "$(q "select count(*) from public.counter_receipts where till_session_id = '$qsession' and state = 'finalized'")" "1"
 
 echo "stock transfer race: opposing transfers never deadlock and keep every total; the last stock is taken once; a booking confirmation and a customer return of one item serialise in both orders; two put-aways cannot over-allocate a line; two sessions crossing a reorder point raise one alert"
