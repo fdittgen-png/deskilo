@@ -21046,12 +21046,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get managedProfileTitle => 'Managed profile';
 
   @override
+  String get masterDataNoUnit => 'No unit';
+
+  @override
+  String get masterDataNoVat => 'No VAT';
+
+  @override
   String get masterDataSearchHint =>
       'Type a name or a code, or pick from the list';
 
   @override
   String get masterDataUnknownCode =>
       'This is not a valid entry. Pick one from the list.';
+
+  @override
+  String get masterDataUnlisted => 'This is not in the list: pick one';
 
   @override
   String get mcpApiReference => 'API reference';
@@ -22631,6 +22640,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get measureDimensionMass => 'Mass';
+
+  @override
+  String get measureDimensionPackage => 'Package';
 
   @override
   String get measureDimensionTime => 'Time';
@@ -25651,10 +25663,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get permAllowsOperateKiosk => 'Set up the kiosk and hand out badges.';
 
   @override
-  String get permAllowsOverrideTillPrice =>
-      'Sell a till line at a price other than the item\'s, with a reason the receipt keeps. Without it, a till line is sold at the item\'s price.';
-
-  @override
   String get permAllowsPaymentTermsEdit =>
       'Request a change of a member\'s payment conditions; validation decides.';
 
@@ -25808,9 +25816,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get permOperateKiosk => 'Operate the kiosk and badges';
-
-  @override
-  String get permOverrideTillPrice => 'Change a price at the till';
 
   @override
   String get permPaymentTermsEdit => 'Request payment-condition changes';
@@ -32518,10 +32523,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'The most cells one till layout may hold, over all its pages and sizes. A larger layout is refused when it is saved.';
 
   @override
-  String get settingHintCounterMaxDiscount =>
-      'The largest discount, in percent, a cashier may give on a till line. 0 means no discount at the till.';
-
-  @override
   String get settingHintCounterOfflineMaxMinutes =>
       'How long after the till lost its connection a cash sale made offline is still accepted when it is sent. Later sales are refused and listed for the owner.';
 
@@ -32968,9 +32969,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingLabelCounterLayoutMaxCells => 'Till layout size';
-
-  @override
-  String get settingLabelCounterMaxDiscount => 'Largest discount at the till';
 
   @override
   String get settingLabelCounterOfflineMaxMinutes =>
@@ -41175,17 +41173,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get tillDiscountBeyond =>
-      'This discount is beyond what the business allows at the till.';
-
-  @override
-  String get tillDiscountField => 'Discount (%)';
-
-  @override
-  String get tillDiscountInvalid =>
-      'A discount is a percentage off the item\'s price, on a line without a changed price.';
-
-  @override
   String get tillDrawerAddTill => 'Add a till';
 
   @override
@@ -41692,6 +41679,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tillNotForCounter => 'This item is not for sale at the counter.';
 
   @override
+  String get tillNotPrinted =>
+      'Receipt not printed — the sale is complete. Print again.';
+
+  @override
   String tillNotReady(String operation) {
     return 'Not ready in your country: $operation';
   }
@@ -41699,9 +41690,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get tillNotReadyHint =>
       'Nothing is numbered and nothing is taken until the country\'s operation is supported.';
-
-  @override
-  String get tillNothingToReprint => 'No sale to print again yet.';
 
   @override
   String get tillOfflineBanner =>
@@ -41842,26 +41830,82 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get tillPriceField => 'New price';
-
-  @override
-  String get tillPriceNotAllowed =>
-      'You may not change a price at the till. The line is sold at the item\'s price.';
-
-  @override
-  String get tillPriceReason => 'Reason';
-
-  @override
-  String get tillPriceReasonHint => 'Kept on the receipt.';
-
-  @override
-  String get tillPriceReasonMissing => 'A changed price needs its reason.';
-
-  @override
-  String get tillPriceUnreadable => 'Type a number, such as 4.50.';
-
-  @override
   String get tillPricing => 'Pricing the basket…';
+
+  @override
+  String get tillPrintCopy => 'Print a copy';
+
+  @override
+  String get tillPrintReceipt => 'Print the receipt';
+
+  @override
+  String get tillPrintTotal => 'TOTAL';
+
+  @override
+  String get tillPrinted => 'Receipt printed.';
+
+  @override
+  String get tillPrinterCodePage => 'Code page';
+
+  @override
+  String get tillPrinterCodePage437 => 'PC437 (without the euro sign)';
+
+  @override
+  String get tillPrinterCodePage858 => 'PC858 (with the euro sign)';
+
+  @override
+  String get tillPrinterDrawer => 'A cash drawer is attached to the printer';
+
+  @override
+  String get tillPrinterHost => 'Printer address';
+
+  @override
+  String get tillPrinterHostHint =>
+      'A name or an address on this network, for example 192.168.1.50';
+
+  @override
+  String get tillPrinterHostRequired => 'Enter the printer\'s address.';
+
+  @override
+  String get tillPrinterMode => 'Print after a sale';
+
+  @override
+  String get tillPrinterModeAlways => 'Always';
+
+  @override
+  String get tillPrinterModeAsk => 'Offer it';
+
+  @override
+  String get tillPrinterModeNever => 'Only when asked';
+
+  @override
+  String get tillPrinterPaper => 'Paper width';
+
+  @override
+  String tillPrinterPaperWidth(String mm) {
+    return '$mm mm';
+  }
+
+  @override
+  String get tillPrinterPort => 'Port';
+
+  @override
+  String get tillPrinterPortInvalid => 'The port is a number from 1 to 65535.';
+
+  @override
+  String get tillPrinterSet => 'Set up the receipt printer';
+
+  @override
+  String get tillPrinterTest => 'Test print';
+
+  @override
+  String get tillPrinterTestSent => 'Test page sent.';
+
+  @override
+  String get tillPrinterTitle => 'Receipt printer';
+
+  @override
+  String get tillPrinting => 'Printing…';
 
   @override
   String get tillQuantityHint => 'An exact quantity, for example 1 or 0.350.';
@@ -41928,9 +41972,13 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String tillReceiptCopy(String copy) {
-    return 'COPY $copy — not a new receipt';
-  }
+  String get tillReceiptCash => 'Cash';
+
+  @override
+  String get tillReceiptChange => 'Change';
+
+  @override
+  String get tillReceiptCopy => '*** COPY ***';
 
   @override
   String tillReceiptCorrects(String number) {
@@ -41972,9 +42020,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tillReceiptShow => 'Show the receipt';
 
   @override
+  String get tillReceiptTax => 'of which tax';
+
+  @override
   String tillReceiptTaxLine(String percent, String tax, String net) {
     return 'VAT $percent: $tax on $net';
   }
+
+  @override
+  String get tillReceiptThanks => 'Thank you';
 
   @override
   String tillReceiptTotal(String amount) {
@@ -41992,9 +42046,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tillRetry => 'Try again';
-
-  @override
-  String get tillRingUpFirst => 'Ring up an item first.';
 
   @override
   String get tillScanLabel => 'Scan a code';

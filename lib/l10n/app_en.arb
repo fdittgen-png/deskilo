@@ -27804,6 +27804,14 @@
   "@managedProfileTitle": {
     "description": "#887 managed profiles: managedProfileTitle"
   },
+  "masterDataNoUnit": "No unit",
+  "@masterDataNoUnit": {
+    "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataNoUnit"
+  },
+  "masterDataNoVat": "No VAT",
+  "@masterDataNoVat": {
+    "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataNoVat"
+  },
   "masterDataSearchHint": "Type a name or a code, or pick from the list",
   "@masterDataSearchHint": {
     "description": "#3563 Helper under a field that names master data (a country, a currency): what can be typed."
@@ -27811,6 +27819,10 @@
   "masterDataUnknownCode": "This is not a valid entry. Pick one from the list.",
   "@masterDataUnknownCode": {
     "description": "#3563 Error under a master-data field (country, currency) whose value is outside the catalogue; shown for a stored value too."
+  },
+  "masterDataUnlisted": "This is not in the list: pick one",
+  "@masterDataUnlisted": {
+    "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataUnlisted"
   },
   "mcpApiReference": "API reference",
   "@mcpApiReference": {
@@ -29869,6 +29881,10 @@
   "measureDimensionMass": "Mass",
   "@measureDimensionMass": {
     "description": "#4442 dimension: mass"
+  },
+  "measureDimensionPackage": "Package",
+  "@measureDimensionPackage": {
+    "description": "#4479 dimension: a packaging unit, which converts only through an item's own factor"
   },
   "measureDimensionTime": "Time",
   "@measureDimensionTime": {
@@ -33871,10 +33887,6 @@
   "@permAllowsOperateKiosk": {
     "description": "#3628 roles at the desk: one line of what the permission allows"
   },
-  "permAllowsOverrideTillPrice": "Sell a till line at a price other than the item's, with a reason the receipt keeps. Without it, a till line is sold at the item's price.",
-  "@permAllowsOverrideTillPrice": {
-    "description": "#4476 the right to change a till line price, with a reason"
-  },
   "permAllowsPaymentTermsEdit": "Request a change of a member's payment conditions; validation decides.",
   "@permAllowsPaymentTermsEdit": {
     "description": "#3628 roles at the desk: one line of what the permission allows"
@@ -34066,10 +34078,6 @@
   "permOperateKiosk": "Operate the kiosk and badges",
   "@permOperateKiosk": {
     "description": "#982 permission catalog: permOperateKiosk"
-  },
-  "permOverrideTillPrice": "Change a price at the till",
-  "@permOverrideTillPrice": {
-    "description": "#4476 the right to change a till line price, with a reason"
   },
   "permPaymentTermsEdit": "Request payment-condition changes",
   "@permPaymentTermsEdit": {
@@ -42562,10 +42570,6 @@
   "@settingHintCounterLayoutMaxCells": {
     "description": "#4448 a till layout setting"
   },
-  "settingHintCounterMaxDiscount": "The largest discount, in percent, a cashier may give on a till line. 0 means no discount at the till.",
-  "@settingHintCounterMaxDiscount": {
-    "description": "#4476 the setting counter.max_discount_percent"
-  },
   "settingHintCounterOfflineMaxMinutes": "How long after the till lost its connection a cash sale made offline is still accepted when it is sent. Later sales are refused and listed for the owner.",
   "@settingHintCounterOfflineMaxMinutes": {
     "description": "#4373 setting hint"
@@ -43037,10 +43041,6 @@
   "settingLabelCounterLayoutMaxCells": "Till layout size",
   "@settingLabelCounterLayoutMaxCells": {
     "description": "#4448 a till layout setting"
-  },
-  "settingLabelCounterMaxDiscount": "Largest discount at the till",
-  "@settingLabelCounterMaxDiscount": {
-    "description": "#4476 the setting counter.max_discount_percent"
   },
   "settingLabelCounterOfflineMaxMinutes": "Longest offline period (minutes)",
   "@settingLabelCounterOfflineMaxMinutes": {
@@ -53696,18 +53696,6 @@
       }
     }
   },
-  "tillDiscountBeyond": "This discount is beyond what the business allows at the till.",
-  "@tillDiscountBeyond": {
-    "description": "#4476 a discount refused beyond the business's limit"
-  },
-  "tillDiscountField": "Discount (%)",
-  "@tillDiscountField": {
-    "description": "#4476 the till price keys"
-  },
-  "tillDiscountInvalid": "A discount is a percentage off the item's price, on a line without a changed price.",
-  "@tillDiscountInvalid": {
-    "description": "#4476 the till price keys"
-  },
   "tillDrawerAddTill": "Add a till",
   "@tillDrawerAddTill": {
     "description": "#4367 till sessions: the cash drawer"
@@ -54392,6 +54380,10 @@
   "@tillNotForCounter": {
     "description": "#4366 the till"
   },
+  "tillNotPrinted": "Receipt not printed — the sale is complete. Print again.",
+  "@tillNotPrinted": {
+    "description": "#4368 the till's receipt printer"
+  },
   "tillNotReady": "Not ready in your country: {operation}",
   "@tillNotReady": {
     "description": "#4366 the till",
@@ -54404,10 +54396,6 @@
   "tillNotReadyHint": "Nothing is numbered and nothing is taken until the country's operation is supported.",
   "@tillNotReadyHint": {
     "description": "#4366 the till"
-  },
-  "tillNothingToReprint": "No sale to print again yet.",
-  "@tillNothingToReprint": {
-    "description": "#4476 Reprint with no sale yet"
   },
   "tillOfflineBanner": "Offline — cash only. Sales are kept on this device and sent when the connection returns.",
   "@tillOfflineBanner": {
@@ -54575,33 +54563,110 @@
       }
     }
   },
-  "tillPriceField": "New price",
-  "@tillPriceField": {
-    "description": "#4476 the till price keys"
-  },
-  "tillPriceNotAllowed": "You may not change a price at the till. The line is sold at the item's price.",
-  "@tillPriceNotAllowed": {
-    "description": "#4476 the till price keys"
-  },
-  "tillPriceReason": "Reason",
-  "@tillPriceReason": {
-    "description": "#4476 the till price keys"
-  },
-  "tillPriceReasonHint": "Kept on the receipt.",
-  "@tillPriceReasonHint": {
-    "description": "#4476 the till price keys"
-  },
-  "tillPriceReasonMissing": "A changed price needs its reason.",
-  "@tillPriceReasonMissing": {
-    "description": "#4476 the till price keys"
-  },
-  "tillPriceUnreadable": "Type a number, such as 4.50.",
-  "@tillPriceUnreadable": {
-    "description": "#4476 the till price keys"
-  },
   "tillPricing": "Pricing the basket…",
   "@tillPricing": {
     "description": "#4366 the till"
+  },
+  "tillPrintCopy": "Print a copy",
+  "@tillPrintCopy": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrintReceipt": "Print the receipt",
+  "@tillPrintReceipt": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrintTotal": "TOTAL",
+  "@tillPrintTotal": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinted": "Receipt printed.",
+  "@tillPrinted": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterCodePage": "Code page",
+  "@tillPrinterCodePage": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterCodePage437": "PC437 (without the euro sign)",
+  "@tillPrinterCodePage437": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterCodePage858": "PC858 (with the euro sign)",
+  "@tillPrinterCodePage858": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterDrawer": "A cash drawer is attached to the printer",
+  "@tillPrinterDrawer": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterHost": "Printer address",
+  "@tillPrinterHost": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterHostHint": "A name or an address on this network, for example 192.168.1.50",
+  "@tillPrinterHostHint": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterHostRequired": "Enter the printer's address.",
+  "@tillPrinterHostRequired": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterMode": "Print after a sale",
+  "@tillPrinterMode": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterModeAlways": "Always",
+  "@tillPrinterModeAlways": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterModeAsk": "Offer it",
+  "@tillPrinterModeAsk": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterModeNever": "Only when asked",
+  "@tillPrinterModeNever": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterPaper": "Paper width",
+  "@tillPrinterPaper": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterPaperWidth": "{mm} mm",
+  "@tillPrinterPaperWidth": {
+    "description": "#4368 the till's receipt printer: a paper width in millimetres, the number arrives formatted",
+    "placeholders": {
+      "mm": {
+        "type": "String"
+      }
+    }
+  },
+  "tillPrinterPort": "Port",
+  "@tillPrinterPort": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterPortInvalid": "The port is a number from 1 to 65535.",
+  "@tillPrinterPortInvalid": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterSet": "Set up the receipt printer",
+  "@tillPrinterSet": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterTest": "Test print",
+  "@tillPrinterTest": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterTestSent": "Test page sent.",
+  "@tillPrinterTestSent": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterTitle": "Receipt printer",
+  "@tillPrinterTitle": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinting": "Printing…",
+  "@tillPrinting": {
+    "description": "#4368 the till's receipt printer"
   },
   "tillQuantityHint": "An exact quantity, for example 1 or 0.350.",
   "@tillQuantityHint": {
@@ -54696,14 +54761,17 @@
       }
     }
   },
-  "tillReceiptCopy": "COPY {copy} — not a new receipt",
+  "tillReceiptCash": "Cash",
+  "@tillReceiptCash": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillReceiptChange": "Change",
+  "@tillReceiptChange": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillReceiptCopy": "*** COPY ***",
   "@tillReceiptCopy": {
-    "description": "#4476 a receipt printed again; copy is its number among the copies, a label (1, 2, ...)",
-    "placeholders": {
-      "copy": {
-        "type": "String"
-      }
-    }
+    "description": "#4368 the till's receipt printer"
   },
   "tillReceiptCorrects": "Corrects receipt {number}",
   "@tillReceiptCorrects": {
@@ -54769,6 +54837,10 @@
   "@tillReceiptShow": {
     "description": "#4184 the counter receipt document"
   },
+  "tillReceiptTax": "of which tax",
+  "@tillReceiptTax": {
+    "description": "#4368 the till's receipt printer"
+  },
   "tillReceiptTaxLine": "VAT {percent}: {tax} on {net}",
   "@tillReceiptTaxLine": {
     "description": "#4184 the counter receipt document; percent, tax and net arrive formatted",
@@ -54783,6 +54855,10 @@
         "type": "String"
       }
     }
+  },
+  "tillReceiptThanks": "Thank you",
+  "@tillReceiptThanks": {
+    "description": "#4368 the till's receipt printer"
   },
   "tillReceiptTotal": "Total {amount}",
   "@tillReceiptTotal": {
@@ -54809,10 +54885,6 @@
   "tillRetry": "Try again",
   "@tillRetry": {
     "description": "#4366 the till: ask the server again"
-  },
-  "tillRingUpFirst": "Ring up an item first.",
-  "@tillRingUpFirst": {
-    "description": "#4476 the till price keys"
   },
   "tillScanLabel": "Scan a code",
   "@tillScanLabel": {

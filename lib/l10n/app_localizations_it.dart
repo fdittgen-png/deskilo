@@ -21212,12 +21212,21 @@ class AppLocalizationsIt extends AppLocalizations {
   String get managedProfileTitle => 'Profilo gestito';
 
   @override
+  String get masterDataNoUnit => 'Nessuna unità';
+
+  @override
+  String get masterDataNoVat => 'Senza IVA';
+
+  @override
   String get masterDataSearchHint =>
       'Digiti un nome o un codice, oppure scelga dall\'elenco';
 
   @override
   String get masterDataUnknownCode =>
       'Non è una voce valida. Ne scelga una dall\'elenco.';
+
+  @override
+  String get masterDataUnlisted => 'Non è nell\'elenco: sceglierne uno';
 
   @override
   String get mcpApiReference => 'Riferimento API';
@@ -22822,6 +22831,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get measureDimensionMass => 'Massa';
+
+  @override
+  String get measureDimensionPackage => 'Confezione';
 
   @override
   String get measureDimensionTime => 'Tempo';
@@ -25865,10 +25877,6 @@ class AppLocalizationsIt extends AppLocalizations {
       'Configurare il chiosco e assegnare i badge.';
 
   @override
-  String get permAllowsOverrideTillPrice =>
-      'Vendere una riga di cassa a un prezzo diverso da quello dell\'articolo, con un motivo che lo scontrino conserva. Senza questo diritto, una riga di cassa è venduta al prezzo dell\'articolo.';
-
-  @override
   String get permAllowsPaymentTermsEdit =>
       'Chiedere una modifica delle condizioni di pagamento di un membro; decide la convalida.';
 
@@ -26024,9 +26032,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get permOperateKiosk => 'Operare il chiosco e i badge';
-
-  @override
-  String get permOverrideTillPrice => 'Modificare un prezzo alla cassa';
 
   @override
   String get permPaymentTermsEdit =>
@@ -32796,10 +32801,6 @@ class AppLocalizationsIt extends AppLocalizations {
       'Il numero massimo di celle di un layout di cassa, su tutte le pagine e dimensioni. Un layout più grande viene rifiutato al salvataggio.';
 
   @override
-  String get settingHintCounterMaxDiscount =>
-      'Lo sconto massimo, in percentuale, che un cassiere può applicare a una riga di cassa. 0 significa nessuno sconto alla cassa.';
-
-  @override
   String get settingHintCounterOfflineMaxMinutes =>
       'Per quanto tempo dopo la perdita della connessione una vendita in contanti fatta offline è ancora accettata all\'invio. Le vendite successive sono rifiutate ed elencate per il titolare.';
 
@@ -33255,9 +33256,6 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settingLabelCounterLayoutMaxCells =>
       'Dimensione del layout di cassa';
-
-  @override
-  String get settingLabelCounterMaxDiscount => 'Sconto massimo alla cassa';
 
   @override
   String get settingLabelCounterOfflineMaxMinutes =>
@@ -41566,17 +41564,6 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get tillDiscountBeyond =>
-      'Questo sconto supera quanto l\'azienda consente alla cassa.';
-
-  @override
-  String get tillDiscountField => 'Sconto (%)';
-
-  @override
-  String get tillDiscountInvalid =>
-      'Uno sconto è una percentuale del prezzo dell\'articolo, su una riga senza prezzo modificato.';
-
-  @override
   String get tillDrawerAddTill => 'Aggiungere una cassa';
 
   @override
@@ -42088,6 +42075,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get tillNotForCounter => 'Questo articolo non è in vendita al banco.';
 
   @override
+  String get tillNotPrinted =>
+      'Scontrino non stampato — la vendita è completa. Stampa di nuovo.';
+
+  @override
   String tillNotReady(String operation) {
     return 'Non ancora pronto nel Suo paese: $operation';
   }
@@ -42095,9 +42086,6 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get tillNotReadyHint =>
       'Non viene numerato né incassato nulla finché l\'operazione del paese non è supportata.';
-
-  @override
-  String get tillNothingToReprint => 'Ancora nessuna vendita da ristampare.';
 
   @override
   String get tillOfflineBanner =>
@@ -42243,27 +42231,83 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get tillPriceField => 'Nuovo prezzo';
-
-  @override
-  String get tillPriceNotAllowed =>
-      'Non può modificare un prezzo alla cassa. La riga è venduta al prezzo dell\'articolo.';
-
-  @override
-  String get tillPriceReason => 'Motivo';
-
-  @override
-  String get tillPriceReasonHint => 'Conservato sullo scontrino.';
-
-  @override
-  String get tillPriceReasonMissing =>
-      'Un prezzo modificato ha bisogno di un motivo.';
-
-  @override
-  String get tillPriceUnreadable => 'Digiti un numero, ad esempio 4,50.';
-
-  @override
   String get tillPricing => 'Calcolo del carrello…';
+
+  @override
+  String get tillPrintCopy => 'Stampa una copia';
+
+  @override
+  String get tillPrintReceipt => 'Stampa lo scontrino';
+
+  @override
+  String get tillPrintTotal => 'TOTALE';
+
+  @override
+  String get tillPrinted => 'Scontrino stampato.';
+
+  @override
+  String get tillPrinterCodePage => 'Tabella dei caratteri';
+
+  @override
+  String get tillPrinterCodePage437 => 'PC437 (senza il simbolo dell\'euro)';
+
+  @override
+  String get tillPrinterCodePage858 => 'PC858 (con il simbolo dell\'euro)';
+
+  @override
+  String get tillPrinterDrawer => 'Un cassetto è collegato alla stampante';
+
+  @override
+  String get tillPrinterHost => 'Indirizzo della stampante';
+
+  @override
+  String get tillPrinterHostHint =>
+      'Un nome o un indirizzo di questa rete, ad esempio 192.168.1.50';
+
+  @override
+  String get tillPrinterHostRequired =>
+      'Inserisca l\'indirizzo della stampante.';
+
+  @override
+  String get tillPrinterMode => 'Stampa dopo una vendita';
+
+  @override
+  String get tillPrinterModeAlways => 'Sempre';
+
+  @override
+  String get tillPrinterModeAsk => 'Proporlo';
+
+  @override
+  String get tillPrinterModeNever => 'Solo su richiesta';
+
+  @override
+  String get tillPrinterPaper => 'Larghezza della carta';
+
+  @override
+  String tillPrinterPaperWidth(String mm) {
+    return '$mm mm';
+  }
+
+  @override
+  String get tillPrinterPort => 'Porta';
+
+  @override
+  String get tillPrinterPortInvalid => 'La porta è un numero da 1 a 65535.';
+
+  @override
+  String get tillPrinterSet => 'Configura la stampante di scontrini';
+
+  @override
+  String get tillPrinterTest => 'Stampa di prova';
+
+  @override
+  String get tillPrinterTestSent => 'Pagina di prova inviata.';
+
+  @override
+  String get tillPrinterTitle => 'Stampante di scontrini';
+
+  @override
+  String get tillPrinting => 'Stampa in corso…';
 
   @override
   String get tillQuantityHint =>
@@ -42332,9 +42376,13 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String tillReceiptCopy(String copy) {
-    return 'COPIA $copy — non è un nuovo scontrino';
-  }
+  String get tillReceiptCash => 'Contanti';
+
+  @override
+  String get tillReceiptChange => 'Resto';
+
+  @override
+  String get tillReceiptCopy => '*** COPIA ***';
 
   @override
   String tillReceiptCorrects(String number) {
@@ -42376,9 +42424,15 @@ class AppLocalizationsIt extends AppLocalizations {
   String get tillReceiptShow => 'Mostrare lo scontrino';
 
   @override
+  String get tillReceiptTax => 'di cui imposta';
+
+  @override
   String tillReceiptTaxLine(String percent, String tax, String net) {
     return 'IVA $percent: $tax su $net';
   }
+
+  @override
+  String get tillReceiptThanks => 'Grazie';
 
   @override
   String tillReceiptTotal(String amount) {
@@ -42396,9 +42450,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get tillRetry => 'Riprova';
-
-  @override
-  String get tillRingUpFirst => 'Registri prima un articolo.';
 
   @override
   String get tillScanLabel => 'Scansiona un codice';

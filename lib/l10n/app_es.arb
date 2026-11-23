@@ -12826,8 +12826,20 @@
   "@managedProfileTitle": {
     "description": "#887 managed profiles: managedProfileTitle"
   },
+  "masterDataNoUnit": "Sin unidad",
+  "@masterDataNoUnit": {
+    "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataNoUnit"
+  },
+  "masterDataNoVat": "Sin IVA",
+  "@masterDataNoVat": {
+    "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataNoVat"
+  },
   "masterDataSearchHint": "Escriba un nombre o un código, o elija de la lista",
   "masterDataUnknownCode": "No es una entrada válida. Elija una de la lista.",
+  "masterDataUnlisted": "Esto no está en la lista: elija uno",
+  "@masterDataUnlisted": {
+    "description": "#4471 a unit or a VAT rate is picked from the master data: masterDataUnlisted"
+  },
   "mcpApiReference": "Referencia de la API",
   "mcpApiReferenceHint": "Qué puede llamar un asistente y cómo se autoriza",
   "mcpAssistantsTitle": "Asistentes",
@@ -13300,6 +13312,10 @@
   "measureDimensionMass": "Masa",
   "@measureDimensionMass": {
     "description": "#4442 dimension: mass"
+  },
+  "measureDimensionPackage": "Envase",
+  "@measureDimensionPackage": {
+    "description": "#4479 dimension: a packaging unit, which converts only through an item's own factor"
   },
   "measureDimensionTime": "Tiempo",
   "@measureDimensionTime": {
@@ -14747,7 +14763,6 @@
   "permAllowsManageStock": "Dar entrada, mover y dar salida a mercancías.",
   "permAllowsManageValidation": "Definir qué solicitudes necesitan aprobación y quién las aprueba.",
   "permAllowsOperateKiosk": "Configurar el quiosco y entregar las tarjetas.",
-  "permAllowsOverrideTillPrice": "Vender una línea de caja a un precio distinto del del artículo, con un motivo que el tique conserva. Sin este derecho, una línea de caja se vende al precio del artículo.",
   "permAllowsPaymentTermsEdit": "Solicitar un cambio de las condiciones de pago de un miembro; la validación decide.",
   "permAllowsRecordOutgoingPayments": "Registrar y anular el pago hecho a un miembro por una solicitud aprobada.",
   "permAllowsUseMessages": "Usar las conversaciones, el canal de avisos y las notificaciones.",
@@ -14856,7 +14871,6 @@
   "@permOperateKiosk": {
     "description": "#982 permission catalog: permOperateKiosk"
   },
-  "permOverrideTillPrice": "Cambiar un precio en la caja",
   "permPaymentTermsEdit": "Solicitar cambios de condiciones de pago",
   "@permPaymentTermsEdit": {
     "description": "#881 member payment conditions: permPaymentTermsEdit"
@@ -19354,7 +19368,6 @@
   "settingHintCounterFiscalObligation": "Lo que declara sobre las normas fiscales de una venta en mostrador: ninguna significa que no se aplica ninguna obligación fiscal de caja a su negocio (su propia declaración, anotada en cada ticket); caja obligatoria significa que sí se aplica. Solo se emite un ticket donde la operación de su país está soportada en el caso que declara.",
   "settingHintCounterLayoutCashierReorder": "Un cajero puede reordenar las teclas de una caja en su propio dispositivo sin cambiar el diseño publicado.",
   "settingHintCounterLayoutMaxCells": "El máximo de celdas que puede tener un diseño de caja, sumando todas sus páginas y tamaños. Un diseño mayor se rechaza al guardarlo.",
-  "settingHintCounterMaxDiscount": "El descuento máximo, en porcentaje, que un cajero puede aplicar a una línea de caja. 0 significa ningún descuento en la caja.",
   "settingHintCounterOfflineMaxMinutes": "Cuánto tiempo después de perder la conexión la caja aún se acepta una venta en efectivo hecha sin conexión al enviarla. Las posteriores se rechazan y se listan para el responsable.",
   "@settingHintCounterOfflineMaxMinutes": {
     "description": "#4373 setting hint"
@@ -19617,7 +19630,6 @@
   "settingLabelCounterFiscalObligation": "Normas fiscales de las ventas en mostrador",
   "settingLabelCounterLayoutCashierReorder": "Los cajeros reordenan las teclas",
   "settingLabelCounterLayoutMaxCells": "Tamaño del diseño de caja",
-  "settingLabelCounterMaxDiscount": "Descuento máximo en la caja",
   "settingLabelCounterOfflineMaxMinutes": "Tiempo máximo sin conexión (minutos)",
   "@settingLabelCounterOfflineMaxMinutes": {
     "description": "#4373 setting label"
@@ -24143,9 +24155,6 @@
       }
     }
   },
-  "tillDiscountBeyond": "Este descuento supera lo que la empresa permite en la caja.",
-  "tillDiscountField": "Descuento (%)",
-  "tillDiscountInvalid": "Un descuento es un porcentaje del precio del artículo, en una línea sin precio cambiado.",
   "tillDrawerAddTill": "Añadir una caja",
   "tillDrawerAmountInvalid": "Escriba un importe.",
   "tillDrawerAmountZero": "El importe debe ser mayor que cero.",
@@ -24307,9 +24316,12 @@
   "@tillNotForCounter": {
     "description": "#4366 the till"
   },
+  "tillNotPrinted": "Ticket no impreso — la venta está completa. Imprimir de nuevo.",
+  "@tillNotPrinted": {
+    "description": "#4368 the till's receipt printer"
+  },
   "tillNotReady": "Aún no está listo en su país: {operation}",
   "tillNotReadyHint": "No se numera ni se cobra nada mientras la operación del país no esté admitida.",
-  "tillNothingToReprint": "Aún no hay ninguna venta que reimprimir.",
   "tillOfflineBanner": "Sin conexión: solo efectivo. Las ventas se guardan en este dispositivo y se envían cuando vuelve la conexión.",
   "@tillOfflineBanner": {
     "description": "#4373 the till sells offline: the banner"
@@ -24458,13 +24470,108 @@
       }
     }
   },
-  "tillPriceField": "Nuevo precio",
-  "tillPriceNotAllowed": "No puede cambiar un precio en la caja. La línea se vende al precio del artículo.",
-  "tillPriceReason": "Motivo",
-  "tillPriceReasonHint": "Se conserva en el tique.",
-  "tillPriceReasonMissing": "Un precio cambiado necesita su motivo.",
-  "tillPriceUnreadable": "Escriba un número, por ejemplo 4,50.",
   "tillPricing": "Calculando la cesta…",
+  "tillPrintCopy": "Imprimir una copia",
+  "@tillPrintCopy": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrintReceipt": "Imprimir el ticket",
+  "@tillPrintReceipt": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrintTotal": "TOTAL",
+  "@tillPrintTotal": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinted": "Ticket impreso.",
+  "@tillPrinted": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterCodePage": "Página de códigos",
+  "@tillPrinterCodePage": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterCodePage437": "PC437 (sin el signo del euro)",
+  "@tillPrinterCodePage437": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterCodePage858": "PC858 (con el signo del euro)",
+  "@tillPrinterCodePage858": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterDrawer": "Hay un cajón de efectivo conectado a la impresora",
+  "@tillPrinterDrawer": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterHost": "Dirección de la impresora",
+  "@tillPrinterHost": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterHostHint": "Un nombre o una dirección de esta red, por ejemplo 192.168.1.50",
+  "@tillPrinterHostHint": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterHostRequired": "Escriba la dirección de la impresora.",
+  "@tillPrinterHostRequired": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterMode": "Imprimir tras una venta",
+  "@tillPrinterMode": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterModeAlways": "Siempre",
+  "@tillPrinterModeAlways": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterModeAsk": "Ofrecerlo",
+  "@tillPrinterModeAsk": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterModeNever": "Solo si se pide",
+  "@tillPrinterModeNever": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterPaper": "Ancho del papel",
+  "@tillPrinterPaper": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterPaperWidth": "{mm} mm",
+  "@tillPrinterPaperWidth": {
+    "description": "#4368 the till's receipt printer: a paper width in millimetres, the number arrives formatted",
+    "placeholders": {
+      "mm": {
+        "type": "String"
+      }
+    }
+  },
+  "tillPrinterPort": "Puerto",
+  "@tillPrinterPort": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterPortInvalid": "El puerto es un número de 1 a 65535.",
+  "@tillPrinterPortInvalid": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterSet": "Configurar la impresora de tickets",
+  "@tillPrinterSet": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterTest": "Impresión de prueba",
+  "@tillPrinterTest": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterTestSent": "Página de prueba enviada.",
+  "@tillPrinterTestSent": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinterTitle": "Impresora de tickets",
+  "@tillPrinterTitle": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillPrinting": "Imprimiendo…",
+  "@tillPrinting": {
+    "description": "#4368 the till's receipt printer"
+  },
   "tillQuantityHint": "Una cantidad exacta, por ejemplo 1 o 0,350.",
   "tillQuantityRefused": "Introduzca una cantidad superior a cero con un máximo de seis decimales.",
   "tillQuantityTitle": "Cantidad vendida",
@@ -24481,7 +24588,18 @@
   "tillReadinessUnavailable": "No disponible",
   "tillReadinessUnconfirmed": "Aún no confirmada por un profesional fiscal.",
   "tillReadinessUnknownCountry": "El registro no nombra ninguna operación de caja para {country}: nada está admitido y la caja no vende nada.",
-  "tillReceiptCopy": "COPIA {copy} — no es un tique nuevo",
+  "tillReceiptCash": "Efectivo",
+  "@tillReceiptCash": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillReceiptChange": "Cambio",
+  "@tillReceiptChange": {
+    "description": "#4368 the till's receipt printer"
+  },
+  "tillReceiptCopy": "*** COPIA ***",
+  "@tillReceiptCopy": {
+    "description": "#4368 the till's receipt printer"
+  },
   "tillReceiptCorrects": "Corrige el ticket {number}",
   "tillReceiptDisagrees": "Los importes de este ticket no concuerdan entre sí. Se muestra tal como se fijó; avise a su administración.",
   "tillReceiptIssuedUnder": "Emitido según: {specification} ({version})",
@@ -24490,7 +24608,15 @@
   "tillReceiptPrintNote": "No hay ninguna impresora de tickets conectada a la aplicación: imprima desde el menú de compartir.",
   "tillReceiptShare": "Compartir el ticket",
   "tillReceiptShow": "Mostrar el ticket",
+  "tillReceiptTax": "de los cuales impuesto",
+  "@tillReceiptTax": {
+    "description": "#4368 the till's receipt printer"
+  },
   "tillReceiptTaxLine": "IVA {percent}: {tax} sobre {net}",
+  "tillReceiptThanks": "Gracias",
+  "@tillReceiptThanks": {
+    "description": "#4368 the till's receipt printer"
+  },
   "tillReceiptTotal": "Total {amount}",
   "tillReceiptUnreadable": "Este ticket lo escribió una versión más reciente de DesKilo: actualice la aplicación para leerlo.",
   "tillRemoveLine": "Quitar {name} de la cesta",
@@ -24498,7 +24624,6 @@
   "@tillRetry": {
     "description": "#4366 the till: ask the server again"
   },
-  "tillRingUpFirst": "Registre primero un artículo.",
   "tillScanLabel": "Escanear un código",
   "@tillScanLabel": {
     "description": "#4366 the till"
