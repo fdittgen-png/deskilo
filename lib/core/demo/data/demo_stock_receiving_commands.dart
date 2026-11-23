@@ -8,6 +8,7 @@
 // answers the same ids. Nothing leaves the process.
 import 'package:deskilo/features/money/domain/purchase_order.dart';
 import 'package:deskilo/features/money/domain/purchase_order_receipt.dart';
+import 'package:deskilo/features/stock/domain/put_away_progress.dart' show exactOfReceived;
 import 'package:deskilo/features/stock/domain/stock_config.dart';
 import 'package:deskilo/features/stock/domain/stock_receiving.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
@@ -81,7 +82,8 @@ class DemoStockReceivingCommands implements StockReceivingCommands {
           order: order,
           receivedOn: DateTime.parse(delivery.receivedOn),
           note: delivery.note,
-          quantities: {for (final l in delivery.lines) l.lineNo: double.parse(l.quantity)},
+          // the purchase order's own numbers (#4177): the one place a Demo quantity leaves the exact type
+          quantities: {for (final l in delivery.lines) l.lineNo: num.parse(l.quantity).toDouble()},
         ),
       );
       final receipt = _orders.receipts.last;
@@ -102,7 +104,7 @@ class DemoStockReceivingCommands implements StockReceivingCommands {
     if (receipt == null) throw _refused('receipt', 'receipt_unknown');
     final order = _orders.orders.firstWhere((o) => o.id == receipt.orderId);
     final places = (await _config.places(workspaceId)).where((p) => !p.virtual && p.active).map((p) => p.id).toSet();
-    final running = <int, double>{};
+    final running = <int, ExactQuantity>{};
     final planned = <ReceiptAllocation>[];
     for (var i = 0; i < allocations.length; i++) {
       planned.add(await _plan(receipt, order, places, running, i, allocations[i]));
@@ -157,7 +159,7 @@ class DemoStockReceivingCommands implements StockReceivingCommands {
     PurchaseOrderReceipt receipt,
     PurchaseOrder order,
     Set<String> places,
-    Map<int, double> running,
+    Map<int, ExactQuantity> running,
     int i,
     PutAwayAllocation a,
   ) async {
@@ -171,14 +173,17 @@ class DemoStockReceivingCommands implements StockReceivingCommands {
         ? (1, 1)
         : item.units.where((u) => u.unit == unit).map((u) => (u.factorNum, u.factorDen)).firstOrNull;
     if (factor == null) throw _refused('allocations[$i].line', 'unit_unmapped');
-    final qty = double.tryParse(a.quantity);
-    if (qty == null || qty <= 0) throw _refused('allocations[$i].quantity', 'quantity_invalid');
+    final qty = ExactQuantity.tryParse(a.quantity).value;
+    if (qty == null || qty <= ExactQuantity.zero) throw _refused('allocations[$i].quantity', 'quantity_invalid');
+    // in the inventory unit, as the server records it: round(q * num / den, 6) (0840)
+    final inventory = qty.scaled(factor.$1, factor.$2, round: true).value;
+    if (inventory == null || inventory <= ExactQuantity.zero) throw _refused('allocations[$i].quantity', 'quantity_invalid');
     final already = _rows
             .where((r) => r.row.receiptLineId == '${receipt.id}:${a.lineNo}')
-            .fold(0.0, (s, r) => s + double.parse(r.row.enteredQuantity.text)) +
-        (running[a.lineNo] ?? 0);
-    if (already + qty > received) throw _refused('allocations[$i].quantity', 'over_allocated');
-    running[a.lineNo] = (running[a.lineNo] ?? 0) + qty;
+            .fold(ExactQuantity.zero, (s, r) => s + r.row.enteredQuantity) +
+        (running[a.lineNo] ?? ExactQuantity.zero);
+    if (already + qty > exactOfReceived(received)) throw _refused('allocations[$i].quantity', 'over_allocated');
+    running[a.lineNo] = (running[a.lineNo] ?? ExactQuantity.zero) + qty;
     if (!places.contains(a.locationId)) throw _refused('allocations[$i].location_id', 'location_foreign');
     await _checkVariantAndLot(item, a, i);
     final n = _next++;
@@ -190,8 +195,8 @@ class DemoStockReceivingCommands implements StockReceivingCommands {
       lotId: 'demo-lot-$n',
       locationId: a.locationId,
       movementId: 'demo-movement-$n',
-      enteredQuantity: ExactQuantity.parse(a.quantity),
-      inventoryQuantity: ExactQuantity.parse('${qty * factor.$1 / factor.$2}'),
+      enteredQuantity: qty,
+      inventoryQuantity: inventory,
       lineNo: a.lineNo,
       enteredUnit: unit,
       orderReference: order.reference,

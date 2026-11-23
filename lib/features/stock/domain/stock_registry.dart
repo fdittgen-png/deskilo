@@ -57,7 +57,12 @@ class StockRegistryRow {
   String get label => variantLabel == null ? itemName : '$itemName · $variantLabel';
 
   /// The last known cost in minor units, rounded; null when unknown or not shown.
-  int? get costMinor => !costVisible || cost == null ? null : double.tryParse(cost!)?.round();
+  int? get costMinor {
+    if (!costVisible || cost == null) return null;
+    // #4393 -- read exactly and rounded half away from zero, as the server rounds money; no binary float between.
+    final exact = ExactQuantity.tryParse(cost!).value;
+    return exact?.scaled(1, 1000000, round: true).value?.micro.toInt();
+  }
 
   factory StockRegistryRow.fromJson(Object? json) {
     final r = JsonReader.of(json, context: 'stock_registry_page_v1');

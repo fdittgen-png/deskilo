@@ -98,12 +98,16 @@ String? _decimalInputText(
 /// mapped to canonical text and read exactly, or the reason it is none. A
 /// text that is no number is `malformed`; one with too many decimals or too
 /// large is refused with its own problem, never rounded.
+///
+/// [grouping] off (#4393) reads a quantity field typed without grouping: one
+/// separator at most, `.` or `,`, always the decimal one, and no locale.
 ExactQuantityResult exactQuantityFromInput(
   String raw, {
-  required String locale,
+  String? locale,
+  bool grouping = true,
   bool allowNegative = false,
 }) {
-  final text = _decimalInputText(raw, locale: locale, allowNegative: allowNegative);
+  final text = _decimalInputText(raw, locale: locale, grouping: grouping, allowNegative: allowNegative);
   if (text == null) return (value: null, problem: ExactQuantityProblem.malformed);
   // `.5` and `5.` are what a keyboard types; the kernel reads `0.5` and `5`.
   final whole = text.replaceFirstMapped(RegExp(r'^(-?)\.'), (m) => '${m[1]}0.');

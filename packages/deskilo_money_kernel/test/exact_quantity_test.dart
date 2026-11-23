@@ -100,4 +100,38 @@ void main() {
       expect(ExactQuantity.parse(_max).micro, BigInt.parse('999999999999999999'));
     });
   });
+
+  group('#4393 scaled', () {
+    ExactQuantityResult s(String q, int n, int d) => ExactQuantity.parse(q).scaled(n, d);
+    test('an exact ratio is the exact value', () {
+      for (final (q, n, d, want) in [
+        ('1', 1, 1, '1'),
+        ('2', 1, 4, '0.5'),
+        ('3', 1, 3, '1'),
+        ('1.5', 12, 1, '18'),
+        ('0.000001', 1, 2, null),
+        ('-6', 1, 4, '-1.5'),
+        ('0', 7, 3, '0'),
+      ]) {
+        final r = s(q, n, d);
+        expect(r.value?.text, want, reason: '$q * $n / $d');
+      }
+    });
+    test('a ratio with no six-decimal value is a problem, never rounded', () {
+      expect(s('1', 1, 3).problem, ExactQuantityProblem.notRepresentable);
+      expect(s('0.000001', 1, 2).problem, ExactQuantityProblem.notRepresentable);
+      expect(s('1', 1, 3).value, isNull);
+    });
+    test('rounded, as the stock ledger records it: half away from zero', () {
+      expect(ExactQuantity.parse('1').scaled(1, 3, round: true).value?.text, '0.333333');
+      expect(ExactQuantity.parse('2').scaled(1, 3, round: true).value?.text, '0.666667');
+      expect(ExactQuantity.parse('-2').scaled(1, 3, round: true).value?.text, '-0.666667');
+      expect(ExactQuantity.parse('0.000001').scaled(1, 2, round: true).value?.text, '0.000001');
+      expect(ExactQuantity.parse('3').scaled(1, 3, round: true).value?.text, '1');
+    });
+    test('a zero denominator and an overflow are problems', () {
+      expect(s('1', 1, 0).problem, ExactQuantityProblem.zeroDenominator);
+      expect(s('999999999999', 2, 1).problem, ExactQuantityProblem.outOfRange);
+    });
+  });
 }
