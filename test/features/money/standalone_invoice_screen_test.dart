@@ -9,7 +9,9 @@
 import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/core/demo/demo_scope.dart';
 import 'package:deskilo/core/demo/seed/demo_second_space_seed.dart';
+import 'package:deskilo/core/time/business_day_providers.dart';
 import 'package:deskilo/core/time/calendar_days.dart';
+import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/core/ui/date_field.dart';
 import 'package:deskilo/features/money/presentation/standalone/standalone_invoice_screen.dart';
 import 'package:deskilo/features/money/providers/standalone_invoice_providers.dart';
@@ -21,6 +23,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../helpers/mock_providers.dart';
 
 /// The Demo keeps timers running, so the screen never idles: a few frames are
 /// all a tap or a typed value needs.
@@ -42,7 +46,7 @@ void main() {
     // timers that the test's fake clock never fires
     await tester.runAsync(() async {
       fixture = DemoFixture.build();
-      container = ProviderContainer(overrides: [...demoOverrides(fixture), ...extra])
+      container = ProviderContainer(overrides: [...demoOverrides(fixture), dayBoundarySchedulerProvider.overrideWithValue(const PinnedDayBoundaries()), ...extra])
         ..listen(currentWorkspaceProvider, (_, _) {});
       await container.read(currentWorkspaceProvider.future);
       if (!featureOn) {
@@ -153,8 +157,10 @@ void main() {
   });
 
   testWidgets('the composer offers the business\'s day as the service date and the payment term after it', (tester) async {
-    final day = DateTime(2031, 5, 17);
-    await open(tester, const Size(390, 844), extra: [businessDateOfProvider.overrideWithValue((_) => day), invoiceDueDaysProvider.overrideWithValue(21)]);
+    await open(tester, const Size(390, 844), extra: [invoiceDueDaysProvider.overrideWithValue(21)]);
+    // The business's calendar day of the Demo's clock, not the device's: the two differ near midnight.
+    final zone = container.read(currentWorkspaceProvider).value!.timezone;
+    final day = businessDateOf(container.read(clockProvider).now(), zone);
     expect(tester.widget<AppDateField>(await reveal(tester, 'standalone-service-date')).value, day);
     expect(tester.widget<AppDateField>(await reveal(tester, 'standalone-due-date')).value, addCalendarDays(day, 21));
   });

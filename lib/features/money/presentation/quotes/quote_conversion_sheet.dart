@@ -121,14 +121,24 @@ class _QuoteConversionState extends ConsumerState<_QuoteConversionSheet> {
         dueOn: addCalendarDays(today, ref.read(invoiceDueDaysProvider)),
       ),
     );
-    // The payment term arrives after the sheet opens: the due date offered follows it until the person sets one.
-    ref.listenManual<int>(invoiceDueDaysProvider, (was, now) {
-      final c = _state.value;
-      if (was != null && c.dueOn == addCalendarDays(c.serviceDate, was)) {
-        _state.value = c.withDates(dueOn: addCalendarDays(c.serviceDate, now));
-      }
-    });
+    // The business's calendar and the payment term can arrive after the sheet opens: a date the person has not set follows
+    // them, one the person set is never overwritten.
+    ref
+      ..listenManual<DateTime>(businessDayProvider, (was, now) {
+        final c = _state.value;
+        final service = _serviceTouched ? c.serviceDate : now;
+        final due = _dueTouched ? c.dueOn : addCalendarDays(service, ref.read(invoiceDueDaysProvider));
+        _state.value = c.withDates(serviceDate: service, dueOn: due);
+      })
+      ..listenManual<int>(invoiceDueDaysProvider, (was, now) {
+        final c = _state.value;
+        if (!_dueTouched) _state.value = c.withDates(dueOn: addCalendarDays(c.serviceDate, now));
+      });
   }
+
+  /// Whether the person has chosen a date: a chosen date is theirs, whatever arrives later.
+  bool _serviceTouched = false;
+  bool _dueTouched = false;
 
   @override
   void dispose() {
@@ -214,7 +224,10 @@ class _QuoteConversionState extends ConsumerState<_QuoteConversionSheet> {
         label: l10n.standaloneInvoiceServiceDate,
         value: s.serviceDate,
         enabled: !s.busy,
-        onChanged: (d) => _edit(s.withDates(serviceDate: d.date)),
+        onChanged: (d) {
+          _serviceTouched = true;
+          _edit(s.withDates(serviceDate: d.date));
+        },
       ),
       const FormGap(),
       AppDateField(
@@ -222,7 +235,10 @@ class _QuoteConversionState extends ConsumerState<_QuoteConversionSheet> {
         label: l10n.standaloneInvoiceDueDate,
         value: s.dueOn,
         enabled: !s.busy,
-        onChanged: (d) => _edit(s.withDates(dueOn: d.date)),
+        onChanged: (d) {
+          _dueTouched = true;
+          _edit(s.withDates(dueOn: d.date));
+        },
       ),
       const FormGap(),
       OutlinedButton(

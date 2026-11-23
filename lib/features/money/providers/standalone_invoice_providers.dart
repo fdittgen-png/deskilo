@@ -25,7 +25,9 @@ final standaloneIssuanceProvider = Provider<StandaloneIssuance>(
 /// #4426 -- the days a new invoice's due date is offered after its service date: the workspace's payment term, the
 /// setting `dunning.first_after_days` the server freezes a standalone invoice's maturity from ("the workspace payment
 /// term of N days"), so the preview and the issued invoice agree. While the setting is not read, or the workspace has not
-/// set it, the registry's own default stands: the number the server falls back to.
+/// set it, the registry's own default stands: the number the server falls back to. The value is read from the rules the
+/// app holds (the settings snapshot when it carries one); a platform-scope override the snapshot does not carry is not seen
+/// here, so the offered date can differ from the server's until the person sets one (recorded on #4426).
 final invoiceDueDaysProvider = Provider<int>(
   (ref) => ref.watch(dunningRulesProvider).value?.firstAfterDays ?? SettingDefaults.dunningFirstAfterDays,
 );
