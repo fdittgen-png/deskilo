@@ -3777,6 +3777,7 @@ Lleva un estudio, una consulta o un salón en lugar de un espacio de coworking y
 - El coworking no propone nada, y desactivar las plazas no borra nada: vuelva a activarlas y el plano y las reservas regresan.
 
 - **Autónomo** es para una persona que vende servicios a clientes: mantiene los lugares desactivados y activa la facturación, los clientes de facturación, los presupuestos y las compras, nunca un proveedor, mensajes ni una página pública. Es un tipo propio: **Servicio** sigue como estaba.
+- **Tienda** es para un negocio que compra, guarda en stock y vende mercancías. Mantiene los lugares desactivados y propone el stock (recepción, salida, lotes por fecha, puntos de reposición), los servicios como catálogo, las compras y los pedidos. También elige el **tipo de tienda** — comestibles, panadería, carnicería, floristería o tienda de barrio: cambia las palabras y los ejemplos, nunca lo que hace la aplicación. Si vende al peso, active **Las mercancías se venden al peso** en los ajustes del stock: un artículo nuevo se propone entonces en kilogramos. La venta en mostrador se propondrá cuando exista; las etiquetas RFID se ofrecen, nunca se proponen.
 - Me nombra el tipo que cada uno de sus negocios eligió, junto a su país y su moneda.
 
 **Véase también:** [Funciones](#activar-o-desactivar-procesos-enteros)

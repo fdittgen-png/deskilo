@@ -4,6 +4,7 @@ signed-out on  /account-activity/history -> /auth
 signed-out on  /account-messages -> /auth
 signed-out on  /account-messages/thread -> /auth
 signed-out on  /accounting/connected -> /auth
+signed-out on  /app-update -> /auth
 signed-out on  /applications -> /auth
 signed-out on  /assistants -> /auth
 signed-out on  /assistants/connect -> /auth
@@ -175,6 +176,7 @@ signed-out off /account-activity/history -> /auth
 signed-out off /account-messages -> /auth
 signed-out off /account-messages/thread -> /auth
 signed-out off /accounting/connected -> /auth
+signed-out off /app-update -> /auth
 signed-out off /applications -> /auth
 signed-out off /assistants -> /auth
 signed-out off /assistants/connect -> /auth
@@ -346,6 +348,7 @@ no-space on  /account-activity/history -> (open)
 no-space on  /account-messages -> (open)
 no-space on  /account-messages/thread -> /account-messages
 no-space on  /accounting/connected -> /me
+no-space on  /app-update -> /me
 no-space on  /applications -> (open)
 no-space on  /assistants -> (open)
 no-space on  /assistants/connect -> /me
@@ -517,6 +520,7 @@ no-space off /account-activity/history -> (open)
 no-space off /account-messages -> (open)
 no-space off /account-messages/thread -> /account-messages
 no-space off /accounting/connected -> /me
+no-space off /app-update -> /me
 no-space off /applications -> (open)
 no-space off /assistants -> (open)
 no-space off /assistants/connect -> /me
@@ -688,6 +692,7 @@ member on  /account-activity/history -> (open)
 member on  /account-messages -> (open)
 member on  /account-messages/thread -> /account-messages
 member on  /accounting/connected -> /calendar
+member on  /app-update -> /reserve
 member on  /applications -> (open)
 member on  /assistants -> (open)
 member on  /assistants/connect -> /assistants
@@ -859,6 +864,7 @@ member off /account-activity/history -> (open)
 member off /account-messages -> (open)
 member off /account-messages/thread -> /account-messages
 member off /accounting/connected -> /messages
+member off /app-update -> /messages
 member off /applications -> (open)
 member off /assistants -> (open)
 member off /assistants/connect -> /assistants
@@ -1030,6 +1036,7 @@ admin on  /account-activity/history -> (open)
 admin on  /account-messages -> (open)
 admin on  /account-messages/thread -> /account-messages
 admin on  /accounting/connected -> /money/accounting
+admin on  /app-update -> /reserve
 admin on  /applications -> (open)
 admin on  /assistants -> (open)
 admin on  /assistants/connect -> /assistants
@@ -1202,6 +1209,7 @@ admin off /account-activity/history -> (open)
 admin off /account-messages -> (open)
 admin off /account-messages/thread -> /account-messages
 admin off /accounting/connected -> /messages
+admin off /app-update -> /messages
 admin off /applications -> (open)
 admin off /assistants -> (open)
 admin off /assistants/connect -> /assistants
@@ -1373,6 +1381,7 @@ owner on  /account-activity/history -> (open)
 owner on  /account-messages -> (open)
 owner on  /account-messages/thread -> /account-messages
 owner on  /accounting/connected -> /money/accounting
+owner on  /app-update -> /reserve
 owner on  /applications -> (open)
 owner on  /assistants -> (open)
 owner on  /assistants/connect -> /assistants
@@ -1545,6 +1554,7 @@ owner off /account-activity/history -> (open)
 owner off /account-messages -> (open)
 owner off /account-messages/thread -> /account-messages
 owner off /accounting/connected -> /messages
+owner off /app-update -> /messages
 owner off /applications -> (open)
 owner off /assistants -> (open)
 owner off /assistants/connect -> /assistants

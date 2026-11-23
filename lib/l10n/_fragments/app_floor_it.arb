@@ -1,0 +1,8 @@
+{
+  "@@locale": "it",
+  "appUpdateTitle": "Questa app deve essere aggiornata",
+  "appUpdateBody": "Questa installazione accetta solo un'app DesKilo più recente. I Suoi dati sono al sicuro: nulla di ciò che ha inserito va perso, e tutto torna disponibile quando l'app è aggiornata.",
+  "appUpdateWeb": "Ricarichi questa pagina per caricare la versione più recente dell'app.",
+  "appUpdateStore": "Aggiorni DesKilo dallo store da cui l'ha installata, poi la riapra.",
+  "appUpdateDesktop": "Installi il pacchetto DesKilo più recente per questo computer, poi lo riapra."
+}

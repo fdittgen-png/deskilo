@@ -79,6 +79,7 @@ const FED_ANSWER_WAIT=[['30','optSeconds',{n:30}],['60','optOneMinute'],['120','
 const SUP_LOOKUP_WAIT=[['5','optSeconds',{n:5}],['10','optSeconds',{n:10}],['15','optSeconds',{n:15}],['30','optSeconds',{n:30}]];
 // #3675 — where badge sign-in works (workspace setting
 // security.badge_signin_where), while kiosk enrolment is on.
+const SHOP_TYPES=[['grocery','shopTypeGrocery'],['bakery','shopTypeBakery'],['butcher','shopTypeButcher'],['florist','shopTypeFlorist'],['corner_shop','shopTypeCornerShop']];
 // #4361 — the defaults of item groups (workspace settings stock.group_default_tag_mode,
 // stock.group_default_count_days, stock.price_rounding).
 const STOCK_TAG=[['none','optTagNone'],['per_batch','optTagPerBatch'],['per_unit','optTagPerUnit']];
@@ -172,6 +173,8 @@ const PARAM_META=[
  ['badgeSecurity.signinWhere','badgeSigninWhere','enum',()=>BADGE_WHERE.map(x=>x[0]),{needs:'badgeSignIn'}],
  // #3824 — whether a move may leave less than nothing at a place (workspace setting stock.allow_negative).
  ['stock.allowNegative','stockAllowNegative','bool',null,{needs:'stockManagement'}],
+ // #4365 — whether goods are sold by weight (workspace setting stock.weighed_goods).
+ ['stock.weighedGoods','stockWeighedGoods','bool',null,{needs:'stockManagement'}],
  // #4293 — the character between the levels of a place address (workspace setting stock.address_separator).
  ['stock.addressSeparator','stockAddressSeparator','enum',()=>STOCK_SEP.map(x=>x[0]),{needs:'stockManagement'}],
  ['stock.tagGrace','stockTagGrace','enum',()=>STOCK_TAG_GRACE.map(x=>x[0]),{needs:'stockTags'}],['stock.repeatedScan','stockRepeatedScan','enum',()=>STOCK_REPEAT.map(x=>x[0]),{needs:'stockScanning'}],
@@ -203,7 +206,9 @@ const PARAM_META=[
  ['landTax.option','legalOptionToTax','bool'],['landTax.date','legalOptionDate','date'],['landTax.ref','legalOptionRef','text'],['landTax.bare','legalBareLetting','bool'],['landTax.qst','legalQstNumber','text'],['landTax.quick','legalQuickMethod','bool'],
  ['freeLevel','billingFreeLevel','bool'],
  ['pay.iban','payIbanIntl','text'],['pay.qr_iban','payQrIban','text'],['pay.reference','payReference','text'],['pay.wero','payWero','text'],['pay.lydia','payLydia','text'],['pay.wise','payWise','text'],
- ['businessKind','identityBusinessKind','enum',()=>['coworking','studio','practice','salon','freelancer','service']],
+ ['businessKind','identityBusinessKind','enum',()=>['coworking','studio','practice','salon','freelancer','shop','service']],
+ // #4365 — the type of shop a business of the kind shop is (workspace setting business.shop_type).
+ ['business.shopType','businessShopType','enum',()=>SHOP_TYPES.map(x=>x[0])],
  ['org','legalOrg','enum',()=>['association','company']],['customerCapacity','legalCustomerCapacity','enum',()=>['','business','consumer']],
  ['vatRegime','legalVatRegime','enum',()=>['not_subject','exempt','registered']],['vatExigibility','legalVatExigibility','enum',()=>VATEXIGIBILITY.map(x=>x[0])],
  ['numbering.prefix','fieldPrefix','text'],['numbering.datePart','colDate','enum',()=>NUMDATE.map(x=>x[0])],['numbering.digits','fieldDigits','int',{min:1}],
@@ -248,7 +253,7 @@ const PARAM_EXCLUDED={
 // never read by the app (secrets never travel). Keyed by the answer's path;
 // what is not listed is applied by the import. The review step lists every
 // 'app' and 'file' answer as what remains to do in the app.
-const DEST={businessKind:'app',name:'app',environment:'app',network:'app',enrolment:'app',directory:'app',federation:'app',inbox:'app',supplierLookup:'app',badgeSecurity:'app',stock:'app',retention:'app',bank:'app',quotes:'app',records:'app',map:'app',region:'app',bi:'app',members:'app',einvoice:'file'};
+const DEST={businessKind:'app',business:'app',name:'app',environment:'app',network:'app',enrolment:'app',directory:'app',federation:'app',inbox:'app',supplierLookup:'app',badgeSecurity:'app',stock:'app',retention:'app',bank:'app',quotes:'app',records:'app',map:'app',region:'app',bi:'app',members:'app',einvoice:'file'};
 const DEST_TEXT={import:['destImport','destImportHint'],app:['destApp','destAppHint'],file:['destFile','destFileHint']};
 const destOf=path=>DEST[String(path||'').split('.')[0]]||'import';
 // Where each answer lives in the app, and the guide section that explains it

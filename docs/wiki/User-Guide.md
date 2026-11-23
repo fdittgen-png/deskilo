@@ -3777,6 +3777,7 @@ You run a studio, a practice or a salon rather than a coworking space, and want 
 - Coworking proposes nothing, and switching places off deletes nothing: switch them on again and the floor plan and bookings are back.
 
 - **Freelancer** is for one person who sells services to customers: it keeps places off and switches on invoicing, billing customers, quotes and purchases, and never a provider, messages or a public page. It is its own kind: **Service** stays as it was.
+- **Shop** is for a business that buys, keeps in stock and sells goods. It keeps places off and proposes the stock (receiving, take-out, lots by date, reorder points), services as the catalogue, purchases and purchase orders. You also choose the **type of shop** — grocery, bakery, butcher, florist or corner shop: it changes words and examples, never what the app does. If you sell by weight, switch on **Goods are sold by weight** in the stock settings and a new item is proposed in kilograms. The counter sale is proposed when it exists; RFID tags are offered, never proposed.
 - Me names the kind each of your businesses set, beside its country and currency.
 
 **See also:** [Features](#switch-whole-processes-on-or-off)

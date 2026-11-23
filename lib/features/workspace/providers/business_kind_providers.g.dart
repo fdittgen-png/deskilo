@@ -198,7 +198,7 @@ final class BusinessKindCommandsProvider
 }
 
 String _$businessKindCommandsHash() =>
-    r'2af1ec173c905963f443e2c0507542a616dfda0f';
+    r'a78827ee000a757aa163ec88c390459b1608671f';
 
 /// #4223 — whether the selected workspace's primary kind keeps places off.
 /// Watched, never awaited (the settings are a long chain): until the kinds and

@@ -3777,6 +3777,7 @@ Gestisce uno studio, un ambulatorio o un salone invece di uno spazio di coworkin
 - Il coworking non propone nulla, e disattivare i posti non cancella nulla: li riattivi e planimetria e prenotazioni tornano.
 
 - **Libero professionista** è per una persona che vende servizi ai clienti: tiene disattivati i luoghi e attiva la fatturazione, i clienti di fatturazione, i preventivi e gli acquisti, mai un fornitore, i messaggi o una pagina pubblica. È un tipo a sé: **Servizio** resta com’era.
+- **Negozio** è per un’attività che acquista, tiene a magazzino e vende merce. Tiene disattivati i luoghi e propone il magazzino (ricezione, prelievo, lotti per data, punti di riordino), i servizi come catalogo, gli acquisti e gli ordini. Sceglie anche il **tipo di negozio** — alimentari, panificio, macelleria, fiorista o negozio di quartiere: cambia le parole e gli esempi, mai ciò che fa l’app. Se vende a peso, attivi **La merce si vende a peso** nelle impostazioni del magazzino: un nuovo articolo viene allora proposto in chilogrammi. La vendita al banco verrà proposta quando esisterà; i tag RFID sono offerti, mai proposti.
 - Me indica il tipo che ciascuna delle sue attività ha scelto, accanto al paese e alla valuta.
 
 **Vedi anche:** [Funzioni](#attivare-o-disattivare-interi-processi)

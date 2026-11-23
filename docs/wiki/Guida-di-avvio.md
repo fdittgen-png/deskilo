@@ -75,6 +75,7 @@ Vuole che l’app corrisponda alla Sua attività prima di configurare qualsiasi 
 | **Ambulatorio** | Appuntamenti: massaggio, terapia, coaching, consulenza. |
 | **Salone** | Estetica, parrucchiere, unghie, tatuaggio. |
 | **Libero professionista** | Una persona che vende e fattura i propri servizi: clienti, preventivi e fatture, senza locali. |
+| **Negozio** | Merce acquistata, tenuta a magazzino e venduta: un alimentari, un panificio, una macelleria, un fiorista o un negozio di quartiere. |
 | **Impresa di servizi** | Qualsiasi altra attività che vende i propri servizi. |
 
 **Passaggi**

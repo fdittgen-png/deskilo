@@ -84,6 +84,14 @@ final stockAddressSeparatorProvider = Provider<String>((ref) {
       : SettingDefaults.stockAddressSeparator;
 });
 
+/// #4365 -- whether the business sells by weight (`stock.weighed_goods`): a new item is proposed in kilograms.
+final stockWeighedGoodsProvider = Provider<bool>((ref) {
+  final settings = ref.watch(activeSettingsProvider);
+  return settings != null && settings.definitions.containsKey('stock.weighed_goods')
+      ? settings.read<bool>('stock.weighed_goods')
+      : SettingDefaults.stockWeighedGoods;
+});
+
 /// The places of a business, for the place filter.
 final stockPlacesProvider = FutureProvider.autoDispose
     .family<List<StockPlace>, String>(

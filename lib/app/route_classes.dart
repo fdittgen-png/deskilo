@@ -143,6 +143,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/business-task-wizard', RouteClass.workspace, place: 'drawer-task-wizard', measure: PageMeasure.work),
   RouteRule('/server', RouteClass.publicEntry),
   RouteRule(kSchemaUpdateRoute, RouteClass.publicEntry),
+  RouteRule(kAppUpdateRoute, RouteClass.publicEntry),
   RouteRule('/server/new-instance', RouteClass.operator, measure: PageMeasure.reading),
   RouteRule('/consent', RouteClass.nativeAccount),
   RouteRule('/profiles', RouteClass.nativeAccount),

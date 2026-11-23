@@ -469,6 +469,11 @@
     }
   },
   "appTitle": "DesKilo",
+  "appUpdateBody": "Cette installation n'accepte qu'une application DesKilo plus récente. Vos données sont en sécurité : rien de ce que vous avez saisi n'est perdu, et tout est de nouveau là une fois l'application mise à jour.",
+  "appUpdateDesktop": "Installez le dernier paquet DesKilo pour cet ordinateur, puis rouvrez-le.",
+  "appUpdateStore": "Mettez DesKilo à jour depuis le store où vous l'avez installé, puis rouvrez-le.",
+  "appUpdateTitle": "Cette application doit être mise à jour",
+  "appUpdateWeb": "Rechargez cette page pour charger la dernière version de l'application.",
   "applicationAcceptedVote": "A accepté cette demande",
   "@applicationAcceptedVote": {
     "description": "Workspace admission history and discussion (#1791)"
@@ -3479,6 +3484,7 @@
   "businessKindDescPractice": "Rendez-vous : massage, thérapie, coaching, conseil.",
   "businessKindDescSalon": "Beauté, coiffure, ongles, tatouage.",
   "businessKindDescService": "Toute autre entreprise qui vend ses services.",
+  "businessKindDescShop": "Des marchandises achetées, tenues en stock et vendues : une épicerie, une boulangerie, une boucherie, un fleuriste ou une supérette.",
   "businessKindDescStudio": "Cours et ateliers : yoga, danse, musique, art.",
   "businessKindMoreTitle": "C’est aussi… (facultatif)",
   "businessKindNameCoworking": "Espace de coworking",
@@ -3486,6 +3492,7 @@
   "businessKindNamePractice": "Cabinet",
   "businessKindNameSalon": "Salon",
   "businessKindNameService": "Entreprise de services",
+  "businessKindNameShop": "Commerce",
   "businessKindNameStudio": "Studio",
   "businessKindNoBookingYet": "La réservation de cours et de rendez-vous ne fait pas partie de cette version. Aujourd’hui, vous avez : vos prestations avec leurs prix, les factures, le paiement en ligne, les messages et votre page publique.",
   "businessKindNoChange": "Les fonctions restent telles quelles.",
@@ -5203,6 +5210,7 @@
   "discoveryKindPractices": "Cabinets",
   "discoveryKindSalons": "Salons",
   "discoveryKindServices": "Autres services",
+  "discoveryKindShops": "Commerces",
   "discoveryKindStudios": "Studios",
   "discoveryKindUncovered": "{count, plural, =0{{count} annuaires ne savent pas trier par type : ils n’ont pas été interrogés.} one{Un annuaire ne sait pas trier par type : il n’a pas été interrogé.} other{{count} annuaires ne savent pas trier par type : ils n’ont pas été interrogés.}}",
   "discoveryLoadedCount": "Lieux chargés : {loaded} · affichés : {shown} · annuaires ayant répondu : {answered} sur {sources}",
@@ -18973,6 +18981,7 @@
   },
   "settingHintBusinessKind": "Ce qu'est l'activité : un espace de coworking, un studio, un cabinet, un salon ou une autre activité de service. Elle propose les fonctionnalités et les mots dont elle a besoin ; un espace de coworking garde tout comme avant.",
   "settingHintBusinessMoreKinds": "Les autres types d'activité exercés en plus du principal, le cas échéant.",
+  "settingHintBusinessShopType": "Épicerie, boulangerie, boucherie, fleuriste ou supérette. Cela change les mots et les exemples de l’application, jamais ce qu’elle fait.",
   "settingHintCalendarRangeDays": "Fixée par la plateforme : la période la plus longue qu’une requête de calendrier peut demander. Elle borne la requête.",
   "@settingHintCalendarRangeDays": {
     "description": "#2487 settings: Setting hint."
@@ -19128,6 +19137,7 @@
   "settingHintStockPriceRounding": "Comment un prix de vente proposé est arrondi : au 0,05 ou 0,10 le plus proche, ou à un prix qui finit par 0,99. Il ne sert qu'à proposer un prix.",
   "settingHintStockRepeatedScan": "Ce que fait une feuille de marchandises quand le même code est scanné de nouveau : ajouter un de plus à la ligne, ou demander la quantité.",
   "settingHintStockTagRebindGraceDays": "Combien de jours après son retrait un code d'étiquette peut être lié de nouveau. 0 : tout de suite. Une étiquette en vigueur n'est jamais liée deux fois.",
+  "settingHintStockWeighedGoods": "Activé : un nouvel article de stock est proposé en kilogrammes plutôt qu’en pièces (boucherie, boulangerie, comptoir d’épicerie). Tout article peut garder une autre unité.",
   "settingHintVatViesEvidenceDays": "Jours pendant lesquels un contrôle valide du numéro de TVA reste assez récent pour servir de preuve sur une nouvelle facture. Une valeur plus courte demande un nouveau contrôle plus tôt ; ce n’est pas la preuve qu’une opération est valable.",
   "@settingHintVatViesEvidenceDays": {
     "description": "#2487 retention settings"
@@ -19198,6 +19208,7 @@
   },
   "settingLabelBusinessKind": "Type d'activité",
   "settingLabelBusinessMoreKinds": "Aussi un type d'activité",
+  "settingLabelBusinessShopType": "Type de commerce",
   "settingLabelCalendarRangeDays": "Période du calendrier",
   "@settingLabelCalendarRangeDays": {
     "description": "#2487 settings: Setting label."
@@ -19353,6 +19364,7 @@
   "settingLabelStockPriceRounding": "Arrondi des prix",
   "settingLabelStockRepeatedScan": "Un code scanné de nouveau",
   "settingLabelStockTagRebindGraceDays": "Jours avant de réutiliser une étiquette retirée",
+  "settingLabelStockWeighedGoods": "Les marchandises se vendent au poids",
   "settingLabelVatViesEvidenceDays": "Fraîcheur du contrôle du numéro de TVA",
   "@settingLabelVatViesEvidenceDays": {
     "description": "#2487 retention settings"
@@ -20214,6 +20226,11 @@
   "shellPendingDecisions": "{count, plural, one{{count} décision vous attend} other{{count} décisions vous attendent}}",
   "shellReserveButton": "Réserver",
   "shellSwipeCoachMark": "Balayez la barre vers le bas pour l'affichage plein écran. Balayez vers le haut, ou appuyez longuement sur le bouton Réserver, pour la faire revenir.",
+  "shopTypeBakery": "Boulangerie",
+  "shopTypeButcher": "Boucherie",
+  "shopTypeCornerShop": "Supérette",
+  "shopTypeFlorist": "Fleuriste",
+  "shopTypeGrocery": "Épicerie",
   "shortcutClose": "Fermer",
   "shortcutFilter": "Filtrer cette liste",
   "shortcutKeys": "Les touches de cette page",
