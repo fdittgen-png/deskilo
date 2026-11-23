@@ -2,7 +2,7 @@
 //
 // #4360 (G11) -- the camera as a scanner in the move sheet, at a phone and a desk width, with a fake reader that
 // emits codes: the camera button is there with scanning on; a decoded EAN fills the sheet through the same path a
-// typed scan takes; the same label seen again is one read; a GTIN with a wrong check digit is said and not sent; a
+// typed scan takes; the same label seen again is one read; a GTIN with a wrong check digit is resolved as typed and said to be a misread only when nothing is found; a
 // GS1 string is resolved by its GTIN; a camera that cannot start says so. And the QR-only scanners still ask for QR.
 import 'package:deskilo/core/demo/data/demo_stock_code_resolver.dart';
 import 'package:deskilo/core/demo/data/demo_stock_config_commands.dart';
@@ -98,13 +98,14 @@ void main() {
         expect(_shown(tester, 'stock-move-item'), 'demo-item-mugs');
       });
 
-      testWidgets('a GTIN with a wrong check digit is said and never sent', (tester) async {
+      testWidgets('a GTIN with a wrong check digit is resolved as typed and, finding nothing, said to be a misread', (tester) async {
         final (camera, _) = await _open(tester, size);
         camera.onCode!('4006381333930');
         await _frames(tester);
         expect(find.byKey(const ValueKey('stock-camera-misread')), findsOneWidget);
         expect(find.text(_en.stockCameraMisread), findsOneWidget);
-        expect(find.text(_en.stockCameraCount(0)), findsOneWidget);
+        expect(find.text(_en.stockCameraCount(1)), findsOneWidget, reason: 'it was sent to the resolver, which knew nothing of it');
+        expect(find.byKey(const ValueKey('stock-camera-last')), findsNothing);
       });
 
       testWidgets('a GS1 string is resolved by its GTIN', (tester) async {
