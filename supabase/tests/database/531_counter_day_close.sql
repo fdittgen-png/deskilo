@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- #4367 (0909): the day close refuses a till still open (naming it), is made by someone who may see the finances, is numbered and immutable, its report totals agree with the receipts (by tax rate and tender, the range of numbers, the differences), a lost answer recovers the same close, a day closed once is closed, an assistant reads it with the right to see the finances and nothing else does. Rolled back.
 begin;
-select plan(19);
+select plan(16);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid

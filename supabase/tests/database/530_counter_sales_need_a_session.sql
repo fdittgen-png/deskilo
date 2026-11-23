@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- #4367 (0908): with the sessions on a sale needs an open session on its till; the expected cash counts its cash tenders and cash refunds; a card whose outcome is unknown at the close is listed as unresolved, not as cash; a sale cannot be finalized into a closed session. Rolled back.
 begin;
-select plan(19);
+select plan(13);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid

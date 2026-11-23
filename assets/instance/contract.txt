@@ -390,6 +390,19 @@ constraint conversations.conversations_pkey PRIMARY KEY (id)
 constraint conversations.conversations_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint conversations.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint conversations.system_company_present CHECK ((company_id IS NOT NULL))
+constraint counter_cash_entries.counter_cash_entries_amount_minor_check CHECK ((amount_minor > 0))
+constraint counter_cash_entries.counter_cash_entries_check CHECK (((purchase_document_id IS NULL) OR (kind = 'paid_out'::text)))
+constraint counter_cash_entries.counter_cash_entries_kind_check CHECK ((kind = ANY (ARRAY['paid_in'::text, 'paid_out'::text])))
+constraint counter_cash_entries.counter_cash_entries_pkey PRIMARY KEY (id)
+constraint counter_cash_entries.counter_cash_entries_purchase_document_id_fkey FOREIGN KEY (purchase_document_id) REFERENCES purchase_documents(id)
+constraint counter_cash_entries.counter_cash_entries_reason_check CHECK (((char_length(btrim(reason)) >= 1) AND (char_length(btrim(reason)) <= 60)))
+constraint counter_cash_entries.counter_cash_entries_workspace_id_approved_by_member_id_fkey FOREIGN KEY (workspace_id, approved_by_member_id) REFERENCES members(workspace_id, id)
+constraint counter_cash_entries.counter_cash_entries_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint counter_cash_entries.counter_cash_entries_workspace_id_id_key UNIQUE (workspace_id, id)
+constraint counter_cash_entries.counter_cash_entries_workspace_id_recorded_by_member_id_fkey FOREIGN KEY (workspace_id, recorded_by_member_id) REFERENCES members(workspace_id, id)
+constraint counter_cash_entries.counter_cash_entries_workspace_id_session_id_fkey FOREIGN KEY (workspace_id, session_id) REFERENCES counter_till_sessions(workspace_id, id)
+constraint counter_cash_entries.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint counter_cash_entries.system_company_present CHECK ((company_id IS NOT NULL))
 constraint counter_country_operations.counter_country_operations_check CHECK (((outcome = 'unavailable'::text) OR (adapter IS NOT NULL)))
 constraint counter_country_operations.counter_country_operations_check1 CHECK (((outcome = 'supported'::text) OR (reason <> ''::text)))
 constraint counter_country_operations.counter_country_operations_country_code_check CHECK ((country_code ~ '^[A-Z]{2}$'::text))
@@ -402,6 +415,14 @@ constraint counter_country_operations.counter_country_operations_regime_check CH
 constraint counter_country_operations.counter_country_operations_specification_check CHECK ((btrim(specification) <> ''::text))
 constraint counter_country_operations.counter_country_operations_specification_version_check CHECK ((btrim(specification_version) <> ''::text))
 constraint counter_country_operations.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint counter_day_closes.counter_day_closes_pkey PRIMARY KEY (id)
+constraint counter_day_closes.counter_day_closes_workspace_id_closed_by_member_id_fkey FOREIGN KEY (workspace_id, closed_by_member_id) REFERENCES members(workspace_id, id)
+constraint counter_day_closes.counter_day_closes_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint counter_day_closes.counter_day_closes_workspace_id_id_key UNIQUE (workspace_id, id)
+constraint counter_day_closes.counter_day_closes_workspace_id_number_key UNIQUE (workspace_id, number)
+constraint counter_day_closes.counter_day_closes_workspace_id_site_key_business_date_key UNIQUE (workspace_id, site_key, business_date)
+constraint counter_day_closes.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint counter_day_closes.system_company_present CHECK ((company_id IS NOT NULL))
 constraint counter_receipt_lines.counter_receipt_lines_gross_minor_check CHECK ((gross_minor >= 0))
 constraint counter_receipt_lines.counter_receipt_lines_line_no_check CHECK ((line_no >= 1))
 constraint counter_receipt_lines.counter_receipt_lines_net_minor_check CHECK ((net_minor >= 0))
@@ -427,6 +448,7 @@ constraint counter_receipts.counter_receipts_pkey PRIMARY KEY (id)
 constraint counter_receipts.counter_receipts_price_basis_check CHECK ((price_basis = ANY (ARRAY['gross'::text, 'net'::text])))
 constraint counter_receipts.counter_receipts_revision_check CHECK ((revision >= 1))
 constraint counter_receipts.counter_receipts_schema_version_check CHECK ((schema_version >= 1))
+constraint counter_receipts.counter_receipts_session_fkey FOREIGN KEY (workspace_id, till_session_id) REFERENCES counter_till_sessions(workspace_id, id)
 constraint counter_receipts.counter_receipts_source_kind_check CHECK ((source_kind ~ '^[a-z_]{1,32}$'::text))
 constraint counter_receipts.counter_receipts_source_ref_check CHECK ((char_length(source_ref) <= 200))
 constraint counter_receipts.counter_receipts_state_check CHECK ((state = ANY (ARRAY['draft'::text, 'finalized'::text])))
@@ -445,6 +467,7 @@ constraint counter_refunds.counter_refunds_kind_check CHECK ((kind = ANY (ARRAY[
 constraint counter_refunds.counter_refunds_part_check CHECK ((part >= 1))
 constraint counter_refunds.counter_refunds_pkey PRIMARY KEY (id)
 constraint counter_refunds.counter_refunds_receipt_id_part_key UNIQUE (receipt_id, part)
+constraint counter_refunds.counter_refunds_session_fkey FOREIGN KEY (workspace_id, till_session_id) REFERENCES counter_till_sessions(workspace_id, id)
 constraint counter_refunds.counter_refunds_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint counter_refunds.counter_refunds_workspace_id_id_key UNIQUE (workspace_id, id)
 constraint counter_refunds.counter_refunds_workspace_id_receipt_id_fkey FOREIGN KEY (workspace_id, receipt_id) REFERENCES counter_receipts(workspace_id, id)
@@ -467,6 +490,30 @@ constraint counter_tenders.counter_tenders_workspace_id_recorded_by_member_id_fk
 constraint counter_tenders.counter_tenders_workspace_id_resolved_by_member_id_fkey FOREIGN KEY (workspace_id, resolved_by_member_id) REFERENCES members(workspace_id, id)
 constraint counter_tenders.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint counter_tenders.system_company_present CHECK ((company_id IS NOT NULL))
+constraint counter_till_sessions.counter_till_sessions_banked_minor_check CHECK (((banked_minor IS NULL) OR (banked_minor >= 0)))
+constraint counter_till_sessions.counter_till_sessions_check CHECK (((state = 'closed'::text) = ((closed_at IS NOT NULL) AND (counted_minor IS NOT NULL) AND (expected_minor IS NOT NULL) AND (difference_minor IS NOT NULL))))
+constraint counter_till_sessions.counter_till_sessions_counted_minor_check CHECK (((counted_minor IS NULL) OR (counted_minor >= 0)))
+constraint counter_till_sessions.counter_till_sessions_day_fkey FOREIGN KEY (workspace_id, day_close_id) REFERENCES counter_day_closes(workspace_id, id)
+constraint counter_till_sessions.counter_till_sessions_difference_reason_check CHECK (((difference_reason IS NULL) OR (char_length(difference_reason) <= 200)))
+constraint counter_till_sessions.counter_till_sessions_float_minor_check CHECK ((float_minor >= 0))
+constraint counter_till_sessions.counter_till_sessions_pkey PRIMARY KEY (id)
+constraint counter_till_sessions.counter_till_sessions_state_check CHECK ((state = ANY (ARRAY['open'::text, 'closed'::text])))
+constraint counter_till_sessions.counter_till_sessions_unresolved_card_minor_check CHECK (((unresolved_card_minor IS NULL) OR (unresolved_card_minor >= 0)))
+constraint counter_till_sessions.counter_till_sessions_workspace_id_closed_by_member_id_fkey FOREIGN KEY (workspace_id, closed_by_member_id) REFERENCES members(workspace_id, id)
+constraint counter_till_sessions.counter_till_sessions_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint counter_till_sessions.counter_till_sessions_workspace_id_id_key UNIQUE (workspace_id, id)
+constraint counter_till_sessions.counter_till_sessions_workspace_id_opened_by_member_id_fkey FOREIGN KEY (workspace_id, opened_by_member_id) REFERENCES members(workspace_id, id)
+constraint counter_till_sessions.counter_till_sessions_workspace_id_till_id_fkey FOREIGN KEY (workspace_id, till_id) REFERENCES counter_tills(workspace_id, id)
+constraint counter_till_sessions.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint counter_till_sessions.system_company_present CHECK ((company_id IS NOT NULL))
+constraint counter_tills.counter_tills_name_check CHECK (((char_length(btrim(name)) >= 1) AND (char_length(btrim(name)) <= 60)))
+constraint counter_tills.counter_tills_pkey PRIMARY KEY (id)
+constraint counter_tills.counter_tills_site_id_fkey FOREIGN KEY (site_id) REFERENCES sites(id)
+constraint counter_tills.counter_tills_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint counter_tills.counter_tills_workspace_id_id_key UNIQUE (workspace_id, id)
+constraint counter_tills.counter_tills_workspace_id_name_key UNIQUE (workspace_id, name)
+constraint counter_tills.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint counter_tills.system_company_present CHECK ((company_id IS NOT NULL))
 constraint credit_products.credit_products_half_days_check CHECK (((half_days >= 1) AND (half_days <= 500)))
 constraint credit_products.credit_products_name_check CHECK ((btrim(name) <> ''::text))
 constraint credit_products.credit_products_pkey PRIMARY KEY (id)
@@ -3057,23 +3104,35 @@ routine public.cost_allocation_rule_json(r bi_cost_allocation_rules) -> jsonb | 
 routine public.cost_allocation_rules_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:789cffb7df60
 routine public.counter_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:66c1d614d21a
 routine public.counter_adapters() -> text[] | function | invoker | immutable | exec:service_role | body:eea3a873b58c
+routine public.counter_cash_entry_v1(p_workspace_id uuid, p_request_id uuid, p_session_id uuid, p_kind text, p_amount_minor bigint, p_reason text, p_purchase_document_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:80084981d857
+routine public.counter_day_close_v1(p_workspace_id uuid, p_request_id uuid, p_site_id uuid, p_business_date date) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:a4570d491fae
+routine public.counter_day_report_v1(p_workspace_id uuid, p_day_close_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:6e7ad269ace0
+routine public.counter_denominations_total(p_denominations jsonb) -> bigint | function | invoker | immutable | exec:service_role | body:fe05c177ae65
 routine public.counter_frozen_guard() -> trigger | function | invoker | volatile | exec:service_role | body:a9c6b6fdca6f
 routine public.counter_goods_return_v1(p_workspace_id uuid, p_request_id uuid, p_correction_id uuid, p_lines jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:d83f1a38055e
 routine public.counter_line_compute(p_workspace_id uuid, p_line jsonb, p_index integer, p_currency text, p_tax_point date) -> jsonb | function | definer | stable | exec:service_role | body:36efd33a36e8
 routine public.counter_lines_of(p_workspace_id uuid, p_lines jsonb, p_currency text, p_basis text, p_tax_point date) -> jsonb | function | definer | stable | exec:service_role | body:bfe50aa31258
+routine public.counter_open_session(p_workspace_id uuid, p_till text) -> uuid | function | definer | volatile | exec:service_role | body:3fb1d7861f42
 routine public.counter_operation_row(p_workspace_id uuid, p_operation text) -> counter_country_operations | function | definer | stable | exec:service_role | body:59a85833376f
 routine public.counter_operation_state(p_workspace_id uuid, p_operation text) -> text | function | definer | stable | exec:service_role | body:b59b96f02cf4
 routine public.counter_readiness_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:9e12e5da4551
 routine public.counter_receipt_correct_v1(p_workspace_id uuid, p_request_id uuid, p_original_id uuid, p_body jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:1452fbfd8264
 routine public.counter_receipt_decode(p_frozen jsonb) -> jsonb | function | invoker | immutable | exec:service_role | body:928178fe46df
-routine public.counter_receipt_draft_v1(p_workspace_id uuid, p_request_id uuid, p_receipt_id uuid, p_expected_revision integer, p_body jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:01ce6764d7c5
-routine public.counter_receipt_finalize_v1(p_workspace_id uuid, p_request_id uuid, p_receipt_id uuid, p_expected_revision integer, p_tenders jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:6fb7be3427c5
-routine public.counter_refund_v1(p_workspace_id uuid, p_request_id uuid, p_correction_id uuid, p_refunds jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:018f0f2be614
+routine public.counter_receipt_draft_v1(p_workspace_id uuid, p_request_id uuid, p_receipt_id uuid, p_expected_revision integer, p_body jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:7c2cb5fd1066
+routine public.counter_receipt_finalize_v1(p_workspace_id uuid, p_request_id uuid, p_receipt_id uuid, p_expected_revision integer, p_tenders jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:b2beaf6e58a1
+routine public.counter_refund_v1(p_workspace_id uuid, p_request_id uuid, p_correction_id uuid, p_refunds jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:5bdff69dd04a
 routine public.counter_refunds_frozen() -> trigger | function | invoker | volatile | exec:service_role | body:581cb131a084
 routine public.counter_require_operation(p_workspace_id uuid, p_operation text) -> counter_country_operations | function | definer | stable | exec:service_role | body:d1fc60a0d6e8
+routine public.counter_session_cash(p_session_id uuid) -> jsonb | function | definer | stable | exec:service_role | body:15d25eaa207f
+routine public.counter_session_close_v1(p_workspace_id uuid, p_request_id uuid, p_session_id uuid, p_counted_minor bigint, p_denominations jsonb, p_difference_reason text, p_banked_minor bigint) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:0c6407fd058e
+routine public.counter_session_expected_v1(p_workspace_id uuid, p_session_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:f44b63c3ae31
+routine public.counter_session_open_v1(p_workspace_id uuid, p_request_id uuid, p_till_id uuid, p_float_minor bigint, p_denominations jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:883e86b1ef6f
 routine public.counter_tender_reconcile_v1(p_workspace_id uuid, p_request_id uuid, p_tender_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:405814ff2609
 routine public.counter_tender_request_v1(p_workspace_id uuid, p_request_id uuid, p_receipt_id uuid, p_kind text, p_amount_minor bigint) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:7abb8d7623ef
 routine public.counter_tender_resolve_v1(p_workspace_id uuid, p_request_id uuid, p_tender_id uuid, p_outcome text, p_provider_ref text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:5f6c84c49864
+routine public.counter_till_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:55c0e9ee1de4
+routine public.counter_till_frozen_guard() -> trigger | function | invoker | volatile | exec:service_role | body:230c75b0f4d8
+routine public.counter_till_save_v1(p_workspace_id uuid, p_request_id uuid, p_till_id uuid, p_name text, p_site_id uuid, p_active boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:27aef2514cee
 routine public.country_papers(p_country text, p_on date) -> jsonb | function | definer | stable | exec:service_role | body:e88ec4f4583e
 routine public.courtesy_word(p_code text, p_lang text) -> text | function | invoker | immutable | exec:authenticated,service_role | body:6ee8d303b265
 routine public.create_account_group(p_title text, p_users uuid[], p_expected_account uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:8824f7fdaaa1
@@ -3192,14 +3251,14 @@ routine public.export_floor_plan(p_workspace_id uuid) -> jsonb | function | defi
 routine public.export_my_data(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:60e99a54bb53
 routine public.export_my_personal_data_v1() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:d7b715189c7e
 routine public.export_workspace_configuration(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:92590453f1db
-routine public.export_workspace_records(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:ca7d631b3fe9
+routine public.export_workspace_records(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:b168ca345273
 routine public.extend_rights_request(p_request_id uuid, p_reason text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:04408416313f
 routine public.feature_available_in(p_country text, p_key text) -> boolean | function | invoker | stable | exec:authenticated,service_role | body:afd99a4fede6
 routine public.feature_effective(p_workspace_id uuid, p_key text) -> boolean | function | invoker | stable | exec:authenticated,service_role | body:1d4c5b503042
 routine public.feature_effective_in(p_flags jsonb, p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:f36e5aa82a04
 routine public.feature_operation_allowed(p_workspace uuid, p_feature text, p_operation text) -> boolean | function | definer | stable | exec:service_role | body:084f4cf0e3a0
 routine public.feature_raw(p_flags jsonb, p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:3f29a2e68fc1
-routine public.feature_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:c30a5bbf2242
+routine public.feature_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:73cee54d0f01
 routine public.federation_answer_wait() -> interval | function | definer | stable | exec: | body:ecc7c683d6e9
 routine public.federation_envelope_headers(p_purpose text, p_target uuid, p_event uuid, p_path text, p_body jsonb) -> jsonb | function | definer | volatile | exec: | body:dc4baaa18342
 routine public.federation_inbox_accept(p_method text, p_path text, p_headers jsonb, p_body_b64 text) -> jsonb | function | definer | volatile | exec:service_role | body:9eb383212bb9
@@ -4283,7 +4342,7 @@ routine public.setup_current_levels(p_flags jsonb, p_country text) -> jsonb | fu
 routine public.setup_hours_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:4f359045c81a
 routine public.setup_invitation_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:5852379a5e56
 routine public.setup_level_arguments() -> text[] | function | invoker | immutable | exec:service_role | body:7f746fc5ea32
-routine public.setup_level_catalogue() -> jsonb | function | invoker | immutable | exec:service_role | body:4ccb3bf40372
+routine public.setup_level_catalogue() -> jsonb | function | invoker | immutable | exec:service_role | body:61700262ea92
 routine public.setup_level_rank(p_process text, p_level text) -> integer | function | invoker | immutable | exec:service_role | body:a54edb860b1c
 routine public.setup_levels_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:c01c658a9993
 routine public.setup_member_rights_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:fa33dc1d0dfa
@@ -4454,7 +4513,7 @@ routine public.tell_owners_kiosk_device(p_workspace_id uuid, p_change text, p_de
 routine public.template_blocked_validations(p_tables jsonb, p_selected text[]) -> jsonb | function | invoker | immutable | exec:service_role | body:c094ee38e47a
 routine public.template_compatibility(p_template workspace_templates, p_groups text[]) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:99d317191047
 routine public.template_customizations(p_workspace_id uuid, p_template workspace_templates, p_groups jsonb) -> jsonb | function | definer | stable | exec:service_role | body:9906b0d4a427
-routine public.template_field_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:55fb85fc825f
+routine public.template_field_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:d8967073e5e1
 routine public.template_local_needs(p_template_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:680fc4d8017c
 routine public.template_local_slot_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:41d51bce65a7
 routine public.template_outline(p_template_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e7a5648e8753
@@ -4644,7 +4703,11 @@ trigger configuration_choice_events.zz_system_columns_stamp CREATE TRIGGER zz_sy
 trigger conversation_participants.customer_subject_refused CREATE TRIGGER customer_subject_refused BEFORE INSERT OR UPDATE OF member_id ON public.conversation_participants FOR EACH ROW EXECUTE FUNCTION reject_customer_subject('member_id')
 trigger conversation_participants.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.conversation_participants FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger conversations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.conversations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger counter_cash_entries.counter_cash_entries_frozen CREATE TRIGGER counter_cash_entries_frozen BEFORE DELETE OR UPDATE ON public.counter_cash_entries FOR EACH ROW EXECUTE FUNCTION counter_till_frozen_guard()
+trigger counter_cash_entries.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.counter_cash_entries FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger counter_country_operations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.counter_country_operations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger counter_day_closes.counter_day_closes_frozen CREATE TRIGGER counter_day_closes_frozen BEFORE DELETE OR UPDATE ON public.counter_day_closes FOR EACH ROW EXECUTE FUNCTION counter_till_frozen_guard()
+trigger counter_day_closes.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.counter_day_closes FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger counter_receipt_lines.counter_receipt_lines_frozen CREATE TRIGGER counter_receipt_lines_frozen BEFORE DELETE OR UPDATE ON public.counter_receipt_lines FOR EACH ROW EXECUTE FUNCTION counter_frozen_guard()
 trigger counter_receipt_lines.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.counter_receipt_lines FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger counter_receipts.counter_receipts_frozen CREATE TRIGGER counter_receipts_frozen BEFORE DELETE OR UPDATE ON public.counter_receipts FOR EACH ROW EXECUTE FUNCTION counter_frozen_guard()
@@ -4653,6 +4716,9 @@ trigger counter_refunds.counter_refunds_frozen CREATE TRIGGER counter_refunds_fr
 trigger counter_refunds.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.counter_refunds FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger counter_tenders.counter_tenders_frozen CREATE TRIGGER counter_tenders_frozen BEFORE DELETE OR UPDATE ON public.counter_tenders FOR EACH ROW EXECUTE FUNCTION counter_frozen_guard()
 trigger counter_tenders.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.counter_tenders FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger counter_till_sessions.counter_till_sessions_frozen CREATE TRIGGER counter_till_sessions_frozen BEFORE DELETE OR UPDATE ON public.counter_till_sessions FOR EACH ROW EXECUTE FUNCTION counter_till_frozen_guard()
+trigger counter_till_sessions.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.counter_till_sessions FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger counter_tills.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.counter_tills FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger credit_products.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.credit_products FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger customer_quote_conversions.customer_quote_conversions_frozen CREATE TRIGGER customer_quote_conversions_frozen BEFORE DELETE OR UPDATE ON public.customer_quote_conversions FOR EACH ROW EXECUTE FUNCTION customer_quote_frozen()
 trigger customer_quote_conversions.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.customer_quote_conversions FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()

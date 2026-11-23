@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- #4367 (0905-0909): the shop's Saturday: a float counted by denomination, twenty cash sales, a paid-out linked to a purchase, a count that is 0.50 short with its reason, an amount to the bank, and the day closed with a report that agrees with the receipts. Rolled back.
 begin;
-select plan(19);
+select plan(9);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
