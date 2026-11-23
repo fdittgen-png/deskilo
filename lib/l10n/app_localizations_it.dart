@@ -40103,7 +40103,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get tillTitle => 'Cassa';
 
   @override
-  String get tillTotalDue => 'Totale da pagare';
+  String tillTotalDue(String amount) {
+    return 'Totale da pagare: $amount';
+  }
 
   @override
   String get tipAvailabilityClosure =>

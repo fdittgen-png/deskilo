@@ -167,3 +167,12 @@ abstract interface class TillPort {
 
   Future<TillSold> finalize(String workspaceId, {required String requestId, required String receiptId, required int expectedRevision, required List<TillTender> tenders});
 }
+
+/// #4366 -- an item the till offers as a key: what a tap rings up.
+class TillKey {
+  const TillKey({required this.id, required this.name, required this.unit});
+
+  final String id;
+  final String name;
+  final String unit;
+}

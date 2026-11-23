@@ -5,7 +5,7 @@
 // by itself (cash short of the total) is said here.
 import '../../../core/trace/refusal_text.dart';
 import '../../../l10n/app_localizations.dart';
-import '../application/till_session.dart';
+import 'till_session.dart';
 
 /// The name of a counter operation as a country's registry knows it.
 String tillOperationName(AppLocalizations l10n, String operation) => switch (operation) {

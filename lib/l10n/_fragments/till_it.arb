@@ -15,7 +15,7 @@
   "tillQuantityHint": "Una quantità esatta, per esempio 1 oppure 0,350.",
   "tillQuantityRefused": "Inserisca una quantità superiore a zero con al massimo sei decimali.",
   "tillRemoveLine": "Togliere {name} dal carrello",
-  "tillTotalDue": "Totale da pagare",
+  "tillTotalDue": "Totale da pagare: {amount}",
   "tillTaxIncluded": "di cui imposta {amount}",
   "tillPricing": "Calcolo del carrello…",
   "tillPayCash": "Incassare in contanti",

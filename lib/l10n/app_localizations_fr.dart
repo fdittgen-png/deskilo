@@ -40222,7 +40222,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get tillTitle => 'Caisse';
 
   @override
-  String get tillTotalDue => 'Total à payer';
+  String tillTotalDue(String amount) {
+    return 'Total à payer: $amount';
+  }
 
   @override
   String get tipAvailabilityClosure =>

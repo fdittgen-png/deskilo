@@ -41,7 +41,6 @@ import '../../features/money/presentation/screens/vat_return_page.dart';
 import '../../features/money/presentation/screens/vat_screen.dart';
 import '../../features/money/presentation/screens/workspace_status_screen.dart';
 import '../../features/money/presentation/standalone/standalone_invoice_screen.dart';
-import '../../features/money/presentation/till_screen.dart';
 import '../../features/money/presentation/widgets/expense_repartition_sheet.dart'
     show expenseRepartitionPage;
 import '../../features/money/presentation/widgets/purchase_order_record.dart';
@@ -54,6 +53,7 @@ import '../../features/workspace/providers/workspace_providers.dart';
 import '../route_access.dart';
 import '../route_env.dart';
 import 'me_adapters.dart';
+import 'till_route.dart';
 
 /// Routes of the money feature.
 List<RouteBase> moneyRoutes(RouteEnv env) => [
@@ -91,7 +91,7 @@ List<RouteBase> _invoicingRoutes(RouteEnv env) {
       redirect: env.guard(
         const RouteAccess(features: [WorkspaceFeature.counterReceipts], to: '/money'),
       ),
-      builder: (context, state) => const TillScreen(),
+      builder: (context, state) => const TillRoute(),
     ),
     GoRoute(
       path: '/invoices',

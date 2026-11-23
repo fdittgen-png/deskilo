@@ -4,12 +4,12 @@
 // a second tap one more, a quantity is typed exactly (0.350), the server's pricing is what the basket shows, cash short
 // of the total is refused before anything is sent, the exact amount makes the sale and the next customer starts clean,
 // a country that is not ready offers nothing and says which operation, and a server refusal is said in words.
+import 'package:deskilo/app/routes/till_route.dart';
 import 'package:deskilo/core/demo/data/demo_stock_config_commands.dart';
 import 'package:deskilo/core/demo/data/demo_stock_ledger.dart';
 import 'package:deskilo/core/demo/data/demo_stock_queries.dart';
 import 'package:deskilo/core/demo/data/demo_till.dart';
 import 'package:deskilo/features/money/domain/counter_till.dart';
-import 'package:deskilo/features/money/presentation/till_screen.dart';
 import 'package:deskilo/features/money/providers/till_providers.dart';
 import 'package:deskilo/features/stock/providers/stock_providers.dart';
 import 'package:deskilo/l10n/app_localizations_en.dart';
@@ -24,7 +24,7 @@ final _en = AppLocalizationsEn();
 
 /// The Demo till whose sale the server refuses with [code]: the pricing works, the tender is what is refused.
 class _RefusingTill extends DemoTill {
-  _RefusingTill(this.code) : super(currency: 'EUR', vatPercent: 20);
+  _RefusingTill(this.code) : super(country: 'FR', currency: 'EUR', vatPercent: 20);
 
   final String code;
 
@@ -37,7 +37,7 @@ Future<void> _open(WidgetTester tester, TillPort till, Size size) async {
   final config = DemoStockConfigCommands('ws-1');
   await pumpApp(
     tester,
-    const TillScreen(),
+    const TillRoute(),
     size: size,
     overrides: [
       ...standardTestOverrides(),
@@ -60,7 +60,7 @@ Future<void> _tap(WidgetTester tester, String key) async {
   await _settle(tester);
 }
 
-DemoTill _ready() => DemoTill(currency: 'EUR', vatPercent: 20);
+DemoTill _ready() => DemoTill(country: 'FR', currency: 'EUR', vatPercent: 20);
 
 void main() {
   for (final size in const [Size(390, 844), Size(1024, 768), Size(1440, 900)]) {
@@ -127,7 +127,7 @@ void main() {
       });
 
       testWidgets('a country that is not ready offers nothing and names the operation', (tester) async {
-        await _open(tester, DemoTill(currency: 'EUR', vatPercent: 20, ready: false), size);
+        await _open(tester, DemoTill(country: 'FR', currency: 'EUR', vatPercent: 20, ready: false), size);
         expect(find.byKey(const ValueKey('till-not-ready')), findsOneWidget);
         expect(find.text(_en.tillNotReady('${_en.tillOpIssueReceipt}, ${_en.tillOpReconcileTender}')), findsOneWidget);
         expect(find.byKey(const ValueKey('till-key-demo-item-milk')), findsNothing);

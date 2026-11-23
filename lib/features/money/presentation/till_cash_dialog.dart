@@ -3,6 +3,7 @@
 // #4366 -- taking cash: the amount the customer gave, "exact" for the total, the change said by the till. Answers the
 // amount in minor units, or null when it was cancelled.
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
@@ -54,7 +55,7 @@ class _CashDialogState extends State<_CashDialog> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text('${l10n.tillTotalDue}: ${money.formatMinor(widget.totalMinor)}', style: Theme.of(context).textTheme.titleMedium),
+            Text(l10n.tillTotalDue(money.formatMinor(widget.totalMinor)), style: Theme.of(context).textTheme.titleMedium),
             const FormGap(),
             AppTextField(
               key: const ValueKey('till-cash-given'),
@@ -62,6 +63,7 @@ class _CashDialogState extends State<_CashDialog> {
               label: l10n.tillCashGiven,
               error: error,
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
+              inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]'))],
               autofocus: true,
             ),
             const FormGap.small(),
@@ -77,7 +79,7 @@ class _CashDialogState extends State<_CashDialog> {
         ),
       ),
       actions: [
-        TextButton(onPressed: () => Navigator.of(context).pop(), child: Text(MaterialLocalizations.of(context).cancelButtonLabel)),
+        TextButton(key: const ValueKey('till-cash-cancel'), onPressed: () => Navigator.of(context).pop(), child: Text(MaterialLocalizations.of(context).cancelButtonLabel)),
         FilledButton(key: const ValueKey('till-cash-confirm'), onPressed: _confirm, child: Text(l10n.tillPayCash)),
       ],
     );

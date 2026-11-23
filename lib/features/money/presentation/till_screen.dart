@@ -9,41 +9,47 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/help/help_anchors.dart';
+import '../../../core/help/help_dot.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
+import '../../../core/ui/adaptive/window_class.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../core/ui/kit/page_title.dart';
 import '../../../core/ui/loading_view.dart';
-import '../../stock/domain/stock_page.dart';
-import '../../stock/providers/stock_providers.dart';
 import '../../workspace/providers/workspace_providers.dart';
-import '../application/till_session.dart';
+import '../domain/counter_till.dart';
 import '../providers/till_providers.dart';
 import 'till_basket.dart';
 import 'till_cash_dialog.dart';
+import 'till_session.dart';
 import 'till_text.dart';
 
-/// The width from which the keys and the basket sit side by side.
-const double _tillWide = 720;
-
+/// The till. [keys] are the items it offers, read by the route from the stock: the till does not know the stock.
 class TillScreen extends ConsumerWidget {
-  const TillScreen({super.key});
+  const TillScreen({super.key, required this.keys});
+
+  final AsyncValue<List<TillKey>> keys;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final workspaceId = ref.watch(currentWorkspaceProvider).value?.id;
     return Scaffold(
-      appBar: AppBar(title: PageTitle(context.l10n.tillTitle)),
-      body: workspaceId == null ? const LoadingView() : _Readiness(workspaceId: workspaceId),
+      appBar: AppBar(
+        title: PageTitle(context.l10n.tillTitle),
+        actions: [HelpDot(context.l10n.tillTitle, anchor: HelpAnchor.moneyTill)],
+      ),
+      body: workspaceId == null ? const LoadingView() : _Readiness(workspaceId: workspaceId, keys: keys),
     );
   }
 }
 
 /// The till opens only where the country's operations are supported.
 class _Readiness extends ConsumerWidget {
-  const _Readiness({required this.workspaceId});
+  const _Readiness({required this.workspaceId, required this.keys});
 
   final String workspaceId;
+  final AsyncValue<List<TillKey>> keys;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -54,7 +60,7 @@ class _Readiness extends ConsumerWidget {
           loading: () => const LoadingView(),
           error: (e, _) => _Notice(text: tillProblemText(l10n, e)),
           data: (readiness) => readiness.ready
-              ? _Till(workspaceId: workspaceId)
+              ? _Till(workspaceId: workspaceId, keys: keys)
               : _Notice(
                   key: const ValueKey('till-not-ready'),
                   text: l10n.tillNotReady(
@@ -88,9 +94,10 @@ class _Notice extends StatelessWidget {
 }
 
 class _Till extends ConsumerStatefulWidget {
-  const _Till({required this.workspaceId});
+  const _Till({required this.workspaceId, required this.keys});
 
   final String workspaceId;
+  final AsyncValue<List<TillKey>> keys;
 
   @override
   ConsumerState<_Till> createState() => _TillState();
@@ -122,11 +129,10 @@ class _TillState extends ConsumerState<_Till> {
 
   @override
   Widget build(BuildContext context) {
-    final items = ref.watch(stockItemsProvider(widget.workspaceId));
-    return LayoutBuilder(
+        return LayoutBuilder(
       builder: (context, box) {
         final keys = _Keys(
-          items: items,
+          items: widget.keys,
           onTap: (i) => unawaited(_session.add(itemId: i.id, name: i.name, unit: i.unit)),
         );
         final basket = ValueListenableBuilder<TillState>(
@@ -139,7 +145,7 @@ class _TillState extends ConsumerState<_Till> {
             onNext: _session.next,
           ),
         );
-        if (box.maxWidth >= _tillWide) {
+        if (WindowClass.ofWidth(box.maxWidth).atLeast(WindowClass.medium)) {
           return Row(
             children: [
               Expanded(flex: 3, child: keys),
@@ -164,8 +170,8 @@ class _TillState extends ConsumerState<_Till> {
 class _Keys extends StatelessWidget {
   const _Keys({required this.items, required this.onTap});
 
-  final AsyncValue<List<StockItem>> items;
-  final void Function(StockItem) onTap;
+  final AsyncValue<List<TillKey>> items;
+  final void Function(TillKey) onTap;
 
   @override
   Widget build(BuildContext context) {

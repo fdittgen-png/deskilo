@@ -3,14 +3,15 @@
 // #4366 -- the till's basket: the lines with their exact quantity and the price the server gave them, the total, the
 // refusal of the last act in words, and the one way on (pay, or the next customer once it is paid).
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/i18n/money_format.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/ui/form_kit.dart';
-import '../application/till_session.dart';
 import '../domain/counter_till.dart';
+import 'till_session.dart';
 import 'till_text.dart';
 
 class TillBasket extends StatelessWidget {
@@ -121,7 +122,7 @@ class _Footer extends StatelessWidget {
       children: [
         if (draft != null) ...[
           Text(
-            '${l10n.tillTotalDue}: ${money.formatMinor(draft.totals.grossMinor)}',
+            l10n.tillTotalDue(money.formatMinor(draft.totals.grossMinor)),
             key: const ValueKey('till-total'),
             style: theme.textTheme.titleLarge,
           ),
@@ -162,7 +163,7 @@ class _Sold extends StatelessWidget {
       children: [
         Text(l10n.tillSoldTitle, style: theme.textTheme.titleLarge),
         Text(l10n.tillReceiptNumber(sold.number), key: const ValueKey('till-receipt')),
-        Text('${l10n.tillTotalDue}: ${money.formatMinor(sold.totals.grossMinor)}'),
+        Text(l10n.tillTotalDue(money.formatMinor(sold.totals.grossMinor))),
         if (change != null && change! > 0)
           Text(l10n.tillChangeDue(money.formatMinor(change!)), key: const ValueKey('till-change'), style: theme.textTheme.titleMedium),
         const FormGap(),
@@ -210,11 +211,12 @@ class _QuantityDialogState extends State<_QuantityDialog> {
         label: l10n.tillQuantityTitle,
         helper: l10n.tillQuantityHint,
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
+        inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]'))],
         autofocus: true,
         onSubmitted: (v) => Navigator.of(context).pop(v),
       ),
       actions: [
-        TextButton(onPressed: () => Navigator.of(context).pop(), child: Text(MaterialLocalizations.of(context).cancelButtonLabel)),
+        TextButton(key: const ValueKey('till-quantity-cancel'), onPressed: () => Navigator.of(context).pop(), child: Text(MaterialLocalizations.of(context).cancelButtonLabel)),
         FilledButton(
           key: const ValueKey('till-quantity-confirm'),
           onPressed: () => Navigator.of(context).pop(_text.text),

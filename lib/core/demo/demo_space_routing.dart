@@ -33,6 +33,7 @@ import '../../features/money/providers/purchase_providers.dart';
 import '../../features/money/providers/recorded_payments_providers.dart';
 import '../../features/money/providers/settlement_review_providers.dart';
 import '../../features/money/providers/standalone_invoice_providers.dart';
+import '../../features/money/providers/till_providers.dart';
 import '../../features/plan/providers/accessory_providers.dart';
 import '../../features/plan/providers/charging_station_providers.dart';
 import '../../features/plan/providers/floor_plan_providers.dart';
@@ -62,6 +63,7 @@ import 'data/demo_stock_reorder.dart';
 import 'data/demo_stock_reversals.dart';
 import 'data/demo_stock_tags.dart';
 import 'data/demo_stock_trace.dart';
+import 'data/demo_till.dart';
 import 'data/finance_kpi_repository.dart';
 import 'data/money/demo_credit_moves.dart';
 import 'data/money/demo_invoice_issue_drafts.dart';
@@ -132,6 +134,14 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
       workspaces: space.workspaces,
     );
   });
+  // #4366 — each space's till: its own counter, its own numbers.
+  final tills = demoSpacesOf(
+    (key) => DemoTill(
+      country: fixture.workspaces.workspaces.firstWhere((w) => w.id == key.id).countryCode,
+      currency: key.currency,
+      vatPercent: 20,
+    ),
+  );
   final myReservations = _myReservations(fixture);
   final stocks = _DemoStocks(fixture);
   // #3865 — each space's last bank statement lives on the fixture.
@@ -251,6 +261,7 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
     recordedPaymentsRepositoryProvider.overrideWith(
       (ref) => demoPickSpace(ref, payments),
     ),
+    tillPortProvider.overrideWith((ref) => demoPickSpace(ref, tills)),
   ];
 }
 

@@ -15,7 +15,6 @@
 // step both ways: a new route without a row fails, a row without a route
 // fails, and every registered action must be named by some recorded
 // route and called from some seam.
-
 import 'action_registry.dart';
 
 enum CoverageStatus { recorded, recorder, excluded, planned }

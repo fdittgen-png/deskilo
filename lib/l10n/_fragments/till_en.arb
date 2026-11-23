@@ -73,9 +73,14 @@
       }
     }
   },
-  "tillTotalDue": "Total to pay",
+  "tillTotalDue": "Total to pay: {amount}",
   "@tillTotalDue": {
-    "description": "#4366 the till"
+    "description": "#4366 the till",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
   },
   "tillTaxIncluded": "of which tax {amount}",
   "@tillTaxIncluded": {

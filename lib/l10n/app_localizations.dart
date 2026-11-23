@@ -64045,8 +64045,8 @@ abstract class AppLocalizations {
   /// #4366 the till
   ///
   /// In en, this message translates to:
-  /// **'Total to pay'**
-  String get tillTotalDue;
+  /// **'Total to pay: {amount}'**
+  String tillTotalDue(String amount);
 
   /// Tip (#2313) on the availability surface: a scenario "To …: …".
   ///

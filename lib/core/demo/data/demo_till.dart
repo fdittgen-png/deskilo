@@ -13,8 +13,9 @@ import 'demo_stock_registry.dart';
 PostgrestException _refused(String code, String message) => PostgrestException(message: message, code: code);
 
 class DemoTill implements TillPort {
-  DemoTill({required this.currency, required this.vatPercent, this.ready = true, this.minorDigits = 2});
+  DemoTill({required this.country, required this.currency, required this.vatPercent, this.ready = true, this.minorDigits = 2});
 
+  final String country;
   final String currency;
   final int vatPercent;
   final bool ready;
@@ -27,7 +28,7 @@ class DemoTill implements TillPort {
 
   @override
   Future<TillReadiness> readiness(String workspaceId) async => TillReadiness(
-    country: 'FR',
+    country: country,
     fiscalObligation: 'none',
     ready: ready,
     operations: [

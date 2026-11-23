@@ -23373,7 +23373,7 @@
   "tillSoldTitle": "Venduto",
   "tillTaxIncluded": "di cui imposta {amount}",
   "tillTitle": "Cassa",
-  "tillTotalDue": "Totale da pagare",
+  "tillTotalDue": "Totale da pagare: {amount}",
   "tipAvailabilityClosure": "Per chiudere un giorno che nessuno potrà prenotare: tocchi «Aggiungi giorno di chiusura» e indichi un motivo, se vuole.",
   "tipAvailabilityDays": "Per impostare i giorni di apertura: selezioni i giorni sotto «Giorni di apertura».",
   "tipAvailabilityGrid": "Per scegliere come si dividono le prenotazioni: scelga una «Granularità delle prenotazioni» — periodi liberi, fasce, mezze giornate o giornate intere.",

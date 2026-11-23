@@ -15,7 +15,7 @@
   "tillQuantityHint": "Una cantidad exacta, por ejemplo 1 o 0,350.",
   "tillQuantityRefused": "Introduzca una cantidad superior a cero con un máximo de seis decimales.",
   "tillRemoveLine": "Quitar {name} de la cesta",
-  "tillTotalDue": "Total a pagar",
+  "tillTotalDue": "Total a pagar: {amount}",
   "tillTaxIncluded": "de los cuales impuesto {amount}",
   "tillPricing": "Calculando la cesta…",
   "tillPayCash": "Cobrar en efectivo",

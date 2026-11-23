@@ -40178,7 +40178,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get tillTitle => 'Kasse';
 
   @override
-  String get tillTotalDue => 'Zu zahlender Betrag';
+  String tillTotalDue(String amount) {
+    return 'Zu zahlender Betrag: $amount';
+  }
 
   @override
   String get tipAvailabilityClosure =>

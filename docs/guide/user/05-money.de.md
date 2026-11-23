@@ -748,6 +748,19 @@ Ist die Funktion *Tags* eingeschaltet und liest Ihr Telefon NFC, zeigen **Lager 
 - **UHF-Etiketten** kann ein Telefon nicht lesen. Ein Artikel, der nur solche hat, sagt *nutzen Sie das RFID-Lesegerät*.
 - Zuordnen braucht das Recht, das Lager zu verwalten; Lesen das Recht, es einzusehen.
 
+<!-- anchor: user.money.till -->
+### Kasse
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie bedienen Kundschaft an der Theke und möchten jeden Verkauf in Sekunden, nummeriert und bar abschließen.
+
+Öffnen Sie **Kasse** im Verkaufsmenü (sie braucht die Funktion Kassenbons und das Recht, Rechnungen auszustellen). Die Artikel sind Tasten: ein Tipp bucht einen, ein weiterer Tipp einen mehr. Tippen Sie auf eine Zeile, um die **Verkaufte Menge** genau einzugeben, zum Beispiel 0,350 für Wiegeware (ein Komma wird als Punkt gelesen; die Menge muss über null liegen, mit höchstens sechs Dezimalstellen). Der Server bepreist den Warenkorb inklusive Steuer, und die Kasse zeigt **Zu zahlender Betrag**; auf dem Telefon wird nichts berechnet.
+
+Drücken Sie **Bar kassieren** und geben Sie **Gegeben** ein (oder **Passend**). Weniger als der Gesamtbetrag wird abgelehnt, bevor etwas gesendet wird. Der Server nummeriert den Verkauf, und die Kasse nennt das Rückgeld; **Nächster Kunde** beginnt einen leeren Warenkorb. Derselbe Verkauf, zweimal gesendet, verkauft nie doppelt.
+
+Wo Ihr Land die Kasse noch nicht erlaubt, nennt die Kasse den fehlenden Vorgang und bietet nichts an: nichts wird nummeriert und nichts kassiert. Eine Warenzeile braucht die Lagerverwaltung; eine Ablehnung des Servers erscheint in Worten. Kartenzahlung, Rabatte, Erstattungen und Rückgaben gehören nicht zu dieser ersten Kasse. (#4366)
+
 <!-- anchor: user.money.stock.value -->
 ### Lagerwert und Herkunft der Ware
 

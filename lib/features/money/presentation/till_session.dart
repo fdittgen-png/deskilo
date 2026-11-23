@@ -7,6 +7,7 @@
 import 'package:flutter/foundation.dart';
 
 import '../../../core/ids/request_id.dart';
+import '../../../core/trace/trace_logger.dart';
 import '../domain/counter_till.dart';
 import '../domain/till_quantity.dart';
 
@@ -110,7 +111,8 @@ class TillSession {
         expectedRevision: _now.draft?.revision,
       );
       if (generation == _generation) state.value = _now.copyWith(draft: () => draft, busy: false);
-    } on Object catch (e) {
+    } on Object catch (e, st) {
+      TraceLogger.instance.error('money', 'till request refused', error: e, stackTrace: st);
       if (generation == _generation) state.value = _now.copyWith(busy: false, problem: () => e);
     }
   }
@@ -138,7 +140,8 @@ class TillSession {
       if (generation == _generation) {
         state.value = _now.copyWith(busy: false, sold: () => sold, change: () => givenMinor - total);
       }
-    } on Object catch (e) {
+    } on Object catch (e, st) {
+      TraceLogger.instance.error('money', 'till request refused', error: e, stackTrace: st);
       if (generation == _generation) state.value = _now.copyWith(busy: false, problem: () => e);
     }
   }

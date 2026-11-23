@@ -15,7 +15,7 @@
   "tillQuantityHint": "Une quantité exacte, par exemple 1 ou 0,350.",
   "tillQuantityRefused": "Saisissez une quantité supérieure à zéro, avec au plus six décimales.",
   "tillRemoveLine": "Retirer {name} du panier",
-  "tillTotalDue": "Total à payer",
+  "tillTotalDue": "Total à payer: {amount}",
   "tillTaxIncluded": "dont taxe {amount}",
   "tillPricing": "Calcul du panier…",
   "tillPayCash": "Encaisser en espèces",

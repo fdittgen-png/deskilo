@@ -15,7 +15,7 @@
   "tillQuantityHint": "Eine genaue Menge, zum Beispiel 1 oder 0,350.",
   "tillQuantityRefused": "Geben Sie eine Menge über null mit höchstens sechs Dezimalstellen ein.",
   "tillRemoveLine": "{name} aus dem Warenkorb nehmen",
-  "tillTotalDue": "Zu zahlender Betrag",
+  "tillTotalDue": "Zu zahlender Betrag: {amount}",
   "tillTaxIncluded": "davon Steuer {amount}",
   "tillPricing": "Warenkorb wird berechnet …",
   "tillPayCash": "Bar kassieren",

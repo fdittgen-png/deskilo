@@ -51655,9 +51655,14 @@
   "@tillTitle": {
     "description": "#4366 the till"
   },
-  "tillTotalDue": "Total to pay",
+  "tillTotalDue": "Total to pay: {amount}",
   "@tillTotalDue": {
-    "description": "#4366 the till"
+    "description": "#4366 the till",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
   },
   "tipAvailabilityClosure": "To close a day nobody can book: tap “Add closure day” and give a reason if you like.",
   "@tipAvailabilityClosure": {

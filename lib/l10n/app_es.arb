@@ -23373,7 +23373,7 @@
   "tillSoldTitle": "Vendido",
   "tillTaxIncluded": "de los cuales impuesto {amount}",
   "tillTitle": "Caja",
-  "tillTotalDue": "Total a pagar",
+  "tillTotalDue": "Total a pagar: {amount}",
   "tipAvailabilityClosure": "Para cerrar un día que nadie podrá reservar: toque «Añadir día de cierre» e indique un motivo si quiere.",
   "tipAvailabilityDays": "Para fijar los días de apertura: marca los días bajo «Días de apertura».",
   "tipAvailabilityGrid": "Para elegir cómo se dividen las reservas: escoge una «Granularidad de las reservas»: periodos libres, franjas, medias jornadas o jornadas completas.",
