@@ -36533,6 +36533,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get stockPutAwayNothing => 'Non resta nulla da collocare.';
 
   @override
+  String stockPutAwayPieceProblem(int piece, String problem) {
+    return 'Pezzo $piece: $problem';
+  }
+
+  @override
   String get stockPutAwayPlace => 'Ubicazione';
 
   @override
@@ -36547,6 +36552,62 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get stockPutAwayRemaining => 'Collocare il resto';
+
+  @override
+  String stockPutAwayTagAllRead(int needed) {
+    String _temp0 = intl.Intl.pluralLogic(
+      needed,
+      locale: localeName,
+      other: 'Tutti i $needed pezzi di questa riga hanno già un tag.',
+      one: 'L\'unico pezzo di questa riga ($needed) ha già un tag.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get stockPutAwayTagField => 'Tag del pezzo successivo';
+
+  @override
+  String stockPutAwayTagRemove(String code) {
+    return 'Rimuovere il tag $code';
+  }
+
+  @override
+  String stockPutAwayTagsCount(int read, int needed) {
+    String _temp0 = intl.Intl.pluralLogic(
+      read,
+      locale: localeName,
+      other: '$read pezzi letti',
+      one: '$read pezzo letto',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      needed,
+      locale: localeName,
+      other: '$needed',
+      one: '$needed',
+    );
+    return '$_temp0 su $_temp1';
+  }
+
+  @override
+  String stockPutAwayTagsMissing(int needed, int read) {
+    String _temp0 = intl.Intl.pluralLogic(
+      needed,
+      locale: localeName,
+      other: '$needed necessari',
+      one: '$needed necessario',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      read,
+      locale: localeName,
+      other: '$read letti',
+      one: '$read letto',
+    );
+    return 'Un tag per pezzo: $_temp0, $_temp1.';
+  }
+
+  @override
+  String get stockPutAwayTagsTitle => 'Tag dei pezzi';
 
   @override
   String stockPutAwayTitle(String order) {

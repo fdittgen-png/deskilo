@@ -58133,6 +58133,12 @@ abstract class AppLocalizations {
   /// **'Nothing is left to put away.'**
   String get stockPutAwayNothing;
 
+  /// #4379 G13b put-away by piece [not a count: piece] -- the piece's place among the line's tags
+  ///
+  /// In en, this message translates to:
+  /// **'Piece {piece}: {problem}'**
+  String stockPutAwayPieceProblem(int piece, String problem);
+
   /// #4171 receiving into stock: a label or message
   ///
   /// In en, this message translates to:
@@ -58156,6 +58162,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Put away what remains'**
   String get stockPutAwayRemaining;
+
+  /// #4379 G13b put-away by piece
+  ///
+  /// In en, this message translates to:
+  /// **'{needed, plural, one{The {needed} piece of this line already has a tag.} other{All {needed} pieces of this line already have a tag.}}'**
+  String stockPutAwayTagAllRead(int needed);
+
+  /// #4379 G13b put-away by piece
+  ///
+  /// In en, this message translates to:
+  /// **'Tag of the next piece'**
+  String get stockPutAwayTagField;
+
+  /// #4379 G13b put-away by piece
+  ///
+  /// In en, this message translates to:
+  /// **'Remove tag {code}'**
+  String stockPutAwayTagRemove(String code);
+
+  /// #4379 G13b put-away by piece
+  ///
+  /// In en, this message translates to:
+  /// **'{read, plural, one{{read} piece} other{{read} pieces}} read of {needed, plural, one{{needed}} other{{needed}}}'**
+  String stockPutAwayTagsCount(int read, int needed);
+
+  /// #4379 G13b put-away by piece
+  ///
+  /// In en, this message translates to:
+  /// **'Read one tag per piece: {needed, plural, one{{needed} needed} other{{needed} needed}}, {read, plural, one{{read} read} other{{read} read}}.'**
+  String stockPutAwayTagsMissing(int needed, int read);
+
+  /// #4379 G13b put-away by piece
+  ///
+  /// In en, this message translates to:
+  /// **'Tags of the pieces'**
+  String get stockPutAwayTagsTitle;
 
   /// #4171 receiving into stock: a label or message
   ///

@@ -43,6 +43,7 @@ PutAwayServices _services(WidgetRef ref) => PutAwayServices(
   config: ref.read(stockConfigCommandsProvider),
   queries: ref.read(stockQueriesProvider),
   currency: ref.read(currentWorkspaceProvider).value?.currencyCode ?? '',
+  groups: ref.read(stockTagsProvider) ? ref.read(itemGroupsProvider) : null,
 );
 
 class StockPurchaseOrderSeam implements PurchaseOrderStockSeam {
