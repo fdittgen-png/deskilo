@@ -14,6 +14,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
 
+import '../../app/business_day_wiring.dart';
 import '../../app/finance_hosts_wiring.dart';
 import '../../app/private_values_wiring.dart';
 import '../../features/calendar/providers/calendar_providers.dart';
@@ -181,6 +182,8 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
     financeHostsFromMe, financeHomeFromMe, demoFinanceCommands(fixture),
     // #4167 — My businesses names the person's production spaces.
     businessWorkspacesFromApp,
+    // #4426 — the money screens offer the business's day.
+    businessDayFromApp,
     // #2552 XPRIV-01 — the persona's mask choice, as the app reads it.
     privateValuesFromAccount,
     // #2575

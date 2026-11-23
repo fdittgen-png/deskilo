@@ -13,6 +13,8 @@
 import '../../../features/reservations/domain/reservation_refusal.dart';
 import '../../../features/reservations/domain/reservation_repository.dart';
 import '../../../features/workspace/domain/booking_policies.dart';
+import '../../codes/dk_code.dart';
+import '../../codes/pg_code.dart';
 import 'demo_booking_refusal.dart';
 import 'reservation_repository.dart';
 import 'workspace_repository.dart';
@@ -57,7 +59,7 @@ class RightsCheckedReservationRepository extends FakeReservationRepository {
 
   ReservationRefused get _refusal => demoBookingRefusal(
     message: 'not allowed to make reservations',
-    code: '42501',
+    code: PgCode.insufficientPrivilege,
   );
 
   @override
@@ -124,7 +126,7 @@ class RightsCheckedReservationRepository extends FakeReservationRepository {
     if (!mayActForOthers()) {
       throw demoBookingRefusal(
         message: 'not an admin of this workspace',
-        code: 'DKN01',
+        code: DkCode.dkn01,
       );
     }
     if (!isActiveMember(subjectMemberId)) {
@@ -145,7 +147,7 @@ class RightsCheckedReservationRepository extends FakeReservationRepository {
     final own = reservations
         .any((r) => r.id == reservationId && r.memberId == myMemberId);
     if (!own && !mayActForOthers()) {
-      throw demoBookingRefusal(message: 'not your reservation', code: 'DKK29');
+      throw demoBookingRefusal(message: 'not your reservation', code: DkCode.dkk29);
     }
     return super.cancel(reservationId);
   }

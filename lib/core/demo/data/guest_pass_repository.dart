@@ -17,6 +17,8 @@ import '../../../features/money/domain/guest_pass.dart';
 import '../../../features/plan/domain/seat.dart';
 import '../../../features/reservations/domain/reservation.dart';
 import '../../../features/workspace/domain/member.dart';
+import '../../codes/dk_code.dart';
+import '../../codes/pg_code.dart';
 import '../../text/collation.dart';
 import '../demo_clock.dart';
 import 'money/demo_member_account_commands.dart';
@@ -97,7 +99,7 @@ class FakeGuestPassRepository implements GuestPassRepository {
     bool active = true,
   }) async {
     if (!mayPrice()) {
-      throw const PostgrestException(message: 'not allowed to edit the guest passes', code: '42501');
+      throw const PostgrestException(message: 'not allowed to edit the guest passes', code: PgCode.insufficientPrivilege);
     }
     final offer = GuestPassOffer(
       id: id ?? 'demo-pass-offer-${_next++}',
@@ -134,7 +136,7 @@ class FakeGuestPassRepository implements GuestPassRepository {
       );
     }
     if (!maySell()) {
-      throw const PostgrestException(message: 'not allowed to sell a guest pass', code: '42501');
+      throw const PostgrestException(message: 'not allowed to sell a guest pass', code: PgCode.insufficientPrivilege);
     }
     final offer = offerList
         .where((o) => o.id == draft.offer?.id && o.active)
@@ -262,14 +264,14 @@ class FakeGuestPassRepository implements GuestPassRepository {
     required String requestId,
   }) async {
     if (!maySell()) {
-      throw const PostgrestException(message: 'not allowed to revoke a guest pass', code: 'DKN01');
+      throw const PostgrestException(message: 'not allowed to revoke a guest pass', code: DkCode.dkn01);
     }
     final i = records.indexWhere((p) => p.id == passId);
     if (i < 0) throw StateError('unknown guest pass');
     final done = revocations[passId];
     if (done != null) {
       if (done.requestId == requestId) return done.cancelled;
-      throw const PostgrestException(message: 'this guest pass is already revoked', code: 'DKD01');
+      throw const PostgrestException(message: 'this guest pass is already revoked', code: DkCode.dkd01);
     }
     final sale = sales.values.firstWhere((s) => s.passId == passId);
     final at = now();

@@ -374,9 +374,11 @@ Future<int> _run(List<String> argv) async {
         'the verdict is ${verdict.verdict} (${verdict.attention}), not upgrade',
       );
       _check(verdict.marker == marker, 'verdict marker ${verdict.marker}');
+      // the migrations above the marker, counted by file: a number taken and never used is no migration
+      final above = bundle.schema.where((m) => int.parse(_versionOf(m)) > marker).length;
       _check(
-        verdict.pending == latest - marker,
-        'pending ${verdict.pending}, want ${latest - marker}',
+        verdict.pending == above,
+        'pending ${verdict.pending}, want $above',
       );
       final point = await InstanceBuilder(b).resumePoint(resumeDb, bundle);
       _check(point == late, 'resumePoint $point, want $late');

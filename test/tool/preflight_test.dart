@@ -22,9 +22,10 @@ void main() {
     expect(_commands(['test/features/money/refund_test.dart']), isEmpty);
   });
 
-  test('a migration selects the applied baseline and the instance bundle, '
-      'in that order — the bundle reads the baseline', () {
+  test('a migration selects the DK codes, the applied baseline and the instance '
+      'bundle, in that order — the bundle reads the baseline and the codes', () {
     expect(_commands(['supabase/migrations/0248_example.sql']), [
+      'dart run tool/build_dk_codes.dart',
       'dart run tool/record_applied_migrations.dart',
       'dart run tool/build_instance.dart',
     ]);

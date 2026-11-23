@@ -8,6 +8,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/codes/dk_code.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/refusal_text.dart';
@@ -69,7 +70,7 @@ class MonthResultView extends ConsumerWidget {
       fallback: l10n.invoiceMonthNotIssued,
     );
     // #3811 — DKI01 is the essentials refusal; its DETAIL names them.
-    final missing = refusalCodeOf(error).code == 'DKI01'
+    final missing = refusalCodeOf(error).code == DkCode.dki01
         ? _missingIn(error)
         : const <String>[];
     return (

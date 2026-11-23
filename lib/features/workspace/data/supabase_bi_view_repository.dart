@@ -6,6 +6,7 @@
 // its request, so a retry after a lost answer is answered once (#2579).
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/codes/pg_code.dart';
 import '../domain/bi_saved_view.dart';
 
 class SupabaseBiViewRepository implements BiViewRepository {
@@ -19,11 +20,11 @@ class SupabaseBiViewRepository implements BiViewRepository {
     } on PostgrestException catch (e, st) {
       // trace-exempt: rethrown typed; the views bar says which refusal.
       final failure = switch (e.code) {
-        '40001' => BiViewFailure.stale,
-        '42501' => BiViewFailure.forbidden,
-        '23505' => BiViewFailure.nameTaken,
-        '22023' => BiViewFailure.invalid,
-        '0A000' => BiViewFailure.unsupported,
+        PgCode.serializationFailure => BiViewFailure.stale,
+        PgCode.insufficientPrivilege => BiViewFailure.forbidden,
+        PgCode.uniqueViolation => BiViewFailure.nameTaken,
+        PgCode.invalidParameterValue => BiViewFailure.invalid,
+        PgCode.featureNotSupported => BiViewFailure.unsupported,
         _ => null,
       };
       if (failure == null) rethrow;
