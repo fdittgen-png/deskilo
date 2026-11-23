@@ -39,5 +39,9 @@
   "stockTagMalformed": "Das ist kein gültiger Tag-Code.",
   "stockTagOwnerUnknown": "Dieser Artikel oder Lagerplatz ist nicht bekannt.",
   "stockTagModeNone": "Dieser Artikel verwendet keine Tags.",
-  "stockTagPerUnit": "Dieser Artikel wird stückweise getaggt: Taggen Sie die Stücke beim Wareneingang."
+  "stockTagPerUnit": "Dieser Artikel wird stückweise getaggt: Taggen Sie die Stücke beim Wareneingang.",
+  "settingLabelStockTagReadMaxTags": "Höchstzahl Etiketten je Massenlesung",
+  "settingHintStockTagReadMaxTags": "Wie viele verschiedene Etiketten eine Massenlesung behält, bevor sie keine weiteren annimmt. Dieselbe Etikette, mehrfach gelesen, zählt einmal.",
+  "settingLabelStockTagReadUnitAsQuantity": "Ein gelesenes Stück in einer Umlagerung zählt als eins seines Artikels",
+  "settingHintStockTagReadUnitAsQuantity": "Bei einer Massenumlagerung wird eine Etikette auf einem Stück eines nicht stückweise geführten Artikels als Menge 1 dieses Artikels aufgenommen. Aus: Eine solche Etikette wird ausgelassen und aufgelistet."
 }

@@ -39,5 +39,9 @@
   "stockTagMalformed": "Ce n’est pas un code de puce valide.",
   "stockTagOwnerUnknown": "Cet article ou cet emplacement est inconnu.",
   "stockTagModeNone": "Cet article n’utilise pas de puces.",
-  "stockTagPerUnit": "Cet article est étiqueté pièce par pièce : étiquetez ses pièces à la réception."
+  "stockTagPerUnit": "Cet article est étiqueté pièce par pièce : étiquetez ses pièces à la réception.",
+  "settingLabelStockTagReadMaxTags": "Nombre maximal d'étiquettes par lecture en masse",
+  "settingHintStockTagReadMaxTags": "Combien d'étiquettes différentes une lecture en masse conserve avant de ne plus en prendre. Une même étiquette lue plusieurs fois compte une fois.",
+  "settingLabelStockTagReadUnitAsQuantity": "Une pièce lue dans un transfert compte pour un de son article",
+  "settingHintStockTagReadUnitAsQuantity": "Dans un transfert en masse, une étiquette posée sur une pièce d'un article non suivi pièce par pièce est ajoutée comme quantité 1 de cet article. Désactivé : cette étiquette est écartée et listée."
 }

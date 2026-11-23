@@ -93,6 +93,8 @@ const COUNTER_CHANNEL=[['share','optChannelShare'],['print','optChannelPrint'],[
 const COUNTER_CUSTOMERLESS=[['allowed','optCustomerlessAllowed'],['refused','optCustomerlessRefused']];
 const STOCK_TAG_GRACE=[['0','optAtOnce'],['7','optDays',{n:7}],['30','optDays',{n:30}],['90','optDays',{n:90}]];
 const STOCK_REPEAT=[['add_one','optAddOne'],['ask_quantity','optAskQuantity']];
+// #4364 — bulk tag reads: the most tags one read keeps (stock.tag_read_max_tags) and whether a piece of an untracked item counts as one (stock.tag_read_unit_as_quantity).
+const STOCK_TAG_READ=[['200','optTags',{n:200}],['500','optTags',{n:500}],['1000','optTags',{n:1000}],['2000','optTags',{n:2000}]];
 // #4295 — cycle counts: the value from which a place's holding of an item is high value (workspace
 // setting stock.cycle_count_high_value_minor, in minor units) and the days a task may stay open
 // past its due date before the inbox says it is overdue (stock.cycle_count_overdue_days).
@@ -182,7 +184,7 @@ const PARAM_META=[
  ['stock.weighedGoods','stockWeighedGoods','bool',null,{needs:'stockManagement'}],
  // #4293 — the character between the levels of a place address (workspace setting stock.address_separator).
  ['stock.addressSeparator','stockAddressSeparator','enum',()=>STOCK_SEP.map(x=>x[0]),{needs:'stockManagement'}],
- ['stock.tagGrace','stockTagGrace','enum',()=>STOCK_TAG_GRACE.map(x=>x[0]),{needs:'stockTags'}],['stock.repeatedScan','stockRepeatedScan','enum',()=>STOCK_REPEAT.map(x=>x[0]),{needs:'stockScanning'}],
+ ['stock.tagGrace','stockTagGrace','enum',()=>STOCK_TAG_GRACE.map(x=>x[0]),{needs:'stockTags'}],['stock.repeatedScan','stockRepeatedScan','enum',()=>STOCK_REPEAT.map(x=>x[0]),{needs:'stockScanning'}],['stock.tagReadMax','stockTagReadMax','enum',()=>STOCK_TAG_READ.map(x=>x[0]),{needs:'stockTagReads'}],['stock.tagReadQuantity','stockTagReadQuantity','bool',null,{needs:'stockTagReads'}],
  ['stock.tagMode','stockGroupTagMode','enum',()=>STOCK_TAG.map(x=>x[0]),{needs:'stockItemGroups'}],['stock.countDays','stockGroupCountDays','enum',()=>STOCK_COUNT_DAYS.map(x=>x[0]),{needs:'stockItemGroups'}],['stock.priceRounding','stockGroupRounding','enum',()=>STOCK_ROUNDING.map(x=>x[0]),{needs:'stockItemGroups'}],
  ['counter.fiscalObligation','counterFiscal','enum',()=>COUNTER_FISCAL.map(x=>x[0]),{needs:'counterReceipts'}],['counter.documentChannel','counterChannel','enum',()=>COUNTER_CHANNEL.map(x=>x[0]),{needs:'counterReceipts'}],['counter.customerless','counterCustomerless','enum',()=>COUNTER_CUSTOMERLESS.map(x=>x[0]),{needs:'counterReceipts'}],
  ['stock.cycleHighValue','stockCycleHighValue','enum',()=>STOCK_CYCLE_VALUE.map(x=>x[0]),{needs:'stockCycleCounts'}],['stock.cycleOverdue','stockCycleOverdue','enum',()=>STOCK_CYCLE_OVERDUE.map(x=>x[0]),{needs:'stockCycleCounts'}],

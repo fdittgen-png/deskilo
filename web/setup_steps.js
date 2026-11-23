@@ -275,6 +275,8 @@ const STEPS=[
   if(on('stockManagement'))k.push(selectEl(T('stockAddressSeparator'),'stock.addressSeparator',opts(STOCK_SEP),T('stockAddressSeparatorHint'),null,'services'));
   if(on('stockTags'))k.push(selectEl(T('stockTagGrace'),'stock.tagGrace',opts(STOCK_TAG_GRACE),T('stockTagGraceHint'),null,'services'));
   if(on('stockScanning'))k.push(selectEl(T('stockRepeatedScan'),'stock.repeatedScan',opts(STOCK_REPEAT),T('stockRepeatedScanHint'),null,'services'));
+  if(on('stockTagReads'))k.push(selectEl(T('stockTagReadMax'),'stock.tagReadMax',opts(STOCK_TAG_READ),T('stockTagReadMaxHint'),null,'services'));
+  if(on('stockTagReads'))k.push(checkbox(T('stockTagReadQuantity'),T('stockTagReadQuantityHint'),S.stock.tagReadQuantity,v=>set('stock.tagReadQuantity',v)));
   if(on('counterReceipts'))k.push(selectEl(T('counterFiscal'),'counter.fiscalObligation',opts(COUNTER_FISCAL),T('counterFiscalHint'),null,'services'),selectEl(T('counterChannel'),'counter.documentChannel',opts(COUNTER_CHANNEL),T('counterChannelHint'),null,'services'),selectEl(T('counterCustomerless'),'counter.customerless',opts(COUNTER_CUSTOMERLESS),T('counterCustomerlessHint'),null,'services'));
   if(on('stockItemGroups'))k.push(selectEl(T('stockGroupTagMode'),'stock.tagMode',opts(STOCK_TAG),T('stockGroupTagModeHint'),null,'services'),selectEl(T('stockGroupCountDays'),'stock.countDays',opts(STOCK_COUNT_DAYS),T('stockGroupCountDaysHint'),null,'services'),selectEl(T('stockGroupRounding'),'stock.priceRounding',opts(STOCK_ROUNDING),T('stockGroupRoundingHint'),null,'services'));
   // #4295 — cycle counts: when a place's holding is high value, and when an open task is overdue.

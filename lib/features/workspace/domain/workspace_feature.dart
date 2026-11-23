@@ -446,7 +446,8 @@ enum WorkspaceFeature {
   /// #4362 tags, #4359 scanning (feature_manifest_stock.dart).
   stockTags,
   stockScanning,
-  counterReceipts;
+  counterReceipts,
+  stockTagReads;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;

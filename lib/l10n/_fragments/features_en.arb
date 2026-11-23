@@ -929,5 +929,13 @@
   },
   "@featureCounterReceiptsDesc": {
     "description": "#4184 feature description"
+  },
+  "featureStockTagReadsTitle": "Reading many tags",
+  "featureStockTagReadsDesc": "A UHF reader in keyboard mode reads many tags at once to receive, move and count: the tags are collected, de-duplicated and resolved, and nothing is sent until the user confirms.",
+  "@featureStockTagReadsTitle": {
+    "description": "#4364 feature name"
+  },
+  "@featureStockTagReadsDesc": {
+    "description": "#4364 feature description"
   }
 }

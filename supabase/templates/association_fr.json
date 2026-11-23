@@ -209,6 +209,7 @@
         "stockCycleCounts": false,
         "stockItemGroups": false,
         "stockLots": false,
+        "stockTagReads": false,
         "stockManagement": false,
         "stockReceiving": false,
         "stockReorder": false,
