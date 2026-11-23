@@ -51,3 +51,28 @@ Deno.test("no answer at all is an outage, not an exception", async () => {
   const outcome = await askVies(subject, (() => Promise.reject(new Error("down"))) as typeof fetch);
   assertEquals(outcome.status, "unavailable");
 });
+
+// #4412 -- an uncaught error is the envelope: a code and the request id, never the error's own words.
+import { guard } from "../_shared/serve.ts";
+import { handle } from "./index.ts";
+
+Deno.test("#4412 vies-check: a thrown error answers the envelope and no internal message", async () => {
+  Deno.env.delete("SUPABASE_URL");
+  const saved = console.error;
+  console.error = () => {};
+  try {
+    const answer = await guard("vies-check", handle)(
+      new Request("https://x.test/", {
+        method: "POST",
+        headers: { "x-request-id": "r-vies" },
+        body: JSON.stringify({ workspace_id: "w", member_id: "m" }),
+      }),
+    );
+    assertEquals(answer.status, 500);
+    const text = await answer.text();
+    assertEquals(JSON.parse(text), { error: "internal_error", request_id: "r-vies" });
+    assertEquals(/supabase|url/i.test(text), false);
+  } finally {
+    console.error = saved;
+  }
+});
