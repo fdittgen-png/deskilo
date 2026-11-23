@@ -89,12 +89,12 @@ select set_config('t.line', (select id::text from public.counter_receipt_lines w
 select set_config('t.c', pg_temp.corr(1, 101, 1103, current_setting('t.r')::uuid, format('{"lines": [{"corrects_line_id": "%s", "quantity": "1"}]}', current_setting('t.line'))), false);
 select set_config('t.cid', pg_temp.f(current_setting('t.c'), 'receipt_id'), false);
 select is((select count(*)::int from public.counter_refunds), 0, 'a correction refunds nothing by itself');
-select is(left(pg_temp.refund(1, 1104, current_setting('t.cid')::uuid, '[{"kind": "cash", "amount_minor": 1300}]'), 9), 'ERR DKT08', 'a refund beyond what the correction credits is refused');
+select is(left(pg_temp.refund(1, 1104, current_setting('t.cid')::uuid, '[{"kind": "cash", "amount_minor": 1300}]'), 9), 'ERR DKL08', 'a refund beyond what the correction credits is refused');
 select is(pg_temp.f(pg_temp.refund(1, 1105, current_setting('t.cid')::uuid, '[{"kind": "cash", "amount_minor": 500}]'), 'left_minor'), '700', 'part of it is refunded, with what is left');
 select is(pg_temp.f(pg_temp.refund(1, 1105, current_setting('t.cid')::uuid, '[{"kind": "cash", "amount_minor": 500}]'), 'replayed'), 'true', 'a lost answer retried under the same id answers the same and refunds nothing twice');
-select is(pg_temp.refund(1, 1106, current_setting('t.cid')::uuid, '[{"kind": "cash", "amount_minor": 800}]'), 'ERR DKT08 {"left": "700", "reason": "refund_beyond"}', 'the next refund is bounded by what is left');
+select is(pg_temp.refund(1, 1106, current_setting('t.cid')::uuid, '[{"kind": "cash", "amount_minor": 800}]'), 'ERR DKL08 {"left": "700", "reason": "refund_beyond"}', 'the next refund is bounded by what is left');
 select is(pg_temp.f(pg_temp.refund(1, 1107, current_setting('t.cid')::uuid, '[{"kind": "cash", "amount_minor": 700}]'), 'left_minor'), '0', 'the rest is refunded');
-select is(left(pg_temp.refund(1, 1108, current_setting('t.r')::uuid, '[{"kind": "cash", "amount_minor": 1}]'), 9), 'ERR DKT04', 'only a correction is refunded, never the sale itself');
+select is(left(pg_temp.refund(1, 1108, current_setting('t.r')::uuid, '[{"kind": "cash", "amount_minor": 1}]'), 9), 'ERR DKL04', 'only a correction is refunded, never the sale itself');
 select is(pg_temp.run_as(pg_temp.u(1), 'update public.counter_refunds set amount_minor = 1'), 'ERR 42501 ' , 'a refund is not edited (no write grant)');
 select is(left(pg_temp.refund(2, 1109, current_setting('t.cid')::uuid, '[{"kind": "cash", "amount_minor": 1}]'), 9), 'ERR DKN01', 'a member without the right to issue refunds nothing');
 

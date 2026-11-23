@@ -21,9 +21,9 @@
 --   * `counter_readiness_v1` answers, for the business, what is supported and what is not and why; a supported row
 --     counts only while its adapter is implemented (`counter_adapters()`), so a registry row alone never opens an
 --     operation. `counter_require_operation` is the gate every command calls BEFORE it draws a number or hands a
---     tender over: an unsupported operation is refused (DKT01) with nothing consumed.
+--     tender over: an unsupported operation is refused (DKL01) with nothing consumed.
 --   * `counter_receipt_decode` is the versioned reader of a frozen receipt: version 1 is read, any other version is
---     refused (DKT09) rather than guessed, and a version-1 document read by a later reader keeps its keys.
+--     refused (DKL09) rather than guessed, and a version-1 document read by a later reader keeps its keys.
 --   * Three settings: the owner's fiscal declaration, how the document leaves the counter, and whether a sale may
 --     name no customer. A sale with no customer never creates an account, a member or a subscription.
 
@@ -207,28 +207,28 @@ begin
   if tg_table_name = 'counter_receipts' then
     if tg_op = 'DELETE' then
       if old.state = 'finalized' then
-        raise exception 'a finalized receipt is never deleted' using errcode = 'DKT03';
+        raise exception 'a finalized receipt is never deleted' using errcode = 'DKL03';
       end if;
       return old;
     end if;
     if old.state = 'finalized' then
-      raise exception 'a finalized receipt is never edited: a correction is a new receipt' using errcode = 'DKT03';
+      raise exception 'a finalized receipt is never edited: a correction is a new receipt' using errcode = 'DKL03';
     end if;
     return new;
   elsif tg_table_name = 'counter_receipt_lines' then
     select state into v_state from public.counter_receipts where id = coalesce(new.receipt_id, old.receipt_id);
     if v_state = 'finalized' then
-      raise exception 'the lines of a finalized receipt are never edited' using errcode = 'DKT03';
+      raise exception 'the lines of a finalized receipt are never edited' using errcode = 'DKL03';
     end if;
     return coalesce(new, old);
   else
     if tg_op = 'DELETE' then
-      raise exception 'a tender is never deleted' using errcode = 'DKT03';
+      raise exception 'a tender is never deleted' using errcode = 'DKL03';
     end if;
     v_old := to_jsonb(old) - v_sys - array['state', 'provider_ref', 'reconciliation', 'resolved_at', 'resolved_by_member_id'];
     v_new := to_jsonb(new) - v_sys - array['state', 'provider_ref', 'reconciliation', 'resolved_at', 'resolved_by_member_id'];
     if v_old is distinct from v_new then
-      raise exception 'what a tender is for and how much is never edited' using errcode = 'DKT03';
+      raise exception 'what a tender is for and how much is never edited' using errcode = 'DKL03';
     end if;
     return new;
   end if;
@@ -301,7 +301,7 @@ begin
     v_why := 'adapter_missing';
   end if;
   if v_why is not null then
-    raise exception 'this operation is not supported here: %', p_operation using errcode = 'DKT01',
+    raise exception 'this operation is not supported here: %', p_operation using errcode = 'DKL01',
       detail = jsonb_build_object('operation', p_operation, 'country', v_country, 'fiscal_obligation', v_regime, 'reason', v_why)::text;
   end if;
   return v_row;
@@ -359,15 +359,15 @@ declare
   v_version int;
 begin
   if coalesce(jsonb_typeof(p_frozen), '') <> 'object' or coalesce(p_frozen ->> 'version', '') !~ '^[0-9]{1,4}$' then
-    raise exception 'not a receipt this reader knows' using errcode = 'DKT09';
+    raise exception 'not a receipt this reader knows' using errcode = 'DKL09';
   end if;
   v_version := (p_frozen ->> 'version')::int;
   if v_version <> 1 then
-    raise exception 'a receipt of version % is not read by this reader', v_version using errcode = 'DKT09';
+    raise exception 'a receipt of version % is not read by this reader', v_version using errcode = 'DKL09';
   end if;
   if coalesce(jsonb_typeof(p_frozen -> 'lines'), '') <> 'array' or coalesce(jsonb_typeof(p_frozen -> 'totals'), '') <> 'object'
      or coalesce(p_frozen ->> 'currency', '') !~ '^[A-Z]{3}$' then
-    raise exception 'a receipt of version 1 is incomplete' using errcode = 'DKT09';
+    raise exception 'a receipt of version 1 is incomplete' using errcode = 'DKL09';
   end if;
   -- only the keys version 1 defines are read: a later writer's added keys are ignored, never guessed
   return jsonb_build_object(

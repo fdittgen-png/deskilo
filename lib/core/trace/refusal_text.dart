@@ -141,13 +141,13 @@ enum KnownRefusal {
   stockTagRetiredLately,
   stockPieceInStock,
 
-  /// #4184 (0893) -- DKT01: an operation of the counter that the country, under the case the owner declared,
+  /// #4184 (0893) -- DKL01: an operation of the counter that the country, under the case the owner declared,
   /// does not support (nothing was numbered, nothing handed over).
   counterUnsupported,
 
-  /// #4185 (0894) -- DKT02: something a receipt needs is missing or not acceptable; DKT04: not an open draft, or
-  /// already issued for its source; DKT05: the business names a customer on every sale; DKT06: the tenders do not
-  /// settle the sale, or one is not taken here; DKT08: a correction beyond what the original has left; DKT10: the
+  /// #4185 (0894) -- DKL02: something a receipt needs is missing or not acceptable; DKL04: not an open draft, or
+  /// already issued for its source; DKL05: the business names a customer on every sale; DKL06: the tenders do not
+  /// settle the sale, or one is not taken here; DKL08: a correction beyond what the original has left; DKL10: the
   /// receipt changed meanwhile.
   counterEssentials,
   counterNotOpen,
@@ -156,8 +156,8 @@ enum KnownRefusal {
   counterCorrectionBeyond,
   counterChanged,
 
-  /// #4185 (0894, 0895) -- DKT07: goods cannot be sold or taken back here (the goods ledger is off, or there is no place to
-  /// take them from or put them back); DKT11: a card authorization is open, unknown or already settled.
+  /// #4185 (0894, 0895) -- DKL07: goods cannot be sold or taken back here (the goods ledger is off, or there is no place to
+  /// take them from or put them back); DKL11: a card authorization is open, unknown or already settled.
   counterGoods,
   counterTenderState,
 
@@ -243,15 +243,15 @@ const Map<String, KnownRefusal> _codedRefusals = {
   'DKG24': KnownRefusal.stockPieceInStock,
   'DKG25': KnownRefusal.stockNamePieces,
   'DKG26': KnownRefusal.stockPieceWhere,
-  'DKT01': KnownRefusal.counterUnsupported,
-  'DKT02': KnownRefusal.counterEssentials,
-  'DKT04': KnownRefusal.counterNotOpen,
-  'DKT05': KnownRefusal.counterCustomerNeeded,
-  'DKT06': KnownRefusal.counterTenders,
-  'DKT08': KnownRefusal.counterCorrectionBeyond,
-  'DKT07': KnownRefusal.counterGoods,
-  'DKT10': KnownRefusal.counterChanged,
-  'DKT11': KnownRefusal.counterTenderState,
+  'DKL01': KnownRefusal.counterUnsupported,
+  'DKL02': KnownRefusal.counterEssentials,
+  'DKL04': KnownRefusal.counterNotOpen,
+  'DKL05': KnownRefusal.counterCustomerNeeded,
+  'DKL06': KnownRefusal.counterTenders,
+  'DKL08': KnownRefusal.counterCorrectionBeyond,
+  'DKL07': KnownRefusal.counterGoods,
+  'DKL10': KnownRefusal.counterChanged,
+  'DKL11': KnownRefusal.counterTenderState,
   // #4008 — a member who left (0782).
   'DKM01': KnownRefusal.memberReturnsAsNew,
 };

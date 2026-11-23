@@ -114,8 +114,8 @@ select set_config('t.seq', pg_temp.seq(), false);
 select set_config('t.d2', pg_temp.draft(1, 101, 1304, null, null, '{"source_ref": "g-2", "lines": [' || pg_temp.goodsline(301, '20') || ']}'), false);
 select is(left(pg_temp.fin(1, 101, 1305, pg_temp.f(current_setting('t.d2'), 'receipt_id')::uuid, 1, '[{"kind": "cash", "amount_minor": 10000}]'), 9), 'ERR DKG03', 'a goods line that cannot leave refuses the sale');
 select is(pg_temp.seq() || ' ' || pg_temp.onhand()::text, current_setting('t.seq') || ' 8.000000', 'and the number is not consumed and the stock is untouched (the atomic part rolled back)');
-select is(pg_temp.draft(1, 101, 1306, null, null, '{"lines": [' || pg_temp.goodsline(302, '1') || ']}'), 'ERR DKT02 line_1_item', 'an item of another business is refused');
-select is(pg_temp.draft(1, 101, 1307, null, null, '{"lines": [{"quantity": "1", "unit_price": "1.00", "supply": "goods", "description": "x", "unit": {"code": "u", "label": "u"}}]}'), 'ERR DKT02 line_1_item', 'a goods line with no item is refused');
+select is(pg_temp.draft(1, 101, 1306, null, null, '{"lines": [' || pg_temp.goodsline(302, '1') || ']}'), 'ERR DKL02 line_1_item', 'an item of another business is refused');
+select is(pg_temp.draft(1, 101, 1307, null, null, '{"lines": [{"quantity": "1", "unit_price": "1.00", "supply": "goods", "description": "x", "unit": {"code": "u", "label": "u"}}]}'), 'ERR DKL02 line_1_item', 'a goods line with no item is refused');
 select set_config('t.line', (select id::text from public.counter_receipt_lines where receipt_id = current_setting('t.r')::uuid and line_no = 1), false);
 select set_config('t.c', pg_temp.corr(1, 101, 1308, current_setting('t.r')::uuid, format('{"lines": [{"corrects_line_id": "%s", "quantity": "1"}]}', current_setting('t.line'))), false);
 select is(pg_temp.onhand(), 8::numeric, 'a correction of goods is a credit document: no stock moves');
@@ -123,7 +123,7 @@ select set_config('t.cline', (select id::text from public.counter_receipt_lines 
 select is(left(pg_temp.ret(2, 1309, pg_temp.f(current_setting('t.c'), 'receipt_id')::uuid, format('[{"corrects_line_id": "%s", "quantity": "1"}]', current_setting('t.cline'))), 9), 'ERR DKN01', 'a person who cannot manage the stock takes nothing back');
 select set_config('t.ret', pg_temp.ret(1, 1310, pg_temp.f(current_setting('t.c'), 'receipt_id')::uuid, format('[{"corrects_line_id": "%s", "quantity": "1"}]', current_setting('t.cline'))), false);
 select is(pg_temp.f(current_setting('t.ret'), 'movements') || ' ' || pg_temp.onhand()::text, '1 9.000000', 'the physical return takes the goods back, linked to the correction');
-select is(pg_temp.ret(1, 1311, pg_temp.f(current_setting('t.c'), 'receipt_id')::uuid, format('[{"corrects_line_id": "%s", "quantity": "1"}]', current_setting('t.cline'))), 'ERR DKT08 {"left": "0", "line": 1, "reason": "return_beyond"}', 'no more comes back than the correction credits');
+select is(pg_temp.ret(1, 1311, pg_temp.f(current_setting('t.c'), 'receipt_id')::uuid, format('[{"corrects_line_id": "%s", "quantity": "1"}]', current_setting('t.cline'))), 'ERR DKL08 {"left": "0", "line": 1, "reason": "return_beyond"}', 'no more comes back than the correction credits');
 select is((select count(*)::int from public.counter_refunds) || ' ' || (select count(*)::int from public.counter_receipts where kind = 'correction'), '0 1', 'and a return neither refunds nor credits');
 
 select * from finish();

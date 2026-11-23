@@ -12,6 +12,7 @@
 --     in its own transaction, under its own request id, so a replay moves nothing twice and a line that cannot leave
 --     rolls the sale back; a correction (a credit document) moves nothing; a physical return is its own command (0897).
 
+-- audience: all row readers
 alter table public.stock_movements add column counter_receipt_id uuid;
 alter table public.stock_movements add constraint stock_movements_counter_receipt_fkey
   foreign key (workspace_id, counter_receipt_id) references public.counter_receipts (workspace_id, id);

@@ -40,7 +40,7 @@
 #   (L) two put-aways of one receipt line naming 3 tags each of the 4 delivered piece by piece: the second
 #       waits for the line's lock and is refused as over-allocated; one set of 3 pieces.
 #   (M) two operators finalize one counter draft under different request ids: the second waits for the receipt's lock
-#       and is refused (DKT04); one number, one tender.
+#       and is refused (DKL04); one number, one tender.
 # A holder that never took its lock, or a contender that never waited, fails the
 # script: nothing here can pass empty. A single pgTAP transaction cannot show a
 # race, so each contender is its own psql process on CI's disposable database.
@@ -665,7 +665,7 @@ grep -q "over_allocated" "$scratch/contender15" || { echo "::error::the second p
 expect "(L) three pieces exist, with their tags, once" "$(q "select count(*) || '/' || (select count(*) from public.stock_tags where workspace_id = '$ws' and owner_kind = 'piece' and state = 'active' and item_id = '$pitem') from public.stock_tagged_units where workspace_id = '$ws' and item_id = '$pitem'")" "3/3"
 
 # (M) two operators finalize the same counter draft under different request ids: the second waits for the receipt's
-# lock, then is refused (DKT04, no longer an open draft); one number is drawn, one set of tenders exists.
+# lock, then is refused (DKL04, no longer an open draft); one number is drawn, one set of tenders exists.
 q "update public.workspaces set vat_regime = 'vat_registered', feature_flags = coalesce(feature_flags, '{}'::jsonb) || '{\"invoicing\": true, \"standaloneInvoicing\": true, \"counterReceipts\": true}' where id = '$ws'" >/dev/null
 q "insert into public.vat_rates (workspace_id, label, percent, category, is_default, group_key) select '$ws', 'Standard', 20, 'S', true, 'standard' where not exists (select 1 from public.vat_rates where workspace_id = '$ws' and is_default)" >/dev/null
 q "insert into public.setting_values (scope, workspace_id, key, value) values ('workspace', '$ws', 'counter.fiscal_obligation', '\"none\"'::jsonb) on conflict do nothing" >/dev/null
@@ -694,7 +694,7 @@ wait_lock "transfer-race-counter"
 wait "$holder16" || { echo "::error::the first finalize failed: $(tr '\n' ' ' < "$scratch/holder16")" >&2; exit 1; }
 wait "$contender16" || true
 grep -qx finalized "$scratch/holder16" || { echo "::error::the first finalize did not complete: $(tr '\n' ' ' < "$scratch/holder16")" >&2; exit 1; }
-grep -q "DKT04" "$scratch/contender16" || { echo "::error::the second finalize was not refused as no longer open: $(tr '\n' ' ' < "$scratch/contender16")" >&2; exit 1; }
+grep -q "DKL04" "$scratch/contender16" || { echo "::error::the second finalize was not refused as no longer open: $(tr '\n' ' ' < "$scratch/contender16")" >&2; exit 1; }
 expect "(M) one receipt number and one tender" "$(q "select count(distinct r.number) || '/' || (select count(*) from public.counter_tenders t where t.receipt_id = r.id) from public.counter_receipts r where r.id = '$cdraft' group by r.id")" "1/1"
 
 echo "stock transfer race: opposing transfers never deadlock and keep every total; the last stock is taken once; a booking confirmation and a customer return of one item serialise in both orders; two put-aways cannot over-allocate a line; two sessions crossing a reorder point raise one alert"

@@ -2,7 +2,7 @@
 -- #4184 (0891-0893, CS1): the counter's contract. The registry of country operations says supported only with an
 -- adapter and never for Italy or for a case that declares a fiscal register; the readiness of a business is what
 -- the registry says AND an implemented adapter (a registry row alone opens nothing); the gate refuses an
--- unsupported operation (DKT01) with its reason; a finalized receipt, its lines and a tender's amount are never
+-- unsupported operation (DKL01) with its reason; a finalized receipt, its lines and a tender's amount are never
 -- edited; a correction is a new receipt that cites the original; the same source finalizes once; the tables take
 -- no direct write; the versioned reader refuses a version it does not know. Rolled back.
 begin;
@@ -86,8 +86,8 @@ select is(left(pg_temp.ready(4, 101), 9), 'ERR DKN01', 'and another business rea
 
 -- ── the gate ──
 select is(pg_temp.detail_of(format('select public.counter_require_operation(%L, %L)', pg_temp.u(102), 'issue_receipt')),
-  'DKT01 {"reason": "unavailable", "country": "IT", "operation": "issue_receipt", "fiscal_obligation": "none"}', 'an unsupported operation is refused before anything is consumed (DKT01), with its country, case and reason');
-select is(left(pg_temp.sqlstate_of(format('select public.counter_require_operation(%L, %L)', pg_temp.u(101), 'sign_fiscal')), 5), 'DKT01', 'a fiscal signing that no adapter does is refused as well');
+  'DKL01 {"reason": "unavailable", "country": "IT", "operation": "issue_receipt", "fiscal_obligation": "none"}', 'an unsupported operation is refused before anything is consumed (DKL01), with its country, case and reason');
+select is(left(pg_temp.sqlstate_of(format('select public.counter_require_operation(%L, %L)', pg_temp.u(101), 'sign_fiscal')), 5), 'DKL01', 'a fiscal signing that no adapter does is refused as well');
 
 -- ── the tables: no direct write, rights, frozen documents ──
 select is(left(pg_temp.run_as(pg_temp.u(1), format($q$insert into public.counter_receipts (workspace_id, currency) values (%L, 'EUR') returning id::text$q$, pg_temp.u(101))), 9), 'ERR 42501', 'the owner cannot write a receipt directly: the tables have no write grant');
@@ -98,11 +98,11 @@ update public.counter_receipts set state = 'finalized', number = 'R-1', finalize
   frozen = '{"version": 1, "currency": "EUR", "lines": [], "totals": {"net_minor": "1000", "tax_minor": "200", "gross_minor": "1200"}}',
   operation_id = (select id from public.counter_country_operations where country_code = 'FR' and operation = 'issue_receipt' and regime = 'none'),
   total_minor = 1200, tax_minor = 200 where id = pg_temp.u(501);
-select is(pg_temp.sqlstate_of($q$update public.counter_receipts set total_minor = 1 where id = '00000000-0000-4000-8000-000000000501'$q$), 'DKT03', 'a finalized receipt is never edited');
-select is(pg_temp.sqlstate_of($q$delete from public.counter_receipts where id = '00000000-0000-4000-8000-000000000501'$q$), 'DKT03', 'nor deleted');
-select is(pg_temp.sqlstate_of($q$update public.counter_receipt_lines set quantity = 2 where id = '00000000-0000-4000-8000-000000000601'$q$), 'DKT03', 'nor are its lines');
+select is(pg_temp.sqlstate_of($q$update public.counter_receipts set total_minor = 1 where id = '00000000-0000-4000-8000-000000000501'$q$), 'DKL03', 'a finalized receipt is never edited');
+select is(pg_temp.sqlstate_of($q$delete from public.counter_receipts where id = '00000000-0000-4000-8000-000000000501'$q$), 'DKL03', 'nor deleted');
+select is(pg_temp.sqlstate_of($q$update public.counter_receipt_lines set quantity = 2 where id = '00000000-0000-4000-8000-000000000601'$q$), 'DKL03', 'nor are its lines');
 insert into public.counter_tenders (id, workspace_id, receipt_id, kind, amount_minor) values (pg_temp.u(701), pg_temp.u(101), pg_temp.u(501), 'cash', 1200);
-select is(pg_temp.sqlstate_of($q$update public.counter_tenders set amount_minor = 1 where id = '00000000-0000-4000-8000-000000000701'$q$), 'DKT03', 'a tender''s amount is never edited');
+select is(pg_temp.sqlstate_of($q$update public.counter_tenders set amount_minor = 1 where id = '00000000-0000-4000-8000-000000000701'$q$), 'DKL03', 'a tender''s amount is never edited');
 select is(pg_temp.sqlstate_of($q$update public.counter_tenders set state = 'accepted', resolved_at = now() where id = '00000000-0000-4000-8000-000000000701'$q$), 'none', 'while its state goes forward');
 select is(pg_temp.sqlstate_of(format($q$insert into public.counter_receipts (workspace_id, currency, source_ref, state, number, finalized_at, frozen, operation_id) values (%L, 'EUR', 'order-1', 'finalized', 'R-2', now(), '{}', (select id from public.counter_country_operations limit 1))$q$, pg_temp.u(101))), '23505',
   'the same source cannot finalize a second initial receipt');
@@ -112,8 +112,8 @@ select is(pg_temp.sqlstate_of(format($q$insert into public.counter_receipts (wor
 
 -- ── the versioned reader ──
 select is(public.counter_receipt_decode('{"version": 1, "currency": "EUR", "lines": [], "totals": {}, "future_key": 1}'::jsonb) ? 'future_key', false, 'version 1 is read and a later writer''s added key is ignored');
-select is(pg_temp.sqlstate_of($q$select public.counter_receipt_decode('{"version": 2, "currency": "EUR", "lines": [], "totals": {}}'::jsonb)$q$), 'DKT09', 'a version this reader does not know is refused, never guessed');
-select is(pg_temp.sqlstate_of($q$select public.counter_receipt_decode('{"version": 1, "currency": "EUR"}'::jsonb)$q$), 'DKT09', 'and an incomplete version 1 is refused');
+select is(pg_temp.sqlstate_of($q$select public.counter_receipt_decode('{"version": 2, "currency": "EUR", "lines": [], "totals": {}}'::jsonb)$q$), 'DKL09', 'a version this reader does not know is refused, never guessed');
+select is(pg_temp.sqlstate_of($q$select public.counter_receipt_decode('{"version": 1, "currency": "EUR"}'::jsonb)$q$), 'DKL09', 'and an incomplete version 1 is refused');
 
 select * from finish();
 rollback;
