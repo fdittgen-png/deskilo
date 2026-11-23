@@ -25,6 +25,10 @@ const _notForTheApp = <String, String>{
       'a payment claim naming a standalone invoice: the app offers no payment '
       'of one until the payment part of #4165 (B), where its words are '
       'mapped; the refusal is the server\'s guard for any other caller (0820)',
+  'DKC16':
+      'a standalone payment naming a monthly invoice: the app offers no '
+      'standalone payment until the client part of #4165 (B2), where its '
+      'words are mapped; the refusal is the server\'s guard for any other caller (0901)',
   'DKP02':
       'the app offers no plan to add to a room since plans are retired '
       '(#4042); a room keeps the plans it named already',

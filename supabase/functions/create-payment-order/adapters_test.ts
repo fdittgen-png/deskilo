@@ -200,6 +200,27 @@ Deno.test("#3556: a payment names its invoices, or none as before", () => {
   ];
   const named = parsePaymentOrderRequest({ ...body, invoice_ids: ids }, "EUR");
   assertEquals(named.ok && named.request.invoiceIds, ids);
+  assertEquals(named.ok && named.request.standalone, false);
+});
+
+Deno.test("#4165: a standalone payment has no month, and names its invoices and request id", () => {
+  const ids = ["00000000-0000-4000-8000-000000000001"];
+  const body = {
+    provider: "stripe",
+    member_id: "m",
+    amount_cents: 500,
+    standalone: true,
+    invoice_ids: ids,
+    request_id: "00000000-0000-4000-8000-0000000000aa",
+  };
+  const ok = parsePaymentOrderRequest(body, "EUR");
+  assertEquals(ok.ok && ok.request.standalone, true);
+  assertEquals(ok.ok && ok.request.period, "");
+  for (const missing of ["invoice_ids", "request_id"]) {
+    const bad: Record<string, unknown> = { ...body };
+    delete bad[missing];
+    assertEquals(parsePaymentOrderRequest(bad, "EUR").ok, false, missing);
+  }
 });
 
 /** What each provider receives as the text its payer reads, for [payee]. */
