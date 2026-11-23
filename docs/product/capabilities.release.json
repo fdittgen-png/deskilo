@@ -2344,13 +2344,13 @@
       "capabilities": []
     },
     {
-      "key": "stockTags",
+      "key": "stockTagReads",
       "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
-      "key": "stockTagReads",
+      "key": "stockTags",
       "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []

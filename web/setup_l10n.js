@@ -841,6 +841,11 @@ window.SETUP_L10N={
    "stockTagGraceHint": "How many days after it was retired a tag code may be bound again. Set in the app's settings.",
    "stockRepeatedScan": "A code scanned again",
    "stockRepeatedScanHint": "What a goods sheet does when the same code is scanned again: add one more, or ask the quantity. Set in the app's settings.",
+   "stockTagReadMax": "Most tags in one bulk read",
+   "stockTagReadMaxHint": "How many different tags one bulk read keeps before it takes no more. The same tag read many times counts once. Set in the app's settings.",
+   "stockTagReadQuantity": "A piece read in a move counts as one of its item",
+   "stockTagReadQuantityHint": "In a bulk move, a tag on a piece of an item that is not tracked piece by piece is added as quantity 1 of that item. Off: such a tag is left out and listed. Set in the app's settings.",
+   "optTags": "{n} tags",
    "optAtOnce": "At once",
    "optAddOne": "Add one more",
    "optAskQuantity": "Ask the quantity",
@@ -1567,6 +1572,10 @@ window.SETUP_L10N={
    "counterTillSessions": [
     "Till sessions and day close",
     "Open a till with its float, count the drawer at the close, and close the day with its report. A sale needs an open till; the expected cash is derived from what was taken, never typed."
+   ],
+   "stockTagReads": [
+    "Reading many tags",
+    "A UHF reader in keyboard mode reads many tags at once to receive, move and count: the tags are collected, de-duplicated and resolved, and nothing is sent until the user confirms."
    ]
   },
   "process": {
@@ -2805,6 +2814,11 @@ window.SETUP_L10N={
    "stockTagGraceHint": "Combien de jours après son retrait un code d'étiquette peut être lié de nouveau. Se règle dans les paramètres de l'app.",
    "stockRepeatedScan": "Un code scanné de nouveau",
    "stockRepeatedScanHint": "Ce que fait une feuille de marchandises quand le même code est scanné de nouveau : ajouter un de plus, ou demander la quantité. Se règle dans les paramètres de l'app.",
+   "stockTagReadMax": "Nombre maximal d'étiquettes par lecture en masse",
+   "stockTagReadMaxHint": "Combien d'étiquettes différentes une lecture en masse conserve avant de ne plus en prendre. Une même étiquette lue plusieurs fois compte une fois. Se règle dans les paramètres de l'app.",
+   "stockTagReadQuantity": "Une pièce lue dans un transfert compte pour un de son article",
+   "stockTagReadQuantityHint": "Dans un transfert en masse, une étiquette posée sur une pièce d'un article non suivi pièce par pièce est ajoutée comme quantité 1 de cet article. Désactivé : cette étiquette est écartée et listée. Se règle dans les paramètres de l'app.",
+   "optTags": "{n} étiquettes",
    "optAtOnce": "Tout de suite",
    "optAddOne": "Ajouter un de plus",
    "optAskQuantity": "Demander la quantité",
@@ -3531,6 +3545,10 @@ window.SETUP_L10N={
    "counterTillSessions": [
     "Sessions de caisse et clôture de journée",
     "Ouvrez une caisse avec son fond, comptez le tiroir à la fermeture et clôturez la journée avec son rapport. Une vente exige une caisse ouverte ; les espèces attendues se déduisent de ce qui a été encaissé, jamais saisies."
+   ],
+   "stockTagReads": [
+    "Lecture de nombreuses étiquettes",
+    "Un lecteur UHF en mode clavier lit de nombreuses étiquettes d'un coup pour recevoir, déplacer et compter : les étiquettes sont rassemblées, dédoublonnées et résolues, et rien n'est envoyé avant la confirmation de l'utilisateur."
    ]
   },
   "process": {
@@ -4769,6 +4787,11 @@ window.SETUP_L10N={
    "stockTagGraceHint": "Wie viele Tage nach dem Entfernen ein Etikettencode wieder gebunden werden darf. Einstellbar in den Einstellungen der App.",
    "stockRepeatedScan": "Ein erneut gescannter Code",
    "stockRepeatedScanHint": "Was ein Warenblatt tut, wenn derselbe Code noch einmal gescannt wird: eins mehr hinzufügen oder die Menge erfragen. Einstellbar in den Einstellungen der App.",
+   "stockTagReadMax": "Höchstzahl Etiketten je Massenlesung",
+   "stockTagReadMaxHint": "Wie viele verschiedene Etiketten eine Massenlesung behält, bevor sie keine weiteren annimmt. Dieselbe Etikette, mehrfach gelesen, zählt einmal. Einstellbar in den Einstellungen der App.",
+   "stockTagReadQuantity": "Ein gelesenes Stück in einer Umlagerung zählt als eins seines Artikels",
+   "stockTagReadQuantityHint": "Bei einer Massenumlagerung wird eine Etikette auf einem Stück eines nicht stückweise geführten Artikels als Menge 1 dieses Artikels aufgenommen. Aus: Eine solche Etikette wird ausgelassen und aufgelistet. Einstellbar in den Einstellungen der App.",
+   "optTags": "{n} Etiketten",
    "optAtOnce": "Sofort",
    "optAddOne": "Eins mehr hinzufügen",
    "optAskQuantity": "Menge erfragen",
@@ -5495,6 +5518,10 @@ window.SETUP_L10N={
    "counterTillSessions": [
     "Kassensitzungen und Tagesabschluss",
     "Eine Kasse mit ihrem Wechselgeld eröffnen, die Schublade beim Abschluss zählen und den Tag mit seinem Bericht abschließen. Ein Verkauf braucht eine geöffnete Kasse; das erwartete Bargeld wird aus dem Eingenommenen abgeleitet, nie eingetippt."
+   ],
+   "stockTagReads": [
+    "Viele Etiketten lesen",
+    "Ein UHF-Lesegerät im Tastaturmodus liest viele Etiketten auf einmal zum Wareneingang, Umlagern und Zählen: Die Etiketten werden gesammelt, entdoppelt und aufgelöst, und nichts wird gesendet, bevor die Person bestätigt."
    ]
   },
   "process": {
@@ -6733,6 +6760,11 @@ window.SETUP_L10N={
    "stockTagGraceHint": "Cuántos días después de retirarla puede volver a vincularse un código de etiqueta. Se ajusta en los ajustes de la app.",
    "stockRepeatedScan": "Un código escaneado de nuevo",
    "stockRepeatedScanHint": "Qué hace una hoja de mercancías cuando se escanea otra vez el mismo código: añadir uno más o preguntar la cantidad. Se ajusta en los ajustes de la app.",
+   "stockTagReadMax": "Máximo de etiquetas por lectura masiva",
+   "stockTagReadMaxHint": "Cuántas etiquetas distintas conserva una lectura masiva antes de no aceptar más. La misma etiqueta leída varias veces cuenta una vez. Se ajusta en los ajustes de la app.",
+   "stockTagReadQuantity": "Una pieza leída en un traslado cuenta como una de su artículo",
+   "stockTagReadQuantityHint": "En un traslado masivo, la etiqueta de una pieza de un artículo no seguido pieza a pieza se añade como cantidad 1 de ese artículo. Desactivado: esa etiqueta se deja fuera y se lista. Se ajusta en los ajustes de la app.",
+   "optTags": "{n} etiquetas",
    "optAtOnce": "De inmediato",
    "optAddOne": "Añadir uno más",
    "optAskQuantity": "Preguntar la cantidad",
@@ -7459,6 +7491,10 @@ window.SETUP_L10N={
    "counterTillSessions": [
     "Sesiones de caja y cierre del día",
     "Abra una caja con su fondo, cuente el cajón al cierre y cierre el día con su informe. Una venta necesita una caja abierta; el efectivo esperado se deriva de lo cobrado, nunca se escribe."
+   ],
+   "stockTagReads": [
+    "Lectura de muchas etiquetas",
+    "Un lector UHF en modo teclado lee muchas etiquetas a la vez para recibir, mover y contar: las etiquetas se reúnen, se eliminan duplicados y se resuelven, y no se envía nada hasta que la persona confirma."
    ]
   },
   "process": {
@@ -8697,6 +8733,11 @@ window.SETUP_L10N={
    "stockTagGraceHint": "Quanti giorni dopo il ritiro un codice di etichetta può essere associato di nuovo. Si imposta nelle impostazioni dell'app.",
    "stockRepeatedScan": "Un codice scansionato di nuovo",
    "stockRepeatedScanHint": "Cosa fa un foglio di merci quando lo stesso codice è scansionato ancora: aggiungere uno o chiedere la quantità. Si imposta nelle impostazioni dell'app.",
+   "stockTagReadMax": "Massimo di etichette per lettura di massa",
+   "stockTagReadMaxHint": "Quante etichette diverse conserva una lettura di massa prima di non accettarne altre. La stessa etichetta letta più volte conta una volta. Si imposta nelle impostazioni dell'app.",
+   "stockTagReadQuantity": "Un pezzo letto in uno spostamento conta come uno del suo articolo",
+   "stockTagReadQuantityHint": "In uno spostamento di massa, l'etichetta su un pezzo di un articolo non tracciato pezzo per pezzo viene aggiunta come quantità 1 di quell'articolo. Disattivato: tale etichetta viene esclusa ed elencata. Si imposta nelle impostazioni dell'app.",
+   "optTags": "{n} etichette",
    "optAtOnce": "Subito",
    "optAddOne": "Aggiungi uno",
    "optAskQuantity": "Chiedi la quantità",
@@ -9423,6 +9464,10 @@ window.SETUP_L10N={
    "counterTillSessions": [
     "Sessioni di cassa e chiusura della giornata",
     "Apra una cassa con il suo fondo, conti il cassetto alla chiusura e chiuda la giornata con il suo rapporto. Una vendita richiede una cassa aperta; il contante atteso si ricava da quanto incassato, mai digitato."
+   ],
+   "stockTagReads": [
+    "Lettura di molte etichette",
+    "Un lettore UHF in modalità tastiera legge molte etichette insieme per ricevere, spostare e contare: le etichette sono raccolte, deduplicate e risolte, e nulla viene inviato finché la persona non conferma."
    ]
   },
   "process": {

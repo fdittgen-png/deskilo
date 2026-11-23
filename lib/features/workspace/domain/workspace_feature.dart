@@ -447,8 +447,7 @@ enum WorkspaceFeature {
   stockTags,
   stockScanning,
   counterReceipts,
-  counterTillSessions,
-  stockTagReads;
+  counterTillSessions, stockTagReads;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
