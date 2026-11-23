@@ -7790,6 +7790,8 @@
   "@featureStockCycleCountsTitle": {
     "description": "#4295 feature name"
   },
+  "featureStockItemGroupsDesc": "Regroupez les articles pour partager leurs réglages : suivi, durée de conservation, mode d'étiquette, unités, TVA, caisse et plus. Un article hérite de la valeur de son groupe sauf s'il garde la sienne ; un changement de groupe montre combien d'articles il touche avant d'être enregistré.",
+  "featureStockItemGroupsTitle": "Groupes d'articles",
   "featureStockLotsDesc": "Suivre les marchandises par lot ou par date de péremption, avec une durée de conservation. Désactivé : aucun article n’est suivi par lot, et ce qui a été enregistré est conservé tel quel.",
   "@featureStockLotsDesc": {
     "description": "#4169 what the lots and expiry feature does, and what off means"
@@ -19064,6 +19066,9 @@
   "settingHintStockAllowNegative": "Désactivé : un mouvement qui laisserait moins que rien à un endroit est refusé. Activé : il est enregistré, et l'endroit affiche une quantité négative jusqu'à l'arrivée de marchandises.",
   "settingHintStockCycleCountHighValueMinor": "La valeur, en unités mineures de la devise de l’entreprise, à partir de laquelle ce qu’un lieu contient d’un article est de forte valeur pour un plan d’inventaire tournant sans seuil propre.",
   "settingHintStockCycleCountOverdueDays": "Combien de jours une tâche d’inventaire tournant peut rester ouverte après son échéance avant que la boîte de réception la dise en retard.",
+  "settingHintStockGroupDefaultCountDays": "Tous les combien de jours un article que ni un groupe ni un réglage propre ne concerne est proposé pour un comptage tournant. 0 : non planifié.",
+  "settingHintStockGroupDefaultTagMode": "Si un article que ni un groupe ni un réglage propre ne concerne porte une étiquette RFID : aucune, une étiquette qui désigne un lot, ou une étiquette par unité (ce qui exige un suivi à la pièce).",
+  "settingHintStockPriceRounding": "Comment un prix de vente proposé est arrondi : au 0,05 ou 0,10 le plus proche, ou à un prix qui finit par 0,99. Il ne sert qu'à proposer un prix.",
   "settingHintVatViesEvidenceDays": "Jours pendant lesquels un contrôle valide du numéro de TVA reste assez récent pour servir de preuve sur une nouvelle facture. Une valeur plus courte demande un nouveau contrôle plus tôt ; ce n’est pas la preuve qu’une opération est valable.",
   "@settingHintVatViesEvidenceDays": {
     "description": "#2487 retention settings"
@@ -19284,6 +19289,9 @@
   "settingLabelStockAllowNegative": "Le stock peut passer sous zéro",
   "settingLabelStockCycleCountHighValueMinor": "Inventaire tournant : seuil de forte valeur",
   "settingLabelStockCycleCountOverdueDays": "Inventaire tournant : en retard après",
+  "settingLabelStockGroupDefaultCountDays": "Cycle de comptage par défaut (jours)",
+  "settingLabelStockGroupDefaultTagMode": "Mode d'étiquette par défaut des articles",
+  "settingLabelStockPriceRounding": "Arrondi des prix",
   "settingLabelVatViesEvidenceDays": "Fraîcheur du contrôle du numéro de TVA",
   "@settingLabelVatViesEvidenceDays": {
     "description": "#2487 retention settings"
@@ -21234,6 +21242,21 @@
   "@stockReasonFactorInvalid": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonGroupDepth": "Un sous-groupe ne peut pas avoir de sous-groupes.",
+  "stockReasonGroupHasMovements": "Cet article a des mouvements de stock : son unité et son suivi restent tels qu'écrits.",
+  "stockReasonGroupHasSubgroups": "Ce groupe a des sous-groupes : déplacez-les ou supprimez-les d'abord.",
+  "stockReasonGroupInUse": "Ce groupe est utilisé par des articles : déplacez-les d'abord.",
+  "stockReasonGroupItemUnknown": "Cet article n'est pas un article de cette entreprise.",
+  "stockReasonGroupNameDuplicate": "Un groupe de ce niveau porte déjà ce nom.",
+  "stockReasonGroupNameLength": "Le nom d'un groupe compte de 1 à 80 caractères.",
+  "stockReasonGroupNameRequired": "Un nouveau groupe a besoin d'un nom.",
+  "stockReasonGroupNeedsSerial": "Une étiquette par unité exige un suivi à la pièce.",
+  "stockReasonGroupNotOverridable": "C'est une proposition pour les nouveaux articles, elle ne se règle pas par article.",
+  "stockReasonGroupPlaceUnknown": "Ce lieu n'est pas un lieu de cette entreprise.",
+  "stockReasonGroupUnknown": "Ce groupe n'est pas un groupe de cette entreprise.",
+  "stockReasonGroupUnknownReference": "Un lieu, un article ou un taux nommé ici n'appartient pas à cette entreprise.",
+  "stockReasonGroupValueRequired": "Donnez une valeur, ou reprenez celle du groupe.",
+  "stockReasonGroupVatRateUnknown": "Ce taux de TVA n'est pas un des taux actifs de cette entreprise.",
   "stockReasonGtinCheck": "Le chiffre de contrôle de ce code-barres est faux.",
   "@stockReasonGtinCheck": {
     "description": "#4169 the stock editors: a text under a field the server refused"

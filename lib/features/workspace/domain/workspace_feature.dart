@@ -425,11 +425,9 @@ enum WorkspaceFeature {
   organisation,
   /// #4165 — a standalone customer invoice, with no member-month behind it.
   standaloneInvoicing,
-  /// #4164 — the business's billing customers, each with a billing identity
-  /// of its own. Asked for, under invoicing. Off: nothing changes.
+  /// #4164 — billing customers: who the business invoices, account or not.
   billingCustomers,
-  /// #4166 — customer quotes, sent and decided; an accepted one becomes the
-  /// customer's first invoice. Asked for, under invoicing. Off: nothing changes.
+  /// #4166 — customer quotes: an offer, sent and decided; the accepted one invoices.
   customerQuotes,
 
   /// #4169 — lots and expiry on goods (feature_manifest_stock.dart).
@@ -447,7 +445,8 @@ enum WorkspaceFeature {
   /// #4172 — counts of stock, approved before they move it (feature_manifest_stock.dart).
   stockCounts,
   /// #4295 — scheduled cycle counts (feature_manifest_stock.dart).
-  stockCycleCounts;
+  stockCycleCounts,
+  stockItemGroups;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;

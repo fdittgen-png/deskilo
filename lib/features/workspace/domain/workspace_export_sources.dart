@@ -462,6 +462,9 @@ const List<ExportSource> workspaceExportSources = [
   ExportSource.everyColumn('stock_transfer_lines'),
   // #4294 — the reorder points of a business.
   ExportSource.everyColumn('stock_reorder_points'),
+  // #4361 — the item groups and the history of their changes.
+  ExportSource.everyColumn('item_groups'),
+  ExportSource.everyColumn('item_group_history'),
   ExportSource.everyColumn('stock_locations'),
   ExportSource.everyColumn('stock_lots'),
   ExportSource.everyColumn('stock_movements'),

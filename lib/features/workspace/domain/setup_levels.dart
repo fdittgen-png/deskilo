@@ -281,6 +281,8 @@ const Map<SetupProcess, List<SetupLevel>> setupLevels = {
         WorkspaceFeature.stockCounts,
         // #4295 — scheduled cycle counts.
         WorkspaceFeature.stockCycleCounts,
+        // #4361
+        WorkspaceFeature.stockItemGroups,
       },
     ),
   ],

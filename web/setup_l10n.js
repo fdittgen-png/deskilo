@@ -812,7 +812,21 @@ window.SETUP_L10N={
    "stockCycleHighValueHint": "The value, in minor units of the business currency, from which what a place holds of an item counts as high value for a cycle count plan that has no threshold of its own. Set in the app's settings.",
    "stockCycleOverdue": "Cycle count: overdue after",
    "stockCycleOverdueHint": "How many days a cycle count task may stay open past its due date before the inbox says it is overdue. Set in the app's settings.",
-   "optMinorUnits": "{n} (minor units)"
+   "optMinorUnits": "{n} (minor units)",
+   "stockGroupTagMode": "Default tag mode of items",
+   "stockGroupTagModeHint": "Whether an item that no group and no own setting speaks for carries an RFID tag: none, one tag naming a batch, or one tag per unit (which needs tracking by piece). Set in the app's settings.",
+   "stockGroupCountDays": "Default count cycle",
+   "stockGroupCountDaysHint": "Every how many days an item that no group and no own setting speaks for is proposed for a cycle count. Set in the app's settings.",
+   "stockGroupRounding": "Price rounding",
+   "stockGroupRoundingHint": "How a proposed sale price is rounded. It is used only to propose a price. Set in the app's settings.",
+   "optTagNone": "No tag",
+   "optTagPerBatch": "One tag per batch",
+   "optTagPerUnit": "One tag per unit",
+   "optNotScheduled": "Not scheduled",
+   "optRoundNone": "No rounding",
+   "optRound005": "To 0.05",
+   "optRound010": "To 0.10",
+   "optRound099": "Ending in 0.99"
   },
   "feature": {
    "calendarTab": [
@@ -1494,6 +1508,10 @@ window.SETUP_L10N={
    "stockCycleCounts": [
     "Cycle counts",
     "Plan spot checks of chosen places, items or high-value goods. A due plan makes a count task the counter does without seeing the expected quantities; each difference is approved like any count. Off: no plan runs and no task is made; the ledger is unaffected."
+   ],
+   "stockItemGroups": [
+    "Item groups",
+    "Group items so that their settings are shared: tracking, shelf life, tag mode, units, VAT, the till and more. An item inherits its group's value unless it keeps its own; a change to a group shows how many items it reaches before it is saved."
    ]
   },
   "process": {
@@ -2703,7 +2721,21 @@ window.SETUP_L10N={
    "stockCycleHighValueHint": "La valeur, en unités mineures de la devise de l’entreprise, à partir de laquelle ce qu’un lieu contient d’un article est de forte valeur pour un plan sans seuil propre. Réglé dans les paramètres de l’application.",
    "stockCycleOverdue": "Inventaire tournant : en retard après",
    "stockCycleOverdueHint": "Combien de jours une tâche d’inventaire tournant peut rester ouverte après son échéance avant d’être dite en retard. Réglé dans les paramètres de l’application.",
-   "optMinorUnits": "{n} (unités mineures)"
+   "optMinorUnits": "{n} (unités mineures)",
+   "stockGroupTagMode": "Mode d'étiquette par défaut des articles",
+   "stockGroupTagModeHint": "Si un article que ni un groupe ni un réglage propre ne concerne porte une étiquette RFID : aucune, une étiquette qui désigne un lot, ou une étiquette par unité (ce qui exige un suivi à la pièce). Se règle dans les paramètres de l'app.",
+   "stockGroupCountDays": "Cycle de comptage par défaut",
+   "stockGroupCountDaysHint": "Tous les combien de jours un article que ni un groupe ni un réglage propre ne concerne est proposé pour un comptage tournant. Se règle dans les paramètres de l'app.",
+   "stockGroupRounding": "Arrondi des prix",
+   "stockGroupRoundingHint": "Comment un prix de vente proposé est arrondi. Il ne sert qu'à proposer un prix. Se règle dans les paramètres de l'app.",
+   "optTagNone": "Pas d'étiquette",
+   "optTagPerBatch": "Une étiquette par lot",
+   "optTagPerUnit": "Une étiquette par unité",
+   "optNotScheduled": "Non planifié",
+   "optRoundNone": "Pas d'arrondi",
+   "optRound005": "Au 0,05",
+   "optRound010": "Au 0,10",
+   "optRound099": "Finissant par 0,99"
   },
   "feature": {
    "calendarTab": [
@@ -3385,6 +3417,10 @@ window.SETUP_L10N={
    "stockCycleCounts": [
     "Inventaires tournants",
     "Planifiez des contrôles ponctuels de lieux, d’articles ou de marchandises de valeur. Un plan échu crée une tâche de comptage que le compteur fait sans voir les quantités attendues ; chaque écart est approuvé comme tout comptage. Désactivé : aucun plan ne s’exécute et aucune tâche n’est créée ; le registre n’est pas touché."
+   ],
+   "stockItemGroups": [
+    "Groupes d'articles",
+    "Regroupez les articles pour partager leurs réglages : suivi, durée de conservation, mode d'étiquette, unités, TVA, caisse et plus. Un article hérite de la valeur de son groupe sauf s'il garde la sienne ; un changement de groupe montre combien d'articles il touche avant d'être enregistré."
    ]
   },
   "process": {
@@ -4594,7 +4630,21 @@ window.SETUP_L10N={
    "stockCycleHighValueHint": "Der Wert in der kleinsten Einheit der Währung des Unternehmens, ab dem das, was ein Ort von einem Artikel hält, für einen Plan ohne eigene Schwelle als hochwertig gilt. Einstellbar in den Einstellungen der App.",
    "stockCycleOverdue": "Permanente Inventur: überfällig nach",
    "stockCycleOverdueHint": "Wie viele Tage eine Inventuraufgabe nach ihrem Fälligkeitstag offen bleiben darf, bevor sie als überfällig gemeldet wird. Einstellbar in den Einstellungen der App.",
-   "optMinorUnits": "{n} (kleinste Einheit)"
+   "optMinorUnits": "{n} (kleinste Einheit)",
+   "stockGroupTagMode": "Standard-Etikettenmodus der Artikel",
+   "stockGroupTagModeHint": "Ob ein Artikel, den weder eine Gruppe noch eine eigene Einstellung betrifft, ein RFID-Etikett trägt: keines, ein Etikett für eine Charge oder ein Etikett je Stück (das eine Verfolgung je Stück braucht). Einstellbar in den Einstellungen der App.",
+   "stockGroupCountDays": "Standard-Zählzyklus",
+   "stockGroupCountDaysHint": "Nach wie vielen Tagen ein Artikel, den weder eine Gruppe noch eine eigene Einstellung betrifft, zur Zyklus-Zählung vorgeschlagen wird. Einstellbar in den Einstellungen der App.",
+   "stockGroupRounding": "Preisrundung",
+   "stockGroupRoundingHint": "Wie ein vorgeschlagener Verkaufspreis gerundet wird. Sie dient nur dazu, einen Preis vorzuschlagen. Einstellbar in den Einstellungen der App.",
+   "optTagNone": "Kein Etikett",
+   "optTagPerBatch": "Ein Etikett je Charge",
+   "optTagPerUnit": "Ein Etikett je Stück",
+   "optNotScheduled": "Nicht geplant",
+   "optRoundNone": "Keine Rundung",
+   "optRound005": "Auf 0,05",
+   "optRound010": "Auf 0,10",
+   "optRound099": "Endend auf 0,99"
   },
   "feature": {
    "calendarTab": [
@@ -5276,6 +5326,10 @@ window.SETUP_L10N={
    "stockCycleCounts": [
     "Permanente Inventur",
     "Planen Sie Stichproben für ausgewählte Orte, Artikel oder hochwertige Ware. Ein fälliger Plan erzeugt eine Zählaufgabe, die ohne die erwarteten Mengen erledigt wird; jede Differenz wird wie jede Zählung genehmigt. Aus: kein Plan läuft und keine Aufgabe entsteht; das Buch bleibt unberührt."
+   ],
+   "stockItemGroups": [
+    "Artikelgruppen",
+    "Artikel gruppieren, damit ihre Einstellungen geteilt werden: Nachverfolgung, Haltbarkeit, Etikettenmodus, Einheiten, Mehrwertsteuer, Kasse und mehr. Ein Artikel erbt den Wert seiner Gruppe, außer er behält seinen eigenen; eine Änderung an der Gruppe zeigt vor dem Speichern, wie viele Artikel sie erreicht."
    ]
   },
   "process": {
@@ -6485,7 +6539,21 @@ window.SETUP_L10N={
    "stockCycleHighValueHint": "El valor, en unidades menores de la moneda de la empresa, a partir del cual lo que un lugar contiene de un artículo es de alto valor para un plan sin umbral propio. Se ajusta en los ajustes de la aplicación.",
    "stockCycleOverdue": "Recuento cíclico: vencido tras",
    "stockCycleOverdueHint": "Cuántos días puede seguir abierta una tarea de recuento cíclico después de su fecha antes de declararse vencida. Se ajusta en los ajustes de la aplicación.",
-   "optMinorUnits": "{n} (unidades menores)"
+   "optMinorUnits": "{n} (unidades menores)",
+   "stockGroupTagMode": "Modo de etiqueta por defecto de los artículos",
+   "stockGroupTagModeHint": "Si un artículo que ni un grupo ni un ajuste propio contempla lleva una etiqueta RFID: ninguna, una etiqueta que nombra un lote o una etiqueta por unidad (que exige seguimiento por pieza). Se ajusta en los ajustes de la app.",
+   "stockGroupCountDays": "Ciclo de recuento por defecto",
+   "stockGroupCountDaysHint": "Cada cuántos días se propone para un recuento cíclico un artículo que ni un grupo ni un ajuste propio contempla. Se ajusta en los ajustes de la app.",
+   "stockGroupRounding": "Redondeo de precios",
+   "stockGroupRoundingHint": "Cómo se redondea un precio de venta propuesto. Solo sirve para proponer un precio. Se ajusta en los ajustes de la app.",
+   "optTagNone": "Sin etiqueta",
+   "optTagPerBatch": "Una etiqueta por lote",
+   "optTagPerUnit": "Una etiqueta por unidad",
+   "optNotScheduled": "Sin programar",
+   "optRoundNone": "Sin redondeo",
+   "optRound005": "A 0,05",
+   "optRound010": "A 0,10",
+   "optRound099": "Terminando en 0,99"
   },
   "feature": {
    "calendarTab": [
@@ -7167,6 +7235,10 @@ window.SETUP_L10N={
    "stockCycleCounts": [
     "Recuentos cíclicos",
     "Planifique controles puntuales de lugares, artículos o mercancías de alto valor. Un plan vencido crea una tarea de recuento que se hace sin ver las cantidades esperadas; cada diferencia se aprueba como cualquier recuento. Desactivado: ningún plan se ejecuta ni se crea tarea; el registro no cambia."
+   ],
+   "stockItemGroups": [
+    "Grupos de artículos",
+    "Agrupe artículos para compartir sus ajustes: seguimiento, caducidad, modo de etiqueta, unidades, IVA, caja y más. Un artículo hereda el valor de su grupo salvo que conserve el suyo; un cambio de grupo muestra a cuántos artículos llega antes de guardarse."
    ]
   },
   "process": {
@@ -8376,7 +8448,21 @@ window.SETUP_L10N={
    "stockCycleHighValueHint": "Il valore, in unità minori della valuta dell’azienda, da cui ciò che un luogo contiene di un articolo è di alto valore per un piano senza soglia propria. Si imposta nelle impostazioni dell’app.",
    "stockCycleOverdue": "Inventario ciclico: in ritardo dopo",
    "stockCycleOverdueHint": "Quanti giorni un compito di inventario ciclico può restare aperto dopo la scadenza prima di essere dichiarato in ritardo. Si imposta nelle impostazioni dell’app.",
-   "optMinorUnits": "{n} (unità minori)"
+   "optMinorUnits": "{n} (unità minori)",
+   "stockGroupTagMode": "Modalità etichetta predefinita degli articoli",
+   "stockGroupTagModeHint": "Se un articolo che né un gruppo né un'impostazione propria riguarda porta un'etichetta RFID: nessuna, una etichetta che indica un lotto o una etichetta per unità (che richiede la tracciabilità per pezzo). Si imposta nelle impostazioni dell'app.",
+   "stockGroupCountDays": "Ciclo di conteggio predefinito",
+   "stockGroupCountDaysHint": "Ogni quanti giorni un articolo che né un gruppo né un'impostazione propria riguarda è proposto per un conteggio ciclico. Si imposta nelle impostazioni dell'app.",
+   "stockGroupRounding": "Arrotondamento dei prezzi",
+   "stockGroupRoundingHint": "Come si arrotonda un prezzo di vendita proposto. Serve solo a proporre un prezzo. Si imposta nelle impostazioni dell'app.",
+   "optTagNone": "Nessuna etichetta",
+   "optTagPerBatch": "Una etichetta per lotto",
+   "optTagPerUnit": "Una etichetta per unità",
+   "optNotScheduled": "Non programmato",
+   "optRoundNone": "Nessun arrotondamento",
+   "optRound005": "A 0,05",
+   "optRound010": "A 0,10",
+   "optRound099": "Che finisce per 0,99"
   },
   "feature": {
    "calendarTab": [
@@ -9058,6 +9144,10 @@ window.SETUP_L10N={
    "stockCycleCounts": [
     "Inventari ciclici",
     "Pianifichi controlli a campione di luoghi, articoli o merci di alto valore. Un piano scaduto crea un compito di conteggio che si esegue senza vedere le quantità attese; ogni differenza è approvata come ogni conteggio. Disattivato: nessun piano parte e nessun compito viene creato; il registro non cambia."
+   ],
+   "stockItemGroups": [
+    "Gruppi di articoli",
+    "Raggruppi gli articoli per condividerne le impostazioni: tracciabilità, scadenza, modalità etichetta, unità, IVA, cassa e altro. Un articolo eredita il valore del suo gruppo salvo che mantenga il proprio; una modifica al gruppo mostra quanti articoli raggiunge prima di essere salvata."
    ]
   },
   "process": {

@@ -212,6 +212,10 @@ public.item_dimension_values.item_dimension_values_select
 public.item_dimension_values.mcp_delegated_deny
 public.item_dimensions.item_dimensions_select
 public.item_dimensions.mcp_delegated_deny
+public.item_group_history.item_group_history_select
+public.item_group_history.mcp_delegated_deny
+public.item_groups.item_groups_select
+public.item_groups.mcp_delegated_deny
 public.item_units.item_units_select
 public.item_units.mcp_delegated_deny
 public.item_variant_values.item_variant_values_select

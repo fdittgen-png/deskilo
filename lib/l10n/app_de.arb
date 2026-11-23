@@ -7790,6 +7790,8 @@
   "@featureStockCycleCountsTitle": {
     "description": "#4295 feature name"
   },
+  "featureStockItemGroupsDesc": "Artikel gruppieren, damit ihre Einstellungen geteilt werden: Nachverfolgung, Haltbarkeit, Etikettenmodus, Einheiten, Mehrwertsteuer, Kasse und mehr. Ein Artikel erbt den Wert seiner Gruppe, außer er behält seinen eigenen; eine Änderung an der Gruppe zeigt vor dem Speichern, wie viele Artikel sie erreicht.",
+  "featureStockItemGroupsTitle": "Artikelgruppen",
   "featureStockLotsDesc": "Waren nach Charge oder Verfallsdatum verfolgen, mit einer Haltbarkeit. Aus: kein Artikel wird nach Charge verfolgt, und Erfasstes bleibt unverändert.",
   "@featureStockLotsDesc": {
     "description": "#4169 what the lots and expiry feature does, and what off means"
@@ -19064,6 +19066,9 @@
   "settingHintStockAllowNegative": "Aus: eine Bewegung, die an einem Ort weniger als nichts übrig ließe, wird abgelehnt. An: sie wird gebucht, und der Ort zeigt eine negative Menge, bis Ware eintrifft.",
   "settingHintStockCycleCountHighValueMinor": "Der Wert in der kleinsten Einheit der Währung des Unternehmens, ab dem das, was ein Ort von einem Artikel hält, für einen Inventurplan ohne eigene Schwelle als hochwertig gilt.",
   "settingHintStockCycleCountOverdueDays": "Wie viele Tage eine Inventuraufgabe nach ihrem Fälligkeitstag offen bleiben darf, bevor der Posteingang sie als überfällig meldet.",
+  "settingHintStockGroupDefaultCountDays": "Nach wie vielen Tagen ein Artikel, den weder eine Gruppe noch eine eigene Einstellung betrifft, zur Zyklus-Zählung vorgeschlagen wird. 0 heißt nicht geplant.",
+  "settingHintStockGroupDefaultTagMode": "Ob ein Artikel, den weder eine Gruppe noch eine eigene Einstellung betrifft, ein RFID-Etikett trägt: keines, ein Etikett für eine Charge oder ein Etikett je Stück (das eine Verfolgung je Stück braucht).",
+  "settingHintStockPriceRounding": "Wie ein vorgeschlagener Verkaufspreis gerundet wird: auf 0,05 oder 0,10 oder auf einen Preis, der auf 0,99 endet. Sie dient nur dazu, einen Preis vorzuschlagen.",
   "settingHintVatViesEvidenceDays": "Tage, die eine gültige Prüfung der USt-IdNr. aktuell genug bleibt, um auf einer neuen Rechnung als Nachweis zu dienen. Ein kürzerer Wert verlangt früher eine neue Prüfung; er beweist nicht, dass ein Geschäft gültig ist.",
   "@settingHintVatViesEvidenceDays": {
     "description": "#2487 retention settings"
@@ -19284,6 +19289,9 @@
   "settingLabelStockAllowNegative": "Bestand darf unter null fallen",
   "settingLabelStockCycleCountHighValueMinor": "Permanente Inventur: Schwelle für hohen Wert",
   "settingLabelStockCycleCountOverdueDays": "Permanente Inventur: überfällig nach",
+  "settingLabelStockGroupDefaultCountDays": "Standard-Zählzyklus (Tage)",
+  "settingLabelStockGroupDefaultTagMode": "Standard-Etikettenmodus der Artikel",
+  "settingLabelStockPriceRounding": "Preisrundung",
   "settingLabelVatViesEvidenceDays": "Aktualität der USt-IdNr.-Prüfung",
   "@settingLabelVatViesEvidenceDays": {
     "description": "#2487 retention settings"
@@ -21234,6 +21242,21 @@
   "@stockReasonFactorInvalid": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonGroupDepth": "Eine Untergruppe kann keine Untergruppen haben.",
+  "stockReasonGroupHasMovements": "Dieser Artikel hat Lagerbewegungen: Einheit und Verfolgung bleiben, wie sie geschrieben wurden.",
+  "stockReasonGroupHasSubgroups": "Diese Gruppe hat Untergruppen: verschieben oder löschen Sie sie zuerst.",
+  "stockReasonGroupInUse": "Diese Gruppe wird von Artikeln verwendet: verschieben Sie sie zuerst.",
+  "stockReasonGroupItemUnknown": "Dieser Artikel gehört nicht zu diesem Betrieb.",
+  "stockReasonGroupNameDuplicate": "Eine Gruppe dieser Ebene hat diesen Namen schon.",
+  "stockReasonGroupNameLength": "Der Name einer Gruppe hat 1 bis 80 Zeichen.",
+  "stockReasonGroupNameRequired": "Eine neue Gruppe braucht einen Namen.",
+  "stockReasonGroupNeedsSerial": "Etiketten je Stück brauchen eine Verfolgung je Stück.",
+  "stockReasonGroupNotOverridable": "Das ist ein Vorschlag für neue Artikel und wird nicht je Artikel gesetzt.",
+  "stockReasonGroupPlaceUnknown": "Dieser Ort gehört nicht zu diesem Betrieb.",
+  "stockReasonGroupUnknown": "Diese Gruppe gehört nicht zu diesem Betrieb.",
+  "stockReasonGroupUnknownReference": "Ein hier genannter Ort, Artikel oder Satz gehört nicht zu diesem Betrieb.",
+  "stockReasonGroupValueRequired": "Geben Sie einen Wert an oder übernehmen Sie den der Gruppe.",
+  "stockReasonGroupVatRateUnknown": "Dieser Mehrwertsteuersatz gehört nicht zu den aktiven Sätzen dieses Betriebs.",
   "stockReasonGtinCheck": "Die Prüfziffer dieses Barcodes stimmt nicht.",
   "@stockReasonGtinCheck": {
     "description": "#4169 the stock editors: a text under a field the server refused"

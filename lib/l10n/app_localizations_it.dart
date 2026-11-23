@@ -12544,6 +12544,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featureStockCycleCountsTitle => 'Inventari ciclici';
 
   @override
+  String get featureStockItemGroupsDesc =>
+      'Raggruppi gli articoli per condividerne le impostazioni: tracciabilità, scadenza, modalità etichetta, unità, IVA, cassa e altro. Un articolo eredita il valore del suo gruppo salvo che mantenga il proprio; una modifica al gruppo mostra quanti articoli raggiunge prima di essere salvata.';
+
+  @override
+  String get featureStockItemGroupsTitle => 'Gruppi di articoli';
+
+  @override
   String get featureStockLotsDesc =>
       'Seguire le merci per lotto o per data di scadenza, con una durata di conservazione. Disattivato: nessun articolo è seguito per lotto e ciò che è stato registrato resta invariato.';
 
@@ -32084,6 +32091,18 @@ class AppLocalizationsIt extends AppLocalizations {
       'Quanti giorni un compito di inventario ciclico può restare aperto dopo la scadenza prima che la posta lo dichiari in ritardo.';
 
   @override
+  String get settingHintStockGroupDefaultCountDays =>
+      'Ogni quanti giorni un articolo che né un gruppo né un\'impostazione propria riguarda è proposto per un conteggio ciclico. 0 significa non programmato.';
+
+  @override
+  String get settingHintStockGroupDefaultTagMode =>
+      'Se un articolo che né un gruppo né un\'impostazione propria riguarda porta un\'etichetta RFID: nessuna, una etichetta che indica un lotto o una etichetta per unità (che richiede la tracciabilità per pezzo).';
+
+  @override
+  String get settingHintStockPriceRounding =>
+      'Come si arrotonda un prezzo di vendita proposto: al 0,05 o 0,10 più vicino, o a un prezzo che finisce per 0,99. Serve solo a proporre un prezzo.';
+
+  @override
   String get settingHintVatViesEvidenceDays =>
       'Giorni in cui un controllo valido della partita IVA resta abbastanza recente da fungere da prova su una nuova fattura. Un valore più breve richiede prima un nuovo controllo; non prova che un’operazione sia valida.';
 
@@ -32429,6 +32448,17 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settingLabelStockCycleCountOverdueDays =>
       'Inventario ciclico: in ritardo dopo';
+
+  @override
+  String get settingLabelStockGroupDefaultCountDays =>
+      'Ciclo di conteggio predefinito (giorni)';
+
+  @override
+  String get settingLabelStockGroupDefaultTagMode =>
+      'Modalità etichetta predefinita degli articoli';
+
+  @override
+  String get settingLabelStockPriceRounding => 'Arrotondamento dei prezzi';
 
   @override
   String get settingLabelVatViesEvidenceDays =>
@@ -36040,6 +36070,66 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get stockReasonFactorInvalid =>
       'Entrambi i numeri devono essere interi maggiori di zero.';
+
+  @override
+  String get stockReasonGroupDepth =>
+      'Un sottogruppo non può avere sottogruppi.';
+
+  @override
+  String get stockReasonGroupHasMovements =>
+      'Questo articolo ha movimenti di magazzino: unità e tracciabilità restano come scritte.';
+
+  @override
+  String get stockReasonGroupHasSubgroups =>
+      'Questo gruppo ha sottogruppi: li sposti o li elimini prima.';
+
+  @override
+  String get stockReasonGroupInUse =>
+      'Questo gruppo è usato da articoli: li sposti prima.';
+
+  @override
+  String get stockReasonGroupItemUnknown =>
+      'Questo articolo non è di questa attività.';
+
+  @override
+  String get stockReasonGroupNameDuplicate =>
+      'Un gruppo di questo livello ha già questo nome.';
+
+  @override
+  String get stockReasonGroupNameLength =>
+      'Il nome di un gruppo ha da 1 a 80 caratteri.';
+
+  @override
+  String get stockReasonGroupNameRequired =>
+      'Un nuovo gruppo ha bisogno di un nome.';
+
+  @override
+  String get stockReasonGroupNeedsSerial =>
+      'Le etichette per unità richiedono la tracciabilità per pezzo.';
+
+  @override
+  String get stockReasonGroupNotOverridable =>
+      'È una proposta per i nuovi articoli e non si imposta per articolo.';
+
+  @override
+  String get stockReasonGroupPlaceUnknown =>
+      'Questo luogo non è di questa attività.';
+
+  @override
+  String get stockReasonGroupUnknown =>
+      'Questo gruppo non è di questa attività.';
+
+  @override
+  String get stockReasonGroupUnknownReference =>
+      'Un luogo, un articolo o un\'aliquota qui indicati non sono di questa attività.';
+
+  @override
+  String get stockReasonGroupValueRequired =>
+      'Indichi un valore oppure usi quello del gruppo.';
+
+  @override
+  String get stockReasonGroupVatRateUnknown =>
+      'Questa aliquota IVA non è tra quelle attive di questa attività.';
 
   @override
   String get stockReasonGtinCheck =>

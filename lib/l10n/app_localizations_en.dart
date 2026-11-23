@@ -12450,6 +12450,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureStockCycleCountsTitle => 'Cycle counts';
 
   @override
+  String get featureStockItemGroupsDesc =>
+      'Group items so that their settings are shared: tracking, shelf life, tag mode, units, VAT, the till and more. An item inherits its group\'s value unless it keeps its own; a change to a group shows how many items it reaches before it is saved.';
+
+  @override
+  String get featureStockItemGroupsTitle => 'Item groups';
+
+  @override
   String get featureStockLotsDesc =>
       'Track goods by lot or by expiry date, with a shelf life. Off: no item is tracked by lot, and what was recorded is kept as it is.';
 
@@ -31808,6 +31815,18 @@ class AppLocalizationsEn extends AppLocalizations {
       'How many days a cycle count task may stay open past its due date before the inbox says it is overdue.';
 
   @override
+  String get settingHintStockGroupDefaultCountDays =>
+      'Every how many days an item that no group and no own setting speaks for is proposed for a cycle count. 0 means not scheduled.';
+
+  @override
+  String get settingHintStockGroupDefaultTagMode =>
+      'Whether an item that no group and no own setting speaks for carries an RFID tag: none, one tag naming a batch, or one tag per unit (which needs tracking by piece).';
+
+  @override
+  String get settingHintStockPriceRounding =>
+      'How a proposed sale price is rounded: to the nearest 0.05 or 0.10, or to a price ending in 0.99. It is used only to propose a price.';
+
+  @override
   String get settingHintVatViesEvidenceDays =>
       'Days a valid VAT-number check stays recent enough to stand as evidence on a new invoice. A shorter value asks for a fresh check sooner; it is not proof that a transaction is valid.';
 
@@ -32123,6 +32142,17 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get settingLabelStockCycleCountOverdueDays =>
       'Cycle count: overdue after';
+
+  @override
+  String get settingLabelStockGroupDefaultCountDays =>
+      'Default count cycle (days)';
+
+  @override
+  String get settingLabelStockGroupDefaultTagMode =>
+      'Default tag mode of items';
+
+  @override
+  String get settingLabelStockPriceRounding => 'Price rounding';
 
   @override
   String get settingLabelVatViesEvidenceDays => 'VAT-number check freshness';
@@ -35707,6 +35737,64 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get stockReasonFactorInvalid =>
       'Both numbers must be whole numbers above zero.';
+
+  @override
+  String get stockReasonGroupDepth => 'A sub-group cannot have sub-groups.';
+
+  @override
+  String get stockReasonGroupHasMovements =>
+      'This item has stock movements: its unit and tracking stay as they were written.';
+
+  @override
+  String get stockReasonGroupHasSubgroups =>
+      'This group has sub-groups: move or delete them first.';
+
+  @override
+  String get stockReasonGroupInUse =>
+      'This group is used by items: move them first.';
+
+  @override
+  String get stockReasonGroupItemUnknown =>
+      'This item is not one of this business\'s.';
+
+  @override
+  String get stockReasonGroupNameDuplicate =>
+      'A group of this level already has this name.';
+
+  @override
+  String get stockReasonGroupNameLength =>
+      'A group\'s name has 1 to 80 characters.';
+
+  @override
+  String get stockReasonGroupNameRequired => 'A new group needs a name.';
+
+  @override
+  String get stockReasonGroupNeedsSerial =>
+      'Per-unit tags need tracking by piece.';
+
+  @override
+  String get stockReasonGroupNotOverridable =>
+      'This is a proposal for new items and is not set per item.';
+
+  @override
+  String get stockReasonGroupPlaceUnknown =>
+      'This place is not one of this business\'s.';
+
+  @override
+  String get stockReasonGroupUnknown =>
+      'This group is not one of this business\'s.';
+
+  @override
+  String get stockReasonGroupUnknownReference =>
+      'A place, item or rate named here is not one of this business\'s.';
+
+  @override
+  String get stockReasonGroupValueRequired =>
+      'Give a value, or use the group\'s value.';
+
+  @override
+  String get stockReasonGroupVatRateUnknown =>
+      'This VAT rate is not one of this business\'s active rates.';
 
   @override
   String get stockReasonGtinCheck =>

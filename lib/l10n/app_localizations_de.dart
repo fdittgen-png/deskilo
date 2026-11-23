@@ -12562,6 +12562,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get featureStockCycleCountsTitle => 'Permanente Inventur';
 
   @override
+  String get featureStockItemGroupsDesc =>
+      'Artikel gruppieren, damit ihre Einstellungen geteilt werden: Nachverfolgung, Haltbarkeit, Etikettenmodus, Einheiten, Mehrwertsteuer, Kasse und mehr. Ein Artikel erbt den Wert seiner Gruppe, außer er behält seinen eigenen; eine Änderung an der Gruppe zeigt vor dem Speichern, wie viele Artikel sie erreicht.';
+
+  @override
+  String get featureStockItemGroupsTitle => 'Artikelgruppen';
+
+  @override
   String get featureStockLotsDesc =>
       'Waren nach Charge oder Verfallsdatum verfolgen, mit einer Haltbarkeit. Aus: kein Artikel wird nach Charge verfolgt, und Erfasstes bleibt unverändert.';
 
@@ -32136,6 +32143,18 @@ class AppLocalizationsDe extends AppLocalizations {
       'Wie viele Tage eine Inventuraufgabe nach ihrem Fälligkeitstag offen bleiben darf, bevor der Posteingang sie als überfällig meldet.';
 
   @override
+  String get settingHintStockGroupDefaultCountDays =>
+      'Nach wie vielen Tagen ein Artikel, den weder eine Gruppe noch eine eigene Einstellung betrifft, zur Zyklus-Zählung vorgeschlagen wird. 0 heißt nicht geplant.';
+
+  @override
+  String get settingHintStockGroupDefaultTagMode =>
+      'Ob ein Artikel, den weder eine Gruppe noch eine eigene Einstellung betrifft, ein RFID-Etikett trägt: keines, ein Etikett für eine Charge oder ein Etikett je Stück (das eine Verfolgung je Stück braucht).';
+
+  @override
+  String get settingHintStockPriceRounding =>
+      'Wie ein vorgeschlagener Verkaufspreis gerundet wird: auf 0,05 oder 0,10 oder auf einen Preis, der auf 0,99 endet. Sie dient nur dazu, einen Preis vorzuschlagen.';
+
+  @override
   String get settingHintVatViesEvidenceDays =>
       'Tage, die eine gültige Prüfung der USt-IdNr. aktuell genug bleibt, um auf einer neuen Rechnung als Nachweis zu dienen. Ein kürzerer Wert verlangt früher eine neue Prüfung; er beweist nicht, dass ein Geschäft gültig ist.';
 
@@ -32466,6 +32485,17 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get settingLabelStockCycleCountOverdueDays =>
       'Permanente Inventur: überfällig nach';
+
+  @override
+  String get settingLabelStockGroupDefaultCountDays =>
+      'Standard-Zählzyklus (Tage)';
+
+  @override
+  String get settingLabelStockGroupDefaultTagMode =>
+      'Standard-Etikettenmodus der Artikel';
+
+  @override
+  String get settingLabelStockPriceRounding => 'Preisrundung';
 
   @override
   String get settingLabelVatViesEvidenceDays =>
@@ -36096,6 +36126,66 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get stockReasonFactorInvalid =>
       'Beide Zahlen müssen ganze Zahlen über null sein.';
+
+  @override
+  String get stockReasonGroupDepth =>
+      'Eine Untergruppe kann keine Untergruppen haben.';
+
+  @override
+  String get stockReasonGroupHasMovements =>
+      'Dieser Artikel hat Lagerbewegungen: Einheit und Verfolgung bleiben, wie sie geschrieben wurden.';
+
+  @override
+  String get stockReasonGroupHasSubgroups =>
+      'Diese Gruppe hat Untergruppen: verschieben oder löschen Sie sie zuerst.';
+
+  @override
+  String get stockReasonGroupInUse =>
+      'Diese Gruppe wird von Artikeln verwendet: verschieben Sie sie zuerst.';
+
+  @override
+  String get stockReasonGroupItemUnknown =>
+      'Dieser Artikel gehört nicht zu diesem Betrieb.';
+
+  @override
+  String get stockReasonGroupNameDuplicate =>
+      'Eine Gruppe dieser Ebene hat diesen Namen schon.';
+
+  @override
+  String get stockReasonGroupNameLength =>
+      'Der Name einer Gruppe hat 1 bis 80 Zeichen.';
+
+  @override
+  String get stockReasonGroupNameRequired =>
+      'Eine neue Gruppe braucht einen Namen.';
+
+  @override
+  String get stockReasonGroupNeedsSerial =>
+      'Etiketten je Stück brauchen eine Verfolgung je Stück.';
+
+  @override
+  String get stockReasonGroupNotOverridable =>
+      'Das ist ein Vorschlag für neue Artikel und wird nicht je Artikel gesetzt.';
+
+  @override
+  String get stockReasonGroupPlaceUnknown =>
+      'Dieser Ort gehört nicht zu diesem Betrieb.';
+
+  @override
+  String get stockReasonGroupUnknown =>
+      'Diese Gruppe gehört nicht zu diesem Betrieb.';
+
+  @override
+  String get stockReasonGroupUnknownReference =>
+      'Ein hier genannter Ort, Artikel oder Satz gehört nicht zu diesem Betrieb.';
+
+  @override
+  String get stockReasonGroupValueRequired =>
+      'Geben Sie einen Wert an oder übernehmen Sie den der Gruppe.';
+
+  @override
+  String get stockReasonGroupVatRateUnknown =>
+      'Dieser Mehrwertsteuersatz gehört nicht zu den aktiven Sätzen dieses Betriebs.';
 
   @override
   String get stockReasonGtinCheck =>

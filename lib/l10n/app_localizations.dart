@@ -20272,6 +20272,18 @@ abstract class AppLocalizations {
   /// **'Cycle counts'**
   String get featureStockCycleCountsTitle;
 
+  /// #4361 feature description
+  ///
+  /// In en, this message translates to:
+  /// **'Group items so that their settings are shared: tracking, shelf life, tag mode, units, VAT, the till and more. An item inherits its group\'s value unless it keeps its own; a change to a group shows how many items it reaches before it is saved.'**
+  String get featureStockItemGroupsDesc;
+
+  /// #4361 feature name
+  ///
+  /// In en, this message translates to:
+  /// **'Item groups'**
+  String get featureStockItemGroupsTitle;
+
   /// #4169 what the lots and expiry feature does, and what off means
   ///
   /// In en, this message translates to:
@@ -51026,6 +51038,24 @@ abstract class AppLocalizations {
   /// **'How many days a cycle count task may stay open past its due date before the inbox says it is overdue.'**
   String get settingHintStockCycleCountOverdueDays;
 
+  /// #4361 setting label/hint
+  ///
+  /// In en, this message translates to:
+  /// **'Every how many days an item that no group and no own setting speaks for is proposed for a cycle count. 0 means not scheduled.'**
+  String get settingHintStockGroupDefaultCountDays;
+
+  /// #4361 setting label/hint
+  ///
+  /// In en, this message translates to:
+  /// **'Whether an item that no group and no own setting speaks for carries an RFID tag: none, one tag naming a batch, or one tag per unit (which needs tracking by piece).'**
+  String get settingHintStockGroupDefaultTagMode;
+
+  /// #4361 setting label/hint
+  ///
+  /// In en, this message translates to:
+  /// **'How a proposed sale price is rounded: to the nearest 0.05 or 0.10, or to a price ending in 0.99. It is used only to propose a price.'**
+  String get settingHintStockPriceRounding;
+
   /// #2487 retention settings
   ///
   /// In en, this message translates to:
@@ -51571,6 +51601,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cycle count: overdue after'**
   String get settingLabelStockCycleCountOverdueDays;
+
+  /// #4361 setting label/hint
+  ///
+  /// In en, this message translates to:
+  /// **'Default count cycle (days)'**
+  String get settingLabelStockGroupDefaultCountDays;
+
+  /// #4361 setting label/hint
+  ///
+  /// In en, this message translates to:
+  /// **'Default tag mode of items'**
+  String get settingLabelStockGroupDefaultTagMode;
+
+  /// #4361 setting label/hint
+  ///
+  /// In en, this message translates to:
+  /// **'Price rounding'**
+  String get settingLabelStockPriceRounding;
 
   /// #2487 retention settings
   ///
@@ -57366,6 +57414,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Both numbers must be whole numbers above zero.'**
   String get stockReasonFactorInvalid;
+
+  /// #4361 refusal text
+  ///
+  /// In en, this message translates to:
+  /// **'A sub-group cannot have sub-groups.'**
+  String get stockReasonGroupDepth;
+
+  /// #4361 refusal text
+  ///
+  /// In en, this message translates to:
+  /// **'This item has stock movements: its unit and tracking stay as they were written.'**
+  String get stockReasonGroupHasMovements;
+
+  /// #4361 refusal text
+  ///
+  /// In en, this message translates to:
+  /// **'This group has sub-groups: move or delete them first.'**
+  String get stockReasonGroupHasSubgroups;
+
+  /// #4361 refusal text
+  ///
+  /// In en, this message translates to:
+  /// **'This group is used by items: move them first.'**
+  String get stockReasonGroupInUse;
+
+  /// #4361 refusal text
+  ///
+  /// In en, this message translates to:
+  /// **'This item is not one of this business\'s.'**
+  String get stockReasonGroupItemUnknown;
+
+  /// #4361 refusal text
+  ///
+  /// In en, this message translates to:
+  /// **'A group of this level already has this name.'**
+  String get stockReasonGroupNameDuplicate;
+
+  /// #4361 refusal text
+  ///
+  /// In en, this message translates to:
+  /// **'A group\'s name has 1 to 80 characters.'**
+  String get stockReasonGroupNameLength;
+
+  /// #4361 refusal text
+  ///
+  /// In en, this message translates to:
+  /// **'A new group needs a name.'**
+  String get stockReasonGroupNameRequired;
+
+  /// #4361 refusal text
+  ///
+  /// In en, this message translates to:
+  /// **'Per-unit tags need tracking by piece.'**
+  String get stockReasonGroupNeedsSerial;
+
+  /// #4361 refusal text
+  ///
+  /// In en, this message translates to:
+  /// **'This is a proposal for new items and is not set per item.'**
+  String get stockReasonGroupNotOverridable;
+
+  /// #4361 refusal text
+  ///
+  /// In en, this message translates to:
+  /// **'This place is not one of this business\'s.'**
+  String get stockReasonGroupPlaceUnknown;
+
+  /// #4361 refusal text
+  ///
+  /// In en, this message translates to:
+  /// **'This group is not one of this business\'s.'**
+  String get stockReasonGroupUnknown;
+
+  /// #4361 refusal text
+  ///
+  /// In en, this message translates to:
+  /// **'A place, item or rate named here is not one of this business\'s.'**
+  String get stockReasonGroupUnknownReference;
+
+  /// #4361 refusal text
+  ///
+  /// In en, this message translates to:
+  /// **'Give a value, or use the group\'s value.'**
+  String get stockReasonGroupValueRequired;
+
+  /// #4361 refusal text
+  ///
+  /// In en, this message translates to:
+  /// **'This VAT rate is not one of this business\'s active rates.'**
+  String get stockReasonGroupVatRateUnknown;
 
   /// #4169 the stock editors: a text under a field the server refused
   ///

@@ -326,5 +326,6 @@ String _stockName(AppLocalizations l10n, WorkspaceFeature feature) =>
       WorkspaceFeature.stockReturns => l10n.featureStockReturnsTitle,
       WorkspaceFeature.stockCounts => l10n.featureStockCountsTitle,
       WorkspaceFeature.stockCycleCounts => l10n.featureStockCycleCountsTitle,
+      WorkspaceFeature.stockItemGroups => l10n.featureStockItemGroupsTitle,
       _ => feature.name,
     };

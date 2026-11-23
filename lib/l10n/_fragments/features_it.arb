@@ -337,5 +337,7 @@
   "featureStockCycleCountsDesc": "Pianifichi controlli a campione di luoghi, articoli o merci di alto valore. Un piano scaduto crea un compito di conteggio che si esegue senza vedere le quantità attese; ogni differenza è approvata come ogni conteggio. Disattivato: nessun piano parte e nessun compito viene creato; il registro non cambia.",
   "@featureStockCycleCountsDesc": {
     "description": "#4295 feature description"
-  }
+  },
+  "featureStockItemGroupsTitle": "Gruppi di articoli",
+  "featureStockItemGroupsDesc": "Raggruppi gli articoli per condividerne le impostazioni: tracciabilità, scadenza, modalità etichetta, unità, IVA, cassa e altro. Un articolo eredita il valore del suo gruppo salvo che mantenga il proprio; una modifica al gruppo mostra quanti articoli raggiunge prima di essere salvata."
 }

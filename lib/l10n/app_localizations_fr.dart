@@ -12597,6 +12597,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get featureStockCycleCountsTitle => 'Inventaires tournants';
 
   @override
+  String get featureStockItemGroupsDesc =>
+      'Regroupez les articles pour partager leurs réglages : suivi, durée de conservation, mode d\'étiquette, unités, TVA, caisse et plus. Un article hérite de la valeur de son groupe sauf s\'il garde la sienne ; un changement de groupe montre combien d\'articles il touche avant d\'être enregistré.';
+
+  @override
+  String get featureStockItemGroupsTitle => 'Groupes d\'articles';
+
+  @override
   String get featureStockLotsDesc =>
       'Suivre les marchandises par lot ou par date de péremption, avec une durée de conservation. Désactivé : aucun article n’est suivi par lot, et ce qui a été enregistré est conservé tel quel.';
 
@@ -32182,6 +32189,18 @@ class AppLocalizationsFr extends AppLocalizations {
       'Combien de jours une tâche d’inventaire tournant peut rester ouverte après son échéance avant que la boîte de réception la dise en retard.';
 
   @override
+  String get settingHintStockGroupDefaultCountDays =>
+      'Tous les combien de jours un article que ni un groupe ni un réglage propre ne concerne est proposé pour un comptage tournant. 0 : non planifié.';
+
+  @override
+  String get settingHintStockGroupDefaultTagMode =>
+      'Si un article que ni un groupe ni un réglage propre ne concerne porte une étiquette RFID : aucune, une étiquette qui désigne un lot, ou une étiquette par unité (ce qui exige un suivi à la pièce).';
+
+  @override
+  String get settingHintStockPriceRounding =>
+      'Comment un prix de vente proposé est arrondi : au 0,05 ou 0,10 le plus proche, ou à un prix qui finit par 0,99. Il ne sert qu\'à proposer un prix.';
+
+  @override
   String get settingHintVatViesEvidenceDays =>
       'Jours pendant lesquels un contrôle valide du numéro de TVA reste assez récent pour servir de preuve sur une nouvelle facture. Une valeur plus courte demande un nouveau contrôle plus tôt ; ce n’est pas la preuve qu’une opération est valable.';
 
@@ -32522,6 +32541,17 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingLabelStockCycleCountOverdueDays =>
       'Inventaire tournant : en retard après';
+
+  @override
+  String get settingLabelStockGroupDefaultCountDays =>
+      'Cycle de comptage par défaut (jours)';
+
+  @override
+  String get settingLabelStockGroupDefaultTagMode =>
+      'Mode d\'étiquette par défaut des articles';
+
+  @override
+  String get settingLabelStockPriceRounding => 'Arrondi des prix';
 
   @override
   String get settingLabelVatViesEvidenceDays =>
@@ -36155,6 +36185,66 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get stockReasonFactorInvalid =>
       'Les deux nombres doivent être des entiers supérieurs à zéro.';
+
+  @override
+  String get stockReasonGroupDepth =>
+      'Un sous-groupe ne peut pas avoir de sous-groupes.';
+
+  @override
+  String get stockReasonGroupHasMovements =>
+      'Cet article a des mouvements de stock : son unité et son suivi restent tels qu\'écrits.';
+
+  @override
+  String get stockReasonGroupHasSubgroups =>
+      'Ce groupe a des sous-groupes : déplacez-les ou supprimez-les d\'abord.';
+
+  @override
+  String get stockReasonGroupInUse =>
+      'Ce groupe est utilisé par des articles : déplacez-les d\'abord.';
+
+  @override
+  String get stockReasonGroupItemUnknown =>
+      'Cet article n\'est pas un article de cette entreprise.';
+
+  @override
+  String get stockReasonGroupNameDuplicate =>
+      'Un groupe de ce niveau porte déjà ce nom.';
+
+  @override
+  String get stockReasonGroupNameLength =>
+      'Le nom d\'un groupe compte de 1 à 80 caractères.';
+
+  @override
+  String get stockReasonGroupNameRequired =>
+      'Un nouveau groupe a besoin d\'un nom.';
+
+  @override
+  String get stockReasonGroupNeedsSerial =>
+      'Une étiquette par unité exige un suivi à la pièce.';
+
+  @override
+  String get stockReasonGroupNotOverridable =>
+      'C\'est une proposition pour les nouveaux articles, elle ne se règle pas par article.';
+
+  @override
+  String get stockReasonGroupPlaceUnknown =>
+      'Ce lieu n\'est pas un lieu de cette entreprise.';
+
+  @override
+  String get stockReasonGroupUnknown =>
+      'Ce groupe n\'est pas un groupe de cette entreprise.';
+
+  @override
+  String get stockReasonGroupUnknownReference =>
+      'Un lieu, un article ou un taux nommé ici n\'appartient pas à cette entreprise.';
+
+  @override
+  String get stockReasonGroupValueRequired =>
+      'Donnez une valeur, ou reprenez celle du groupe.';
+
+  @override
+  String get stockReasonGroupVatRateUnknown =>
+      'Ce taux de TVA n\'est pas un des taux actifs de cette entreprise.';
 
   @override
   String get stockReasonGtinCheck =>

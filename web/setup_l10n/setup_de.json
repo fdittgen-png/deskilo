@@ -807,5 +807,19 @@
  "stockCycleHighValueHint": "Der Wert in der kleinsten Einheit der Währung des Unternehmens, ab dem das, was ein Ort von einem Artikel hält, für einen Plan ohne eigene Schwelle als hochwertig gilt. Einstellbar in den Einstellungen der App.",
  "stockCycleOverdue": "Permanente Inventur: überfällig nach",
  "stockCycleOverdueHint": "Wie viele Tage eine Inventuraufgabe nach ihrem Fälligkeitstag offen bleiben darf, bevor sie als überfällig gemeldet wird. Einstellbar in den Einstellungen der App.",
- "optMinorUnits": "{n} (kleinste Einheit)"
+ "optMinorUnits": "{n} (kleinste Einheit)",
+ "stockGroupTagMode": "Standard-Etikettenmodus der Artikel",
+ "stockGroupTagModeHint": "Ob ein Artikel, den weder eine Gruppe noch eine eigene Einstellung betrifft, ein RFID-Etikett trägt: keines, ein Etikett für eine Charge oder ein Etikett je Stück (das eine Verfolgung je Stück braucht). Einstellbar in den Einstellungen der App.",
+ "stockGroupCountDays": "Standard-Zählzyklus",
+ "stockGroupCountDaysHint": "Nach wie vielen Tagen ein Artikel, den weder eine Gruppe noch eine eigene Einstellung betrifft, zur Zyklus-Zählung vorgeschlagen wird. Einstellbar in den Einstellungen der App.",
+ "stockGroupRounding": "Preisrundung",
+ "stockGroupRoundingHint": "Wie ein vorgeschlagener Verkaufspreis gerundet wird. Sie dient nur dazu, einen Preis vorzuschlagen. Einstellbar in den Einstellungen der App.",
+ "optTagNone": "Kein Etikett",
+ "optTagPerBatch": "Ein Etikett je Charge",
+ "optTagPerUnit": "Ein Etikett je Stück",
+ "optNotScheduled": "Nicht geplant",
+ "optRoundNone": "Keine Rundung",
+ "optRound005": "Auf 0,05",
+ "optRound010": "Auf 0,10",
+ "optRound099": "Endend auf 0,99"
 }

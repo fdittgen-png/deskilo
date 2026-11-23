@@ -80,6 +80,14 @@ String _biReportSettingLabel(AppLocalizations l10n, String key) => switch (key) 
       'bi.report_max_visuals' => l10n.settingLabelBiReportMaxVisuals,
       'bi.report_max_bytes' => l10n.settingLabelBiReportMaxBytes,
       'bi.detail_page_size' => l10n.settingLabelBiDetailPageSize,
+      _ => _itemGroupSettingLabel(l10n, key),
+    };
+
+/// #4361 -- the defaults an item group falls back to.
+String _itemGroupSettingLabel(AppLocalizations l10n, String key) => switch (key) {
+      'stock.group_default_tag_mode' => l10n.settingLabelStockGroupDefaultTagMode,
+      'stock.group_default_count_days' => l10n.settingLabelStockGroupDefaultCountDays,
+      'stock.price_rounding' => l10n.settingLabelStockPriceRounding,
       _ => _bankSettingLabel(l10n, key),
     };
 
@@ -211,6 +219,14 @@ String? _biReportSettingHint(AppLocalizations l10n, String key) => switch (key) 
       'bi.report_max_visuals' => l10n.settingHintBiReportMaxVisuals,
       'bi.report_max_bytes' => l10n.settingHintBiReportMaxBytes,
       'bi.detail_page_size' => l10n.settingHintBiDetailPageSize,
+      _ => _itemGroupSettingHint(l10n, key),
+    };
+
+/// #4361 -- the defaults an item group falls back to.
+String? _itemGroupSettingHint(AppLocalizations l10n, String key) => switch (key) {
+      'stock.group_default_tag_mode' => l10n.settingHintStockGroupDefaultTagMode,
+      'stock.group_default_count_days' => l10n.settingHintStockGroupDefaultCountDays,
+      'stock.price_rounding' => l10n.settingHintStockPriceRounding,
       _ => _bankSettingHint(l10n, key),
     };
 

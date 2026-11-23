@@ -30,6 +30,9 @@
 #   (H2) the last two lines of a task, on different items, counted at once: the
 #       second waits for the task's lock, and the task is closed (complete), not
 #       left open with nothing pending.
+#   (I) a group is saved while one of its items is overridden, then while it is moved to another group:
+#       the second command waits for the group's lock and is refused as stale (DKG10); no deadlock, and
+#       the saved value is the one that stands.
 # A holder that never took its lock, or a contender that never waited, fails the
 # script: nothing here can pass empty. A single pgTAP transaction cannot show a
 # race, so each contender is its own psql process on CI's disposable database.
@@ -472,5 +475,72 @@ wait_lock "transfer-race-taskclose"
 wait "$holder10" || { echo "::error::the first count failed: $(tr '\n' ' ' < "$scratch/holder10")" >&2; exit 1; }
 wait "$contender10" || { echo "::error::the second count failed: $(tr '\n' ' ' < "$scratch/contender10")" >&2; exit 1; }
 expect "(H2) the task is complete, with nothing pending" "$(q "select t.state || '/' || (select count(*) from public.stock_count_task_lines x where x.task_id = t.id and x.state = 'pending') from public.stock_count_tasks t where t.plan_id = '$plan2'")" "complete/0"
+
+# (I) a group is saved while one of its items is overridden, and while it is moved to another group: the
+# second command waits for the group's lock, then is refused as stale (DKG10): never a deadlock, and the saved
+# value is not overwritten by what the second read before the save.
+q "update public.workspaces set feature_flags = coalesce(feature_flags, '{}'::jsonb) || '{\"stockItemGroups\": true}' where id = '$ws'" >/dev/null
+ig1=$(uid); ig2=$(uid)
+iitem=$(q "insert into public.services (workspace_id, name, price_cents, active, inventory_unit, tracking, stockable) values ('$ws', 'Race group item', 100, true, 'piece', 'none', true) returning id" | head -1)
+psql "$url" -X -qAt -v ON_ERROR_STOP=1 >/dev/null 2>&1 <<SQL
+begin;
+$as_owner
+select public.item_group_save_v1('$ws', gen_random_uuid(), '$ig1', 0, '{"name": "Race group", "parameters": {"shelf_life_days": 7}}'::jsonb);
+select public.item_group_save_v1('$ws', gen_random_uuid(), '$ig2', 0, '{"name": "Race group two"}'::jsonb);
+select public.item_group_assign_v1('$ws', gen_random_uuid(), '$iitem', (select stock_revision from public.services where id = '$iitem'), '$ig1');
+commit;
+SQL
+expect "(I) the item took its group's shelf life" "$(q "select shelf_life_days from public.services where id = '$iitem'")" "7"
+irev=$(q "select stock_revision from public.services where id = '$iitem'")
+psql "$url" -X -qAt -v ON_ERROR_STOP=1 >"$scratch/holder11" 2>&1 <<SQL &
+begin;
+$as_owner
+select 'saved ' || (public.item_group_save_v1('$ws', gen_random_uuid(), '$ig1', 1, '{"parameters": {"shelf_life_days": 10}}'::jsonb) ->> 'revision');
+reset role;
+\\! touch '$scratch/ready11'
+select pg_sleep(4);
+commit;
+SQL
+holder11=$!
+wait_marker "$scratch/ready11" "$scratch/holder11"
+PGAPPNAME="transfer-race-override" psql "$url" -X -qAt -v ON_ERROR_STOP=1 >"$scratch/contender11" 2>&1 <<SQL &
+\\set VERBOSITY verbose
+begin;
+$as_owner
+select public.item_override_save_v1('$ws', gen_random_uuid(), '$iitem', $irev, 'shelf_life_days', 'set', '21'::jsonb);
+commit;
+SQL
+contender11=$!
+wait_lock "transfer-race-override"
+wait "$holder11" || { echo "::error::the group save failed: $(tr '\n' ' ' < "$scratch/holder11")" >&2; exit 1; }
+wait "$contender11" || true
+grep -qx "saved 2" "$scratch/holder11" || { echo "::error::the group did not save: $(tr '\n' ' ' < "$scratch/holder11")" >&2; exit 1; }
+grep -q "DKG10" "$scratch/contender11" || { echo "::error::the override was not refused as stale: $(tr '\n' ' ' < "$scratch/contender11")" >&2; exit 1; }
+expect "(I) the saved shelf life stands, the override was not applied" "$(q "select shelf_life_days || '/' || cardinality(group_overrides) from public.services where id = '$iitem'")" "10/0"
+irev=$(q "select stock_revision from public.services where id = '$iitem'")
+psql "$url" -X -qAt -v ON_ERROR_STOP=1 >"$scratch/holder12" 2>&1 <<SQL &
+begin;
+$as_owner
+select 'saved ' || (public.item_group_save_v1('$ws', gen_random_uuid(), '$ig1', 2, '{"parameters": {"shelf_life_days": 12}}'::jsonb) ->> 'revision');
+reset role;
+\\! touch '$scratch/ready12'
+select pg_sleep(4);
+commit;
+SQL
+holder12=$!
+wait_marker "$scratch/ready12" "$scratch/holder12"
+PGAPPNAME="transfer-race-move" psql "$url" -X -qAt -v ON_ERROR_STOP=1 >"$scratch/contender12" 2>&1 <<SQL &
+\\set VERBOSITY verbose
+begin;
+$as_owner
+select public.item_group_assign_v1('$ws', gen_random_uuid(), '$iitem', $irev, '$ig2');
+commit;
+SQL
+contender12=$!
+wait_lock "transfer-race-move"
+wait "$holder12" || { echo "::error::the second group save failed: $(tr '\n' ' ' < "$scratch/holder12")" >&2; exit 1; }
+wait "$contender12" || true
+grep -q "DKG10" "$scratch/contender12" || { echo "::error::the move was not refused as stale: $(tr '\n' ' ' < "$scratch/contender12")" >&2; exit 1; }
+expect "(I) the item stays in its group with the saved value" "$(q "select (group_id = '$ig1')::text || '/' || shelf_life_days from public.services where id = '$iitem'")" "true/12"
 
 echo "stock transfer race: opposing transfers never deadlock and keep every total; the last stock is taken once; a booking confirmation and a customer return of one item serialise in both orders; two put-aways cannot over-allocate a line; two sessions crossing a reorder point raise one alert"

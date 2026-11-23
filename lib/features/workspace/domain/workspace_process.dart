@@ -154,6 +154,8 @@ const workspaceProcesses = <WorkspaceProcess>[
       WorkspaceFeature.stockCounts,
       // #4295 — scheduled cycle counts.
       WorkspaceFeature.stockCycleCounts,
+      // #4361
+      WorkspaceFeature.stockItemGroups,
     ]),
   ]),
   WorkspaceProcess('billingPayments', [

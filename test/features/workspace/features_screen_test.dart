@@ -89,7 +89,7 @@ void main() {
     // #4170 — stockTakeOut: taking goods out is asked for.
     // #4294 — stockReorder: reorder points are asked for.
     // #4172 — stockReturns: returns and corrections are asked for; stockCounts: counts; stockCycleCounts: cycle counts.
-    expect(onCount, featureManifest.length - 67);
+    expect(onCount, featureManifest.length - 68);
   });
 
   testWidgets(

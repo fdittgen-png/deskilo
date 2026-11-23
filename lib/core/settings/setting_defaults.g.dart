@@ -182,6 +182,12 @@ abstract final class SettingDefaults {
   static const int stockCycleCountHighValueMinor = 50000;
   /// `stock.cycle_count_overdue_days`
   static const int stockCycleCountOverdueDays = 7;
+  /// `stock.group_default_count_days`
+  static const int stockGroupDefaultCountDays = 0;
+  /// `stock.group_default_tag_mode`
+  static const String stockGroupDefaultTagMode = 'none';
+  /// `stock.price_rounding`
+  static const String stockPriceRounding = 'none';
   /// `vat.vies_evidence_days`
   static const int vatViesEvidenceDays = 90;
 }

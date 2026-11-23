@@ -897,5 +897,13 @@
   "featureStockCycleCountsDesc": "Plan spot checks of chosen places, items or high-value goods. A due plan makes a count task the counter does without seeing the expected quantities; each difference is approved like any count. Off: no plan runs and no task is made; the ledger is unaffected.",
   "@featureStockCycleCountsDesc": {
     "description": "#4295 feature description"
+  },
+  "featureStockItemGroupsTitle": "Item groups",
+  "featureStockItemGroupsDesc": "Group items so that their settings are shared: tracking, shelf life, tag mode, units, VAT, the till and more. An item inherits its group's value unless it keeps its own; a change to a group shows how many items it reaches before it is saved.",
+  "@featureStockItemGroupsTitle": {
+    "description": "#4361 feature name"
+  },
+  "@featureStockItemGroupsDesc": {
+    "description": "#4361 feature description"
   }
 }

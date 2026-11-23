@@ -88,4 +88,12 @@ const Map<WorkspaceFeature, FeatureManifestEntry> stockFeatureManifest = {
     requires: WorkspaceFeature.stockCounts,
     defaultOn: false,
   ),
+  // #4361 — item groups: shared settings that items inherit and may override, with history. Asked for, under the goods ledger. Off: items keep their own values exactly as before.
+  WorkspaceFeature.stockItemGroups: FeatureManifestEntry(
+    feature: WorkspaceFeature.stockItemGroups,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.stockManagement,
+    defaultOn: false,
+  ),
 };
