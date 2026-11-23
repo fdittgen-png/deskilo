@@ -50,6 +50,8 @@ abstract final class SettingDefaults {
   static const String businessKind = 'coworking';
   /// `business.more_kinds`
   static const String businessMoreKinds = '';
+  /// `business.shop_type`
+  static const String businessShopType = 'grocery';
   /// `calendar.range_days`
   static const int calendarRangeDays = 400;
   /// `directory.geocoder_url`
@@ -192,6 +194,8 @@ abstract final class SettingDefaults {
   static const String stockRepeatedScan = 'add_one';
   /// `stock.tag_rebind_grace_days`
   static const int stockTagRebindGraceDays = 30;
+  /// `stock.weighed_goods`
+  static const bool stockWeighedGoods = false;
   /// `vat.vies_evidence_days`
   static const int vatViesEvidenceDays = 90;
 }

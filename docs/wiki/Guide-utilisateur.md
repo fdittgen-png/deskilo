@@ -3776,6 +3776,7 @@ Vous tenez un studio, un cabinet ou un salon plutôt qu’un espace de coworking
 - Le coworking ne propose rien, et désactiver les places ne supprime rien : réactivez-les et le plan et les réservations reviennent.
 
 - **Indépendant** est pour une personne seule qui vend des services à des clients : il garde les lieux désactivés et active la facturation, les clients de facturation, les devis et les achats, jamais un prestataire, des messages ni une page publique. C’est un type à part entière : **Service** reste inchangé.
+- **Commerce** est pour une entreprise qui achète, tient en stock et vend des marchandises. Il garde les lieux désactivés et propose le stock (réception, sortie, lots par date, seuils de réapprovisionnement), les prestations comme catalogue, les achats et les commandes. Vous choisissez aussi le **type de commerce** — épicerie, boulangerie, boucherie, fleuriste ou supérette : il change les mots et les exemples, jamais ce que fait l’application. Si vous vendez au poids, activez **Les marchandises se vendent au poids** dans les réglages du stock : un nouvel article est alors proposé en kilogrammes. La vente au comptoir sera proposée quand elle existera ; les puces RFID sont offertes, jamais proposées.
 - Me nomme le type que chacune de vos activités a choisi, à côté de son pays et de sa devise.
 
 **Voir aussi:** [Fonctions](#activer-ou-désactiver-des-processus-entiers)

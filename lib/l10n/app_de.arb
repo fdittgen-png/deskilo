@@ -3479,6 +3479,7 @@
   "businessKindDescPractice": "Termine: Massage, Therapie, Coaching, Beratung.",
   "businessKindDescSalon": "Kosmetik, Friseur, Nägel, Tattoo.",
   "businessKindDescService": "Jedes andere Unternehmen, das seine Leistungen verkauft.",
+  "businessKindDescShop": "Ware, die eingekauft, gelagert und verkauft wird: ein Feinkostladen, eine Bäckerei, eine Metzgerei, ein Blumenladen oder ein Späti.",
   "businessKindDescStudio": "Kurse und Unterricht: Yoga, Tanz, Musik, Kunst.",
   "businessKindMoreTitle": "Es ist auch … (optional)",
   "businessKindNameCoworking": "Coworking-Space",
@@ -3486,6 +3487,7 @@
   "businessKindNamePractice": "Praxis",
   "businessKindNameSalon": "Salon",
   "businessKindNameService": "Dienstleistungsunternehmen",
+  "businessKindNameShop": "Laden",
   "businessKindNameStudio": "Studio",
   "businessKindNoBookingYet": "Die Buchung von Kursen und Terminen ist nicht Teil dieser Version. Heute erhalten Sie: Ihre Leistungen mit Preisen, Rechnungen, Online-Zahlung, Nachrichten und Ihre öffentliche Seite.",
   "businessKindNoChange": "Die Funktionen bleiben, wie sie sind.",
@@ -5203,6 +5205,7 @@
   "discoveryKindPractices": "Praxen",
   "discoveryKindSalons": "Salons",
   "discoveryKindServices": "Andere Dienstleistungen",
+  "discoveryKindShops": "Läden",
   "discoveryKindStudios": "Studios",
   "discoveryKindUncovered": "{count, plural, one{Ein Verzeichnis kann nicht nach Art filtern und wurde nicht gefragt.} other{{count} Verzeichnisse können nicht nach Art filtern und wurden nicht gefragt.}}",
   "discoveryLoadedCount": "Geladene Orte: {loaded} · angezeigt: {shown} · antwortende Verzeichnisse: {answered} von {sources}",
@@ -18973,6 +18976,7 @@
   },
   "settingHintBusinessKind": "Was das Geschäft ist: ein Coworking-Space, ein Studio, eine Praxis, ein Salon oder ein anderes Dienstleistungsgeschäft. Sie schlägt die Funktionen und Begriffe vor, die es braucht; ein Coworking-Space bleibt, wie er war.",
   "settingHintBusinessMoreKinds": "Weitere Arten, die das Geschäft neben der Hauptart ist, falls zutreffend.",
+  "settingHintBusinessShopType": "Lebensmittelgeschäft, Bäckerei, Metzgerei, Blumenladen oder Späti. Es ändert die Wörter und Beispiele der App, nie ihr Verhalten.",
   "settingHintCalendarRangeDays": "Von der Plattform festgelegt: der längste Zeitraum, den eine Kalenderabfrage anfordern darf. Er begrenzt die Abfrage.",
   "@settingHintCalendarRangeDays": {
     "description": "#2487 settings: Setting hint."
@@ -19128,6 +19132,7 @@
   "settingHintStockPriceRounding": "Wie ein vorgeschlagener Verkaufspreis gerundet wird: auf 0,05 oder 0,10 oder auf einen Preis, der auf 0,99 endet. Sie dient nur dazu, einen Preis vorzuschlagen.",
   "settingHintStockRepeatedScan": "Was ein Warenblatt tut, wenn derselbe Code noch einmal gescannt wird: eins mehr zur Zeile hinzufügen oder die Menge erfragen.",
   "settingHintStockTagRebindGraceDays": "Wie viele Tage nach dem Entfernen ein Etikettencode wieder gebunden werden darf. 0 heißt sofort. Ein gültiges Etikett wird nie doppelt gebunden.",
+  "settingHintStockWeighedGoods": "An: Ein neuer Lagerartikel wird in Kilogramm statt in Stück vorgeschlagen (Metzgerei, Bäckerei, Theke). Jeder Artikel kann weiterhin eine andere Einheit erhalten.",
   "settingHintVatViesEvidenceDays": "Tage, die eine gültige Prüfung der USt-IdNr. aktuell genug bleibt, um auf einer neuen Rechnung als Nachweis zu dienen. Ein kürzerer Wert verlangt früher eine neue Prüfung; er beweist nicht, dass ein Geschäft gültig ist.",
   "@settingHintVatViesEvidenceDays": {
     "description": "#2487 retention settings"
@@ -19198,6 +19203,7 @@
   },
   "settingLabelBusinessKind": "Art des Geschäfts",
   "settingLabelBusinessMoreKinds": "Auch eine Art des Geschäfts",
+  "settingLabelBusinessShopType": "Art des Ladens",
   "settingLabelCalendarRangeDays": "Kalenderzeitraum",
   "@settingLabelCalendarRangeDays": {
     "description": "#2487 settings: Setting label."
@@ -19353,6 +19359,7 @@
   "settingLabelStockPriceRounding": "Preisrundung",
   "settingLabelStockRepeatedScan": "Ein erneut gescannter Code",
   "settingLabelStockTagRebindGraceDays": "Tage, bevor ein entferntes Etikett neu vergeben wird",
+  "settingLabelStockWeighedGoods": "Ware wird nach Gewicht verkauft",
   "settingLabelVatViesEvidenceDays": "Aktualität der USt-IdNr.-Prüfung",
   "@settingLabelVatViesEvidenceDays": {
     "description": "#2487 retention settings"
@@ -20214,6 +20221,11 @@
   "shellPendingDecisions": "{count, plural, one{1 Entscheidung wartet auf Sie} other{{count} Entscheidungen warten auf Sie}}",
   "shellReserveButton": "Reservieren",
   "shellSwipeCoachMark": "Wischen Sie die Leiste nach unten für die Vollbildansicht. Nach oben wischen oder die Reservieren-Taste lange drücken, um sie zurückzuholen.",
+  "shopTypeBakery": "Bäckerei",
+  "shopTypeButcher": "Metzgerei",
+  "shopTypeCornerShop": "Späti",
+  "shopTypeFlorist": "Blumenladen",
+  "shopTypeGrocery": "Lebensmittelgeschäft",
   "shortcutClose": "Schließen",
   "shortcutFilter": "Diese Liste filtern",
   "shortcutKeys": "Die Tasten dieser Seite",

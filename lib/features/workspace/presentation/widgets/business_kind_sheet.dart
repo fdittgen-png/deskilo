@@ -18,6 +18,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../application/business_kind_commands.dart';
 import '../../domain/business_kind.dart';
 import '../../domain/business_kind_proposal.dart';
+import '../../domain/business_profile.dart';
 import '../../domain/feature_lifecycle.dart';
 import '../../domain/feature_operation.dart';
 import '../../domain/workspace.dart';
@@ -41,6 +42,7 @@ String _kindDescription(AppLocalizations l10n, String code) => switch (code) {
   'practice' => l10n.businessKindDescPractice,
   'salon' => l10n.businessKindDescSalon,
   'freelancer' => l10n.businessKindDescFreelancer,
+  'shop' => l10n.businessKindDescShop,
   'service' => l10n.businessKindDescService,
   _ => '',
 };
@@ -58,6 +60,7 @@ class _Choice {
     this.workspace, {
     required this.kind,
     required List<String> more,
+    required this.shopType,
   }) : more = {...more},
        raw = resolveEnabledFeatures(workspace.featureFlags);
 
@@ -67,6 +70,12 @@ class _Choice {
   String kind;
   final Set<String> more;
   final Set<WorkspaceFeature> ticked = {};
+
+  /// The type of shop (#4365), kept when the business is, or becomes, a shop.
+  String shopType;
+
+  /// Whether the business is a shop (primary or further kind): the type is asked.
+  bool get isShop => kind == 'shop' || more.contains('shop');
 
   void choose(String code) {
     kind = code;
@@ -139,6 +148,18 @@ List<Widget> _fields(
           ),
     ],
   ),
+  if (choice.isShop)
+    DropdownButtonFormField<String>(
+      key: const ValueKey('business-kind-shop-type'),
+      initialValue: choice.shopType,
+      isExpanded: true,
+      decoration: InputDecoration(labelText: l10n.settingLabelBusinessShopType),
+      items: [for (final t in shopTypes) DropdownMenuItem(value: t, child: Text(shopTypeLabel(l10n, t)))],
+      onChanged: (v) {
+        choice.shopType = v ?? choice.shopType;
+        refresh();
+      },
+    ),
   const Divider(),
   _ProposalView(
     proposal: choice.proposal,
@@ -340,6 +361,7 @@ class BusinessKindTile extends ConsumerWidget {
       workspace,
       kind: current.kind,
       more: current.moreKinds,
+      shopType: current.shopType,
     );
     return showAppFormSheet(
       context,
@@ -353,6 +375,14 @@ class BusinessKindTile extends ConsumerWidget {
     );
   }
 
+  /// The type of shop, written when the business is a shop and the type moved (#4365).
+  Future<void> _saveShopType(WidgetRef ref, _Choice choice) async {
+    if (!choice.isShop) return;
+    final current = await ref.read(businessProfileProvider.future);
+    if (current.shopType == choice.shopType) return;
+    await ref.read(businessKindCommandsProvider).saveShopType(choice.workspace.id, choice.shopType);
+  }
+
   /// Saves [choice]; null when saved, else what to say.
   Future<String?> _save(
     WidgetRef ref,
@@ -360,6 +390,7 @@ class BusinessKindTile extends ConsumerWidget {
     _Choice choice,
   ) async {
     try {
+      await _saveShopType(ref, choice);
       final outcome = await ref
           .read(businessKindCommandsProvider)
           .save(

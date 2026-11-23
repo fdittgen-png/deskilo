@@ -9251,6 +9251,12 @@ abstract class AppLocalizations {
   /// **'Any other business that sells its services.'**
   String get businessKindDescService;
 
+  /// #4365 G16 the shop business kind
+  ///
+  /// In en, this message translates to:
+  /// **'Goods bought, kept in stock and sold: an épicerie, a bakery, a butcher, a florist or a corner shop.'**
+  String get businessKindDescShop;
+
   /// #3550 the one-line description of the business kind 'studio'
   ///
   /// In en, this message translates to:
@@ -9292,6 +9298,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Service business'**
   String get businessKindNameService;
+
+  /// #4365 G16 the shop business kind
+  ///
+  /// In en, this message translates to:
+  /// **'Shop'**
+  String get businessKindNameShop;
 
   /// #3550 the name of the business kind 'studio'
   ///
@@ -13598,6 +13610,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Other services'**
   String get discoveryKindServices;
+
+  /// #4365 G16 the shop business kind
+  ///
+  /// In en, this message translates to:
+  /// **'Shops'**
+  String get discoveryKindShops;
 
   /// #3554 Discover: chip narrowing the search to studios
   ///
@@ -50994,6 +51012,12 @@ abstract class AppLocalizations {
   /// **'Further kinds the business also is, if any, besides the main one.'**
   String get settingHintBusinessMoreKinds;
 
+  /// #4365 G16 the shop business kind
+  ///
+  /// In en, this message translates to:
+  /// **'Grocery, bakery, butcher, florist or corner shop. It changes the words and examples the app shows, never what it does.'**
+  String get settingHintBusinessShopType;
+
   /// #2487 settings: Setting hint.
   ///
   /// In en, this message translates to:
@@ -51420,6 +51444,12 @@ abstract class AppLocalizations {
   /// **'How many days after it was retired a tag code may be bound again. 0 means at once. A tag in force is never bound twice.'**
   String get settingHintStockTagRebindGraceDays;
 
+  /// #4365 G16 the shop business kind
+  ///
+  /// In en, this message translates to:
+  /// **'On: a new stock item is proposed in kilograms instead of pieces (a butcher, a bakery, a grocery counter). Any item can still be given another unit.'**
+  String get settingHintStockWeighedGoods;
+
   /// #2487 retention settings
   ///
   /// In en, this message translates to:
@@ -51569,6 +51599,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Also a kind of business'**
   String get settingLabelBusinessMoreKinds;
+
+  /// #4365 G16 the shop business kind
+  ///
+  /// In en, this message translates to:
+  /// **'Type of shop'**
+  String get settingLabelBusinessShopType;
 
   /// #2487 settings: Setting label.
   ///
@@ -51995,6 +52031,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Days before a retired tag is bound again'**
   String get settingLabelStockTagRebindGraceDays;
+
+  /// #4365 G16 the shop business kind
+  ///
+  /// In en, this message translates to:
+  /// **'Goods are sold by weight'**
+  String get settingLabelStockWeighedGoods;
 
   /// #2487 retention settings
   ///
@@ -55432,6 +55474,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Swipe the bar down for a full-screen view. Swipe up, or long-press the Reserve button, to bring it back.'**
   String get shellSwipeCoachMark;
+
+  /// #4365 G16 the shop business kind
+  ///
+  /// In en, this message translates to:
+  /// **'Bakery'**
+  String get shopTypeBakery;
+
+  /// #4365 G16 the shop business kind
+  ///
+  /// In en, this message translates to:
+  /// **'Butcher'**
+  String get shopTypeButcher;
+
+  /// #4365 G16 the shop business kind
+  ///
+  /// In en, this message translates to:
+  /// **'Corner shop'**
+  String get shopTypeCornerShop;
+
+  /// #4365 G16 the shop business kind
+  ///
+  /// In en, this message translates to:
+  /// **'Florist'**
+  String get shopTypeFlorist;
+
+  /// #4365 G16 the shop business kind
+  ///
+  /// In en, this message translates to:
+  /// **'Grocery'**
+  String get shopTypeGrocery;
 
   /// #3610 a line of the keys overlay: what the key does
   ///

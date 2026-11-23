@@ -5896,6 +5896,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Qualsiasi altra attività che vende i propri servizi.';
 
   @override
+  String get businessKindDescShop =>
+      'Merce acquistata, tenuta a magazzino e venduta: un alimentari, un panificio, una macelleria, un fiorista o un negozio di quartiere.';
+
+  @override
   String get businessKindDescStudio =>
       'Lezioni e corsi: yoga, danza, musica, arte.';
 
@@ -5916,6 +5920,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get businessKindNameService => 'Impresa di servizi';
+
+  @override
+  String get businessKindNameShop => 'Negozio';
 
   @override
   String get businessKindNameStudio => 'Studio';
@@ -8611,6 +8618,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get discoveryKindServices => 'Altri servizi';
+
+  @override
+  String get discoveryKindShops => 'Negozi';
 
   @override
   String get discoveryKindStudios => 'Studi';
@@ -32068,6 +32078,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Altri tipi che l\'attività è anche, se ce ne sono, oltre a quello principale.';
 
   @override
+  String get settingHintBusinessShopType =>
+      'Alimentari, panificio, macelleria, fiorista o negozio di quartiere. Cambia le parole e gli esempi dell’app, mai ciò che fa.';
+
+  @override
   String get settingHintCalendarRangeDays =>
       'Fissato dalla piattaforma: il periodo più lungo che una richiesta del calendario può chiedere. Delimita la richiesta.';
 
@@ -32352,6 +32366,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Quanti giorni dopo il ritiro un codice di etichetta può essere associato di nuovo. 0 significa subito. Un\'etichetta in uso non è mai associata due volte.';
 
   @override
+  String get settingHintStockWeighedGoods =>
+      'Attivo: un nuovo articolo di magazzino viene proposto in chilogrammi anziché in pezzi (macelleria, panificio, banco). Ogni articolo può avere un’altra unità.';
+
+  @override
   String get settingHintVatViesEvidenceDays =>
       'Giorni in cui un controllo valido della partita IVA resta abbastanza recente da fungere da prova su una nuova fattura. Un valore più breve richiede prima un nuovo controllo; non prova che un’operazione sia valida.';
 
@@ -32439,6 +32457,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get settingLabelBusinessMoreKinds => 'Anche un tipo di attività';
+
+  @override
+  String get settingLabelBusinessShopType => 'Tipo di negozio';
 
   @override
   String get settingLabelCalendarRangeDays => 'Periodo del calendario';
@@ -32715,6 +32736,9 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settingLabelStockTagRebindGraceDays =>
       'Giorni prima di riutilizzare un\'etichetta ritirata';
+
+  @override
+  String get settingLabelStockWeighedGoods => 'La merce si vende a peso';
 
   @override
   String get settingLabelVatViesEvidenceDays =>
@@ -34968,6 +34992,21 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get shellSwipeCoachMark =>
       'Scorra la barra verso il basso per la vista a schermo intero. Scorra verso l’alto, o tenga premuto il pulsante Prenota, per riportarla.';
+
+  @override
+  String get shopTypeBakery => 'Panificio';
+
+  @override
+  String get shopTypeButcher => 'Macelleria';
+
+  @override
+  String get shopTypeCornerShop => 'Negozio di quartiere';
+
+  @override
+  String get shopTypeFlorist => 'Fiorista';
+
+  @override
+  String get shopTypeGrocery => 'Alimentari';
 
   @override
   String get shortcutClose => 'Chiudi';

@@ -5905,6 +5905,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Jedes andere Unternehmen, das seine Leistungen verkauft.';
 
   @override
+  String get businessKindDescShop =>
+      'Ware, die eingekauft, gelagert und verkauft wird: ein Feinkostladen, eine Bäckerei, eine Metzgerei, ein Blumenladen oder ein Späti.';
+
+  @override
   String get businessKindDescStudio =>
       'Kurse und Unterricht: Yoga, Tanz, Musik, Kunst.';
 
@@ -5925,6 +5929,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get businessKindNameService => 'Dienstleistungsunternehmen';
+
+  @override
+  String get businessKindNameShop => 'Laden';
 
   @override
   String get businessKindNameStudio => 'Studio';
@@ -8627,6 +8634,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get discoveryKindServices => 'Andere Dienstleistungen';
+
+  @override
+  String get discoveryKindShops => 'Läden';
 
   @override
   String get discoveryKindStudios => 'Studios';
@@ -32120,6 +32130,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Weitere Arten, die das Geschäft neben der Hauptart ist, falls zutreffend.';
 
   @override
+  String get settingHintBusinessShopType =>
+      'Lebensmittelgeschäft, Bäckerei, Metzgerei, Blumenladen oder Späti. Es ändert die Wörter und Beispiele der App, nie ihr Verhalten.';
+
+  @override
   String get settingHintCalendarRangeDays =>
       'Von der Plattform festgelegt: der längste Zeitraum, den eine Kalenderabfrage anfordern darf. Er begrenzt die Abfrage.';
 
@@ -32404,6 +32418,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Wie viele Tage nach dem Entfernen ein Etikettencode wieder gebunden werden darf. 0 heißt sofort. Ein gültiges Etikett wird nie doppelt gebunden.';
 
   @override
+  String get settingHintStockWeighedGoods =>
+      'An: Ein neuer Lagerartikel wird in Kilogramm statt in Stück vorgeschlagen (Metzgerei, Bäckerei, Theke). Jeder Artikel kann weiterhin eine andere Einheit erhalten.';
+
+  @override
   String get settingHintVatViesEvidenceDays =>
       'Tage, die eine gültige Prüfung der USt-IdNr. aktuell genug bleibt, um auf einer neuen Rechnung als Nachweis zu dienen. Ein kürzerer Wert verlangt früher eine neue Prüfung; er beweist nicht, dass ein Geschäft gültig ist.';
 
@@ -32486,6 +32504,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingLabelBusinessMoreKinds => 'Auch eine Art des Geschäfts';
+
+  @override
+  String get settingLabelBusinessShopType => 'Art des Ladens';
 
   @override
   String get settingLabelCalendarRangeDays => 'Kalenderzeitraum';
@@ -32752,6 +32773,9 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get settingLabelStockTagRebindGraceDays =>
       'Tage, bevor ein entferntes Etikett neu vergeben wird';
+
+  @override
+  String get settingLabelStockWeighedGoods => 'Ware wird nach Gewicht verkauft';
 
   @override
   String get settingLabelVatViesEvidenceDays =>
@@ -35017,6 +35041,21 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get shellSwipeCoachMark =>
       'Wischen Sie die Leiste nach unten für die Vollbildansicht. Nach oben wischen oder die Reservieren-Taste lange drücken, um sie zurückzuholen.';
+
+  @override
+  String get shopTypeBakery => 'Bäckerei';
+
+  @override
+  String get shopTypeButcher => 'Metzgerei';
+
+  @override
+  String get shopTypeCornerShop => 'Späti';
+
+  @override
+  String get shopTypeFlorist => 'Blumenladen';
+
+  @override
+  String get shopTypeGrocery => 'Lebensmittelgeschäft';
 
   @override
   String get shortcutClose => 'Schließen';
