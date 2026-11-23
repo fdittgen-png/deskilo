@@ -158,10 +158,15 @@ class _ItemsState extends ConsumerState<_Items> {
         (r.homeAddressPath ?? '').split(stockAddressJoint).join(separator).toLowerCase().contains(q);
   }
 
-  /// A search submitted that names no row of the list is a code typed by hand: it goes the way a scanner's goes.
+  /// A search submitted that is a whole barcode, or shows nothing, is a code typed by hand: it goes the way a scanner's goes.
   void _submitted(String text, bool mayManage) {
     final code = text.trim();
-    if (code.isEmpty || _rows.any((r) => r.itemName.toLowerCase().contains(code.toLowerCase()))) return;
+    if (code.isEmpty) return;
+    final separator = ref.read(stockAddressSeparatorProvider);
+    final shown = _rows.where((r) => _matches(r, separator)).toList();
+    // A list that still shows rows is a search by name or address; only a whole barcode among them, or nothing shown at
+    // all, is a code typed by hand.
+    if (shown.isNotEmpty && !shown.any((r) => r.barcode == code)) return;
     unawaited(_fromScanner(code, mayManage));
   }
 

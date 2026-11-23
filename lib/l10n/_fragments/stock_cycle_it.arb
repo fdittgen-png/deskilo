@@ -36,6 +36,10 @@
   "stockCycleHistoryAccuracy": "{count, plural, one{1 conteggio} other{{count} conteggi}}, {percent} % esatti",
   "stockCycleTaskTitle": "Contare",
   "stockCycleScan": "Scansiona o digita un codice a barre",
+  "stockCycleScanWhich": "Più righe ancora da contare hanno questo codice: scelga quella che sta contando.",
+  "@stockCycleScanWhich": {
+    "description": "#4395 cycle counts: a code that fits several pending lines asks which one"
+  },
   "stockCycleScanNone": "Nessuna riga ancora da contare ha questo codice.",
   "stockCycleBlind": "Lei conta ciò che trova: la cifra del sistema non viene mostrata, quindi non può influenzare il conteggio.",
   "stockCycleLineCount": "Contare",

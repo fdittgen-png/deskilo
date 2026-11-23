@@ -57089,6 +57089,12 @@ abstract class AppLocalizations {
   /// **'No line still to count has this code.'**
   String get stockCycleScanNone;
 
+  /// #4395 cycle counts: a code that fits several pending lines asks which one
+  ///
+  /// In en, this message translates to:
+  /// **'Several lines still to count have this code: choose the one you are counting.'**
+  String get stockCycleScanWhich;
+
   /// #4295 cycle counts
   ///
   /// In en, this message translates to:

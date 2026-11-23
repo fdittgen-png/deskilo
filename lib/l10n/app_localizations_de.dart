@@ -36016,6 +36016,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Keine noch zu zählende Zeile hat diesen Code.';
 
   @override
+  String get stockCycleScanWhich =>
+      'Mehrere noch zu zählende Zeilen haben diesen Code: Wählen Sie die, die Sie zählen.';
+
+  @override
   String get stockCycleScopeHighValue => 'Hoher Wert';
 
   @override

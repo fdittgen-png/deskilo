@@ -231,6 +231,16 @@ void main() {
         expect(find.byKey(const ValueKey('stock-item-save')), findsOneWidget, reason: 'the item editor of Tea opened');
       });
 
+      testWidgets('Enter on a search that still shows rows is a search, not an unknown code', (tester) async {
+        await _open(tester, _Config(), size, held: _manage);
+        await tester.enterText(find.byKey(const ValueKey('stock-registry-search')), 'Tea');
+        await tester.testTextInput.receiveAction(TextInputAction.done);
+        await _settle(tester);
+        expect(find.byKey(const ValueKey('stock-item-i-Tea')), findsOneWidget);
+        expect(find.textContaining('Tea'), findsWidgets);
+        expect(find.byType(SnackBar), findsNothing, reason: 'no "unknown code" over a list that is filled');
+      });
+
       testWidgets('a home place is chosen from the places and sent with its request', (tester) async {
         final registry = _Registry();
         await _open(tester, _Config(), size, held: _manage, registry: registry);

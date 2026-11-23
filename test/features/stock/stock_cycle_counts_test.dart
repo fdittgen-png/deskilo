@@ -71,6 +71,22 @@ class _Resolver implements StockCodeResolver {
   }
 }
 
+/// A resolver that answers exactly what it is told per code, or fails.
+class _Told implements StockCodeResolver {
+  _Told(this._answers, {this.fail = false});
+
+  final Map<String, StockCodeResolution> _answers;
+  final bool fail;
+
+  @override
+  Future<StockCodeResolution> resolve(String workspaceId, String code) async {
+    if (fail) throw Exception('server down');
+    return _answers[code] ?? StockCodeResolution.unknown(code);
+  }
+}
+
+const _tee = ScannedItem(id: 'i-tee', name: 'Tee', unit: 'piece');
+
 class _Cycle implements StockCycleCounts {
   _Cycle({this.failTasks = false, this.state = CountTaskState.open, this.seeDifference = false, List<CountTaskLine> more = const []}) {
     lines = [
@@ -320,6 +336,75 @@ void main() {
         await tester.tap(find.byKey(const ValueKey('stock-cycle-count-save')));
         await _frames(tester);
         expect(cycle.counted.single.line, 'l-240');
+      });
+
+      testWidgets('a variant code opens the line of that variant, not the first line of the item', (tester) async {
+        final cycle = _Cycle(more: const [
+          CountTaskLine(lineId: 'l-red', itemId: 'i-tee', variantId: 'v-red', locationId: 'demo-place-main', state: CountLineState.pending),
+          CountTaskLine(lineId: 'l-blue', itemId: 'i-tee', variantId: 'v-blue', locationId: 'demo-place-main', state: CountLineState.pending),
+        ]);
+        final resolver = _Told({
+          'RED': const StockCodeResolution(kind: ScannedKind.variant, code: 'RED', item: _tee, variantId: 'v-blue'),
+        });
+        await _open(tester, const StockCountTaskScreen(taskId: 't-1'), cycle, size, resolver: resolver);
+        await tester.enterText(find.byKey(const ValueKey('stock-cycle-scan')), 'RED');
+        await tester.testTextInput.receiveAction(TextInputAction.search);
+        await _frames(tester);
+        await tester.enterText(find.byKey(const ValueKey('stock-cycle-observed')), '4');
+        await tester.tap(find.byKey(const ValueKey('stock-cycle-count-save')));
+        await _frames(tester);
+        expect(cycle.counted.single.line, 'l-blue', reason: 'the code names the blue variant');
+      });
+
+      testWidgets('a lot code opens only the line of that lot', (tester) async {
+        final cycle = _Cycle(more: const [
+          CountTaskLine(lineId: 'l-a', itemId: 'i-tee', lotId: 'lot-a', locationId: 'demo-place-main', state: CountLineState.pending),
+          CountTaskLine(lineId: 'l-b', itemId: 'i-tee', lotId: 'lot-b', locationId: 'demo-place-main', state: CountLineState.pending),
+        ]);
+        final resolver = _Told({'LOT': const StockCodeResolution(kind: ScannedKind.lot, code: 'LOT', item: _tee, lotId: 'lot-b')});
+        await _open(tester, const StockCountTaskScreen(taskId: 't-1'), cycle, size, resolver: resolver);
+        await tester.enterText(find.byKey(const ValueKey('stock-cycle-scan')), 'LOT');
+        await tester.testTextInput.receiveAction(TextInputAction.search);
+        await _frames(tester);
+        await tester.enterText(find.byKey(const ValueKey('stock-cycle-observed')), '2');
+        await tester.tap(find.byKey(const ValueKey('stock-cycle-count-save')));
+        await _frames(tester);
+        expect(cycle.counted.single.line, 'l-b');
+      });
+
+      testWidgets('an item kept in two places asks which line is counted', (tester) async {
+        final cycle = _Cycle(more: const [
+          CountTaskLine(lineId: 'l-p1', itemId: 'i-tee', locationId: 'demo-place-main', state: CountLineState.pending),
+          CountTaskLine(lineId: 'l-p2', itemId: 'i-tee', locationId: 'demo-place-back', state: CountLineState.pending),
+        ]);
+        final resolver = _Told({'TEE': const StockCodeResolution(kind: ScannedKind.item, code: 'TEE', item: _tee)});
+        await _open(tester, const StockCountTaskScreen(taskId: 't-1'), cycle, size, resolver: resolver);
+        await tester.enterText(find.byKey(const ValueKey('stock-cycle-scan')), 'TEE');
+        await tester.testTextInput.receiveAction(TextInputAction.search);
+        await _frames(tester);
+        expect(find.text(_en.stockCycleScanWhich), findsOneWidget);
+        await tester.tap(find.byKey(const ValueKey('stock-cycle-scan-pick-l-p2')));
+        await _frames(tester);
+        await tester.enterText(find.byKey(const ValueKey('stock-cycle-observed')), '6');
+        await tester.tap(find.byKey(const ValueKey('stock-cycle-count-save')));
+        await _frames(tester);
+        expect(cycle.counted.single.line, 'l-p2');
+      });
+
+      testWidgets('an item that is not on the task says nothing is found, and a failing resolver says the read failed', (tester) async {
+        final cycle = _Cycle();
+        final resolver = _Told({'OTHER': const StockCodeResolution(kind: ScannedKind.item, code: 'OTHER', item: ScannedItem(id: 'i-other', name: 'Other', unit: 'piece'))});
+        await _open(tester, const StockCountTaskScreen(taskId: 't-1'), cycle, size, resolver: resolver);
+        await tester.enterText(find.byKey(const ValueKey('stock-cycle-scan')), 'OTHER');
+        await tester.testTextInput.receiveAction(TextInputAction.search);
+        await _frames(tester);
+        expect(find.text(_en.stockCycleScanNone), findsOneWidget);
+        expect(cycle.counted, isEmpty);
+        await _open(tester, const StockCountTaskScreen(taskId: 't-1'), _Cycle(), size, resolver: _Told(const {}, fail: true));
+        await tester.enterText(find.byKey(const ValueKey('stock-cycle-scan')), 'ANY');
+        await tester.testTextInput.receiveAction(TextInputAction.search);
+        await _frames(tester);
+        expect(find.text(_en.stockReadFailed), findsOneWidget);
       });
 
       testWidgets('a task that is no longer open offers no count or skip', (tester) async {

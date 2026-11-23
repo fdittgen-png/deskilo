@@ -35961,6 +35961,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Nessuna riga ancora da contare ha questo codice.';
 
   @override
+  String get stockCycleScanWhich =>
+      'Più righe ancora da contare hanno questo codice: scelga quella che sta contando.';
+
+  @override
   String get stockCycleScopeHighValue => 'Alto valore';
 
   @override
