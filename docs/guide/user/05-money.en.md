@@ -748,6 +748,19 @@ With the *Tags* feature on and a phone that reads NFC, **Stock → Items** and *
 - **UHF labels** cannot be read by a phone. An item that only has them says *use the RFID reader*.
 - Binding needs the right to manage the stock; reading needs the right to see it.
 
+<!-- anchor: user.money.till -->
+### Till
+
+**Audience:** Administrator · Owner
+
+You serve customers at the counter and want each sale made in seconds, numbered, and paid in cash.
+
+Open **Till** in the sales menu (it needs the counter receipts feature and the right to issue invoices). The items are keys: a tap rings one up, a second tap adds one more. Tap a line to type its **Quantity sold** exactly, for example 0.350 for a weighed item (a comma is read as a point; the quantity must be above zero, with at most six decimals). The server prices the basket, with the tax included, and the till shows **Total to pay**; nothing is priced on the phone.
+
+Press **Take cash** and type the **Cash given** (or **Exact amount**). Less than the total is refused before anything is sent. The sale is numbered by the server and the till says the change due; **Next customer** starts a clean basket. Sending the same sale twice never sells twice.
+
+Where your country does not yet allow the counter, the till says which operation is missing and offers nothing: nothing is numbered and nothing is taken. A goods line needs stock management on; a refusal of the server is shown in words. Card payments, discounts, refunds and returns are not part of this first till.
+
 <!-- anchor: user.money.stock.value -->
 ### Stock value and where goods came from
 

@@ -40,6 +40,15 @@ extension SalesEntries on DrawerEntries {
           () => go('/invoice-register'),
           route: '/invoice-register',
         ),
+      // #4366 — the till: a sale at the counter on a receipt of its own.
+      if (features.contains(WorkspaceFeature.counterReceipts) && may(WorkspacePermission.issueInvoices))
+        DrawerEntry(
+          'drawer-till',
+          Icons.point_of_sale_outlined,
+          l10n.tillTitle,
+          () => go('/till'),
+          route: '/till',
+        ),
       // #4166 — the quotes: an offer to a billing customer before an invoice.
       if (own.contains(BusinessEntry.quotes))
         DrawerEntry(

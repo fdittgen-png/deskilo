@@ -54,6 +54,8 @@ insert into listed (sig, reason) values
    'callable by the service role only; the status of the event it handed to respond_to_event, which applies its own checks'),
   ('message_ref_workspace(text,uuid)',
    'callable by the service role only'),
+  ('my_finance_overview_v2()',
+   'amounts of the invoices of the caller''s own financial subjects (their member rows and live billing grants); no event'),
   ('my_finance_overview()',
    'amounts of the caller''s own invoices; no event'),
   ('open_claim_invoices(uuid)',
@@ -145,7 +147,7 @@ select is((select coalesce(string_agg(l.sig, ', ' order by l.sig), '') from list
             where l.reason like 'callable by the service role only%'
               and has_function_privilege('authenticated', l.sig::regprocedure, 'execute')), '',
   'every entry listed as callable by the service role only is not executable by a signed-in client');
-select ok((select count(*) from listed) = 40, 'the list holds 40 reasoned exceptions');
+select ok((select count(*) from listed) = 42, 'the list holds 42 reasoned exceptions');
 
 select * from finish();
 rollback;

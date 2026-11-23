@@ -173,3 +173,4 @@ stockItemGroups | everywhere | y y y y y y y y y y
 stockTags | everywhere | y y y y y y y y y y
 stockScanning | everywhere | y y y y y y y y y y
 counterReceipts | everywhere | y y y y y y y y y y
+counterTillSessions | everywhere | y y y y y y y y y y

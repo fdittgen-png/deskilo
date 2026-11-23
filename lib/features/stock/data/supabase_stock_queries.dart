@@ -71,7 +71,7 @@ class SupabaseStockQueries implements StockQueries {
   Future<List<StockItem>> items(String workspaceId) async {
     final rows = await _client
         .from('services')
-        .select('id, name, inventory_unit')
+        .select('id, name, inventory_unit, active')
         .eq('workspace_id', workspaceId)
         .eq('stockable', true)
         .order('name');

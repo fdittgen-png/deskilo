@@ -1,0 +1,241 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+//
+// #4366 (CS4) -- the till: a full-screen basket served in seconds. The items are keys; a tap rings one up (a second tap
+// one more); a line's quantity is an exact decimal typed on it; the server prices the basket and makes the sale in one
+// command. Where the country does not allow the counter yet, the till says which operation and offers nothing: nothing
+// is numbered and nothing is taken.
+import 'dart:async';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../../core/help/help_anchors.dart';
+import '../../../core/help/help_dot.dart';
+import '../../../core/l10n/context_l10n.dart';
+import '../../../core/theme/app_spacing.dart';
+import '../../../core/ui/adaptive/window_class.dart';
+import '../../../core/ui/form_kit.dart';
+import '../../../core/ui/kit/page_title.dart';
+import '../../../core/ui/loading_view.dart';
+import '../domain/counter_till.dart';
+import '../providers/till_providers.dart';
+import 'till_basket.dart';
+import 'till_cash_dialog.dart';
+import 'till_session.dart';
+import 'till_text.dart';
+
+/// The till. [keys] are the items it offers, read by the route from the stock: the till does not know the stock.
+class TillScreen extends ConsumerWidget {
+  const TillScreen({super.key, required this.workspaceId, required this.keys});
+
+  /// The open business; null while it is being read.
+  final String? workspaceId;
+  final AsyncValue<List<TillKey>> keys;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final workspaceId = this.workspaceId;
+    return Scaffold(
+      appBar: AppBar(
+        title: PageTitle(context.l10n.tillTitle),
+        actions: [HelpDot(context.l10n.tillTitle, anchor: HelpAnchor.moneyTill)],
+      ),
+      body: workspaceId == null ? const LoadingView() : _Readiness(workspaceId: workspaceId, keys: keys),
+    );
+  }
+}
+
+/// The till opens only where the country's operations are supported.
+class _Readiness extends ConsumerWidget {
+  const _Readiness({required this.workspaceId, required this.keys});
+
+  final String workspaceId;
+  final AsyncValue<List<TillKey>> keys;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
+    return ref
+        .watch(tillReadinessProvider(workspaceId))
+        .when(
+          loading: () => const LoadingView(),
+          error: (e, _) => _Notice(
+            text: tillProblemText(l10n, e),
+            onRetry: () => ref.invalidate(tillReadinessProvider(workspaceId)),
+          ),
+          data: (readiness) => readiness.ready
+              ? _Till(key: ValueKey('till-$workspaceId'), workspaceId: workspaceId, keys: keys)
+              : _Notice(
+                  key: const ValueKey('till-not-ready'),
+                  text: l10n.tillNotReady(
+                    [for (final o in readiness.blocking) tillOperationName(l10n, o.operation)].join(', '),
+                  ),
+                  hint: l10n.tillNotReadyHint,
+                ),
+        );
+  }
+}
+
+class _Notice extends StatelessWidget {
+  const _Notice({super.key, required this.text, this.hint, this.onRetry});
+
+  final String text;
+  final String? hint;
+  final VoidCallback? onRetry;
+
+  @override
+  Widget build(BuildContext context) => Center(
+    child: Padding(
+      padding: const EdgeInsets.all(AppSpacing.lg),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(text, style: Theme.of(context).textTheme.titleMedium, textAlign: TextAlign.center),
+          if (hint != null) ...[const FormGap(), Text(hint!, textAlign: TextAlign.center)],
+          if (onRetry != null) ...[
+            const FormGap(),
+            FilledButton(key: const ValueKey('till-retry'), onPressed: onRetry, child: Text(context.l10n.tillRetry)),
+          ],
+        ],
+      ),
+    ),
+  );
+}
+
+class _Till extends ConsumerStatefulWidget {
+  const _Till({super.key, required this.workspaceId, required this.keys});
+
+  final String workspaceId;
+  final AsyncValue<List<TillKey>> keys;
+
+  @override
+  ConsumerState<_Till> createState() => _TillState();
+}
+
+class _TillState extends ConsumerState<_Till> {
+  late final TillSession _session = ref.read(tillSessionProvider(widget.workspaceId));
+
+  @override
+  void dispose() {
+    _session.leave();
+    super.dispose();
+  }
+
+  /// Leaving with a sale that may have been made asks first: it stays waiting, and is not to be rung up again.
+  Future<void> _asked(BuildContext context) async {
+    final l10n = context.l10n;
+    final go = await showDialog<bool>(
+      context: context,
+      builder: (c) => AlertDialog(
+        title: Text(l10n.tillLeaveTitle),
+        content: Text(l10n.tillLeaveBody),
+        actions: [
+          TextButton(key: const ValueKey('till-leave-stay'), onPressed: () => Navigator.of(c).pop(false), child: Text(l10n.tillLeaveStay)),
+          FilledButton(key: const ValueKey('till-leave-go'), onPressed: () => Navigator.of(c).pop(true), child: Text(l10n.tillLeaveGo)),
+        ],
+      ),
+    );
+    if (go == true && context.mounted) Navigator.of(context).pop();
+  }
+
+  Future<void> _pay(TillState state) async {
+    final draft = state.draft;
+    if (draft == null) return;
+    final given = await showTillCashDialog(context, totalMinor: draft.totals.grossMinor, currency: draft.totals.currency);
+    if (given != null) await _session.payCash(given);
+  }
+
+  Future<void> _setQuantity(int index) async {
+    final l10n = context.l10n;
+    final typed = await showTillQuantityDialog(context, current: _session.state.value.lines[index]);
+    if (typed == null) return;
+    final ok = await _session.setQuantity(index, typed);
+    if (!ok && mounted) _session.reject(l10n.tillQuantityRefused);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+        return ValueListenableBuilder<TillState>(
+      valueListenable: _session.state,
+      builder: (context, state, child) => PopScope(
+        canPop: !state.unconfirmed,
+        onPopInvokedWithResult: (didPop, _) {
+          if (!didPop) unawaited(_asked(context));
+        },
+        child: child!,
+      ),
+      child: LayoutBuilder(
+      builder: (context, box) {
+        final keys = _Keys(
+          key: const ValueKey('till-keys'),
+          items: widget.keys,
+          onTap: (i) => unawaited(_session.add(itemId: i.id, name: i.name, unit: i.unit)),
+        );
+        final basket = ValueListenableBuilder<TillState>(
+          valueListenable: _session.state,
+          builder: (context, state, _) => TillBasket(
+            key: const ValueKey('till-basket'),
+            state: state,
+            onQuantity: _setQuantity,
+            onRemove: (i) => unawaited(_session.remove(i)),
+            onPay: () => unawaited(_pay(state)),
+            onNext: _session.next,
+            onRetry: () => unawaited(_session.retry()),
+            onConfirm: () => unawaited(_session.confirmSale()),
+          ),
+        );
+        if (WindowClass.ofWidth(box.maxWidth).atLeast(WindowClass.medium)) {
+          return Row(
+            children: [
+              Expanded(flex: 3, child: keys),
+              const VerticalDivider(width: 1),
+              Expanded(flex: 2, child: basket),
+            ],
+          );
+        }
+        return Column(
+          children: [
+            Expanded(flex: 2, child: keys),
+            const Divider(height: 1),
+            Expanded(flex: 3, child: basket),
+          ],
+        );
+      },
+    ),
+    );
+  }
+}
+
+/// The items as keys.
+class _Keys extends StatelessWidget {
+  const _Keys({super.key, required this.items, required this.onTap});
+
+  final AsyncValue<List<TillKey>> items;
+  final void Function(TillKey) onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    return items.when(
+      loading: () => const LoadingView(),
+      error: (e, _) => _Notice(text: tillProblemText(l10n, e)),
+      data: (list) => list.isEmpty
+          ? _Notice(text: l10n.tillKeysEmpty)
+          : GridView.builder(
+              padding: const EdgeInsets.all(AppSpacing.md),
+              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: 160,
+                mainAxisExtent: 64,
+                mainAxisSpacing: AppSpacing.sm,
+                crossAxisSpacing: AppSpacing.sm,
+              ),
+              itemCount: list.length,
+              itemBuilder: (context, i) => FilledButton.tonal(
+                key: ValueKey('till-key-${list[i].id}'),
+                onPressed: () => onTap(list[i]),
+                child: Text(list[i].name, maxLines: 2, overflow: TextOverflow.ellipsis, textAlign: TextAlign.center),
+              ),
+            ),
+    );
+  }
+}

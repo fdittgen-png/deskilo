@@ -193,11 +193,14 @@ class StockPlace {
 
 /// A stock item a filter can name.
 class StockItem {
-  const StockItem({required this.id, required this.name, required this.unit});
+  const StockItem({required this.id, required this.name, required this.unit, this.active = true});
 
   final String id;
   final String name;
   final String unit;
+
+  /// Whether the item is on sale: a turned-off item stays in the stock's history but is not rung up.
+  final bool active;
 
   factory StockItem.fromJson(Object? json) {
     final r = JsonReader.of(json, context: 'services');
@@ -205,6 +208,7 @@ class StockItem {
       id: r.string('id'),
       name: r.stringOr('name'),
       unit: r.stringOr('inventory_unit'),
+      active: r.boolOr('active', fallback: true),
     );
   }
 }
