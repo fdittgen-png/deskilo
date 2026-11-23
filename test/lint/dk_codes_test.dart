@@ -77,6 +77,10 @@ const _notForTheApp = <String, String>{
       '(0565)',
 };
 
+/// #4415 -- RATCHET: how many codes a person never meets in the app. A new
+/// refusal arrives with its words; this list only shortens.
+const _notForTheAppCeiling = 20;
+
 final _raised = RegExp(r"errcode\s*=\s*'(DK[A-Z0-9]{3})'");
 final _read = RegExp(r"'(DK[A-Z0-9]{3})'");
 
@@ -102,6 +106,19 @@ void main() {
           'map the code to its words in the app (refusal_text.dart, '
           'booking_error_text.dart), or name it in _notForTheApp with '
           'the reason a person never meets it there',
+    );
+  });
+
+  test('the list of codes the app does not read holds its ceiling', () {
+    expect(
+      _notForTheApp.length,
+      lessThanOrEqualTo(_notForTheAppCeiling),
+      reason: 'give the new refusal its words instead of naming it here (#4415)',
+    );
+    expect(
+      _notForTheApp.length,
+      _notForTheAppCeiling,
+      reason: 'it fell: lower _notForTheAppCeiling to ${_notForTheApp.length}',
     );
   });
 
