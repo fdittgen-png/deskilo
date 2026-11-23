@@ -29,3 +29,8 @@ export const ACTIONS: Record<string, Registered> = {
   status: { run: status, live: true, manage: true },
   resolve: { run: resolve, live: true, manage: false },
 };
+
+/** The action a request names; a name the table does not hold (and no member of Object.prototype) is a send. */
+export function actionFor(name: string | undefined): Registered {
+  return name !== undefined && Object.hasOwn(ACTIONS, name) ? ACTIONS[name] : SEND;
+}

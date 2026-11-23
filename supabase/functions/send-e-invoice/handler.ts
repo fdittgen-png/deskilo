@@ -19,7 +19,7 @@
 
 import { refuseDelegated } from "../_shared/delegated.ts";
 import { CORS, preflight } from "../_shared/cors.ts";
-import { ACTIONS, SEND } from "./actions/index.ts";
+import { actionFor } from "./actions/index.ts";
 import {
   type ActionContext,
   type Config,
@@ -71,7 +71,7 @@ export async function handle(req: Request, deps: Deps): Promise<Response> {
   // #1078 — WHO is asking, BEFORE anything answers; scoped by user_id.
   const userId = await store.user(authorization.replace("Bearer ", ""));
   if (!userId) return json({ error: "unauthorized" }, 401);
-  const action = ACTIONS[payload.action ?? ""] ?? SEND;
+  const action = actionFor(payload.action);
   const rights = await rightsOf(store, workspaceId, userId, action.manage);
   if (!rights) {
     return json({ error: "not allowed to issue invoices in this workspace" }, 403);
