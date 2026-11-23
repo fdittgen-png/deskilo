@@ -41,7 +41,6 @@ class TillState {
     bool? busy,
     Object? Function()? problem,
     int? Function()? change,
-    bool? unconfirmed,
   }) => TillState(
     lines: lines ?? this.lines,
     draft: draft == null ? this.draft : draft(),
@@ -49,8 +48,12 @@ class TillState {
     busy: busy ?? this.busy,
     problem: problem == null ? this.problem : problem(),
     change: change == null ? this.change : change(),
-    unconfirmed: unconfirmed ?? this.unconfirmed,
+    unconfirmed: unconfirmed,
   );
+
+  /// The same state with the sale marked as waiting to be confirmed, or not.
+  TillState withUnconfirmed({required bool value}) =>
+      TillState(lines: lines, draft: draft, sold: sold, busy: busy, problem: problem, change: change, unconfirmed: value);
 }
 
 /// The cash given is less than the total: said by the till itself before anything is sent.
@@ -256,7 +259,7 @@ class TillSession {
         TraceLogger.instance.warn('money', 'till sale ${sold.number} made after the till was closed');
         return;
       }
-      _set(_now.copyWith(sold: () => sold, change: () => _givenMinor - total, unconfirmed: false));
+      _set(_now.copyWith(sold: () => sold, change: () => _givenMinor - total).withUnconfirmed(value: false));
     } on Object catch (e, st) {
       TraceLogger.instance.error('money', 'till sale not confirmed', error: e, stackTrace: st);
       final refusal = knownRefusalOf(e);
@@ -264,15 +267,15 @@ class TillSession {
         // A definite refusal: this receipt is not the one to sell. The basket is priced again as it is.
         _finalAttempt = null;
         _last = null;
-        _set(_now.copyWith(unconfirmed: false));
+        _set(_now.withUnconfirmed(value: false));
         await _price(_now.lines);
         _set(_now.copyWith(problem: () => e));
       } else if (refusal != null) {
         _finalAttempt = null;
-        _set(_now.copyWith(problem: () => e, unconfirmed: false));
+        _set(_now.copyWith(problem: () => e).withUnconfirmed(value: false));
       } else {
         // No answer, or an answer that says nothing about the sale: it may have been made.
-        _set(_now.copyWith(problem: () => e, unconfirmed: true));
+        _set(_now.copyWith(problem: () => e).withUnconfirmed(value: true));
       }
     }
   }
