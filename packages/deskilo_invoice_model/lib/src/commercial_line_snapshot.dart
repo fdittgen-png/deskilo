@@ -141,7 +141,7 @@ final class CommercialLineUnsupported extends CommercialLine {
   /// person can read; null otherwise. It is a display of a historical fact,
   /// never an input to a calculation.
   String? get rawQuantity => switch (raw['quantity']) {
-    final String q when RegExp(r'^-?\d+(\.\d+)?$').hasMatch(q) => q,
+    final String q when exactDecimalGrammar.hasMatch(q) => q,
     _ => null,
   };
 }
