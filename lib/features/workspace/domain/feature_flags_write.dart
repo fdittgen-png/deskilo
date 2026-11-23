@@ -2,6 +2,8 @@
 //
 // #1329 — what a feature-flag write can answer besides "done".
 
+import '../../../core/data/dk_code.dart';
+
 /// The flags changed on the server since the preview read them: nothing
 /// was written (`set_feature_flags`, 0245, SQLSTATE DK409). The caller
 /// refetches, recomputes the preview and asks again — never replays the
@@ -9,7 +11,7 @@
 class FeatureFlagsConflict implements Exception {
   const FeatureFlagsConflict(this.keys);
 
-  static const String sqlState = 'DK409';
+  static const String sqlState = DkCode.dk409;
 
   /// The read-set keys whose value moved, as the server named them.
   final List<String> keys;

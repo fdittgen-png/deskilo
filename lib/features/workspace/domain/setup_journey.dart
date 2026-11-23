@@ -10,6 +10,7 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:xml/xml.dart';
 
+import '../../../core/data/pg_code.dart';
 import 'setup_levels.dart';
 
 /// The level of each process in [levels] (process name → level id) that
@@ -63,7 +64,7 @@ class SetupJourneyConflict implements Exception {
 
   /// The server raises this state with a message starting with
   /// [messagePrefix] (save_setup_journey).
-  static const String sqlState = '40001';
+  static const String sqlState = PgCode.serializationFailure;
   static const String messagePrefix = 'setup journey changed:';
 
   /// Whether a server error with [code] and [message] is this conflict.

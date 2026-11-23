@@ -7,6 +7,7 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show isoDay;
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
+import '../../../core/data/pg_code.dart';
 import '../../../core/validation/pending_validation.dart';
 import '../domain/invitation_answer.dart';
 import '../domain/member.dart';
@@ -276,7 +277,7 @@ mixin SupabaseMembership on SupabaseWorkspaceRows, SupabaseManagedIdentity
       );
     } on PostgrestException catch (e, st) {
       // trace-exempt: rethrown typed; the task names the earliest date.
-      final earliest = e.code == '22023'
+      final earliest = e.code == PgCode.invalidParameterValue
           ? DateTime.tryParse(e.details?.toString() ?? '')
           : null;
       if (earliest == null) rethrow;

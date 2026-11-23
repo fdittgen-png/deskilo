@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import '../../../core/data/pg_code.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/bi_batch.dart';
 import '../domain/kpi_contract.dart';
@@ -33,7 +34,7 @@ class FanOutBatchReader implements KpiBatchReader {
       if (finance == null) {
         return BiBatchEntry.failed(
           r.key,
-          code: '0A000',
+          code: PgCode.featureNotSupported,
           message: 'no finance reader',
         );
       }

@@ -12,6 +12,7 @@ import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/member_note.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
+import '../../data/pg_code.dart';
 import 'conversation_visibility.dart';
 
 mixin FakeConversations implements ConversationRepository {
@@ -251,7 +252,7 @@ mixin FakeConversations implements ConversationRepository {
     if (people != null && !people.contains(me)) {
       throw const PostgrestException(
         message: 'not a participant of this conversation',
-        code: '42501',
+        code: PgCode.insufficientPrivilege,
       );
     }
     sentMessages.add((conversationId: conversationId, body: body));

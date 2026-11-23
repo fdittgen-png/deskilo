@@ -8,6 +8,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/backend/connected_installations.dart';
+import '../../../core/data/pg_code.dart';
 import '../domain/inbox_sources.dart';
 
 mixin SupabaseInboxPages {
@@ -33,9 +34,9 @@ mixin SupabaseInboxPages {
     } on PostgrestException catch (e, st) {
       // trace-exempt: rethrown typed; the inbox names the source's state.
       final failure = switch (e.code) {
-        'PGRST202' || '42883' => InboxSourceFailure.unsupported,
-        '0A000' => InboxSourceFailure.wrongRole,
-        '22023' => InboxSourceFailure.invalid,
+        PgCode.pgrstFunctionNotFound || PgCode.undefinedFunction => InboxSourceFailure.unsupported,
+        PgCode.featureNotSupported => InboxSourceFailure.wrongRole,
+        PgCode.invalidParameterValue => InboxSourceFailure.invalid,
         _ => null,
       };
       if (failure == null) rethrow;

@@ -5,6 +5,7 @@
 // untouched (a write is never retried here: the editor offers the retry).
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/dk_code.dart';
 import '../domain/billing_customer.dart';
 
 class SupabaseBillingCustomerRepository implements BillingCustomerRepository {
@@ -76,10 +77,10 @@ class SupabaseBillingCustomerRepository implements BillingCustomerRepository {
       // trace-exempt: a refusal is rethrown typed with its cause and stack; a
       // failure that is not one passes through untouched.
       final kind = switch (e.code) {
-        'DKN01' || 'DKU02' => BillingCustomerRefusalKind.notAllowed,
-        'DKU05' => BillingCustomerRefusalKind.stale,
-        'DKU04' => BillingCustomerRefusalKind.unknownCustomer,
-        'DKU03' => BillingCustomerRefusalKind.nameNeeded,
+        DkCode.dkn01 || DkCode.dku02 => BillingCustomerRefusalKind.notAllowed,
+        DkCode.dku05 => BillingCustomerRefusalKind.stale,
+        DkCode.dku04 => BillingCustomerRefusalKind.unknownCustomer,
+        DkCode.dku03 => BillingCustomerRefusalKind.nameNeeded,
         _ => null,
       };
       if (kind == null) rethrow;

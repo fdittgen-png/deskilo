@@ -5,6 +5,7 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/pg_code.dart';
 import '../domain/bi_batch.dart';
 import '../domain/kpi_contract.dart';
 import '../domain/kpi_purchases.dart';
@@ -37,7 +38,7 @@ class SupabaseKpiRepository implements KpiRepository {
       );
     } on PostgrestException catch (e, st) {
       // trace-exempt: rethrown typed; the tile shows it.
-      if (e.code == '42501') {
+      if (e.code == PgCode.insufficientPrivilege) {
         Error.throwWithStackTrace(const KpiForbidden(), st);
       }
       rethrow;
@@ -70,7 +71,7 @@ class SupabaseFinanceKpiRepository implements FinanceKpiRepository {
       );
     } on PostgrestException catch (e, st) {
       // trace-exempt: rethrown typed; the card shows it.
-      if (e.code == '42501') {
+      if (e.code == PgCode.insufficientPrivilege) {
         Error.throwWithStackTrace(const KpiForbidden(), st);
       }
       rethrow;
@@ -118,7 +119,7 @@ class SupabaseBiBatchReader implements KpiBatchReader {
       );
     } on PostgrestException catch (e, st) {
       // trace-exempt: rethrown typed; the card shows it.
-      if (e.code == '42501') {
+      if (e.code == PgCode.insufficientPrivilege) {
         Error.throwWithStackTrace(const KpiForbidden(), st);
       }
       rethrow;
@@ -155,7 +156,7 @@ class SupabasePurchaseKpiRepository implements PurchaseKpiRepository {
       );
     } on PostgrestException catch (e, st) {
       // trace-exempt: rethrown typed; the card shows it.
-      if (e.code == '42501') {
+      if (e.code == PgCode.insufficientPrivilege) {
         Error.throwWithStackTrace(const KpiForbidden(), st);
       }
       rethrow;
@@ -188,7 +189,7 @@ class SupabaseCostKpiRepository implements CostKpiRepository {
       );
     } on PostgrestException catch (e, st) {
       // trace-exempt: rethrown typed; the card shows it.
-      if (e.code == '42501') {
+      if (e.code == PgCode.insufficientPrivilege) {
         Error.throwWithStackTrace(const KpiForbidden(), st);
       }
       rethrow;

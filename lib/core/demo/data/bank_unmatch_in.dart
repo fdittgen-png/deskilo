@@ -10,6 +10,8 @@ import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import '../../../features/events/domain/workspace_event.dart';
 import '../../../features/money/domain/bank/bank_records.dart';
+import '../../data/dk_code.dart';
+import '../../data/pg_code.dart';
 import 'money_repository.dart';
 
 /// A match undone, as the server records it.
@@ -36,7 +38,7 @@ PostgrestException _refusal(String code, String message) =>
 
 /// The right that matches a payment is the right that undoes the match.
 void demoRequireIssueRight({required bool allowed}) {
-  if (!allowed) throw _refusal('42501', 'issuing invoices is not allowed');
+  if (!allowed) throw _refusal(PgCode.insufficientPrivilege, 'issuing invoices is not allowed');
 }
 
 /// Whether this request was answered before (and so changes nothing); the
@@ -51,13 +53,13 @@ bool demoUnmatchIsReplay(
   if (earlier != null) {
     if (earlier.lineId != lineId) {
       throw _refusal(
-        '22023',
+        PgCode.invalidParameterValue,
         'this request id was already used for a different request',
       );
     }
     return true;
   }
-  if (reason.isEmpty) throw _refusal('22023', 'state why the match is undone');
+  if (reason.isEmpty) throw _refusal(PgCode.invalidParameterValue, 'state why the match is undone');
   return false;
 }
 
@@ -94,7 +96,7 @@ void demoRecordMatchPayment(
   if (row == null ||
       rows.fold<int>(0, (sum, r) => sum + r.paidCents) != match.paidCents) {
     throw _refusal(
-      'DKB05',
+      DkCode.dkb05,
       'the payments of this invoice do not add up to its match',
     );
   }
@@ -104,7 +106,7 @@ void demoRecordMatchPayment(
   ];
   // 0660 — the first payment goes last.
   if (identical(row, rows.first) && rest.isNotEmpty) {
-    throw _refusal('DKB07', 'undo the later payments of this invoice first');
+    throw _refusal(DkCode.dkb07, 'undo the later payments of this invoice first');
   }
   return (row: row, rest: rest);
 }
@@ -118,7 +120,7 @@ DemoUnmatchTarget demoUnmatchTarget({
 }) {
   if (!line.isMoneyIn) {
     throw _refusal(
-      'DKB02',
+      DkCode.dkb02,
       'money out settles no invoice: undo its reconciliation',
     );
   }
@@ -129,11 +131,11 @@ DemoUnmatchTarget demoUnmatchTarget({
       match == null ||
       (line.status != BankLineStatus.matched &&
           line.status != BankLineStatus.pending)) {
-    throw _refusal('DKB01', 'this movement settles no invoice');
+    throw _refusal(DkCode.dkb01, 'this movement settles no invoice');
   }
   if (match.pending || line.status == BankLineStatus.pending) {
     throw _refusal(
-      'DKB01',
+      DkCode.dkb01,
       'this match awaits its validation: reject it there',
     );
   }
@@ -144,7 +146,7 @@ DemoUnmatchTarget demoUnmatchTarget({
       invoice.settledByInvoiceId != null ||
       money.invoices.any((i) => i.settledByInvoiceId == invoiceId)) {
     throw _refusal(
-      'DKB04',
+      DkCode.dkb04,
       'this match did more than link a payment: it cannot be undone here',
     );
   }
@@ -156,7 +158,7 @@ DemoUnmatchTarget demoUnmatchTarget({
       closed(match.matchedAt) ||
       (rest.isNotEmpty && closed(rest.last.matchedAt))) {
     throw _refusal(
-      'DKB06',
+      DkCode.dkb06,
       'this payment is dated inside a closed period of the books',
     );
   }

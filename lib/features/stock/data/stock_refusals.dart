@@ -10,21 +10,22 @@ import 'dart:convert';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/dk_code.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/stock_config.dart';
 
 /// Throws the typed failure [e] stands for, with its stack, or rethrows it.
 Never throwStockFailure(PostgrestException e, StackTrace stack) {
   switch (e.code) {
-    case 'DKG10':
+    case DkCode.dkg10:
       Error.throwWithStackTrace(const StockConfigStale(), stack);
-    case 'DKG08':
+    case DkCode.dkg08:
       Error.throwWithStackTrace(const StockConfigInUse(), stack);
-    case 'DKG03':
+    case DkCode.dkg03:
       Error.throwWithStackTrace(StockNotEnough(e.message), stack);
-    case 'DKG11':
+    case DkCode.dkg11:
       Error.throwWithStackTrace(_refused(e.details), stack);
-    case 'DKG22' || 'DKG23' || 'DKG24' || 'DKG04':
+    case DkCode.dkg22 || DkCode.dkg23 || DkCode.dkg24 || DkCode.dkg04:
       Error.throwWithStackTrace(StockTagRefused(e.code!, _detail(e.details)), stack);
     default:
       Error.throwWithStackTrace(e, stack);
@@ -34,7 +35,7 @@ Never throwStockFailure(PostgrestException e, StackTrace stack) {
 /// The field and the reason the server wrote as JSON in its detail.
 StockConfigRefused _refused(Object? details) {
   try {
-    final r = JsonReader.of(jsonDecode('$details'), context: 'DKG11');
+    final r = JsonReader.of(jsonDecode('$details'), context: DkCode.dkg11);
     return StockConfigRefused(r.string('field'), r.string('reason'));
   } on Object catch (error, stack) {
     TraceLogger.instance.warn('stock', 'a stock refusal detail was not JSON: $error\n$stack');

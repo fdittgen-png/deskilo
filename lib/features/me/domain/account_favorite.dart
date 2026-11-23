@@ -6,6 +6,8 @@
 // of another installation they hold a membership fact in force for; any
 // other reference is refused and nothing is written.
 
+import '../../../core/data/pg_code.dart';
+
 /// Why the personal home did not keep a favourite.
 enum AccountFavoriteRefusal {
   /// The reference is malformed, or names no space of that home (22023).
@@ -34,8 +36,8 @@ class AccountFavoriteRefused implements Exception {
 /// The refusal a SQLSTATE stands for, or null when it is not one.
 AccountFavoriteRefusal? accountFavoriteRefusalOf(String? code) =>
     switch (code) {
-      '22023' => AccountFavoriteRefusal.unknownReference,
-      '42501' || 'P0001' => AccountFavoriteRefusal.noRelationship,
-      'PGRST202' || '42883' => AccountFavoriteRefusal.unsupported,
+      PgCode.invalidParameterValue => AccountFavoriteRefusal.unknownReference,
+      PgCode.insufficientPrivilege || PgCode.raiseException => AccountFavoriteRefusal.noRelationship,
+      PgCode.pgrstFunctionNotFound || PgCode.undefinedFunction => AccountFavoriteRefusal.unsupported,
       _ => null,
     };

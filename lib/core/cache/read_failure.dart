@@ -3,6 +3,8 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
+
+import '../data/pg_code.dart';
 import '../data/server_error.dart';
 
 /// Why a network read failed, as far as the cache may care (#1849).
@@ -39,11 +41,11 @@ ReadFailure classifyReadFailure(Object error) {
   }
   final code = serverErrorCode(error);
   if (code != null) {
-    if (code == '42501' ||
+    if (code == PgCode.insufficientPrivilege ||
         code == '401' ||
         code == '403' ||
-        code == 'PGRST301' ||
-        code == 'PGRST302') {
+        code == PgCode.pgrstJwtExpired ||
+        code == PgCode.pgrstJwtInvalid) {
       return ReadFailure.denied;
     }
     // 5xx from the gateway or a database connection class (08xxx) or the

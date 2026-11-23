@@ -2,6 +2,7 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/pg_code.dart';
 import '../../../core/data/unreadable_rows.dart';
 import '../domain/book_chart.dart';
 import '../domain/book_profile_repository.dart';
@@ -66,7 +67,7 @@ class SupabaseBookProfileRepository implements BookProfileRepository {
     } on PostgrestException catch (e, st) {
       // trace-exempt: a stale save is an answer, anything else is rethrown
       // for the caller's runGuarded to trace.
-      if (e.code == '40001') return null;
+      if (e.code == PgCode.serializationFailure) return null;
       Error.throwWithStackTrace(e, st);
     }
   }
@@ -106,7 +107,7 @@ class SupabaseBookProfileRepository implements BookProfileRepository {
     } on PostgrestException catch (e, st) {
       // trace-exempt: a stale save is an answer, anything else is rethrown
       // for the caller's runGuarded to trace.
-      if (e.code == '40001') return null;
+      if (e.code == PgCode.serializationFailure) return null;
       Error.throwWithStackTrace(e, st);
     }
   }
@@ -137,7 +138,7 @@ class SupabaseBookProfileRepository implements BookProfileRepository {
     } on PostgrestException catch (e, st) {
       // trace-exempt: a stale save is an answer, anything else is rethrown
       // for the caller's runGuarded to trace.
-      if (e.code == '40001') return null;
+      if (e.code == PgCode.serializationFailure) return null;
       Error.throwWithStackTrace(e, st);
     }
   }

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
+import '../../../../core/data/dk_code.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/refusal_text.dart';
 import '../../../../core/trace/trace_logger.dart';
@@ -67,12 +68,12 @@ String invoiceRefusalText(
   // #3811 — read by the server's codes (0396, 0740), never its sentences.
   final refusal = refusalCodeOf(error);
   return switch (refusal.code) {
-    'DKI07' => l10n.invoiceAlreadyInvoiced,
+    DkCode.dki07 => l10n.invoiceAlreadyInvoiced,
     // #3994 — a correction is of the kind of the invoice it replaces.
-    'DKI08' => l10n.invoiceCorrectionKeepsKind,
-    'DKI01' when refusal.details == 'invoice_feature_disabled' =>
+    DkCode.dki08 => l10n.invoiceCorrectionKeepsKind,
+    DkCode.dki01 when refusal.details == 'invoice_feature_disabled' =>
       l10n.invoiceFeatureDisabled,
-    'DKI01' => l10n.invoiceEssentialsRefused,
+    DkCode.dki01 => l10n.invoiceEssentialsRefused,
     _ => fallback ?? l10n.workspaceGenericError,
   };
 }

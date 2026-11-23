@@ -3,6 +3,7 @@
 // #3294 — the customer figures over Supabase (`kpi_customer_quality`, 0671).
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/pg_code.dart';
 import '../domain/kpi_contract.dart';
 import '../domain/kpi_customers.dart';
 
@@ -29,7 +30,7 @@ class SupabaseCustomerKpiRepository implements CustomerKpiRepository {
       );
     } on PostgrestException catch (e, st) {
       // trace-exempt: rethrown typed; the card shows it.
-      if (e.code == '42501') {
+      if (e.code == PgCode.insufficientPrivilege) {
         Error.throwWithStackTrace(const KpiForbidden(), st);
       }
       rethrow;

@@ -6,6 +6,7 @@
 // command-line assistants, approves access for a bounded time, and reads
 // the installation notices. The refusals those RPCs raise are named here
 // so the screens can say what to do instead of "try again".
+import '../../../core/data/dk_code.dart';
 import '../../../core/data/server_error.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/mcp_onboarding.dart';
@@ -64,7 +65,7 @@ class McpOnboardingCommands {
       );
       return WorkspaceSwitchOutcome.switched;
     } catch (e, st) {
-      if (serverErrorCode(e) != 'DK409') rethrow;
+      if (serverErrorCode(e) != DkCode.dk409) rethrow;
       TraceLogger.instance.warn(
         'mcp',
         'mcpAccess changed meanwhile',

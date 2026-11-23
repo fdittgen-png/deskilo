@@ -4,6 +4,7 @@
 // typed. Nothing is retried here: an export is asked once per click.
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/pg_code.dart';
 import '../domain/bi_batch.dart';
 import '../domain/bi_report_snapshot.dart';
 
@@ -40,10 +41,10 @@ class SupabaseBiExportRepository implements BiExportRepository {
 
 /// The failure a SQLSTATE of the export read stands for.
 BiExportFailure _failureOf(String? code) => switch (code) {
-  '42501' => BiExportFailure.forbidden,
-  '0A000' => BiExportFailure.off,
+  PgCode.insufficientPrivilege => BiExportFailure.forbidden,
+  PgCode.featureNotSupported => BiExportFailure.off,
   '54000' => BiExportFailure.tooLarge,
-  '40001' => BiExportFailure.stale,
-  '22023' => BiExportFailure.invalid,
+  PgCode.serializationFailure => BiExportFailure.stale,
+  PgCode.invalidParameterValue => BiExportFailure.invalid,
   _ => BiExportFailure.unavailable,
 };

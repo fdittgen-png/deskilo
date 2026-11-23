@@ -15,6 +15,8 @@
 library;
 
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
+import '../../../core/data/pg_code.dart';
 import 'bi_batch.dart';
 import 'bi_query.dart';
 import 'bi_report_definition.dart';
@@ -75,7 +77,7 @@ class BiExportRefused implements Exception {
 
 /// The code of a figure the server does not answer in an export: a metric
 /// the batch does not answer, or one at another version there.
-const _notAnswered = '0A000';
+const _notAnswered = PgCode.featureNotSupported;
 
 /// A visual of the report with the periods it shows.
 class BiSnapshotItem {

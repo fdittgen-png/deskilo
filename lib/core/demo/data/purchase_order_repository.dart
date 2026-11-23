@@ -17,6 +17,7 @@ import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 import '../../../features/money/domain/purchase_order.dart';
 import '../../../features/money/domain/purchase_order_receipt.dart';
 import '../../../features/money/domain/service_item.dart';
+import '../../data/pg_code.dart';
 
 class FakePurchaseOrderRepository implements PurchaseOrderRepository {
   FakePurchaseOrderRepository({
@@ -44,7 +45,7 @@ class FakePurchaseOrderRepository implements PurchaseOrderRepository {
   PurchaseOrderMailSettings? mail;
   final Map<String, PurchaseOrder> _requests = {};
 
-  static PostgrestException _refused(String message, [String code = '22023']) =>
+  static PostgrestException _refused(String message, [String code = PgCode.invalidParameterValue]) =>
       PostgrestException(message: message, code: code);
 
   @override
@@ -130,7 +131,7 @@ class FakePurchaseOrderRepository implements PurchaseOrderRepository {
         throw _refused('only a draft purchase order is edited');
       }
       if (was.revision != draft.expectedRevision) {
-        throw _refused('stale revision', '40001');
+        throw _refused('stale revision', PgCode.serializationFailure);
       }
       _noSendInFlight(was.id);
       saved = PurchaseOrder(
@@ -185,7 +186,7 @@ class FakePurchaseOrderRepository implements PurchaseOrderRepository {
     if (o.state != PurchaseOrderState.draft) {
       throw _refused('only a draft purchase order is sent');
     }
-    if (o.revision != revision) throw _refused('stale revision', '40001');
+    if (o.revision != revision) throw _refused('stale revision', PgCode.serializationFailure);
     _noSendInFlight(o.id);
     return _requests[requestId] = orders[i] = _with(
       o,
@@ -210,7 +211,7 @@ class FakePurchaseOrderRepository implements PurchaseOrderRepository {
     if (!o.state.open || o.state == PurchaseOrderState.received) {
       throw _refused('a ${o.state.wire} purchase order is not cancelled');
     }
-    if (o.revision != revision) throw _refused('stale revision', '40001');
+    if (o.revision != revision) throw _refused('stale revision', PgCode.serializationFailure);
     _noSendInFlight(o.id);
     return _requests[requestId] = orders[i] = _with(
       o,
@@ -236,7 +237,7 @@ class FakePurchaseOrderRepository implements PurchaseOrderRepository {
   ) async {
     if (!draft.validFor(mail)) throw _refused('invalid mail settings');
     if (mail != null && mail!.revision != draft.revision) {
-      throw _refused('stale revision', '40001');
+      throw _refused('stale revision', PgCode.serializationFailure);
     }
     return mail = PurchaseOrderMailSettings(
       senderEmail: draft.senderEmail.trim(),
@@ -262,7 +263,7 @@ class FakePurchaseOrderRepository implements PurchaseOrderRepository {
     if (o.state != PurchaseOrderState.draft) {
       throw _refused('only a draft purchase order is sent');
     }
-    if (o.revision != order.revision) throw _refused('stale revision', '40001');
+    if (o.revision != order.revision) throw _refused('stale revision', PgCode.serializationFailure);
     if (!o.emailable) {
       throw _refused('the order names no address to e-mail it to');
     }
@@ -353,7 +354,7 @@ class FakePurchaseOrderRepository implements PurchaseOrderRepository {
       throw _refused('only a sent order receives its goods');
     }
     if (o.revision != draft.order.revision) {
-      throw _refused('stale revision', '40001');
+      throw _refused('stale revision', PgCode.serializationFailure);
     }
     if (problems.isNotEmpty) throw _refused('invalid delivery');
     final lines = [

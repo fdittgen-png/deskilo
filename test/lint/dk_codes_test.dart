@@ -5,8 +5,11 @@
 // code, or named below as one a person never meets in the app, with its
 // reason. A new refusal therefore arrives with words in the five languages,
 // or with a stated reason why it needs none.
+import 'dart:io';
+
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../tool/build_dk_codes.dart';
 import 'lint_sources.dart';
 
 /// Codes the app does not read, each with its reason. A name here must be
@@ -101,6 +104,26 @@ void main() {
     for (final f in handWrittenDartFiles('lib'))
       for (final m in _read.allMatches(f.readAsStringSync())) m.group(1)!,
   };
+
+  test('DkCode holds exactly the codes the migrations raise (SQL and Dart cannot differ)', () {
+    final generated = File('lib/core/data/dk_code.dart').readAsStringSync();
+    final fromSql = raisedCodes('supabase/migrations');
+    final inDart = RegExp(r"static const \w+ = '(DK[A-Z0-9]{3})';")
+        .allMatches(generated)
+        .map((m) => m.group(1)!)
+        .toSet();
+    expect(
+      fromSql.toSet().difference(inDart),
+      isEmpty,
+      reason: 'a code the migrations raise is missing from DkCode: dart run tool/build_dk_codes.dart',
+    );
+    expect(
+      inDart.difference(fromSql.toSet()),
+      isEmpty,
+      reason: 'DkCode holds a code no migration raises: dart run tool/build_dk_codes.dart',
+    );
+    expect(generated, dkCodeSource(fromSql), reason: 'dk_code.dart is not the generator\'s output');
+  });
 
   test('a code is raised by errcode or through the refusal helper', () {
     expect(raisedIn("raise exception 'x' using errcode = 'DKG07';"), {'DKG07'});

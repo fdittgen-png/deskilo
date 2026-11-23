@@ -16,6 +16,7 @@ import 'dart:async';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../data/pg_code.dart';
 import '../public_network/public_network_negotiator.dart';
 import '../public_network/public_network_operations.dart';
 import '../trace/trace_logger.dart';
@@ -129,10 +130,10 @@ ConnectionFailure classifyConnectionError(
   if (error is PostgrestException) {
     final code = error.code ?? '';
     final status = int.tryParse(code);
-    if (code == 'PGRST301' || error.message.toLowerCase().contains('jwt')) {
+    if (code == PgCode.pgrstJwtExpired || error.message.toLowerCase().contains('jwt')) {
       return as(ConnectionFailureReason.expired);
     }
-    if (code == '42501' || status == 401 || status == 403) {
+    if (code == PgCode.insufficientPrivilege || status == 401 || status == 403) {
       return as(ConnectionFailureReason.denied);
     }
     if (status != null && status >= 500) {

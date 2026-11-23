@@ -6,6 +6,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/data/dk_code.dart';
 import '../../../../core/files/file_delivery.dart';
 import '../../../../core/files/file_delivery_notice.dart';
 import '../../../../core/l10n/context_l10n.dart';
@@ -38,7 +39,7 @@ class SentEInvoiceDownload extends ConsumerWidget {
       if (!context.mounted) return;
       AppSnack.error(
         context,
-        refusalCodeOf(e).code == 'DKI09'
+        refusalCodeOf(e).code == DkCode.dki09
             ? l10n.eInvoiceSentNotIntact
             : l10n.eInvoiceSentNone,
       );

@@ -4,6 +4,7 @@
 // allocation, the rules with every revision, and appending one.
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/pg_code.dart';
 import '../domain/cost_allocation_rules.dart';
 import '../domain/kpi_contract.dart';
 
@@ -17,7 +18,7 @@ class SupabaseCostAllocationRepository implements CostAllocationRepository {
       return await _client.rpc<Object?>(fn, params: params);
     } on PostgrestException catch (e, st) {
       // trace-exempt: rethrown typed; the card or the editor shows it.
-      if (e.code == '42501') {
+      if (e.code == PgCode.insufficientPrivilege) {
         Error.throwWithStackTrace(const KpiForbidden(), st);
       }
       rethrow;

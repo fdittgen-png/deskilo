@@ -14,6 +14,7 @@
 // This is the server's refusal, distinct from the client-side `BookingRefusal`
 // gate (`booking_gate.dart`), which foresees one before asking.
 import 'dart:convert';
+import '../../../core/data/dk_code.dart';
 
 /// A refusal's kind: a code the server issues, or one of the legacy readings.
 enum ReservationRefusalKind {
@@ -57,7 +58,7 @@ class ReservationRefusal {
   /// it carried: used by tests and fakes that stand in for a server.
   const ReservationRefusal.coded(String this.code, {this.minutes, this.days})
     : kind = ReservationRefusalKind.coded,
-      blockedByOther = code == 'DKK26';
+      blockedByOther = code == DkCode.dkk26;
 
   /// What the transport could not be read as: no kind, no value, no text.
   static const ReservationRefusal unknown = ReservationRefusal._(
@@ -94,7 +95,7 @@ class ReservationRefusal {
     final known = code != null && _knownCodes.contains(code);
     final words = message ?? '';
     final other =
-        code == 'DKK26' ||
+        code == DkCode.dkk26 ||
         code == '23P01' ||
         words.contains('already reserved');
     if (known) {
@@ -147,40 +148,40 @@ class ReservationRefused implements Exception {
 /// Every code 0739 issues (DKK14 and DKK24 are not issued): the only ones this
 /// app reads as a meaning.
 const Set<String> _knownCodes = {
-  'DKK01',
-  'DKK02',
-  'DKK03',
-  'DKK04',
-  'DKK05',
-  'DKK06',
-  'DKK07',
-  'DKK08',
-  'DKK09',
-  'DKK10',
-  'DKK11',
-  'DKK12',
-  'DKK13',
-  'DKK15',
-  'DKK16',
-  'DKK17',
-  'DKK18',
-  'DKK19',
-  'DKK20',
-  'DKK21',
-  'DKK22',
-  'DKK23',
-  'DKK25',
-  'DKK26',
-  'DKK27',
-  'DKK28',
-  'DKK29',
-  'DKK30',
-  'DKK31',
-  'DKK32',
-  'DKK33',
-  'DKK34',
-  'DKK35',
-  'DKK36',
+  DkCode.dkk01,
+  DkCode.dkk02,
+  DkCode.dkk03,
+  DkCode.dkk04,
+  DkCode.dkk05,
+  DkCode.dkk06,
+  DkCode.dkk07,
+  DkCode.dkk08,
+  DkCode.dkk09,
+  DkCode.dkk10,
+  DkCode.dkk11,
+  DkCode.dkk12,
+  DkCode.dkk13,
+  DkCode.dkk15,
+  DkCode.dkk16,
+  DkCode.dkk17,
+  DkCode.dkk18,
+  DkCode.dkk19,
+  DkCode.dkk20,
+  DkCode.dkk21,
+  DkCode.dkk22,
+  DkCode.dkk23,
+  DkCode.dkk25,
+  DkCode.dkk26,
+  DkCode.dkk27,
+  DkCode.dkk28,
+  DkCode.dkk29,
+  DkCode.dkk30,
+  DkCode.dkk31,
+  DkCode.dkk32,
+  DkCode.dkk33,
+  DkCode.dkk34,
+  DkCode.dkk35,
+  DkCode.dkk36,
 };
 
 /// A whole, non-negative number from a detail value (an integer, or a double

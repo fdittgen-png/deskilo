@@ -6,6 +6,8 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/dk_code.dart';
+import '../../../core/data/pg_code.dart';
 import '../domain/customer_quote.dart';
 
 class SupabaseCustomerQuoteRepository implements CustomerQuoteRepository {
@@ -187,13 +189,13 @@ class SupabaseCustomerQuoteRepository implements CustomerQuoteRepository {
       // trace-exempt: a refusal is rethrown typed with its cause and stack; a
       // failure that is not one passes through untouched.
       final kind = switch (e.code) {
-        'DKQ02' => QuoteRefusalKind.stale,
-        'DKQ03' || 'DKQ05' => QuoteRefusalKind.state,
-        'DKQ04' => QuoteRefusalKind.expired,
-        'DKQ08' => QuoteRefusalKind.needsReview,
-        'DKQ06' || 'DKI01' => QuoteRefusalKind.incomplete,
-        'DKQ10' => QuoteRefusalKind.featureOff,
-        'DKN01' || 'DKQ07' || '28000' => QuoteRefusalKind.notAllowed,
+        DkCode.dkq02 => QuoteRefusalKind.stale,
+        DkCode.dkq03 || DkCode.dkq05 => QuoteRefusalKind.state,
+        DkCode.dkq04 => QuoteRefusalKind.expired,
+        DkCode.dkq08 => QuoteRefusalKind.needsReview,
+        DkCode.dkq06 || DkCode.dki01 => QuoteRefusalKind.incomplete,
+        DkCode.dkq10 => QuoteRefusalKind.featureOff,
+        DkCode.dkn01 || DkCode.dkq07 || PgCode.invalidAuthorization => QuoteRefusalKind.notAllowed,
         _ => null,
       };
       if (kind == null) rethrow;

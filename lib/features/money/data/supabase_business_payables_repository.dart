@@ -2,6 +2,7 @@
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/pg_code.dart';
 import '../domain/business_payables.dart';
 import '../domain/supplier_balance.dart';
 import '../domain/supplier_payables_page.dart';
@@ -57,7 +58,7 @@ class SupabaseBusinessPayablesRepository implements BusinessPayablesRepository {
     try {
       return await read();
     } on PostgrestException catch (e, st) {
-      if (e.code == '42501') {
+      if (e.code == PgCode.insufficientPrivilege) {
         Error.throwWithStackTrace(const BusinessPayablesRefusal(), st);
       }
       rethrow;

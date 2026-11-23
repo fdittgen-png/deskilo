@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../backend/connected_installations.dart';
+import '../../data/pg_code.dart';
 import '../../trace/trace_logger.dart';
 import '../public_network_negotiator.dart';
 import '../public_network_operations.dart';
@@ -37,7 +38,7 @@ class PublicNetworkNegotiator {
       return readPublicDescriptor(raw);
     } on PostgrestException catch (e, st) {
       // The captured answer of a server from before negotiation.
-      if (e.code != 'PGRST202') rethrow;
+      if (e.code != PgCode.pgrstFunctionNotFound) rethrow;
       TraceLogger.instance.log(
         TraceLevel.info,
         'public_network',

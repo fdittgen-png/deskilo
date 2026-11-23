@@ -16,6 +16,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../core/backend/connected_target.dart';
 import '../../../core/backend/connection_outcome.dart';
 import '../../../core/backend/context_clients.dart';
+import '../../../core/data/pg_code.dart';
 import '../../../core/settings/settings.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/my_reservations.dart';
@@ -217,10 +218,10 @@ class HostMyReservationsRepository implements MyReservationsRepository {
   /// raises for a missing personal row. Anything else is not a refusal.
   static MyReservationsFailure? _refusalOf(PostgrestException e) =>
       switch (e.code) {
-        'PGRST202' => MyReservationsFailure.unsupported,
-        '42501' => MyReservationsFailure.forbidden,
-        '22023' => MyReservationsFailure.invalid,
-        'P0001' when e.message.contains('unknown setting') =>
+        PgCode.pgrstFunctionNotFound => MyReservationsFailure.unsupported,
+        PgCode.insufficientPrivilege => MyReservationsFailure.forbidden,
+        PgCode.invalidParameterValue => MyReservationsFailure.invalid,
+        PgCode.raiseException when e.message.contains('unknown setting') =>
           MyReservationsFailure.misconfigured,
         _ => null,
       };

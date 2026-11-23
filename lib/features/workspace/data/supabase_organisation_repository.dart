@@ -5,6 +5,7 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show JsonReader;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/pg_code.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/organisation.dart';
 import '../domain/organisation_overview.dart';
@@ -95,7 +96,7 @@ class SupabaseOrganisationRepository implements OrganisationRepository {
       final id = JsonReader.of(answer, context: 'house').string('workspace_id');
       return (workspaceId: id, refused: null);
     } on PostgrestException catch (e, st) {
-      if (!const {'42501', '22023', '55000'}.contains(e.code)) rethrow;
+      if (!const {PgCode.insufficientPrivilege, PgCode.invalidParameterValue, '55000'}.contains(e.code)) rethrow;
       TraceLogger.instance.warn(
         'workspace',
         'house refused',
@@ -144,7 +145,7 @@ class SupabaseOrganisationRepository implements OrganisationRepository {
       ).stringOrNull('status');
       return (joined: HouseJoin.of(status), refused: null);
     } on PostgrestException catch (e, st) {
-      if (!const {'42501', '22023', '55000'}.contains(e.code)) rethrow;
+      if (!const {PgCode.insufficientPrivilege, PgCode.invalidParameterValue, '55000'}.contains(e.code)) rethrow;
       TraceLogger.instance.warn(
         'workspace',
         'house membership request refused',
@@ -190,7 +191,7 @@ class SupabaseOrganisationRepository implements OrganisationRepository {
       await _client.rpc<Object?>(name, params: params);
       return null;
     } on PostgrestException catch (e, st) {
-      if (!const {'42501', '22023', '55000'}.contains(e.code)) rethrow;
+      if (!const {PgCode.insufficientPrivilege, PgCode.invalidParameterValue, '55000'}.contains(e.code)) rethrow;
       TraceLogger.instance.warn(
         'workspace',
         'organisation command refused',
@@ -210,7 +211,7 @@ class SupabaseOrganisationRepository implements OrganisationRepository {
           OrganisationRefusal.onlyAPerson,
         (_, 'this business is no house of an organisation') =>
           OrganisationRefusal.noHouse,
-        ('42501', _) => OrganisationRefusal.notOwner,
+        (PgCode.insufficientPrivilege, _) => OrganisationRefusal.notOwner,
         ('55000', _) => OrganisationRefusal.featureOff,
         (_, 'a development twin is never the head') =>
           OrganisationRefusal.twinNeverHead,

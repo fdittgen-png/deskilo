@@ -6,6 +6,8 @@
 // makes a retry safe, and the screen offers it).
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/dk_code.dart';
+import '../../../core/data/pg_code.dart';
 import '../../../core/data/unreadable_rows.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/service_fulfilment.dart';
@@ -187,13 +189,13 @@ class SupabaseServiceFulfilmentRepository
       // trace-exempt: a refusal is rethrown typed with its cause and stack; a
       // failure that is not one passes through untouched.
       final kind = switch (e.code) {
-        'DKF02' => FulfilmentRefusalKind.stale,
-        'DKF03' || 'DKF04' => FulfilmentRefusalKind.state,
-        'DKF05' => FulfilmentRefusalKind.requestReused,
-        'DKF06' => FulfilmentRefusalKind.incomplete,
-        'DKF01' => FulfilmentRefusalKind.unknown,
-        'DKF10' => FulfilmentRefusalKind.featureOff,
-        'DKF07' || '42501' || '28000' => FulfilmentRefusalKind.notAllowed,
+        DkCode.dkf02 => FulfilmentRefusalKind.stale,
+        DkCode.dkf03 || DkCode.dkf04 => FulfilmentRefusalKind.state,
+        DkCode.dkf05 => FulfilmentRefusalKind.requestReused,
+        DkCode.dkf06 => FulfilmentRefusalKind.incomplete,
+        DkCode.dkf01 => FulfilmentRefusalKind.unknown,
+        DkCode.dkf10 => FulfilmentRefusalKind.featureOff,
+        DkCode.dkf07 || PgCode.insufficientPrivilege || PgCode.invalidAuthorization => FulfilmentRefusalKind.notAllowed,
         _ => null,
       };
       if (kind == null) rethrow;

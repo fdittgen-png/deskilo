@@ -5,50 +5,52 @@
 // recorded: each refusal has its code (DKC01–DKC15) and the app answers
 // each by its own sentence, never as a failure of the app.
 
+import '../../../core/data/dk_code.dart';
+
 /// Why a claim was refused, by the server's code.
 enum ClaimRefusal {
   /// DKC01 — no invoice named.
-  empty('DKC01'),
+  empty(DkCode.dkc01),
 
   /// DKC02 — an invoice that is not mine to pay (or unknown, or of another
   /// business: one answer for all).
-  notYours('DKC02'),
+  notYours(DkCode.dkc02),
 
   /// DKC03 — invoices of several months.
-  months('DKC03'),
+  months(DkCode.dkc03),
 
   /// DKC04 — the payment's month is not the invoices'.
-  otherMonth('DKC04'),
+  otherMonth(DkCode.dkc04),
 
   /// DKC05 — an invoice that cannot take a payment now.
-  cannotTake('DKC05'),
+  cannotTake(DkCode.dkc05),
 
   /// DKC06 — an invoice already in another payment.
-  alreadyInPayment('DKC06'),
+  alreadyInPayment(DkCode.dkc06),
 
   /// DKC07 — the amount is not what the invoices still owe.
-  amount('DKC07'),
+  amount(DkCode.dkc07),
 
   /// DKC08 — not one of my payments.
-  notMyPayment('DKC08'),
+  notMyPayment(DkCode.dkc08),
 
   /// DKC09 — the payment names no invoices to free (already withdrawn).
-  nothingToFree('DKC09'),
+  nothingToFree(DkCode.dkc09),
 
   /// DKC10 — the payment is no longer being processed.
-  notProcessing('DKC10'),
+  notProcessing(DkCode.dkc10),
 
   /// DKC11 — an invoice in another currency than the payment.
-  currency('DKC11'),
+  currency(DkCode.dkc11),
 
   /// DKC12 — a retry of a payment whose claim was withdrawn.
-  withdrawn('DKC12'),
+  withdrawn(DkCode.dkc12),
 
   /// DKC13 — the business already decided this declaration.
-  decided('DKC13'),
+  decided(DkCode.dkc13),
 
   /// DKC15 — the request id of this payment was used for another one.
-  requestChanged('DKC15'),
+  requestChanged(DkCode.dkc15),
 
   /// A claim's code this version does not know (a newer server's).
   other('');

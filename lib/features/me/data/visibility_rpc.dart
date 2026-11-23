@@ -2,6 +2,7 @@
 import 'package:meta/meta.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/pg_code.dart';
 import '../domain/visibility.dart';
 import '../domain/visibility_write.dart';
 
@@ -64,7 +65,7 @@ Future<MyVisibility> writeVisibilityIfUnchanged(
 @visibleForTesting
 Exception? visibilityWriteRefusal(PostgrestException e) => switch (e.code) {
       'PT409' => const VisibilityConflict(),
-      'PGRST202' || '42883' => const VisibilityUnsupported(),
+      PgCode.pgrstFunctionNotFound || PgCode.undefinedFunction => const VisibilityUnsupported(),
       _ => e.message == 'visibility_conflict'
           ? const VisibilityConflict()
           : null,

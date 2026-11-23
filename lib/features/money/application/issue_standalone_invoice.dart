@@ -10,6 +10,7 @@
 // never writes; a change of the selected workspace or account since does not
 // move it. The request id makes a resend safe too: the server answers the
 // invoice of the first attempt, never a second one.
+import '../../../core/data/dk_code.dart';
 import '../../../core/data/server_error.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/command_receipt.dart';
@@ -115,7 +116,7 @@ class StandaloneIssuance {
 /// any other failure.
 List<String> standaloneRefusalKeys(Object error) {
   final details = serverErrorDetails(error);
-  return serverErrorCode(error) == 'DKI01' && details != null && details.isNotEmpty
+  return serverErrorCode(error) == DkCode.dki01 && details != null && details.isNotEmpty
       ? details.split(',')
       : const [];
 }

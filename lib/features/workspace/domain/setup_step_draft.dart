@@ -6,6 +6,7 @@
 // command applies what the owner confirms, and readiness is computed from
 // what was applied. Every write is made against the version it read.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import '../../../core/data/pg_code.dart';
 
 /// The draft the server holds for one step.
 class SetupStepDraft {
@@ -63,7 +64,7 @@ class SetupDraftConflict implements Exception {
 
   /// The server raises this state with a message starting with
   /// [messagePrefix] (setup_step_drafts' functions).
-  static const String sqlState = '40001';
+  static const String sqlState = PgCode.serializationFailure;
   static const String messagePrefix = 'setup draft changed:';
 
   /// Whether a server error with [code] and [message] is this conflict.

@@ -9,6 +9,7 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/pg_code.dart';
 import '../domain/personal_message_directory.dart';
 
 /// A typed refusal or any answer of the home itself is final; only a
@@ -94,9 +95,9 @@ class SupabasePersonalMessageDirectoryRepository
   /// The SQLSTATEs the reader raises on purpose, and PostgREST's answer
   /// for a function it does not know. Anything else is not a refusal.
   static DirectoryFailure? _refusalOf(PostgrestException e) => switch (e.code) {
-    'PGRST202' || '42883' => DirectoryFailure.unsupported,
-    '42501' => DirectoryFailure.forbidden,
-    '22023' => DirectoryFailure.invalid,
+    PgCode.pgrstFunctionNotFound || PgCode.undefinedFunction => DirectoryFailure.unsupported,
+    PgCode.insufficientPrivilege => DirectoryFailure.forbidden,
+    PgCode.invalidParameterValue => DirectoryFailure.invalid,
     _ => null,
   };
 }
