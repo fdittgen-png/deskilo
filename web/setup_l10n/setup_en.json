@@ -828,5 +828,18 @@
  "stockRepeatedScanHint": "What a goods sheet does when the same code is scanned again: add one more, or ask the quantity. Set in the app's settings.",
  "optAtOnce": "At once",
  "optAddOne": "Add one more",
- "optAskQuantity": "Ask the quantity"
+ "optAskQuantity": "Ask the quantity",
+ "counterFiscal": "Fiscal rules for counter sales",
+ "counterFiscalHint": "What you declare: no fiscal cash-register obligation applies to your business, or one does. A receipt is issued only where your country's operation is supported under the case you declare. Set in the app's settings.",
+ "counterChannel": "How a counter receipt leaves the counter",
+ "counterChannelHint": "Shared, printed, or both: the receipt is the same immutable document. Set in the app's settings.",
+ "counterCustomerless": "Sales without a named customer",
+ "counterCustomerlessHint": "Allowed, or every sale names a customer. A sale without a customer never creates an account, a member or a subscription. Set in the app's settings.",
+ "optFiscalRequired": "A fiscal register is required",
+ "optFiscalNone": "No fiscal register obligation (my declaration)",
+ "optChannelShare": "Share",
+ "optChannelPrint": "Print",
+ "optChannelBoth": "Share and print",
+ "optCustomerlessAllowed": "Allowed",
+ "optCustomerlessRefused": "A customer is always named"
 }

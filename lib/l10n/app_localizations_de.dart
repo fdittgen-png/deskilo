@@ -11648,6 +11648,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Raumdatei (XML) trägt die gesamte Konfiguration — Tarife, rechtliche Identität, Buchungs- und Freigaberegeln, Rollen, Dokumentvorlagen, Standorte, Schließtage — und der Import wendet sie an, auch auf einen Raum, der schon Buchungen hat. Aus: die Datei trägt nur Einstellungen und Grundriss.';
 
   @override
+  String get featureCounterReceiptsDesc =>
+      'Ein Verkauf an der Kasse ergibt einen unveränderlichen, einmal nummerierten Beleg mit der erhaltenen Zahlung. Er wird nur angeboten, wo der Vorgang des Landes unterstützt wird, und sagt klar, wenn nicht.';
+
+  @override
+  String get featureCounterReceiptsTitle => 'Kassenbelege';
+
+  @override
   String get featureCountriesEuName => 'der Europäischen Union';
 
   @override
@@ -28804,6 +28811,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Das hat sich inzwischen geändert. Öffnen Sie es erneut, um den aktuellen Stand zu sehen.';
 
   @override
+  String get refusalCounterUnsupported =>
+      'Dieser Vorgang wird für Ihr Land in dem in den Einstellungen erklärten Fall nicht unterstützt: Es wurde nichts nummeriert und nichts angenommen.';
+
+  @override
   String refusalMainStoreExpired(String held, String asked) {
     return 'Das Hauptlager enthält nur $held von den $asked, die dieser Verkauf verlangt, die verkäuflich sind: der Rest ist abgelaufen. Nichts wurde entnommen und der Verkauf wurde nicht bestätigt.';
   }
@@ -31917,6 +31928,18 @@ class AppLocalizationsDe extends AppLocalizations {
       'Von der Plattform festgelegt: der längste Zeitraum, den eine Kalenderabfrage anfordern darf. Er begrenzt die Abfrage.';
 
   @override
+  String get settingHintCounterCustomerlessSales =>
+      'Erlaubt: Ein Verkauf kann ohne Kundennamen erfolgen. Abgelehnt: Jeder Verkauf nennt einen Kunden. Ein Verkauf ohne Kunden legt nie ein Konto, ein Mitglied oder ein Abonnement an.';
+
+  @override
+  String get settingHintCounterDocumentChannel =>
+      'Geteilt (Nachricht oder Mail), gedruckt oder beides. Der Beleg ist in jedem Fall dasselbe unveränderliche Dokument.';
+
+  @override
+  String get settingHintCounterFiscalObligation =>
+      'Was Sie zu den steuerlichen Vorgaben für einen Verkauf an der Kasse erklären: keine bedeutet, dass für Ihren Betrieb keine Kassenpflicht gilt (Ihre eigene Erklärung, auf jedem Beleg festgehalten); Kasse erforderlich bedeutet, dass eine gilt. Ein Beleg wird nur ausgestellt, wo der Vorgang Ihres Landes für den erklärten Fall unterstützt wird.';
+
+  @override
   String get settingHintDirectoryGeocoderUrl =>
       'Der Photon-kompatible Dienst, der eine veröffentlichte Adresse auf der Entdecken-Karte platziert: eine https-Adresse im öffentlichen Internet, ohne Benutzername, Passwort, Abfrage oder #. Leer lassen, um die Adresse zu verwenden, mit der diese App-Version gebaut wurde, sonst den öffentlichen Photon-Dienst.';
 
@@ -32282,6 +32305,18 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingLabelCalendarRangeDays => 'Kalenderzeitraum';
+
+  @override
+  String get settingLabelCounterCustomerlessSales =>
+      'Verkäufe ohne genannten Kunden';
+
+  @override
+  String get settingLabelCounterDocumentChannel =>
+      'Wie ein Kassenbeleg die Kasse verlässt';
+
+  @override
+  String get settingLabelCounterFiscalObligation =>
+      'Steuerliche Vorgaben für Kassenverkäufe';
 
   @override
   String get settingLabelDirectoryGeocoderUrl => 'Adresssuchdienst';

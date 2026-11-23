@@ -1,0 +1,9 @@
+{
+  "settingLabelCounterFiscalObligation": "Règles fiscales des ventes au comptoir",
+  "settingHintCounterFiscalObligation": "Ce que vous déclarez sur les règles fiscales d'une vente au comptoir : aucune signifie qu'aucune obligation fiscale de caisse ne s'applique à votre entreprise (votre propre déclaration, inscrite sur chaque ticket) ; caisse requise signifie qu'une obligation s'applique. Un ticket n'est émis que là où l'opération de votre pays est prise en charge dans le cas que vous déclarez.",
+  "settingLabelCounterDocumentChannel": "Comment le ticket quitte le comptoir",
+  "settingHintCounterDocumentChannel": "Partagé (message ou courriel), imprimé, ou les deux. Le ticket est le même document immuable dans tous les cas.",
+  "settingLabelCounterCustomerlessSales": "Ventes sans client nommé",
+  "settingHintCounterCustomerlessSales": "Autorisées : une vente peut se faire sans nommer de client. Refusées : chaque vente en nomme un. Une vente sans client ne crée jamais de compte, de membre ni d'abonnement.",
+  "refusalCounterUnsupported": "Cette opération n'est pas prise en charge pour votre pays dans le cas que vous avez déclaré dans les paramètres : rien n'a été numéroté et rien n'a été encaissé."
+}

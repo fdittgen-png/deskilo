@@ -1,0 +1,9 @@
+{
+  "settingLabelCounterFiscalObligation": "Steuerliche Vorgaben für Kassenverkäufe",
+  "settingHintCounterFiscalObligation": "Was Sie zu den steuerlichen Vorgaben für einen Verkauf an der Kasse erklären: keine bedeutet, dass für Ihren Betrieb keine Kassenpflicht gilt (Ihre eigene Erklärung, auf jedem Beleg festgehalten); Kasse erforderlich bedeutet, dass eine gilt. Ein Beleg wird nur ausgestellt, wo der Vorgang Ihres Landes für den erklärten Fall unterstützt wird.",
+  "settingLabelCounterDocumentChannel": "Wie ein Kassenbeleg die Kasse verlässt",
+  "settingHintCounterDocumentChannel": "Geteilt (Nachricht oder Mail), gedruckt oder beides. Der Beleg ist in jedem Fall dasselbe unveränderliche Dokument.",
+  "settingLabelCounterCustomerlessSales": "Verkäufe ohne genannten Kunden",
+  "settingHintCounterCustomerlessSales": "Erlaubt: Ein Verkauf kann ohne Kundennamen erfolgen. Abgelehnt: Jeder Verkauf nennt einen Kunden. Ein Verkauf ohne Kunden legt nie ein Konto, ein Mitglied oder ein Abonnement an.",
+  "refusalCounterUnsupported": "Dieser Vorgang wird für Ihr Land in dem in den Einstellungen erklärten Fall nicht unterstützt: Es wurde nichts nummeriert und nichts angenommen."
+}

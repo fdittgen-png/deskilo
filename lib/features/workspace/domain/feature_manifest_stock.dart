@@ -115,4 +115,12 @@ const Map<WorkspaceFeature, FeatureManifestEntry> stockFeatureManifest = {
     requires: WorkspaceFeature.stockManagement,
     defaultOn: false,
   ),
+  // #4184 — counter receipts: an immutable receipt of a sale at the counter, numbered once, with its tender. Asked for, under standalone invoicing. Off: nothing changes.
+  WorkspaceFeature.counterReceipts: FeatureManifestEntry(
+    feature: WorkspaceFeature.counterReceipts,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.standaloneInvoicing,
+    defaultOn: false,
+  ),
 };

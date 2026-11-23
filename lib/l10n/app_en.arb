@@ -15296,6 +15296,14 @@
   "@featureConfigurationTransferDesc": {
     "description": "#916 configuration transfer: featureConfigurationTransferDesc"
   },
+  "featureCounterReceiptsDesc": "A sale at the counter gives an immutable receipt of its own, numbered once, with the tender it was paid with. It is offered only where the country's operation is supported, and says plainly where it is not.",
+  "@featureCounterReceiptsDesc": {
+    "description": "#4184 feature description"
+  },
+  "featureCounterReceiptsTitle": "Counter receipts",
+  "@featureCounterReceiptsTitle": {
+    "description": "#4184 feature name"
+  },
   "featureCountriesEuName": "the European Union",
   "@featureCountriesEuName": {
     "description": "#2454 feature availability by country"
@@ -37464,6 +37472,10 @@
   "@refusalChangedMeanwhile": {
     "description": "#1305 Shown when an invoice changed state before the action reached the server"
   },
+  "refusalCounterUnsupported": "This operation is not supported for your country under the case you declared in the settings: nothing was numbered and nothing was taken.",
+  "@refusalCounterUnsupported": {
+    "description": "#4184 refusal"
+  },
   "refusalMainStoreExpired": "The main store holds only {held} of the {asked} this sale asks for that is fit to sell: the rest is past its date. Nothing was taken and the sale was not confirmed.",
   "@refusalMainStoreExpired": {
     "description": "#4170 a sale refused for what the main store holds",
@@ -41262,6 +41274,18 @@
   "@settingHintCalendarRangeDays": {
     "description": "#2487 settings: Setting hint."
   },
+  "settingHintCounterCustomerlessSales": "Allowed: a sale may be made without naming a customer. Refused: every sale names one. A sale without a customer never creates an account, a member or a subscription.",
+  "@settingHintCounterCustomerlessSales": {
+    "description": "#4184 setting label/hint"
+  },
+  "settingHintCounterDocumentChannel": "Shared (a message or a mail), printed, or both. The receipt is the same immutable document in every case.",
+  "@settingHintCounterDocumentChannel": {
+    "description": "#4184 setting label/hint"
+  },
+  "settingHintCounterFiscalObligation": "What you declare about the fiscal rules for a sale at the counter: none means no fiscal cash-register obligation applies to your business (your own declaration, recorded on each receipt); register required means one does. A receipt is issued only where your country's operation is supported under the case you declare.",
+  "@settingHintCounterFiscalObligation": {
+    "description": "#4184 setting label/hint"
+  },
   "settingHintDirectoryGeocoderUrl": "The Photon-compatible service that places a published address on the discovery map: an https address on the public internet, without a user name, password, query or #. Leave it empty to use the address this app version was built with, else the public Photon service.",
   "@settingHintDirectoryGeocoderUrl": {
     "description": "#2488 Setting hint."
@@ -41645,6 +41669,18 @@
   "settingLabelCalendarRangeDays": "Calendar range",
   "@settingLabelCalendarRangeDays": {
     "description": "#2487 settings: Setting label."
+  },
+  "settingLabelCounterCustomerlessSales": "Sales without a named customer",
+  "@settingLabelCounterCustomerlessSales": {
+    "description": "#4184 setting label/hint"
+  },
+  "settingLabelCounterDocumentChannel": "How a counter receipt leaves the counter",
+  "@settingLabelCounterDocumentChannel": {
+    "description": "#4184 setting label/hint"
+  },
+  "settingLabelCounterFiscalObligation": "Fiscal rules for counter sales",
+  "@settingLabelCounterFiscalObligation": {
+    "description": "#4184 setting label/hint"
   },
   "settingLabelDirectoryGeocoderUrl": "Address lookup service",
   "@settingLabelDirectoryGeocoderUrl": {

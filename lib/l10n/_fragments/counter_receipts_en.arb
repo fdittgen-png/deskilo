@@ -1,0 +1,30 @@
+{
+  "settingLabelCounterFiscalObligation": "Fiscal rules for counter sales",
+  "@settingLabelCounterFiscalObligation": {
+    "description": "#4184 setting label/hint"
+  },
+  "settingHintCounterFiscalObligation": "What you declare about the fiscal rules for a sale at the counter: none means no fiscal cash-register obligation applies to your business (your own declaration, recorded on each receipt); register required means one does. A receipt is issued only where your country's operation is supported under the case you declare.",
+  "@settingHintCounterFiscalObligation": {
+    "description": "#4184 setting label/hint"
+  },
+  "settingLabelCounterDocumentChannel": "How a counter receipt leaves the counter",
+  "@settingLabelCounterDocumentChannel": {
+    "description": "#4184 setting label/hint"
+  },
+  "settingHintCounterDocumentChannel": "Shared (a message or a mail), printed, or both. The receipt is the same immutable document in every case.",
+  "@settingHintCounterDocumentChannel": {
+    "description": "#4184 setting label/hint"
+  },
+  "settingLabelCounterCustomerlessSales": "Sales without a named customer",
+  "@settingLabelCounterCustomerlessSales": {
+    "description": "#4184 setting label/hint"
+  },
+  "settingHintCounterCustomerlessSales": "Allowed: a sale may be made without naming a customer. Refused: every sale names one. A sale without a customer never creates an account, a member or a subscription.",
+  "@settingHintCounterCustomerlessSales": {
+    "description": "#4184 setting label/hint"
+  },
+  "refusalCounterUnsupported": "This operation is not supported for your country under the case you declared in the settings: nothing was numbered and nothing was taken.",
+  "@refusalCounterUnsupported": {
+    "description": "#4184 refusal"
+  }
+}

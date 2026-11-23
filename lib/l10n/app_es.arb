@@ -7195,6 +7195,8 @@
   "@featureConfigurationTransferDesc": {
     "description": "#916 configuration transfer: featureConfigurationTransferDesc"
   },
+  "featureCounterReceiptsDesc": "Una venta en el mostrador da un ticket inmutable, numerado una sola vez, con el cobro recibido. Solo se ofrece donde la operación del país está soportada, y dice claramente cuándo no lo está.",
+  "featureCounterReceiptsTitle": "Tickets de caja",
   "featureCountriesEuName": "la Unión Europea",
   "@featureCountriesEuName": {
     "description": "#2454 feature availability by country"
@@ -16461,6 +16463,7 @@
     "description": "#2380 (0660) Refusal DKB07: the first payment of an invoice is undone after its later payments."
   },
   "refusalChangedMeanwhile": "Esto ha cambiado mientras tanto. Vuelva a abrirlo para ver cómo está.",
+  "refusalCounterUnsupported": "Esta operación no está soportada para su país en el caso que declaró en los ajustes: no se numeró nada y no se cobró nada.",
   "refusalMainStoreExpired": "El almacén principal solo tiene {held} de los {asked} que pide esta venta aptos para vender: el resto ha caducado. No se retiró nada y la venta no se confirmó.",
   "@refusalMainStoreExpired": {
     "description": "#4170 a sale refused for what the main store holds",
@@ -18929,6 +18932,9 @@
   "@settingHintCalendarRangeDays": {
     "description": "#2487 settings: Setting hint."
   },
+  "settingHintCounterCustomerlessSales": "Permitidas: se puede vender sin nombrar un cliente. Rechazadas: cada venta nombra uno. Una venta sin cliente nunca crea una cuenta, un miembro ni una suscripción.",
+  "settingHintCounterDocumentChannel": "Compartido (mensaje o correo), impreso o ambos. El ticket es el mismo documento inmutable en todos los casos.",
+  "settingHintCounterFiscalObligation": "Lo que declara sobre las normas fiscales de una venta en mostrador: ninguna significa que no se aplica ninguna obligación fiscal de caja a su negocio (su propia declaración, anotada en cada ticket); caja obligatoria significa que sí se aplica. Solo se emite un ticket donde la operación de su país está soportada en el caso que declara.",
   "settingHintDirectoryGeocoderUrl": "El servicio compatible con Photon que sitúa una dirección publicada en el mapa de descubrimiento: una dirección https en la internet pública, sin nombre de usuario, contraseña, consulta ni #. Déjelo vacío para usar la dirección con la que se construyó esta versión de la aplicación; si no, el servicio público Photon.",
   "settingHintDirectoryTileUrlTemplate": "El servidor de teselas con el que se dibuja el mapa de descubrimiento, con los marcadores z, x e y entre llaves en su dirección (se admite s entre llaves para un subdominio): https, en la internet pública, sin nombre de usuario, contraseña ni #. Déjelo vacío para usar el servidor de esta versión de la aplicación; si no, OpenStreetMap. Un nuevo host vuelve a preguntar a cada persona antes de cargar el mapa.",
   "settingHintDirectoryUpcomingWindowDays": "Cuántos días antes muestra el directorio la próxima reserva de un miembro.",
@@ -19154,6 +19160,9 @@
   "@settingLabelCalendarRangeDays": {
     "description": "#2487 settings: Setting label."
   },
+  "settingLabelCounterCustomerlessSales": "Ventas sin cliente nombrado",
+  "settingLabelCounterDocumentChannel": "Cómo sale el ticket del mostrador",
+  "settingLabelCounterFiscalObligation": "Normas fiscales de las ventas en mostrador",
   "settingLabelDirectoryGeocoderUrl": "Servicio de búsqueda de direcciones",
   "settingLabelDirectoryTileUrlTemplate": "Servidor de teselas del mapa",
   "settingLabelDirectoryUpcomingWindowDays": "Vista previa del directorio",

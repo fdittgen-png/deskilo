@@ -141,6 +141,10 @@ enum KnownRefusal {
   stockTagRetiredLately,
   stockPieceInStock,
 
+  /// #4184 (0893) -- DKT01: an operation of the counter that the country, under the case the owner declared,
+  /// does not support (nothing was numbered, nothing handed over).
+  counterUnsupported,
+
   /// #4362 (0887) — DKG25: the pieces of a piece-tracked item must be named;
   /// DKG26: a named piece is not where the movement takes it from.
   stockNamePieces,
@@ -223,6 +227,7 @@ const Map<String, KnownRefusal> _codedRefusals = {
   'DKG24': KnownRefusal.stockPieceInStock,
   'DKG25': KnownRefusal.stockNamePieces,
   'DKG26': KnownRefusal.stockPieceWhere,
+  'DKT01': KnownRefusal.counterUnsupported,
   // #4008 — a member who left (0782).
   'DKM01': KnownRefusal.memberReturnsAsNew,
 };
@@ -335,6 +340,7 @@ String? _tagRefusalText(AppLocalizations l10n, KnownRefusal refusal) => switch (
       KnownRefusal.stockPieceInStock => l10n.refusalStockPieceInStock,
       KnownRefusal.stockNamePieces => l10n.refusalStockNamePieces,
       KnownRefusal.stockPieceWhere => l10n.refusalStockPieceWhere,
+      KnownRefusal.counterUnsupported => l10n.refusalCounterUnsupported,
       _ => null,
     };
 

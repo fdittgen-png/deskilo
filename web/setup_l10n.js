@@ -833,7 +833,20 @@ window.SETUP_L10N={
    "stockRepeatedScanHint": "What a goods sheet does when the same code is scanned again: add one more, or ask the quantity. Set in the app's settings.",
    "optAtOnce": "At once",
    "optAddOne": "Add one more",
-   "optAskQuantity": "Ask the quantity"
+   "optAskQuantity": "Ask the quantity",
+   "counterFiscal": "Fiscal rules for counter sales",
+   "counterFiscalHint": "What you declare: no fiscal cash-register obligation applies to your business, or one does. A receipt is issued only where your country's operation is supported under the case you declare. Set in the app's settings.",
+   "counterChannel": "How a counter receipt leaves the counter",
+   "counterChannelHint": "Shared, printed, or both: the receipt is the same immutable document. Set in the app's settings.",
+   "counterCustomerless": "Sales without a named customer",
+   "counterCustomerlessHint": "Allowed, or every sale names a customer. A sale without a customer never creates an account, a member or a subscription. Set in the app's settings.",
+   "optFiscalRequired": "A fiscal register is required",
+   "optFiscalNone": "No fiscal register obligation (my declaration)",
+   "optChannelShare": "Share",
+   "optChannelPrint": "Print",
+   "optChannelBoth": "Share and print",
+   "optCustomerlessAllowed": "Allowed",
+   "optCustomerlessRefused": "A customer is always named"
   },
   "feature": {
    "calendarTab": [
@@ -1527,6 +1540,10 @@ window.SETUP_L10N={
    "stockScanning": [
     "Scanning",
     "A barcode scanner that types, or the phone camera, fills any goods sheet: a code is read as a barcode, a place label, a lot label or an RFID tag. On with the goods ledger."
+   ],
+   "counterReceipts": [
+    "Counter receipts",
+    "A sale at the counter gives an immutable receipt of its own, numbered once, with the tender it was paid with. It is offered only where the country's operation is supported, and says plainly where it is not."
    ]
   },
   "process": {
@@ -2757,7 +2774,20 @@ window.SETUP_L10N={
    "stockRepeatedScanHint": "Ce que fait une feuille de marchandises quand le même code est scanné de nouveau : ajouter un de plus, ou demander la quantité. Se règle dans les paramètres de l'app.",
    "optAtOnce": "Tout de suite",
    "optAddOne": "Ajouter un de plus",
-   "optAskQuantity": "Demander la quantité"
+   "optAskQuantity": "Demander la quantité",
+   "counterFiscal": "Règles fiscales des ventes au comptoir",
+   "counterFiscalHint": "Ce que vous déclarez : aucune obligation fiscale de caisse ne s'applique à votre entreprise, ou une s'applique. Un ticket n'est émis que là où l'opération de votre pays est prise en charge dans le cas déclaré. Réglé dans les paramètres de l'app.",
+   "counterChannel": "Comment le ticket quitte le comptoir",
+   "counterChannelHint": "Partagé, imprimé ou les deux : le ticket est le même document immuable. Réglé dans les paramètres de l'app.",
+   "counterCustomerless": "Ventes sans client nommé",
+   "counterCustomerlessHint": "Autorisées, ou chaque vente nomme un client. Une vente sans client ne crée jamais de compte, de membre ni d'abonnement. Réglé dans les paramètres de l'app.",
+   "optFiscalRequired": "Une caisse fiscale est requise",
+   "optFiscalNone": "Aucune obligation de caisse (ma déclaration)",
+   "optChannelShare": "Partager",
+   "optChannelPrint": "Imprimer",
+   "optChannelBoth": "Partager et imprimer",
+   "optCustomerlessAllowed": "Autorisées",
+   "optCustomerlessRefused": "Un client est toujours nommé"
   },
   "feature": {
    "calendarTab": [
@@ -3451,6 +3481,10 @@ window.SETUP_L10N={
    "stockScanning": [
     "Scan",
     "Une douchette qui tape, ou la caméra du téléphone, remplit toute feuille de marchandises : un code est lu comme un code-barres, une étiquette de lieu, une étiquette de lot ou une étiquette RFID. Activé avec le registre des marchandises."
+   ],
+   "counterReceipts": [
+    "Tickets de caisse",
+    "Une vente au comptoir donne un ticket immuable, numéroté une seule fois, avec le règlement reçu. Il n'est proposé que là où l'opération du pays est prise en charge, et dit clairement quand elle ne l'est pas."
    ]
   },
   "process": {
@@ -4681,7 +4715,20 @@ window.SETUP_L10N={
    "stockRepeatedScanHint": "Was ein Warenblatt tut, wenn derselbe Code noch einmal gescannt wird: eins mehr hinzufügen oder die Menge erfragen. Einstellbar in den Einstellungen der App.",
    "optAtOnce": "Sofort",
    "optAddOne": "Eins mehr hinzufügen",
-   "optAskQuantity": "Menge erfragen"
+   "optAskQuantity": "Menge erfragen",
+   "counterFiscal": "Steuerliche Vorgaben für Kassenverkäufe",
+   "counterFiscalHint": "Was Sie erklären: Für Ihren Betrieb gilt keine Kassenpflicht, oder eine gilt. Ein Beleg wird nur ausgestellt, wo der Vorgang Ihres Landes für den erklärten Fall unterstützt wird. Einzustellen in den Einstellungen der App.",
+   "counterChannel": "Wie ein Kassenbeleg die Kasse verlässt",
+   "counterChannelHint": "Geteilt, gedruckt oder beides: Der Beleg ist dasselbe unveränderliche Dokument. Einzustellen in den Einstellungen der App.",
+   "counterCustomerless": "Verkäufe ohne genannten Kunden",
+   "counterCustomerlessHint": "Erlaubt, oder jeder Verkauf nennt einen Kunden. Ein Verkauf ohne Kunden legt nie ein Konto, ein Mitglied oder ein Abonnement an. Einzustellen in den Einstellungen der App.",
+   "optFiscalRequired": "Eine Kasse ist vorgeschrieben",
+   "optFiscalNone": "Keine Kassenpflicht (meine Erklärung)",
+   "optChannelShare": "Teilen",
+   "optChannelPrint": "Drucken",
+   "optChannelBoth": "Teilen und drucken",
+   "optCustomerlessAllowed": "Erlaubt",
+   "optCustomerlessRefused": "Ein Kunde wird immer genannt"
   },
   "feature": {
    "calendarTab": [
@@ -5375,6 +5422,10 @@ window.SETUP_L10N={
    "stockScanning": [
     "Scannen",
     "Ein tippender Barcode-Scanner oder die Handykamera füllt jedes Warenblatt: ein Code wird als Barcode, Ortsetikett, Chargenetikett oder RFID-Etikett gelesen. Mit dem Warenbuch eingeschaltet."
+   ],
+   "counterReceipts": [
+    "Kassenbelege",
+    "Ein Verkauf an der Kasse ergibt einen unveränderlichen, einmal nummerierten Beleg mit der erhaltenen Zahlung. Er wird nur angeboten, wo der Vorgang des Landes unterstützt wird, und sagt klar, wenn nicht."
    ]
   },
   "process": {
@@ -6605,7 +6656,20 @@ window.SETUP_L10N={
    "stockRepeatedScanHint": "Qué hace una hoja de mercancías cuando se escanea otra vez el mismo código: añadir uno más o preguntar la cantidad. Se ajusta en los ajustes de la app.",
    "optAtOnce": "De inmediato",
    "optAddOne": "Añadir uno más",
-   "optAskQuantity": "Preguntar la cantidad"
+   "optAskQuantity": "Preguntar la cantidad",
+   "counterFiscal": "Normas fiscales de las ventas en mostrador",
+   "counterFiscalHint": "Lo que declara: a su negocio no se aplica ninguna obligación fiscal de caja, o sí se aplica. Solo se emite un ticket donde la operación de su país está soportada en el caso declarado. Se ajusta en los ajustes de la app.",
+   "counterChannel": "Cómo sale el ticket del mostrador",
+   "counterChannelHint": "Compartido, impreso o ambos: el ticket es el mismo documento inmutable. Se ajusta en los ajustes de la app.",
+   "counterCustomerless": "Ventas sin cliente nombrado",
+   "counterCustomerlessHint": "Permitidas, o cada venta nombra un cliente. Una venta sin cliente nunca crea una cuenta, un miembro ni una suscripción. Se ajusta en los ajustes de la app.",
+   "optFiscalRequired": "Se requiere caja fiscal",
+   "optFiscalNone": "Sin obligación de caja (mi declaración)",
+   "optChannelShare": "Compartir",
+   "optChannelPrint": "Imprimir",
+   "optChannelBoth": "Compartir e imprimir",
+   "optCustomerlessAllowed": "Permitidas",
+   "optCustomerlessRefused": "Siempre se nombra un cliente"
   },
   "feature": {
    "calendarTab": [
@@ -7299,6 +7363,10 @@ window.SETUP_L10N={
    "stockScanning": [
     "Escaneo",
     "Un lector que teclea, o la cámara del móvil, rellena cualquier hoja de mercancías: un código se lee como código de barras, etiqueta de lugar, etiqueta de lote o etiqueta RFID. Activado con el registro de mercancías."
+   ],
+   "counterReceipts": [
+    "Tickets de caja",
+    "Una venta en el mostrador da un ticket inmutable, numerado una sola vez, con el cobro recibido. Solo se ofrece donde la operación del país está soportada, y dice claramente cuándo no lo está."
    ]
   },
   "process": {
@@ -8529,7 +8597,20 @@ window.SETUP_L10N={
    "stockRepeatedScanHint": "Cosa fa un foglio di merci quando lo stesso codice è scansionato ancora: aggiungere uno o chiedere la quantità. Si imposta nelle impostazioni dell'app.",
    "optAtOnce": "Subito",
    "optAddOne": "Aggiungi uno",
-   "optAskQuantity": "Chiedi la quantità"
+   "optAskQuantity": "Chiedi la quantità",
+   "counterFiscal": "Regole fiscali delle vendite al banco",
+   "counterFiscalHint": "Ciò che dichiara: al Suo esercizio non si applica alcun obbligo fiscale di registratore, oppure si applica. Lo scontrino è emesso solo dove l'operazione del Suo paese è supportata nel caso dichiarato. Si imposta nelle impostazioni dell'app.",
+   "counterChannel": "Come lo scontrino lascia il banco",
+   "counterChannelHint": "Condiviso, stampato o entrambi: lo scontrino è lo stesso documento immutabile. Si imposta nelle impostazioni dell'app.",
+   "counterCustomerless": "Vendite senza cliente indicato",
+   "counterCustomerlessHint": "Consentite, oppure ogni vendita indica un cliente. Una vendita senza cliente non crea mai un account, un socio o un abbonamento. Si imposta nelle impostazioni dell'app.",
+   "optFiscalRequired": "Serve un registratore fiscale",
+   "optFiscalNone": "Nessun obbligo di registratore (mia dichiarazione)",
+   "optChannelShare": "Condividere",
+   "optChannelPrint": "Stampare",
+   "optChannelBoth": "Condividere e stampare",
+   "optCustomerlessAllowed": "Consentite",
+   "optCustomerlessRefused": "Un cliente è sempre indicato"
   },
   "feature": {
    "calendarTab": [
@@ -9223,6 +9304,10 @@ window.SETUP_L10N={
    "stockScanning": [
     "Scansione",
     "Un lettore che digita, o la fotocamera del telefono, compila qualsiasi foglio di merci: un codice è letto come codice a barre, etichetta di luogo, etichetta di lotto o etichetta RFID. Attivo con il registro delle merci."
+   ],
+   "counterReceipts": [
+    "Scontrini di cassa",
+    "Una vendita al banco dà uno scontrino immutabile, numerato una sola volta, con il pagamento ricevuto. È offerto solo dove l'operazione del paese è supportata e dice chiaramente quando non lo è."
    ]
   },
   "process": {

@@ -828,5 +828,18 @@
  "stockRepeatedScanHint": "Ce que fait une feuille de marchandises quand le même code est scanné de nouveau : ajouter un de plus, ou demander la quantité. Se règle dans les paramètres de l'app.",
  "optAtOnce": "Tout de suite",
  "optAddOne": "Ajouter un de plus",
- "optAskQuantity": "Demander la quantité"
+ "optAskQuantity": "Demander la quantité",
+ "counterFiscal": "Règles fiscales des ventes au comptoir",
+ "counterFiscalHint": "Ce que vous déclarez : aucune obligation fiscale de caisse ne s'applique à votre entreprise, ou une s'applique. Un ticket n'est émis que là où l'opération de votre pays est prise en charge dans le cas déclaré. Réglé dans les paramètres de l'app.",
+ "counterChannel": "Comment le ticket quitte le comptoir",
+ "counterChannelHint": "Partagé, imprimé ou les deux : le ticket est le même document immuable. Réglé dans les paramètres de l'app.",
+ "counterCustomerless": "Ventes sans client nommé",
+ "counterCustomerlessHint": "Autorisées, ou chaque vente nomme un client. Une vente sans client ne crée jamais de compte, de membre ni d'abonnement. Réglé dans les paramètres de l'app.",
+ "optFiscalRequired": "Une caisse fiscale est requise",
+ "optFiscalNone": "Aucune obligation de caisse (ma déclaration)",
+ "optChannelShare": "Partager",
+ "optChannelPrint": "Imprimer",
+ "optChannelBoth": "Partager et imprimer",
+ "optCustomerlessAllowed": "Autorisées",
+ "optCustomerlessRefused": "Un client est toujours nommé"
 }

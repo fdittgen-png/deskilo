@@ -18736,6 +18736,18 @@ abstract class AppLocalizations {
   /// **'The space file (XML) carries the whole configuration — tariffs, legal identity, booking and validation rules, roles, document designs, sites, closure days — and importing it applies it, even on a space that already has bookings. Off: the file carries settings and floor plan only.'**
   String get featureConfigurationTransferDesc;
 
+  /// #4184 feature description
+  ///
+  /// In en, this message translates to:
+  /// **'A sale at the counter gives an immutable receipt of its own, numbered once, with the tender it was paid with. It is offered only where the country\'s operation is supported, and says plainly where it is not.'**
+  String get featureCounterReceiptsDesc;
+
+  /// #4184 feature name
+  ///
+  /// In en, this message translates to:
+  /// **'Counter receipts'**
+  String get featureCounterReceiptsTitle;
+
   /// #2454 feature availability by country
   ///
   /// In en, this message translates to:
@@ -45776,6 +45788,12 @@ abstract class AppLocalizations {
   /// **'This changed in the meantime. Reopen it to see where it stands.'**
   String get refusalChangedMeanwhile;
 
+  /// #4184 refusal
+  ///
+  /// In en, this message translates to:
+  /// **'This operation is not supported for your country under the case you declared in the settings: nothing was numbered and nothing was taken.'**
+  String get refusalCounterUnsupported;
+
   /// #4170 a sale refused for what the main store holds
   ///
   /// In en, this message translates to:
@@ -50702,6 +50720,24 @@ abstract class AppLocalizations {
   /// **'Fixed by the platform: the longest range one calendar request may ask for. It bounds the query.'**
   String get settingHintCalendarRangeDays;
 
+  /// #4184 setting label/hint
+  ///
+  /// In en, this message translates to:
+  /// **'Allowed: a sale may be made without naming a customer. Refused: every sale names one. A sale without a customer never creates an account, a member or a subscription.'**
+  String get settingHintCounterCustomerlessSales;
+
+  /// #4184 setting label/hint
+  ///
+  /// In en, this message translates to:
+  /// **'Shared (a message or a mail), printed, or both. The receipt is the same immutable document in every case.'**
+  String get settingHintCounterDocumentChannel;
+
+  /// #4184 setting label/hint
+  ///
+  /// In en, this message translates to:
+  /// **'What you declare about the fiscal rules for a sale at the counter: none means no fiscal cash-register obligation applies to your business (your own declaration, recorded on each receipt); register required means one does. A receipt is issued only where your country\'s operation is supported under the case you declare.'**
+  String get settingHintCounterFiscalObligation;
+
   /// #2488 Setting hint.
   ///
   /// In en, this message translates to:
@@ -51277,6 +51313,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Calendar range'**
   String get settingLabelCalendarRangeDays;
+
+  /// #4184 setting label/hint
+  ///
+  /// In en, this message translates to:
+  /// **'Sales without a named customer'**
+  String get settingLabelCounterCustomerlessSales;
+
+  /// #4184 setting label/hint
+  ///
+  /// In en, this message translates to:
+  /// **'How a counter receipt leaves the counter'**
+  String get settingLabelCounterDocumentChannel;
+
+  /// #4184 setting label/hint
+  ///
+  /// In en, this message translates to:
+  /// **'Fiscal rules for counter sales'**
+  String get settingLabelCounterFiscalObligation;
 
   /// #2488 Setting label.
   ///

@@ -11678,6 +11678,13 @@ class AppLocalizationsFr extends AppLocalizations {
       'Le fichier de l\'espace (XML) emporte toute la configuration — tarifs, identité légale, règles de réservation et de validation, rôles, maquettes de documents, sites, jours de fermeture — et l\'import l\'applique, même sur un espace qui a déjà des réservations. Désactivé : le fichier n\'emporte que les réglages et le plan.';
 
   @override
+  String get featureCounterReceiptsDesc =>
+      'Une vente au comptoir donne un ticket immuable, numéroté une seule fois, avec le règlement reçu. Il n\'est proposé que là où l\'opération du pays est prise en charge, et dit clairement quand elle ne l\'est pas.';
+
+  @override
+  String get featureCounterReceiptsTitle => 'Tickets de caisse';
+
+  @override
   String get featureCountriesEuName => 'l\'Union européenne';
 
   @override
@@ -28841,6 +28848,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Cet élément a changé entre-temps. Rouvrez-le pour voir où il en est.';
 
   @override
+  String get refusalCounterUnsupported =>
+      'Cette opération n\'est pas prise en charge pour votre pays dans le cas que vous avez déclaré dans les paramètres : rien n\'a été numéroté et rien n\'a été encaissé.';
+
+  @override
   String refusalMainStoreExpired(String held, String asked) {
     return 'Le magasin principal ne contient que $held sur les $asked que cette vente demande qui soient vendables : le reste a dépassé sa date. Rien n’a été prélevé et la vente n’a pas été confirmée.';
   }
@@ -31963,6 +31974,18 @@ class AppLocalizationsFr extends AppLocalizations {
       'Fixée par la plateforme : la période la plus longue qu’une requête de calendrier peut demander. Elle borne la requête.';
 
   @override
+  String get settingHintCounterCustomerlessSales =>
+      'Autorisées : une vente peut se faire sans nommer de client. Refusées : chaque vente en nomme un. Une vente sans client ne crée jamais de compte, de membre ni d\'abonnement.';
+
+  @override
+  String get settingHintCounterDocumentChannel =>
+      'Partagé (message ou courriel), imprimé, ou les deux. Le ticket est le même document immuable dans tous les cas.';
+
+  @override
+  String get settingHintCounterFiscalObligation =>
+      'Ce que vous déclarez sur les règles fiscales d\'une vente au comptoir : aucune signifie qu\'aucune obligation fiscale de caisse ne s\'applique à votre entreprise (votre propre déclaration, inscrite sur chaque ticket) ; caisse requise signifie qu\'une obligation s\'applique. Un ticket n\'est émis que là où l\'opération de votre pays est prise en charge dans le cas que vous déclarez.';
+
+  @override
   String get settingHintDirectoryGeocoderUrl =>
       'Le service compatible Photon qui place une adresse publiée sur la carte de découverte : une adresse https sur l\'internet public, sans nom d\'utilisateur, mot de passe, requête ni #. Laissez vide pour utiliser l\'adresse avec laquelle cette version de l\'application a été construite, sinon le service public Photon.';
 
@@ -32334,6 +32357,17 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get settingLabelCalendarRangeDays => 'Période du calendrier';
+
+  @override
+  String get settingLabelCounterCustomerlessSales => 'Ventes sans client nommé';
+
+  @override
+  String get settingLabelCounterDocumentChannel =>
+      'Comment le ticket quitte le comptoir';
+
+  @override
+  String get settingLabelCounterFiscalObligation =>
+      'Règles fiscales des ventes au comptoir';
 
   @override
   String get settingLabelDirectoryGeocoderUrl =>

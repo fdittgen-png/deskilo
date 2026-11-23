@@ -1,0 +1,9 @@
+{
+  "settingLabelCounterFiscalObligation": "Normas fiscales de las ventas en mostrador",
+  "settingHintCounterFiscalObligation": "Lo que declara sobre las normas fiscales de una venta en mostrador: ninguna significa que no se aplica ninguna obligación fiscal de caja a su negocio (su propia declaración, anotada en cada ticket); caja obligatoria significa que sí se aplica. Solo se emite un ticket donde la operación de su país está soportada en el caso que declara.",
+  "settingLabelCounterDocumentChannel": "Cómo sale el ticket del mostrador",
+  "settingHintCounterDocumentChannel": "Compartido (mensaje o correo), impreso o ambos. El ticket es el mismo documento inmutable en todos los casos.",
+  "settingLabelCounterCustomerlessSales": "Ventas sin cliente nombrado",
+  "settingHintCounterCustomerlessSales": "Permitidas: se puede vender sin nombrar un cliente. Rechazadas: cada venta nombra uno. Una venta sin cliente nunca crea una cuenta, un miembro ni una suscripción.",
+  "refusalCounterUnsupported": "Esta operación no está soportada para su país en el caso que declaró en los ajustes: no se numeró nada y no se cobró nada."
+}

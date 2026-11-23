@@ -828,5 +828,18 @@
  "stockRepeatedScanHint": "Qué hace una hoja de mercancías cuando se escanea otra vez el mismo código: añadir uno más o preguntar la cantidad. Se ajusta en los ajustes de la app.",
  "optAtOnce": "De inmediato",
  "optAddOne": "Añadir uno más",
- "optAskQuantity": "Preguntar la cantidad"
+ "optAskQuantity": "Preguntar la cantidad",
+ "counterFiscal": "Normas fiscales de las ventas en mostrador",
+ "counterFiscalHint": "Lo que declara: a su negocio no se aplica ninguna obligación fiscal de caja, o sí se aplica. Solo se emite un ticket donde la operación de su país está soportada en el caso declarado. Se ajusta en los ajustes de la app.",
+ "counterChannel": "Cómo sale el ticket del mostrador",
+ "counterChannelHint": "Compartido, impreso o ambos: el ticket es el mismo documento inmutable. Se ajusta en los ajustes de la app.",
+ "counterCustomerless": "Ventas sin cliente nombrado",
+ "counterCustomerlessHint": "Permitidas, o cada venta nombra un cliente. Una venta sin cliente nunca crea una cuenta, un miembro ni una suscripción. Se ajusta en los ajustes de la app.",
+ "optFiscalRequired": "Se requiere caja fiscal",
+ "optFiscalNone": "Sin obligación de caja (mi declaración)",
+ "optChannelShare": "Compartir",
+ "optChannelPrint": "Imprimir",
+ "optChannelBoth": "Compartir e imprimir",
+ "optCustomerlessAllowed": "Permitidas",
+ "optCustomerlessRefused": "Siempre se nombra un cliente"
 }
