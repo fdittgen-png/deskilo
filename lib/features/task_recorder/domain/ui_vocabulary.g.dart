@@ -5032,6 +5032,7 @@ const List<String> uiKeyPatterns = [
   'demo-stock-low-{}',
   'demo-stock-movement-{}',
   'demo-sub-{}-{}',
+  'demo-tag-{}',
   'demo-usage-{}',
   'demo-valuation-{}',
   'demo-vat-{}-{}',
