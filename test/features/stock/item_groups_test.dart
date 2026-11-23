@@ -8,6 +8,8 @@
 // an item previews how many settings change.
 import 'package:deskilo/core/demo/data/demo_item_groups.dart';
 import 'package:deskilo/core/demo/data/demo_stock_config_commands.dart';
+import 'package:deskilo/core/ui/dropdown_field.dart';
+import 'package:deskilo/features/stock/domain/stock_config.dart';
 import 'package:deskilo/features/stock/presentation/item_group_assign_dialog.dart';
 import 'package:deskilo/features/stock/presentation/item_groups_screen.dart';
 import 'package:deskilo/features/stock/providers/stock_providers.dart';
@@ -30,8 +32,16 @@ Future<void> _frames(WidgetTester tester) async {
   }
 }
 
-Future<DemoItemGroups> _open(WidgetTester tester, Size size, {Widget? home}) async {
-  final config = DemoStockConfigCommands('ws-1');
+/// The Demo's stock settings whose read of the places fails.
+class _NoPlaces extends DemoStockConfigCommands {
+  _NoPlaces() : super('ws-1');
+
+  @override
+  Future<List<StockPlaceConfig>> places(String workspaceId) => Future.error(Exception('places down'));
+}
+
+Future<DemoItemGroups> _open(WidgetTester tester, Size size, {Widget? home, bool places = true}) async {
+  final config = places ? DemoStockConfigCommands('ws-1') : _NoPlaces();
   final groups = DemoItemGroups('ws-1', config, () => DateTime(2026, 11, 22));
   await pumpApp(
     tester,
@@ -140,6 +150,25 @@ void main() {
         expect((saved.params['default_purchase_factor_num'], saved.params['default_purchase_factor_den']), (1, 3));
       });
 
+      testWidgets('a reorder quantity of zero or below six decimals is refused, a point or a comma reads the same', (tester) async {
+        await _open(tester, size);
+        await _tap(tester, 'item-group-add');
+        await tester.enterText(find.byKey(const ValueKey('item-group-name')), 'Quantities');
+        for (final bad in ['0.0', '0,00', '0.0000004']) {
+          await tester.enterText(find.byKey(const ValueKey('item-group-reorder-qty')), bad);
+          await _tap(tester, 'item-group-save');
+          expect(find.text(_en.stockReasonOutOfRange), findsOneWidget, reason: bad);
+        }
+        await tester.enterText(find.byKey(const ValueKey('item-group-reorder-qty')), '2,5');
+        await _tap(tester, 'item-group-save');
+      });
+
+      testWidgets('a failed read of the places still opens the group sheet, without home zones', (tester) async {
+        await _open(tester, size, places: false);
+        await _tap(tester, 'item-group-add');
+        expect(find.byKey(const ValueKey('item-group-name')), findsOneWidget);
+      });
+
       testWidgets('an empty group is created, then deleted', (tester) async {
         final w = await _open(tester, size);
         await _tap(tester, 'item-group-add');
@@ -178,6 +207,7 @@ void main() {
         await _choose(tester, 'item-group-tag-mode', _en.itemGroupTagUnit);
         expect(find.text(_en.itemGroupReasonNeedsSerial), findsOneWidget);
         expect((await w.effective('ws-1', 'demo-item-milk')).params['tag_mode']!.value, 'per_batch');
+        expect(tester.widget<AppDropdownField<String?>>(find.byKey(const ValueKey('item-group-tag-mode'))).value, 'per_batch', reason: 'the field shows the value in force, not the refused choice');
         // no tag at all is the item's own value, shown inline as its own, and given back to the group
         await _choose(tester, 'item-group-tag-mode', _en.itemGroupTagNone);
         expect((await w.effective('ws-1', 'demo-item-milk')).params['tag_mode']!.own, isTrue);

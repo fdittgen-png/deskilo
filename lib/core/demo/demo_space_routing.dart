@@ -382,7 +382,7 @@ class _DemoStock {
     operations = DemoStockOperations(ledger, config);
     reversals = DemoStockReversals(ledger);
     itemGroups = DemoItemGroups(id, config, now);
-    tags = DemoStockTags();
+    tags = DemoStockTags(tagModeOf: (item) async => (await itemGroups.effective(id, item)).params['tag_mode']?.value as String?);
     codeResolver = DemoStockCodeResolver(id, config, registry, tags);
   }
 

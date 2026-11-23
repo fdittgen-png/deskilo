@@ -99,7 +99,15 @@ class _GroupDraft {
   int? _int(String key) => int.tryParse(fields.text(key));
 
   /// A decimal typed with the member's own separators, as the dot-decimal text the server reads; null when empty or not one.
-  String? _decimal(String key) => fields.text(key).isEmpty ? null : decimalTextFromInput(fields.text(key), locale: locale, grouping: false);
+  String? _decimal(String key) {
+    if (fields.text(key).isEmpty) return null;
+    final text = decimalTextFromInput(fields.text(key), locale: locale, grouping: false);
+    // a numeric(18,6): at most six decimals, never rounded
+    return text != null && RegExp(r'^[0-9]{1,12}(\.[0-9]{1,6})?$').hasMatch(text) ? text : null;
+  }
+
+  /// Whether [text] (a dot-decimal text) is zero: `0`, `0.0`, `0.000000`.
+  bool _isZero(String text) => !RegExp(r'[1-9]').hasMatch(text);
 
   PurchaseFactor? get _factor => fields.text('factor').isEmpty ? null : parsePurchaseFactor(fields.text('factor'));
 
@@ -132,7 +140,7 @@ class _GroupDraft {
     if (fields.text('purchaseUnit').isNotEmpty && fields.text('factor').isEmpty) 'factor': l10n.stockReasonOutOfRange,
     if (fields.text('purchaseUnit').isEmpty && fields.text('factor').isNotEmpty) 'purchaseUnit': l10n.stockReasonNameMalformed,
     if (fields.text('reorderPoint').isNotEmpty && _decimal('reorderPoint') == null) 'reorderPoint': l10n.stockReasonOutOfRange,
-    if (fields.text('reorderQty').isNotEmpty && (_decimal('reorderQty') == null || _decimal('reorderQty') == '0')) 'reorderQty': l10n.stockReasonOutOfRange,
+    if (fields.text('reorderQty').isNotEmpty && (_decimal('reorderQty') == null || _isZero(_decimal('reorderQty')!))) 'reorderQty': l10n.stockReasonOutOfRange,
   };
 
   Future<String?> submit(AppLocalizations l10n) async {

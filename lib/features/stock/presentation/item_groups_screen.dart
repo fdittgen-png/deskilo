@@ -11,11 +11,13 @@ import '../../../core/help/help_anchors.dart';
 import '../../../core/help/help_dot.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
+import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/kit/page_title.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../workspace/domain/workspace_permission.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/item_groups.dart';
+import '../domain/stock_config.dart';
 import '../providers/stock_providers.dart';
 import 'item_group_sheet.dart';
 import 'item_group_text.dart';
@@ -67,7 +69,13 @@ class _GroupList extends ConsumerWidget {
   final bool mayManage;
 
   Future<void> _open(BuildContext context, WidgetRef ref, ItemGroup? group) async {
-    final places = await ref.read(stockPlaceConfigsProvider(workspaceId).future);
+    // the home zones are a choice, not a need: a failed read opens the sheet without them
+    var places = const <StockPlaceConfig>[];
+    try {
+      places = await ref.read(stockPlaceConfigsProvider(workspaceId).future);
+    } on Object catch (e, st) {
+      TraceLogger.instance.warn('stock', 'the places could not be read for a group: $e', stackTrace: st);
+    }
     if (!context.mounted) return;
     final saved = await showItemGroupSheet(context, ref.read(itemGroupsProvider), workspaceId: workspaceId, group: group, groups: groups, places: places);
     if (saved) ref.invalidate(itemGroupListProvider(workspaceId));

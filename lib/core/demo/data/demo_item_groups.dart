@@ -32,6 +32,8 @@ class DemoItemGroups implements ItemGroups {
     _member.addAll({'demo-item-milk': 'demo-group-drinks', 'demo-item-syrup': 'demo-group-drinks', 'demo-item-beans': 'demo-group-hot', 'demo-item-mugs': 'demo-group-home'});
     _own['demo-item-syrup'] = {'shelf_life_days': 365};
     // #4362 -- the gift basket carries a tag per piece, the crate of apples one tag per crate.
+    // the mugs carry a tag per batch (the Demo binds a chip to them)
+    _own['demo-item-mugs'] = {'tag_mode': 'per_batch'};
     _own['demo-item-basket'] = {'tracking': 'serial', 'tag_mode': 'per_unit'};
     _own['demo-item-apples'] = {'tracking': 'lot', 'tag_mode': 'per_batch'};
   }

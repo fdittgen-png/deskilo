@@ -23,7 +23,9 @@ class _Bound {
 }
 
 class DemoStockTags implements StockTags {
-  DemoStockTags() {
+  /// [tagModeOf] answers an item's effective tag mode (`none`, `per_batch`, `per_unit`) as the server reads it; without it
+  /// every owner binds, which is what the tests that bind chips without items rely on.
+  DemoStockTags({this.tagModeOf}) {
     _active
       ..add(_Bound('demo-tag-1', 'A1B2C3D4', const TagOwner.place('demo-place-shelf')))
       ..add(_Bound('demo-tag-2', '04E5F6A7B8C9D0', const TagOwner.item('demo-item-mugs')))
@@ -34,6 +36,8 @@ class DemoStockTags implements StockTags {
       _active.add(_Bound('demo-tag-${4 + i}', 'E2801160600002054AF3E00$i', const TagOwner.item('demo-item-basket'), kind: 'epc', pieceId: 'demo-piece-$i'));
     }
   }
+
+  final Future<String?> Function(String itemId)? tagModeOf;
 
   final List<_Bound> _active = [];
   final Map<String, TagBound> _answers = {};
@@ -63,8 +67,16 @@ class DemoStockTags implements StockTags {
     final normalised = normalise(code);
     if (!_hex.hasMatch(normalised)) throw const StockConfigRefused('tag.code', 'tag_malformed');
     final held = _active.where((t) => t.code == normalised).firstOrNull;
-    if (held != null && !_same(held.owner, owner)) {
+    // a piece's tag names a piece, never the item it belongs to: the server compares the kind of owner too
+    if (held != null && (held.pieceId != null || !_same(held.owner, owner))) {
       throw StockTagRefused(DkCode.dkg22, {'code': normalised, 'owner': held.owner.locationId ?? held.owner.itemId});
+    }
+    // what a tag on an item names is the item's tag mode: batches here, pieces by the movement path
+    final itemId = owner.itemId;
+    if (held == null && tagModeOf != null && owner.kind != 'place' && itemId != null) {
+      final mode = await tagModeOf!(itemId);
+      if (mode == 'per_unit') throw const StockConfigRefused('owner', 'tag_per_unit_item');
+      if (mode != 'per_batch') throw const StockConfigRefused('owner', 'tag_mode_none');
     }
     final bound = held ?? _Bound('demo-tag-${_next++}', normalised, owner);
     if (held == null) _active.add(bound);
@@ -80,6 +92,8 @@ class DemoStockTags implements StockTags {
     final normalised = normalise(code);
     final held = _active.where((t) => t.code == normalised).firstOrNull;
     if (held == null) throw const StockTagRefused(DkCode.dkg04);
+    // a piece is retired with its tag only when it is not in stock: the Demo's pieces are in stock
+    if (held.pieceId != null) throw const StockTagRefused(DkCode.dkg24);
     _active.remove(held);
   }
 }

@@ -115,7 +115,8 @@ class _AssignDialogState extends ConsumerState<_AssignDialog> {
       _reload();
     } on Object catch (e, st) {
       TraceLogger.instance.warn('stock', 'an item was not given its own value: $e', stackTrace: st);
-      if (mounted) _view.value = _view.value.said(itemGroupProblem(l10n, e));
+      // the field shows the value in force: read it again, so a refused choice does not stay on the screen
+      if (mounted) _reload(say: itemGroupProblem(l10n, e));
     }
   }
 
