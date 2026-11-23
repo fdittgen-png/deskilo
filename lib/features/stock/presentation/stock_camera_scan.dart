@@ -109,7 +109,7 @@ class _CameraDialogState extends ConsumerState<_CameraDialog> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(l10n.stockCameraCount(_state.value.reads), key: const ValueKey('stock-camera-count')),
-                    if (line != null) Text(l10n.stockScanLast(line.itemName, line.quantityText, line.unit), key: const ValueKey('stock-camera-last')),
+                    if (line != null) Text(l10n.stockScanLast(line.itemName, line.shownQuantity, line.unit), key: const ValueKey('stock-camera-last')),
                     if (last != null && last.outcome == ScanOutcome.unknown && last.code == _state.value.misread)
                       Text(l10n.stockCameraMisread, key: const ValueKey('stock-camera-misread'), style: TextStyle(color: Theme.of(context).colorScheme.error)),
                   ],
