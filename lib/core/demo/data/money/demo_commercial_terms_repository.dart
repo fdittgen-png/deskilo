@@ -69,6 +69,7 @@ class DemoCommercialTerms implements CommercialTermsRepository {
     String? vatRateId,
     SupplyClass supplyClass = SupplyClass.property,
     ServiceDetails details = const ServiceDetails(),
+    String? requestId,
   }) async {
     final service = ServiceItem(
       description: details.description,

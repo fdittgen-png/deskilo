@@ -20,12 +20,27 @@ final _en = AppLocalizationsEn();
 class _Creator implements StockServiceCreator {
   final created = <({String name, int price, String? vat})>[];
 
+  /// What the server remembers (#4376): a request id answers the service it first made.
+  final answers = <String, String>{};
+  final requests = <String?>[];
+
+  /// The answer of the next call is lost after the service was made.
+  bool loseNextAnswer = false;
+
   @override
   Future<List<StockVatChoice>> vatChoices(String workspaceId) async => const [(id: 'vat-std', label: 'Standard'), (id: 'vat-red', label: 'Reduced')];
 
   @override
-  Future<String> create(String workspaceId, {required String name, required int priceCents, String? vatRateId}) async {
+  Future<String> create(String workspaceId, {required String name, required int priceCents, String? vatRateId, String? requestId}) async {
+    requests.add(requestId);
+    final known = requestId == null ? null : answers[requestId];
+    if (known != null) return known;
     created.add((name: name, price: priceCents, vat: vatRateId));
+    if (requestId != null) answers[requestId] = 'svc-1';
+    if (loseNextAnswer) {
+      loseNextAnswer = false;
+      throw StateError('the answer was lost');
+    }
     return 'svc-1';
   }
 }
@@ -168,6 +183,20 @@ void main() {
         await _frames(tester);
         expect(creator.created, hasLength(1), reason: 'the retry goes on from the settings: no second service');
         expect(commands.saved, hasLength(1));
+      });
+      testWidgets('a lost answer followed by a retry leaves one service: both calls carry the sheet\'s one request id (#4376)', (tester) async {
+        final (creator, _, _) = await _open(tester, size);
+        creator.loseNextAnswer = true;
+        await tester.enterText(find.byKey(const ValueKey('stock-new-item-name')), 'Oat bar');
+        await tester.tap(find.byKey(const ValueKey('stock-new-item-save')));
+        await _frames(tester);
+        expect(creator.created, hasLength(1), reason: 'the service was made, the answer was lost');
+        await tester.tap(find.byKey(const ValueKey('stock-new-item-save')));
+        await _frames(tester);
+        expect(creator.requests, hasLength(2));
+        expect(creator.requests.first, isNotNull);
+        expect(creator.requests.last, creator.requests.first, reason: 'the retry is the same request');
+        expect(creator.created, hasLength(1), reason: 'and the server made no second service');
       });
     });
   }

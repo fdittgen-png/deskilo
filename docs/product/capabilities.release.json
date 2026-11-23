@@ -2290,6 +2290,12 @@
       "capabilities": []
     },
     {
+      "key": "stockItemGroups",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "stockLots",
       "maturity": "beta",
       "lifecycle": "active",
@@ -2315,6 +2321,18 @@
     },
     {
       "key": "stockReturns",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "stockScanning",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "stockTags",
       "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []

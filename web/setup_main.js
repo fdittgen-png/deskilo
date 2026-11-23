@@ -102,8 +102,9 @@ const DEFAULTS={
  // #2563 C2 — how long the backchannel's receipts and ended-membership
  // tombstones are kept (platform setting federation.retention_hours), and
  // how long a server waits for an answer before it sends a message again
- // (platform setting federation.answer_wait_seconds).
- federation:{retentionHours:'24',answerWait:'120'},
+ // (platform setting federation.answer_wait_seconds), and how many membership facts it sends
+ // per minute (platform setting federation.fact_drain_batch, #4327).
+ federation:{retentionHours:'24',answerWait:'120',factBatch:'500'},
  // #4217 — how long after its first sending a checkout may be sent again under
  // its original request, per provider (platform settings payments.resend_window_*_minutes).
  paymentResend:{mollie:'50',paypal:'330',stripe:'1380'},
@@ -114,7 +115,7 @@ const DEFAULTS={
  // each workspace server (platform setting messaging.inbox_page_size).
  inbox:{pageSize:'50'},
  // #2863 — supplier lookup wait and quota (platform settings purchase.supplier_lookup_*).
- badgeSecurity:{failureLimit:'50',signinWhere:'enrolled_kiosks'},stock:{allowNegative:false,addressSeparator:'-',cycleHighValue:'50000',cycleOverdue:'7',weighedGoods:false},business:{shopType:'grocery'},supplierLookup:{timeout:'15',perMinute:'20'},retention:{usYears:'0'},bank:{maxBytes:'5242880',maxLines:'5000',matchWindow:'60'},records:{hostingCountry:'',craReference:''},map:{tiles:'',geocoder:''},bi:{detailPageSize:'50'},region:{currency:'EUR',country:'FR',locale:'en_US',weekStart:'locale'}, // #2380 bank.import_max_*/match_window_days; #2378 records.hosting_country ('' = none declared), records.cra_authorisation_reference; #2488 locale.default_currency/country/locale; #3648 locale.default_week_start; directory.tile_url_template/geocoder_url ('' = the app's default); #2578 bi.detail_page_size
+ badgeSecurity:{failureLimit:'50',signinWhere:'enrolled_kiosks'},stock:{allowNegative:false,addressSeparator:'-',tagMode:'none',countDays:'0',priceRounding:'none',tagGrace:'30',repeatedScan:'add_one',cycleHighValue:'50000',cycleOverdue:'7',weighedGoods:false},business:{shopType:'grocery'},supplierLookup:{timeout:'15',perMinute:'20'},retention:{usYears:'0'},bank:{maxBytes:'5242880',maxLines:'5000',matchWindow:'60'},records:{hostingCountry:'',craReference:''},map:{tiles:'',geocoder:''},bi:{detailPageSize:'50'},region:{currency:'EUR',country:'FR',locale:'en_US',weekStart:'locale'}, // #2380 bank.import_max_*/match_window_days; #2378 records.hosting_country ('' = none declared), records.cra_authorisation_reference; #2488 locale.default_currency/country/locale; #3648 locale.default_week_start; directory.tile_url_template/geocoder_url ('' = the app's default); #2578 bi.detail_page_size
  weekdays:['1','2','3','4','5'],granularity:'half_day',dayStart:'08:00',boundary:'12:00',dayEnd:'17:00',closures:[],
  halfDayHours:'4',fullDayHours:'8',deskOpacity:'100',
  horizonDays:'90',minDuration:'30',maxDuration:'1440',

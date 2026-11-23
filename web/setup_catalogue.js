@@ -682,6 +682,18 @@ window.SETUP_REGISTRY={
   [
    "stockCycleCounts",
    false
+  ],
+  [
+   "stockItemGroups",
+   false
+  ],
+  [
+   "stockTags",
+   false
+  ],
+  [
+   "stockScanning",
+   false
   ]
  ],
  "requires": {
@@ -801,7 +813,10 @@ window.SETUP_REGISTRY={
   "stockReorder": "stockManagement",
   "stockReturns": "stockManagement",
   "stockCounts": "stockManagement",
-  "stockCycleCounts": "stockCounts"
+  "stockCycleCounts": "stockCounts",
+  "stockItemGroups": "stockManagement",
+  "stockTags": "stockManagement",
+  "stockScanning": "stockManagement"
  },
  "availableIn": {
   "recapitulativeStatement": [
@@ -1525,7 +1540,10 @@ window.SETUP_PROCESSES=[
      "stockReorder",
      "stockReturns",
      "stockCounts",
-     "stockCycleCounts"
+     "stockCycleCounts",
+     "stockItemGroups",
+     "stockTags",
+     "stockScanning"
     ]
    }
   ]
@@ -2017,7 +2035,10 @@ window.SETUP_LEVELS={
       "stockReorder",
       "stockReturns",
       "stockCounts",
-      "stockCycleCounts"
+      "stockCycleCounts",
+      "stockItemGroups",
+      "stockTags",
+      "stockScanning"
      ],
      "needs": {
       "money": "invoices"

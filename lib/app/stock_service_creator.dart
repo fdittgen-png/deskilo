@@ -22,8 +22,8 @@ class MoneyStockServiceCreator implements StockServiceCreator {
   }
 
   @override
-  Future<String> create(String workspaceId, {required String name, required int priceCents, String? vatRateId}) async {
-    final service = await _ref.read(moneyRepositoryProvider).createService(workspaceId, name: name, priceCents: priceCents, vatRateId: vatRateId);
+  Future<String> create(String workspaceId, {required String name, required int priceCents, String? vatRateId, String? requestId}) async {
+    final service = await _ref.read(moneyRepositoryProvider).createService(workspaceId, name: name, priceCents: priceCents, vatRateId: vatRateId, requestId: requestId);
     return service.id;
   }
 }

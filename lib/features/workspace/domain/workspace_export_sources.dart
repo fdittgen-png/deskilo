@@ -448,6 +448,9 @@ const List<ExportSource> workspaceExportSources = [
   ExportSource.everyColumn('supplier_item_mappings'),
   // #4171 — what was put away from a delivery.
   ExportSource.everyColumn('stock_receipt_allocations'),
+  // #4362 — the tags bound to items, places and pieces, and the named pieces.
+  ExportSource.everyColumn('stock_tags'),
+  ExportSource.everyColumn('stock_tagged_units'),
   // #4172 — the returns, and what each line reversed.
   ExportSource.everyColumn('stock_returns'),
   ExportSource.everyColumn('stock_reversals'),
@@ -462,6 +465,9 @@ const List<ExportSource> workspaceExportSources = [
   ExportSource.everyColumn('stock_transfer_lines'),
   // #4294 — the reorder points of a business.
   ExportSource.everyColumn('stock_reorder_points'),
+  // #4361 — the item groups and the history of their changes.
+  ExportSource.everyColumn('item_groups'),
+  ExportSource.everyColumn('item_group_history'),
   ExportSource.everyColumn('stock_locations'),
   ExportSource.everyColumn('stock_lots'),
   ExportSource.everyColumn('stock_movements'),

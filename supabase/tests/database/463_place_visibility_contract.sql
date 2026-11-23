@@ -1,4 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
+-- utc-date-file: the assertions hold with the business's day one day ahead of and one day behind the database's (workspace_today forced to current_date +/- 1 on the dev project, #4384)
 -- Places and booking events have the same visibility in rules, calendar,
 -- direct reads and commands. Unknown and unreadable targets answer alike;
 -- the booking's member, the rental audience and sites holders retain access.

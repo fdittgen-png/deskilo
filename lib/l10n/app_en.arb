@@ -16381,6 +16381,14 @@
   "@featureStockCycleCountsTitle": {
     "description": "#4295 feature name"
   },
+  "featureStockItemGroupsDesc": "Group items so that their settings are shared: tracking, shelf life, tag mode, units, VAT, the till and more. An item inherits its group's value unless it keeps its own; a change to a group shows how many items it reaches before it is saved.",
+  "@featureStockItemGroupsDesc": {
+    "description": "#4361 feature description"
+  },
+  "featureStockItemGroupsTitle": "Item groups",
+  "@featureStockItemGroupsTitle": {
+    "description": "#4361 feature name"
+  },
   "featureStockLotsDesc": "Track goods by lot or by expiry date, with a shelf life. Off: no item is tracked by lot, and what was recorded is kept as it is.",
   "@featureStockLotsDesc": {
     "description": "#4169 what the lots and expiry feature does, and what off means"
@@ -16420,6 +16428,22 @@
   "featureStockReturnsTitle": "Stock returns and corrections",
   "@featureStockReturnsTitle": {
     "description": "#4172 feature name"
+  },
+  "featureStockScanningDesc": "A barcode scanner that types, or the phone camera, fills any goods sheet: a code is read as a barcode, a place label, a lot label or an RFID tag. On with the goods ledger.",
+  "@featureStockScanningDesc": {
+    "description": "#4359 feature description"
+  },
+  "featureStockScanningTitle": "Scanning",
+  "@featureStockScanningTitle": {
+    "description": "#4359 feature name"
+  },
+  "featureStockTagsDesc": "Tag items, units, batches and places with RFID or NFC tags, stored like a barcode and unique in the business. A tag may name one batch or one piece, as the item's group says; a tag read is recognised wherever a barcode is.",
+  "@featureStockTagsDesc": {
+    "description": "#4362 feature description"
+  },
+  "featureStockTagsTitle": "RFID tags",
+  "@featureStockTagsTitle": {
+    "description": "#4362 feature name"
   },
   "featureStockTakeOutDesc": "Take goods out of stock for use or as a loss, with the reason and the lot. Off: no consumption or loss is offered; transfers and receiving are unaffected.",
   "@featureStockTakeOutDesc": {
@@ -20278,6 +20302,28 @@
   "@instanceDoctorAuthReauthOffTitle": {
     "description": "#3904 Doctor warning: changing a password does not ask the person to sign in again."
   },
+  "instanceDoctorFactBacklogDetail": "{overdue} of {waiting} waiting facts are older than one refresh period; {live} relationships are live and one period delivers {capacity}.\n        Fix: raise federation.fact_drain_batch (or lengthen the refresh period) so that batch x period / 60 exceeds the live relationships.",
+  "@instanceDoctorFactBacklogDetail": {
+    "description": "#4327 Detail: {overdue} waiting longer than a period, {waiting} waiting, {live} live relationships, {capacity} delivered per period; the setting name stays as written.",
+    "placeholders": {
+      "overdue": {
+        "type": "String"
+      },
+      "waiting": {
+        "type": "String"
+      },
+      "live": {
+        "type": "String"
+      },
+      "capacity": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceDoctorFactBacklogTitle": "Membership facts wait longer than a refresh period",
+  "@instanceDoctorFactBacklogTitle": {
+    "description": "#4327 Doctor finding: membership facts wait longer than a refresh period."
+  },
   "instanceDoctorGuardAnonViewDetail": "{names}\n        Without security_invoker the view reads with the owner rights and bypasses the policies of the tables under it.",
   "@instanceDoctorGuardAnonViewDetail": {
     "description": "#3489 Detail of the alarm: a view readable by anon runs as its owner; {names} lists the objects.",
@@ -20405,6 +20451,10 @@
   "instanceDoctorProbeAuth": "Auth configuration",
   "@instanceDoctorProbeAuth": {
     "description": "#3489 Doctor probe name: auth configuration."
+  },
+  "instanceDoctorProbeFactDelivery": "Membership fact delivery",
+  "@instanceDoctorProbeFactDelivery": {
+    "description": "#4327 Doctor probe name: the delivery of membership facts."
   },
   "instanceDoctorProbeFailedDetail": "Supabase answered {status}: {message}\n        The other checks ran without it.",
   "@instanceDoctorProbeFailedDetail": {
@@ -37514,6 +37564,10 @@
   "@refusalStockMove": {
     "description": "refusal DKG07 (#3824)"
   },
+  "refusalStockNamePieces": "This item is tracked piece by piece: name each piece, as many as the quantity.",
+  "@refusalStockNamePieces": {
+    "description": "#4362 refusal"
+  },
   "refusalStockNotEnough": "There is not that much at this place. Nothing was moved.",
   "@refusalStockNotEnough": {
     "description": "refusal DKG03 (#3824)"
@@ -37530,6 +37584,14 @@
   "@refusalStockPage": {
     "description": "#4161 (0833) DKG09: a stock page request that is not valid (size outside 1..200, or a cursor that is not one)."
   },
+  "refusalStockPieceInStock": "This piece is in stock. Move it out or write it off before its tag is retired.",
+  "@refusalStockPieceInStock": {
+    "description": "#4362 refusal"
+  },
+  "refusalStockPieceWhere": "A named piece is not where this movement takes it from. Check the place or the piece.",
+  "@refusalStockPieceWhere": {
+    "description": "#4362 refusal"
+  },
   "refusalStockReturnBeyond": "More than this movement held cannot be returned: part of it was already returned or corrected.",
   "@refusalStockReturnBeyond": {
     "description": "#4172 refusal"
@@ -37545,6 +37607,14 @@
   "refusalStockStale": "This was changed by someone else since you opened it. Read it again, then make your change again.",
   "@refusalStockStale": {
     "description": "#4169 (0836) DKG10: a stock configuration save of a revision that is no longer current."
+  },
+  "refusalStockTagBound": "This tag is already on another item, place or piece. Retire it there first.",
+  "@refusalStockTagBound": {
+    "description": "#4362 refusal"
+  },
+  "refusalStockTagRetiredLately": "This tag was retired a short while ago and cannot be bound again yet. The waiting period is a setting of the business.",
+  "@refusalStockTagRetiredLately": {
+    "description": "#4362 refusal"
   },
   "refusalStockUnit": "This item has no such unit. Add the unit to the item, or enter the quantity in a unit it lists.",
   "@refusalStockUnit": {
@@ -41232,6 +41302,10 @@
   "@settingHintFederationAnswerWaitSeconds": {
     "description": "#2563 C2 answer wait: settingHintFederationAnswerWaitSeconds"
   },
+  "settingHintFederationFactDrainBatch": "The most membership facts a workspace server sends to its personal home in one minute. A server renews each live relationship once per identity status refresh, so it keeps up with this number times the refresh seconds divided by 60 relationships (500 and 300 seconds: 2,500). Raise it when the instance doctor reports a delivery backlog.",
+  "@settingHintFederationFactDrainBatch": {
+    "description": "#4327 fact drain batch: settingHintFederationFactDrainBatch"
+  },
   "settingHintFederationRetentionHours": "Hours a server keeps the receipts of signed messages between servers, and a personal home the tombstones of ended memberships, before the hourly cleanup removes them. Never shorter than the longest status lifetime plus twice the clock difference.",
   "@settingHintFederationRetentionHours": {
     "description": "#2563 C2 retention: settingHintFederationRetentionHours"
@@ -41464,6 +41538,26 @@
   "@settingHintStockCycleCountOverdueDays": {
     "description": "#4295 settings: Setting hint."
   },
+  "settingHintStockGroupDefaultCountDays": "Every how many days an item that no group and no own setting speaks for is proposed for a cycle count. 0 means not scheduled.",
+  "@settingHintStockGroupDefaultCountDays": {
+    "description": "#4361 setting label/hint"
+  },
+  "settingHintStockGroupDefaultTagMode": "Whether an item that no group and no own setting speaks for carries an RFID tag: none, one tag naming a batch, or one tag per unit (which needs tracking by piece).",
+  "@settingHintStockGroupDefaultTagMode": {
+    "description": "#4361 setting label/hint"
+  },
+  "settingHintStockPriceRounding": "How a proposed sale price is rounded: to the nearest 0.05 or 0.10, or to a price ending in 0.99. It is used only to propose a price.",
+  "@settingHintStockPriceRounding": {
+    "description": "#4361 setting label/hint"
+  },
+  "settingHintStockRepeatedScan": "What a goods sheet does when the same code is scanned again: add one more to the line, or ask the quantity.",
+  "@settingHintStockRepeatedScan": {
+    "description": "#4362/#4359 setting label/hint"
+  },
+  "settingHintStockTagRebindGraceDays": "How many days after it was retired a tag code may be bound again. 0 means at once. A tag in force is never bound twice.",
+  "@settingHintStockTagRebindGraceDays": {
+    "description": "#4362/#4359 setting label/hint"
+  },
   "settingHintStockWeighedGoods": "On: a new stock item is proposed in kilograms instead of pieces (a butcher, a bakery, a grocery counter). Any item can still be given another unit.",
   "@settingHintStockWeighedGoods": {
     "description": "#4365 G16 the shop business kind"
@@ -41599,6 +41693,10 @@
   "settingLabelFederationAnswerWaitSeconds": "Backchannel answer wait",
   "@settingLabelFederationAnswerWaitSeconds": {
     "description": "#2563 C2 answer wait: settingLabelFederationAnswerWaitSeconds"
+  },
+  "settingLabelFederationFactDrainBatch": "Membership facts sent per minute",
+  "@settingLabelFederationFactDrainBatch": {
+    "description": "#4327 fact drain batch: settingLabelFederationFactDrainBatch"
   },
   "settingLabelFederationRetentionHours": "Backchannel retention",
   "@settingLabelFederationRetentionHours": {
@@ -41831,6 +41929,26 @@
   "settingLabelStockCycleCountOverdueDays": "Cycle count: overdue after",
   "@settingLabelStockCycleCountOverdueDays": {
     "description": "#4295 settings: Setting label."
+  },
+  "settingLabelStockGroupDefaultCountDays": "Default count cycle (days)",
+  "@settingLabelStockGroupDefaultCountDays": {
+    "description": "#4361 setting label/hint"
+  },
+  "settingLabelStockGroupDefaultTagMode": "Default tag mode of items",
+  "@settingLabelStockGroupDefaultTagMode": {
+    "description": "#4361 setting label/hint"
+  },
+  "settingLabelStockPriceRounding": "Price rounding",
+  "@settingLabelStockPriceRounding": {
+    "description": "#4361 setting label/hint"
+  },
+  "settingLabelStockRepeatedScan": "A code scanned again",
+  "@settingLabelStockRepeatedScan": {
+    "description": "#4362/#4359 setting label/hint"
+  },
+  "settingLabelStockTagRebindGraceDays": "Days before a retired tag is bound again",
+  "@settingLabelStockTagRebindGraceDays": {
+    "description": "#4362/#4359 setting label/hint"
   },
   "settingLabelStockWeighedGoods": "Goods are sold by weight",
   "@settingLabelStockWeighedGoods": {
@@ -46490,6 +46608,66 @@
   "@stockReasonFactorInvalid": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonGroupDepth": "A sub-group cannot have sub-groups.",
+  "@stockReasonGroupDepth": {
+    "description": "#4361 refusal text"
+  },
+  "stockReasonGroupHasMovements": "This item has stock movements: its unit and tracking stay as they were written.",
+  "@stockReasonGroupHasMovements": {
+    "description": "#4361 refusal text"
+  },
+  "stockReasonGroupHasSubgroups": "This group has sub-groups: move or delete them first.",
+  "@stockReasonGroupHasSubgroups": {
+    "description": "#4361 refusal text"
+  },
+  "stockReasonGroupInUse": "This group is used by items: move them first.",
+  "@stockReasonGroupInUse": {
+    "description": "#4361 refusal text"
+  },
+  "stockReasonGroupItemUnknown": "This item is not one of this business's.",
+  "@stockReasonGroupItemUnknown": {
+    "description": "#4361 refusal text"
+  },
+  "stockReasonGroupNameDuplicate": "A group of this level already has this name.",
+  "@stockReasonGroupNameDuplicate": {
+    "description": "#4361 refusal text"
+  },
+  "stockReasonGroupNameLength": "A group's name has 1 to 80 characters.",
+  "@stockReasonGroupNameLength": {
+    "description": "#4361 refusal text"
+  },
+  "stockReasonGroupNameRequired": "A new group needs a name.",
+  "@stockReasonGroupNameRequired": {
+    "description": "#4361 refusal text"
+  },
+  "stockReasonGroupNeedsSerial": "Per-unit tags need tracking by piece.",
+  "@stockReasonGroupNeedsSerial": {
+    "description": "#4361 refusal text"
+  },
+  "stockReasonGroupNotOverridable": "This is a proposal for new items and is not set per item.",
+  "@stockReasonGroupNotOverridable": {
+    "description": "#4361 refusal text"
+  },
+  "stockReasonGroupPlaceUnknown": "This place is not one of this business's.",
+  "@stockReasonGroupPlaceUnknown": {
+    "description": "#4361 refusal text"
+  },
+  "stockReasonGroupUnknown": "This group is not one of this business's.",
+  "@stockReasonGroupUnknown": {
+    "description": "#4361 refusal text"
+  },
+  "stockReasonGroupUnknownReference": "A place, item or rate named here is not one of this business's.",
+  "@stockReasonGroupUnknownReference": {
+    "description": "#4361 refusal text"
+  },
+  "stockReasonGroupValueRequired": "Give a value, or use the group's value.",
+  "@stockReasonGroupValueRequired": {
+    "description": "#4361 refusal text"
+  },
+  "stockReasonGroupVatRateUnknown": "This VAT rate is not one of this business's active rates.",
+  "@stockReasonGroupVatRateUnknown": {
+    "description": "#4361 refusal text"
+  },
   "stockReasonGtinCheck": "The check digit of this barcode is wrong.",
   "@stockReasonGtinCheck": {
     "description": "#4169 the stock editors: a text under a field the server refused"
@@ -46497,6 +46675,10 @@
   "stockReasonGtinLength": "A barcode has 8 to 14 digits.",
   "@stockReasonGtinLength": {
     "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonHasTags": "Tags are bound here: retire them before the tag mode changes.",
+  "@stockReasonHasTags": {
+    "description": "#4362 reason"
   },
   "stockReasonHomeInvalid": "Choose a place of this business that is in use and is not a supplier, customer, loss or transit place.",
   "@stockReasonHomeInvalid": {
@@ -46674,6 +46856,26 @@
   "@stockReasonSupplierForeign": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonTagMalformed": "This code is not a tag code that can be read.",
+  "@stockReasonTagMalformed": {
+    "description": "#4362 reason"
+  },
+  "stockReasonTagModeNone": "This item does not carry tags: its tag mode is none.",
+  "@stockReasonTagModeNone": {
+    "description": "#4362 reason"
+  },
+  "stockReasonTagOwnerInactive": "This item or place is deactivated: bring it back before a tag is bound to it.",
+  "@stockReasonTagOwnerInactive": {
+    "description": "#4362 reason"
+  },
+  "stockReasonTagOwnerUnknown": "The item, place or piece this tag is meant for is not known here.",
+  "@stockReasonTagOwnerUnknown": {
+    "description": "#4362 reason"
+  },
+  "stockReasonTagPerUnitItem": "A tag per unit goes on a piece, not on the item: bind it to a piece.",
+  "@stockReasonTagPerUnitItem": {
+    "description": "#4362 reason"
+  },
   "stockReasonTargetBelowPoint": "The level to order up to must be above the reorder point.",
   "@stockReasonTargetBelowPoint": {
     "description": "#4294 reorder points: a label or a message"
@@ -46717,6 +46919,10 @@
   "stockReasonUnitUnmapped": "The unit of this line is not a unit of the item: add it to the item first.",
   "@stockReasonUnitUnmapped": {
     "description": "#4171 receiving into stock: a text under a field the server refused"
+  },
+  "stockReasonUnitsNotTracked": "Pieces are named only for an item tracked piece by piece.",
+  "@stockReasonUnitsNotTracked": {
+    "description": "#4362 reason"
   },
   "stockReasonValueForeign": "This value does not belong to this dimension.",
   "@stockReasonValueForeign": {

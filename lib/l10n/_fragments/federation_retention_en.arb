@@ -15,5 +15,13 @@
   "settingHintFederationAnswerWaitSeconds": "Seconds a server waits for the answer to a signed message it sent to another server before it sends the same message again. At least 30; keep it below the status lifetime.",
   "@settingHintFederationAnswerWaitSeconds": {
     "description": "#2563 C2 answer wait: settingHintFederationAnswerWaitSeconds"
+  },
+  "settingLabelFederationFactDrainBatch": "Membership facts sent per minute",
+  "settingHintFederationFactDrainBatch": "The most membership facts a workspace server sends to its personal home in one minute. A server renews each live relationship once per identity status refresh, so it keeps up with this number times the refresh seconds divided by 60 relationships (500 and 300 seconds: 2,500). Raise it when the instance doctor reports a delivery backlog.",
+  "@settingLabelFederationFactDrainBatch": {
+    "description": "#4327 fact drain batch: settingLabelFederationFactDrainBatch"
+  },
+  "@settingHintFederationFactDrainBatch": {
+    "description": "#4327 fact drain batch: settingHintFederationFactDrainBatch"
   }
 }

@@ -341,5 +341,31 @@
         "type": "String"
       }
     }
+  },
+  "instanceDoctorProbeFactDelivery": "Membership fact delivery",
+  "instanceDoctorFactBacklogTitle": "Membership facts wait longer than a refresh period",
+  "instanceDoctorFactBacklogDetail": "{overdue} of {waiting} waiting facts are older than one refresh period; {live} relationships are live and one period delivers {capacity}.\n        Fix: raise federation.fact_drain_batch (or lengthen the refresh period) so that batch x period / 60 exceeds the live relationships.",
+  "@instanceDoctorProbeFactDelivery": {
+    "description": "#4327 Doctor probe name: the delivery of membership facts."
+  },
+  "@instanceDoctorFactBacklogTitle": {
+    "description": "#4327 Doctor finding: membership facts wait longer than a refresh period."
+  },
+  "@instanceDoctorFactBacklogDetail": {
+    "description": "#4327 Detail: {overdue} waiting longer than a period, {waiting} waiting, {live} live relationships, {capacity} delivered per period; the setting name stays as written.",
+    "placeholders": {
+      "overdue": {
+        "type": "String"
+      },
+      "waiting": {
+        "type": "String"
+      },
+      "live": {
+        "type": "String"
+      },
+      "capacity": {
+        "type": "String"
+      }
+    }
   }
 }

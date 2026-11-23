@@ -71,6 +71,7 @@ class _Terms implements CommercialTermsRepository {
     String? vatRateId,
     SupplyClass supplyClass = SupplyClass.property,
     ServiceDetails details = const ServiceDetails(),
+    String? requestId,
   }) => throw UnimplementedError();
 
   @override

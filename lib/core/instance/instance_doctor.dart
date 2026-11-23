@@ -83,6 +83,9 @@ class InstanceDoctor {
             () async => checkGuards(await api.query(ref, guardHealthSql))),
         ...await _probe(DoctorProbe.roles,
             () async => checkInstallationRoles(await api.query(ref, installationRolesSql))),
+        // #4327 -- a workspace server whose membership facts wait longer than a refresh period.
+        ...await _probe(DoctorProbe.factDelivery,
+            () async => checkFactDelivery(await api.query(ref, factDeliverySql))),
         ...await _probe(DoctorProbe.push,
             () async => checkPushConfig(await api.query(ref, pushConfigSql), ref: ref)),
         // #3916 -- the app address of the functions that link back to the app.

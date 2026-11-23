@@ -89,6 +89,8 @@ const _shop = {
   'stockTakeOut': true,
   'stockLots': true,
   'stockReorder': true,
+  'stockItemGroups': true,
+  'stockScanning': true,
 };
 
 /// The profile 0709 seeds for the kinds without places.

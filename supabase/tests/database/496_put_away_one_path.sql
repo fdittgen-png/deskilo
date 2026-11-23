@@ -1,4 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
+-- utc-date-file: the assertions hold with the business's day one day ahead of and one day behind the database's (workspace_today forced to current_date +/- 1 on the dev project, #4384)
 -- #4303 (0854): put-away goes through the one stock path. The put-away of a delivery makes
 -- no lot and writes no movement itself: it describes its lots and parts and calls
 -- stock_apply_lines, and the only function that inserts a lot is the one path. What a

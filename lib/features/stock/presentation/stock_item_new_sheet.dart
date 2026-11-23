@@ -72,6 +72,9 @@ class _NewItemDraft {
   /// One request id per step, per sheet: a retry answers once.
   final String _settingsRequest = newRequestId();
   final String _homeRequest = newRequestId();
+
+  /// #4376 -- one request id for the creation of the item: a retry after a lost answer is the same request.
+  final String _serviceRequest = newRequestId();
   String? vatId;
   String unit = 'piece';
   String? home;
@@ -101,6 +104,7 @@ class _NewItemDraft {
         name: fields.text('name').trim(),
         priceCents: _price(context) ?? 0,
         vatRateId: vatId,
+        requestId: _serviceRequest,
       );
       if (!_settingsSaved) {
         final config = await ports.commands.item(workspaceId, id);

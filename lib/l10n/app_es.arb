@@ -7793,6 +7793,8 @@
   "@featureStockCycleCountsTitle": {
     "description": "#4295 feature name"
   },
+  "featureStockItemGroupsDesc": "Agrupe artículos para compartir sus ajustes: seguimiento, caducidad, modo de etiqueta, unidades, IVA, caja y más. Un artículo hereda el valor de su grupo salvo que conserve el suyo; un cambio de grupo muestra a cuántos artículos llega antes de guardarse.",
+  "featureStockItemGroupsTitle": "Grupos de artículos",
   "featureStockLotsDesc": "Seguir las mercancías por lote o por fecha de caducidad, con una vida útil. Desactivado: ningún artículo se sigue por lote y lo registrado se conserva tal cual.",
   "@featureStockLotsDesc": {
     "description": "#4169 what the lots and expiry feature does, and what off means"
@@ -7827,6 +7829,10 @@
   "@featureStockReturnsTitle": {
     "description": "#4172 feature name"
   },
+  "featureStockScanningDesc": "Un lector que teclea, o la cámara del móvil, rellena cualquier hoja de mercancías: un código se lee como código de barras, etiqueta de lugar, etiqueta de lote o etiqueta RFID. Activado con el registro de mercancías.",
+  "featureStockScanningTitle": "Escaneo",
+  "featureStockTagsDesc": "Etiquete artículos, unidades, lotes y lugares con etiquetas RFID o NFC, guardadas como un código de barras y únicas en el negocio. Una etiqueta puede nombrar un lote o una pieza, según el grupo del artículo; la lectura de una etiqueta se reconoce donde se reconoce un código de barras.",
+  "featureStockTagsTitle": "Etiquetas RFID",
   "featureStockTakeOutDesc": "Sacar mercancías de las existencias para uso o como pérdida, con el motivo y el lote. Desactivado: no se ofrece consumo ni pérdida; las transferencias y la recepción no cambian.",
   "@featureStockTakeOutDesc": {
     "description": "#4170 what the taking goods out feature does, and what off means"
@@ -9169,6 +9175,8 @@
   "instanceDoctorAuthFixDetail": "valor  {value}\n        Solución: {command}",
   "instanceDoctorAuthPasswordShortTitle": "{length, plural, one{Las contraseñas pueden tener menos de {length} carácter} other{Las contraseñas pueden tener menos de {length} caracteres}}",
   "instanceDoctorAuthReauthOffTitle": "Un cambio de contraseña no pide volver a iniciar sesión",
+  "instanceDoctorFactBacklogDetail": "{overdue} de {waiting} hechos en espera tienen más de un periodo de actualización; hay {live} relaciones vivas y un periodo entrega {capacity}.\n        Solución: suba federation.fact_drain_batch (o alargue el periodo de actualización) para que lote x periodo / 60 supere las relaciones vivas.",
+  "instanceDoctorFactBacklogTitle": "Hay hechos de pertenencia que esperan más de un periodo de actualización",
   "instanceDoctorGuardAnonViewDetail": "{names}\n        Sin security_invoker, la vista lee con los derechos del propietario y esquiva las políticas de las tablas que hay debajo.",
   "instanceDoctorGuardAnonViewTitle": "Una vista legible por anon se ejecuta como su propietario",
   "instanceDoctorGuardDefinerDetail": "{names}\n        Se ejecuta como propietario; un search_path sin fijar deja que quien llama decida a qué tabla se refieren sus nombres sin calificar.",
@@ -9189,6 +9197,7 @@
   "instanceDoctorPolicyDriftSkippedTitle": "Desviación de políticas no comprobada",
   "instanceDoctorProbeAppUrl": "Dirección de la app de las funciones",
   "instanceDoctorProbeAuth": "Configuración de autenticación",
+  "instanceDoctorProbeFactDelivery": "Envío de hechos de pertenencia",
   "instanceDoctorProbeFailedDetail": "Supabase respondió {status}: {message}\n        Las demás comprobaciones se ejecutaron sin ella.",
   "instanceDoctorProbeFailedTitle": "Falló la consulta «{probe}»",
   "instanceDoctorProbeHardening": "Endurecimiento",
@@ -16516,6 +16525,7 @@
   "refusalStockLocation": "Este lugar no es de este negocio, ya no se usa o es a la vez el origen y el destino del movimiento. No se ha movido nada.",
   "refusalStockLot": "Este lote pertenece a otro artículo, o el artículo se sigue por lotes y no se indicó ninguno. No se ha movido nada.",
   "refusalStockMove": "Este movimiento no puede registrarse así: una cantidad mayor que cero, un motivo conocido y de una a doscientas líneas, o la misma solicitud reenviada sin cambios. No se ha movido nada.",
+  "refusalStockNamePieces": "Este artículo se sigue pieza a pieza: nombre cada pieza, tantas como la cantidad.",
   "refusalStockNotEnough": "No hay tanto en este lugar. No se ha movido nada.",
   "refusalStockOff": "La gestión de existencias está desactivada en este negocio. No se ha movido nada.",
   "refusalStockOnlyExpired": "Lo que queda en el almacén principal ha caducado y nunca se vende. Se rechazó la confirmación; no se retiró nada.",
@@ -16523,6 +16533,8 @@
     "description": "#4170 (0847) DKG15: only expired stock is left for a sale."
   },
   "refusalStockPage": "Esta petición de página no es válida: pida de 1 a 200 filas y continúe solo desde la posición que dio una página.",
+  "refusalStockPieceInStock": "Esta pieza está en stock. Sáquela o désela de baja antes de retirar su etiqueta.",
+  "refusalStockPieceWhere": "Una pieza nombrada no está donde este movimiento la toma. Compruebe el lugar o la pieza.",
   "refusalStockReturnBeyond": "No se puede devolver más de lo que contenía este movimiento: una parte ya se devolvió o se corrigió.",
   "@refusalStockReturnBeyond": {
     "description": "#4172 refusal"
@@ -16536,6 +16548,8 @@
     "description": "#4172 refusal"
   },
   "refusalStockStale": "Otra persona lo ha modificado desde que lo abrió. Vuelva a leerlo y haga de nuevo su cambio.",
+  "refusalStockTagBound": "Esta etiqueta ya está en otro artículo, lugar o pieza. Retírela primero allí.",
+  "refusalStockTagRetiredLately": "Esta etiqueta se retiró hace poco y todavía no se puede asociar de nuevo. El plazo de espera es un ajuste del negocio.",
   "refusalStockUnit": "Este artículo no tiene esa unidad. Añada la unidad al artículo o indique la cantidad en una unidad que tenga.",
   "refusalStockVariant": "Este artículo tiene variantes: indique cuál (color, talla) mover, vender o contar. No se cambió nada.",
   "@refusalStockVariant": {
@@ -18931,6 +18945,7 @@
   },
   "settingHintEinvoiceStuckAttemptMinutes": "Cuántos minutos puede quedar preparada una factura electrónica, sin que se haya iniciado el envío, antes de avisar al propietario de que el intento se detuvo. Un envío iniciado sin resultado se avisa en cuanto vence su propio plazo.",
   "settingHintFederationAnswerWaitSeconds": "Segundos que un servidor espera la respuesta a un mensaje firmado enviado a otro servidor antes de volver a enviar el mismo mensaje. Al menos 30; manténgala por debajo de la validez del estado.",
+  "settingHintFederationFactDrainBatch": "El máximo de hechos de pertenencia que un servidor de espacios envía a su hogar personal en un minuto. Un servidor renueva cada relación viva una vez por actualización del estado de identidad: soporta como mucho este número multiplicado por los segundos de actualización divididos entre 60 relaciones (500 y 300 segundos: 2.500). Súbalo cuando el doctor de la instancia avise de un atraso de envío.",
   "settingHintFederationRetentionHours": "Horas que un servidor guarda los acuses de recibo de los mensajes firmados entre servidores, y un hogar personal las huellas de las membresías terminadas, antes de que la limpieza horaria los elimine. Nunca menos que la validez de estado más larga más dos veces el desfase de reloj.",
   "settingHintIdentityClockSkewSeconds": "Segundos de desfase de reloj entre el hogar personal y un servidor de espacios que aún se aceptan, de 0 a 30.",
   "settingHintIdentityStatusAssertionLifetimeSeconds": "Segundos durante los que un servidor de espacios puede fiarse de un estado de identidad firmado por el hogar personal. 900 como máximo: a una cuenta suspendida se le rechazan las nuevas solicitudes en ese plazo más el desfase de reloj.",
@@ -19064,6 +19079,11 @@
   "settingHintStockAllowNegative": "Desactivado: se rechaza un movimiento que dejaría menos que nada en un lugar. Activado: se registra y el lugar muestra una cantidad negativa hasta que llegue mercancía.",
   "settingHintStockCycleCountHighValueMinor": "El valor, en unidades menores de la moneda de la empresa, a partir del cual lo que un lugar contiene de un artículo se considera de alto valor para un plan de recuento sin umbral propio.",
   "settingHintStockCycleCountOverdueDays": "Cuántos días puede seguir abierta una tarea de recuento cíclico después de su fecha antes de que la bandeja la declare vencida.",
+  "settingHintStockGroupDefaultCountDays": "Cada cuántos días se propone para un recuento cíclico un artículo que ni un grupo ni un ajuste propio contempla. 0 significa sin programar.",
+  "settingHintStockGroupDefaultTagMode": "Si un artículo que ni un grupo ni un ajuste propio contempla lleva una etiqueta RFID: ninguna, una etiqueta que nombra un lote o una etiqueta por unidad (que exige seguimiento por pieza).",
+  "settingHintStockPriceRounding": "Cómo se redondea un precio de venta propuesto: al 0,05 o 0,10 más cercano, o a un precio que termina en 0,99. Solo sirve para proponer un precio.",
+  "settingHintStockRepeatedScan": "Qué hace una hoja de mercancías cuando se escanea otra vez el mismo código: añadir uno más a la línea o preguntar la cantidad.",
+  "settingHintStockTagRebindGraceDays": "Cuántos días después de retirarla puede volver a vincularse un código de etiqueta. 0 significa de inmediato. Una etiqueta vigente nunca se vincula dos veces.",
   "settingHintStockWeighedGoods": "Activado: un artículo de stock nuevo se propone en kilogramos en lugar de piezas (carnicería, panadería, mostrador). Cualquier artículo puede tener otra unidad.",
   "settingHintVatViesEvidenceDays": "Días que una comprobación válida del NIF-IVA sigue siendo lo bastante reciente para servir de prueba en una nueva factura. Un valor más corto pide una nueva comprobación antes; no prueba que una operación sea válida.",
   "@settingHintVatViesEvidenceDays": {
@@ -19152,6 +19172,7 @@
   },
   "settingLabelEinvoiceStuckAttemptMinutes": "Intento de factura electrónica interrumpido",
   "settingLabelFederationAnswerWaitSeconds": "Espera de respuesta entre servidores",
+  "settingLabelFederationFactDrainBatch": "Hechos de pertenencia enviados por minuto",
   "settingLabelFederationRetentionHours": "Conservación de los intercambios entre servidores",
   "settingLabelIdentityClockSkewSeconds": "Desfase de reloj permitido",
   "settingLabelIdentityStatusAssertionLifetimeSeconds": "Validez del estado de identidad",
@@ -19285,6 +19306,11 @@
   "settingLabelStockAllowNegative": "Las existencias pueden bajar de cero",
   "settingLabelStockCycleCountHighValueMinor": "Recuento cíclico: umbral de alto valor",
   "settingLabelStockCycleCountOverdueDays": "Recuento cíclico: vencido tras",
+  "settingLabelStockGroupDefaultCountDays": "Ciclo de recuento por defecto (días)",
+  "settingLabelStockGroupDefaultTagMode": "Modo de etiqueta por defecto de los artículos",
+  "settingLabelStockPriceRounding": "Redondeo de precios",
+  "settingLabelStockRepeatedScan": "Un código escaneado de nuevo",
+  "settingLabelStockTagRebindGraceDays": "Días antes de reutilizar una etiqueta retirada",
   "settingLabelStockWeighedGoods": "Las mercancías se venden al peso",
   "settingLabelVatViesEvidenceDays": "Vigencia de la comprobación del NIF-IVA",
   "@settingLabelVatViesEvidenceDays": {
@@ -21241,6 +21267,21 @@
   "@stockReasonFactorInvalid": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonGroupDepth": "Un subgrupo no puede tener subgrupos.",
+  "stockReasonGroupHasMovements": "Este artículo tiene movimientos de stock: su unidad y su seguimiento quedan como se escribieron.",
+  "stockReasonGroupHasSubgroups": "Este grupo tiene subgrupos: muévalos o elimínelos primero.",
+  "stockReasonGroupInUse": "Este grupo lo usan artículos: muévalos primero.",
+  "stockReasonGroupItemUnknown": "Este artículo no es de este negocio.",
+  "stockReasonGroupNameDuplicate": "Un grupo de este nivel ya tiene este nombre.",
+  "stockReasonGroupNameLength": "El nombre de un grupo tiene de 1 a 80 caracteres.",
+  "stockReasonGroupNameRequired": "Un grupo nuevo necesita un nombre.",
+  "stockReasonGroupNeedsSerial": "Las etiquetas por unidad exigen seguimiento por pieza.",
+  "stockReasonGroupNotOverridable": "Es una propuesta para artículos nuevos y no se fija por artículo.",
+  "stockReasonGroupPlaceUnknown": "Este lugar no es de este negocio.",
+  "stockReasonGroupUnknown": "Este grupo no es de este negocio.",
+  "stockReasonGroupUnknownReference": "Un lugar, artículo o tipo nombrado aquí no es de este negocio.",
+  "stockReasonGroupValueRequired": "Indique un valor o use el del grupo.",
+  "stockReasonGroupVatRateUnknown": "Este tipo de IVA no es uno de los activos de este negocio.",
   "stockReasonGtinCheck": "El dígito de control de este código de barras es erróneo.",
   "@stockReasonGtinCheck": {
     "description": "#4169 the stock editors: a text under a field the server refused"
@@ -21249,6 +21290,7 @@
   "@stockReasonGtinLength": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonHasTags": "Aquí hay etiquetas asociadas: retírelas antes de cambiar el modo de etiqueta.",
   "stockReasonHomeInvalid": "Elija una ubicación de esta empresa en uso que no sea de proveedor, cliente, pérdida ni tránsito.",
   "stockReasonItemForeign": "Este artículo no es de este negocio.",
   "@stockReasonItemForeign": {
@@ -21395,6 +21437,11 @@
   "@stockReasonSupplierForeign": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonTagMalformed": "Este código no es un código de etiqueta legible.",
+  "stockReasonTagModeNone": "Este artículo no lleva etiquetas: su modo de etiqueta es ninguno.",
+  "stockReasonTagOwnerInactive": "Este artículo o lugar está desactivado: vuelva a activarlo antes de asociarle una etiqueta.",
+  "stockReasonTagOwnerUnknown": "El artículo, lugar o pieza al que va esta etiqueta no se conoce aquí.",
+  "stockReasonTagPerUnitItem": "Una etiqueta por unidad va en una pieza, no en el artículo: asóciela a una pieza.",
   "stockReasonTargetBelowPoint": "El nivel hasta el que pedir debe estar por encima del punto de reposición.",
   "stockReasonTooLong": "Este texto es demasiado largo.",
   "@stockReasonTooLong": {
@@ -21436,6 +21483,7 @@
   "@stockReasonUnitUnmapped": {
     "description": "#4171 receiving into stock: a text under a field the server refused"
   },
+  "stockReasonUnitsNotTracked": "Las piezas solo se nombran para un artículo seguido pieza a pieza.",
   "stockReasonValueForeign": "Este valor no pertenece a esta dimensión.",
   "@stockReasonValueForeign": {
     "description": "#4169 the stock editors: a text under a field the server refused"

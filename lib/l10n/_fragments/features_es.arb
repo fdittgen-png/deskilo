@@ -337,5 +337,11 @@
   "featureStockCycleCountsDesc": "Planifique controles puntuales de lugares, artículos o mercancías de alto valor. Un plan vencido crea una tarea de recuento que se hace sin ver las cantidades esperadas; cada diferencia se aprueba como cualquier recuento. Desactivado: ningún plan se ejecuta ni se crea tarea; el registro no cambia.",
   "@featureStockCycleCountsDesc": {
     "description": "#4295 feature description"
-  }
+  },
+  "featureStockItemGroupsTitle": "Grupos de artículos",
+  "featureStockItemGroupsDesc": "Agrupe artículos para compartir sus ajustes: seguimiento, caducidad, modo de etiqueta, unidades, IVA, caja y más. Un artículo hereda el valor de su grupo salvo que conserve el suyo; un cambio de grupo muestra a cuántos artículos llega antes de guardarse.",
+  "featureStockTagsTitle": "Etiquetas RFID",
+  "featureStockTagsDesc": "Etiquete artículos, unidades, lotes y lugares con etiquetas RFID o NFC, guardadas como un código de barras y únicas en el negocio. Una etiqueta puede nombrar un lote o una pieza, según el grupo del artículo; la lectura de una etiqueta se reconoce donde se reconoce un código de barras.",
+  "featureStockScanningTitle": "Escaneo",
+  "featureStockScanningDesc": "Un lector que teclea, o la cámara del móvil, rellena cualquier hoja de mercancías: un código se lee como código de barras, etiqueta de lugar, etiqueta de lote o etiqueta RFID. Activado con el registro de mercancías."
 }

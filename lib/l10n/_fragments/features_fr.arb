@@ -337,5 +337,11 @@
   "featureStockCycleCountsDesc": "Planifiez des contrôles ponctuels de lieux, d’articles ou de marchandises de valeur. Un plan échu crée une tâche de comptage que le compteur fait sans voir les quantités attendues ; chaque écart est approuvé comme tout comptage. Désactivé : aucun plan ne s’exécute et aucune tâche n’est créée ; le registre n’est pas touché.",
   "@featureStockCycleCountsDesc": {
     "description": "#4295 feature description"
-  }
+  },
+  "featureStockItemGroupsTitle": "Groupes d'articles",
+  "featureStockItemGroupsDesc": "Regroupez les articles pour partager leurs réglages : suivi, durée de conservation, mode d'étiquette, unités, TVA, caisse et plus. Un article hérite de la valeur de son groupe sauf s'il garde la sienne ; un changement de groupe montre combien d'articles il touche avant d'être enregistré.",
+  "featureStockTagsTitle": "Étiquettes RFID",
+  "featureStockTagsDesc": "Étiquetez articles, unités, lots et lieux avec des étiquettes RFID ou NFC, enregistrées comme un code-barres et uniques dans l'entreprise. Une étiquette peut désigner un lot ou une pièce, selon le groupe de l'article ; la lecture d'une étiquette est reconnue partout où un code-barres l'est.",
+  "featureStockScanningTitle": "Scan",
+  "featureStockScanningDesc": "Une douchette qui tape, ou la caméra du téléphone, remplit toute feuille de marchandises : un code est lu comme un code-barres, une étiquette de lieu, une étiquette de lot ou une étiquette RFID. Activé avec le registre des marchandises."
 }

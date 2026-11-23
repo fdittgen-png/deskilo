@@ -24,7 +24,7 @@ end;
 $$;
 -- A local day three days ahead, at the given hour of the space (Paris).
 create or replace function pg_temp.at(p_day int, p_hour numeric) returns timestamptz language sql as $$
-  select ((current_date + 3 + p_day)::timestamp + make_interval(mins => (p_hour * 60)::int))
+  select (((now() at time zone 'Europe/Paris')::date + 3 + p_day)::timestamp + make_interval(mins => (p_hour * 60)::int))
          at time zone 'Europe/Paris'
 $$;
 create or replace function pg_temp.sell(p_req text, p_offer text, p_guest jsonb, p_from timestamptz,

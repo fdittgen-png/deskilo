@@ -52,5 +52,8 @@
   "instanceDoctorAppUrlMissingTitle": "Die Funktionen, die zur App zurückverlinken, haben keine App-Adresse",
   "instanceDoctorAppUrlMissingDetail": "{functions}\n        Abhilfe: dart run tool/instance.dart auth --ref <ref> --site-url <Web-Adresse der App>",
   "instanceDoctorAppUrlForeignTitle": "Die App-Adresse der Funktionen ist nicht die Web-Adresse dieser Instanz",
-  "instanceDoctorAppUrlForeignDetail": "{functions}\n        Abhilfe: dart run tool/instance.dart auth --ref <ref> --site-url <Web-Adresse der App>"
+  "instanceDoctorAppUrlForeignDetail": "{functions}\n        Abhilfe: dart run tool/instance.dart auth --ref <ref> --site-url <Web-Adresse der App>",
+  "instanceDoctorProbeFactDelivery": "Versand der Mitgliedschaftsfakten",
+  "instanceDoctorFactBacklogTitle": "Mitgliedschaftsfakten warten länger als eine Aktualisierungsperiode",
+  "instanceDoctorFactBacklogDetail": "{overdue} von {waiting} wartenden Fakten sind älter als eine Aktualisierungsperiode; {live} Beziehungen sind lebendig und eine Periode liefert {capacity}.\n        Behebung: erhöhen Sie federation.fact_drain_batch (oder verlängern Sie die Aktualisierungsperiode), sodass Batch x Periode / 60 die lebenden Beziehungen übersteigt."
 }

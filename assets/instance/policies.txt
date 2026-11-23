@@ -212,6 +212,10 @@ public.item_dimension_values.item_dimension_values_select
 public.item_dimension_values.mcp_delegated_deny
 public.item_dimensions.item_dimensions_select
 public.item_dimensions.mcp_delegated_deny
+public.item_group_history.item_group_history_select
+public.item_group_history.mcp_delegated_deny
+public.item_groups.item_groups_select
+public.item_groups.mcp_delegated_deny
 public.item_units.item_units_select
 public.item_units.mcp_delegated_deny
 public.item_variant_values.item_variant_values_select
@@ -534,6 +538,10 @@ public.stock_returns.mcp_delegated_deny
 public.stock_returns.stock_returns_select
 public.stock_reversals.mcp_delegated_deny
 public.stock_reversals.stock_reversals_select
+public.stock_tagged_units.mcp_delegated_deny
+public.stock_tagged_units.stock_tagged_units_select
+public.stock_tags.mcp_delegated_deny
+public.stock_tags.stock_tags_select
 public.stock_transfer_lines.mcp_delegated_deny
 public.stock_transfer_lines.stock_transfer_lines_select
 public.stock_transfers.mcp_delegated_deny

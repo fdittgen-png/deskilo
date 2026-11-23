@@ -1,0 +1,19 @@
+{
+  "@@locale": "es",
+  "settingLabelStockTagRebindGraceDays": "Días antes de reutilizar una etiqueta retirada",
+  "settingHintStockTagRebindGraceDays": "Cuántos días después de retirarla puede volver a vincularse un código de etiqueta. 0 significa de inmediato. Una etiqueta vigente nunca se vincula dos veces.",
+  "settingLabelStockRepeatedScan": "Un código escaneado de nuevo",
+  "settingHintStockRepeatedScan": "Qué hace una hoja de mercancías cuando se escanea otra vez el mismo código: añadir uno más a la línea o preguntar la cantidad.",
+  "refusalStockTagBound": "Esta etiqueta ya está en otro artículo, lugar o pieza. Retírela primero allí.",
+  "refusalStockTagRetiredLately": "Esta etiqueta se retiró hace poco y todavía no se puede asociar de nuevo. El plazo de espera es un ajuste del negocio.",
+  "refusalStockPieceInStock": "Esta pieza está en stock. Sáquela o désela de baja antes de retirar su etiqueta.",
+  "refusalStockNamePieces": "Este artículo se sigue pieza a pieza: nombre cada pieza, tantas como la cantidad.",
+  "refusalStockPieceWhere": "Una pieza nombrada no está donde este movimiento la toma. Compruebe el lugar o la pieza.",
+  "stockReasonHasTags": "Aquí hay etiquetas asociadas: retírelas antes de cambiar el modo de etiqueta.",
+  "stockReasonTagModeNone": "Este artículo no lleva etiquetas: su modo de etiqueta es ninguno.",
+  "stockReasonTagPerUnitItem": "Una etiqueta por unidad va en una pieza, no en el artículo: asóciela a una pieza.",
+  "stockReasonTagMalformed": "Este código no es un código de etiqueta legible.",
+  "stockReasonTagOwnerUnknown": "El artículo, lugar o pieza al que va esta etiqueta no se conoce aquí.",
+  "stockReasonUnitsNotTracked": "Las piezas solo se nombran para un artículo seguido pieza a pieza.",
+  "stockReasonTagOwnerInactive": "Este artículo o lugar está desactivado: vuelva a activarlo antes de asociarle una etiqueta."
+}

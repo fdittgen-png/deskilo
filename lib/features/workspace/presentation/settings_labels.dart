@@ -66,6 +66,7 @@ String _federationSettingLabel(AppLocalizations l10n, String key) => switch (key
       'identity.clock_skew_seconds' => l10n.settingLabelIdentityClockSkewSeconds,
       'federation.retention_hours' => l10n.settingLabelFederationRetentionHours,
       'federation.answer_wait_seconds' => l10n.settingLabelFederationAnswerWaitSeconds,
+      'federation.fact_drain_batch' => l10n.settingLabelFederationFactDrainBatch,
       _ => _biReportSettingLabel(l10n, key),
     };
 
@@ -79,6 +80,16 @@ String _biReportSettingLabel(AppLocalizations l10n, String key) => switch (key) 
       'bi.report_max_visuals' => l10n.settingLabelBiReportMaxVisuals,
       'bi.report_max_bytes' => l10n.settingLabelBiReportMaxBytes,
       'bi.detail_page_size' => l10n.settingLabelBiDetailPageSize,
+      _ => _itemGroupSettingLabel(l10n, key),
+    };
+
+/// #4361 -- the defaults an item group falls back to.
+String _itemGroupSettingLabel(AppLocalizations l10n, String key) => switch (key) {
+      'stock.group_default_tag_mode' => l10n.settingLabelStockGroupDefaultTagMode,
+      'stock.group_default_count_days' => l10n.settingLabelStockGroupDefaultCountDays,
+      'stock.price_rounding' => l10n.settingLabelStockPriceRounding,
+      'stock.tag_rebind_grace_days' => l10n.settingLabelStockTagRebindGraceDays,
+      'stock.repeated_scan' => l10n.settingLabelStockRepeatedScan,
       _ => _bankSettingLabel(l10n, key),
     };
 
@@ -198,6 +209,7 @@ String? _federationSettingHint(AppLocalizations l10n, String key) => switch (key
       'identity.clock_skew_seconds' => l10n.settingHintIdentityClockSkewSeconds,
       'federation.retention_hours' => l10n.settingHintFederationRetentionHours,
       'federation.answer_wait_seconds' => l10n.settingHintFederationAnswerWaitSeconds,
+      'federation.fact_drain_batch' => l10n.settingHintFederationFactDrainBatch,
       _ => _biReportSettingHint(l10n, key),
     };
 
@@ -211,6 +223,16 @@ String? _biReportSettingHint(AppLocalizations l10n, String key) => switch (key) 
       'bi.report_max_visuals' => l10n.settingHintBiReportMaxVisuals,
       'bi.report_max_bytes' => l10n.settingHintBiReportMaxBytes,
       'bi.detail_page_size' => l10n.settingHintBiDetailPageSize,
+      _ => _itemGroupSettingHint(l10n, key),
+    };
+
+/// #4361 -- the defaults an item group falls back to.
+String? _itemGroupSettingHint(AppLocalizations l10n, String key) => switch (key) {
+      'stock.group_default_tag_mode' => l10n.settingHintStockGroupDefaultTagMode,
+      'stock.group_default_count_days' => l10n.settingHintStockGroupDefaultCountDays,
+      'stock.price_rounding' => l10n.settingHintStockPriceRounding,
+      'stock.tag_rebind_grace_days' => l10n.settingHintStockTagRebindGraceDays,
+      'stock.repeated_scan' => l10n.settingHintStockRepeatedScan,
       _ => _bankSettingHint(l10n, key),
     };
 

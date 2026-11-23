@@ -88,4 +88,31 @@ const Map<WorkspaceFeature, FeatureManifestEntry> stockFeatureManifest = {
     requires: WorkspaceFeature.stockCounts,
     defaultOn: false,
   ),
+  // #4361 — item groups: shared settings that items inherit and may override, with history. Asked for, under the goods ledger. Off: items keep their own values exactly as before.
+  WorkspaceFeature.stockItemGroups: FeatureManifestEntry(
+    feature: WorkspaceFeature.stockItemGroups,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.stockManagement,
+    defaultOn: false,
+  ),
+  // #4362 — RFID tags on items, units, lots and places, stored like a barcode and unique per
+  // business; a tag may name one piece. Asked for, under the goods ledger. Off: no tag is bound and
+  // a tag read is not recognised.
+  WorkspaceFeature.stockTags: FeatureManifestEntry(
+    feature: WorkspaceFeature.stockTags,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.stockManagement,
+    defaultOn: false,
+  ),
+  // #4359 — a scanner that types, and the camera, fill any goods sheet: a code is read as a barcode, a
+  // place label, a lot label or a tag. Asked for, under the goods ledger; off: the sheets take no scan.
+  WorkspaceFeature.stockScanning: FeatureManifestEntry(
+    feature: WorkspaceFeature.stockScanning,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.stockManagement,
+    defaultOn: false,
+  ),
 };

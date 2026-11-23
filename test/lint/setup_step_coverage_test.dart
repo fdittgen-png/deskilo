@@ -58,6 +58,12 @@ const _switches = <WorkspaceFeature>{
   WorkspaceFeature.stockCounts,
   // #4295 — cycle counts are asked for on the stock screens, not in the setup guide.
   WorkspaceFeature.stockCycleCounts,
+  // #4361 — asked for on its own screens, not in the setup guide.
+  WorkspaceFeature.stockItemGroups,
+  // #4362 — RFID tags are asked for on the stock screens, not in the setup guide.
+  WorkspaceFeature.stockTags,
+  // #4359 — scanning is asked for on the stock screens, not in the setup guide.
+  WorkspaceFeature.stockScanning,
   // Booking and the plan read what is already set up.
   WorkspaceFeature.seriesBooking,
   WorkspaceFeature.seatDayTimeline,

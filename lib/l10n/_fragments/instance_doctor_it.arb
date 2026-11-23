@@ -52,5 +52,8 @@
   "instanceDoctorAppUrlMissingTitle": "Le funzioni che rimandano all'app non hanno un indirizzo dell'app",
   "instanceDoctorAppUrlMissingDetail": "{functions}\n        Rimedio: dart run tool/instance.dart auth --ref <ref> --site-url <indirizzo web dell'app>",
   "instanceDoctorAppUrlForeignTitle": "L'indirizzo dell'app delle funzioni non è l'indirizzo web di questa istanza",
-  "instanceDoctorAppUrlForeignDetail": "{functions}\n        Rimedio: dart run tool/instance.dart auth --ref <ref> --site-url <indirizzo web dell'app>"
+  "instanceDoctorAppUrlForeignDetail": "{functions}\n        Rimedio: dart run tool/instance.dart auth --ref <ref> --site-url <indirizzo web dell'app>",
+  "instanceDoctorProbeFactDelivery": "Invio dei fatti di appartenenza",
+  "instanceDoctorFactBacklogTitle": "Dei fatti di appartenenza attendono più di un periodo di aggiornamento",
+  "instanceDoctorFactBacklogDetail": "{overdue} dei {waiting} fatti in attesa hanno più di un periodo di aggiornamento; le relazioni attive sono {live} e un periodo ne consegna {capacity}.\n        Correzione: aumenti federation.fact_drain_batch (o allunghi il periodo di aggiornamento) in modo che lotto x periodo / 60 superi le relazioni attive."
 }

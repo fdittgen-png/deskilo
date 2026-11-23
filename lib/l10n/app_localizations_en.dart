@@ -12460,6 +12460,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureStockCycleCountsTitle => 'Cycle counts';
 
   @override
+  String get featureStockItemGroupsDesc =>
+      'Group items so that their settings are shared: tracking, shelf life, tag mode, units, VAT, the till and more. An item inherits its group\'s value unless it keeps its own; a change to a group shows how many items it reaches before it is saved.';
+
+  @override
+  String get featureStockItemGroupsTitle => 'Item groups';
+
+  @override
   String get featureStockLotsDesc =>
       'Track goods by lot or by expiry date, with a shelf life. Off: no item is tracked by lot, and what was recorded is kept as it is.';
 
@@ -12494,6 +12501,20 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get featureStockReturnsTitle => 'Stock returns and corrections';
+
+  @override
+  String get featureStockScanningDesc =>
+      'A barcode scanner that types, or the phone camera, fills any goods sheet: a code is read as a barcode, a place label, a lot label or an RFID tag. On with the goods ledger.';
+
+  @override
+  String get featureStockScanningTitle => 'Scanning';
+
+  @override
+  String get featureStockTagsDesc =>
+      'Tag items, units, batches and places with RFID or NFC tags, stored like a barcode and unique in the business. A tag may name one batch or one piece, as the item\'s group says; a tag read is recognised wherever a barcode is.';
+
+  @override
+  String get featureStockTagsTitle => 'RFID tags';
 
   @override
   String get featureStockTakeOutDesc =>
@@ -15411,6 +15432,20 @@ class AppLocalizationsEn extends AppLocalizations {
       'A password change does not ask to sign in again';
 
   @override
+  String instanceDoctorFactBacklogDetail(
+    String overdue,
+    String waiting,
+    String live,
+    String capacity,
+  ) {
+    return '$overdue of $waiting waiting facts are older than one refresh period; $live relationships are live and one period delivers $capacity.\n        Fix: raise federation.fact_drain_batch (or lengthen the refresh period) so that batch x period / 60 exceeds the live relationships.';
+  }
+
+  @override
+  String get instanceDoctorFactBacklogTitle =>
+      'Membership facts wait longer than a refresh period';
+
+  @override
   String instanceDoctorGuardAnonViewDetail(String names) {
     return '$names\n        Without security_invoker the view reads with the owner rights and bypasses the policies of the tables under it.';
   }
@@ -15526,6 +15561,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get instanceDoctorProbeAuth => 'Auth configuration';
+
+  @override
+  String get instanceDoctorProbeFactDelivery => 'Membership fact delivery';
 
   @override
   String instanceDoctorProbeFailedDetail(int status, String message) {
@@ -28560,6 +28598,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'This move cannot be recorded as given: a quantity above zero, a known reason and one to two hundred lines, or the same request sent again unchanged. Nothing was moved.';
 
   @override
+  String get refusalStockNamePieces =>
+      'This item is tracked piece by piece: name each piece, as many as the quantity.';
+
+  @override
   String get refusalStockNotEnough =>
       'There is not that much at this place. Nothing was moved.';
 
@@ -28576,6 +28618,14 @@ class AppLocalizationsEn extends AppLocalizations {
       'This page request is not valid: ask for 1 to 200 rows, and continue only from the position a page gave.';
 
   @override
+  String get refusalStockPieceInStock =>
+      'This piece is in stock. Move it out or write it off before its tag is retired.';
+
+  @override
+  String get refusalStockPieceWhere =>
+      'A named piece is not where this movement takes it from. Check the place or the piece.';
+
+  @override
   String get refusalStockReturnBeyond =>
       'More than this movement held cannot be returned: part of it was already returned or corrected.';
 
@@ -28590,6 +28640,14 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get refusalStockStale =>
       'This was changed by someone else since you opened it. Read it again, then make your change again.';
+
+  @override
+  String get refusalStockTagBound =>
+      'This tag is already on another item, place or piece. Retire it there first.';
+
+  @override
+  String get refusalStockTagRetiredLately =>
+      'This tag was retired a short while ago and cannot be bound again yet. The waiting period is a setting of the business.';
 
   @override
   String get refusalStockUnit =>
@@ -31569,6 +31627,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Seconds a server waits for the answer to a signed message it sent to another server before it sends the same message again. At least 30; keep it below the status lifetime.';
 
   @override
+  String get settingHintFederationFactDrainBatch =>
+      'The most membership facts a workspace server sends to its personal home in one minute. A server renews each live relationship once per identity status refresh, so it keeps up with this number times the refresh seconds divided by 60 relationships (500 and 300 seconds: 2,500). Raise it when the instance doctor reports a delivery backlog.';
+
+  @override
   String get settingHintFederationRetentionHours =>
       'Hours a server keeps the receipts of signed messages between servers, and a personal home the tombstones of ended memberships, before the hourly cleanup removes them. Never shorter than the longest status lifetime plus twice the clock difference.';
 
@@ -31801,6 +31863,26 @@ class AppLocalizationsEn extends AppLocalizations {
       'How many days a cycle count task may stay open past its due date before the inbox says it is overdue.';
 
   @override
+  String get settingHintStockGroupDefaultCountDays =>
+      'Every how many days an item that no group and no own setting speaks for is proposed for a cycle count. 0 means not scheduled.';
+
+  @override
+  String get settingHintStockGroupDefaultTagMode =>
+      'Whether an item that no group and no own setting speaks for carries an RFID tag: none, one tag naming a batch, or one tag per unit (which needs tracking by piece).';
+
+  @override
+  String get settingHintStockPriceRounding =>
+      'How a proposed sale price is rounded: to the nearest 0.05 or 0.10, or to a price ending in 0.99. It is used only to propose a price.';
+
+  @override
+  String get settingHintStockRepeatedScan =>
+      'What a goods sheet does when the same code is scanned again: add one more to the line, or ask the quantity.';
+
+  @override
+  String get settingHintStockTagRebindGraceDays =>
+      'How many days after it was retired a tag code may be bound again. 0 means at once. A tag in force is never bound twice.';
+
+  @override
   String get settingHintStockWeighedGoods =>
       'On: a new stock item is proposed in kilograms instead of pieces (a butcher, a bakery, a grocery counter). Any item can still be given another unit.';
 
@@ -31912,6 +31994,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get settingLabelFederationAnswerWaitSeconds =>
       'Backchannel answer wait';
+
+  @override
+  String get settingLabelFederationFactDrainBatch =>
+      'Membership facts sent per minute';
 
   @override
   String get settingLabelFederationRetentionHours => 'Backchannel retention';
@@ -32119,6 +32205,24 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get settingLabelStockCycleCountOverdueDays =>
       'Cycle count: overdue after';
+
+  @override
+  String get settingLabelStockGroupDefaultCountDays =>
+      'Default count cycle (days)';
+
+  @override
+  String get settingLabelStockGroupDefaultTagMode =>
+      'Default tag mode of items';
+
+  @override
+  String get settingLabelStockPriceRounding => 'Price rounding';
+
+  @override
+  String get settingLabelStockRepeatedScan => 'A code scanned again';
+
+  @override
+  String get settingLabelStockTagRebindGraceDays =>
+      'Days before a retired tag is bound again';
 
   @override
   String get settingLabelStockWeighedGoods => 'Goods are sold by weight';
@@ -35723,11 +35827,73 @@ class AppLocalizationsEn extends AppLocalizations {
       'Both numbers must be whole numbers above zero.';
 
   @override
+  String get stockReasonGroupDepth => 'A sub-group cannot have sub-groups.';
+
+  @override
+  String get stockReasonGroupHasMovements =>
+      'This item has stock movements: its unit and tracking stay as they were written.';
+
+  @override
+  String get stockReasonGroupHasSubgroups =>
+      'This group has sub-groups: move or delete them first.';
+
+  @override
+  String get stockReasonGroupInUse =>
+      'This group is used by items: move them first.';
+
+  @override
+  String get stockReasonGroupItemUnknown =>
+      'This item is not one of this business\'s.';
+
+  @override
+  String get stockReasonGroupNameDuplicate =>
+      'A group of this level already has this name.';
+
+  @override
+  String get stockReasonGroupNameLength =>
+      'A group\'s name has 1 to 80 characters.';
+
+  @override
+  String get stockReasonGroupNameRequired => 'A new group needs a name.';
+
+  @override
+  String get stockReasonGroupNeedsSerial =>
+      'Per-unit tags need tracking by piece.';
+
+  @override
+  String get stockReasonGroupNotOverridable =>
+      'This is a proposal for new items and is not set per item.';
+
+  @override
+  String get stockReasonGroupPlaceUnknown =>
+      'This place is not one of this business\'s.';
+
+  @override
+  String get stockReasonGroupUnknown =>
+      'This group is not one of this business\'s.';
+
+  @override
+  String get stockReasonGroupUnknownReference =>
+      'A place, item or rate named here is not one of this business\'s.';
+
+  @override
+  String get stockReasonGroupValueRequired =>
+      'Give a value, or use the group\'s value.';
+
+  @override
+  String get stockReasonGroupVatRateUnknown =>
+      'This VAT rate is not one of this business\'s active rates.';
+
+  @override
   String get stockReasonGtinCheck =>
       'The check digit of this barcode is wrong.';
 
   @override
   String get stockReasonGtinLength => 'A barcode has 8 to 14 digits.';
+
+  @override
+  String get stockReasonHasTags =>
+      'Tags are bound here: retire them before the tag mode changes.';
 
   @override
   String get stockReasonHomeInvalid =>
@@ -35892,6 +36058,26 @@ class AppLocalizationsEn extends AppLocalizations {
       'This supplier is not one of this business.';
 
   @override
+  String get stockReasonTagMalformed =>
+      'This code is not a tag code that can be read.';
+
+  @override
+  String get stockReasonTagModeNone =>
+      'This item does not carry tags: its tag mode is none.';
+
+  @override
+  String get stockReasonTagOwnerInactive =>
+      'This item or place is deactivated: bring it back before a tag is bound to it.';
+
+  @override
+  String get stockReasonTagOwnerUnknown =>
+      'The item, place or piece this tag is meant for is not known here.';
+
+  @override
+  String get stockReasonTagPerUnitItem =>
+      'A tag per unit goes on a piece, not on the item: bind it to a piece.';
+
+  @override
   String get stockReasonTargetBelowPoint =>
       'The level to order up to must be above the reorder point.';
 
@@ -35930,6 +36116,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get stockReasonUnitUnmapped =>
       'The unit of this line is not a unit of the item: add it to the item first.';
+
+  @override
+  String get stockReasonUnitsNotTracked =>
+      'Pieces are named only for an item tracked piece by piece.';
 
   @override
   String get stockReasonValueForeign =>

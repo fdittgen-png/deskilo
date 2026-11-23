@@ -1,0 +1,19 @@
+{
+  "@@locale": "it",
+  "settingLabelStockTagRebindGraceDays": "Giorni prima di riutilizzare un'etichetta ritirata",
+  "settingHintStockTagRebindGraceDays": "Quanti giorni dopo il ritiro un codice di etichetta può essere associato di nuovo. 0 significa subito. Un'etichetta in uso non è mai associata due volte.",
+  "settingLabelStockRepeatedScan": "Un codice scansionato di nuovo",
+  "settingHintStockRepeatedScan": "Cosa fa un foglio di merci quando lo stesso codice è scansionato ancora: aggiungere uno alla riga o chiedere la quantità.",
+  "refusalStockTagBound": "Questa etichetta è già su un altro articolo, luogo o pezzo. La ritiri prima lì.",
+  "refusalStockTagRetiredLately": "Questa etichetta è stata ritirata da poco e non può ancora essere associata di nuovo. Il tempo di attesa è un'impostazione dell'attività.",
+  "refusalStockPieceInStock": "Questo pezzo è in magazzino. Lo scarichi o lo cancelli prima di ritirare la sua etichetta.",
+  "refusalStockNamePieces": "Questo articolo è tracciato pezzo per pezzo: indichi ogni pezzo, tanti quanti la quantità.",
+  "refusalStockPieceWhere": "Un pezzo indicato non si trova dove questo movimento lo preleva. Controlli il luogo o il pezzo.",
+  "stockReasonHasTags": "Qui ci sono etichette associate: le ritiri prima di cambiare la modalità etichetta.",
+  "stockReasonTagModeNone": "Questo articolo non porta etichette: la sua modalità etichetta è nessuna.",
+  "stockReasonTagPerUnitItem": "Un'etichetta per unità va su un pezzo, non sull'articolo: la associ a un pezzo.",
+  "stockReasonTagMalformed": "Questo codice non è un codice di etichetta leggibile.",
+  "stockReasonTagOwnerUnknown": "L'articolo, il luogo o il pezzo a cui è destinata questa etichetta non è noto qui.",
+  "stockReasonUnitsNotTracked": "I pezzi si indicano solo per un articolo tracciato pezzo per pezzo.",
+  "stockReasonTagOwnerInactive": "Questo articolo o luogo è disattivato: lo riattivi prima di associargli un'etichetta."
+}

@@ -69,6 +69,9 @@ const EINVOICE_STUCK=[['15','optMinutes',{n:15}],['60','optOneHour'],['240','opt
 const FED_RETENTION=[['1','optOneHour'],['6','optHours',{n:6}],['24','optHours',{n:24}],['72','optHours',{n:72}],['168','optDays',{n:7}],['720','optDays',{n:30}]];
 // #2563 C2 — the wait for a backchannel answer (platform setting
 // federation.answer_wait_seconds): 30..600 seconds.
+// #4327 — the membership facts a server sends per minute (platform setting
+// federation.fact_drain_batch): 50..2000.
+const FED_FACT_BATCH=[['100','optEntries',{n:100}],['250','optEntries',{n:250}],['500','optEntries',{n:500}],['1000','optEntries',{n:1000}],['2000','optEntries',{n:2000}]];
 const FED_ANSWER_WAIT=[['30','optSeconds',{n:30}],['60','optOneMinute'],['120','optMinutes',{n:2}],['300','optMinutes',{n:5}],['600','optMinutes',{n:10}]];
 // #2863 — the supplier lookup (platform settings
 // purchase.supplier_lookup_timeout_seconds 3..30 s and
@@ -77,6 +80,14 @@ const SUP_LOOKUP_WAIT=[['5','optSeconds',{n:5}],['10','optSeconds',{n:10}],['15'
 // #3675 — where badge sign-in works (workspace setting
 // security.badge_signin_where), while kiosk enrolment is on.
 const SHOP_TYPES=[['grocery','shopTypeGrocery'],['bakery','shopTypeBakery'],['butcher','shopTypeButcher'],['florist','shopTypeFlorist'],['corner_shop','shopTypeCornerShop']];
+// #4361 — the defaults of item groups (workspace settings stock.group_default_tag_mode,
+// stock.group_default_count_days, stock.price_rounding).
+const STOCK_TAG=[['none','optTagNone'],['per_batch','optTagPerBatch'],['per_unit','optTagPerUnit']];
+const STOCK_COUNT_DAYS=[['0','optNotScheduled'],['7','optDays',{n:7}],['14','optDays',{n:14}],['30','optDays',{n:30}],['90','optDays',{n:90}]];
+const STOCK_ROUNDING=[['none','optRoundNone'],['0.05','optRound005'],['0.10','optRound010'],['0.99','optRound099']];
+// #4362/#4359 — the days before a retired tag code is bound again (stock.tag_rebind_grace_days) and what a repeated scan does (stock.repeated_scan).
+const STOCK_TAG_GRACE=[['0','optAtOnce'],['7','optDays',{n:7}],['30','optDays',{n:30}],['90','optDays',{n:90}]];
+const STOCK_REPEAT=[['add_one','optAddOne'],['ask_quantity','optAskQuantity']];
 // #4295 — cycle counts: the value from which a place's holding of an item is high value (workspace
 // setting stock.cycle_count_high_value_minor, in minor units) and the days a task may stay open
 // past its due date before the inbox says it is overdue (stock.cycle_count_overdue_days).
@@ -155,6 +166,7 @@ const PARAM_META=[
  ['paymentResend.stripe','resendStripe','enum',()=>RESEND_STRIPE.map(x=>x[0]),{needs:'moneyTab'}],['einvoiceStuck.minutes','einvoiceStuck','enum',()=>EINVOICE_STUCK.map(x=>x[0]),{needs:'moneyTab'}],
  ['federation.retentionHours','fedRetention','enum',()=>FED_RETENTION.map(x=>x[0])],
  ['federation.answerWait','fedAnswerWait','enum',()=>FED_ANSWER_WAIT.map(x=>x[0])],
+ ['federation.factBatch','fedFactBatch','enum',()=>FED_FACT_BATCH.map(x=>x[0])],
  ['inbox.pageSize','inboxPageSize','enum',()=>INBOX_PAGE.map(x=>x[0])],
  ['bi.detailPageSize','biDetailPageSize','enum',()=>BI_DETAIL_PAGE.map(x=>x[0]),{needs:'moneyTab'}],
  ['badgeSecurity.failureLimit','badgeFailureLimit','num',{min:1,max:50}],
@@ -165,6 +177,8 @@ const PARAM_META=[
  ['stock.weighedGoods','stockWeighedGoods','bool',null,{needs:'stockManagement'}],
  // #4293 — the character between the levels of a place address (workspace setting stock.address_separator).
  ['stock.addressSeparator','stockAddressSeparator','enum',()=>STOCK_SEP.map(x=>x[0]),{needs:'stockManagement'}],
+ ['stock.tagGrace','stockTagGrace','enum',()=>STOCK_TAG_GRACE.map(x=>x[0]),{needs:'stockTags'}],['stock.repeatedScan','stockRepeatedScan','enum',()=>STOCK_REPEAT.map(x=>x[0]),{needs:'stockScanning'}],
+ ['stock.tagMode','stockGroupTagMode','enum',()=>STOCK_TAG.map(x=>x[0]),{needs:'stockItemGroups'}],['stock.countDays','stockGroupCountDays','enum',()=>STOCK_COUNT_DAYS.map(x=>x[0]),{needs:'stockItemGroups'}],['stock.priceRounding','stockGroupRounding','enum',()=>STOCK_ROUNDING.map(x=>x[0]),{needs:'stockItemGroups'}],
  ['stock.cycleHighValue','stockCycleHighValue','enum',()=>STOCK_CYCLE_VALUE.map(x=>x[0]),{needs:'stockCycleCounts'}],['stock.cycleOverdue','stockCycleOverdue','enum',()=>STOCK_CYCLE_OVERDUE.map(x=>x[0]),{needs:'stockCycleCounts'}],
  ['supplierLookup.timeout','supLookupWait','enum',()=>SUP_LOOKUP_WAIT.map(x=>x[0])],
  ['supplierLookup.perMinute','supLookupRate','enum',()=>SUP_LOOKUP_RATE.map(x=>x[0])],

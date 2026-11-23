@@ -25,9 +25,9 @@ grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.fact(p_u int, p_c text, p_name text default null)
 returns void language sql as $$
   insert into public.membership_facts (user_id, network_id, issuer, source_installation_id,
-    revision, status, asserted_at, valid_until, enrolment_epoch, event_id, workspace_name)
+    revision, status, asserted_at, valid_until, enrolment_epoch, event_id, workspace_name, members_directory)
   select pg_temp.u(p_u), pg_temp.ref(p_c), 'https://p279.test/auth/v1', pg_temp.inst(p_c), 1,
-         'active', now(), now() + interval '900 seconds', e.enrolled_at, gen_random_uuid(), p_name
+         'active', now(), now() + interval '900 seconds', e.enrolled_at, gen_random_uuid(), p_name, true
     from public.enrolled_installations e where e.installation_id = pg_temp.inst(p_c) $$;
 grant execute on all functions in schema pg_temp to authenticated, anon;
 -- u(p_n)'s workspaces page. plpgsql: each call reads what earlier statements wrote.

@@ -1,4 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
+-- utc-date-file: the assertions hold with the business's day one day ahead of and one day behind the database's (workspace_today forced to current_date +/- 1 on the dev project, #4384)
 --
 -- #2380 (0659, 0660) -- the booking dates of a validated part payment, through the
 -- real decision path (respond_to_event). With a rule for payments, L3 pays

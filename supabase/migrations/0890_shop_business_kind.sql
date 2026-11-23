@@ -21,7 +21,7 @@
 insert into public.business_kinds (code, sort_order) values ('shop', 47)
 on conflict (code) do nothing;
 update public.business_kinds
-   set feature_profile = '{"placeBooking": false, "moneyTab": true, "services": true, "invoicing": true, "purchases": true, "purchaseOrders": true, "stockManagement": true, "stockReceiving": true, "stockTakeOut": true, "stockLots": true, "stockReorder": true}'::jsonb
+   set feature_profile = '{"placeBooking": false, "moneyTab": true, "services": true, "invoicing": true, "purchases": true, "purchaseOrders": true, "stockManagement": true, "stockReceiving": true, "stockTakeOut": true, "stockLots": true, "stockReorder": true, "stockItemGroups": true, "stockScanning": true}'::jsonb
  where code = 'shop' and feature_profile = '{}'::jsonb;
 
 -- BEGIN GENERATED SEED (dart run tool/build_settings_seed.dart)

@@ -72,6 +72,7 @@ class _Stack {
     : url = j['url'] as String,
       anon = j['anon'] as String,
       service = j['service'] as String,
+      db = j['db'] as String,
       user = j['user'] as Map<String, dynamic>,
       stranger = j['stranger'] as Map<String, dynamic>?,
       reservationId = j['reservationId'] as String?,
@@ -91,6 +92,9 @@ class _Stack {
   final String url;
   final String anon;
   final String service;
+
+  /// The stack's database, reached the way its operator reaches it.
+  final String db;
   final Map<String, dynamic> user;
   final Map<String, dynamic>? stranger;
   final String? reservationId;
@@ -124,6 +128,16 @@ class _Stack {
       (await readback.from(table).select('id')).length;
 
   /// The roles the stack's own database holds, read with its service key.
+  /// `operator_set_installation_roles` as the operator runs it: no API role,
+  /// the service role included, may execute it (federation hardening).
+  Future<ProcessResult> operatorSetRoles(List<String> roles) => Process.run(
+    'psql',
+    [
+      db, '-qtAX', '-v', 'VERBOSITY=verbose', '-c',
+      "select public.operator_set_installation_roles('{${roles.join(',')}}')",
+    ],
+  );
+
   Future<List<String>> storedRoles() async {
     final row = await readback
         .from('installation_identity')
@@ -599,23 +613,26 @@ void main() {
 
     // A role change over W-A's rows is refused, and nothing moved.
     final before = [await a.rows('workspaces'), await a.rows('members')];
+    final refused = await a.operatorSetRoles(['personal_home']);
+    expect(refused.exitCode, isNot(0));
+    expect('${refused.stderr}', contains('DKR02'));
+    // No API role may run it at all: the service role is refused too.
     await expectLater(
       a.readback.rpc<dynamic>(
         'operator_set_installation_roles',
         params: {'p_roles': ['personal_home']},
       ),
-      throwsA(isA<PostgrestException>().having((e) => e.code, 'code', 'DKR02')),
+      throwsA(isA<PostgrestException>().having((e) => e.code, 'code', '42501')),
     );
     expect(await a.storedRoles(), ['personal_home', 'workspace_host']);
     expect([await a.rows('workspaces'), await a.rows('members')], before);
 
     // At P the same change is the state it is in: accepted, unchanged.
-    final again = await p.readback.rpc<dynamic>(
-      'operator_set_installation_roles',
-      params: {'p_roles': ['personal_home']},
-    ) as Map;
-    expect(again['unchanged'], true);
-    expect(again['roles'], ['personal_home']);
+    final again = await p.operatorSetRoles(['personal_home']);
+    expect(again.exitCode, 0, reason: '${again.stderr}');
+    final answer = jsonDecode('${again.stdout}'.trim()) as Map;
+    expect(answer['unchanged'], true);
+    expect(answer['roles'], ['personal_home']);
     await expectOperationalCountsZeroAtP();
   });
 

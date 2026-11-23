@@ -730,6 +730,8 @@ window.SETUP_L10N={
    "fedRetentionHint": "How long a server keeps the receipts of signed messages between servers, and a personal home the traces of ended memberships, before the hourly cleanup removes them. Never shorter than the identity status lifetime plus twice the clock difference. Set in the app's settings.",
    "fedAnswerWait": "Backchannel answer wait",
    "fedAnswerWaitHint": "How long a server waits for the answer to a signed message it sent to another server (an identity status, a membership) before it sends the same message again. At least 30 seconds; keep it below the identity status lifetime. Set in the app's settings.",
+   "fedFactBatch": "Membership facts sent per minute",
+   "fedFactBatchHint": "The most membership facts a workspace server sends to its personal home in one minute. A server renews each live relationship once per identity status refresh, so it keeps up with this number times the refresh seconds divided by 60 relationships (500 and 300 seconds: 2,500). Raise it when the instance doctor reports a delivery backlog. Set in the app's settings.",
    "supLookupWait": "Supplier lookup wait",
    "supLookupWaitHint": "How long the server waits for the company registry (VIES) when someone looks up a supplier's VAT number, before it says the registry did not answer. Set in the app's settings.",
    "supLookupRate": "Supplier lookups per minute",
@@ -820,7 +822,28 @@ window.SETUP_L10N={
    "shopTypeFlorist": "Florist",
    "shopTypeCornerShop": "Corner shop",
    "stockWeighedGoods": "Goods are sold by weight",
-   "stockWeighedGoodsHint": "A new stock item is proposed in kilograms instead of pieces (butcher, bakery, grocery counter)."
+   "stockWeighedGoodsHint": "A new stock item is proposed in kilograms instead of pieces (butcher, bakery, grocery counter).",
+   "stockGroupTagMode": "Default tag mode of items",
+   "stockGroupTagModeHint": "Whether an item that no group and no own setting speaks for carries an RFID tag: none, one tag naming a batch, or one tag per unit (which needs tracking by piece). Set in the app's settings.",
+   "stockGroupCountDays": "Default count cycle",
+   "stockGroupCountDaysHint": "Every how many days an item that no group and no own setting speaks for is proposed for a cycle count. Set in the app's settings.",
+   "stockGroupRounding": "Price rounding",
+   "stockGroupRoundingHint": "How a proposed sale price is rounded. It is used only to propose a price. Set in the app's settings.",
+   "optTagNone": "No tag",
+   "optTagPerBatch": "One tag per batch",
+   "optTagPerUnit": "One tag per unit",
+   "optNotScheduled": "Not scheduled",
+   "optRoundNone": "No rounding",
+   "optRound005": "To 0.05",
+   "optRound010": "To 0.10",
+   "optRound099": "Ending in 0.99",
+   "stockTagGrace": "Days before a retired tag is bound again",
+   "stockTagGraceHint": "How many days after it was retired a tag code may be bound again. Set in the app's settings.",
+   "stockRepeatedScan": "A code scanned again",
+   "stockRepeatedScanHint": "What a goods sheet does when the same code is scanned again: add one more, or ask the quantity. Set in the app's settings.",
+   "optAtOnce": "At once",
+   "optAddOne": "Add one more",
+   "optAskQuantity": "Ask the quantity"
   },
   "feature": {
    "calendarTab": [
@@ -1502,6 +1525,18 @@ window.SETUP_L10N={
    "stockCycleCounts": [
     "Cycle counts",
     "Plan spot checks of chosen places, items or high-value goods. A due plan makes a count task the counter does without seeing the expected quantities; each difference is approved like any count. Off: no plan runs and no task is made; the ledger is unaffected."
+   ],
+   "stockItemGroups": [
+    "Item groups",
+    "Group items so that their settings are shared: tracking, shelf life, tag mode, units, VAT, the till and more. An item inherits its group's value unless it keeps its own; a change to a group shows how many items it reaches before it is saved."
+   ],
+   "stockTags": [
+    "RFID tags",
+    "Tag items, units, batches and places with RFID or NFC tags, stored like a barcode and unique in the business. A tag may name one batch or one piece, as the item's group says; a tag read is recognised wherever a barcode is."
+   ],
+   "stockScanning": [
+    "Scanning",
+    "A barcode scanner that types, or the phone camera, fills any goods sheet: a code is read as a barcode, a place label, a lot label or an RFID tag. On with the goods ledger."
    ]
   },
   "process": {
@@ -2629,6 +2664,8 @@ window.SETUP_L10N={
    "fedRetentionHint": "Combien de temps un serveur garde les accusés de réception des messages signés entre serveurs, et un domicile personnel les traces des adhésions terminées, avant le nettoyage horaire. Jamais moins que la validité du statut d'identité plus deux fois l'écart d'horloge. Se règle dans les paramètres de l'app.",
    "fedAnswerWait": "Attente de réponse entre serveurs",
    "fedAnswerWaitHint": "Combien de temps un serveur attend la réponse à un message signé envoyé à un autre serveur (un statut d'identité, une adhésion) avant de renvoyer le même message. Au moins 30 secondes ; gardez-la sous la durée de validité du statut d'identité. Se règle dans les paramètres de l'app.",
+   "fedFactBatch": "Faits d'adhésion envoyés par minute",
+   "fedFactBatchHint": "Le nombre maximal de faits d'adhésion qu'un serveur d'espaces envoie à son domicile personnel en une minute. Un serveur renouvelle chaque relation vivante une fois par actualisation du statut d'identité : il suit au plus ce nombre multiplié par les secondes d'actualisation divisées par 60 relations (500 et 300 secondes : 2 500). Augmentez-le quand le médecin d'instance signale un retard d'envoi. Se règle dans les paramètres de l'app.",
    "supLookupWait": "Attente de la recherche fournisseur",
    "supLookupWaitHint": "Durée pendant laquelle le serveur attend le registre des sociétés (VIES) quand quelqu'un recherche le numéro de TVA d'un fournisseur, avant d'indiquer que le registre n'a pas répondu. Se règle dans les paramètres de l'app.",
    "supLookupRate": "Recherches fournisseur par minute",
@@ -2719,7 +2756,28 @@ window.SETUP_L10N={
    "shopTypeFlorist": "Fleuriste",
    "shopTypeCornerShop": "Supérette",
    "stockWeighedGoods": "Les marchandises se vendent au poids",
-   "stockWeighedGoodsHint": "Un nouvel article de stock est proposé en kilogrammes plutôt qu’en pièces (boucherie, boulangerie, comptoir d’épicerie)."
+   "stockWeighedGoodsHint": "Un nouvel article de stock est proposé en kilogrammes plutôt qu’en pièces (boucherie, boulangerie, comptoir d’épicerie).",
+   "stockGroupTagMode": "Mode d'étiquette par défaut des articles",
+   "stockGroupTagModeHint": "Si un article que ni un groupe ni un réglage propre ne concerne porte une étiquette RFID : aucune, une étiquette qui désigne un lot, ou une étiquette par unité (ce qui exige un suivi à la pièce). Se règle dans les paramètres de l'app.",
+   "stockGroupCountDays": "Cycle de comptage par défaut",
+   "stockGroupCountDaysHint": "Tous les combien de jours un article que ni un groupe ni un réglage propre ne concerne est proposé pour un comptage tournant. Se règle dans les paramètres de l'app.",
+   "stockGroupRounding": "Arrondi des prix",
+   "stockGroupRoundingHint": "Comment un prix de vente proposé est arrondi. Il ne sert qu'à proposer un prix. Se règle dans les paramètres de l'app.",
+   "optTagNone": "Pas d'étiquette",
+   "optTagPerBatch": "Une étiquette par lot",
+   "optTagPerUnit": "Une étiquette par unité",
+   "optNotScheduled": "Non planifié",
+   "optRoundNone": "Pas d'arrondi",
+   "optRound005": "Au 0,05",
+   "optRound010": "Au 0,10",
+   "optRound099": "Finissant par 0,99",
+   "stockTagGrace": "Jours avant de réutiliser une étiquette retirée",
+   "stockTagGraceHint": "Combien de jours après son retrait un code d'étiquette peut être lié de nouveau. Se règle dans les paramètres de l'app.",
+   "stockRepeatedScan": "Un code scanné de nouveau",
+   "stockRepeatedScanHint": "Ce que fait une feuille de marchandises quand le même code est scanné de nouveau : ajouter un de plus, ou demander la quantité. Se règle dans les paramètres de l'app.",
+   "optAtOnce": "Tout de suite",
+   "optAddOne": "Ajouter un de plus",
+   "optAskQuantity": "Demander la quantité"
   },
   "feature": {
    "calendarTab": [
@@ -3401,6 +3459,18 @@ window.SETUP_L10N={
    "stockCycleCounts": [
     "Inventaires tournants",
     "Planifiez des contrôles ponctuels de lieux, d’articles ou de marchandises de valeur. Un plan échu crée une tâche de comptage que le compteur fait sans voir les quantités attendues ; chaque écart est approuvé comme tout comptage. Désactivé : aucun plan ne s’exécute et aucune tâche n’est créée ; le registre n’est pas touché."
+   ],
+   "stockItemGroups": [
+    "Groupes d'articles",
+    "Regroupez les articles pour partager leurs réglages : suivi, durée de conservation, mode d'étiquette, unités, TVA, caisse et plus. Un article hérite de la valeur de son groupe sauf s'il garde la sienne ; un changement de groupe montre combien d'articles il touche avant d'être enregistré."
+   ],
+   "stockTags": [
+    "Étiquettes RFID",
+    "Étiquetez articles, unités, lots et lieux avec des étiquettes RFID ou NFC, enregistrées comme un code-barres et uniques dans l'entreprise. Une étiquette peut désigner un lot ou une pièce, selon le groupe de l'article ; la lecture d'une étiquette est reconnue partout où un code-barres l'est."
+   ],
+   "stockScanning": [
+    "Scan",
+    "Une douchette qui tape, ou la caméra du téléphone, remplit toute feuille de marchandises : un code est lu comme un code-barres, une étiquette de lieu, une étiquette de lot ou une étiquette RFID. Activé avec le registre des marchandises."
    ]
   },
   "process": {
@@ -4528,6 +4598,8 @@ window.SETUP_L10N={
    "fedRetentionHint": "Wie lange ein Server die Empfangsbelege signierter Nachrichten zwischen Servern und ein persönliches Zuhause die Spuren beendeter Mitgliedschaften aufbewahrt, bevor die stündliche Bereinigung sie entfernt. Nie kürzer als die Gültigkeit des Identitätsstatus plus die doppelte Uhrabweichung. Wird in den Einstellungen der App festgelegt.",
    "fedAnswerWait": "Wartezeit auf Antwort im Server-Austausch",
    "fedAnswerWaitHint": "Wie lange ein Server auf die Antwort auf eine signierte Nachricht an einen anderen Server (einen Identitätsstatus, eine Mitgliedschaft) wartet, bevor er dieselbe Nachricht erneut sendet. Mindestens 30 Sekunden; unter der Gültigkeit des Identitätsstatus halten. Wird in den Einstellungen der App festgelegt.",
+   "fedFactBatch": "Mitgliedschaftsfakten pro Minute",
+   "fedFactBatchHint": "Die höchste Zahl an Mitgliedschaftsfakten, die ein Arbeitsbereichs-Server in einer Minute an sein persönliches Zuhause sendet. Ein Server erneuert jede lebende Beziehung einmal je Aktualisierung des Identitätsstatus; er schafft höchstens diese Zahl mal die Aktualisierungssekunden geteilt durch 60 Beziehungen (500 und 300 Sekunden: 2.500). Erhöhen Sie sie, wenn der Instanz-Doktor einen Sendestau meldet. Einstellbar in den Einstellungen der App.",
    "supLookupWait": "Wartezeit der Lieferantensuche",
    "supLookupWaitHint": "Wie lange der Server auf das Unternehmensregister (VIES) wartet, wenn jemand die USt-IdNr. eines Lieferanten sucht, bevor er meldet, dass das Register nicht geantwortet hat. Wird in den Einstellungen der App festgelegt.",
    "supLookupRate": "Lieferantensuchen pro Minute",
@@ -4618,7 +4690,28 @@ window.SETUP_L10N={
    "shopTypeFlorist": "Blumenladen",
    "shopTypeCornerShop": "Späti",
    "stockWeighedGoods": "Ware wird nach Gewicht verkauft",
-   "stockWeighedGoodsHint": "Ein neuer Lagerartikel wird in Kilogramm statt in Stück vorgeschlagen (Metzgerei, Bäckerei, Theke)."
+   "stockWeighedGoodsHint": "Ein neuer Lagerartikel wird in Kilogramm statt in Stück vorgeschlagen (Metzgerei, Bäckerei, Theke).",
+   "stockGroupTagMode": "Standard-Etikettenmodus der Artikel",
+   "stockGroupTagModeHint": "Ob ein Artikel, den weder eine Gruppe noch eine eigene Einstellung betrifft, ein RFID-Etikett trägt: keines, ein Etikett für eine Charge oder ein Etikett je Stück (das eine Verfolgung je Stück braucht). Einstellbar in den Einstellungen der App.",
+   "stockGroupCountDays": "Standard-Zählzyklus",
+   "stockGroupCountDaysHint": "Nach wie vielen Tagen ein Artikel, den weder eine Gruppe noch eine eigene Einstellung betrifft, zur Zyklus-Zählung vorgeschlagen wird. Einstellbar in den Einstellungen der App.",
+   "stockGroupRounding": "Preisrundung",
+   "stockGroupRoundingHint": "Wie ein vorgeschlagener Verkaufspreis gerundet wird. Sie dient nur dazu, einen Preis vorzuschlagen. Einstellbar in den Einstellungen der App.",
+   "optTagNone": "Kein Etikett",
+   "optTagPerBatch": "Ein Etikett je Charge",
+   "optTagPerUnit": "Ein Etikett je Stück",
+   "optNotScheduled": "Nicht geplant",
+   "optRoundNone": "Keine Rundung",
+   "optRound005": "Auf 0,05",
+   "optRound010": "Auf 0,10",
+   "optRound099": "Endend auf 0,99",
+   "stockTagGrace": "Tage, bevor ein entferntes Etikett neu vergeben wird",
+   "stockTagGraceHint": "Wie viele Tage nach dem Entfernen ein Etikettencode wieder gebunden werden darf. Einstellbar in den Einstellungen der App.",
+   "stockRepeatedScan": "Ein erneut gescannter Code",
+   "stockRepeatedScanHint": "Was ein Warenblatt tut, wenn derselbe Code noch einmal gescannt wird: eins mehr hinzufügen oder die Menge erfragen. Einstellbar in den Einstellungen der App.",
+   "optAtOnce": "Sofort",
+   "optAddOne": "Eins mehr hinzufügen",
+   "optAskQuantity": "Menge erfragen"
   },
   "feature": {
    "calendarTab": [
@@ -5300,6 +5393,18 @@ window.SETUP_L10N={
    "stockCycleCounts": [
     "Permanente Inventur",
     "Planen Sie Stichproben für ausgewählte Orte, Artikel oder hochwertige Ware. Ein fälliger Plan erzeugt eine Zählaufgabe, die ohne die erwarteten Mengen erledigt wird; jede Differenz wird wie jede Zählung genehmigt. Aus: kein Plan läuft und keine Aufgabe entsteht; das Buch bleibt unberührt."
+   ],
+   "stockItemGroups": [
+    "Artikelgruppen",
+    "Artikel gruppieren, damit ihre Einstellungen geteilt werden: Nachverfolgung, Haltbarkeit, Etikettenmodus, Einheiten, Mehrwertsteuer, Kasse und mehr. Ein Artikel erbt den Wert seiner Gruppe, außer er behält seinen eigenen; eine Änderung an der Gruppe zeigt vor dem Speichern, wie viele Artikel sie erreicht."
+   ],
+   "stockTags": [
+    "RFID-Etiketten",
+    "Artikel, Einheiten, Chargen und Orte mit RFID- oder NFC-Etiketten versehen, wie ein Barcode gespeichert und im Betrieb eindeutig. Ein Etikett kann eine Charge oder ein Stück benennen, wie es die Gruppe des Artikels sagt; ein gelesenes Etikett wird überall erkannt, wo ein Barcode erkannt wird."
+   ],
+   "stockScanning": [
+    "Scannen",
+    "Ein tippender Barcode-Scanner oder die Handykamera füllt jedes Warenblatt: ein Code wird als Barcode, Ortsetikett, Chargenetikett oder RFID-Etikett gelesen. Mit dem Warenbuch eingeschaltet."
    ]
   },
   "process": {
@@ -6427,6 +6532,8 @@ window.SETUP_L10N={
    "fedRetentionHint": "Cuánto tiempo un servidor guarda los acuses de recibo de los mensajes firmados entre servidores, y un hogar personal las huellas de las membresías terminadas, antes de la limpieza horaria. Nunca menos que la validez del estado de identidad más dos veces el desfase de reloj. Se ajusta en la configuración de la app.",
    "fedAnswerWait": "Espera de respuesta entre servidores",
    "fedAnswerWaitHint": "Cuánto tiempo espera un servidor la respuesta a un mensaje firmado enviado a otro servidor (un estado de identidad, una membresía) antes de volver a enviar el mismo mensaje. Al menos 30 segundos; manténgala por debajo de la validez del estado de identidad. Se ajusta en la configuración de la app.",
+   "fedFactBatch": "Hechos de pertenencia enviados por minuto",
+   "fedFactBatchHint": "El máximo de hechos de pertenencia que un servidor de espacios envía a su hogar personal en un minuto. Un servidor renueva cada relación viva una vez por actualización del estado de identidad: soporta como mucho este número multiplicado por los segundos de actualización divididos entre 60 relaciones (500 y 300 segundos: 2.500). Súbalo cuando el doctor de la instancia avise de un atraso de envío. Se ajusta en los ajustes de la app.",
    "supLookupWait": "Espera de la búsqueda de proveedores",
    "supLookupWaitHint": "Cuánto espera el servidor al registro de empresas (VIES) cuando alguien busca el número de IVA de un proveedor, antes de indicar que el registro no respondió. Se ajusta en la configuración de la app.",
    "supLookupRate": "Búsquedas de proveedores por minuto",
@@ -6517,7 +6624,28 @@ window.SETUP_L10N={
    "shopTypeFlorist": "Floristería",
    "shopTypeCornerShop": "Tienda de barrio",
    "stockWeighedGoods": "Las mercancías se venden al peso",
-   "stockWeighedGoodsHint": "Un artículo de stock nuevo se propone en kilogramos en lugar de piezas (carnicería, panadería, mostrador)."
+   "stockWeighedGoodsHint": "Un artículo de stock nuevo se propone en kilogramos en lugar de piezas (carnicería, panadería, mostrador).",
+   "stockGroupTagMode": "Modo de etiqueta por defecto de los artículos",
+   "stockGroupTagModeHint": "Si un artículo que ni un grupo ni un ajuste propio contempla lleva una etiqueta RFID: ninguna, una etiqueta que nombra un lote o una etiqueta por unidad (que exige seguimiento por pieza). Se ajusta en los ajustes de la app.",
+   "stockGroupCountDays": "Ciclo de recuento por defecto",
+   "stockGroupCountDaysHint": "Cada cuántos días se propone para un recuento cíclico un artículo que ni un grupo ni un ajuste propio contempla. Se ajusta en los ajustes de la app.",
+   "stockGroupRounding": "Redondeo de precios",
+   "stockGroupRoundingHint": "Cómo se redondea un precio de venta propuesto. Solo sirve para proponer un precio. Se ajusta en los ajustes de la app.",
+   "optTagNone": "Sin etiqueta",
+   "optTagPerBatch": "Una etiqueta por lote",
+   "optTagPerUnit": "Una etiqueta por unidad",
+   "optNotScheduled": "Sin programar",
+   "optRoundNone": "Sin redondeo",
+   "optRound005": "A 0,05",
+   "optRound010": "A 0,10",
+   "optRound099": "Terminando en 0,99",
+   "stockTagGrace": "Días antes de reutilizar una etiqueta retirada",
+   "stockTagGraceHint": "Cuántos días después de retirarla puede volver a vincularse un código de etiqueta. Se ajusta en los ajustes de la app.",
+   "stockRepeatedScan": "Un código escaneado de nuevo",
+   "stockRepeatedScanHint": "Qué hace una hoja de mercancías cuando se escanea otra vez el mismo código: añadir uno más o preguntar la cantidad. Se ajusta en los ajustes de la app.",
+   "optAtOnce": "De inmediato",
+   "optAddOne": "Añadir uno más",
+   "optAskQuantity": "Preguntar la cantidad"
   },
   "feature": {
    "calendarTab": [
@@ -7199,6 +7327,18 @@ window.SETUP_L10N={
    "stockCycleCounts": [
     "Recuentos cíclicos",
     "Planifique controles puntuales de lugares, artículos o mercancías de alto valor. Un plan vencido crea una tarea de recuento que se hace sin ver las cantidades esperadas; cada diferencia se aprueba como cualquier recuento. Desactivado: ningún plan se ejecuta ni se crea tarea; el registro no cambia."
+   ],
+   "stockItemGroups": [
+    "Grupos de artículos",
+    "Agrupe artículos para compartir sus ajustes: seguimiento, caducidad, modo de etiqueta, unidades, IVA, caja y más. Un artículo hereda el valor de su grupo salvo que conserve el suyo; un cambio de grupo muestra a cuántos artículos llega antes de guardarse."
+   ],
+   "stockTags": [
+    "Etiquetas RFID",
+    "Etiquete artículos, unidades, lotes y lugares con etiquetas RFID o NFC, guardadas como un código de barras y únicas en el negocio. Una etiqueta puede nombrar un lote o una pieza, según el grupo del artículo; la lectura de una etiqueta se reconoce donde se reconoce un código de barras."
+   ],
+   "stockScanning": [
+    "Escaneo",
+    "Un lector que teclea, o la cámara del móvil, rellena cualquier hoja de mercancías: un código se lee como código de barras, etiqueta de lugar, etiqueta de lote o etiqueta RFID. Activado con el registro de mercancías."
    ]
   },
   "process": {
@@ -8326,6 +8466,8 @@ window.SETUP_L10N={
    "fedRetentionHint": "Per quanto tempo un server conserva le ricevute dei messaggi firmati tra server, e una casa personale le tracce delle iscrizioni terminate, prima della pulizia oraria. Mai meno della validità dello stato di identità più due volte lo scarto d'orologio. Si imposta nelle impostazioni dell'app.",
    "fedAnswerWait": "Attesa della risposta tra server",
    "fedAnswerWaitHint": "Per quanto tempo un server attende la risposta a un messaggio firmato inviato a un altro server (uno stato di identità, un'iscrizione) prima di inviare di nuovo lo stesso messaggio. Almeno 30 secondi; tenerla sotto la validità dello stato di identità. Si imposta nelle impostazioni dell'app.",
+   "fedFactBatch": "Fatti di appartenenza inviati al minuto",
+   "fedFactBatchHint": "Il numero massimo di fatti di appartenenza che un server di spazi invia al proprio domicilio personale in un minuto. Un server rinnova ogni relazione attiva una volta per aggiornamento dello stato di identità: regge al massimo questo numero per i secondi di aggiornamento divisi per 60 relazioni (500 e 300 secondi: 2.500). Lo aumenti quando il medico dell'istanza segnala un ritardo di invio. Si imposta nelle impostazioni dell'app.",
    "supLookupWait": "Attesa della ricerca fornitore",
    "supLookupWaitHint": "Quanto il server attende il registro delle imprese (VIES) quando qualcuno cerca la partita IVA di un fornitore, prima di indicare che il registro non ha risposto. Si imposta nelle impostazioni dell'app.",
    "supLookupRate": "Ricerche fornitore al minuto",
@@ -8416,7 +8558,28 @@ window.SETUP_L10N={
    "shopTypeFlorist": "Fiorista",
    "shopTypeCornerShop": "Negozio di quartiere",
    "stockWeighedGoods": "La merce si vende a peso",
-   "stockWeighedGoodsHint": "Un nuovo articolo di magazzino viene proposto in chilogrammi anziché in pezzi (macelleria, panificio, banco)."
+   "stockWeighedGoodsHint": "Un nuovo articolo di magazzino viene proposto in chilogrammi anziché in pezzi (macelleria, panificio, banco).",
+   "stockGroupTagMode": "Modalità etichetta predefinita degli articoli",
+   "stockGroupTagModeHint": "Se un articolo che né un gruppo né un'impostazione propria riguarda porta un'etichetta RFID: nessuna, una etichetta che indica un lotto o una etichetta per unità (che richiede la tracciabilità per pezzo). Si imposta nelle impostazioni dell'app.",
+   "stockGroupCountDays": "Ciclo di conteggio predefinito",
+   "stockGroupCountDaysHint": "Ogni quanti giorni un articolo che né un gruppo né un'impostazione propria riguarda è proposto per un conteggio ciclico. Si imposta nelle impostazioni dell'app.",
+   "stockGroupRounding": "Arrotondamento dei prezzi",
+   "stockGroupRoundingHint": "Come si arrotonda un prezzo di vendita proposto. Serve solo a proporre un prezzo. Si imposta nelle impostazioni dell'app.",
+   "optTagNone": "Nessuna etichetta",
+   "optTagPerBatch": "Una etichetta per lotto",
+   "optTagPerUnit": "Una etichetta per unità",
+   "optNotScheduled": "Non programmato",
+   "optRoundNone": "Nessun arrotondamento",
+   "optRound005": "A 0,05",
+   "optRound010": "A 0,10",
+   "optRound099": "Che finisce per 0,99",
+   "stockTagGrace": "Giorni prima di riutilizzare un'etichetta ritirata",
+   "stockTagGraceHint": "Quanti giorni dopo il ritiro un codice di etichetta può essere associato di nuovo. Si imposta nelle impostazioni dell'app.",
+   "stockRepeatedScan": "Un codice scansionato di nuovo",
+   "stockRepeatedScanHint": "Cosa fa un foglio di merci quando lo stesso codice è scansionato ancora: aggiungere uno o chiedere la quantità. Si imposta nelle impostazioni dell'app.",
+   "optAtOnce": "Subito",
+   "optAddOne": "Aggiungi uno",
+   "optAskQuantity": "Chiedi la quantità"
   },
   "feature": {
    "calendarTab": [
@@ -9098,6 +9261,18 @@ window.SETUP_L10N={
    "stockCycleCounts": [
     "Inventari ciclici",
     "Pianifichi controlli a campione di luoghi, articoli o merci di alto valore. Un piano scaduto crea un compito di conteggio che si esegue senza vedere le quantità attese; ogni differenza è approvata come ogni conteggio. Disattivato: nessun piano parte e nessun compito viene creato; il registro non cambia."
+   ],
+   "stockItemGroups": [
+    "Gruppi di articoli",
+    "Raggruppi gli articoli per condividerne le impostazioni: tracciabilità, scadenza, modalità etichetta, unità, IVA, cassa e altro. Un articolo eredita il valore del suo gruppo salvo che mantenga il proprio; una modifica al gruppo mostra quanti articoli raggiunge prima di essere salvata."
+   ],
+   "stockTags": [
+    "Etichette RFID",
+    "Etichetti articoli, unità, lotti e luoghi con etichette RFID o NFC, registrate come un codice a barre e uniche nell'attività. Un'etichetta può indicare un lotto o un pezzo, secondo il gruppo dell'articolo; la lettura di un'etichetta è riconosciuta ovunque lo sia un codice a barre."
+   ],
+   "stockScanning": [
+    "Scansione",
+    "Un lettore che digita, o la fotocamera del telefono, compila qualsiasi foglio di merci: un codice è letto come codice a barre, etichetta di luogo, etichetta di lotto o etichetta RFID. Attivo con il registro delle merci."
    ]
   },
   "process": {

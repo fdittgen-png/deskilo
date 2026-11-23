@@ -12554,6 +12554,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featureStockCycleCountsTitle => 'Inventari ciclici';
 
   @override
+  String get featureStockItemGroupsDesc =>
+      'Raggruppi gli articoli per condividerne le impostazioni: tracciabilità, scadenza, modalità etichetta, unità, IVA, cassa e altro. Un articolo eredita il valore del suo gruppo salvo che mantenga il proprio; una modifica al gruppo mostra quanti articoli raggiunge prima di essere salvata.';
+
+  @override
+  String get featureStockItemGroupsTitle => 'Gruppi di articoli';
+
+  @override
   String get featureStockLotsDesc =>
       'Seguire le merci per lotto o per data di scadenza, con una durata di conservazione. Disattivato: nessun articolo è seguito per lotto e ciò che è stato registrato resta invariato.';
 
@@ -12588,6 +12595,20 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get featureStockReturnsTitle => 'Resi e correzioni di magazzino';
+
+  @override
+  String get featureStockScanningDesc =>
+      'Un lettore che digita, o la fotocamera del telefono, compila qualsiasi foglio di merci: un codice è letto come codice a barre, etichetta di luogo, etichetta di lotto o etichetta RFID. Attivo con il registro delle merci.';
+
+  @override
+  String get featureStockScanningTitle => 'Scansione';
+
+  @override
+  String get featureStockTagsDesc =>
+      'Etichetti articoli, unità, lotti e luoghi con etichette RFID o NFC, registrate come un codice a barre e uniche nell\'attività. Un\'etichetta può indicare un lotto o un pezzo, secondo il gruppo dell\'articolo; la lettura di un\'etichetta è riconosciuta ovunque lo sia un codice a barre.';
+
+  @override
+  String get featureStockTagsTitle => 'Etichette RFID';
 
   @override
   String get featureStockTakeOutDesc =>
@@ -15528,6 +15549,20 @@ class AppLocalizationsIt extends AppLocalizations {
       'Un cambio di password non chiede di accedere di nuovo';
 
   @override
+  String instanceDoctorFactBacklogDetail(
+    String overdue,
+    String waiting,
+    String live,
+    String capacity,
+  ) {
+    return '$overdue dei $waiting fatti in attesa hanno più di un periodo di aggiornamento; le relazioni attive sono $live e un periodo ne consegna $capacity.\n        Correzione: aumenti federation.fact_drain_batch (o allunghi il periodo di aggiornamento) in modo che lotto x periodo / 60 superi le relazioni attive.';
+  }
+
+  @override
+  String get instanceDoctorFactBacklogTitle =>
+      'Dei fatti di appartenenza attendono più di un periodo di aggiornamento';
+
+  @override
   String instanceDoctorGuardAnonViewDetail(String names) {
     return '$names\n        Senza security_invoker la vista legge con i diritti del proprietario e aggira le policy delle tabelle sottostanti.';
   }
@@ -15643,6 +15678,10 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get instanceDoctorProbeAuth => 'Configurazione dell\'autenticazione';
+
+  @override
+  String get instanceDoctorProbeFactDelivery =>
+      'Invio dei fatti di appartenenza';
 
   @override
   String instanceDoctorProbeFailedDetail(int status, String message) {
@@ -28799,6 +28838,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questo movimento non può essere registrato così: una quantità sopra zero, un motivo noto e da una a duecento righe, oppure la stessa richiesta inviata di nuovo invariata. Non è stato spostato nulla.';
 
   @override
+  String get refusalStockNamePieces =>
+      'Questo articolo è tracciato pezzo per pezzo: indichi ogni pezzo, tanti quanti la quantità.';
+
+  @override
   String get refusalStockNotEnough =>
       'In questo luogo non ce n\'è così tanto. Non è stato spostato nulla.';
 
@@ -28815,6 +28858,14 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questa richiesta di pagina non è valida: richiedere da 1 a 200 righe e proseguire solo dalla posizione indicata da una pagina.';
 
   @override
+  String get refusalStockPieceInStock =>
+      'Questo pezzo è in magazzino. Lo scarichi o lo cancelli prima di ritirare la sua etichetta.';
+
+  @override
+  String get refusalStockPieceWhere =>
+      'Un pezzo indicato non si trova dove questo movimento lo preleva. Controlli il luogo o il pezzo.';
+
+  @override
   String get refusalStockReturnBeyond =>
       'Non si può restituire più di quanto questo movimento conteneva: una parte è già stata restituita o corretta.';
 
@@ -28829,6 +28880,14 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get refusalStockStale =>
       'Qualcun altro lo ha modificato da quando lo ha aperto. Lo rilegga e rifaccia la sua modifica.';
+
+  @override
+  String get refusalStockTagBound =>
+      'Questa etichetta è già su un altro articolo, luogo o pezzo. La ritiri prima lì.';
+
+  @override
+  String get refusalStockTagRetiredLately =>
+      'Questa etichetta è stata ritirata da poco e non può ancora essere associata di nuovo. Il tempo di attesa è un\'impostazione dell\'attività.';
 
   @override
   String get refusalStockUnit =>
@@ -31844,6 +31903,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Secondi per cui un server attende la risposta a un messaggio firmato inviato a un altro server prima di inviare di nuovo lo stesso messaggio. Almeno 30; tenerla sotto la validità dello stato.';
 
   @override
+  String get settingHintFederationFactDrainBatch =>
+      'Il numero massimo di fatti di appartenenza che un server di spazi invia al proprio domicilio personale in un minuto. Un server rinnova ogni relazione attiva una volta per aggiornamento dello stato di identità: regge al massimo questo numero per i secondi di aggiornamento divisi per 60 relazioni (500 e 300 secondi: 2.500). Lo aumenti quando il medico dell\'istanza segnala un ritardo di invio.';
+
+  @override
   String get settingHintFederationRetentionHours =>
       'Ore per cui un server conserva le ricevute dei messaggi firmati tra server, e una casa personale le tracce delle iscrizioni terminate, prima che la pulizia oraria le rimuova. Mai meno della validità di stato più lunga più due volte lo scarto d\'orologio.';
 
@@ -32076,6 +32139,26 @@ class AppLocalizationsIt extends AppLocalizations {
       'Quanti giorni un compito di inventario ciclico può restare aperto dopo la scadenza prima che la posta lo dichiari in ritardo.';
 
   @override
+  String get settingHintStockGroupDefaultCountDays =>
+      'Ogni quanti giorni un articolo che né un gruppo né un\'impostazione propria riguarda è proposto per un conteggio ciclico. 0 significa non programmato.';
+
+  @override
+  String get settingHintStockGroupDefaultTagMode =>
+      'Se un articolo che né un gruppo né un\'impostazione propria riguarda porta un\'etichetta RFID: nessuna, una etichetta che indica un lotto o una etichetta per unità (che richiede la tracciabilità per pezzo).';
+
+  @override
+  String get settingHintStockPriceRounding =>
+      'Come si arrotonda un prezzo di vendita proposto: al 0,05 o 0,10 più vicino, o a un prezzo che finisce per 0,99. Serve solo a proporre un prezzo.';
+
+  @override
+  String get settingHintStockRepeatedScan =>
+      'Cosa fa un foglio di merci quando lo stesso codice è scansionato ancora: aggiungere uno alla riga o chiedere la quantità.';
+
+  @override
+  String get settingHintStockTagRebindGraceDays =>
+      'Quanti giorni dopo il ritiro un codice di etichetta può essere associato di nuovo. 0 significa subito. Un\'etichetta in uso non è mai associata due volte.';
+
+  @override
   String get settingHintStockWeighedGoods =>
       'Attivo: un nuovo articolo di magazzino viene proposto in chilogrammi anziché in pezzi (macelleria, panificio, banco). Ogni articolo può avere un’altra unità.';
 
@@ -32197,6 +32280,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settingLabelFederationAnswerWaitSeconds =>
       'Attesa della risposta tra server';
+
+  @override
+  String get settingLabelFederationFactDrainBatch =>
+      'Fatti di appartenenza inviati al minuto';
 
   @override
   String get settingLabelFederationRetentionHours =>
@@ -32424,6 +32511,24 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settingLabelStockCycleCountOverdueDays =>
       'Inventario ciclico: in ritardo dopo';
+
+  @override
+  String get settingLabelStockGroupDefaultCountDays =>
+      'Ciclo di conteggio predefinito (giorni)';
+
+  @override
+  String get settingLabelStockGroupDefaultTagMode =>
+      'Modalità etichetta predefinita degli articoli';
+
+  @override
+  String get settingLabelStockPriceRounding => 'Arrotondamento dei prezzi';
+
+  @override
+  String get settingLabelStockRepeatedScan => 'Un codice scansionato di nuovo';
+
+  @override
+  String get settingLabelStockTagRebindGraceDays =>
+      'Giorni prima di riutilizzare un\'etichetta ritirata';
 
   @override
   String get settingLabelStockWeighedGoods => 'La merce si vende a peso';
@@ -36055,11 +36160,75 @@ class AppLocalizationsIt extends AppLocalizations {
       'Entrambi i numeri devono essere interi maggiori di zero.';
 
   @override
+  String get stockReasonGroupDepth =>
+      'Un sottogruppo non può avere sottogruppi.';
+
+  @override
+  String get stockReasonGroupHasMovements =>
+      'Questo articolo ha movimenti di magazzino: unità e tracciabilità restano come scritte.';
+
+  @override
+  String get stockReasonGroupHasSubgroups =>
+      'Questo gruppo ha sottogruppi: li sposti o li elimini prima.';
+
+  @override
+  String get stockReasonGroupInUse =>
+      'Questo gruppo è usato da articoli: li sposti prima.';
+
+  @override
+  String get stockReasonGroupItemUnknown =>
+      'Questo articolo non è di questa attività.';
+
+  @override
+  String get stockReasonGroupNameDuplicate =>
+      'Un gruppo di questo livello ha già questo nome.';
+
+  @override
+  String get stockReasonGroupNameLength =>
+      'Il nome di un gruppo ha da 1 a 80 caratteri.';
+
+  @override
+  String get stockReasonGroupNameRequired =>
+      'Un nuovo gruppo ha bisogno di un nome.';
+
+  @override
+  String get stockReasonGroupNeedsSerial =>
+      'Le etichette per unità richiedono la tracciabilità per pezzo.';
+
+  @override
+  String get stockReasonGroupNotOverridable =>
+      'È una proposta per i nuovi articoli e non si imposta per articolo.';
+
+  @override
+  String get stockReasonGroupPlaceUnknown =>
+      'Questo luogo non è di questa attività.';
+
+  @override
+  String get stockReasonGroupUnknown =>
+      'Questo gruppo non è di questa attività.';
+
+  @override
+  String get stockReasonGroupUnknownReference =>
+      'Un luogo, un articolo o un\'aliquota qui indicati non sono di questa attività.';
+
+  @override
+  String get stockReasonGroupValueRequired =>
+      'Indichi un valore oppure usi quello del gruppo.';
+
+  @override
+  String get stockReasonGroupVatRateUnknown =>
+      'Questa aliquota IVA non è tra quelle attive di questa attività.';
+
+  @override
   String get stockReasonGtinCheck =>
       'La cifra di controllo di questo codice a barre è errata.';
 
   @override
   String get stockReasonGtinLength => 'Un codice a barre ha da 8 a 14 cifre.';
+
+  @override
+  String get stockReasonHasTags =>
+      'Qui ci sono etichette associate: le ritiri prima di cambiare la modalità etichetta.';
 
   @override
   String get stockReasonHomeInvalid =>
@@ -36230,6 +36399,26 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questo fornitore non appartiene a questa attività.';
 
   @override
+  String get stockReasonTagMalformed =>
+      'Questo codice non è un codice di etichetta leggibile.';
+
+  @override
+  String get stockReasonTagModeNone =>
+      'Questo articolo non porta etichette: la sua modalità etichetta è nessuna.';
+
+  @override
+  String get stockReasonTagOwnerInactive =>
+      'Questo articolo o luogo è disattivato: lo riattivi prima di associargli un\'etichetta.';
+
+  @override
+  String get stockReasonTagOwnerUnknown =>
+      'L\'articolo, il luogo o il pezzo a cui è destinata questa etichetta non è noto qui.';
+
+  @override
+  String get stockReasonTagPerUnitItem =>
+      'Un\'etichetta per unità va su un pezzo, non sull\'articolo: la associ a un pezzo.';
+
+  @override
   String get stockReasonTargetBelowPoint =>
       'Il livello fino a cui ordinare deve essere sopra il punto di riordino.';
 
@@ -36268,6 +36457,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get stockReasonUnitUnmapped =>
       'L’unità di questa riga non è un’unità dell’articolo: aggiungerla prima all’articolo.';
+
+  @override
+  String get stockReasonUnitsNotTracked =>
+      'I pezzi si indicano solo per un articolo tracciato pezzo per pezzo.';
 
   @override
   String get stockReasonValueForeign =>

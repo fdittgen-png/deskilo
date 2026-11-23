@@ -8,7 +8,7 @@ select plan(12);
 
 select is((select sort_order from public.business_kinds where code = 'shop'), 47, 'a shop sorts between freelancer and service');
 select is((select feature_profile from public.business_kinds where code = 'shop'),
-  '{"placeBooking": false, "moneyTab": true, "services": true, "invoicing": true, "purchases": true, "purchaseOrders": true, "stockManagement": true, "stockReceiving": true, "stockTakeOut": true, "stockLots": true, "stockReorder": true}'::jsonb,
+  '{"placeBooking": false, "moneyTab": true, "services": true, "invoicing": true, "purchases": true, "purchaseOrders": true, "stockManagement": true, "stockReceiving": true, "stockTakeOut": true, "stockLots": true, "stockReorder": true, "stockItemGroups": true, "stockScanning": true}'::jsonb,
   'the shop proposes the stock, the catalogue and the purchases, and switches the places off');
 select is((select count(*)::int from public.business_kinds k, jsonb_object_keys(k.feature_profile) key
             where k.code = 'shop' and key in ('onlinePayments', 'messagesHub', 'publicListings', 'seriesBooking')

@@ -32,6 +32,8 @@ const _demoShopProfile = {
   'stockTakeOut': true,
   'stockLots': true,
   'stockReorder': true,
+  'stockItemGroups': true,
+  'stockScanning': true,
 };
 
 /// #4168 — the freelancer's profile: the money side of a one-person service

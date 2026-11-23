@@ -1,4 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
+-- utc-date-file: the assertions hold with the business's day one day ahead of and one day behind the database's (workspace_today forced to current_date +/- 1 on the dev project, #4384)
 -- #4140 (0808) — My finances answers, for an invoice a declared payment
 -- names while the business has not decided it, that declaration (the one
 -- its member may take back): never an online payment's, never another
