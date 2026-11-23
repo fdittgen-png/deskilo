@@ -33,7 +33,7 @@ const Map<String, String> _noLayoutOfItsOwn = {
   '/stock/groups': '#4361 a list of groups and a sheet; its widget tests render it at phone and desk widths',
   '/stock/cycle-counts': '#4295 tabs of lists and a sheet; its widget tests render it at phone and desk widths',
   '/stock/cycle-counts/:taskId': '#4295 a list of lines and two sheets; its widget tests render it at phone and desk widths',
-  '/till': '#4366 keys beside a basket and two dialogs; its widget tests render it at phone, tablet and desk widths',
+  '/till': '#4366 keys, a basket, two dialogs; widget tests render it at phone, tablet and desk',
   '/stock/transfers': '#4170 a list of cards and three sheets; its widget tests render it at phone and desk widths',
   '/me/spaces/manage': 'forwards to /profiles, which the desk walk renders',
   '/invoicing/standalone/new': '#4165 composer behind its feature; its widget tests walk it at phone and desk',

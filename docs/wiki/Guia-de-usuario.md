@@ -3139,7 +3139,7 @@ Con la función *Etiquetas* activada y un teléfono que lee NFC, **Stock → Art
 <!-- anchor: user.money.till -->
 ### Caja
 
-**Destinatarios:** Administrador/a · Propietario/a
+**Público:** Administrador/a · Propietario
 
 Atiende a clientes en el mostrador y quiere cada venta en segundos, numerada y cobrada en efectivo.
 
@@ -3147,7 +3147,7 @@ Abra **Caja** en el menú de ventas (necesita la función de tickets de caja y e
 
 Pulse **Cobrar en efectivo** y escriba el **Efectivo entregado** (o **Importe exacto**). Menos que el total se rechaza antes de enviar nada. El servidor numera la venta y la caja indica el cambio; **Siguiente cliente** empieza una cesta vacía. Enviar dos veces la misma venta nunca la vende dos veces.
 
-Donde su país aún no permite la caja, esta nombra la operación que falta y no ofrece nada: nada se numera ni se cobra. Una línea de mercancía necesita la gestión de stock; el rechazo del servidor se dice con palabras. Los pagos con tarjeta, descuentos, reembolsos y devoluciones no forman parte de esta primera caja. (#4366)
+Donde su país aún no permite la caja, esta nombra la operación que falta y no ofrece nada: nada se numera ni se cobra. Una línea de mercancía necesita la gestión de stock; el rechazo del servidor se dice con palabras. Los pagos con tarjeta, descuentos, reembolsos y devoluciones no forman parte de esta primera caja.
 
 <!-- anchor: user.money.stock.value -->
 ### Valor de las existencias y origen de la mercancía

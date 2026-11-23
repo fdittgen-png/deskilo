@@ -3147,7 +3147,7 @@ Apra **Cassa** nel menu delle vendite (richiede la funzione scontrini di cassa e
 
 Prema **Incassare in contanti** e digiti i **Contanti dati** (o **Importo esatto**). Meno del totale viene rifiutato prima di inviare qualsiasi cosa. Il server numera la vendita e la cassa dice il resto; **Cliente successivo** riparte da un carrello vuoto. Inviare due volte la stessa vendita non la vende mai due volte.
 
-Dove il suo paese non consente ancora la cassa, questa indica l'operazione mancante e non offre nulla: nulla viene numerato né incassato. Una riga di merce richiede la gestione del magazzino; un rifiuto del server è detto a parole. Pagamenti con carta, sconti, rimborsi e resi non fanno parte di questa prima cassa. (#4366)
+Dove il suo paese non consente ancora la cassa, questa indica l'operazione mancante e non offre nulla: nulla viene numerato né incassato. Una riga di merce richiede la gestione del magazzino; un rifiuto del server è detto a parole. Pagamenti con carta, sconti, rimborsi e resi non fanno parte di questa prima cassa.
 
 <!-- anchor: user.money.stock.value -->
 ### Valore del magazzino e origine della merce

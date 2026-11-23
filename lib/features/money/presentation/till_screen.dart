@@ -17,7 +17,6 @@ import '../../../core/ui/adaptive/window_class.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../core/ui/kit/page_title.dart';
 import '../../../core/ui/loading_view.dart';
-import '../../workspace/providers/workspace_providers.dart';
 import '../domain/counter_till.dart';
 import '../providers/till_providers.dart';
 import 'till_basket.dart';
@@ -27,13 +26,15 @@ import 'till_text.dart';
 
 /// The till. [keys] are the items it offers, read by the route from the stock: the till does not know the stock.
 class TillScreen extends ConsumerWidget {
-  const TillScreen({super.key, required this.keys});
+  const TillScreen({super.key, required this.workspaceId, required this.keys});
 
+  /// The open business; null while it is being read.
+  final String? workspaceId;
   final AsyncValue<List<TillKey>> keys;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final workspaceId = ref.watch(currentWorkspaceProvider).value?.id;
+    final workspaceId = this.workspaceId;
     return Scaffold(
       appBar: AppBar(
         title: PageTitle(context.l10n.tillTitle),
@@ -132,12 +133,14 @@ class _TillState extends ConsumerState<_Till> {
         return LayoutBuilder(
       builder: (context, box) {
         final keys = _Keys(
+          key: const ValueKey('till-keys'),
           items: widget.keys,
           onTap: (i) => unawaited(_session.add(itemId: i.id, name: i.name, unit: i.unit)),
         );
         final basket = ValueListenableBuilder<TillState>(
           valueListenable: _session.state,
           builder: (context, state, _) => TillBasket(
+            key: const ValueKey('till-basket'),
             state: state,
             onQuantity: _setQuantity,
             onRemove: (i) => unawaited(_session.remove(i)),
@@ -168,7 +171,7 @@ class _TillState extends ConsumerState<_Till> {
 
 /// The items as keys.
 class _Keys extends StatelessWidget {
-  const _Keys({required this.items, required this.onTap});
+  const _Keys({super.key, required this.items, required this.onTap});
 
   final AsyncValue<List<TillKey>> items;
   final void Function(TillKey) onTap;

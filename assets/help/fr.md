@@ -2999,7 +2999,7 @@ Avec la fonction *Puces* activée et un téléphone qui lit le NFC, **Stock → 
 
 ### Caisse
 
-**Public :** Administrateur·rice · Propriétaire
+**Public:** Administrateur·rice · Propriétaire
 
 Vous servez des clients au comptoir et voulez que chaque vente soit faite en quelques secondes, numérotée et payée en espèces.
 
@@ -3007,7 +3007,7 @@ Ouvrez **Caisse** dans le menu des ventes (elle demande la fonction tickets de c
 
 Appuyez sur **Encaisser en espèces** et saisissez les **Espèces remises** (ou **Compte juste**). Moins que le total est refusé avant tout envoi. Le serveur numérote la vente et la caisse indique la monnaie à rendre ; **Client suivant** repart d'un panier vide. Envoyer deux fois la même vente ne la vend jamais deux fois.
 
-Là où votre pays n'autorise pas encore la caisse, elle nomme l'opération manquante et ne propose rien : rien n'est numéroté ni encaissé. Une ligne de marchandise demande la gestion de stock ; un refus du serveur est dit en mots. Paiements par carte, remises, remboursements et retours ne font pas partie de cette première caisse. (#4366)
+Là où votre pays n'autorise pas encore la caisse, elle nomme l'opération manquante et ne propose rien : rien n'est numéroté ni encaissé. Une ligne de marchandise demande la gestion de stock ; un refus du serveur est dit en mots. Paiements par carte, remises, remboursements et retours ne font pas partie de cette première caisse.
 
 ### Valeur du stock et origine des marchandises
 

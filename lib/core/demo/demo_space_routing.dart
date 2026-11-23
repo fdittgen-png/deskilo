@@ -134,14 +134,7 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
       workspaces: space.workspaces,
     );
   });
-  // #4366 — each space's till: its own counter, its own numbers.
-  final tills = demoSpacesOf(
-    (key) => DemoTill(
-      country: fixture.workspaces.workspaces.firstWhere((w) => w.id == key.id).countryCode,
-      currency: key.currency,
-      vatPercent: 20,
-    ),
-  );
+  final tills = _demoTills(fixture);
   final myReservations = _myReservations(fixture);
   final stocks = _DemoStocks(fixture);
   // #3865 — each space's last bank statement lives on the fixture.
@@ -419,3 +412,12 @@ List<Override> _hmrcOverrides(DemoFixture fixture) => [
     ),
   ),
 ];
+
+/// #4366 — each space's till: its own counter, its own numbers.
+DemoSpaces<DemoTill> _demoTills(DemoFixture fixture) => demoSpacesOf(
+  (key) => DemoTill(
+    country: fixture.workspaces.workspaces.firstWhere((w) => w.id == key.id).countryCode,
+    currency: key.currency,
+    vatPercent: 20,
+  ),
+);

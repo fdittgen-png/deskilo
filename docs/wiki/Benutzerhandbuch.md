@@ -3147,7 +3147,7 @@ Sie bedienen Kundschaft an der Theke und möchten jeden Verkauf in Sekunden, num
 
 Drücken Sie **Bar kassieren** und geben Sie **Gegeben** ein (oder **Passend**). Weniger als der Gesamtbetrag wird abgelehnt, bevor etwas gesendet wird. Der Server nummeriert den Verkauf, und die Kasse nennt das Rückgeld; **Nächster Kunde** beginnt einen leeren Warenkorb. Derselbe Verkauf, zweimal gesendet, verkauft nie doppelt.
 
-Wo Ihr Land die Kasse noch nicht erlaubt, nennt die Kasse den fehlenden Vorgang und bietet nichts an: nichts wird nummeriert und nichts kassiert. Eine Warenzeile braucht die Lagerverwaltung; eine Ablehnung des Servers erscheint in Worten. Kartenzahlung, Rabatte, Erstattungen und Rückgaben gehören nicht zu dieser ersten Kasse. (#4366)
+Wo Ihr Land die Kasse noch nicht erlaubt, nennt die Kasse den fehlenden Vorgang und bietet nichts an: nichts wird nummeriert und nichts kassiert. Eine Warenzeile braucht die Lagerverwaltung; eine Ablehnung des Servers erscheint in Worten. Kartenzahlung, Rabatte, Erstattungen und Rückgaben gehören nicht zu dieser ersten Kasse.
 
 <!-- anchor: user.money.stock.value -->
 ### Lagerwert und Herkunft der Ware

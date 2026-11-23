@@ -21,6 +21,6 @@ class TillRoute extends ConsumerWidget {
         : ref
               .watch(stockItemsProvider(workspaceId))
               .whenData((items) => [for (final i in items) TillKey(id: i.id, name: i.name, unit: i.unit)]);
-    return TillScreen(keys: keys);
+    return TillScreen(workspaceId: workspaceId, keys: keys);
   }
 }

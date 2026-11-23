@@ -3007,7 +3007,7 @@ Open **Till** in the sales menu (it needs the counter receipts feature and the r
 
 Press **Take cash** and type the **Cash given** (or **Exact amount**). Less than the total is refused before anything is sent. The sale is numbered by the server and the till says the change due; **Next customer** starts a clean basket. Sending the same sale twice never sells twice.
 
-Where your country does not yet allow the counter, the till says which operation is missing and offers nothing: nothing is numbered and nothing is taken. A goods line needs stock management on; a refusal of the server is shown in words. Card payments, discounts, refunds and returns are not part of this first till. (#4366)
+Where your country does not yet allow the counter, the till says which operation is missing and offers nothing: nothing is numbered and nothing is taken. A goods line needs stock management on; a refusal of the server is shown in words. Card payments, discounts, refunds and returns are not part of this first till.
 
 ### Stock value and where goods came from
 
