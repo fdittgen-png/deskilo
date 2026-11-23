@@ -71,7 +71,7 @@ class ExactQuantity implements Comparable<ExactQuantity> {
   static ExactQuantityResult tryParse(String text) {
     ExactQuantityResult refuse(ExactQuantityProblem p) =>
         (value: null, problem: p);
-    if (!RegExp(r'^-?\d+(\.\d+)?$').hasMatch(text)) {
+    if (!exactDecimalGrammar.hasMatch(text)) {
       return refuse(ExactQuantityProblem.malformed);
     }
     final decimal = ExactDecimal.parse(text);
