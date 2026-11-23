@@ -28,6 +28,7 @@ end;
 $fn$;
 revoke execute on function public.refuse(text, jsonb, text) from public, anon, authenticated;
 
+-- restates 0836
 create or replace function public.stock_config_refuse(p_field text, p_reason text)
 returns void
 language plpgsql
@@ -41,6 +42,7 @@ end;
 $fn$;
 revoke execute on function public.stock_config_refuse(text, text) from public, anon, authenticated;
 
+-- restates 0604
 create or replace function public.retention_refuse_unless_eligible(p_what text, p_assessment jsonb)
 returns void
 language plpgsql
