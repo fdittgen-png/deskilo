@@ -60,6 +60,8 @@ public.bi_cost_allocation_rules.bi_cost_allocation_rules_select
 public.bi_cost_allocation_rules.mcp_delegated_deny
 public.bi_export_evidence.mcp_delegated_deny
 public.bi_views.mcp_delegated_deny
+public.billing_access_grants.billing_access_grants_select
+public.billing_access_grants.mcp_delegated_deny
 public.billing_parties.billing_parties_select
 public.billing_parties.mcp_delegated_deny
 public.book_accounts.mcp_delegated_deny

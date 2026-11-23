@@ -262,6 +262,18 @@ constraint bi_views.bi_views_user_id_fkey FOREIGN KEY (user_id) REFERENCES auth.
 constraint bi_views.bi_views_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint bi_views.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint bi_views.system_company_present CHECK ((company_id IS NOT NULL))
+constraint billing_access_grants.billing_access_grants_check CHECK (((principal_user_id IS NULL) = (accepted_at IS NULL)))
+constraint billing_access_grants.billing_access_grants_check1 CHECK (((revoked_at IS NULL) OR (revoked_by_user_id IS NOT NULL)))
+constraint billing_access_grants.billing_access_grants_code_key UNIQUE (code)
+constraint billing_access_grants.billing_access_grants_pkey PRIMARY KEY (id)
+constraint billing_access_grants.billing_access_grants_principal_user_id_fkey FOREIGN KEY (principal_user_id) REFERENCES auth.users(id) ON DELETE CASCADE
+constraint billing_access_grants.billing_access_grants_purpose_check CHECK ((purpose = 'billing_documents'::text))
+constraint billing_access_grants.billing_access_grants_revoke_reason_check CHECK ((char_length(revoke_reason) <= 500))
+constraint billing_access_grants.billing_access_grants_workspace_id_financial_subject_id_fkey FOREIGN KEY (workspace_id, financial_subject_id) REFERENCES members(workspace_id, id) ON DELETE CASCADE
+constraint billing_access_grants.billing_access_grants_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint billing_access_grants.billing_access_grants_workspace_id_request_id_key UNIQUE (workspace_id, request_id)
+constraint billing_access_grants.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint billing_access_grants.system_company_present CHECK ((company_id IS NOT NULL))
 constraint billing_parties.billing_parties_check CHECK (((company <> ''::text) OR (first_name <> ''::text) OR (last_name <> ''::text)))
 constraint billing_parties.billing_parties_city_check CHECK ((char_length(city) <= 120))
 constraint billing_parties.billing_parties_company_check CHECK ((char_length(company) <= 200))
@@ -2963,6 +2975,10 @@ routine public.bi_view_set_default(p_workspace_id uuid, p_scope text, p_id uuid)
 routine public.bi_views_gate(p_workspace_id uuid) -> void | function | definer | stable | exec:service_role | body:e6858809d33b
 routine public.bi_views_list(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e5197bc3183b
 routine public.bi_views_team_writer(p_workspace_id uuid) -> boolean | function | invoker | stable | exec:service_role | body:5446e2613be5
+routine public.billing_access_accept_v1(p_code text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:b8a62f798142
+routine public.billing_access_invite_v1(p_workspace uuid, p_subject uuid, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:51aa5f49b215
+routine public.billing_access_preview_v1(p_code text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:bbee23010629
+routine public.billing_access_revoke_v1(p_grant_id uuid, p_reason text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:854f1c6b935d
 routine public.billing_customer_create_v1(p_workspace uuid, p_party jsonb, p_capacity text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:ee7740d9b980
 routine public.billing_customer_ok(p_workspace uuid, p_subject uuid) -> boolean | function | definer | stable | exec:service_role | body:9612fb05f753
 routine public.billing_customers_readable(p_workspace uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:bb0b3783b008
@@ -3718,7 +3734,10 @@ routine public.my_database_capabilities() -> jsonb | function | definer | stable
 routine public.my_directory_person() -> uuid | function | definer | stable | exec:authenticated,service_role | body:48d6f565f410
 routine public.my_favorites(p_workspace uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:deb7553efe4e
 routine public.my_finance_overview() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:9c807012ab89
+routine public.my_finance_overview_v2() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e6a6d0822b5d
+routine public.my_finance_subjects() -> SETOF uuid | function | definer | stable | exec:service_role | body:0b89785b26e9
 routine public.my_financial_activity(p_kind text, p_before_at timestamp with time zone, p_before_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:84d21820a6ea
+routine public.my_financial_activity_v2(p_kind text, p_before_at timestamp with time zone, p_before_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:334f396e0f67
 routine public.my_group_inbox() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:6e87b3be0c6a
 routine public.my_guest_participations() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:392d10602309
 routine public.my_identity_status() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:5834f2bc6bd0
@@ -3731,7 +3750,7 @@ routine public.my_organisation_houses_v1() -> jsonb | function | definer | stabl
 routine public.my_organisations_v1() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:ed9f8d83c22d
 routine public.my_personal_message_directory_v1(p_section text, p_workspace_network_id text, p_after_key text, p_query text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:4f0fd5b4e1ef
 routine public.my_personal_preferences(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:213deec91380
-routine public.my_personal_workspace_refs_v1() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:99cb00004823
+routine public.my_personal_workspace_refs_v1() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:734c51e6d560
 routine public.my_public_profile() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:3c381728dd4f
 routine public.my_reachable_people() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:7e4e6a455cf0
 routine public.my_reservations_page_v1(p_from timestamp with time zone, p_to timestamp with time zone, p_workspace_id uuid, p_direction text, p_after_start timestamp with time zone, p_after_id uuid) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:a32390072be3
@@ -4631,6 +4650,7 @@ trigger bi_cost_allocation_rules.zz_system_columns_stamp CREATE TRIGGER zz_syste
 trigger bi_export_evidence.bi_export_evidence_append_only CREATE TRIGGER bi_export_evidence_append_only BEFORE UPDATE ON public.bi_export_evidence FOR EACH ROW EXECUTE FUNCTION bi_export_evidence_append_only()
 trigger bi_export_evidence.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.bi_export_evidence FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger bi_views.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.bi_views FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger billing_access_grants.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.billing_access_grants FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger billing_parties.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.billing_parties FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger book_accounts.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.book_accounts FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger book_exports.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.book_exports FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
