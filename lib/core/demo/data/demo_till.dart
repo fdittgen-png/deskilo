@@ -41,14 +41,14 @@ class DemoTill implements TillPort {
     final id = receiptId ?? 'demo-receipt-${_drafts.length + _sales + 1}';
     final known = _drafts[id];
     if (receiptId != null && (known == null || known.revision != expectedRevision)) {
-      throw _refused('DKT10', 'this receipt changed meanwhile');
+      throw _refused('DKL10', 'this receipt changed meanwhile');
     }
     var gross = 0;
     var tax = 0;
     final priced = <TillPricedLine>[];
     for (final l in lines) {
       final unit = DemoStockRegistry.catalogue[l.itemId]?.$2;
-      if (unit == null) throw _refused('DKT02', 'line_${priced.length + 1}_unit_price');
+      if (unit == null) throw _refused('DKL02', 'line_${priced.length + 1}_unit_price');
       final amount = _times(unit, l.quantity);
       final lineTax = amount - (amount * 100 / (100 + vatPercent)).round();
       gross += amount;
@@ -79,10 +79,10 @@ class DemoTill implements TillPort {
     final again = _done[requestId];
     if (again != null) return again;
     final draft = _drafts[receiptId];
-    if (!ready) throw _refused('DKT01', 'the country operation is not supported');
-    if (draft == null) throw _refused('DKT04', 'this receipt is not an open draft');
-    if (draft.revision != expectedRevision) throw _refused('DKT10', 'this receipt changed meanwhile');
-    if (tenders.fold<int>(0, (a, t) => a + t.amountMinor) != draft.totals.grossMinor) throw _refused('DKT06', 'tender_sum');
+    if (!ready) throw _refused('DKL01', 'the country operation is not supported');
+    if (draft == null) throw _refused('DKL04', 'this receipt is not an open draft');
+    if (draft.revision != expectedRevision) throw _refused('DKL10', 'this receipt changed meanwhile');
+    if (tenders.fold<int>(0, (a, t) => a + t.amountMinor) != draft.totals.grossMinor) throw _refused('DKL06', 'tender_sum');
     final sold = TillSold(receiptId: receiptId, number: 'R-${(++_sales).toString().padLeft(5, '0')}', totals: draft.totals);
     _drafts.remove(receiptId);
     return _done[requestId] = sold;
