@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #1881 — the frozen coverage manifest: every route the router
-// registers, and what the task recorder does on it.
+// #1881 — the frozen coverage manifest: every route the router registers, and what the task recorder does on it.
 //
 //   recorded — instrumented: its own seams name the steps; recorder — the
 //   recorder's own screens, never recorded; excluded — a protected screen

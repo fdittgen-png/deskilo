@@ -9,10 +9,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/help/help_anchors.dart';
 import '../../../core/help/help_dot.dart';
+import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
+import '../../../core/ui/app_date_picker.dart';
 import '../../../core/ui/kit/page_title.dart';
 import '../../../core/ui/loading_view.dart';
+import '../../money/providers/business_day_provider.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/stock_where_is.dart';
 import '../providers/stock_providers.dart';
@@ -32,17 +35,16 @@ class _State extends ConsumerState<StockWhereIsScreen> {
   DateTime? _at;
 
   Future<void> _pick() async {
-    final today = DateTime.now();
-    final day = await showDatePicker(
+    final today = ref.read(businessDayProvider);
+    final day = await showAppDatePicker(
       context: context,
-      initialDate: _at ?? today,
+      initialDate: _at == null ? today : DateTime(_at!.year, _at!.month, _at!.day),
       firstDate: DateTime(today.year - 10),
       lastDate: today,
     );
     if (day == null || !mounted) return;
-    // the end of that day: what the item held when the day was over (today: now, never a time to come)
-    final end = DateTime(day.year, day.month, day.day, 23, 59, 59);
-    setState(() => _at = end.isAfter(today) ? null : end);
+    // what the item held when that day was over; today is now (never a time to come)
+    setState(() => _at = DateUtils.isSameDay(day, today) ? null : DateTime.utc(day.year, day.month, day.day, 23, 59, 59));
   }
 
   @override
@@ -92,14 +94,6 @@ class _Answer extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
-    final loc = MaterialLocalizations.of(context);
-    final real = answer.real.toList();
-    final away = answer.places.where((p) => p.isVirtual).toList();
-    String qty(WhereIsPlace p) => l10n.stockQuantityWithUnit(p.quantity.text, answer.unit);
-    String what(WhereIsPlace p) => [
-      if (p.variantLabel != null) p.variantLabel!,
-      if (p.lotCode == null || p.lotId == null) l10n.stockNoLot else l10n.stockLotLabel(p.lotCode!),
-    ].join(' · ');
     return Align(
       alignment: Alignment.topCenter,
       child: ConstrainedBox(
@@ -115,81 +109,137 @@ class _Answer extends StatelessWidget {
               style: theme.textTheme.titleMedium,
             ),
             const SizedBox(height: AppSpacing.sm),
-            Wrap(
-              spacing: AppSpacing.sm,
-              runSpacing: AppSpacing.xs,
-              crossAxisAlignment: WrapCrossAlignment.center,
-              children: [
-                ChoiceChip(key: const ValueKey('stock-where-now'), label: Text(l10n.stockWhereIsNow), selected: at == null, onSelected: (_) => onNow()),
-                ActionChip(
-                  key: const ValueKey('stock-where-pick'),
-                  avatar: const Icon(Icons.event, size: 18),
-                  label: Text(at == null ? l10n.stockWhereIsPickDate : l10n.stockWhereIsAsOf(loc.formatMediumDate(at!))),
-                  onPressed: onPick,
-                ),
-              ],
-            ),
+            _DateChips(at: at, onPick: onPick, onNow: onNow),
             const SizedBox(height: AppSpacing.md),
-            if (real.isEmpty) Text(l10n.stockWhereIsNowhere, key: const ValueKey('stock-where-nowhere')),
-            for (final p in real)
-              ListTile(
-                key: ValueKey('stock-where-place-${p.locationId}-${p.variantId ?? ''}-${p.lotId ?? ''}'),
-                contentPadding: EdgeInsets.zero,
-                title: Text(p.locationName.isEmpty ? p.locationCode : '${p.locationCode} · ${p.locationName}'),
-                subtitle: Text(what(p)),
-                trailing: Text(qty(p), style: theme.textTheme.titleMedium),
-              ),
-            if (answer.transit != null && answer.transit!.isNotEmpty) ...[
-              _Heading(l10n.stockWhereIsTransit),
-              for (final t in answer.transit!)
-                ListTile(
-                  key: ValueKey('stock-where-transit-${t.transferId}-${t.lotId ?? ''}'),
-                  contentPadding: EdgeInsets.zero,
-                  title: Text(l10n.stockWhereIsTransitLine(t.fromCode, t.toCode)),
-                  trailing: Text(l10n.stockQuantityWithUnit(t.quantity.text, answer.unit), style: theme.textTheme.titleMedium),
-                ),
-            ],
-            if (away.isNotEmpty || answer.documents.isNotEmpty) ...[
-              _Heading(l10n.stockWhereIsAway),
-              for (final p in away)
-                ListTile(
-                  key: ValueKey('stock-where-away-${p.locationId}-${p.lotId ?? ''}'),
-                  contentPadding: EdgeInsets.zero,
-                  title: Text(p.locationName.isEmpty ? p.locationCode : '${p.locationCode} · ${p.locationName}'),
-                  subtitle: Text(what(p)),
-                  trailing: Text(qty(p)),
-                ),
-              for (final d in answer.documents)
-                ListTile(
-                  key: ValueKey('stock-where-document-${d.movementId}'),
-                  dense: true,
-                  contentPadding: EdgeInsets.zero,
-                  title: Text('${d.reason} · ${d.fromCode} → ${d.toCode}'),
-                  subtitle: Text(loc.formatMediumDate(d.occurredAt.toLocal())),
-                  trailing: Text(l10n.stockQuantityWithUnit(d.quantity.text, answer.unit)),
-                ),
-            ],
-            if (answer.pieces == null && at != null) ...[
-              _Heading(l10n.stockWhereIsPieces),
-              Text(l10n.stockWhereIsPiecesPast, key: const ValueKey('stock-where-pieces-past'), style: theme.textTheme.bodySmall),
-            ],
-            if (answer.pieces != null && answer.pieces!.isNotEmpty) ...[
-              _Heading(l10n.stockWhereIsPieces),
-              for (final p in answer.pieces!)
-                ListTile(
-                  key: ValueKey('stock-where-piece-${p.pieceId}'),
-                  dense: true,
-                  contentPadding: EdgeInsets.zero,
-                  title: Text(p.tags.isEmpty ? p.pieceId : p.tags.join(', ')),
-                  subtitle: Text('${p.locationCode} · ${p.state}'),
-                ),
-              if (answer.piecesMore) Text(l10n.stockWhereIsPiecesMore, key: const ValueKey('stock-where-pieces-more'), style: theme.textTheme.bodySmall),
-            ],
+            ..._places(context, answer),
+            ..._transit(context, answer),
+            ..._away(context, answer),
+            ..._pieces(context, answer, at),
           ],
         ),
       ),
     );
   }
+}
+
+String _what(BuildContext context, WhereIsPlace p) {
+  final l10n = context.l10n;
+  return [
+    if (p.variantLabel != null) p.variantLabel!,
+    if (p.lotCode == null || p.lotId == null) l10n.stockNoLot else l10n.stockLotLabel(p.lotCode!),
+  ].join(' \u00b7 ');
+}
+
+String _placeTitle(WhereIsPlace p) => p.locationName.isEmpty ? p.locationCode : '${p.locationCode} \u00b7 ${p.locationName}';
+
+class _DateChips extends StatelessWidget {
+  const _DateChips({required this.at, required this.onPick, required this.onNow});
+
+  final DateTime? at;
+  final VoidCallback onPick;
+  final VoidCallback onNow;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    return Wrap(
+      spacing: AppSpacing.sm,
+      runSpacing: AppSpacing.xs,
+      crossAxisAlignment: WrapCrossAlignment.center,
+      children: [
+        ChoiceChip(key: const ValueKey('stock-where-now'), label: Text(l10n.stockWhereIsNow), selected: at == null, onSelected: (_) => onNow()),
+        ActionChip(
+          key: const ValueKey('stock-where-pick'),
+          label: Text(at == null ? l10n.stockWhereIsPickDate : l10n.stockWhereIsAsOf(appFormatOf(context).date(at!))),
+          onPressed: onPick,
+        ),
+      ],
+    );
+  }
+}
+
+List<Widget> _places(BuildContext context, WhereIsAnswer answer) {
+  final l10n = context.l10n;
+  final real = answer.real.toList();
+  return [
+    if (real.isEmpty) Text(l10n.stockWhereIsNowhere, key: const ValueKey('stock-where-nowhere')),
+    for (final p in real)
+      ListTile(
+        key: ValueKey('stock-where-place-${p.locationId}-${p.variantId ?? ''}-${p.lotId ?? ''}'),
+        contentPadding: EdgeInsets.zero,
+        title: Text(_placeTitle(p)),
+        subtitle: Text(_what(context, p)),
+        trailing: Text(l10n.stockQuantityWithUnit(p.quantity.text, answer.unit), style: Theme.of(context).textTheme.titleMedium),
+      ),
+  ];
+}
+
+List<Widget> _transit(BuildContext context, WhereIsAnswer answer) {
+  final l10n = context.l10n;
+  final transit = answer.transit;
+  if (transit == null || transit.isEmpty) return const [];
+  return [
+    _Heading(l10n.stockWhereIsTransit),
+    for (final t in transit)
+      ListTile(
+        key: ValueKey('stock-where-transit-${t.transferId}-${t.lotId ?? ''}'),
+        contentPadding: EdgeInsets.zero,
+        title: Text(l10n.stockWhereIsTransitLine(t.fromCode, t.toCode)),
+        trailing: Text(l10n.stockQuantityWithUnit(t.quantity.text, answer.unit), style: Theme.of(context).textTheme.titleMedium),
+      ),
+  ];
+}
+
+List<Widget> _away(BuildContext context, WhereIsAnswer answer) {
+  final l10n = context.l10n;
+  final away = answer.places.where((p) => p.isVirtual).toList();
+  if (away.isEmpty && answer.documents.isEmpty) return const [];
+  return [
+    _Heading(l10n.stockWhereIsAway),
+    for (final p in away)
+      ListTile(
+        key: ValueKey('stock-where-away-${p.locationId}-${p.lotId ?? ''}'),
+        contentPadding: EdgeInsets.zero,
+        title: Text(_placeTitle(p)),
+        subtitle: Text(_what(context, p)),
+        trailing: Text(l10n.stockQuantityWithUnit(p.quantity.text, answer.unit)),
+      ),
+    for (final d in answer.documents)
+      ListTile(
+        key: ValueKey('stock-where-document-${d.movementId}'),
+        dense: true,
+        contentPadding: EdgeInsets.zero,
+        title: Text('${d.reason} \u00b7 ${d.fromCode} \u2192 ${d.toCode}'),
+        subtitle: Text(appFormatOf(context).date(d.occurredAt)),
+        trailing: Text(l10n.stockQuantityWithUnit(d.quantity.text, answer.unit)),
+      ),
+  ];
+}
+
+List<Widget> _pieces(BuildContext context, WhereIsAnswer answer, DateTime? at) {
+  final l10n = context.l10n;
+  final pieces = answer.pieces;
+  if (pieces == null) {
+    return at == null
+        ? const []
+        : [
+            _Heading(l10n.stockWhereIsPieces),
+            Text(l10n.stockWhereIsPiecesPast, key: const ValueKey('stock-where-pieces-past'), style: Theme.of(context).textTheme.bodySmall),
+          ];
+  }
+  if (pieces.isEmpty) return const [];
+  return [
+    _Heading(l10n.stockWhereIsPieces),
+    for (final p in pieces)
+      ListTile(
+        key: ValueKey('stock-where-piece-${p.pieceId}'),
+        dense: true,
+        contentPadding: EdgeInsets.zero,
+        title: Text(p.tags.isEmpty ? p.pieceId : p.tags.join(', ')),
+        subtitle: Text('${p.locationCode} \u00b7 ${p.state}'),
+      ),
+    if (answer.piecesMore) Text(l10n.stockWhereIsPiecesMore, key: const ValueKey('stock-where-pieces-more'), style: Theme.of(context).textTheme.bodySmall),
+  ];
 }
 
 class _Heading extends StatelessWidget {

@@ -305,8 +305,8 @@ final stockServiceCreatorProvider = Provider<StockServiceCreator?>((ref) => null
 final stockWhereIsProvider = Provider<StockWhereIs>((ref) => SupabaseStockWhereIs(ref.watch(selectedWorkspaceClientProvider)));
 
 /// What to look at: an item, perhaps one of its lots, now (no date) or at [at].
-typedef WhereIsQuery = ({String workspaceId, String itemId, String? lotId, DateTime? at});
+typedef _WhereIsQuery = ({String workspaceId, String itemId, String? lotId, DateTime? at});
 
-final stockWhereIsAnswerProvider = FutureProvider.autoDispose.family<WhereIsAnswer, WhereIsQuery>(
+final stockWhereIsAnswerProvider = FutureProvider.autoDispose.family<WhereIsAnswer, _WhereIsQuery>(
   (ref, q) => ref.watch(stockWhereIsProvider).whereIs(q.workspaceId, q.itemId, lotId: q.lotId, at: q.at),
 );

@@ -19,7 +19,7 @@ begin
     raise exception 'not allowed to see the stock' using errcode = 'DKN01';
   end if;
   perform public.stock_reader(p_workspace_id);
-  if p_at is not null and p_at > now() + interval '5 minutes' then
+  if p_at is not null and p_at > now() then
     raise exception 'a date to look at is not in the future' using errcode = 'DKG07';
   end if;
   select s.id, s.name, s.inventory_unit as unit into v_item

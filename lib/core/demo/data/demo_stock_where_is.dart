@@ -12,6 +12,8 @@ import '../../codes/dk_code.dart';
 import 'demo_stock_ledger.dart';
 import 'demo_stock_tags.dart';
 
+typedef _Held = ({String place, String? lotId, String? lotCode, ExactQuantity quantity});
+
 class DemoStockWhereIs implements StockWhereIs {
   DemoStockWhereIs(this._ledger, this._tags);
 
@@ -23,22 +25,45 @@ class DemoStockWhereIs implements StockWhereIs {
     final item = _ledger.mine(workspaceId) ? _ledger.itemOf(itemId) : null;
     if (item == null) throw const StockConfigRefused('item_id', DkCode.dkg04);
     final places = await _ledger.placeConfigs();
-    // replay: every movement up to the date adds to its place and takes from the one it left
-    final held = <String, ({String place, String? lotId, String? lotCode, ExactQuantity quantity})>{};
-    void add(StockMovementRow m, String place, ExactQuantity q) {
-      final key = '$place|${m.lotId ?? ''}';
-      final was = held[key]?.quantity ?? ExactQuantity.zero;
-      held[key] = (place: place, lotId: m.lotId, lotCode: m.lotCode, quantity: was + q);
-    }
-
     final moves = [
       for (final m in _ledger.movements)
         if (m.itemId == itemId && (lotId == null || m.lotId == lotId) && (at == null || !m.occurredAt.isAfter(at))) m,
     ];
+    final rows = _placesOf(_replay(moves), places);
+    var onHand = ExactQuantity.zero;
+    for (final p in rows.where((p) => !p.isVirtual)) {
+      onHand = onHand + p.quantity;
+    }
+    return WhereIsAnswer(
+      itemId: item.id,
+      itemName: item.name,
+      unit: item.unit,
+      lotId: lotId,
+      asOf: at,
+      onHand: onHand,
+      places: rows,
+      documents: _documents(moves, places),
+      transit: at == null ? _transit(itemId, lotId) : null,
+      pieces: at == null ? _pieces(itemId, places) : null,
+    );
+  }
+
+  /// Every movement adds to its place and takes from the one it left.
+  Map<String, _Held> _replay(List<StockMovementRow> moves) {
+    final held = <String, _Held>{};
+    void add(StockMovementRow m, String place, ExactQuantity q) {
+      final key = '$place|${m.lotId ?? ''}';
+      held[key] = (place: place, lotId: m.lotId, lotCode: m.lotCode, quantity: (held[key]?.quantity ?? ExactQuantity.zero) + q);
+    }
+
     for (final m in moves) {
       add(m, m.toLocationId, m.quantity);
       add(m, m.fromLocationId, ExactQuantity.zero - m.quantity);
     }
+    return held;
+  }
+
+  List<WhereIsPlace> _placesOf(Map<String, _Held> held, Map<String, StockPlaceConfig> places) {
     final rows = [
       for (final h in held.values)
         if (h.quantity != ExactQuantity.zero)
@@ -52,49 +77,39 @@ class DemoStockWhereIs implements StockWhereIs {
             lotId: h.lotId,
             lotCode: h.lotCode,
           ),
-    ]..sort((a, b) => a.isVirtual == b.isVirtual ? a.locationCode.compareTo(b.locationCode) : (a.isVirtual ? 1 : -1));
-    var onHand = ExactQuantity.zero;
-    for (final p in rows.where((p) => !p.isVirtual)) {
-      onHand = onHand + p.quantity;
-    }
-    final pieces = at == null
-        ? [
-            for (final p in _tags.pieceTags(itemId))
-              WhereIsPiece(pieceId: p.pieceId, state: 'in_stock', locationId: 'demo-place-main', locationCode: places['demo-place-main']?.code ?? 'MAIN', tags: [p.code]),
-          ]
-        : null;
-    return WhereIsAnswer(
-      itemId: item.id,
-      itemName: item.name,
-      unit: item.unit,
-      lotId: lotId,
-      asOf: at,
-      onHand: onHand,
-      places: rows,
-      documents: [
-        for (final m in moves.take(20))
-          if ((places[m.toLocationId]?.kind == 'customer' || places[m.toLocationId]?.kind == 'loss') ||
-              (places[m.fromLocationId]?.kind == 'customer' || places[m.fromLocationId]?.kind == 'loss'))
-            WhereIsDocument(
-              movementId: m.id,
-              reason: m.reason,
-              occurredAt: m.occurredAt,
-              fromCode: m.fromLocationCode,
-              toCode: m.toLocationCode,
-              quantity: m.quantity,
-              invoiceId: m.causes['invoice'],
-              eventId: m.causes['event'],
-            ),
-      ],
-      transit: at != null
-          ? null
-          : [
-              for (final t in _ledger.openTransfers)
-                for (final l in t.lines)
-                  if (l.itemId == itemId && (lotId == null || l.lotId == lotId) && l.loaded > l.received)
-                    WhereIsTransit(transferId: t.id, fromCode: t.fromCode, toCode: t.toCode, quantity: l.loaded - l.received, lotId: l.lotId),
-            ],
-      pieces: pieces,
-    );
+    ];
+    return rows..sort((a, b) {
+      if (a.isVirtual != b.isVirtual) return a.isVirtual ? 1 : -1;
+      return a.locationCode.compareTo(b.locationCode);
+    });
   }
+
+  bool _leaves(String? kind) => kind == 'customer' || kind == 'loss';
+
+  List<WhereIsDocument> _documents(List<StockMovementRow> moves, Map<String, StockPlaceConfig> places) => [
+    for (final m in moves.take(20))
+      if (_leaves(places[m.toLocationId]?.kind) || _leaves(places[m.fromLocationId]?.kind))
+        WhereIsDocument(
+          movementId: m.id,
+          reason: m.reason,
+          occurredAt: m.occurredAt,
+          fromCode: m.fromLocationCode,
+          toCode: m.toLocationCode,
+          quantity: m.quantity,
+          invoiceId: m.causes['invoice'],
+          eventId: m.causes['event'],
+        ),
+  ];
+
+  List<WhereIsTransit> _transit(String itemId, String? lotId) => [
+    for (final t in _ledger.openTransfers)
+      for (final l in t.lines)
+        if (l.itemId == itemId && (lotId == null || l.lotId == lotId) && l.loaded > l.received)
+          WhereIsTransit(transferId: t.id, fromCode: t.fromCode, toCode: t.toCode, quantity: l.loaded - l.received, lotId: l.lotId),
+  ];
+
+  List<WhereIsPiece> _pieces(String itemId, Map<String, StockPlaceConfig> places) => [
+    for (final p in _tags.pieceTags(itemId))
+      WhereIsPiece(pieceId: p.pieceId, state: 'in_stock', locationId: 'demo-place-main', locationCode: places['demo-place-main']?.code ?? 'MAIN', tags: [p.code]),
+  ];
 }

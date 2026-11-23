@@ -99,7 +99,7 @@ void main() {
     expect(long.pieces, isNull);
     expect(long.transit, isNull);
     final now = await port.whereIs('ws-1', 'demo-item-mugs');
-    final today = await port.whereIs('ws-1', 'demo-item-mugs', at: DateTime.now().add(const Duration(minutes: 1)));
+    final today = await port.whereIs('ws-1', 'demo-item-mugs', at: DateTime.utc(2100));
     expect(today.onHand, now.onHand, reason: 'replayed at this moment the movements give the balances');
   });
 
