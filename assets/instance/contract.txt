@@ -3135,6 +3135,7 @@ routine public.deploy_entities(p_from uuid, p_to uuid, p_entities text[]) -> jso
 routine public.deployable_entities() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:f7ebbed8fedf
 routine public.deployment_direction(p_from uuid, p_to uuid) -> text | function | definer | stable | exec:service_role | body:cb650fe1e2aa
 routine public.desk_room_visible(p_desk uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:b85f418fd5db
+routine public.deskilo_app_floor() -> integer | function | invoker | immutable | exec:anon,authenticated,service_role | body:8b86dbfb3d17
 routine public.deskilo_schema_version() -> integer | function | invoker | stable | exec:anon,authenticated,service_role | body:f2f88751992a
 routine public.direct_conversation(p_workspace_id uuid, p_other_member_id uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:317959433a98
 routine public.directory_identity_unlinked() -> trigger | function | definer | volatile | exec:service_role | body:ee068aa5fb8e
