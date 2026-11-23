@@ -40130,6 +40130,130 @@ class AppLocalizationsDe extends AppLocalizations {
   String get threadRefsIn => 'Verweise in';
 
   @override
+  String get tillBasketEmpty =>
+      'Tippen Sie auf einen Artikel, um einen Verkauf zu beginnen.';
+
+  @override
+  String get tillBasketTitle => 'Warenkorb';
+
+  @override
+  String get tillCashExact => 'Passend';
+
+  @override
+  String get tillCashGiven => 'Gegeben';
+
+  @override
+  String get tillCashInvalid => 'Geben Sie den gegebenen Betrag als Zahl ein.';
+
+  @override
+  String get tillCashShort => 'Der gegebene Betrag ist kleiner als die Summe.';
+
+  @override
+  String tillChangeDue(String amount) {
+    return 'Rückgeld: $amount';
+  }
+
+  @override
+  String get tillConfirmSale => 'Verkauf bestätigen';
+
+  @override
+  String get tillFailed =>
+      'Die Kasse konnte das nicht ausführen. Versuchen Sie es erneut.';
+
+  @override
+  String get tillKeysEmpty =>
+      'Es gibt noch nichts zu verkaufen. Legen Sie zuerst Artikel im Lager an.';
+
+  @override
+  String get tillKeysTitle => 'Artikel zum Kassieren';
+
+  @override
+  String get tillLeaveBody =>
+      'Der Verkauf wurde gesendet, die Antwort blieb aus. Beim Verlassen bleibt er offen: Öffnen Sie die Kasse erneut und bestätigen Sie ihn. Buchen Sie ihn nicht noch einmal.';
+
+  @override
+  String get tillLeaveGo => 'Verlassen';
+
+  @override
+  String get tillLeaveStay => 'Bleiben';
+
+  @override
+  String get tillLeaveTitle => 'Der Verkauf ist nicht bestätigt';
+
+  @override
+  String get tillNextCustomer => 'Nächster Kunde';
+
+  @override
+  String tillNotReady(String operation) {
+    return 'In Ihrem Land noch nicht bereit: $operation';
+  }
+
+  @override
+  String get tillNotReadyHint =>
+      'Es wird nichts nummeriert und nichts kassiert, solange der Vorgang des Landes nicht unterstützt wird.';
+
+  @override
+  String get tillOpCorrectReceipt => 'Beleg korrigieren';
+
+  @override
+  String get tillOpExportFiscal => 'Fiskaldaten exportieren';
+
+  @override
+  String get tillOpIssueReceipt => 'Beleg ausstellen';
+
+  @override
+  String get tillOpReconcileTender => 'Kartenzahlung abgleichen';
+
+  @override
+  String get tillOpSignFiscal => 'fiskalischen Beleg signieren';
+
+  @override
+  String get tillPayCash => 'Bar kassieren';
+
+  @override
+  String get tillPricing => 'Warenkorb wird berechnet …';
+
+  @override
+  String get tillQuantityHint =>
+      'Eine genaue Menge, zum Beispiel 1 oder 0,350.';
+
+  @override
+  String get tillQuantityRefused =>
+      'Geben Sie eine Menge über null mit höchstens sechs Dezimalstellen ein.';
+
+  @override
+  String get tillQuantityTitle => 'Verkaufte Menge';
+
+  @override
+  String tillReceiptNumber(String number) {
+    return 'Beleg $number';
+  }
+
+  @override
+  String tillRemoveLine(String name) {
+    return '$name aus dem Warenkorb nehmen';
+  }
+
+  @override
+  String get tillRetry => 'Erneut versuchen';
+
+  @override
+  String get tillSoldTitle => 'Verkauft';
+
+  @override
+  String tillTaxIncluded(String amount) {
+    return 'davon Steuer $amount';
+  }
+
+  @override
+  String get tillTitle => 'Kasse';
+
+  @override
+  String tillTotalDue(String amount) {
+    return 'Zu zahlender Betrag: $amount';
+  }
+
+  @override
   String get tipAvailabilityClosure =>
       'Einen Tag schließen, den niemand buchen kann: auf „Schließtag hinzufügen“ tippen und bei Bedarf einen Grund angeben.';
 

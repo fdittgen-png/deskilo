@@ -23359,6 +23359,59 @@
   "@threadRefsIn": {
     "description": "Me thread: which workspace the references speak about"
   },
+  "tillBasketEmpty": "Tocchi un articolo per iniziare una vendita.",
+  "tillBasketTitle": "Carrello",
+  "tillCashExact": "Importo esatto",
+  "tillCashGiven": "Contanti dati",
+  "tillCashInvalid": "Inserisca l'importo dato come numero.",
+  "tillCashShort": "I contanti dati sono inferiori al totale.",
+  "tillChangeDue": "Resto da dare: {amount}",
+  "tillConfirmSale": "Confermare la vendita",
+  "@tillConfirmSale": {
+    "description": "#4366 the till: the sale was sent and its answer was lost; send it again under the same request"
+  },
+  "tillFailed": "La cassa non ha potuto eseguirlo. Riprovi.",
+  "tillKeysEmpty": "Non c'è ancora nulla da vendere. Aggiunga prima degli articoli nel magazzino.",
+  "tillKeysTitle": "Articoli da battere",
+  "tillLeaveBody": "La vendita è stata inviata e la risposta non è arrivata. Uscendo resta in attesa: riapra la cassa e la confermi. Non la registri di nuovo.",
+  "@tillLeaveBody": {
+    "description": "#4366 the till: what leaving with a sale waiting to be confirmed does"
+  },
+  "tillLeaveGo": "Uscire",
+  "@tillLeaveGo": {
+    "description": "#4366 the till: leave the till with the sale still waiting"
+  },
+  "tillLeaveStay": "Restare",
+  "@tillLeaveStay": {
+    "description": "#4366 the till: stay on the till"
+  },
+  "tillLeaveTitle": "La vendita non è confermata",
+  "@tillLeaveTitle": {
+    "description": "#4366 the till: title of the question asked when leaving with a sale waiting to be confirmed"
+  },
+  "tillNextCustomer": "Cliente successivo",
+  "tillNotReady": "Non ancora pronto nel Suo paese: {operation}",
+  "tillNotReadyHint": "Non viene numerato né incassato nulla finché l'operazione del paese non è supportata.",
+  "tillOpCorrectReceipt": "correzione di uno scontrino",
+  "tillOpExportFiscal": "esportazione dei dati fiscali",
+  "tillOpIssueReceipt": "emissione di uno scontrino",
+  "tillOpReconcileTender": "riconciliazione di un pagamento con carta",
+  "tillOpSignFiscal": "firma di uno scontrino fiscale",
+  "tillPayCash": "Incassare in contanti",
+  "tillPricing": "Calcolo del carrello…",
+  "tillQuantityHint": "Una quantità esatta, per esempio 1 oppure 0,350.",
+  "tillQuantityRefused": "Inserisca una quantità superiore a zero con al massimo sei decimali.",
+  "tillQuantityTitle": "Quantità venduta",
+  "tillReceiptNumber": "Scontrino {number}",
+  "tillRemoveLine": "Togliere {name} dal carrello",
+  "tillRetry": "Riprova",
+  "@tillRetry": {
+    "description": "#4366 the till: ask the server again"
+  },
+  "tillSoldTitle": "Venduto",
+  "tillTaxIncluded": "di cui imposta {amount}",
+  "tillTitle": "Cassa",
+  "tillTotalDue": "Totale da pagare: {amount}",
   "tipAvailabilityClosure": "Per chiudere un giorno che nessuno potrà prenotare: tocchi «Aggiungi giorno di chiusura» e indichi un motivo, se vuole.",
   "tipAvailabilityDays": "Per impostare i giorni di apertura: selezioni i giorni sotto «Giorni di apertura».",
   "tipAvailabilityGrid": "Per scegliere come si dividono le prenotazioni: scelga una «Granularità delle prenotazioni» — periodi liberi, fasce, mezze giornate o giornate intere.",

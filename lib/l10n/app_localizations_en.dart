@@ -39676,6 +39676,127 @@ class AppLocalizationsEn extends AppLocalizations {
   String get threadRefsIn => 'References in';
 
   @override
+  String get tillBasketEmpty => 'Tap an item to start a sale.';
+
+  @override
+  String get tillBasketTitle => 'Basket';
+
+  @override
+  String get tillCashExact => 'Exact amount';
+
+  @override
+  String get tillCashGiven => 'Cash given';
+
+  @override
+  String get tillCashInvalid => 'Enter the amount given as a number.';
+
+  @override
+  String get tillCashShort => 'The cash given is less than the total.';
+
+  @override
+  String tillChangeDue(String amount) {
+    return 'Change due: $amount';
+  }
+
+  @override
+  String get tillConfirmSale => 'Confirm the sale';
+
+  @override
+  String get tillFailed => 'The till could not do that. Try again.';
+
+  @override
+  String get tillKeysEmpty =>
+      'There is nothing to sell yet. Add items in the stock first.';
+
+  @override
+  String get tillKeysTitle => 'Items to ring up';
+
+  @override
+  String get tillLeaveBody =>
+      'The sale was sent and its answer did not come. Leaving keeps it waiting: open the till again and confirm it. Do not ring it up again.';
+
+  @override
+  String get tillLeaveGo => 'Leave';
+
+  @override
+  String get tillLeaveStay => 'Stay';
+
+  @override
+  String get tillLeaveTitle => 'The sale is not confirmed';
+
+  @override
+  String get tillNextCustomer => 'Next customer';
+
+  @override
+  String tillNotReady(String operation) {
+    return 'Not ready in your country: $operation';
+  }
+
+  @override
+  String get tillNotReadyHint =>
+      'Nothing is numbered and nothing is taken until the country\'s operation is supported.';
+
+  @override
+  String get tillOpCorrectReceipt => 'correcting a receipt';
+
+  @override
+  String get tillOpExportFiscal => 'exporting fiscal records';
+
+  @override
+  String get tillOpIssueReceipt => 'issuing a receipt';
+
+  @override
+  String get tillOpReconcileTender => 'reconciling a card payment';
+
+  @override
+  String get tillOpSignFiscal => 'signing a fiscal receipt';
+
+  @override
+  String get tillPayCash => 'Take cash';
+
+  @override
+  String get tillPricing => 'Pricing the basket…';
+
+  @override
+  String get tillQuantityHint => 'An exact quantity, for example 1 or 0.350.';
+
+  @override
+  String get tillQuantityRefused =>
+      'Enter a quantity above zero with at most six decimals.';
+
+  @override
+  String get tillQuantityTitle => 'Quantity sold';
+
+  @override
+  String tillReceiptNumber(String number) {
+    return 'Receipt $number';
+  }
+
+  @override
+  String tillRemoveLine(String name) {
+    return 'Take $name out of the basket';
+  }
+
+  @override
+  String get tillRetry => 'Try again';
+
+  @override
+  String get tillSoldTitle => 'Sold';
+
+  @override
+  String tillTaxIncluded(String amount) {
+    return 'of which tax $amount';
+  }
+
+  @override
+  String get tillTitle => 'Till';
+
+  @override
+  String tillTotalDue(String amount) {
+    return 'Total to pay: $amount';
+  }
+
+  @override
   String get tipAvailabilityClosure =>
       'To close a day nobody can book: tap “Add closure day” and give a reason if you like.';
 

@@ -23359,6 +23359,59 @@
   "@threadRefsIn": {
     "description": "Me thread: which workspace the references speak about"
   },
+  "tillBasketEmpty": "Toque un artículo para empezar una venta.",
+  "tillBasketTitle": "Cesta",
+  "tillCashExact": "Importe exacto",
+  "tillCashGiven": "Efectivo entregado",
+  "tillCashInvalid": "Introduzca el importe entregado como número.",
+  "tillCashShort": "El efectivo entregado es inferior al total.",
+  "tillChangeDue": "Cambio a devolver: {amount}",
+  "tillConfirmSale": "Confirmar la venta",
+  "@tillConfirmSale": {
+    "description": "#4366 the till: the sale was sent and its answer was lost; send it again under the same request"
+  },
+  "tillFailed": "La caja no pudo hacerlo. Inténtelo de nuevo.",
+  "tillKeysEmpty": "Todavía no hay nada que vender. Añada primero artículos en el stock.",
+  "tillKeysTitle": "Artículos para cobrar",
+  "tillLeaveBody": "La venta se envió y no llegó la respuesta. Al salir queda en espera: abra la caja de nuevo y confírmela. No la registre otra vez.",
+  "@tillLeaveBody": {
+    "description": "#4366 the till: what leaving with a sale waiting to be confirmed does"
+  },
+  "tillLeaveGo": "Salir",
+  "@tillLeaveGo": {
+    "description": "#4366 the till: leave the till with the sale still waiting"
+  },
+  "tillLeaveStay": "Quedarse",
+  "@tillLeaveStay": {
+    "description": "#4366 the till: stay on the till"
+  },
+  "tillLeaveTitle": "La venta no está confirmada",
+  "@tillLeaveTitle": {
+    "description": "#4366 the till: title of the question asked when leaving with a sale waiting to be confirmed"
+  },
+  "tillNextCustomer": "Siguiente cliente",
+  "tillNotReady": "Aún no está listo en su país: {operation}",
+  "tillNotReadyHint": "No se numera ni se cobra nada mientras la operación del país no esté admitida.",
+  "tillOpCorrectReceipt": "corrección de un ticket",
+  "tillOpExportFiscal": "exportación de datos fiscales",
+  "tillOpIssueReceipt": "emisión de un ticket",
+  "tillOpReconcileTender": "conciliación de un pago con tarjeta",
+  "tillOpSignFiscal": "firma de un ticket fiscal",
+  "tillPayCash": "Cobrar en efectivo",
+  "tillPricing": "Calculando la cesta…",
+  "tillQuantityHint": "Una cantidad exacta, por ejemplo 1 o 0,350.",
+  "tillQuantityRefused": "Introduzca una cantidad superior a cero con un máximo de seis decimales.",
+  "tillQuantityTitle": "Cantidad vendida",
+  "tillReceiptNumber": "Ticket {number}",
+  "tillRemoveLine": "Quitar {name} de la cesta",
+  "tillRetry": "Reintentar",
+  "@tillRetry": {
+    "description": "#4366 the till: ask the server again"
+  },
+  "tillSoldTitle": "Vendido",
+  "tillTaxIncluded": "de los cuales impuesto {amount}",
+  "tillTitle": "Caja",
+  "tillTotalDue": "Total a pagar: {amount}",
   "tipAvailabilityClosure": "Para cerrar un día que nadie podrá reservar: toque «Añadir día de cierre» e indique un motivo si quiere.",
   "tipAvailabilityDays": "Para fijar los días de apertura: marca los días bajo «Días de apertura».",
   "tipAvailabilityGrid": "Para elegir cómo se dividen las reservas: escoge una «Granularidad de las reservas»: periodos libres, franjas, medias jornadas o jornadas completas.",
