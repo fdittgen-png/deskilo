@@ -20753,6 +20753,11 @@
   "@statusTo": {
     "description": "#934 workspace status / repartition wizard: statusTo"
   },
+  "stockCameraCount": "{count, plural, one{1 codice letto} other{{count} codici letti}}",
+  "stockCameraDenied": "La fotocamera non è riuscita ad avviarsi. Consenta l’accesso alla fotocamera per DesKilo nelle impostazioni del dispositivo, poi riprovi.",
+  "stockCameraMisread": "Quel codice non è stato letto bene: scansioni di nuovo.",
+  "stockCameraOpen": "Scansiona con la fotocamera",
+  "stockCameraTitle": "Scanner fotocamera",
   "stockCostLabel": "Costo per unità",
   "stockCostNotShown": "Costo non mostrato",
   "stockCostUnknown": "Costo non registrato",
@@ -21651,6 +21656,10 @@
   "stockReversalSupplierOpen": "Reso al fornitore",
   "stockReversalSupplierTitle": "Reso al fornitore",
   "stockScanAlreadyRead": "Il tag {code} è già stato letto.",
+  "stockScanConfirm": "Quando la fotocamera legge un codice",
+  "stockScanConfirmClick": "Fai clic",
+  "stockScanConfirmNone": "Non fare nulla",
+  "stockScanConfirmVibrate": "Vibra",
   "stockScanFailed": "Non è stato possibile leggere il codice scansionato. Controlli la connessione e lo scansioni di nuovo.",
   "stockScanHelp": "Lavorare con uno scanner",
   "stockScanHint": "Usa uno scanner di codici a barre? Attivi «Scansione»",

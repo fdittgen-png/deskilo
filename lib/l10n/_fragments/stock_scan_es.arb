@@ -21,5 +21,14 @@
   "stockScanNfcReading": "Acerque la etiqueta a la parte trasera del teléfono…",
   "stockScanNfcFailed": "El teléfono no pudo iniciar la lectura. Compruebe que el NFC esté activado.",
   "stockScanAlreadyRead": "La etiqueta {code} ya se leyó.",
-  "stockScanUnknownTag": "Etiqueta {code} desconocida"
+  "stockScanUnknownTag": "Etiqueta {code} desconocida",
+  "stockCameraOpen": "Escanear con la cámara",
+  "stockCameraTitle": "Escáner de cámara",
+  "stockCameraCount": "{count, plural, one{1 código leído} other{{count} códigos leídos}}",
+  "stockCameraMisread": "Ese código no se leyó bien: vuelva a escanear.",
+  "stockCameraDenied": "La cámara no pudo iniciarse. Permita el acceso a la cámara para DesKilo en los ajustes del dispositivo y vuelva a intentarlo.",
+  "stockScanConfirm": "Cuando la cámara lee un código",
+  "stockScanConfirmNone": "No hacer nada",
+  "stockScanConfirmVibrate": "Vibrar",
+  "stockScanConfirmClick": "Hacer clic"
 }

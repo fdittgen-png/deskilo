@@ -20753,6 +20753,11 @@
   "@statusTo": {
     "description": "#934 workspace status / repartition wizard: statusTo"
   },
+  "stockCameraCount": "{count, plural, one{1 Code gelesen} other{{count} Codes gelesen}}",
+  "stockCameraDenied": "Die Kamera konnte nicht starten. Erlauben Sie DesKilo den Kamerazugriff in den Geräteeinstellungen und versuchen Sie es erneut.",
+  "stockCameraMisread": "Dieser Code wurde nicht sauber gelesen – scannen Sie erneut.",
+  "stockCameraOpen": "Mit der Kamera scannen",
+  "stockCameraTitle": "Kamera-Scanner",
   "stockCostLabel": "Kosten je Einheit",
   "stockCostNotShown": "Kosten nicht angezeigt",
   "stockCostUnknown": "Kosten nicht erfasst",
@@ -21651,6 +21656,10 @@
   "stockReversalSupplierOpen": "Rückgabe an den Lieferanten",
   "stockReversalSupplierTitle": "Rückgabe an den Lieferanten",
   "stockScanAlreadyRead": "Der Tag {code} wurde bereits gelesen.",
+  "stockScanConfirm": "Wenn die Kamera einen Code liest",
+  "stockScanConfirmClick": "Klicken",
+  "stockScanConfirmNone": "Nichts tun",
+  "stockScanConfirmVibrate": "Vibrieren",
   "stockScanFailed": "Der gescannte Code konnte nicht gelesen werden. Prüfen Sie die Verbindung und scannen Sie erneut.",
   "stockScanHelp": "Mit einem Scanner arbeiten",
   "stockScanHint": "Sie verwenden einen Barcode-Scanner? Schalten Sie „Scannen“ ein",

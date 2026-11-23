@@ -56615,6 +56615,36 @@ abstract class AppLocalizations {
   /// **'To'**
   String get statusTo;
 
+  /// #4360 G11 camera: stockCameraCount
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{1 code read} other{{count} codes read}}'**
+  String stockCameraCount(int count);
+
+  /// #4360 G11 camera: stockCameraDenied
+  ///
+  /// In en, this message translates to:
+  /// **'The camera could not start. Allow camera access for DesKilo in the device’s settings, then try again.'**
+  String get stockCameraDenied;
+
+  /// #4360 G11 camera: stockCameraMisread
+  ///
+  /// In en, this message translates to:
+  /// **'That code did not read cleanly — scan again.'**
+  String get stockCameraMisread;
+
+  /// #4360 G11 camera: stockCameraOpen
+  ///
+  /// In en, this message translates to:
+  /// **'Scan with the camera'**
+  String get stockCameraOpen;
+
+  /// #4360 G11 camera: stockCameraTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Camera scanner'**
+  String get stockCameraTitle;
+
   /// #4161 the cost per unit of a movement
   ///
   /// In en, this message translates to:
@@ -58930,6 +58960,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Tag {code} was already read.'**
   String stockScanAlreadyRead(String code);
+
+  /// #4360 G11 camera: stockScanConfirm
+  ///
+  /// In en, this message translates to:
+  /// **'When the camera reads a code'**
+  String get stockScanConfirm;
+
+  /// #4360 G11 camera: stockScanConfirmClick
+  ///
+  /// In en, this message translates to:
+  /// **'Click'**
+  String get stockScanConfirmClick;
+
+  /// #4360 G11 camera: stockScanConfirmNone
+  ///
+  /// In en, this message translates to:
+  /// **'Do nothing'**
+  String get stockScanConfirmNone;
+
+  /// #4360 G11 camera: stockScanConfirmVibrate
+  ///
+  /// In en, this message translates to:
+  /// **'Vibrate'**
+  String get stockScanConfirmVibrate;
 
   /// #4359 G10 scanner: stockScanFailed
   ///

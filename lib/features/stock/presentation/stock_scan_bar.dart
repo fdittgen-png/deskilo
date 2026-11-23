@@ -15,6 +15,7 @@ import '../../../core/theme/app_spacing.dart';
 import '../../workspace/domain/workspace_permission.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/stock_scan_session.dart';
+import 'stock_camera_scan.dart';
 import 'stock_nfc_button.dart';
 import 'stock_scan_feed.dart';
 
@@ -49,7 +50,18 @@ class StockScanBar extends ConsumerWidget {
                     HelpDot(l10n.stockScanHelp, anchor: HelpAnchor.moneyStockScanning),
                   ],
                 ),
-              StockNfcButton(onUid: feed.readTag),
+              Wrap(
+                spacing: AppSpacing.sm,
+                children: [
+                  OutlinedButton.icon(
+                    key: const ValueKey('stock-scan-camera'),
+                    icon: const Icon(Icons.photo_camera_outlined),
+                    label: Text(l10n.stockCameraOpen),
+                    onPressed: () => showStockCameraScan(context, feed),
+                  ),
+                  StockNfcButton(onUid: feed.readTag),
+                ],
+              ),
               if (feed.problem != null)
                 Text(l10n.stockScanFailed, key: const ValueKey('stock-scan-failed'), style: TextStyle(color: Theme.of(context).colorScheme.error)),
               if (last != null && last.outcome == ScanOutcome.line && last.line != null)

@@ -35641,6 +35641,31 @@ class AppLocalizationsIt extends AppLocalizations {
   String get statusTo => 'Al';
 
   @override
+  String stockCameraCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count codici letti',
+      one: '1 codice letto',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get stockCameraDenied =>
+      'La fotocamera non è riuscita ad avviarsi. Consenta l’accesso alla fotocamera per DesKilo nelle impostazioni del dispositivo, poi riprovi.';
+
+  @override
+  String get stockCameraMisread =>
+      'Quel codice non è stato letto bene: scansioni di nuovo.';
+
+  @override
+  String get stockCameraOpen => 'Scansiona con la fotocamera';
+
+  @override
+  String get stockCameraTitle => 'Scanner fotocamera';
+
+  @override
   String get stockCostLabel => 'Costo per unità';
 
   @override
@@ -37042,6 +37067,18 @@ class AppLocalizationsIt extends AppLocalizations {
   String stockScanAlreadyRead(String code) {
     return 'Il tag $code è già stato letto.';
   }
+
+  @override
+  String get stockScanConfirm => 'Quando la fotocamera legge un codice';
+
+  @override
+  String get stockScanConfirmClick => 'Fai clic';
+
+  @override
+  String get stockScanConfirmNone => 'Non fare nulla';
+
+  @override
+  String get stockScanConfirmVibrate => 'Vibra';
 
   @override
   String get stockScanFailed =>
