@@ -11,6 +11,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/backend/context_clients.dart';
+import '../../../core/codes/pg_code.dart';
 import '../domain/my_reservations.dart';
 import 'host_my_reservations_repository.dart';
 import 'reservation_refusal_boundary.dart';
@@ -59,7 +60,7 @@ class HostMyReservationActions implements MyReservationActions {
         } on PostgrestException catch (e, st) {
           // trace-exempt: an older host without the command is typed; every other answer is
           // the host's own reason, rethrown for the conversion.
-          if (e.code != 'PGRST202') rethrow;
+          if (e.code != PgCode.pgrstFunctionNotFound) rethrow;
           Error.throwWithStackTrace(
             MyReservationsRefused(MyReservationsFailure.unsupported, detail: e.message),
             st,

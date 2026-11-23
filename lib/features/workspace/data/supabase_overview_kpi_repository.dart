@@ -3,6 +3,7 @@
 // #2583 — the overview's own figures over Supabase (0536).
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/codes/pg_code.dart';
 import '../domain/kpi_contract.dart';
 import '../domain/kpi_overview.dart';
 
@@ -38,7 +39,7 @@ class SupabaseOverviewKpiRepository implements OverviewKpiRepository {
       );
     } on PostgrestException catch (e, st) {
       // trace-exempt: rethrown typed; the card shows it.
-      if (e.code == '42501') {
+      if (e.code == PgCode.insufficientPrivilege) {
         Error.throwWithStackTrace(const KpiForbidden(), st);
       }
       rethrow;
