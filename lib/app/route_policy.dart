@@ -29,6 +29,7 @@
 // location the policy would redirect again is a loop by another name.
 import 'package:meta/meta.dart';
 import '../core/demo/demo_link.dart';
+import '../core/instance/app_compatibility.dart';
 import '../core/instance/schema_compatibility.dart';
 import '../features/workspace/domain/workspace_feature.dart';
 import 'route_classes.dart';
@@ -119,6 +120,7 @@ class RouteFacts {
   const RouteFacts({
     required this.auth,
     this.schema = SchemaCompatibility.unknown,
+    this.appFloor = AppFloorVerdict.unknown,
     this.privacy = PrivacyFact.accepted,
     this.workspaces = WorkspacesFact.some,
     this.membership = MembershipFact.active,
@@ -130,6 +132,9 @@ class RouteFacts {
 
   final AuthFact auth;
   final SchemaCompatibility schema;
+
+  /// #3726 — how the installation's floor judges this app.
+  final AppFloorVerdict appFloor;
   final PrivacyFact privacy;
   final WorkspacesFact workspaces;
   final MembershipFact membership;
@@ -150,6 +155,12 @@ class RouteFacts {
 enum RouteReason {
   schemaBehind,
   schemaCurrent,
+
+  /// #3726 — the installation accepts only newer apps.
+  appBelowFloor,
+
+  /// #3726 — the app is accepted: the update screen sends home.
+  appAccepted,
   signInRequired,
   alreadySignedIn,
 
@@ -259,6 +270,25 @@ RouteDecision? _schemaDecision(
       : RouteDecision.go(schemaGate, RouteReason.schemaBehind);
 }
 
+/// #3726 — an installation that accepts only newer apps gates every route
+/// but the way out, after the schema gate and in the same shape: the Demo
+/// and its older link go on to the rules below. Null: the rules below decide.
+RouteDecision? _appFloorDecision(
+  RouteRequest request,
+  RouteFacts facts,
+  RouteDecision? demoEntry,
+) {
+  final path = request.location;
+  final gate = appFloorGateRedirect(facts.appFloor, path);
+  if (facts.appFloor != AppFloorVerdict.below) {
+    return gate == null ? null : RouteDecision.go(facts.home, RouteReason.appAccepted);
+  }
+  if (path == '/demo' || demoEntry != null) return null;
+  return gate == null
+      ? const RouteDecision.stay()
+      : RouteDecision.go(gate, RouteReason.appBelowFloor);
+}
+
 /// The policy: one hop for [request] under [facts]. Pure — reads its
 /// arguments and nothing else, writes nothing.
 @visibleForTesting
@@ -267,6 +297,8 @@ RouteDecision resolveDestination(RouteRequest request, RouteFacts facts) {
   final demoEntry = _demoLinkRedirect(request);
   final schemaHop = _schemaDecision(request, facts, demoEntry);
   if (schemaHop != null) return schemaHop;
+  final floorHop = _appFloorDecision(request, facts, demoEntry);
+  if (floorHop != null) return floorHop;
   if (facts.auth == AuthFact.loading) return const RouteDecision.stay();
   if (demoEntry != null) return demoEntry;
 

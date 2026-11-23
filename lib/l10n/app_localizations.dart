@@ -1814,6 +1814,36 @@ abstract class AppLocalizations {
   /// **'DesKilo'**
   String get appTitle;
 
+  /// #3726 What happened, on the app-update screen
+  ///
+  /// In en, this message translates to:
+  /// **'This installation accepts only a newer DesKilo app. Your data is safe: nothing you entered is lost, and it is there again once the app is updated.'**
+  String get appUpdateBody;
+
+  /// #3726 How to update on a desktop computer
+  ///
+  /// In en, this message translates to:
+  /// **'Install the newest DesKilo package for this computer, then open it again.'**
+  String get appUpdateDesktop;
+
+  /// #3726 How to update on a phone or tablet
+  ///
+  /// In en, this message translates to:
+  /// **'Update DesKilo from the store you installed it from, then open it again.'**
+  String get appUpdateStore;
+
+  /// #3726 Title of the screen shown when the installation accepts only newer apps
+  ///
+  /// In en, this message translates to:
+  /// **'This app needs an update'**
+  String get appUpdateTitle;
+
+  /// #3726 How to update in a web browser
+  ///
+  /// In en, this message translates to:
+  /// **'Reload this page to load the newest version of the app.'**
+  String get appUpdateWeb;
+
   /// Workspace admission history and discussion (#1791)
   ///
   /// In en, this message translates to:

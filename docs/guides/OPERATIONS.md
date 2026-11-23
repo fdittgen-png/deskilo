@@ -153,7 +153,7 @@ doctor's "Schema is behind" alarm is for.
 
 ## Version compatibility
 
-The decision record is [ADR 0053](../decisions/0053-compatibility-of-app-installation-and-features.md): three numbers, what a person sees per installation, the rules of change. The table below is what is supported today; the app's compatibility number and the installation's floor do not exist yet.
+The decision record is [ADR 0053](../decisions/0053-compatibility-of-app-installation-and-features.md): three numbers, what a person sees per installation, the rules of change. The table below is what is supported today. The app carries its compatibility number (#3726); an installation states its floor with `deskilo_app_floor()`, which arrives in a later migration. Until then every installation answers "no floor".
 
 | | |
 |---|---|
@@ -161,6 +161,7 @@ The decision record is [ADR 0053](../decisions/0053-compatibility-of-app-install
 | App → schema | a newer app on an older schema: **not supported** — run `instance.dart install` |
 | Version | `select public.deskilo_schema_version();` — the number of the last migration applied, written by the migration itself (#1312). Readable without signing in. Row counts in `supabase_migrations` are not a version: hosted projects record timestamps there |
 | Bundle | `assets/instance/bundle.json` is generated from `supabase/migrations/` and pinned by `test/lint/instance_bundle_test.dart`, so it can never lag |
+| App floor | `select public.deskilo_app_floor();` — the oldest app compatibility number the installation accepts; null means every app. An app below it shows one screen (what happened, how to update on this platform, the Server screen, sign out); an app at or above it notices nothing. A floor that could not be read never blocks, and a refusal once read is kept while the installation cannot be asked. **Raise it only in its own migration**, after apps that read it have been available for the support window, never in the file that first needs it. Testers on the reference installation are blocked the moment it is applied. It is a courtesy for apps that know it: an old contract is ended by the server function that stops answering, not by the floor |
 | Postgres | the hosted projects run 17.x; `supabase/config.toml` pins the local stack to the same major so CI tests what production runs |
 
 ## What a migration will do to your instance

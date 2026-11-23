@@ -125,6 +125,11 @@ const List<RouteCoverage> routeCoverage = [
     category: ProtectedSurface.secrets,
   ),
   RouteCoverage(
+    '/app-update',
+    CoverageStatus.excluded,
+    category: ProtectedSurface.operator,
+  ),
+  RouteCoverage(
     '/server-update',
     CoverageStatus.excluded,
     category: ProtectedSurface.operator,
