@@ -7,6 +7,7 @@ import 'package:deskilo/features/reservations/domain/reservation_repository.dart
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
 import 'package:deskilo/features/workspace/domain/booking_policies.dart';
 
+import '../../codes/dk_code.dart';
 import 'demo_booking_refusal.dart';
 import 'fixture_clock.dart';
 
@@ -100,12 +101,11 @@ class FakeReservationRepository with ReadsLeaveNothingOut implements Reservation
     // 06:00 walk-in passes too). Pinned substrings like the server.
     if (_touchesOutside(startsAt, endsAt)) {
       if (outsideHoursMode == OutsideHoursMode.off) {
-        throw demoBookingRefusal(
-            message: 'bookings outside the opening hours are not allowed', code: 'DKK16');
+        throw demoBookingRefusal(message: 'bookings outside the opening hours are not allowed', code: DkCode.dkk16);
       }
       if (outsideHoursMode == OutsideHoursMode.walkupOnly && !walkUp) {
         throw demoBookingRefusal(
-            code: 'DKK15', message: 'only spontaneous check-ins are possible '
+            code: DkCode.dkk15, message: 'only spontaneous check-ins are possible '
                 'outside the opening hours — booking ahead is not');
       }
     }
@@ -136,7 +136,7 @@ class FakeReservationRepository with ReadsLeaveNothingOut implements Reservation
             r.startsAt.isBefore(end)).length;
     if (busy >= allowanceFor(memberId)) {
       throw demoBookingRefusal(
-          message: 'you already have a reservation in that period', code: 'DKK19');
+          message: 'you already have a reservation in that period', code: DkCode.dkk19);
     }
   }
 
@@ -459,10 +459,10 @@ class FakeReservationRepository with ReadsLeaveNothingOut implements Reservation
         at.month == r.startsAt.month &&
         at.day == r.startsAt.day;
     if (at.isBefore(r.startsAt.subtract(leeway)) && !sameDay) {
-      throw demoBookingRefusal(message: 'check-in window not open yet', code: 'DKK17');
+      throw demoBookingRefusal(message: 'check-in window not open yet', code: DkCode.dkk17);
     }
     if (!at.isBefore(r.endsAt)) {
-      throw demoBookingRefusal(message: 'check-in window closed', code: 'DKK18');
+      throw demoBookingRefusal(message: 'check-in window closed', code: DkCode.dkk18);
     }
     // 0079/0119 mirror: stale check-ins complete at their own end;
     // check-ins still RUNNING elsewhere refuse once they reach the
@@ -478,7 +478,7 @@ class FakeReservationRepository with ReadsLeaveNothingOut implements Reservation
         running++;
         if (running >= allowanceFor(r.memberId)) {
           throw demoBookingRefusal(
-              message: 'already checked in elsewhere', code: 'DKK20');
+              message: 'already checked in elsewhere', code: DkCode.dkk20);
         }
         continue;
       }
@@ -536,7 +536,7 @@ class FakeReservationRepository with ReadsLeaveNothingOut implements Reservation
     // badge member is active elsewhere — pinned substring.
     if (badgeToken == 'busy-badge') {
       throw demoBookingRefusal(
-          message: 'you already have a reservation in that period', code: 'DKK19');
+          message: 'you already have a reservation in that period', code: DkCode.dkk19);
     }
     // #622 — mirror the exclusion constraint for kiosk walk-ups: an
     // ACTIVE reservation by ANOTHER member on the target refuses with
@@ -616,15 +616,15 @@ class FakeReservationRepository with ReadsLeaveNothingOut implements Reservation
     if (r.status == ReservationStatus.checkedIn) {
       if (startsAt != r.startsAt) {
         throw demoBookingRefusal(
-            message: 'a running booking keeps its start', code: 'DKK31');
+            message: 'a running booking keeps its start', code: DkCode.dkk31);
       }
       if (!endsAt.isAfter(now())) {
         throw demoBookingRefusal(
-            message: 'the new end must lie ahead', code: 'DKK32');
+            message: 'the new end must lie ahead', code: DkCode.dkk32);
       }
     } else if (r.status != ReservationStatus.reserved) {
       throw demoBookingRefusal(
-          message: 'only upcoming reservations can be edited', code: 'DKK33');
+          message: 'only upcoming reservations can be edited', code: DkCode.dkk33);
     }
     if (_overlapsActive(r.seatId, r.officeId, startsAt, endsAt,
         ignoreId: reservationId)) {

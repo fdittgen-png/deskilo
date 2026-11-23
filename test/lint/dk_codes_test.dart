@@ -5,8 +5,11 @@
 // code, or named below as one a person never meets in the app, with its
 // reason. A new refusal therefore arrives with words in the five languages,
 // or with a stated reason why it needs none.
+import 'dart:io';
+
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../tool/build_dk_codes.dart';
 import 'lint_sources.dart';
 
 /// Codes the app does not read, each with its reason. A name here must be
@@ -91,6 +94,21 @@ Set<String> raisedIn(String sql) => {
   for (final m in _raised.allMatches(sql)) (m.group(1) ?? m.group(2))!,
 };
 final _read = RegExp(r"'(DK[A-Z0-9]{3})'");
+final _readConstant = RegExp(r'\bDkCode\.(dk[a-z0-9]{3})\b');
+
+/// The DK codes [source] reads: quoted, or by their `DkCode` constant (#4417).
+Set<String> readIn(String source) {
+  // a mention in a comment reads nothing
+  final code = source
+      .split('\n')
+      .where((l) => !l.trimLeft().startsWith('//'))
+      .map((l) => l.split(' //').first)
+      .join('\n');
+  return {
+    for (final m in _read.allMatches(code)) m.group(1)!,
+    for (final m in _readConstant.allMatches(code)) m.group(1)!.toUpperCase(),
+  };
+}
 
 void main() {
   final raised = <String>{
@@ -99,8 +117,37 @@ void main() {
   };
   final read = <String>{
     for (final f in handWrittenDartFiles('lib'))
-      for (final m in _read.allMatches(f.readAsStringSync())) m.group(1)!,
+      // the generated constants file names every code: it is no reader (#4417)
+      if (!f.path.endsWith('lib/core/codes/dk_code.dart'))
+        ...readIn(f.readAsStringSync()),
   };
+
+  test('DkCode holds exactly the codes the migrations raise (SQL and Dart cannot differ)', () {
+    final generated = File('lib/core/codes/dk_code.dart').readAsStringSync();
+    final fromSql = raisedCodes('supabase/migrations');
+    final inDart = RegExp(r"static const \w+ = '(DK[A-Z0-9]{3})';")
+        .allMatches(generated)
+        .map((m) => m.group(1)!)
+        .toSet();
+    expect(
+      fromSql.toSet().difference(inDart),
+      isEmpty,
+      reason: 'a code the migrations raise is missing from DkCode: dart run tool/build_dk_codes.dart',
+    );
+    expect(
+      inDart.difference(fromSql.toSet()),
+      isEmpty,
+      reason: 'DkCode holds a code no migration raises: dart run tool/build_dk_codes.dart',
+    );
+    expect(generated, dkCodeSource(fromSql), reason: 'dk_code.dart is not the generator\'s output');
+  });
+
+  test('a code is read quoted or by its constant', () {
+    expect(readIn("case 'DKN01':"), {'DKN01'});
+    expect(readIn('case DkCode.dkn01: x(DkCode.dkg07);'), {'DKN01', 'DKG07'});
+    expect(readIn('final DkCodex = 1;'), isEmpty);
+    expect(readIn("// DkCode.dkn01 and 'DKG07' in a comment\nfinal x = 1; // DkCode.dkg04"), isEmpty);
+  });
 
   test('a code is raised by errcode or through the refusal helper', () {
     expect(raisedIn("raise exception 'x' using errcode = 'DKG07';"), {'DKG07'});

@@ -14,6 +14,7 @@ import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
+import '../../codes/dk_code.dart';
 import 'fake_workspace_state.dart';
 
 mixin FakeWorkspaceMembers on FakeWorkspaceState
@@ -31,11 +32,11 @@ mixin FakeWorkspaceMembers on FakeWorkspaceState
   }) async {
     if (isAdmin && !myMember.isOwner) {
       throw const PostgrestException(
-          message: 'only owners may invite admins', code: 'DKN01');
+          message: 'only owners may invite admins', code: DkCode.dkn01);
     }
     if (!isAdmin && !myMember.isAdmin) {
       throw const PostgrestException(
-          message: 'only admins may invite members', code: 'DKN01');
+          message: 'only admins may invite members', code: DkCode.dkn01);
     }
     final code = 'INVITE${nextInviteCode++}Z';
     mintedInvitations.add((

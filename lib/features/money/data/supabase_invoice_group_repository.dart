@@ -4,6 +4,7 @@
 // home, directly under row security (0801): my own rows only.
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/codes/pg_code.dart';
 import '../domain/invoice_groups.dart';
 
 class SupabaseInvoiceGroupRepository implements InvoiceGroupRepository {
@@ -73,7 +74,7 @@ class SupabaseInvoiceGroupRepository implements InvoiceGroupRepository {
     } on PostgrestException catch (e, st) {
       // trace-exempt: rethrown as the refusal the sheet names, or as is
       final refusal = switch (e.code) {
-        '23505' => InvoiceGroupRefusal.nameTaken,
+        PgCode.uniqueViolation => InvoiceGroupRefusal.nameTaken,
         '23514' => InvoiceGroupRefusal.nameShape,
         _ => null,
       };

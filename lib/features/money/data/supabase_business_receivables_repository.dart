@@ -2,6 +2,7 @@
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/codes/pg_code.dart';
 import '../domain/business_receivables.dart';
 
 /// Reads the complete per-currency aggregate on the server rather than summing
@@ -23,7 +24,7 @@ class SupabaseBusinessReceivablesRepository
       );
     } on PostgrestException catch (e, st) {
       // 42501: not the finance right of that business, or no invoicing there.
-      if (e.code == '42501') {
+      if (e.code == PgCode.insufficientPrivilege) {
         Error.throwWithStackTrace(const BusinessReceivablesRefusal(), st);
       }
       rethrow;
@@ -51,7 +52,7 @@ class SupabaseBusinessReceivablesRepository
         ),
       );
     } on PostgrestException catch (e, st) {
-      if (e.code == '42501') {
+      if (e.code == PgCode.insufficientPrivilege) {
         Error.throwWithStackTrace(const BusinessReceivablesRefusal(), st);
       }
       rethrow;

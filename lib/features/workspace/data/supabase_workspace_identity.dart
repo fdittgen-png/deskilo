@@ -9,6 +9,7 @@ import 'dart:typed_data';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show JsonReader;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/codes/pg_code.dart';
 import '../../../core/data/server_names.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/payment_instructions.dart';
@@ -102,7 +103,7 @@ mixin SupabaseWorkspaceIdentity on SupabaseWorkspaceRows
       );
       return null;
     } on PostgrestException catch (e, st) {
-      if (e.code != '42501' && e.code != '22023') rethrow;
+      if (e.code != PgCode.insufficientPrivilege && e.code != PgCode.invalidParameterValue) rethrow;
       TraceLogger.instance.warn(
         'workspace',
         'accounting journals refused',
@@ -110,13 +111,13 @@ mixin SupabaseWorkspaceIdentity on SupabaseWorkspaceRows
         stackTrace: st,
       );
       final why = JsonReader.orEmpty(
-        e.code == '22023' ? _decoded(e.details) : null,
+        e.code == PgCode.invalidParameterValue ? _decoded(e.details) : null,
         context: 'accounting_journals.refusal',
       );
       return (
         problem: why.textOrAbsent('problem') ?? 'shape',
         role: why.textOrAbsent('role') ?? '',
-        notAllowed: e.code == '42501',
+        notAllowed: e.code == PgCode.insufficientPrivilege,
       );
     }
   }
@@ -270,7 +271,7 @@ mixin SupabaseWorkspaceIdentity on SupabaseWorkspaceRows
       );
     } on PostgrestException catch (e, st) {
       // 0378 — the letters-and-colour pair is unique across workspaces.
-      if (e.code == '23505') {
+      if (e.code == PgCode.uniqueViolation) {
         Error.throwWithStackTrace(const WorkspaceSymbolTaken(), st);
       }
       rethrow;

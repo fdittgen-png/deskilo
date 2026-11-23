@@ -6,6 +6,7 @@
 // or a read finds something. The scanner resolver reads the same store.
 import '../../../features/stock/domain/stock_config.dart';
 import '../../../features/stock/domain/stock_tags.dart';
+import '../../codes/dk_code.dart';
 
 class _Bound {
   _Bound(this.id, this.code, this.owner);
@@ -51,7 +52,7 @@ class DemoStockTags implements StockTags {
     if (!_hex.hasMatch(normalised)) throw const StockConfigRefused('tag.code', 'tag_malformed');
     final held = _active.where((t) => t.code == normalised).firstOrNull;
     if (held != null && !_same(held.owner, owner)) {
-      throw StockTagRefused('DKG22', {'code': normalised, 'owner': held.owner.locationId ?? held.owner.itemId});
+      throw StockTagRefused(DkCode.dkg22, {'code': normalised, 'owner': held.owner.locationId ?? held.owner.itemId});
     }
     final bound = held ?? _Bound('demo-tag-${_next++}', normalised, owner);
     if (held == null) _active.add(bound);
@@ -66,7 +67,7 @@ class DemoStockTags implements StockTags {
   Future<void> retire(String workspaceId, {required String requestId, required String code, required String reason}) async {
     final normalised = normalise(code);
     final held = _active.where((t) => t.code == normalised).firstOrNull;
-    if (held == null) throw const StockTagRefused('DKG04');
+    if (held == null) throw const StockTagRefused(DkCode.dkg04);
     _active.remove(held);
   }
 }

@@ -19,6 +19,15 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../tool/project_scale/scale.dart';
 import '../../tool/test_inventory/inventory.dart' show testFiles;
 
+/// Migration numbers taken by a lane at push time and never used, or taken by a branch not yet on this one.
+/// A number listed here must have no file: the branch that brings it takes it off the list.
+const _notUsed = {
+  898, 899, // till S4 (#4185), folded into 0897
+  902, 903, 904, // standalone payments (#4165 B1), done in 0901
+  912, 913, 914, // billing access (#4164 B1), done in 0910-0911
+  915, 916, 917, // UHF reads (#4364), on its own branch
+};
+
 int _valueOf(List<Measure> all, String startsWith) => all
     .firstWhere((m) => m.name.startsWith(startsWith),
         orElse: () => throw StateError('no measure named "$startsWith"'))
@@ -52,10 +61,19 @@ void main() {
     // `requiredSchemaVersion` equals the highest migration by the rule
     // `migration_version_marker_test` enforces, so counting the files is
     // the same answer from the other side — unless a number was skipped.
-    expect(_valueOf(all, 'SQL migrations'), requiredSchemaVersion,
+    expect(_valueOf(all, 'SQL migrations') + _notUsed.length, requiredSchemaVersion,
         reason: 'the migration files and requiredSchemaVersion disagree: '
-            'either a number was skipped in supabase/migrations or the '
-            'marker was not bumped');
+            'either a number was skipped in supabase/migrations (list it in '
+            '_notUsed if it is never used) or the marker was not bumped');
+  });
+
+  test('a migration number listed as not used has no file', () {
+    final present = {
+      for (final f in Directory('supabase/migrations').listSync())
+        if (RegExp(r'/(\d{4})_[^/]*\.sql$').firstMatch(f.path) case final m?) int.parse(m.group(1)!),
+    };
+    expect(_notUsed.intersection(present), isEmpty,
+        reason: 'a migration with this number exists now: take it off _notUsed');
   });
 
   test('the test-files measure is the set the inventory classifies', () {
