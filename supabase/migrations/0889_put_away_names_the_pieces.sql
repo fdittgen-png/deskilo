@@ -96,6 +96,23 @@ begin
     E'      end if;\n' ||
     E'      raise;\n' ||
     E'    end;\n');
+  -- the tags named by units are locked in code order, after the items (a bind takes the item row, then the code):
+  -- two requests naming the same tags in opposite order cannot deadlock
+  v_old := E'  perform 1 from public.services where id = any (v_ids) and workspace_id = p_workspace_id order by id for update;\n';
+  if pg_temp.occurrences(v_next, v_old) <> 1 then
+    raise exception '0889: the item lock of stock_apply_lines is not found exactly once' using errcode = 'P0001';
+  end if;
+  v_next := replace(v_next, v_old, v_old ||
+    E'  declare\n    v_tag text;\n  begin\n' ||
+    E'    for v_tag in\n' ||
+    E'      select distinct public.stock_tag_normalize(u ->> \'tag\') c\n' ||
+    E'        from jsonb_array_elements(p_lines) l,\n' ||
+    E'             jsonb_array_elements(case when jsonb_typeof(l -> \'units\') = \'array\' then l -> \'units\' else \'[]\'::jsonb end) u\n' ||
+    E'       where public.stock_tag_normalize(u ->> \'tag\') is not null order by 1\n' ||
+    E'    loop\n' ||
+    E'      perform pg_advisory_xact_lock(hashtextextended(\'stock_tag:\' || p_workspace_id::text || \':\' || v_tag, 0));\n' ||
+    E'    end loop;\n' ||
+    E'  end;\n');
   execute v_next;
 end
 $patch$;
