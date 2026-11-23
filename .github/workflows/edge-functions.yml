@@ -76,6 +76,13 @@ jobs:
           fi
           echo "## Edge functions typecheck" >> "$GITHUB_STEP_SUMMARY"
 
+      # #4412 — a catch says what happened: it logs through the shared logger,
+      # rethrows or carries `// handled: <reason>`. The ones that predate the
+      # rule are counted per file in _shared/catch_baseline.json; a file may
+      # not gain one, and the count only falls.
+      - name: Catches say what happened
+        run: deno run -A supabase/functions/_shared/catch_check.ts
+
       # #1616 — the functions' own tests (the network stubbed at Supabase's
       # boundary), e.g. the MCP endpoint's protocol and refusal matrix.
       #
