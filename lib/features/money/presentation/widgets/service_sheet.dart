@@ -9,6 +9,7 @@ import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/data/retry.dart' show newRequestId;
 import '../../../../core/format/cents.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
@@ -36,6 +37,8 @@ abstract final class ServiceEditor {
     Iterable<String> categories = const [],
   }) async {
     final l10n = context.l10n;
+    // #4376 — one request id per sheet: a retry of the same save is the same request.
+    final requestId = newRequestId();
     // #3614 — a standard task: a side panel beside the table at the desk.
     final draft = await showTask<ServiceDraft>(
       context,
@@ -57,7 +60,7 @@ abstract final class ServiceEditor {
       errorText: l10n.servicesSaveFailed,
       action: () => ref
           .read(saveServiceProvider)
-          .save(workspaceId, draft, serviceId: service?.id),
+          .save(workspaceId, draft, serviceId: service?.id, requestId: requestId),
     )) {
       return;
     }

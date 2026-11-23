@@ -57,12 +57,14 @@ class SaveService {
   const SaveService(this._terms);
   final CommercialTermsRepository _terms;
 
-  /// Creates [draft] in [workspaceId]'s catalogue, or updates [serviceId].
+  /// Creates [draft] in [workspaceId]'s catalogue (under [requestId], one per sheet: a retry answers the first
+  /// service, #4376), or updates [serviceId].
   /// Throws [ArgumentError] for a draft with problems: nothing is sent.
   Future<ServiceItem> save(
     String workspaceId,
     ServiceDraft draft, {
     String? serviceId,
+    String? requestId,
   }) {
     if (serviceProblems(draft).isNotEmpty) {
       throw ArgumentError('the service draft has problems');
@@ -76,6 +78,7 @@ class SaveService {
             vatRateId: vat,
             supplyClass: draft.supplyClass,
             details: draft.details,
+            requestId: requestId,
           )
         : _terms.updateService(
             serviceId,
