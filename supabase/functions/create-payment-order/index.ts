@@ -132,7 +132,7 @@ export async function handleWith(
     console.log("payment config probe", { workspaceId, providers, missing });
     // #3556 — this function takes a payment's claim of invoices: an app
     // pays a selection only where its host's function says so.
-    return json({ providers, missing, claims: true, continuations: true });
+    return json({ providers, missing, claims: true, continuations: true, standalone: true });
   }
 
   const continued = await continuationOf(body, () => callerOf(token));
@@ -181,7 +181,7 @@ export async function handleWith(
   const currency = String(continued?.currency ?? ws?.currency_code ?? "EUR").toUpperCase();
   const parsed = parsePaymentOrderRequest(body, currency);
   if (!parsed.ok) return json(parsed.body, parsed.status);
-  const { provider, memberId, amountCents, period, requestId, invoiceIds } = parsed.request;
+  const { provider, memberId, amountCents, period, requestId, invoiceIds, standalone } = parsed.request;
 
   let cfg: Record<string, string>;
   try {
@@ -217,19 +217,37 @@ export async function handleWith(
   // verifies the token; it does not make later calls run as that user.
   // Credentials and the order-id patch stay on the privileged client.
   const caller = callerOf(token);
-  const { data: opened, error: openError } = continued ? { data: continued, error: null } : await caller.rpc(
-    "open_payment_intent",
-    {
-      p_workspace_id: workspaceId,
-      p_member_id: memberId,
-      p_provider: provider,
-      p_period: period,
-      p_amount_cents: amountCents,
-      p_currency: currency,
-      p_request_id: requestId,
-      p_invoice_ids: invoiceIds,
-    },
-  );
+  // #4165 — a standalone selection is opened by its own adapter, under the
+  // explicit allocation mode; the member checked above is its subject.
+  const opener = standalone
+    ? {
+      name: "open_standalone_payment_intent_v1",
+      args: {
+        p_workspace_id: workspaceId,
+        p_financial_subject_id: memberId,
+        p_provider: provider,
+        p_amount_cents: amountCents,
+        p_currency: currency,
+        p_request_id: requestId,
+        p_invoice_ids: invoiceIds,
+      },
+    }
+    : {
+      name: "open_payment_intent",
+      args: {
+        p_workspace_id: workspaceId,
+        p_member_id: memberId,
+        p_provider: provider,
+        p_period: period,
+        p_amount_cents: amountCents,
+        p_currency: currency,
+        p_request_id: requestId,
+        p_invoice_ids: invoiceIds,
+      },
+    };
+  const { data: opened, error: openError } = continued
+    ? { data: continued, error: null }
+    : await caller.rpc(opener.name, opener.args);
   const intent = Array.isArray(opened) ? opened[0] : opened;
   if (openError || !intent?.reference) {
     const refused = claimRefusal(openError);
