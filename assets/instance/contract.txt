@@ -4508,6 +4508,7 @@ routine public.stock_unit_factor(p_item_id uuid, p_unit text) -> TABLE(num bigin
 routine public.stock_valuation_v1(p_workspace_id uuid, p_at timestamp with time zone) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:d4beccf42a39
 routine public.stock_value_at_v1(p_workspace_id uuid, p_at timestamp with time zone) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:ea761add5e0f
 routine public.stock_variant_label(p_variant_id uuid) -> text | function | definer | stable | exec:service_role | body:3c5414fbb3c4
+routine public.stock_where_is_v1(p_workspace_id uuid, p_item_id uuid, p_lot_id uuid, p_at timestamp with time zone) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:c9a7cd7f33ad
 routine public.storage_path_columns() -> TABLE(table_name text, column_name text, bucket text) | function | invoker | immutable | exec:service_role | body:cb1fa37f6288
 routine public.store_invoice_original(p_invoice_id uuid, p_pdf_sha256 text, p_xml text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:516b15a47957
 routine public.store_setting(p_workspace uuid, p_key text, p_value jsonb, p_note text, p_by uuid) -> boolean | function | definer | volatile | exec:service_role | body:c233f4937fef
