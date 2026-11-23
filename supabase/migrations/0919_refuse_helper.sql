@@ -9,7 +9,11 @@
 -- `exception when others` and a literal `interval '...'`; the per-domain helpers below call this one. It is the server's own:
 -- no client role may call it.
 --
--- restates 0836 (stock_config_refuse) 0604 (retention_refuse_unless_eligible)
+-- Also (the follow-up of #4398): the decision of a count records what the count recorded, as stock_record did: the mode 'count' joins
+-- the modes that skip today's master data (variants, lot tracking, active places) in stock_apply_lines; the piece rule (DKG25) and
+-- the choice of lots stay.
+--
+-- restates 0836 (stock_config_refuse) 0604 (retention_refuse_unless_eligible) 0918 (stock_apply_lines)
 create or replace function public.refuse(p_code text, p_detail jsonb default null, p_message text default null)
 returns void
 language plpgsql
@@ -67,5 +71,40 @@ begin
 end;
 $fn$;
 revoke execute on function public.retention_refuse_unless_eligible(text, jsonb) from public, anon, authenticated;
+
+create or replace function pg_temp.occurrences(p_def text, p_old text)
+returns int language sql as $f$
+  select (length(p_def) - length(replace(p_def, p_old, ''))) / length(p_old)
+$f$;
+create or replace function pg_temp.patch(p_fn regprocedure, p_olds text[], p_news text[])
+returns void language plpgsql as $f$
+declare
+  v_def text := pg_get_functiondef(p_fn);
+  k int;
+begin
+  for k in 1 .. array_length(p_olds, 1) loop
+    if pg_temp.occurrences(v_def, p_olds[k]) <> 1 then
+      raise exception '0919: anchor % not found exactly once in %', k, p_fn::text using errcode = 'P0001';
+    end if;
+    v_def := replace(v_def, p_olds[k], p_news[k]);
+  end loop;
+  execute v_def;
+end
+$f$;
+select pg_temp.patch('public.stock_apply_lines(uuid, uuid, uuid, jsonb, text, timestamp with time zone, jsonb, text)'::regprocedure,
+  array[
+    $o$     where id = (e ->> 'item_id')::uuid and workspace_id = p_workspace_id and (stockable or p_mode in ('bridge', 'open', 'return', 'legacy'));$o$,
+    $o$     where id = (e ->> 'from')::uuid and workspace_id = p_workspace_id and (active or p_mode in ('bridge', 'open', 'return', 'legacy'));$o$,
+    $o$     where id = (e ->> 'to')::uuid and workspace_id = p_workspace_id and (active or p_mode in ('bridge', 'open', 'return', 'legacy'));$o$,
+    $o$         where x.id = v_var and x.workspace_id = p_workspace_id and x.item_id = v_item.id and (x.active or p_mode in ('bridge', 'open', 'return', 'legacy'))) then$o$,
+    $o$    if v_var is null and not (p_mode in ('bridge', 'open', 'return', 'legacy')) and exists (select 1 from public.item_variants x where x.item_id = v_item.id and x.active) then$o$,
+    $o$    if v_item.tracking <> 'none' and v_lot is null and not (p_mode in ('bridge', 'open', 'return', 'legacy')) then$o$],
+  array[
+    $n$     where id = (e ->> 'item_id')::uuid and workspace_id = p_workspace_id and (stockable or p_mode in ('bridge', 'open', 'return', 'legacy', 'count'));$n$,
+    $n$     where id = (e ->> 'from')::uuid and workspace_id = p_workspace_id and (active or p_mode in ('bridge', 'open', 'return', 'legacy', 'count'));$n$,
+    $n$     where id = (e ->> 'to')::uuid and workspace_id = p_workspace_id and (active or p_mode in ('bridge', 'open', 'return', 'legacy', 'count'));$n$,
+    $n$         where x.id = v_var and x.workspace_id = p_workspace_id and x.item_id = v_item.id and (x.active or p_mode in ('bridge', 'open', 'return', 'legacy', 'count'))) then$n$,
+    $n$    if v_var is null and not (p_mode in ('bridge', 'open', 'return', 'legacy', 'count')) and exists (select 1 from public.item_variants x where x.item_id = v_item.id and x.active) then$n$,
+    $n$    if v_item.tracking <> 'none' and v_lot is null and not (p_mode in ('bridge', 'open', 'return', 'legacy', 'count')) then$n$]);
 
 select public.set_deskilo_schema_version(919);

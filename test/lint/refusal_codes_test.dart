@@ -30,11 +30,12 @@ const _genericBaseline = 289;
 const _bookingSentenceBudget = 6;
 
 final _fileName = RegExp(r'^(\d{4})_[a-z0-9_]+\.sql$');
-final _raise = RegExp(r'raise\s+exception\b[^;]*;', caseSensitive: false);
+// a statement is cut at a dollar quote: a fragment of one, quoted as an anchor, is no statement
+final _raise = RegExp(r'raise\s+exception\b[^;\$]*;', caseSensitive: false);
 
-/// The text a migration quotes as an anchor to patch (`\$r\$…\$r\$`): the
+/// The text a migration quotes as an anchor to patch (`\$r\$…\$r\$` or `\$o\$…\$o\$`): the
 /// statement as it stood, not a refusal this migration raises.
-final _anchorQuote = RegExp(r'\$r\$.*?\$r\$', dotAll: true);
+final _anchorQuote = RegExp(r'\$([ro])\$.*?\$\1\$', dotAll: true);
 
 /// The blocks that run once at migration time: `do $tag$ ... $tag$;` and a
 /// `pg_temp` helper function. A refusal there is an assertion about the
@@ -57,7 +58,6 @@ final _intervalLiteral = RegExp(r"\binterval\s+'", caseSensitive: false);
 String runTimeCode(String sql) {
   final noBlocks = sql
       .replaceAll(_anchorQuote, '')
-      .replaceAll(RegExp(r'\$o\$.*?\$o\$', dotAll: true), '')
       .replaceAll(_migrationTime, '');
   return noBlocks
       .split('\n')
