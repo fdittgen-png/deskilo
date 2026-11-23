@@ -10951,7 +10951,6 @@ const Set<String> uiLabelKeys = {
   'itemGroupTagUnit',
   'itemGroupTrackingSerial',
   'itemGroupUseGroup',
-  'itemGroupVatRate',
   'itemGroupYes',
   'itemGroupsAdd',
   'itemGroupsEmpty',

@@ -22,7 +22,7 @@ String itemGroupParamLabel(AppLocalizations l10n, String param) => switch (param
   'reorder_point_default' => l10n.itemGroupReorderPoint,
   'reorder_quantity_default' => l10n.itemGroupReorderQty,
   'home_zone_id' => l10n.itemGroupHomeZone,
-  'vat_rate_id' => l10n.itemGroupVatRate,
+  'vat_rate_id' => l10n.vatServiceRate,
   'supply_class' => l10n.itemGroupSupply,
   'price_rounding' => l10n.itemGroupRounding,
   'target_margin_bps' => l10n.itemGroupMargin,
@@ -47,7 +47,7 @@ String itemGroupValueText(AppLocalizations l10n, String param, Object? value) {
     'sold_by_weight' => value == true ? l10n.itemGroupYes : l10n.itemGroupNo,
     'supply_class' => value == 'property' ? l10n.itemGroupSupplyProperty : l10n.itemGroupSupplyGeneral,
     'price_rounding' => value == 'none' ? l10n.itemGroupRoundingNone : '$value',
-    'target_margin_bps' => '${percentOfMarginBps((value as num).toInt())} %',
+    'target_margin_bps' => l10n.itemGroupMarginValue(percentOfMarginBps((value as num).toInt())),
     'vat_rate_id' || 'home_zone_id' => l10n.itemGroupSet,
     _ => '$value',
   };

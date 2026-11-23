@@ -29,6 +29,10 @@ import 'item_group_text.dart';
 /// The units a group may set for its items (the registry's units of count, mass and volume).
 const _units = ['piece', 'g', 'kg', 'ml', 'cl', 'l'];
 
+/// What a sheet offers beside the group itself: the places a home zone is chosen from, the VAT rates, and whether the
+/// person may see and set what an item costs or sells for (manageServices and viewFinances).
+typedef GroupChoices = ({List<StockPlaceConfig> places, List<StockVatChoice> vat, bool finance});
+
 /// Opens the sheet of [group] (null: a new group); true when something was saved or deleted.
 Future<bool> showItemGroupSheet(
   BuildContext context,
@@ -36,12 +40,10 @@ Future<bool> showItemGroupSheet(
   required String workspaceId,
   required ItemGroup? group,
   required List<ItemGroup> groups,
-  List<StockPlaceConfig> places = const [],
-  List<StockVatChoice> vatChoices = const [],
-  bool financeAllowed = false,
+  GroupChoices choices = const (places: <StockPlaceConfig>[], vat: <StockVatChoice>[], finance: false),
 }) {
   final l10n = context.l10n;
-  final draft = _GroupDraft(port, workspaceId, group, groups, places, appFormatOf(context).locale, vatChoices, financeAllowed: financeAllowed);
+  final draft = _GroupDraft(port, workspaceId, group, groups, choices, appFormatOf(context).locale);
   return showAppFormSheet(
     context,
     AppFormSheet(
@@ -57,7 +59,7 @@ Future<bool> showItemGroupSheet(
 }
 
 class _GroupDraft {
-  _GroupDraft(this.port, this.workspaceId, this.group, this.groups, this.places, this.locale, this.vatChoices, {required this.financeAllowed})
+  _GroupDraft(this.port, this.workspaceId, this.group, this.groups, this.choices, this.locale)
     : _id = group?.id ?? newRequestId(),
       parentId = group?.parentId,
       tracking = group?.params['tracking'] as String?,
@@ -86,12 +88,14 @@ class _GroupDraft {
   final String workspaceId;
   final ItemGroup? group;
   final List<ItemGroup> groups;
-  final List<StockPlaceConfig> places;
+  final GroupChoices choices;
   final String locale;
-  final List<StockVatChoice> vatChoices;
+
+  List<StockPlaceConfig> get places => choices.places;
+  List<StockVatChoice> get vatChoices => choices.vat;
 
   /// Whether the person may see and set what an item costs or sells for (manageServices and viewFinances).
-  final bool financeAllowed;
+  bool get financeAllowed => choices.finance;
   final FormControllers fields;
   final String _id;
 
@@ -201,6 +205,14 @@ class _GroupDraft {
         if (g.parentId == null && g.id != group?.id) g,
     ];
     return [
+      ..._basicFields(l10n, edit, parents),
+      ..._proposalFields(context, l10n, edit),
+      ..._financeFields(context, l10n, edit),
+      ..._footer(context, l10n),
+    ];
+  }
+
+  List<Widget> _basicFields(AppLocalizations l10n, void Function(void Function()) edit, List<ItemGroup> parents) => [
       AppTextField(key: const ValueKey('item-group-name'), controller: fields['name'], fieldKey: 'name', label: l10n.itemGroupName, onChanged: (_) => _preview = null),
       const FormGap(),
       AppDropdownField<String?>(
@@ -271,7 +283,10 @@ class _GroupDraft {
         value: sold,
         items: [(null, l10n.itemGroupNotSet), (true, l10n.itemGroupYes), (false, l10n.itemGroupNo)],
         onChanged: (v) => edit(() => sold = v),
-      ),
+      )
+  ];
+
+  List<Widget> _proposalFields(BuildContext context, AppLocalizations l10n, void Function(void Function()) edit) => [
       const FormGap(),
       Text(l10n.itemGroupProposalHint, key: const ValueKey('item-group-proposals'), style: Theme.of(context).textTheme.bodySmall),
       const FormGap.small(),
@@ -306,6 +321,9 @@ class _GroupDraft {
         items: [(null, l10n.itemGroupNotSet), for (final p in places) (p.id, p.name)],
         onChanged: (v) => edit(() => zone = v),
       ),
+  ];
+
+  List<Widget> _financeFields(BuildContext context, AppLocalizations l10n, void Function(void Function()) edit) => [
       if (financeAllowed) ...[
         const FormGap(),
         Text(l10n.itemGroupFinanceHint, key: const ValueKey('item-group-finance'), style: Theme.of(context).textTheme.bodySmall),
@@ -313,7 +331,7 @@ class _GroupDraft {
         if (vatChoices.isNotEmpty)
           AppDropdownField<String?>(
             key: const ValueKey('item-group-vat'),
-            label: l10n.itemGroupVatRate,
+            label: l10n.vatServiceRate,
             value: vat,
             items: [(null, l10n.itemGroupNotSet), for (final v in vatChoices) (v.id, v.label)],
             onChanged: (v) => edit(() => vat = v),
@@ -345,6 +363,9 @@ class _GroupDraft {
           onChanged: (_) => _preview = null,
         ),
       ],
+  ];
+
+  List<Widget> _footer(BuildContext context, AppLocalizations l10n) => [
       if (_preview != null) _PreviewCard(preview: _preview!),
       if (group != null) ...[
         const FormGap(),
@@ -359,8 +380,7 @@ class _GroupDraft {
             ),
           ),
       ],
-    ];
-  }
+  ];
 
   Future<void> _delete(BuildContext context) async {
     final l10n = context.l10n;

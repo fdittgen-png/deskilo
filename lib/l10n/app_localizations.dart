@@ -29496,6 +29496,12 @@ abstract class AppLocalizations {
   /// **'Target margin on cost (%)'**
   String get itemGroupMargin;
 
+  /// #4361 G12: a target margin as the group shows it; the percent arrives formatted
+  ///
+  /// In en, this message translates to:
+  /// **'{percent} %'**
+  String itemGroupMarginValue(String percent);
+
   /// #4361 G12 item groups: itemGroupMinAge
   ///
   /// In en, this message translates to:
@@ -29752,12 +29758,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Use the group’s value'**
   String get itemGroupUseGroup;
-
-  /// #4361 G12 finance parameters of an item group
-  ///
-  /// In en, this message translates to:
-  /// **'VAT rate'**
-  String get itemGroupVatRate;
 
   /// #4361 G12 item groups: itemGroupYes
   ///

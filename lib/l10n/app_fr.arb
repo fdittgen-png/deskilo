@@ -11266,6 +11266,15 @@
   "@itemGroupMargin": {
     "description": "#4361 G12 finance parameters of an item group"
   },
+  "itemGroupMarginValue": "{percent} %",
+  "@itemGroupMarginValue": {
+    "description": "#4361 G12: a target margin as the group shows it; the percent arrives formatted",
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
   "itemGroupMinAge": "Âge minimum pour une vente",
   "itemGroupMove": "Déplacer",
   "itemGroupMoveReaches": "{count, plural, one{Le déplacement change {count} réglage.} other{Le déplacement change {count} réglages.}}",
@@ -11344,10 +11353,6 @@
   "itemGroupTagUnit": "Une puce par pièce",
   "itemGroupTrackingSerial": "À la pièce (série)",
   "itemGroupUseGroup": "Utiliser la valeur du groupe",
-  "itemGroupVatRate": "Taux de TVA",
-  "@itemGroupVatRate": {
-    "description": "#4361 G12 finance parameters of an item group"
-  },
   "itemGroupYes": "Oui",
   "itemGroupsAdd": "Ajouter un groupe",
   "itemGroupsEmpty": "Aucun groupe pour l’instant. Un groupe porte des réglages que ses articles partagent.",

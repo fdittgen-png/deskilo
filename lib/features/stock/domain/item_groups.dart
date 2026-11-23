@@ -242,10 +242,6 @@ abstract interface class ItemGroups {
   Future<List<GroupHistoryRow>> history(String workspaceId, {String? groupId, String? itemId, int limit = 50});
 }
 
-/// The parameters that say what an item costs or sells for: they need the right to manage services AND to see the
-/// finances, on every path (the server hides them from a reader without it and refuses the write).
-const itemGroupFinance = ['vat_rate_id', 'supply_class', 'price_rounding', 'target_margin_bps'];
-
 /// The roundings a group may propose for a price, as the server accepts them.
 const itemGroupRoundings = ['none', '0.05', '0.10', '0.99'];
 

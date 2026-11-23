@@ -18705,6 +18705,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get itemGroupMargin => 'Zielmarge auf die Kosten (%)';
 
   @override
+  String itemGroupMarginValue(String percent) {
+    return '$percent %';
+  }
+
+  @override
   String get itemGroupMinAge => 'Mindestalter für einen Verkauf';
 
   @override
@@ -18871,9 +18876,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get itemGroupUseGroup => 'Wert der Gruppe verwenden';
-
-  @override
-  String get itemGroupVatRate => 'Steuersatz';
 
   @override
   String get itemGroupYes => 'Ja';

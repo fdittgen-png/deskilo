@@ -65,10 +65,6 @@
   "@itemGroupSet": {
     "description": "#4361 G12 finance parameters of an item group"
   },
-  "itemGroupVatRate": "Tipo de IVA",
-  "@itemGroupVatRate": {
-    "description": "#4361 G12 finance parameters of an item group"
-  },
   "itemGroupSupply": "Clase de operación",
   "@itemGroupSupply": {
     "description": "#4361 G12 finance parameters of an item group"
@@ -100,6 +96,15 @@
   "itemGroupHidden": "No visible para usted",
   "@itemGroupHidden": {
     "description": "#4361 G12 finance parameters of an item group"
+  },
+  "itemGroupMarginValue": "{percent} %",
+  "@itemGroupMarginValue": {
+    "description": "#4361 G12: a target margin as the group shows it; the percent arrives formatted",
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
   },
   "itemGroupOwn": "Valor propio",
   "itemGroupUseGroup": "Usar el valor del grupo",

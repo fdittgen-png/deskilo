@@ -82,7 +82,7 @@ class _GroupList extends ConsumerWidget {
     final finance = held.contains(WorkspacePermission.manageServices) && held.contains(WorkspacePermission.viewFinances);
     final vat = finance ? await ref.read(stockServiceCreatorProvider)?.vatChoices(workspaceId) ?? const <StockVatChoice>[] : const <StockVatChoice>[];
     if (!context.mounted) return;
-    final saved = await showItemGroupSheet(context, ref.read(itemGroupsProvider), workspaceId: workspaceId, group: group, groups: groups, places: places, vatChoices: vat, financeAllowed: finance);
+    final saved = await showItemGroupSheet(context, ref.read(itemGroupsProvider), workspaceId: workspaceId, group: group, groups: groups, choices: (places: places, vat: vat, finance: finance));
     if (saved) ref.invalidate(itemGroupListProvider(workspaceId));
   }
 

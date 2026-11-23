@@ -7698,7 +7698,6 @@ Map<String, _Getter> _part18() => {
   'itemGroupReorderPoint': (l) => l.itemGroupReorderPoint,
   'itemGroupSupply': (l) => l.itemGroupSupply,
   'itemGroupSupplyGeneral': (l) => l.itemGroupSupplyGeneral,
-  'itemGroupVatRate': (l) => l.itemGroupVatRate,
   'journeyHowWorkspaceLabel': (l) => l.journeyHowWorkspaceLabel,
   'kioskEnrolTrust': (l) => l.kioskEnrolTrust,
   'kioskNfcOff': (l) => l.kioskNfcOff,

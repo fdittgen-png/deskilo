@@ -24224,6 +24224,15 @@
   "@itemGroupMargin": {
     "description": "#4361 G12 finance parameters of an item group"
   },
+  "itemGroupMarginValue": "{percent} %",
+  "@itemGroupMarginValue": {
+    "description": "#4361 G12: a target margin as the group shows it; the percent arrives formatted",
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
   "itemGroupMinAge": "Minimum age for a sale",
   "@itemGroupMinAge": {
     "description": "#4361 G12 item groups: itemGroupMinAge"
@@ -24421,10 +24430,6 @@
   "itemGroupUseGroup": "Use the group’s value",
   "@itemGroupUseGroup": {
     "description": "#4361 G12 item groups: itemGroupUseGroup"
-  },
-  "itemGroupVatRate": "VAT rate",
-  "@itemGroupVatRate": {
-    "description": "#4361 G12 finance parameters of an item group"
   },
   "itemGroupYes": "Yes",
   "@itemGroupYes": {
