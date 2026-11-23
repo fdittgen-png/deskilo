@@ -22,6 +22,8 @@ void main() {
     ('1e3', null, ExactQuantityProblem.malformed, CommercialDecimalProblem.malformed),
     ('.5', null, ExactQuantityProblem.malformed, CommercialDecimalProblem.malformed),
     ('', null, ExactQuantityProblem.malformed, CommercialDecimalProblem.malformed),
+    ('0999999999999', '999999999999', null, null),
+    ('-0.0', '0', null, null),
   ];
   for (final (text, canonical, kernel, commercial) in table) {
     test("'$text' reads the same under both names", () {
@@ -39,5 +41,8 @@ void main() {
     expect(parseCommercialDecimal('-1', allowNegative: true).value?.text, '-1');
     expect(parseCommercialDecimal('0', positive: false).value?.text, '0');
     expect(parseCommercialDecimal('-1', positive: false).problem, CommercialDecimalProblem.notPositive);
+    expect(parseCommercialDecimal(' 1.5 ').value?.text, '1.5', reason: 'trimmed, as before');
+    expect(parseCommercialDecimal('-1000000000000').problem, CommercialDecimalProblem.notPositive,
+        reason: 'the sign is named before the magnitude, as before');
   });
 }

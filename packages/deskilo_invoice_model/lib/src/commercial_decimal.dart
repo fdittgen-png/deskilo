@@ -4,8 +4,8 @@
 // and its canonical text.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
-/// At most six fractional digits, the precision of the physical ledger
-/// (`numeric(18,6)`), and twelve integer digits: the kernel's ExactQuantity bounds (#4406).
+// At most six fractional digits, the precision of the physical ledger
+// (`numeric(18,6)`), and twelve integer digits: the kernel's ExactQuantity bounds (#4406).
 
 /// Why a quantity or a price is not accepted.
 enum CommercialDecimalProblem {
@@ -64,6 +64,10 @@ CommercialDecimalResult parseCommercialDecimal(
   final trimmed = text.trim();
   final read = ExactQuantity.tryParse(trimmed);
   final q = read.value;
+  // A refused sign is named before a refused magnitude, as it always was.
+  if (read.problem == ExactQuantityProblem.outOfRange && trimmed.startsWith('-') && !allowNegative) {
+    return (value: null, problem: CommercialDecimalProblem.notPositive);
+  }
   if (q == null) {
     return (
       value: null,
