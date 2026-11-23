@@ -812,6 +812,8 @@ window.SETUP_L10N={
    "stockCycleHighValueHint": "The value, in minor units of the business currency, from which what a place holds of an item counts as high value for a cycle count plan that has no threshold of its own. Set in the app's settings.",
    "stockCycleOverdue": "Cycle count: overdue after",
    "stockCycleOverdueHint": "How many days a cycle count task may stay open past its due date before the inbox says it is overdue. Set in the app's settings.",
+   "stockExpiryHorizon": "Expiry report: look ahead",
+   "stockExpiryHorizonHint": "How many days after the reference date the expiry report looks ahead for what is about to expire. Set in the app's settings.",
    "optMinorUnits": "{n} (minor units)",
    "businessKind_shop": "Shop — buys, keeps in stock and sells goods",
    "businessShopType": "Type of shop",
@@ -1576,6 +1578,10 @@ window.SETUP_L10N={
    "stockTagReads": [
     "Reading many tags",
     "A UHF reader in keyboard mode reads many tags at once to receive, move and count: the tags are collected, de-duplicated and resolved, and nothing is sent until the user confirms."
+   ],
+   "stockExpiryReport": [
+    "The expiry report",
+    "Prints, at a date you choose, every lot or piece in stock that is expired at that date or expires after it, with a layout you can edit like the other reports."
    ]
   },
   "process": {
@@ -2785,6 +2791,8 @@ window.SETUP_L10N={
    "stockCycleHighValueHint": "La valeur, en unités mineures de la devise de l’entreprise, à partir de laquelle ce qu’un lieu contient d’un article est de forte valeur pour un plan sans seuil propre. Réglé dans les paramètres de l’application.",
    "stockCycleOverdue": "Inventaire tournant : en retard après",
    "stockCycleOverdueHint": "Combien de jours une tâche d’inventaire tournant peut rester ouverte après son échéance avant d’être dite en retard. Réglé dans les paramètres de l’application.",
+   "stockExpiryHorizon": "Rapport de péremption : horizon",
+   "stockExpiryHorizonHint": "Combien de jours après la date de référence le rapport de péremption regarde ce qui va bientôt périmer. Réglé dans les paramètres de l'app.",
    "optMinorUnits": "{n} (unités mineures)",
    "businessKind_shop": "Commerce — achète, tient en stock et vend des marchandises",
    "businessShopType": "Type de commerce",
@@ -3549,6 +3557,10 @@ window.SETUP_L10N={
    "stockTagReads": [
     "Lecture de nombreuses étiquettes",
     "Un lecteur UHF en mode clavier lit de nombreuses étiquettes d'un coup pour recevoir, déplacer et compter : les étiquettes sont rassemblées, dédoublonnées et résolues, et rien n'est envoyé avant la confirmation de l'utilisateur."
+   ],
+   "stockExpiryReport": [
+    "Le rapport de péremption",
+    "Imprime, à une date choisie, chaque lot ou pièce en stock périmé à cette date ou qui périme après, avec une mise en page modifiable comme les autres rapports."
    ]
   },
   "process": {
@@ -4758,6 +4770,8 @@ window.SETUP_L10N={
    "stockCycleHighValueHint": "Der Wert in der kleinsten Einheit der Währung des Unternehmens, ab dem das, was ein Ort von einem Artikel hält, für einen Plan ohne eigene Schwelle als hochwertig gilt. Einstellbar in den Einstellungen der App.",
    "stockCycleOverdue": "Permanente Inventur: überfällig nach",
    "stockCycleOverdueHint": "Wie viele Tage eine Inventuraufgabe nach ihrem Fälligkeitstag offen bleiben darf, bevor sie als überfällig gemeldet wird. Einstellbar in den Einstellungen der App.",
+   "stockExpiryHorizon": "Verfallsbericht: Vorausschau",
+   "stockExpiryHorizonHint": "Wie viele Tage nach dem Stichtag der Verfallsbericht vorausschaut, was bald abläuft. In den Einstellungen der App festgelegt.",
    "optMinorUnits": "{n} (kleinste Einheit)",
    "businessKind_shop": "Laden — kauft, lagert und verkauft Ware",
    "businessShopType": "Art des Ladens",
@@ -5522,6 +5536,10 @@ window.SETUP_L10N={
    "stockTagReads": [
     "Viele Etiketten lesen",
     "Ein UHF-Lesegerät im Tastaturmodus liest viele Etiketten auf einmal zum Wareneingang, Umlagern und Zählen: Die Etiketten werden gesammelt, entdoppelt und aufgelöst, und nichts wird gesendet, bevor die Person bestätigt."
+   ],
+   "stockExpiryReport": [
+    "Der Verfallsbericht",
+    "Druckt zu einem gewählten Datum jede Charge oder jedes Stück im Bestand, die an diesem Datum abgelaufen sind oder danach ablaufen, mit einem Layout, das Sie wie die anderen Berichte bearbeiten können."
    ]
   },
   "process": {
@@ -6731,6 +6749,8 @@ window.SETUP_L10N={
    "stockCycleHighValueHint": "El valor, en unidades menores de la moneda de la empresa, a partir del cual lo que un lugar contiene de un artículo es de alto valor para un plan sin umbral propio. Se ajusta en los ajustes de la aplicación.",
    "stockCycleOverdue": "Recuento cíclico: vencido tras",
    "stockCycleOverdueHint": "Cuántos días puede seguir abierta una tarea de recuento cíclico después de su fecha antes de declararse vencida. Se ajusta en los ajustes de la aplicación.",
+   "stockExpiryHorizon": "Informe de caducidad: horizonte",
+   "stockExpiryHorizonHint": "Cuántos días después de la fecha de referencia mira el informe de caducidad lo que está por caducar. Se define en los ajustes de la app.",
    "optMinorUnits": "{n} (unidades menores)",
    "businessKind_shop": "Tienda — compra, guarda en stock y vende mercancías",
    "businessShopType": "Tipo de tienda",
@@ -7495,6 +7515,10 @@ window.SETUP_L10N={
    "stockTagReads": [
     "Lectura de muchas etiquetas",
     "Un lector UHF en modo teclado lee muchas etiquetas a la vez para recibir, mover y contar: las etiquetas se reúnen, se eliminan duplicados y se resuelven, y no se envía nada hasta que la persona confirma."
+   ],
+   "stockExpiryReport": [
+    "El informe de caducidad",
+    "Imprime, en una fecha elegida, cada lote o pieza en stock caducado en esa fecha o que caduca después, con un diseño editable como los demás informes."
    ]
   },
   "process": {
@@ -8704,6 +8728,8 @@ window.SETUP_L10N={
    "stockCycleHighValueHint": "Il valore, in unità minori della valuta dell’azienda, da cui ciò che un luogo contiene di un articolo è di alto valore per un piano senza soglia propria. Si imposta nelle impostazioni dell’app.",
    "stockCycleOverdue": "Inventario ciclico: in ritardo dopo",
    "stockCycleOverdueHint": "Quanti giorni un compito di inventario ciclico può restare aperto dopo la scadenza prima di essere dichiarato in ritardo. Si imposta nelle impostazioni dell’app.",
+   "stockExpiryHorizon": "Rapporto di scadenza: orizzonte",
+   "stockExpiryHorizonHint": "Quanti giorni dopo la data di riferimento il rapporto di scadenza guarda ciò che sta per scadere. Impostato nelle impostazioni dell'app.",
    "optMinorUnits": "{n} (unità minori)",
    "businessKind_shop": "Negozio — acquista, tiene a magazzino e vende merce",
    "businessShopType": "Tipo di negozio",
@@ -9468,6 +9494,10 @@ window.SETUP_L10N={
    "stockTagReads": [
     "Lettura di molte etichette",
     "Un lettore UHF in modalità tastiera legge molte etichette insieme per ricevere, spostare e contare: le etichette sono raccolte, deduplicate e risolte, e nulla viene inviato finché la persona non conferma."
+   ],
+   "stockExpiryReport": [
+    "Il rapporto di scadenza",
+    "Stampa, a una data scelta, ogni lotto o pezzo in magazzino scaduto a quella data o che scade dopo, con un layout modificabile come gli altri rapporti."
    ]
   },
   "process": {

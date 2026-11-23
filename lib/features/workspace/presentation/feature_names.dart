@@ -332,5 +332,6 @@ String _stockName(AppLocalizations l10n, WorkspaceFeature feature) =>
       WorkspaceFeature.counterReceipts => l10n.featureCounterReceiptsTitle,
       WorkspaceFeature.counterTillSessions => l10n.featureCounterTillSessionsTitle,
       WorkspaceFeature.stockTagReads => l10n.featureStockTagReadsTitle,
+      WorkspaceFeature.stockExpiryReport => l10n.featureStockExpiryReportTitle,
       _ => feature.name,
     };

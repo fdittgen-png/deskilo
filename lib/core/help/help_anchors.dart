@@ -39,6 +39,7 @@ abstract final class HelpAnchor {
   static const moneyStockScanning = 'user.money.stock.scanning';
   static const moneyStockNfc = 'user.money.stock.nfc';
   static const moneyStockRfid = 'user.money.stock.rfid';
+  static const moneyStockExpiry = 'user.money.stock.expiry';
   static const moneyStockBulkRead = 'user.money.stock.bulkread';
   static const moneyTill = 'user.money.till';
 

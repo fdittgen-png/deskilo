@@ -96,9 +96,8 @@ enum WorkspaceFeature {
   letterStandard,
   priceNegotiations,
 
-  /// #767 — recurring scheduled expenses (internet, phone, electricity): the schedule is validated
-  /// once, each due occurrence is presented to the member — matching amount lands settled, a
-  /// deviation explains itself and passes the expense validation.
+  /// #767 — recurring scheduled expenses (internet, phone, electricity): validated once, each due
+  /// occurrence is presented to the member — a matching amount lands settled, a deviation explains itself.
   scheduledExpenses,
 
   /// #793 — the avatar monogram identifies ONE member: the initials of the first and family name,
@@ -447,7 +446,8 @@ enum WorkspaceFeature {
   stockScanning,
   counterReceipts,
   counterTillSessions,
-  stockTagReads;
+  stockTagReads,
+  stockExpiryReport;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;

@@ -1,0 +1,45 @@
+{
+  "workspace": "Test Space",
+  "workspace_address": "1 place du Marché",
+  "as_of": "22 nov. 2026",
+  "scope": "both",
+  "issued": "22 nov. 2026",
+  "issued_by": "Camille Owner",
+  "count": 3,
+  "no_rows": false,
+  "rows": [
+    {
+      "item": "Lait",
+      "variant": "",
+      "lot": "L-09",
+      "tag": "",
+      "place": "MAIN · Magasin",
+      "expires": "16 nov. 2026",
+      "days": "6",
+      "state": "expired",
+      "quantity": "2 l"
+    },
+    {
+      "item": "Yaourt",
+      "variant": "Nature",
+      "lot": "Y-12",
+      "tag": "",
+      "place": "MAIN · Magasin",
+      "expires": "22 nov. 2026",
+      "days": "0",
+      "state": "today",
+      "quantity": "12 pièce"
+    },
+    {
+      "item": "Panier",
+      "variant": "",
+      "lot": "P-1",
+      "tag": "E2801160600002054AF3E001",
+      "place": "BACK · Réserve",
+      "expires": "1 déc. 2026",
+      "days": "9",
+      "state": "expiring",
+      "quantity": "1 pièce"
+    }
+  ]
+}

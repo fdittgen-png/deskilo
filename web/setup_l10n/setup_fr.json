@@ -807,6 +807,8 @@
  "stockCycleHighValueHint": "La valeur, en unités mineures de la devise de l’entreprise, à partir de laquelle ce qu’un lieu contient d’un article est de forte valeur pour un plan sans seuil propre. Réglé dans les paramètres de l’application.",
  "stockCycleOverdue": "Inventaire tournant : en retard après",
  "stockCycleOverdueHint": "Combien de jours une tâche d’inventaire tournant peut rester ouverte après son échéance avant d’être dite en retard. Réglé dans les paramètres de l’application.",
+ "stockExpiryHorizon": "Rapport de péremption : horizon",
+ "stockExpiryHorizonHint": "Combien de jours après la date de référence le rapport de péremption regarde ce qui va bientôt périmer. Réglé dans les paramètres de l'app.",
  "optMinorUnits": "{n} (unités mineures)",
  "businessKind_shop": "Commerce — achète, tient en stock et vend des marchandises",
  "businessShopType": "Type de commerce",

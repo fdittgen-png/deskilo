@@ -7,6 +7,14 @@
   "@settingHintStockCycleCountHighValueMinor": {
     "description": "#4295 settings: Setting hint."
   },
+  "settingLabelStockExpiryHorizonDays": "Expiry report: look ahead",
+  "@settingLabelStockExpiryHorizonDays": {
+    "description": "#4431 setting label"
+  },
+  "settingHintStockExpiryHorizonDays": "How many days after the reference date the expiry report looks ahead for what is about to expire, when no horizon is named when it is printed.",
+  "@settingHintStockExpiryHorizonDays": {
+    "description": "#4431 setting hint"
+  },
   "settingLabelStockCycleCountOverdueDays": "Cycle count: overdue after",
   "@settingLabelStockCycleCountOverdueDays": {
     "description": "#4295 settings: Setting label."

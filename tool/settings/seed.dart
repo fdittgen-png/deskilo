@@ -1810,6 +1810,25 @@ final List<({SettingSeed row, String since})> settingSeeds = [
     ),
   ),
   (
+    since: 'stock_expiry_report',
+    row: (
+      key: 'stock.expiry_horizon_days',
+      type: 'int',
+      defaultValue: 30,
+      min: 1,
+      max: 3650,
+      unit: 'days',
+      group: 'business',
+      scopes: ['workspace'],
+      editPermission: 'manageStock',
+      floor: null,
+      editable: true,
+      choices: null,
+      source: 'expiry report (#4431)',
+      note: 'How many days after the reference date the expiry report looks ahead for what is about to expire, when the person who prints it does not name a horizon of their own.',
+    ),
+  ),
+  (
     since: 'stock_cycle_counts',
     row: (
       key: 'stock.cycle_count_overdue_days',

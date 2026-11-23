@@ -20344,6 +20344,18 @@ abstract class AppLocalizations {
   /// **'Cycle counts'**
   String get featureStockCycleCountsTitle;
 
+  /// #4431 the expiry report feature: what it does
+  ///
+  /// In en, this message translates to:
+  /// **'Prints, at a date you choose, every lot or piece in stock that is expired at that date or expires after it, with a layout you can edit like the other reports.'**
+  String get featureStockExpiryReportDesc;
+
+  /// #4431 the expiry report feature: its name
+  ///
+  /// In en, this message translates to:
+  /// **'The expiry report'**
+  String get featureStockExpiryReportTitle;
+
   /// #4361 feature description
   ///
   /// In en, this message translates to:
@@ -47712,6 +47724,12 @@ abstract class AppLocalizations {
   /// **'Workspace status'**
   String get reportDocStatus;
 
+  /// #4431 the expiry report
+  ///
+  /// In en, this message translates to:
+  /// **'Expiry report'**
+  String get reportDocStockExpiry;
+
   /// Report kind (#2376): the trial balance with its auxiliary balance
   ///
   /// In en, this message translates to:
@@ -51702,6 +51720,12 @@ abstract class AppLocalizations {
   /// **'How many days a cycle count task may stay open past its due date before the inbox says it is overdue.'**
   String get settingHintStockCycleCountOverdueDays;
 
+  /// #4431 setting hint
+  ///
+  /// In en, this message translates to:
+  /// **'How many days after the reference date the expiry report looks ahead for what is about to expire, when no horizon is named when it is printed.'**
+  String get settingHintStockExpiryHorizonDays;
+
   /// #4361 setting label/hint
   ///
   /// In en, this message translates to:
@@ -52343,6 +52367,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cycle count: overdue after'**
   String get settingLabelStockCycleCountOverdueDays;
+
+  /// #4431 setting label
+  ///
+  /// In en, this message translates to:
+  /// **'Expiry report: look ahead'**
+  String get settingLabelStockExpiryHorizonDays;
 
   /// #4361 setting label/hint
   ///
@@ -57724,6 +57754,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Entered'**
   String get stockEnteredLabel;
+
+  /// #4431 the expiry report
+  ///
+  /// In en, this message translates to:
+  /// **'Any'**
+  String get stockExpiryAny;
+
+  /// #4431 the expiry report
+  ///
+  /// In en, this message translates to:
+  /// **'The report is cut at {rows} rows: narrow the date, the place or the group.'**
+  String stockExpiryCut(String rows);
+
+  /// #4431 the expiry report
+  ///
+  /// In en, this message translates to:
+  /// **'Reference date'**
+  String get stockExpiryDate;
+
+  /// #4431 the expiry report
+  ///
+  /// In en, this message translates to:
+  /// **'in {days} d'**
+  String stockExpiryDaysAhead(String days);
+
+  /// #4431 the expiry report
+  ///
+  /// In en, this message translates to:
+  /// **'{days} d past'**
+  String stockExpiryDaysPast(String days);
+
+  /// #4431 the expiry report
+  ///
+  /// In en, this message translates to:
+  /// **'Item group'**
+  String get stockExpiryGroup;
+
+  /// #4431 the expiry report
+  ///
+  /// In en, this message translates to:
+  /// **'Look ahead (days)'**
+  String get stockExpiryHorizon;
+
+  /// #4431 the expiry report
+  ///
+  /// In en, this message translates to:
+  /// **'Empty: the business\'s own setting.'**
+  String get stockExpiryHorizonHint;
+
+  /// #4431 the expiry report
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing in stock is expired or about to expire at this date.'**
+  String get stockExpiryNone;
+
+  /// #4431 the expiry report
+  ///
+  /// In en, this message translates to:
+  /// **'Place'**
+  String get stockExpiryPlace;
+
+  /// #4431 the expiry report
+  ///
+  /// In en, this message translates to:
+  /// **'Print the report'**
+  String get stockExpiryPrint;
+
+  /// #4431 the expiry report
+  ///
+  /// In en, this message translates to:
+  /// **'The expiry report could not be read.'**
+  String get stockExpiryReadFailed;
+
+  /// #4431 the expiry report
+  ///
+  /// In en, this message translates to:
+  /// **'What to list'**
+  String get stockExpiryScope;
+
+  /// #4431 the expiry report
+  ///
+  /// In en, this message translates to:
+  /// **'Expired and expiring'**
+  String get stockExpiryScopeBoth;
+
+  /// #4431 the expiry report
+  ///
+  /// In en, this message translates to:
+  /// **'Expired'**
+  String get stockExpiryScopeExpired;
+
+  /// #4431 the expiry report
+  ///
+  /// In en, this message translates to:
+  /// **'Expiring'**
+  String get stockExpiryScopeExpiring;
+
+  /// #4431 the expiry report
+  ///
+  /// In en, this message translates to:
+  /// **'Expiry report'**
+  String get stockExpiryTitle;
 
   /// #4350 adding an item, and the first-run stock page
   ///

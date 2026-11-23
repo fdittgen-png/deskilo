@@ -13,6 +13,7 @@ import '../../features/stock/presentation/stock_count_task_screen.dart';
 import '../../features/stock/presentation/stock_counts_screen.dart';
 import '../../features/stock/presentation/stock_cycle_counts_screen.dart';
 import '../../features/stock/presentation/stock_entry.dart';
+import '../../features/stock/presentation/stock_expiry_screen.dart';
 import '../../features/stock/presentation/stock_items_screen.dart';
 import '../../features/stock/presentation/stock_movement_screen.dart';
 import '../../features/stock/presentation/stock_places_screen.dart';
@@ -45,6 +46,10 @@ List<RouteBase> stockRoutes(RouteEnv env) {
   );
   const groupsAccess = RouteAccess(
     features: [WorkspaceFeature.stockManagement, WorkspaceFeature.stockItemGroups],
+    to: '/reserve',
+  );
+  const expiryAccess = RouteAccess(
+    features: [WorkspaceFeature.stockManagement, WorkspaceFeature.stockExpiryReport],
     to: '/reserve',
   );
   return [
@@ -115,6 +120,12 @@ List<RouteBase> stockRoutes(RouteEnv env) {
           path: 'groups',
           redirect: env.guard(groupsAccess),
           builder: (context, state) => const ItemGroupsScreen(),
+        ),
+        // #4431 — the expiry report: what is expired at a date or expires after it, printed from the report engine.
+        GoRoute(
+          path: 'expiry',
+          redirect: env.guard(expiryAccess),
+          builder: (context, state) => const StockExpiryScreen(),
         ),
         GoRoute(
           path: 'movements/:id',

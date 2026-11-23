@@ -138,6 +138,7 @@
   "user.money.stock.nfc": "Tags mit dem NFC des Telefons",
   "user.money.till": "Kasse",
   "user.money.stock.rfid": "RFID-Tags: eines pro Charge oder eines pro Stück",
+  "user.money.stock.expiry": "Der Verfallsbericht",
   "user.money.stock.bulkread": "Viele Etiketten lesen",
   "user.money.stock.value": "Lagerwert und Herkunft der Ware",
   "user.money.stock.reversals": "Rückgaben, Korrekturen und Zählungen",
