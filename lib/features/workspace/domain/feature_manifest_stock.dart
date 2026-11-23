@@ -123,12 +123,4 @@ const Map<WorkspaceFeature, FeatureManifestEntry> stockFeatureManifest = {
     requires: WorkspaceFeature.standaloneInvoicing,
     defaultOn: false,
   ),
-  // #4366 — the till: a full-screen basket served in seconds, on the counter receipt of #4184. Asked for. Off: no till.
-  WorkspaceFeature.counterTill: FeatureManifestEntry(
-    feature: WorkspaceFeature.counterTill,
-    surface: FeatureSurface.money,
-    tier: FeatureTier.platform,
-    requires: WorkspaceFeature.counterReceipts,
-    defaultOn: false,
-  ),
 };

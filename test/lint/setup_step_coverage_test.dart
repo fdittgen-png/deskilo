@@ -66,8 +66,6 @@ const _switches = <WorkspaceFeature>{
   WorkspaceFeature.stockScanning,
   // #4184 — asked for on its own screens, not in the setup guide.
   WorkspaceFeature.counterReceipts,
-  // #4366 — the till is asked for on its own screen, not in the setup guide.
-  WorkspaceFeature.counterTill,
   // Booking and the plan read what is already set up.
   WorkspaceFeature.seriesBooking,
   WorkspaceFeature.seatDayTimeline,
