@@ -88,10 +88,8 @@ command -v timeout >/dev/null 2>&1 && LIMIT=(timeout 60)
 say() { printf '  %s\n' "$*"; }
 bad() { echo "::error::db race: $*"; FAILED=$((FAILED + 1)); }
 die() { echo "::error::db race: $*"; exit 1; }
-q() {
-  PGOPTIONS='-c statement_timeout=20s' ${LIMIT[@]+"${LIMIT[@]}"} \
-    psql "$DB_URL" -qtAX -v ON_ERROR_STOP=1 -c "$1"
-}
+RACE_URL=$DB_URL RACE_PGOPTIONS='-c statement_timeout=20s' RACE_LIMIT=(${LIMIT[@]+"${LIMIT[@]}"})
+. "$(dirname "${BASH_SOURCE[0]}")/lib/race.sh"
 # Decimal digits are hex digits: the pid makes a valid, per-run uuid.
 uid() { printf '00000000-0000-4000-8000-%08d%04d' "$RUN" "$1"; }
 
