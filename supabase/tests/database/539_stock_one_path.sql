@@ -2,7 +2,7 @@
 -- #4398: one stock path. What a return and a count decision do to an item tracked piece by piece, measured before the refactor:
 -- the piece rule hooked into stock_apply_lines (0887) must hold for every command that moves goods. Rolled back.
 begin;
-select plan(17);
+select plan(19);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -113,6 +113,13 @@ select is(left(pg_temp.run_as(pg_temp.u(3), format('select public.stock_return_v
 select is(left(pg_temp.run_as(pg_temp.u(3), format('select public.stock_return_v1(%L, %L, %L, %L, %L::jsonb)::text', pg_temp.u(101), pg_temp.u(983), pg_temp.u(984), 'correction',
   format('[{"return_line_id": "%s", "source_movement_id": "%s", "quantity": "1", "units": [{"tag": "E28068940000401561D679F1"}]}]', pg_temp.u(985), current_setting('t.retmv')))), 7), '{"kind"',
   'and one that names the piece it returned puts it back');
+
+-- the decision of a count records what the count recorded: today's variants and places do not refuse it (#4415, 0919)
+select is(pg_temp.apply('count', 'adjustment', format('[{"item_id": "%s", "from": "%s", "to": "%s", "quantity": "1", "expired_ack": true}]', pg_temp.u(305), pg_temp.place('loss'), pg_temp.loc('MAIN'))),
+  'ok', 'a count decided after its item gained variants is recorded (the generic door asks for the variant)');
+insert into public.stock_locations (id, workspace_id, parent_id, kind, code, active) values (pg_temp.u(990), pg_temp.u(101), pg_temp.loc('MAIN'), 'zone', 'GONE', false);
+select is(pg_temp.apply('count', 'adjustment', format('[{"item_id": "%s", "from": "%s", "to": "%s", "quantity": "1", "expired_ack": true}]', pg_temp.u(306), pg_temp.place('loss'), pg_temp.u(990))),
+  'ok', 'and after its place was deactivated');
 
 -- the acceptance of #4398: one function writes the ledger
 select is((select string_agg(p.proname::text, ',' order by p.proname) from pg_proc p join pg_namespace n on n.oid = p.pronamespace
