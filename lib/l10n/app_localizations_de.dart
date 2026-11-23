@@ -28827,8 +28827,16 @@ class AppLocalizationsDe extends AppLocalizations {
       'Für diesen Beleg fehlt etwas oder es ist nicht zulässig: Es wurde nichts nummeriert und nichts angenommen.';
 
   @override
+  String get refusalCounterGoods =>
+      'Waren können hier nicht verkauft oder zurückgenommen werden: Das Warenbuch ist aus, oder es gibt keinen Ort, von dem sie genommen oder an den sie zurückgelegt werden.';
+
+  @override
   String get refusalCounterNotOpen =>
       'Dieser Beleg ist kein offener Entwurf mehr, oder für denselben Verkauf wurde schon ein Beleg ausgestellt.';
+
+  @override
+  String get refusalCounterTenderState =>
+      'Diese Kartenfreigabe ist noch offen, unbekannt oder schon abgeschlossen: Fragen Sie beim Anbieter nach, statt erneut anzufragen.';
 
   @override
   String get refusalCounterTenders =>

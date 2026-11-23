@@ -156,6 +156,11 @@ enum KnownRefusal {
   counterCorrectionBeyond,
   counterChanged,
 
+  /// #4185 (0894, 0895) -- DKT07: goods cannot be sold or taken back here (the goods ledger is off, or there is no place to
+  /// take them from or put them back); DKT11: a card authorization is open, unknown or already settled.
+  counterGoods,
+  counterTenderState,
+
   /// #4362 (0887) — DKG25: the pieces of a piece-tracked item must be named;
   /// DKG26: a named piece is not where the movement takes it from.
   stockNamePieces,
@@ -244,7 +249,9 @@ const Map<String, KnownRefusal> _codedRefusals = {
   'DKT05': KnownRefusal.counterCustomerNeeded,
   'DKT06': KnownRefusal.counterTenders,
   'DKT08': KnownRefusal.counterCorrectionBeyond,
+  'DKT07': KnownRefusal.counterGoods,
   'DKT10': KnownRefusal.counterChanged,
+  'DKT11': KnownRefusal.counterTenderState,
   // #4008 — a member who left (0782).
   'DKM01': KnownRefusal.memberReturnsAsNew,
 };
@@ -369,6 +376,8 @@ String? _counterRefusalText(AppLocalizations l10n, KnownRefusal refusal) => swit
       KnownRefusal.counterTenders => l10n.refusalCounterTenders,
       KnownRefusal.counterCorrectionBeyond => l10n.refusalCounterCorrectionBeyond,
       KnownRefusal.counterChanged => l10n.refusalCounterChanged,
+      KnownRefusal.counterGoods => l10n.refusalCounterGoods,
+      KnownRefusal.counterTenderState => l10n.refusalCounterTenderState,
       _ => null,
     };
 

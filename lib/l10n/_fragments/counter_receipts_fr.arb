@@ -11,5 +11,7 @@
   "refusalCounterCustomerNeeded": "Cette entreprise nomme un client à chaque vente : choisissez-en un avant de terminer.",
   "refusalCounterTenders": "Les règlements ne soldent pas exactement cette vente, ou l'un d'eux n'est pas pris en charge ici.",
   "refusalCounterCorrectionBeyond": "Une correction ne peut pas dépasser ce qu'il reste de la ligne d'origine.",
-  "refusalCounterChanged": "Ce ticket a changé entre-temps : rouvrez-le."
+  "refusalCounterChanged": "Ce ticket a changé entre-temps : rouvrez-le.",
+  "refusalCounterGoods": "Les marchandises ne peuvent pas être vendues ou reprises ici : le registre des marchandises est désactivé, ou il n'y a pas de lieu d'où les prendre ou où les remettre.",
+  "refusalCounterTenderState": "Cette autorisation par carte est encore ouverte, inconnue ou déjà réglée : interrogez le prestataire au lieu de redemander."
 }

@@ -28778,8 +28778,16 @@ class AppLocalizationsIt extends AppLocalizations {
       'A questo scontrino manca qualcosa o non è accettabile: non è stato numerato nulla e non è stato incassato nulla.';
 
   @override
+  String get refusalCounterGoods =>
+      'Qui le merci non si possono vendere né riprendere: il registro delle merci è spento, oppure non c\'è un luogo da cui prenderle o in cui rimetterle.';
+
+  @override
   String get refusalCounterNotOpen =>
       'Questo scontrino non è più una bozza aperta, oppure per la stessa vendita ne è già stato emesso uno.';
+
+  @override
+  String get refusalCounterTenderState =>
+      'Questa autorizzazione della carta è ancora aperta, sconosciuta o già conclusa: chieda al fornitore invece di richiederla di nuovo.';
 
   @override
   String get refusalCounterTenders =>

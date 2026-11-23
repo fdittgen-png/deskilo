@@ -28864,8 +28864,16 @@ class AppLocalizationsFr extends AppLocalizations {
       'Il manque quelque chose à ce ticket ou ce n\'est pas acceptable : rien n\'a été numéroté et rien n\'a été encaissé.';
 
   @override
+  String get refusalCounterGoods =>
+      'Les marchandises ne peuvent pas être vendues ou reprises ici : le registre des marchandises est désactivé, ou il n\'y a pas de lieu d\'où les prendre ou où les remettre.';
+
+  @override
   String get refusalCounterNotOpen =>
       'Ce ticket n\'est plus un brouillon ouvert, ou un ticket a déjà été émis pour la même vente.';
+
+  @override
+  String get refusalCounterTenderState =>
+      'Cette autorisation par carte est encore ouverte, inconnue ou déjà réglée : interrogez le prestataire au lieu de redemander.';
 
   @override
   String get refusalCounterTenders =>

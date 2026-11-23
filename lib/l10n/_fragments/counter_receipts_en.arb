@@ -50,5 +50,13 @@
   "refusalCounterChanged": "This receipt changed meanwhile: open it again.",
   "@refusalCounterChanged": {
     "description": "#4185 refusal"
+  },
+  "refusalCounterGoods": "Goods cannot be sold or taken back here: the goods ledger is off, or there is no place to take them from or put them back.",
+  "@refusalCounterGoods": {
+    "description": "#4185 refusal"
+  },
+  "refusalCounterTenderState": "This card authorization is still open, unknown or already settled: ask the provider about it instead of asking again.",
+  "@refusalCounterTenderState": {
+    "description": "#4185 refusal"
   }
 }

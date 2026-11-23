@@ -28538,8 +28538,16 @@ class AppLocalizationsEn extends AppLocalizations {
       'Something this receipt needs is missing or not acceptable: nothing was numbered and nothing was taken.';
 
   @override
+  String get refusalCounterGoods =>
+      'Goods cannot be sold or taken back here: the goods ledger is off, or there is no place to take them from or put them back.';
+
+  @override
   String get refusalCounterNotOpen =>
       'This receipt is no longer an open draft, or a receipt was already issued for the same sale.';
+
+  @override
+  String get refusalCounterTenderState =>
+      'This card authorization is still open, unknown or already settled: ask the provider about it instead of asking again.';
 
   @override
   String get refusalCounterTenders =>

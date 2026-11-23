@@ -4,7 +4,7 @@
 -- original's frozen document is unchanged afterwards; only a finalized sale is corrected; a correction is not corrected;
 -- it needs the operation supported. Rolled back.
 begin;
-select plan(13);
+select plan(14);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -80,7 +80,10 @@ select is((select md5(frozen::text) from public.counter_receipts where id = curr
 select is(pg_temp.f(pg_temp.corr(1, 101, 963, current_setting('t.r')::uuid, format('{"reason": "one cut was not done", "lines": [{"corrects_line_id": "%s", "quantity": "1"}]}', current_setting('t.line'))), 'number'), pg_temp.f(current_setting('t.c1'), 'number'), 'a lost answer retried under the same request id answers the same correction');
 select is((select count(*)::int from public.counter_receipts where corrects_receipt_id = current_setting('t.r')::uuid), 1, 'and makes no second one');
 select is(pg_temp.corr(1, 101, 964, current_setting('t.r')::uuid, format('{"lines": [{"corrects_line_id": "%s", "quantity": "2"}]}', current_setting('t.line'))), 'ERR DKT08 {"left": "1", "line": 1, "reason": "beyond_original"}', 'correcting more than the line has left is refused, saying what is left');
-select is(pg_temp.corr(1, 101, 965, current_setting('t.r')::uuid, format('{"lines": [{"corrects_line_id": "%s", "quantity": "1"}]}', current_setting('t.line'))) like '{%', true, 'the remaining one is corrected');
+update public.vat_rates set percent = 5 where id = pg_temp.u(801);
+select set_config('t.c2', pg_temp.corr(1, 101, 965, current_setting('t.r')::uuid, format('{"lines": [{"corrects_line_id": "%s", "quantity": "1"}]}', current_setting('t.line'))), false);
+select is(current_setting('t.c2') like '{%', true, 'the remaining one is corrected');
+select is((current_setting('t.c2')::jsonb #>> '{totals,tax_minor}') || ' ' || (current_setting('t.c2')::jsonb #>> '{totals,gross_minor}'), '200 1200', 'with the ORIGINAL line''s tax (20%) though the rate is 5% today: the corrections add up to the original exactly');
 select is(left(pg_temp.corr(1, 101, 966, current_setting('t.r')::uuid, format('{"lines": [{"corrects_line_id": "%s", "quantity": "1"}]}', current_setting('t.line'))), 12), 'ERR DKT08 {"', 'and the line is then fully corrected');
 select is(left(pg_temp.corr(1, 101, 967, pg_temp.f(current_setting('t.c1'), 'receipt_id')::uuid, '{"lines": []}'), 9), 'ERR DKT04', 'a correction is not corrected');
 select is(pg_temp.corr(1, 101, 968, current_setting('t.r')::uuid, '{"lines": [{"corrects_line_id": "00000000-0000-4000-8000-0000000000ff", "quantity": "1"}]}'), 'ERR DKT08 {"line": 1, "reason": "line_unknown"}', 'a line that is not the original''s is refused');

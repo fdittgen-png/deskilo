@@ -39,6 +39,8 @@
 #       is refused (DKG22); one tag, on the piece.
 #   (L) two put-aways of one receipt line naming 3 tags each of the 4 delivered piece by piece: the second
 #       waits for the line's lock and is refused as over-allocated; one set of 3 pieces.
+#   (M) two operators finalize one counter draft under different request ids: the second waits for the receipt's lock
+#       and is refused (DKT04); one number, one tender.
 # A holder that never took its lock, or a contender that never waited, fails the
 # script: nothing here can pass empty. A single pgTAP transaction cannot show a
 # race, so each contender is its own psql process on CI's disposable database.
@@ -661,5 +663,38 @@ wait "$contender15" || true
 grep -qx putaway "$scratch/holder15" || { echo "::error::the first piece put-away did not complete: $(tr '\n' ' ' < "$scratch/holder15")" >&2; exit 1; }
 grep -q "over_allocated" "$scratch/contender15" || { echo "::error::the second piece put-away was not refused as over_allocated: $(tr '\n' ' ' < "$scratch/contender15")" >&2; exit 1; }
 expect "(L) three pieces exist, with their tags, once" "$(q "select count(*) || '/' || (select count(*) from public.stock_tags where workspace_id = '$ws' and owner_kind = 'piece' and state = 'active' and item_id = '$pitem') from public.stock_tagged_units where workspace_id = '$ws' and item_id = '$pitem'")" "3/3"
+
+# (M) two operators finalize the same counter draft under different request ids: the second waits for the receipt's
+# lock, then is refused (DKT04, no longer an open draft); one number is drawn, one set of tenders exists.
+q "update public.workspaces set vat_regime = 'vat_registered', feature_flags = coalesce(feature_flags, '{}'::jsonb) || '{\"invoicing\": true, \"standaloneInvoicing\": true, \"counterReceipts\": true}' where id = '$ws'" >/dev/null
+q "insert into public.vat_rates (workspace_id, label, percent, category, is_default, group_key) select '$ws', 'Standard', 20, 'S', true, 'standard' where not exists (select 1 from public.vat_rates where workspace_id = '$ws' and is_default)" >/dev/null
+q "insert into public.setting_values (scope, workspace_id, key, value) values ('workspace', '$ws', 'counter.fiscal_obligation', '\"none\"'::jsonb) on conflict do nothing" >/dev/null
+cdraft=$(psql "$url" -X -qAt -v ON_ERROR_STOP=1 -c "begin; select set_config('request.jwt.claims', '{\"sub\":\"$owner\",\"role\":\"authenticated\",\"aal\":\"aal2\"}', true); set local role authenticated; select (public.counter_receipt_draft_v1('$ws', gen_random_uuid(), null, null, '{\"lines\": [{\"description\": \"Race service\", \"quantity\": \"1\", \"unit_price\": \"12.00\", \"supply\": \"general\", \"unit\": {\"code\": \"unit\", \"label\": \"unit\", \"un_ece_code\": \"C62\"}}]}'::jsonb) ->> 'receipt_id'); commit;" | grep -E '^[0-9a-f-]{36}$' | head -1)
+[[ -n "$cdraft" ]] || { echo "::error::the counter draft was not made" >&2; exit 1; }
+cf() { echo "$as_owner select 'finalized' from (select public.counter_receipt_finalize_v1('$ws', '$1', '$cdraft', 1, '[{\"kind\": \"cash\", \"amount_minor\": 1200}]'::jsonb)) t;"; }
+cf1=$(uid); cf2=$(uid)
+psql "$url" -X -qAt -v ON_ERROR_STOP=1 >"$scratch/holder16" 2>&1 <<SQL &
+begin;
+$(cf "$cf1")
+reset role;
+\\! touch '$scratch/ready16'
+select pg_sleep(4);
+commit;
+SQL
+holder16=$!
+wait_marker "$scratch/ready16" "$scratch/holder16"
+PGAPPNAME="transfer-race-counter" psql "$url" -X -qAt -v ON_ERROR_STOP=1 >"$scratch/contender16" 2>&1 <<SQL &
+\\set VERBOSITY verbose
+begin;
+$(cf "$cf2")
+commit;
+SQL
+contender16=$!
+wait_lock "transfer-race-counter"
+wait "$holder16" || { echo "::error::the first finalize failed: $(tr '\n' ' ' < "$scratch/holder16")" >&2; exit 1; }
+wait "$contender16" || true
+grep -qx finalized "$scratch/holder16" || { echo "::error::the first finalize did not complete: $(tr '\n' ' ' < "$scratch/holder16")" >&2; exit 1; }
+grep -q "DKT04" "$scratch/contender16" || { echo "::error::the second finalize was not refused as no longer open: $(tr '\n' ' ' < "$scratch/contender16")" >&2; exit 1; }
+expect "(M) one receipt number and one tender" "$(q "select count(distinct r.number) || '/' || (select count(*) from public.counter_tenders t where t.receipt_id = r.id) from public.counter_receipts r where r.id = '$cdraft' group by r.id")" "1/1"
 
 echo "stock transfer race: opposing transfers never deadlock and keep every total; the last stock is taken once; a booking confirmation and a customer return of one item serialise in both orders; two put-aways cannot over-allocate a line; two sessions crossing a reorder point raise one alert"

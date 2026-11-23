@@ -37488,8 +37488,16 @@
   "@refusalCounterEssentials": {
     "description": "#4185 refusal"
   },
+  "refusalCounterGoods": "Goods cannot be sold or taken back here: the goods ledger is off, or there is no place to take them from or put them back.",
+  "@refusalCounterGoods": {
+    "description": "#4185 refusal"
+  },
   "refusalCounterNotOpen": "This receipt is no longer an open draft, or a receipt was already issued for the same sale.",
   "@refusalCounterNotOpen": {
+    "description": "#4185 refusal"
+  },
+  "refusalCounterTenderState": "This card authorization is still open, unknown or already settled: ask the provider about it instead of asking again.",
+  "@refusalCounterTenderState": {
     "description": "#4185 refusal"
   },
   "refusalCounterTenders": "The payments do not settle this sale exactly, or one of them is not taken here.",

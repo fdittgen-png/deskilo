@@ -452,6 +452,7 @@ const List<ExportSource> workspaceExportSources = [
   ExportSource.everyColumn('counter_receipts'),
   ExportSource.everyColumn('counter_receipt_lines'),
   ExportSource.everyColumn('counter_tenders'),
+  ExportSource.everyColumn('counter_refunds'),
   // #4362 — the tags bound to items, places and pieces, and the named pieces.
   ExportSource.everyColumn('stock_tags'),
   ExportSource.everyColumn('stock_tagged_units'),

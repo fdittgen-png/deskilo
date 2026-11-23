@@ -11,5 +11,7 @@
   "refusalCounterCustomerNeeded": "Este negocio nombra un cliente en cada venta: elija uno antes de terminar.",
   "refusalCounterTenders": "Los cobros no saldan exactamente esta venta, o uno de ellos no se acepta aquí.",
   "refusalCounterCorrectionBeyond": "Una corrección no puede ir más allá de lo que queda de la línea original.",
-  "refusalCounterChanged": "Este ticket cambió mientras tanto: ábralo de nuevo."
+  "refusalCounterChanged": "Este ticket cambió mientras tanto: ábralo de nuevo.",
+  "refusalCounterGoods": "Aquí no se pueden vender ni recuperar mercancías: el libro de mercancías está desactivado, o no hay un lugar de donde tomarlas o donde devolverlas.",
+  "refusalCounterTenderState": "Esta autorización de tarjeta sigue abierta, es desconocida o ya está resuelta: consulte al proveedor en lugar de pedirla otra vez."
 }

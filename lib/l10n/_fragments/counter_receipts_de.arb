@@ -11,5 +11,7 @@
   "refusalCounterCustomerNeeded": "Dieser Betrieb nennt bei jedem Verkauf einen Kunden: Wählen Sie vor dem Abschluss einen aus.",
   "refusalCounterTenders": "Die Zahlungen begleichen diesen Verkauf nicht genau, oder eine davon wird hier nicht angenommen.",
   "refusalCounterCorrectionBeyond": "Eine Korrektur kann nicht über das hinausgehen, was von der ursprünglichen Zeile übrig ist.",
-  "refusalCounterChanged": "Dieser Beleg hat sich inzwischen geändert: Öffnen Sie ihn erneut."
+  "refusalCounterChanged": "Dieser Beleg hat sich inzwischen geändert: Öffnen Sie ihn erneut.",
+  "refusalCounterGoods": "Waren können hier nicht verkauft oder zurückgenommen werden: Das Warenbuch ist aus, oder es gibt keinen Ort, von dem sie genommen oder an den sie zurückgelegt werden.",
+  "refusalCounterTenderState": "Diese Kartenfreigabe ist noch offen, unbekannt oder schon abgeschlossen: Fragen Sie beim Anbieter nach, statt erneut anzufragen."
 }

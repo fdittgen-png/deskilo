@@ -17,7 +17,8 @@
 --     of it, with quantities bounded by what the original line still has left (DKT08). It is the credit document only:
 --     no refund is made by it.
 --   * The line facts are computed by the standalone invoice's own line function (0820), so a service at the counter and
---     a standalone invoice freeze the same facts; goods lines are computed the same way and marked goods.
+--     a standalone invoice freeze the same facts; goods lines are computed the same way and marked goods, and their
+--     movement is made by the one stock path (0896) in the finalize's own transaction.
 
 create or replace function public.counter_adapters()
 returns text[] language sql immutable set search_path = public as $fn$
@@ -173,6 +174,10 @@ begin
         v_in := v_in || jsonb_build_object('supply', case when v_item.stockable then 'goods' else 'general' end);
       end if;
     end if;
+    if v_in ->> 'supply' = 'goods' and (v_item.id is null or not v_item.stockable) then
+      v_missing := v_missing || ('line_' || v_idx || '_item');
+      continue;
+    end if;
     if coalesce(v_in ->> 'line_id', '') = '' then v_in := v_in || jsonb_build_object('line_id', gen_random_uuid()); end if;
     v_in := v_in || jsonb_build_object('basis', p_basis);
     v_out := public.counter_line_compute(p_workspace_id, v_in, v_idx, p_currency, p_tax_point);
@@ -316,6 +321,10 @@ declare
   v_result jsonb;
   r jsonb;
   v_no int := 0;
+  v_named uuid[];
+  v_tender public.counter_tenders;
+  v_goods jsonb;
+  v_main uuid;
 begin
   v_me := public.counter_actor(p_workspace_id);
   if p_request_id is null or p_receipt_id is null or coalesce(jsonb_typeof(p_tenders), '') <> 'array' then
@@ -365,11 +374,28 @@ begin
   if v_total <= 0 then
     raise exception 'receipt_essentials_missing' using errcode = 'DKT02', detail = 'total_not_positive';
   end if;
-  -- the tenders: cash and other, each of its own part, adding to the total exactly
-  if jsonb_array_length(p_tenders) = 0 then
+  -- the tenders: the cash and other ones named here, each of its own part, and the card ones already accepted on this
+  -- receipt (named by id), adding to the total exactly; an authorization still open (requested or unknown) is never
+  -- passed over, a refused one is not paid
+  if exists (select 1 from public.counter_tenders t where t.receipt_id = v_rec.id
+                and (t.state in ('requested', 'unknown') or (t.state = 'accepted' and t.reconciliation = 'needed'))) then
+    raise exception 'a card authorization of this sale is still open' using errcode = 'DKT06', detail = 'tender_open';
+  end if;
+  if jsonb_array_length(p_tenders) = 0 and not exists (select 1 from public.counter_tenders t where t.receipt_id = v_rec.id and t.state = 'accepted') then
     raise exception 'a sale is settled by its tenders' using errcode = 'DKT06', detail = 'tenders_missing';
   end if;
+  v_named := array[]::uuid[];
   for v_t in select value from jsonb_array_elements(p_tenders) loop
+    if v_t ? 'tender_id' then
+      select * into v_tender from public.counter_tenders t
+       where t.id = nullif(v_t ->> 'tender_id', '')::uuid and t.receipt_id = v_rec.id and t.workspace_id = p_workspace_id;
+      if v_tender.id is null or v_tender.kind <> 'card' or v_tender.state <> 'accepted' or v_tender.reconciliation = 'needed' or v_tender.id = any (v_named) then
+        raise exception 'this tender is not an accepted card tender of this sale' using errcode = 'DKT06', detail = 'tender_state';
+      end if;
+      v_named := v_named || v_tender.id;
+      v_sum := v_sum + v_tender.amount_minor;
+      continue;
+    end if;
     v_kind := v_t ->> 'kind';
     if v_kind is null or v_kind not in ('cash', 'other') then
       raise exception 'this tender is not taken here' using errcode = 'DKT06', detail = 'tender_kind';
@@ -379,6 +405,9 @@ begin
     end if;
     v_sum := v_sum + (v_t ->> 'amount_minor')::bigint;
   end loop;
+  -- an accepted card tender of this receipt that the caller did not name is still money taken: it counts
+  v_sum := v_sum + coalesce((select sum(t.amount_minor) from public.counter_tenders t
+                              where t.receipt_id = v_rec.id and t.state = 'accepted' and not (t.id = any (v_named))), 0);
   if v_sum <> v_total then
     raise exception 'the tenders do not add up to the total' using errcode = 'DKT06', detail = 'tender_sum';
   end if;
@@ -413,13 +442,39 @@ begin
   update public.counter_receipts set state = 'finalized', number = v_number, frozen = v_frozen, total_minor = v_total, tax_minor = v_tax,
          operation_id = v_op.id, fiscal_assumption = v_regime, finalized_by_member_id = v_me, finalized_at = now()
    where id = v_rec.id;
+  select coalesce(max(t.part), 0) into v_part from public.counter_tenders t where t.receipt_id = v_rec.id;
   for v_t in select value from jsonb_array_elements(p_tenders) loop
+    if v_t ? 'tender_id' then continue; end if;
     v_part := v_part + 1;
     insert into public.counter_tenders (workspace_id, receipt_id, part, kind, amount_minor, state, request_id, resolved_at, recorded_by_member_id)
     values (p_workspace_id, v_rec.id, v_part, v_t ->> 'kind', (v_t ->> 'amount_minor')::bigint, 'accepted', p_request_id, now(), v_me);
   end loop;
+  -- goods: one movement per goods line through the one stock path, in this transaction and under this request id, linked to
+  -- this receipt: a line that cannot leave (not enough, expired, a variant or a lot to name) rolls the whole sale back,
+  -- number included; issuing the receipt moves nothing else, and a replay answers without moving anything again
+  v_goods := '[]'::jsonb;
+  for r in select value from jsonb_array_elements(v_calc -> 'lines') loop
+    if r #>> '{line,supply}' = 'goods' then
+      if not public.feature_effective(p_workspace_id, 'stockManagement') then
+        raise exception 'goods are not sold here: the goods ledger is off' using errcode = 'DKT07', detail = 'goods_off';
+      end if;
+      v_main := coalesce(nullif(r #>> '{input,from_location_id}', '')::uuid,
+                         (select sl.id from public.stock_locations sl where sl.workspace_id = p_workspace_id and sl.code = 'MAIN' limit 1));
+      if v_main is null then
+        raise exception 'no place to take the goods from' using errcode = 'DKT07', detail = 'from_place';
+      end if;
+      v_goods := v_goods || jsonb_build_array(jsonb_strip_nulls(jsonb_build_object(
+        'item_id', r ->> 'item_id', 'variant_id', nullif(r #>> '{input,variant_id}', ''),
+        'quantity', r #>> '{line,commercial,quantity}', 'unit', r #>> '{line,commercial,unit,code}',
+        'from', v_main, 'to', public.stock_place(p_workspace_id, 'customer'), 'lot_id', nullif(r #>> '{input,lot_id}', ''))));
+    end if;
+  end loop;
+  if jsonb_array_length(v_goods) > 0 then
+    perform public.stock_apply_lines(p_workspace_id, v_me, p_request_id, v_goods, 'sale', now(),
+                                     jsonb_build_object('counter_receipt_id', v_rec.id), 'generic');
+  end if;
   v_result := jsonb_build_object('receipt_id', v_rec.id, 'number', v_number, 'currency', v_rec.currency,
-    'totals', v_calc -> 'totals', 'tenders', jsonb_array_length(p_tenders), 'replayed', false);
+    'totals', v_calc -> 'totals', 'tenders', (select count(*) from public.counter_tenders t where t.receipt_id = v_rec.id and t.state = 'accepted'), 'replayed', false);
   return public.purchase_request_end(p_workspace_id, p_request_id, 'counter_finalize', v_digest, v_result);
 end;
 $fn$;
@@ -458,6 +513,10 @@ declare
   v_seen uuid[] := array[]::uuid[];
   v_result jsonb;
   r jsonb;
+  v_prev_gross bigint;
+  v_prev_tax bigint;
+  v_line_gross bigint;
+  v_line_tax bigint;
 begin
   v_me := public.counter_actor(p_workspace_id);
   if p_request_id is null or p_original_id is null or coalesce(jsonb_typeof(p_body), '') <> 'object' or coalesce(jsonb_typeof(p_body -> 'lines'), '') <> 'array' then
@@ -493,12 +552,33 @@ begin
       raise exception 'more is corrected than the original line has left' using errcode = 'DKT08',
         detail = jsonb_build_object('line', v_idx, 'reason', 'beyond_original', 'left', trim_scale(v_left)::text)::text;
     end if;
-    -- the same facts as the original line: its own price, unit and tax, for the corrected quantity
-    v_in := (v_ol.frozen -> 'input') || jsonb_build_object('quantity', trim_scale(v_qty)::text, 'line_id', gen_random_uuid());
-    v_out := public.counter_line_compute(p_workspace_id, v_in, v_idx, v_orig.currency, v_tp);
+    -- the facts of the ORIGINAL line, not today's: its own price, unit, rate and category, at the original tax point,
+    -- for the corrected quantity; a line that completes the original is exactly what is left of it
+    v_in := (v_ol.frozen -> 'input') || jsonb_build_object('quantity', trim_scale(v_qty)::text, 'line_id', gen_random_uuid(),
+                                                            'supply', case when (v_ol.frozen ->> 'supply') = 'goods' then 'general' else v_ol.frozen ->> 'supply' end);
+    v_out := public.standalone_invoice_line_v1(v_in, v_idx, v_orig.currency, (v_ol.frozen ->> 'vat_percent')::numeric,
+               v_ol.frozen ->> 'vat_category', (v_ol.frozen #>> '{commercial,tax_facts,tax_point}')::date);
     if jsonb_array_length(v_out -> 'missing') > 0 then
       raise exception 'receipt_essentials_missing' using errcode = 'DKT02',
         detail = (select string_agg(x, ',') from jsonb_array_elements_text(v_out -> 'missing') x);
+    end if;
+    select coalesce(sum(c.gross_minor), 0), coalesce(sum(c.tax_minor), 0) into v_prev_gross, v_prev_tax
+      from public.counter_receipt_lines c join public.counter_receipts cr on cr.id = c.receipt_id and cr.state = 'finalized'
+     where c.corrects_line_id = v_ol.id;
+    v_line_gross := (v_out #>> '{line,commercial,amounts,gross_minor}')::bigint;
+    if v_qty = v_left then
+      v_line_gross := v_ol.gross_minor - v_prev_gross;
+      v_line_tax := v_ol.tax_minor - v_prev_tax;
+      v_out := jsonb_set(jsonb_set(jsonb_set(jsonb_set(v_out, '{line,commercial,amounts,gross_minor}', to_jsonb(v_line_gross::text)),
+                 '{line,commercial,amounts,tax_minor}', to_jsonb(v_line_tax::text)),
+                 '{line,commercial,amounts,net_minor}', to_jsonb((v_line_gross - v_line_tax)::text)),
+                 '{line,amount_cents}', to_jsonb(v_line_gross));
+    elsif v_prev_gross + v_line_gross > v_ol.gross_minor then
+      raise exception 'more is corrected than the original line holds' using errcode = 'DKT08',
+        detail = jsonb_build_object('line', v_idx, 'reason', 'amount_beyond')::text;
+    end if;
+    if (v_ol.frozen ->> 'supply') = 'goods' then
+      v_out := jsonb_set(v_out, '{line}', jsonb_set(jsonb_set(jsonb_set(v_out -> 'line', '{kind}', '"goods"'), '{supply}', '"goods"'), '{commercial,supply}', '"goods"'));
     end if;
     v_rows := v_rows || jsonb_build_array(jsonb_build_object('input', v_in, 'line', v_out -> 'line', 'item_id', v_ol.item_id,
                                                               'variant_id', v_ol.variant_id, 'corrects_line_id', v_ol.id));

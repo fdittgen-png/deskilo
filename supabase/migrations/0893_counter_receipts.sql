@@ -178,6 +178,7 @@ create table public.counter_tenders (
   state text not null default 'recorded' check (state in ('recorded', 'requested', 'unknown', 'accepted', 'refused')),
   provider_key text check (provider_key is null or char_length(provider_key) <= 200),
   request_id uuid,
+  offered_revision int,
   reconciliation text check (reconciliation is null or reconciliation in ('needed', 'done')),
   resolved_at timestamptz,
   recorded_by_member_id uuid,

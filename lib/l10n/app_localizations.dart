@@ -45815,8 +45815,20 @@ abstract class AppLocalizations {
   /// #4185 refusal
   ///
   /// In en, this message translates to:
+  /// **'Goods cannot be sold or taken back here: the goods ledger is off, or there is no place to take them from or put them back.'**
+  String get refusalCounterGoods;
+
+  /// #4185 refusal
+  ///
+  /// In en, this message translates to:
   /// **'This receipt is no longer an open draft, or a receipt was already issued for the same sale.'**
   String get refusalCounterNotOpen;
+
+  /// #4185 refusal
+  ///
+  /// In en, this message translates to:
+  /// **'This card authorization is still open, unknown or already settled: ask the provider about it instead of asking again.'**
+  String get refusalCounterTenderState;
 
   /// #4185 refusal
   ///
