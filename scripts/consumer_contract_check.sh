@@ -30,7 +30,7 @@ last_definer() { # $1 = object name: the last migration that creates it
 }
 
 cat > "$tmp/planted.json" <<'EOF'
-{"functions": {"deskilo_schema_version": ["p_consumer_contract_planted"]}, "optional": [],
+{"functions": {"deskilo_schema_version": [["p_consumer_contract_planted"]]}, "optional": [],
  "tables": {"consumer_contract_planted_table": null}}
 EOF
 planted="$(check "$tmp/planted.json" | wc -l | tr -d ' ')"

@@ -24,21 +24,23 @@ fn_gone as (
      and fns.fn not in (select jsonb_array_elements_text(coalesce(j -> 'optional', '[]')) from c)
 ),
 fn_params as (
-  select 'function ' || fn || ': no definition accepts the parameters it sends ('
-           || coalesce((select string_agg(x, ', ' order by x) from jsonb_array_elements_text(fns.sent) x), 'none') || ')' as msg,
-         fn as obj
-    from fns
-   where jsonb_typeof(fns.sent) = 'array'
-     and exists (select 1 from procs where proname = fns.fn)
+  -- one row per call site's parameter set: each must be accepted by some definition on its own
+  select 'function ' || fns.fn || ': no definition accepts the parameters one call sends ('
+           || coalesce((select string_agg(x, ', ' order by x) from jsonb_array_elements_text(s.set) x), 'none') || ')' as msg,
+         fns.fn as obj
+    from fns, jsonb_array_elements(case when jsonb_typeof(fns.sent) = 'array' then fns.sent else '[]' end) s(set)
+   where exists (select 1 from procs where proname = fns.fn)
      and not exists (
        select 1 from procs pr
         where pr.proname = fns.fn
-          -- every parameter the app sends is an input of this definition
-          and not exists (select 1 from jsonb_array_elements_text(fns.sent) x where not x = any(pr.inputs))
-          -- every input without a default is sent
+          -- every parameter this call sends is a named input of this definition
+          and not exists (
+            select 1 from jsonb_array_elements_text(s.set) x
+             where not coalesce(x = any(array_remove(pr.inputs, null)), false))
+          -- every input without a default is sent by this call
           and not exists (
             select 1 from generate_series(1, pr.pronargs - pr.pronargdefaults) i
-             where not (pr.inputs[i] in (select jsonb_array_elements_text(fns.sent))))
+             where not coalesce(pr.inputs[i] in (select jsonb_array_elements_text(s.set)), false))
      )
 ),
 rels as (

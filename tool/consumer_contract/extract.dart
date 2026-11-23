@@ -15,14 +15,27 @@ import 'package:analyzer/dart/analysis/utilities.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/visitor.dart';
 
-/// One function the app calls: the parameter names it may send. Null when a
-/// call sends a map the syntax cannot read: then only the function's
-/// existence is claimed.
+/// One function the app calls, and the parameter names each call site
+/// sends. A call whose map the syntax cannot read adds no set: for it only
+/// the function's existence is claimed.
 class CalledFunction {
   CalledFunction(this.name);
   final String name;
-  final Set<String> params = {};
-  bool paramsKnown = true;
+
+  /// One entry per distinct parameter set a call site sends, sorted and
+  /// joined: each must be accepted by some definition on its own.
+  final Set<String> callSets = {};
+
+  /// Records one call site that sends [keys] (null: unreadable).
+  void sends(Set<String>? keys) {
+    if (keys != null) callSets.add((keys.toList()..sort()).join(','));
+  }
+
+  /// Every parameter name any call site sends.
+  Set<String> get params => {
+    for (final s in callSets)
+      if (s.isNotEmpty) ...s.split(','),
+  };
 
   /// The app reads an installation without this function as an answer
   /// (`isMissingFunction` beside the call): its absence breaks nothing.
@@ -32,12 +45,11 @@ class CalledFunction {
 }
 
 /// One table or view the app reads or writes, and the columns it names.
-/// [allColumns] is true when it selects `*`: then only the table is claimed.
+/// A `select('*')` adds no column; the columns named elsewhere still count.
 class TouchedTable {
   TouchedTable(this.name);
   final String name;
   final Set<String> columns = {};
-  bool allColumns = false;
 }
 
 class ConsumerContract {
@@ -61,13 +73,16 @@ class ConsumerContract {
       for (final f
           in (functions.values.toList()
             ..sort((a, b) => a.name.compareTo(b.name))))
-        f.name: f.paramsKnown ? (f.params.toList()..sort()) : null,
+        f.name: [
+          for (final s in (f.callSets.toList()..sort()))
+            [if (s.isNotEmpty) ...s.split(',')],
+        ],
     },
     'optional': (optional.toList()..sort()),
     'tables': {
       for (final t
           in (tables.values.toList()..sort((a, b) => a.name.compareTo(b.name))))
-        t.name: t.allColumns ? null : (t.columns.toList()..sort()),
+        t.name: (t.columns.toList()..sort()),
     },
   };
 }
@@ -137,17 +152,12 @@ void extractInto(
                 .whereType<SetOrMapLiteral>()
                 .firstOrNull
           : null;
-      final keys = map == null ? null : collector.literalKeys(map);
-      if (keys == null) {
-        f.paramsKnown = false;
-      } else {
-        f.params.addAll(keys);
-      }
+      f.sends(map == null ? null : collector.literalKeys(map));
     }
     if (collector.pendingFrom.isNotEmpty &&
         (server?.tables.contains(v) ?? false)) {
       relFound = true;
-      into.tables.putIfAbsent(v, () => TouchedTable(v)).allColumns = true;
+      into.tables.putIfAbsent(v, () => TouchedTable(v));
     }
   }
   if (!fnFound) into.unresolved.addAll(collector.pendingRpc);
@@ -202,14 +212,12 @@ class _Collector extends RecursiveAstVisitor<void> {
     if (e is SimpleStringLiteral) {
       switch (node.name.lexeme) {
         case 'rpc':
-          into.functions.putIfAbsent(e.value, () => CalledFunction(e.value))
-            ..paramsKnown = false
-            ..calls += 1;
+          into.functions
+                  .putIfAbsent(e.value, () => CalledFunction(e.value))
+                  .calls +=
+              1;
         case 'relation':
-          into.tables
-                  .putIfAbsent(e.value, () => TouchedTable(e.value))
-                  .allColumns =
-              true;
+          into.tables.putIfAbsent(e.value, () => TouchedTable(e.value));
       }
     }
     super.visitNamedArgument(node);
@@ -243,9 +251,8 @@ class _Collector extends RecursiveAstVisitor<void> {
     final args = node.argumentList.arguments;
     if (args.isEmpty) return;
     final first = args.first.argumentExpression;
-    final names = first is SimpleStringLiteral
-        ? [first.value]
-        : _declaredAt(node);
+    final literal = first is StringLiteral ? first.stringValue : null;
+    final names = literal != null ? [literal] : _declaredAt(node);
     if (names == null) {
       if (!_bySpec(first)) pendingRpc.add('$path:${_line(node)}');
       return;
@@ -260,13 +267,7 @@ class _Collector extends RecursiveAstVisitor<void> {
       final f = into.functions.putIfAbsent(name, () => CalledFunction(name));
       f.calls++;
       if (tolerant) f.tolerant++;
-      if (params == null) continue;
-      final keys = literalKeys(params);
-      if (keys == null) {
-        f.paramsKnown = false;
-      } else {
-        f.params.addAll(keys);
-      }
+      f.sends(params == null ? <String>{} : literalKeys(params));
     }
   }
 
@@ -316,24 +317,32 @@ class _Collector extends RecursiveAstVisitor<void> {
       }
     }
 
+    // A select string may be split over adjacent literals; an interpolated
+    // one names only its literal parts' plain columns.
+    String? text(Expression? e) => e is StringLiteral
+        ? e.stringValue ??
+              (e is StringInterpolation
+                  ? e.elements
+                        .whereType<InterpolationString>()
+                        .map((s) => s.value)
+                        .join(' ')
+                  : null)
+        : null;
     switch (name) {
       case 'select':
+        final s = text(args.firstOrNull);
+        if (s != null) add(selectColumns(s) ?? const {});
+      case 'insert' || 'update' || 'upsert':
         final first = args.firstOrNull;
-        if (first == null) {
-          for (final t in tables) {
-            t.allColumns = true;
-          }
-        } else if (first is SimpleStringLiteral) {
-          final cols = selectColumns(first.value);
-          if (cols == null) {
-            for (final t in tables) {
-              t.allColumns = true;
-            }
-          } else {
-            add(cols);
+        if (first != null) add(literalKeys(first) ?? const []);
+        for (final a
+            in call.argumentList.arguments.whereType<NamedArgument>()) {
+          final s = text(a.argumentExpression);
+          if (a.name.lexeme == 'onConflict' && s != null) {
+            add(s.split(',').map((c) => c.trim()).where(_isColumn));
           }
         }
-      case 'insert' || 'update' || 'upsert':
+      case 'match':
         final first = args.firstOrNull;
         if (first != null) add(literalKeys(first) ?? const []);
       case 'eq' ||
@@ -342,7 +351,9 @@ class _Collector extends RecursiveAstVisitor<void> {
           'gte' ||
           'lt' ||
           'lte' ||
-          'is_' ||
+          'isFilter' ||
+          'filter' ||
+          'textSearch' ||
           'inFilter' ||
           'order' ||
           'like' ||

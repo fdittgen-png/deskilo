@@ -67,6 +67,13 @@ void main() {
       expect(j['source'], isA<String>(), reason: f.path);
       expect(j['functions'], isA<Map<String, Object?>>(), reason: f.path);
       expect(j['tables'], isA<Map<String, Object?>>(), reason: f.path);
+      expect(
+        j.containsKey('unresolved'),
+        isFalse,
+        reason:
+            '${f.path}: every call of the release must be named, '
+            'by hand under "declared" when its tag cannot show it',
+      );
     }
   });
 
@@ -75,7 +82,7 @@ void main() {
       final c = _of(
         '''f(c) => c.rpc<Object?>('fn_a', params: {'p_x': 1, 'p_y': 2});''',
       );
-      expect(c.functions['fn_a']!.params, {'p_x', 'p_y'});
+      expect(c.functions['fn_a']!.callSets, {'p_x,p_y'});
       expect(c.functions['fn_a']!.optional, isFalse);
     });
 
@@ -118,6 +125,23 @@ g(c) => c.from('t').insert({'w': 1});
 h(c) => c.storage.from('bucket').list();''');
       expect(c.tables['t']!.columns, {'a', 'b', 'd', 'e', 'w'});
       expect(c.tables.containsKey('bucket'), isFalse);
+    });
+
+    test('each call site keeps its own parameter set', () {
+      final c = _of('''
+a(c) => c.rpc('fn_e', params: {'p_x': 1});
+b(c) => c.rpc('fn_e', params: {'p_x': 1, 'p_y': 2});
+d(c) => c.rpc('fn_e');''');
+      expect(c.functions['fn_e']!.callSets, {'p_x', 'p_x,p_y', ''});
+    });
+
+    test('a select over adjacent strings, a star and an upsert key', () {
+      final c = _of('''
+f(c) => c.from('t').select('a, b, '
+    'c').eq('d', 1);
+g(c) => c.from('t').select();
+h(c) => c.from('t').upsert({'e': 1}, onConflict: 'k1, k2');''');
+      expect(c.tables['t']!.columns, {'a', 'b', 'c', 'd', 'e', 'k1', 'k2'});
     });
 
     test('a select of everything claims only the table', () {
