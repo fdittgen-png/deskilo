@@ -6,9 +6,16 @@
 
 export type Level = "debug" | "info" | "warn" | "error";
 
-/** Fields whose value is a secret or a person's data: their value is replaced. */
-const REDACTED_KEY =
-  /authorization|token|secret|password|passwd|api[_-]?key|apikey|credential|cookie|signature|iban|private|bearer|jwt|^(?:email|phone|name|first_name|last_name|address|vat_id|legal_id|body|headers)$|_(?:email|phone|address|vat_id|legal_id)$|(?:first|last|full|display|customer|contact)_name$/i;
+/** A key as words: camelCase and `-` become `_`, lower case (`fullName`, `vat-id`, `VATID` -> `full_name`, `vat_id`, `vatid`). */
+export function keyWords(key: string): string {
+  return key.replace(/([a-z0-9])([A-Z])/g, "$1_$2").replace(/-/g, "_").toLowerCase();
+}
+
+/** Fields whose value is a secret or a person's data: their value is replaced. The words of the key are read, singular or plural. */
+const REDACTED_WORDS =
+  /(?:^|_)(?:authorization|token|tokens|secret|secrets|password|passwd|passwords|api_?key|apikey|credential|credentials|cookie|cookies|signature|iban|ibans|private|bearer|jwt|email|emails|e_mail|phone|phones|mobile|vat_?id|legal_?id|address|addresses|recipient|recipients|username|user_name|first_name|last_name|full_name|display_name|customer_name|contact_name|body|headers)(?:_|$)|^names?$/;
+
+const isRedactedKey = (key: string) => REDACTED_WORDS.test(keyWords(key));
 
 /** How deep a logged object is read: beyond it the value is not logged. */
 export const LOG_DEPTH = 4;
@@ -31,7 +38,7 @@ function redactObject(
   seen.add(value);
   const out: Record<string, unknown> = {};
   for (const [key, item] of Object.entries(value)) {
-    out[key] = REDACTED_KEY.test(key) ? "[redacted]" : redactValue(item, depth + 1, seen);
+    out[key] = isRedactedKey(key) ? "[redacted]" : redactValue(item, depth + 1, seen);
   }
   return out;
 }
@@ -53,13 +60,12 @@ function redactValue(value: unknown, depth: number, seen: WeakSet<object>): unkn
 /** A message with the credentials it may carry removed: a bearer token, a key in a query string. */
 export function scrub(text: string): string {
   return text
+    .replace(/:\/\/[^\/@\s]*@/g, "://[redacted]@")
+    .replace(/Basic\s+\S+/gi, "Basic [redacted]")
+    .replace(/([?&][\w-]*(?:token|secret|key|password|signature)[\w-]*=)[^&\s]*/gi, "$1[redacted]")
     .replace(/eyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]*/g, "[jwt]")
     .replace(/[A-Za-z0-9._%+-]{1,64}@[A-Za-z0-9-]{1,63}(?:\.[A-Za-z0-9-]{1,63}){1,8}/g, "[email]")
-    .replace(/Bearer\s+[A-Za-z0-9._~+\/=-]+/gi, "Bearer [redacted]")
-    .replace(
-      /([?&](?:api[_-]?key|token|secret|key|password|signature)=)[^&\s]+/gi,
-      "$1[redacted]",
-    );
+    .replace(/Bearer\s+[A-Za-z0-9._~+\/=-]+/gi, "Bearer [redacted]");
 }
 
 const clip = (text: string) =>
@@ -71,9 +77,16 @@ const keep = (text: string) => clip(scrub(text.slice(0, LOG_WIDTH * 4)));
 /** What an error is, for a log: its name and its message, scrubbed and clipped. Never for an answer. */
 export function describeError(error: unknown): { type: string; message: string } {
   if (error instanceof Error) {
-    return { type: error.name, message: keep(error.message) };
+    return { type: keep(String(error.name)), message: keep(String(error.message)) };
   }
-  return { type: typeof error, message: keep(String(error)) };
+  let text: string;
+  try {
+    text = String(error);
+  } catch {
+    // handled: an error that cannot be printed is described by its kind, never by throwing
+    text = "[unprintable]";
+  }
+  return { type: typeof error, message: keep(text) };
 }
 
 /** A request id a client may name: a UUID, or up to 64 characters of letters, digits and . _ : - ; anything else is not echoed. */
@@ -95,12 +108,13 @@ export function logLine(
 ): void {
   let line: string;
   try {
+    // the fields first: a field can never override what identifies the line
     line = JSON.stringify({
+      ...redactFields(fields),
       level,
       fn,
       code,
       ...(requestId ? { request_id: requestId } : {}),
-      ...redactFields(fields),
     });
   } catch {
     // handled: a field that cannot be written never stops the line, nor the answer that logs it
