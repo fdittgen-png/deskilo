@@ -7203,6 +7203,8 @@
   "@featureConfigurationTransferDesc": {
     "description": "#916 configuration transfer: featureConfigurationTransferDesc"
   },
+  "featureCounterReceiptsDesc": "Una vendita al banco dà uno scontrino immutabile, numerato una sola volta, con il pagamento ricevuto. È offerto solo dove l'operazione del paese è supportata e dice chiaramente quando non lo è.",
+  "featureCounterReceiptsTitle": "Scontrini di cassa",
   "featureCountriesEuName": "l'Unione europea",
   "@featureCountriesEuName": {
     "description": "#2454 feature availability by country"
@@ -16517,6 +16519,15 @@
     "description": "#2380 (0660) Refusal DKB07: the first payment of an invoice is undone after its later payments."
   },
   "refusalChangedMeanwhile": "Nel frattempo è cambiato. Lo riapra per vedere a che punto è.",
+  "refusalCounterChanged": "Questo scontrino è cambiato nel frattempo: lo riapra.",
+  "refusalCounterCorrectionBeyond": "Una correzione non può superare ciò che resta della riga originale.",
+  "refusalCounterCustomerNeeded": "Questa attività indica un cliente in ogni vendita: ne scelga uno prima di concludere.",
+  "refusalCounterEssentials": "A questo scontrino manca qualcosa o non è accettabile: non è stato numerato nulla e non è stato incassato nulla.",
+  "refusalCounterGoods": "Qui le merci non si possono vendere né riprendere: il registro delle merci è spento, oppure non c'è un luogo da cui prenderle o in cui rimetterle.",
+  "refusalCounterNotOpen": "Questo scontrino non è più una bozza aperta, oppure per la stessa vendita ne è già stato emesso uno.",
+  "refusalCounterTenderState": "Questa autorizzazione della carta è ancora aperta, sconosciuta o già conclusa: chieda al fornitore invece di richiederla di nuovo.",
+  "refusalCounterTenders": "I pagamenti non saldano esattamente questa vendita, oppure uno di essi non è accettato qui.",
+  "refusalCounterUnsupported": "Questa operazione non è supportata per il Suo paese nel caso dichiarato nelle impostazioni: non è stato numerato nulla e non è stato incassato nulla.",
   "refusalMainStoreExpired": "Il magazzino principale contiene solo {held} dei {asked} richiesti da questa vendita che siano vendibili: il resto è scaduto. Nulla è stato prelevato e la vendita non è stata confermata.",
   "@refusalMainStoreExpired": {
     "description": "#4170 a sale refused for what the main store holds",
@@ -18986,6 +18997,9 @@
   "@settingHintCalendarRangeDays": {
     "description": "#2487 settings: Setting hint."
   },
+  "settingHintCounterCustomerlessSales": "Consentite: si può vendere senza indicare un cliente. Rifiutate: ogni vendita ne indica uno. Una vendita senza cliente non crea mai un account, un socio o un abbonamento.",
+  "settingHintCounterDocumentChannel": "Condiviso (messaggio o posta), stampato o entrambi. Lo scontrino è lo stesso documento immutabile in ogni caso.",
+  "settingHintCounterFiscalObligation": "Ciò che dichiara sulle regole fiscali di una vendita al banco: nessuna significa che al Suo esercizio non si applica alcun obbligo fiscale di registratore (una Sua dichiarazione, annotata su ogni scontrino); registratore richiesto significa che si applica. Lo scontrino è emesso solo dove l'operazione del Suo paese è supportata nel caso dichiarato.",
   "settingHintDirectoryGeocoderUrl": "Il servizio compatibile con Photon che colloca un indirizzo pubblicato sulla mappa di scoperta: un indirizzo https sull'internet pubblica, senza nome utente, password, query né #. Lasci vuoto per usare l'indirizzo con cui è stata costruita questa versione dell'app, altrimenti il servizio pubblico Photon.",
   "settingHintDirectoryTileUrlTemplate": "Il server delle tessere da cui è disegnata la mappa di scoperta, con i segnaposto z, x e y tra parentesi graffe nell'indirizzo (s tra parentesi graffe per un sottodominio è ammesso): https, sull'internet pubblica, senza nome utente, password né #. Lasci vuoto per usare il server di questa versione dell'app, altrimenti OpenStreetMap. Un nuovo host chiede di nuovo a ogni persona prima che la mappa si carichi.",
   "settingHintDirectoryUpcomingWindowDays": "Quanti giorni prima l'elenco mostra la prossima prenotazione di un membro.",
@@ -19213,6 +19227,9 @@
   "@settingLabelCalendarRangeDays": {
     "description": "#2487 settings: Setting label."
   },
+  "settingLabelCounterCustomerlessSales": "Vendite senza cliente indicato",
+  "settingLabelCounterDocumentChannel": "Come lo scontrino lascia il banco",
+  "settingLabelCounterFiscalObligation": "Regole fiscali delle vendite al banco",
   "settingLabelDirectoryGeocoderUrl": "Servizio di ricerca indirizzi",
   "settingLabelDirectoryTileUrlTemplate": "Server delle tessere della mappa",
   "settingLabelDirectoryUpcomingWindowDays": "Anteprima dell'elenco",

@@ -438,16 +438,15 @@ enum WorkspaceFeature {
   /// #4294 — reorder points and low-stock alerts (feature_manifest_stock.dart).
   stockReorder,
 
-  /// #4172 — returns and corrections of stock (feature_manifest_stock.dart).
+  /// #4172 returns and corrections, counts; #4295 cycle counts (feature_manifest_stock.dart).
   stockReturns,
-  /// #4172 — counts of stock, approved before they move it (feature_manifest_stock.dart).
   stockCounts,
-  /// #4295 — scheduled cycle counts (feature_manifest_stock.dart).
   stockCycleCounts,
   stockItemGroups,
   /// #4362 tags, #4359 scanning (feature_manifest_stock.dart).
   stockTags,
-  stockScanning;
+  stockScanning,
+  counterReceipts;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;

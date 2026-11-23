@@ -95,6 +95,7 @@
         "coOwner": false,
         "configurableSettings": false,
         "configurationTransfer": false,
+        "counterReceipts": false,
         "customFields": false,
         "customRoles": true,
         "customerQuotes": false,

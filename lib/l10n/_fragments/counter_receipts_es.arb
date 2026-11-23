@@ -1,0 +1,17 @@
+{
+  "settingLabelCounterFiscalObligation": "Normas fiscales de las ventas en mostrador",
+  "settingHintCounterFiscalObligation": "Lo que declara sobre las normas fiscales de una venta en mostrador: ninguna significa que no se aplica ninguna obligación fiscal de caja a su negocio (su propia declaración, anotada en cada ticket); caja obligatoria significa que sí se aplica. Solo se emite un ticket donde la operación de su país está soportada en el caso que declara.",
+  "settingLabelCounterDocumentChannel": "Cómo sale el ticket del mostrador",
+  "settingHintCounterDocumentChannel": "Compartido (mensaje o correo), impreso o ambos. El ticket es el mismo documento inmutable en todos los casos.",
+  "settingLabelCounterCustomerlessSales": "Ventas sin cliente nombrado",
+  "settingHintCounterCustomerlessSales": "Permitidas: se puede vender sin nombrar un cliente. Rechazadas: cada venta nombra uno. Una venta sin cliente nunca crea una cuenta, un miembro ni una suscripción.",
+  "refusalCounterUnsupported": "Esta operación no está soportada para su país en el caso que declaró en los ajustes: no se numeró nada y no se cobró nada.",
+  "refusalCounterEssentials": "A este ticket le falta algo o no es aceptable: no se numeró nada y no se cobró nada.",
+  "refusalCounterNotOpen": "Este ticket ya no es un borrador abierto, o ya se emitió un ticket para la misma venta.",
+  "refusalCounterCustomerNeeded": "Este negocio nombra un cliente en cada venta: elija uno antes de terminar.",
+  "refusalCounterTenders": "Los cobros no saldan exactamente esta venta, o uno de ellos no se acepta aquí.",
+  "refusalCounterCorrectionBeyond": "Una corrección no puede ir más allá de lo que queda de la línea original.",
+  "refusalCounterChanged": "Este ticket cambió mientras tanto: ábralo de nuevo.",
+  "refusalCounterGoods": "Aquí no se pueden vender ni recuperar mercancías: el libro de mercancías está desactivado, o no hay un lugar de donde tomarlas o donde devolverlas.",
+  "refusalCounterTenderState": "Esta autorización de tarjeta sigue abierta, es desconocida o ya está resuelta: consulte al proveedor en lugar de pedirla otra vez."
+}

@@ -343,5 +343,7 @@
   "featureStockTagsTitle": "RFID-Etiketten",
   "featureStockTagsDesc": "Artikel, Einheiten, Chargen und Orte mit RFID- oder NFC-Etiketten versehen, wie ein Barcode gespeichert und im Betrieb eindeutig. Ein Etikett kann eine Charge oder ein Stück benennen, wie es die Gruppe des Artikels sagt; ein gelesenes Etikett wird überall erkannt, wo ein Barcode erkannt wird.",
   "featureStockScanningTitle": "Scannen",
-  "featureStockScanningDesc": "Ein tippender Barcode-Scanner oder die Handykamera füllt jedes Warenblatt: ein Code wird als Barcode, Ortsetikett, Chargenetikett oder RFID-Etikett gelesen. Mit dem Warenbuch eingeschaltet."
+  "featureStockScanningDesc": "Ein tippender Barcode-Scanner oder die Handykamera füllt jedes Warenblatt: ein Code wird als Barcode, Ortsetikett, Chargenetikett oder RFID-Etikett gelesen. Mit dem Warenbuch eingeschaltet.",
+  "featureCounterReceiptsTitle": "Kassenbelege",
+  "featureCounterReceiptsDesc": "Ein Verkauf an der Kasse ergibt einen unveränderlichen, einmal nummerierten Beleg mit der erhaltenen Zahlung. Er wird nur angeboten, wo der Vorgang des Landes unterstützt wird, und sagt klar, wenn nicht."
 }

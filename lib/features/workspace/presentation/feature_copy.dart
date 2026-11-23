@@ -320,6 +320,7 @@ String _stockDescription(AppLocalizations l10n, WorkspaceFeature feature) =>
       WorkspaceFeature.stockItemGroups => l10n.featureStockItemGroupsDesc,
       WorkspaceFeature.stockTags => l10n.featureStockTagsDesc,
       WorkspaceFeature.stockScanning => l10n.featureStockScanningDesc,
+      WorkspaceFeature.counterReceipts => l10n.featureCounterReceiptsDesc,
       _ => feature.name,
     };
 

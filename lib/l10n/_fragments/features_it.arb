@@ -343,5 +343,7 @@
   "featureStockTagsTitle": "Etichette RFID",
   "featureStockTagsDesc": "Etichetti articoli, unità, lotti e luoghi con etichette RFID o NFC, registrate come un codice a barre e uniche nell'attività. Un'etichetta può indicare un lotto o un pezzo, secondo il gruppo dell'articolo; la lettura di un'etichetta è riconosciuta ovunque lo sia un codice a barre.",
   "featureStockScanningTitle": "Scansione",
-  "featureStockScanningDesc": "Un lettore che digita, o la fotocamera del telefono, compila qualsiasi foglio di merci: un codice è letto come codice a barre, etichetta di luogo, etichetta di lotto o etichetta RFID. Attivo con il registro delle merci."
+  "featureStockScanningDesc": "Un lettore che digita, o la fotocamera del telefono, compila qualsiasi foglio di merci: un codice è letto come codice a barre, etichetta di luogo, etichetta di lotto o etichetta RFID. Attivo con il registro delle merci.",
+  "featureCounterReceiptsTitle": "Scontrini di cassa",
+  "featureCounterReceiptsDesc": "Una vendita al banco dà uno scontrino immutabile, numerato una sola volta, con il pagamento ricevuto. È offerto solo dove l'operazione del paese è supportata e dice chiaramente quando non lo è."
 }

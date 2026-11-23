@@ -11648,6 +11648,13 @@ class AppLocalizationsEs extends AppLocalizations {
       'El archivo del espacio (XML) lleva toda la configuración — tarifas, identidad legal, reglas de reserva y validación, roles, diseños de documentos, sedes, días de cierre — y la importación la aplica, incluso en un espacio que ya tiene reservas. Desactivado: el archivo solo lleva ajustes y plano.';
 
   @override
+  String get featureCounterReceiptsDesc =>
+      'Una venta en el mostrador da un ticket inmutable, numerado una sola vez, con el cobro recibido. Solo se ofrece donde la operación del país está soportada, y dice claramente cuándo no lo está.';
+
+  @override
+  String get featureCounterReceiptsTitle => 'Tickets de caja';
+
+  @override
   String get featureCountriesEuName => 'la Unión Europea';
 
   @override
@@ -28954,6 +28961,42 @@ class AppLocalizationsEs extends AppLocalizations {
       'Esto ha cambiado mientras tanto. Vuelva a abrirlo para ver cómo está.';
 
   @override
+  String get refusalCounterChanged =>
+      'Este ticket cambió mientras tanto: ábralo de nuevo.';
+
+  @override
+  String get refusalCounterCorrectionBeyond =>
+      'Una corrección no puede ir más allá de lo que queda de la línea original.';
+
+  @override
+  String get refusalCounterCustomerNeeded =>
+      'Este negocio nombra un cliente en cada venta: elija uno antes de terminar.';
+
+  @override
+  String get refusalCounterEssentials =>
+      'A este ticket le falta algo o no es aceptable: no se numeró nada y no se cobró nada.';
+
+  @override
+  String get refusalCounterGoods =>
+      'Aquí no se pueden vender ni recuperar mercancías: el libro de mercancías está desactivado, o no hay un lugar de donde tomarlas o donde devolverlas.';
+
+  @override
+  String get refusalCounterNotOpen =>
+      'Este ticket ya no es un borrador abierto, o ya se emitió un ticket para la misma venta.';
+
+  @override
+  String get refusalCounterTenderState =>
+      'Esta autorización de tarjeta sigue abierta, es desconocida o ya está resuelta: consulte al proveedor en lugar de pedirla otra vez.';
+
+  @override
+  String get refusalCounterTenders =>
+      'Los cobros no saldan exactamente esta venta, o uno de ellos no se acepta aquí.';
+
+  @override
+  String get refusalCounterUnsupported =>
+      'Esta operación no está soportada para su país en el caso que declaró en los ajustes: no se numeró nada y no se cobró nada.';
+
+  @override
   String refusalMainStoreExpired(String held, String asked) {
     return 'El almacén principal solo tiene $held de los $asked que pide esta venta aptos para vender: el resto ha caducado. No se retiró nada y la venta no se confirmó.';
   }
@@ -32063,6 +32106,18 @@ class AppLocalizationsEs extends AppLocalizations {
       'Fijado por la plataforma: el periodo más largo que puede pedir una consulta del calendario. Acota la consulta.';
 
   @override
+  String get settingHintCounterCustomerlessSales =>
+      'Permitidas: se puede vender sin nombrar un cliente. Rechazadas: cada venta nombra uno. Una venta sin cliente nunca crea una cuenta, un miembro ni una suscripción.';
+
+  @override
+  String get settingHintCounterDocumentChannel =>
+      'Compartido (mensaje o correo), impreso o ambos. El ticket es el mismo documento inmutable en todos los casos.';
+
+  @override
+  String get settingHintCounterFiscalObligation =>
+      'Lo que declara sobre las normas fiscales de una venta en mostrador: ninguna significa que no se aplica ninguna obligación fiscal de caja a su negocio (su propia declaración, anotada en cada ticket); caja obligatoria significa que sí se aplica. Solo se emite un ticket donde la operación de su país está soportada en el caso que declara.';
+
+  @override
   String get settingHintDirectoryGeocoderUrl =>
       'El servicio compatible con Photon que sitúa una dirección publicada en el mapa de descubrimiento: una dirección https en la internet pública, sin nombre de usuario, contraseña, consulta ni #. Déjelo vacío para usar la dirección con la que se construyó esta versión de la aplicación; si no, el servicio público Photon.';
 
@@ -32441,6 +32496,18 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get settingLabelCalendarRangeDays => 'Periodo del calendario';
+
+  @override
+  String get settingLabelCounterCustomerlessSales =>
+      'Ventas sin cliente nombrado';
+
+  @override
+  String get settingLabelCounterDocumentChannel =>
+      'Cómo sale el ticket del mostrador';
+
+  @override
+  String get settingLabelCounterFiscalObligation =>
+      'Normas fiscales de las ventas en mostrador';
 
   @override
   String get settingLabelDirectoryGeocoderUrl =>

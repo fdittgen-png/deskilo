@@ -1,0 +1,17 @@
+{
+  "settingLabelCounterFiscalObligation": "Regole fiscali delle vendite al banco",
+  "settingHintCounterFiscalObligation": "Ciò che dichiara sulle regole fiscali di una vendita al banco: nessuna significa che al Suo esercizio non si applica alcun obbligo fiscale di registratore (una Sua dichiarazione, annotata su ogni scontrino); registratore richiesto significa che si applica. Lo scontrino è emesso solo dove l'operazione del Suo paese è supportata nel caso dichiarato.",
+  "settingLabelCounterDocumentChannel": "Come lo scontrino lascia il banco",
+  "settingHintCounterDocumentChannel": "Condiviso (messaggio o posta), stampato o entrambi. Lo scontrino è lo stesso documento immutabile in ogni caso.",
+  "settingLabelCounterCustomerlessSales": "Vendite senza cliente indicato",
+  "settingHintCounterCustomerlessSales": "Consentite: si può vendere senza indicare un cliente. Rifiutate: ogni vendita ne indica uno. Una vendita senza cliente non crea mai un account, un socio o un abbonamento.",
+  "refusalCounterUnsupported": "Questa operazione non è supportata per il Suo paese nel caso dichiarato nelle impostazioni: non è stato numerato nulla e non è stato incassato nulla.",
+  "refusalCounterEssentials": "A questo scontrino manca qualcosa o non è accettabile: non è stato numerato nulla e non è stato incassato nulla.",
+  "refusalCounterNotOpen": "Questo scontrino non è più una bozza aperta, oppure per la stessa vendita ne è già stato emesso uno.",
+  "refusalCounterCustomerNeeded": "Questa attività indica un cliente in ogni vendita: ne scelga uno prima di concludere.",
+  "refusalCounterTenders": "I pagamenti non saldano esattamente questa vendita, oppure uno di essi non è accettato qui.",
+  "refusalCounterCorrectionBeyond": "Una correzione non può superare ciò che resta della riga originale.",
+  "refusalCounterChanged": "Questo scontrino è cambiato nel frattempo: lo riapra.",
+  "refusalCounterGoods": "Qui le merci non si possono vendere né riprendere: il registro delle merci è spento, oppure non c'è un luogo da cui prenderle o in cui rimetterle.",
+  "refusalCounterTenderState": "Questa autorizzazione della carta è ancora aperta, sconosciuta o già conclusa: chieda al fornitore invece di richiederla di nuovo."
+}

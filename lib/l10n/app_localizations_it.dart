@@ -11659,6 +11659,13 @@ class AppLocalizationsIt extends AppLocalizations {
       'Il file dello spazio (XML) porta l\'intera configurazione — tariffe, identità legale, regole di prenotazione e convalida, ruoli, layout dei documenti, sedi, giorni di chiusura — e l\'importazione la applica, anche su uno spazio che ha già prenotazioni. Disattivato: il file porta solo impostazioni e planimetria.';
 
   @override
+  String get featureCounterReceiptsDesc =>
+      'Una vendita al banco dà uno scontrino immutabile, numerato una sola volta, con il pagamento ricevuto. È offerto solo dove l\'operazione del paese è supportata e dice chiaramente quando non lo è.';
+
+  @override
+  String get featureCounterReceiptsTitle => 'Scontrini di cassa';
+
+  @override
   String get featureCountriesEuName => 'l\'Unione europea';
 
   @override
@@ -28991,6 +28998,42 @@ class AppLocalizationsIt extends AppLocalizations {
       'Nel frattempo è cambiato. Lo riapra per vedere a che punto è.';
 
   @override
+  String get refusalCounterChanged =>
+      'Questo scontrino è cambiato nel frattempo: lo riapra.';
+
+  @override
+  String get refusalCounterCorrectionBeyond =>
+      'Una correzione non può superare ciò che resta della riga originale.';
+
+  @override
+  String get refusalCounterCustomerNeeded =>
+      'Questa attività indica un cliente in ogni vendita: ne scelga uno prima di concludere.';
+
+  @override
+  String get refusalCounterEssentials =>
+      'A questo scontrino manca qualcosa o non è accettabile: non è stato numerato nulla e non è stato incassato nulla.';
+
+  @override
+  String get refusalCounterGoods =>
+      'Qui le merci non si possono vendere né riprendere: il registro delle merci è spento, oppure non c\'è un luogo da cui prenderle o in cui rimetterle.';
+
+  @override
+  String get refusalCounterNotOpen =>
+      'Questo scontrino non è più una bozza aperta, oppure per la stessa vendita ne è già stato emesso uno.';
+
+  @override
+  String get refusalCounterTenderState =>
+      'Questa autorizzazione della carta è ancora aperta, sconosciuta o già conclusa: chieda al fornitore invece di richiederla di nuovo.';
+
+  @override
+  String get refusalCounterTenders =>
+      'I pagamenti non saldano esattamente questa vendita, oppure uno di essi non è accettato qui.';
+
+  @override
+  String get refusalCounterUnsupported =>
+      'Questa operazione non è supportata per il Suo paese nel caso dichiarato nelle impostazioni: non è stato numerato nulla e non è stato incassato nulla.';
+
+  @override
   String refusalMainStoreExpired(String held, String asked) {
     return 'Il magazzino principale contiene solo $held dei $asked richiesti da questa vendita che siano vendibili: il resto è scaduto. Nulla è stato prelevato e la vendita non è stata confermata.';
   }
@@ -32105,6 +32148,18 @@ class AppLocalizationsIt extends AppLocalizations {
       'Fissato dalla piattaforma: il periodo più lungo che una richiesta del calendario può chiedere. Delimita la richiesta.';
 
   @override
+  String get settingHintCounterCustomerlessSales =>
+      'Consentite: si può vendere senza indicare un cliente. Rifiutate: ogni vendita ne indica uno. Una vendita senza cliente non crea mai un account, un socio o un abbonamento.';
+
+  @override
+  String get settingHintCounterDocumentChannel =>
+      'Condiviso (messaggio o posta), stampato o entrambi. Lo scontrino è lo stesso documento immutabile in ogni caso.';
+
+  @override
+  String get settingHintCounterFiscalObligation =>
+      'Ciò che dichiara sulle regole fiscali di una vendita al banco: nessuna significa che al Suo esercizio non si applica alcun obbligo fiscale di registratore (una Sua dichiarazione, annotata su ogni scontrino); registratore richiesto significa che si applica. Lo scontrino è emesso solo dove l\'operazione del Suo paese è supportata nel caso dichiarato.';
+
+  @override
   String get settingHintDirectoryGeocoderUrl =>
       'Il servizio compatibile con Photon che colloca un indirizzo pubblicato sulla mappa di scoperta: un indirizzo https sull\'internet pubblica, senza nome utente, password, query né #. Lasci vuoto per usare l\'indirizzo con cui è stata costruita questa versione dell\'app, altrimenti il servizio pubblico Photon.';
 
@@ -32482,6 +32537,18 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get settingLabelCalendarRangeDays => 'Periodo del calendario';
+
+  @override
+  String get settingLabelCounterCustomerlessSales =>
+      'Vendite senza cliente indicato';
+
+  @override
+  String get settingLabelCounterDocumentChannel =>
+      'Come lo scontrino lascia il banco';
+
+  @override
+  String get settingLabelCounterFiscalObligation =>
+      'Regole fiscali delle vendite al banco';
 
   @override
   String get settingLabelDirectoryGeocoderUrl =>

@@ -80,6 +80,14 @@ String _biReportSettingLabel(AppLocalizations l10n, String key) => switch (key) 
       'bi.report_max_visuals' => l10n.settingLabelBiReportMaxVisuals,
       'bi.report_max_bytes' => l10n.settingLabelBiReportMaxBytes,
       'bi.detail_page_size' => l10n.settingLabelBiDetailPageSize,
+      _ => _counterSettingLabel(l10n, key),
+    };
+
+/// #4184 -- the counter receipt settings.
+String _counterSettingLabel(AppLocalizations l10n, String key) => switch (key) {
+      'counter.fiscal_obligation' => l10n.settingLabelCounterFiscalObligation,
+      'counter.document_channel' => l10n.settingLabelCounterDocumentChannel,
+      'counter.customerless_sales' => l10n.settingLabelCounterCustomerlessSales,
       _ => _itemGroupSettingLabel(l10n, key),
     };
 
@@ -223,6 +231,14 @@ String? _biReportSettingHint(AppLocalizations l10n, String key) => switch (key) 
       'bi.report_max_visuals' => l10n.settingHintBiReportMaxVisuals,
       'bi.report_max_bytes' => l10n.settingHintBiReportMaxBytes,
       'bi.detail_page_size' => l10n.settingHintBiDetailPageSize,
+      _ => _counterSettingHint(l10n, key),
+    };
+
+/// #4184 -- the counter receipt settings.
+String? _counterSettingHint(AppLocalizations l10n, String key) => switch (key) {
+      'counter.fiscal_obligation' => l10n.settingHintCounterFiscalObligation,
+      'counter.document_channel' => l10n.settingHintCounterDocumentChannel,
+      'counter.customerless_sales' => l10n.settingHintCounterCustomerlessSales,
       _ => _itemGroupSettingHint(l10n, key),
     };
 

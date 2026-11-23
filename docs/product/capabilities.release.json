@@ -1572,6 +1572,12 @@
       "capabilities": []
     },
     {
+      "key": "counterReceipts",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "customFields",
       "maturity": "beta",
       "lifecycle": "active",

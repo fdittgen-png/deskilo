@@ -329,5 +329,6 @@ String _stockName(AppLocalizations l10n, WorkspaceFeature feature) =>
       WorkspaceFeature.stockItemGroups => l10n.featureStockItemGroupsTitle,
       WorkspaceFeature.stockTags => l10n.featureStockTagsTitle,
       WorkspaceFeature.stockScanning => l10n.featureStockScanningTitle,
+      WorkspaceFeature.counterReceipts => l10n.featureCounterReceiptsTitle,
       _ => feature.name,
     };

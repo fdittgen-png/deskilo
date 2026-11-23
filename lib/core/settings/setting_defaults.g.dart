@@ -54,6 +54,12 @@ abstract final class SettingDefaults {
   static const String businessShopType = 'grocery';
   /// `calendar.range_days`
   static const int calendarRangeDays = 400;
+  /// `counter.customerless_sales`
+  static const String counterCustomerlessSales = 'allowed';
+  /// `counter.document_channel`
+  static const String counterDocumentChannel = 'share';
+  /// `counter.fiscal_obligation`
+  static const String counterFiscalObligation = 'register_required';
   /// `directory.geocoder_url`
   static const String directoryGeocoderUrl = 'https://photon.komoot.io/api/';
   /// `directory.tile_url_template`

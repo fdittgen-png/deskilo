@@ -56,6 +56,8 @@ insert into listed (sig, reason) values
    'edits the billing identity of one billing customer under manageBillingCustomers (status customer only; any other id answers as unknown)'),
   ('member_emails(uuid)',
    'lists addresses through a join on auth.users by user_id: a customer-only subject has no login and no address here'),
+  ('counter_receipt_draft_v1(uuid,uuid,uuid,integer,jsonb)',
+   'checks that the financial subject a counter sale names is a member of this business, under the right to issue and the counter feature: a customer-only subject is a legitimate target (the sale is billed to it), and a sale that names none reads no row'),
   ('room_offer_v1(uuid,uuid)',
    'the caller''s own active member row, by login, then the room''s offer to it'),
   ('activate_co_owner(uuid)',
@@ -218,7 +220,7 @@ select is((select string_agg(r.sig || ':' || r.tier, ', ' order by r.sig) from p
   'a reader is found whatever its name''s form and however it became definer; each rule is seen in its source');
 select ok((select count(*) from pg_temp.readers() where tier = 'service') > 50, 'the service-only readers are read');
 select ok((select count(*) from pg_temp.readers() where tier in ('own row', 'status gate')) > 100, 'the own-row and status-gated readers are read');
-select ok((select count(*) from listed) = 63, 'the list holds 63 reasoned exceptions');
+select ok((select count(*) from listed) = 64, 'the list holds 64 reasoned exceptions');
 
 select * from finish();
 rollback;

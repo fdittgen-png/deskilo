@@ -11572,6 +11572,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'The space file (XML) carries the whole configuration — tariffs, legal identity, booking and validation rules, roles, document designs, sites, closure days — and importing it applies it, even on a space that already has bookings. Off: the file carries settings and floor plan only.';
 
   @override
+  String get featureCounterReceiptsDesc =>
+      'A sale at the counter gives an immutable receipt of its own, numbered once, with the tender it was paid with. It is offered only where the country\'s operation is supported, and says plainly where it is not.';
+
+  @override
+  String get featureCounterReceiptsTitle => 'Counter receipts';
+
+  @override
   String get featureCountriesEuName => 'the European Union';
 
   @override
@@ -28749,6 +28756,42 @@ class AppLocalizationsEn extends AppLocalizations {
       'This changed in the meantime. Reopen it to see where it stands.';
 
   @override
+  String get refusalCounterChanged =>
+      'This receipt changed meanwhile: open it again.';
+
+  @override
+  String get refusalCounterCorrectionBeyond =>
+      'A correction cannot go beyond what the original line has left.';
+
+  @override
+  String get refusalCounterCustomerNeeded =>
+      'This business names a customer on every sale: choose one before finishing.';
+
+  @override
+  String get refusalCounterEssentials =>
+      'Something this receipt needs is missing or not acceptable: nothing was numbered and nothing was taken.';
+
+  @override
+  String get refusalCounterGoods =>
+      'Goods cannot be sold or taken back here: the goods ledger is off, or there is no place to take them from or put them back.';
+
+  @override
+  String get refusalCounterNotOpen =>
+      'This receipt is no longer an open draft, or a receipt was already issued for the same sale.';
+
+  @override
+  String get refusalCounterTenderState =>
+      'This card authorization is still open, unknown or already settled: ask the provider about it instead of asking again.';
+
+  @override
+  String get refusalCounterTenders =>
+      'The payments do not settle this sale exactly, or one of them is not taken here.';
+
+  @override
+  String get refusalCounterUnsupported =>
+      'This operation is not supported for your country under the case you declared in the settings: nothing was numbered and nothing was taken.';
+
+  @override
   String refusalMainStoreExpired(String held, String asked) {
     return 'The main store holds only $held of the $asked this sale asks for that is fit to sell: the rest is past its date. Nothing was taken and the sale was not confirmed.';
   }
@@ -31827,6 +31870,18 @@ class AppLocalizationsEn extends AppLocalizations {
       'Fixed by the platform: the longest range one calendar request may ask for. It bounds the query.';
 
   @override
+  String get settingHintCounterCustomerlessSales =>
+      'Allowed: a sale may be made without naming a customer. Refused: every sale names one. A sale without a customer never creates an account, a member or a subscription.';
+
+  @override
+  String get settingHintCounterDocumentChannel =>
+      'Shared (a message or a mail), printed, or both. The receipt is the same immutable document in every case.';
+
+  @override
+  String get settingHintCounterFiscalObligation =>
+      'What you declare about the fiscal rules for a sale at the counter: none means no fiscal cash-register obligation applies to your business (your own declaration, recorded on each receipt); register required means one does. A receipt is issued only where your country\'s operation is supported under the case you declare.';
+
+  @override
   String get settingHintDirectoryGeocoderUrl =>
       'The Photon-compatible service that places a published address on the discovery map: an https address on the public internet, without a user name, password, query or #. Leave it empty to use the address this app version was built with, else the public Photon service.';
 
@@ -32197,6 +32252,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingLabelCalendarRangeDays => 'Calendar range';
+
+  @override
+  String get settingLabelCounterCustomerlessSales =>
+      'Sales without a named customer';
+
+  @override
+  String get settingLabelCounterDocumentChannel =>
+      'How a counter receipt leaves the counter';
+
+  @override
+  String get settingLabelCounterFiscalObligation =>
+      'Fiscal rules for counter sales';
 
   @override
   String get settingLabelDirectoryGeocoderUrl => 'Address lookup service';

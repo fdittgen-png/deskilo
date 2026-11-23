@@ -141,6 +141,26 @@ enum KnownRefusal {
   stockTagRetiredLately,
   stockPieceInStock,
 
+  /// #4184 (0893) -- DKL01: an operation of the counter that the country, under the case the owner declared,
+  /// does not support (nothing was numbered, nothing handed over).
+  counterUnsupported,
+
+  /// #4185 (0894) -- DKL02: something a receipt needs is missing or not acceptable; DKL04: not an open draft, or
+  /// already issued for its source; DKL05: the business names a customer on every sale; DKL06: the tenders do not
+  /// settle the sale, or one is not taken here; DKL08: a correction beyond what the original has left; DKL10: the
+  /// receipt changed meanwhile.
+  counterEssentials,
+  counterNotOpen,
+  counterCustomerNeeded,
+  counterTenders,
+  counterCorrectionBeyond,
+  counterChanged,
+
+  /// #4185 (0894, 0895) -- DKL07: goods cannot be sold or taken back here (the goods ledger is off, or there is no place to
+  /// take them from or put them back); DKL11: a card authorization is open, unknown or already settled.
+  counterGoods,
+  counterTenderState,
+
   /// #4362 (0887) — DKG25: the pieces of a piece-tracked item must be named;
   /// DKG26: a named piece is not where the movement takes it from.
   stockNamePieces,
@@ -223,6 +243,15 @@ const Map<String, KnownRefusal> _codedRefusals = {
   'DKG24': KnownRefusal.stockPieceInStock,
   'DKG25': KnownRefusal.stockNamePieces,
   'DKG26': KnownRefusal.stockPieceWhere,
+  'DKL01': KnownRefusal.counterUnsupported,
+  'DKL02': KnownRefusal.counterEssentials,
+  'DKL04': KnownRefusal.counterNotOpen,
+  'DKL05': KnownRefusal.counterCustomerNeeded,
+  'DKL06': KnownRefusal.counterTenders,
+  'DKL08': KnownRefusal.counterCorrectionBeyond,
+  'DKL07': KnownRefusal.counterGoods,
+  'DKL10': KnownRefusal.counterChanged,
+  'DKL11': KnownRefusal.counterTenderState,
   // #4008 — a member who left (0782).
   'DKM01': KnownRefusal.memberReturnsAsNew,
 };
@@ -335,6 +364,20 @@ String? _tagRefusalText(AppLocalizations l10n, KnownRefusal refusal) => switch (
       KnownRefusal.stockPieceInStock => l10n.refusalStockPieceInStock,
       KnownRefusal.stockNamePieces => l10n.refusalStockNamePieces,
       KnownRefusal.stockPieceWhere => l10n.refusalStockPieceWhere,
+      _ => _counterRefusalText(l10n, refusal),
+    };
+
+/// #4184, #4185 -- the counter's refusals.
+String? _counterRefusalText(AppLocalizations l10n, KnownRefusal refusal) => switch (refusal) {
+      KnownRefusal.counterUnsupported => l10n.refusalCounterUnsupported,
+      KnownRefusal.counterEssentials => l10n.refusalCounterEssentials,
+      KnownRefusal.counterNotOpen => l10n.refusalCounterNotOpen,
+      KnownRefusal.counterCustomerNeeded => l10n.refusalCounterCustomerNeeded,
+      KnownRefusal.counterTenders => l10n.refusalCounterTenders,
+      KnownRefusal.counterCorrectionBeyond => l10n.refusalCounterCorrectionBeyond,
+      KnownRefusal.counterChanged => l10n.refusalCounterChanged,
+      KnownRefusal.counterGoods => l10n.refusalCounterGoods,
+      KnownRefusal.counterTenderState => l10n.refusalCounterTenderState,
       _ => null,
     };
 

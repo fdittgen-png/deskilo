@@ -921,5 +921,13 @@
   },
   "@featureStockScanningDesc": {
     "description": "#4359 feature description"
+  },
+  "featureCounterReceiptsTitle": "Counter receipts",
+  "featureCounterReceiptsDesc": "A sale at the counter gives an immutable receipt of its own, numbered once, with the tender it was paid with. It is offered only where the country's operation is supported, and says plainly where it is not.",
+  "@featureCounterReceiptsTitle": {
+    "description": "#4184 feature name"
+  },
+  "@featureCounterReceiptsDesc": {
+    "description": "#4184 feature description"
   }
 }

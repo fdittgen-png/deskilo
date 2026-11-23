@@ -390,6 +390,83 @@ constraint conversations.conversations_pkey PRIMARY KEY (id)
 constraint conversations.conversations_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint conversations.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint conversations.system_company_present CHECK ((company_id IS NOT NULL))
+constraint counter_country_operations.counter_country_operations_check CHECK (((outcome = 'unavailable'::text) OR (adapter IS NOT NULL)))
+constraint counter_country_operations.counter_country_operations_check1 CHECK (((outcome = 'supported'::text) OR (reason <> ''::text)))
+constraint counter_country_operations.counter_country_operations_country_code_check CHECK ((country_code ~ '^[A-Z]{2}$'::text))
+constraint counter_country_operations.counter_country_operations_country_code_operation_regime_key UNIQUE (country_code, operation, regime)
+constraint counter_country_operations.counter_country_operations_evidence_check CHECK ((btrim(evidence) <> ''::text))
+constraint counter_country_operations.counter_country_operations_operation_check CHECK ((operation = ANY (ARRAY['issue_receipt'::text, 'correct_receipt'::text, 'reconcile_tender'::text, 'sign_fiscal'::text, 'export_fiscal'::text])))
+constraint counter_country_operations.counter_country_operations_outcome_check CHECK ((outcome = ANY (ARRAY['supported'::text, 'unavailable'::text])))
+constraint counter_country_operations.counter_country_operations_pkey PRIMARY KEY (id)
+constraint counter_country_operations.counter_country_operations_regime_check CHECK ((regime = ANY (ARRAY['none'::text, 'register_required'::text])))
+constraint counter_country_operations.counter_country_operations_specification_check CHECK ((btrim(specification) <> ''::text))
+constraint counter_country_operations.counter_country_operations_specification_version_check CHECK ((btrim(specification_version) <> ''::text))
+constraint counter_country_operations.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint counter_receipt_lines.counter_receipt_lines_gross_minor_check CHECK ((gross_minor >= 0))
+constraint counter_receipt_lines.counter_receipt_lines_line_no_check CHECK ((line_no >= 1))
+constraint counter_receipt_lines.counter_receipt_lines_net_minor_check CHECK ((net_minor >= 0))
+constraint counter_receipt_lines.counter_receipt_lines_pkey PRIMARY KEY (id)
+constraint counter_receipt_lines.counter_receipt_lines_quantity_check CHECK ((quantity > (0)::numeric))
+constraint counter_receipt_lines.counter_receipt_lines_receipt_id_line_no_key UNIQUE (receipt_id, line_no)
+constraint counter_receipt_lines.counter_receipt_lines_tax_minor_check CHECK ((tax_minor >= 0))
+constraint counter_receipt_lines.counter_receipt_lines_workspace_id_corrects_line_id_fkey FOREIGN KEY (workspace_id, corrects_line_id) REFERENCES counter_receipt_lines(workspace_id, id)
+constraint counter_receipt_lines.counter_receipt_lines_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint counter_receipt_lines.counter_receipt_lines_workspace_id_id_key UNIQUE (workspace_id, id)
+constraint counter_receipt_lines.counter_receipt_lines_workspace_id_item_id_fkey FOREIGN KEY (workspace_id, item_id) REFERENCES services(workspace_id, id)
+constraint counter_receipt_lines.counter_receipt_lines_workspace_id_receipt_id_fkey FOREIGN KEY (workspace_id, receipt_id) REFERENCES counter_receipts(workspace_id, id) ON DELETE CASCADE
+constraint counter_receipt_lines.counter_receipt_lines_workspace_id_variant_id_fkey FOREIGN KEY (workspace_id, variant_id) REFERENCES item_variants(workspace_id, id)
+constraint counter_receipt_lines.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint counter_receipt_lines.system_company_present CHECK ((company_id IS NOT NULL))
+constraint counter_receipts.counter_receipts_check CHECK (((state = 'finalized'::text) = ((number IS NOT NULL) AND (frozen IS NOT NULL) AND (finalized_at IS NOT NULL) AND (operation_id IS NOT NULL))))
+constraint counter_receipts.counter_receipts_check1 CHECK (((kind = 'correction'::text) = (corrects_receipt_id IS NOT NULL)))
+constraint counter_receipts.counter_receipts_currency_check CHECK ((currency ~ '^[A-Z]{3}$'::text))
+constraint counter_receipts.counter_receipts_fiscal_assumption_check CHECK (((fiscal_assumption IS NULL) OR (fiscal_assumption = ANY (ARRAY['none'::text, 'register_required'::text]))))
+constraint counter_receipts.counter_receipts_kind_check CHECK ((kind = ANY (ARRAY['sale'::text, 'correction'::text])))
+constraint counter_receipts.counter_receipts_operation_id_fkey FOREIGN KEY (operation_id) REFERENCES counter_country_operations(id)
+constraint counter_receipts.counter_receipts_pkey PRIMARY KEY (id)
+constraint counter_receipts.counter_receipts_price_basis_check CHECK ((price_basis = ANY (ARRAY['gross'::text, 'net'::text])))
+constraint counter_receipts.counter_receipts_revision_check CHECK ((revision >= 1))
+constraint counter_receipts.counter_receipts_schema_version_check CHECK ((schema_version >= 1))
+constraint counter_receipts.counter_receipts_source_kind_check CHECK ((source_kind ~ '^[a-z_]{1,32}$'::text))
+constraint counter_receipts.counter_receipts_source_ref_check CHECK ((char_length(source_ref) <= 200))
+constraint counter_receipts.counter_receipts_state_check CHECK ((state = ANY (ARRAY['draft'::text, 'finalized'::text])))
+constraint counter_receipts.counter_receipts_tax_minor_check CHECK (((tax_minor IS NULL) OR (tax_minor >= 0)))
+constraint counter_receipts.counter_receipts_total_minor_check CHECK (((total_minor IS NULL) OR (total_minor >= 0)))
+constraint counter_receipts.counter_receipts_workspace_id_corrects_receipt_id_fkey FOREIGN KEY (workspace_id, corrects_receipt_id) REFERENCES counter_receipts(workspace_id, id)
+constraint counter_receipts.counter_receipts_workspace_id_created_by_member_id_fkey FOREIGN KEY (workspace_id, created_by_member_id) REFERENCES members(workspace_id, id)
+constraint counter_receipts.counter_receipts_workspace_id_finalized_by_member_id_fkey FOREIGN KEY (workspace_id, finalized_by_member_id) REFERENCES members(workspace_id, id)
+constraint counter_receipts.counter_receipts_workspace_id_financial_subject_id_fkey FOREIGN KEY (workspace_id, financial_subject_id) REFERENCES members(workspace_id, id)
+constraint counter_receipts.counter_receipts_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint counter_receipts.counter_receipts_workspace_id_id_key UNIQUE (workspace_id, id)
+constraint counter_receipts.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint counter_receipts.system_company_present CHECK ((company_id IS NOT NULL))
+constraint counter_refunds.counter_refunds_amount_minor_check CHECK ((amount_minor > 0))
+constraint counter_refunds.counter_refunds_kind_check CHECK ((kind = ANY (ARRAY['cash'::text, 'other'::text])))
+constraint counter_refunds.counter_refunds_part_check CHECK ((part >= 1))
+constraint counter_refunds.counter_refunds_pkey PRIMARY KEY (id)
+constraint counter_refunds.counter_refunds_receipt_id_part_key UNIQUE (receipt_id, part)
+constraint counter_refunds.counter_refunds_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint counter_refunds.counter_refunds_workspace_id_id_key UNIQUE (workspace_id, id)
+constraint counter_refunds.counter_refunds_workspace_id_receipt_id_fkey FOREIGN KEY (workspace_id, receipt_id) REFERENCES counter_receipts(workspace_id, id)
+constraint counter_refunds.counter_refunds_workspace_id_refunded_by_member_id_fkey FOREIGN KEY (workspace_id, refunded_by_member_id) REFERENCES members(workspace_id, id)
+constraint counter_refunds.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint counter_refunds.system_company_present CHECK ((company_id IS NOT NULL))
+constraint counter_tenders.counter_tenders_amount_minor_check CHECK ((amount_minor > 0))
+constraint counter_tenders.counter_tenders_kind_check CHECK ((kind = ANY (ARRAY['cash'::text, 'card'::text, 'other'::text])))
+constraint counter_tenders.counter_tenders_part_check CHECK ((part >= 1))
+constraint counter_tenders.counter_tenders_pkey PRIMARY KEY (id)
+constraint counter_tenders.counter_tenders_provider_key_check CHECK (((provider_key IS NULL) OR (char_length(provider_key) <= 200)))
+constraint counter_tenders.counter_tenders_provider_ref_check CHECK (((provider_ref IS NULL) OR (char_length(provider_ref) <= 200)))
+constraint counter_tenders.counter_tenders_receipt_id_part_key UNIQUE (receipt_id, part)
+constraint counter_tenders.counter_tenders_reconciliation_check CHECK (((reconciliation IS NULL) OR (reconciliation = ANY (ARRAY['needed'::text, 'done'::text]))))
+constraint counter_tenders.counter_tenders_state_check CHECK ((state = ANY (ARRAY['recorded'::text, 'requested'::text, 'unknown'::text, 'accepted'::text, 'refused'::text])))
+constraint counter_tenders.counter_tenders_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint counter_tenders.counter_tenders_workspace_id_id_key UNIQUE (workspace_id, id)
+constraint counter_tenders.counter_tenders_workspace_id_receipt_id_fkey FOREIGN KEY (workspace_id, receipt_id) REFERENCES counter_receipts(workspace_id, id) ON DELETE CASCADE
+constraint counter_tenders.counter_tenders_workspace_id_recorded_by_member_id_fkey FOREIGN KEY (workspace_id, recorded_by_member_id) REFERENCES members(workspace_id, id)
+constraint counter_tenders.counter_tenders_workspace_id_resolved_by_member_id_fkey FOREIGN KEY (workspace_id, resolved_by_member_id) REFERENCES members(workspace_id, id)
+constraint counter_tenders.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint counter_tenders.system_company_present CHECK ((company_id IS NOT NULL))
 constraint credit_products.credit_products_half_days_check CHECK (((half_days >= 1) AND (half_days <= 500)))
 constraint credit_products.credit_products_name_check CHECK ((btrim(name) <> ''::text))
 constraint credit_products.credit_products_pkey PRIMARY KEY (id)
@@ -2263,6 +2340,8 @@ constraint stock_lots.stock_lots_workspace_id_item_id_fkey FOREIGN KEY (workspac
 constraint stock_lots.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint stock_lots.system_company_present CHECK ((company_id IS NOT NULL))
 constraint stock_movements.stock_movements_check CHECK ((from_location_id <> to_location_id))
+constraint stock_movements.stock_movements_counter_line_fkey FOREIGN KEY (workspace_id, counter_line_id) REFERENCES counter_receipt_lines(workspace_id, id)
+constraint stock_movements.stock_movements_counter_receipt_fkey FOREIGN KEY (workspace_id, counter_receipt_id) REFERENCES counter_receipts(workspace_id, id)
 constraint stock_movements.stock_movements_entered_quantity_check CHECK ((entered_quantity > (0)::numeric))
 constraint stock_movements.stock_movements_line_no_check CHECK (((line_no >= 1) AND (line_no <= 200)))
 constraint stock_movements.stock_movements_part_check CHECK ((part >= 1))
@@ -2976,6 +3055,25 @@ routine public.convert_customer_quote_v1(p_workspace_id uuid, p_quote_id uuid, p
 routine public.convert_to_series(p_reservation_id uuid, p_pattern text, p_until timestamp with time zone, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f1bc75036b58
 routine public.cost_allocation_rule_json(r bi_cost_allocation_rules) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:622f770f2792
 routine public.cost_allocation_rules_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:789cffb7df60
+routine public.counter_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:66c1d614d21a
+routine public.counter_adapters() -> text[] | function | invoker | immutable | exec:service_role | body:eea3a873b58c
+routine public.counter_frozen_guard() -> trigger | function | invoker | volatile | exec:service_role | body:a9c6b6fdca6f
+routine public.counter_goods_return_v1(p_workspace_id uuid, p_request_id uuid, p_correction_id uuid, p_lines jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:d83f1a38055e
+routine public.counter_line_compute(p_workspace_id uuid, p_line jsonb, p_index integer, p_currency text, p_tax_point date) -> jsonb | function | definer | stable | exec:service_role | body:36efd33a36e8
+routine public.counter_lines_of(p_workspace_id uuid, p_lines jsonb, p_currency text, p_basis text, p_tax_point date) -> jsonb | function | definer | stable | exec:service_role | body:bfe50aa31258
+routine public.counter_operation_row(p_workspace_id uuid, p_operation text) -> counter_country_operations | function | definer | stable | exec:service_role | body:59a85833376f
+routine public.counter_operation_state(p_workspace_id uuid, p_operation text) -> text | function | definer | stable | exec:service_role | body:b59b96f02cf4
+routine public.counter_readiness_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:9e12e5da4551
+routine public.counter_receipt_correct_v1(p_workspace_id uuid, p_request_id uuid, p_original_id uuid, p_body jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:1452fbfd8264
+routine public.counter_receipt_decode(p_frozen jsonb) -> jsonb | function | invoker | immutable | exec:service_role | body:928178fe46df
+routine public.counter_receipt_draft_v1(p_workspace_id uuid, p_request_id uuid, p_receipt_id uuid, p_expected_revision integer, p_body jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:01ce6764d7c5
+routine public.counter_receipt_finalize_v1(p_workspace_id uuid, p_request_id uuid, p_receipt_id uuid, p_expected_revision integer, p_tenders jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:6fb7be3427c5
+routine public.counter_refund_v1(p_workspace_id uuid, p_request_id uuid, p_correction_id uuid, p_refunds jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:018f0f2be614
+routine public.counter_refunds_frozen() -> trigger | function | invoker | volatile | exec:service_role | body:581cb131a084
+routine public.counter_require_operation(p_workspace_id uuid, p_operation text) -> counter_country_operations | function | definer | stable | exec:service_role | body:d1fc60a0d6e8
+routine public.counter_tender_reconcile_v1(p_workspace_id uuid, p_request_id uuid, p_tender_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:405814ff2609
+routine public.counter_tender_request_v1(p_workspace_id uuid, p_request_id uuid, p_receipt_id uuid, p_kind text, p_amount_minor bigint) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:7abb8d7623ef
+routine public.counter_tender_resolve_v1(p_workspace_id uuid, p_request_id uuid, p_tender_id uuid, p_outcome text, p_provider_ref text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:5f6c84c49864
 routine public.country_papers(p_country text, p_on date) -> jsonb | function | definer | stable | exec:service_role | body:e88ec4f4583e
 routine public.courtesy_word(p_code text, p_lang text) -> text | function | invoker | immutable | exec:authenticated,service_role | body:6ee8d303b265
 routine public.create_account_group(p_title text, p_users uuid[], p_expected_account uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:8824f7fdaaa1
@@ -3094,14 +3192,14 @@ routine public.export_floor_plan(p_workspace_id uuid) -> jsonb | function | defi
 routine public.export_my_data(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:60e99a54bb53
 routine public.export_my_personal_data_v1() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:d7b715189c7e
 routine public.export_workspace_configuration(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:92590453f1db
-routine public.export_workspace_records(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:0226a548774e
+routine public.export_workspace_records(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:ca7d631b3fe9
 routine public.extend_rights_request(p_request_id uuid, p_reason text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:04408416313f
 routine public.feature_available_in(p_country text, p_key text) -> boolean | function | invoker | stable | exec:authenticated,service_role | body:afd99a4fede6
 routine public.feature_effective(p_workspace_id uuid, p_key text) -> boolean | function | invoker | stable | exec:authenticated,service_role | body:1d4c5b503042
 routine public.feature_effective_in(p_flags jsonb, p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:f36e5aa82a04
 routine public.feature_operation_allowed(p_workspace uuid, p_feature text, p_operation text) -> boolean | function | definer | stable | exec:service_role | body:084f4cf0e3a0
 routine public.feature_raw(p_flags jsonb, p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:3f29a2e68fc1
-routine public.feature_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:b60c3e5b5131
+routine public.feature_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:c30a5bbf2242
 routine public.federation_answer_wait() -> interval | function | definer | stable | exec: | body:ecc7c683d6e9
 routine public.federation_envelope_headers(p_purpose text, p_target uuid, p_event uuid, p_path text, p_body jsonb) -> jsonb | function | definer | volatile | exec: | body:dc4baaa18342
 routine public.federation_inbox_accept(p_method text, p_path text, p_headers jsonb, p_body_b64 text) -> jsonb | function | definer | volatile | exec:service_role | body:9eb383212bb9
@@ -4185,7 +4283,7 @@ routine public.setup_current_levels(p_flags jsonb, p_country text) -> jsonb | fu
 routine public.setup_hours_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:4f359045c81a
 routine public.setup_invitation_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:5852379a5e56
 routine public.setup_level_arguments() -> text[] | function | invoker | immutable | exec:service_role | body:7f746fc5ea32
-routine public.setup_level_catalogue() -> jsonb | function | invoker | immutable | exec:service_role | body:71f3b608c67c
+routine public.setup_level_catalogue() -> jsonb | function | invoker | immutable | exec:service_role | body:4ccb3bf40372
 routine public.setup_level_rank(p_process text, p_level text) -> integer | function | invoker | immutable | exec:service_role | body:a54edb860b1c
 routine public.setup_levels_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:c01c658a9993
 routine public.setup_member_rights_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:fa33dc1d0dfa
@@ -4209,7 +4307,7 @@ routine public.standalone_invoice_line_v1(p_line jsonb, p_index integer, p_curre
 routine public.standalone_invoice_subject(p_workspace_id uuid, p_subject uuid) -> members | function | definer | stable | exec:service_role | body:03bed41502dd
 routine public.start_space_inquiry(p_workspace uuid, p_body text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:24335253d564
 routine public.start_space_inquiry_v1(p_workspace uuid, p_body text, p_request_id uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:307a68c96e0f
-routine public.stock_apply_lines(p_workspace_id uuid, p_actor uuid, p_request_id uuid, p_lines jsonb, p_reason text, p_at timestamp with time zone, p_links jsonb, p_mode text) -> jsonb | function | definer | volatile | exec:service_role | body:8e093ac8e4d5
+routine public.stock_apply_lines(p_workspace_id uuid, p_actor uuid, p_request_id uuid, p_lines jsonb, p_reason text, p_at timestamp with time zone, p_links jsonb, p_mode text) -> jsonb | function | definer | volatile | exec:service_role | body:ac63c47d15c7
 routine public.stock_bits_value(p_bits bit varying) -> numeric | function | invoker | immutable | exec:service_role | body:fbdb23474211
 routine public.stock_blind_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:8d7f9c93e191
 routine public.stock_command_args(p_request_id uuid, p_lines jsonb) -> void | function | invoker | immutable | exec:service_role | body:2c0224c1f582
@@ -4277,7 +4375,7 @@ routine public.stock_put_away_apply(p_workspace_id uuid, p_actor uuid, p_command
 routine public.stock_reader(p_workspace_id uuid) -> void | function | definer | stable | exec:service_role | body:9b17f67f1969
 routine public.stock_real_site(p_location_id uuid) -> uuid | function | definer | stable | exec:service_role | body:22dfe760af5d
 routine public.stock_receiving_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:02f36cd0aeb5
-routine public.stock_record(p_workspace_id uuid, p_item_id uuid, p_lot_id uuid, p_from uuid, p_to uuid, p_quantity numeric, p_entered_unit text, p_entered_quantity numeric, p_occurred_at timestamp with time zone, p_reason text, p_actor uuid, p_request_id uuid, p_line_no integer, p_part integer, p_links jsonb, p_variant_id uuid) -> uuid | function | definer | volatile | exec:service_role | body:26b0e09240c1
+routine public.stock_record(p_workspace_id uuid, p_item_id uuid, p_lot_id uuid, p_from uuid, p_to uuid, p_quantity numeric, p_entered_unit text, p_entered_quantity numeric, p_occurred_at timestamp with time zone, p_reason text, p_actor uuid, p_request_id uuid, p_line_no integer, p_part integer, p_links jsonb, p_variant_id uuid) -> uuid | function | definer | volatile | exec:service_role | body:921009c0e553
 routine public.stock_registry_page_v1(p_workspace_id uuid, p_location_id uuid, p_no_home boolean, p_limit integer, p_after jsonb) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:9572c81a6d1e
 routine public.stock_reorder_check(p_point_id uuid) -> void | function | definer | volatile | exec:service_role | body:ae171724a26b
 routine public.stock_reorder_quantity(p_obj jsonb, p_key text, p_default numeric) -> numeric | function | invoker | immutable | exec:service_role | body:0b131a38cdb8
@@ -4356,7 +4454,7 @@ routine public.tell_owners_kiosk_device(p_workspace_id uuid, p_change text, p_de
 routine public.template_blocked_validations(p_tables jsonb, p_selected text[]) -> jsonb | function | invoker | immutable | exec:service_role | body:c094ee38e47a
 routine public.template_compatibility(p_template workspace_templates, p_groups text[]) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:99d317191047
 routine public.template_customizations(p_workspace_id uuid, p_template workspace_templates, p_groups jsonb) -> jsonb | function | definer | stable | exec:service_role | body:9906b0d4a427
-routine public.template_field_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:73909b3b76f3
+routine public.template_field_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:55fb85fc825f
 routine public.template_local_needs(p_template_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:680fc4d8017c
 routine public.template_local_slot_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:41d51bce65a7
 routine public.template_outline(p_template_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e7a5648e8753
@@ -4546,6 +4644,15 @@ trigger configuration_choice_events.zz_system_columns_stamp CREATE TRIGGER zz_sy
 trigger conversation_participants.customer_subject_refused CREATE TRIGGER customer_subject_refused BEFORE INSERT OR UPDATE OF member_id ON public.conversation_participants FOR EACH ROW EXECUTE FUNCTION reject_customer_subject('member_id')
 trigger conversation_participants.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.conversation_participants FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger conversations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.conversations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger counter_country_operations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.counter_country_operations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger counter_receipt_lines.counter_receipt_lines_frozen CREATE TRIGGER counter_receipt_lines_frozen BEFORE DELETE OR UPDATE ON public.counter_receipt_lines FOR EACH ROW EXECUTE FUNCTION counter_frozen_guard()
+trigger counter_receipt_lines.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.counter_receipt_lines FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger counter_receipts.counter_receipts_frozen CREATE TRIGGER counter_receipts_frozen BEFORE DELETE OR UPDATE ON public.counter_receipts FOR EACH ROW EXECUTE FUNCTION counter_frozen_guard()
+trigger counter_receipts.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.counter_receipts FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger counter_refunds.counter_refunds_frozen CREATE TRIGGER counter_refunds_frozen BEFORE DELETE OR UPDATE ON public.counter_refunds FOR EACH ROW EXECUTE FUNCTION counter_refunds_frozen()
+trigger counter_refunds.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.counter_refunds FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger counter_tenders.counter_tenders_frozen CREATE TRIGGER counter_tenders_frozen BEFORE DELETE OR UPDATE ON public.counter_tenders FOR EACH ROW EXECUTE FUNCTION counter_frozen_guard()
+trigger counter_tenders.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.counter_tenders FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger credit_products.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.credit_products FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger customer_quote_conversions.customer_quote_conversions_frozen CREATE TRIGGER customer_quote_conversions_frozen BEFORE DELETE OR UPDATE ON public.customer_quote_conversions FOR EACH ROW EXECUTE FUNCTION customer_quote_frozen()
 trigger customer_quote_conversions.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.customer_quote_conversions FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()

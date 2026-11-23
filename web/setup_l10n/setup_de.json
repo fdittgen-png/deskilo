@@ -838,5 +838,18 @@
  "stockRepeatedScanHint": "Was ein Warenblatt tut, wenn derselbe Code noch einmal gescannt wird: eins mehr hinzufügen oder die Menge erfragen. Einstellbar in den Einstellungen der App.",
  "optAtOnce": "Sofort",
  "optAddOne": "Eins mehr hinzufügen",
- "optAskQuantity": "Menge erfragen"
+ "optAskQuantity": "Menge erfragen",
+ "counterFiscal": "Steuerliche Vorgaben für Kassenverkäufe",
+ "counterFiscalHint": "Was Sie erklären: Für Ihren Betrieb gilt keine Kassenpflicht, oder eine gilt. Ein Beleg wird nur ausgestellt, wo der Vorgang Ihres Landes für den erklärten Fall unterstützt wird. Einzustellen in den Einstellungen der App.",
+ "counterChannel": "Wie ein Kassenbeleg die Kasse verlässt",
+ "counterChannelHint": "Geteilt, gedruckt oder beides: Der Beleg ist dasselbe unveränderliche Dokument. Einzustellen in den Einstellungen der App.",
+ "counterCustomerless": "Verkäufe ohne genannten Kunden",
+ "counterCustomerlessHint": "Erlaubt, oder jeder Verkauf nennt einen Kunden. Ein Verkauf ohne Kunden legt nie ein Konto, ein Mitglied oder ein Abonnement an. Einzustellen in den Einstellungen der App.",
+ "optFiscalRequired": "Eine Kasse ist vorgeschrieben",
+ "optFiscalNone": "Keine Kassenpflicht (meine Erklärung)",
+ "optChannelShare": "Teilen",
+ "optChannelPrint": "Drucken",
+ "optChannelBoth": "Teilen und drucken",
+ "optCustomerlessAllowed": "Erlaubt",
+ "optCustomerlessRefused": "Ein Kunde wird immer genannt"
 }
