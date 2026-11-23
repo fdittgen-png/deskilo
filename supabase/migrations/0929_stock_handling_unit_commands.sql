@@ -55,6 +55,19 @@ end;
 $fn$;
 revoke execute on function public.stock_hu_uuid(text, text) from public, anon, authenticated;
 
+-- the items of some lines locked first, in id order, as the stock path locks them: two requests claiming the same loose stock
+-- queue behind each other (the second reads what is loose after the first), and opposing requests cannot deadlock
+create or replace function public.stock_hu_lock_items(p_workspace_id uuid, p_lines jsonb)
+returns void language plpgsql security definer set search_path = public as $fn$
+declare
+  v_ids uuid[];
+begin
+  select array_agg(distinct public.stock_hu_uuid(x ->> 'item_id', 'item_id')) into v_ids from jsonb_array_elements(p_lines) x;
+  perform 1 from public.services where id = any (v_ids) and workspace_id = p_workspace_id order by id for update;
+end;
+$fn$;
+revoke execute on function public.stock_hu_lock_items(uuid, jsonb) from public, anon, authenticated;
+
 -- one content line put into a unit at its place: checked against what is loose there, the pieces claimed
 create or replace function public.stock_hu_add_line(p_workspace_id uuid, p_unit uuid, p_location uuid, p_line jsonb)
 returns void language plpgsql security definer set search_path = public as $fn$
@@ -87,9 +100,9 @@ begin
     end if;
   elsif v_units is not null then
     perform public.refuse('DKG28', jsonb_build_object('reason', 'pieces', 'item_id', v_item.id), 'only a piece-tracked line names pieces');
-  elsif v_qty > public.stock_hu_loose(p_workspace_id, v_item.id, v_var, v_lot, p_location, p_unit) then
+  elsif v_qty > public.stock_hu_loose(p_workspace_id, v_item.id, v_var, v_lot, p_location) then
     perform public.refuse('DKG03', jsonb_build_object('item_id', v_item.id, 'location_id', p_location,
-      'have', public.stock_hu_loose(p_workspace_id, v_item.id, v_var, v_lot, p_location, p_unit), 'asked', v_qty), 'not that much loose here');
+      'have', public.stock_hu_loose(p_workspace_id, v_item.id, v_var, v_lot, p_location), 'asked', v_qty), 'not that much loose here');
   end if;
   select id into v_line from public.stock_handling_unit_lines
    where unit_id = p_unit and item_id = v_item.id and variant_id is not distinct from v_var and lot_id is not distinct from v_lot for update;
@@ -146,15 +159,20 @@ begin
   v_digest := md5('hu_make|' || p_unit::text);
   v_done := public.purchase_request_begin(p_workspace_id, p_request_id, 'stock_hu_make', v_digest);
   if v_done is not null then return v_done; end if;
+  perform public.stock_hu_lock_items(p_workspace_id, p_unit -> 'lines');
   v_loc := public.stock_hu_uuid(p_unit ->> 'location_id', 'location_id');
   if not exists (select 1 from public.stock_locations where id = v_loc and workspace_id = p_workspace_id and active) then
     perform public.refuse('DKG28', jsonb_build_object('reason', 'place'), 'a unit is at an active place of this business');
   end if;
   v_kind := coalesce(nullif(p_unit ->> 'kind', ''), 'other');
   v_parent := public.stock_hu_uuid(p_unit ->> 'parent_unit_id', 'parent_unit_id');
-  if v_parent is not null and not exists (select 1 from public.stock_handling_units
-       where id = v_parent and workspace_id = p_workspace_id and state = 'open' and parent_unit_id is null and location_id = v_loc) then
-    perform public.refuse('DKG28', jsonb_build_object('reason', 'parent'), 'a unit nests in an open top-level unit at the same place');
+  if v_parent is not null then
+    -- the parent locked, as a move or an unpack of it would lock it: they queue behind this one
+    if (public.stock_hu_lock(p_workspace_id, v_parent, null)).parent_unit_id is not null
+       or (select location_id from public.stock_handling_units where id = v_parent) <> v_loc then
+      perform public.refuse('DKG28', jsonb_build_object('reason', 'parent'), 'a unit nests in an open top-level unit at the same place');
+    end if;
+    update public.stock_handling_units set revision = revision + 1 where id = v_parent;
   end if;
   begin
     insert into public.stock_handling_units (workspace_id, code, label_code, kind, location_id, parent_unit_id, receipt_line_id)
@@ -291,5 +309,56 @@ end;
 $fn$;
 revoke execute on function public.stock_hu_unpack_v1(uuid, uuid, uuid, int) from public, anon;
 grant execute on function public.stock_hu_unpack_v1(uuid, uuid, uuid, int) to authenticated;
+
+-- ── a unit never claims stock that is gone ───────────────────────────────
+-- Checked at commit, as the pieces are (0887): for every (item, variant, lot, place) whose balance a transaction wrote, what the open
+-- units at that place claim is at most the balance; for every piece in a unit, the piece is in stock at its unit's place. A loose
+-- take-out of stock that is all packed in a unit is refused, naming the units (DKG03: move or unpack the unit); the move of the unit
+-- itself passes, since its place moves in the same transaction.
+create or replace function public.stock_hu_claims_check()
+returns trigger language plpgsql security definer set search_path = public as $fn$
+declare
+  v_bal numeric;
+  v_claim numeric;
+  v_units text;
+begin
+  select b.quantity into v_bal from public.stock_balances b where b.id = new.id;
+  if v_bal is null then return null; end if;
+  select coalesce(sum(l.quantity), 0), string_agg(distinct u.code, ', ' order by u.code) into v_claim, v_units
+    from public.stock_handling_unit_lines l
+    join public.stock_handling_units u on u.workspace_id = l.workspace_id and u.id = l.unit_id
+   where l.workspace_id = new.workspace_id and l.item_id = new.item_id and l.variant_id is not distinct from new.variant_id
+     and l.lot_id is not distinct from new.lot_id and u.location_id = new.location_id and u.state = 'open';
+  if v_claim > 0 and v_claim > v_bal then
+    perform public.refuse('DKG03', jsonb_build_object('item_id', new.item_id, 'location_id', new.location_id, 'have', v_bal,
+      'packed', v_claim, 'units', v_units), 'this stock is packed in a unit: move or unpack the unit');
+  end if;
+  return null;
+end;
+$fn$;
+revoke execute on function public.stock_hu_claims_check() from public, anon, authenticated;
+create constraint trigger stock_hu_claims after insert or update of quantity on public.stock_balances
+  deferrable initially deferred for each row execute function public.stock_hu_claims_check();
+
+create or replace function public.stock_hu_pieces_check()
+returns trigger language plpgsql security definer set search_path = public as $fn$
+declare
+  v_unit text;
+begin
+  select u.code into v_unit
+    from public.stock_handling_unit_pieces p
+    join public.stock_handling_unit_lines l on l.workspace_id = p.workspace_id and l.id = p.unit_line_id
+    join public.stock_handling_units u on u.workspace_id = l.workspace_id and u.id = l.unit_id
+   where p.piece_id = new.id and u.state = 'open' and (new.state <> 'in_stock' or new.location_id <> u.location_id);
+  if v_unit is not null then
+    perform public.refuse('DKG03', jsonb_build_object('piece_id', new.id, 'location_id', new.location_id, 'units', v_unit),
+      'this piece is packed in a unit: move or unpack the unit');
+  end if;
+  return null;
+end;
+$fn$;
+revoke execute on function public.stock_hu_pieces_check() from public, anon, authenticated;
+create constraint trigger stock_hu_pieces after update of state, location_id on public.stock_tagged_units
+  deferrable initially deferred for each row execute function public.stock_hu_pieces_check();
 
 select public.set_deskilo_schema_version(929);

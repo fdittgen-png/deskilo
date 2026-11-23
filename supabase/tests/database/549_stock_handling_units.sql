@@ -3,7 +3,7 @@
 -- its whole content in one request through the one stock path (lots and pieces kept, the ledger and the unit agreeing), refused when it
 -- changed under the caller, unpacked loose, nested one level; whoever manages the stock acts, never an assistant. Rolled back.
 begin;
-select plan(25);
+select plan(28);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -149,6 +149,13 @@ select is(left(pg_temp.move(3, 936, 'C1', 'MAIN', 3), 9), 'ERR DKG27', 'an unpac
 select is(left(pg_temp.move(2, 937, 'P1', 'MAIN', 2), 9), 'ERR DKN01', 'a member who may not manage the stock is refused');
 select is(left(pg_temp.move(3, 938, 'P1', 'MAIN', 2, true), 9), 'ERR DKN01', 'an assistant session is refused');
 select is(left(pg_temp.hu(4, 'stock_hu_make_v1', format('%L, %L::jsonb', pg_temp.u(939), '{"code": "X", "location_id": "00000000-0000-4000-8000-000000000001", "lines": [{"item_id": "00000000-0000-4000-8000-000000000001", "quantity": "1"}]}'), 102), 9), 'ERR DKG01', 'with the feature off nothing is made');
+
+-- a unit never claims stock that is gone: a loose take-out of stock that is all packed is refused, and passes once the unit is unpacked
+select pg_temp.make(3, 940, format('{"code": "S9", "kind": "box", "location_id": "%s", "lines": [{"item_id": "%s", "quantity": "6"}]}', pg_temp.loc('MAIN'), pg_temp.u(306)));
+select is(left(pg_temp.mv(3, 941, format('[{"item_id": "%s", "quantity": "1", "from": "%s", "to": "%s"}]', pg_temp.u(306), pg_temp.loc('MAIN'), pg_temp.loc('FLOOR')), 'transfer'), 9), 'ERR DKG03', 'taking out salt that is all packed in a unit is refused: move or unpack the unit');
+select is(pg_temp.bal(306, 'MAIN'), 6.000000, 'and the refused take-out left the balance as it was');
+select pg_temp.unpack(3, 942, 'S9', 1);
+select is(left(pg_temp.mv(3, 943, format('[{"item_id": "%s", "quantity": "1", "from": "%s", "to": "%s"}]', pg_temp.u(306), pg_temp.loc('MAIN'), pg_temp.loc('FLOOR')), 'transfer'), 3) <> 'ERR', true, 'after the unpack the same take-out passes');
 
 select * from finish();
 rollback;

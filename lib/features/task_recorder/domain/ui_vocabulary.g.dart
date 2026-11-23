@@ -9740,6 +9740,8 @@ const Set<String> uiLabelKeys = {
   'featureStockCycleCountsTitle',
   'featureStockExpiryReportDesc',
   'featureStockExpiryReportTitle',
+  'featureStockHandlingUnitsDesc',
+  'featureStockHandlingUnitsTitle',
   'featureStockItemGroupsDesc',
   'featureStockItemGroupsTitle',
   'featureStockLotsDesc',

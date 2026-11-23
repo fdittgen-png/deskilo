@@ -454,6 +454,10 @@ const List<ExportSource> workspaceExportSources = [
   // #4362 — the tags bound to items, places and pieces, and the named pieces.
   ExportSource.everyColumn('stock_tags'),
   ExportSource.everyColumn('stock_tagged_units'),
+  // #4435 — the handling units, what they hold, their pieces, the movements they carried, and the repacks.
+  ExportSource.everyColumn('stock_handling_units'), ExportSource.everyColumn('stock_handling_unit_lines'),
+  ExportSource.everyColumn('stock_handling_unit_pieces'), ExportSource.everyColumn('stock_movement_handling_units'),
+  ExportSource.everyColumn('stock_repacks'), ExportSource.everyColumn('stock_repack_lines'),
   ExportSource.everyColumn('stock_movement_units'),
   // #4172 — the returns, and what each line reversed.
   ExportSource.everyColumn('stock_returns'),
