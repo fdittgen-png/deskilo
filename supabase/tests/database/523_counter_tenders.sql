@@ -5,7 +5,7 @@
 -- refund follows a correction, needs the right to record outgoing payments and never exceeds what the correction credits.
 -- Rolled back.
 begin;
-select plan(19);
+select plan(21);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -70,7 +70,7 @@ grant execute on all functions in schema pg_temp to authenticated, anon;
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
 select pg_temp.u(n), '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', 'cproducer-' || n || '@deskilo.test', '', now(), now(), now() from generate_series(1, 3) n;
 insert into public.workspaces (id, name, country_code, currency_code, timezone, created_by, vat_regime, feature_flags, role_permissions) values
-  (pg_temp.u(101), 'Counter FR', 'FR', 'EUR', 'Europe/Paris', pg_temp.u(1), 'vat_registered', '{"services": true, "invoicing": true, "standaloneInvoicing": true, "counterReceipts": true}', '{}'),
+  (pg_temp.u(101), 'Counter FR', 'FR', 'EUR', 'Europe/Paris', pg_temp.u(1), 'vat_registered', '{"services": true, "invoicing": true, "standaloneInvoicing": true, "counterReceipts": true}', '{"member": ["issueInvoices"]}'),
   (pg_temp.u(102), 'Counter IT', 'IT', 'EUR', 'Europe/Rome', pg_temp.u(1), 'vat_registered', '{"services": true, "invoicing": true, "standaloneInvoicing": true, "counterReceipts": true}', '{}'),
   (pg_temp.u(103), 'Counter JP', 'FR', 'JPY', 'Europe/Paris', pg_temp.u(1), 'vat_registered', '{"services": true, "invoicing": true, "standaloneInvoicing": true, "counterReceipts": true}', '{}'),
   (pg_temp.u(104), 'Counter KW', 'FR', 'KWD', 'Europe/Paris', pg_temp.u(1), 'vat_registered', '{"services": true, "invoicing": true, "standaloneInvoicing": true, "counterReceipts": true}', '{}');
@@ -116,6 +116,12 @@ select is(pg_temp.f(pg_temp.tres(1, 1004, pg_temp.f(current_setting('t.t4'), 'te
 select is(left(pg_temp.fin(1, 101, 1005, current_setting('t.d')::uuid, 2, '[]'), 15), 'ERR DKT06 tende', 'the sale cannot be finalized until it is reconciled');
 select is(pg_temp.f(pg_temp.trec(1, 1006, pg_temp.f(current_setting('t.t4'), 'tender_id')::uuid), 'reconciliation'), 'done', 'a person who may see the finances reconciles it');
 select is(pg_temp.f(pg_temp.fin(1, 101, 1007, current_setting('t.d')::uuid, 2, '[]'), 'number') is not null, true, 'and the sale is then finalized with it');
+
+-- ── an unknown authorization is not settled on a cashier's word ──
+select set_config('t.e', pg_temp.newdraft(1011, 'c-5'), false);
+select set_config('t.t5', pg_temp.treq(2, 1012, current_setting('t.e')::uuid, 1200), false);
+select is(pg_temp.f(pg_temp.tres(2, 1013, pg_temp.f(current_setting('t.t5'), 'tender_id')::uuid, 'unknown'), 'state'), 'unknown', 'a cashier records that the answer did not come');
+select is(left(pg_temp.tres(2, 1014, pg_temp.f(current_setting('t.t5'), 'tender_id')::uuid, 'accepted'), 9), 'ERR DKN01', 'but settling it takes someone who may see the finances');
 
 select * from finish();
 rollback;

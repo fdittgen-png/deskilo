@@ -180,6 +180,8 @@ create table public.counter_tenders (
   amount_minor bigint not null check (amount_minor > 0),
   state text not null default 'recorded' check (state in ('recorded', 'requested', 'unknown', 'accepted', 'refused')),
   provider_key text check (provider_key is null or char_length(provider_key) <= 200),
+  provider_ref text check (provider_ref is null or char_length(provider_ref) <= 200),
+  resolved_by_member_id uuid,
   request_id uuid,
   offered_revision int,
   reconciliation text check (reconciliation is null or reconciliation in ('needed', 'done')),
@@ -188,7 +190,8 @@ create table public.counter_tenders (
   unique (receipt_id, part),
   unique (workspace_id, id),
   foreign key (workspace_id, receipt_id) references public.counter_receipts (workspace_id, id) on delete cascade,
-  foreign key (workspace_id, recorded_by_member_id) references public.members (workspace_id, id)
+  foreign key (workspace_id, recorded_by_member_id) references public.members (workspace_id, id),
+  foreign key (workspace_id, resolved_by_member_id) references public.members (workspace_id, id)
 );
 select public.ensure_system_columns('counter_tenders');
 
@@ -222,8 +225,8 @@ begin
     if tg_op = 'DELETE' then
       raise exception 'a tender is never deleted' using errcode = 'DKT03';
     end if;
-    v_old := to_jsonb(old) - v_sys - array['state', 'provider_key', 'reconciliation', 'resolved_at'];
-    v_new := to_jsonb(new) - v_sys - array['state', 'provider_key', 'reconciliation', 'resolved_at'];
+    v_old := to_jsonb(old) - v_sys - array['state', 'provider_ref', 'reconciliation', 'resolved_at', 'resolved_by_member_id'];
+    v_new := to_jsonb(new) - v_sys - array['state', 'provider_ref', 'reconciliation', 'resolved_at', 'resolved_by_member_id'];
     if v_old is distinct from v_new then
       raise exception 'what a tender is for and how much is never edited' using errcode = 'DKT03';
     end if;

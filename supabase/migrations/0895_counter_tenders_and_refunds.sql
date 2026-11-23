@@ -89,6 +89,12 @@ begin
   if v_tender.id is null then
     raise exception 'not a card tender of this business' using errcode = 'DKT04';
   end if;
+  perform public.counter_require_operation(p_workspace_id, 'reconcile_tender');
+  -- from `unknown` only a person who may see the finances settles it: the cashier's own word is not the way out of a
+  -- timeout (the provider's answer is read and entered by a supervisor, or arrives through a verified channel later)
+  if v_tender.state = 'unknown' and not public.has_permission(p_workspace_id, 'viewFinances') then
+    raise exception 'an unknown authorization is settled by someone who may see the finances' using errcode = 'DKN01';
+  end if;
   if v_tender.state not in ('requested', 'unknown') then
     raise exception 'this authorization is already settled' using errcode = 'DKT11';
   end if;
@@ -100,7 +106,8 @@ begin
   if p_outcome = 'accepted' and (v_rec.state <> 'draft' or v_rec.revision <> v_tender.offered_revision) then
     v_recon := 'needed';
   end if;
-  update public.counter_tenders set state = p_outcome, provider_key = coalesce(nullif(p_provider_ref, ''), provider_key),
+  -- the provider key is the request's own and is never overwritten: the provider's reference is kept beside it
+  update public.counter_tenders set state = p_outcome, provider_ref = nullif(p_provider_ref, ''), resolved_by_member_id = v_me,
          reconciliation = v_recon, resolved_at = case when p_outcome = 'unknown' then null else now() end
    where id = v_tender.id;
   v_result := jsonb_build_object('tender_id', v_tender.id, 'state', p_outcome, 'reconciliation', v_recon, 'replayed', false);
