@@ -14,181 +14,30 @@
 // landed and whose answer is lost is `uncertain` and is never resent
 // automatically: a lookup (where the channel has one) or a person with
 // the send authority settles it.
+// The actions are a table (actions/index.ts): this file reads the request,
+// decides who may ask, builds the context and runs the action it names.
 
 import { refuseDelegated } from "../_shared/delegated.ts";
 import { CORS, preflight } from "../_shared/cors.ts";
+import { ACTIONS, SEND } from "./actions/index.ts";
 import {
-  isProvider,
-  requiredFields,
-  status as askStatus,
-  type Submission,
-  submit,
-  SANDBOX,
-  acceptedFormats,
-  takesTestDocument,
-} from "./connectors.ts";
-import { redact, safeError } from "./connectors/common.ts";
-import { clientDetail, safeFetch } from "./connectors/safe_fetch.ts";
-import type { Phase, TransmissionStore } from "./store.ts";
+  type ActionContext,
+  type Config,
+  configForDestination,
+  type Deps,
+  DESTINATIONS,
+  type Destination,
+  ENVIRONMENTS,
+  type Environment,
+  json,
+  missingFor,
+  type Payload,
+} from "./common.ts";
+import { safeError } from "./connectors/common.ts";
+import { safeFetch } from "./connectors/safe_fetch.ts";
 
-/** The longest a dispatch may stay in flight before it is treated as
- * uncertain: the Edge Function's own wall-clock budget, a technical
- * transport limit of the platform rather than a business value (#3335 D4). */
-export const DISPATCH_WINDOW_SECONDS = 150;
-
-/** The keys a client may declare about itself, and the longest value (#3336).
- * The database clips again (record_provenance); this keeps what leaves the
- * handler small and honest. A value that is not a string is DROPPED, never
- * coerced into one. */
-const DECLARED_KEYS = ["renderer", "renderer_version", "app_version", "format"];
-const DECLARED_WIDTH = 120;
-
-export function clipDeclared(value: unknown): Record<string, string> {
-  const out: Record<string, string> = {};
-  if (value === null || typeof value !== "object" || Array.isArray(value)) {
-    return out;
-  }
-  for (const key of DECLARED_KEYS) {
-    const v = (value as Record<string, unknown>)[key];
-    if (typeof v === "string" && v.length > 0) {
-      out[key] = v.slice(0, DECLARED_WIDTH);
-    }
-  }
-  return out;
-}
-
-export interface Deps {
-  store: TransmissionStore;
-  fetchImpl?: typeof fetch;
-}
-
-const json = (body: unknown, status = 200) =>
-  new Response(JSON.stringify(body), {
-    status,
-    headers: { ...CORS, "Content-Type": "application/json" },
-  });
-
-/** Where a document may be sent. 'prod' is the unsuffixed key set that
- * predates environments; 'uat'/'dev' read the suffixed keys (0074). */
-const ENVIRONMENTS = ["prod", "uat", "dev"] as const;
-type Environment = (typeof ENVIRONMENTS)[number];
-
-/** WHO receives the document (#568): the platform the government mandate
- * points at, or the customer's own delivery service. 'government' is the
- * unprefixed key set that predates destinations; 'customer' reads the
- * customer_-prefixed keys. */
-const DESTINATIONS = ["government", "customer"] as const;
-type Destination = (typeof DESTINATIONS)[number];
-
-type Config = Record<string, string>;
-
-/** The config as one destination sees it. The customer channel is a
- * SEPARATE endpoint and credential — never a fallback to the government
- * ones, because an invoice quietly landing on the wrong platform is the
- * accident this split exists to prevent. */
-function configForDestination(cfg: Config, dest: Destination): Config {
-  if (dest === "government") {
-    return Object.fromEntries(
-      Object.entries(cfg).filter(([key]) => !key.startsWith("customer_")),
-    );
-  }
-  return Object.fromEntries(
-    Object.entries(cfg)
-      .filter(([key]) => key.startsWith("customer_"))
-      .map(([key, value]) => [key.slice("customer_".length), value]),
-  );
-}
-
-/** The config as one environment sees it. endpoint and auth_value are
- * STRICTLY per-environment — no fallback to prod, because a UAT document
- * silently reaching the production platform is the exact accident this
- * feature exists to prevent. Header and field name fall back to the
- * production values, then to the adapter defaults: they describe the
- * upload shape, not the destination. */
-function configFor(
-  cfg: Config,
-  env: Environment,
-  provider = "generic",
-): Config {
-  if (env === "prod") return cfg;
-  // #2358 — every field a connector REQUIRES is strictly per environment,
-  // like the generic endpoint and token: a sandbox key must never fall
-  // back to the production one.
-  const scoped: Config = { ...cfg };
-  for (const field of requiredFields(provider)) {
-    scoped[field] = cfg[`${field}_${env}`] ?? "";
-  }
-  scoped.auth_header = cfg[`auth_header_${env}`] || cfg.auth_header || "";
-  scoped.field_name = cfg[`field_name_${env}`] || cfg.field_name || "";
-  return scoped;
-}
-
-function missingFor(
-  cfg: Config,
-  env: Environment,
-  provider = "generic",
-): string[] {
-  const scoped = configFor(cfg, env, provider);
-  return requiredFields(provider).filter((field) => !scoped[field]);
-}
-
-// #1117 — `Uint8Array<ArrayBuffer>`, not the bare `Uint8Array`.
-// TypeScript 5.7 made the type generic over its buffer, and the bare
-// form widens to `ArrayBufferLike`, which admits a SharedArrayBuffer
-// and is therefore not a `BufferSource`. These bytes always come from
-// `Uint8Array.from(atob(...))`, whose buffer is a real ArrayBuffer, so
-// naming it is a narrowing, not a cast.
-async function sha256(bytes: Uint8Array<ArrayBuffer>): Promise<string> {
-  const digest = await crypto.subtle.digest("SHA-256", bytes);
-  return [...new Uint8Array(digest)]
-    .map((b) => b.toString(16).padStart(2, "0"))
-    .join("");
-}
-
-/** The binding of a transmission as the database keeps it: the document's
- * hash, its format and its receiver. */
-async function bindingOf(
-  hash: string,
-  format: string,
-  receiverScheme: string,
-  receiverId: string,
-): Promise<string> {
-  return await sha256(
-    new TextEncoder().encode([hash, format, receiverScheme, receiverId].join("|")),
-  );
-}
-
-/** What an older client can read: it knows accepted, rejected and failed
- * only, so an unresolved phase reads `failed` with words that say the
- * document was NOT sent again. `phase` carries the truth for new readers. */
-const legacyStatus = (phase: Phase): "accepted" | "rejected" | "failed" =>
-  phase === "accepted" || phase === "rejected" ? phase : "failed";
-
-const UNRESOLVED_DETAIL = "In progress or unresolved - do not resend";
-
-/** The wire answer of a send or a replay (#3335). `status` stays one of the
- * three values an older client decodes; `phase` is the whole truth. */
-function answer(
-  phase: Phase,
-  id: string,
-  externalId: string,
-  detail: string,
-  environment: string,
-  destination: string,
-  httpStatus?: number,
-): Response {
-  const unresolved = phase === "prepared" || phase === "sent" ||
-    phase === "uncertain";
-  return json({
-    status: legacyStatus(phase),
-    phase,
-    transmission_id: id,
-    external_id: externalId,
-    detail: unresolved ? UNRESOLVED_DETAIL : detail,
-    environment,
-    destination,
-  }, httpStatus ?? (phase === "accepted" ? 200 : unresolved ? 409 : 502));
-}
+export { clipDeclared, DISPATCH_WINDOW_SECONDS } from "./common.ts";
+export type { Deps } from "./common.ts";
 
 export async function handle(req: Request, deps: Deps): Promise<Response> {
   const { store } = deps;
@@ -201,27 +50,7 @@ export async function handle(req: Request, deps: Deps): Promise<Response> {
   if (delegated) return delegated;
 
   const authorization = req.headers.get("Authorization") ?? "";
-  let payload: {
-    workspace_id?: string;
-    invoice_id?: string;
-    declaration_id?: string;
-    file_name?: string;
-    mime_type?: string;
-    content_base64?: string;
-    action?: string;
-    environment?: string;
-    destination?: string;
-    format?: string;
-    receiver_scheme?: string;
-    receiver_id?: string;
-    transmission_id?: string;
-    outcome?: string;
-    reason?: string;
-    evidence?: string;
-    verdict?: Record<string, unknown>;
-    // #3336 — what the client says about its renderer (clipped below)
-    declared?: unknown;
-  };
+  let payload: Payload;
   try {
     payload = await req.json();
   } catch (error) {
@@ -242,24 +71,12 @@ export async function handle(req: Request, deps: Deps): Promise<Response> {
   // #1078 — WHO is asking, BEFORE anything answers; scoped by user_id.
   const userId = await store.user(authorization.replace("Bearer ", ""));
   if (!userId) return json({ error: "unauthorized" }, 401);
-  const me = await store.member(workspaceId, userId);
-  // An active owner, or an active member who holds issueInvoices (the
-  // permission matrix: from the base role or a role of the space).
-  const mayIssue = !!me && me.status === "active" &&
-    (me.is_owner || await store.hasPermission(me.id, "issueInvoices"));
-  // #3883 -- a sandbox test document issues nothing: it is sent, and asked
-  // about, by whoever manages the integrations (the credentials' right).
-  const testing = payload.action === "test" || payload.action === "status" ||
-    payload.action === "test_state";
-  const mayManage = testing && !!me && me.status === "active" &&
-    (me.is_owner || await store.hasPermission(me.id, "manageIntegrations"));
-  if (!me || (!mayIssue && !mayManage)) {
+  const action = ACTIONS[payload.action ?? ""] ?? SEND;
+  const rights = await rightsOf(store, workspaceId, userId, action.manage);
+  if (!rights) {
     return json({ error: "not allowed to issue invoices in this workspace" }, 403);
   }
-  if (!testing && !mayIssue) {
-    return json({ error: "not allowed to issue invoices in this workspace" }, 403);
-  }
-
+  const { mayIssue, mayManage } = rights;
   const credentials = await store.credentials(workspaceId);
   const fullCfg = (credentials?.config ?? {}) as Config;
   const environment = (ENVIRONMENTS as readonly string[]).includes(
@@ -280,42 +97,27 @@ export async function handle(req: Request, deps: Deps): Promise<Response> {
   const missing = missingFor(cfg, environment, provider);
 
   // The client asks first whether sending is even possible.
-  if (payload.action === "config") {
-    const govCfg = configForDestination(fullCfg, "government");
-    const govProvider = credentials?.provider ?? "generic";
-    // a provider whose connector was retired cannot send: say so (#3338)
-    const installed = isProvider(govProvider);
-    return json({
-      configured: installed &&
-        missingFor(govCfg, "prod", govProvider).length === 0,
-      ...(installed ? {} : { error: "provider_not_installed" }),
-      provider: govProvider,
-      missing: missingFor(govCfg, "prod", govProvider),
-      environments: Object.fromEntries(
-        ENVIRONMENTS.map((
-          env,
-        ) => [env, missingFor(govCfg, env, govProvider).length === 0]),
-      ),
-      destinations: Object.fromEntries(
-        DESTINATIONS.map((dest) => {
-          const scoped = configForDestination(fullCfg, dest);
-          return [dest, {
-            configured: missingFor(scoped, "prod").length === 0,
-            missing: missingFor(scoped, "prod"),
-            environments: Object.fromEntries(
-              ENVIRONMENTS.map(
-                (env) => [env, missingFor(scoped, env).length === 0],
-              ),
-            ),
-          }];
-        }),
-      ),
-      // a client that sees this understands the unresolved phases (#3335)
-      phases: true,
-    });
-  }
 
-  // #917 — a DEVELOPMENT workspace does not talk to the outside world.
+  const ctx: ActionContext = {
+    store, fetchImpl, payload, workspaceId, userId, mayIssue, mayManage,
+    credentials, fullCfg, cfg, environment, destination, provider, missing,
+  };
+
+  // A development workspace and an uncertain dispatch matter to the actions
+  // that talk to the outside world; the client's first question does not.
+  if (action.live) {
+    const refused = await liveGate(store, workspaceId);
+    if (refused) return refused;
+  }
+  return await action.run(ctx);
+}
+
+/** #917 — a DEVELOPMENT workspace does not talk to the outside world; and a
+ * dispatch whose deadline passed with no outcome is uncertain now. */
+async function liveGate(
+  store: Deps["store"],
+  workspaceId: string,
+): Promise<Response | null> {
   if ((await store.workspaceEnvironment(workspaceId)) !== "prod") {
     return json({
       error: "development_workspace",
@@ -325,567 +127,30 @@ export async function handle(req: Request, deps: Deps): Promise<Response> {
         "to send for real.",
     }, 409);
   }
-
-  // A dispatch whose deadline passed with no outcome is uncertain now.
   try {
     await store.expire(workspaceId);
   } catch (error) {
     console.error("send-e-invoice: expiry sweep failed", safeError(error));
   }
-
-  // ── #3883: a sandbox test document of the national channel ─────────
-  if (payload.action === "test_state") {
-    if (!mayManage) {
-      return json({
-        error: "not allowed to manage the integrations of this workspace",
-      }, 403);
-    }
-    const latest = await store.latestTest(workspaceId);
-    const verdict = (latest?.verdict ?? {}) as Record<string, unknown>;
-    return json({
-      available: takesTestDocument(credentials?.provider ?? "generic"),
-      // the channel's own syntax: a test document is built in it (#3930)
-      format: takesTestDocument(credentials?.provider ?? "generic")
-        ? (acceptedFormats(credentials?.provider ?? "generic")[0] ?? "")
-        : "",
-      test: latest === null ? null : {
-        transmission_id: latest.id,
-        phase: latest.phase,
-        document_status: verdict.document === "rejected"
-          ? "rejected"
-          : verdict.status === "accepted" || verdict.status === "rejected"
-          ? verdict.status
-          : "unknown",
-      },
-    });
-  }
-  if (payload.action === "test") {
-    return await sendTestDocument(
-      store,
-      fetchImpl,
-      payload,
-      { workspaceId, userId, mayManage, credentials },
-    );
-  }
-
-  // ── what became of an earlier submission ────────────────────────────
-  if (payload.action === "status") {
-    const sent = await store.transmission(payload.transmission_id ?? "");
-    if (!sent || sent.workspace_id !== workspaceId) {
-      return json({ error: "unknown transmission" }, 404);
-    }
-    // #3883 -- whoever manages the integrations asks about a test document
-    // only; an invoice's transmission is the issuer's.
-    if (!mayIssue && sent.kind !== "test") {
-      return json({ error: "not allowed to issue invoices in this workspace" }, 403);
-    }
-    // Only a recorded upload can be asked about, and never by a resend.
-    if (
-      !sent.external_id ||
-      (sent.phase !== "accepted" && sent.phase !== "uncertain")
-    ) {
-      return json({
-        phase: sent.phase,
-        status: legacyStatus(sent.phase),
-        lookup: "unavailable",
-        detail: sent.phase === "uncertain" ? UNRESOLVED_DETAIL : sent.detail,
-      });
-    }
-    // The stored destination and environment decide the credentials, not
-    // the request's defaults (O11).
-    const sentCfg = configForDestination(
-      fullCfg,
-      sent.destination as Destination,
-    );
-    // #3883 -- a test's verdict opens the gate: it is read from the
-    // connector's documented sandbox only, as the test was sent there.
-    if (
-      sent.kind === "test" &&
-      !onDocumentedSandbox(
-        configFor(sentCfg, "uat", sent.provider),
-        SANDBOX[sent.provider] ?? {},
-      )
-    ) {
-      return json({ error: "sandbox_not_documented", provider: sent.provider }, 409);
-    }
-    const asked = await askStatus(
-      sent.provider,
-      configFor(sentCfg, sent.environment as Environment, sent.provider),
-      sent.external_id,
-      fetchImpl,
-    );
-    // A document verdict is something the connector READ from a successful
-    // answer; a refused or failed query is a query error, never a verdict.
-    const isVerdict = asked.httpStatus === undefined &&
-      !asked.pending &&
-      (asked.status === "accepted" || asked.status === "rejected") &&
-      Object.keys(asked.receipt).length > 0;
-    if (isVerdict) {
-      await store.lookup(
-        sent.id,
-        sent.phase === "uncertain" ? "accepted" : null,
-        sent.external_id,
-        asked.receipt,
-        {
-          status: asked.status,
-          detail: clientDetail(asked.status, asked.detail),
-        },
-        "",
-      );
-    } else if (asked.httpStatus === undefined && asked.pending) {
-      // #3881 -- a readable answer with no verdict yet: the provider holds
-      // the upload (an uncertain upload settles accepted) and what it said
-      // is kept; the document has no verdict and no query error.
-      console.log("send-e-invoice: no document verdict yet");
-      await store.lookup(
-        sent.id,
-        sent.phase === "uncertain" ? "accepted" : null,
-        sent.external_id,
-        Object.keys(asked.receipt).length > 0 ? asked.receipt : null,
-        null,
-        "",
-      );
-    } else {
-      console.error("send-e-invoice: status query failed", redact(asked.detail));
-      await store.lookup(
-        sent.id,
-        null,
-        "",
-        null,
-        null,
-        clientDetail(asked.status, asked.detail),
-      );
-    }
-    const current = await store.transmission(sent.id);
-    return json({
-      phase: current?.phase ?? sent.phase,
-      status: legacyStatus(current?.phase ?? sent.phase),
-      document_status: isVerdict ? asked.status : "unknown",
-      detail: isVerdict ? clientDetail(asked.status, asked.detail) : "",
-      receipt: current?.receipt ?? sent.receipt,
-    });
-  }
-
-  // ── a person settles an uncertain submission ────────────────────────
-  if (payload.action === "resolve") {
-    const target = await store.transmission(payload.transmission_id ?? "");
-    if (!target || target.workspace_id !== workspaceId) {
-      return json({ error: "unknown transmission" }, 404);
-    }
-    if (!["accepted", "rejected", "failed"].includes(payload.outcome ?? "")) {
-      return json({ error: "invalid resolution" }, 400);
-    }
-    try {
-      const done = await store.resolve(
-        target.id,
-        userId,
-        payload.outcome as "accepted" | "rejected" | "failed",
-        payload.reason ?? "",
-        payload.evidence ?? "",
-        payload.verdict ?? null,
-      );
-      return json(
-        { resolved: done.resolved, phase: done.phase ?? null },
-        done.resolved ? 200 : 409,
-      );
-    } catch (error) {
-      const code = (error as { code?: string }).code;
-      if (code === "42501") {
-        return json({ error: "not allowed to issue invoices in this workspace" }, 403);
-      }
-      if (code === "22023") {
-        return json({ error: "a reason and the evidence are required" }, 400);
-      }
-      console.error("send-e-invoice: resolve failed", safeError(error));
-      return json({ error: "resolve_failed" }, 500);
-    }
-  }
-
-  if (missing.length > 0) {
-    return json({ error: "not_configured", missing, environment }, 409);
-  }
-
-  // ── send ─────────────────────────────────────────────────────────────
-  const invoiceId = payload.invoice_id ?? "";
-  const content = payload.content_base64 ?? "";
-  if (!invoiceId || !content) {
-    return json({ error: "invoice_id and content_base64 required" }, 400);
-  }
-  const invoice = await store.invoice(invoiceId);
-  if (!invoice || invoice.workspace_id !== workspaceId) {
-    return json({ error: "unknown invoice" }, 404);
-  }
-  // A voided invoice is not sent.
-  if (invoice.voided_at) return json({ error: "invoice_voided" }, 409);
-  // About ten megabytes once decoded.
-  if (content.length > 14_000_000) {
-    return json({ error: "document_too_large" }, 413);
-  }
-
-  const bytes = Uint8Array.from(atob(content), (c) => c.charCodeAt(0));
-  const hash = await sha256(bytes);
-  const fileName = payload.file_name || `${invoice.number}.pdf`;
-  const mimeType = payload.mime_type || "application/pdf";
-  const format = payload.format ||
-    (mimeType === "application/pdf" ? "facturX" : "en16931Ubl");
-
-  // 1. PREPARE: durable, deduplicated by the business identity. Any
-  // failure here means nothing has left (O1).
-  let prepared;
-  try {
-    prepared = await store.prepare({
-      workspaceId,
-      invoiceId,
-      provider,
-      destination,
-      environment,
-      actor: userId,
-      byName: await store.profileName(userId),
-      format,
-      hash,
-      fileName,
-      mimeType,
-      receiverScheme: payload.receiver_scheme ?? "",
-      receiverId: payload.receiver_id ?? "",
-      bytes,
-      declared: clipDeclared(payload.declared),
-    });
-  } catch (error) {
-    console.error("send-e-invoice: prepare failed", safeError(error));
-    return json({ error: "prepare_failed" }, 500);
-  }
-  if (prepared.outcome === "unknown_invoice" || !prepared.id) {
-    return json({ error: "unknown invoice" }, 404);
-  }
-  if (prepared.outcome === "conflict") {
-    return json({
-      error: "binding_changed",
-      phase: prepared.phase,
-      transmission_id: prepared.id,
-      detail: "This invoice already has a submission to this destination " +
-        "with other content; it is not sent again.",
-    }, 409);
-  }
-  const id = prepared.id;
-  const state = prepared.phase ?? "prepared";
-  // An existing record that is not waiting for a first (or proven
-  // no-effect) dispatch answers as it stands: no second upload (O7).
-  if (
-    prepared.outcome === "existing" && state !== "prepared" &&
-    state !== "failed"
-  ) {
-    return answer(
-      state,
-      id,
-      prepared.external_id ?? "",
-      prepared.detail ?? "",
-      environment,
-      destination,
-    );
-  }
-
-  return dispatchPrepared(store, fetchImpl, {
-    id,
-    hash,
-    provider,
-    cfg,
-    environment,
-    destination,
-    fileName,
-    mimeType,
-    format,
-    number: invoice.number,
-    binding: await bindingOf(
-      hash,
-      format,
-      payload.receiver_scheme ?? "",
-      payload.receiver_id ?? "",
-    ),
-  });
+  return null;
 }
 
-/** What a prepared transmission needs to leave: its record, the stored
- * artifact's hash, and where it goes. */
-interface Dispatch {
-  id: string;
-  hash: string;
-  provider: string;
-  cfg: Config;
-  environment: Environment;
-  destination: Destination;
-  fileName: string;
-  mimeType: string;
-  format: string;
-  number: string;
-  /** The binding the request verified (an invoice's send); a test
-   * document has none. */
-  binding?: string;
-}
-
-/** Steps 2-5 of a send, for an invoice's document and a sandbox test
- * document alike (#3883): verify the stored artifact, claim the dispatch,
- * post it, record the outcome. */
-async function dispatchPrepared(
-  store: TransmissionStore,
-  fetchImpl: typeof fetch,
-  d: Dispatch,
-): Promise<Response> {
-  const {
-    id,
-    hash,
-    provider,
-    cfg,
-    environment,
-    destination,
-    fileName,
-    mimeType,
-    format,
-  } = d;
-  // 2. VERIFY the stored artifact before it can leave (O1).
-  let artifact;
-  try {
-    artifact = await store.artifact(id);
-  } catch (error) {
-    console.error("send-e-invoice: artifact read failed", safeError(error));
-    return json({ error: "artifact_unavailable" }, 500);
-  }
-  if (
-    !artifact || artifact.sha256 !== hash ||
-    (await sha256(artifact.bytes)) !== hash
-  ) {
-    return json({ error: "artifact_unavailable" }, 500);
-  }
-
-  // 3. CLAIM the dispatch atomically; only the winner calls the provider.
-  const owner = crypto.randomUUID();
-  let claim;
-  try {
-    claim = await store.claim(id, owner, DISPATCH_WINDOW_SECONDS, d.binding);
-  } catch (error) {
-    console.error("send-e-invoice: claim failed", safeError(error));
-    return json({ error: "claim_failed" }, 500);
-  }
-  if (!claim.claimed && claim.detail === "binding_changed") {
-    // the document was replaced after it was verified: this request holds
-    // the old one and sends nothing
-    return json({
-      error: "binding_changed",
-      phase: claim.phase,
-      transmission_id: id,
-      detail: "This invoice was prepared again with other content; this " +
-        "request sent nothing.",
-    }, 409);
-  }
-  if (!claim.claimed || claim.generation === undefined) {
-    return answer(
-      claim.phase ?? "sent",
-      id,
-      claim.external_id ?? "",
-      claim.detail ?? "",
-      environment,
-      destination,
-    );
-  }
-
-  // 4. POST from the STORED artifact, provider, destination, environment.
-  const outcome: Submission = await submit(
-    provider,
-    configFor(cfg, environment, provider),
-    {
-      fileName: artifact.fileName || fileName,
-      mimeType: artifact.mimeType || mimeType,
-      bytes: artifact.bytes,
-      format,
-      number: d.number,
-      receiver: artifact.receiverId
-        ? { scheme: artifact.receiverScheme, id: artifact.receiverId }
-        : undefined,
-    },
-    fetchImpl,
-  );
-  // #3090 — the provider's own words are for the server log only.
-  if (outcome.status !== "accepted") {
-    console.error(
-      `send-e-invoice: transmission ${outcome.status}`,
-      redact(outcome.detail),
-    );
-  }
-
-  // 5. RECORD against this owner and generation. If the write is lost the
-  // dispatch stays `sent` and expires to `uncertain`: never rejected.
-  const detail = clientDetail(
-    outcome.status === "uncertain" ? "failed" : outcome.status,
-    outcome.detail,
-  );
-  let recorded = false;
-  try {
-    recorded = await store.record(
-      id,
-      claim.generation,
-      owner,
-      outcome.status,
-      outcome.externalId,
-      detail,
-      outcome.receipt,
-    );
-  } catch (error) {
-    console.error("send-e-invoice: outcome write failed", safeError(error));
-  }
-  if (!recorded) {
-    return answer(
-      "uncertain",
-      id,
-      outcome.externalId,
-      "",
-      environment,
-      destination,
-    );
-  }
-  // #3932 -- a platform that decides in the answer to the upload: its verdict
-  // is recorded beside the upload, as a later status query would
-  if (outcome.verdict !== undefined && outcome.status === "accepted") {
-    try {
-      await store.lookup(
-        id,
-        null,
-        outcome.externalId,
-        outcome.receipt,
-        { status: outcome.verdict, detail: clientDetail(outcome.verdict, outcome.detail) },
-        "",
-      );
-    } catch (error) {
-      console.error("send-e-invoice: verdict write failed", safeError(error));
-    }
-  }
-  return answer(
-    outcome.status,
-    id,
-    outcome.externalId,
-    detail,
-    environment,
-    destination,
-  );
-}
-
-/** #3883 -- whether every address the connector documents for its sandbox
- * is the one [scoped] (the sandbox credentials) points at, host for host. */
-function onDocumentedSandbox(scoped: Config, sandbox: Config): boolean {
-  const host = (url: string): string | null => {
-    try {
-      const u = new URL(url);
-      return u.protocol === "https:" ? u.host : null;
-    } catch {
-      return null;
-    }
-  };
-  const keys = Object.keys(sandbox);
-  return keys.length > 0 &&
-    keys.every((k) => {
-      const want = host(sandbox[k]);
-      return want !== null && host(scoped[k] ?? "") === want;
-    });
-}
-
-/** #3883 -- why a second test waits, in a sentence a person can act on. */
-const TEST_PENDING_DETAIL =
-  "A test document is still waiting for the platform's verdict. Ask the " +
-  "platform about it before sending another.";
-
-/** #3883 -- sends a sandbox test document through the national channel: the
- * holder of the integrations' right only, a connector whose verdict opens the
- * channel's gate only, the sandbox credentials only (never the live ones,
- * never a fallback), one test at a time. It is no invoice: nothing is issued,
- * numbered or booked. */
-async function sendTestDocument(
-  store: TransmissionStore,
-  fetchImpl: typeof fetch,
-  payload: {
-    content_base64?: string;
-    file_name?: string;
-    mime_type?: string;
-    format?: string;
-    declared?: unknown;
-  },
-  ctx: {
-    workspaceId: string;
-    userId: string;
-    mayManage: boolean;
-    credentials: { provider: string; config: Record<string, string> } | null;
-  },
-): Promise<Response> {
-  if (!ctx.mayManage) {
-    return json({
-      error: "not allowed to manage the integrations of this workspace",
-    }, 403);
-  }
-  const provider = ctx.credentials?.provider ?? "generic";
-  if (!takesTestDocument(provider)) {
-    return json({ error: "test_unavailable", provider }, 409);
-  }
-  const cfg = configForDestination(
-    (ctx.credentials?.config ?? {}) as Config,
-    "government",
-  );
-  const missing = missingFor(cfg, "uat", provider);
-  if (missing.length > 0) {
-    return json({ error: "sandbox_credentials_missing", missing }, 409);
-  }
-  // Its verdict opens the gate, so a test goes only to the connector's
-  // documented sandbox: the platform's own answer, never another host's.
-  if (!onDocumentedSandbox(configFor(cfg, "uat", provider), SANDBOX[provider] ?? {})) {
-    return json({ error: "sandbox_not_documented", provider }, 409);
-  }
-  const content = payload.content_base64 ?? "";
-  if (!content) return json({ error: "content_base64 required" }, 400);
-  if (content.length > 14_000_000) {
-    return json({ error: "document_too_large" }, 413);
-  }
-  const bytes = Uint8Array.from(atob(content), (c) => c.charCodeAt(0));
-  const hash = await sha256(bytes);
-  const fileName = payload.file_name || "test.xml";
-  const mimeType = payload.mime_type || "application/xml";
-  // a test document is in the channel's own syntax, whatever the caller named
-  const formats = acceptedFormats(provider);
-  const format = payload.format || formats[0] || "";
-  if (!formats.includes(format)) {
-    return json({ error: "format_not_accepted", provider, formats }, 400);
-  }
-  let prepared;
-  try {
-    prepared = await store.prepareTest({
-      workspaceId: ctx.workspaceId,
-      provider,
-      actor: ctx.userId,
-      byName: await store.profileName(ctx.userId),
-      format,
-      hash,
-      fileName,
-      mimeType,
-      bytes,
-      declared: clipDeclared(payload.declared),
-    });
-  } catch (error) {
-    console.error("send-e-invoice: test prepare failed", safeError(error));
-    return json({ error: "prepare_failed" }, 500);
-  }
-  if (prepared.outcome === "test_pending" || !prepared.id) {
-    return json({
-      error: "test_pending",
-      transmission_id: prepared.id ?? "",
-      phase: prepared.phase ?? "",
-      detail: TEST_PENDING_DETAIL,
-    }, 409);
-  }
-  return await dispatchPrepared(store, fetchImpl, {
-    id: prepared.id,
-    hash,
-    provider,
-    cfg,
-    environment: "uat",
-    destination: "government",
-    fileName,
-    mimeType,
-    format,
-    number: fileName,
-  });
+/** WHO may ask (#1078): an active owner, or an active member who holds
+ * issueInvoices (from the base role or a role of the space). #3883 -- a
+ * sandbox test document issues nothing: it is sent, and asked about, by
+ * whoever manages the integrations (the credentials' right). Null: refused. */
+async function rightsOf(
+  store: Deps["store"],
+  workspaceId: string,
+  userId: string,
+  testing: boolean,
+): Promise<{ mayIssue: boolean; mayManage: boolean } | null> {
+  const me = await store.member(workspaceId, userId);
+  const active = !!me && me.status === "active";
+  const mayIssue = active &&
+    (me.is_owner || await store.hasPermission(me.id, "issueInvoices"));
+  const mayManage = testing && active &&
+    (me.is_owner || await store.hasPermission(me.id, "manageIntegrations"));
+  if (!me || (!mayIssue && !mayManage) || (!testing && !mayIssue)) return null;
+  return { mayIssue, mayManage };
 }
