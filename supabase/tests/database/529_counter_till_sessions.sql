@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- #4367 (0905-0907, CS5): a till is opened with its float (one open session per till, a lost answer recovers the same one), takes paid-in and paid-out entries with a reason from the business's list (a paid-out above the limit needs the right to record outgoing payments), the expected cash is derived and hidden from a blind count, the close records the counted amount, the difference and its reason, and a closed session is frozen. Rolled back.
 begin;
-select plan(27);
+select plan(28);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -122,6 +122,7 @@ select is(pg_temp.run_as(pg_temp.u(2), 'select count(*)::text from public.counte
   'the counter reads its own open session only: the closed session, with its expected cash and difference, and the entries of it are not its to read');
 select is(pg_temp.run_as(pg_temp.u(3), 'select count(*)::text from public.counter_till_sessions'), '2', 'the finances read every session');
 select is(pg_temp.run_as(pg_temp.u(3), 'select count(*)::text from public.counter_cash_entries'), '2', 'and every entry');
+select is(left(pg_temp.sexp(2, pg_temp.f(current_setting('t.s'), 'session_id')::uuid), 9), 'ERR DKN01', 'the counter does not read the expected cash of a closed session either, nor of one it did not open');
 
 select * from finish();
 rollback;

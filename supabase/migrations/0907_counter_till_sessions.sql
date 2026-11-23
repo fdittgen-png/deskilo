@@ -455,9 +455,16 @@ begin
   if v_session.id is null then
     raise exception 'not a session of this business' using errcode = 'DKL12', detail = jsonb_build_object('reason', 'session_unknown')::text;
   end if;
-  if v_session.state = 'open' and coalesce((public.setting_value(p_workspace_id, 'counter.blind_count') #>> '{}')::boolean, true)
-     and not public.has_permission(p_workspace_id, 'viewFinances') then
-    raise exception 'the drawer is counted blind' using errcode = 'DKN01';
+  if not public.has_permission(p_workspace_id, 'viewFinances') then
+    -- the counter reads the expected cash of its own open session only, and never while the drawer is counted blind: the same
+    -- boundary as the rows it may select; a closed session's figures are the finances'
+    if v_session.state <> 'open'
+       or v_session.opened_by_member_id is distinct from (select m.id from public.members m where m.workspace_id = p_workspace_id and m.user_id = auth.uid() and m.status = 'active') then
+      raise exception 'the expected cash of this session is not for the counter' using errcode = 'DKN01';
+    end if;
+    if coalesce((public.setting_value(p_workspace_id, 'counter.blind_count') #>> '{}')::boolean, true) then
+      raise exception 'the drawer is counted blind' using errcode = 'DKN01';
+    end if;
   end if;
   return public.counter_session_cash(v_session.id) || jsonb_build_object('session_id', v_session.id, 'state', v_session.state);
 end;
