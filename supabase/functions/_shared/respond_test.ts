@@ -1,7 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+// #4412 -- the invariant: an edge function answers one envelope (a stable code and words safe to show), a failure
+// never carries the error's own words, the logger keeps secrets, personal data and cycles out of its lines, and a
+// request id is never echoed raw.
 import { assert, assertEquals } from "jsr:@std/assert@1";
 import { fail, INTERNAL_ERROR, ok, refuse } from "./respond.ts";
-import { describeError, redactFields, scrub } from "./log.ts";
+import { describeError, logLine, redactFields, requestIdOf, scrub } from "./log.ts";
 import { guard } from "./serve.ts";
 
 const quietly = async <T>(run: () => Promise<T> | T): Promise<{ result: T; lines: string[] }> => {
@@ -64,5 +67,55 @@ Deno.test("#4412 a log line leaves secrets and long strings out", () => {
   assertEquals((out.note as string).length, 303);
   assertEquals(out.ok, "fine");
   assertEquals(scrub("https://h.test/p?api_key=SECRET&x=1"), "https://h.test/p?api_key=[redacted]&x=1");
-  assertEquals(describeError("plain").name, "string");
+  assertEquals(describeError("plain").type, "string");
+});
+
+Deno.test("#4412 redaction reads arrays and nested objects, personal keys, e-mails and JWTs, and survives a cycle", () => {
+  const out = redactFields({
+    list: [{ token: "t", ok: 1 }, "mail me at ann@example.com", "eyJhbGciOi.eyJzdWIiOi.sig"],
+    email: "ann@example.com",
+    first_name: "Ann",
+    name: "Ann",
+    file_name: "x.pdf",
+    nested: { deeper: { deepest: { deepest2: { x: 1 } } } },
+  });
+  assertEquals((out.list as unknown[])[0], { token: "[redacted]", ok: 1 });
+  assertEquals((out.list as unknown[])[1], "mail me at [email]");
+  assertEquals((out.list as unknown[])[2], "[jwt]");
+  assertEquals([out.email, out.first_name, out.name], ["[redacted]", "[redacted]", "[redacted]"]);
+  assertEquals(out.file_name, "x.pdf", "a key that only contains the word is not a personal one");
+  assertEquals(JSON.stringify(out.nested).includes("\"x\""), false, "past the depth nothing is logged");
+  const cyclic: Record<string, unknown> = { a: 1 };
+  cyclic.self = cyclic;
+  assertEquals((redactFields(cyclic).self as string), "[cycle]");
+  const saved = console.log;
+  const lines: string[] = [];
+  console.log = (l: string) => lines.push(l);
+  try {
+    logLine("info", "demo", "c", { cyclic, big: 10n }, "r");
+    logLine("info", "demo", "c", { f: () => 1 });
+  } finally {
+    console.log = saved;
+  }
+  assertEquals(lines.length, 2);
+});
+
+Deno.test("#4412 a request id is a UUID or a short safe string; client text is never echoed", () => {
+  const withId = (id: string) => requestIdOf(new Request("https://x.test/", { headers: { "x-request-id": id } }));
+  assertEquals(withId("8b8c1f0e-2f4e-4d2e-9d0e-0a1b2c3d4e5f"), "8b8c1f0e-2f4e-4d2e-9d0e-0a1b2c3d4e5f");
+  assertEquals(withId("req_12:ab.c-9"), "req_12:ab.c-9");
+  for (const bad of ["a".repeat(65), "has space", "<script>x</script>", "id\twith-tab"]) {
+    const made = withId(bad);
+    assertEquals(made === bad, false);
+    assertEquals(/^[0-9a-f-]{36}$/.test(made), true);
+  }
+});
+
+Deno.test("#4412 a huge text costs a bounded scrub and is clipped", () => {
+  const started = performance.now();
+  const huge = "a".repeat(2_000_000) + "@";
+  const out = redactFields({ note: huge, list: [huge] });
+  assertEquals((out.note as string).length, 303);
+  assert(performance.now() - started < 500, "a large field is bounded before it is scrubbed");
+  assertEquals(describeError(new Error(huge)).message.length, 303);
 });
