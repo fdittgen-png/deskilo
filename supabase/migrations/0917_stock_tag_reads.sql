@@ -144,10 +144,19 @@ $f$;
 do $patch$
 declare
   v_def text := pg_get_functiondef('public.stock_pieces_apply(uuid, uuid, uuid, uuid, jsonb, uuid, uuid, text, numeric)'::regprocedure);
-  v_old text := E'or pc.location_id <> p_from or pc.state <> v_expect or v_pid = any (v_ids) then\n        raise exception ''a named piece is not where this movement takes it from'' using errcode = ''DKG26'';';
-  v_new text := E'or pc.location_id <> p_from or pc.state <> v_expect or v_pid = any (v_ids) then\n        raise exception ''a named piece is not where this movement takes it from'' using errcode = ''DKG26'',\n          detail = jsonb_build_object(''piece_id'', pc.id, ''state'', pc.state, ''place_id'', pc.location_id,\n                                      ''place'', (select z.code from public.stock_locations z where z.id = pc.location_id))::text;';
+  v_head text := E'or pc.location_id <> p_from or pc.state <> v_expect or v_pid = any (v_ids) then\n        raise exception ''a named piece is not where this movement takes it from'' using errcode = ''DKG26''';
+  -- the refusal as 0887 wrote it, and as a later restatement wrote it with the index of the unit in its detail
+  v_old text;
+  v_new text;
+  v_place text := E'''place'', (select z.code from public.stock_locations z where z.id = pc.location_id)';
 begin
-  if pg_temp.occurrences(v_def, v_old) <> 1 then
+  if pg_temp.occurrences(v_def, v_head || E';') = 1 then
+    v_old := v_head || E';';
+    v_new := v_head || E',\n          detail = jsonb_build_object(''piece_id'', pc.id, ''state'', pc.state, ''place_id'', pc.location_id,\n                                      ' || v_place || E')::text;';
+  elsif pg_temp.occurrences(v_def, v_head || E',\n          detail = jsonb_build_object(''unit'', v_ix)::text;') = 1 then
+    v_old := v_head || E',\n          detail = jsonb_build_object(''unit'', v_ix)::text;';
+    v_new := v_head || E',\n          detail = jsonb_build_object(''unit'', v_ix, ''piece_id'', pc.id, ''state'', pc.state, ''place_id'', pc.location_id,\n                                      ' || v_place || E')::text;';
+  else
     raise exception '0917: anchor not found exactly once in stock_pieces_apply' using errcode = 'P0001';
   end if;
   execute replace(v_def, v_old, v_new);
