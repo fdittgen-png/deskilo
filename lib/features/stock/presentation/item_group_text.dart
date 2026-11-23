@@ -51,13 +51,15 @@ String itemGroupSummary(AppLocalizations l10n, ItemGroup g) => [
     if (g.params[p] != null) '${itemGroupParamLabel(l10n, p)}: ${itemGroupValueText(l10n, p, g.params[p])}',
   for (final p in itemGroupProposals)
     // the factor is one number: its numerator speaks for the pair
-    if (g.params[p] != null && p != 'default_purchase_factor_den')
-      '${itemGroupParamLabel(l10n, p)}: ${switch (p) {
-        'default_purchase_factor_num' => purchaseFactorText((g.params[p]! as num).toInt(), ((g.params['default_purchase_factor_den'] ?? 1) as num).toInt()),
-        'home_zone_id' => l10n.itemGroupYes,
-        _ => g.params[p],
-      }}',
+    if (g.params[p] != null && p != 'default_purchase_factor_den') '${itemGroupParamLabel(l10n, p)}: ${_proposalText(l10n, g, p)}',
 ].join(' · ');
+
+/// A proposal of [g] as a person reads it: the factor as one number or a fraction, the home zone as set.
+String _proposalText(AppLocalizations l10n, ItemGroup g, String p) => switch (p) {
+  'default_purchase_factor_num' => purchaseFactorText((g.params[p]! as num).toInt(), ((g.params['default_purchase_factor_den'] ?? 1) as num).toInt()),
+  'home_zone_id' => l10n.itemGroupYes,
+  _ => '${g.params[p]}',
+};
 
 /// What a skipped item's reason says.
 String itemGroupReasonText(AppLocalizations l10n, String reason) => switch (reason) {
