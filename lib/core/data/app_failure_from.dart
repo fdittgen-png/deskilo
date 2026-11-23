@@ -10,6 +10,7 @@ import 'dart:async' show TimeoutException;
 import 'dart:io' show SocketException;
 
 import '../failure/app_failure.dart';
+import '../trace/trace_logger.dart';
 import 'server_error.dart';
 
 final _httpStatus = RegExp(r'^\d{3}$');
@@ -49,8 +50,10 @@ AppFailure appFailureFrom(Object error) {
 Future<CommandOutcome<T>> runCommand<T>(Future<T> Function() action) async {
   try {
     return CommandDone(await action());
-  } on Object catch (e) {
-    return switch (appFailureFrom(e)) {
+  } on Object catch (e, st) {
+    final failure = appFailureFrom(e);
+    TraceLogger.instance.warn('command', 'a command did not complete: $failure', stackTrace: st);
+    return switch (failure) {
       final Refusal r => CommandRefused(r),
       final other => CommandUnreached(other),
     };
