@@ -63,7 +63,7 @@ class FakePurchaseOrderRepository implements PurchaseOrderRepository {
           (s.state == PurchaseOrderSendState.pending ||
               s.state == PurchaseOrderSendState.unconfirmed),
     )) {
-      throw _refused('an e-mail of this order may be on its way', '55000');
+      throw _refused('an e-mail of this order may be on its way', PgCode.objectNotInPrerequisiteState);
     }
   }
 
@@ -277,7 +277,7 @@ class FakePurchaseOrderRepository implements PurchaseOrderRepository {
     )) {
       throw _refused(
         'an earlier send of this order has no confirmed outcome',
-        '55000',
+        PgCode.objectNotInPrerequisiteState,
       );
     }
     final send = PurchaseOrderSend(

@@ -23,6 +23,9 @@ abstract final class PgCode {
   /// `feature_not_supported`.
   static const featureNotSupported = '0A000';
 
+  /// `object_not_in_prerequisite_state`.
+  static const objectNotInPrerequisiteState = '55000';
+
   /// `unique_violation`.
   static const uniqueViolation = '23505';
 

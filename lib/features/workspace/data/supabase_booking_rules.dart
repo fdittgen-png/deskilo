@@ -6,6 +6,8 @@
 // (the part-file bodies and their `_xxxImpl` forwarders are gone).
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+
+import '../../../core/data/server_names.dart';
 import '../../../core/time/work_hours.dart';
 import '../domain/booking_granularity.dart';
 import '../domain/booking_policies.dart';
@@ -20,7 +22,7 @@ mixin SupabaseBookingRules implements BookingRulesRepository {
   @override
   Future<List<int>> fetchOpenWeekdays(String workspaceId) async {
     final row = await client
-        .from('workspaces')
+        .from(ServerTable.workspaces)
         .select('booking_rules')
         .eq('id', workspaceId)
         .single();
@@ -41,7 +43,7 @@ mixin SupabaseBookingRules implements BookingRulesRepository {
   @override
   Future<String?> fetchDefaultPeriod(String workspaceId) async {
     final row = await client
-        .from('workspaces')
+        .from(ServerTable.workspaces)
         .select('booking_rules')
         .eq('id', workspaceId)
         .single();
@@ -60,7 +62,7 @@ mixin SupabaseBookingRules implements BookingRulesRepository {
     String workspaceId,
   ) async {
     final row = await client
-        .from('workspaces')
+        .from(ServerTable.workspaces)
         .select('booking_rules')
         .eq('id', workspaceId)
         .single();
@@ -82,7 +84,7 @@ mixin SupabaseBookingRules implements BookingRulesRepository {
   @override
   Future<WorkHours> fetchWorkHours(String workspaceId) async {
     final row = await client
-        .from('workspaces')
+        .from(ServerTable.workspaces)
         .select('booking_rules')
         .eq('id', workspaceId)
         .single();
@@ -94,7 +96,7 @@ mixin SupabaseBookingRules implements BookingRulesRepository {
   @override
   Future<BookingPolicies> fetchBookingPolicies(String workspaceId) async {
     final row = await client
-        .from('workspaces')
+        .from(ServerTable.workspaces)
         .select('booking_rules')
         .eq('id', workspaceId)
         .single();

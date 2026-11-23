@@ -9,7 +9,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'lint_sources.dart';
 
 final _quotedCode = RegExp(
-  r"'(DK[A-Z0-9]{3}|P0001|PGRST\d+|42501|22023|40001|42883|42703|0A000|23505|28000)'",
+  r"'(DK[A-Z0-9]{3}|P0001|PGRST\d+|42501|22023|40001|42883|42703|0A000|23505|28000|55000)'",
 );
 
 const _constantFiles = {

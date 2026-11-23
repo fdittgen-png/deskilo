@@ -35,7 +35,7 @@ class SupabaseRecordedPaymentsRepository implements RecordedPaymentsRepository {
       switch (e.code) {
         case PgCode.insufficientPrivilege:
           Error.throwWithStackTrace(const RecordedPaymentsForbidden(), st);
-        case '55000':
+        case PgCode.objectNotInPrerequisiteState:
           Error.throwWithStackTrace(const RecordedPaymentsSwitchedOff(), st);
       }
       rethrow;

@@ -6,6 +6,7 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/server_names.dart';
 import '../domain/guest_pass.dart';
 
 class SupabaseGuestPassRepository implements GuestPassRepository {
@@ -39,7 +40,7 @@ class SupabaseGuestPassRepository implements GuestPassRepository {
   @override
   Future<List<GuestPassPlace>> places(String workspaceId) async {
     final rows = await _client
-        .from('seats')
+        .from(ServerTable.seats)
         .select('id, name, desks(offices(levels(name)))')
         .eq('workspace_id', workspaceId)
         .order('name');

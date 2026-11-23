@@ -97,10 +97,18 @@ final _read = RegExp(r"'(DK[A-Z0-9]{3})'");
 final _readConstant = RegExp(r'\bDkCode\.(dk[a-z0-9]{3})\b');
 
 /// The DK codes [source] reads: quoted, or by their `DkCode` constant (#4417).
-Set<String> readIn(String source) => {
-  for (final m in _read.allMatches(source)) m.group(1)!,
-  for (final m in _readConstant.allMatches(source)) m.group(1)!.toUpperCase(),
-};
+Set<String> readIn(String source) {
+  // a mention in a comment reads nothing
+  final code = source
+      .split('\n')
+      .where((l) => !l.trimLeft().startsWith('//'))
+      .map((l) => l.split(' //').first)
+      .join('\n');
+  return {
+    for (final m in _read.allMatches(code)) m.group(1)!,
+    for (final m in _readConstant.allMatches(code)) m.group(1)!.toUpperCase(),
+  };
+}
 
 void main() {
   final raised = <String>{
@@ -138,6 +146,7 @@ void main() {
     expect(readIn("case 'DKN01':"), {'DKN01'});
     expect(readIn('case DkCode.dkn01: x(DkCode.dkg07);'), {'DKN01', 'DKG07'});
     expect(readIn('final DkCodex = 1;'), isEmpty);
+    expect(readIn("// DkCode.dkn01 and 'DKG07' in a comment\nfinal x = 1; // DkCode.dkg04"), isEmpty);
   });
 
   test('a code is raised by errcode or through the refusal helper', () {

@@ -3,6 +3,7 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/server_names.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/stock_config.dart';
 import '../domain/stock_config_commands.dart';
@@ -21,7 +22,7 @@ class SupabaseStockConfigCommands implements StockConfigCommands {
   @override
   Future<StockItemConfig?> item(String workspaceId, String itemId) async {
     final rows = await _client
-        .from('services')
+        .from(ServerTable.services)
         .select(
           'id, stock_revision, stockable, purchasable, sellable, '
           'inventory_unit, tracking, shelf_life_days',
@@ -65,7 +66,7 @@ class SupabaseStockConfigCommands implements StockConfigCommands {
           JsonReader.of(k, context: 'stock_location_kinds').string('key'),
     };
     final rows = await _client
-        .from('stock_locations')
+        .from(ServerTable.stockLocations)
         .select(
           'id, revision, kind, code, name, barcode, parent_id, active, receives_from_suppliers, pick_role, address_path',
         )
@@ -183,7 +184,7 @@ class SupabaseStockConfigCommands implements StockConfigCommands {
   @override
   Future<List<StockSupplierRef>> suppliers(String workspaceId) async {
     final rows = await _client
-        .from('suppliers')
+        .from(ServerTable.suppliers)
         .select('id, name')
         .eq('workspace_id', workspaceId)
         .order('name');

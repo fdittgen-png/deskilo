@@ -12,6 +12,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../codes/pg_code.dart';
+import '../data/server_names.dart';
 import 'backend_settings.dart';
 
 /// What an installation declared about the personal home of its people.
@@ -107,7 +108,7 @@ Future<PersonalHomeDeclaration> readPersonalHomeDeclaration(
 ) async {
   try {
     final row = await client
-        .from('installation_identity')
+        .from(ServerTable.installationIdentity)
         .select(
           'roles, personal_home_kind, personal_home_url, personal_home_key',
         )

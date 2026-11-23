@@ -2,6 +2,7 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/server_names.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/stock_operations.dart';
 import 'stock_refusals.dart';
@@ -38,7 +39,7 @@ class SupabaseStockOperations implements StockOperations {
     ];
     final items = {
       for (final i in await _client
-          .from('services')
+          .from(ServerTable.services)
           .select('id, name, inventory_unit')
           .eq('workspace_id', workspaceId)
           .inFilter('id', {for (final l in lines) l.string('item_id')}.toList()))
@@ -46,7 +47,7 @@ class SupabaseStockOperations implements StockOperations {
     };
     final codes = {
       for (final p in await _client
-          .from('stock_locations')
+          .from(ServerTable.stockLocations)
           .select('id, code')
           .eq('workspace_id', workspaceId)
           .inFilter('id', {

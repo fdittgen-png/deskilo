@@ -5,6 +5,7 @@ import '../../../core/cache/cache_store.dart';
 import '../../../core/cache/cached_fetch.dart';
 import '../../../core/data/paged_fetch.dart';
 import '../../../core/data/retry.dart';
+import '../../../core/data/server_names.dart';
 import '../../../core/data/sweep_throttle.dart';
 import '../../../core/data/unreadable_rows.dart' show ReadWithUnreadable;
 import '../../../core/time/clock.dart';
@@ -113,7 +114,7 @@ class SupabaseReservationRepository implements ReservationRepository {
           return fetchAllPages(
             table: 'reservations',
             build: () => _client
-                .from('reservations')
+                .from(ServerTable.reservations)
                 .select()
                 .eq('workspace_id', workspaceId)
                 .lt('starts_at', to.toUtc().toIso8601String())
@@ -123,7 +124,7 @@ class SupabaseReservationRepository implements ReservationRepository {
             // The closing count: a window that changed mid-read is read
             // again or refused, never cached as complete.
             count: () async => (await _client
-                    .from('reservations')
+                    .from(ServerTable.reservations)
                     .select('id')
                     .eq('workspace_id', workspaceId)
                     .lt('starts_at', to.toUtc().toIso8601String())
@@ -153,7 +154,7 @@ class SupabaseReservationRepository implements ReservationRepository {
     final rows = await fetchAllPages(
       table: 'reservations',
       build: () => _client
-          .from('reservations')
+          .from(ServerTable.reservations)
           .select()
           .eq('workspace_id', workspaceId)
           .order('starts_at', ascending: true)
@@ -453,7 +454,7 @@ class SupabaseReservationRepository implements ReservationRepository {
   @override
   Future<Reservation?> fetchById(String reservationId) async {
     final row = await _client
-        .from('reservations')
+        .from(ServerTable.reservations)
         .select()
         .eq('id', reservationId)
         .maybeSingle();

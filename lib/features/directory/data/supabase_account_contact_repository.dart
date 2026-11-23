@@ -2,6 +2,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/backend/connected_installations.dart';
+import '../../../core/data/server_names.dart';
 import '../domain/public_workspace.dart';
 
 class SupabaseAccountContactRepository implements AccountContactRepository {
@@ -73,7 +74,7 @@ class SupabaseAccountContactRepository implements AccountContactRepository {
   Future<String> send(String recipient, String body) => connections.use(
     source,
     (client) => client.rpc<String>(
-      'send_account_message',
+      ServerRpc.sendAccountMessage,
       params: {
         'p_recipient': recipient,
         'p_body': body,

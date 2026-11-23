@@ -96,7 +96,7 @@ class SupabaseOrganisationRepository implements OrganisationRepository {
       final id = JsonReader.of(answer, context: 'house').string('workspace_id');
       return (workspaceId: id, refused: null);
     } on PostgrestException catch (e, st) {
-      if (!const {PgCode.insufficientPrivilege, PgCode.invalidParameterValue, '55000'}.contains(e.code)) rethrow;
+      if (!const {PgCode.insufficientPrivilege, PgCode.invalidParameterValue, PgCode.objectNotInPrerequisiteState}.contains(e.code)) rethrow;
       TraceLogger.instance.warn(
         'workspace',
         'house refused',
@@ -145,7 +145,7 @@ class SupabaseOrganisationRepository implements OrganisationRepository {
       ).stringOrNull('status');
       return (joined: HouseJoin.of(status), refused: null);
     } on PostgrestException catch (e, st) {
-      if (!const {PgCode.insufficientPrivilege, PgCode.invalidParameterValue, '55000'}.contains(e.code)) rethrow;
+      if (!const {PgCode.insufficientPrivilege, PgCode.invalidParameterValue, PgCode.objectNotInPrerequisiteState}.contains(e.code)) rethrow;
       TraceLogger.instance.warn(
         'workspace',
         'house membership request refused',
@@ -191,7 +191,7 @@ class SupabaseOrganisationRepository implements OrganisationRepository {
       await _client.rpc<Object?>(name, params: params);
       return null;
     } on PostgrestException catch (e, st) {
-      if (!const {PgCode.insufficientPrivilege, PgCode.invalidParameterValue, '55000'}.contains(e.code)) rethrow;
+      if (!const {PgCode.insufficientPrivilege, PgCode.invalidParameterValue, PgCode.objectNotInPrerequisiteState}.contains(e.code)) rethrow;
       TraceLogger.instance.warn(
         'workspace',
         'organisation command refused',
@@ -212,7 +212,7 @@ class SupabaseOrganisationRepository implements OrganisationRepository {
         (_, 'this business is no house of an organisation') =>
           OrganisationRefusal.noHouse,
         (PgCode.insufficientPrivilege, _) => OrganisationRefusal.notOwner,
-        ('55000', _) => OrganisationRefusal.featureOff,
+        (PgCode.objectNotInPrerequisiteState, _) => OrganisationRefusal.featureOff,
         (_, 'a development twin is never the head') =>
           OrganisationRefusal.twinNeverHead,
         (_, 'the new head is not a house of this organisation') =>

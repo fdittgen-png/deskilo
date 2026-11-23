@@ -10,6 +10,7 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show JsonReader;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/codes/pg_code.dart';
+import '../../../core/data/server_names.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/payment_instructions.dart';
 import '../domain/workspace_branding.dart';
@@ -196,7 +197,7 @@ mixin SupabaseWorkspaceIdentity on SupabaseWorkspaceRows
   @override
   Future<Map<String, dynamic>> fetchLexicon(String workspaceId) async {
     final row = await client
-        .from('workspaces')
+        .from(ServerTable.workspaces)
         .select('lexicon')
         .eq('id', workspaceId)
         .single();
@@ -226,7 +227,7 @@ mixin SupabaseWorkspaceIdentity on SupabaseWorkspaceRows
   @override
   Future<void> setWorkspaceEmblem(String workspaceId, Uint8List png) async {
     await client.storage
-        .from('floor-plans')
+        .from(ServerBucket.floorPlans)
         .uploadBinary(
           SupabaseWorkspaceRepository.emblemPath(workspaceId),
           png,
@@ -241,7 +242,7 @@ mixin SupabaseWorkspaceIdentity on SupabaseWorkspaceRows
   Future<Uint8List?> fetchWorkspaceEmblem(String workspaceId) async {
     try {
       return await client.storage
-          .from('floor-plans')
+          .from(ServerBucket.floorPlans)
           .download(SupabaseWorkspaceRepository.emblemPath(workspaceId));
     } on StorageException {
       // No object, or not readable by this member: the app renders as it
@@ -252,7 +253,7 @@ mixin SupabaseWorkspaceIdentity on SupabaseWorkspaceRows
 
   @override
   Future<void> clearWorkspaceEmblem(String workspaceId) async {
-    await client.storage.from('floor-plans').remove([
+    await client.storage.from(ServerBucket.floorPlans).remove([
       SupabaseWorkspaceRepository.emblemPath(workspaceId),
     ]);
   }

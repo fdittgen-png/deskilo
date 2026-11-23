@@ -119,3 +119,39 @@ Deno.test("#4412 a huge text costs a bounded scrub and is clipped", () => {
   assert(performance.now() - started < 500, "a large field is bounded before it is scrubbed");
   assertEquals(describeError(new Error(huge)).message.length, 303);
 });
+
+Deno.test("#4412 personal keys are read by their words: camelCase, separators and plurals", () => {
+  const out = redactFields({
+    vatId: 1, VATID: 1, "vat-id": 1, emailAddress: 1, fullName: 1, phone_number: 1, mobile: 1,
+    username: 1, recipients: 1, Recipients: 1, userName: 1, file_name: "x.pdf", filename: "y", count: 2,
+  });
+  for (const k of ["vatId", "VATID", "vat-id", "emailAddress", "fullName", "phone_number", "mobile", "username", "recipients", "Recipients", "userName"]) {
+    assertEquals(out[k], "[redacted]", k);
+  }
+  assertEquals([out.file_name, out.filename, out.count], ["x.pdf", "y", 2]);
+});
+
+Deno.test("#4412 a text loses URL credentials, query secrets and Basic credentials", () => {
+  assertEquals(scrub("GET https://user:pass@host.test/p"), "GET https://[redacted]@host.test/p");
+  assertEquals(scrub("https://h.test/p?x=1&access_token=abc&Api-Key=zzz&q=ok"), "https://h.test/p?x=1&access_token=[redacted]&Api-Key=[redacted]&q=ok");
+  assertEquals(scrub("Authorization: Basic dXNlcjpwYXNz"), "Authorization: Basic [redacted]");
+});
+
+Deno.test("#4412 describeError never throws and a field cannot override what identifies a line", () => {
+  const unprintable = { toString() { throw new Error("no"); } };
+  assertEquals(describeError(unprintable).message, "[unprintable]");
+  const odd = new Error("m");
+  odd.name = "N" + "x".repeat(500) + " Bearer abc";
+  assertEquals(describeError(odd).type.length <= 303, true);
+  assertEquals(describeError(odd).type.includes("abc"), false);
+  const saved = console.log;
+  const lines: string[] = [];
+  console.log = (l: string) => lines.push(l);
+  try {
+    logLine("info", "real_fn", "real_code", { level: "error", fn: "spoof", code: "spoof", request_id: "spoof" }, "r-9");
+  } finally {
+    console.log = saved;
+  }
+  const line = JSON.parse(lines[0]);
+  assertEquals([line.level, line.fn, line.code, line.request_id], ["info", "real_fn", "real_code", "r-9"]);
+});
