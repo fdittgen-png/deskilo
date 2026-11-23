@@ -821,5 +821,12 @@
  "optRoundNone": "Nessun arrotondamento",
  "optRound005": "A 0,05",
  "optRound010": "A 0,10",
- "optRound099": "Che finisce per 0,99"
+ "optRound099": "Che finisce per 0,99",
+ "stockTagGrace": "Giorni prima di riutilizzare un'etichetta ritirata",
+ "stockTagGraceHint": "Quanti giorni dopo il ritiro un codice di etichetta può essere associato di nuovo. Si imposta nelle impostazioni dell'app.",
+ "stockRepeatedScan": "Un codice scansionato di nuovo",
+ "stockRepeatedScanHint": "Cosa fa un foglio di merci quando lo stesso codice è scansionato ancora: aggiungere uno o chiedere la quantità. Si imposta nelle impostazioni dell'app.",
+ "optAtOnce": "Subito",
+ "optAddOne": "Aggiungi uno",
+ "optAskQuantity": "Chiedi la quantità"
 }

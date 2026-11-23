@@ -1,0 +1,67 @@
+{
+  "@@locale": "en",
+  "settingLabelStockTagRebindGraceDays": "Days before a retired tag is bound again",
+  "@settingLabelStockTagRebindGraceDays": {
+    "description": "#4362/#4359 setting label/hint"
+  },
+  "settingHintStockTagRebindGraceDays": "How many days after it was retired a tag code may be bound again. 0 means at once. A tag in force is never bound twice.",
+  "@settingHintStockTagRebindGraceDays": {
+    "description": "#4362/#4359 setting label/hint"
+  },
+  "settingLabelStockRepeatedScan": "A code scanned again",
+  "@settingLabelStockRepeatedScan": {
+    "description": "#4362/#4359 setting label/hint"
+  },
+  "settingHintStockRepeatedScan": "What a goods sheet does when the same code is scanned again: add one more to the line, or ask the quantity.",
+  "@settingHintStockRepeatedScan": {
+    "description": "#4362/#4359 setting label/hint"
+  },
+  "refusalStockTagBound": "This tag is already on another item, place or piece. Retire it there first.",
+  "@refusalStockTagBound": {
+    "description": "#4362 refusal"
+  },
+  "refusalStockTagRetiredLately": "This tag was retired a short while ago and cannot be bound again yet. The waiting period is a setting of the business.",
+  "@refusalStockTagRetiredLately": {
+    "description": "#4362 refusal"
+  },
+  "refusalStockPieceInStock": "This piece is in stock. Move it out or write it off before its tag is retired.",
+  "@refusalStockPieceInStock": {
+    "description": "#4362 refusal"
+  },
+  "refusalStockNamePieces": "This item is tracked piece by piece: name each piece, as many as the quantity.",
+  "@refusalStockNamePieces": {
+    "description": "#4362 refusal"
+  },
+  "refusalStockPieceWhere": "A named piece is not where this movement takes it from. Check the place or the piece.",
+  "@refusalStockPieceWhere": {
+    "description": "#4362 refusal"
+  },
+  "stockReasonHasTags": "Tags are bound here: retire them before the tag mode changes.",
+  "@stockReasonHasTags": {
+    "description": "#4362 reason"
+  },
+  "stockReasonTagModeNone": "This item does not carry tags: its tag mode is none.",
+  "@stockReasonTagModeNone": {
+    "description": "#4362 reason"
+  },
+  "stockReasonTagPerUnitItem": "A tag per unit goes on a piece, not on the item: bind it to a piece.",
+  "@stockReasonTagPerUnitItem": {
+    "description": "#4362 reason"
+  },
+  "stockReasonTagMalformed": "This code is not a tag code that can be read.",
+  "@stockReasonTagMalformed": {
+    "description": "#4362 reason"
+  },
+  "stockReasonTagOwnerUnknown": "The item, place or piece this tag is meant for is not known here.",
+  "@stockReasonTagOwnerUnknown": {
+    "description": "#4362 reason"
+  },
+  "stockReasonUnitsNotTracked": "Pieces are named only for an item tracked piece by piece.",
+  "@stockReasonUnitsNotTracked": {
+    "description": "#4362 reason"
+  },
+  "stockReasonTagOwnerInactive": "This item or place is deactivated: bring it back before a tag is bound to it.",
+  "@stockReasonTagOwnerInactive": {
+    "description": "#4362 reason"
+  }
+}

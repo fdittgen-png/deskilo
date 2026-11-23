@@ -2326,6 +2326,18 @@
       "capabilities": []
     },
     {
+      "key": "stockScanning",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "stockTags",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "stockTakeOut",
       "maturity": "beta",
       "lifecycle": "active",

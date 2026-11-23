@@ -170,3 +170,5 @@ stockReturns | everywhere | y y y y y y y y y y
 stockCounts | everywhere | y y y y y y y y y y
 stockCycleCounts | everywhere | y y y y y y y y y y
 stockItemGroups | everywhere | y y y y y y y y y y
+stockTags | everywhere | y y y y y y y y y y
+stockScanning | everywhere | y y y y y y y y y y

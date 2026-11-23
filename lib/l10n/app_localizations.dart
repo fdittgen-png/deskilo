@@ -20344,6 +20344,30 @@ abstract class AppLocalizations {
   /// **'Stock returns and corrections'**
   String get featureStockReturnsTitle;
 
+  /// #4359 feature description
+  ///
+  /// In en, this message translates to:
+  /// **'A barcode scanner that types, or the phone camera, fills any goods sheet: a code is read as a barcode, a place label, a lot label or an RFID tag. On with the goods ledger.'**
+  String get featureStockScanningDesc;
+
+  /// #4359 feature name
+  ///
+  /// In en, this message translates to:
+  /// **'Scanning'**
+  String get featureStockScanningTitle;
+
+  /// #4362 feature description
+  ///
+  /// In en, this message translates to:
+  /// **'Tag items, units, batches and places with RFID or NFC tags, stored like a barcode and unique in the business. A tag may name one batch or one piece, as the item\'s group says; a tag read is recognised wherever a barcode is.'**
+  String get featureStockTagsDesc;
+
+  /// #4362 feature name
+  ///
+  /// In en, this message translates to:
+  /// **'RFID tags'**
+  String get featureStockTagsTitle;
+
   /// #4170 what the taking goods out feature does, and what off means
   ///
   /// In en, this message translates to:
@@ -45860,6 +45884,12 @@ abstract class AppLocalizations {
   /// **'This move cannot be recorded as given: a quantity above zero, a known reason and one to two hundred lines, or the same request sent again unchanged. Nothing was moved.'**
   String get refusalStockMove;
 
+  /// #4362 refusal
+  ///
+  /// In en, this message translates to:
+  /// **'This item is tracked piece by piece: name each piece, as many as the quantity.'**
+  String get refusalStockNamePieces;
+
   /// refusal DKG03 (#3824)
   ///
   /// In en, this message translates to:
@@ -45884,6 +45914,18 @@ abstract class AppLocalizations {
   /// **'This page request is not valid: ask for 1 to 200 rows, and continue only from the position a page gave.'**
   String get refusalStockPage;
 
+  /// #4362 refusal
+  ///
+  /// In en, this message translates to:
+  /// **'This piece is in stock. Move it out or write it off before its tag is retired.'**
+  String get refusalStockPieceInStock;
+
+  /// #4362 refusal
+  ///
+  /// In en, this message translates to:
+  /// **'A named piece is not where this movement takes it from. Check the place or the piece.'**
+  String get refusalStockPieceWhere;
+
   /// #4172 refusal
   ///
   /// In en, this message translates to:
@@ -45907,6 +45949,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This was changed by someone else since you opened it. Read it again, then make your change again.'**
   String get refusalStockStale;
+
+  /// #4362 refusal
+  ///
+  /// In en, this message translates to:
+  /// **'This tag is already on another item, place or piece. Retire it there first.'**
+  String get refusalStockTagBound;
+
+  /// #4362 refusal
+  ///
+  /// In en, this message translates to:
+  /// **'This tag was retired a short while ago and cannot be bound again yet. The waiting period is a setting of the business.'**
+  String get refusalStockTagRetiredLately;
 
   /// refusal DKG02 (#3824)
   ///
@@ -51056,6 +51110,18 @@ abstract class AppLocalizations {
   /// **'How a proposed sale price is rounded: to the nearest 0.05 or 0.10, or to a price ending in 0.99. It is used only to propose a price.'**
   String get settingHintStockPriceRounding;
 
+  /// #4362/#4359 setting label/hint
+  ///
+  /// In en, this message translates to:
+  /// **'What a goods sheet does when the same code is scanned again: add one more to the line, or ask the quantity.'**
+  String get settingHintStockRepeatedScan;
+
+  /// #4362/#4359 setting label/hint
+  ///
+  /// In en, this message translates to:
+  /// **'How many days after it was retired a tag code may be bound again. 0 means at once. A tag in force is never bound twice.'**
+  String get settingHintStockTagRebindGraceDays;
+
   /// #2487 retention settings
   ///
   /// In en, this message translates to:
@@ -51619,6 +51685,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Price rounding'**
   String get settingLabelStockPriceRounding;
+
+  /// #4362/#4359 setting label/hint
+  ///
+  /// In en, this message translates to:
+  /// **'A code scanned again'**
+  String get settingLabelStockRepeatedScan;
+
+  /// #4362/#4359 setting label/hint
+  ///
+  /// In en, this message translates to:
+  /// **'Days before a retired tag is bound again'**
+  String get settingLabelStockTagRebindGraceDays;
 
   /// #2487 retention settings
   ///
@@ -57517,6 +57595,12 @@ abstract class AppLocalizations {
   /// **'A barcode has 8 to 14 digits.'**
   String get stockReasonGtinLength;
 
+  /// #4362 reason
+  ///
+  /// In en, this message translates to:
+  /// **'Tags are bound here: retire them before the tag mode changes.'**
+  String get stockReasonHasTags;
+
   /// #4293 the registry of the stock: a label or a message
   ///
   /// In en, this message translates to:
@@ -57781,6 +57865,36 @@ abstract class AppLocalizations {
   /// **'This supplier is not one of this business.'**
   String get stockReasonSupplierForeign;
 
+  /// #4362 reason
+  ///
+  /// In en, this message translates to:
+  /// **'This code is not a tag code that can be read.'**
+  String get stockReasonTagMalformed;
+
+  /// #4362 reason
+  ///
+  /// In en, this message translates to:
+  /// **'This item does not carry tags: its tag mode is none.'**
+  String get stockReasonTagModeNone;
+
+  /// #4362 reason
+  ///
+  /// In en, this message translates to:
+  /// **'This item or place is deactivated: bring it back before a tag is bound to it.'**
+  String get stockReasonTagOwnerInactive;
+
+  /// #4362 reason
+  ///
+  /// In en, this message translates to:
+  /// **'The item, place or piece this tag is meant for is not known here.'**
+  String get stockReasonTagOwnerUnknown;
+
+  /// #4362 reason
+  ///
+  /// In en, this message translates to:
+  /// **'A tag per unit goes on a piece, not on the item: bind it to a piece.'**
+  String get stockReasonTagPerUnitItem;
+
   /// #4294 reorder points: a label or a message
   ///
   /// In en, this message translates to:
@@ -57846,6 +57960,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The unit of this line is not a unit of the item: add it to the item first.'**
   String get stockReasonUnitUnmapped;
+
+  /// #4362 reason
+  ///
+  /// In en, this message translates to:
+  /// **'Pieces are named only for an item tracked piece by piece.'**
+  String get stockReasonUnitsNotTracked;
 
   /// #4169 the stock editors: a text under a field the server refused
   ///

@@ -33,6 +33,10 @@
 #   (I) a group is saved while one of its items is overridden, then while it is moved to another group:
 #       the second command waits for the group's lock and is refused as stale (DKG10); no deadlock, and
 #       the saved value is the one that stands.
+#   (J) two sessions bind one tag code to two items: the second waits for the code's lock and
+#       is refused (DKG22); one active tag, on the first item.
+#   (K) a receipt naming a new piece's tag and a bind of the same code: the bind waits for the code's lock and
+#       is refused (DKG22); one tag, on the piece.
 # A holder that never took its lock, or a contender that never waited, fails the
 # script: nothing here can pass empty. A single pgTAP transaction cannot show a
 # race, so each contender is its own psql process on CI's disposable database.
@@ -542,5 +546,65 @@ wait "$holder12" || { echo "::error::the second group save failed: $(tr '\n' ' '
 wait "$contender12" || true
 grep -q "DKG10" "$scratch/contender12" || { echo "::error::the move was not refused as stale: $(tr '\n' ' ' < "$scratch/contender12")" >&2; exit 1; }
 expect "(I) the item stays in its group with the saved value" "$(q "select (group_id = '$ig1')::text || '/' || shelf_life_days from public.services where id = '$iitem'")" "true/12"
+
+# (J) two sessions bind the same tag code to two different items: the second waits for the code's lock, then is
+# refused (DKG22, bound elsewhere); one active tag exists, on the first item.
+q "update public.workspaces set feature_flags = coalesce(feature_flags, '{}'::jsonb) || '{\"stockTags\": true}' where id = '$ws'" >/dev/null
+jitem1=$(q "insert into public.services (workspace_id, name, price_cents, active, inventory_unit, tracking, stockable, tag_mode) values ('$ws', 'Race tag item one', 100, true, 'piece', 'none', true, 'per_batch') returning id" | head -1)
+jitem2=$(q "insert into public.services (workspace_id, name, price_cents, active, inventory_unit, tracking, stockable, tag_mode) values ('$ws', 'Race tag item two', 100, true, 'piece', 'none', true, 'per_batch') returning id" | head -1)
+psql "$url" -X -qAt -v ON_ERROR_STOP=1 >"$scratch/holder13" 2>&1 <<SQL &
+begin;
+$as_owner
+select 'bound ' || (public.stock_tag_bind_v1('$ws', gen_random_uuid(), '{"code": "3074257BF7194E4000001A85", "owner": {"kind": "item", "item_id": "$jitem1"}}'::jsonb) ->> 'owner_kind');
+reset role;
+\\! touch '$scratch/ready13'
+select pg_sleep(4);
+commit;
+SQL
+holder13=$!
+wait_marker "$scratch/ready13" "$scratch/holder13"
+PGAPPNAME="transfer-race-bind" psql "$url" -X -qAt -v ON_ERROR_STOP=1 >"$scratch/contender13" 2>&1 <<SQL &
+\\set VERBOSITY verbose
+begin;
+$as_owner
+select public.stock_tag_bind_v1('$ws', gen_random_uuid(), '{"code": "3074257BF7194E4000001A85", "owner": {"kind": "item", "item_id": "$jitem2"}}'::jsonb);
+commit;
+SQL
+contender13=$!
+wait_lock "transfer-race-bind"
+wait "$holder13" || { echo "::error::the first bind failed: $(tr '\n' ' ' < "$scratch/holder13")" >&2; exit 1; }
+wait "$contender13" || true
+grep -qx "bound item" "$scratch/holder13" || { echo "::error::the first bind did not complete: $(tr '\n' ' ' < "$scratch/holder13")" >&2; exit 1; }
+grep -q "DKG22" "$scratch/contender13" || { echo "::error::the second bind was not refused as bound elsewhere: $(tr '\n' ' ' < "$scratch/contender13")" >&2; exit 1; }
+expect "(J) one active tag exists for the code, on the first item" "$(q "select count(*) || '/' || bool_and(item_id = '$jitem1')::text from public.stock_tags where workspace_id = '$ws' and state = 'active' and item_id in ('$jitem1', '$jitem2')")" "1/true"
+
+# (K) a receipt that names a new piece's tag, and a bind of the same code to a place: the bind waits for the
+# code's lock the receipt holds, then is refused (DKG22, the code is on the piece), never a raw unique violation.
+kitem=$(q "insert into public.services (workspace_id, name, price_cents, active, inventory_unit, tracking, stockable, tag_mode) values ('$ws', 'Race piece item', 100, true, 'piece', 'serial', true, 'per_unit') returning id" | head -1)
+psql "$url" -X -qAt -v ON_ERROR_STOP=1 >"$scratch/holder14" 2>&1 <<SQL &
+begin;
+$as_owner
+select 'received ' || jsonb_typeof(public.stock_move_v1('$ws', gen_random_uuid(), '[{"item_id": "$kitem", "quantity": "1", "from": "$supplier", "to": "$main", "units": [{"tag": "E28068940000401561D68B01"}], "new_lot": {"total_cost_minor": 100}}]'::jsonb, 'receipt'));
+reset role;
+\\! touch '$scratch/ready14'
+select pg_sleep(4);
+commit;
+SQL
+holder14=$!
+wait_marker "$scratch/ready14" "$scratch/holder14"
+PGAPPNAME="transfer-race-piece-bind" psql "$url" -X -qAt -v ON_ERROR_STOP=1 >"$scratch/contender14" 2>&1 <<SQL &
+\\set VERBOSITY verbose
+begin;
+$as_owner
+select public.stock_tag_bind_v1('$ws', gen_random_uuid(), '{"code": "E28068940000401561D68B01", "owner": {"kind": "place", "location_id": "$shelf"}}'::jsonb);
+commit;
+SQL
+contender14=$!
+wait_lock "transfer-race-piece-bind"
+wait "$holder14" || { echo "::error::the receipt failed: $(tr '\n' ' ' < "$scratch/holder14")" >&2; exit 1; }
+wait "$contender14" || true
+grep -q "^received" "$scratch/holder14" || { echo "::error::the receipt did not complete: $(tr '\n' ' ' < "$scratch/holder14")" >&2; exit 1; }
+grep -q "DKG22" "$scratch/contender14" || { echo "::error::the bind was not refused as bound to the piece: $(tr '\n' ' ' < "$scratch/contender14")" >&2; exit 1; }
+expect "(K) the code is on the received piece only" "$(q "select count(*) || '/' || bool_and(owner_kind = 'piece')::text from public.stock_tags where workspace_id = '$ws' and state = 'active' and code = 'E28068940000401561D68B01'")" "1/true"
 
 echo "stock transfer race: opposing transfers never deadlock and keep every total; the last stock is taken once; a booking confirmation and a customer return of one item serialise in both orders; two put-aways cannot over-allocate a line; two sessions crossing a reorder point raise one alert"

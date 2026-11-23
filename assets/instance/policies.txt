@@ -538,6 +538,10 @@ public.stock_returns.mcp_delegated_deny
 public.stock_returns.stock_returns_select
 public.stock_reversals.mcp_delegated_deny
 public.stock_reversals.stock_reversals_select
+public.stock_tagged_units.mcp_delegated_deny
+public.stock_tagged_units.stock_tagged_units_select
+public.stock_tags.mcp_delegated_deny
+public.stock_tags.stock_tags_select
 public.stock_transfer_lines.mcp_delegated_deny
 public.stock_transfer_lines.stock_transfer_lines_select
 public.stock_transfers.mcp_delegated_deny

@@ -117,13 +117,10 @@ select set_config('l.two', (select frozen -> 'lines' -> 1 #>> '{commercial,line_
                            where quote_id = current_setting('q.id')::uuid), false);
 select set_config('t.books', pg_temp.books(), false);
 
--- the business's own date, not the database session's: they differ for a few hours a day
-select set_config('t.today', public.workspace_today(pg_temp.u(101))::text, false);
-
 -- ── before there is anything to follow ──
 select is(pg_temp.open_line(1, pg_temp.u(101), 1, 'quote', current_setting('q.id')::uuid, current_setting('l.two')::uuid),
   'ERR DKF03', 'a quote that was only sent is no commercial evidence yet');
-select is(pg_temp.as_user(1, format($s$select public.record_customer_quote_decision_v1(%L, %L, 1, 'accepted', current_setting('t.today')::date, 'email', 'mail')::text$s$,
+select is(pg_temp.as_user(1, format($s$select public.record_customer_quote_decision_v1(%L, %L, 1, 'accepted', current_date, 'email', 'mail')::text$s$,
   pg_temp.u(101), current_setting('q.id'))) like '%recorded_by_issuer%', true, 'the issuer records the acceptance of revision 1');
 update public.workspaces set feature_flags = feature_flags - 'serviceFulfilment' where id = pg_temp.u(101);
 select is(pg_temp.open_line(1, pg_temp.u(101), 1, 'quote', current_setting('q.id')::uuid, current_setting('l.two')::uuid),
@@ -150,7 +147,7 @@ select is((select string_agg(coalesce(from_state, '-') || '>' || to_state, ' ' o
   '->ordered ordered>started started>done', 'ordered > started > done');
 
 -- ── 2. then the invoice, a partial payment: the history does not move ──
-select set_config('c.a', pg_temp.as_user(1, format($s$select public.prepare_quote_conversion_v1(%L, %L, current_setting('t.today')::date, current_setting('t.today')::date + 30)::text$s$,
+select set_config('c.a', pg_temp.as_user(1, format($s$select public.prepare_quote_conversion_v1(%L, %L, current_date, current_date + 30)::text$s$,
   pg_temp.u(101), current_setting('q.id'))), false);
 select set_config('c.i', pg_temp.as_user(1, format(
   $s$select public.convert_customer_quote_v1(%L, %L, %s, '00000000-0000-4000-8000-000000041781'::uuid)::text$s$,
@@ -249,7 +246,7 @@ select is(pg_temp.step(1, pg_temp.u(101), current_setting('d.id'), 3, 'started',
 
 -- ── 6. a direct commitment later billed: the explicit link ──
 select set_config('n.a', pg_temp.as_user(1, format(
-  $s$select public.save_standalone_invoice_draft_v1(%L, null, null, %L, current_setting('t.today')::date, current_setting('t.today')::date + 30, '', '', %L::jsonb)::text$s$,
+  $s$select public.save_standalone_invoice_draft_v1(%L, null, null, %L, current_date, current_date + 30, '', '', %L::jsonb)::text$s$,
   pg_temp.u(101), current_setting('t.customer2'), jsonb_build_array(pg_temp.line('3', '70', 'Coaching'))::text)), false);
 select set_config('n.i', pg_temp.as_user(1, format(
   $s$select public.issue_standalone_invoice_v1(%L, %L, %s, '00000000-0000-4000-8000-000000041782'::uuid)::text$s$,
@@ -272,7 +269,7 @@ select is(pg_temp.as_user(1, format($s$select public.link_service_fulfilment_inv
   pg_temp.u(101), current_setting('d.cid'), current_setting('n.id'), current_setting('n.line'))), 'ERR DKF03',
   'a line that already has its own engagement is not linked to another');
 select set_config('n.b', pg_temp.as_user(1, format(
-  $s$select public.save_standalone_invoice_draft_v1(%L, null, null, %L, current_setting('t.today')::date, current_setting('t.today')::date + 30, '', '', %L::jsonb)::text$s$,
+  $s$select public.save_standalone_invoice_draft_v1(%L, null, null, %L, current_date, current_date + 30, '', '', %L::jsonb)::text$s$,
   pg_temp.u(101), current_setting('t.customer2'), jsonb_build_array(pg_temp.line('3', '70', 'Coaching'))::text)), false);
 select set_config('n.bi', pg_temp.as_user(1, format(
   $s$select public.issue_standalone_invoice_v1(%L, %L, %s, '00000000-0000-4000-8000-000000041783'::uuid)::text$s$,

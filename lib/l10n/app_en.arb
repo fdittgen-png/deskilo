@@ -16417,6 +16417,22 @@
   "@featureStockReturnsTitle": {
     "description": "#4172 feature name"
   },
+  "featureStockScanningDesc": "A barcode scanner that types, or the phone camera, fills any goods sheet: a code is read as a barcode, a place label, a lot label or an RFID tag. On with the goods ledger.",
+  "@featureStockScanningDesc": {
+    "description": "#4359 feature description"
+  },
+  "featureStockScanningTitle": "Scanning",
+  "@featureStockScanningTitle": {
+    "description": "#4359 feature name"
+  },
+  "featureStockTagsDesc": "Tag items, units, batches and places with RFID or NFC tags, stored like a barcode and unique in the business. A tag may name one batch or one piece, as the item's group says; a tag read is recognised wherever a barcode is.",
+  "@featureStockTagsDesc": {
+    "description": "#4362 feature description"
+  },
+  "featureStockTagsTitle": "RFID tags",
+  "@featureStockTagsTitle": {
+    "description": "#4362 feature name"
+  },
   "featureStockTakeOutDesc": "Take goods out of stock for use or as a loss, with the reason and the lot. Off: no consumption or loss is offered; transfers and receiving are unaffected.",
   "@featureStockTakeOutDesc": {
     "description": "#4170 what the taking goods out feature does, and what off means"
@@ -37536,6 +37552,10 @@
   "@refusalStockMove": {
     "description": "refusal DKG07 (#3824)"
   },
+  "refusalStockNamePieces": "This item is tracked piece by piece: name each piece, as many as the quantity.",
+  "@refusalStockNamePieces": {
+    "description": "#4362 refusal"
+  },
   "refusalStockNotEnough": "There is not that much at this place. Nothing was moved.",
   "@refusalStockNotEnough": {
     "description": "refusal DKG03 (#3824)"
@@ -37552,6 +37572,14 @@
   "@refusalStockPage": {
     "description": "#4161 (0833) DKG09: a stock page request that is not valid (size outside 1..200, or a cursor that is not one)."
   },
+  "refusalStockPieceInStock": "This piece is in stock. Move it out or write it off before its tag is retired.",
+  "@refusalStockPieceInStock": {
+    "description": "#4362 refusal"
+  },
+  "refusalStockPieceWhere": "A named piece is not where this movement takes it from. Check the place or the piece.",
+  "@refusalStockPieceWhere": {
+    "description": "#4362 refusal"
+  },
   "refusalStockReturnBeyond": "More than this movement held cannot be returned: part of it was already returned or corrected.",
   "@refusalStockReturnBeyond": {
     "description": "#4172 refusal"
@@ -37567,6 +37595,14 @@
   "refusalStockStale": "This was changed by someone else since you opened it. Read it again, then make your change again.",
   "@refusalStockStale": {
     "description": "#4169 (0836) DKG10: a stock configuration save of a revision that is no longer current."
+  },
+  "refusalStockTagBound": "This tag is already on another item, place or piece. Retire it there first.",
+  "@refusalStockTagBound": {
+    "description": "#4362 refusal"
+  },
+  "refusalStockTagRetiredLately": "This tag was retired a short while ago and cannot be bound again yet. The waiting period is a setting of the business.",
+  "@refusalStockTagRetiredLately": {
+    "description": "#4362 refusal"
   },
   "refusalStockUnit": "This item has no such unit. Add the unit to the item, or enter the quantity in a unit it lists.",
   "@refusalStockUnit": {
@@ -41498,6 +41534,14 @@
   "@settingHintStockPriceRounding": {
     "description": "#4361 setting label/hint"
   },
+  "settingHintStockRepeatedScan": "What a goods sheet does when the same code is scanned again: add one more to the line, or ask the quantity.",
+  "@settingHintStockRepeatedScan": {
+    "description": "#4362/#4359 setting label/hint"
+  },
+  "settingHintStockTagRebindGraceDays": "How many days after it was retired a tag code may be bound again. 0 means at once. A tag in force is never bound twice.",
+  "@settingHintStockTagRebindGraceDays": {
+    "description": "#4362/#4359 setting label/hint"
+  },
   "settingHintVatViesEvidenceDays": "Days a valid VAT-number check stays recent enough to stand as evidence on a new invoice. A shorter value asks for a fresh check sooner; it is not proof that a transaction is valid.",
   "@settingHintVatViesEvidenceDays": {
     "description": "#2487 retention settings"
@@ -41873,6 +41917,14 @@
   "settingLabelStockPriceRounding": "Price rounding",
   "@settingLabelStockPriceRounding": {
     "description": "#4361 setting label/hint"
+  },
+  "settingLabelStockRepeatedScan": "A code scanned again",
+  "@settingLabelStockRepeatedScan": {
+    "description": "#4362/#4359 setting label/hint"
+  },
+  "settingLabelStockTagRebindGraceDays": "Days before a retired tag is bound again",
+  "@settingLabelStockTagRebindGraceDays": {
+    "description": "#4362/#4359 setting label/hint"
   },
   "settingLabelVatViesEvidenceDays": "VAT-number check freshness",
   "@settingLabelVatViesEvidenceDays": {
@@ -46576,6 +46628,10 @@
   "@stockReasonGtinLength": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonHasTags": "Tags are bound here: retire them before the tag mode changes.",
+  "@stockReasonHasTags": {
+    "description": "#4362 reason"
+  },
   "stockReasonHomeInvalid": "Choose a place of this business that is in use and is not a supplier, customer, loss or transit place.",
   "@stockReasonHomeInvalid": {
     "description": "#4293 the registry of the stock: a label or a message"
@@ -46752,6 +46808,26 @@
   "@stockReasonSupplierForeign": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
+  "stockReasonTagMalformed": "This code is not a tag code that can be read.",
+  "@stockReasonTagMalformed": {
+    "description": "#4362 reason"
+  },
+  "stockReasonTagModeNone": "This item does not carry tags: its tag mode is none.",
+  "@stockReasonTagModeNone": {
+    "description": "#4362 reason"
+  },
+  "stockReasonTagOwnerInactive": "This item or place is deactivated: bring it back before a tag is bound to it.",
+  "@stockReasonTagOwnerInactive": {
+    "description": "#4362 reason"
+  },
+  "stockReasonTagOwnerUnknown": "The item, place or piece this tag is meant for is not known here.",
+  "@stockReasonTagOwnerUnknown": {
+    "description": "#4362 reason"
+  },
+  "stockReasonTagPerUnitItem": "A tag per unit goes on a piece, not on the item: bind it to a piece.",
+  "@stockReasonTagPerUnitItem": {
+    "description": "#4362 reason"
+  },
   "stockReasonTargetBelowPoint": "The level to order up to must be above the reorder point.",
   "@stockReasonTargetBelowPoint": {
     "description": "#4294 reorder points: a label or a message"
@@ -46795,6 +46871,10 @@
   "stockReasonUnitUnmapped": "The unit of this line is not a unit of the item: add it to the item first.",
   "@stockReasonUnitUnmapped": {
     "description": "#4171 receiving into stock: a text under a field the server refused"
+  },
+  "stockReasonUnitsNotTracked": "Pieces are named only for an item tracked piece by piece.",
+  "@stockReasonUnitsNotTracked": {
+    "description": "#4362 reason"
   },
   "stockReasonValueForeign": "This value does not belong to this dimension.",
   "@stockReasonValueForeign": {
