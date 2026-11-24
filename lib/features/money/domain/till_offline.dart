@@ -5,7 +5,7 @@
 // when the connection returns; the server (`counter_offline_sync_v1`, contract section 7) checks every rule again. Nothing here
 // takes anything but cash, claims a fiscal signature, or prices a line the device has no price for. Amounts are MINOR units.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show JsonReader;
-import 'package:flutter/foundation.dart' show visibleForTesting;
+import 'package:meta/meta.dart' show visibleForTesting;
 
 import 'till_quantity.dart';
 

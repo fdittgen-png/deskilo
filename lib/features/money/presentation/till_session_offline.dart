@@ -31,7 +31,8 @@ extension TillSessionOffline on TillSession {
       _setOffline(offline.value.copyWith(waiting: kit.queue.pendingCount, unreadable: false));
       // sales that waited since the app was last closed offline are sent now, if the connection is there
       if (kit.queue.hasPending) unawaited(reconnect(force: true));
-    } on OfflineStoreUnreadable {
+    } on OfflineStoreUnreadable catch (e, st) {
+      TraceLogger.instance.warn('money', 'the offline state of the device cannot be read', error: e, stackTrace: st);
       _setOffline(offline.value.copyWith(unreadable: true));
     }
   }
@@ -43,7 +44,8 @@ extension TillSessionOffline on TillSession {
     final kit = offlineKit!;
     try {
       await kit.queue.goOffline(sessionId: offlineSessionId!, now: kit.now());
-    } on OfflineStoreUnreadable {
+    } on OfflineStoreUnreadable catch (e, st) {
+      TraceLogger.instance.warn('money', 'the offline state of the device cannot be read', error: e, stackTrace: st);
       _setOffline(offline.value.copyWith(unreadable: true));
       return false;
     }
@@ -97,7 +99,8 @@ extension TillSessionOffline on TillSession {
     } on OfflineRecordRefused catch (e, st) {
       TraceLogger.instance.warn('money', 'an offline sale was refused by the device', error: e, stackTrace: st);
       _set(_now.copyWith(problem: () => e));
-    } on OfflineStoreUnreadable {
+    } on OfflineStoreUnreadable catch (e, st) {
+      TraceLogger.instance.warn('money', 'the offline state of the device cannot be read', error: e, stackTrace: st);
       _setOffline(offline.value.copyWith(unreadable: true));
     }
   }
@@ -121,8 +124,9 @@ extension TillSessionOffline on TillSession {
     _setOffline(offline.value.copyWith(syncing: true));
     try {
       await port.readiness(workspaceId).timeout(callTimeout);
-    } on Object {
+    } on Object catch (e, st) {
       // still no answer: the till stays offline and looks again
+      TraceLogger.instance.warn('money', 'the till is still offline', error: e, stackTrace: st);
       _setOffline(offline.value.copyWith(syncing: false));
       return;
     }
