@@ -44,10 +44,10 @@ Never throwStockFailure(PostgrestException e, StackTrace stack, {bool pieces = f
 StockConfigRefused _refused(Object? details) {
   try {
     final r = JsonReader.of(jsonDecode('$details'), context: DkCode.dkg11);
-    return StockConfigRefused(r.string('field'), r.string('reason'));
+    return StockConfigRefused(r.string('field'), StockRefusal.fromWire(r.string('reason')));
   } on Object catch (error, stack) {
     TraceLogger.instance.warn('stock', 'a stock refusal detail was not JSON', error: error, stackTrace: stack);
-    return const StockConfigRefused('request', 'malformed');
+    return const StockConfigRefused('request', StockRefusal.malformed);
   }
 }
 

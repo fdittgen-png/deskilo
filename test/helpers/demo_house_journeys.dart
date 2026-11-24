@@ -6,6 +6,7 @@
 import 'package:deskilo/core/demo/demo_london_space.dart';
 import 'package:deskilo/core/demo/demo_new_york_space.dart';
 import 'package:deskilo/core/demo/seed/demo_london_seed.dart';
+import 'package:deskilo/core/failure/app_failure.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/hmrc_submission.dart';
 import 'package:deskilo/features/money/domain/mtd_boxes.dart';
@@ -38,7 +39,7 @@ Future<bool> mtdSubmissionJourney(DemoLondonData london) async {
     declaration,
     reference: ActiveTaxReference.current,
   );
-  Future<HmrcOutcome> submit() => hmrc.submit(
+  Future<CommandOutcome<HmrcFiling>> submit() => hmrc.submit(
     declarationId: declaration.id,
     connectionId: connection.id,
     boxes: boxes,
@@ -47,13 +48,15 @@ Future<bool> mtdSubmissionJourney(DemoLondonData london) async {
   );
   final outcome = await submit();
   final filed = london.money.vatDeclarations.single;
-  return outcome is HmrcFiled &&
-      outcome.demo &&
-      outcome.receipt.formBundleNumber.startsWith('DEMO-') &&
+  final filing = hmrcFilingOf(outcome);
+  return filing != null &&
+      filing.recorded &&
+      filing.demo &&
+      filing.receipt.formBundleNumber.startsWith('DEMO-') &&
       filed.status == 'filed' &&
       filed.submittedChannel == 'hmrc_mtd' &&
-      filed.submittedReceipt == outcome.receipt.formBundleNumber &&
-      await submit() is HmrcRefused;
+      filed.submittedReceipt == filing.receipt.formBundleNumber &&
+      hmrcRefusalOf(await submit()) != null;
 }
 
 /// Ada reads New York's sales-tax return of the last full month, as the

@@ -6,6 +6,8 @@
 // throws; it never sees the caller's session, a workspace table or a
 // database client.
 
+import { env as readEnv } from "../_shared/config.ts";
+
 export type Provider = "paypal" | "stripe" | "mollie" | "wero";
 
 /** The effective configuration of one provider for one workspace. */
@@ -51,5 +53,5 @@ export type OrderAdapter = (
 /** The deployment's own transport and environment. */
 export const runtimeDeps = (): AdapterDeps => ({
   transport: (url, init) => fetch(url, init),
-  env: (name) => Deno.env.get(name),
+  env: readEnv,
 });

@@ -119,10 +119,9 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
       AsyncData(value: final invoices) =>
         readsStandIn(ref, [invoiceMatchesProvider, invoiceRemindersProvider]) ??
             _body(context, l10n, invoices),
-      AsyncError() => Center(
-          child: Text(
-            l10n.workspaceGenericError,
-          ),
+      AsyncError(:final error) => ReadFailureBanner(
+          error: error,
+          onRetry: () => ref.invalidate(invoicesProvider),
         ),
       _ => const LoadingView(),
     };

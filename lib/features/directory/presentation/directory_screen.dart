@@ -11,9 +11,9 @@ import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
+import '../../../core/ui/async_read_body.dart';
 import '../../../core/ui/empty_state.dart';
 import '../../../core/ui/kit/filled_field.dart';
-import '../../../core/ui/kit/retry_notice.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../core/ui/view_toggle.dart';
 import '../../auth/providers/auth_providers.dart';
@@ -372,10 +372,9 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
       children: [
         Padding(
           padding: AppSpacing.mdAll,
-          child: RetryNotice(
+          child: ReadFailureBanner(
             key: const ValueKey('directory-portal-directory-unavailable-2'),
-            text: l.discoveryDirectoriesDidNotAnswer(1),
-            retryLabel: l.commonRetry,
+            error: error,
             onRetry: retry,
           ),
         ),
@@ -420,6 +419,7 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
             : map
                 ? _mapView(result)
                 : _list(result, beside: false),
+        // #4414 kept: _failure words the typed home refusal, else ReadFailureBanner
         AsyncError(:final error) => _failure(error),
         _ => const LoadingView(),
       },

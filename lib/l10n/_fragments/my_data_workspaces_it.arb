@@ -3,7 +3,6 @@
   "meDataWorkspacesTitle": "I Suoi dati in ogni attività",
   "meDataWorkspacesScope": "Ogni attività esporta ciò che conserva su di Lei — iscrizione, prenotazioni, conto e fatture — dal proprio server, un file per attività. La parte del Suo account personale è la scheda qui sopra.",
   "meDataWorkspacesEmpty": "Il Suo account non nomina ancora alcuna attività.",
-  "meDataWorkspacesFailed": "Non è stato possibile leggere le attività del Suo account. Non è stato esportato nulla.",
   "meDataWorkspaceUnnamed": "Attività {id}",
   "meDataWorkspaceExport": "Esporta",
   "meDataWorkspaceHostUnavailable": "Il server di questa attività non è raggiungibile da qui. Non è stato esportato nulla.",

@@ -11,15 +11,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
-import '../../../core/trace/trace_logger.dart';
 import '../domain/stock_page.dart';
 import '../domain/stock_trace.dart';
 import '../providers/stock_providers.dart';
+import 'stock_read_failed.dart';
 
 /// The goods put away against the [kind] (`order` or `bill`) document [id] of [workspaceId].
-class StockDocumentGoodsBlock extends ConsumerStatefulWidget {
+class StockDocumentGoodsBlock extends ConsumerWidget {
   const StockDocumentGoodsBlock({required this.workspaceId, required this.kind, required this.id, super.key});
 
   final String workspaceId;
@@ -27,89 +28,52 @@ class StockDocumentGoodsBlock extends ConsumerStatefulWidget {
   final String id;
 
   @override
-  ConsumerState<StockDocumentGoodsBlock> createState() => _State();
-}
-
-class _State extends ConsumerState<StockDocumentGoodsBlock> {
-  TraceState _state = TraceState.notLinked;
-  final List<DocumentGoodsRow> _rows = [];
-  bool _more = false;
-  Map<String, Object?>? _next;
-  bool _loading = true;
-  bool _failed = false;
-
-  @override
-  void initState() {
-    super.initState();
-    unawaited(_load(first: true));
-  }
-
-  Future<void> _load({required bool first}) async {
-    setState(() {
-      _loading = true;
-      _failed = false;
-    });
-    try {
-      final page = await ref.read(stockTraceReaderProvider).documentGoods(widget.workspaceId, widget.kind, widget.id, after: first ? null : _next);
-      if (!mounted) return;
-      setState(() {
-        if (first) _rows.clear();
-        _state = page.state;
-        _rows.addAll(page.rows);
-        _more = page.more;
-        _next = page.next;
-        _loading = false;
-      });
-    } on Object catch (e, st) {
-      TraceLogger.instance.log(TraceLevel.info, 'stock', 'stock_document_goods_block: Object handled', error: e, stackTrace: st);
-      if (!mounted) return;
-      setState(() {
-        _failed = true;
-        _loading = false;
-      });
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final items = {for (final i in ref.watch(stockItemsProvider(widget.workspaceId)).value ?? const <StockItem>[]) i.id: i}; // empty-ok: a name falls back to its id
+    // #4401 -- the one stock walk reads the pages; a failed page keeps the rows and is asked again
+    final provider = stockDocumentGoodsWalkProvider((workspaceId: workspaceId, kind: kind, id: id));
+    final walk = ref.watch(provider);
+    final first = walk.first;
+    final state = first is DocumentGoods ? first.state : TraceState.notLinked;
+    final items = {for (final i in ref.watch(stockItemsProvider(workspaceId)).value ?? const <StockItem>[]) i.id: i}; // empty-ok: a name falls back to its id
     final Widget body;
-    if (_failed) {
-      body = Row(
-        key: const ValueKey('stock-goods-failed'),
-        children: [
-          Flexible(child: Text(l10n.stockReadFailed)),
-          TextButton(key: const ValueKey('stock-goods-retry'), onPressed: () => _load(first: _rows.isEmpty), child: Text(l10n.identityConnectRetry)),
-        ],
+    if (walk.error != null) {
+      body = StockReadFailed(
+        keyName: 'stock-goods',
+        error: walk.error!,
+        onRetry: () => unawaited(walk.rows.isEmpty ? ref.read(provider.notifier).reload() : ref.read(provider.notifier).loadMore()),
       );
-    } else if (_loading && _rows.isEmpty) {
+    } else if (walk.loading && walk.rows.isEmpty) {
       body = const LinearProgressIndicator();
-    } else if (_state == TraceState.unavailable) {
+    } else if (state == TraceState.unavailable) {
       body = Text(l10n.stockGoodsUnavailable, key: const ValueKey('stock-goods-unavailable'));
-    } else if (_state != TraceState.listed || _rows.isEmpty) {
+    } else if (state != TraceState.listed || walk.rows.isEmpty) {
       body = Text(l10n.stockGoodsNone, key: const ValueKey('stock-goods-none'));
     } else {
       body = Column(
         key: const ValueKey('stock-goods'),
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          for (final r in _rows)
+          for (final r in walk.rows)
             ListTile(
               key: ValueKey('stock-goods-${r.movementId}'),
               contentPadding: EdgeInsets.zero,
               title: Text(
                 l10n.stockGoodsRow(
                   items[r.itemId]?.name ?? r.itemId,
-                  l10n.stockQuantityWithUnit(r.enteredQuantity.text, r.enteredUnit),
-                  l10n.stockQuantityWithUnit(r.quantity.text, items[r.itemId]?.unit ?? ''),
+                  l10n.stockQuantityWithUnit(appFormatOf(context).quantity(r.enteredQuantity), r.enteredUnit),
+                  l10n.stockQuantityWithUnit(appFormatOf(context).quantity(r.quantity), items[r.itemId]?.unit ?? ''),
                 ),
               ),
               trailing: const Icon(Icons.chevron_right),
               onTap: () => context.push('/stock/movements/${r.movementId}'),
             ),
-          if (_more)
-            TextButton(key: const ValueKey('stock-goods-more'), onPressed: _loading ? null : () => _load(first: false), child: Text(l10n.stockGoodsMore)),
+          if (!walk.complete && walk.next != null)
+            TextButton(
+              key: const ValueKey('stock-goods-more'),
+              onPressed: walk.loading ? null : () => unawaited(ref.read(provider.notifier).loadMore()),
+              child: Text(l10n.stockGoodsMore),
+            ),
         ],
       );
     }

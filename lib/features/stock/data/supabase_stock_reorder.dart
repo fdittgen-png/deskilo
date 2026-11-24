@@ -16,18 +16,19 @@ class SupabaseStockReorder implements StockReorder {
   @override
   Future<List<StockReorderPoint>> points(String workspaceId) async {
     // the quantities are read as text: exact, never through a floating-point number
-    final rows = await _client
+    final rows = await StockRpc(_client).rows('stock_reorder_points', () => _client
         .from('stock_reorder_points')
         .select('id, revision, item_id, variant_id, site_id, reorder_point::text, reorder_quantity::text, target_quantity::text, active')
         .eq('workspace_id', workspaceId)
-        .order('created_datetime');
+        .order('created_datetime', ascending: true)
+        .order('id', ascending: true));
     return [for (final row in rows) StockReorderPoint.fromJson(row)];
   }
 
   @override
   Future<StockSaved> savePoint(
     String workspaceId, {
-    required Map<String, Object?> point,
+    required StockReorderPointDraft point,
     required String requestId,
     String? pointId,
     int? expectedRevision,
@@ -40,7 +41,7 @@ class SupabaseStockReorder implements StockReorder {
           'p_point_id': pointId,
           'p_expected_revision': expectedRevision,
           'p_request_id': requestId,
-          'p_point': point,
+          'p_point': point.toJson(),
         },
       );
       final r = JsonReader.of(answer, context: 'save_stock_reorder_point_v1');

@@ -54,17 +54,19 @@ insert into public.services (workspace_id, name, price_cents, active, inventory_
 values (:'ws', 'Race mug', 1000, true, 'piece', 'none', true) returning id as item \gset
 select id as main from public.stock_locations where workspace_id = :'ws' and code = 'MAIN' \gset
 select id as supplier from public.stock_locations where workspace_id = :'ws' and kind = 'supplier' \gset
+-- the day of the business, read before the session takes the member role (workspace_today is a server helper)
+select public.workspace_today(:'ws') as today \gset
 begin;
 select set_config('request.jwt.claims', '{"sub":"$owner","role":"authenticated","aal":"aal2"}', true);
 set local role authenticated;
 select public.stock_move_v1(:'ws', gen_random_uuid(), jsonb_build_array(
   jsonb_build_object('item_id', :'item', 'quantity', 1, 'from', :'supplier', 'to', :'main')), 'receipt');
-select (public.save_standalone_invoice_draft_v1(:'ws', null, null, :'customer', public.workspace_today(:'ws'),
-  public.workspace_today(:'ws') + 30, '', '', jsonb_build_array(jsonb_build_object('description', 'Mug', 'quantity', '1',
+select (public.save_standalone_invoice_draft_v1(:'ws', null, null, :'customer', :'today'::date,
+  (:'today'::date + 30), '', '', jsonb_build_array(jsonb_build_object('description', 'Mug', 'quantity', '1',
   'unit_price', '10', 'basis', 'net', 'supply', 'goods', 'item_id', :'item',
   'unit', jsonb_build_object('code', 'piece', 'label', 'pc', 'un_ece_code', 'C62')))) ->> 'draft_id') as one \gset
-select (public.save_standalone_invoice_draft_v1(:'ws', null, null, :'customer', public.workspace_today(:'ws'),
-  public.workspace_today(:'ws') + 30, '', '', jsonb_build_array(jsonb_build_object('description', 'Mug', 'quantity', '1',
+select (public.save_standalone_invoice_draft_v1(:'ws', null, null, :'customer', :'today'::date,
+  (:'today'::date + 30), '', '', jsonb_build_array(jsonb_build_object('description', 'Mug', 'quantity', '1',
   'unit_price', '10', 'basis', 'net', 'supply', 'goods', 'item_id', :'item',
   'unit', jsonb_build_object('code', 'piece', 'label', 'pc', 'un_ece_code', 'C62')))) ->> 'draft_id') as two \gset
 reset role;

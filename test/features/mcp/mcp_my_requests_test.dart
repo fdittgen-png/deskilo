@@ -84,7 +84,7 @@ void main() {
   testWidgets('a failed read says so, never an empty list', (tester) async {
     await _pump(tester, () async => throw StateError('offline'));
     expect(
-      find.byKey(const ValueKey('mcp-requests-unavailable')),
+      find.byKey(const ValueKey('read-failure')),
       findsOneWidget,
     );
   });

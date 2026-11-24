@@ -252,7 +252,8 @@ void main() {
     expect(find.text('No reservations on this day.'), findsNothing);
     repo.failWindowReads = false;
     await tester.tap(find.descendant(
-        of: find.byKey(banner), matching: find.text('Retry')));
+        of: find.byKey(banner),
+        matching: find.byKey(const ValueKey('inline-banner-action'))));
     await tester.pumpAndSettle();
     expect(find.byKey(banner), findsNothing);
     expect(find.text('No reservations on this day.'), findsOneWidget);

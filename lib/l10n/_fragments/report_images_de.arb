@@ -1,5 +1,4 @@
 {
-  "reportImagesLoadFailed": "Berichtsbilder konnten nicht geladen werden. Erneut versuchen.",
   "reportImagePreparing": "Das Bild wird für den Druck vorbereitet …",
   "reportImagesOversized": "{count, plural, one{1 gespeichertes Bild ist größer, als es gedruckt wird} other{{count} gespeicherte Bilder sind größer, als sie gedruckt werden}}",
   "reportImagesBringToPrint": "Auf Druckgröße bringen",

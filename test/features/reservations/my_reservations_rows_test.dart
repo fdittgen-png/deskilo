@@ -349,7 +349,7 @@ void main() {
 
     // #4315 — the sentence is the host's reason in the reader's language: the refusal reaches the
     // card typed (as the real adapter now delivers it), and the card words it, never the plain failure.
-    for (final (language, code) in [('en', 'DKK17'), ('de', 'DKK17'), ('fr', 'DKK18')]) {
+    for (final (language, code) in [('en', DkCode.dkk17), ('de', DkCode.dkk17), ('fr', DkCode.dkk18)]) {
       testWidgets('a host\'s own refusal of Check in ($code) is its reason in $language, never a generic one',
           (tester) async {
         final hosts = _Hosts()..first['inst-b'] = _page('inst-b', [_item('b1', today9, workspace: 'ws-b')]);

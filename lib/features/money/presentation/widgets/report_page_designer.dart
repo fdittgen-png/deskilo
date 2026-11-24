@@ -262,6 +262,7 @@ class ReportPageDesignerState extends ConsumerState<ReportPageDesigner> {
       final loaded = ref.watch(reportImageBytesProvider(name));
       final bytes = loaded.value;
       if (bytes != null) images[name] = bytes;
+      // #4414 kept: collects the pictures the notice names
       if (loaded.hasError) failed[name] = loaded.error!;
     }
     final view = KeyedSubtree(

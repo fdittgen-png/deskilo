@@ -70,6 +70,7 @@ class PublicPersonScreen extends ConsumerWidget {
             ),
           ),
         ),
+        // #4414 kept: an unreadable public profile reads as gone, never probed
         AsyncData() || AsyncError() => gone,
         _ => const LoadingView(),
       },

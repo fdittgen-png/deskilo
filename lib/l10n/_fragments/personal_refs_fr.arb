@@ -6,6 +6,5 @@
   "meRefStale": "Adhésion non confirmée récemment",
   "meRefNoRelationship": "Aucune adhésion sur ce serveur",
   "meRefDefault": "Par défaut",
-  "meRefsUnavailable": "Vos lieux ailleurs n'ont pas pu être lus.",
   "meRefStatusUnknown": "Statut d'adhésion illisible pour cette version"
 }

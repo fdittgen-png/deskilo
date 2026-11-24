@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
@@ -343,7 +344,7 @@ class MoneyOnlinePayment {
       }
       return;
     }
-    if (_context.mounted) unawaited(_context.push('/payment-config'));
+    if (_context.mounted) unawaited(_context.push(Routes.paymentConfig));
   }
 
   /// Owner/admin diagnostics when online payments cannot run: names the

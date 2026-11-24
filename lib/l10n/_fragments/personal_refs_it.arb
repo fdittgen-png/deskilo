@@ -6,6 +6,5 @@
   "meRefStale": "Iscrizione non confermata di recente",
   "meRefNoRelationship": "Nessuna iscrizione su questo server",
   "meRefDefault": "Predefinito",
-  "meRefsUnavailable": "Non è stato possibile leggere i Suoi posti altrove.",
   "meRefStatusUnknown": "Stato di iscrizione che questa versione non sa leggere"
 }

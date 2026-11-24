@@ -20,6 +20,7 @@ class PurchaseApprovalBadge extends StatelessWidget {
         child: const SizedBox(width: 18, height: 18, child: LoadingView()),
       );
     }
+    // #4414 kept: a badge's icon; the queue it opens shows the failed read
     if (value.hasError) {
       return Tooltip(
         message: context.l10n.purchaseApprovalsRefused,

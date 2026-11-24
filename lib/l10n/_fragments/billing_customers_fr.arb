@@ -9,7 +9,6 @@
   "billingCustomersEmpty": "Aucun client facturé pour l'instant. Ajoutez le premier pour le facturer sans lui demander de créer un compte.",
   "billingCustomersAdd": "Ajouter un client",
   "billingCustomersSearch": "Rechercher un client",
-  "billingCustomersLoadFailed": "Les clients n'ont pas pu être lus. Ce n'est pas une liste vide.",
   "billingCustomersUnavailable": "Les clients facturés ne sont pas encore disponibles sur cette installation. Rien n'a été modifié.",
   "billingCustomersRetry": "Réessayer",
   "billingCustomerNewTitle": "Nouveau client facturé",

@@ -6,10 +6,11 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../auth/providers/auth_providers.dart';
 import '../../domain/account_activity.dart';
 import '../../providers/account_activity_providers.dart';
@@ -43,7 +44,7 @@ class _ActivityState extends ConsumerState<AccountActivityScreen> {
           IconButton(
             key: const ValueKey('account-activity-portal-connections'),
             tooltip: l10n.portalConnections,
-            onPressed: () => context.push('/connections'),
+            onPressed: () => context.push(Routes.connections),
             icon: const Icon(Icons.dns_outlined),
           ),
         ],
@@ -120,7 +121,7 @@ class _ActivityState extends ConsumerState<AccountActivityScreen> {
                                   [
                                         entry.reference,
                                         entry.description,
-                                        _status(l10n, entry.status),
+                                        activityStatusText(l10n, entry.state),
                                         personalFormatOf(context).dates(DateShape.date).format(personalFormatOf(context).wall(entry.occurredAt)),
                                         if (entry.amountCents
                                             case final amount?)
@@ -162,16 +163,14 @@ class _ActivityState extends ConsumerState<AccountActivityScreen> {
                         ],
                       ),
                     ),
-                    AsyncError() => ListView(
+                    AsyncError(:final error) => ListView(
                       children: [
-                        HostActivity(key: ValueKey(account), kind: _kind),
-                        TextButton(
-                          key: const ValueKey('account-activity-failed'),
-                          onPressed: () => ref.invalidate(provider),
-                          child: Text(
-                            l10n.accountActivityFailed,
-                          ),
+                        ReadFailureBanner(
+                          error: error,
+                          retryKey: const ValueKey('account-activity-failed'),
+                          onRetry: () => ref.invalidate(provider),
                         ),
+                        HostActivity(key: ValueKey(account), kind: _kind),
                       ],
                     ),
                     _ => ListView(
@@ -186,18 +185,4 @@ class _ActivityState extends ConsumerState<AccountActivityScreen> {
             ),
     );
   }
-
-  String _status(AppLocalizations l10n, String status) => switch (status) {
-    'created' => l10n.payOnlinePendingTitle,
-    'failed' => l10n.payOnlineFailedTitle,
-    'reversed' => l10n.payOnlineReversedTitle,
-    'confirmed' => l10n.accountPaymentConfirmed,
-    'awaiting_match' => l10n.accountPaymentAwaitingMatch,
-    'voided' => l10n.accountInvoiceVoided,
-    'regrouped' =>
-      l10n.accountInvoiceRegrouped,
-    'issued' => l10n.accountInvoiceIssued,
-    'corrected' => l10n.accountUsageCorrected,
-    _ => '',
-  };
 }

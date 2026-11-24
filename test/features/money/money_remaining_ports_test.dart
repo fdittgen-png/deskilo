@@ -17,6 +17,7 @@ import 'package:deskilo/core/demo/data/money_repository.dart';
 import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/core/demo/demo_scope.dart';
 import 'package:deskilo/core/demo/seed/demo_second_space_seed.dart';
+import 'package:deskilo/core/failure/app_failure.dart';
 import 'package:deskilo/features/money/application/record_payment.dart';
 import 'package:deskilo/features/money/application/save_dunning_rules.dart';
 import 'package:deskilo/features/money/data/supabase_money_repository.dart';
@@ -397,7 +398,7 @@ void main() {
       amountCents: 1200,
       paidOn: DateTime(2026, 8, 3),
     );
-    expect(outcome, isA<PaymentRecorded>());
+    expect(outcome, isA<CommandDone<PaymentRecorded>>());
     expect(commands.calls, ['pay:w1:m1:1200']);
   });
 

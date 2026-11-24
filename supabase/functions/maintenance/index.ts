@@ -15,9 +15,15 @@
 // on, they are removed through the Storage API so the stored file goes with
 // its metadata, and a file that could not be removed is named and left.
 
+import { env as readEnv, KEYS } from "../_shared/config.ts";
 import { refuseDelegated } from "../_shared/delegated.ts";
 import { sameSecret } from "../_shared/same_secret.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
+import { describeError, logLine } from "../_shared/log.ts";
+import { ok, refuse } from "../_shared/respond.ts";
+import { guard } from "../_shared/serve.ts";
+
+const FN = "maintenance";
 
 export const MAINTENANCE_SECRET_HEADER = "x-deskilo-maintenance-secret";
 /** A run's lease: longer than the slowest sweep it covers. */
@@ -51,18 +57,13 @@ export type Deps = {
 const defaultDeps: Deps = {
   service: () =>
     createClient(
-      Deno.env.get("SUPABASE_URL")!,
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+      readEnv(KEYS.supabaseUrl)!,
+      readEnv(KEYS.supabaseServiceRoleKey)!,
     ) as unknown as Db,
-  env: (name) => Deno.env.get(name),
+  env: readEnv,
   now: () => Date.now(),
 };
 
-const json = (body: unknown, status = 200) =>
-  new Response(JSON.stringify(body), {
-    status,
-    headers: { "Content-Type": "application/json" },
-  });
 
 /** The database job's secret, or the exact service credential. */
 export function mayMaintain(
@@ -143,7 +144,7 @@ export async function handle(
   req: Request,
   deps: Deps = defaultDeps,
 ): Promise<Response> {
-  if (req.method !== "POST") return json({ error: "method_not_allowed" }, 405);
+  if (req.method !== "POST") return refuse("method_not_allowed", 405);
   const delegated = refuseDelegated(req);
   if (delegated) return delegated;
   if (
@@ -153,22 +154,22 @@ export async function handle(
       deps.env("SUPABASE_SERVICE_ROLE_KEY"),
     )
   ) {
-    return json({ error: "not allowed" }, 401);
+    return refuse("not allowed", 401);
   }
   const body = (await req.json().catch(() => ({}))) as Row;
   const job = String(body.job ?? "");
   const run = Object.hasOwn(JOBS, job) ? JOBS[job] : undefined;
-  if (!run) return json({ error: "unknown_job" }, 400);
+  if (!run) return refuse("unknown_job", 400);
   const service = deps.service();
   const startedAt = new Date(deps.now()).toISOString();
   let result: (JobResult & { lease?: string }) | null;
   try {
     result = await run(service);
   } catch (e) {
-    console.error("maintenance job failed", { job, error: String(e) });
-    return json({ error: "job_failed", job }, 500);
+    logLine("error", FN, "job_failed", { job, error: describeError(e) });
+    return refuse("job_failed", 500, undefined, { job });
   }
-  if (!result) return json({ job, skipped: "leased" });
+  if (!result) return ok({ job, skipped: "leased" });
   const finished = await service.rpc("maintenance_finish_v1", {
     p_job: job,
     p_lease_token: result.lease,
@@ -177,8 +178,8 @@ export async function handle(
     p_failures: result.failures,
   });
   const kept = !finished.error && finished.data === true;
-  if (!kept) console.error("maintenance record not kept", { job });
-  return json({
+  if (!kept) logLine("error", FN, "maintenance_record_not_kept", { job });
+  return ok({
     job,
     ...result.counts,
     failures: result.failures.length,
@@ -186,4 +187,7 @@ export async function handle(
   });
 }
 
-if (import.meta.main) Deno.serve((req) => handle(req));
+/** The function as it is served: whatever [handle] throws is the envelope (#4412). */
+export const serve = (deps: Deps = defaultDeps) => guard(FN, (req) => handle(req, deps));
+
+if (import.meta.main) Deno.serve(serve());

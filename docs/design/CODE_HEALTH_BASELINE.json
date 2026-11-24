@@ -140,7 +140,7 @@
 
       "lib/features/money/presentation/screens/vat_screen.dart": 7,
 
-      "lib/features/money/presentation/standalone/standalone_invoice_screen.dart": 12,
+      "lib/features/money/presentation/standalone/standalone_invoice_screen.dart": 10,
 
       "lib/features/money/presentation/widgets/billing_rules_dialog.dart": 6,
 
@@ -331,21 +331,17 @@
 
       "lib/features/calendar/presentation/screens/calendar_screen.dart": 1,
 
-      "lib/features/calendar/presentation/widgets/access_sheet.dart": 2,
+      "lib/features/editor/presentation/screens/editor_screen.dart": 1,
 
-      "lib/features/editor/presentation/screens/editor_screen.dart": 2,
-
-      "lib/features/editor/presentation/screens/level_canvas_screen.dart": 1,
-
-      "lib/features/events/presentation/screens/validation_settings_screen.dart": 2,
+      "lib/features/events/presentation/screens/validation_settings_screen.dart": 1,
 
       "lib/features/events/presentation/widgets/pending_decisions_section.dart": 1,
 
-      "lib/features/kiosk/presentation/screens/kiosk_screen.dart": 2,
+      "lib/features/kiosk/presentation/screens/kiosk_screen.dart": 1,
 
       "lib/features/members/presentation/member_profile_link.dart": 1,
 
-      "lib/features/members/presentation/screens/directory_screen.dart": 2,
+      "lib/features/members/presentation/screens/directory_screen.dart": 1,
 
       "lib/features/members/presentation/screens/managed_profile_screen.dart": 1,
 
@@ -369,13 +365,11 @@
 
       "lib/features/money/presentation/report_actions.dart": 2,
 
-      "lib/features/money/presentation/screens/billing_screen.dart": 2,
+      "lib/features/money/presentation/screens/billing_screen.dart": 1,
 
       "lib/features/money/presentation/screens/einvoice_config_screen.dart": 2,
 
       "lib/features/money/presentation/screens/legal_identity_screen.dart": 1,
-
-      "lib/features/money/presentation/screens/money_body.dart": 1,
 
       "lib/features/money/presentation/screens/money_online_payment.dart": 2,
 
@@ -387,11 +381,7 @@
 
       "lib/features/money/presentation/screens/repartition_wizard_screen.dart": 1,
 
-      "lib/features/money/presentation/screens/report_editor_screen.dart": 1,
-
-      "lib/features/money/presentation/screens/services_screen.dart": 1,
-
-      "lib/features/money/presentation/screens/vat_declarations_screen.dart": 4,
+      "lib/features/money/presentation/screens/vat_declarations_screen.dart": 3,
 
       "lib/features/money/presentation/screens/vat_screen.dart": 1,
 
@@ -407,8 +397,6 @@
 
       "lib/features/money/presentation/widgets/expense_sheet.dart": 1,
 
-      "lib/features/money/presentation/widgets/invoice_archive_tab.dart": 1,
-
       "lib/features/money/presentation/widgets/invoice_issue_runner.dart": 1,
 
       "lib/features/money/presentation/widgets/invoice_template_editor_actions.dart": 2,
@@ -423,13 +411,13 @@
 
       "lib/features/money/presentation/widgets/settlement_sheet.dart": 1,
 
-      "lib/features/money/presentation/widgets/usage_face.dart": 3,
+      "lib/features/money/presentation/widgets/usage_face.dart": 2,
 
       "lib/features/money/presentation/widgets/wizard_steps_issue.dart": 1,
 
       "lib/features/money/presentation/widgets/wizard_steps_payments.dart": 1,
 
-      "lib/features/plan/presentation/screens/accessories_screen.dart": 2,
+      "lib/features/plan/presentation/screens/accessories_screen.dart": 1,
 
       "lib/features/plan/presentation/widgets/admin_seat_actions.dart": 1,
 
@@ -439,7 +427,7 @@
 
       "lib/features/profile/presentation/screens/developer_screen.dart": 2,
 
-      "lib/features/profile/presentation/screens/personal_info_screen.dart": 2,
+      "lib/features/profile/presentation/screens/personal_info_screen.dart": 1,
 
       "lib/features/profile/presentation/screens/privacy_screen.dart": 2,
 
@@ -465,8 +453,6 @@
 
       "lib/features/workspace/presentation/screens/availability_actions.dart": 1,
 
-      "lib/features/workspace/presentation/screens/availability_screen.dart": 1,
-
       "lib/features/workspace/presentation/screens/deployment_screen.dart": 3,
 
       "lib/features/workspace/presentation/screens/documents_screen.dart": 3,
@@ -481,7 +467,7 @@
 
       "lib/features/workspace/presentation/screens/sites_screen.dart": 2,
 
-      "lib/features/workspace/presentation/screens/wording_screen.dart": 2,
+      "lib/features/workspace/presentation/screens/wording_screen.dart": 1,
 
       "lib/features/workspace/presentation/screens/workspace_code_screen.dart": 1,
 
@@ -651,6 +637,27 @@
       "lib/features/workspace/presentation/widgets/badge_manager_dialog.dart": 1,
 
       "lib/features/workspace/presentation/widgets/feature_capability_list.dart": 1
+    },
+    "inlineRoute": {
+      "lib/features/calendar/presentation/screens/calendar_hub_screen.dart": 2,
+
+      "lib/features/money/presentation/screens/customer_quote_editor_screen.dart": 1,
+
+      "lib/features/money/presentation/screens/vat_declarations_screen.dart": 1,
+
+      "lib/features/money/presentation/till_drawer/till_drawer_screen.dart": 1,
+
+      "lib/features/money/presentation/till_screen.dart": 1,
+
+      "lib/features/stock/presentation/stock_chain_section.dart": 1,
+
+      "lib/features/stock/presentation/stock_cycle_counts_screen.dart": 1,
+
+      "lib/features/stock/presentation/stock_document_goods_block.dart": 1,
+
+      "lib/features/stock/presentation/stock_first_run.dart": 2,
+
+      "lib/features/stock/presentation/stock_screen.dart": 2
     }
   },
   "functions": [
@@ -729,15 +736,15 @@
     {"id":"lib/features/mcp/data/supabase_mcp_admin_repository.dart#SupabaseMcpAdminRepository.savePolicy({required String workspaceId,required int expectedRevision,required String mutationId,required bool enabled,required Set<String> operations,required String targetCeiling,required Set<String> optionalFields})","cog":0,"cyc":1,"len":23,"params":7},
     {"id":"lib/features/mcp/domain/mcp_access_status.dart#McpAccessStatus.new.derive(McpContextRef context,{McpGoogleSignIn? google,required IdentityBindingStatus? identity,required DatabaseCapabilities? capabilities,required McpPolicy? policy,required ConsentOptions? options,required List<McpConnectionInfo>? connections})","cog":17,"cyc":15,"len":44,"params":7},
     {"id":"lib/features/mcp/presentation/mcp_consent_screen.dart#_McpConsentScreenState.build(BuildContext context)","cog":39,"cyc":24,"len":144,"params":1},
-    {"id":"lib/features/members/presentation/widgets/member_money_card.dart#MemberMoneyCard.build(BuildContext context,WidgetRef ref)","cog":30,"cyc":30,"len":153,"params":2},
+    {"id":"lib/features/members/presentation/widgets/member_money_card.dart#MemberMoneyCard.build(BuildContext context,WidgetRef ref)","cog":29,"cyc":30,"len":152,"params":2},
     {"id":"lib/features/money/application/book_repartition.dart#Repartitions.book({required String workspaceId,required String title,required int amountCents,required String period,required RepartitionRule rule,required List<RepartitionShare> shares,bool remember})","cog":0,"cyc":1,"len":20,"params":7},
-    {"id":"lib/features/money/application/book_repartition.dart#bookRepartition(MoneyRepository repository,{required String workspaceId,required String title,required int amountCents,required String period,required RepartitionRule rule,required List<RepartitionShare> shares,bool remember})","cog":3,"cyc":3,"len":32,"params":8},
+    {"id":"lib/features/money/application/book_repartition.dart#bookRepartition(MoneyRepository repository,{required String workspaceId,required String title,required int amountCents,required String period,required RepartitionRule rule,required List<RepartitionShare> shares,bool remember})","cog":3,"cyc":3,"len":27,"params":8},
     {"id":"lib/features/money/application/declare_vat.dart#VatDeclarations.report({required String workspaceId,required Iterable<Invoice> invoices,required Map<String, InvoiceMatch> matches,required DateTime start,required DateTime end,required String zeroCategory,required VatTaxPointBasis basis,required TaxReferenceSet reference,required DateTime Function(DateTime instant) dayOf})","cog":1,"cyc":2,"len":26,"params":9},
     {"id":"lib/features/money/application/einvoice_resolve.dart#resolveEInvoice(WidgetRef ref,{required String workspaceId,required String transmissionId,required EInvoiceResolution resolution,required String reason,required String evidence,bool documentRejected})","cog":0,"cyc":1,"len":22,"params":7},
     {"id":"lib/features/money/application/guest_pass_commands.dart#GuestPassCommands.saveOffer(String workspaceId,{String? id,required String name,required GuestPassUnit unit,required int priceCents,String? vatRateId,bool active})","cog":0,"cyc":1,"len":18,"params":7},
     {"id":"lib/features/money/application/jurisdiction/register_context_builder.dart#registerContextOf(Iterable<Invoice> invoices,{required TaxReferenceSet reference,required VatFilingParty party,required DateTime from,required DateTime to,String? thresholdKey,String activity,bool monthly,bool immediateSupply})","cog":4,"cyc":4,"len":42,"params":9},
     {"id":"lib/features/money/application/schedule_expense.dart#ExpenseSchedules.schedule({required String workspaceId,required String title,required int? amountCents,required DateTime startsOn,required ScheduleUnit unit,int every,int? repeatCount,DateTime? endsOn,ScheduleDetails details})","cog":3,"cyc":4,"len":36,"params":9},
-    {"id":"lib/features/money/application/send_reminder.dart#sendReminder({required InvoiceCommands repository,required FileSharer share,required String invoiceId,required int level,required Uint8List bytes,required String fileName,required String message})","cog":1,"cyc":2,"len":26,"params":7},
+    {"id":"lib/features/money/application/send_reminder.dart#sendReminder({required InvoiceCommands repository,required FileSharer share,required String invoiceId,required int level,required Uint8List bytes,required String fileName,required String message})","cog":0,"cyc":1,"len":26,"params":7},
     {"id":"lib/features/money/data/supabase_book_profile_repository.dart#SupabaseBookProfileRepository.saveBookMapping({required String workspaceId,required String issuerSiteId,required BookRole role,required String accountId,required DateTime effectiveFrom,required int expectedRevision,String? qualifier})","cog":4,"cyc":4,"len":30,"params":7},
     {"id":"lib/features/money/data/supabase_commercial_terms_repository.dart#SupabaseCommercialTermsRepository.proposePriceNegotiation({required String memberId,int? feeCents,int? overageFeeCents,double? discountPercent,String note,DateTime? validFrom,int? subscriptionPct,Map<String, Map<String, int>> items})","cog":0,"cyc":1,"len":23,"params":8},
     {"id":"lib/features/money/data/supabase_einvoice_transmissions.dart#SupabaseEInvoiceTransmissions.sendEInvoice({required String workspaceId,required String invoiceId,required String fileName,required String mimeType,required List<int> bytes,String environment,String destination,String format,String receiverScheme,String receiverId})","cog":4,"cyc":5,"len":39,"params":10},
@@ -772,7 +779,7 @@
     {"id":"lib/features/money/presentation/invoice_journey.dart#InvoiceJourney.of({required Invoice invoice,required InvoiceMatch? match,required ({int count, DateTime last})? reminder,required DunningRules rules,required BusinessMoment at,InvoiceJourneyFacts facts,String replacedByNumber})","cog":9,"cyc":16,"len":63,"params":7},
     {"id":"lib/features/money/presentation/report_design_actions.dart#exportReportDesign(BuildContext context,WidgetRef ref,{required ReportKind kind,required String language,required String workspaceName,required ReportBands bands,required DateTime exportedAt})","cog":3,"cyc":3,"len":37,"params":7},
     {"id":"lib/features/money/presentation/report_layout_design_actions.dart#exportReportLayout(BuildContext context,WidgetRef ref,{required ReportKind kind,required String language,required String workspaceName,required String layoutXml,required DateTime exportedAt,Map<String, String> texts})","cog":3,"cyc":3,"len":36,"params":8},
-    {"id":"lib/features/money/presentation/screens/account_activity_screen.dart#_ActivityState.build(BuildContext context)","cog":35,"cyc":18,"len":159,"params":1},
+    {"id":"lib/features/money/presentation/screens/account_activity_screen.dart#_ActivityState.build(BuildContext context)","cog":35,"cyc":18,"len":157,"params":1},
     {"id":"lib/features/money/presentation/screens/money_member_documents.dart#MoneyMemberDocuments._letterData(String docId,String period,AppLocalizations docL10n,String language,({String id, String name, int pct}) who,{AgreementFacts? agreement,PaymentsFacts? payments})","cog":1,"cyc":4,"len":27,"params":7},
     {"id":"lib/features/money/presentation/usage_report_data.dart#usageReportData(BuildContext context,WidgetRef ref,{required String period,required String memberId,required String memberName,AppLocalizations? l10nOverride,String? localeName})","cog":6,"cyc":25,"len":97,"params":7},
     {"id":"lib/features/money/presentation/widgets/book_profile_sheet.dart#_BookProfileSheetState.build(BuildContext context)","cog":24,"cyc":26,"len":196,"params":1},
@@ -869,7 +876,6 @@
     {"id":"lib/features/workspace/presentation/feature_copy.dart#featureDescription(AppLocalizations l10n,WorkspaceFeature feature)","cog":1,"cyc":124,"len":240,"params":2},
     {"id":"lib/features/workspace/presentation/feature_names.dart#featureName(AppLocalizations l10n,WorkspaceFeature feature)","cog":1,"cyc":124,"len":248,"params":2},
     {"id":"lib/features/workspace/presentation/onboarding_handoff.dart#runOnboardingAction({required BuildContext context,required WidgetRef ref,required Future<String?> Function() action,WizardNavigationController? navigation,String? over})","cog":43,"cyc":31,"len":71,"params":5},
-    {"id":"lib/features/workspace/presentation/process_names.dart#processCopy(AppLocalizations l10n,String key)","cog":1,"cyc":33,"len":66,"params":2},
     {"id":"lib/features/workspace/presentation/screens/documents_screen.dart#DocumentsScreen._addDialog(BuildContext context,WidgetRef ref)","cog":12,"cyc":12,"len":177,"params":2},
     {"id":"lib/features/workspace/presentation/screens/message_search_screen.dart#_MessageSearchScreenState.build(BuildContext context)","cog":41,"cyc":35,"len":126,"params":1},
     {"id":"lib/features/workspace/presentation/screens/onboarding_screen.dart#_OnboardingScreenState.build(BuildContext context)","cog":30,"cyc":23,"len":84,"params":1},

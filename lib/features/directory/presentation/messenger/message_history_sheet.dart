@@ -6,6 +6,7 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_sheet.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/messenger.dart';
@@ -110,11 +111,11 @@ class _MessageHistorySheet extends ConsumerWidget {
                       ),
                   ],
                 ),
-                AsyncError() => Center(
-                  child: TextButton(
-                    key: const ValueKey('message-history-retry'),
-                    onPressed: () => ref.invalidate(provider),
-                    child: Text(l10n.commonRetry),
+                AsyncError(:final error) => Center(
+                  child: ReadFailureBanner(
+                    error: error,
+                    retryKey: const ValueKey('message-history-retry'),
+                    onRetry: () => ref.invalidate(provider),
                   ),
                 ),
                 _ => const LoadingView(),

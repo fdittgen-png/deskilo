@@ -22,11 +22,12 @@ class SupabaseCommercialTermsRepository implements CommercialTermsRepository {
 
   @override
   Future<List<FeeBand>> fetchFeeBands(String workspaceId) async {
-    final rows = await _client
+    final rows = await fetchConfigurationList(table: 'fee_bands', build: () => _client
         .from('fee_bands')
         .select()
         .eq('workspace_id', workspaceId)
-        .order('from_pct', ascending: true);
+        .order('from_pct', ascending: true)
+        .order('id', ascending: true));
     return rows
         .map(
           (row) => FeeBand(
@@ -161,12 +162,17 @@ class SupabaseCommercialTermsRepository implements CommercialTermsRepository {
     String workspaceId, {
     bool includeInactive = false,
   }) async {
-    var query = _client
-        .from('packages')
-        .select()
-        .eq('workspace_id', workspaceId);
-    if (!includeInactive) query = query.eq('active', true);
-    final rows = await query.order('days', ascending: true);
+    final rows = await fetchConfigurationList(
+      table: 'packages',
+      build: () {
+        var query = _client
+            .from('packages')
+            .select()
+            .eq('workspace_id', workspaceId);
+        if (!includeInactive) query = query.eq('active', true);
+        return query.order('days', ascending: true).order('id', ascending: true);
+      },
+    );
     return rows.map(Package.fromRow).toList();
   }
 

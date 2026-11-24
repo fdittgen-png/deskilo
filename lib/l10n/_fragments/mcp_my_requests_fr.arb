@@ -7,6 +7,5 @@
   "mcpRequestRefused": "Refusée",
   "mcpRequestExpired": "Expirée",
   "mcpRequestRevoked": "Retirée",
-  "mcpRequestUnknown": "Réponse illisible",
-  "mcpRequestsUnavailable": "Les demandes de vos assistants n'ont pas pu être lues. Rouvrez cette page plus tard."
+  "mcpRequestUnknown": "Réponse illisible"
 }

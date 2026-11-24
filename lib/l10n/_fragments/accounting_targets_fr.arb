@@ -5,7 +5,6 @@
   "acctTargetsTitle": "Systèmes comptables",
   "acctTargetsIntro": "Où va la comptabilité de chaque émetteur. Un système connecté reçoit les pièces lui-même ; les autres reçoivent les fichiers exportés de la comptabilité. Chaque transfert est listé ci-dessous avec l'empreinte de ce qu'il a porté.",
   "acctTargetsNoApiTarget": "Aucun système comptable de ce pays n'est encore joint par une connexion : la comptabilité part par fichier, depuis l'export comptable.",
-  "acctTargetsLoadFailed": "Les systèmes comptables n'ont pas pu être chargés.",
   "acctTargetsNotConnected": "Non connecté",
   "acctConnStatusPending": "En attente de la connexion",
   "acctConnStatusConnected": "Connecté",

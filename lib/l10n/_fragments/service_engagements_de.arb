@@ -4,7 +4,6 @@
   "engagementsIntro": "Verfolgen Sie jede bestellte Leistung: bestellt, begonnen, erledigt. Angebot, Rechnung und Zahlungen bleiben daneben unverändert.",
   "engagementsNew": "Neuer Auftrag",
   "engagementsEmpty": "Noch kein Auftrag. Öffnen Sie einen aus einem angenommenen Angebot oder legen Sie direkt einen an.",
-  "engagementsLoadFailed": "Die Aufträge konnten nicht gelesen werden. Das ist keine leere Liste.",
   "engagementStateOrdered": "Bestellt",
   "engagementStateStarted": "Begonnen",
   "engagementStateDone": "Erledigt",
@@ -43,9 +42,6 @@
     "description": "service engagements (#4178)"
   },
   "@engagementsEmpty": {
-    "description": "service engagements (#4178)"
-  },
-  "@engagementsLoadFailed": {
     "description": "service engagements (#4178)"
   },
   "@engagementStateOrdered": {

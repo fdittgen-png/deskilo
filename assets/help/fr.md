@@ -1600,7 +1600,7 @@ Dans ce chapitre :
 - Votre compte : [photo](help:user.profile.settings.photo), [informations personnelles](help:user.profile.settings.personal-info), [adresse](help:user.profile.settings.address), [numéro de TVA](help:user.profile.settings.vat-id), [conditions de paiement](help:user.profile.settings.payment-terms), [WhatsApp](help:user.profile.settings.whatsapp), [statut](help:user.profile.settings.status), [période de réservation par défaut](help:user.profile.settings.default-period)
 - Votre badge : [le badge](help:user.profile.settings.badge) et [son code](help:user.profile.settings.badge-pin)
 - L'aspect et la lecture de l'application : [langue](help:user.profile.settings.language), [thème](help:user.profile.settings.theme), [navigation](help:user.profile.settings.navigation), [nombres et dates](help:user.profile.settings.regional-formats), [horloge](help:user.profile.settings.clock), [fuseau horaire](help:user.profile.settings.device-zone), [astuces](help:user.profile.settings.restore-hints), [caméra avant](help:user.profile.settings.front-camera), [comptes liés](help:user.profile.settings.linked-accounts)
-- Confidentialité et vos données : [qui peut voir mes données](help:user.privacy.visibility), [qui me voit](help:user.privacy.audiences), [profil public](help:user.privacy.public-profile), [export](help:user.privacy.export), [effacement](help:user.privacy.erase), [demandes d'exercice de droits](help:user.privacy.requests), [notifications push](help:user.privacy.push), [vos droits](help:user.privacy.consent)
+- Confidentialité et vos données : [qui peut voir mes données](help:user.privacy.visibility), [qui me voit](help:user.privacy.audiences), [profil public](help:user.privacy.public-profile), [export](help:user.privacy.export), [effacement](help:user.privacy.erase), [demandes d'exercice de droits](help:user.privacy.requests), [notifications push](help:user.privacy.push), [rapports d'erreur](help:user.privacy.error-reports), [vos droits](help:user.privacy.consent)
 - [Votre propre serveur](help:user.backend.server)
 
 ### Comment les Réglages sont organisés
@@ -2217,6 +2217,28 @@ Vous voulez cesser d'envoyer des notifications à cet appareil, ou les réactive
 
 - Désactivé, l'application continue de fonctionner et rien n'est envoyé à cet appareil.
 - Activé, l'adresse de cet appareil et chaque notification passent par le service de notifications push.
+
+**Voir aussi:** [Vos données, vos droits](help:user.privacy.consent)
+
+### Envoyer les rapports d'erreur
+
+**Public:** Tout le monde
+
+Vous voulez savoir ce que l'application envoie quand quelque chose se passe mal, ou l'en empêcher.
+
+<!-- image: user-privacy-error-reports -->
+
+**Étapes**
+
+1. Ouvrez [Confidentialité et données](app:/privacy).
+2. Désactivez ou activez **Envoyer les rapports d'erreur**. Il reste activé tant que vous ne le désactivez pas, et le choix est conservé sur cet appareil.
+
+**Bon à savoir**
+
+- Un rapport part uniquement vers l'installation à laquelle vous êtes connecté, jamais vers une autre société. Son opérateur le lit ; les entreprises dont vous êtes membre ne le voient pas.
+- Il indique la version de l'application, la plateforme, le type d'erreur et l'endroit de l'application où elle s'est produite. Il ne contient jamais ce que vous avez saisi, le texte de l'erreur, une adresse e-mail, un nom ou une clé.
+- Chaque personne envoie au plus un nombre fixé de rapports par heure, un rapport a une taille maximale, et l'installation supprime les rapports après un nombre de jours fixé. L'opérateur règle les trois.
+- Désactivé, rien ne quitte l'appareil : l'erreur reste dans le journal de cet appareil. Un assistant relié à votre compte n'envoie jamais de rapport.
 
 **Voir aussi:** [Vos données, vos droits](help:user.privacy.consent)
 
@@ -3899,6 +3921,31 @@ Vous voulez que vos factures et vos lettres s'impriment sur le papier qu'utilise
 - Si l'espace passe dans un pays qui n'utilise pas le papier choisi, il suit le papier usuel de ce pays.
 
 **Voir aussi:** [Pays](help:user.workspace.settings.country)
+
+### Unités de mesure
+
+**Public:** Propriétaire · Administrateur·rice avec l'autorisation
+
+Vos articles, devis et factures sont mesurés dans des unités, et certaines se convertissent en d’autres : 1 km vaut 1000 m. Chaque entreprise commence avec les unités usuelles (pièce, g, kg, ml, cl, l, mm, cm, m, km, m², min, h) ; vous ajoutez les vôtres, par exemple un touret de câble de 50 m.
+
+<!-- image: user-workspace-settings--units -->
+
+**Étapes**
+
+1. Activez **Unités de mesure** sous **Fonctionnalités** (elle est désactivée tant que vous ne la demandez pas).
+2. Dans [Unités de mesure](app:/settings/units), touchez **Nouvelle unité**.
+3. Renseignez **Code de l’unité** (il ne pourra plus changer), **Votre nom pour l’unité**, **Elle mesure** et **Une unité vaut** dans l’unité de base de ce qu’elle mesure : 1000 pour un km compté en m, 0,001 pour un mm.
+4. Si vous le souhaitez, renseignez **Code UN/ECE (pour les factures électroniques)**, que portent les factures électroniques (KMT pour un km).
+5. Touchez **Enregistrer**.
+
+**Bon à savoir**
+
+- Une unité de base garde sa dimension et son facteur ; vous pouvez lui donner votre propre nom.
+- Une unité utilisée (un article compté avec elle, un mouvement de stock, un devis ou une ligne de facture) garde pour toujours sa dimension et son facteur : une correction est une nouvelle unité. Une unité que personne n’utilise peut être archivée (**Archiver**) puis affichée de nouveau (**Afficher de nouveau**).
+- Une conversion est exacte : 2,5 km font 2500 m. Deux sortes d’unités ne se convertissent jamais, et un résultat que six décimales ne peuvent pas contenir est refusé, jamais arrondi.
+- Seuls le propriétaire et les administrateurs autorisés à modifier les réglages de l’espace tiennent les unités.
+
+**Voir aussi:** [Papier des documents](help:user.workspace.settings.paper)
 
 ### Organisation
 
@@ -6517,7 +6564,7 @@ Ce qui entoure le travail de tous les jours : le côté test d'un espace et le c
 Dans ce chapitre :
 - [Un espace a deux côtés](help:user.advanced.environments) · [Entrer d'un côté](help:user.advanced.enter-environment) · [Un espace de test](help:user.advanced.test-space) · [Qui peut déployer](help:user.advanced.deploy-permissions) · [Déployer entre les côtés](help:user.advanced.deploy) · [Situation de l'espace et archive de l'exercice](help:user.advanced.status-archive)
 - [Votre propre serveur](help:user.advanced.own-server) · [Quand une installation exige une application plus récente](help:user.advanced.app-floor) · [Publier une nouvelle version](help:user.advanced.releases)
-- [Les assistants](help:user.advanced.assistants) · [Connecter un assistant](help:user.advanced.assistants-connect) · [Les autorisations](help:user.advanced.assistants-approve) · [Ce que les assistants peuvent faire](help:user.advanced.assistants-policy)
+- [Les assistants](help:user.advanced.assistants) · [Connecter un assistant](help:user.advanced.assistants-connect) · [Les autorisations](help:user.advanced.assistants-approve) · [Ce que les assistants peuvent faire](help:user.advanced.assistants-policy) · [Rapports d'erreur](help:user.advanced.error-reports)
 - [L'enregistreur de tâches](help:user.advanced.recorder) · [Enregistrer une tâche](help:user.advanced.recorder-record) · [Relire un enregistrement](help:user.advanced.recorder-review) · [Créer un guide](help:user.advanced.guide-make) · [Suivre un guide](help:user.advanced.guide-play) · [Le menu rond](help:user.advanced.guide-circle) · [Modifier un guide](help:user.advanced.guide-edit) · [Confidentialité des enregistrements](help:user.advanced.recorder-privacy)
 - [L'espace de démonstration](help:user.advanced.demo) · [Mode tournage](help:user.advanced.filming)
 - [Les plateformes](help:user.advanced.platforms) · [Détails pour l'assistance](help:user.advanced.support) · [Quand quelque chose ne fonctionne pas](help:user.advanced.troubleshooting)
@@ -6803,6 +6850,28 @@ Vous décidez quels services un espace propose aux assistants.
 - C'est réservé aux personnes qui détiennent la permission d'intégrations ; les propriétaires l'ont toujours.
 
 **Voir aussi:** [Un interrupteur de fonctionnalité](help:user.features.switch)
+
+### Rapports d'erreur
+
+**Public:** Opérateur·rice
+
+Vous exploitez l'installation et voulez voir ce qui s'est mal passé dans les applications qui y sont connectées.
+
+<!-- image: user-advanced-error-reports -->
+
+**Étapes**
+
+1. Ouvrez [Installation : assistants](app:/installation/assistants).
+2. Touchez **Rapports d'erreur**. Les plus récents viennent en premier.
+3. Touchez un rapport pour lire sa pile, masquée par l'application. **Rapports plus anciens** lit les suivants.
+
+**Bon à savoir**
+
+- Un rapport indique l'endroit de l'application et le type d'erreur, son code, la version de l'application, la plateforme et l'heure. Il ne contient jamais ce qu'une personne a saisi, une adresse e-mail, un nom ou une clé.
+- Seul l'opérateur de l'installation les lit ; les entreprises de l'installation ne les voient jamais.
+- Dans les paramètres, **Rapports d'erreur par personne et par heure**, **Taille maximale d'un rapport d'erreur** et **Durée de conservation des rapports d'erreur** fixent combien en arrivent, leur taille et leur durée. Chaque personne peut désactiver les rapports sur son appareil.
+
+**Voir aussi:** [Envoyer les rapports d'erreur](help:user.privacy.error-reports)
 
 ### L'enregistreur de tâches et les visites guidées
 

@@ -14,23 +14,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/help/help_anchors.dart';
-import '../../../core/help/help_dot.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/scan/scan_scope.dart';
 import '../../../core/text/collation.dart';
 import '../../../core/theme/app_spacing.dart';
-import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/dropdown_field.dart';
+import '../../../core/ui/empty_state.dart';
 import '../../../core/ui/form_kit.dart';
-import '../../../core/ui/kit/page_title.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/domain/workspace_permission.dart';
 import '../../workspace/providers/workspace_providers.dart';
+import '../application/stock_walk.dart';
 import '../domain/stock_code_resolver.dart';
 import '../domain/stock_config.dart';
-import '../domain/stock_page.dart';
 import '../domain/stock_registry.dart';
 import '../domain/stock_tags.dart';
 import '../providers/stock_providers.dart';
@@ -39,6 +37,8 @@ import 'stock_home_sheet.dart';
 import 'stock_item_add.dart';
 import 'stock_item_editor.dart';
 import 'stock_mapping_editor.dart';
+import 'stock_page_shell.dart';
+import 'stock_read_failed.dart';
 import 'stock_screen_scan.dart';
 import 'stock_tags_dialog.dart';
 import 'stock_variants_editor.dart';
@@ -52,28 +52,20 @@ class StockItemsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final workspaceId = ref.watch(currentWorkspaceProvider).value?.id;
-    return Scaffold(
-      appBar: AppBar(
-        title: PageTitle(l10n.stockItemsTitle),
-        actions: [HelpDot(l10n.permModuleStock, anchor: HelpAnchor.moneyStockRegistry)],
+    return StockPageShell(
+      title: l10n.stockItemsTitle,
+      anchor: HelpAnchor.moneyStockRegistry,
+      helpTopic: l10n.permModuleStock,
+      reading: true,
+      body: (context, ref, workspaceId) => Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(AppSpacing.md),
+            child: Text(l10n.stockItemsIntro, style: Theme.of(context).textTheme.bodyMedium),
+          ),
+          Expanded(child: _Items(workspaceId: workspaceId, addFirst: addFirst)),
+        ],
       ),
-      body: workspaceId == null
-          ? const LoadingView()
-          : Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 720),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(AppSpacing.md),
-                      child: Text(l10n.stockItemsIntro, style: Theme.of(context).textTheme.bodyMedium),
-                    ),
-                    Expanded(child: _Items(workspaceId: workspaceId, addFirst: addFirst)),
-                  ],
-                ),
-              ),
-            ),
     );
   }
 }
@@ -90,65 +82,34 @@ class _Items extends ConsumerStatefulWidget {
 
 class _ItemsState extends ConsumerState<_Items> {
   final _search = TextEditingController();
-  final _rows = <StockRegistryRow>[];
-  StockCursor? _next;
-  bool _loading = true;
-  bool _failed = false;
   String? _place;
   bool _noHome = false;
   String _query = '';
-  int _generation = 0;
+
+  /// #4401 -- the registry under the filters chosen, read by the one stock walk: a filter changed is another walk.
+  ({String workspaceId, String? placeId, bool noHome}) get _filter => (workspaceId: widget.workspaceId, placeId: _place, noHome: _noHome);
+
+  StockWalkState<StockRegistryRow> get _walk => ref.read(stockRegistryWalkProvider(_filter));
+
+  /// Reads the registry again from its first page.
+  void _reload() => unawaited(ref.read(stockRegistryWalkProvider(_filter).notifier).reload());
 
   @override
   void initState() {
     super.initState();
-    unawaited(_load(reset: true));
     if (widget.addFirst) WidgetsBinding.instance.addPostFrameCallback((_) => unawaited(_add()));
   }
 
   /// Chooses a service to keep in stock; the list is read again when an item was made.
   Future<void> _add() async {
     if (!mounted) return;
-    if (await StockItemAdd(ref).run(context, widget.workspaceId)) unawaited(_load(reset: true));
+    if (await StockItemAdd(ref).run(context, widget.workspaceId)) _reload();
   }
 
   @override
   void dispose() {
     _search.dispose();
     super.dispose();
-  }
-
-  Future<void> _load({required bool reset}) async {
-    final generation = ++_generation;
-    setState(() {
-      _loading = true;
-      _failed = false;
-      if (reset) {
-        _rows.clear();
-        _next = null;
-      }
-    });
-    try {
-      final page = await ref.read(stockRegistryProvider).page(
-        widget.workspaceId,
-        placeId: _place,
-        noHome: _noHome,
-        after: reset ? null : _next,
-      );
-      if (!mounted || generation != _generation) return;
-      setState(() {
-        _rows.addAll(page.rows);
-        _next = page.complete ? null : page.next;
-        _loading = false;
-      });
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'the registry was not read', error: e, stackTrace: st);
-      if (!mounted || generation != _generation) return;
-      setState(() {
-        _failed = true;
-        _loading = false;
-      });
-    }
   }
 
   bool _matches(StockRegistryRow r, String separator) {
@@ -164,7 +125,7 @@ class _ItemsState extends ConsumerState<_Items> {
     final code = text.trim();
     if (code.isEmpty) return;
     final separator = ref.read(stockAddressSeparatorProvider);
-    final shown = _rows.where((r) => _matches(r, separator)).toList();
+    final shown = _walk.rows.where((r) => _matches(r, separator)).toList();
     // A list that still shows rows is a search by name or address; only a whole barcode among them, or nothing shown at
     // all, is a code typed by hand.
     if (shown.isNotEmpty && !shown.any((r) => r.barcode == code)) return;
@@ -178,8 +139,7 @@ class _ItemsState extends ConsumerState<_Items> {
     final item = answer.item;
     final place = answer.place;
     if (answer.kind == ScannedKind.place && place != null && !_noHome) {
-      _place = place.id;
-      await _load(reset: true);
+      setState(() => _place = place.id);
     } else if (item != null && item.id.isNotEmpty && mayManage) {
       final lotsOn = ref.read(enabledFeaturesSyncProvider).contains(WorkspaceFeature.stockLots);
       await showStockItemEditor(
@@ -207,23 +167,18 @@ class _ItemsState extends ConsumerState<_Items> {
     final l10n = context.l10n;
     final separator = ref.watch(stockAddressSeparatorProvider);
     final places = ref.watch(stockPlaceConfigsProvider(widget.workspaceId)).value ?? const <StockPlaceConfig>[]; // empty-ok: the places only feed a filter and a choice
-    if (_failed) {
+    final walk = ref.watch(stockRegistryWalkProvider(_filter));
+    if (walk.error != null) {
       return Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(l10n.stockReadFailed, key: const ValueKey('stock-items-failed')),
-            const FormGap(),
-            OutlinedButton(
-              key: const ValueKey('stock-items-retry'),
-              onPressed: () => unawaited(_load(reset: true)),
-              child: Text(l10n.identityConnectRetry),
-            ),
-          ],
+        child: StockReadFailed(
+          keyName: 'stock-items',
+          error: walk.error!,
+          // the page that failed is asked again; the first, when nothing was read
+          onRetry: walk.rows.isEmpty ? _reload : () => unawaited(ref.read(stockRegistryWalkProvider(_filter).notifier).loadMore()),
         ),
       );
     }
-    final shown = [for (final r in _rows) if (_matches(r, separator)) r];
+    final shown = [for (final r in walk.rows) if (_matches(r, separator)) r];
     final seen = <String>{};
     return Column(
       children: [
@@ -262,35 +217,26 @@ class _ItemsState extends ConsumerState<_Items> {
                 ],
                 onChanged: _noHome
                     ? null
-                    : (v) {
-                        _place = v;
-                        unawaited(_load(reset: true));
-                      },
+                    : (v) => setState(() => _place = v),
               ),
               SwitchListTile(
                 key: const ValueKey('stock-registry-no-home'),
                 contentPadding: EdgeInsets.zero,
                 title: Text(l10n.stockRegistryNoHomeFilter),
                 value: _noHome,
-                onChanged: (v) {
+                onChanged: (v) => setState(() {
                   _noHome = v;
                   if (v) _place = null;
-                  unawaited(_load(reset: true));
-                },
+                }),
               ),
             ],
           ),
         ),
         Expanded(
-          child: _loading && _rows.isEmpty
+          child: walk.loading && walk.rows.isEmpty
               ? const LoadingView()
               : shown.isEmpty
-              ? Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(AppSpacing.md),
-                    child: Text(l10n.stockItemsEmpty, key: const ValueKey('stock-items-empty'), textAlign: TextAlign.center),
-                  ),
-                )
+              ? EmptyState(key: const ValueKey('stock-items-empty'), icon: Icons.inventory_2_outlined, title: l10n.stockItemsEmpty)
               : ListView(
                   children: [
                     for (final r in shown)
@@ -301,12 +247,14 @@ class _ItemsState extends ConsumerState<_Items> {
                         showTools: seen.add(r.itemId),
                         places: places,
                         separator: separator,
-                        onHomeChanged: () => _load(reset: true),
+                        onHomeChanged: _reload,
                       ),
-                    if (_next != null)
+                    if (!walk.complete && walk.next != null)
                       TextButton(
                         key: const ValueKey('stock-registry-more'),
-                        onPressed: _loading ? null : () => unawaited(_load(reset: false)),
+                        onPressed: walk.loading
+                            ? null
+                            : () => unawaited(ref.read(stockRegistryWalkProvider(_filter).notifier).loadMore()),
                         child: Text(l10n.stockRegistryMore),
                       ),
                   ],
@@ -350,7 +298,7 @@ class _RegistryRow extends ConsumerWidget {
       if (row.homeAddressPath == null) l10n.stockRegistryNoHome,
       if (row.homeAddressPath != null)
         l10n.stockRegistryHome(row.homeAddressPath!.split(stockAddressJoint).join(separator)),
-      l10n.stockRegistryOnHand(l10n.stockQuantityWithUnit(row.onHand.text, row.unit)),
+      l10n.stockRegistryOnHand(l10n.stockQuantityWithUnit(appFormatOf(context).quantity(row.onHand), row.unit)),
     ].join(' · ');
   }
 

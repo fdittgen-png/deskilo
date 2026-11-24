@@ -80,11 +80,11 @@ class DemoItemGroups implements ItemGroups {
         ];
 
   @override
-  Future<GroupSaved> save(String workspaceId, {required String requestId, required String groupId, required int expectedRevision, required Map<String, Object?> body, bool apply = true}) async {
+  Future<GroupSaved> save(String workspaceId, {required String requestId, required String groupId, required int expectedRevision, required ItemGroupDraft body, bool apply = true}) async {
     final replay = apply ? _answers[requestId] : null;
     if (replay is GroupSaved) return replay;
     final old = _groups[groupId];
-    final change = _checked(groupId, expectedRevision, body, old);
+    final change = _checked(groupId, expectedRevision, body.toJson(), old);
     final reached = old == null ? const <String>[] : _itemsOf(groupId);
     final effect = _effectOf(old, change.changes, change.next, reached);
     final revision = (old?.revision ?? 0) + 1;
@@ -104,16 +104,19 @@ class DemoItemGroups implements ItemGroups {
   /// The save's content, refused as the server refuses it: a stale revision, no name, a name in use, a group
   /// that does not exist or nests too deep, per-piece tags without tracking by piece.
   ({String name, String? parentId, Map<String, Object?> changes, Map<String, Object?> next}) _checked(String groupId, int expectedRevision, Map<String, Object?> body, _Group? old) {
-    if (old == null && expectedRevision != 0) throw const StockConfigRefused('group_id', 'group_unknown');
+    if (old == null && expectedRevision != 0) throw const StockConfigRefused('group_id', StockRefusal.groupUnknown);
     if (old != null && old.revision != expectedRevision) throw const StockConfigStale();
     final name = (body['name'] as String?)?.trim() ?? old?.name;
-    if (name == null || name.isEmpty) throw const StockConfigRefused('name', 'required');
-    if (_groups.values.any((g) => g.id != groupId && g.name.toLowerCase() == name.toLowerCase())) throw const StockConfigRefused('name', 'name_duplicate');
+    if (name == null || name.isEmpty) throw const StockConfigRefused('name', StockRefusal.required);
     final parentId = body.containsKey('parent_id') ? body['parent_id'] as String? : old?.parentId;
+    // one name per level, as the server's unique index (workspace, parent, name)
+    if (_groups.values.any((g) => g.id != groupId && g.parentId == parentId && g.name.toLowerCase() == name.toLowerCase())) {
+      throw const StockConfigRefused('name', StockRefusal.nameDuplicate);
+    }
     if (parentId != null) {
       final parent = _groups[parentId];
-      if (parent == null) throw const StockConfigRefused('parent_id', 'group_unknown');
-      if (parent.parentId != null || _childrenOf(groupId).isNotEmpty) throw const StockConfigRefused('parent_id', 'depth');
+      if (parent == null) throw const StockConfigRefused('parent_id', StockRefusal.groupUnknown);
+      if (parent.parentId != null || _childrenOf(groupId).isNotEmpty) throw const StockConfigRefused('parent_id', StockRefusal.depth);
     }
     final changes = Map<String, Object?>.from((body['parameters'] as Map?) ?? const {});
     final next = {...?old?.params};
@@ -121,10 +124,10 @@ class DemoItemGroups implements ItemGroups {
       e.value == null ? next.remove(e.key) : next[e.key] = e.value;
     }
     if ((next['default_purchase_factor_num'] == null) != (next['default_purchase_factor_den'] == null)) {
-      throw const StockConfigRefused('default_purchase_factor_num', 'factor_both');
+      throw const StockConfigRefused('default_purchase_factor_num', StockRefusal.factorInvalid);
     }
     if (next['tag_mode'] == 'per_unit' && (next['tracking'] ?? _groups[parentId]?.params['tracking']) != 'serial') {
-      throw const StockConfigRefused('tag_mode', 'needs_serial');
+      throw const StockConfigRefused('tag_mode', StockRefusal.needsSerial);
     }
     return (name: name, parentId: parentId, changes: changes, next: next);
   }
@@ -167,9 +170,9 @@ class DemoItemGroups implements ItemGroups {
   @override
   Future<GroupAssigned> assign(String workspaceId, {required String requestId, required String itemId, required int expectedRevision, required String? groupId, bool apply = true}) async {
     final revision = (await _config.item(workspaceId, itemId))?.revision;
-    if (revision == null) throw const StockConfigRefused('item_id', 'not_an_item');
+    if (revision == null) throw const StockConfigRefused('item_id', StockRefusal.itemUnknown);
     if (revision != expectedRevision) throw const StockConfigStale();
-    if (groupId != null && !_groups.containsKey(groupId)) throw const StockConfigRefused('group_id', 'group_unknown');
+    if (groupId != null && !_groups.containsKey(groupId)) throw const StockConfigRefused('group_id', StockRefusal.groupUnknown);
     if (_member[itemId] == groupId) return const GroupAssigned(applied: false, affected: 0, skipped: [], unchanged: true);
     final before = {for (final p in _params) p: _pick(itemId, p).value};
     final saved = _member[itemId];
@@ -183,16 +186,16 @@ class DemoItemGroups implements ItemGroups {
   @override
   Future<void> setOverride(String workspaceId, String requestId, ItemOverride change) async {
     final parameter = change.parameter;
-    if (!_params.contains(parameter)) throw StockConfigRefused(parameter, 'not_overridable');
+    if (!_params.contains(parameter)) throw StockConfigRefused(parameter, StockRefusal.notOverridable);
     final revision = (await _config.item(workspaceId, change.itemId))?.revision;
     if (revision != change.expectedRevision) throw const StockConfigStale();
     final before = _pick(change.itemId, parameter).value;
     if (change.mode == 'set') {
-      if (change.value == null) throw StockConfigRefused(parameter, 'value_required');
+      if (change.value == null) throw StockConfigRefused(parameter, StockRefusal.valueRequired);
       // as the server: a tag per piece needs the item tracked by piece
       if (parameter == 'tag_mode' && change.value == 'per_unit') {
         final tracking = _pick(change.itemId, 'tracking').value ?? (await _config.item(workspaceId, change.itemId))?.tracking;
-        if (tracking != 'serial') throw const StockConfigRefused('tag_mode', 'needs_serial');
+        if (tracking != 'serial') throw const StockConfigRefused('tag_mode', StockRefusal.needsSerial);
       }
       (_own[change.itemId] ??= {})[parameter] = change.value;
     } else {
@@ -204,17 +207,17 @@ class DemoItemGroups implements ItemGroups {
   @override
   Future<void> delete(String workspaceId, {required String requestId, required String groupId, required int expectedRevision}) async {
     final g = _groups[groupId];
-    if (g == null) throw const StockConfigRefused('group_id', 'group_unknown');
+    if (g == null) throw const StockConfigRefused('group_id', StockRefusal.groupUnknown);
     if (g.revision != expectedRevision) throw const StockConfigStale();
-    if (_childrenOf(groupId).isNotEmpty) throw const StockConfigRefused('group_id', 'has_subgroups');
-    if (_member.containsValue(groupId)) throw const StockConfigRefused('group_id', 'in_use');
+    if (_childrenOf(groupId).isNotEmpty) throw const StockConfigRefused('group_id', StockRefusal.hasSubgroups);
+    if (_member.containsValue(groupId)) throw const StockConfigRefused('group_id', StockRefusal.inUse);
     _groups.remove(groupId);
   }
 
   @override
   Future<ItemEffective> effective(String workspaceId, String itemId) async {
     final config = await _config.item(workspaceId, itemId);
-    if (config == null) throw const StockConfigRefused('item_id', 'not_an_item');
+    if (config == null) throw const StockConfigRefused('item_id', StockRefusal.itemUnknown);
     final own = {'tracking': config.tracking, 'shelf_life_days': config.shelfLifeDays, 'inventory_unit': config.inventoryUnit};
     final out = <String, EffectiveParam>{};
     for (final p in _params) {

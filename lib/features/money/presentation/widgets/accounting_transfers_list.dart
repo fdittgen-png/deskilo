@@ -13,6 +13,7 @@ import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/accounting_connection.dart';
@@ -115,9 +116,10 @@ class _AccountingTransfersListState
           AccountingDeliverButtons(workspaceId: widget.workspaceId, year: _year),
         transfers.when(
           loading: () => const LoadingView(),
-          error: (_, _) => Text(
-            l10n.acctTargetsLoadFailed,
+          error: (e, _) => ReadFailureBanner(
             key: const ValueKey('acct-transfers-failed'),
+            error: e,
+            onRetry: () => ref.invalidate(accountingTransfersProvider(( workspaceId: widget.workspaceId, from: DateTime(_year), to: DateTime(_year, 12, 31), ))),
           ),
           data: (t) => Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,

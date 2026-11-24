@@ -16,6 +16,7 @@ import '../../../../core/ui/kit/result_page.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/issue_month.dart';
 import '../../application/issue_month_readiness.dart';
+import '../../domain/invoice_missing.dart';
 import '../../providers/money_providers.dart';
 import '../widgets/invoice_issue_runner.dart';
 import 'invoice_month_parts.dart';
@@ -44,8 +45,10 @@ class MonthResultView extends ConsumerWidget {
       key.startsWith('seller_') ||
       key.startsWith('buyer_') ||
       key.startsWith('vat_') ||
-      key == 'exemption_reason' ||
-      key == 'vies_unverified';
+      switch (InvoiceMissing.fromWire(key)) {
+        InvoiceMissing.exemptionReason || InvoiceMissing.viesUnverified => true,
+        _ => false,
+      };
 
   /// The missing essentials DKI01's DETAIL names, a comma-separated list
   /// (none when it names none).
@@ -126,7 +129,7 @@ class MonthResultView extends ConsumerWidget {
     ResultTone.ok => l10n.invoiceMonthResultTitle(report.issued.length),
     ResultTone.partial => l10n.invoiceMonthResultPartial(
       report.issued.length,
-      report.outcomes.length,
+      report.lines.length,
     ),
   };
 

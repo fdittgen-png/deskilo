@@ -88,6 +88,7 @@ const Set<WorkspaceFeature> defaultOffFeatures = {
   WorkspaceFeature.stockExpiryReport,
   WorkspaceFeature.stockHandlingUnits,
   WorkspaceFeature.counterOfflineCash,
+  WorkspaceFeature.unitsOfMeasure,
   // #4165 — a customer invoice without a member-month is asked for.
   WorkspaceFeature.standaloneInvoicing,
   // #1598 — renaming the gear a member sees is asked for, never
@@ -280,6 +281,7 @@ void main() {
       'stockExpiryReport': true,
       'stockHandlingUnits': true,
       'counterOfflineCash': true,
+      'unitsOfMeasure': true,
       'standaloneInvoicing': true,
       'billingCustomers': true,
       'customerQuotes': true,

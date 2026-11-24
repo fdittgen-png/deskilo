@@ -9,6 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/l10n/context_l10n.dart';
+import '../../../core/navigation/routes.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/personal_theme.dart';
 import '../../../core/ui/kit/tile_row.dart';
@@ -46,7 +47,7 @@ class PersonalSpaceCompactRow extends ConsumerWidget {
     final VoidCallback? onTap = open
         ? () => openMySpace(ref, context, local)
         : pending
-        ? () => context.push('/applications')
+        ? () => context.push(Routes.applications)
         : null;
     // A test space is entered, never booked from Home.
     final book = open && !entry.isTest;

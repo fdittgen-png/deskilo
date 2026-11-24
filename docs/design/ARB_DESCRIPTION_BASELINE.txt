@@ -417,7 +417,6 @@ taxRefDomainRetention
 taxRefRetentionStart
 taxRefYears
 templateResultCount
-templatesLoadFailed
 ukFacilitiesPackage
 ukFacilitiesPackageHelp
 ukLandTaxHelp

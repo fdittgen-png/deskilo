@@ -4,6 +4,7 @@
 // written through its two definers.
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/paged_fetch.dart';
 import '../domain/workspace_permission.dart';
 import '../domain/workspace_role.dart';
 import '../domain/workspace_roles_repository.dart';
@@ -15,10 +16,11 @@ class SupabaseWorkspaceRoles implements WorkspaceRolesRepository {
 
   @override
   Future<List<WorkspaceRole>> fetchRoles(String workspaceId) async {
-    final rows = await _client
+    final rows = await fetchConfigurationList(table: 'workspace_roles', build: () => _client
         .from('workspace_roles')
         .select('id, key, permissions, names, sort_order, active, builtin')
-        .eq('workspace_id', workspaceId);
+        .eq('workspace_id', workspaceId)
+        .order('id', ascending: true));
     return [
       for (final row in rows as List)
         () {
@@ -47,10 +49,11 @@ class SupabaseWorkspaceRoles implements WorkspaceRolesRepository {
 
   @override
   Future<List<String>> fetchRoleMembers(String roleId) async {
-    final rows = await _client
+    final rows = await fetchAllPages(table: 'workspace_role_members', build: () => _client
         .from('workspace_role_members')
         .select('member_id')
-        .eq('role_id', roleId);
+        .eq('role_id', roleId)
+        .order('id', ascending: true));
     return [
       for (final row in rows as List)
         '${Map<String, dynamic>.from(row as Map)['member_id']}',
@@ -59,10 +62,11 @@ class SupabaseWorkspaceRoles implements WorkspaceRolesRepository {
 
   @override
   Future<Map<String, Set<String>>> fetchAssignments(String workspaceId) async {
-    final rows = await _client
+    final rows = await fetchAllPages(table: 'workspace_role_members', build: () => _client
         .from('workspace_role_members')
         .select('member_id, role_id')
-        .eq('workspace_id', workspaceId);
+        .eq('workspace_id', workspaceId)
+        .order('id', ascending: true));
     final out = <String, Set<String>>{};
     for (final row in rows as List) {
       final map = Map<String, dynamic>.from(row as Map);

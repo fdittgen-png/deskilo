@@ -125,7 +125,6 @@
   "accessoriesSupplement": "Suplemento por media jornada",
   "accessoriesTitle": "Accesorios",
   "accountActivityEmpty": "No hay registros que mostrar.",
-  "accountActivityFailed": "No se pudo cargar su historial financiero. Toque para reintentar.",
   "accountActivityScope": "Todos sus perfiles en este servidor, incluidas las afiliaciones anteriores. Las monedas se muestran por separado.",
   "accountActivityTitle": "Mi consumo y mis pagos",
   "accountCardTitle": "Su cuenta",
@@ -334,7 +333,6 @@
   "acctStateTitle": "Nuevo trabajo contable",
   "acctTargetNotDeliveredYet": "Todavía no se envía ningún documento a este sistema: la conexión y sus correspondencias se conservan para el envío, que aún no funciona para él.",
   "acctTargetsIntro": "Adónde va la contabilidad de cada emisor. Un sistema conectado recibe los documentos por sí mismo; los demás reciben los ficheros exportados de la contabilidad. Cada transferencia figura abajo con la huella de lo que llevó.",
-  "acctTargetsLoadFailed": "No se han podido cargar los sistemas contables.",
   "acctTargetsNoApiTarget": "Ningún sistema contable de este país se alcanza todavía por conexión: la contabilidad sale por fichero, desde la exportación contable.",
   "acctTargetsNotConnected": "Sin conectar",
   "acctTargetsTitle": "Sistemas contables",
@@ -513,10 +511,6 @@
   "applicationsEmpty": "No hay solicitudes de acceso.",
   "@applicationsEmpty": {
     "description": "Workspace admission history and discussion (#1791)"
-  },
-  "applicationsLoadFailed": "No se pudieron cargar sus solicitudes de acceso. Inténtelo de nuevo.",
-  "@applicationsLoadFailed": {
-    "description": "Admission action failure (#1791)"
   },
   "applicationsTitle": "Solicitudes de acceso",
   "@applicationsTitle": {
@@ -867,7 +861,6 @@
     "description": "#662 - badge sign-in"
   },
   "badgePinReviewNotice": "La longitud de este PIN antiguo es desconocida o inferior al mínimo actual. Pida al miembro que lo cambie en sus propios ajustes. Su PIN actual sigue funcionando.",
-  "badgePinReviewUnavailable": "El estado de revisión del PIN no está disponible. Reinténtelo antes de dar por hecho que cumple el mínimo actual.",
   "badgePinSaveFailed": "No se pudo contactar con el servidor. Su PIN no ha cambiado: inténtelo de nuevo.",
   "@badgePinSaveFailed": {
     "description": "#1086 the PIN save or clear could not reach the server"
@@ -3004,7 +2997,6 @@
   "billingCustomerVatInvalid": "Esto no parece un número de IVA. Solo se comprueba su forma, no su existencia.",
   "billingCustomersAdd": "Añadir un cliente",
   "billingCustomersEmpty": "Aún no hay clientes facturados. Añada el primero para facturarle sin pedirle que cree una cuenta.",
-  "billingCustomersLoadFailed": "No se pudieron leer los clientes. No es una lista vacía.",
   "billingCustomersNoAccount": "Las personas y empresas a las que factura. No son miembros y no ven nada de su negocio, salvo que las invite a leer sus propias facturas desde su propia cuenta.",
   "billingCustomersRetry": "Reintentar",
   "billingCustomersSearch": "Buscar clientes",
@@ -3153,10 +3145,6 @@
   },
   "bookPeriodsInvalid": "Elija los dos días e indique un motivo donde se pida.",
   "@bookPeriodsInvalid": {
-    "description": "#2365 accounting periods"
-  },
-  "bookPeriodsLoadFailed": "No se pudieron cargar los periodos.",
-  "@bookPeriodsLoadFailed": {
     "description": "#2365 accounting periods"
   },
   "bookPeriodsNoExports": "Aún no hay exportaciones.",
@@ -3884,10 +3872,6 @@
       }
     }
   },
-  "capacityKpiRetry": "Reintentar",
-  "@capacityKpiRetry": {
-    "description": "#1918 capacity KPI"
-  },
   "capacityKpiRooms": "Salas sin puestos: {count}, {reserved} de {offered} horas-sala reservadas",
   "@capacityKpiRooms": {
     "description": "#1918 capacity KPI",
@@ -4153,7 +4137,6 @@
   "compareRemove": "Quitar de la comparación",
   "compareSearch": "Buscar un ajuste",
   "compareTitle": "Comparar plantillas",
-  "compareUnavailable": "No se pudieron leer estas plantillas para compararlas. No se afirma nada.",
   "compareUnknown": "Desconocido",
   "compareYes": "Sí",
   "composerAttach": "Adjuntar una referencia",
@@ -4213,7 +4196,6 @@
   "consentRightsBody": "Acceso, rectificación, exportación (art. 20), supresión (art. 17) y oposición — cada uno es un botón en Ajustes → Privacidad y datos. Para lo demás: fdittgen@gmail.com. Puede retirar este consentimiento en cualquier momento saliendo del espacio y borrando sus datos.",
   "consentRightsTitle": "Sus derechos",
   "consentTitle": "Sus datos, sus derechos",
-  "consentUnavailable": "No se pudo cargar su cuenta, así que todavía no hay nada que aceptar.",
   "consentVersion": "Versión",
   "consentVersionNumber": "Versión {version}",
   "consentWhatBody": "Su cuenta (e-mail, nombre visible, contraseña cifrada), su perfil tal como lo rellena (foto, estado, dirección, número de WhatsApp — cada uno opcional), y lo que hace en un espacio: reservas y registros de entrada, mensajes, gastos y consumos, su suscripción, facturas y pagos. Todo se guarda en el servidor donde funciona su espacio: en el servidor de referencia compartido, en la UE (Supabase, eu-central-1); en un servidor que una comunidad gestiona por su cuenta, donde su operador haya elegido. Ajustes → Privacidad y datos muestra el aviso de ese servidor: quién lo gestiona, dónde están los datos y quién los recibe.",
@@ -6065,7 +6047,6 @@
   "einvoiceConfigTitle": "Plataforma de facturación electrónica",
   "einvoiceConfigToken": "Token o credencial",
   "einvoiceConfigTokenSet": "Hay un token guardado (escriba uno nuevo para reemplazarlo).",
-  "einvoiceConfigUnavailable": "No se pudo cargar la configuración de la plataforma. Compruebe la conexión e inténtelo de nuevo.",
   "einvoiceCustomerSectionHelp": "Adónde van las facturas para el cliente: su punto de acceso Peppol, portal o la API acordada — separado de la plataforma gubernamental.",
   "@einvoiceCustomerSectionHelp": {
     "description": "E-invoicing config: customer delivery section help (#568)"
@@ -6281,10 +6262,6 @@
   "@engagementsIntro": {
     "description": "service engagements (#4178)"
   },
-  "engagementsLoadFailed": "No se pudieron leer los servicios. Esto no es una lista vacía.",
-  "@engagementsLoadFailed": {
-    "description": "service engagements (#4178)"
-  },
   "engagementsNew": "Nuevo servicio",
   "@engagementsNew": {
     "description": "service engagements (#4178)"
@@ -6440,10 +6417,6 @@
   },
   "equipmentInvalid": "Elija una línea de compra y, para una decisión, indique su fundamento.",
   "@equipmentInvalid": {
-    "description": "#2576 equipment register"
-  },
-  "equipmentLoadFailed": "No se pudieron cargar los equipos.",
-  "@equipmentLoadFailed": {
     "description": "#2576 equipment register"
   },
   "equipmentRegister": "Registrar un equipo",
@@ -8027,6 +8000,14 @@
   "featureUiAnimationsTitle": "Animaciones de la interfaz",
   "featureUniqueMonogramsDesc": "Un avatar sin foto muestra iniciales que pertenecen a un solo miembro: inicial del nombre y del apellido, una letra más si dos coinciden, y números solo como último recurso. Desactivado: solo la primera letra, repetida en todos los que la comparten.",
   "featureUniqueMonogramsTitle": "Iniciales de avatar distintas",
+  "featureUnitsOfMeasureDesc": "El propietario y los administradores mantienen las unidades de medida del negocio y sus conversiones (1 km = 1000 m, 1 kg = 1000 g). Los artículos, los presupuestos y las facturas se miden con ellas. Las unidades básicas siempre están; al activar esta opción aparece la pantalla para mantenerlas.",
+  "@featureUnitsOfMeasureDesc": {
+    "description": "#4442 feature description"
+  },
+  "featureUnitsOfMeasureTitle": "Unidades de medida",
+  "@featureUnitsOfMeasureTitle": {
+    "description": "#4442 feature name"
+  },
   "featureUsageInvoicesDesc": "Cuando el mes termina, lo que realmente costó más allá de la suscripción — excesos, suplementos, servicios — se factura aparte. Desactivado: eso sigue en la factura del mes.",
   "featureUsageInvoicesTitle": "Facturas de fin de mes",
   "featureUsageRecordsDesc": "Cada reserva contada deja un registro: la ventana reservada, el tiempo realmente presente y lo que se factura. Una reserva a la que nadie llegó se factura entera. Quien sale antes puede pedir que el tiempo no usado deje de facturarse, y lo decide otra persona, nunca quien lo pide. Desactivado: sin registros ni corrección.",
@@ -9398,6 +9379,13 @@
   "instanceEnrolRun": "Inscribir en este hogar personal",
   "instanceEnrolSame": "Una instalación no se inscribe a sí misma.",
   "instanceEnrolUnreadable": "Este proyecto aún no responde como una instalación Deskilo. Instale primero el esquema.",
+  "instanceErrorReportCode": "Código {code}",
+  "instanceErrorReportFacts": "{version} · {platform} · {time}",
+  "instanceErrorReportStack": "Pila, ocultada por la app",
+  "instanceErrorReports": "Informes de error",
+  "instanceErrorReportsHint": "Lo que enviaron las apps cuando algo falló, los más recientes primero. Los miembros de una empresa nunca los ven.",
+  "instanceErrorReportsNone": "No ha llegado ningún informe de error.",
+  "instanceErrorReportsOlder": "Informes anteriores",
   "instanceFamilyChatgpt": "ChatGPT",
   "instanceFamilyClaude": "Claude",
   "instanceFamilyLoopback": "Asistente de escritorio o de línea de comandos",
@@ -11443,7 +11431,6 @@
   "itemGroupReasonHasMovements": "ya tiene movimientos",
   "itemGroupReasonHasSubgroups": "Este grupo tiene subgrupos: elimínelos primero.",
   "itemGroupReasonInUse": "Este grupo lo usan artículos: muévalos primero.",
-  "itemGroupReasonNameDuplicate": "Otro grupo ya tiene este nombre.",
   "itemGroupReasonNeedsSerial": "Las etiquetas por pieza necesitan seguimiento por pieza.",
   "itemGroupReasonNotOverridable": "Este ajuste no puede tener un valor propio.",
   "itemGroupReorderPoint": "Punto de pedido por defecto",
@@ -12033,10 +12020,6 @@
   "@leaseCommitmentsIntro": {
     "description": "#2575 commitment matching"
   },
-  "leaseCommitmentsLoadFailed": "No se pudieron cargar los vencimientos.",
-  "@leaseCommitmentsLoadFailed": {
-    "description": "#2575 commitment matching"
-  },
   "leaseDeposit": "Fianza {amount}",
   "@leaseDeposit": {
     "description": "#2569 premises lease",
@@ -12160,10 +12143,6 @@
         "type": "String"
       }
     }
-  },
-  "leaseLoadFailed": "No se pudo cargar el contrato.",
-  "@leaseLoadFailed": {
-    "description": "#2569 premises lease"
   },
   "leaseMatchAction": "Conciliar una factura",
   "@leaseMatchAction": {
@@ -12650,7 +12629,6 @@
   "libraryPartial": "Una parte de esta plantilla no puede aplicarse aquí y se deja fuera.",
   "libraryPlanNames": "Estos nombres viajan con el plano: {names}",
   "libraryPreviewChanges": "Ver los cambios",
-  "libraryPreviewFailed": "No se pudieron previsualizar los cambios. No se aplicó nada.",
   "libraryPreviewTitle": "Qué cambiaría « {name} »",
   "libraryProcessOff": "{feature} desactivada",
   "@libraryProcessOff": {
@@ -12808,10 +12786,6 @@
   "managedProfileHandOverHint": "Genera un código personal ligado a este perfil. Quien lo canjee se hace con el perfil — reservas, facturas, suscripción — en cuanto usted apruebe la membresía.",
   "@managedProfileHandOverHint": {
     "description": "#887 managed profiles: managedProfileHandOverHint"
-  },
-  "managedProfileIdentityUnavailable": "No se han podido leer estos datos, así que todavía no hay nada que editar. No se ha cambiado nada.",
-  "@managedProfileIdentityUnavailable": {
-    "description": "#1561 shown when the managed identity could not be read, so the form is not offered"
   },
   "managedProfileIntro": "Esta persona aún no tiene cuenta. Usted reserva, factura y gestiona por ella; entréguele el perfil cuando se una.",
   "@managedProfileIntro": {
@@ -13063,7 +13037,6 @@
   "mcpPolicyStale": "Alguien cambió estos ajustes mientras tanto. Revise los ajustes actuales y guarde de nuevo.",
   "mcpPolicySwitched": "Ha cambiado de espacio. Vuelva a abrir esta página para editar el otro espacio.",
   "mcpPolicyTitle": "Acceso de asistentes",
-  "mcpPolicyUnavailable": "No se pudieron cargar los ajustes de asistentes. Inténtelo más tarde.",
   "mcpRefusalClientNotApproved": "Este asistente aún no está aprobado en este servidor. El operador aprueba cada asistente una vez; pídaselo y vuelva a conectar desde el asistente.",
   "mcpRefusalClientNotApprovedNamed": "Este asistente aún no está aprobado en este servidor. El operador aprueba cada asistente una vez; pídaselo y vuelva a conectar desde el asistente. Esperando al operador del servidor: {names}.",
   "mcpRefusalNoIdentity": "Confirme primero su identidad en DesKilo en Asistentes y vuelva a conectar desde el asistente.",
@@ -13079,7 +13052,6 @@
   "mcpRequestRevoked": "Retirada",
   "mcpRequestUnknown": "Respuesta ilegible",
   "mcpRequestsAnsweredTitle": "Respondidas recientemente",
-  "mcpRequestsUnavailable": "No se pudieron leer las solicitudes de sus asistentes. Vuelva a abrir esta página más tarde.",
   "mcpRequestsWaitingTitle": "Pendiente de su confirmación",
   "mcpReviewApprove": "Aprobar",
   "mcpReviewChanged": "Esta solicitud cambió u otro administrador decidió antes. No se hizo nada.",
@@ -13091,7 +13063,6 @@
   "mcpReviewReject": "Rechazar",
   "mcpReviewSecondFactor": "Esa base de datos necesita su segundo factor en su propia sesión. No se decidió nada.",
   "mcpReviewTitle": "Aprobaciones de asistentes",
-  "mcpReviewUnavailable": "No se pudieron cargar las solicitudes. Una revisión necesita su segundo factor; inténtelo de nuevo.",
   "mcpStateAfterPrevious": "Después del paso anterior",
   "mcpStateAllowed": "Permitido",
   "mcpStateApproved": "Aprobada",
@@ -13129,7 +13100,6 @@
   "mcpUsagePending": "Pendientes de validación",
   "mcpUsageRefusals": "Rechazadas",
   "mcpUsageRequests": "Solicitudes",
-  "mcpUsageUnavailable": "No se pudo cargar el uso.",
   "mcpUsageWorkspaceTitle": "Uso de asistentes, últimos 30 días",
   "meAccountInMe": "Mi cuenta está en Yo",
   "meAccountInMeBody": "Foto, idioma, tema e inicios de sesión son suyos en todos los espacios.",
@@ -13170,7 +13140,6 @@
   "meDataWorkspaceSuperseded": "La cuenta conectada cambió mientras se leía la exportación. No se ofreció nada.",
   "meDataWorkspaceUnnamed": "Negocio {id}",
   "meDataWorkspacesEmpty": "Su cuenta aún no nombra ningún negocio.",
-  "meDataWorkspacesFailed": "No se pudieron leer los negocios de su cuenta. No se exportó nada.",
   "meDataWorkspacesScope": "Cada negocio exporta lo que conserva sobre usted — afiliación, reservas, cuenta y facturas — desde su propio servidor, un archivo por negocio. La parte de su cuenta personal es la tarjeta de arriba.",
   "meDataWorkspacesTitle": "Sus datos en cada negocio",
   "meDemoSessionBadgeHint": "Está explorando un negocio de demostración. Nada de esto sale de este dispositivo.",
@@ -13252,7 +13221,6 @@
   "meOverviewView": "Ver",
   "mePlaceMember": "Miembro",
   "mePlaceRequestSent": "Solicitud enviada · esperando respuesta",
-  "mePlacesLoadFailed": "No se pudieron cargar sus lugares.",
   "mePrivacySelfServiceOff": "Este negocio gestiona él mismo las solicitudes de datos. Presente una solicitud de derechos y el administrador de datos personales la responderá.",
   "meRealBusiness": "Negocio real",
   "meRefDefault": "Predeterminado",
@@ -13262,7 +13230,6 @@
   "meRefUnnamed": "Un lugar en otro servidor",
   "meRefUnverified": "Membresía aún no verificada",
   "meRefsTitle": "Lugares en otros servidores",
-  "meRefsUnavailable": "No se pudieron leer sus lugares en otros servidores.",
   "meRunASpace": "¿Dirige usted un negocio?",
   "meRunASpaceAction": "Configurarlo",
   "meSectionMine": "Mi historial y mis datos",
@@ -13299,6 +13266,134 @@
   "meWelcomeSubtitle": "¿Qué busca?",
   "meWelcomeTitle": "Bienvenido, {name}",
   "meWhereSpacesLive": "Dónde están mis lugares",
+  "measureDimensionArea": "Superficie",
+  "@measureDimensionArea": {
+    "description": "#4442 dimension: area"
+  },
+  "measureDimensionCount": "Cantidad",
+  "@measureDimensionCount": {
+    "description": "#4442 dimension: counting"
+  },
+  "measureDimensionLength": "Longitud",
+  "@measureDimensionLength": {
+    "description": "#4442 dimension: length"
+  },
+  "measureDimensionMass": "Masa",
+  "@measureDimensionMass": {
+    "description": "#4442 dimension: mass"
+  },
+  "measureDimensionTime": "Tiempo",
+  "@measureDimensionTime": {
+    "description": "#4442 dimension: time"
+  },
+  "measureDimensionVolume": "Volumen",
+  "@measureDimensionVolume": {
+    "description": "#4442 dimension: volume"
+  },
+  "measureReasonDimension": "Elija lo que mide esta unidad.",
+  "@measureReasonDimension": {
+    "description": "#4442 refusal: no dimension chosen"
+  },
+  "measureReasonEce": "Un código UN/ECE tiene dos o tres mayúsculas o dígitos.",
+  "@measureReasonEce": {
+    "description": "#4442 refusal: the UN/ECE code is malformed"
+  },
+  "measureReasonFixed": "Esta unidad es fija y no puede modificarse ni eliminarse.",
+  "@measureReasonFixed": {
+    "description": "#4442 refusal: a fixed unit"
+  },
+  "measureReasonInUse": "Esta unidad está en uso, así que su dimensión y su factor ya no pueden cambiar. Cree una unidad nueva.",
+  "@measureReasonInUse": {
+    "description": "#4442 refusal: a unit in use keeps its factor"
+  },
+  "measureReasonInexact": "El resultado no puede escribirse exactamente con seis decimales.",
+  "@measureReasonInexact": {
+    "description": "#4442 refusal: a conversion that six decimals cannot hold"
+  },
+  "measureReasonName": "Una unidad nueva necesita un nombre.",
+  "@measureReasonName": {
+    "description": "#4442 refusal: a new unit needs a name"
+  },
+  "measureUnitArchive": "Archivar",
+  "@measureUnitArchive": {
+    "description": "#4442 action: archive an unused unit"
+  },
+  "measureUnitArchivedTag": "Archivada",
+  "@measureUnitArchivedTag": {
+    "description": "#4442 tag on an archived unit"
+  },
+  "measureUnitBuiltIn": "Básica",
+  "@measureUnitBuiltIn": {
+    "description": "#4442 tag on a built-in unit"
+  },
+  "measureUnitCodeField": "Código de la unidad",
+  "@measureUnitCodeField": {
+    "description": "#4442 field: the code of a unit"
+  },
+  "measureUnitCodeHelp": "Letras minúsculas, dígitos y guiones bajos. No podrá cambiarse después.",
+  "@measureUnitCodeHelp": {
+    "description": "#4442 helper of the code field"
+  },
+  "measureUnitDimensionField": "Mide",
+  "@measureUnitDimensionField": {
+    "description": "#4442 field: what a unit measures"
+  },
+  "measureUnitEceField": "Código UN/ECE (para facturas electrónicas)",
+  "@measureUnitEceField": {
+    "description": "#4442 field: the UN/ECE code of a unit"
+  },
+  "measureUnitEdit": "Editar unidad",
+  "@measureUnitEdit": {
+    "description": "#4442 edit sheet title"
+  },
+  "measureUnitFactorField": "Una unidad equivale a",
+  "@measureUnitFactorField": {
+    "description": "#4442 field: how many base units one unit is"
+  },
+  "measureUnitFactorHelp": "Contado en {base}, la unidad base de lo que mide: 1000 para un km, 0,001 para un mm.",
+  "@measureUnitFactorHelp": {
+    "description": "#4442 helper of the factor field",
+    "placeholders": {
+      "base": {
+        "type": "String"
+      }
+    }
+  },
+  "measureUnitLine": "1 {unit} = {value} {base}",
+  "@measureUnitLine": {
+    "description": "#4442 a unit's conversion line, e.g. 1 km = 1000 m",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      },
+      "base": {
+        "type": "String"
+      }
+    }
+  },
+  "measureUnitNameField": "Su nombre para la unidad",
+  "@measureUnitNameField": {
+    "description": "#4442 field: the business's own word for a unit"
+  },
+  "measureUnitNew": "Nueva unidad",
+  "@measureUnitNew": {
+    "description": "#4442 new unit action"
+  },
+  "measureUnitRestore": "Mostrar de nuevo",
+  "@measureUnitRestore": {
+    "description": "#4442 action: show an archived unit again"
+  },
+  "measureUnitsIntro": "Las unidades en que se miden sus artículos, presupuestos y facturas, y cómo se convierten: 1 km = 1000 m. Las unidades básicas siempre están; añada las suyas, por ejemplo una bobina de cable de 50 m.",
+  "@measureUnitsIntro": {
+    "description": "#4442 what the screen is for"
+  },
+  "measureUnitsSubtitle": "Sus propias unidades y sus conversiones",
+  "@measureUnitsSubtitle": {
+    "description": "#4442 the row in the workspace settings"
+  },
   "memberAccountTitle": "Mi cuenta",
   "@memberAccountTitle": {
     "description": "#1598 member account menu: memberAccountTitle"
@@ -13366,10 +13461,6 @@
   "memberMoneySettled": "Nada pendiente.",
   "@memberMoneySettled": {
     "description": "#704 - the money section of a member profile"
-  },
-  "memberMoneyUnavailable": "No se pudieron cargar las finanzas. Tire para actualizar.",
-  "@memberMoneyUnavailable": {
-    "description": "#709 - the money section of a profile could not be read"
   },
   "memberMonthInProgress": "Este mes",
   "@memberMonthInProgress": {
@@ -13990,10 +14081,6 @@
   "@newMemberDefaultsTitle": {
     "description": "#1294 the new-member defaults section title"
   },
-  "newMemberDefaultsUnavailable": "No se han podido leer ahora mismo. Al guardar se quedan como están.",
-  "@newMemberDefaultsUnavailable": {
-    "description": "#1563 shown when the new-member defaults could not be read, so Save omits them"
-  },
   "newMemberDefaultsUnset": "Nada elegido: los nuevos miembros empiezan al 100 % y las reservas se bloquean cuando se agota el derecho.",
   "@newMemberDefaultsUnset": {
     "description": "#1294 shown when nothing is configured, naming the product defaults"
@@ -14418,7 +14505,6 @@
   "payConfigSettlementsFetch": "Obtener los pagos",
   "payConfigSettlementsFetched": "{count} pagos registrados",
   "payConfigSettlementsReviewTitle": "Liquidaciones por revisar",
-  "payConfigSettlementsReviewUnreadable": "No se pudieron leer las liquidaciones por revisar.",
   "payConfigTitle": "Pagos en línea",
   "payFieldApiKey": "Clave API",
   "payFieldClientId": "Client ID",
@@ -14488,7 +14574,6 @@
   "paymentMatchCandidate": "{number} · {amount} pendientes",
   "paymentMatchDecide": "Otro importe: usted elige cómo saldar la diferencia",
   "paymentMatchEmpty": "Ningún pago espera una factura.",
-  "paymentMatchFailed": "No se pudieron leer los pagos.",
   "paymentMatchHeader": "{amount} recibidos el {date}",
   "paymentMatchIntro": "Se recibió un pago que aún no está asignado. Elija la factura que paga.",
   "paymentMatchInvoiceGone": "Esta factura ya no está abierta: la lista se vuelve a leer.",
@@ -14607,7 +14692,6 @@
   "pendingNotUpdated": "Estado no actualizado — no se pudo contactar con el servidor. Su solicitud no ha cambiado.",
   "pendingStillWaiting": "Sigue pendiente de aprobación.",
   "periodReservationsEmpty": "Ninguna reserva en estos meses.",
-  "periodReservationsFailed": "No se pudieron leer las reservas.",
   "periodReservationsLevel": "Solo en {level}",
   "periodReservationsTitle": "Reservas de {period}",
   "periodReservationsUnknownLevel": "Este no es un nivel de este espacio.",
@@ -15171,7 +15255,6 @@
   "portalSavePreview": "Guardar y ver la vista externa",
   "portalSearch": "Buscar lugares",
   "portalSendCode": "Enviar código de acceso",
-  "portalSourceUnavailable": "Un servidor no está disponible. Esta vista está incompleta. Toque para reintentar.",
   "portalUseCode": "Usar un código por correo",
   "portalUseWorkspaceInfo": "Usar la información del espacio",
   "portalVisibilityLink": "Quién puede encontrarme y escribirme",
@@ -15223,7 +15306,6 @@
   "privacyAdminIncidentTitle": "Registrar un incidente de datos",
   "privacyAdminIntro": "Las solicitudes de los miembros sobre sus datos personales y los incidentes que usted registra. Cada solicitud se responde en un mes natural.",
   "privacyAdminKind": "Tipo de solicitud",
-  "privacyAdminLoadFailed": "No se pudieron leer las solicitudes.",
   "privacyAdminMember": "Miembro",
   "privacyAdminOpenTile": "Datos personales y solicitudes de derechos",
   "privacyAdminOutcomeKind": "Qué pasó con los datos",
@@ -15288,6 +15370,9 @@
       }
     }
   },
+  "privacyErrorReports": "Enviar informes de error",
+  "privacyErrorReportsFailed": "No se pudo guardar la elección en este dispositivo.",
+  "privacyErrorReportsHint": "Cuando la app registra un error, un informe sin sus datos va a la instalación en la que ha iniciado sesión, para que su operador pueda corregirlo.",
   "privacyExport": "Exportar mis datos",
   "@privacyExport": {
     "description": "#719 - privacy & data"
@@ -15452,6 +15537,8 @@
   "processFeatureWaiting": "Activada, esperando {feature}",
   "processFilterAll": "Todos",
   "processFilterEmpty": "Ningún proceso coincide con este filtro.",
+  "processGoodsStock": "Mercancías y existencias",
+  "processGoodsStockDesc": "Llevar, mover, contar y rastrear las mercancías que se venden.",
   "processHeldBack": "{count, plural, one{1 función está activada pero espera un requisito desactivado} other{{count} funciones están activadas pero esperan un requisito desactivado}}",
   "processInProcess": "en {process}",
   "processIntegrations": "Integraciones y automatización",
@@ -15566,7 +15653,6 @@
     "description": "#974 profiles site: profilesSitePick"
   },
   "profilesTitle": "Perfiles",
-  "profilesUnavailable": "No se pudieron cargar sus espacios de trabajo.",
   "provenanceFromTemplate": "De la plantilla «{name}»",
   "provenanceProductDefault": "Valor predeterminado del producto",
   "provenanceResetToDefault": "Volver al valor predeterminado",
@@ -15642,7 +15728,6 @@
   "publicProfilePublishBody": "Cualquier persona en Internet, con sesión o sin ella, podrá leer su nombre, su profesión y su presentación en su enlace. Sus datos de contacto, su presencia y sus lugares siguen siendo privados.",
   "publicProfilePublishTitle": "¿Publicar un perfil público?",
   "publicProfilePublishedInfo": "Información publicada por este negocio. La falta de información no significa que un equipamiento no esté disponible.",
-  "publicProfileRefreshFailed": "No se ha podido actualizar la página de este negocio. Se muestra la información ya cargada.",
   "publicProfileRefreshing": "Actualizando la información publicada…",
   "publicProfileRegularHours": "Horario habitual en la zona horaria del negocio; las excepciones y la disponibilidad actual pueden variar.",
   "publicProfileTakesInquiries": "Acepta consultas",
@@ -16533,10 +16618,8 @@
   "quoteValidUntil": "Válido hasta el {date}",
   "quotesEmpty": "Aún no hay presupuestos. Haga el primero para un cliente facturado.",
   "quotesIntro": "Ofertas a sus clientes facturados. Un presupuesto enviado nunca cambia; una modificación es otra revisión. No se factura nada hasta que convierta uno aceptado.",
-  "quotesLoadFailed": "No se pudieron leer los presupuestos. No es una lista vacía.",
   "quotesNew": "Nuevo presupuesto",
   "quotesNotAllowed": "No puede leer los presupuestos de este negocio.",
-  "quotesRetry": "Reintentar",
   "quotesTitle": "Presupuestos",
   "readStateDenied": "No tiene acceso a esto. Si lo necesita, pídaselo a un administrador del espacio.",
   "@readStateDenied": {
@@ -17878,7 +17961,6 @@
   "@reportImagesEmpty": {
     "description": "Report WYSIWYG editor + image library (#488)"
   },
-  "reportImagesLoadFailed": "No se pudieron cargar las imágenes de los informes. Inténtelo de nuevo.",
   "reportImagesOpenLibrary": "Abrir la biblioteca de imágenes",
   "reportImagesOversized": "{count, plural, one{{count} imagen guardada es más grande de lo que se imprime} other{{count} imágenes guardadas son más grandes de lo que se imprimen}}",
   "reportImagesTitle": "Imágenes de informes",
@@ -18320,7 +18402,6 @@
   "retentionHoldSaveFailed": "No se ha podido guardar la retención. No ha cambiado nada.",
   "retentionHoldSince": "{what} · {issuer} · desde el {date}",
   "retentionHoldsEmpty": "No hay ninguna retención. Una retención conserva los registros más allá de su plazo, para una auditoría o un litigio.",
-  "retentionHoldsLoadFailed": "No se han podido leer las retenciones.",
   "retentionHoldsTitle": "Retenciones legales",
   "retentionKeptHold": "Se conserva por una retención legal: {reason}",
   "retentionKeptReview": "Se conserva hasta que una persona revise la regla de conservación",
@@ -18808,10 +18889,6 @@
   "@roomRentLevels": {
     "description": "#2568 rented rooms"
   },
-  "roomRentLoadFailed": "No se pudieron cargar las salas alquiladas.",
-  "@roomRentLoadFailed": {
-    "description": "#2568 rented rooms"
-  },
   "roomRentNeedSupplier": "Añada primero al arrendador como proveedor.",
   "@roomRentNeedSupplier": {
     "description": "#2568 rented rooms"
@@ -19138,6 +19215,7 @@
   },
   "settingGroupBusiness": "Negocio",
   "settingGroupCompatibility": "Versiones de la aplicación",
+  "settingGroupDiagnostics": "Informes de error",
   "settingGroupDirectory": "Directorio de miembros",
   "@settingGroupDirectory": {
     "description": "#2486 settings: Settings group title."
@@ -19426,6 +19504,9 @@
   "settingHintStockTagReadUnitAsQuantity": "En un traslado masivo, la etiqueta de una pieza de un artículo no seguido pieza a pieza se añade como cantidad 1 de ese artículo. Desactivado: esa etiqueta se deja fuera y se lista.",
   "settingHintStockTagRebindGraceDays": "Cuántos días después de retirarla puede volver a vincularse un código de etiqueta. 0 significa de inmediato. Una etiqueta vigente nunca se vincula dos veces.",
   "settingHintStockWeighedGoods": "Activado: un artículo de stock nuevo se propone en kilogramos en lugar de piezas (carnicería, panadería, mostrador). Cualquier artículo puede tener otra unidad.",
+  "settingHintTraceReportMaxBytes": "El mayor informe de error que acepta esta instalación. La app acorta la pila del informe antes de enviarlo; un informe que siga siendo mayor se descarta.",
+  "settingHintTraceReportRetentionDays": "Cuántos días conserva esta instalación un informe de error. Los informes más antiguos se borran cuando llega uno nuevo.",
+  "settingHintTraceReportsPerHour": "Cuántos informes de error puede enviar una persona a esta instalación en una hora, sumando todos sus dispositivos. Los siguientes de esa hora se descartan, nunca se ponen en cola. 0 desactiva los informes de error para todos.",
   "settingHintVatViesEvidenceDays": "Días que una comprobación válida del NIF-IVA sigue siendo lo bastante reciente para servir de prueba en una nueva factura. Un valor más corto pide una nueva comprobación antes; no prueba que una operación sea válida.",
   "@settingHintVatViesEvidenceDays": {
     "description": "#2487 retention settings"
@@ -19683,6 +19764,9 @@
   "settingLabelStockTagReadUnitAsQuantity": "Una pieza leída en un traslado cuenta como una de su artículo",
   "settingLabelStockTagRebindGraceDays": "Días antes de reutilizar una etiqueta retirada",
   "settingLabelStockWeighedGoods": "Las mercancías se venden al peso",
+  "settingLabelTraceReportMaxBytes": "Tamaño máximo de un informe de error",
+  "settingLabelTraceReportRetentionDays": "Conservar los informes de error durante",
+  "settingLabelTraceReportsPerHour": "Informes de error por persona y hora",
   "settingLabelVatViesEvidenceDays": "Vigencia de la comprobación del NIF-IVA",
   "@settingLabelVatViesEvidenceDays": {
     "description": "#2487 retention settings"
@@ -19873,10 +19957,6 @@
   },
   "settingsFrontCamera": "Escanear con la cámara frontal",
   "settingsFrontCameraDesc": "Las tarjetas se leen con la cámara del lado de la pantalla — desactívelo para usar la cámara trasera.",
-  "settingsLoadFailed": "No se pudieron cargar los ajustes.",
-  "@settingsLoadFailed": {
-    "description": "#2484 settings: Error text."
-  },
   "settingsOfflineRegistry": "Se muestran los valores por defecto integrados: no se pudo contactar con el servidor, por ahora no se puede cambiar nada.",
   "@settingsOfflineRegistry": {
     "description": "#2484 settings: Banner: the editor shows the bundled registry."
@@ -20497,7 +20577,6 @@
   "setupStepLeave": "Salir",
   "setupStepLeaveMessage": "Sus respuestas aún no se han aplicado. Quedan guardadas como borrador y las encontrará aquí cuando vuelva.",
   "setupStepLeaveTitle": "¿Salir de este paso?",
-  "setupStepLoadFailed": "No se ha podido cargar este paso. Inténtelo más tarde.",
   "setupStepNext": "Siguiente paso",
   "@setupStepNext": {
     "description": "#3076 — on a step page of the guide: goes on to the next step still to do."
@@ -21847,18 +21926,11 @@
   "@stockReasonFactorInvalid": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
-  "stockReasonGroupDepth": "Un subgrupo no puede tener subgrupos.",
-  "stockReasonGroupHasMovements": "Este artículo tiene movimientos de stock: su unidad y su seguimiento quedan como se escribieron.",
-  "stockReasonGroupHasSubgroups": "Este grupo tiene subgrupos: muévalos o elimínelos primero.",
-  "stockReasonGroupInUse": "Este grupo lo usan artículos: muévalos primero.",
   "stockReasonGroupItemUnknown": "Este artículo no es de este negocio.",
   "stockReasonGroupNameDuplicate": "Un grupo de este nivel ya tiene este nombre.",
   "stockReasonGroupNameLength": "El nombre de un grupo tiene de 1 a 80 caracteres.",
   "stockReasonGroupNameRequired": "Un grupo nuevo necesita un nombre.",
-  "stockReasonGroupNeedsSerial": "Las etiquetas por unidad exigen seguimiento por pieza.",
-  "stockReasonGroupNotOverridable": "Es una propuesta para artículos nuevos y no se fija por artículo.",
   "stockReasonGroupPlaceUnknown": "Este lugar no es de este negocio.",
-  "stockReasonGroupUnknown": "Este grupo no es de este negocio.",
   "stockReasonGroupUnknownReference": "Un lugar, artículo o tipo nombrado aquí no es de este negocio.",
   "stockReasonGroupValueRequired": "Indique un valor o use el del grupo.",
   "stockReasonGroupVatRateUnknown": "Este tipo de IVA no es uno de los activos de este negocio.",
@@ -22138,6 +22210,30 @@
   "stockReorderTitle": "Reposición",
   "stockReorderToOrderEmpty": "No hay nada que pedir.",
   "stockReorderToOrderTitle": "Qué pedir",
+  "stockRequiredArticle": "Introduzca la referencia de artículo del proveedor.",
+  "@stockRequiredArticle": {
+    "description": "#4402 the supplier article sheet: said under the article reference when it is empty (the app's own check)"
+  },
+  "stockRequiredDestination": "Elija la ubicación a la que va la mercancía, distinta de la que deja.",
+  "@stockRequiredDestination": {
+    "description": "#4402 the move sheet: said under the destination when none is chosen, or when it is the place the goods leave (the app's own check)"
+  },
+  "stockRequiredItem": "Elija un artículo.",
+  "@stockRequiredItem": {
+    "description": "#4402 a stock sheet: said under the item field when no item is chosen yet (the app's own check, not a refusal of the server)"
+  },
+  "stockRequiredPlace": "Elija una ubicación.",
+  "@stockRequiredPlace": {
+    "description": "#4402 a stock sheet: said under a place field when no place is chosen yet (the app's own check, not a refusal of the server)"
+  },
+  "stockRequiredSite": "Elija un sitio.",
+  "@stockRequiredSite": {
+    "description": "#4402 the reorder point sheet: said under the site when none is chosen yet (the app's own check, not a refusal of the server)"
+  },
+  "stockRequiredSupplier": "Elija un proveedor.",
+  "@stockRequiredSupplier": {
+    "description": "#4402 the supplier article sheet: said under the supplier when none is chosen yet (the app's own check)"
+  },
   "stockReversalBackTo": "Las mercancías vuelven a",
   "stockReversalCorrectionOpen": "Corregir este movimiento",
   "stockReversalCorrectionTitle": "Corregir un movimiento",
@@ -22207,18 +22303,15 @@
   "@stockSettingsValues": {
     "description": "the stock pages and group (#4299)"
   },
+  "stockStateUnknown": "Desconocido para esta aplicación",
   "stockStoredLabel": "Guardado",
   "stockTabMovements": "Movimientos",
   "stockTabOnHand": "En existencias",
   "stockTagBoundElsewhere": "Esta etiqueta ya está asociada a {owner}.",
   "stockTagKindNfc": "Chip NFC",
   "stockTagKindUhf": "Etiqueta UHF",
-  "stockTagMalformed": "Ese no es un código de etiqueta válido.",
-  "stockTagModeNone": "Este artículo no usa etiquetas.",
   "stockTagNotInForce": "Esta no es una etiqueta en uso aquí.",
   "stockTagOnPiece": "Esta etiqueta está en una pieza que sigue en stock.",
-  "stockTagOwnerUnknown": "Este artículo o ubicación no se conoce.",
-  "stockTagPerUnit": "Este artículo se etiqueta pieza a pieza: etiquete sus piezas al recibirlas.",
   "stockTagPiece": "Pieza {number}",
   "@stockTagPiece": {
     "description": "#4362 G13 tags: the name of one piece in the list of pieces",
@@ -22507,6 +22600,14 @@
   "subprocessReportDesignDesc": "Diseñar informes y mantener sus textos y diseños.",
   "subprocessReservations": "Reservar puestos y espacios",
   "subprocessReservationsDesc": "Reservar puestos o espacios completos según las reglas.",
+  "subprocessStockControl": "Recuentos y reposición",
+  "subprocessStockControlDesc": "Contar existencias, programar recuentos cíclicos y reponer a tiempo.",
+  "subprocessStockItems": "Artículos y unidades",
+  "subprocessStockItemsDesc": "Artículos, grupos de artículos, unidades de medida y unidades de manipulación.",
+  "subprocessStockMovements": "Recepción y movimientos",
+  "subprocessStockMovementsDesc": "Recibir entregas, retirar mercancías y gestionar devoluciones.",
+  "subprocessStockTracking": "Trazabilidad",
+  "subprocessStockTrackingDesc": "Lotes, caducidad, escaneo y etiquetas que rastrean cada pieza.",
   "subprocessStructure": "Estructura del espacio",
   "subprocessStructureDesc": "Gestionar sedes y disponibilidad de elementos del plano.",
   "subprocessTax": "Gestión del IVA",
@@ -22690,10 +22791,6 @@
   "suppliersArchivedTag": "archivado",
   "@suppliersArchivedTag": {
     "description": "#2567 suppliers"
-  },
-  "suppliersBalanceUnavailable": "Saldo no disponible",
-  "@suppliersBalanceUnavailable": {
-    "description": "#3070 supplier outstanding balance"
   },
   "suppliersBank": "Datos bancarios",
   "@suppliersBank": {
@@ -22918,6 +23015,7 @@
   "supplyClassLabel": "Lugar de prestación",
   "supplyClassProperty": "Vinculado a los locales",
   "supplyClassPropertyMeaning": "Tributa donde están los locales.",
+  "supplyClassUnknown": "Una clase que esta app aún no conoce: se conserva tal como la tiene el servidor",
   "supportChanged": "El contexto cambió. Prepare una nueva vista previa.",
   "supportDay": "Últimas 24 horas",
   "supportDemo": "Demo: contexto local simulado",
@@ -23745,10 +23843,6 @@
     "description": "#2477 tax reference: Field: label of a rate."
   },
   "taxRefLanguages": "Idiomas oficiales (ISO 639-1, el habitual primero)",
-  "taxRefLoadFailed": "No se pudieron cargar los datos de referencia.",
-  "@taxRefLoadFailed": {
-    "description": "#2477 tax reference: error text when the list cannot load."
-  },
   "taxRefMemberEmpty": "Un Estado miembro no tiene más campos.",
   "@taxRefMemberEmpty": {
     "description": "#2477 tax reference: Hint in the form of an EU member."
@@ -23912,7 +24006,6 @@
   "templateWidenCount": "{count, plural, one{1 ajuste pasa a ser legible, tal como lo contiene ahora la plantilla.} other{{count} ajustes pasan a ser legibles, tal como los contiene ahora la plantilla.}}",
   "templateWidenExcluded": "{count, plural, one{1 tipo de valor nunca sale con ella (datos bancarios, sedes, direcciones…).} other{{count} tipos de valores nunca salen con ella (datos bancarios, sedes, direcciones…).}}",
   "templateWidenTitle": "¿Hacer esta plantilla legible para: {audience}?",
-  "templatesLoadFailed": "No se pudieron cargar las plantillas.",
   "themeDark": "Oscuro",
   "themeLight": "Claro",
   "themeSystem": "Predeterminado del sistema",
@@ -24230,12 +24323,12 @@
   "tillReceiptCorrects": "Corrige el ticket {number}",
   "tillReceiptDisagrees": "Los importes de este ticket no concuerdan entre sí. Se muestra tal como se fijó; avise a su administración.",
   "tillReceiptIssuedUnder": "Emitido según: {specification} ({version})",
-  "tillReceiptLine": "{label}: {quantity} {unit}",
+  "tillReceiptLine": "{label}: {quantity} {unit}  {amount}",
   "tillReceiptNumber": "Ticket {number}",
   "tillReceiptPrintNote": "No hay ninguna impresora de tickets conectada a la aplicación: imprima desde el menú de compartir.",
   "tillReceiptShare": "Compartir el ticket",
   "tillReceiptShow": "Mostrar el ticket",
-  "tillReceiptTaxLine": "IVA {percent} %: {tax} sobre {net}",
+  "tillReceiptTaxLine": "IVA {percent}: {tax} sobre {net}",
   "tillReceiptTotal": "Total {amount}",
   "tillReceiptUnreadable": "Este ticket lo escribió una versión más reciente de DesKilo: actualice la aplicación para leerlo.",
   "tillRemoveLine": "Quitar {name} de la cesta",
@@ -24809,10 +24902,6 @@
         "type": "String"
       }
     }
-  },
-  "valuationLoadFailed": "No se pudieron cargar las valoraciones.",
-  "@valuationLoadFailed": {
-    "description": "#2576 accountant valuations"
   },
   "valuationManual": "Introducir un bien",
   "@valuationManual": {
@@ -25637,18 +25726,9 @@
       }
     }
   },
-  "visibilityOnServerUnavailable": "{host} no respondió. Inténtelo más tarde.",
-  "@visibilityOnServerUnavailable": {
-    "placeholders": {
-      "host": {
-        "type": "String"
-      }
-    }
-  },
   "visibilityPresence": "Hoy en el lugar",
   "visibilityPreviewCanWrite": "Puede iniciar una conversación con usted",
   "visibilityPreviewCannotWrite": "No puede iniciar una conversación con usted",
-  "visibilityPreviewFailed": "No se pudo cargar la vista previa.",
   "visibilityPreviewMySpaces": "Un miembro de mis lugares",
   "visibilityPreviewNobody": "Solo yo",
   "visibilityPreviewNothing": "No ven nada de usted.",
@@ -25665,9 +25745,7 @@
   "visibilitySpaceOnServer": "en el servidor {installation}",
   "visibilitySpaceUnlisted": "Un lugar que ya no aparece en la lista",
   "visibilitySpaceUnverified": "Verificación no disponible",
-  "visibilitySpacesUnavailable": "Sus lugares no se pueden listar ahora.",
   "visibilityTitle": "Quién me ve",
-  "visibilityUnavailable": "No se puede leer ahora quién ve qué de usted. No se ha cambiado nada.",
   "visibilityUnconfirmedTitle": "No se ha podido confirmar su cambio",
   "visibilityUnsupported": "Su hogar personal aún no puede guardar este ajuste: quienes lo gestionan deben actualizarlo. No se ha cambiado nada.",
   "visibilityWidenAction": "Ampliar",

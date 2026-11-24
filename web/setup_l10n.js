@@ -745,6 +745,12 @@ window.SETUP_L10N={
    "fedFactBatchHint": "The most membership facts a workspace server sends to its personal home in one minute. A server renews each live relationship once per identity status refresh, so it keeps up with this number times the refresh seconds divided by 60 relationships (500 and 300 seconds: 2,500). Raise it when the instance doctor reports a delivery backlog. Set in the app's settings.",
    "appSupportWindow": "Support window for older apps",
    "appSupportWindowHint": "How many days an older app stays accepted after a newer one is available on the slowest channel you distribute it through. The oldest app the installation accepts is raised only after this window, so every member has time to update. Set in the app's settings.",
+   "traceReportsPerHour": "Error reports per person and hour",
+   "traceReportsPerHourHint": "How many error reports one signed-in person may send to this installation in an hour, from all their devices together. Further reports in that hour are dropped. None turns error reports off. Set in the app's settings.",
+   "traceReportMaxBytes": "Largest error report",
+   "traceReportMaxBytesHint": "The largest error report this installation accepts; the app shortens a report's stack to fit. Set in the app's settings.",
+   "traceReportRetention": "Error reports kept for",
+   "traceReportRetentionHint": "How long this installation keeps an error report before deleting it. Set in the app's settings.",
    "supLookupWait": "Supplier lookup wait",
    "supLookupWaitHint": "How long the server waits for the company registry (VIES) when someone looks up a supplier's VAT number, before it says the registry did not answer. Set in the app's settings.",
    "supLookupRate": "Supplier lookups per minute",
@@ -887,7 +893,12 @@ window.SETUP_L10N={
    "counterPaidOutLimitHint": "A paid-out above this needs someone who may record outgoing payments. Set in the app's settings.",
    "counterCashReasons": "Reasons for cash in and out",
    "counterCashReasonsHint": "Separated by commas, for example change, expense, other. Set in the app's settings.",
-   "optNoLimit": "No limit"
+   "optNoLimit": "No limit",
+   "optPerHour": "{n} per hour",
+   "optPerHourDefault": "{n} per hour (default)",
+   "optKilobytes": "{n} KB",
+   "optKilobytesDefault": "{n} KB (default)",
+   "optReportsOff": "None (error reports off)"
   },
   "feature": {
    "calendarTab": [
@@ -1605,6 +1616,10 @@ window.SETUP_L10N={
    "counterOfflineCash": [
     "Selling offline, cash only",
     "When the connection is lost the till keeps selling for cash, records each sale on the device and sends the sales in order once the connection returns. Other ways to pay wait for the connection."
+   ],
+   "unitsOfMeasure": [
+    "Units of measure",
+    "The owner and the admins keep the business's own units of measure and their conversions (1 km = 1000 m, 1 kg = 1000 g). Items, quotes and invoices are measured in them. The built-in units are always there; switching this on adds the screen to maintain them."
    ]
   },
   "process": {
@@ -1627,6 +1642,10 @@ window.SETUP_L10N={
    "membershipCommerce": [
     "Membership commerce",
     "Set service prices and member agreements."
+   ],
+   "goodsStock": [
+    "Goods & stock",
+    "Keep, move, count and trace the goods the business sells."
    ],
    "billingPayments": [
     "Billing & payments",
@@ -1689,6 +1708,22 @@ window.SETUP_L10N={
    "pricing": [
     "Services & pricing",
     "Price services and accessories and agree member terms."
+   ],
+   "stockItems": [
+    "Items and units",
+    "Items, item groups, units of measure and handling units."
+   ],
+   "stockMovements": [
+    "Receiving and movements",
+    "Receive deliveries, take goods out and handle returns."
+   ],
+   "stockControl": [
+    "Counts and replenishment",
+    "Count stock, schedule cycle counts and reorder in time."
+   ],
+   "stockTracking": [
+    "Traceability",
+    "Lots, expiry, scanning and tags that trace each piece."
    ],
    "records": [
     "Financial records",
@@ -2747,6 +2782,12 @@ window.SETUP_L10N={
    "fedFactBatchHint": "Le nombre maximal de faits d'adhésion qu'un serveur d'espaces envoie à son domicile personnel en une minute. Un serveur renouvelle chaque relation vivante une fois par actualisation du statut d'identité : il suit au plus ce nombre multiplié par les secondes d'actualisation divisées par 60 relations (500 et 300 secondes : 2 500). Augmentez-le quand le médecin d'instance signale un retard d'envoi. Se règle dans les paramètres de l'app.",
    "appSupportWindow": "Délai de prise en charge des anciennes applications",
    "appSupportWindowHint": "Combien de jours une ancienne application reste acceptée après qu'une plus récente est disponible sur le canal de distribution le plus lent. L'application la plus ancienne acceptée par l'installation n'est relevée qu'après ce délai, pour que chaque membre ait le temps de la mettre à jour. Se règle dans les paramètres de l'app.",
+   "traceReportsPerHour": "Rapports d'erreur par personne et par heure",
+   "traceReportsPerHourHint": "Combien de rapports d'erreur une personne connectée peut envoyer à cette installation en une heure, tous ses appareils confondus. Les rapports suivants de cette heure sont abandonnés. Aucun désactive les rapports d'erreur. Se règle dans les paramètres de l'app.",
+   "traceReportMaxBytes": "Taille maximale d'un rapport d'erreur",
+   "traceReportMaxBytesHint": "Le plus grand rapport d'erreur que cette installation accepte ; l'application raccourcit la pile d'un rapport pour qu'il tienne. Se règle dans les paramètres de l'app.",
+   "traceReportRetention": "Durée de conservation des rapports d'erreur",
+   "traceReportRetentionHint": "Combien de temps cette installation conserve un rapport d'erreur avant de le supprimer. Se règle dans les paramètres de l'app.",
    "supLookupWait": "Attente de la recherche fournisseur",
    "supLookupWaitHint": "Durée pendant laquelle le serveur attend le registre des sociétés (VIES) quand quelqu'un recherche le numéro de TVA d'un fournisseur, avant d'indiquer que le registre n'a pas répondu. Se règle dans les paramètres de l'app.",
    "supLookupRate": "Recherches fournisseur par minute",
@@ -2889,7 +2930,12 @@ window.SETUP_L10N={
    "counterPaidOutLimitHint": "Un retrait au-delà exige une personne pouvant enregistrer des paiements sortants. Réglé dans les paramètres de l'app.",
    "counterCashReasons": "Motifs des entrées et sorties d'espèces",
    "counterCashReasonsHint": "Séparés par des virgules, par exemple monnaie, dépense, autre. Réglé dans les paramètres de l'app.",
-   "optNoLimit": "Aucune limite"
+   "optNoLimit": "Aucune limite",
+   "optPerHour": "{n} par heure",
+   "optPerHourDefault": "{n} par heure (par défaut)",
+   "optKilobytes": "{n} Ko",
+   "optKilobytesDefault": "{n} Ko (par défaut)",
+   "optReportsOff": "Aucun (rapports d'erreur désactivés)"
   },
   "feature": {
    "calendarTab": [
@@ -3607,6 +3653,10 @@ window.SETUP_L10N={
    "counterOfflineCash": [
     "Vendre hors ligne, en espèces seulement",
     "Quand la connexion est perdue, la caisse continue de vendre en espèces, enregistre chaque vente sur l'appareil et envoie les ventes dans l'ordre au retour de la connexion. Les autres moyens de paiement attendent la connexion."
+   ],
+   "unitsOfMeasure": [
+    "Unités de mesure",
+    "Le propriétaire et les administrateurs tiennent les unités de mesure de l’entreprise et leurs conversions (1 km = 1000 m, 1 kg = 1000 g). Les articles, les devis et les factures sont mesurés avec elles. Les unités de base sont toujours là ; activer cette option ajoute l’écran pour les gérer."
    ]
   },
   "process": {
@@ -3629,6 +3679,10 @@ window.SETUP_L10N={
    "membershipCommerce": [
     "Offres aux membres",
     "Définir les prix des services et les accords avec les membres."
+   ],
+   "goodsStock": [
+    "Marchandises et stock",
+    "Tenir, déplacer, compter et tracer les marchandises vendues."
    ],
    "billingPayments": [
     "Facturation et paiements",
@@ -3691,6 +3745,22 @@ window.SETUP_L10N={
    "pricing": [
     "Services et tarification",
     "Tarifer les services et accessoires et convenir des conditions des membres."
+   ],
+   "stockItems": [
+    "Articles et unités",
+    "Articles, groupes d'articles, unités de mesure et unités de manutention."
+   ],
+   "stockMovements": [
+    "Réception et mouvements",
+    "Recevoir les livraisons, sortir des marchandises et gérer les retours."
+   ],
+   "stockControl": [
+    "Inventaires et réapprovisionnement",
+    "Compter le stock, planifier les inventaires tournants et réapprovisionner à temps."
+   ],
+   "stockTracking": [
+    "Traçabilité",
+    "Lots, péremption, scan et étiquettes qui tracent chaque pièce."
    ],
    "records": [
     "Suivi financier",
@@ -4749,6 +4819,12 @@ window.SETUP_L10N={
    "fedFactBatchHint": "Die höchste Zahl an Mitgliedschaftsfakten, die ein Arbeitsbereichs-Server in einer Minute an sein persönliches Zuhause sendet. Ein Server erneuert jede lebende Beziehung einmal je Aktualisierung des Identitätsstatus; er schafft höchstens diese Zahl mal die Aktualisierungssekunden geteilt durch 60 Beziehungen (500 und 300 Sekunden: 2.500). Erhöhen Sie sie, wenn der Instanz-Doktor einen Sendestau meldet. Einstellbar in den Einstellungen der App.",
    "appSupportWindow": "Unterstützungsfrist für ältere Apps",
    "appSupportWindowHint": "Wie viele Tage eine ältere App angenommen bleibt, nachdem eine neuere auf dem langsamsten Vertriebskanal verfügbar ist. Die älteste App, die die Installation annimmt, wird erst nach dieser Frist angehoben, damit jedes Mitglied Zeit zum Aktualisieren hat. Einstellbar in den Einstellungen der App.",
+   "traceReportsPerHour": "Fehlerberichte pro Person und Stunde",
+   "traceReportsPerHourHint": "Wie viele Fehlerberichte eine angemeldete Person in einer Stunde an diese Installation senden darf, über alle ihre Geräte zusammen. Weitere Berichte in dieser Stunde werden verworfen. Keine schaltet Fehlerberichte ab. Einstellbar in den Einstellungen der App.",
+   "traceReportMaxBytes": "Größter Fehlerbericht",
+   "traceReportMaxBytesHint": "Der größte Fehlerbericht, den diese Installation annimmt; die App kürzt den Stack eines Berichts, bis er passt. Einstellbar in den Einstellungen der App.",
+   "traceReportRetention": "Fehlerberichte aufbewahren für",
+   "traceReportRetentionHint": "Wie lange diese Installation einen Fehlerbericht aufbewahrt, bevor sie ihn löscht. Einstellbar in den Einstellungen der App.",
    "supLookupWait": "Wartezeit der Lieferantensuche",
    "supLookupWaitHint": "Wie lange der Server auf das Unternehmensregister (VIES) wartet, wenn jemand die USt-IdNr. eines Lieferanten sucht, bevor er meldet, dass das Register nicht geantwortet hat. Wird in den Einstellungen der App festgelegt.",
    "supLookupRate": "Lieferantensuchen pro Minute",
@@ -4891,7 +4967,12 @@ window.SETUP_L10N={
    "counterPaidOutLimitHint": "Eine Entnahme darüber braucht jemanden, der ausgehende Zahlungen erfassen darf. Einzustellen in den Einstellungen der App.",
    "counterCashReasons": "Gründe für Bargeld ein und aus",
    "counterCashReasonsHint": "Durch Kommas getrennt, zum Beispiel Wechselgeld, Ausgabe, sonstiges. Einzustellen in den Einstellungen der App.",
-   "optNoLimit": "Keine Grenze"
+   "optNoLimit": "Keine Grenze",
+   "optPerHour": "{n} pro Stunde",
+   "optPerHourDefault": "{n} pro Stunde (Standard)",
+   "optKilobytes": "{n} KB",
+   "optKilobytesDefault": "{n} KB (Standard)",
+   "optReportsOff": "Keine (Fehlerberichte aus)"
   },
   "feature": {
    "calendarTab": [
@@ -5609,6 +5690,10 @@ window.SETUP_L10N={
    "counterOfflineCash": [
     "Offline verkaufen, nur bar",
     "Bei verlorener Verbindung verkauft die Kasse weiter gegen Bargeld, speichert jeden Verkauf auf dem Gerät und sendet die Verkäufe der Reihe nach, sobald die Verbindung zurück ist. Andere Zahlarten warten auf die Verbindung."
+   ],
+   "unitsOfMeasure": [
+    "Maßeinheiten",
+    "Inhaber und Administratoren pflegen die eigenen Maßeinheiten des Betriebs und ihre Umrechnungen (1 km = 1000 m, 1 kg = 1000 g). Artikel, Angebote und Rechnungen werden darin gemessen. Die Standardeinheiten sind immer vorhanden; mit dieser Option erscheint die Seite, auf der sie gepflegt werden."
    ]
   },
   "process": {
@@ -5631,6 +5716,10 @@ window.SETUP_L10N={
    "membershipCommerce": [
     "Mitgliedschaftsangebote",
     "Leistungspreise und Mitgliedsvereinbarungen festlegen."
+   ],
+   "goodsStock": [
+    "Waren und Lager",
+    "Die verkauften Waren führen, bewegen, zählen und zurückverfolgen."
    ],
    "billingPayments": [
     "Abrechnung und Zahlungen",
@@ -5693,6 +5782,22 @@ window.SETUP_L10N={
    "pricing": [
     "Leistungen und Preise",
     "Leistungen und Zubehör bepreisen und Mitgliedskonditionen vereinbaren."
+   ],
+   "stockItems": [
+    "Artikel und Einheiten",
+    "Artikel, Artikelgruppen, Maßeinheiten und Handhabungseinheiten."
+   ],
+   "stockMovements": [
+    "Wareneingang und Bewegungen",
+    "Lieferungen annehmen, Waren entnehmen und Rücknahmen abwickeln."
+   ],
+   "stockControl": [
+    "Zählungen und Nachbestellung",
+    "Bestand zählen, Stichtagszählungen planen und rechtzeitig nachbestellen."
+   ],
+   "stockTracking": [
+    "Rückverfolgbarkeit",
+    "Chargen, Verfall, Scannen und Tags, die jedes Stück zurückverfolgen."
    ],
    "records": [
     "Finanzübersicht",
@@ -6751,6 +6856,12 @@ window.SETUP_L10N={
    "fedFactBatchHint": "El máximo de hechos de pertenencia que un servidor de espacios envía a su hogar personal en un minuto. Un servidor renueva cada relación viva una vez por actualización del estado de identidad: soporta como mucho este número multiplicado por los segundos de actualización divididos entre 60 relaciones (500 y 300 segundos: 2.500). Súbalo cuando el doctor de la instancia avise de un atraso de envío. Se ajusta en los ajustes de la app.",
    "appSupportWindow": "Plazo de soporte de las aplicaciones antiguas",
    "appSupportWindowHint": "Cuántos días sigue aceptada una aplicación antigua después de que haya una más reciente disponible en el canal de distribución más lento. La aplicación más antigua que acepta la instalación solo se eleva tras este plazo, para que cada miembro tenga tiempo de actualizarla. Se ajusta en los ajustes de la app.",
+   "traceReportsPerHour": "Informes de error por persona y hora",
+   "traceReportsPerHourHint": "Cuántos informes de error puede enviar una persona con sesión iniciada a esta instalación en una hora, sumando todos sus dispositivos. Los siguientes de esa hora se descartan. Ninguno desactiva los informes de error. Se ajusta en los ajustes de la app.",
+   "traceReportMaxBytes": "Tamaño máximo de un informe de error",
+   "traceReportMaxBytesHint": "El mayor informe de error que acepta esta instalación; la app acorta la pila de un informe para que quepa. Se ajusta en los ajustes de la app.",
+   "traceReportRetention": "Conservar los informes de error durante",
+   "traceReportRetentionHint": "Cuánto tiempo conserva esta instalación un informe de error antes de borrarlo. Se ajusta en los ajustes de la app.",
    "supLookupWait": "Espera de la búsqueda de proveedores",
    "supLookupWaitHint": "Cuánto espera el servidor al registro de empresas (VIES) cuando alguien busca el número de IVA de un proveedor, antes de indicar que el registro no respondió. Se ajusta en la configuración de la app.",
    "supLookupRate": "Búsquedas de proveedores por minuto",
@@ -6893,7 +7004,12 @@ window.SETUP_L10N={
    "counterPaidOutLimitHint": "Una salida por encima necesita a alguien que pueda registrar pagos salientes. Se ajusta en los ajustes de la app.",
    "counterCashReasons": "Motivos de entradas y salidas de efectivo",
    "counterCashReasonsHint": "Separados por comas, por ejemplo cambio, gasto, otro. Se ajusta en los ajustes de la app.",
-   "optNoLimit": "Sin límite"
+   "optNoLimit": "Sin límite",
+   "optPerHour": "{n} por hora",
+   "optPerHourDefault": "{n} por hora (por defecto)",
+   "optKilobytes": "{n} KB",
+   "optKilobytesDefault": "{n} KB (por defecto)",
+   "optReportsOff": "Ninguno (informes de error desactivados)"
   },
   "feature": {
    "calendarTab": [
@@ -7611,6 +7727,10 @@ window.SETUP_L10N={
    "counterOfflineCash": [
     "Vender sin conexión, solo en efectivo",
     "Si se pierde la conexión, la caja sigue vendiendo en efectivo, guarda cada venta en el dispositivo y envía las ventas en orden cuando vuelve la conexión. Los demás medios de pago esperan la conexión."
+   ],
+   "unitsOfMeasure": [
+    "Unidades de medida",
+    "El propietario y los administradores mantienen las unidades de medida del negocio y sus conversiones (1 km = 1000 m, 1 kg = 1000 g). Los artículos, los presupuestos y las facturas se miden con ellas. Las unidades básicas siempre están; al activar esta opción aparece la pantalla para mantenerlas."
    ]
   },
   "process": {
@@ -7633,6 +7753,10 @@ window.SETUP_L10N={
    "membershipCommerce": [
     "Ofertas para miembros",
     "Definir precios de servicios y acuerdos con los miembros."
+   ],
+   "goodsStock": [
+    "Mercancías y existencias",
+    "Llevar, mover, contar y rastrear las mercancías que se venden."
    ],
    "billingPayments": [
     "Facturación y pagos",
@@ -7695,6 +7819,22 @@ window.SETUP_L10N={
    "pricing": [
     "Servicios y precios",
     "Fijar precios de servicios y accesorios y acordar condiciones."
+   ],
+   "stockItems": [
+    "Artículos y unidades",
+    "Artículos, grupos de artículos, unidades de medida y unidades de manipulación."
+   ],
+   "stockMovements": [
+    "Recepción y movimientos",
+    "Recibir entregas, retirar mercancías y gestionar devoluciones."
+   ],
+   "stockControl": [
+    "Recuentos y reposición",
+    "Contar existencias, programar recuentos cíclicos y reponer a tiempo."
+   ],
+   "stockTracking": [
+    "Trazabilidad",
+    "Lotes, caducidad, escaneo y etiquetas que rastrean cada pieza."
    ],
    "records": [
     "Registros financieros",
@@ -8753,6 +8893,12 @@ window.SETUP_L10N={
    "fedFactBatchHint": "Il numero massimo di fatti di appartenenza che un server di spazi invia al proprio domicilio personale in un minuto. Un server rinnova ogni relazione attiva una volta per aggiornamento dello stato di identità: regge al massimo questo numero per i secondi di aggiornamento divisi per 60 relazioni (500 e 300 secondi: 2.500). Lo aumenti quando il medico dell'istanza segnala un ritardo di invio. Si imposta nelle impostazioni dell'app.",
    "appSupportWindow": "Periodo di supporto delle app precedenti",
    "appSupportWindowHint": "Quanti giorni un'app precedente resta accettata dopo che una più recente è disponibile sul canale di distribuzione più lento. L'app più vecchia accettata dall'installazione viene alzata solo dopo questo periodo, così ogni membro ha il tempo di aggiornarla. Si imposta nelle impostazioni dell'app.",
+   "traceReportsPerHour": "Segnalazioni di errore per persona e ora",
+   "traceReportsPerHourHint": "Quante segnalazioni di errore una persona connessa può inviare a questa installazione in un'ora, da tutti i suoi dispositivi insieme. Le successive di quell'ora vengono scartate. Nessuna disattiva le segnalazioni di errore. Si imposta nelle impostazioni dell'app.",
+   "traceReportMaxBytes": "Dimensione massima di una segnalazione di errore",
+   "traceReportMaxBytesHint": "La segnalazione di errore più grande che questa installazione accetta; l'app accorcia lo stack di una segnalazione perché ci stia. Si imposta nelle impostazioni dell'app.",
+   "traceReportRetention": "Conservare le segnalazioni di errore per",
+   "traceReportRetentionHint": "Per quanto tempo questa installazione conserva una segnalazione di errore prima di eliminarla. Si imposta nelle impostazioni dell'app.",
    "supLookupWait": "Attesa della ricerca fornitore",
    "supLookupWaitHint": "Quanto il server attende il registro delle imprese (VIES) quando qualcuno cerca la partita IVA di un fornitore, prima di indicare che il registro non ha risposto. Si imposta nelle impostazioni dell'app.",
    "supLookupRate": "Ricerche fornitore al minuto",
@@ -8895,7 +9041,12 @@ window.SETUP_L10N={
    "counterPaidOutLimitHint": "Un prelievo oltre questo richiede qualcuno che possa registrare pagamenti in uscita. Si imposta nelle impostazioni dell'app.",
    "counterCashReasons": "Motivi di entrate e uscite di contante",
    "counterCashReasonsHint": "Separati da virgole, per esempio resto, spesa, altro. Si imposta nelle impostazioni dell'app.",
-   "optNoLimit": "Nessun limite"
+   "optNoLimit": "Nessun limite",
+   "optPerHour": "{n} all'ora",
+   "optPerHourDefault": "{n} all'ora (predefinito)",
+   "optKilobytes": "{n} KB",
+   "optKilobytesDefault": "{n} KB (predefinito)",
+   "optReportsOff": "Nessuna (segnalazioni di errore disattivate)"
   },
   "feature": {
    "calendarTab": [
@@ -9613,6 +9764,10 @@ window.SETUP_L10N={
    "counterOfflineCash": [
     "Vendere offline, solo in contanti",
     "Quando la connessione cade, la cassa continua a vendere in contanti, registra ogni vendita sul dispositivo e invia le vendite in ordine al ritorno della connessione. Gli altri metodi di pagamento attendono la connessione."
+   ],
+   "unitsOfMeasure": [
+    "Unità di misura",
+    "Il titolare e gli amministratori gestiscono le unità di misura dell’attività e le loro conversioni (1 km = 1000 m, 1 kg = 1000 g). Articoli, preventivi e fatture sono misurati con esse. Le unità di base ci sono sempre; attivando questa opzione compare la schermata per gestirle."
    ]
   },
   "process": {
@@ -9635,6 +9790,10 @@ window.SETUP_L10N={
    "membershipCommerce": [
     "Offerte per i membri",
     "Definire prezzi dei servizi e accordi con i membri."
+   ],
+   "goodsStock": [
+    "Merci e magazzino",
+    "Tenere, spostare, contare e tracciare le merci vendute."
    ],
    "billingPayments": [
     "Fatturazione e pagamenti",
@@ -9697,6 +9856,22 @@ window.SETUP_L10N={
    "pricing": [
     "Servizi e prezzi",
     "Definire prezzi di servizi e accessori e concordare le condizioni."
+   ],
+   "stockItems": [
+    "Articoli e unità",
+    "Articoli, gruppi di articoli, unità di misura e unità di movimentazione."
+   ],
+   "stockMovements": [
+    "Ricezione e movimenti",
+    "Ricevere le consegne, prelevare merci e gestire i resi."
+   ],
+   "stockControl": [
+    "Conteggi e rifornimento",
+    "Contare le giacenze, pianificare i conteggi ciclici e riordinare per tempo."
+   ],
+   "stockTracking": [
+    "Tracciabilità",
+    "Lotti, scadenza, scansione ed etichette che tracciano ogni pezzo."
    ],
    "records": [
     "Registrazioni finanziarie",

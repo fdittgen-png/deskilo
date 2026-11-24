@@ -95,7 +95,6 @@ enum WorkspaceFeature {
   vatReport,
   letterStandard,
   priceNegotiations,
-
   /// #767 — recurring scheduled expenses (internet, phone, electricity): each due occurrence is presented to the member.
   scheduledExpenses,
 
@@ -433,7 +432,6 @@ enum WorkspaceFeature {
   serviceFulfilment,
   /// #4294 — reorder points and low-stock alerts (feature_manifest_stock.dart).
   stockReorder,
-
   /// #4172 returns and corrections, counts; #4295 cycle counts (feature_manifest_stock.dart).
   stockReturns,
   stockCounts,
@@ -447,7 +445,9 @@ enum WorkspaceFeature {
   stockTagReads,
   stockExpiryReport,
   stockHandlingUnits,
-  counterOfflineCash;
+  counterOfflineCash,
+  /// #4442 the units of measure of a business and their conversions (feature_manifest_stock.dart).
+  unitsOfMeasure;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;

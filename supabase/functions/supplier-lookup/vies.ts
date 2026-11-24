@@ -10,6 +10,7 @@
 // asked for (that is the invoice flow's job, vies-check).
 
 import type { Adapter, LookupOptions, LookupRequest, LookupResult } from "./contract.ts";
+import { logLine } from "../_shared/log.ts";
 
 const VIES_URL =
   "https://ec.europa.eu/taxation_customs/vies/rest-api/check-vat-number";
@@ -155,7 +156,7 @@ export async function askVies(
   } catch (error) {
     const aborted = error instanceof DOMException && error.name === "AbortError";
     // The failure class is logged, never the identifier that was asked.
-    console.warn(`supplier-lookup: VIES ${aborted ? "timed out" : "did not answer"}`);
+    logLine("warn", "supplier-lookup", aborted ? "vies_timeout" : "vies_no_answer");
     return failure(aborted ? "timeout" : "unavailable", aborted ? "timeout" : "no answer");
   } finally {
     clearTimeout(timer);

@@ -36,10 +36,6 @@
   "@billingCustomersSearch": {
     "description": "the billing customers screen and editor (#4164)"
   },
-  "billingCustomersLoadFailed": "The customers could not be read. This is not an empty list.",
-  "@billingCustomersLoadFailed": {
-    "description": "the billing customers screen and editor (#4164)"
-  },
   "billingCustomersUnavailable": "Billing customers are not available on this installation yet. Nothing was changed.",
   "@billingCustomersUnavailable": {
     "description": "the billing customers screen and editor (#4164)"

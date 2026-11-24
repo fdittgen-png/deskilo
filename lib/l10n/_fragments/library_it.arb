@@ -45,7 +45,6 @@
   "libraryNotSupported": "Questo modello non può essere applicato qui.",
   "libraryPartial": "Una parte di questo modello non può essere applicata qui e viene esclusa.",
   "libraryNothingToApply": "Tutto ciò che porta questo modello è già qui.",
-  "libraryPreviewFailed": "Non è stato possibile mostrare le modifiche. Non è stato applicato nulla.",
   "libraryPublishGroups": "Cosa viaggia",
   "libraryNeverPublished": "Mai pubblicato",
   "libraryNeverSites": "Le sedi e i loro indirizzi",
@@ -121,7 +120,6 @@
   "@libraryProcessTechnical": {
     "description": "Template apply preview (#1330): the heading for reserved capabilities no process lists"
   },
-  "templatesLoadFailed": "Non è stato possibile caricare i modelli.",
   "onboardingTemplatesFailedEmpty": "Non è stato possibile caricare i modelli, quindi questo spazio partirebbe vuoto. Torni indietro per riprovare.",
   "templateResultCount": "{count, plural, =0{Nessun modello mostrato} one{1 modello mostrato} other{{count} modelli mostrati}}"
 }

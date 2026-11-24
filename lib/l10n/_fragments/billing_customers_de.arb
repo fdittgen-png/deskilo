@@ -9,7 +9,6 @@
   "billingCustomersEmpty": "Noch keine Rechnungskunden. Legen Sie den ersten an, um ihm eine Rechnung zu stellen, ohne dass er ein Konto anlegen muss.",
   "billingCustomersAdd": "Kunden hinzufügen",
   "billingCustomersSearch": "Kunden suchen",
-  "billingCustomersLoadFailed": "Die Kunden konnten nicht gelesen werden. Das ist keine leere Liste.",
   "billingCustomersUnavailable": "Rechnungskunden sind auf dieser Installation noch nicht verfügbar. Es wurde nichts geändert.",
   "billingCustomersRetry": "Erneut versuchen",
   "billingCustomerNewTitle": "Neuer Rechnungskunde",

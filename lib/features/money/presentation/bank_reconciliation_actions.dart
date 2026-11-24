@@ -33,6 +33,7 @@ class BankReconciliationActions {
     required BankReconciliationWords words,
   }) async {
     final actorState = ref.read(authStateProvider);
+    // #4414 kept: a command's precondition, not a view
     if (actorState.isLoading || actorState.hasError) {
       throw StateError('account unavailable');
     }
@@ -41,10 +42,10 @@ class BankReconciliationActions {
       final currentActor = ref.read(authStateProvider);
       final currentWorkspace = ref.read(currentWorkspaceProvider);
       return !currentActor.isLoading &&
-          !currentActor.hasError &&
+          !currentActor.hasError && // #4414 kept: scope check
           currentActor.value == actor &&
           !currentWorkspace.isLoading &&
-          !currentWorkspace.hasError &&
+          !currentWorkspace.hasError && // #4414 kept: scope check
           currentWorkspace.value?.id == workspaceId;
     }
 

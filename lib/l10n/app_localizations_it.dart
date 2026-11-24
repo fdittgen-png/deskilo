@@ -163,10 +163,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get accountActivityEmpty => 'Nessun dato da mostrare.';
 
   @override
-  String get accountActivityFailed =>
-      'Impossibile caricare la cronologia finanziaria. Tocchi per riprovare.';
-
-  @override
   String get accountActivityScope =>
       'Tutti i suoi profili su questo server, comprese le iscrizioni precedenti. Le valute sono mostrate separatamente.';
 
@@ -805,10 +801,6 @@ class AppLocalizationsIt extends AppLocalizations {
       'Dove va la contabilità di ogni emittente. Un sistema collegato riceve i documenti da sé; gli altri ricevono i file esportati dalla contabilità. Ogni trasferimento è elencato qui sotto con l\'impronta di ciò che ha portato.';
 
   @override
-  String get acctTargetsLoadFailed =>
-      'Non è stato possibile caricare i sistemi contabili.';
-
-  @override
   String get acctTargetsNoApiTarget =>
       'Nessun sistema contabile di questo paese è ancora raggiunto da un collegamento: la contabilità parte tramite file, dall\'esportazione contabile.';
 
@@ -1124,10 +1116,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get applicationsEmpty => 'Nessuna richiesta di accesso.';
-
-  @override
-  String get applicationsLoadFailed =>
-      'Impossibile caricare le richieste di accesso. Riprovi.';
 
   @override
   String get applicationsTitle => 'Richieste di accesso';
@@ -2140,10 +2128,6 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get badgePinReviewNotice =>
       'La lunghezza di questo vecchio PIN è sconosciuta o inferiore al minimo attuale. Chiedi al membro di cambiarlo nelle proprie impostazioni. Il PIN attuale resta utilizzabile.';
-
-  @override
-  String get badgePinReviewUnavailable =>
-      'Lo stato di verifica del PIN non è disponibile. Riprova prima di presumere che rispetti il minimo attuale.';
 
   @override
   String get badgePinSaveFailed =>
@@ -5272,10 +5256,6 @@ class AppLocalizationsIt extends AppLocalizations {
       'Nessun cliente fatturato per ora. Si aggiunga il primo per fatturargli senza chiedergli di creare un account.';
 
   @override
-  String get billingCustomersLoadFailed =>
-      'Non è stato possibile leggere i clienti. Non è un elenco vuoto.';
-
-  @override
   String get billingCustomersNoAccount =>
       'Le persone e le aziende a cui si fattura. Non sono membri e non vedono nulla dell\'attività, a meno che non le si inviti a leggere le proprie fatture dal proprio account.';
 
@@ -5511,10 +5491,6 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get bookPeriodsInvalid =>
       'Scelga entrambi i giorni e indichi un motivo dove richiesto.';
-
-  @override
-  String get bookPeriodsLoadFailed =>
-      'Non è stato possibile caricare i periodi.';
 
   @override
   String get bookPeriodsNoExports => 'Ancora nessuna esportazione.';
@@ -6667,9 +6643,6 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get capacityKpiRetry => 'Riprova';
-
-  @override
   String capacityKpiRooms(String count, String reserved, String offered) {
     return 'Sale senza posti: $count, $reserved su $offered ore-sala prenotate';
   }
@@ -7128,10 +7101,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get compareTitle => 'Confronta i modelli';
 
   @override
-  String get compareUnavailable =>
-      'Non è stato possibile leggere questi modelli per confrontarli. Non si afferma nulla.';
-
-  @override
   String get compareUnknown => 'Sconosciuto';
 
   @override
@@ -7316,10 +7285,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get consentTitle => 'I suoi dati, i suoi diritti';
-
-  @override
-  String get consentUnavailable =>
-      'Impossibile caricare il suo account, quindi non c’è ancora nulla da accettare.';
 
   @override
   String get consentVersion => 'Versione';
@@ -10006,10 +9971,6 @@ class AppLocalizationsIt extends AppLocalizations {
       'Un token è salvato (digitane uno nuovo per sostituirlo).';
 
   @override
-  String get einvoiceConfigUnavailable =>
-      'Impossibile caricare la configurazione della piattaforma. Controlli la connessione e riprovi.';
-
-  @override
   String get einvoiceCustomerSectionHelp =>
       'Dove vanno le fatture per il cliente: il suo punto di accesso Peppol, il portale o l’API concordata — separato dalla piattaforma governativa.';
 
@@ -10256,10 +10217,6 @@ class AppLocalizationsIt extends AppLocalizations {
       'Seguite ogni servizio ordinato: ordinato, avviato, concluso. Il preventivo, la fattura e i pagamenti restano invariati accanto.';
 
   @override
-  String get engagementsLoadFailed =>
-      'Non è stato possibile leggere i servizi. Non è un elenco vuoto.';
-
-  @override
   String get engagementsNew => 'Nuovo servizio';
 
   @override
@@ -10405,9 +10362,6 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get equipmentInvalid =>
       'Scelga una riga d\'acquisto e, per una decisione, ne indichi il fondamento.';
-
-  @override
-  String get equipmentLoadFailed => 'Impossibile caricare le attrezzature.';
 
   @override
   String get equipmentRegister => 'Registra un\'attrezzatura';
@@ -13201,6 +13155,13 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get featureUniqueMonogramsTitle => 'Iniziali avatar distinte';
+
+  @override
+  String get featureUnitsOfMeasureDesc =>
+      'Il titolare e gli amministratori gestiscono le unità di misura dell’attività e le loro conversioni (1 km = 1000 m, 1 kg = 1000 g). Articoli, preventivi e fatture sono misurati con esse. Le unità di base ci sono sempre; attivando questa opzione compare la schermata per gestirle.';
+
+  @override
+  String get featureUnitsOfMeasureTitle => 'Unità di misura';
 
   @override
   String get featureUsageInvoicesDesc =>
@@ -16366,6 +16327,37 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questo progetto non risponde ancora come un\'installazione Deskilo. Installi prima lo schema.';
 
   @override
+  String instanceErrorReportCode(String code) {
+    return 'Codice $code';
+  }
+
+  @override
+  String instanceErrorReportFacts(
+    String version,
+    String platform,
+    String time,
+  ) {
+    return '$version · $platform · $time';
+  }
+
+  @override
+  String get instanceErrorReportStack => 'Stack, oscurato dall\'app';
+
+  @override
+  String get instanceErrorReports => 'Segnalazioni di errore';
+
+  @override
+  String get instanceErrorReportsHint =>
+      'Ciò che le app hanno inviato quando qualcosa è andato storto, dalle più recenti. I membri di un\'azienda non le vedono mai.';
+
+  @override
+  String get instanceErrorReportsNone =>
+      'Non è arrivata alcuna segnalazione di errore.';
+
+  @override
+  String get instanceErrorReportsOlder => 'Segnalazioni precedenti';
+
+  @override
   String get instanceFamilyChatgpt => 'ChatGPT';
 
   @override
@@ -19237,10 +19229,6 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questo gruppo è usato da articoli: li sposti prima.';
 
   @override
-  String get itemGroupReasonNameDuplicate =>
-      'Un altro gruppo ha già questo nome.';
-
-  @override
   String get itemGroupReasonNeedsSerial =>
       'I tag per pezzo richiedono il tracciamento per pezzo.';
 
@@ -20268,9 +20256,6 @@ class AppLocalizationsIt extends AppLocalizations {
       'Il canone che il contratto si aspetta ogni mese e le fatture che lo hanno sostituito. Una fattura assegnata a un mese ne sostituisce l’attesa; non aggiunge mai un secondo costo.';
 
   @override
-  String get leaseCommitmentsLoadFailed => 'Impossibile caricare le scadenze.';
-
-  @override
   String leaseDeposit(String amount) {
     return 'Deposito $amount';
   }
@@ -20353,9 +20338,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String leaseLessor(String name) {
     return 'Locatore: $name';
   }
-
-  @override
-  String get leaseLoadFailed => 'Impossibile caricare il contratto.';
 
   @override
   String get leaseMatchAction => 'Abbina una fattura';
@@ -20942,10 +20924,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get libraryPreviewChanges => 'Vedi le modifiche';
 
   @override
-  String get libraryPreviewFailed =>
-      'Non è stato possibile mostrare le modifiche. Non è stato applicato nulla.';
-
-  @override
   String libraryPreviewTitle(String name) {
     return 'Cosa cambierebbe « $name »';
   }
@@ -21205,10 +21183,6 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get managedProfileHandOverHint =>
       'Genera un codice personale legato a questo profilo. Chi lo riscatta prende il profilo — prenotazioni, fatture, abbonamento — appena Lei approva l\'adesione.';
-
-  @override
-  String get managedProfileIdentityUnavailable =>
-      'Non è stato possibile leggere questi dati, quindi non c\'è ancora nulla da modificare. Non è stato cambiato nulla.';
 
   @override
   String get managedProfileIntro =>
@@ -22082,10 +22056,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get mcpPolicyTitle => 'Accesso degli assistenti';
 
   @override
-  String get mcpPolicyUnavailable =>
-      'Impossibile caricare le impostazioni degli assistenti. Riprovi più tardi.';
-
-  @override
   String get mcpRefusalClientNotApproved =>
       'Questo assistente non è ancora approvato su questo server. L’operatore approva ogni assistente una volta; glielo chieda, poi si colleghi di nuovo dall’assistente.';
 
@@ -22140,10 +22110,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get mcpRequestsAnsweredTitle => 'Risposte di recente';
 
   @override
-  String get mcpRequestsUnavailable =>
-      'Non è stato possibile leggere le richieste dei Suoi assistenti. Riapra questa pagina più tardi.';
-
-  @override
   String get mcpRequestsWaitingTitle => 'In attesa della Sua conferma';
 
   @override
@@ -22179,10 +22145,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get mcpReviewTitle => 'Approvazioni degli assistenti';
-
-  @override
-  String get mcpReviewUnavailable =>
-      'Impossibile caricare le richieste. Un esame richiede il suo secondo fattore; riprovi.';
 
   @override
   String get mcpStateAfterPrevious => 'Dopo il passaggio precedente';
@@ -22299,10 +22261,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get mcpUsageRequests => 'Richieste';
 
   @override
-  String get mcpUsageUnavailable =>
-      'Non è stato possibile caricare l\'utilizzo.';
-
-  @override
   String get mcpUsageWorkspaceTitle => 'Uso degli assistenti, ultimi 30 giorni';
 
   @override
@@ -22410,10 +22368,6 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get meDataWorkspacesEmpty =>
       'Il Suo account non nomina ancora alcuna attività.';
-
-  @override
-  String get meDataWorkspacesFailed =>
-      'Non è stato possibile leggere le attività del Suo account. Non è stato esportato nulla.';
 
   @override
   String get meDataWorkspacesScope =>
@@ -22691,9 +22645,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get mePlaceRequestSent => 'Richiesta inviata · in attesa di risposta';
 
   @override
-  String get mePlacesLoadFailed => 'Impossibile caricare i suoi posti.';
-
-  @override
   String get mePrivacySelfServiceOff =>
       'Questa attività gestisce da sé le richieste sui dati. Presenti una richiesta di diritti: l’amministratore dei dati personali risponderà.';
 
@@ -22721,10 +22672,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get meRefsTitle => 'Posti altrove';
-
-  @override
-  String get meRefsUnavailable =>
-      'Non è stato possibile leggere i Suoi posti altrove.';
 
   @override
   String get meRunASpace => 'Gestisce un’attività in proprio?';
@@ -22854,6 +22801,101 @@ class AppLocalizationsIt extends AppLocalizations {
   String get meWhereSpacesLive => 'Dove si trovano i miei posti';
 
   @override
+  String get measureDimensionArea => 'Superficie';
+
+  @override
+  String get measureDimensionCount => 'Quantità';
+
+  @override
+  String get measureDimensionLength => 'Lunghezza';
+
+  @override
+  String get measureDimensionMass => 'Massa';
+
+  @override
+  String get measureDimensionTime => 'Tempo';
+
+  @override
+  String get measureDimensionVolume => 'Volume';
+
+  @override
+  String get measureReasonDimension => 'Scelga che cosa misura questa unità.';
+
+  @override
+  String get measureReasonEce =>
+      'Un codice UN/ECE è formato da due o tre lettere maiuscole o cifre.';
+
+  @override
+  String get measureReasonFixed =>
+      'Questa unità è fissa e non può essere modificata né rimossa.';
+
+  @override
+  String get measureReasonInUse =>
+      'Questa unità è in uso, quindi la sua grandezza e il suo fattore non possono più cambiare. Crei invece una nuova unità.';
+
+  @override
+  String get measureReasonInexact =>
+      'Il risultato non può essere scritto esattamente con sei decimali.';
+
+  @override
+  String get measureReasonName => 'Una nuova unità ha bisogno di un nome.';
+
+  @override
+  String get measureUnitArchive => 'Archivia';
+
+  @override
+  String get measureUnitArchivedTag => 'Archiviata';
+
+  @override
+  String get measureUnitBuiltIn => 'Di base';
+
+  @override
+  String get measureUnitCodeField => 'Codice dell’unità';
+
+  @override
+  String get measureUnitCodeHelp =>
+      'Lettere minuscole, cifre e trattini bassi. Non potrà più cambiare.';
+
+  @override
+  String get measureUnitDimensionField => 'Misura';
+
+  @override
+  String get measureUnitEceField =>
+      'Codice UN/ECE (per le fatture elettroniche)';
+
+  @override
+  String get measureUnitEdit => 'Modifica unità';
+
+  @override
+  String get measureUnitFactorField => 'Un’unità equivale a';
+
+  @override
+  String measureUnitFactorHelp(String base) {
+    return 'Contata in $base, l’unità di base di ciò che misura: 1000 per un km, 0,001 per un mm.';
+  }
+
+  @override
+  String measureUnitLine(String unit, String value, String base) {
+    return '1 $unit = $value $base';
+  }
+
+  @override
+  String get measureUnitNameField => 'Il suo nome per l’unità';
+
+  @override
+  String get measureUnitNew => 'Nuova unità';
+
+  @override
+  String get measureUnitRestore => 'Mostra di nuovo';
+
+  @override
+  String get measureUnitsIntro =>
+      'Le unità in cui sono misurati i suoi articoli, preventivi e fatture, e come si convertono: 1 km = 1000 m. Le unità di base ci sono sempre; aggiunga le sue, per esempio una matassa di cavo da 50 m.';
+
+  @override
+  String get measureUnitsSubtitle => 'Le sue unità e le loro conversioni';
+
+  @override
   String get memberAccountTitle => 'Il mio account';
 
   @override
@@ -22934,10 +22976,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get memberMoneySettled => 'Nulla in sospeso.';
-
-  @override
-  String get memberMoneyUnavailable =>
-      'Impossibile caricare le finanze. Trascini per aggiornare.';
 
   @override
   String get memberMonthInProgress => 'Questo mese';
@@ -24484,10 +24522,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get newMemberDefaultsTitle => 'Nuovi membri';
 
   @override
-  String get newMemberDefaultsUnavailable =>
-      'Non è stato possibile leggerli ora. Il salvataggio li lascia invariati.';
-
-  @override
   String get newMemberDefaultsUnset =>
       'Niente scelto: i nuovi membri iniziano al 100 % e le prenotazioni si bloccano una volta esaurito il monte ore.';
 
@@ -25315,10 +25349,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get payConfigSettlementsReviewTitle => 'Liquidazioni da verificare';
 
   @override
-  String get payConfigSettlementsReviewUnreadable =>
-      'Non è stato possibile leggere le liquidazioni da verificare.';
-
-  @override
   String get payConfigTitle => 'Pagamenti online';
 
   @override
@@ -25527,9 +25557,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get paymentMatchEmpty => 'Nessun pagamento attende una fattura.';
 
   @override
-  String get paymentMatchFailed => 'Non è stato possibile leggere i pagamenti.';
-
-  @override
   String paymentMatchHeader(String amount, String date) {
     return '$amount ricevuti il $date';
   }
@@ -25694,10 +25721,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get periodReservationsEmpty => 'Nessuna prenotazione in questi mesi.';
-
-  @override
-  String get periodReservationsFailed =>
-      'Non è stato possibile leggere le prenotazioni.';
 
   @override
   String periodReservationsLevel(String level) {
@@ -26886,10 +26909,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get portalSendCode => 'Invia codice di accesso';
 
   @override
-  String get portalSourceUnavailable =>
-      'Un server non è disponibile. La panoramica è incompleta. Tocchi per riprovare.';
-
-  @override
   String get portalUseCode => 'Usa un codice via email';
 
   @override
@@ -26990,9 +27009,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get privacyAdminKind => 'Tipo di richiesta';
 
   @override
-  String get privacyAdminLoadFailed => 'Impossibile leggere le richieste.';
-
-  @override
   String get privacyAdminMember => 'Membro';
 
   @override
@@ -27056,6 +27072,17 @@ class AppLocalizationsIt extends AppLocalizations {
   String privacyErasedIn(String space) {
     return 'I Suoi dati in $space sono cancellati. Ciò che lo spazio deve conservare resta per il suo periodo di conservazione; le altre installazioni non sono interessate.';
   }
+
+  @override
+  String get privacyErrorReports => 'Inviare le segnalazioni di errore';
+
+  @override
+  String get privacyErrorReportsFailed =>
+      'Non è stato possibile salvare la scelta su questo dispositivo.';
+
+  @override
+  String get privacyErrorReportsHint =>
+      'Quando l\'app registra un errore, una segnalazione senza i Suoi dati va all\'installazione a cui ha effettuato l\'accesso, perché il suo operatore possa correggerlo.';
 
   @override
   String get privacyExport => 'Esporta i miei dati';
@@ -27315,6 +27342,13 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get processFilterEmpty =>
       'Nessun processo corrisponde a questo filtro.';
+
+  @override
+  String get processGoodsStock => 'Merci e magazzino';
+
+  @override
+  String get processGoodsStockDesc =>
+      'Tenere, spostare, contare e tracciare le merci vendute.';
 
   @override
   String processHeldBack(int count) {
@@ -27585,10 +27619,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get profilesTitle => 'Profili';
 
   @override
-  String get profilesUnavailable =>
-      'Impossibile caricare i suoi spazi di lavoro.';
-
-  @override
   String provenanceFromTemplate(String name) {
     return 'Dal modello «$name»';
   }
@@ -27715,10 +27745,6 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get publicProfilePublishedInfo =>
       'Informazioni pubblicate da questa attività. Un’informazione mancante non indica che una dotazione sia assente.';
-
-  @override
-  String get publicProfileRefreshFailed =>
-      'Non è stato possibile aggiornare la pagina di questa attività. Vengono mostrate le informazioni già caricate.';
 
   @override
   String get publicProfileRefreshing =>
@@ -29021,18 +29047,11 @@ class AppLocalizationsIt extends AppLocalizations {
       'Offerte ai clienti fatturati. Un preventivo inviato non cambia mai; una modifica è un\'altra revisione. Non si fattura nulla finché non si converte uno accettato.';
 
   @override
-  String get quotesLoadFailed =>
-      'I preventivi non hanno potuto essere letti. Non è un elenco vuoto.';
-
-  @override
   String get quotesNew => 'Nuovo preventivo';
 
   @override
   String get quotesNotAllowed =>
       'Non è consentito leggere i preventivi di questa attività.';
-
-  @override
-  String get quotesRetry => 'Riprovare';
 
   @override
   String get quotesTitle => 'Preventivi';
@@ -30942,10 +30961,6 @@ class AppLocalizationsIt extends AppLocalizations {
       'Nessuna immagine — carichi il suo logo, un timbro o una firma e vi faccia riferimento con ![nome].';
 
   @override
-  String get reportImagesLoadFailed =>
-      'Impossibile caricare le immagini dei report. Riprovi.';
-
-  @override
   String get reportImagesOpenLibrary => 'Apri la libreria di immagini';
 
   @override
@@ -31493,10 +31508,6 @@ class AppLocalizationsIt extends AppLocalizations {
       'Nessun blocco attivo. Un blocco conserva i documenti oltre il periodo di conservazione, per una verifica o una controversia.';
 
   @override
-  String get retentionHoldsLoadFailed =>
-      'Non è stato possibile leggere i blocchi.';
-
-  @override
   String get retentionHoldsTitle => 'Blocchi di conservazione';
 
   @override
@@ -31905,10 +31916,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get roomRentLevels => 'Piani';
-
-  @override
-  String get roomRentLoadFailed =>
-      'Non è stato possibile caricare le sale in affitto.';
 
   @override
   String get roomRentNeedSupplier =>
@@ -32589,6 +32596,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get settingGroupCompatibility => 'Versioni dell\'app';
 
   @override
+  String get settingGroupDiagnostics => 'Segnalazioni di errore';
+
+  @override
   String get settingGroupDirectory => 'Elenco dei membri';
 
   @override
@@ -33069,6 +33079,18 @@ class AppLocalizationsIt extends AppLocalizations {
       'Attivo: un nuovo articolo di magazzino viene proposto in chilogrammi anziché in pezzi (macelleria, panificio, banco). Ogni articolo può avere un’altra unità.';
 
   @override
+  String get settingHintTraceReportMaxBytes =>
+      'La segnalazione di errore più grande che questa installazione accetta. L\'app accorcia lo stack della segnalazione prima dell\'invio; una segnalazione ancora più grande viene scartata.';
+
+  @override
+  String get settingHintTraceReportRetentionDays =>
+      'Per quanti giorni questa installazione conserva una segnalazione di errore. Le segnalazioni più vecchie vengono eliminate all\'arrivo di una nuova.';
+
+  @override
+  String get settingHintTraceReportsPerHour =>
+      'Quante segnalazioni di errore una persona può inviare a questa installazione in un\'ora, da tutti i suoi dispositivi insieme. Le successive di quell\'ora vengono scartate, mai messe in coda. 0 disattiva le segnalazioni di errore per tutti.';
+
+  @override
   String get settingHintVatViesEvidenceDays =>
       'Giorni in cui un controllo valido della partita IVA resta abbastanza recente da fungere da prova su una nuova fattura. Un valore più breve richiede prima un nuovo controllo; non prova che un’operazione sia valida.';
 
@@ -33498,6 +33520,18 @@ class AppLocalizationsIt extends AppLocalizations {
   String get settingLabelStockWeighedGoods => 'La merce si vende a peso';
 
   @override
+  String get settingLabelTraceReportMaxBytes =>
+      'Dimensione massima di una segnalazione di errore';
+
+  @override
+  String get settingLabelTraceReportRetentionDays =>
+      'Conservare le segnalazioni di errore per';
+
+  @override
+  String get settingLabelTraceReportsPerHour =>
+      'Segnalazioni di errore per persona e ora';
+
+  @override
   String get settingLabelVatViesEvidenceDays =>
       'Validità del controllo della partita IVA';
 
@@ -33644,9 +33678,6 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settingsFrontCameraDesc =>
       'I badge vengono letti con la fotocamera lato schermo — la disattivi per usare la fotocamera posteriore.';
-
-  @override
-  String get settingsLoadFailed => 'Impossibile caricare le impostazioni.';
 
   @override
   String get settingsOfflineRegistry =>
@@ -35599,10 +35630,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get setupStepLeaveTitle => 'Lasciare questo passo?';
 
   @override
-  String get setupStepLoadFailed =>
-      'Non è stato possibile caricare questo passaggio. Riprovi più tardi.';
-
-  @override
   String get setupStepNext => 'Passo successivo';
 
   @override
@@ -37539,22 +37566,6 @@ class AppLocalizationsIt extends AppLocalizations {
       'Entrambi i numeri devono essere interi maggiori di zero.';
 
   @override
-  String get stockReasonGroupDepth =>
-      'Un sottogruppo non può avere sottogruppi.';
-
-  @override
-  String get stockReasonGroupHasMovements =>
-      'Questo articolo ha movimenti di magazzino: unità e tracciabilità restano come scritte.';
-
-  @override
-  String get stockReasonGroupHasSubgroups =>
-      'Questo gruppo ha sottogruppi: li sposti o li elimini prima.';
-
-  @override
-  String get stockReasonGroupInUse =>
-      'Questo gruppo è usato da articoli: li sposti prima.';
-
-  @override
   String get stockReasonGroupItemUnknown =>
       'Questo articolo non è di questa attività.';
 
@@ -37571,20 +37582,8 @@ class AppLocalizationsIt extends AppLocalizations {
       'Un nuovo gruppo ha bisogno di un nome.';
 
   @override
-  String get stockReasonGroupNeedsSerial =>
-      'Le etichette per unità richiedono la tracciabilità per pezzo.';
-
-  @override
-  String get stockReasonGroupNotOverridable =>
-      'È una proposta per i nuovi articoli e non si imposta per articolo.';
-
-  @override
   String get stockReasonGroupPlaceUnknown =>
       'Questo luogo non è di questa attività.';
-
-  @override
-  String get stockReasonGroupUnknown =>
-      'Questo gruppo non è di questa attività.';
 
   @override
   String get stockReasonGroupUnknownReference =>
@@ -38041,6 +38040,26 @@ class AppLocalizationsIt extends AppLocalizations {
   String get stockReorderToOrderTitle => 'Cosa ordinare';
 
   @override
+  String get stockRequiredArticle =>
+      'Inserire il riferimento articolo del fornitore.';
+
+  @override
+  String get stockRequiredDestination =>
+      'Scegliere l’ubicazione in cui va la merce, diversa da quella che lascia.';
+
+  @override
+  String get stockRequiredItem => 'Scegliere un articolo.';
+
+  @override
+  String get stockRequiredPlace => 'Scegliere un’ubicazione.';
+
+  @override
+  String get stockRequiredSite => 'Scegliere una sede.';
+
+  @override
+  String get stockRequiredSupplier => 'Scegliere un fornitore.';
+
+  @override
   String get stockReversalBackTo => 'La merce torna a';
 
   @override
@@ -38242,6 +38261,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get stockSettingsValues => 'Regole del magazzino';
 
   @override
+  String get stockStateUnknown => 'Sconosciuto a questa applicazione';
+
+  @override
   String get stockStoredLabel => 'Registrato';
 
   @override
@@ -38262,24 +38284,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get stockTagKindUhf => 'Etichetta UHF';
 
   @override
-  String get stockTagMalformed => 'Questo non è un codice tag valido.';
-
-  @override
-  String get stockTagModeNone => 'Questo articolo non usa tag.';
-
-  @override
   String get stockTagNotInForce => 'Questo non è un tag in uso qui.';
 
   @override
   String get stockTagOnPiece => 'Questo tag è su un pezzo ancora a magazzino.';
-
-  @override
-  String get stockTagOwnerUnknown =>
-      'Questo articolo o questa posizione non è noto.';
-
-  @override
-  String get stockTagPerUnit =>
-      'Questo articolo è etichettato pezzo per pezzo: etichetti i pezzi alla ricezione.';
 
   @override
   String stockTagPiece(String number) {
@@ -38912,6 +38920,34 @@ class AppLocalizationsIt extends AppLocalizations {
       'Prenotare posti o interi spazi secondo le regole.';
 
   @override
+  String get subprocessStockControl => 'Conteggi e rifornimento';
+
+  @override
+  String get subprocessStockControlDesc =>
+      'Contare le giacenze, pianificare i conteggi ciclici e riordinare per tempo.';
+
+  @override
+  String get subprocessStockItems => 'Articoli e unità';
+
+  @override
+  String get subprocessStockItemsDesc =>
+      'Articoli, gruppi di articoli, unità di misura e unità di movimentazione.';
+
+  @override
+  String get subprocessStockMovements => 'Ricezione e movimenti';
+
+  @override
+  String get subprocessStockMovementsDesc =>
+      'Ricevere le consegne, prelevare merci e gestire i resi.';
+
+  @override
+  String get subprocessStockTracking => 'Tracciabilità';
+
+  @override
+  String get subprocessStockTrackingDesc =>
+      'Lotti, scadenza, scansione ed etichette che tracciano ogni pezzo.';
+
+  @override
   String get subprocessStructure => 'Struttura dello spazio';
 
   @override
@@ -39074,9 +39110,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get suppliersArchivedTag => 'archiviato';
-
-  @override
-  String get suppliersBalanceUnavailable => 'Saldo non disponibile';
 
   @override
   String get suppliersBank => 'Coordinate bancarie';
@@ -39254,6 +39287,10 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get supplyClassPropertyMeaning => 'Tassato dove si trovano i locali.';
+
+  @override
+  String get supplyClassUnknown =>
+      'Una classe che quest\'app non conosce ancora: resta come l\'ha il server';
 
   @override
   String get supportChanged =>
@@ -41001,9 +41038,6 @@ class AppLocalizationsIt extends AppLocalizations {
       'Lingue ufficiali (ISO 639-1, la consueta per prima)';
 
   @override
-  String get taxRefLoadFailed => 'Impossibile caricare i dati di riferimento.';
-
-  @override
   String get taxRefMemberEmpty => 'Uno Stato membro non ha altri campi.';
 
   @override
@@ -41265,9 +41299,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String templateWidenTitle(String audience) {
     return 'Rendere questo modello leggibile da: $audience?';
   }
-
-  @override
-  String get templatesLoadFailed => 'Non è stato possibile caricare i modelli.';
 
   @override
   String get themeDark => 'Scuro';
@@ -41980,8 +42011,13 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String tillReceiptLine(String label, String quantity, String unit) {
-    return '$label: $quantity $unit';
+  String tillReceiptLine(
+    String label,
+    String quantity,
+    String unit,
+    String amount,
+  ) {
+    return '$label: $quantity $unit  $amount';
   }
 
   @override
@@ -42001,7 +42037,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String tillReceiptTaxLine(String percent, String tax, String net) {
-    return 'IVA $percent %: $tax su $net';
+    return 'IVA $percent: $tax su $net';
   }
 
   @override
@@ -43132,10 +43168,6 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get valuationLoadFailed =>
-      'Non è stato possibile caricare le valutazioni.';
-
-  @override
   String get valuationManual => 'Inserire un bene';
 
   @override
@@ -44032,11 +44064,6 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String visibilityOnServerUnavailable(String host) {
-    return '$host non ha risposto. Riprovi più tardi.';
-  }
-
-  @override
   String get visibilityPresence => 'Oggi sul posto';
 
   @override
@@ -44046,9 +44073,6 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get visibilityPreviewCannotWrite =>
       'Non può iniziare una conversazione con Lei';
-
-  @override
-  String get visibilityPreviewFailed => 'Impossibile caricare l\'anteprima.';
 
   @override
   String get visibilityPreviewMySpaces => 'Un membro dei miei posti';
@@ -44107,15 +44131,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get visibilitySpaceUnverified => 'Verifica non disponibile';
 
   @override
-  String get visibilitySpacesUnavailable =>
-      'Al momento i Suoi posti non possono essere elencati.';
-
-  @override
   String get visibilityTitle => 'Chi mi vede';
-
-  @override
-  String get visibilityUnavailable =>
-      'Al momento non è possibile leggere chi vede cosa di Lei. Non è stato modificato nulla.';
 
   @override
   String get visibilityUnconfirmedTitle =>

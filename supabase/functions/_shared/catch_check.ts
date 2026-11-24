@@ -6,6 +6,9 @@
 // in catch_baseline.json: a file may not gain one, and the count only falls (a fall asks
 // for the baseline to be lowered, as the ratchets of the Dart lints do).
 //
+// The same check holds the other half of the rule at zero: a function logs only through the
+// structured logger, so `console.*` appears in _shared/log.ts (and this tool) and nowhere else.
+//
 //   deno run -A supabase/functions/_shared/catch_check.ts            # check the tree
 //   deno run -A supabase/functions/_shared/catch_check.ts --write    # write the baseline
 
@@ -118,6 +121,21 @@ function skipString(src: string, start: number): number {
   return src.length;
 }
 
+/** The `console.<level>(` calls of [source] outside its strings and comments, as their line numbers. */
+export function consoleCalls(source: string): number[] {
+  const masked = mask(source);
+  const lines: number[] = [];
+  const call = /\bconsole\s*\.\s*(?:log|info|warn|error|debug|trace)\s*\(/g;
+  let m: RegExpExecArray | null;
+  while ((m = call.exec(masked)) !== null) {
+    lines.push(masked.slice(0, m.index).split("\n").length);
+  }
+  return lines;
+}
+
+/** The files that may write to the console: the logger itself, and this tool's own report. */
+export const CONSOLE_OWNERS = new Set(["_shared/log.ts", "_shared/catch_check.ts"]);
+
 /** The files the rule reads: a function's own code, not its tests or the test helpers. */
 export function sourceFiles(root: string): string[] {
   const out: string[] = [];
@@ -141,11 +159,18 @@ export function checkTree(
   baseline: Record<string, number>,
 ): { counts: Record<string, number>; problems: string[] } {
   const counts: Record<string, number> = {};
-  for (const file of sourceFiles(root)) {
-    const n = unaccountedCatches(Deno.readTextFileSync(file)).length;
-    if (n > 0) counts[file.slice(root.length + 1)] = n;
-  }
   const problems: string[] = [];
+  for (const file of sourceFiles(root)) {
+    const source = Deno.readTextFileSync(file);
+    const name = file.slice(root.length + 1);
+    const n = unaccountedCatches(source).length;
+    if (n > 0) counts[name] = n;
+    if (!CONSOLE_OWNERS.has(name)) {
+      for (const line of consoleCalls(source)) {
+        problems.push(`${name}:${line}: console.* -- log through logLine (_shared/log.ts) instead`);
+      }
+    }
+  }
   for (const [file, n] of Object.entries(counts)) {
     const allowed = baseline[file] ?? 0;
     if (n > allowed) {

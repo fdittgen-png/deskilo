@@ -28,10 +28,6 @@
   "@leaseEmpty": {
     "description": "#2569 premises lease"
   },
-  "leaseLoadFailed": "Der Mietvertrag konnte nicht geladen werden.",
-  "@leaseLoadFailed": {
-    "description": "#2569 premises lease"
-  },
   "leaseSaved": "Gespeichert",
   "@leaseSaved": {
     "description": "#2569 premises lease"
@@ -324,10 +320,6 @@
   "@leaseCommitmentsEmpty": {
     "description": "#2575 commitment matching"
   },
-  "leaseCommitmentsLoadFailed": "Die Fälligkeiten konnten nicht geladen werden.",
-  "@leaseCommitmentsLoadFailed": {
-    "description": "#2575 commitment matching"
-  },
   "leaseCommitmentExpected": "Erwartet",
   "@leaseCommitmentExpected": {
     "description": "#2575 commitment matching"
@@ -542,10 +534,6 @@
   },
   "equipmentEmpty": "Noch keine Anlage erfasst.",
   "@equipmentEmpty": {
-    "description": "#2576 equipment register"
-  },
-  "equipmentLoadFailed": "Die Anlagen konnten nicht geladen werden.",
-  "@equipmentLoadFailed": {
     "description": "#2576 equipment register"
   },
   "equipmentRegister": "Anlage erfassen",

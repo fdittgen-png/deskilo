@@ -83,6 +83,11 @@ jobs:
       - name: Catches say what happened
         run: deno run -A supabase/functions/_shared/catch_check.ts
 
+      # #4412 — deno's own lint over every function and its tests (unused
+      # bindings, async without await, empty blocks ...): held at zero.
+      - name: Lint every function
+        run: deno lint supabase/functions
+
       # #1616 — the functions' own tests (the network stubbed at Supabase's
       # boundary), e.g. the MCP endpoint's protocol and refusal matrix.
       #

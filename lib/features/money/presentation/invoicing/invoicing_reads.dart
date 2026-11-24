@@ -72,16 +72,24 @@ final invoicingReceivablesProvider = Provider.autoDispose<List<Receivable>?>(
 final invoicingFailedSourcesProvider =
     Provider.autoDispose<Set<InvoicingSource>>(
       (ref) => {
+        // #4414 kept: the failed sources, each named by the source banner
         if (ref.watch(invoicesProvider).hasError) InvoicingSource.invoices,
+        // #4414 kept: as above
         if (ref.watch(invoiceMatchesProvider).hasError) InvoicingSource.matches,
+        // #4414 kept: as above
         if (ref.watch(invoiceRemindersProvider).hasError)
           InvoicingSource.reminders,
+        // #4414 kept: as above
         if (ref.watch(dunningHoldsProvider).hasError) InvoicingSource.holds,
+        // #4414 kept: as above
         if (ref.watch(invoiceTransmissionsProvider).hasError)
           InvoicingSource.transmissions,
+        // #4414 kept: as above
         if (ref.watch(unassignedMoneyProvider).hasError)
           InvoicingSource.credits,
+        // #4414 kept: as above
         if (ref.watch(eventsProvider).hasError) InvoicingSource.declarations,
+        // #4414 kept: as above
         if (ref.watch(dunningRulesProvider).hasError) InvoicingSource.rules,
       },
     );
@@ -95,7 +103,7 @@ final invoicingStatusesWaitingProvider = Provider.autoDispose<bool>(
     ref.watch(invoiceTransmissionsProvider),
     ref.watch(eventsProvider),
     ref.watch(dunningRulesProvider),
-  ].any((r) => !r.hasValue && !r.hasError),
+  ].any((r) => !r.hasValue && !r.hasError), // #4414 kept: still reading
 );
 
 /// Reads [source] again.
@@ -184,6 +192,7 @@ bool unassignedMoneyUnreadable(AsyncValue<UnassignedMoney> read) =>
 /// The unassigned money once it is read, or null while it is not (loading,
 /// reloading or failed): unknown is not none.
 UnassignedMoney? unassignedMoneyKnown(AsyncValue<UnassignedMoney> read) =>
+    // #4414 kept: only a current answer is counted
     read.isLoading || read.hasError ? null : read.value;
 
 /// #3840 — one customer's statement as of today, the server's snapshot

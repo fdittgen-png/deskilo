@@ -5,9 +5,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -20,7 +22,6 @@ import '../../application/connect_checklist.dart';
 import '../../domain/mcp_context.dart';
 import '../../providers/mcp_providers.dart';
 import '../confirm_identity.dart';
-import 'connect_workspaces.dart';
 
 /// What stands between this person and a first assistant call, one row
 /// per [ConnectChecklist] item; [run] performs a guarded action and
@@ -50,7 +51,10 @@ class ConnectChecklistCard extends ConsumerWidget {
     final now = ref.watch(clockProvider).now();
     return status.when(
       loading: () => const LoadingView(),
-      error: (_, _) => const ConnectUnavailable(),
+      error: (e, _) => ReadFailureBanner(
+        error: e,
+        onRetry: () => ref.invalidate(mcpAccessStatusProvider(scope)),
+      ),
       data: (s) {
         final list = ConnectChecklist.derive(
           status: s,
@@ -165,7 +169,7 @@ class _ConnectRow extends ConsumerWidget {
       ConnectAction.none || ConnectAction.addConnector => null,
       ConnectAction.linkGoogle => button(
         l10n.mcpStatusLinkGoogle,
-        () => context.push('/linked-accounts'),
+        () => context.push(Routes.linkedAccounts),
       ),
       ConnectAction.signInWithGoogle => button(
         l10n.mcpStatusSignInGoogle,
@@ -181,11 +185,11 @@ class _ConnectRow extends ConsumerWidget {
       ),
       ConnectAction.openSetup => button(
         l10n.mcpConnectOpenSetup,
-        () => context.push('/settings/assistant-setup'),
+        () => context.push(Routes.settingsAssistantSetup),
       ),
       ConnectAction.openInstallation => button(
         l10n.mcpConnectOpenInstallation,
-        () => context.push('/installation/assistants'),
+        () => context.push(Routes.installationAssistants),
       ),
       // No conversation reaches the operator from a workspace (their
       // account id is not shown to members), so the request is copied

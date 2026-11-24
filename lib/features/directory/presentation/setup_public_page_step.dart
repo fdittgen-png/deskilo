@@ -16,9 +16,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/l10n/context_l10n.dart';
+import '../../../core/navigation/routes.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
+import '../../../core/ui/async_read_body.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../core/ui/inline_banner.dart';
 import '../../../core/ui/loading_view.dart';
@@ -55,9 +57,10 @@ class SetupPublicPageStep extends ConsumerStatefulWidget {
 }
 
 class _SetupPublicPageStepState extends ConsumerState<SetupPublicPageStep> {
-  late final Future<Map<String, Object?>> _read = ref
-      .read(publicationActionsProvider)
-      .ownPage(widget.workspaceId);
+  late Future<Map<String, Object?>> _read = _readPage();
+
+  Future<Map<String, Object?>> _readPage() =>
+      ref.read(publicationActionsProvider).ownPage(widget.workspaceId);
   final _controllers = {
     for (final field in _edited) field: TextEditingController(),
   };
@@ -158,10 +161,10 @@ class _SetupPublicPageStepState extends ConsumerState<SetupPublicPageStep> {
       if (snapshot.hasError) {
         return Padding(
           padding: AppSpacing.lgAll,
-          child: InlineBanner(
+          child: ReadFailureBanner(
             key: const ValueKey('setup-public-page-failed'),
-            icon: Icons.error_outline,
-            text: context.l10n.setupStepLoadFailed,
+            error: snapshot.error!,
+            onRetry: () => setState(() => _read = _readPage()),
           ),
         );
       }
@@ -243,7 +246,7 @@ class _SetupPublicPageStepState extends ConsumerState<SetupPublicPageStep> {
               ),
               TextButton(
                 key: const ValueKey('setup-public-page-open'),
-                onPressed: () => context.push('/settings/public-page'),
+                onPressed: () => context.push(Routes.settingsPublicPage),
                 child: Text(l10n.setupPublicPageMore),
               ),
             ],

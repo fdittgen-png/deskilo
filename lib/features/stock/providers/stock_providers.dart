@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async' show FutureRecord2, ParallelWaitError;
+import 'dart:async' as async show AsyncError;
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/settings/active_settings.dart';
@@ -56,7 +59,6 @@ final stockQueriesProvider = Provider<StockQueries>(
 final stockOnHandWalkProvider = NotifierProvider.autoDispose
     .family<StockWalk<StockOnHandRow>, StockWalkState<StockOnHandRow>, StockFilters>(
       (filters) => StockWalk<StockOnHandRow>(
-        filters,
         (ref) {
           final queries = ref.read(stockQueriesProvider);
           return (after) => queries.onHandPage(
@@ -73,7 +75,6 @@ final stockOnHandWalkProvider = NotifierProvider.autoDispose
 final stockMovementsWalkProvider = NotifierProvider.autoDispose
     .family<StockWalk<StockMovementRow>, StockWalkState<StockMovementRow>, StockFilters>(
       (filters) => StockWalk<StockMovementRow>(
-        filters,
         (ref) {
           final queries = ref.read(stockQueriesProvider);
           return (after) => queries.movementsPage(
@@ -136,6 +137,18 @@ final stockConfigCommandsProvider = Provider<StockConfigCommands>(
 final stockRegistryProvider = Provider<StockRegistry>(
   (ref) => SupabaseStockRegistry(ref.watch(selectedWorkspaceClientProvider)),
 );
+
+/// The registry of stocked items, a page at a time, under the place or the "no home" filter chosen (#4401: the one
+/// stock walk).
+final stockRegistryWalkProvider = NotifierProvider.autoDispose
+    .family<StockWalk<StockRegistryRow>, StockWalkState<StockRegistryRow>, ({String workspaceId, String? placeId, bool noHome})>(
+      (filter) => StockWalk<StockRegistryRow>(
+        (ref) {
+          final registry = ref.read(stockRegistryProvider);
+          return (after) => registry.page(filter.workspaceId, placeId: filter.placeId, noHome: filter.noHome, after: after);
+        },
+      ),
+    );
 
 /// #4294 -- what is low and what to order, for the selected business. The Demo and the tests
 /// replace it.
@@ -208,6 +221,18 @@ final stockScanAddsOneProvider = Provider<bool>((ref) {
 final stockTraceReaderProvider = Provider<StockTraceReader>(
   (ref) => SupabaseStockTrace(ref.watch(selectedWorkspaceClientProvider)),
 );
+
+/// The goods put away against one document (`order`, `bill` or `payment`), a keyset page at a time (#4401: the one
+/// stock walk).
+final stockDocumentGoodsWalkProvider = NotifierProvider.autoDispose
+    .family<StockWalk<DocumentGoodsRow>, StockWalkState<DocumentGoodsRow>, ({String workspaceId, String kind, String id})>(
+      (document) => StockWalk<DocumentGoodsRow>(
+        (ref) {
+          final reader = ref.read(stockTraceReaderProvider);
+          return (after) => reader.documentGoods(document.workspaceId, document.kind, document.id, after: after);
+        },
+      ),
+    );
 
 /// #4432 -- the whole chain of a lot or a piece (0923).
 final stockTraceChainReaderProvider = Provider<StockTraceChainReader>(
@@ -283,6 +308,32 @@ final openTransfersProvider = FutureProvider.autoDispose
 final stockPlaceConfigsProvider = FutureProvider.autoDispose
     .family<List<StockPlaceConfig>, String>(
       (ref, workspaceId) => ref.watch(stockConfigCommandsProvider).places(workspaceId),
+      retry: (_, _) => null,
+    );
+
+/// What a stock sheet chooses from: the items, the places and the character
+/// between the levels of an address.
+typedef StockSheetChoices = ({List<StockItem> items, List<StockPlaceConfig> places, String separator});
+
+/// The items and places of a business, read together (neither waits for the
+/// other); the first read that failed is the failure.
+final stockSheetChoicesProvider = FutureProvider.autoDispose
+    .family<StockSheetChoices, String>(
+      (ref, workspaceId) async {
+        final separator = ref.watch(stockAddressSeparatorProvider);
+        try {
+          final (items, places) = await (
+            ref.watch(stockItemsProvider(workspaceId).future),
+            ref.watch(stockPlaceConfigsProvider(workspaceId).future),
+          ).wait;
+          return (items: items, places: places, separator: separator);
+        } on ParallelWaitError<(List<StockItem>?, List<StockPlaceConfig>?), (async.AsyncError?, async.AsyncError?)> catch (e, st) {
+          // the read's own failure is carried on unchanged
+          final failed = e.errors.$1 ?? e.errors.$2;
+          if (failed == null) Error.throwWithStackTrace(e, st);
+          Error.throwWithStackTrace(failed.error, failed.stackTrace);
+        }
+      },
       retry: (_, _) => null,
     );
 

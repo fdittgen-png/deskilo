@@ -9,6 +9,7 @@ import 'package:supabase_flutter/supabase_flutter.dart'
 
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/nfc/nfc_uid_reader.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
@@ -174,7 +175,7 @@ Future<void> showSeatPropertiesSheet(
                     key: const ValueKey('seat-add-accessories'),
                     onPressed: () {
                       Navigator.of(context).pop(false);
-                      unawaited(context.push('/accessories'));
+                      unawaited(context.push(Routes.accessories));
                     },
                     icon: const Icon(Icons.add, size: 18),
                     label: Text(

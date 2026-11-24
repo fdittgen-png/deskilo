@@ -20,7 +20,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/backend/connected_installation_providers.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
-import '../../../core/ui/inline_banner.dart';
+import '../../../core/ui/async_read_body.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../core/ui/server_label.dart';
 import '../domain/visibility.dart';
@@ -238,12 +238,10 @@ class _LegacyAccount extends ConsumerWidget {
           ),
         ),
         if (read.hasError)
-          InlineBanner(
+          ReadFailureBanner(
             key: const ValueKey('linked-visibility-unavailable'),
-            icon: Icons.cloud_off_outlined,
-            text: words.visibilityOnServerUnavailable(label),
-            actionLabel: words.commonRetry,
-            onAction: () => ref.invalidate(linkedVisibilityProvider(source)),
+            error: read.error!,
+            onRetry: () => ref.invalidate(linkedVisibilityProvider(source)),
           )
         else if (read.value case final visibility?) ...[
           for (final field in [

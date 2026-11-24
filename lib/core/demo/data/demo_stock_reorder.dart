@@ -73,28 +73,29 @@ class DemoStockReorder implements StockReorder {
   @override
   Future<StockSaved> savePoint(
     String workspaceId, {
-    required Map<String, Object?> point,
+    required StockReorderPointDraft point,
     required String requestId,
     String? pointId,
     int? expectedRevision,
   }) async {
-    if (workspaceId != _workspaceId) throw const StockConfigRefused('item_id', 'item_foreign');
+    final body = point.toJson();
+    if (workspaceId != _workspaceId) throw const StockConfigRefused('item_id', StockRefusal.itemForeign);
     final old = pointId == null ? null : _points[pointId];
-    if (pointId != null && old == null) throw const StockConfigRefused('point', 'malformed');
+    if (pointId != null && old == null) throw const StockConfigRefused('point', StockRefusal.malformed);
     if (old != null && old.revision != expectedRevision) throw const StockConfigStale();
-    final (:item, :variant, :site) = await _targetOf(point, old);
-    final read = _quantityOf(point, 'reorder_point', old?.reorderPoint);
-    final quantity = _quantityOf(point, 'reorder_quantity', old?.reorderQuantity);
-    final target = _quantityOf(point, 'target_quantity', old?.targetQuantity);
+    final (:item, :variant, :site) = await _targetOf(body, old);
+    final read = _quantityOf(body, 'reorder_point', old?.reorderPoint);
+    final quantity = _quantityOf(body, 'reorder_quantity', old?.reorderQuantity);
+    final target = _quantityOf(body, 'target_quantity', old?.targetQuantity);
     final level = _checkRule(read, quantity, target);
     if (_points.values.any((p) => p.itemId == item && p.variantId == variant && p.siteId == site && p.id != pointId)) {
-      throw const StockConfigRefused('item_id', 'point_twice');
+      throw const StockConfigRefused('item_id', StockRefusal.pointTwice);
     }
     final id = pointId ?? 'demo-point-new-${_next++}';
     final revision = (old?.revision ?? 0) + 1;
     _points[id] = StockReorderPoint(
       id: id, revision: revision, itemId: item, variantId: variant, siteId: site, reorderPoint: level,
-      reorderQuantity: quantity, targetQuantity: target, active: point['active'] as bool? ?? old?.active ?? true,
+      reorderQuantity: quantity, targetQuantity: target, active: body['active'] as bool? ?? old?.active ?? true,
     );
     return (id: id, revision: revision, replayed: false);
   }
@@ -106,13 +107,13 @@ class DemoStockReorder implements StockReorder {
     final variant = point.containsKey('variant_id') ? point['variant_id'] as String? : old?.variantId;
     final site = point['site_id'] as String? ?? old?.siteId;
     if (item == null || !DemoStockLedger.items.any((i) => i.id == item)) {
-      throw const StockConfigRefused('item_id', 'item_foreign');
+      throw const StockConfigRefused('item_id', StockRefusal.itemForeign);
     }
     final places = await _config.places(_workspaceId);
     final siteOk = places.any((p) => p.id == site && p.parentId == null && !p.virtual && p.active && p.kind != 'in_transit');
-    if (site == null || !siteOk) throw const StockConfigRefused('site_id', 'site_unknown');
+    if (site == null || !siteOk) throw const StockConfigRefused('site_id', StockRefusal.siteUnknown);
     if (old != null && (item != old.itemId || variant != old.variantId || site != old.siteId)) {
-      throw const StockConfigRefused('item_id', 'point_fixed');
+      throw const StockConfigRefused('item_id', StockRefusal.pointFixed);
     }
     return (item: item, variant: variant, site: site);
   }
@@ -122,18 +123,18 @@ class DemoStockReorder implements StockReorder {
     if (!point.containsKey(key)) return fallback;
     final text = (point[key] as String?)?.trim();
     if (text == null || text.isEmpty) return null;
-    if (!_quantity.hasMatch(text)) throw StockConfigRefused(key, 'quantity_invalid');
+    if (!_quantity.hasMatch(text)) throw StockConfigRefused(key, StockRefusal.quantityInvalid);
     return ExactQuantity.parse(text);
   }
 
   /// The server's rules for what to order: a level, a quantity or a level to order up to (not both).
   static ExactQuantity _checkRule(ExactQuantity? level, ExactQuantity? quantity, ExactQuantity? target) {
-    if (level == null) throw const StockConfigRefused('reorder_point', 'quantity_invalid');
-    if (quantity != null && target != null) throw const StockConfigRefused('target_quantity', 'quantity_and_target');
+    if (level == null) throw const StockConfigRefused('reorder_point', StockRefusal.quantityInvalid);
+    if (quantity != null && target != null) throw const StockConfigRefused('target_quantity', StockRefusal.quantityAndTarget);
     if (quantity != null && quantity.compareTo(ExactQuantity.zero) <= 0) {
-      throw const StockConfigRefused('reorder_quantity', 'quantity_invalid');
+      throw const StockConfigRefused('reorder_quantity', StockRefusal.quantityInvalid);
     }
-    if (target != null && target.compareTo(level) <= 0) throw const StockConfigRefused('target_quantity', 'target_below_point');
+    if (target != null && target.compareTo(level) <= 0) throw const StockConfigRefused('target_quantity', StockRefusal.targetBelowPoint);
     return level;
   }
 
@@ -218,10 +219,10 @@ class DemoStockReorder implements StockReorder {
     required String requestId,
   }) async {
     if (workspaceId != _workspaceId || lines.isEmpty) {
-      throw const StockConfigRefused('lines', 'malformed');
+      throw const StockConfigRefused('lines', StockRefusal.malformed);
     }
     final known = lines.every((l) => _preferred[l.itemId]?.$1 == supplierId);
-    if (!known) throw const StockConfigRefused('lines', 'mapping_unknown');
+    if (!known) throw const StockConfigRefused('lines', StockRefusal.mappingUnknown);
     return _drafts.putIfAbsent(requestId, () => (orderId: 'demo-draft-${_drafts.length + 1}', number: 'DRAFT-${_drafts.length + 1}'));
   }
 }

@@ -2,7 +2,6 @@
   "eventTypeBadgeSecurityAlert": "Protezione dell’accesso con badge",
   "eventBadgeSecurityAlert": "L’accesso con badge è sospeso dopo {failures, plural, one{1 tentativo fallito} other{{failures} tentativi falliti}} in {minutes, plural, one{1 minuto} other{{minutes} minuti}}. Verifica i badge e chiedi ai membri di accedere via e-mail fino alla fine del blocco.",
   "badgePinReviewNotice": "La lunghezza di questo vecchio PIN è sconosciuta o inferiore al minimo attuale. Chiedi al membro di cambiarlo nelle proprie impostazioni. Il PIN attuale resta utilizzabile.",
-  "badgePinReviewUnavailable": "Lo stato di verifica del PIN non è disponibile. Riprova prima di presumere che rispetti il minimo attuale.",
   "settingLabelSecurityBadgeWorkspaceFailureLimit": "Limite dei tentativi falliti con badge dello spazio",
   "settingHintSecurityBadgeWorkspaceFailureLimit": "Badge diversi dello spazio con un PIN errato durante il periodo di blocco prima di sospendere l’accesso e avvisare i proprietari. Un solo badge non lo raggiunge. Il limite può solo essere ridotto.",
   "@eventBadgeSecurityAlert": {

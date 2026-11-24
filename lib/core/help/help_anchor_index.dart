@@ -8,6 +8,8 @@ import 'help_anchors.dart';
 const helpAnchorIndex = <String>{
   HelpAnchor.workspacePublicPage,
   HelpAnchor.privacyBusinessSees,
+  HelpAnchor.privacyErrorReports,
+  HelpAnchor.advancedErrorReports,
   HelpAnchor.workspaceBusinessKind,
   HelpAnchor.moneySales,
   HelpAnchor.moneyPurchases,
@@ -90,6 +92,7 @@ const helpAnchorIndex = <String>{
   HelpAnchor.workspaceCurrencyTimezone,
   HelpAnchor.workspaceLanguage,
   HelpAnchor.workspacePaper,
+  HelpAnchor.settingsUnits,
   HelpAnchor.organisation,
   HelpAnchor.workspaceAddress,
   HelpAnchor.workspaceWhatsappGroup,

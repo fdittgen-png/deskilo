@@ -2,8 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/l10n/context_l10n.dart';
-import '../../../../core/ui/empty_state.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../providers/money_providers.dart';
 import '../widgets/invoice_template_sheet.dart';
 
@@ -16,7 +15,6 @@ class ReportEditorScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = context.l10n;
     final template = ref.watch(invoicePdfTemplateProvider);
     return switch (template) {
       AsyncData(:final value) => ReportTemplateEditor(
@@ -24,11 +22,11 @@ class ReportEditorScreen extends ConsumerWidget {
           initial: value,
           asPage: true,
         ),
-      AsyncError() => Scaffold(
+      AsyncError(:final error) => Scaffold(
           appBar: AppBar(),
-          body: EmptyState(
-            icon: Icons.error_outline,
-            title: l10n.workspaceGenericError,
+          body: ReadFailureBanner(
+            error: error,
+            onRetry: () => ref.invalidate(invoicePdfTemplateProvider),
           ),
         ),
       _ => Scaffold(

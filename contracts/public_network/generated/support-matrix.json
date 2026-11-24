@@ -230,8 +230,8 @@
     "evidence": {
       "supabase/tests/database/130_public_network_negotiation.sql": "1e9e84cc05cacff545b9e686c65d14066fdacf49fd15a48fd797c53fc953acb8",
       "test/core/public_network/public_network_codec_test.dart": "a446a0310f2b8f91be2fb2e729ffeabe6e4bfdd176f0a66d9f26dbc509697c02",
-      "test/core/public_network/public_network_negotiation_test.dart": "c3c75df7c058ff975575d76e7107fbc565d68353bbea8a294b2ea7b138d93c86",
-      "test/features/directory/participant_negotiation_test.dart": "22379556053bb8208bfdd46e66dd1c84aacb56623ed87f7a4a80577f773ca3f1",
+      "test/core/public_network/public_network_negotiation_test.dart": "a6459cc264e6fb44080fcdf360933155ff1eb9448820f091e3ebdc4353f2a2f8",
+      "test/features/directory/participant_negotiation_test.dart": "d398b2c1e406a3acf86211a03380243883fc1705b65d79cb647a5b1b1c1e974e",
       "test/fixtures/public_network/descriptor_current.json": "9a35aa288361bc0bacb5115511ffaf73f943eb89feff1b8e2968a7b650c8be35",
       "test/fixtures/public_network/legacy_server_no_descriptor.json": "577eea25d7b5cd945504ed49c6eef95096155d8d46185587fab3efdbd86b9859",
       "test/fixtures/public_network/released_client_requests.json": "35192f11ad727121ab15c4f108efb99315afdcbd973506f01dab57d6c9cd42e0",

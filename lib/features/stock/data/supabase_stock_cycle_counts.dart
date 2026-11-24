@@ -20,14 +20,16 @@ class SupabaseStockCycleCounts implements StockCycleCounts {
 
   @override
   Future<List<CountPlan>> plans(String workspaceId) async {
-    return StockRpc(_client).guard('the count plans were refused', () async {
-      final rows = await _client
+    final rows = await StockRpc(_client).rows(
+      'the count plans',
+      () => _client
           .from('stock_count_plans')
           .select('id, name, scope_kind, location_ids, item_ids, high_value_minor, interval_days, next_due_on, active')
           .eq('workspace_id', workspaceId)
-          .order('next_due_on');
-      return [for (final row in rows) CountPlan.fromRow(row)];
-    });
+          .order('next_due_on', ascending: true)
+          .order('id', ascending: true),
+    );
+    return [for (final row in rows) CountPlan.fromRow(row)];
   }
 
   @override

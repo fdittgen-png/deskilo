@@ -118,11 +118,13 @@ class InvoicePage extends ConsumerWidget {
     // #3680 — the status is stated once the match is read (a failed read is
     // a named source that withholds actions).
     final matchRead = ref.watch(invoiceMatchesProvider);
+    // #4414 kept: waiting, or unreadable: the page keeps a way out
     if (invoice == null || !matchRead.hasValue && !matchRead.hasError) {
       // Still loading, or no longer readable: either way the page keeps a
       // way out.
       return _waiting(
         context,
+        // #4414 kept: an invoice no longer readable says so on its page
         unreadable: invoice == null && (read.hasError || invoices != null),
       );
     }

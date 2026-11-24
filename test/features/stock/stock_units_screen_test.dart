@@ -8,6 +8,8 @@ import 'package:deskilo/core/demo/data/demo_stock_config_commands.dart';
 import 'package:deskilo/core/demo/data/demo_stock_handling_units.dart';
 import 'package:deskilo/core/demo/data/demo_stock_ledger.dart';
 import 'package:deskilo/core/demo/data/demo_stock_queries.dart';
+import 'package:deskilo/core/i18n/app_format.dart';
+import 'package:deskilo/core/i18n/format_controller.dart';
 import 'package:deskilo/features/stock/domain/handling_units.dart';
 import 'package:deskilo/features/stock/presentation/stock_units_screen.dart';
 import 'package:deskilo/features/stock/providers/stock_providers.dart';
@@ -42,14 +44,19 @@ class _Kit {
   late final DemoStockQueries queries;
 }
 
-Future<_Kit> _open(WidgetTester tester, Size size, {StockHandlingUnits Function(StockHandlingUnits)? wrap}) async {
+Future<_Kit> _open(WidgetTester tester, Size size, {StockHandlingUnits Function(StockHandlingUnits)? wrap, String? format}) async {
   final kit = _Kit();
   await pumpApp(
     tester,
     const StockUnitsScreen(),
     size: size,
     overrides: [
-      ...standardTestOverrides(),
+      // a test that names a format locale reads what is typed in it
+      ...standardTestOverrides(pinFormats: format == null),
+      if (format != null) ...[
+        appFormatProvider.overrideWithValue(AppFormat(locale: format, currencyCode: 'EUR')),
+        personalFormatProvider.overrideWithValue(AppFormat(locale: format, currencyCode: 'EUR')),
+      ],
       stockHandlingUnitsProvider.overrideWithValue(wrap == null ? kit.units : wrap(kit.units)),
       stockConfigCommandsProvider.overrideWithValue(kit.config),
       stockQueriesProvider.overrideWithValue(kit.queries),
@@ -144,6 +151,46 @@ void main() {
         expect(kit.ledger.balance('demo-item-beans', 'demo-place-main').text, '12.5');
       });
 
+      // #4425 -- what is typed is read in the member's format: 1,5 in German and 1.5 in English make the same unit
+      for (final (format, typed) in [('de_DE', '1,5'), ('en_US', '1.5')]) {
+        testWidgets('a unit of $typed typed in $format holds 1.5', (tester) async {
+          final kit = await _open(tester, size, format: format);
+          await tester.tap(find.byKey(const ValueKey('stock-units-make')));
+          await _frames(tester);
+          await tester.enterText(find.byKey(const ValueKey('stock-unit-code')), 'BOX-7');
+          await tester.tap(find.byKey(const ValueKey('stock-unit-item')));
+          await _frames(tester);
+          await tester.tap(find.text('Coffee beans').last);
+          await _frames(tester);
+          await tester.enterText(find.byKey(const ValueKey('stock-unit-quantity')), typed);
+          await tester.tap(find.byKey(const ValueKey('stock-unit-make-save')));
+          await _frames(tester);
+          final made = (await kit.units.page('ws-1')).rows.firstWhere((u) => u.code == 'BOX-7');
+          expect((await kit.units.unit('ws-1', made.id))!.lines.single.quantity.text, '1.5');
+        });
+
+        testWidgets('a carton repacked into two boxes of ${typed == '1,5' ? '2,5' : '2.5'} in $format', (tester) async {
+          final kit = await _open(tester, size, format: format);
+          await tester.tap(find.byKey(const ValueKey('stock-unit-CT-001')));
+          await _frames(tester);
+          await tester.tap(find.byKey(const ValueKey('stock-unit-repack')));
+          await _frames(tester);
+          await tester.tap(find.byKey(const ValueKey('stock-unit-repack-item')));
+          await _frames(tester);
+          await tester.tap(find.textContaining('Coffee beans').last);
+          await _frames(tester);
+          await tester.enterText(find.byKey(const ValueKey('stock-unit-repack-boxes')), '2');
+          await tester.enterText(find.byKey(const ValueKey('stock-unit-repack-each')), typed == '1,5' ? '2,5' : '2.5');
+          await tester.tap(find.byKey(const ValueKey('stock-unit-repack-save')));
+          await _frames(tester);
+          final boxes = [for (final u in (await kit.units.page('ws-1')).rows) if (u.code.startsWith('CT-001-')) u];
+          expect(boxes, hasLength(2));
+          for (final b in boxes) {
+            expect((await kit.units.unit('ws-1', b.id))!.lines.single.quantity.text, '2.5');
+          }
+        });
+      }
+
       testWidgets('a unit is made from loose stock: more than is loose is refused, a quantity that fits is made', (tester) async {
         await _open(tester, size);
         await tester.tap(find.byKey(const ValueKey('stock-units-make')));
@@ -170,7 +217,7 @@ void main() {
   testWidgets('a failed read says so and reads again', (tester) async {
     late _Flaky flaky;
     await _open(tester, const Size(390, 844), wrap: (u) => flaky = _Flaky(u));
-    expect(find.text(_en.stockUnitsReadFailed), findsOneWidget);
+    expect(find.byKey(const ValueKey('stock-units-failed')), findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('stock-units-retry')));
     await _frames(tester);
     expect(find.byKey(const ValueKey('stock-unit-PAL-001')), findsOneWidget);

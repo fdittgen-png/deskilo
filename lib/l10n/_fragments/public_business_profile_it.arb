@@ -5,6 +5,5 @@
   "publicProfileRegularHours": "Orari abituali nel fuso orario dell’attività; eccezioni e disponibilità effettiva possono differire.",
   "publicProfileTakesInquiries": "Accetta richieste di informazioni",
   "publicProfileContacts": "Opzioni di contatto",
-  "publicProfileRefreshing": "Aggiornamento delle informazioni pubblicate…",
-  "publicProfileRefreshFailed": "Non è stato possibile aggiornare la pagina di questa attività. Vengono mostrate le informazioni già caricate."
+  "publicProfileRefreshing": "Aggiornamento delle informazioni pubblicate…"
 }

@@ -9,6 +9,7 @@ import { SANDBOX, acceptedFormats, takesTestDocument, SANDBOX_ENVIRONMENT } from
 import { safeError } from "../connectors/common.ts";
 import { dispatchPrepared } from "../dispatch.ts";
 import type { TransmissionStore } from "../store.ts";
+import { logLine } from "../../_shared/log.ts";
 /** #3883 -- why a second test waits, in a sentence a person can act on. */
 export const TEST_PENDING_DETAIL =
   "A test document is still waiting for the platform's verdict. Ask the " +
@@ -88,7 +89,7 @@ export async function sendTestDocument(
       declared: clipDeclared(payload.declared),
     });
   } catch (error) {
-    console.error("send-e-invoice: test prepare failed", safeError(error));
+    logLine("error", "send-e-invoice", "test_prepare_failed", { error: safeError(error) });
     return json({ error: "prepare_failed" }, 500);
   }
   if (prepared.outcome === "test_pending" || !prepared.id) {

@@ -1670,7 +1670,7 @@ In questo capitolo:
 - Il suo account: [foto](#il-suo-account-e-la-sua-foto), [dati personali](#dati-personali), [indirizzo](#il-suo-indirizzo), [partita IVA](#la-sua-partita-iva), [condizioni di pagamento](#le-sue-condizioni-di-pagamento), [WhatsApp](#il-suo-numero-whatsapp), [stato](#la-sua-riga-di-stato), [periodo di prenotazione predefinito](#periodo-di-prenotazione-predefinito)
 - Il suo badge: [il badge](#il-suo-badge) e [il suo PIN](#il-pin-del-suo-badge)
 - Aspetto e lettura dell'app: [lingua](#lingua-dellapp), [tema](#tema), [navigazione](#stile-di-navigazione), [numeri e date](#numeri-e-date), [orologio](#orologio), [fuso orario](#mostra-gli-orari-nel-mio-fuso), [suggerimenti](#ripristinare-i-suggerimenti), [fotocamera frontale](#fotocamera-frontale-per-la-scansione), [account collegati](#account-collegati)
-- Privacy e dati personali: [chi può vedere i miei dati](#privacy-chi-può-vedere-i-miei-dati), [chi mi vede](#scegliere-chi-mi-vede), [profilo pubblico](#pubblicare-un-profilo-pubblico), [esportazione](#esportare-i-miei-dati), [cancellazione](#cancellare-i-miei-dati), [richieste sui diritti](#richieste-sui-diritti), [notifiche push](#notifiche-push-su-questo-dispositivo), [i suoi diritti](#i-suoi-dati-i-suoi-diritti)
+- Privacy e dati personali: [chi può vedere i miei dati](#privacy-chi-può-vedere-i-miei-dati), [chi mi vede](#scegliere-chi-mi-vede), [profilo pubblico](#pubblicare-un-profilo-pubblico), [esportazione](#esportare-i-miei-dati), [cancellazione](#cancellare-i-miei-dati), [richieste sui diritti](#richieste-sui-diritti), [notifiche push](#notifiche-push-su-questo-dispositivo), [segnalazioni di errore](#inviare-le-segnalazioni-di-errore), [i suoi diritti](#i-suoi-dati-i-suoi-diritti)
 - [Il suo server](#il-suo-server)
 
 <!-- anchor: user.settings.organisation -->
@@ -2314,6 +2314,29 @@ Vuole che non vengano più inviate notifiche a questo dispositivo, oppure riatti
 
 - Disattivate, l'app continua a funzionare e nulla viene inviato a questo dispositivo.
 - Attivate, l'indirizzo di questo dispositivo e ogni notifica vanno al servizio push.
+
+**Vedi anche:** [I suoi dati, i suoi diritti](#i-suoi-dati-i-suoi-diritti)
+
+<!-- anchor: user.privacy.error-reports -->
+### Inviare le segnalazioni di errore
+
+**Destinatari:** Tutti
+
+Vuole sapere che cosa invia l'app quando qualcosa va storto, oppure impedirlo.
+
+<!-- image: user-privacy-error-reports -->
+
+**Passaggi**
+
+1. Apra [Privacy e dati](https://fdittgen-png.github.io/deskilo/#/privacy).
+2. Disattivi o attivi **Inviare le segnalazioni di errore**. Resta attivo finché non lo disattiva, e la scelta è conservata su questo dispositivo.
+
+**Da sapere**
+
+- Una segnalazione va solo all'installazione a cui ha effettuato l'accesso, mai a un'altra società. Il suo operatore la legge; le aziende di cui è membro non la vedono.
+- Indica la versione dell'app, la piattaforma, il tipo di errore e il punto dell'app in cui è avvenuto. Non contiene mai ciò che ha digitato, il testo dell'errore, un indirizzo e-mail, un nome o una chiave.
+- Ogni persona invia al massimo un numero stabilito di segnalazioni all'ora, una segnalazione ha una dimensione massima e l'installazione elimina le segnalazioni dopo un numero stabilito di giorni. L'operatore stabilisce tutti e tre.
+- Disattivato, nulla lascia il dispositivo: l'errore resta nel registro di questo dispositivo. Un assistente collegato al Suo account non invia mai una segnalazione.
 
 **Vedi anche:** [I suoi dati, i suoi diritti](#i-suoi-dati-i-suoi-diritti)
 
@@ -4090,6 +4113,32 @@ Vuole che le sue fatture e lettere siano stampate sulla carta che usa il suo pae
 - Se lo spazio passa a un paese che non usa la carta scelta, segue la carta abituale di quel paese.
 
 **Vedi anche:** [Paese](#paese)
+
+<!-- anchor: user.workspace.settings.units -->
+### Unità di misura
+
+**Destinatari:** Proprietario · Amministratore con il permesso
+
+I suoi articoli, preventivi e fatture sono misurati in unità, e alcune unità si convertono in altre: 1 km sono 1000 m. Ogni attività parte con quelle usuali (pezzo, g, kg, ml, cl, l, mm, cm, m, km, m², min, h); lei aggiunge le sue, per esempio una matassa di cavo da 50 m.
+
+<!-- image: user-workspace-settings--units -->
+
+**Passaggi**
+
+1. Attivi **Unità di misura** in **Funzionalità** (è disattivata finché non la richiede).
+2. In [Unità di misura](https://fdittgen-png.github.io/deskilo/#/settings/units), tocchi **Nuova unità**.
+3. Compili **Codice dell’unità** (non potrà più cambiare), **Il suo nome per l’unità**, **Misura** e **Un’unità equivale a** nell’unità di base di ciò che misura: 1000 per un km contato in m, 0,001 per un mm.
+4. Se vuole, compili **Codice UN/ECE (per le fatture elettroniche)**, che le fatture elettroniche riportano (KMT per un km).
+5. Tocchi **Salva**.
+
+**Da sapere**
+
+- Un’unità di base mantiene la sua grandezza e il suo fattore; può darle un nome suo.
+- Un’unità in uso (un articolo contato con essa, un movimento di magazzino, un preventivo o una riga di fattura) mantiene per sempre grandezza e fattore: una correzione è una nuova unità. Un’unità che nessuno usa può essere archiviata (**Archivia**) e mostrata di nuovo (**Mostra di nuovo**).
+- Una conversione è esatta: 2,5 km sono 2500 m. Due tipi di unità non si convertono mai, e un risultato che sei decimali non possono contenere viene rifiutato, mai arrotondato.
+- Solo il proprietario e gli amministratori autorizzati a modificare le impostazioni dello spazio gestiscono le unità.
+
+**Vedi anche:** [Carta dei documenti](#carta-dei-documenti)
 
 <!-- anchor: user.workspace.settings.organisation -->
 ### Organizzazione
@@ -6895,7 +6944,7 @@ Ciò che sta attorno al lavoro di ogni giorno: il lato di prova di uno spazio e 
 In questo capitolo:
 - [Uno spazio ha due lati](#uno-spazio-ha-due-lati) · [Entrare in un lato](#entrare-nel-lato-reale-o-in-quello-di-prova) · [Uno spazio di prova](#a-che-cosa-serve-uno-spazio-di-prova) · [Chi può distribuire](#chi-può-distribuire-ed-entrare-in-produzione) · [Distribuire tra i lati](#distribuire-tra-i-due-lati) · [Situazione dello spazio e archivio dell'esercizio](#situazione-dello-spazio-e-archivio-dellesercizio)
 - [Il Suo server](#gestire-il-proprio-server) · [Quando un'installazione richiede un'app più recente](#quando-uninstallazione-richiede-unapp-più-recente) · [Pubblicare una nuova versione](#pubblicare-una-nuova-versione-prima-il-server)
-- [Assistenti](#assistenti-che-cosa-sono) · [Collegare un assistente](#collegare-un-assistente) · [Approvazioni](#approvazioni-e-conferme-per-gli-assistenti) · [Che cosa possono fare gli assistenti](#che-cosa-possono-fare-gli-assistenti-in-uno-spazio)
+- [Assistenti](#assistenti-che-cosa-sono) · [Collegare un assistente](#collegare-un-assistente) · [Approvazioni](#approvazioni-e-conferme-per-gli-assistenti) · [Che cosa possono fare gli assistenti](#che-cosa-possono-fare-gli-assistenti-in-uno-spazio) · [Segnalazioni di errore](#segnalazioni-di-errore)
 - [Il registratore di attività](#il-registratore-di-attività-e-le-visite-guidate) · [Registrare un'attività](#registrare-unattività) · [Rivedere una registrazione](#rivedere-modificare-ed-esportare-una-registrazione) · [Creare una guida](#creare-una-guida-da-una-registrazione) · [Seguire una guida](#seguire-una-guida) · [Il menu circolare](#il-menu-circolare) · [Modificare una guida](#modificare-o-riparare-una-guida) · [Riservatezza delle registrazioni](#che-cosa-conserva-una-registrazione)
 - [Lo spazio dimostrativo](#lo-spazio-dimostrativo) · [Modalità ripresa](#modalità-ripresa)
 - [Piattaforme](#deskilo-sui-suoi-dispositivi) · [Dettagli per l'assistenza](#dettagli-per-lassistenza) · [Quando qualcosa non funziona](#quando-qualcosa-non-funziona)
@@ -7194,6 +7243,29 @@ Decide quali servizi uno spazio offre agli assistenti.
 - È riservato a chi possiede il permesso sulle integrazioni; i proprietari lo hanno sempre.
 
 **Vedi anche:** [Un interruttore di funzione](#un-interruttore-di-funzionalità)
+
+<!-- anchor: user.advanced.error-reports -->
+### Segnalazioni di errore
+
+**Destinatari:** Operatore
+
+Gestisce l'installazione e vuole vedere che cosa è andato storto nelle app collegate.
+
+<!-- image: user-advanced-error-reports -->
+
+**Passaggi**
+
+1. Apra [Installazione: assistenti](https://fdittgen-png.github.io/deskilo/#/installation/assistants).
+2. Tocchi **Segnalazioni di errore**. Le più recenti vengono per prime.
+3. Tocchi una segnalazione per leggerne lo stack, oscurato dall'app. **Segnalazioni precedenti** legge le successive.
+
+**Da sapere**
+
+- Una segnalazione indica il punto dell'app e il tipo di errore, il suo codice, la versione dell'app, la piattaforma e l'ora. Non contiene mai ciò che una persona ha digitato, un indirizzo e-mail, un nome o una chiave.
+- Solo l'operatore dell'installazione le legge; le aziende dell'installazione non le vedono mai.
+- Nelle impostazioni, **Segnalazioni di errore per persona e ora**, **Dimensione massima di una segnalazione di errore** e **Conservare le segnalazioni di errore per** stabiliscono quante ne arrivano, quanto grandi e per quanto tempo. Ogni persona può disattivare le segnalazioni sul proprio dispositivo.
+
+**Vedi anche:** [Inviare le segnalazioni di errore](#inviare-le-segnalazioni-di-errore)
 
 <!-- anchor: user.advanced.recorder -->
 ### Il registratore di attività e le visite guidate

@@ -20,12 +20,17 @@
 // nothing is credited (_shared/mollie_payment_rules.ts). A paid payment shown charged back
 // or refunded is recorded as reversed instead.
 
+import { env as readEnv, KEYS } from "../_shared/config.ts";
 import { configOf } from "../_shared/webhook_guard.ts";
 import { createClient, SupabaseClient } from "npm:@supabase/supabase-js@2";
 import { mollieApi } from "../_shared/providers.ts";
 import { type Intent, mismatch, reversalOf } from "../_shared/mollie_payment_rules.ts";
 import { allowsTestPayments } from "../_shared/test_payments.ts";
 import { attachOrder, INTENT_KEY, intentIdOf, provisionalIntent } from "../_shared/provisional_intent.ts";
+import { describeError, logLine } from "../_shared/log.ts";
+import { guard } from "../_shared/serve.ts";
+
+const FN = "mollie-webhook";
 
 // The key of the provider the intent was created with — Wero is offered
 // through Mollie but stores its own credentials.
@@ -61,10 +66,10 @@ export interface Deps {
 const defaultDeps: Deps = {
   admin: () =>
     createClient(
-      Deno.env.get("SUPABASE_URL")!,
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+      readEnv(KEYS.supabaseUrl)!,
+      readEnv(KEYS.supabaseServiceRoleKey)!,
     ),
-  env: (name) => Deno.env.get(name),
+  env: readEnv,
   fetch: (input, init) => fetch(input, init),
   allowTest: () => allowsTestPayments(),
 };
@@ -78,7 +83,7 @@ export async function handle(req: Request, deps: Deps = defaultDeps): Promise<Re
     return respond("unsupported_payload", 400);
   }
   const form = await req.formData().catch((error) => {
-    console.warn("mollie-webhook: unreadable form body", error);
+    logLine("warn", FN, "unreadable_form_body", { error: describeError(error) });
     return null;
   });
   const paymentId = form?.get("id");
@@ -98,7 +103,7 @@ export async function handle(req: Request, deps: Deps = defaultDeps): Promise<Re
       .maybeSingle<Intent>();
   const { data: byOrder, error: lookupError } = await byOrderOnce();
   if (lookupError) {
-    console.error("mollie webhook: intent lookup failed");
+    logLine("error", FN, "intent_lookup_failed");
     return respond("lookup_failed", 500);
   }
   // #3917 -- an intent whose provider answer was uncertain does not know its
@@ -116,7 +121,7 @@ export async function handle(req: Request, deps: Deps = defaultDeps): Promise<Re
       "id, workspace_id, provider, amount_cents, currency, reference",
     );
     if (provisional.error) {
-      console.error("mollie webhook: intent lookup failed");
+      logLine("error", FN, "intent_lookup_failed");
       return respond("lookup_failed", 500);
     }
     intent = provisional.data;
@@ -127,13 +132,13 @@ export async function handle(req: Request, deps: Deps = defaultDeps): Promise<Re
     // the two reads: read it by the payment once more.
     const again = await byOrderOnce();
     if (again.error) {
-      console.error("mollie webhook: intent lookup failed");
+      logLine("error", FN, "intent_lookup_failed");
       return respond("lookup_failed", 500);
     }
     intent = again.data;
   }
   if (!intent) {
-    console.log("mollie webhook: unknown payment, ignoring", paymentId);
+    logLine("info", FN, "unknown_payment_ignoring", { paymentId });
     return respond("ok", 200);
   }
   const settleProvider = intent.provider;
@@ -141,11 +146,11 @@ export async function handle(req: Request, deps: Deps = defaultDeps): Promise<Re
   try {
     key = await apiKey(admin, intent.workspace_id, settleProvider, deps.env);
   } catch (e) {
-    console.error("mollie webhook credential read failed", String(e));
+    logLine("error", FN, "credential_read_failed", { error: describeError(e) });
     return respond("config_unavailable", 500);
   }
   if (!key) {
-    console.log("mollie webhook not configured for workspace", intent.workspace_id);
+    logLine("info", FN, "not_configured_for_workspace", { workspace_id: intent.workspace_id });
     return respond("not_configured", 200);
   }
 
@@ -158,17 +163,17 @@ export async function handle(req: Request, deps: Deps = defaultDeps): Promise<Re
     if (!res.ok) {
       // Unavailable, or unknown to Mollie under THIS key: nothing to settle,
       // and Mollie retries a non-2xx.
-      console.error("mollie payment fetch failed", res.status);
+      logLine("error", FN, "payment_fetch_failed", { status: res.status });
       return respond("fetch_failed", 500);
     }
     payment = await res.json();
   } catch (e) {
-    console.error("mollie payment fetch error", String(e));
+    logLine("error", FN, "payment_fetch_error", { error: describeError(e) });
     return respond("fetch_error", 500);
   }
 
   if (payment.id !== paymentId) {
-    console.error("mollie answered for another payment", { paymentId, got: payment.id });
+    logLine("error", FN, "answered_for_another_payment", { paymentId, got: payment.id });
     return respond("payment_mismatch", 409);
   }
   if (attach) {
@@ -176,26 +181,26 @@ export async function handle(req: Request, deps: Deps = defaultDeps): Promise<Re
     // be guessed, the business's own payment cannot.
     const carried = (payment.metadata as Record<string, unknown> | undefined)?.[INTENT_KEY];
     if (carried !== attach) {
-      console.log("mollie webhook: the payment does not carry the named intent, ignoring", paymentId);
+      logLine("info", FN, "intent_not_carried", { paymentId });
       return respond("ok", 200);
     }
     const { error, outcome } = await attachOrder(admin, attach, paymentId);
     if (error) {
-      console.error("mollie webhook: order attach failed");
+      logLine("error", FN, "order_attach_failed");
       return respond("attach_failed", 500);
     }
     if (outcome === "other") {
-      console.log("mollie webhook: the named intent holds another payment, ignoring", paymentId);
+      logLine("info", FN, "intent_holds_another_payment", { paymentId });
       return respond("ok", 200);
     }
-    console.log("mollie webhook: payment attached to its intent", { paymentId, outcome });
+    logLine("info", FN, "payment_attached_to_its_intent", { paymentId, outcome });
   }
 
   const status = payment.status as string;
   if (status === "paid") {
     const why = mismatch(intent, payment, key, deps.allowTest());
     if (why) {
-      console.error("mollie payment does not match the intent", { paymentId, why });
+      logLine("error", FN, "payment_does_not_match_the_intent", { paymentId, why });
       return respond(`mismatch_${why}`, 409);
     }
     // #3905 -- charged back or refunded: recorded as reversed, never settled.
@@ -207,10 +212,10 @@ export async function handle(req: Request, deps: Deps = defaultDeps): Promise<Re
         p_reason: reversal,
       });
       if (markError) {
-        console.error("mollie reversal record failed", markError.message);
+        logLine("error", FN, "reversal_record_failed", { error: describeError(markError) });
         return respond("reversal_record_failed", 500);
       }
-      console.log("mollie payment reversed", { paymentId, reversal });
+      logLine("info", FN, "payment_reversed", { paymentId, reversal });
       return respond("ok", 200);
     }
     const { error } = await admin.rpc("settle_online_payment", {
@@ -220,22 +225,25 @@ export async function handle(req: Request, deps: Deps = defaultDeps): Promise<Re
       p_amount_cents: intent.amount_cents,
     });
     if (error) {
-      console.error("mollie settle failed", error.message);
+      logLine("error", FN, "settle_failed", { error: describeError(error) });
       return respond("settle_failed", 500);
     }
-    console.log("mollie payment settled", { paymentId, settleProvider });
+    logLine("info", FN, "payment_settled", { paymentId, settleProvider });
   } else if (["failed", "canceled", "expired"].includes(status)) {
     // Only a `created` intent becomes failed: a captured one keeps its money.
     await admin.rpc("mark_payment_failed", {
       p_provider: settleProvider,
       p_order_id: paymentId,
     });
-    console.log("mollie payment marked failed", { paymentId, status });
+    logLine("info", FN, "payment_marked_failed", { paymentId, status });
   } else {
     // open, pending, authorized: not paid, and not a failure either.
-    console.log("mollie webhook: not paid yet", { paymentId, status });
+    logLine("info", FN, "not_paid_yet", { paymentId, status });
   }
   return respond("ok", 200);
 }
 
-if (import.meta.main) Deno.serve((req) => handle(req));
+/** The function as it is served: whatever [handle] throws is the envelope (#4412). */
+export const serve = (deps: Deps = defaultDeps) => guard(FN, (req) => handle(req, deps));
+
+if (import.meta.main) Deno.serve(serve());

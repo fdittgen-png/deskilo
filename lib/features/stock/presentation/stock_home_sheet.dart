@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
-import '../../../core/trace/trace_logger.dart';
+import '../../../core/trace/guarded.dart';
 import '../../../core/ui/dropdown_field.dart';
 import '../../../core/ui/form_kit.dart';
 import '../domain/stock_config.dart';
@@ -25,7 +25,7 @@ Future<bool> showStockHomeSheet(
   final l10n = context.l10n;
   final choices = [
     for (final p in places)
-      if (!p.virtual && p.active && p.kind != 'in_transit') p,
+      if (p.isAddressable && p.active) p,
   ]..sort((a, b) => a.addressPath.compareTo(b.addressPath));
   var home = row.homeLocationId;
   final requestId = newRequestId();
@@ -36,19 +36,20 @@ Future<bool> showStockHomeSheet(
       submitLabel: l10n.stockEditSave,
       submitKey: const ValueKey('stock-home-save'),
       onSubmit: () async {
-        try {
-          await registry.setHome(
-            workspaceId,
-            itemId: row.itemId,
-            variantId: row.variantId,
-            placeId: home,
-            requestId: requestId,
-          );
-          return null;
-        } on Object catch (e, st) {
-          TraceLogger.instance.warn('stock', 'a home place was not saved', error: e, stackTrace: st);
-          return stockSaveProblem(l10n, e);
-        }
+        return guardSave(
+          domain: 'stock',
+          message: 'a home place was not saved',
+          action: () async {
+            await registry.setHome(
+              workspaceId,
+              itemId: row.itemId,
+              variantId: row.variantId,
+              placeId: home,
+              requestId: requestId,
+            );
+          },
+          problem: (e) => stockProblemText(l10n, e),
+        );
       },
       builder: (context, refresh) => [
         Text(l10n.stockRegistryHomeHelp),

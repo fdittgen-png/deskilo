@@ -1,8 +1,4 @@
 {
-  "reportImagesLoadFailed": "Could not load report images. Try again.",
-  "@reportImagesLoadFailed": {
-    "description": "Shown as the label in report image picker (money)."
-  },
   "reportImagePreparing": "Preparing the picture for print…",
   "@reportImagePreparing": {
     "description": "#3984 the picture dialog while a picture is brought to print size before it is stored"

@@ -10,6 +10,7 @@ import '../../../core/backend/connected_installation_providers.dart';
 import '../../../core/backend/secondary_federation.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/links/link_launcher.dart';
+import '../../../core/navigation/routes.dart';
 import '../../../core/public_network/public_network_negotiator.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/personal_theme.dart';
@@ -55,7 +56,7 @@ class PublicWorkspaceView extends ConsumerWidget {
     SecondaryConnectAction action,
   ) async {
     if (ref.read(authStateProvider).value == null) {
-      await context.push('/auth');
+      await context.push(Routes.auth);
       return _Connection.none;
     }
     final registry = ref.read(connectedInstallationsProvider);

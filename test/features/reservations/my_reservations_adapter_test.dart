@@ -109,7 +109,10 @@ class _Host {
     if (request.url.path == '/rest/v1/workspaces') {
       zoneReads.add(request.url);
       return http.Response(
-        zonesFail ? jsonEncode({'code': '57014', 'message': 'timeout'}) : jsonEncode(zones),
+        zonesFail
+            ? jsonEncode({'code': '57014', 'message': 'timeout'})
+            // a list read pages until an empty page (#4446): the zones are the first page
+            : jsonEncode((int.tryParse(request.url.queryParameters['offset'] ?? '') ?? 0) > 0 ? const <Object?>[] : zones),
         zonesFail ? 500 : 200,
         request: request,
         headers: {'content-type': 'application/json'},
@@ -266,7 +269,7 @@ void main() {
       final page = await _adapter(host).page(_source, _query);
       expect(page.source, _installation);
       expect(page.zones, {'ws-1': 'Europe/Paris'}, reason: 'the zone of the workspace, from the same host');
-      expect(host.zoneReads.single.queryParameters['id'], 'in.("ws-1")');
+      expect(host.zoneReads.first.queryParameters['id'], 'in.("ws-1")');
       expect(page.hasMore, isTrue);
       expect(page.next, MyReservationsCursor(afterStart: DateTime.utc(2031, 3, 2, 8), afterId: 'r-2'));
       final first = page.items.first;

@@ -11,8 +11,10 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/workspace_time.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/kit/page_bar.dart';
@@ -123,14 +125,18 @@ class PeriodReservationsScreen extends ConsumerWidget {
                   '${format.time(r.startsAt)}–${format.time(r.endsAt)}',
                 ),
                 trailing: const Icon(Icons.chevron_right),
-                onTap: () => context.push('/res/${r.id}'),
+                onTap: () => context.push(Routes.reservation(r.id)),
               ),
             ],
           ],
         ),
-        AsyncError() => EmptyState(
-          icon: Icons.error_outline,
-          title: l10n.periodReservationsFailed,
+        AsyncError(:final error) => ReadFailureBanner(
+          error: error,
+          onRetry: () => ref.invalidate(
+            level == null
+                ? periodReservationsProvider(fromMonth, toMonth)
+                : levelPeriodReservationsProvider(fromMonth, toMonth, level),
+          ),
         ),
         _ => const LoadingView(),
       },

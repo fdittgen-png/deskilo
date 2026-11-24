@@ -110,7 +110,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    expect(find.text('Payables unavailable'), findsOneWidget);
+    expect(find.byKey(const ValueKey('read-failure')), findsOneWidget);
     repo.fail = false;
     await tester.tap(find.byKey(const ValueKey('supplier-payables-retry')));
     await tester.pumpAndSettle();

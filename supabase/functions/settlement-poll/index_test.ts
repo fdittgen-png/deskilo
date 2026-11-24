@@ -5,7 +5,7 @@
 // claim and result follow 0732's rules (pgTAP 399 proves those on the real
 // one). The oracle is the recorder's own table: every settlement once.
 import { assertEquals } from "jsr:@std/assert@1";
-import { handle, MAX_PAGES, POLL_SECRET_HEADER, RUN_BUDGET_MS } from "./index.ts";
+import { handle, MAX_PAGES, POLL_SECRET_HEADER, RUN_BUDGET_MS, serve } from "./index.ts";
 
 const SECRET = "poll-secret-for-tests";
 const SERVICE = "service-credential-for-tests";
@@ -196,4 +196,32 @@ Deno.test("a run past its budget claims no more workspaces; a lost lease keeps n
   db.lose();
   const lost = await (await run(db, m.fetchFn, { now: nextRun() })).json();
   assertEquals(lost.read.every((r: Row) => r.kept === false), true);
+});
+
+// #4412 -- an uncaught error is the envelope: a code and the request id, never the error's own words.
+Deno.test("#4412 settlement-poll: a thrown error answers the envelope and no internal message", async () => {
+  const saved = console.error;
+  console.error = () => {};
+  try {
+    const answer = await serve({
+      service: () => {
+        throw new Error("service role key sb_secret_xyz is wrong");
+      },
+      env: (n) => (n === "SETTLEMENT_POLL_SECRET" ? SECRET : n === "SUPABASE_SERVICE_ROLE_KEY" ? SERVICE : undefined),
+      fetch: () => Promise.reject(new Error("unused")),
+      now: () => Date.now(),
+    })(
+      new Request("http://x", {
+        method: "POST",
+        body: "{}",
+        headers: { [POLL_SECRET_HEADER]: SECRET, "x-request-id": "r-poll" },
+      }),
+    );
+    assertEquals(answer.status, 500);
+    const text = await answer.text();
+    assertEquals(JSON.parse(text), { error: "internal_error", request_id: "r-poll" });
+    assertEquals(/secret|sb_|wrong/i.test(text), false);
+  } finally {
+    console.error = saved;
+  }
 });

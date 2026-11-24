@@ -7,8 +7,10 @@
 import 'package:deskilo/core/demo/data/demo_stock_config_commands.dart';
 import 'package:deskilo/core/demo/data/demo_stock_ledger.dart';
 import 'package:deskilo/core/demo/data/demo_stock_queries.dart';
+import 'package:deskilo/core/i18n/app_format.dart';
+import 'package:deskilo/core/i18n/format_controller.dart';
 import 'package:deskilo/core/ui/dropdown_field.dart';
-import 'package:deskilo/features/stock/domain/stock_config.dart' show StockConfigFailure, StockConfigRefused, StockSaved;
+import 'package:deskilo/features/stock/domain/stock_config.dart' show StockConfigFailure, StockConfigRefused, StockRefusal, StockSaved;
 import 'package:deskilo/features/stock/domain/stock_reorder.dart';
 import 'package:deskilo/features/stock/presentation/stock_reorder_screen.dart';
 import 'package:deskilo/features/stock/providers/stock_providers.dart';
@@ -47,13 +49,13 @@ class _Reorder implements StockReorder {
   @override
   Future<StockSaved> savePoint(
     String workspaceId, {
-    required Map<String, Object?> point,
+    required StockReorderPointDraft point,
     required String requestId,
     String? pointId,
     int? expectedRevision,
   }) async {
     if (failSave case final StockConfigFailure e) throw e;
-    saved.add((point: point, id: pointId, rev: expectedRevision, request: requestId));
+    saved.add((point: point.toJson(), id: pointId, rev: expectedRevision, request: requestId));
     return (id: pointId ?? 'pt-new', revision: (expectedRevision ?? 0) + 1, replayed: false);
   }
 
@@ -121,7 +123,12 @@ Future<void> _open(WidgetTester tester, _Reorder reorder, Size size, {Set<Worksp
     size: size,
     locale: locale,
     overrides: [
-      ...standardTestOverrides(),
+      // a test that names a language also formats in it (the member's format locale)
+      ...standardTestOverrides(pinFormats: locale == null),
+      if (locale != null) ...[
+        appFormatProvider.overrideWithValue(AppFormat(locale: locale.languageCode == 'de' ? 'de_DE' : 'en_US', currencyCode: 'EUR')),
+        personalFormatProvider.overrideWithValue(AppFormat(locale: locale.languageCode == 'de' ? 'de_DE' : 'en_US', currencyCode: 'EUR')),
+      ],
       stockReorderProvider.overrideWithValue(reorder),
       stockConfigCommandsProvider.overrideWithValue(config),
       stockQueriesProvider.overrideWithValue(DemoStockQueries(DemoStockLedger('ws-1', config))),
@@ -193,7 +200,7 @@ void main() {
         await _settle(tester);
         expect(reorder.drafts.length, 2);
         expect(reorder.drafts[0].request, isNot(reorder.drafts[1].request), reason: 'a draft made renews the request');
-        reorder.failDraft = const StockConfigRefused('lines[0]', 'mapping_unknown');
+        reorder.failDraft = const StockConfigRefused('lines[0]', StockRefusal.mappingUnknown);
         await tester.tap(find.byKey(const ValueKey('stock-order-draft-sup-1')));
         await _settle(tester);
         reorder.failDraft = null;
@@ -204,7 +211,7 @@ void main() {
       });
 
       testWidgets('a refused draft says why and makes nothing', (tester) async {
-        final reorder = _Reorder()..failDraft = const StockConfigRefused('lines[0]', 'mapping_unknown');
+        final reorder = _Reorder()..failDraft = const StockConfigRefused('lines[0]', StockRefusal.mappingUnknown);
         await _open(tester, reorder, size);
         await tester.ensureVisible(find.byKey(const ValueKey('stock-order-draft-sup-1')));
         await tester.tap(find.byKey(const ValueKey('stock-order-draft-sup-1')));
@@ -224,8 +231,8 @@ void main() {
       });
 
       // #4425 -- a level typed with the member's decimal separator: 15,5 in German and 15.5 in English save the same
-      for (final (code, typed) in [('de', '15,5'), ('en', '15.5')]) {
-        testWidgets('a level typed $typed in $code is saved as 15.5', (tester) async {
+      for (final (code, typed, saved) in [('de', '15,5', '15.5'), ('en', '15.5', '15.5'), ('de', '1.234,5', '1234.5'), ('en', '1,234.5', '1234.5')]) {
+        testWidgets('a level typed $typed in $code is saved as $saved', (tester) async {
           final reorder = _Reorder();
           await _open(tester, reorder, size, locale: Locale(code));
           await _reveal(tester, find.byKey(const ValueKey('stock-point-pt-beans')));
@@ -234,7 +241,7 @@ void main() {
           await tester.enterText(find.byKey(const ValueKey('stock-point-level')), typed);
           await tester.tap(find.byKey(const ValueKey('stock-point-save')));
           await _settle(tester);
-          expect(reorder.saved.single.point['reorder_point'], '15.5');
+          expect(reorder.saved.single.point['reorder_point'], saved);
         });
       }
 
@@ -265,8 +272,9 @@ void main() {
         await tester.tap(find.byKey(const ValueKey('stock-point-save')));
         await _settle(tester);
         expect(reorder.saved, isEmpty, reason: 'no item, no site, no level: nothing is sent');
-        expect(find.text(_en.stockReasonItemForeign), findsOneWidget);
-        expect(find.text(_en.stockReasonSiteUnknown), findsOneWidget);
+        // #4402 -- a missing choice is the app's own check, in words of its own
+        expect(find.text(_en.stockRequiredItem), findsOneWidget);
+        expect(find.text(_en.stockRequiredSite), findsOneWidget);
         expect(find.text(_en.stockReasonQuantityInvalid), findsOneWidget);
       });
 
@@ -286,7 +294,7 @@ void main() {
       });
 
       testWidgets('a refusal of the server is said under the sheet and the sheet stays', (tester) async {
-        final reorder = _Reorder()..failSave = const StockConfigRefused('item_id', 'point_twice');
+        final reorder = _Reorder()..failSave = const StockConfigRefused('item_id', StockRefusal.pointTwice);
         await _open(tester, reorder, size);
         await _reveal(tester, find.byKey(const ValueKey('stock-point-pt-beans')));
         await tester.tap(find.byKey(const ValueKey('stock-point-pt-beans')));

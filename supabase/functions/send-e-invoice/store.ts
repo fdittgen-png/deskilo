@@ -8,6 +8,7 @@
 // implementation below is a thin mapping onto the 0689 RPCs.
 
 import { SupabaseClient } from "npm:@supabase/supabase-js@2";
+import { describeError, logLine } from "../_shared/log.ts";
 
 export type Phase =
   | "prepared"
@@ -191,7 +192,7 @@ export function supabaseStore(admin: SupabaseClient): TransmissionStore {
     async user(token) {
       const { data, error } = await admin.auth.getUser(token);
       if (error || !data?.user) {
-        console.error("send-e-invoice auth failed", error?.message);
+        logLine("error", "send-e-invoice", "auth_failed", { error: describeError(error) });
         return null;
       }
       return data.user.id;

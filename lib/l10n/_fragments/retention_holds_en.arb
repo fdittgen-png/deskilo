@@ -139,9 +139,5 @@
   "retentionHoldSaveFailed": "The hold could not be saved. Nothing changed.",
   "@retentionHoldSaveFailed": {
     "description": "#2571 retention holds and dispositions"
-  },
-  "retentionHoldsLoadFailed": "The holds could not be read.",
-  "@retentionHoldsLoadFailed": {
-    "description": "#2571 retention holds and dispositions"
   }
 }

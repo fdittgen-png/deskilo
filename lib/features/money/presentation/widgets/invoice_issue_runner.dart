@@ -2,12 +2,14 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/codes/dk_code.dart';
+import '../../../../core/failure/app_failure.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/refusal_text.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/issue_invoice.dart';
+import '../../domain/invoice_missing.dart';
 import 'invoice_unknown_outcome_dialog.dart';
 
 /// Sends [attempt] once and tells the person what is true: issued, held for
@@ -24,11 +26,12 @@ Future<bool> runInvoiceIssue(
 }) async {
   final l10n = context.l10n;
   var outcome = await issuance.issue(attempt);
-  if (outcome is InvoiceIssueUnknown) {
+  if (outcome is CommandUnreached<String>) {
     if (!context.mounted) return false;
     final found = await showInvoiceUnknownOutcomeDialog(
       context,
       issuance: issuance,
+      attempt: attempt,
       unknown: outcome,
     );
     if (found == null) return false;
@@ -36,20 +39,20 @@ Future<bool> runInvoiceIssue(
   }
   if (!context.mounted) return false;
   switch (outcome) {
-    case InvoiceIssued(:final invoiceId):
+    case CommandDone(value: final invoiceId):
       AppSnack.success(context, l10n.invoiceIssued);
       await afterIssue?.call(invoiceId);
       return true;
-    case InvoiceIssueHeld():
+    case CommandHeld():
       AppSnack.info(context, l10n.validationSentForApproval);
-    case InvoiceIssueRefused(:final error):
+    case CommandRefused(:final refusal):
       TraceLogger.instance.error(
         'money',
         'invoice issue refused',
-        error: error,
+        error: refusal,
       );
-      AppSnack.error(context, invoiceRefusalText(l10n, error));
-    case InvoiceIssueUnknown():
+      AppSnack.error(context, invoiceRefusalText(l10n, refusal));
+    case CommandUnreached():
       break;
   }
   return false;
@@ -64,14 +67,19 @@ String invoiceRefusalText(
   Object error, {
   String? fallback,
 }) {
-  if (error is InvoiceIssueDeclined) return l10n.invoiceIssueDeclined;
+  if (error is InvoiceIssueDeclined ||
+      (error is Refusal && isDeclined(error))) {
+    return l10n.invoiceIssueDeclined;
+  }
   // #3811 — read by the server's codes (0396, 0740), never its sentences.
   final refusal = refusalCodeOf(error);
   return switch (refusal.code) {
     DkCode.dki07 => l10n.invoiceAlreadyInvoiced,
     // #3994 — a correction is of the kind of the invoice it replaces.
     DkCode.dki08 => l10n.invoiceCorrectionKeepsKind,
-    DkCode.dki01 when refusal.details == 'invoice_feature_disabled' =>
+    DkCode.dki01
+        when InvoiceMissing.fromWire(refusal.details) ==
+            InvoiceMissing.invoiceFeatureDisabled =>
       l10n.invoiceFeatureDisabled,
     DkCode.dki01 => l10n.invoiceEssentialsRefused,
     _ => fallback ?? l10n.workspaceGenericError,

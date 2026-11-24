@@ -8,6 +8,7 @@ import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -312,7 +313,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
                     .map((rate) => '${rate.label} (${appFormatOf(context).ratePercent(rate.percent)})')
                     .join(' · ')),
             trailing: const Icon(Icons.chevron_right),
-            onTap: () => context.push('/vat'),
+            onTap: () => context.push(Routes.vat),
           ),
           // #1869 — who keeps the official books, per issuer.
           if (ref
@@ -460,7 +461,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
               anchor: HelpAnchor.einvoiceOverview,
             ),
             trailing: const Icon(Icons.chevron_right),
-            onTap: () => context.push('/einvoice-config'),
+            onTap: () => context.push(Routes.einvoiceConfig),
           ),
           const SizedBox(height: AppSpacing.lg),
           LegalPartyFields(

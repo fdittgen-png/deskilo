@@ -14,7 +14,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/setup_step_layout.dart';
@@ -54,12 +56,12 @@ class SetupOnlinePaymentsStep extends ConsumerWidget {
             checkout: checkout,
           ),
         ),
-        AsyncError() => Padding(
+        AsyncError(:final error) => Padding(
           padding: AppSpacing.lgAll,
-          child: InlineBanner(
+          child: ReadFailureBanner(
             key: const ValueKey('setup-online-failed'),
-            icon: Icons.error_outline,
-            text: context.l10n.setupStepLoadFailed,
+            error: error,
+            onRetry: () => ref.invalidate(paymentGatewayStatusProvider(workspaceId)),
           ),
         ),
         _ => const LoadingView(),
@@ -117,7 +119,7 @@ class _OnlineForm extends StatelessWidget {
           alignment: AlignmentDirectional.centerStart,
           child: TextButton(
             key: const ValueKey('setup-online-open-config'),
-            onPressed: () => context.push('/payment-config'),
+            onPressed: () => context.push(Routes.paymentConfig),
             child: Text(l10n.setupOnlineOpenConfig),
           ),
         ),

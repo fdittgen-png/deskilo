@@ -16,7 +16,7 @@ import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_frame.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../core/ui/availability_unavailable_banner.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/motion.dart';
@@ -346,7 +346,8 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                           padding: const EdgeInsets.only(top: 48),
                           // #1848 — a failed read is not an empty day.
                           child: read.hasError && !read.hasValue
-                              ? AvailabilityUnavailableBanner(
+                              ? ReadFailureBanner(key: const ValueKey('reserve-availability-unavailable'),
+                                  error: read.error!,
                                   onRetry: () => ref.invalidate(
                                       reservationsForMonthProvider(monthKeyOf(_month))))
                               : EmptyState(

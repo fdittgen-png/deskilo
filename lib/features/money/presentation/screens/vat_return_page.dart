@@ -18,6 +18,7 @@ import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/adaptive/long_task_page.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/vat_return_documents.dart';
@@ -50,7 +51,11 @@ class _VatReturnPageState extends ConsumerState<VatReturnPage> {
     final read = ref.watch(vatReturnBoxesProvider(widget.declarationId));
     final found = read.value;
     final Widget body = switch (read) {
-      AsyncError() => Center(child: Text(l.accountingStatusNotRead)),
+      AsyncError(:final error) => ReadFailureBanner(
+        error: error,
+        onRetry: () =>
+            ref.invalidate(vatReturnBoxesProvider(widget.declarationId)),
+      ),
       AsyncData(value: null) => Center(
         child: Text(
           l.searchRecordUnreadable,

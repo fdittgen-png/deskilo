@@ -374,12 +374,6 @@ abstract class AppLocalizations {
   /// **'No records to display.'**
   String get accountActivityEmpty;
 
-  /// Shown as a text in account activity screen (money), and 2 other places.
-  ///
-  /// In en, this message translates to:
-  /// **'Could not load your financial history. Tap to retry.'**
-  String get accountActivityFailed;
-
   /// Shown as a text in account activity screen (money).
   ///
   /// In en, this message translates to:
@@ -1394,12 +1388,6 @@ abstract class AppLocalizations {
   /// **'Where the books of each issuer go. A connected system receives the documents itself; any other receives the files exported from the books. Every transfer is listed below with the digest of what it carried.'**
   String get acctTargetsIntro;
 
-  /// #2370 Accounting systems sheet: the connections or transfers could not be read.
-  ///
-  /// In en, this message translates to:
-  /// **'The accounting systems could not be loaded.'**
-  String get acctTargetsLoadFailed;
-
   /// #2370 Accounting systems sheet: no system of the country is reached by a connection.
   ///
   /// In en, this message translates to:
@@ -1903,12 +1891,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No workspace requests.'**
   String get applicationsEmpty;
-
-  /// Admission action failure (#1791)
-  ///
-  /// In en, this message translates to:
-  /// **'Could not load your workspace requests. Please try again.'**
-  String get applicationsLoadFailed;
 
   /// Workspace admission history and discussion (#1791)
   ///
@@ -3492,12 +3474,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This PIN predates length tracking or is shorter than the current minimum. Ask the member to change it in their own settings. Their existing PIN keeps working.'**
   String get badgePinReviewNotice;
-
-  /// Shown as a text in badge pin review notice (workspace).
-  ///
-  /// In en, this message translates to:
-  /// **'PIN review status is unavailable. Try again before assuming this PIN meets the current minimum.'**
-  String get badgePinReviewUnavailable;
 
   /// #1086 the PIN save or clear could not reach the server
   ///
@@ -8252,12 +8228,6 @@ abstract class AppLocalizations {
   /// the billing customers screen and editor (#4164)
   ///
   /// In en, this message translates to:
-  /// **'The customers could not be read. This is not an empty list.'**
-  String get billingCustomersLoadFailed;
-
-  /// the billing customers screen and editor (#4164)
-  ///
-  /// In en, this message translates to:
   /// **'The people and businesses you invoice. They are not members and see nothing of your business, unless you invite them to read their own invoices from their own account.'**
   String get billingCustomersNoAccount;
 
@@ -8656,12 +8626,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Choose both days, and give a reason where one is asked.'**
   String get bookPeriodsInvalid;
-
-  /// #2365 accounting periods
-  ///
-  /// In en, this message translates to:
-  /// **'The periods could not be loaded.'**
-  String get bookPeriodsLoadFailed;
 
   /// #2365 accounting periods
   ///
@@ -10448,12 +10412,6 @@ abstract class AppLocalizations {
   /// #1918 capacity KPI
   ///
   /// In en, this message translates to:
-  /// **'Try again'**
-  String get capacityKpiRetry;
-
-  /// #1918 capacity KPI
-  ///
-  /// In en, this message translates to:
   /// **'Rooms without seats: {count}, {reserved} of {offered} room-hours reserved'**
   String capacityKpiRooms(String count, String reserved, String offered);
 
@@ -11150,12 +11108,6 @@ abstract class AppLocalizations {
   /// #1660 template_compare
   ///
   /// In en, this message translates to:
-  /// **'These templates could not be read to compare them. Nothing is claimed either way.'**
-  String get compareUnavailable;
-
-  /// #1660 template_compare
-  ///
-  /// In en, this message translates to:
   /// **'Unknown'**
   String get compareUnknown;
 
@@ -11446,12 +11398,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your data, your rights'**
   String get consentTitle;
-
-  /// Banner on the consent screen when the profile could not be fetched (#1650): a retry replaces the acceptance form
-  ///
-  /// In en, this message translates to:
-  /// **'Your account could not be loaded, so there is nothing to accept yet.'**
-  String get consentUnavailable;
 
   /// Shown as the text in consent screen (profile), and 1 other place.
   ///
@@ -15921,12 +15867,6 @@ abstract class AppLocalizations {
   /// **'A token is stored (type a new one to replace it).'**
   String get einvoiceConfigTokenSet;
 
-  /// Shown when the e-invoice platform status probe fails
-  ///
-  /// In en, this message translates to:
-  /// **'The platform settings could not be loaded. Check your connection and try again.'**
-  String get einvoiceConfigUnavailable;
-
   /// E-invoicing config: customer delivery section help (#568)
   ///
   /// In en, this message translates to:
@@ -16344,12 +16284,6 @@ abstract class AppLocalizations {
   /// service engagements (#4178)
   ///
   /// In en, this message translates to:
-  /// **'The engagements could not be read. This is not an empty list.'**
-  String get engagementsLoadFailed;
-
-  /// service engagements (#4178)
-  ///
-  /// In en, this message translates to:
   /// **'New engagement'**
   String get engagementsNew;
 
@@ -16586,12 +16520,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Choose a purchase line, and for a decision give its basis.'**
   String get equipmentInvalid;
-
-  /// #2576 equipment register
-  ///
-  /// In en, this message translates to:
-  /// **'The equipment could not be loaded.'**
-  String get equipmentLoadFailed;
 
   /// #2576 equipment register
   ///
@@ -21303,6 +21231,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Distinct avatar initials'**
   String get featureUniqueMonogramsTitle;
+
+  /// #4442 feature description
+  ///
+  /// In en, this message translates to:
+  /// **'The owner and the admins keep the business\'s own units of measure and their conversions (1 km = 1000 m, 1 kg = 1000 g). Items, quotes and invoices are measured in them. The built-in units are always there; switching this on adds the screen to maintain them.'**
+  String get featureUnitsOfMeasureDesc;
+
+  /// #4442 feature name
+  ///
+  /// In en, this message translates to:
+  /// **'Units of measure'**
+  String get featureUnitsOfMeasureTitle;
 
   /// Shown as a text in feature copy (workspace).
   ///
@@ -26041,6 +25981,48 @@ abstract class AppLocalizations {
   /// **'This project does not answer as a Deskilo installation yet. Install the schema first.'**
   String get instanceEnrolUnreadable;
 
+  /// #4416 Instance console: the code the error carried
+  ///
+  /// In en, this message translates to:
+  /// **'Code {code}'**
+  String instanceErrorReportCode(String code);
+
+  /// #4416 Instance console: one report's app version, platform and time
+  ///
+  /// In en, this message translates to:
+  /// **'{version} · {platform} · {time}'**
+  String instanceErrorReportFacts(String version, String platform, String time);
+
+  /// #4416 Instance console: heading of a report's stack
+  ///
+  /// In en, this message translates to:
+  /// **'Stack, redacted by the app'**
+  String get instanceErrorReportStack;
+
+  /// #4416 Instance console: the error reports apps sent to this installation, its row and sheet title
+  ///
+  /// In en, this message translates to:
+  /// **'Error reports'**
+  String get instanceErrorReports;
+
+  /// #4416 Instance console: under the error reports row
+  ///
+  /// In en, this message translates to:
+  /// **'What the apps sent when something went wrong, newest first. Members of a business never see them.'**
+  String get instanceErrorReportsHint;
+
+  /// #4416 Instance console: the list is empty
+  ///
+  /// In en, this message translates to:
+  /// **'No error report has arrived.'**
+  String get instanceErrorReportsNone;
+
+  /// #4416 Instance console: reads the next page of older reports
+  ///
+  /// In en, this message translates to:
+  /// **'Older reports'**
+  String get instanceErrorReportsOlder;
+
   /// #2145 assistant onboarding: instanceFamilyChatgpt
   ///
   /// In en, this message translates to:
@@ -30335,12 +30317,6 @@ abstract class AppLocalizations {
   /// **'This group is used by items: move them first.'**
   String get itemGroupReasonInUse;
 
-  /// #4361 G12 item groups: itemGroupReasonNameDuplicate
-  ///
-  /// In en, this message translates to:
-  /// **'Another group already has this name.'**
-  String get itemGroupReasonNameDuplicate;
-
   /// #4361 G12 item groups: itemGroupReasonNeedsSerial
   ///
   /// In en, this message translates to:
@@ -31925,12 +31901,6 @@ abstract class AppLocalizations {
   /// **'The rent the lease expects each month and the bills that replaced it. A bill allocated to a month replaces its expectation; it never adds a second cost.'**
   String get leaseCommitmentsIntro;
 
-  /// #2575 commitment matching
-  ///
-  /// In en, this message translates to:
-  /// **'The commitments could not be loaded.'**
-  String get leaseCommitmentsLoadFailed;
-
   /// #2569 premises lease
   ///
   /// In en, this message translates to:
@@ -32074,12 +32044,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Lessor: {name}'**
   String leaseLessor(String name);
-
-  /// #2569 premises lease
-  ///
-  /// In en, this message translates to:
-  /// **'The lease could not be loaded.'**
-  String get leaseLoadFailed;
 
   /// #2575 commitment matching
   ///
@@ -32992,12 +32956,6 @@ abstract class AppLocalizations {
   /// **'Preview changes'**
   String get libraryPreviewChanges;
 
-  /// Template apply sheet when the server preview could not be loaded (#1280)
-  ///
-  /// In en, this message translates to:
-  /// **'The changes could not be previewed. Nothing was applied.'**
-  String get libraryPreviewFailed;
-
   /// Template apply preview (#1280): libraryPreviewTitle
   ///
   /// In en, this message translates to:
@@ -33423,12 +33381,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Mints a personal code bound to this profile. Whoever redeems it takes the profile over — reservations, invoices, subscription — once you approve the membership.'**
   String get managedProfileHandOverHint;
-
-  /// #1561 shown when the managed identity could not be read, so the form is not offered
-  ///
-  /// In en, this message translates to:
-  /// **'These details could not be read, so there is nothing to edit yet. Nothing has been changed.'**
-  String get managedProfileIdentityUnavailable;
 
   /// #887 managed profiles: managedProfileIntro
   ///
@@ -34840,12 +34792,6 @@ abstract class AppLocalizations {
   /// **'Assistant access'**
   String get mcpPolicyTitle;
 
-  /// #1626 #1627 #1628 mcp_settings
-  ///
-  /// In en, this message translates to:
-  /// **'The assistant settings could not be loaded. Try again later.'**
-  String get mcpPolicyUnavailable;
-
   /// #2145 Connect an assistant: mcpRefusalClientNotApproved
   ///
   /// In en, this message translates to:
@@ -34939,12 +34885,6 @@ abstract class AppLocalizations {
   /// #3978 mcp_my_requests
   ///
   /// In en, this message translates to:
-  /// **'Your assistants\' requests could not be read. Open this page again later.'**
-  String get mcpRequestsUnavailable;
-
-  /// #3978 mcp_my_requests
-  ///
-  /// In en, this message translates to:
   /// **'Waiting for your confirmation'**
   String get mcpRequestsWaitingTitle;
 
@@ -35007,12 +34947,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Assistant approvals'**
   String get mcpReviewTitle;
-
-  /// #1626 #1627 #1628 mcp_settings
-  ///
-  /// In en, this message translates to:
-  /// **'The requests could not be loaded. A review needs your second factor; try again.'**
-  String get mcpReviewUnavailable;
 
   /// MCP status card (assistant setup): identity confirmation, taken in place
   ///
@@ -35239,12 +35173,6 @@ abstract class AppLocalizations {
   /// #1630 mcp_usage
   ///
   /// In en, this message translates to:
-  /// **'Usage could not be loaded.'**
-  String get mcpUsageUnavailable;
-
-  /// #1630 mcp_usage
-  ///
-  /// In en, this message translates to:
   /// **'Assistant use, last 30 days'**
   String get mcpUsageWorkspaceTitle;
 
@@ -35409,12 +35337,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your account names no business yet.'**
   String get meDataWorkspacesEmpty;
-
-  /// #2557 C3 the workspace list could not be read.
-  ///
-  /// In en, this message translates to:
-  /// **'The businesses your account names could not be read. Nothing was exported.'**
-  String get meDataWorkspacesFailed;
 
   /// #2557 C3 what each workspace's export covers.
   ///
@@ -35842,12 +35764,6 @@ abstract class AppLocalizations {
   /// **'Request sent · waiting for an answer'**
   String get mePlaceRequestSent;
 
-  /// Me, My places: the places could not be loaded (#3555: the profiles screen keeps profilesUnavailable)
-  ///
-  /// In en, this message translates to:
-  /// **'Your places could not be loaded.'**
-  String get mePlacesLoadFailed;
-
   /// Me, the data export card: the business answers data requests itself (#3555: refusal_text keeps privacySelfServiceOff)
   ///
   /// In en, this message translates to:
@@ -35901,12 +35817,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Places elsewhere'**
   String get meRefsTitle;
-
-  /// #2563 Me home: the references could not be read
-  ///
-  /// In en, this message translates to:
-  /// **'Your places elsewhere could not be read.'**
-  String get meRefsUnavailable;
 
   /// #3545 First visit: the question before the link that creates a business.
   ///
@@ -36124,6 +36034,174 @@ abstract class AppLocalizations {
   /// **'Where my places live'**
   String get meWhereSpacesLive;
 
+  /// #4442 dimension: area
+  ///
+  /// In en, this message translates to:
+  /// **'Area'**
+  String get measureDimensionArea;
+
+  /// #4442 dimension: counting
+  ///
+  /// In en, this message translates to:
+  /// **'Count'**
+  String get measureDimensionCount;
+
+  /// #4442 dimension: length
+  ///
+  /// In en, this message translates to:
+  /// **'Length'**
+  String get measureDimensionLength;
+
+  /// #4442 dimension: mass
+  ///
+  /// In en, this message translates to:
+  /// **'Mass'**
+  String get measureDimensionMass;
+
+  /// #4442 dimension: time
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
+  String get measureDimensionTime;
+
+  /// #4442 dimension: volume
+  ///
+  /// In en, this message translates to:
+  /// **'Volume'**
+  String get measureDimensionVolume;
+
+  /// #4442 refusal: no dimension chosen
+  ///
+  /// In en, this message translates to:
+  /// **'Choose what this unit measures.'**
+  String get measureReasonDimension;
+
+  /// #4442 refusal: the UN/ECE code is malformed
+  ///
+  /// In en, this message translates to:
+  /// **'A UN/ECE code is two or three capital letters or digits.'**
+  String get measureReasonEce;
+
+  /// #4442 refusal: a fixed unit
+  ///
+  /// In en, this message translates to:
+  /// **'This unit is fixed and cannot be changed or removed.'**
+  String get measureReasonFixed;
+
+  /// #4442 refusal: a unit in use keeps its factor
+  ///
+  /// In en, this message translates to:
+  /// **'This unit is in use, so its dimension and factor can no longer change. Make a new unit instead.'**
+  String get measureReasonInUse;
+
+  /// #4442 refusal: a conversion that six decimals cannot hold
+  ///
+  /// In en, this message translates to:
+  /// **'The result cannot be written exactly with six decimals.'**
+  String get measureReasonInexact;
+
+  /// #4442 refusal: a new unit needs a name
+  ///
+  /// In en, this message translates to:
+  /// **'A new unit needs a name.'**
+  String get measureReasonName;
+
+  /// #4442 action: archive an unused unit
+  ///
+  /// In en, this message translates to:
+  /// **'Archive'**
+  String get measureUnitArchive;
+
+  /// #4442 tag on an archived unit
+  ///
+  /// In en, this message translates to:
+  /// **'Archived'**
+  String get measureUnitArchivedTag;
+
+  /// #4442 tag on a built-in unit
+  ///
+  /// In en, this message translates to:
+  /// **'Built in'**
+  String get measureUnitBuiltIn;
+
+  /// #4442 field: the code of a unit
+  ///
+  /// In en, this message translates to:
+  /// **'Unit code'**
+  String get measureUnitCodeField;
+
+  /// #4442 helper of the code field
+  ///
+  /// In en, this message translates to:
+  /// **'Lower case letters, digits and underscores. It cannot change later.'**
+  String get measureUnitCodeHelp;
+
+  /// #4442 field: what a unit measures
+  ///
+  /// In en, this message translates to:
+  /// **'It measures'**
+  String get measureUnitDimensionField;
+
+  /// #4442 field: the UN/ECE code of a unit
+  ///
+  /// In en, this message translates to:
+  /// **'UN/ECE code (for e-invoices)'**
+  String get measureUnitEceField;
+
+  /// #4442 edit sheet title
+  ///
+  /// In en, this message translates to:
+  /// **'Edit unit'**
+  String get measureUnitEdit;
+
+  /// #4442 field: how many base units one unit is
+  ///
+  /// In en, this message translates to:
+  /// **'One unit equals'**
+  String get measureUnitFactorField;
+
+  /// #4442 helper of the factor field
+  ///
+  /// In en, this message translates to:
+  /// **'Counted in {base}, the base unit of what it measures: 1000 for a km, 0.001 for a mm.'**
+  String measureUnitFactorHelp(String base);
+
+  /// #4442 a unit's conversion line, e.g. 1 km = 1000 m
+  ///
+  /// In en, this message translates to:
+  /// **'1 {unit} = {value} {base}'**
+  String measureUnitLine(String unit, String value, String base);
+
+  /// #4442 field: the business's own word for a unit
+  ///
+  /// In en, this message translates to:
+  /// **'Your name for the unit'**
+  String get measureUnitNameField;
+
+  /// #4442 new unit action
+  ///
+  /// In en, this message translates to:
+  /// **'New unit'**
+  String get measureUnitNew;
+
+  /// #4442 action: show an archived unit again
+  ///
+  /// In en, this message translates to:
+  /// **'Show again'**
+  String get measureUnitRestore;
+
+  /// #4442 what the screen is for
+  ///
+  /// In en, this message translates to:
+  /// **'The units your items, quotes and invoices are measured in, and how they convert: 1 km = 1000 m. The built-in units are always there; add your own, such as a cable drum of 50 m.'**
+  String get measureUnitsIntro;
+
+  /// #4442 the row in the workspace settings
+  ///
+  /// In en, this message translates to:
+  /// **'Your own units and how they convert'**
+  String get measureUnitsSubtitle;
+
   /// #1598 member account menu: memberAccountTitle
   ///
   /// In en, this message translates to:
@@ -36267,12 +36345,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Nothing outstanding.'**
   String get memberMoneySettled;
-
-  /// #709 - the money section of a profile could not be read
-  ///
-  /// In en, this message translates to:
-  /// **'Money could not be loaded. Pull to refresh.'**
-  String get memberMoneyUnavailable;
 
   /// #704 - the money section of a member profile
   ///
@@ -38686,12 +38758,6 @@ abstract class AppLocalizations {
   /// **'New members'**
   String get newMemberDefaultsTitle;
 
-  /// #1563 shown when the new-member defaults could not be read, so Save omits them
-  ///
-  /// In en, this message translates to:
-  /// **'These could not be read just now. Saving leaves them exactly as they are.'**
-  String get newMemberDefaultsUnavailable;
-
   /// #1294 shown when nothing is configured, naming the product defaults
   ///
   /// In en, this message translates to:
@@ -40053,12 +40119,6 @@ abstract class AppLocalizations {
   /// **'Settlement reports to review'**
   String get payConfigSettlementsReviewTitle;
 
-  /// #3510 settlement reports refused and kept for review
-  ///
-  /// In en, this message translates to:
-  /// **'The settlement reports to review could not be read.'**
-  String get payConfigSettlementsReviewUnreadable;
-
   /// Owner screen to configure online-payment providers (0047)
   ///
   /// In en, this message translates to:
@@ -40400,12 +40460,6 @@ abstract class AppLocalizations {
   /// **'No payment is waiting for an invoice.'**
   String get paymentMatchEmpty;
 
-  /// #3587 R1-f: payments to match (paymentMatchFailed)
-  ///
-  /// In en, this message translates to:
-  /// **'The payments could not be read.'**
-  String get paymentMatchFailed;
-
   /// #3587 R1-f: payments to match (paymentMatchHeader)
   ///
   /// In en, this message translates to:
@@ -40699,12 +40753,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No booking in these months.'**
   String get periodReservationsEmpty;
-
-  /// #2578 the bookings behind the capacity figure
-  ///
-  /// In en, this message translates to:
-  /// **'The bookings could not be read.'**
-  String get periodReservationsFailed;
 
   /// #2580 the bookings behind the capacity figure, narrowed to one level
   ///
@@ -42644,12 +42692,6 @@ abstract class AppLocalizations {
   /// **'Send sign-in code'**
   String get portalSendCode;
 
-  /// Shown as the text in account messenger sections (directory), and 5 other places.
-  ///
-  /// In en, this message translates to:
-  /// **'A server is unavailable. This overview is incomplete. Tap to retry.'**
-  String get portalSourceUnavailable;
-
   /// Shown as the title in connection dialog (directory).
   ///
   /// In en, this message translates to:
@@ -42806,12 +42848,6 @@ abstract class AppLocalizations {
   /// **'Kind of request'**
   String get privacyAdminKind;
 
-  /// Shown as the text in privacy admin screen (members).
-  ///
-  /// In en, this message translates to:
-  /// **'The requests could not be read.'**
-  String get privacyAdminLoadFailed;
-
   /// Shown as the text in privacy admin sheets (members), and 1 other place.
   ///
   /// In en, this message translates to:
@@ -42919,6 +42955,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your data in {space} is erased. What the space must keep stays for its retention period; other installations are not affected.'**
   String privacyErasedIn(String space);
+
+  /// #4416 Privacy switch: send the errors the app records to the installation
+  ///
+  /// In en, this message translates to:
+  /// **'Send error reports'**
+  String get privacyErrorReports;
+
+  /// #4416 Privacy switch: the switch could not be stored
+  ///
+  /// In en, this message translates to:
+  /// **'The choice could not be saved on this device.'**
+  String get privacyErrorReportsFailed;
+
+  /// #4416 Privacy switch: what is sent and where, under its name
+  ///
+  /// In en, this message translates to:
+  /// **'When the app records an error, a report without your data goes to the installation you are signed in to, so its operator can fix it.'**
+  String get privacyErrorReportsHint;
 
   /// #719 - privacy & data
   ///
@@ -43315,6 +43369,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No process matches this filter.'**
   String get processFilterEmpty;
+
+  /// Shown as the title in process names (workspace).
+  ///
+  /// In en, this message translates to:
+  /// **'Goods & stock'**
+  String get processGoodsStock;
+
+  /// Shown as the text in process names (workspace).
+  ///
+  /// In en, this message translates to:
+  /// **'Keep, move, count and trace the goods the business sells.'**
+  String get processGoodsStockDesc;
 
   /// #1327 the process-first overview of the Features screen
   ///
@@ -43730,12 +43796,6 @@ abstract class AppLocalizations {
   /// **'Profiles'**
   String get profilesTitle;
 
-  /// Banner on the Profiles screen when the membership list could not be fetched (#1650); paired with commonRetry
-  ///
-  /// In en, this message translates to:
-  /// **'Your workspaces could not be loaded.'**
-  String get profilesUnavailable;
-
   /// #1307 S4 provenance chip
   ///
   /// In en, this message translates to:
@@ -43933,12 +43993,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Information published by this business. Missing information does not mean that a facility is absent.'**
   String get publicProfilePublishedInfo;
-
-  /// Public profile: RefreshFailed.
-  ///
-  /// In en, this message translates to:
-  /// **'Could not refresh this business’s page. Showing the information already loaded.'**
-  String get publicProfileRefreshFailed;
 
   /// Public profile: Refreshing.
   ///
@@ -46191,12 +46245,6 @@ abstract class AppLocalizations {
   /// customer quotes: the quotes list, editor and detail (#4166)
   ///
   /// In en, this message translates to:
-  /// **'The quotes could not be read. This is not an empty list.'**
-  String get quotesLoadFailed;
-
-  /// customer quotes: the quotes list, editor and detail (#4166)
-  ///
-  /// In en, this message translates to:
   /// **'New quote'**
   String get quotesNew;
 
@@ -46205,12 +46253,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You may not read the quotes of this business.'**
   String get quotesNotAllowed;
-
-  /// customer quotes: the quotes list, editor and detail (#4166)
-  ///
-  /// In en, this message translates to:
-  /// **'Try again'**
-  String get quotesRetry;
 
   /// customer quotes: the quotes list, editor and detail (#4166)
   ///
@@ -49254,12 +49296,6 @@ abstract class AppLocalizations {
   /// **'No image yet — upload your logo, a stamp or a signature and reference it with ![name].'**
   String get reportImagesEmpty;
 
-  /// Shown as the label in report image picker (money).
-  ///
-  /// In en, this message translates to:
-  /// **'Could not load report images. Try again.'**
-  String get reportImagesLoadFailed;
-
   /// #3984 the action of the snack that tells an original was too large: opens the picture library
   ///
   /// In en, this message translates to:
@@ -50169,12 +50205,6 @@ abstract class AppLocalizations {
   /// #2571 retention holds and dispositions
   ///
   /// In en, this message translates to:
-  /// **'The holds could not be read.'**
-  String get retentionHoldsLoadFailed;
-
-  /// #2571 retention holds and dispositions
-  ///
-  /// In en, this message translates to:
   /// **'Legal holds'**
   String get retentionHoldsTitle;
 
@@ -50819,12 +50849,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Floors'**
   String get roomRentLevels;
-
-  /// #2568 rented rooms
-  ///
-  /// In en, this message translates to:
-  /// **'The rented rooms could not be loaded.'**
-  String get roomRentLoadFailed;
 
   /// #2568 rented rooms
   ///
@@ -51798,6 +51822,12 @@ abstract class AppLocalizations {
   /// **'App versions'**
   String get settingGroupCompatibility;
 
+  /// #4416 Settings group: the error reports apps send to this installation
+  ///
+  /// In en, this message translates to:
+  /// **'Error reports'**
+  String get settingGroupDiagnostics;
+
   /// #2486 settings: Settings group title.
   ///
   /// In en, this message translates to:
@@ -52536,6 +52566,24 @@ abstract class AppLocalizations {
   /// **'On: a new stock item is proposed in kilograms instead of pieces (a butcher, a bakery, a grocery counter). Any item can still be given another unit.'**
   String get settingHintStockWeighedGoods;
 
+  /// #4416 Platform setting trace.report_max_bytes: what it decides, under its name
+  ///
+  /// In en, this message translates to:
+  /// **'The largest error report this installation accepts. The app shortens the report\'s stack to fit before it sends; a report still larger is dropped.'**
+  String get settingHintTraceReportMaxBytes;
+
+  /// #4416 Platform setting trace.report_retention_days: what it decides, under its name
+  ///
+  /// In en, this message translates to:
+  /// **'How many days this installation keeps an error report. Older reports are deleted when a new one arrives.'**
+  String get settingHintTraceReportRetentionDays;
+
+  /// #4416 Platform setting trace.reports_per_hour: what it decides, under its name
+  ///
+  /// In en, this message translates to:
+  /// **'How many error reports one person may send to this installation in an hour, from all their devices together. Further reports in that hour are dropped, never queued. 0 turns error reports off for everybody.'**
+  String get settingHintTraceReportsPerHour;
+
   /// #2487 retention settings
   ///
   /// In en, this message translates to:
@@ -53214,6 +53262,24 @@ abstract class AppLocalizations {
   /// **'Goods are sold by weight'**
   String get settingLabelStockWeighedGoods;
 
+  /// #4416 Platform setting trace.report_max_bytes: its name in the settings editor
+  ///
+  /// In en, this message translates to:
+  /// **'Largest error report'**
+  String get settingLabelTraceReportMaxBytes;
+
+  /// #4416 Platform setting trace.report_retention_days: its name in the settings editor
+  ///
+  /// In en, this message translates to:
+  /// **'Error reports kept for'**
+  String get settingLabelTraceReportRetentionDays;
+
+  /// #4416 Platform setting trace.reports_per_hour: its name in the settings editor
+  ///
+  /// In en, this message translates to:
+  /// **'Error reports per person and hour'**
+  String get settingLabelTraceReportsPerHour;
+
   /// #2487 retention settings
   ///
   /// In en, this message translates to:
@@ -53483,12 +53549,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Badges are read with the screen-side camera — turn off to use the back camera.'**
   String get settingsFrontCameraDesc;
-
-  /// #2484 settings: Error text.
-  ///
-  /// In en, this message translates to:
-  /// **'The settings could not be loaded.'**
-  String get settingsLoadFailed;
 
   /// #2484 settings: Banner: the editor shows the bundled registry.
   ///
@@ -56386,12 +56446,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Leave this step?'**
   String get setupStepLeaveTitle;
-
-  /// #2870 setup steps: setupStepLoadFailed
-  ///
-  /// In en, this message translates to:
-  /// **'This step could not be loaded. Try again later.'**
-  String get setupStepLoadFailed;
 
   /// #3076 — on a step page of the guide: goes on to the next step still to do.
   ///
@@ -59594,30 +59648,6 @@ abstract class AppLocalizations {
   /// #4361 refusal text
   ///
   /// In en, this message translates to:
-  /// **'A sub-group cannot have sub-groups.'**
-  String get stockReasonGroupDepth;
-
-  /// #4361 refusal text
-  ///
-  /// In en, this message translates to:
-  /// **'This item has stock movements: its unit and tracking stay as they were written.'**
-  String get stockReasonGroupHasMovements;
-
-  /// #4361 refusal text
-  ///
-  /// In en, this message translates to:
-  /// **'This group has sub-groups: move or delete them first.'**
-  String get stockReasonGroupHasSubgroups;
-
-  /// #4361 refusal text
-  ///
-  /// In en, this message translates to:
-  /// **'This group is used by items: move them first.'**
-  String get stockReasonGroupInUse;
-
-  /// #4361 refusal text
-  ///
-  /// In en, this message translates to:
   /// **'This item is not one of this business\'s.'**
   String get stockReasonGroupItemUnknown;
 
@@ -59642,26 +59672,8 @@ abstract class AppLocalizations {
   /// #4361 refusal text
   ///
   /// In en, this message translates to:
-  /// **'Per-unit tags need tracking by piece.'**
-  String get stockReasonGroupNeedsSerial;
-
-  /// #4361 refusal text
-  ///
-  /// In en, this message translates to:
-  /// **'This is a proposal for new items and is not set per item.'**
-  String get stockReasonGroupNotOverridable;
-
-  /// #4361 refusal text
-  ///
-  /// In en, this message translates to:
   /// **'This place is not one of this business\'s.'**
   String get stockReasonGroupPlaceUnknown;
-
-  /// #4361 refusal text
-  ///
-  /// In en, this message translates to:
-  /// **'This group is not one of this business\'s.'**
-  String get stockReasonGroupUnknown;
 
   /// #4361 refusal text
   ///
@@ -60383,6 +60395,42 @@ abstract class AppLocalizations {
   /// **'What to order'**
   String get stockReorderToOrderTitle;
 
+  /// #4402 the supplier article sheet: said under the article reference when it is empty (the app's own check)
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the supplier\'s article reference.'**
+  String get stockRequiredArticle;
+
+  /// #4402 the move sheet: said under the destination when none is chosen, or when it is the place the goods leave (the app's own check)
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the place the goods go to, another than the one they leave.'**
+  String get stockRequiredDestination;
+
+  /// #4402 a stock sheet: said under the item field when no item is chosen yet (the app's own check, not a refusal of the server)
+  ///
+  /// In en, this message translates to:
+  /// **'Choose an item.'**
+  String get stockRequiredItem;
+
+  /// #4402 a stock sheet: said under a place field when no place is chosen yet (the app's own check, not a refusal of the server)
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a place.'**
+  String get stockRequiredPlace;
+
+  /// #4402 the reorder point sheet: said under the site when none is chosen yet (the app's own check, not a refusal of the server)
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a site.'**
+  String get stockRequiredSite;
+
+  /// #4402 the supplier article sheet: said under the supplier when none is chosen yet (the app's own check)
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a supplier.'**
+  String get stockRequiredSupplier;
+
   /// #4172 stock returns and counts screens
   ///
   /// In en, this message translates to:
@@ -60713,6 +60761,12 @@ abstract class AppLocalizations {
   /// **'Stock rules'**
   String get stockSettingsValues;
 
+  /// #4401 a state, scope or kind a newer server sent that this app does not know: shown instead of a guess
+  ///
+  /// In en, this message translates to:
+  /// **'Not known to this app'**
+  String get stockStateUnknown;
+
   /// #4161 the quantity as stored, in the inventory unit
   ///
   /// In en, this message translates to:
@@ -60749,18 +60803,6 @@ abstract class AppLocalizations {
   /// **'UHF label'**
   String get stockTagKindUhf;
 
-  /// #4363 G14 tags: stockTagMalformed
-  ///
-  /// In en, this message translates to:
-  /// **'That is not a valid tag code.'**
-  String get stockTagMalformed;
-
-  /// #4363 G14 tags: stockTagModeNone
-  ///
-  /// In en, this message translates to:
-  /// **'This item does not use tags.'**
-  String get stockTagModeNone;
-
   /// #4363 G14 tags: stockTagNotInForce
   ///
   /// In en, this message translates to:
@@ -60772,18 +60814,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This tag is on a piece that is still in stock.'**
   String get stockTagOnPiece;
-
-  /// #4363 G14 tags: stockTagOwnerUnknown
-  ///
-  /// In en, this message translates to:
-  /// **'This item or place is not known.'**
-  String get stockTagOwnerUnknown;
-
-  /// #4363 G14 tags: stockTagPerUnit
-  ///
-  /// In en, this message translates to:
-  /// **'This item is tagged piece by piece: tag its pieces when they are received.'**
-  String get stockTagPerUnit;
 
   /// #4362 G13 tags: the name of one piece in the list of pieces
   ///
@@ -61789,6 +61819,54 @@ abstract class AppLocalizations {
   /// Shown as the title in process names (workspace).
   ///
   /// In en, this message translates to:
+  /// **'Counts and replenishment'**
+  String get subprocessStockControl;
+
+  /// Shown as the text in process names (workspace).
+  ///
+  /// In en, this message translates to:
+  /// **'Count stock, schedule cycle counts and reorder in time.'**
+  String get subprocessStockControlDesc;
+
+  /// Shown as the title in process names (workspace).
+  ///
+  /// In en, this message translates to:
+  /// **'Items and units'**
+  String get subprocessStockItems;
+
+  /// Shown as the text in process names (workspace).
+  ///
+  /// In en, this message translates to:
+  /// **'Items, item groups, units of measure and handling units.'**
+  String get subprocessStockItemsDesc;
+
+  /// Shown as the title in process names (workspace).
+  ///
+  /// In en, this message translates to:
+  /// **'Receiving and movements'**
+  String get subprocessStockMovements;
+
+  /// Shown as the text in process names (workspace).
+  ///
+  /// In en, this message translates to:
+  /// **'Receive deliveries, take goods out and handle returns.'**
+  String get subprocessStockMovementsDesc;
+
+  /// Shown as the title in process names (workspace).
+  ///
+  /// In en, this message translates to:
+  /// **'Traceability'**
+  String get subprocessStockTracking;
+
+  /// Shown as the text in process names (workspace).
+  ///
+  /// In en, this message translates to:
+  /// **'Lots, expiry, scanning and tags that trace each piece.'**
+  String get subprocessStockTrackingDesc;
+
+  /// Shown as the title in process names (workspace).
+  ///
+  /// In en, this message translates to:
   /// **'Space structure'**
   String get subprocessStructure;
 
@@ -62055,12 +62133,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'archived'**
   String get suppliersArchivedTag;
-
-  /// #3070 supplier outstanding balance
-  ///
-  /// In en, this message translates to:
-  /// **'Balance unavailable'**
-  String get suppliersBalanceUnavailable;
 
   /// #2567 suppliers
   ///
@@ -62367,6 +62439,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Taxed where the premises are.'**
   String get supplyClassPropertyMeaning;
+
+  /// #4441 Service sheet: a supply class from a newer server, shown read-only and kept
+  ///
+  /// In en, this message translates to:
+  /// **'A class this app does not know yet: kept as the server has it'**
+  String get supplyClassUnknown;
 
   /// Shown as the text in support bundle screen (help).
   ///
@@ -65344,12 +65422,6 @@ abstract class AppLocalizations {
   /// **'Official languages (ISO 639-1, usual one first)'**
   String get taxRefLanguages;
 
-  /// #2477 tax reference: error text when the list cannot load.
-  ///
-  /// In en, this message translates to:
-  /// **'The reference data could not be loaded.'**
-  String get taxRefLoadFailed;
-
   /// #2477 tax reference: Hint in the form of an EU member.
   ///
   /// In en, this message translates to:
@@ -65751,12 +65823,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Make this template readable by: {audience}?'**
   String templateWidenTitle(String audience);
-
-  /// #1660 library
-  ///
-  /// In en, this message translates to:
-  /// **'The templates could not be loaded.'**
-  String get templatesLoadFailed;
 
   /// Theme option forcing the dark appearance
   ///
@@ -66834,7 +66900,7 @@ abstract class AppLocalizations {
   /// **'The registry names no counter operation for {country}: nothing is supported, and the till sells nothing.'**
   String tillReadinessUnknownCountry(String country);
 
-  /// #4184 the counter receipt document
+  /// #4184 the counter receipt document; the number is a reference
   ///
   /// In en, this message translates to:
   /// **'Corrects receipt {number}'**
@@ -66852,11 +66918,16 @@ abstract class AppLocalizations {
   /// **'Issued under: {specification} ({version})'**
   String tillReceiptIssuedUnder(String specification, String version);
 
-  /// #4184 the counter receipt document
+  /// #4184 the counter receipt document; quantity and amount arrive formatted
   ///
   /// In en, this message translates to:
-  /// **'{label}: {quantity} {unit}'**
-  String tillReceiptLine(String label, String quantity, String unit);
+  /// **'{label}: {quantity} {unit}  {amount}'**
+  String tillReceiptLine(
+    String label,
+    String quantity,
+    String unit,
+    String amount,
+  );
 
   /// #4366 the till
   ///
@@ -66882,13 +66953,13 @@ abstract class AppLocalizations {
   /// **'Show the receipt'**
   String get tillReceiptShow;
 
-  /// #4184 the counter receipt document
+  /// #4184 the counter receipt document; percent, tax and net arrive formatted
   ///
   /// In en, this message translates to:
-  /// **'VAT {percent} %: {tax} on {net}'**
+  /// **'VAT {percent}: {tax} on {net}'**
   String tillReceiptTaxLine(String percent, String tax, String net);
 
-  /// #4184 the counter receipt document
+  /// #4184 the counter receipt document; amount arrives formatted
   ///
   /// In en, this message translates to:
   /// **'Total {amount}'**
@@ -68613,12 +68684,6 @@ abstract class AppLocalizations {
   /// #2576 accountant valuations
   ///
   /// In en, this message translates to:
-  /// **'The valuations could not be loaded.'**
-  String get valuationLoadFailed;
-
-  /// #2576 accountant valuations
-  ///
-  /// In en, this message translates to:
   /// **'Type in one asset'**
   String get valuationManual;
 
@@ -70067,12 +70132,6 @@ abstract class AppLocalizations {
   /// **'Who sees me on {host}'**
   String visibilityOnServer(String host);
 
-  /// #2211 who sees me on a connected server: visibilityOnServerUnavailable
-  ///
-  /// In en, this message translates to:
-  /// **'{host} did not answer. Try again later.'**
-  String visibilityOnServerUnavailable(String host);
-
   /// Visibility field: presence in a space today.
   ///
   /// In en, this message translates to:
@@ -70090,12 +70149,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cannot start a conversation with you'**
   String get visibilityPreviewCannotWrite;
-
-  /// Preview failed to load.
-  ///
-  /// In en, this message translates to:
-  /// **'The preview could not be loaded.'**
-  String get visibilityPreviewFailed;
 
   /// Preview audience chip: a member of my spaces.
   ///
@@ -70193,23 +70246,11 @@ abstract class AppLocalizations {
   /// **'Verification unavailable'**
   String get visibilitySpaceUnverified;
 
-  /// #2558 — the chosen-spaces picker when the list of spaces cannot be read.
-  ///
-  /// In en, this message translates to:
-  /// **'Your places cannot be listed right now.'**
-  String get visibilitySpacesUnavailable;
-
   /// Title of the card choosing who sees what of the account.
   ///
   /// In en, this message translates to:
   /// **'Who sees me'**
   String get visibilityTitle;
-
-  /// #2558 — the privacy card when the saved settings cannot be read; a retry follows.
-  ///
-  /// In en, this message translates to:
-  /// **'Who sees what of you cannot be read right now. Nothing was changed.'**
-  String get visibilityUnavailable;
 
   /// #2558 C2 privacy: the reply was lost and the saved field read back is not the intended one
   ///

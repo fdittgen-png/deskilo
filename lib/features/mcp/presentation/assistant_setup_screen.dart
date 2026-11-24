@@ -4,9 +4,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/l10n/context_l10n.dart';
+import '../../../core/navigation/routes.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
+import '../../../core/ui/async_read_body.dart';
 import '../../../core/ui/inline_banner.dart';
 import '../../../core/ui/kit/page_bar.dart';
 import '../../../core/ui/loading_view.dart';
@@ -139,19 +141,18 @@ class _AssistantSetupScreenState extends ConsumerState<AssistantSetupScreen> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final scope = ref.watch(currentMcpContextProvider);
-    final unavailable = InlineBanner(
-      key: const ValueKey('assistant-setup-unavailable'),
-      icon: Icons.cloud_off_outlined,
-      text:
-          l10n.mcpNextUnavailable,
-    );
     return Scaffold(
       appBar: pageBar(context,
         title: l10n.assistantSetupTitle,
       ),
       body: scope.when(
         loading: () => const LoadingView(),
-        error: (_, _) => _padded(unavailable),
+        error: (e, _) => _padded(
+          ReadFailureBanner(
+            error: e,
+            onRetry: () => ref.invalidate(currentMcpContextProvider),
+          ),
+        ),
         data: (captured) => captured == null
             ? _padded(
                 Text(
@@ -163,7 +164,13 @@ class _AssistantSetupScreenState extends ConsumerState<AssistantSetupScreen> {
                   .watch(assistantSetupProvider(captured))
                   .when(
                     loading: () => const LoadingView(),
-                    error: (_, _) => _padded(unavailable),
+                    error: (e, _) => _padded(
+                      ReadFailureBanner(
+                        error: e,
+                        onRetry: () =>
+                            ref.invalidate(assistantSetupProvider(captured)),
+                      ),
+                    ),
                     data: (setup) => _checklist(l10n, captured, setup),
                   ),
       ),
@@ -252,7 +259,7 @@ class _AssistantSetupScreenState extends ConsumerState<AssistantSetupScreen> {
         button(
           'customise',
           l10n.assistantSetupCustomise,
-          () => context.push('/settings/assistants'),
+          () => context.push(Routes.settingsAssistants),
         ),
       ],
       AssistantSetupStep.eligibility => [
@@ -272,7 +279,7 @@ class _AssistantSetupScreenState extends ConsumerState<AssistantSetupScreen> {
           button(
             'review',
             l10n.assistantSetupReview,
-            () => context.push('/database/assistant-approvals'),
+            () => context.push(Routes.databaseAssistantApprovals),
           ),
       ],
       _ => const [],

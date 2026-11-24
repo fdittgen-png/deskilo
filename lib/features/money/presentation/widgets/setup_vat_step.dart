@@ -15,10 +15,12 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -55,12 +57,12 @@ class SetupVatStep extends ConsumerWidget {
             currencyCode: currencyCode,
           ),
         ),
-        AsyncError() => Padding(
+        AsyncError(:final error) => Padding(
           padding: AppSpacing.lgAll,
-          child: InlineBanner(
+          child: ReadFailureBanner(
             key: const ValueKey('setup-vat-failed'),
-            icon: Icons.error_outline,
-            text: context.l10n.setupStepLoadFailed,
+            error: error,
+            onRetry: () => ref.invalidate(vatRatesProvider),
           ),
         ),
         _ => const LoadingView(),
@@ -171,7 +173,7 @@ class _VatFormState extends ConsumerState<_VatForm> {
           alignment: AlignmentDirectional.centerStart,
           child: TextButton(
             key: const ValueKey('setup-vat-open'),
-            onPressed: () => context.push('/vat'),
+            onPressed: () => context.push(Routes.vat),
             child: Text(l10n.setupGrowVatOpen),
           ),
         ),

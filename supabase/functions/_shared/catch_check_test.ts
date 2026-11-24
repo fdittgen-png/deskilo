@@ -2,7 +2,7 @@
 // #4412 -- the invariant: a catch of an edge function logs, rethrows or says why it is handled; an empty or
 // swallowing one fails the CI check, and the ones that predate the rule only fall.
 import { assertEquals } from "jsr:@std/assert@1";
-import { checkTree, unaccountedCatches } from "./catch_check.ts";
+import { checkTree, consoleCalls, unaccountedCatches } from "./catch_check.ts";
 
 Deno.test("#4412 an empty or swallowing catch is seen; one that logs, rethrows or says why is not", () => {
   assertEquals(unaccountedCatches("try { a(); } catch (e) {}"), [""]);
@@ -50,4 +50,21 @@ Deno.test("#4412 the baseline is the tree's: no function gained an unaccounted c
   const root = new URL("..", import.meta.url).pathname.replace(/\/$/, "");
   const baseline = JSON.parse(Deno.readTextFileSync(new URL("./catch_baseline.json", import.meta.url)));
   assertEquals(checkTree(root, baseline).problems, []);
+});
+
+Deno.test("#4412 a function logs only through logLine: console.* outside the logger fails the check", () => {
+  assertEquals(consoleCalls("const a = 1;\nconsole.error('x', e);\nconsole . log(1);"), [2, 3]);
+  assertEquals(consoleCalls("// console.error('x')\nconst s = 'console.log(1)';"), []);
+  const dir = Deno.makeTempDirSync();
+  try {
+    Deno.mkdirSync(`${dir}/fn`);
+    Deno.writeTextFileSync(`${dir}/fn/index.ts`, "export function f() {\n  console.error('failed', 'secret');\n}\n");
+    assertEquals(checkTree(dir, {}).problems, ["fn/index.ts:2: console.* -- log through logLine (_shared/log.ts) instead"]);
+    Deno.mkdirSync(`${dir}/_shared`);
+    Deno.writeTextFileSync(`${dir}/fn/index.ts`, "export const f = () => 1;\n");
+    Deno.writeTextFileSync(`${dir}/_shared/log.ts`, "export const w = (l: string) => console.error(l);\n");
+    assertEquals(checkTree(dir, {}).problems, []);
+  } finally {
+    Deno.removeSync(dir, { recursive: true });
+  }
 });

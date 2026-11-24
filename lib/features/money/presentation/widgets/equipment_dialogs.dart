@@ -8,6 +8,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../domain/workspace_asset.dart';
@@ -94,7 +95,10 @@ class _RegisterDialogState extends ConsumerState<_RegisterDialog> {
       content: SingleChildScrollView(
         child: lines.when(
           loading: () => const LoadingView(),
-          error: (_, _) => Text(l10n.equipmentLoadFailed),
+          error: (e, _) => ReadFailureBanner(
+            error: e,
+            onRetry: () => ref.invalidate(assetCandidateLinesProvider(widget.workspaceId)),
+          ),
           data: (rows) => rows.isEmpty
               ? Text(l10n.equipmentRegisterNone, key: const ValueKey('equipment-none'))
               : Column(

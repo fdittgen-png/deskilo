@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 
 class ApplicationRequestsEntry extends StatelessWidget {
   const ApplicationRequestsEntry({super.key, this.compact = true});
@@ -11,7 +12,7 @@ class ApplicationRequestsEntry extends StatelessWidget {
   Widget build(BuildContext context) {
     final label =
         context.l10n.applicationsTitle;
-    void open() => context.push('/applications');
+    void open() => context.push(Routes.applications);
     return compact
         ? IconButton(
             key: const ValueKey('workspace-requests'),

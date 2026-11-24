@@ -1670,7 +1670,7 @@ En este capítulo:
 - Su cuenta: [foto](#su-cuenta-y-su-foto), [datos personales](#datos-personales), [dirección](#su-dirección), [NIF-IVA](#su-nif-iva), [condiciones de pago](#sus-condiciones-de-pago), [WhatsApp](#su-número-de-whatsapp), [estado](#su-línea-de-estado), [período de reserva predeterminado](#período-de-reserva-predeterminado)
 - Su credencial: [la credencial](#su-credencial) y [su PIN](#el-pin-de-su-credencial)
 - Cómo se ve y se lee la app: [idioma](#idioma-de-la-app), [tema](#tema), [navegación](#estilo-de-navegación), [números y fechas](#números-y-fechas), [reloj](#reloj), [zona horaria](#mostrar-las-horas-en-mi-zona-horaria), [consejos](#restaurar-los-consejos), [cámara frontal](#cámara-frontal-para-escanear), [cuentas vinculadas](#cuentas-vinculadas)
-- Privacidad y sus datos: [quién puede ver mis datos](#privacidad-quién-puede-ver-mis-datos), [quién me ve](#elegir-quién-me-ve), [perfil público](#publicar-un-perfil-público), [exportar](#exportar-mis-datos), [borrar](#borrar-mis-datos), [solicitudes de derechos](#solicitudes-de-derechos), [push](#notificaciones-push-en-este-dispositivo), [sus derechos](#tus-datos-tus-derechos)
+- Privacidad y sus datos: [quién puede ver mis datos](#privacidad-quién-puede-ver-mis-datos), [quién me ve](#elegir-quién-me-ve), [perfil público](#publicar-un-perfil-público), [exportar](#exportar-mis-datos), [borrar](#borrar-mis-datos), [solicitudes de derechos](#solicitudes-de-derechos), [push](#notificaciones-push-en-este-dispositivo), [informes de error](#enviar-informes-de-error), [sus derechos](#tus-datos-tus-derechos)
 - [Su propio servidor](#su-propio-servidor)
 
 <!-- anchor: user.settings.organisation -->
@@ -2314,6 +2314,29 @@ Usted quiere dejar de recibir notificaciones en este dispositivo, o volver a act
 
 - Desactivado, la app sigue funcionando y no se envía nada a este dispositivo.
 - Activado, la dirección de este dispositivo y cada notificación pasan por el servicio push.
+
+**Véase también:** [Tus datos, tus derechos](#tus-datos-tus-derechos)
+
+<!-- anchor: user.privacy.error-reports -->
+### Enviar informes de error
+
+**Público:** Todos
+
+Usted quiere saber qué envía la app cuando algo falla, o impedirlo.
+
+<!-- image: user-privacy-error-reports -->
+
+**Pasos**
+
+1. Abra [Privacidad y datos](https://fdittgen-png.github.io/deskilo/#/privacy).
+2. Desactive o active **Enviar informes de error**. Está activado hasta que lo desactive, y la elección se guarda en este dispositivo.
+
+**Conviene saber**
+
+- Un informe solo va a la instalación en la que ha iniciado sesión, nunca a otra empresa. Su operador lo lee; las empresas de las que es miembro no lo ven.
+- Indica la versión de la app, la plataforma, el tipo de error y el lugar de la app donde ocurrió. Nunca lleva lo que usted escribió, el texto del error, una dirección de correo, un nombre ni una clave.
+- Cada persona envía como mucho un número fijado de informes por hora, un informe tiene un tamaño máximo y la instalación borra los informes tras un número fijado de días. El operador fija los tres.
+- Desactivado, nada sale del dispositivo: el error queda en el registro de este dispositivo. Un asistente conectado a su cuenta nunca envía un informe.
 
 **Véase también:** [Tus datos, tus derechos](#tus-datos-tus-derechos)
 
@@ -4090,6 +4113,32 @@ Usted quiere que sus facturas y cartas se impriman en el papel que usa su país.
 - Si el espacio pasa a un país que no usa el papel elegido, sigue el papel habitual de ese país.
 
 **Véase también:** [País](#país)
+
+<!-- anchor: user.workspace.settings.units -->
+### Unidades de medida
+
+**Público:** Propietario · Administrador/a con el permiso
+
+Sus artículos, presupuestos y facturas se miden en unidades, y algunas se convierten en otras: 1 km son 1000 m. Cada negocio empieza con las habituales (pieza, g, kg, ml, cl, l, mm, cm, m, km, m², min, h); usted añade las suyas, por ejemplo una bobina de cable de 50 m.
+
+<!-- image: user-workspace-settings--units -->
+
+**Pasos**
+
+1. Active **Unidades de medida** en **Funciones** (está desactivada hasta que la pida).
+2. En [Unidades de medida](https://fdittgen-png.github.io/deskilo/#/settings/units), pulse **Nueva unidad**.
+3. Rellene **Código de la unidad** (ya no podrá cambiarse), **Su nombre para la unidad**, **Mide** y **Una unidad equivale a** en la unidad base de lo que mide: 1000 para un km contado en m, 0,001 para un mm.
+4. Si quiere, rellene **Código UN/ECE (para facturas electrónicas)**, que llevan las facturas electrónicas (KMT para un km).
+5. Pulse **Guardar**.
+
+**Conviene saber**
+
+- Una unidad básica conserva su dimensión y su factor; puede darle su propio nombre.
+- Una unidad en uso (un artículo contado con ella, un movimiento de stock, un presupuesto o una línea de factura) conserva para siempre su dimensión y su factor: una corrección es una unidad nueva. Una unidad que nadie usa puede archivarse (**Archivar**) y mostrarse de nuevo (**Mostrar de nuevo**).
+- Una conversión es exacta: 2,5 km son 2500 m. Dos clases de unidad nunca se convierten, y un resultado que seis decimales no pueden contener se rechaza, nunca se redondea.
+- Solo el propietario y los administradores autorizados a cambiar los ajustes del espacio mantienen las unidades.
+
+**Véase también:** [Papel de los documentos](#papel-de-los-documentos)
 
 <!-- anchor: user.workspace.settings.organisation -->
 ### Organización
@@ -6895,7 +6944,7 @@ Lo que rodea al trabajo diario: la cara de pruebas de un espacio y la real, los 
 En este capítulo:
 - [Un espacio tiene dos caras](#un-espacio-tiene-dos-caras) · [Entre en una cara](#entre-en-la-cara-real-o-en-la-de-pruebas) · [Un espacio de prueba](#para-qué-sirve-un-espacio-de-prueba) · [Quién puede desplegar](#quién-puede-desplegar-y-entrar-en-producción) · [Despliegue entre las caras](#despliegue-entre-las-dos-caras) · [Situación del espacio y archivo del ejercicio](#situación-del-espacio-y-archivo-del-ejercicio)
 - [Su propio servidor](#gestione-su-propio-servidor) · [Cuando una instalación exige una aplicación más reciente](#cuando-una-instalación-exige-una-aplicación-más-reciente) · [Publicar una nueva versión](#publicar-una-nueva-versión-primero-el-servidor)
-- [Asistentes](#asistentes-qué-son) · [Conecte un asistente](#conecte-un-asistente) · [Aprobaciones](#aprobaciones-y-confirmaciones-de-los-asistentes) · [Qué pueden hacer los asistentes](#qué-pueden-hacer-los-asistentes-en-un-espacio)
+- [Asistentes](#asistentes-qué-son) · [Conecte un asistente](#conecte-un-asistente) · [Aprobaciones](#aprobaciones-y-confirmaciones-de-los-asistentes) · [Qué pueden hacer los asistentes](#qué-pueden-hacer-los-asistentes-en-un-espacio) · [Informes de error](#informes-de-error)
 - [El grabador de tareas](#el-grabador-de-tareas-y-las-visitas-guiadas) · [Grabe una tarea](#grabe-una-tarea) · [Revise una grabación](#revise-edite-y-exporte-una-grabación) · [Cree una guía](#cree-una-guía-a-partir-de-una-grabación) · [Siga una guía](#siga-una-guía) · [El menú circular](#el-menú-circular) · [Edite una guía](#edite-o-repare-una-guía) · [Privacidad de las grabaciones](#qué-conserva-una-grabación)
 - [El espacio de demostración](#el-espacio-de-demostración) · [Modo grabación](#modo-grabación)
 - [Plataformas](#deskilo-en-sus-dispositivos) · [Detalles de soporte](#detalles-de-soporte) · [Cuando algo no funciona](#cuando-algo-no-funciona)
@@ -7194,6 +7243,29 @@ Usted decide qué servicios ofrece un espacio a los asistentes.
 - Es para quienes tienen el permiso de integraciones; los propietarios siempre lo tienen.
 
 **Véase también:** [Un interruptor de función](#un-interruptor-de-función)
+
+<!-- anchor: user.advanced.error-reports -->
+### Informes de error
+
+**Público:** Operador/a
+
+Usted opera la instalación y quiere ver qué falló en las apps conectadas a ella.
+
+<!-- image: user-advanced-error-reports -->
+
+**Pasos**
+
+1. Abra [Instalación: asistentes](https://fdittgen-png.github.io/deskilo/#/installation/assistants).
+2. Toque **Informes de error**. Los más recientes van primero.
+3. Toque un informe para leer su pila, ocultada por la app. **Informes anteriores** lee los siguientes.
+
+**Conviene saber**
+
+- Un informe indica el lugar de la app y el tipo de error, su código, la versión de la app, la plataforma y la hora. Nunca lleva lo que una persona escribió, una dirección de correo, un nombre ni una clave.
+- Solo el operador de la instalación los lee; las empresas de la instalación nunca los ven.
+- En los ajustes, **Informes de error por persona y hora**, **Tamaño máximo de un informe de error** y **Conservar los informes de error durante** fijan cuántos llegan, su tamaño y cuánto tiempo. Cada persona puede desactivar los informes en su dispositivo.
+
+**Véase también:** [Enviar informes de error](#enviar-informes-de-error)
 
 <!-- anchor: user.advanced.recorder -->
 ### El grabador de tareas y las visitas guiadas

@@ -9,15 +9,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/help/help_anchors.dart';
-import '../../../core/help/help_dot.dart';
+import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
-import '../../../core/trace/trace_logger.dart';
+import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../core/ui/form_kit.dart';
-import '../../../core/ui/kit/page_title.dart';
-import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../workspace/domain/workspace_permission.dart';
 import '../../workspace/providers/workspace_providers.dart';
@@ -25,8 +23,9 @@ import '../domain/stock_config.dart' show StockPlaceConfig, stockAddress;
 import '../domain/stock_reorder.dart';
 import '../providers/stock_providers.dart';
 import 'stock_config_text.dart';
-import 'stock_read_failed.dart';
+import 'stock_page_shell.dart';
 import 'stock_reorder_point_sheet.dart';
+import 'stock_sheet_opener.dart';
 
 class StockReorderScreen extends ConsumerWidget {
   const StockReorderScreen({super.key});
@@ -34,50 +33,31 @@ class StockReorderScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final workspaceId = ref.watch(currentWorkspaceProvider).value?.id;
-    return Scaffold(
-      appBar: AppBar(
-        title: PageTitle(l10n.stockReorderTitle),
-        actions: [
-          HelpDot(l10n.permModuleStock, anchor: HelpAnchor.moneyStockReorder),
-          if (workspaceId != null)
-            IconButton(
-              key: const ValueKey('stock-reorder-reload'),
-              icon: const Icon(Icons.refresh),
-              tooltip: l10n.overviewLayoutReload,
-              onPressed: () {
-                ref
-                  ..invalidate(stockLowProvider(workspaceId))
-                  ..invalidate(stockReplenishmentProvider(workspaceId));
-              },
-            ),
+    return StockPageShell(
+      title: l10n.stockReorderTitle,
+      anchor: HelpAnchor.moneyStockReorder,
+      helpTopic: l10n.permModuleStock,
+      reloadKey: const ValueKey('stock-reorder-reload'),
+      reloads: (workspaceId) => [stockLowProvider(workspaceId), stockReplenishmentProvider(workspaceId)],
+      reading: true,
+      body: (context, ref, workspaceId) => ListView(
+        padding: const EdgeInsets.all(AppSpacing.md),
+        children: [
+          Text(l10n.stockReorderIntro, style: Theme.of(context).textTheme.bodyMedium),
+          const SizedBox(height: AppSpacing.md),
+          Text(l10n.stockReorderLowTitle, style: Theme.of(context).textTheme.titleMedium),
+          const SizedBox(height: AppSpacing.sm),
+          _LowList(workspaceId: workspaceId),
+          const SizedBox(height: AppSpacing.lg),
+          Text(l10n.stockReorderToOrderTitle, style: Theme.of(context).textTheme.titleMedium),
+          const SizedBox(height: AppSpacing.sm),
+          _ToOrder(workspaceId: workspaceId),
+          const SizedBox(height: AppSpacing.lg),
+          Text(l10n.stockReorderPointsTitle, style: Theme.of(context).textTheme.titleMedium),
+          const SizedBox(height: AppSpacing.sm),
+          _PointsList(workspaceId: workspaceId),
         ],
       ),
-      body: workspaceId == null
-          ? const LoadingView()
-          : Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 720),
-                child: ListView(
-                  padding: const EdgeInsets.all(AppSpacing.md),
-                  children: [
-                    Text(l10n.stockReorderIntro, style: Theme.of(context).textTheme.bodyMedium),
-                    const SizedBox(height: AppSpacing.md),
-                    Text(l10n.stockReorderLowTitle, style: Theme.of(context).textTheme.titleMedium),
-                    const SizedBox(height: AppSpacing.sm),
-                    _LowList(workspaceId: workspaceId),
-                    const SizedBox(height: AppSpacing.lg),
-                    Text(l10n.stockReorderToOrderTitle, style: Theme.of(context).textTheme.titleMedium),
-                    const SizedBox(height: AppSpacing.sm),
-                    _ToOrder(workspaceId: workspaceId),
-                    const SizedBox(height: AppSpacing.lg),
-                    Text(l10n.stockReorderPointsTitle, style: Theme.of(context).textTheme.titleMedium),
-                    const SizedBox(height: AppSpacing.sm),
-                    _PointsList(workspaceId: workspaceId),
-                  ],
-                ),
-              ),
-            ),
     );
   }
 }
@@ -91,35 +71,31 @@ class _LowList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    return ref
-        .watch(stockLowProvider(workspaceId))
-        .when(
-          loading: () => const LoadingView(),
-          error: (e, _) => StockReadFailed(
-            error: e,
-            keyName: 'stock-reorder-low',
-            onRetry: () => ref.invalidate(stockLowProvider(workspaceId)),
-          ),
-          data: (rows) => rows.isEmpty
-              ? Text(l10n.stockReorderLowEmpty, key: const ValueKey('stock-reorder-low-empty'))
-              : Column(
-                  children: [
-                    for (final r in rows)
-                      ListTile(
-                        key: ValueKey('stock-low-${r.pointId}'),
-                        contentPadding: EdgeInsets.zero,
-                        title: Text(r.itemName),
-                        subtitle: Text(
-                          l10n.stockReorderLowRow(
-                            r.siteCode,
-                            l10n.stockQuantityWithUnit(r.onHand.text, r.unit),
-                            l10n.stockQuantityWithUnit(r.reorderPoint.text, r.unit),
-                          ),
-                        ),
-                      ),
-                  ],
+    return StockRead(
+      keyName: 'stock-reorder-low',
+      value: ref.watch(stockLowProvider(workspaceId)),
+      onRetry: () => ref.invalidate(stockLowProvider(workspaceId)),
+      isEmpty: (rows) => rows.isEmpty,
+      empty: l10n.stockReorderLowEmpty,
+      emptyIcon: Icons.check_circle_outline,
+      data: (rows) => Column(
+        children: [
+          for (final r in rows)
+            ListTile(
+              key: ValueKey('stock-low-${r.pointId}'),
+              contentPadding: EdgeInsets.zero,
+              title: Text(r.itemName),
+              subtitle: Text(
+                l10n.stockReorderLowRow(
+                  r.siteCode,
+                  l10n.stockQuantityWithUnit(appFormatOf(context).quantity(r.onHand), r.unit),
+                  l10n.stockQuantityWithUnit(appFormatOf(context).quantity(r.reorderPoint), r.unit),
                 ),
-        );
+              ),
+            ),
+        ],
+      ),
+    );
   }
 }
 
@@ -132,43 +108,39 @@ class _ToOrder extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final mayBuy = ref.watch(myPermissionsProvider).contains(WorkspacePermission.managePurchases);
-    return ref
-        .watch(stockReplenishmentProvider(workspaceId))
-        .when(
-          loading: () => const LoadingView(),
-          error: (e, _) => StockReadFailed(
-            error: e,
-            keyName: 'stock-reorder-order',
-            onRetry: () => ref.invalidate(stockReplenishmentProvider(workspaceId)),
-          ),
-          data: (list) => list.isEmpty
-              ? Text(l10n.stockReorderToOrderEmpty, key: const ValueKey('stock-reorder-order-empty'))
-              : Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    for (final g in list.groups)
-                      _GroupCard(workspaceId: workspaceId, group: g, mayBuy: mayBuy),
-                    if (list.noSupplier.isNotEmpty) ...[
-                      const SizedBox(height: AppSpacing.md),
-                      Text(
-                        l10n.stockReorderNoSupplierTitle,
-                        key: const ValueKey('stock-reorder-no-supplier'),
-                        style: Theme.of(context).textTheme.titleSmall,
-                      ),
-                      Text(l10n.stockReorderNoSupplierHelp, style: Theme.of(context).textTheme.bodySmall),
-                      for (final g in list.noSupplier)
-                        ListTile(
-                          key: ValueKey('stock-gap-${g.itemId}-${g.siteCode}'),
-                          contentPadding: EdgeInsets.zero,
-                          title: Text(g.itemName),
-                          subtitle: Text(
-                            l10n.stockReorderGapRow(g.siteCode, l10n.stockQuantityWithUnit(g.quantity.text, g.unit)),
-                          ),
-                        ),
-                    ],
-                  ],
+    return StockRead(
+      keyName: 'stock-reorder-order',
+      value: ref.watch(stockReplenishmentProvider(workspaceId)),
+      onRetry: () => ref.invalidate(stockReplenishmentProvider(workspaceId)),
+      isEmpty: (list) => list.isEmpty,
+      empty: l10n.stockReorderToOrderEmpty,
+      emptyIcon: Icons.shopping_cart_outlined,
+      data: (list) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          for (final g in list.groups)
+            _GroupCard(workspaceId: workspaceId, group: g, mayBuy: mayBuy),
+          if (list.noSupplier.isNotEmpty) ...[
+            const SizedBox(height: AppSpacing.md),
+            Text(
+              l10n.stockReorderNoSupplierTitle,
+              key: const ValueKey('stock-reorder-no-supplier'),
+              style: Theme.of(context).textTheme.titleSmall,
+            ),
+            Text(l10n.stockReorderNoSupplierHelp, style: Theme.of(context).textTheme.bodySmall),
+            for (final g in list.noSupplier)
+              ListTile(
+                key: ValueKey('stock-gap-${g.itemId}-${g.siteCode}'),
+                contentPadding: EdgeInsets.zero,
+                title: Text(g.itemName),
+                subtitle: Text(
+                  l10n.stockReorderGapRow(g.siteCode, l10n.stockQuantityWithUnit(appFormatOf(context).quantity(g.quantity), g.unit)),
                 ),
-        );
+              ),
+          ],
+        ],
+      ),
+    );
   }
 }
 
@@ -179,34 +151,24 @@ class _PointsList extends ConsumerWidget {
 
   final String workspaceId;
 
-  Future<void> _edit(BuildContext context, WidgetRef ref, StockReorderPoint? point) async {
-    try {
-      final items = await ref.read(stockItemsProvider(workspaceId).future);
-      final places = await ref.read(stockPlaceConfigsProvider(workspaceId).future);
-      if (!context.mounted) return;
-      final saved = await showStockReorderPointSheet(
-        context,
-        ref.read(stockReorderProvider),
-        ref.read(stockConfigCommandsProvider),
-        workspaceId: workspaceId,
-        choices: (items: [for (final i in items) i], places: places, separator: ref.read(stockAddressSeparatorProvider)),
-        point: point,
-      );
-      if (saved) {
-        ref
-          ..invalidate(stockReorderPointsProvider(workspaceId))
-          ..invalidate(stockLowProvider(workspaceId))
-          ..invalidate(stockReplenishmentProvider(workspaceId));
-      }
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'the reorder point sheet could not read what it needs', error: e, stackTrace: st);
-      if (context.mounted) AppSnack.error(context, context.l10n.stockReadFailed);
-    }
-  }
+  Future<void> _edit(BuildContext context, WidgetRef ref, StockReorderPoint? point) => StockSheetOpener(ref).open(
+    context,
+    workspaceId,
+    what: 'reorder point',
+    sheet: (choices) => showStockReorderPointSheet(
+      context,
+      ref.read(stockReorderProvider),
+      ref.read(stockConfigCommandsProvider),
+      workspaceId: workspaceId,
+      choices: choices,
+      point: point,
+    ),
+    reads: [stockReorderPointsProvider(workspaceId), stockLowProvider(workspaceId), stockReplenishmentProvider(workspaceId)],
+  );
 
-  String _rule(AppLocalizations l10n, StockReorderPoint p, String unit) {
-    if (p.targetQuantity != null) return l10n.stockReorderRuleTarget(l10n.stockQuantityWithUnit(p.targetQuantity!.text, unit));
-    if (p.reorderQuantity != null) return l10n.stockReorderRuleQuantity(l10n.stockQuantityWithUnit(p.reorderQuantity!.text, unit));
+  String _rule(BuildContext context, AppLocalizations l10n, StockReorderPoint p, String unit) {
+    if (p.targetQuantity != null) return l10n.stockReorderRuleTarget(l10n.stockQuantityWithUnit(appFormatOf(context).quantity(p.targetQuantity!), unit));
+    if (p.reorderQuantity != null) return l10n.stockReorderRuleQuantity(l10n.stockQuantityWithUnit(appFormatOf(context).quantity(p.reorderQuantity!), unit));
     return l10n.stockReorderRuleNone;
   }
 
@@ -217,53 +179,48 @@ class _PointsList extends ConsumerWidget {
     final items = ref.watch(stockItemsProvider(workspaceId)).value ?? const []; // empty-ok: a name falls back to its id
     final places = ref.watch(stockPlaceConfigsProvider(workspaceId)).value ?? const <StockPlaceConfig>[]; // empty-ok: a site falls back to its id
     final separator = ref.watch(stockAddressSeparatorProvider);
-    return ref
-        .watch(stockReorderPointsProvider(workspaceId))
-        .when(
-          loading: () => const LoadingView(),
-          error: (e, _) => StockReadFailed(
-            error: e,
-            keyName: 'stock-reorder-points',
-            onRetry: () => ref.invalidate(stockReorderPointsProvider(workspaceId)),
-          ),
-          data: (points) => Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (points.isEmpty)
-                Text(l10n.stockReorderPointsEmpty, key: const ValueKey('stock-reorder-points-empty'))
-              else
-                for (final p in points)
-                  () {
-                    final item = items.where((i) => i.id == p.itemId).firstOrNull;
-                    final site = places.where((s) => s.id == p.siteId).firstOrNull;
-                    final unit = item?.unit ?? '';
-                    return ListTile(
-                      key: ValueKey('stock-point-${p.id}'),
-                      contentPadding: EdgeInsets.zero,
-                      title: Text(item?.name ?? p.itemId),
-                      subtitle: Text(
-                        [
-                          l10n.stockReorderPointRow(
-                            site == null ? p.siteId : stockAddress(site, separator),
-                            l10n.stockQuantityWithUnit(p.reorderPoint.text, unit),
-                            _rule(l10n, p, unit),
-                          ),
-                          if (!p.active) l10n.stockReorderPointInactive,
-                        ].join(' · '),
+    return StockRead(
+      keyName: 'stock-reorder-points',
+      value: ref.watch(stockReorderPointsProvider(workspaceId)),
+      onRetry: () => ref.invalidate(stockReorderPointsProvider(workspaceId)),
+      data: (points) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (points.isEmpty)
+            Text(l10n.stockReorderPointsEmpty, key: const ValueKey('stock-reorder-points-empty'))
+          else
+            for (final p in points)
+              () {
+                final item = items.where((i) => i.id == p.itemId).firstOrNull;
+                final site = places.where((s) => s.id == p.siteId).firstOrNull;
+                final unit = item?.unit ?? '';
+                return ListTile(
+                  key: ValueKey('stock-point-${p.id}'),
+                  contentPadding: EdgeInsets.zero,
+                  title: Text(item?.name ?? p.itemId),
+                  subtitle: Text(
+                    [
+                      l10n.stockReorderPointRow(
+                        site == null ? p.siteId : stockAddress(site, separator),
+                        l10n.stockQuantityWithUnit(appFormatOf(context).quantity(p.reorderPoint), unit),
+                        _rule(context, l10n, p, unit),
                       ),
-                      onTap: mayManage ? () => _edit(context, ref, p) : null,
-                    );
-                  }(),
-              if (mayManage)
-                TextButton.icon(
-                  key: const ValueKey('stock-point-add'),
-                  icon: const Icon(Icons.add),
-                  label: Text(l10n.stockReorderPointAdd),
-                  onPressed: () => _edit(context, ref, null),
-                ),
-            ],
-          ),
-        );
+                      if (!p.active) l10n.stockReorderPointInactive,
+                    ].join(' · '),
+                  ),
+                  onTap: mayManage ? () => _edit(context, ref, p) : null,
+                );
+              }(),
+          if (mayManage)
+            TextButton.icon(
+              key: const ValueKey('stock-point-add'),
+              icon: const Icon(Icons.add),
+              label: Text(l10n.stockReorderPointAdd),
+              onPressed: () => _edit(context, ref, null),
+            ),
+        ],
+      ),
+    );
   }
 }
 
@@ -286,23 +243,26 @@ class _GroupCardState extends ConsumerState<_GroupCard> {
 
   Future<void> _draft(AppLocalizations l10n) async {
     setState(() => _busy = true);
-    try {
-      final draft = await ref.read(stockReorderProvider).createDraft(
-        widget.workspaceId,
-        supplierId: widget.group.supplierId,
-        lines: widget.group.lines,
-        requestId: _requestId,
-      );
-      _requestId = newRequestId();
-      if (!mounted) return;
-      AppSnack.success(context, l10n.stockReorderDraftCreated(draft.number ?? ''));
-      ref.invalidate(stockReplenishmentProvider(widget.workspaceId));
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'a replenishment draft was not made', error: e, stackTrace: st);
-      if (mounted) AppSnack.error(context, stockSaveProblem(l10n, e));
-    } finally {
-      if (mounted) setState(() => _busy = false);
-    }
+    final problem = await guardSave(
+      domain: 'stock',
+      message: 'a replenishment draft was not made',
+      action: () async {
+        final draft = await ref.read(stockReorderProvider).createDraft(
+          widget.workspaceId,
+          supplierId: widget.group.supplierId,
+          lines: widget.group.lines,
+          requestId: _requestId,
+        );
+        _requestId = newRequestId();
+        if (!mounted) return;
+        AppSnack.success(context, l10n.stockReorderDraftCreated(draft.number ?? ''));
+        ref.invalidate(stockReplenishmentProvider(widget.workspaceId));
+      },
+      problem: (e) => stockProblemText(l10n, e),
+    );
+    if (!mounted) return;
+    if (problem != null) AppSnack.error(context, problem);
+    setState(() => _busy = false);
   }
 
   @override
@@ -322,7 +282,7 @@ class _GroupCardState extends ConsumerState<_GroupCard> {
               Text(
                 l10n.stockReorderGroupLine(
                   line.itemName,
-                  l10n.stockQuantityWithUnit(line.quantity.text, line.unit),
+                  l10n.stockQuantityWithUnit(appFormatOf(context).quantity(line.quantity), line.unit),
                   line.siteCode,
                 ),
                 key: ValueKey('stock-order-line-${line.pointId}'),

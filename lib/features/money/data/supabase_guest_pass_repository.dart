@@ -6,6 +6,7 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/paged_fetch.dart';
 import '../../../core/data/server_names.dart';
 import '../domain/guest_pass.dart';
 
@@ -16,34 +17,36 @@ class SupabaseGuestPassRepository implements GuestPassRepository {
 
   @override
   Future<List<GuestPassOffer>> offers(String workspaceId) async {
-    final rows = await _client
+    final rows = await fetchConfigurationList(table: 'guest_pass_offers', build: () => _client
         .from('guest_pass_offers')
         .select()
         .eq('workspace_id', workspaceId)
-        .order('name');
+        .order('name', ascending: true)
+        .order('id', ascending: true));
     return [for (final r in rows) GuestPassOffer.fromJson(r)];
   }
 
   @override
   Future<List<GuestPassRecord>> passesSold(String workspaceId) async {
-    final rows = await _client
-        .from('guest_passes')
+    final rows = await fetchAllPages(table: 'guest_passes', build: () => _client.from('guest_passes')
         .select(
           'id, member_id, offer_id, unit, units, amount_cents, starts_at, ends_at, '
           'revoked_at, revoked_reservation_ids, invoice_id',
         )
         .eq('workspace_id', workspaceId)
-        .order('sold_at', ascending: false);
+        .order('sold_at', ascending: false)
+        .order('id', ascending: true));
     return [for (final r in rows) GuestPassRecord.fromJson(r)];
   }
 
   @override
   Future<List<GuestPassPlace>> places(String workspaceId) async {
-    final rows = await _client
+    final rows = await fetchConfigurationList(table: ServerTable.seats, build: () => _client
         .from(ServerTable.seats)
         .select('id, name, desks(offices(levels(name)))')
         .eq('workspace_id', workspaceId)
-        .order('name');
+        .order('name', ascending: true)
+        .order('id', ascending: true));
     String level(Map<String, Object?> r) {
       final desk = JsonReader.orEmpty(r).objectOrAbsent('desks');
       return desk.objectOrAbsent('offices').objectOrAbsent('levels').stringOr('name');

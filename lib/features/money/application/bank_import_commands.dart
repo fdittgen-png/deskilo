@@ -8,6 +8,7 @@
 import 'dart:typed_data';
 
 import 'package:crypto/crypto.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart' show MatchResolution;
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show supportedCurrencies;
 
 import '../../../core/trace/trace_logger.dart';
@@ -97,16 +98,17 @@ class BankImportCommands {
     StoredBankLine line, {
     required String invoiceId,
     required int dueCents,
-    String overResolution = 'over_credit_note',
+    MatchResolution overResolution = MatchResolution.overCreditNote,
     String note = '',
   }) => _repository.matchLine(
     line.id,
     invoiceId: invoiceId,
-    resolution: line.amountCents == dueCents
-        ? 'exact'
-        : line.amountCents > dueCents
-        ? overResolution
-        : 'under_accepted',
+    resolution: (line.amountCents == dueCents
+            ? MatchResolution.exact
+            : line.amountCents > dueCents
+            ? overResolution
+            : MatchResolution.underAccepted)
+        .wire,
     note: note.trim(),
   );
 
@@ -131,7 +133,7 @@ class BankImportCommands {
       await _repository.matchLine(
         item.line.id,
         invoiceId: match.invoice.id,
-        resolution: 'exact',
+        resolution: MatchResolution.exact.wire,
         note: '',
       );
       return BankBatchResult.confirmed;

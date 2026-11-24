@@ -19,8 +19,10 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -54,12 +56,12 @@ class SetupEInvoicingStep extends ConsumerWidget {
           previewTitle: context.l10n.setupGuidanceTitle,
           preview: _Obligations(countryCode: countryCode),
         ),
-        AsyncError() => Padding(
+        AsyncError(:final error) => Padding(
           padding: AppSpacing.lgAll,
-          child: InlineBanner(
+          child: ReadFailureBanner(
             key: const ValueKey('setup-einvoicing-failed'),
-            icon: Icons.error_outline,
-            text: context.l10n.setupStepLoadFailed,
+            error: error,
+            onRetry: () => ref.invalidate(eInvoiceStatusProvider),
           ),
         ),
         _ => const LoadingView(),
@@ -117,7 +119,7 @@ class _PlatformForm extends StatelessWidget {
           alignment: AlignmentDirectional.centerStart,
           child: TextButton(
             key: const ValueKey('setup-einvoicing-open'),
-            onPressed: () => context.push('/einvoice-config'),
+            onPressed: () => context.push(Routes.einvoiceConfig),
             child: Text(l10n.setupGrowEinvoicingOpen),
           ),
         ),

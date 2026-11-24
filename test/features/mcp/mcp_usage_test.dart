@@ -192,7 +192,7 @@ void main() {
         standardTestOverrides(workspace: workspace, mcpAdmin: admin),
       );
       expect(
-        find.byKey(const ValueKey('mcp-usage-workspace-unavailable')),
+        find.byKey(const ValueKey('read-failure')),
         findsOneWidget,
       );
       expect(find.text('42'), findsNothing);

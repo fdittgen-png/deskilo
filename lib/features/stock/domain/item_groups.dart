@@ -223,12 +223,25 @@ class GroupHistoryRow {
 /// parameter, `mode` (`set` with [value], or `inherit`).
 typedef ItemOverride = ({String itemId, int expectedRevision, String parameter, String mode, Object? value});
 
+/// A group as it is saved: its name, the group above it (null: a top group) and the parameters it changes. A
+/// parameter is the group's own open set (the same keys as [ItemGroup.params]); a null value takes it back, and a key
+/// left out is left as it is (what an item costs or sells for is left out for someone who may not see it).
+class ItemGroupDraft {
+  const ItemGroupDraft({required this.name, required this.parentId, required this.parameters});
+
+  final String name;
+  final String? parentId;
+  final Map<String, Object?> parameters;
+
+  Map<String, Object?> toJson() => {'name': name, 'parent_id': parentId, 'parameters': parameters};
+}
+
 /// The item groups of a business.
 abstract interface class ItemGroups {
   Future<List<ItemGroup>> groups(String workspaceId);
 
   /// Creates ([expectedRevision] 0, [groupId] new) or changes a group; with [apply] false only says what it would do.
-  Future<GroupSaved> save(String workspaceId, {required String requestId, required String groupId, required int expectedRevision, required Map<String, Object?> body, bool apply = true});
+  Future<GroupSaved> save(String workspaceId, {required String requestId, required String groupId, required int expectedRevision, required ItemGroupDraft body, bool apply = true});
 
   Future<GroupAssigned> assign(String workspaceId, {required String requestId, required String itemId, required int expectedRevision, required String? groupId, bool apply = true});
 

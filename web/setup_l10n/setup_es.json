@@ -740,6 +740,12 @@
  "fedFactBatchHint": "El máximo de hechos de pertenencia que un servidor de espacios envía a su hogar personal en un minuto. Un servidor renueva cada relación viva una vez por actualización del estado de identidad: soporta como mucho este número multiplicado por los segundos de actualización divididos entre 60 relaciones (500 y 300 segundos: 2.500). Súbalo cuando el doctor de la instancia avise de un atraso de envío. Se ajusta en los ajustes de la app.",
  "appSupportWindow": "Plazo de soporte de las aplicaciones antiguas",
  "appSupportWindowHint": "Cuántos días sigue aceptada una aplicación antigua después de que haya una más reciente disponible en el canal de distribución más lento. La aplicación más antigua que acepta la instalación solo se eleva tras este plazo, para que cada miembro tenga tiempo de actualizarla. Se ajusta en los ajustes de la app.",
+ "traceReportsPerHour": "Informes de error por persona y hora",
+ "traceReportsPerHourHint": "Cuántos informes de error puede enviar una persona con sesión iniciada a esta instalación en una hora, sumando todos sus dispositivos. Los siguientes de esa hora se descartan. Ninguno desactiva los informes de error. Se ajusta en los ajustes de la app.",
+ "traceReportMaxBytes": "Tamaño máximo de un informe de error",
+ "traceReportMaxBytesHint": "El mayor informe de error que acepta esta instalación; la app acorta la pila de un informe para que quepa. Se ajusta en los ajustes de la app.",
+ "traceReportRetention": "Conservar los informes de error durante",
+ "traceReportRetentionHint": "Cuánto tiempo conserva esta instalación un informe de error antes de borrarlo. Se ajusta en los ajustes de la app.",
  "supLookupWait": "Espera de la búsqueda de proveedores",
  "supLookupWaitHint": "Cuánto espera el servidor al registro de empresas (VIES) cuando alguien busca el número de IVA de un proveedor, antes de indicar que el registro no respondió. Se ajusta en la configuración de la app.",
  "supLookupRate": "Búsquedas de proveedores por minuto",
@@ -882,5 +888,10 @@
  "counterPaidOutLimitHint": "Una salida por encima necesita a alguien que pueda registrar pagos salientes. Se ajusta en los ajustes de la app.",
  "counterCashReasons": "Motivos de entradas y salidas de efectivo",
  "counterCashReasonsHint": "Separados por comas, por ejemplo cambio, gasto, otro. Se ajusta en los ajustes de la app.",
- "optNoLimit": "Sin límite"
+ "optNoLimit": "Sin límite",
+ "optPerHour": "{n} por hora",
+ "optPerHourDefault": "{n} por hora (por defecto)",
+ "optKilobytes": "{n} KB",
+ "optKilobytesDefault": "{n} KB (por defecto)",
+ "optReportsOff": "Ninguno (informes de error desactivados)"
 }

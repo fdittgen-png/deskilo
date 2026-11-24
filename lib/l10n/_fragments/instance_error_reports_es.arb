@@ -1,0 +1,10 @@
+{
+  "@@locale": "es",
+  "instanceErrorReports": "Informes de error",
+  "instanceErrorReportsHint": "Lo que enviaron las apps cuando algo falló, los más recientes primero. Los miembros de una empresa nunca los ven.",
+  "instanceErrorReportsNone": "No ha llegado ningún informe de error.",
+  "instanceErrorReportsOlder": "Informes anteriores",
+  "instanceErrorReportFacts": "{version} · {platform} · {time}",
+  "instanceErrorReportCode": "Código {code}",
+  "instanceErrorReportStack": "Pila, ocultada por la app"
+}

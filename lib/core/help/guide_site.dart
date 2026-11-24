@@ -2,12 +2,13 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../data/external_hosts.dart';
 import '../links/link_launcher.dart';
 
 /// The published guide site: one page per language for the user guide
 /// (`en.html`) and one for the setup guide (`setup-en.html`). Every
 /// section's element id is its help anchor (`user.x.y` / `setup.x.y`).
-const _guideSiteBase = 'https://fdittgen-png.github.io/deskilo/guide/';
+const _guideSiteBase = '${ExternalHosts.projectSite}guide/';
 
 const _guideLanguages = {'en', 'fr', 'de', 'es', 'it'};
 

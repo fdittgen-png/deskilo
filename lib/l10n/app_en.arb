@@ -216,10 +216,6 @@
   "@accountActivityEmpty": {
     "description": "Shown as a text in account activity screen (money), and 2 other places."
   },
-  "accountActivityFailed": "Could not load your financial history. Tap to retry.",
-  "@accountActivityFailed": {
-    "description": "Shown as a text in account activity screen (money), and 2 other places."
-  },
   "accountActivityScope": "All your profiles on this server, including previous memberships. Currencies are shown separately.",
   "@accountActivityScope": {
     "description": "Shown as a text in account activity screen (money)."
@@ -1046,10 +1042,6 @@
   "@acctTargetsIntro": {
     "description": "#2370 Accounting systems sheet: what the sheet shows."
   },
-  "acctTargetsLoadFailed": "The accounting systems could not be loaded.",
-  "@acctTargetsLoadFailed": {
-    "description": "#2370 Accounting systems sheet: the connections or transfers could not be read."
-  },
   "acctTargetsNoApiTarget": "No accounting system of this country is reached by a connection yet: the books go by file, from the accounting export.",
   "@acctTargetsNoApiTarget": {
     "description": "#2370 Accounting systems sheet: no system of the country is reached by a connection."
@@ -1475,10 +1467,6 @@
   "applicationsEmpty": "No workspace requests.",
   "@applicationsEmpty": {
     "description": "Workspace admission history and discussion (#1791)"
-  },
-  "applicationsLoadFailed": "Could not load your workspace requests. Please try again.",
-  "@applicationsLoadFailed": {
-    "description": "Admission action failure (#1791)"
   },
   "applicationsTitle": "Workspace requests",
   "@applicationsTitle": {
@@ -2740,10 +2728,6 @@
   },
   "badgePinReviewNotice": "This PIN predates length tracking or is shorter than the current minimum. Ask the member to change it in their own settings. Their existing PIN keeps working.",
   "@badgePinReviewNotice": {
-    "description": "Shown as a text in badge pin review notice (workspace)."
-  },
-  "badgePinReviewUnavailable": "PIN review status is unavailable. Try again before assuming this PIN meets the current minimum.",
-  "@badgePinReviewUnavailable": {
     "description": "Shown as a text in badge pin review notice (workspace)."
   },
   "badgePinSaveFailed": "Could not reach the server. Your PIN was not changed — try again.",
@@ -6886,10 +6870,6 @@
   "@billingCustomersEmpty": {
     "description": "the billing customers screen and editor (#4164)"
   },
-  "billingCustomersLoadFailed": "The customers could not be read. This is not an empty list.",
-  "@billingCustomersLoadFailed": {
-    "description": "the billing customers screen and editor (#4164)"
-  },
   "billingCustomersNoAccount": "The people and businesses you invoice. They are not members and see nothing of your business, unless you invite them to read their own invoices from their own account.",
   "@billingCustomersNoAccount": {
     "description": "the billing customers screen and editor (#4164)"
@@ -7219,10 +7199,6 @@
   },
   "bookPeriodsInvalid": "Choose both days, and give a reason where one is asked.",
   "@bookPeriodsInvalid": {
-    "description": "#2365 accounting periods"
-  },
-  "bookPeriodsLoadFailed": "The periods could not be loaded.",
-  "@bookPeriodsLoadFailed": {
     "description": "#2365 accounting periods"
   },
   "bookPeriodsNoExports": "No export yet.",
@@ -8708,10 +8684,6 @@
       }
     }
   },
-  "capacityKpiRetry": "Try again",
-  "@capacityKpiRetry": {
-    "description": "#1918 capacity KPI"
-  },
   "capacityKpiRooms": "Rooms without seats: {count}, {reserved} of {offered} room-hours reserved",
   "@capacityKpiRooms": {
     "description": "#1918 capacity KPI",
@@ -9293,10 +9265,6 @@
   "@compareTitle": {
     "description": "#1660 template_compare"
   },
-  "compareUnavailable": "These templates could not be read to compare them. Nothing is claimed either way.",
-  "@compareUnavailable": {
-    "description": "#1660 template_compare"
-  },
   "compareUnknown": "Unknown",
   "@compareUnknown": {
     "description": "#1660 template_compare"
@@ -9537,10 +9505,6 @@
   "consentTitle": "Your data, your rights",
   "@consentTitle": {
     "description": "Shown as the text in help tips (core), and 2 other places."
-  },
-  "consentUnavailable": "Your account could not be loaded, so there is nothing to accept yet.",
-  "@consentUnavailable": {
-    "description": "Banner on the consent screen when the profile could not be fetched (#1650): a retry replaces the acceptance form"
   },
   "consentVersion": "Version",
   "@consentVersion": {
@@ -13113,10 +13077,6 @@
   "@einvoiceConfigTokenSet": {
     "description": "Shown instead of the stored token"
   },
-  "einvoiceConfigUnavailable": "The platform settings could not be loaded. Check your connection and try again.",
-  "@einvoiceConfigUnavailable": {
-    "description": "Shown when the e-invoice platform status probe fails"
-  },
   "einvoiceCustomerSectionHelp": "Where invoices go for the customer: their Peppol access point, portal or agreed upload API — separate from the government platform.",
   "@einvoiceCustomerSectionHelp": {
     "description": "E-invoicing config: customer delivery section help (#568)"
@@ -13421,10 +13381,6 @@
   "@engagementsIntro": {
     "description": "service engagements (#4178)"
   },
-  "engagementsLoadFailed": "The engagements could not be read. This is not an empty list.",
-  "@engagementsLoadFailed": {
-    "description": "service engagements (#4178)"
-  },
   "engagementsNew": "New engagement",
   "@engagementsNew": {
     "description": "service engagements (#4178)"
@@ -13627,10 +13583,6 @@
   },
   "equipmentInvalid": "Choose a purchase line, and for a decision give its basis.",
   "@equipmentInvalid": {
-    "description": "#2576 equipment register"
-  },
-  "equipmentLoadFailed": "The equipment could not be loaded.",
-  "@equipmentLoadFailed": {
     "description": "#2576 equipment register"
   },
   "equipmentRegister": "Register equipment",
@@ -17291,6 +17243,14 @@
   "featureUniqueMonogramsTitle": "Distinct avatar initials",
   "@featureUniqueMonogramsTitle": {
     "description": "Shown as a text in feature names (workspace)."
+  },
+  "featureUnitsOfMeasureDesc": "The owner and the admins keep the business's own units of measure and their conversions (1 km = 1000 m, 1 kg = 1000 g). Items, quotes and invoices are measured in them. The built-in units are always there; switching this on adds the screen to maintain them.",
+  "@featureUnitsOfMeasureDesc": {
+    "description": "#4442 feature description"
+  },
+  "featureUnitsOfMeasureTitle": "Units of measure",
+  "@featureUnitsOfMeasureTitle": {
+    "description": "#4442 feature name"
   },
   "featureUsageInvoicesDesc": "Once a month is over, what it actually cost beyond the subscription — overage, accessories, services — is invoiced separately. Off: those stay on the whole-month invoice.",
   "@featureUsageInvoicesDesc": {
@@ -21434,6 +21394,50 @@
   "@instanceEnrolUnreadable": {
     "description": "#2562 C2a enrolment: instanceEnrolUnreadable"
   },
+  "instanceErrorReportCode": "Code {code}",
+  "@instanceErrorReportCode": {
+    "description": "#4416 Instance console: the code the error carried",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceErrorReportFacts": "{version} · {platform} · {time}",
+  "@instanceErrorReportFacts": {
+    "description": "#4416 Instance console: one report's app version, platform and time",
+    "placeholders": {
+      "version": {
+        "type": "String"
+      },
+      "platform": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceErrorReportStack": "Stack, redacted by the app",
+  "@instanceErrorReportStack": {
+    "description": "#4416 Instance console: heading of a report's stack"
+  },
+  "instanceErrorReports": "Error reports",
+  "@instanceErrorReports": {
+    "description": "#4416 Instance console: the error reports apps sent to this installation, its row and sheet title"
+  },
+  "instanceErrorReportsHint": "What the apps sent when something went wrong, newest first. Members of a business never see them.",
+  "@instanceErrorReportsHint": {
+    "description": "#4416 Instance console: under the error reports row"
+  },
+  "instanceErrorReportsNone": "No error report has arrived.",
+  "@instanceErrorReportsNone": {
+    "description": "#4416 Instance console: the list is empty"
+  },
+  "instanceErrorReportsOlder": "Older reports",
+  "@instanceErrorReportsOlder": {
+    "description": "#4416 Instance console: reads the next page of older reports"
+  },
   "instanceFamilyChatgpt": "ChatGPT",
   "@instanceFamilyChatgpt": {
     "description": "#2145 assistant onboarding: instanceFamilyChatgpt"
@@ -25039,10 +25043,6 @@
   "@itemGroupReasonInUse": {
     "description": "#4361 G12 item groups: itemGroupReasonInUse"
   },
-  "itemGroupReasonNameDuplicate": "Another group already has this name.",
-  "@itemGroupReasonNameDuplicate": {
-    "description": "#4361 G12 item groups: itemGroupReasonNameDuplicate"
-  },
   "itemGroupReasonNeedsSerial": "Per-piece tags need tracking by piece.",
   "@itemGroupReasonNeedsSerial": {
     "description": "#4361 G12 item groups: itemGroupReasonNeedsSerial"
@@ -26538,10 +26538,6 @@
   "@leaseCommitmentsIntro": {
     "description": "#2575 commitment matching"
   },
-  "leaseCommitmentsLoadFailed": "The commitments could not be loaded.",
-  "@leaseCommitmentsLoadFailed": {
-    "description": "#2575 commitment matching"
-  },
   "leaseDeposit": "Deposit {amount}",
   "@leaseDeposit": {
     "description": "#2569 premises lease",
@@ -26665,10 +26661,6 @@
         "type": "String"
       }
     }
-  },
-  "leaseLoadFailed": "The lease could not be loaded.",
-  "@leaseLoadFailed": {
-    "description": "#2569 premises lease"
   },
   "leaseMatchAction": "Match a bill",
   "@leaseMatchAction": {
@@ -27442,10 +27434,6 @@
   "@libraryPreviewChanges": {
     "description": "Template apply preview (#1280): libraryPreviewChanges"
   },
-  "libraryPreviewFailed": "The changes could not be previewed. Nothing was applied.",
-  "@libraryPreviewFailed": {
-    "description": "Template apply sheet when the server preview could not be loaded (#1280)"
-  },
   "libraryPreviewTitle": "What « {name} » would change",
   "@libraryPreviewTitle": {
     "description": "Template apply preview (#1280): libraryPreviewTitle",
@@ -27784,10 +27772,6 @@
   "managedProfileHandOverHint": "Mints a personal code bound to this profile. Whoever redeems it takes the profile over — reservations, invoices, subscription — once you approve the membership.",
   "@managedProfileHandOverHint": {
     "description": "#887 managed profiles: managedProfileHandOverHint"
-  },
-  "managedProfileIdentityUnavailable": "These details could not be read, so there is nothing to edit yet. Nothing has been changed.",
-  "@managedProfileIdentityUnavailable": {
-    "description": "#1561 shown when the managed identity could not be read, so the form is not offered"
   },
   "managedProfileIntro": "This person has no account yet. You book, invoice and manage for them; hand the profile over when they join.",
   "@managedProfileIntro": {
@@ -28875,10 +28859,6 @@
   "@mcpPolicyTitle": {
     "description": "#1626 #1627 #1628 mcp_settings"
   },
-  "mcpPolicyUnavailable": "The assistant settings could not be loaded. Try again later.",
-  "@mcpPolicyUnavailable": {
-    "description": "#1626 #1627 #1628 mcp_settings"
-  },
   "mcpRefusalClientNotApproved": "This assistant is not approved on this server yet. The operator approves each assistant once; ask them, then connect again from the assistant.",
   "@mcpRefusalClientNotApproved": {
     "description": "#2145 Connect an assistant: mcpRefusalClientNotApproved"
@@ -28955,10 +28935,6 @@
   "@mcpRequestsAnsweredTitle": {
     "description": "#3978 mcp_my_requests"
   },
-  "mcpRequestsUnavailable": "Your assistants' requests could not be read. Open this page again later.",
-  "@mcpRequestsUnavailable": {
-    "description": "#3978 mcp_my_requests"
-  },
   "mcpRequestsWaitingTitle": "Waiting for your confirmation",
   "@mcpRequestsWaitingTitle": {
     "description": "#3978 mcp_my_requests"
@@ -29001,10 +28977,6 @@
   },
   "mcpReviewTitle": "Assistant approvals",
   "@mcpReviewTitle": {
-    "description": "#1626 #1627 #1628 mcp_settings"
-  },
-  "mcpReviewUnavailable": "The requests could not be loaded. A review needs your second factor; try again.",
-  "@mcpReviewUnavailable": {
     "description": "#1626 #1627 #1628 mcp_settings"
   },
   "mcpStateAfterPrevious": "After the step above",
@@ -29160,10 +29132,6 @@
   "@mcpUsageRequests": {
     "description": "#1630 mcp_usage"
   },
-  "mcpUsageUnavailable": "Usage could not be loaded.",
-  "@mcpUsageUnavailable": {
-    "description": "#1630 mcp_usage"
-  },
   "mcpUsageWorkspaceTitle": "Assistant use, last 30 days",
   "@mcpUsageWorkspaceTitle": {
     "description": "#1630 mcp_usage"
@@ -29291,10 +29259,6 @@
   "meDataWorkspacesEmpty": "Your account names no business yet.",
   "@meDataWorkspacesEmpty": {
     "description": "#2557 C3 no workspace to export from."
-  },
-  "meDataWorkspacesFailed": "The businesses your account names could not be read. Nothing was exported.",
-  "@meDataWorkspacesFailed": {
-    "description": "#2557 C3 the workspace list could not be read."
   },
   "meDataWorkspacesScope": "Each business exports what it holds about you — membership, reservations, ledger and invoices — from its own server, one file per business. Your personal account's part is the card above.",
   "@meDataWorkspacesScope": {
@@ -29681,10 +29645,6 @@
   "@mePlaceRequestSent": {
     "description": "#3545 E: a compact Home row of a space the person asked to join and nobody has answered"
   },
-  "mePlacesLoadFailed": "Your places could not be loaded.",
-  "@mePlacesLoadFailed": {
-    "description": "Me, My places: the places could not be loaded (#3555: the profiles screen keeps profilesUnavailable)"
-  },
   "mePrivacySelfServiceOff": "This business handles data requests itself. File a rights request and the personal data admin will answer it.",
   "@mePrivacySelfServiceOff": {
     "description": "Me, the data export card: the business answers data requests itself (#3555: refusal_text keeps privacySelfServiceOff)"
@@ -29720,10 +29680,6 @@
   "meRefsTitle": "Places elsewhere",
   "@meRefsTitle": {
     "description": "#2563 Me home: section of workspaces named by reference that this server does not list"
-  },
-  "meRefsUnavailable": "Your places elsewhere could not be read.",
-  "@meRefsUnavailable": {
-    "description": "#2563 Me home: the references could not be read"
   },
   "meRunASpace": "Run a business yourself?",
   "@meRunASpace": {
@@ -29887,6 +29843,134 @@
   "@meWhereSpacesLive": {
     "description": "Row in Me opening the connected servers."
   },
+  "measureDimensionArea": "Area",
+  "@measureDimensionArea": {
+    "description": "#4442 dimension: area"
+  },
+  "measureDimensionCount": "Count",
+  "@measureDimensionCount": {
+    "description": "#4442 dimension: counting"
+  },
+  "measureDimensionLength": "Length",
+  "@measureDimensionLength": {
+    "description": "#4442 dimension: length"
+  },
+  "measureDimensionMass": "Mass",
+  "@measureDimensionMass": {
+    "description": "#4442 dimension: mass"
+  },
+  "measureDimensionTime": "Time",
+  "@measureDimensionTime": {
+    "description": "#4442 dimension: time"
+  },
+  "measureDimensionVolume": "Volume",
+  "@measureDimensionVolume": {
+    "description": "#4442 dimension: volume"
+  },
+  "measureReasonDimension": "Choose what this unit measures.",
+  "@measureReasonDimension": {
+    "description": "#4442 refusal: no dimension chosen"
+  },
+  "measureReasonEce": "A UN/ECE code is two or three capital letters or digits.",
+  "@measureReasonEce": {
+    "description": "#4442 refusal: the UN/ECE code is malformed"
+  },
+  "measureReasonFixed": "This unit is fixed and cannot be changed or removed.",
+  "@measureReasonFixed": {
+    "description": "#4442 refusal: a fixed unit"
+  },
+  "measureReasonInUse": "This unit is in use, so its dimension and factor can no longer change. Make a new unit instead.",
+  "@measureReasonInUse": {
+    "description": "#4442 refusal: a unit in use keeps its factor"
+  },
+  "measureReasonInexact": "The result cannot be written exactly with six decimals.",
+  "@measureReasonInexact": {
+    "description": "#4442 refusal: a conversion that six decimals cannot hold"
+  },
+  "measureReasonName": "A new unit needs a name.",
+  "@measureReasonName": {
+    "description": "#4442 refusal: a new unit needs a name"
+  },
+  "measureUnitArchive": "Archive",
+  "@measureUnitArchive": {
+    "description": "#4442 action: archive an unused unit"
+  },
+  "measureUnitArchivedTag": "Archived",
+  "@measureUnitArchivedTag": {
+    "description": "#4442 tag on an archived unit"
+  },
+  "measureUnitBuiltIn": "Built in",
+  "@measureUnitBuiltIn": {
+    "description": "#4442 tag on a built-in unit"
+  },
+  "measureUnitCodeField": "Unit code",
+  "@measureUnitCodeField": {
+    "description": "#4442 field: the code of a unit"
+  },
+  "measureUnitCodeHelp": "Lower case letters, digits and underscores. It cannot change later.",
+  "@measureUnitCodeHelp": {
+    "description": "#4442 helper of the code field"
+  },
+  "measureUnitDimensionField": "It measures",
+  "@measureUnitDimensionField": {
+    "description": "#4442 field: what a unit measures"
+  },
+  "measureUnitEceField": "UN/ECE code (for e-invoices)",
+  "@measureUnitEceField": {
+    "description": "#4442 field: the UN/ECE code of a unit"
+  },
+  "measureUnitEdit": "Edit unit",
+  "@measureUnitEdit": {
+    "description": "#4442 edit sheet title"
+  },
+  "measureUnitFactorField": "One unit equals",
+  "@measureUnitFactorField": {
+    "description": "#4442 field: how many base units one unit is"
+  },
+  "measureUnitFactorHelp": "Counted in {base}, the base unit of what it measures: 1000 for a km, 0.001 for a mm.",
+  "@measureUnitFactorHelp": {
+    "description": "#4442 helper of the factor field",
+    "placeholders": {
+      "base": {
+        "type": "String"
+      }
+    }
+  },
+  "measureUnitLine": "1 {unit} = {value} {base}",
+  "@measureUnitLine": {
+    "description": "#4442 a unit's conversion line, e.g. 1 km = 1000 m",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      },
+      "base": {
+        "type": "String"
+      }
+    }
+  },
+  "measureUnitNameField": "Your name for the unit",
+  "@measureUnitNameField": {
+    "description": "#4442 field: the business's own word for a unit"
+  },
+  "measureUnitNew": "New unit",
+  "@measureUnitNew": {
+    "description": "#4442 new unit action"
+  },
+  "measureUnitRestore": "Show again",
+  "@measureUnitRestore": {
+    "description": "#4442 action: show an archived unit again"
+  },
+  "measureUnitsIntro": "The units your items, quotes and invoices are measured in, and how they convert: 1 km = 1000 m. The built-in units are always there; add your own, such as a cable drum of 50 m.",
+  "@measureUnitsIntro": {
+    "description": "#4442 what the screen is for"
+  },
+  "measureUnitsSubtitle": "Your own units and how they convert",
+  "@measureUnitsSubtitle": {
+    "description": "#4442 the row in the workspace settings"
+  },
   "memberAccountTitle": "My account",
   "@memberAccountTitle": {
     "description": "#1598 member account menu: memberAccountTitle"
@@ -29997,10 +30081,6 @@
   "memberMoneySettled": "Nothing outstanding.",
   "@memberMoneySettled": {
     "description": "#704 - the money section of a member profile"
-  },
-  "memberMoneyUnavailable": "Money could not be loaded. Pull to refresh.",
-  "@memberMoneyUnavailable": {
-    "description": "#709 - the money section of a profile could not be read"
   },
   "memberMonthInProgress": "This month",
   "@memberMonthInProgress": {
@@ -32065,10 +32145,6 @@
   "@newMemberDefaultsTitle": {
     "description": "#1294 the new-member defaults section title"
   },
-  "newMemberDefaultsUnavailable": "These could not be read just now. Saving leaves them exactly as they are.",
-  "@newMemberDefaultsUnavailable": {
-    "description": "#1563 shown when the new-member defaults could not be read, so Save omits them"
-  },
   "newMemberDefaultsUnset": "Nothing chosen — new members start at 100% with bookings blocked once the entitlement is used.",
   "@newMemberDefaultsUnset": {
     "description": "#1294 shown when nothing is configured, naming the product defaults"
@@ -33152,10 +33228,6 @@
   "@payConfigSettlementsReviewTitle": {
     "description": "#3510 settlement reports refused and kept for review"
   },
-  "payConfigSettlementsReviewUnreadable": "The settlement reports to review could not be read.",
-  "@payConfigSettlementsReviewUnreadable": {
-    "description": "#3510 settlement reports refused and kept for review"
-  },
   "payConfigTitle": "Online payments",
   "@payConfigTitle": {
     "description": "Owner screen to configure online-payment providers (0047)"
@@ -33432,10 +33504,6 @@
   "@paymentMatchEmpty": {
     "description": "#3587 R1-f: payments to match (paymentMatchEmpty)"
   },
-  "paymentMatchFailed": "The payments could not be read.",
-  "@paymentMatchFailed": {
-    "description": "#3587 R1-f: payments to match (paymentMatchFailed)"
-  },
   "paymentMatchHeader": "{amount} received {date}",
   "@paymentMatchHeader": {
     "description": "#3587 R1-f: payments to match (paymentMatchHeader)",
@@ -33648,10 +33716,6 @@
   },
   "periodReservationsEmpty": "No booking in these months.",
   "@periodReservationsEmpty": {
-    "description": "#2578 the bookings behind the capacity figure"
-  },
-  "periodReservationsFailed": "The bookings could not be read.",
-  "@periodReservationsFailed": {
     "description": "#2578 the bookings behind the capacity figure"
   },
   "periodReservationsLevel": "On {level} only",
@@ -35141,10 +35205,6 @@
   "@portalSendCode": {
     "description": "Shown as the text in connection dialog (directory)."
   },
-  "portalSourceUnavailable": "A server is unavailable. This overview is incomplete. Tap to retry.",
-  "@portalSourceUnavailable": {
-    "description": "Shown as the text in account messenger sections (directory), and 5 other places."
-  },
   "portalUseCode": "Use an email code",
   "@portalUseCode": {
     "description": "Shown as the title in connection dialog (directory)."
@@ -35269,10 +35329,6 @@
   "@privacyAdminKind": {
     "description": "Shown as the label of a field in privacy admin sheets (members), and 1 other place."
   },
-  "privacyAdminLoadFailed": "The requests could not be read.",
-  "@privacyAdminLoadFailed": {
-    "description": "Shown as the text in privacy admin screen (members)."
-  },
   "privacyAdminMember": "Member",
   "@privacyAdminMember": {
     "description": "Shown as the text in privacy admin sheets (members), and 1 other place."
@@ -35364,6 +35420,18 @@
         "type": "String"
       }
     }
+  },
+  "privacyErrorReports": "Send error reports",
+  "@privacyErrorReports": {
+    "description": "#4416 Privacy switch: send the errors the app records to the installation"
+  },
+  "privacyErrorReportsFailed": "The choice could not be saved on this device.",
+  "@privacyErrorReportsFailed": {
+    "description": "#4416 Privacy switch: the switch could not be stored"
+  },
+  "privacyErrorReportsHint": "When the app records an error, a report without your data goes to the installation you are signed in to, so its operator can fix it.",
+  "@privacyErrorReportsHint": {
+    "description": "#4416 Privacy switch: what is sent and where, under its name"
   },
   "privacyExport": "Export my data",
   "@privacyExport": {
@@ -35692,6 +35760,14 @@
   "processFilterEmpty": "No process matches this filter.",
   "@processFilterEmpty": {
     "description": "#1327 the process-first overview of the Features screen"
+  },
+  "processGoodsStock": "Goods & stock",
+  "@processGoodsStock": {
+    "description": "Shown as the title in process names (workspace)."
+  },
+  "processGoodsStockDesc": "Keep, move, count and trace the goods the business sells.",
+  "@processGoodsStockDesc": {
+    "description": "Shown as the text in process names (workspace)."
   },
   "processHeldBack": "{count, plural, one{1 feature is on but waits for a switched-off prerequisite} other{{count} features are on but wait for a switched-off prerequisite}}",
   "@processHeldBack": {
@@ -36032,10 +36108,6 @@
   "@profilesTitle": {
     "description": "Profile switcher screen (#89): one profile per workspace membership"
   },
-  "profilesUnavailable": "Your workspaces could not be loaded.",
-  "@profilesUnavailable": {
-    "description": "Banner on the Profiles screen when the membership list could not be fetched (#1650); paired with commonRetry"
-  },
   "provenanceFromTemplate": "From template «{name}»",
   "@provenanceFromTemplate": {
     "description": "#1307 S4 provenance chip",
@@ -36187,10 +36259,6 @@
   "publicProfilePublishedInfo": "Information published by this business. Missing information does not mean that a facility is absent.",
   "@publicProfilePublishedInfo": {
     "description": "Public profile: PublishedInfo."
-  },
-  "publicProfileRefreshFailed": "Could not refresh this business’s page. Showing the information already loaded.",
-  "@publicProfileRefreshFailed": {
-    "description": "Public profile: RefreshFailed."
   },
   "publicProfileRefreshing": "Refreshing published information…",
   "@publicProfileRefreshing": {
@@ -37932,20 +38000,12 @@
   "@quotesIntro": {
     "description": "customer quotes: the quotes list, editor and detail (#4166)"
   },
-  "quotesLoadFailed": "The quotes could not be read. This is not an empty list.",
-  "@quotesLoadFailed": {
-    "description": "customer quotes: the quotes list, editor and detail (#4166)"
-  },
   "quotesNew": "New quote",
   "@quotesNew": {
     "description": "customer quotes: the quotes list, editor and detail (#4166)"
   },
   "quotesNotAllowed": "You may not read the quotes of this business.",
   "@quotesNotAllowed": {
-    "description": "customer quotes: the quotes list, editor and detail (#4166)"
-  },
-  "quotesRetry": "Try again",
-  "@quotesRetry": {
     "description": "customer quotes: the quotes list, editor and detail (#4166)"
   },
   "quotesTitle": "Quotes",
@@ -40242,10 +40302,6 @@
   "@reportImagesEmpty": {
     "description": "Report WYSIWYG editor + image library (#488)"
   },
-  "reportImagesLoadFailed": "Could not load report images. Try again.",
-  "@reportImagesLoadFailed": {
-    "description": "Shown as the label in report image picker (money)."
-  },
   "reportImagesOpenLibrary": "Open the picture library",
   "@reportImagesOpenLibrary": {
     "description": "#3984 the action of the snack that tells an original was too large: opens the picture library"
@@ -40916,10 +40972,6 @@
   "@retentionHoldsEmpty": {
     "description": "#2571 retention holds and dispositions"
   },
-  "retentionHoldsLoadFailed": "The holds could not be read.",
-  "@retentionHoldsLoadFailed": {
-    "description": "#2571 retention holds and dispositions"
-  },
   "retentionHoldsTitle": "Legal holds",
   "@retentionHoldsTitle": {
     "description": "#2571 retention holds and dispositions"
@@ -41482,10 +41534,6 @@
   },
   "roomRentLevels": "Floors",
   "@roomRentLevels": {
-    "description": "#2568 rented rooms"
-  },
-  "roomRentLoadFailed": "The rented rooms could not be loaded.",
-  "@roomRentLoadFailed": {
     "description": "#2568 rented rooms"
   },
   "roomRentNeedSupplier": "Add the lessor as a supplier first.",
@@ -42299,6 +42347,10 @@
   "@settingGroupCompatibility": {
     "description": "#3732 Settings group: how long older app versions stay accepted by this installation"
   },
+  "settingGroupDiagnostics": "Error reports",
+  "@settingGroupDiagnostics": {
+    "description": "#4416 Settings group: the error reports apps send to this installation"
+  },
   "settingGroupDirectory": "Member directory",
   "@settingGroupDirectory": {
     "description": "#2486 settings: Settings group title."
@@ -42791,6 +42843,18 @@
   "@settingHintStockWeighedGoods": {
     "description": "#4365 G16 the shop business kind"
   },
+  "settingHintTraceReportMaxBytes": "The largest error report this installation accepts. The app shortens the report's stack to fit before it sends; a report still larger is dropped.",
+  "@settingHintTraceReportMaxBytes": {
+    "description": "#4416 Platform setting trace.report_max_bytes: what it decides, under its name"
+  },
+  "settingHintTraceReportRetentionDays": "How many days this installation keeps an error report. Older reports are deleted when a new one arrives.",
+  "@settingHintTraceReportRetentionDays": {
+    "description": "#4416 Platform setting trace.report_retention_days: what it decides, under its name"
+  },
+  "settingHintTraceReportsPerHour": "How many error reports one person may send to this installation in an hour, from all their devices together. Further reports in that hour are dropped, never queued. 0 turns error reports off for everybody.",
+  "@settingHintTraceReportsPerHour": {
+    "description": "#4416 Platform setting trace.reports_per_hour: what it decides, under its name"
+  },
   "settingHintVatViesEvidenceDays": "Days a valid VAT-number check stays recent enough to stand as evidence on a new invoice. A shorter value asks for a fresh check sooner; it is not proof that a transaction is valid.",
   "@settingHintVatViesEvidenceDays": {
     "description": "#2487 retention settings"
@@ -43243,6 +43307,18 @@
   "@settingLabelStockWeighedGoods": {
     "description": "#4365 G16 the shop business kind"
   },
+  "settingLabelTraceReportMaxBytes": "Largest error report",
+  "@settingLabelTraceReportMaxBytes": {
+    "description": "#4416 Platform setting trace.report_max_bytes: its name in the settings editor"
+  },
+  "settingLabelTraceReportRetentionDays": "Error reports kept for",
+  "@settingLabelTraceReportRetentionDays": {
+    "description": "#4416 Platform setting trace.report_retention_days: its name in the settings editor"
+  },
+  "settingLabelTraceReportsPerHour": "Error reports per person and hour",
+  "@settingLabelTraceReportsPerHour": {
+    "description": "#4416 Platform setting trace.reports_per_hour: its name in the settings editor"
+  },
   "settingLabelVatViesEvidenceDays": "VAT-number check freshness",
   "@settingLabelVatViesEvidenceDays": {
     "description": "#2487 retention settings"
@@ -43465,10 +43541,6 @@
   "settingsFrontCameraDesc": "Badges are read with the screen-side camera — turn off to use the back camera.",
   "@settingsFrontCameraDesc": {
     "description": "Subtitle of the front-camera switch"
-  },
-  "settingsLoadFailed": "The settings could not be loaded.",
-  "@settingsLoadFailed": {
-    "description": "#2484 settings: Error text."
   },
   "settingsOfflineRegistry": "Showing the built-in defaults: the server could not be reached, so nothing can be changed now.",
   "@settingsOfflineRegistry": {
@@ -45841,10 +45913,6 @@
   "setupStepLeaveTitle": "Leave this step?",
   "@setupStepLeaveTitle": {
     "description": "#3629 asked when leaving a setup step whose answers are a draft not applied yet."
-  },
-  "setupStepLoadFailed": "This step could not be loaded. Try again later.",
-  "@setupStepLoadFailed": {
-    "description": "#2870 setup steps: setupStepLoadFailed"
   },
   "setupStepNext": "Next step",
   "@setupStepNext": {
@@ -48386,22 +48454,6 @@
   "@stockReasonFactorInvalid": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
-  "stockReasonGroupDepth": "A sub-group cannot have sub-groups.",
-  "@stockReasonGroupDepth": {
-    "description": "#4361 refusal text"
-  },
-  "stockReasonGroupHasMovements": "This item has stock movements: its unit and tracking stay as they were written.",
-  "@stockReasonGroupHasMovements": {
-    "description": "#4361 refusal text"
-  },
-  "stockReasonGroupHasSubgroups": "This group has sub-groups: move or delete them first.",
-  "@stockReasonGroupHasSubgroups": {
-    "description": "#4361 refusal text"
-  },
-  "stockReasonGroupInUse": "This group is used by items: move them first.",
-  "@stockReasonGroupInUse": {
-    "description": "#4361 refusal text"
-  },
   "stockReasonGroupItemUnknown": "This item is not one of this business's.",
   "@stockReasonGroupItemUnknown": {
     "description": "#4361 refusal text"
@@ -48418,20 +48470,8 @@
   "@stockReasonGroupNameRequired": {
     "description": "#4361 refusal text"
   },
-  "stockReasonGroupNeedsSerial": "Per-unit tags need tracking by piece.",
-  "@stockReasonGroupNeedsSerial": {
-    "description": "#4361 refusal text"
-  },
-  "stockReasonGroupNotOverridable": "This is a proposal for new items and is not set per item.",
-  "@stockReasonGroupNotOverridable": {
-    "description": "#4361 refusal text"
-  },
   "stockReasonGroupPlaceUnknown": "This place is not one of this business's.",
   "@stockReasonGroupPlaceUnknown": {
-    "description": "#4361 refusal text"
-  },
-  "stockReasonGroupUnknown": "This group is not one of this business's.",
-  "@stockReasonGroupUnknown": {
     "description": "#4361 refusal text"
   },
   "stockReasonGroupUnknownReference": "A place, item or rate named here is not one of this business's.",
@@ -49000,6 +49040,30 @@
   "@stockReorderToOrderTitle": {
     "description": "#4294 reorder: a label or a message"
   },
+  "stockRequiredArticle": "Enter the supplier's article reference.",
+  "@stockRequiredArticle": {
+    "description": "#4402 the supplier article sheet: said under the article reference when it is empty (the app's own check)"
+  },
+  "stockRequiredDestination": "Choose the place the goods go to, another than the one they leave.",
+  "@stockRequiredDestination": {
+    "description": "#4402 the move sheet: said under the destination when none is chosen, or when it is the place the goods leave (the app's own check)"
+  },
+  "stockRequiredItem": "Choose an item.",
+  "@stockRequiredItem": {
+    "description": "#4402 a stock sheet: said under the item field when no item is chosen yet (the app's own check, not a refusal of the server)"
+  },
+  "stockRequiredPlace": "Choose a place.",
+  "@stockRequiredPlace": {
+    "description": "#4402 a stock sheet: said under a place field when no place is chosen yet (the app's own check, not a refusal of the server)"
+  },
+  "stockRequiredSite": "Choose a site.",
+  "@stockRequiredSite": {
+    "description": "#4402 the reorder point sheet: said under the site when none is chosen yet (the app's own check, not a refusal of the server)"
+  },
+  "stockRequiredSupplier": "Choose a supplier.",
+  "@stockRequiredSupplier": {
+    "description": "#4402 the supplier article sheet: said under the supplier when none is chosen yet (the app's own check)"
+  },
   "stockReversalBackTo": "Goods come back to",
   "@stockReversalBackTo": {
     "description": "#4172 stock returns and counts screens"
@@ -49304,6 +49368,10 @@
   "@stockSettingsValues": {
     "description": "the stock pages and group (#4299)"
   },
+  "stockStateUnknown": "Not known to this app",
+  "@stockStateUnknown": {
+    "description": "#4401 a state, scope or kind a newer server sent that this app does not know: shown instead of a guess"
+  },
   "stockStoredLabel": "Stored",
   "@stockStoredLabel": {
     "description": "#4161 the quantity as stored, in the inventory unit"
@@ -49333,14 +49401,6 @@
   "@stockTagKindUhf": {
     "description": "#4363 G14 tags: stockTagKindUhf"
   },
-  "stockTagMalformed": "That is not a valid tag code.",
-  "@stockTagMalformed": {
-    "description": "#4363 G14 tags: stockTagMalformed"
-  },
-  "stockTagModeNone": "This item does not use tags.",
-  "@stockTagModeNone": {
-    "description": "#4363 G14 tags: stockTagModeNone"
-  },
   "stockTagNotInForce": "This is not a tag in force here.",
   "@stockTagNotInForce": {
     "description": "#4363 G14 tags: stockTagNotInForce"
@@ -49348,14 +49408,6 @@
   "stockTagOnPiece": "This tag is on a piece that is still in stock.",
   "@stockTagOnPiece": {
     "description": "#4363 G14 tags: stockTagOnPiece"
-  },
-  "stockTagOwnerUnknown": "This item or place is not known.",
-  "@stockTagOwnerUnknown": {
-    "description": "#4363 G14 tags: stockTagOwnerUnknown"
-  },
-  "stockTagPerUnit": "This item is tagged piece by piece: tag its pieces when they are received.",
-  "@stockTagPerUnit": {
-    "description": "#4363 G14 tags: stockTagPerUnit"
   },
   "stockTagPiece": "Piece {number}",
   "@stockTagPiece": {
@@ -50225,6 +50277,38 @@
   "@subprocessReservationsDesc": {
     "description": "Shown as the text in process names (workspace)."
   },
+  "subprocessStockControl": "Counts and replenishment",
+  "@subprocessStockControl": {
+    "description": "Shown as the title in process names (workspace)."
+  },
+  "subprocessStockControlDesc": "Count stock, schedule cycle counts and reorder in time.",
+  "@subprocessStockControlDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
+  "subprocessStockItems": "Items and units",
+  "@subprocessStockItems": {
+    "description": "Shown as the title in process names (workspace)."
+  },
+  "subprocessStockItemsDesc": "Items, item groups, units of measure and handling units.",
+  "@subprocessStockItemsDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
+  "subprocessStockMovements": "Receiving and movements",
+  "@subprocessStockMovements": {
+    "description": "Shown as the title in process names (workspace)."
+  },
+  "subprocessStockMovementsDesc": "Receive deliveries, take goods out and handle returns.",
+  "@subprocessStockMovementsDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
+  "subprocessStockTracking": "Traceability",
+  "@subprocessStockTracking": {
+    "description": "Shown as the title in process names (workspace)."
+  },
+  "subprocessStockTrackingDesc": "Lots, expiry, scanning and tags that trace each piece.",
+  "@subprocessStockTrackingDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "subprocessStructure": "Space structure",
   "@subprocessStructure": {
     "description": "Shown as the title in process names (workspace)."
@@ -50437,10 +50521,6 @@
   "suppliersArchivedTag": "archived",
   "@suppliersArchivedTag": {
     "description": "#2567 suppliers"
-  },
-  "suppliersBalanceUnavailable": "Balance unavailable",
-  "@suppliersBalanceUnavailable": {
-    "description": "#3070 supplier outstanding balance"
   },
   "suppliersBank": "Bank details",
   "@suppliersBank": {
@@ -50702,6 +50782,10 @@
   "supplyClassPropertyMeaning": "Taxed where the premises are.",
   "@supplyClassPropertyMeaning": {
     "description": "#3864 place of supply: what the premises choice means"
+  },
+  "supplyClassUnknown": "A class this app does not know yet: kept as the server has it",
+  "@supplyClassUnknown": {
+    "description": "#4441 Service sheet: a supply class from a newer server, shown read-only and kept"
   },
   "supportChanged": "The context changed. Prepare a new preview.",
   "@supportChanged": {
@@ -52865,10 +52949,6 @@
   "@taxRefLanguages": {
     "description": "#3850 document languages: taxRefLanguages"
   },
-  "taxRefLoadFailed": "The reference data could not be loaded.",
-  "@taxRefLoadFailed": {
-    "description": "#2477 tax reference: error text when the list cannot load."
-  },
   "taxRefMemberEmpty": "A member state has no further fields.",
   "@taxRefMemberEmpty": {
     "description": "#2477 tax reference: Hint in the form of an EU member."
@@ -53212,10 +53292,6 @@
         "type": "String"
       }
     }
-  },
-  "templatesLoadFailed": "The templates could not be loaded.",
-  "@templatesLoadFailed": {
-    "description": "#1660 library"
   },
   "themeDark": "Dark",
   "@themeDark": {
@@ -54188,7 +54264,7 @@
   },
   "tillReceiptCorrects": "Corrects receipt {number}",
   "@tillReceiptCorrects": {
-    "description": "#4184 the counter receipt document",
+    "description": "#4184 the counter receipt document; the number is a reference",
     "placeholders": {
       "number": {
         "type": "String"
@@ -54211,9 +54287,9 @@
       }
     }
   },
-  "tillReceiptLine": "{label}: {quantity} {unit}",
+  "tillReceiptLine": "{label}: {quantity} {unit}  {amount}",
   "@tillReceiptLine": {
-    "description": "#4184 the counter receipt document",
+    "description": "#4184 the counter receipt document; quantity and amount arrive formatted",
     "placeholders": {
       "label": {
         "type": "String"
@@ -54222,6 +54298,9 @@
         "type": "String"
       },
       "unit": {
+        "type": "String"
+      },
+      "amount": {
         "type": "String"
       }
     }
@@ -54247,9 +54326,9 @@
   "@tillReceiptShow": {
     "description": "#4184 the counter receipt document"
   },
-  "tillReceiptTaxLine": "VAT {percent} %: {tax} on {net}",
+  "tillReceiptTaxLine": "VAT {percent}: {tax} on {net}",
   "@tillReceiptTaxLine": {
-    "description": "#4184 the counter receipt document",
+    "description": "#4184 the counter receipt document; percent, tax and net arrive formatted",
     "placeholders": {
       "percent": {
         "type": "String"
@@ -54264,7 +54343,7 @@
   },
   "tillReceiptTotal": "Total {amount}",
   "@tillReceiptTotal": {
-    "description": "#4184 the counter receipt document",
+    "description": "#4184 the counter receipt document; amount arrives formatted",
     "placeholders": {
       "amount": {
         "type": "String"
@@ -55635,10 +55714,6 @@
       }
     }
   },
-  "valuationLoadFailed": "The valuations could not be loaded.",
-  "@valuationLoadFailed": {
-    "description": "#2576 accountant valuations"
-  },
   "valuationManual": "Type in one asset",
   "@valuationManual": {
     "description": "#2576 accountant valuations"
@@ -56809,15 +56884,6 @@
       }
     }
   },
-  "visibilityOnServerUnavailable": "{host} did not answer. Try again later.",
-  "@visibilityOnServerUnavailable": {
-    "description": "#2211 who sees me on a connected server: visibilityOnServerUnavailable",
-    "placeholders": {
-      "host": {
-        "type": "String"
-      }
-    }
-  },
   "visibilityPresence": "At the place today",
   "@visibilityPresence": {
     "description": "Visibility field: presence in a space today."
@@ -56829,10 +56895,6 @@
   "visibilityPreviewCannotWrite": "Cannot start a conversation with you",
   "@visibilityPreviewCannotWrite": {
     "description": "Preview line: this audience may not start a conversation."
-  },
-  "visibilityPreviewFailed": "The preview could not be loaded.",
-  "@visibilityPreviewFailed": {
-    "description": "Preview failed to load."
   },
   "visibilityPreviewMySpaces": "A member of my places",
   "@visibilityPreviewMySpaces": {
@@ -56910,17 +56972,9 @@
   "@visibilitySpaceUnverified": {
     "description": "#2558 chosen-spaces picker: a space on another installation whose membership cannot be verified yet"
   },
-  "visibilitySpacesUnavailable": "Your places cannot be listed right now.",
-  "@visibilitySpacesUnavailable": {
-    "description": "#2558 — the chosen-spaces picker when the list of spaces cannot be read."
-  },
   "visibilityTitle": "Who sees me",
   "@visibilityTitle": {
     "description": "Title of the card choosing who sees what of the account."
-  },
-  "visibilityUnavailable": "Who sees what of you cannot be read right now. Nothing was changed.",
-  "@visibilityUnavailable": {
-    "description": "#2558 — the privacy card when the saved settings cannot be read; a retry follows."
   },
   "visibilityUnconfirmedTitle": "Your change could not be confirmed",
   "@visibilityUnconfirmedTitle": {

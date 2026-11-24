@@ -31,7 +31,7 @@ import 'lint_sources.dart';
 /// it was measured, before the purchase order state, the invoice kind and
 /// the statement movement became unknowns). Lower it when a parser is
 /// converted; never raise it.
-const int _knownStateFallbacks = 50;
+const int _knownStateFallbacks = 45;
 
 /// `byName` sites in the scope that read no server value, each with why.
 const _byNameKept = <String, String>{

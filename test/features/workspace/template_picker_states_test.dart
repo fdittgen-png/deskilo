@@ -74,7 +74,7 @@ void main() {
       find.byKey(const ValueKey('template-picker-failed')),
       findsOneWidget,
     );
-    expect(find.text('The templates could not be loaded.'), findsOneWidget);
+    expect(find.byKey(const ValueKey('read-failure')), findsOneWidget);
     expect(
       find.text('Empty space'),
       findsNothing,

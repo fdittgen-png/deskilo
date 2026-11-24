@@ -16,6 +16,7 @@ import 'package:deskilo/features/money/domain/till_offline.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import '../../codes/dk_code.dart';
+import '../../jurisdiction/installed_invoice_mentions.dart';
 import 'demo_stock_registry.dart';
 import 'demo_till_drawer.dart';
 
@@ -45,29 +46,31 @@ const _evidence = {
   'reconcile_tender': 'pgTAP 523 (tender states and reconciliation)',
 };
 
+/// The rows by the module id of the installed add-on that states the country's law: a country with no installed add-on has
+/// no row (the country is the one in the add-on's capability id, `invoice_mentions.IT`).
 const _registry = <String, _Row>{
-  'FR': (
+  'fr.invoice_mentions': (
     specification: 'Code général des impôts, annexe II, art. 242 nonies A (mentions des factures)',
     version: '2026-11',
     from: '2013-01-01',
     supported: true,
     note: '',
   ),
-  'DE': (
+  'de.invoice_mentions': (
     specification: 'Umsatzsteuer-Durchführungsverordnung, § 33 (Rechnungen über Kleinbeträge)',
     version: '2026-11',
     from: '2017-01-01',
     supported: true,
     note: '',
   ),
-  'ES': (
+  'es.invoice_mentions': (
     specification: 'Real Decreto 1619/2012, art. 4 y 7 (factura simplificada)',
     version: '2026-11',
     from: '2013-01-01',
     supported: true,
     note: '',
   ),
-  'IT': (
+  'it.invoice_mentions': (
     specification: 'Decreto legislativo 127/2015, art. 2 (memorizzazione e trasmissione telematica dei corrispettivi)',
     version: 'D.Lgs. 127/2015',
     from: '2020-01-01',
@@ -160,7 +163,12 @@ class DemoTill implements TillPort, TillOfflinePort, CounterBookPort {
   final Map<String, TillDraft> _answered = {};
   final Map<String, Map<String, Object?>> _frozen = {};
 
-  _Row? get _row => _registry[country];
+  _Row? get _row {
+    for (final addOn in installedInvoiceMentions) {
+      if (addOn.descriptor.capabilityId == 'invoice_mentions.$country') return _registry[addOn.descriptor.moduleId];
+    }
+    return null;
+  }
 
   bool get _supported => ready && (_row?.supported ?? false);
 

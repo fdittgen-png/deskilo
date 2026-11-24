@@ -7,6 +7,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/time/workspace_time.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/height_probe.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../plan/domain/floor_plan.dart';
@@ -277,7 +278,10 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
     final planAsync = ref.watch(floorPlanProvider(level.id));
     return switch (planAsync) {
       AsyncData(value: final plan) => _grid(context, [(null, plan)], names),
-      AsyncError() => const TimelineEmptyHint(allLevels: false),
+      AsyncError(:final error) => ReadFailureBanner(
+        error: error,
+        onRetry: () => ref.invalidate(floorPlanProvider(level.id)),
+      ),
       _ => const LoadingView(),
     };
   }
@@ -302,6 +306,7 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
       switch (planAsync) {
         case AsyncData(value: final plan):
           plans.add((level, plan));
+        // #4414 kept: one level's failed plan leaves only that level out
         case AsyncError():
           break; // Skipped, like a level with nothing to show.
         default:

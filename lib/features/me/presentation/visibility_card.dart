@@ -12,7 +12,7 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/adaptive/window_class.dart';
 import '../../../core/ui/app_sheet.dart';
-import '../../../core/ui/inline_banner.dart';
+import '../../../core/ui/async_read_body.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../core/ui/server_label.dart';
 import '../domain/audience_space.dart';
@@ -82,6 +82,7 @@ class VisibilityCard extends ConsumerWidget {
     // The home's own address names it: the account, not a selected space.
     final home = ref.watch(activeBackendProvider).value?.url;
     // The spaces' names, for the widening question; kept while the card is.
+    // #4414 kept: the names wait for a read that answered
     final listed = read.hasValue && !read.hasError
         ? ref.watch(audienceSpacesProvider).value ?? const <AudienceSpace>[]
         : const <AudienceSpace>[];
@@ -132,12 +133,10 @@ class VisibilityCard extends ConsumerWidget {
           if (home != null && home.isNotEmpty)
             _HomeTile(home: home),
           if (read.hasError)
-            InlineBanner(
+            ReadFailureBanner(
               key: const ValueKey('visibility-unavailable'),
-              icon: Icons.cloud_off_outlined,
-              text: l10n.visibilityUnavailable,
-              actionLabel: l10n.commonRetry,
-              onAction: () => ref.invalidate(myVisibilityProvider),
+              error: read.error!,
+              onRetry: () => ref.invalidate(myVisibilityProvider),
             )
           else if (read.value case final visibility?) ...[
             // The three answers most people look for, saved values first.
@@ -151,6 +150,7 @@ class VisibilityCard extends ConsumerWidget {
           // not signed in.
           question(l10n.visibilityAskPublic),
           const PublicProfileTile(),
+          // #4414 kept: the editor only over an answered read
           if (read.value case final visibility? when !read.hasError)
             ExpansionTile(
               key: const ValueKey('visibility-more'),
@@ -179,6 +179,7 @@ class VisibilityCard extends ConsumerWidget {
             ),
         ],
       );
+    // #4414 kept: the preview only over an answered read
     final previewed = read.hasValue && !read.hasError;
     return Card(
       key: const ValueKey('me-visibility-card'),
@@ -262,12 +263,10 @@ class _AudienceSheetState extends ConsumerState<_AudienceSheet> {
     final listed = ref.watch(audienceSpacesProvider);
     if (listed.hasError) {
       return [
-        InlineBanner(
+        ReadFailureBanner(
           key: const ValueKey('visibility-spaces-unavailable'),
-          icon: Icons.cloud_off_outlined,
-          text: l10n.visibilitySpacesUnavailable,
-          actionLabel: l10n.commonRetry,
-          onAction: () => ref.invalidate(audienceSpacesProvider),
+          error: listed.error!,
+          onRetry: () => ref.invalidate(audienceSpacesProvider),
         ),
         for (final id in _chosen.toList()..sort()) _space(id, null),
       ];

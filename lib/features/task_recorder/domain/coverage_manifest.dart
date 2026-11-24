@@ -392,6 +392,8 @@ const List<RouteCoverage> routeCoverage = [
   RouteCoverage('/stock/cycle-counts/:taskId', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/stock/expiry', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/stock/units', CoverageStatus.planned, owner: '#1884'),
+  // #4442 -- Settings > Units of measure.
+  RouteCoverage('/settings/units', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/stock/items', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/stock/places', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/stock/settings', CoverageStatus.planned, owner: '#1884'),

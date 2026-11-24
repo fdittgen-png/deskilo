@@ -24,6 +24,7 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/navigation/list_detail_route.dart';
 import '../../../../core/navigation/navigation_style.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/shortcuts/app_shortcuts.dart';
 import '../../../../core/shortcuts/shortcut_scope.dart';
 import '../../../../core/storage/pane_width_store.dart';
@@ -151,6 +152,7 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
           _wide = isWideNavigationWidth(box.maxWidth);
           final home = switch (invoices) {
             AsyncData(:final value) => _home(context, value),
+            // #4414 kept: the home's source banner names the failed invoices
             AsyncError() => _home(context, const []),
             _ => const LoadingView(),
           };
@@ -214,7 +216,7 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
           'invoicing-more-standalone',
           Icons.edit_note,
           l.standaloneInvoiceMore,
-          () => context.go('/invoicing/standalone/new'),
+          () => context.go(Routes.invoicingStandaloneNew),
         ),
       ...widget.more,
     ];
@@ -316,8 +318,9 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
       ],
       failed: {
         ...ref.watch(invoicingFailedSourcesProvider),
+        // #4414 kept: the failed sources the banner names
         if (received.hasError) InvoicingSource.payments,
-        if (overview.hasError) InvoicingSource.toInvoice,
+        if (overview.hasError) InvoicingSource.toInvoice, // #4414 kept: same
       },
       holdsUnassigned: holdsUnassigned,
       creditsKnown: creditsKnown,
@@ -431,10 +434,10 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
             workspaceId: workspace.id,
             iban: workspaceIban(workspace),
             onFixCustomer: (memberId) async {
-              await context.push('/member/$memberId');
+              await context.push(Routes.member(memberId));
             },
             onFixBusiness: () async {
-              await context.push('/legal-identity');
+              await context.push(Routes.legalIdentity);
             },
           ),
         ),

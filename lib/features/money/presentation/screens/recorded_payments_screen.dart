@@ -99,6 +99,7 @@ class _FirstPage extends ConsumerWidget {
     final value = ref.watch(provider);
     void retry() => ref.invalidate(provider);
 
+    // #4414 kept: a switched-off feature is said as itself, else shared
     final error = value.hasError && !value.hasValue ? value.error : null;
     if (error is RecordedPaymentsSwitchedOff) {
       return ListView(

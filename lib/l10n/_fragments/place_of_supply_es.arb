@@ -76,5 +76,6 @@
         "type": "int"
       }
     }
-  }
+  },
+  "supplyClassUnknown": "Una clase que esta app aún no conoce: se conserva tal como la tiene el servidor"
 }

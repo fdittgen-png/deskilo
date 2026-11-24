@@ -6,6 +6,7 @@
 export const PUSH_SECRET_HEADER = "x-deskilo-push-secret";
 
 import { sameSecret } from "../_shared/same_secret.ts";
+import { logLine } from "../_shared/log.ts";
 
 export { sameSecret };
 
@@ -22,9 +23,7 @@ export function mayTriggerPush(
 ): boolean {
   if (!secret && !warned) {
     warned = true;
-    console.error(
-      "send-push: PUSH_SHARED_SECRET is not set; only the service credential is accepted",
-    );
+    logLine("error", "send-push", "shared_secret_unset");
   }
   const sent = req.headers.get(PUSH_SECRET_HEADER);
   if (secret && sent && sameSecret(sent, secret)) return true;

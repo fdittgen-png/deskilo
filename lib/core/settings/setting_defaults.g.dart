@@ -226,6 +226,12 @@ abstract final class SettingDefaults {
   static const int stockTagRebindGraceDays = 30;
   /// `stock.weighed_goods`
   static const bool stockWeighedGoods = false;
+  /// `trace.report_max_bytes`
+  static const int traceReportMaxBytes = 16384;
+  /// `trace.report_retention_days`
+  static const int traceReportRetentionDays = 30;
+  /// `trace.reports_per_hour`
+  static const int traceReportsPerHour = 20;
   /// `vat.vies_evidence_days`
   static const int vatViesEvidenceDays = 90;
 }

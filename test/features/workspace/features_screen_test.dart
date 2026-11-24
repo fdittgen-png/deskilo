@@ -93,7 +93,7 @@ void main() {
     // #4362 — stockTags: RFID tags are asked for; #4359 — stockScanning: scanning is asked for.
     // #4373 — counterOfflineCash: selling offline is asked for.
     // #4364 — stockTagReads: reading many tags at once is asked for.
-    expect(onCount, featureManifest.length - 76);
+    expect(onCount, featureManifest.length - 77);
   });
 
   testWidgets(

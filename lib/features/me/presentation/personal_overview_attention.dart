@@ -14,6 +14,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
+import '../../../core/navigation/routes.dart';
 import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
@@ -140,6 +141,7 @@ class NeedsAttentionSection extends ConsumerWidget {
       refs: refsOfCurrentAccount(refs),
       inbox: inbox.value,
     );
+    // #4414 kept: each source's failure is named below (SourceUnavailable)
     bool failed(AsyncValue<Object?> a) => a.hasError && !a.isLoading;
     final sources = [documents, refs, inbox];
     final (hostsReading, partialDocuments) = _hostsCoverage(ref);
@@ -242,7 +244,7 @@ class _AttentionRow extends ConsumerWidget {
           item.application!.label ?? l10n.meRefUnnamed,
         ),
         null,
-        () => context.push('/applications'),
+        () => context.push(Routes.applications),
       ),
       AttentionKind.conversation => (
         Icons.forum_outlined,

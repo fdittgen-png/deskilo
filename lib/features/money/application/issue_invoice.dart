@@ -19,14 +19,14 @@
 // does not move the look: it reads the captured workspace, or nothing.
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 
+import '../../../core/data/app_failure_from.dart';
+import '../../../core/failure/app_failure.dart';
 import '../../../core/trace/trace_logger.dart';
-import '../../../core/validation/pending_validation.dart';
 import '../domain/billing_rules.dart';
 import '../domain/command_receipt.dart';
 import '../domain/invoice_action_commands.dart';
 import '../domain/invoice_commands.dart';
 import '../domain/invoice_queries.dart';
-import 'command_failure.dart';
 
 /// What the person confirmed: the context it was made in and the draft.
 /// Immutable, so a look can only ever concern this attempt.
@@ -68,33 +68,9 @@ final class InvoiceIssueAttempt {
   final String correctionReason;
 }
 
-/// How an issue attempt ended, or did not.
-sealed class InvoiceIssueOutcome {
-  const InvoiceIssueOutcome(this.attempt);
-  final InvoiceIssueAttempt attempt;
-}
-
-/// The invoice exists; [invoiceId] is the original one.
-final class InvoiceIssued extends InvoiceIssueOutcome {
-  const InvoiceIssued(super.attempt, this.invoiceId);
-  final String invoiceId;
-}
-
-/// A validation policy holds the request; nothing was issued yet.
-final class InvoiceIssueHeld extends InvoiceIssueOutcome {
-  const InvoiceIssueHeld(super.attempt, this.eventId);
-  final String eventId;
-}
-
-/// The server answered with a refusal: nothing was issued.
-final class InvoiceIssueRefused extends InvoiceIssueOutcome {
-  const InvoiceIssueRefused(super.attempt, this.error);
-  final Object error;
-}
-
 /// The validators declined (or let expire) the held request: nothing was
-/// issued. Carried as the [InvoiceIssueRefused] error of a receipt look.
-final class InvoiceIssueDeclined implements Exception {
+/// issued. A receipt look answers it as a refusal whose cause this is.
+final class InvoiceIssueDeclined implements TypedRefusal {
   const InvoiceIssueDeclined(this.eventId);
   final String eventId;
 
@@ -102,12 +78,9 @@ final class InvoiceIssueDeclined implements Exception {
   String toString() => 'InvoiceIssueDeclined($eventId)';
 }
 
-/// The request left and its answer did not come back usable. The attempt
-/// is retained; whether the invoice exists is not known.
-final class InvoiceIssueUnknown extends InvoiceIssueOutcome {
-  const InvoiceIssueUnknown(super.attempt, this.cause);
-  final Object cause;
-}
+/// Whether [refusal] is a validator's decline (never retried: a new request
+/// would ask the same question again).
+bool isDeclined(Refusal refusal) => refusal.cause is InvoiceIssueDeclined;
 
 /// Issuing an invoice exactly once, and looking for it afterwards.
 class InvoiceIssuance {
@@ -117,34 +90,26 @@ class InvoiceIssuance {
   final InvoiceActionCommands? _actions;
   final InvoiceQueries _queries;
 
-  /// Sends [attempt] ONCE. Never resends: a decoding or transport error is
-  /// [InvoiceIssueUnknown], not a reason to try again.
-  Future<InvoiceIssueOutcome> issue(InvoiceIssueAttempt attempt) async {
-    try {
-      final id = attempt.hasReceipt
-          ? await _sendReceipted(attempt)
-          : await _commands.createInvoice(
-        workspaceId: attempt.workspaceId,
-        memberId: attempt.memberId,
-        period: attempt.period,
-        replacesId: attempt.replacesId,
-        detailed: attempt.detailed,
-        kind: attempt.kind,
-        buyerReference: attempt.buyerReference,
-        purchaseOrder: attempt.purchaseOrder,
-        correctionReason: attempt.correctionReason,
+  /// Sends [attempt] ONCE: the invoice id, held for a validation, refused in
+  /// the server's words, or not reached. Never resends: a decoding or
+  /// transport error is [CommandUnreached], not a reason to try again.
+  Future<CommandOutcome<String>> issue(InvoiceIssueAttempt attempt) =>
+      runCommand(
+        () => attempt.hasReceipt
+            ? _sendReceipted(attempt)
+            : _commands.createInvoice(
+                workspaceId: attempt.workspaceId,
+                memberId: attempt.memberId,
+                period: attempt.period,
+                replacesId: attempt.replacesId,
+                detailed: attempt.detailed,
+                kind: attempt.kind,
+                buyerReference: attempt.buyerReference,
+                purchaseOrder: attempt.purchaseOrder,
+                correctionReason: attempt.correctionReason,
+              ),
+        what: 'invoice issue failed',
       );
-      return InvoiceIssued(attempt, id);
-    } on PendingValidationException catch (e, st) {
-      TraceLogger.instance.error('money', 'invoice issue held', error: e, stackTrace: st);
-      return InvoiceIssueHeld(attempt, e.eventId);
-    } on Object catch (e, st) {
-      TraceLogger.instance.error('money', 'invoice issue failed', error: e, stackTrace: st);
-      return isDefiniteRefusal(e)
-          ? InvoiceIssueRefused(attempt, e)
-          : InvoiceIssueUnknown(attempt, e);
-    }
-  }
 
   Future<String> _sendReceipted(InvoiceIssueAttempt attempt) {
     final command = InvoiceIssueCommand(
@@ -165,47 +130,50 @@ class InvoiceIssuance {
         : _commands.issueInvoiceWithReceipt(command);
   }
 
-  /// Reads the archive of the attempt's own workspace for the invoice the
-  /// attempt made: [InvoiceIssued] with the original id when it exists,
-  /// otherwise the same [InvoiceIssueUnknown] it started from. A read that
-  /// fails is unknown too; it is never read as "not issued".
-  Future<InvoiceIssueOutcome> look(InvoiceIssueUnknown unknown) async {
-    final attempt = unknown.attempt;
-    if (attempt.hasReceipt) return _lookReceipt(unknown);
+  /// Reads the archive of [attempt]'s own workspace for the invoice the
+  /// attempt made: done with the original id when it exists, otherwise the
+  /// same [unknown] it started from. A read that fails is not reached too; it
+  /// is never read as "not issued".
+  Future<CommandOutcome<String>> look(
+    InvoiceIssueAttempt attempt,
+    CommandUnreached<String> unknown,
+  ) async {
+    if (attempt.hasReceipt) return _lookReceipt(attempt, unknown);
     try {
       final invoices = await _queries.fetchInvoices(attempt.workspaceId);
       for (final invoice in invoices) {
-        if (_isTheAttempt(invoice, attempt)) {
-          return InvoiceIssued(attempt, invoice.id);
-        }
+        if (_isTheAttempt(invoice, attempt)) return CommandDone(invoice.id);
       }
       return unknown;
     } on Object catch (e, st) {
       TraceLogger.instance.error('money', 'invoice issue outcome unknown', error: e, stackTrace: st);
-      return InvoiceIssueUnknown(attempt, e);
+      return CommandUnreached(appFailureFrom(e));
     }
   }
 
   /// Reads THAT request's receipt on the attempt's own workspace. Applied
   /// and pending carry the original ids; a missing receipt is only "not
   /// observed" — the attempt stays unknown, retained, never resent.
-  Future<InvoiceIssueOutcome> _lookReceipt(InvoiceIssueUnknown unknown) async {
-    final attempt = unknown.attempt;
+  Future<CommandOutcome<String>> _lookReceipt(
+    InvoiceIssueAttempt attempt,
+    CommandUnreached<String> unknown,
+  ) async {
     try {
       final receipt = await _queries.invoiceCommandOutcome(
         workspaceId: attempt.workspaceId,
         requestId: attempt.requestId!,
       );
       return switch (receipt.state) {
-        CommandReceiptState.applied => InvoiceIssued(attempt, receipt.invoiceId!),
-        CommandReceiptState.pending => InvoiceIssueHeld(attempt, receipt.eventId!),
-        CommandReceiptState.refused =>
-          InvoiceIssueRefused(attempt, InvoiceIssueDeclined(receipt.eventId!)),
+        CommandReceiptState.applied => CommandDone(receipt.invoiceId!),
+        CommandReceiptState.pending => CommandHeld(receipt.eventId!),
+        CommandReceiptState.refused => CommandRefused(
+          Refusal(cause: InvoiceIssueDeclined(receipt.eventId!)),
+        ),
         CommandReceiptState.notObserved => unknown,
       };
     } on Object catch (e, st) {
       TraceLogger.instance.error('money', 'invoice receipt unreadable', error: e, stackTrace: st);
-      return InvoiceIssueUnknown(attempt, e);
+      return CommandUnreached(appFailureFrom(e));
     }
   }
 

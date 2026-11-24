@@ -16,6 +16,7 @@ import '../../../core/l10n/context_l10n.dart';
 import '../../../core/session/session_source.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
+import '../../../core/ui/async_read_body.dart';
 import '../../../l10n/app_localizations.dart';
 import '../application/workspace_exports.dart';
 import '../domain/workspace_export.dart';
@@ -52,22 +53,11 @@ class WorkspaceExportsCard extends ConsumerWidget {
         ),
       );
     } else if (answer.hasError) {
-      body = Column(
+      body = ReadFailureBanner(
         key: const ValueKey('me-data-workspaces-failed'),
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            l10n.meDataWorkspacesFailed,
-            style: theme.textTheme.bodyMedium?.copyWith(
-              color: theme.colorScheme.error,
-            ),
-          ),
-          TextButton(
-            key: const ValueKey('me-data-workspaces-retry'),
-            onPressed: () => ref.invalidate(personalWorkspaceRefsProvider),
-            child: Text(l10n.commonRetry),
-          ),
-        ],
+        error: answer.error!,
+        retryKey: const ValueKey('me-data-workspaces-retry'),
+        onRetry: () => ref.invalidate(personalWorkspaceRefsProvider),
       );
     } else if (sources == null || sources.isEmpty) {
       body = Text(

@@ -9,6 +9,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/text/collation.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_sheet.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -83,11 +84,16 @@ class _MappingsView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final loaded = ref.watch(accountingConnectionsProvider(workspaceId));
+    // #4414 kept: the sheet's shell around the shared read failure below
     if (loaded.hasError) {
       return SheetShell(
         title: l10n.acctTargetsTitle,
         children: [
-          Text(l10n.acctTargetsLoadFailed, key: const ValueKey('acct-maps-failed')),
+          ReadFailureBanner(
+            key: const ValueKey('acct-maps-failed'),
+            error: loaded.error!,
+            onRetry: () => ref.invalidate(accountingConnectionsProvider(workspaceId)),
+          ),
         ],
       );
     }

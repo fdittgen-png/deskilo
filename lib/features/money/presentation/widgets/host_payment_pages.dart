@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../domain/account_activity.dart';
 import '../../domain/finance_hosts.dart';
@@ -68,14 +69,13 @@ class _HostPaymentPagesState extends ConsumerState<HostPaymentPages> {
         case AsyncData(value: final rows):
           more.addAll(rows);
           next = rows.length < activityPageSize ? null : rows.last.cursor;
-        case AsyncError():
-          return Align(
-            alignment: Alignment.centerLeft,
-            child: TextButton(
-              key: ValueKey('finances-payments-more-retry-$id'),
-              onPressed: () => ref.invalidate(provider),
-              child: Text(l10n.financesPaymentsMoreFailed(host.name)),
-            ),
+        case AsyncError(:final error):
+          return ReadFailureBanner(
+            error: error,
+            // #4414 — which host's next page did not answer is said.
+            refusal: l10n.financesPaymentsMoreFailed(host.name),
+            retryKey: ValueKey('finances-payments-more-retry-$id'),
+            onRetry: () => ref.invalidate(provider),
           );
         default:
           return const LoadingView();

@@ -3,6 +3,7 @@ import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/paged_fetch.dart';
 import '../domain/tax_reporting_repository.dart';
 
 /// #2591 C3 — VAT rates and returns, with their own client. The bodies are
@@ -14,11 +15,11 @@ class SupabaseTaxReportingRepository implements TaxReportingRepository {
 
   @override
   Future<List<VatDeclaration>> fetchVatDeclarations(String workspaceId) async {
-    final rows = await _client
-        .from('vat_declarations')
+    final rows = await fetchAllPages(table: 'vat_declarations', build: () => _client.from('vat_declarations')
         .select()
         .eq('workspace_id', workspaceId)
-        .order('period_start', ascending: false);
+        .order('period_start', ascending: false)
+        .order('id', ascending: true));
     return rows.map(VatDeclaration.fromRow).toList();
   }
 
@@ -58,11 +59,12 @@ class SupabaseTaxReportingRepository implements TaxReportingRepository {
 
   @override
   Future<List<VatRate>> fetchVatRates(String workspaceId) async {
-    final rows = await _client
+    final rows = await fetchConfigurationList(table: 'vat_rates', build: () => _client
         .from('vat_rates')
         .select()
         .eq('workspace_id', workspaceId)
-        .order('percent', ascending: false);
+        .order('percent', ascending: false)
+        .order('id', ascending: true));
     return rows.map(VatRate.fromRow).toList();
   }
 

@@ -9,6 +9,7 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../auth/providers/auth_providers.dart';
 import '../../domain/workspace_application.dart';
@@ -182,11 +183,11 @@ class _ThreadState extends ConsumerState<WorkspaceApplicationThread> {
                       ),
                   ],
                 ),
-                AsyncError() => Center(
-                  child: TextButton(
-                    key: const ValueKey('workspace-application-thread-retry'),
-                    onPressed: () => ref.invalidate(provider),
-                    child: Text(l10n.commonRetry),
+                AsyncError(:final error) => Center(
+                  child: ReadFailureBanner(
+                    error: error,
+                    retryKey: const ValueKey('workspace-application-thread-retry'),
+                    onRetry: () => ref.invalidate(provider),
                   ),
                 ),
                 _ => const LoadingView(),

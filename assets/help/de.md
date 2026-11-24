@@ -1600,7 +1600,7 @@ In diesem Kapitel:
 - Ihr Konto: [Foto](help:user.profile.settings.photo), [persönliche Angaben](help:user.profile.settings.personal-info), [Adresse](help:user.profile.settings.address), [USt-IdNr.](help:user.profile.settings.vat-id), [Zahlungsbedingungen](help:user.profile.settings.payment-terms), [WhatsApp](help:user.profile.settings.whatsapp), [Status](help:user.profile.settings.status), [Standard-Buchungszeitraum](help:user.profile.settings.default-period)
 - Ihr Badge: [das Badge](help:user.profile.settings.badge) und [seine PIN](help:user.profile.settings.badge-pin)
 - Wie die App aussieht und liest: [Sprache](help:user.profile.settings.language), [Design](help:user.profile.settings.theme), [Navigation](help:user.profile.settings.navigation), [Zahlen und Daten](help:user.profile.settings.regional-formats), [Uhr](help:user.profile.settings.clock), [Zeitzone](help:user.profile.settings.device-zone), [Hinweise](help:user.profile.settings.restore-hints), [Frontkamera](help:user.profile.settings.front-camera), [verknüpfte Konten](help:user.profile.settings.linked-accounts)
-- Datenschutz und Ihre Daten: [wer meine Daten sehen kann](help:user.privacy.visibility), [wer mich sieht](help:user.privacy.audiences), [öffentliches Profil](help:user.privacy.public-profile), [Export](help:user.privacy.export), [Löschen](help:user.privacy.erase), [Anträge auf Betroffenenrechte](help:user.privacy.requests), [Push](help:user.privacy.push), [Ihre Rechte](help:user.privacy.consent)
+- Datenschutz und Ihre Daten: [wer meine Daten sehen kann](help:user.privacy.visibility), [wer mich sieht](help:user.privacy.audiences), [öffentliches Profil](help:user.privacy.public-profile), [Export](help:user.privacy.export), [Löschen](help:user.privacy.erase), [Anträge auf Betroffenenrechte](help:user.privacy.requests), [Push](help:user.privacy.push), [Fehlerberichte](help:user.privacy.error-reports), [Ihre Rechte](help:user.privacy.consent)
 - [Ihr eigener Server](help:user.backend.server)
 
 ### Wie die Einstellungen aufgebaut sind
@@ -2217,6 +2217,28 @@ Sie möchten verhindern, dass Benachrichtigungen an dieses Gerät gesendet werde
 
 - Ist es aus, funktioniert die App weiter, und an dieses Gerät wird nichts gesendet.
 - Ist es an, gehen die Adresse dieses Geräts und jede Benachrichtigung an den Push-Dienst.
+
+**Siehe auch:** [Ihre Daten, Ihre Rechte](help:user.privacy.consent)
+
+### Fehlerberichte senden
+
+**Zielgruppe:** Alle
+
+Sie möchten wissen, was die App sendet, wenn etwas schiefgeht, oder es abstellen.
+
+<!-- image: user-privacy-error-reports -->
+
+**Schritte**
+
+1. Öffnen Sie [Datenschutz & Daten](app:/privacy).
+2. Schalten Sie **Fehlerberichte senden** aus oder ein. Es ist an, bis Sie es ausschalten, und die Wahl bleibt auf diesem Gerät gespeichert.
+
+**Gut zu wissen**
+
+- Ein Bericht geht nur an die Installation, bei der Sie angemeldet sind, nie an ein anderes Unternehmen. Ihr Betreiber liest ihn; die Unternehmen, bei denen Sie Mitglied sind, sehen ihn nicht.
+- Er nennt die App-Version, die Plattform, die Art des Fehlers und die Stelle der App, an der er auftrat. Er enthält nie, was Sie eingegeben haben, den Text des Fehlers, eine E-Mail-Adresse, einen Namen oder einen Schlüssel.
+- Jede Person sendet höchstens eine festgelegte Zahl von Berichten pro Stunde, ein Bericht hat eine Größengrenze, und die Installation löscht Berichte nach einer festgelegten Zahl von Tagen. Alle drei legt der Betreiber fest.
+- Ist es aus, verlässt nichts das Gerät: Der Fehler bleibt im Protokoll dieses Geräts. Ein mit Ihrem Konto verbundener Assistent sendet nie einen Bericht.
 
 **Siehe auch:** [Ihre Daten, Ihre Rechte](help:user.privacy.consent)
 
@@ -3899,6 +3921,31 @@ Sie möchten, dass Ihre Rechnungen und Briefe auf dem Papier gedruckt werden, da
 - Zieht der Arbeitsbereich in ein Land, das das gewählte Papier nicht verwendet, folgt er dem dort üblichen Papier.
 
 **Siehe auch:** [Land](help:user.workspace.settings.country)
+
+### Maßeinheiten
+
+**Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
+
+Ihre Artikel, Angebote und Rechnungen werden in Einheiten gemessen, und manche Einheiten rechnen sich in andere um: 1 km sind 1000 m. Jeder Betrieb beginnt mit den üblichen Einheiten (Stück, g, kg, ml, cl, l, mm, cm, m, km, m², min, h); eigene ergänzen Sie selbst, etwa eine Kabeltrommel zu 50 m.
+
+<!-- image: user-workspace-settings--units -->
+
+**Schritte**
+
+1. Schalten Sie **Maßeinheiten** unter **Funktionen** ein (sie ist aus, bis Sie sie verlangen).
+2. Tippen Sie in [Maßeinheiten](app:/settings/units) auf **Neue Einheit**.
+3. Füllen Sie **Einheitencode** (er lässt sich später nicht mehr ändern), **Ihre Bezeichnung der Einheit**, **Sie misst** und **Eine Einheit entspricht** in der Basiseinheit der Messgröße aus: 1000 für ein km in m, 0,001 für ein mm.
+4. Optional tragen Sie **UN/ECE-Code (für E-Rechnungen)** ein, den E-Rechnungen mitführen (KMT für ein km).
+5. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Eine Standardeinheit behält ihre Größe und ihren Faktor; Sie können ihr eine eigene Bezeichnung geben.
+- Eine Einheit in Verwendung (ein darin gezählter Artikel, eine Lagerbewegung, ein Angebot oder eine Rechnungszeile) behält Größe und Faktor für immer: Eine Korrektur ist eine neue Einheit. Eine Einheit, die niemand verwendet, lässt sich archivieren (**Archivieren**) und wieder anzeigen (**Wieder anzeigen**).
+- Eine Umrechnung ist exakt: 2,5 km sind 2500 m. Zwei Arten von Einheiten rechnen sich nie um, und ein Ergebnis, das sechs Nachkommastellen nicht fassen, wird abgelehnt, nie gerundet.
+- Nur Inhaber und Administratoren mit der Berechtigung, die Einstellungen des Workspace zu ändern, pflegen die Einheiten.
+
+**Siehe auch:** [Papier der Dokumente](help:user.workspace.settings.paper)
 
 ### Organisation
 
@@ -6517,7 +6564,7 @@ Das, was die tägliche Arbeit umgibt: die Testseite eines Space und die echte, A
 In diesem Kapitel:
 - [Ein Space hat zwei Seiten](help:user.advanced.environments) · [Eine Seite betreten](help:user.advanced.enter-environment) · [Ein Testspace](help:user.advanced.test-space) · [Wer ausrollen darf](help:user.advanced.deploy-permissions) · [Zwischen den Seiten ausrollen](help:user.advanced.deploy) · [Status des Workspace und das Jahresarchiv](help:user.advanced.status-archive)
 - [Ihr eigener Server](help:user.advanced.own-server) · [Wenn eine Installation eine neuere App verlangt](help:user.advanced.app-floor) · [Eine neue Version veröffentlichen](help:user.advanced.releases)
-- [Assistenten](help:user.advanced.assistants) · [Einen Assistenten verbinden](help:user.advanced.assistants-connect) · [Freigaben](help:user.advanced.assistants-approve) · [Was Assistenten dürfen](help:user.advanced.assistants-policy)
+- [Assistenten](help:user.advanced.assistants) · [Einen Assistenten verbinden](help:user.advanced.assistants-connect) · [Freigaben](help:user.advanced.assistants-approve) · [Was Assistenten dürfen](help:user.advanced.assistants-policy) · [Fehlerberichte](help:user.advanced.error-reports)
 - [Der Aufgabenrekorder](help:user.advanced.recorder) · [Eine Aufgabe aufzeichnen](help:user.advanced.recorder-record) · [Eine Aufzeichnung prüfen](help:user.advanced.recorder-review) · [Eine Anleitung erstellen](help:user.advanced.guide-make) · [Einer Anleitung folgen](help:user.advanced.guide-play) · [Das Kreismenü](help:user.advanced.guide-circle) · [Eine Anleitung bearbeiten](help:user.advanced.guide-edit) · [Datenschutz der Aufzeichnungen](help:user.advanced.recorder-privacy)
 - [Der Demo-Workspace](help:user.advanced.demo) · [Aufnahmemodus](help:user.advanced.filming)
 - [Plattformen](help:user.advanced.platforms) · [Supportdetails](help:user.advanced.support) · [Wenn etwas nicht funktioniert](help:user.advanced.troubleshooting)
@@ -6803,6 +6850,28 @@ Sie entscheiden, welche Dienste ein Workspace Assistenten anbietet.
 - Das ist für Personen mit der Integrations-Berechtigung; Inhaber haben sie immer.
 
 **Siehe auch:** [Ein Funktionsschalter](help:user.features.switch)
+
+### Fehlerberichte
+
+**Zielgruppe:** Betreiber:in
+
+Sie betreiben die Installation und möchten sehen, was in den angemeldeten Apps schiefgegangen ist.
+
+<!-- image: user-advanced-error-reports -->
+
+**Schritte**
+
+1. Öffnen Sie [Installation: Assistenten](app:/installation/assistants).
+2. Tippen Sie auf **Fehlerberichte**. Die neuesten stehen oben.
+3. Tippen Sie auf einen Bericht, um seinen von der App geschwärzten Stack zu lesen. **Ältere Berichte** liest die nächsten.
+
+**Gut zu wissen**
+
+- Ein Bericht nennt die Stelle in der App und die Art des Fehlers, seinen Code, die App-Version, die Plattform und die Zeit. Er enthält nie, was eine Person eingegeben hat, eine E-Mail-Adresse, einen Namen oder einen Schlüssel.
+- Nur der Betreiber der Installation liest sie; die Unternehmen der Installation sehen sie nie.
+- In den Einstellungen legen **Fehlerberichte pro Person und Stunde**, **Größter Fehlerbericht** und **Fehlerberichte aufbewahren für** fest, wie viele ankommen, wie groß und wie lange. Jede Person kann Berichte auf ihrem Gerät ausschalten.
+
+**Siehe auch:** [Fehlerberichte senden](help:user.privacy.error-reports)
 
 ### Der Aufgabenrekorder und geführte Touren
 
