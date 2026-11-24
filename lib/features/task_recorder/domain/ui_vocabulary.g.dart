@@ -1029,6 +1029,7 @@ const Set<String> uiKeys = {
   'demo-place-back',
   'demo-place-bay',
   'demo-place-branch',
+  'demo-place-customer',
   'demo-place-depot',
   'demo-place-depot-back',
   'demo-place-eye-shelf',

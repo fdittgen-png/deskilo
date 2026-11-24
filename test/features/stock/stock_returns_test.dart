@@ -6,11 +6,14 @@
 // in and the figures follow, more than can be reversed is said under the field
 // and moves nothing, a correction is a movement back, the page offers nothing
 // to a person who only looks or when the feature is off, and no payment is
-// made by it (the sheet says so). At a phone and at a desk.
+// made by it (the sheet says so). At a phone and at a desk. A customer return
+// of the Demo's sale comes back to a real place, once (#4173).
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/core/demo/data/demo_stock_config_commands.dart';
 import 'package:deskilo/core/demo/data/demo_stock_ledger.dart';
 import 'package:deskilo/core/demo/data/demo_stock_queries.dart';
 import 'package:deskilo/core/demo/data/demo_stock_reversals.dart';
+import 'package:deskilo/features/stock/domain/stock_reversals.dart';
 import 'package:deskilo/features/stock/presentation/stock_movement_screen.dart';
 import 'package:deskilo/features/stock/providers/stock_providers.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
@@ -19,6 +22,7 @@ import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo/l10n/app_localizations_en.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import '../../helpers/mock_providers.dart';
 import '../../helpers/pump_app.dart';
@@ -165,4 +169,45 @@ void main() {
       });
     });
   }
+
+  // #4173 -- the Demo's sale of two mugs from the shelf comes back from its customer to a real place, once, and
+  // nothing else does: a refusal moves nothing.
+  group('a customer return of the Demo sale', () {
+    const sale = 'demo-stock-movement-9';
+    StockReturnLineDraft line(String quantity, {String source = sale, String? to = 'demo-place-shelf'}) =>
+        (lineId: 'line-1', sourceMovementId: source, quantity: quantity, locationId: to, note: '');
+    Future<String?> refusal(Future<Object?> f) async {
+      try {
+        await f;
+        return null;
+      } on PostgrestException catch (e) {
+        return e.code;
+      }
+    }
+
+    test('one mug comes back to the shelf, a retry answers once, and what remains follows', () async {
+      final w = _World();
+      expect(w.ledger.balance('demo-item-mugs', 'demo-place-shelf').text, '10', reason: '12 shelved less the 2 sold');
+      final first = await w.reversals.makeReturn('ws-1', 'return-1', StockReturnKind.customer, [line('1')], 'req-1');
+      final again = await w.reversals.makeReturn('ws-1', 'return-1', StockReturnKind.customer, [line('1')], 'req-1');
+      expect(again, first);
+      expect(w.ledger.balance('demo-item-mugs', 'demo-place-shelf').text, '11');
+      final back = w.ledger.movements.first;
+      expect((back.reason, back.fromLocationId, back.toLocationId, back.quantity.text), ('return_in', 'demo-place-customer', 'demo-place-shelf', '1'));
+      final allows = (await w.reversals.reversible('ws-1', [sale]))[sale]!;
+      expect((allows.reversed.text, allows.remaining.text, allows.reversals.single.kind), ('1', '1', 'customer'));
+    });
+
+    test('more than was sold, a delivery, or a place that holds nothing is refused whole', () async {
+      final w = _World();
+      final before = w.ledger.movements.length;
+      expect(await refusal(w.reversals.makeReturn('ws-1', 'r-1', StockReturnKind.customer, [line('3')], 'q-1')), DkCode.dkg17);
+      expect(await refusal(w.reversals.makeReturn('ws-1', 'r-2', StockReturnKind.customer, [line('1', source: _delivery)], 'q-2')), DkCode.dkg18);
+      expect(await refusal(w.reversals.makeReturn('ws-1', 'r-3', StockReturnKind.customer, [line('1', to: 'demo-place-loss')], 'q-3')), DkCode.dkg05);
+      expect(await refusal(w.reversals.makeReturn('ws-1', 'r-4', StockReturnKind.customer, [line('1', to: 'demo-place-transit')], 'q-4')), DkCode.dkg05);
+      expect(await refusal(w.reversals.makeReturn('ws-1', 'r-5', StockReturnKind.customer, [line('1', to: null)], 'q-5')), DkCode.dkg05);
+      expect(w.ledger.movements.length, before, reason: 'nothing moved');
+      expect(w.ledger.balance('demo-item-mugs', 'demo-place-shelf').text, '10');
+    });
+  });
 }

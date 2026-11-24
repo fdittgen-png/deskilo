@@ -1,13 +1,15 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #4172 (B) -- the Demo's returns, corrections and counts, behind the same
-// port as the server's and on the Demo's ONE ledger: a part of a delivery goes
+// port as the server's and on the Demo's ONE ledger: a part of a sale comes
+// back from the customer to a real place (#4173), a part of a delivery goes
 // back to its supplier or is undone by a correction, each bounded by the
 // movement it reverses; a count records what was observed and waits for an
 // approval, which applies exactly its difference and only if the stock has not
 // moved since. A logical return or count sent again answers what it recorded;
 // other content under the same identity is refused. What a command refuses, it
 // refuses whole and moves nothing. Nothing leaves the process.
+import 'package:deskilo/features/stock/domain/stock_config.dart';
 import 'package:deskilo/features/stock/domain/stock_page.dart';
 import 'package:deskilo/features/stock/domain/stock_reversals.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
@@ -17,6 +19,8 @@ import '../../codes/dk_code.dart';
 import 'demo_stock_ledger.dart';
 
 const _loss = 'demo-place-loss';
+const _customer = 'demo-place-customer';
+const _transit = 'demo-place-transit';
 const _owner = 'demo-member-owner';
 
 PostgrestException _refused(String code, String message) => PostgrestException(message: message, code: code);
@@ -75,21 +79,28 @@ class DemoStockReversals implements StockReversals {
       return _answers[requestId] = known.result;
     }
     // everything is checked before anything moves: a refusal moves nothing
-    final planned = _plan(kind, lines);
+    final planned = _plan(kind, lines, await _ledger.placeConfigs());
     final movementIds = <String>[];
     var remaining = ExactQuantity.zero;
     final item = _ledger.itemOf(planned.first.source.itemId);
     if (item == null) throw _refused(DkCode.dkg04, 'not a stock item of this business');
     for (final p in planned) {
-      final from = kind == StockReturnKind.supplier ? p.line.locationId! : p.source.toLocationId;
-      final to = p.source.fromLocationId;
+      final (from, to) = switch (kind) {
+        StockReturnKind.customer => (p.source.toLocationId, p.line.locationId!),
+        StockReturnKind.supplier => (p.line.locationId!, p.source.fromLocationId),
+        StockReturnKind.correction => (p.source.toLocationId, p.source.fromLocationId),
+      };
       final row = await _ledger.post(
         DemoStockPost(
           item: _ledger.itemOf(p.source.itemId) ?? item,
           quantity: p.quantity,
           from: from,
           to: to,
-          reason: kind == StockReturnKind.supplier ? 'return_out' : 'correction',
+          reason: switch (kind) {
+            StockReturnKind.customer => 'return_in',
+            StockReturnKind.supplier => 'return_out',
+            StockReturnKind.correction => 'correction',
+          },
           lotId: p.source.lotId,
           lotCode: p.source.lotCode,
           variantId: p.source.variantId,
@@ -107,14 +118,14 @@ class DemoStockReversals implements StockReversals {
   }
 
   /// Checks every line against its source before anything moves.
-  List<_Planned> _plan(StockReturnKind kind, List<StockReturnLineDraft> lines) {
+  List<_Planned> _plan(StockReturnKind kind, List<StockReturnLineDraft> lines, Map<String, StockPlaceConfig> places) {
     final planned = <_Planned>[];
     final taken = <String, ExactQuantity>{};
     for (final l in lines) {
       final source = _movement(l.sourceMovementId);
       if (source == null) throw _refused(DkCode.dkg04, 'a line names a movement of another business or none');
       final quantity = _quantity(l.quantity);
-      _kindAllows(kind, source, l);
+      _kindAllows(kind, source, l, places);
       final already = taken[source.id] ?? ExactQuantity.zero;
       final left = source.quantity - _reversed(source.id) - already;
       if (quantity > left) throw _refused(DkCode.dkg17, 'only ${left.text} can still be reversed on this movement');
@@ -135,10 +146,17 @@ class DemoStockReversals implements StockReversals {
     return quantity;
   }
 
-  void _kindAllows(StockReturnKind kind, StockMovementRow source, StockReturnLineDraft l) {
+  /// A place of this business the goods can really be at: active, not virtual, not the road.
+  bool _real(Map<String, StockPlaceConfig> places, String? id) {
+    final p = places[id];
+    return p != null && p.active && !p.virtual && p.id != _transit;
+  }
+
+  void _kindAllows(StockReturnKind kind, StockMovementRow source, StockReturnLineDraft l, Map<String, StockPlaceConfig> places) {
     switch (kind) {
       case StockReturnKind.customer:
-        throw _refused(DkCode.dkg18, 'a customer return follows a sale');
+        if (source.reason != 'sale' || source.toLocationId != _customer) throw _refused(DkCode.dkg18, 'a customer return follows a sale');
+        if (!_real(places, l.locationId)) throw _refused(DkCode.dkg05, 'the goods come back to a real place');
       case StockReturnKind.supplier:
         if (source.reason != 'receipt') throw _refused(DkCode.dkg18, 'a supplier return follows a receipt');
         if (l.locationId == null) throw _refused(DkCode.dkg05, 'the goods leave from a real place');
