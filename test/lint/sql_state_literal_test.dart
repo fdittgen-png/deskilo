@@ -21,10 +21,9 @@ const _constantFiles = {
 const _budget = 0;
 
 /// RATCHET: the quoted codes the tests still spell (test/lint excepted:
-/// its fixtures spell a code on purpose). Most are inside a double-quoted
-/// or raw string, where a constant cannot stand; the till's tests are
-/// still to come. Only falls.
-const _testBudget = 36;
+/// its fixtures spell a code on purpose). What is left: a code no table knows on
+/// purpose (DKC99) and a standard code the app does not react to (22P02). Only falls.
+const _testBudget = 2;
 
 /// The quoted codes of [source]: comment lines and what follows a trailing `//` are not code.
 List<String> quotedCodes(String source) => [

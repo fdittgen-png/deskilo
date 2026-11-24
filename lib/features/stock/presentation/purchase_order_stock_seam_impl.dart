@@ -12,7 +12,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
-import '../../../core/trace/trace_logger.dart';
+import '../../../core/trace/guarded.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../money/domain/purchase_order.dart';
@@ -128,27 +128,28 @@ class _ReceiptPutAway implements ReceiptPutAway {
     PurchaseOrder order,
     ReceiptDelivery delivery,
   ) async {
-    try {
-      await _commands.recordAndPutAway(
-        workspaceId,
-        DeliveryDraft(
-          orderId: order.id,
-          orderRevision: order.revision,
-          receivedOn: isoDay(delivery.receivedOn),
-          lines: [
-            for (final e in delivery.delivered.entries)
-              if (e.value > 0) (lineNo: e.key, quantity: exactOfReceived(e.value).text),
-          ],
-          note: delivery.note.trim(),
-        ),
-        _draft.toAllocations(delivered: delivery.delivered),
-        _draft.requestId,
-      );
-      return null;
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'a delivery and its put-away were not recorded', error: e, stackTrace: st);
-      return stockSaveProblem(l10n, e);
-    }
+    return guardSave(
+      domain: 'stock',
+      message: 'a delivery and its put-away were not recorded',
+      action: () async {
+        await _commands.recordAndPutAway(
+          workspaceId,
+          DeliveryDraft(
+            orderId: order.id,
+            orderRevision: order.revision,
+            receivedOn: isoDay(delivery.receivedOn),
+            lines: [
+              for (final e in delivery.delivered.entries)
+                if (e.value > 0) (lineNo: e.key, quantity: exactOfReceived(e.value).text),
+            ],
+            note: delivery.note.trim(),
+          ),
+          _draft.toAllocations(delivered: delivery.delivered),
+          _draft.requestId,
+        );
+      },
+      problem: (e) => stockProblemText(l10n, e),
+    );
   }
 
   @override

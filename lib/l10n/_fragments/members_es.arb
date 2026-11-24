@@ -209,10 +209,6 @@
       }
     }
   },
-  "memberMoneyUnavailable": "No se pudieron cargar las finanzas. Tire para actualizar.",
-  "@memberMoneyUnavailable": {
-    "description": "#709 - the money section of a profile could not be read"
-  },
   "inboxAlertsTab": "Alertas",
   "inboxFilterAll": "Todos",
   "inboxFilterUnread": "No leídos",

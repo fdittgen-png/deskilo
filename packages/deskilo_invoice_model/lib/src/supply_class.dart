@@ -14,12 +14,38 @@ enum SupplyClass {
   /// A general service (art. 44/45) not tied to the premises — mail
   /// handling, a virtual office, an online-only service: a business
   /// customer elsewhere self-assesses the tax.
-  general('general');
+  general('general'),
+
+  /// #4441 — a class a newer server knows and this app does not. Never
+  /// sent: no place-of-supply rule is picked for it ([supplyVatCategory]
+  /// refuses), a service keeps the class the server has, and nothing new is
+  /// created with it.
+  unknown('');
 
   const SupplyClass(this.wire);
 
   final String wire;
 
-  static SupplyClass fromWire(String? wire) =>
-      wire == general.wire ? general : property;
+  /// The class [wire] names. A row from before the column (0403) has none
+  /// and is property, the column's default; any other value is [unknown],
+  /// never a class it is not.
+  static SupplyClass fromWire(String? wire) => switch (wire) {
+    null => property,
+    'property' => property,
+    'general' => general,
+    _ => unknown,
+  };
+}
+
+/// #4441 — a place-of-supply rule was asked for a supply class this app
+/// does not know: no rule is picked. An [Error], not an exception: the package cannot name the app's
+/// failure types, and asking a rule for a class nobody can read is a state to stop on, never a result.
+final class UnknownSupplyClass implements Error {
+  const UnknownSupplyClass();
+
+  @override
+  StackTrace? get stackTrace => null;
+
+  @override
+  String toString() => 'UnknownSupplyClass';
 }

@@ -17,6 +17,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../domain/finance_overview.dart';
 import '../../domain/payment_claims.dart';
 import '../../providers/finance_overview_provider.dart';
@@ -181,15 +182,7 @@ class FinanceClaimState extends ConsumerWidget {
     if (invoice.paymentReceived) {
       return _Chip(l10n.financesPaymentReceived(invoice.workspaceName));
     }
-    final ended = switch (invoice.claimPaymentState) {
-      'failed' => l10n.financesPaymentFailed,
-      'expired' => l10n.financesPaymentExpired,
-      'changed' => l10n.financesPaymentChanged,
-      'awaiting_provider' => l10n.financesPaymentAwaitingProvider,
-      'withdrawn' => l10n.financesPaymentWithdrawn,
-      'reversed' => l10n.financesPaymentReversed,
-      _ => null,
-    };
+    final ended = claimEndedText(l10n, invoice.claimState);
     if (!invoice.inPayment) return ended == null ? const SizedBox.shrink() : _Chip(ended);
     if (invoice.claimPaymentId == null) {
       final waits = _Chip(l10n.financesWaitsForBusiness(invoice.workspaceName));
@@ -223,7 +216,7 @@ class FinanceClaimState extends ConsumerWidget {
         ),
         if (ended != null) _Chip(ended),
         if (invoice.claimCanContinue == true) FinanceContinuePayment(invoice),
-        if (invoice.claimCanContinue == null || invoice.claimPaymentState == 'unavailable')
+        if (invoice.claimCanContinue == null || invoice.claimState == PaymentClaimState.unavailable)
           Text(l10n.payOnlineClaimsUnsupported, style: Theme.of(context).textTheme.bodySmall),
         TextButton(
           key: ValueKey('finances-withdraw-${invoice.id}'),
@@ -244,3 +237,20 @@ class _Chip extends StatelessWidget {
   Widget build(BuildContext context) =>
       Chip(label: Text(label), visualDensity: VisualDensity.compact);
 }
+
+/// #4418 -- the word for how the payment of an open claim ended; none for
+/// a payment still running, and none for a state this app does not know.
+@visibleForTesting
+String? claimEndedText(AppLocalizations l10n, PaymentClaimState? state) =>
+    switch (state) {
+      PaymentClaimState.failed => l10n.financesPaymentFailed,
+      PaymentClaimState.expired => l10n.financesPaymentExpired,
+      PaymentClaimState.changed => l10n.financesPaymentChanged,
+      PaymentClaimState.awaitingProvider => l10n.financesPaymentAwaitingProvider,
+      PaymentClaimState.withdrawn => l10n.financesPaymentWithdrawn,
+      PaymentClaimState.reversed => l10n.financesPaymentReversed,
+      PaymentClaimState.ready ||
+      PaymentClaimState.unavailable ||
+      PaymentClaimState.unknown ||
+      null => null,
+    };

@@ -91,11 +91,11 @@ void main() {
       await t.bind('ws-1', requestId: 'r1', code: '04AA11BB22', owner: const TagOwner.item('demo-item-apples'));
       await expectLater(
         t.bind('ws-1', requestId: 'r2', code: '04AA11BB23', owner: const TagOwner.item('demo-item-basket')),
-        throwsA(isA<StockConfigRefused>().having((e) => e.reason, 'reason', 'tag_per_unit_item')),
+        throwsA(isA<StockConfigRefused>().having((e) => e.reason, 'reason', StockRefusal.tagPerUnitItem)),
       );
       await expectLater(
         t.bind('ws-1', requestId: 'r3', code: '04AA11BB24', owner: const TagOwner.item('demo-item-milk')),
-        throwsA(isA<StockConfigRefused>().having((e) => e.reason, 'reason', 'tag_mode_none')),
+        throwsA(isA<StockConfigRefused>().having((e) => e.reason, 'reason', StockRefusal.tagModeNone)),
       );
     });
 

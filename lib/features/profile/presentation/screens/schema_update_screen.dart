@@ -7,6 +7,7 @@ import '../../../../core/backend/installation_schema.dart';
 import '../../../../core/backend/schema_version.dart';
 import '../../../../core/instance/schema_compatibility.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 
 /// #1312 — the server this device uses runs an older DesKilo schema than
@@ -102,7 +103,7 @@ class SchemaUpdateScreen extends ConsumerWidget {
             const SizedBox(height: AppSpacing.sm),
             OutlinedButton.icon(
               key: const ValueKey('schema-update-server'),
-              onPressed: () => context.push('/server'),
+              onPressed: () => context.push(Routes.server),
               icon: const Icon(Icons.dns_outlined),
               label: Text(l10n.schemaUpdateServer),
             ),
@@ -110,7 +111,7 @@ class SchemaUpdateScreen extends ConsumerWidget {
               const SizedBox(height: AppSpacing.sm),
               OutlinedButton.icon(
                 key: const ValueKey('schema-update-me'),
-                onPressed: () => context.go('/me'),
+                onPressed: () => context.go(Routes.me),
                 icon: const Icon(Icons.switch_account_outlined),
                 label: Text(l10n.spaceBackToMe),
               ),

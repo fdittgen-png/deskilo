@@ -98,7 +98,7 @@ void main() {
       throwsA(
         isA<StockConfigRefused>()
             .having((e) => e.field, 'field', 'units[0].factor_den')
-            .having((e) => e.reason, 'reason', 'factor_invalid'),
+            .having((e) => e.reason, 'reason', StockRefusal.factorInvalid),
       ),
     );
   });
@@ -110,7 +110,7 @@ void main() {
 
   test('another failure is not swallowed', () async {
     final h = _with(400, {'code': DkCode.dkn01, 'message': 'not allowed', 'details': null, 'hint': null});
-    await expectLater(h.commands.saveItem(_ws, _config, 'r'), throwsA(isA<Refusal>().having((e) => e.code, 'code', 'DKN01')));
+    await expectLater(h.commands.saveItem(_ws, _config, 'r'), throwsA(isA<Refusal>().having((e) => e.code, 'code', DkCode.dkn01)));
   });
 
   test('the variants of an item are saved complete, at the item revision, and a duplicate combination is a refusal', () async {
@@ -137,7 +137,7 @@ void main() {
     });
     await expectLater(
       bad.commands.saveVariants(_ws, _item, variants: const [], expectedRevision: 4, requestId: 'r2'),
-      throwsA(isA<StockConfigRefused>().having((e) => e.reason, 'reason', 'variant_combination_duplicate')),
+      throwsA(isA<StockConfigRefused>().having((e) => e.reason, 'reason', StockRefusal.variantCombinationDuplicate)),
     );
   });
 

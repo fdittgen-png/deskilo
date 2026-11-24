@@ -23,6 +23,7 @@ import 'package:intl/intl.dart' show DateFormat;
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/kit/dashboard_grid.dart';
@@ -167,7 +168,7 @@ class AccountingStatusGrid extends ConsumerWidget {
                 ? l.memberPageNone
                 : '${dates.format(p.from)} – ${dates.format(p.to)}',
           ),
-          onTap: () => context.push('/vat-declarations'),
+          onTap: () => context.push(Routes.vatDeclarations),
         ),
       if (bankDoor case final open?)
         KpiTile(
@@ -218,7 +219,7 @@ class AccountingStatusGrid extends ConsumerWidget {
           figureKey: const ValueKey('accounting-status-numbers-figure'),
           label: l.numberSequenceNext,
           figure: figure(status.nextInvoiceNumber, (n) => n),
-          onTap: () => context.push('/settings/number-sequences'),
+          onTap: () => context.push(Routes.settingsNumberSequences),
         ),
     ];
     final heading = Theme.of(context).textTheme.titleSmall;

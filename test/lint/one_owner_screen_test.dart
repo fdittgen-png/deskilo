@@ -44,7 +44,8 @@ void main() {
       'lib/features/workspace/presentation/screens/'
       'workspace_settings_parameters.dart',
     ).readAsStringSync();
-    expect(settings, contains("context.push('/payment-methods')"));
+    // #4422 — a screen names the page by its Routes symbol.
+    expect(settings, contains('context.push(Routes.paymentMethods)'));
     final drawer = File('lib/app/shell/shell_drawer_entries.dart')
         .readAsStringSync();
     expect(drawer, contains("go('/payment-methods')"));
@@ -71,23 +72,23 @@ void main() {
       String read(String p) => File(p).readAsStringSync();
       expect(
         read('lib/features/money/presentation/widgets/documents_face.dart'),
-        contains("context.push('/documents')"),
+        contains('context.push(Routes.documents)'),
       );
       expect(
         read('lib/features/profile/presentation/screens/settings_screen.dart'),
-        contains("context.push('/documents')"),
+        contains('context.push(Routes.documents)'),
       );
       expect(
         read(
           'lib/features/profile/presentation/widgets/settings_workspace_sections.dart',
         ),
-        contains("context.push('/reports')"),
+        contains('context.push(Routes.reports)'),
       );
       expect(
         read(
           'lib/features/workspace/presentation/screens/workspace_settings_parameters.dart',
         ),
-        contains("context.push('/reports')"),
+        contains('context.push(Routes.reports)'),
       );
     },
   );

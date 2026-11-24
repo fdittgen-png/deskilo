@@ -39,6 +39,7 @@
 // Mcp-Session-Id, no server-initiated request), which is why a sensitive
 // write asks for a native confirmation in the app instead of elicitation.
 
+import { env as readEnv } from "../_shared/config.ts";
 import { Server } from "npm:@modelcontextprotocol/sdk@1.30.1/server/index.js";
 import { WebStandardStreamableHTTPServerTransport } from "npm:@modelcontextprotocol/sdk@1.30.1/server/webStandardStreamableHttp.js";
 import {
@@ -79,7 +80,7 @@ const STRUCTURED_SINCE = "2025-06-18";
 
 const METADATA_PATH = "/.well-known/oauth-protected-resource";
 
-const env = (name: string) => Deno.env.get(name) ?? "";
+const env = (name: string) => readEnv(name) ?? "";
 
 function allowedOrigins(): Set<string> {
   return new Set(env("DESKILO_MCP_ALLOWED_ORIGINS").split(",").map((o) => o.trim()).filter(Boolean));

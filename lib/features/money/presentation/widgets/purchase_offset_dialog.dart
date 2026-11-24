@@ -30,7 +30,7 @@ List<OpenInvoice> openInvoicesOf(
     final m = matches[i.id];
     if (m != null &&
         (m.status != 'confirmed' ||
-            m.resolution != 'under_accepted' ||
+            m.settles != MatchResolution.underAccepted ||
             m.writeoffAt != null)) {
       continue;
     }

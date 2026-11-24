@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/features/enabled_feature_keys.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/canvas_controls.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -194,11 +195,10 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
               ),
             ])
           : switch (planAsync) {
-              AsyncError() => Center(
-                  child: Text(
-                    l10n.workspaceGenericError,
-                  ),
-                ),
+              AsyncError(:final error) => ReadFailureBanner(
+                error: error,
+                onRetry: () => ref.invalidate(floorPlanProvider(widget.levelId)),
+              ),
               _ => const LoadingView(),
             },
     );

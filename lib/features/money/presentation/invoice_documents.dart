@@ -37,6 +37,7 @@ import '../domain/invoice_pdf.dart';
 import '../domain/invoice_pdf_template.dart';
 import '../domain/invoice_report.dart';
 import '../domain/report_data.dart';
+import '../domain/report_kind.dart';
 import '../providers/money_providers.dart';
 import '../providers/usage_providers.dart';
 import 'invoice_actions.dart' show requireWorkspaceTaxReference, workspaceTaxReference;
@@ -137,46 +138,47 @@ Future<void> warmLetterDocProviders(WidgetRef ref, String docId) async {
     }
   }
 
+  Future<void> floorPlans() => quiet(() async {
+    for (final level in await ref.read(levelsProvider.future)) {
+      await ref.read(floorPlanProvider(level.id).future);
+    }
+  });
+
   await quiet(() => ref.read(invoicePdfTemplateProvider.future));
-  if (docId == 'agreement') {
+  final document = ReportDocument.fromId(docId);
+  if (document == ReportDocument.agreement) {
     await quiet(() => ref.read(feeBandsProvider.future));
     await quiet(() => ref.read(servicesProvider.future));
     await quiet(() => ref.read(packagesProvider.future));
     await quiet(() => ref.read(accessoriesProvider().future));
-    await quiet(() async {
-      final levels = await ref.read(levelsProvider.future);
-      for (final level in levels) {
-        await ref.read(floorPlanProvider(level.id).future);
-      }
-    });
-  } else if (docId == 'payments') {
+    await floorPlans();
+  } else if (document == ReportDocument.payments) {
     await quiet(() => ref.read(myLedgerProvider.future));
     await quiet(() => ref.read(eventsProvider.future));
-  } else if (docId == 'workspace') {
+  } else if (document == ReportDocument.workspace) {
     await quiet(() => ref.read(workspaceMembersProvider.future));
     await quiet(() => ref.read(feeBandsProvider.future));
     await quiet(() => ref.read(servicesProvider.future));
     await quiet(() => ref.read(openWeekdaysProvider.future));
-    await quiet(() async {
-      final levels = await ref.read(levelsProvider.future);
-      for (final level in levels) {
-        await ref.read(floorPlanProvider(level.id).future);
-      }
-    });
+    await floorPlans();
   }
   await quiet(() => ref.read(memberNamesProvider.future));
 }
 
 /// #3680 — what Retry asks again: the sources [warmLetterDocProviders] reads.
-void refreshLetterDocSources(WidgetRef ref, String docId) => <ProviderOrFamily>[
-      invoicePdfTemplateProvider, memberNamesProvider,
-      if (docId == 'agreement' || docId == 'workspace') ...[
-        feeBandsProvider, servicesProvider, levelsProvider, floorPlanProvider],
-      if (docId == 'agreement') ...[packagesProvider, accessoriesProvider],
-      if (docId == 'workspace') ...[workspaceMembersProvider, openWeekdaysProvider],
-      if (docId == 'payments') ...[myLedgerProvider, eventsProvider],
-      if (docId == 'usage') ...[memberStatementProvider, usageReadProvider],
-    ].forEach(ref.invalidate);
+void refreshLetterDocSources(WidgetRef ref, String docId) {
+  final document = ReportDocument.fromId(docId);
+  <ProviderOrFamily>[
+    invoicePdfTemplateProvider, memberNamesProvider,
+    if (document == ReportDocument.agreement ||
+        document == ReportDocument.workspace) ...[
+      feeBandsProvider, servicesProvider, levelsProvider, floorPlanProvider],
+    if (document == ReportDocument.agreement) ...[packagesProvider, accessoriesProvider],
+    if (document == ReportDocument.workspace) ...[workspaceMembersProvider, openWeekdaysProvider],
+    if (document == ReportDocument.payments) ...[myLedgerProvider, eventsProvider],
+    if (document == ReportDocument.usage) ...[memberStatementProvider, usageReadProvider],
+  ].forEach(ref.invalidate);
+}
 
 /// Renders letter document [docId] through the workspace's template
 /// bands (or the shipped default — a broken template never blocks, the

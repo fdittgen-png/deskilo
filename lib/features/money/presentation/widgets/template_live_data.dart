@@ -40,16 +40,16 @@ Map<String, Object?>? _liveReportData(
   if (reference == null) return null;
   final invoices = ref.read(invoicesProvider).requireValue;
   final liveWorkspace = ref.read(currentWorkspaceProvider).value;
-  switch (doc) {
-    case 'invoice':
+  switch (ReportDocument.fromId(doc)) {
+    case ReportDocument.invoice:
       if (invoices.isEmpty) return null;
       return invoiceReportData(reportStringsFor(context), invoices.first,
           proforma: false, copy: false, workspace: liveWorkspace, reference: reference);
-    case 'proforma':
+    case ReportDocument.proforma:
       if (invoices.isEmpty) return null;
       return invoiceReportData(reportStringsFor(context), invoices.first,
           proforma: true, copy: false, workspace: liveWorkspace, reference: reference);
-    case 'statement':
+    case ReportDocument.statement:
       final now = ref.read(clockProvider).now();
       final period =
           yearMonth(now.year, now.month);
@@ -68,7 +68,7 @@ Map<String, Object?>? _liveReportData(
         currencyCode: workspace.currencyCode,
         workspace: workspace, reference: reference,
       );
-    case 'agreement':
+    case ReportDocument.agreement:
       final me = ref.read(myMemberProvider).value;
       final names = ref.read(memberNamesProvider).requireValue;
       if (me == null) return null;
@@ -76,7 +76,7 @@ Map<String, Object?>? _liveReportData(
           reportStringsFor(context), agreementFactsOf(ref),
           memberName: names[me.id] ?? '',
           subscriptionPct: me.subscriptionPct, reference: reference);
-    case 'payments':
+    case ReportDocument.payments:
       final me = ref.read(myMemberProvider).value;
       final names = ref.read(memberNamesProvider).requireValue;
       final now = ref.read(clockProvider).now();
@@ -86,10 +86,10 @@ Map<String, Object?>? _liveReportData(
       return paymentsReportData(
           reportStringsFor(context), paymentsFactsOf(ref, period),
           period: period, memberName: names[me.id] ?? '', reference: reference);
-    case 'workspace':
+    case ReportDocument.workspace:
       return workspaceReportData(reportStringsFor(context),
           workspaceFactsOf(ref, context.l10n), reference: reference);
-    case 'status':
+    case ReportDocument.status:
       return null; // #934 — sample data; the live view prints from its screen.
     default:
       if (!_previewsReminder(doc, invoices)) return null;

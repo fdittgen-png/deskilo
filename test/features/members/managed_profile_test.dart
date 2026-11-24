@@ -8,6 +8,7 @@ import 'dart:async';
 
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/codes/dk_code.dart';
+import 'package:deskilo/core/ui/async_read_body.dart';
 import 'package:deskilo/features/profile/domain/personal_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -208,7 +209,8 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.byKey(const ValueKey('personal-info-save')), findsNothing);
-      expect(find.textContaining('could not be read'), findsOneWidget);
+      // #4414: a failed read is the shared read failure, with Try again.
+      expect(find.byType(ReadFailureBanner), findsOneWidget);
 
       // Try again re-reads; this time the server answers.
       workspace

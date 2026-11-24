@@ -373,6 +373,38 @@ void main() {
     expect(money.services.singleWhere((s) => s.name == 'Coffee').supplyClass,
         SupplyClass.property);
   });
+
+  testWidgets('#4441 — a class from a newer server is shown as unknown, '
+      'never offered, and kept when the service is saved', (tester) async {
+    final workspace = FakeWorkspaceRepository.withWorkspace(
+        featureFlags: const {'placeBooking': false});
+    workspace.workspaces[0] =
+        workspace.workspaces[0].copyWith(vatRegime: 'vat_registered');
+    final money = FakeMoneyRepository()
+      ..vatRates = [
+        const VatRate(
+            id: 'vat-1', label: 'Standard', percent: 20, isDefault: true),
+      ];
+    final i = money.services.indexWhere((s) => s.name == 'Coffee');
+    money.services[i] = money.services[i]
+        .copyWith(supplyClass: SupplyClass.fromWire('cultural_event'));
+    await pumpServices(tester, money: money, workspace: workspace);
+
+    await tester.tap(find.text('Coffee'));
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
+    final unknown = find.byKey(const ValueKey('supply-class-unknown'));
+    await tester.ensureVisible(unknown);
+    expect(unknown, findsOneWidget);
+    expect(find.byKey(const ValueKey('supply-class-field')), findsNothing);
+    await tester.tap(find.byKey(const ValueKey('services-save')));
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
+
+    expect(money.services.singleWhere((s) => s.name == 'Coffee').supplyClass,
+        SupplyClass.unknown,
+        reason: 'the class the server has is kept, not replaced');
+  });
 }
 
 /// #3552 — the sheet is taller: a control is brought into view first.

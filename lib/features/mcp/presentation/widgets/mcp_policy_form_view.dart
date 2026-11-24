@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/links/external_hosts.dart';
 import '../../../../core/links/link_launcher.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/inline_banner.dart';
@@ -16,7 +17,7 @@ import 'mcp_usage_cards.dart';
 
 /// #1801 — the self-hosted Swagger UI (#1799), served with the web app.
 @visibleForTesting
-const kMcpApiReferenceUrl = 'https://fdittgen-png.github.io/deskilo/api/';
+const kMcpApiReferenceUrl = '${ExternalHosts.projectSite}api/';
 
 /// The policy form: the draft lives in [mcpPolicyFormProvider], every
 /// toggle goes through it; [onSave] saves the draft.

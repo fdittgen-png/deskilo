@@ -13,6 +13,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/inline_banner.dart';
@@ -92,7 +93,7 @@ class _AccountingSignInReturnScreenState
       appBar: AppBar(
         leading: BackButton(
           key: const ValueKey('accounting-sign-in-bar-back'),
-          onPressed: () => context.go('/money/accounting'),
+          onPressed: () => context.go(Routes.moneyAccounting),
         ),
         title: PageTitle(l10n.hubAccountingTitle),
       ),
@@ -114,7 +115,7 @@ class _AccountingSignInReturnScreenState
               key: const ValueKey('accounting-sign-in-back'),
               onPressed: outcome == null
                   ? null
-                  : () => context.go('/money/accounting'),
+                  : () => context.go(Routes.moneyAccounting),
               child: Text(l10n.accountingSignInBack),
             ),
           ),

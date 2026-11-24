@@ -339,6 +339,7 @@ String settingGroupLabel(AppLocalizations l10n, String group) => switch (group) 
       'business' => l10n.settingGroupBusiness,
       'region' => l10n.settingGroupRegion,
       'compatibility' => l10n.settingGroupCompatibility,
+      'diagnostics' => l10n.settingGroupDiagnostics,
       _ => group,
     };
 
@@ -400,13 +401,17 @@ String? settingRangeLabel(AppLocalizations l10n, SettingDefinition d) {
 
 /// #4217 — the window to send a checkout again, per provider; #4325 — how long
 /// a prepared e-invoice may wait for its dispatch before the owner is told;
-/// #3732 — how long an older app stays accepted (the installation's own).
+/// #3732 — how long an older app stays accepted (the installation's own);
+/// #4416 — the error reports apps send to the installation.
 String _paymentSettingLabel(AppLocalizations l10n, String key) => switch (key) {
       'payments.resend_window_mollie_minutes' => l10n.settingLabelPaymentsResendWindowMollieMinutes,
       'payments.resend_window_paypal_minutes' => l10n.settingLabelPaymentsResendWindowPaypalMinutes,
       'payments.resend_window_stripe_minutes' => l10n.settingLabelPaymentsResendWindowStripeMinutes,
       'einvoice.stuck_attempt_minutes' => l10n.settingLabelEinvoiceStuckAttemptMinutes,
       'apps.support_window_days' => l10n.settingLabelAppsSupportWindowDays,
+      'trace.reports_per_hour' => l10n.settingLabelTraceReportsPerHour,
+      'trace.report_max_bytes' => l10n.settingLabelTraceReportMaxBytes,
+      'trace.report_retention_days' => l10n.settingLabelTraceReportRetentionDays,
       _ => key,
     };
 
@@ -416,5 +421,8 @@ String? _paymentSettingHint(AppLocalizations l10n, String key) => switch (key) {
       'payments.resend_window_stripe_minutes' => l10n.settingHintPaymentsResendWindowStripeMinutes,
       'einvoice.stuck_attempt_minutes' => l10n.settingHintEinvoiceStuckAttemptMinutes,
       'apps.support_window_days' => l10n.settingHintAppsSupportWindowDays,
+      'trace.reports_per_hour' => l10n.settingHintTraceReportsPerHour,
+      'trace.report_max_bytes' => l10n.settingHintTraceReportMaxBytes,
+      'trace.report_retention_days' => l10n.settingHintTraceReportRetentionDays,
       _ => null,
     };

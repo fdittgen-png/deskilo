@@ -15,6 +15,7 @@ import 'package:deskilo/core/i18n/format_controller.dart';
 import 'package:deskilo/features/stock/domain/stock_reversals.dart';
 import 'package:deskilo/features/stock/presentation/stock_counts_screen.dart';
 import 'package:deskilo/features/stock/providers/stock_providers.dart';
+import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
@@ -55,6 +56,10 @@ Future<void> _open(WidgetTester tester, _World w, Size size, {Set<WorkspacePermi
       stockConfigCommandsProvider.overrideWithValue(w.config),
       stockReversalsProvider.overrideWithValue(w.reversals),
       myPermissionsProvider.overrideWithValue(held),
+      // the Demo records its counts as its owner's: the reader is that member (an author may cancel their count)
+      myMemberProvider.overrideWith(
+        (ref) async => const Member(id: 'demo-member-owner', workspaceId: 'ws-1', userId: 'u', isAdmin: false, isOwner: true, status: MemberStatus.active),
+      ),
       enabledFeaturesSyncProvider.overrideWithValue({WorkspaceFeature.stockManagement, WorkspaceFeature.stockCounts}),
     ],
   );
@@ -107,6 +112,13 @@ void main() {
         await _recordCount(tester, '10');
         expect(find.textContaining('12,5 kg'), findsOneWidget);
         expect(find.textContaining('12.5 kg'), findsNothing);
+      });
+
+      testWidgets('in French, a count typed as 1,5 is recorded exactly', (tester) async {
+        final w = _World();
+        await _open(tester, w, size, format: const AppFormat(locale: 'fr_FR', currencyCode: 'EUR'));
+        await _recordCount(tester, '1,5');
+        expect(find.textContaining('1,5 kg'), findsOneWidget);
       });
 
       testWidgets('a count moves nothing and waits for its approval, visibly', (tester) async {

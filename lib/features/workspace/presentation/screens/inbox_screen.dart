@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../directory/presentation/messenger/space_inquiries_screen.dart';
 import '../../../directory/providers/messenger_providers.dart';
 import '../../../events/presentation/screens/events_screen.dart';
@@ -146,7 +147,7 @@ class _TopRow extends ConsumerWidget {
           if (alerts) const _AlertsHeader(),
           TextButton.icon(
             key: const ValueKey('inbox-messenger-door'),
-            onPressed: () => context.go('/me?tab=messages'),
+            onPressed: () => context.go(Routes.meTabMessages),
             icon: unread > 0
                 ? Badge.count(
                     count: unread,

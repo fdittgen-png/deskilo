@@ -1600,7 +1600,7 @@ En este capítulo:
 - Su cuenta: [foto](help:user.profile.settings.photo), [datos personales](help:user.profile.settings.personal-info), [dirección](help:user.profile.settings.address), [NIF-IVA](help:user.profile.settings.vat-id), [condiciones de pago](help:user.profile.settings.payment-terms), [WhatsApp](help:user.profile.settings.whatsapp), [estado](help:user.profile.settings.status), [período de reserva predeterminado](help:user.profile.settings.default-period)
 - Su credencial: [la credencial](help:user.profile.settings.badge) y [su PIN](help:user.profile.settings.badge-pin)
 - Cómo se ve y se lee la app: [idioma](help:user.profile.settings.language), [tema](help:user.profile.settings.theme), [navegación](help:user.profile.settings.navigation), [números y fechas](help:user.profile.settings.regional-formats), [reloj](help:user.profile.settings.clock), [zona horaria](help:user.profile.settings.device-zone), [consejos](help:user.profile.settings.restore-hints), [cámara frontal](help:user.profile.settings.front-camera), [cuentas vinculadas](help:user.profile.settings.linked-accounts)
-- Privacidad y sus datos: [quién puede ver mis datos](help:user.privacy.visibility), [quién me ve](help:user.privacy.audiences), [perfil público](help:user.privacy.public-profile), [exportar](help:user.privacy.export), [borrar](help:user.privacy.erase), [solicitudes de derechos](help:user.privacy.requests), [push](help:user.privacy.push), [sus derechos](help:user.privacy.consent)
+- Privacidad y sus datos: [quién puede ver mis datos](help:user.privacy.visibility), [quién me ve](help:user.privacy.audiences), [perfil público](help:user.privacy.public-profile), [exportar](help:user.privacy.export), [borrar](help:user.privacy.erase), [solicitudes de derechos](help:user.privacy.requests), [push](help:user.privacy.push), [informes de error](help:user.privacy.error-reports), [sus derechos](help:user.privacy.consent)
 - [Su propio servidor](help:user.backend.server)
 
 ### Cómo se organizan los Ajustes
@@ -2217,6 +2217,28 @@ Usted quiere dejar de recibir notificaciones en este dispositivo, o volver a act
 
 - Desactivado, la app sigue funcionando y no se envía nada a este dispositivo.
 - Activado, la dirección de este dispositivo y cada notificación pasan por el servicio push.
+
+**Véase también:** [Tus datos, tus derechos](help:user.privacy.consent)
+
+### Enviar informes de error
+
+**Público:** Todos
+
+Usted quiere saber qué envía la app cuando algo falla, o impedirlo.
+
+<!-- image: user-privacy-error-reports -->
+
+**Pasos**
+
+1. Abra [Privacidad y datos](app:/privacy).
+2. Desactive o active **Enviar informes de error**. Está activado hasta que lo desactive, y la elección se guarda en este dispositivo.
+
+**Conviene saber**
+
+- Un informe solo va a la instalación en la que ha iniciado sesión, nunca a otra empresa. Su operador lo lee; las empresas de las que es miembro no lo ven.
+- Indica la versión de la app, la plataforma, el tipo de error y el lugar de la app donde ocurrió. Nunca lleva lo que usted escribió, el texto del error, una dirección de correo, un nombre ni una clave.
+- Cada persona envía como mucho un número fijado de informes por hora, un informe tiene un tamaño máximo y la instalación borra los informes tras un número fijado de días. El operador fija los tres.
+- Desactivado, nada sale del dispositivo: el error queda en el registro de este dispositivo. Un asistente conectado a su cuenta nunca envía un informe.
 
 **Véase también:** [Tus datos, tus derechos](help:user.privacy.consent)
 
@@ -6532,7 +6554,7 @@ Lo que rodea al trabajo diario: la cara de pruebas de un espacio y la real, los 
 En este capítulo:
 - [Un espacio tiene dos caras](help:user.advanced.environments) · [Entre en una cara](help:user.advanced.enter-environment) · [Un espacio de prueba](help:user.advanced.test-space) · [Quién puede desplegar](help:user.advanced.deploy-permissions) · [Despliegue entre las caras](help:user.advanced.deploy) · [Situación del espacio y archivo del ejercicio](help:user.advanced.status-archive)
 - [Su propio servidor](help:user.advanced.own-server) · [Cuando una instalación exige una aplicación más reciente](help:user.advanced.app-floor) · [Publicar una nueva versión](help:user.advanced.releases)
-- [Asistentes](help:user.advanced.assistants) · [Conecte un asistente](help:user.advanced.assistants-connect) · [Aprobaciones](help:user.advanced.assistants-approve) · [Qué pueden hacer los asistentes](help:user.advanced.assistants-policy)
+- [Asistentes](help:user.advanced.assistants) · [Conecte un asistente](help:user.advanced.assistants-connect) · [Aprobaciones](help:user.advanced.assistants-approve) · [Qué pueden hacer los asistentes](help:user.advanced.assistants-policy) · [Informes de error](help:user.advanced.error-reports)
 - [El grabador de tareas](help:user.advanced.recorder) · [Grabe una tarea](help:user.advanced.recorder-record) · [Revise una grabación](help:user.advanced.recorder-review) · [Cree una guía](help:user.advanced.guide-make) · [Siga una guía](help:user.advanced.guide-play) · [El menú circular](help:user.advanced.guide-circle) · [Edite una guía](help:user.advanced.guide-edit) · [Privacidad de las grabaciones](help:user.advanced.recorder-privacy)
 - [El espacio de demostración](help:user.advanced.demo) · [Modo grabación](help:user.advanced.filming)
 - [Plataformas](help:user.advanced.platforms) · [Detalles de soporte](help:user.advanced.support) · [Cuando algo no funciona](help:user.advanced.troubleshooting)
@@ -6818,6 +6840,28 @@ Usted decide qué servicios ofrece un espacio a los asistentes.
 - Es para quienes tienen el permiso de integraciones; los propietarios siempre lo tienen.
 
 **Véase también:** [Un interruptor de función](help:user.features.switch)
+
+### Informes de error
+
+**Público:** Operador/a
+
+Usted opera la instalación y quiere ver qué falló en las apps conectadas a ella.
+
+<!-- image: user-advanced-error-reports -->
+
+**Pasos**
+
+1. Abra [Instalación: asistentes](app:/installation/assistants).
+2. Toque **Informes de error**. Los más recientes van primero.
+3. Toque un informe para leer su pila, ocultada por la app. **Informes anteriores** lee los siguientes.
+
+**Conviene saber**
+
+- Un informe indica el lugar de la app y el tipo de error, su código, la versión de la app, la plataforma y la hora. Nunca lleva lo que una persona escribió, una dirección de correo, un nombre ni una clave.
+- Solo el operador de la instalación los lee; las empresas de la instalación nunca los ven.
+- En los ajustes, **Informes de error por persona y hora**, **Tamaño máximo de un informe de error** y **Conservar los informes de error durante** fijan cuántos llegan, su tamaño y cuánto tiempo. Cada persona puede desactivar los informes en su dispositivo.
+
+**Véase también:** [Enviar informes de error](help:user.privacy.error-reports)
 
 ### El grabador de tareas y las visitas guiadas
 

@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/i18n/country_names.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../profile/domain/personal_info.dart';
@@ -104,7 +105,7 @@ List<Widget> _memberManagedTiles(MemberPageContext c) {
             countryName: (code) => localizedCountryName(l10n, code),
           )
           .replaceAll('\n', ', '),
-      onTap: () => context.push('/members/managed?member=${member.id}'),
+      onTap: () => context.push(Routes.membersManagedFor(member.id)),
     ),
     if (workspace != null)
       MemberManageTile(

@@ -16,6 +16,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
@@ -143,7 +144,7 @@ class _RemindersPageState extends ConsumerState<_RemindersPage> {
               alignment: AlignmentDirectional.centerStart,
               child: TextButton(
                 key: const ValueKey('setup-reminders-terms'),
-                onPressed: () => context.push('/legal-identity'),
+                onPressed: () => context.push(Routes.legalIdentity),
                 child: Text(l10n.setupGrowRemindersTerms),
               ),
             ),

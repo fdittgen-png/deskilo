@@ -18,6 +18,7 @@ import '../../../../core/time/work_hours.dart';
 import '../../../../core/time/workspace_time.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -383,8 +384,10 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
               child: switch (planAsync) {
                 AsyncData(value: final plan) =>
                   _planView(plan, level, workspace?.deskOpacity, wall),
-                AsyncError() =>
-                  Center(child: Text(l10n.workspaceGenericError)),
+                AsyncError(:final error) => ReadFailureBanner(
+                  error: error,
+                  onRetry: () => ref.invalidate(floorPlanProvider(level.id)),
+                ),
                 _ => const LoadingView(),
               },
             ),

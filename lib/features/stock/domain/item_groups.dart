@@ -140,6 +140,12 @@ class ItemEffective {
   final Map<String, EffectiveParam> params;
   final List<String> problems;
 
+  static const _tagModeKey = 'tag_mode';
+  static const _tagPerPiece = 'per_unit';
+
+  /// Whether the effective tag mode (the item's own, its group's, the business's) is one tag per piece.
+  bool get tagsEachPiece => params[_tagModeKey]?.value == _tagPerPiece;
+
   factory ItemEffective.fromJson(Object? json) {
     final r = JsonReader.of(json, context: 'item_effective_settings');
     final raw = (json! as Map)['parameters'];

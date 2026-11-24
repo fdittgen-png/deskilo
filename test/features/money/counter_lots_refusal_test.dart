@@ -3,6 +3,7 @@
 // #4436 -- the till says why a sale was refused for its lots, read from the refusal's keys (DKG03, "scope": "lots",
 // 0947): goods past their date say so with what is fit to sell and what is past its date; too little says only what is
 // there; a refusal without that detail keeps the generic words. Shown as the till shows a problem.
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/features/money/presentation/till_text.dart';
 import 'package:deskilo/l10n/app_localizations_en.dart';
@@ -16,7 +17,7 @@ final _en = AppLocalizationsEn();
 
 PostgrestException _dkg03(String? details) => PostgrestException(
   message: 'not that much on hand at this place',
-  code: 'DKG03',
+  code: DkCode.dkg03,
   details: details,
 );
 

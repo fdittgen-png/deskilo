@@ -72,6 +72,7 @@ de guestPassName
 de holidayImportRegion
 de inboxChatsTab
 de instanceDoctorProbeSchema
+de instanceErrorReportCode
 de instanceFamilyChatgpt
 de instanceFamilyClaude
 de instanceOrganisationLabel
@@ -353,6 +354,7 @@ fr helpTopicInstances
 fr holidayArmistice
 fr holidayAscension
 fr houseKindService
+fr instanceErrorReportCode
 fr instanceFamilyChatgpt
 fr instanceFamilyClaude
 fr instanceOrganisationLabel

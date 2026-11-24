@@ -20,6 +20,7 @@ import '../domain/measure_unit_form.dart';
 import '../domain/stock_config.dart';
 import '../domain/workspace_units.dart';
 import 'measure_unit_text.dart';
+import 'stock_config_text.dart';
 
 /// Opens the form of [unit] (null: a new unit) over the business's [all] units. [onDone] runs once it is saved.
 Future<void> showMeasureUnitSheet(
@@ -83,7 +84,7 @@ Future<void> showMeasureUnitSheet(
           return null;
         } on StockConfigRefused catch (e, stack) {
           TraceLogger.instance.warn('stock', 'a unit was refused: ${e.field}: ${e.reason}', error: e, stackTrace: stack);
-          return measureUnitReasonText(l10n, e.reason);
+          return stockRefusalText(l10n, e.reason, subject: StockSubject.measureUnit);
         }
       },
       builder: (context, refresh) => [

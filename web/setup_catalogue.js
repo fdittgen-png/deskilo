@@ -1567,24 +1567,49 @@ window.SETUP_PROCESSES=[
      "priceNegotiations",
      "memberPaymentTerms",
      "carnets",
-     "stockManagement",
-     "stockLots",
-     "stockReceiving",
-     "stockTakeOut",
-     "stockReorder",
-     "stockReturns",
-     "stockCounts",
-     "stockCycleCounts",
-     "stockItemGroups",
-     "stockTags",
-     "stockScanning",
      "counterReceipts",
      "counterTillSessions",
-     "stockTagReads",
+     "counterOfflineCash"
+    ]
+   }
+  ]
+ },
+ {
+  "key": "goodsStock",
+  "subprocesses": [
+   {
+    "key": "stockItems",
+    "features": [
+     "stockManagement",
+     "stockItemGroups",
+     "unitsOfMeasure",
+     "stockHandlingUnits"
+    ]
+   },
+   {
+    "key": "stockMovements",
+    "features": [
+     "stockReceiving",
+     "stockTakeOut",
+     "stockReturns"
+    ]
+   },
+   {
+    "key": "stockControl",
+    "features": [
+     "stockCounts",
+     "stockCycleCounts",
+     "stockReorder"
+    ]
+   },
+   {
+    "key": "stockTracking",
+    "features": [
+     "stockLots",
      "stockExpiryReport",
-     "stockHandlingUnits",
-     "counterOfflineCash",
-     "unitsOfMeasure"
+     "stockScanning",
+     "stockTags",
+     "stockTagReads"
     ]
    }
   ]

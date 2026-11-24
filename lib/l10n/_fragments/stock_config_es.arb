@@ -451,5 +451,29 @@
   "@stockReasonMalformed": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
-  "stockStateUnknown": "Desconocido para esta aplicación"
+  "stockStateUnknown": "Desconocido para esta aplicación",
+  "stockRequiredItem": "Elija un artículo.",
+  "@stockRequiredItem": {
+    "description": "#4402 a stock sheet: said under the item field when no item is chosen yet (the app's own check, not a refusal of the server)"
+  },
+  "stockRequiredPlace": "Elija una ubicación.",
+  "@stockRequiredPlace": {
+    "description": "#4402 a stock sheet: said under a place field when no place is chosen yet (the app's own check, not a refusal of the server)"
+  },
+  "stockRequiredDestination": "Elija la ubicación a la que va la mercancía, distinta de la que deja.",
+  "@stockRequiredDestination": {
+    "description": "#4402 the move sheet: said under the destination when none is chosen, or when it is the place the goods leave (the app's own check)"
+  },
+  "stockRequiredSupplier": "Elija un proveedor.",
+  "@stockRequiredSupplier": {
+    "description": "#4402 the supplier article sheet: said under the supplier when none is chosen yet (the app's own check)"
+  },
+  "stockRequiredArticle": "Introduzca la referencia de artículo del proveedor.",
+  "@stockRequiredArticle": {
+    "description": "#4402 the supplier article sheet: said under the article reference when it is empty (the app's own check)"
+  },
+  "stockRequiredSite": "Elija un sitio.",
+  "@stockRequiredSite": {
+    "description": "#4402 the reorder point sheet: said under the site when none is chosen yet (the app's own check, not a refusal of the server)"
+  }
 }

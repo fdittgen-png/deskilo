@@ -289,6 +289,7 @@ class ReplayCoordinator {
     try {
       execution = await run.execute(request, ticket.scope, ticket.decision);
     } on Object {
+      // trace-exempt: a failed execution is recorded as an unknown outcome
       record(ticket, ObservationState.outcomeUnknown);
     }
     if (execution != null) record(ticket, execution.state);
