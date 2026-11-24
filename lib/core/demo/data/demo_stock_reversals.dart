@@ -19,7 +19,6 @@ import '../../codes/dk_code.dart';
 import 'demo_stock_ledger.dart';
 
 const _loss = 'demo-place-loss';
-const _customer = 'demo-place-customer';
 const _transit = 'demo-place-transit';
 const _owner = 'demo-member-owner';
 
@@ -155,11 +154,14 @@ class DemoStockReversals implements StockReversals {
   void _kindAllows(StockReturnKind kind, StockMovementRow source, StockReturnLineDraft l, Map<String, StockPlaceConfig> places) {
     switch (kind) {
       case StockReturnKind.customer:
-        if (source.reason != 'sale' || source.toLocationId != _customer) throw _refused(DkCode.dkg18, 'a customer return follows a sale');
+        // as the server: the sale went to a place of the customer kind
+        if (source.reason != 'sale' || places[source.toLocationId]?.kind != 'customer') {
+          throw _refused(DkCode.dkg18, 'a customer return follows a sale');
+        }
         if (!_real(places, l.locationId)) throw _refused(DkCode.dkg05, 'the goods come back to a real place');
       case StockReturnKind.supplier:
         if (source.reason != 'receipt') throw _refused(DkCode.dkg18, 'a supplier return follows a receipt');
-        if (l.locationId == null) throw _refused(DkCode.dkg05, 'the goods leave from a real place');
+        if (!_real(places, l.locationId)) throw _refused(DkCode.dkg05, 'the goods leave from a real place');
       case StockReturnKind.correction:
         if (source.reason == 'opening') throw _refused(DkCode.dkg18, 'this movement is not corrected here');
     }

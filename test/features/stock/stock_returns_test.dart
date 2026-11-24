@@ -160,6 +160,23 @@ void main() {
         expect(find.byKey(const ValueKey('stock-reversals')), findsNothing);
       });
 
+      testWidgets('the sale is returned by its customer, to the shelf, and the figures follow', (tester) async {
+        final w = _World();
+        await _open(tester, w, size, movement: 'demo-stock-movement-9');
+        expect(find.text(_en.stockReversalCustomerOpen), findsOneWidget);
+        await _tapOpen(tester);
+        expect(find.byKey(const ValueKey('stock-reversal-no-money')), findsOneWidget, reason: 'a customer return refunds nothing');
+        await _choose(tester, 'stock-move-place', 'SHELF-A · Shelf A');
+        await tester.enterText(find.byKey(const ValueKey('stock-reversal-quantity')), '1');
+        await tester.tap(find.byKey(const ValueKey('stock-reversal-submit')));
+        await _settle(tester);
+        expect(w.ledger.balance('demo-item-mugs', 'demo-place-shelf').text, '11');
+        expect(w.ledger.movements.first.reason, 'return_in');
+        await tester.ensureVisible(find.byKey(const ValueKey('stock-reversals')));
+        expect(find.text(_en.stockReversalRemaining('1', 'piece', '1')), findsOneWidget);
+        expect(find.textContaining(_en.stockReversalKindCustomer), findsOneWidget);
+      });
+
       testWidgets('the opening is not reversed here', (tester) async {
         final w = _World();
         final opening = w.ledger.movements.where((m) => m.reason == 'opening').firstOrNull;
@@ -198,7 +215,7 @@ void main() {
       expect((allows.reversed.text, allows.remaining.text, allows.reversals.single.kind), ('1', '1', 'customer'));
     });
 
-    test('more than was sold, a delivery, or a place that holds nothing is refused whole', () async {
+    test('more than was sold, a delivery, or a place that holds nothing is refused whole, and moves nothing', () async {
       final w = _World();
       final before = w.ledger.movements.length;
       expect(await refusal(w.reversals.makeReturn('ws-1', 'r-1', StockReturnKind.customer, [line('3')], 'q-1')), DkCode.dkg17);
@@ -206,6 +223,9 @@ void main() {
       expect(await refusal(w.reversals.makeReturn('ws-1', 'r-3', StockReturnKind.customer, [line('1', to: 'demo-place-loss')], 'q-3')), DkCode.dkg05);
       expect(await refusal(w.reversals.makeReturn('ws-1', 'r-4', StockReturnKind.customer, [line('1', to: 'demo-place-transit')], 'q-4')), DkCode.dkg05);
       expect(await refusal(w.reversals.makeReturn('ws-1', 'r-5', StockReturnKind.customer, [line('1', to: null)], 'q-5')), DkCode.dkg05);
+      // the same holds for a supplier return: the goods leave from a place that can hold them
+      final supplier = (lineId: 'line-1', sourceMovementId: _delivery, quantity: '1', locationId: 'demo-place-loss', note: '');
+      expect(await refusal(w.reversals.makeReturn('ws-1', 'r-6', StockReturnKind.supplier, [supplier], 'q-6')), DkCode.dkg05);
       expect(w.ledger.movements.length, before, reason: 'nothing moved');
       expect(w.ledger.balance('demo-item-mugs', 'demo-place-shelf').text, '10');
     });
