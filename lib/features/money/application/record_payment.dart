@@ -19,28 +19,30 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:meta/meta.dart';
 
+import '../../../core/data/app_failure_from.dart';
+import '../../../core/failure/app_failure.dart';
+
 import '../domain/member_account_commands.dart';
 import '../domain/payment_method.dart';
 
-/// What happened to a payment somebody tried to register.
-sealed class RecordPaymentOutcome {
-  const RecordPaymentOutcome();
-}
-
 /// Recorded, and awaiting the other side's confirmation (0017). [period]
 /// is the month it was booked into; [eventId] the claim to confirm.
-class PaymentRecorded extends RecordPaymentOutcome {
+final class PaymentRecorded {
   const PaymentRecorded({required this.eventId, required this.period});
   final String eventId;
   final String period;
 }
 
-/// Not enough to send: [what] says which part is missing.
-class PaymentIncomplete extends RecordPaymentOutcome {
+/// Not enough to send: [what] says which part is missing. Refused before
+/// anything is sent.
+final class PaymentIncomplete implements TypedRefusal {
   const PaymentIncomplete(this.what);
 
   /// `member`, `amount` or `workspace` — the one the caller must fix.
   final String what;
+
+  @override
+  String toString() => 'PaymentIncomplete($what)';
 }
 
 /// The month a payment paid on [day] belongs to, `YYYY-MM`.
@@ -57,7 +59,7 @@ class Payments {
   /// Refuses rather than sending an empty or negative amount: the server
   /// would refuse it too, and a refusal that names what is missing is
   /// the difference between "fix the amount" and "something went wrong".
-  Future<RecordPaymentOutcome> record({
+  Future<CommandOutcome<PaymentRecorded>> record({
     required String? workspaceId,
     required String? memberId,
     required int? amountCents,
@@ -65,25 +67,25 @@ class Payments {
     String note = '',
     PaymentMethod? method,
   }) async {
+    CommandOutcome<PaymentRecorded> incomplete(String what) =>
+        CommandRefused(Refusal(cause: PaymentIncomplete(what)));
     if (workspaceId == null || workspaceId.isEmpty) {
-      return const PaymentIncomplete('workspace');
+      return incomplete('workspace');
     }
-    if (memberId == null || memberId.isEmpty) {
-      return const PaymentIncomplete('member');
-    }
-    if (amountCents == null || amountCents <= 0) {
-      return const PaymentIncomplete('amount');
-    }
+    if (memberId == null || memberId.isEmpty) return incomplete('member');
+    if (amountCents == null || amountCents <= 0) return incomplete('amount');
     final period = periodOfPayment(paidOn);
-    final eventId = await _money.recordPayment(
-      workspaceId: workspaceId,
-      memberId: memberId,
-      amountCents: amountCents,
-      note: note.trim(),
-      method: method,
-      paidOn: paidOn,
-      period: period,
-    );
-    return PaymentRecorded(eventId: eventId, period: period);
+    return runCommand(() async {
+      final eventId = await _money.recordPayment(
+        workspaceId: workspaceId,
+        memberId: memberId,
+        amountCents: amountCents,
+        note: note.trim(),
+        method: method,
+        paidOn: paidOn,
+        period: period,
+      );
+      return PaymentRecorded(eventId: eventId, period: period);
+    }, what: 'payment not recorded');
   }
 }
