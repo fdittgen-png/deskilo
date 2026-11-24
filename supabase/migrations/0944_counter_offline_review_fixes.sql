@@ -29,6 +29,7 @@ declare
   v_sum bigint := 0;
   v_qty numeric;
   v_unit numeric;
+  v_base numeric;
   v_item public.services;
 begin
   if coalesce(jsonb_typeof(p_body -> 'lines'), '') <> 'array' then
@@ -44,7 +45,13 @@ begin
         return null;
       end if;
       if coalesce(l ->> 'unit_price', '') <> '' then
-        v_unit := (l ->> 'unit_price')::numeric * (10::numeric ^ p_digits);
+        -- read as the price check reads it: per base quantity, which must be a positive decimal; another reading of the
+        -- same line could raise the bound past what the check allowed
+        v_base := coalesce(nullif(l ->> 'base_quantity', ''), '1')::numeric;
+        if v_base is null or v_base <= 0 then
+          return null;
+        end if;
+        v_unit := (l ->> 'unit_price')::numeric / v_base * (10::numeric ^ p_digits);
       else
         select * into v_item from public.services s where s.id = (l ->> 'item_id')::uuid and s.workspace_id = p_workspace_id;
         if v_item.id is null then
@@ -53,7 +60,7 @@ begin
         v_unit := v_item.price_cents;
       end if;
       v_sum := v_sum + round(v_unit * v_qty)::bigint;
-    exception when invalid_text_representation or numeric_value_out_of_range then
+    exception when invalid_text_representation or numeric_value_out_of_range or division_by_zero then
       return null;
     end;
   end loop;

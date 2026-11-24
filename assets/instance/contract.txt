@@ -3220,7 +3220,7 @@ routine public.counter_goods_return_v1(p_workspace_id uuid, p_request_id uuid, p
 routine public.counter_line_compute(p_workspace_id uuid, p_line jsonb, p_index integer, p_currency text, p_tax_point date) -> jsonb | function | definer | stable | exec:service_role | body:36efd33a36e8
 routine public.counter_lines_of(p_workspace_id uuid, p_lines jsonb, p_currency text, p_basis text, p_tax_point date) -> jsonb | function | definer | stable | exec:service_role | body:bfe50aa31258
 routine public.counter_offline_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:7b010a54dd5a
-routine public.counter_offline_body_total(p_workspace_id uuid, p_body jsonb, p_digits integer) -> bigint | function | definer | stable | exec:service_role | body:8267c64576af
+routine public.counter_offline_body_total(p_workspace_id uuid, p_body jsonb, p_digits integer) -> bigint | function | definer | stable | exec:service_role | body:2628b4f30ce6
 routine public.counter_offline_frozen_guard() -> trigger | function | invoker | volatile | exec:service_role | body:46b7fe95de2a
 routine public.counter_offline_gap_list(p_session_id uuid) -> jsonb | function | definer | stable | exec:service_role | body:567066e980a1
 routine public.counter_offline_gaps(p_session_id uuid, p_devices uuid[]) -> jsonb | function | definer | stable | exec:service_role | body:a629034bd78e
