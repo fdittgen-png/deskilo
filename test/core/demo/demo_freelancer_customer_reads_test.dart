@@ -15,6 +15,7 @@ import 'package:deskilo/core/demo/demo_space_ids.dart';
 import 'package:deskilo/core/demo/demo_spaces.dart';
 import 'package:deskilo/core/demo/seed/demo_freelancer_seed.dart'
     show demoKesslerChiaraId, demoKesslerLindnerId;
+import 'package:deskilo/core/failure/app_failure.dart';
 import 'package:deskilo/features/money/application/customer_quote_commands.dart';
 import 'package:deskilo/features/money/domain/billing_access.dart';
 import 'package:deskilo/features/money/domain/customer_quote.dart';
@@ -96,10 +97,10 @@ void main() {
         demoFreelancerSpaceId,
         quote.id,
         draftRevision:
-            (prep as QuoteDone<QuoteConversionPrep>).value.draftRevision,
+            (prep as CommandDone<QuoteConversionPrep>).value.draftRevision,
         requestId: 'reads-1',
       );
-      expect(converted, isA<QuoteDone<QuoteConverted>>());
+      expect(converted, isA<CommandDone<QuoteConverted>>());
 
       fixture.becomePersona(DemoPersona.owner);
       expect(

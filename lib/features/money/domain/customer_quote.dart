@@ -8,6 +8,7 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:meta/meta.dart';
 
+import '../../../core/failure/app_failure.dart';
 import 'customer_quote_lines.dart';
 import 'standalone_invoice.dart';
 
@@ -310,7 +311,7 @@ enum QuoteRefusalKind {
   other,
 }
 
-class QuoteRefusal implements Exception {
+class QuoteRefusal implements TypedRefusal {
   const QuoteRefusal(this.kind, {this.missing = const [], this.detail = ''});
 
   final QuoteRefusalKind kind;

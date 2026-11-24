@@ -118,7 +118,7 @@ const _untracedOnCeiling = <String, int>{
 /// is at 0 and absent.
 const _warnWithoutErrorCeiling = <String, int>{
   'app': 3,
-  'core': 17,
+  'core': 16,
   'features/auth': 2,
   'features/directory': 2,
   'features/events': 1,

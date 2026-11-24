@@ -88,3 +88,9 @@ final class CommandUnreached<T> extends CommandOutcome<T> {
   /// A [TransportFailure], an [Unreadable] answer or a [Defect].
   final AppFailure failure;
 }
+
+/// A refusal a feature typed at its own boundary, with what its screens need
+/// to word it (a quote refused as stale, with the facts it misses). It
+/// reaches a command's outcome as a [Refusal] whose [AppFailure.cause] is the
+/// typed refusal itself.
+abstract interface class TypedRefusal implements Exception {}

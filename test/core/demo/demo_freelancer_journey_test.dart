@@ -9,6 +9,8 @@
 // invoice (EUR 402.00 to collect in all), the paid one gone from the list, and
 // the printer's EUR 120.00 to pay. The figures are arithmetic fixtures, not a
 // tax treatment of any jurisdiction.
+import 'dart:async';
+
 import 'package:deskilo/app/router.dart';
 import 'package:deskilo/core/demo/data/fake_business_payables.dart';
 import 'package:deskilo/core/demo/data/fake_business_receivables.dart';
@@ -19,6 +21,7 @@ import 'package:deskilo/core/demo/demo_space_fulfilments.dart';
 import 'package:deskilo/core/demo/demo_space_ids.dart';
 import 'package:deskilo/core/demo/demo_space_stores.dart';
 import 'package:deskilo/core/demo/demo_spaces.dart';
+import 'package:deskilo/core/failure/app_failure.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/application/customer_quote_commands.dart';
 import 'package:deskilo/features/money/application/receivables_answers.dart';
@@ -118,7 +121,7 @@ void main() {
       serviceDate: today,
       dueOn: today.add(const Duration(days: 30)),
     );
-    final ready = (prep as QuoteDone<QuoteConversionPrep>).value;
+    final ready = (prep as CommandDone<QuoteConversionPrep>).value;
     expect(ready.issuable, isTrue);
     expect(ready.wouldBeTotalCents, 64200);
     expect(ready.contextChanged, isFalse, reason: 'it is what was accepted');
@@ -136,10 +139,10 @@ void main() {
       requestId: 'request-2',
     );
 
-    final issued = (first as QuoteDone<QuoteConverted>).value;
+    final issued = (first as CommandDone<QuoteConverted>).value;
     expect(issued.replayed, isFalse);
     expect(
-      (second as QuoteDone<QuoteConverted>).value.invoiceId,
+      (second as CommandDone<QuoteConverted>).value.invoiceId,
       issued.invoiceId,
     );
     expect(second.value.replayed, isTrue, reason: 'one quote, one invoice');
@@ -162,7 +165,7 @@ void main() {
       serviceDate: today,
       dueOn: today.add(const Duration(days: 30)),
     );
-    final ready = (prep as QuoteDone<QuoteConversionPrep>).value;
+    final ready = (prep as CommandDone<QuoteConversionPrep>).value;
     final issued =
         ((await commands.convert(
                   demoFreelancerSpaceId,
@@ -170,7 +173,7 @@ void main() {
                   draftRevision: ready.draftRevision,
                   requestId: 'request-measure',
                 ))
-                as QuoteDone<QuoteConverted>)
+                as CommandDone<QuoteConverted>)
             .value;
     final invoice = space.money.invoices.firstWhere(
       (i) => i.id == issued.invoiceId,
@@ -212,7 +215,7 @@ void main() {
       serviceDate: today,
       dueOn: today.add(const Duration(days: 30)),
     );
-    final ready = (prep as QuoteDone<QuoteConversionPrep>).value;
+    final ready = (prep as CommandDone<QuoteConversionPrep>).value;
     final issued =
         ((await commands.convert(
                   demoFreelancerSpaceId,
@@ -220,7 +223,7 @@ void main() {
                   draftRevision: ready.draftRevision,
                   requestId: 'request-engagement',
                 ))
-                as QuoteDone<QuoteConverted>)
+                as CommandDone<QuoteConverted>)
             .value;
     space.money.ledger.add(
       LedgerEntry(
@@ -265,7 +268,8 @@ void main() {
       'leaves nothing issued, to be tried again', () async {
     final quote = await theQuote();
     final before = space.money.invoices.length;
-    stores.customerQuotes.failNext = StateError('connection lost');
+    // #4413 -- a lost answer is a transport failure: not reached.
+    stores.customerQuotes.failNext = TimeoutException('connection lost');
 
     final lost = await commands.prepareConversion(
       demoFreelancerSpaceId,
@@ -274,7 +278,7 @@ void main() {
       dueOn: today.add(const Duration(days: 30)),
     );
 
-    expect(lost, isA<QuoteUnreached<QuoteConversionPrep>>());
+    expect(lost, isA<CommandUnreached<QuoteConversionPrep>>());
     expect(space.money.invoices.length, before, reason: 'nothing was issued');
     final again = await commands.prepareConversion(
       demoFreelancerSpaceId,
@@ -282,7 +286,7 @@ void main() {
       serviceDate: today,
       dueOn: today.add(const Duration(days: 30)),
     );
-    expect(again, isA<QuoteDone<QuoteConversionPrep>>());
+    expect(again, isA<CommandDone<QuoteConversionPrep>>());
   });
 
   test('after EUR 300.00 is paid on it, EUR 342.00 is left on the new '
@@ -294,13 +298,13 @@ void main() {
       quote.id,
       serviceDate: today,
       dueOn: today.add(const Duration(days: 30)),
-    )) as QuoteDone<QuoteConversionPrep>;
+    )) as CommandDone<QuoteConversionPrep>;
     final issued = ((await commands.convert(
       demoFreelancerSpaceId,
       quote.id,
       draftRevision: prep.value.draftRevision,
       requestId: 'request-1',
-    )) as QuoteDone<QuoteConverted>).value;
+    )) as CommandDone<QuoteConverted>).value;
     // the customer's transfer, registered and matched to the invoice in part
     space.money.ledger.add(
       LedgerEntry(
