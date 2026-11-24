@@ -1,8 +1,8 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 -- apps: additive
--- (counter_goods_parts replaced by a version that knows what the sale already takes; counter_receipt_finalize_v1
--- restated whole; a refusal gains a detail)
+-- (counter_goods_parts gains a defaulted parameter, what the sale already takes, so a call with the old seven
+-- arguments still answers as before; counter_receipt_finalize_v1 restated whole; a refusal gains a detail)
 --
 -- #4436 (G21, the review of 24 Nov) -- the lots a counter sale draws, planned safely. 0939 planned each line's lots
 -- from the balances before the stock path locked the item, and line by line from the same balances. Now:
@@ -30,7 +30,7 @@
 drop function if exists public.counter_goods_parts(uuid, uuid, uuid, uuid, text, text, jsonb);
 create or replace function public.counter_goods_parts(
   p_workspace_id uuid, p_item_id uuid, p_variant_id uuid, p_from uuid, p_quantity text, p_unit text, p_input jsonb,
-  p_taken jsonb)
+  p_taken jsonb default '{}'::jsonb)
 returns jsonb
 language plpgsql
 stable
