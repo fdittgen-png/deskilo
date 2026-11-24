@@ -34,18 +34,61 @@ FinanceOverview demoFinanceOverview(DemoFixture fixture) {
       if (key != DemoSpaceKey.twin)
         _overviewOf(fixture.space(key).money, fixture.actor.memberId, names, zones),
   ];
+  final held = fixture.stores.home.billingAccess.heldGrants;
   return FinanceOverview(
     invoices: [for (final p in parts) ...p.invoices],
     reminders: [for (final p in parts) ...p.reminders],
     // #4164 B2 — the documents of the subjects the account holds a grant for.
-    billed: demoBilledInvoices(
-      now: fixture.seededAt,
-      held: fixture.stores.home.billingAccess.heldSubjects,
-      workspaceName: names[demoFirstSpaceId] ?? '',
-      timezone: zones[demoFirstSpaceId],
-    ),
+    billed: [
+      ...demoBilledInvoices(
+        now: fixture.seededAt,
+        held: {
+          for (final g in held)
+            if (g.workspaceId == demoFirstSpaceId) g.subjectId,
+        },
+        workspaceName: names[demoFirstSpaceId] ?? '',
+        timezone: zones[demoFirstSpaceId],
+      ),
+      // #4168 — another business's grants read that business's own invoices,
+      // the very rows its owner issued, so the two sides never disagree.
+      for (final key in DemoSpaceKey.values)
+        if (key != DemoSpaceKey.home && key != DemoSpaceKey.twin)
+          for (final g in held)
+            if (g.workspaceId == key.id)
+              ..._billedOf(fixture.space(key).money, g.subjectId, names, zones),
+    ],
   );
 }
+
+/// The invoices [subject] owes [money]'s business, as a billing-grant row:
+/// apart from the account's own, and payable only once #4165 accepts a grant.
+List<FinanceInvoice> _billedOf(
+  FakeMoneyRepository money,
+  String subject,
+  Map<String, String> names,
+  Map<String, String> zones,
+) => [
+  for (final i in _overviewOf(money, subject, names, zones).invoices)
+    FinanceInvoice(
+      id: i.id,
+      workspaceId: i.workspaceId,
+      workspaceName: i.workspaceName,
+      number: i.number,
+      issuedAt: i.issuedAt,
+      dueOn: i.dueOn,
+      totalCents: i.totalCents,
+      paidCents: i.paidCents,
+      currency: i.currency,
+      state: i.state,
+      stillDueCents: i.stillDueCents,
+      period: i.period,
+      inPayment: i.inPayment,
+      claimEventId: i.claimEventId,
+      timezone: i.timezone,
+      financialSubjectId: subject,
+      billingOnly: true,
+    ),
+];
 
 FinanceOverview _overviewOf(
   FakeMoneyRepository money,

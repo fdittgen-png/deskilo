@@ -19,8 +19,9 @@ class FakeBillingAccessRepository implements BillingAccessRepository {
     required this.workspaceNameOf,
     required this.clock,
     this.mayManage = _always,
-    this.account = 'demo-account',
-  });
+    String account = 'demo-account',
+    String Function()? accountOf,
+  }) : _accountOf = accountOf ?? (() => account);
 
   static bool _always() => true;
 
@@ -36,8 +37,10 @@ class FakeBillingAccessRepository implements BillingAccessRepository {
   /// The business a code names, as the preview answers it.
   final String Function(String workspaceId) workspaceNameOf;
 
-  /// The signed-in account (who accepts).
-  final String account;
+  /// The signed-in account (who accepts). #4168 — the Demo reads it from the
+  /// persona, so a grant is held by one login and never by whoever is looking.
+  String get account => _accountOf();
+  final String Function() _accountOf;
 
   /// An error the next call raises, once (a refusal or a transport failure).
   Object? failNext;
@@ -48,9 +51,15 @@ class FakeBillingAccessRepository implements BillingAccessRepository {
   final List<_Row> _rows = [];
   int _next = 1;
 
-  /// Seeds a grant [subjectId] of [workspaceId] already accepted by this
-  /// account (what a customer who accepted earlier holds).
-  void seedAccepted(String workspaceId, String subjectId, String code) {
+  /// Seeds a grant [subjectId] of [workspaceId] already accepted by
+  /// [principal] (this account when null): what a customer who accepted
+  /// earlier holds.
+  void seedAccepted(
+    String workspaceId,
+    String subjectId,
+    String code, {
+    String? principal,
+  }) {
     final now = clock();
     _rows.add(
       _Row(
@@ -62,7 +71,7 @@ class FakeBillingAccessRepository implements BillingAccessRepository {
           invitedAt: now.subtract(_seedInvitedAgo),
           expiresAt: now.subtract(_seedInvitedAgo).add(_inviteValidity),
         )
-        ..principal = account
+        ..principal = principal ?? account
         ..acceptedAt = now.subtract(_seedInvitedAgo).add(_seedAcceptedAfter),
     );
   }
@@ -71,6 +80,13 @@ class FakeBillingAccessRepository implements BillingAccessRepository {
   Set<String> get heldSubjects => {
     for (final r in _rows)
       if (r.principal == account && r.revokedAt == null) r.subjectId,
+  };
+
+  /// #4168 — the same, with the business each grant belongs to.
+  Set<({String workspaceId, String subjectId})> get heldGrants => {
+    for (final r in _rows)
+      if (r.principal == account && r.revokedAt == null)
+        (workspaceId: r.workspaceId, subjectId: r.subjectId),
   };
 
   Never _refuse(BillingAccessRefusalKind kind) =>

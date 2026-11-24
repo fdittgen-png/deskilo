@@ -16,9 +16,9 @@ Rows marked ✓ are asserted by `test/core/demo/demo_persona_accountability_test
 
 | persona | Pézenas (`ws-1`) | Leipzig | London / New York / Zurich / Milan | the practice (`ws-7`, #3863) | Kessler Conseil (`ws-10`, #4168) |
 |---|---|---|---|---|---|
-| owner — Ada (`member-1`) | owner | co-owner (active) | member of each city cast | owner | none: she is no member, the business is Bruno's alone |
+| owner — Ada (`member-1`) | owner | co-owner (active) | member of each city cast | owner | none: she is no member, the business is Bruno's alone; she reads the invoices it made out to Lindner Beratung through the billing-access grant she accepted (#4164), never as the practice's owner |
 | member — Bruno (`member-2`) | member | member | as seeded per city; member in Zurich and Milan; in London also the one `finance_read` role (`viewFinances` only, #4168) | none: its clients are people of Berlin | owner (a freelancer business, no places) |
-| admin — Chiara (`member-3`) | administrator | no membership: Leipzig is not listed for her | as seeded per city | none | none |
+| admin — Chiara (`member-3`) | administrator | no membership: Leipzig is not listed for her | as seeded per city | none | none: a customer in her own name; she reads her own invoice from her personal account through her grant (#4164) |
 | kiosk — front desk tablet (`member-kiosk`) | kiosk device | none | none | none | none |
 
 ## Actions
