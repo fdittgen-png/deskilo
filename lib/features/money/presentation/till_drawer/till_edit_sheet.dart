@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../domain/till_drawer.dart';
 import '../../domain/till_drawer_rules.dart';
@@ -38,7 +39,8 @@ Future<bool> showTillEditSheet(BuildContext context, WidgetRef ref, {required St
           );
           ref.invalidate(tillDrawerProvider(workspaceId));
           return null;
-        } on Object catch (e) {
+        } on Object catch (e, st) {
+      TraceLogger.instance.warn('money', 'the till drawer refused', error: e, stackTrace: st);
           return drawerProblemText(l10n, e);
         }
       },

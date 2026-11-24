@@ -14,6 +14,7 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -51,7 +52,8 @@ class _TillDayScreenState extends ConsumerState<TillDayScreen> {
       if (!mounted) return;
       setState(() => _closing = false);
       await showDayReport(context, report, currency: widget.currency);
-    } on Object catch (e) {
+    } on Object catch (e, st) {
+      TraceLogger.instance.warn('money', 'the till drawer refused', error: e, stackTrace: st);
       if (!mounted) return;
       setState(() {
         _closing = false;
@@ -65,7 +67,8 @@ class _TillDayScreenState extends ConsumerState<TillDayScreen> {
       final report = await ref.read(tillDrawerPortProvider).dayReport(workspaceId, dayCloseId: row.id);
       if (!mounted) return;
       await showDayReport(context, report, currency: widget.currency);
-    } on Object catch (e) {
+    } on Object catch (e, st) {
+      TraceLogger.instance.warn('money', 'the till drawer refused', error: e, stackTrace: st);
       if (!mounted) return;
       setState(() => _problem = e);
     }
