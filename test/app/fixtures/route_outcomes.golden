@@ -166,6 +166,8 @@ signed-out on  /task-workbench/storyboard -> /task-workbench
 signed-out on  /templates/compare -> /auth
 signed-out on  /templates/detail -> /auth
 signed-out on  /till -> /auth
+signed-out on  /till/day -> /auth
+signed-out on  /till/drawer -> /auth
 signed-out on  /validation -> /auth
 signed-out on  /vat -> /auth
 signed-out on  /vat-declarations -> /auth
@@ -341,6 +343,8 @@ signed-out off /task-workbench/storyboard -> /task-workbench
 signed-out off /templates/compare -> /auth
 signed-out off /templates/detail -> /auth
 signed-out off /till -> /auth
+signed-out off /till/day -> /auth
+signed-out off /till/drawer -> /auth
 signed-out off /validation -> /auth
 signed-out off /vat -> /auth
 signed-out off /vat-declarations -> /auth
@@ -516,6 +520,8 @@ no-space on  /task-workbench/storyboard -> /task-workbench
 no-space on  /templates/compare -> /onboarding
 no-space on  /templates/detail -> /onboarding
 no-space on  /till -> /me
+no-space on  /till/day -> /me
+no-space on  /till/drawer -> /me
 no-space on  /validation -> /me
 no-space on  /vat -> /me
 no-space on  /vat-declarations -> /me
@@ -691,6 +697,8 @@ no-space off /task-workbench/storyboard -> /task-workbench
 no-space off /templates/compare -> /onboarding
 no-space off /templates/detail -> /onboarding
 no-space off /till -> /me
+no-space off /till/day -> /me
+no-space off /till/drawer -> /me
 no-space off /validation -> /me
 no-space off /vat -> /me
 no-space off /vat-declarations -> /me
@@ -866,6 +874,8 @@ member on  /task-workbench/storyboard -> /task-workbench
 member on  /templates/compare -> /onboarding
 member on  /templates/detail -> /onboarding
 member on  /till -> /calendar
+member on  /till/day -> /calendar
+member on  /till/drawer -> /calendar
 member on  /validation -> /calendar
 member on  /vat -> /calendar
 member on  /vat-declarations -> /calendar
@@ -1041,6 +1051,8 @@ member off /task-workbench/storyboard -> /task-workbench
 member off /templates/compare -> /onboarding
 member off /templates/detail -> /onboarding
 member off /till -> /messages
+member off /till/day -> /messages
+member off /till/drawer -> /messages
 member off /validation -> /messages
 member off /vat -> /messages
 member off /vat-declarations -> /messages
@@ -1216,6 +1228,8 @@ admin on  /task-workbench/storyboard -> /task-workbench
 admin on  /templates/compare -> /onboarding
 admin on  /templates/detail -> /onboarding
 admin on  /till -> /calendar
+admin on  /till/day -> /calendar
+admin on  /till/drawer -> /calendar
 admin on  /validation -> /calendar
 admin on  /vat -> /calendar
 admin on  /vat-declarations -> /money
@@ -1392,6 +1406,8 @@ admin off /task-workbench/storyboard -> /task-workbench
 admin off /templates/compare -> /onboarding
 admin off /templates/detail -> /onboarding
 admin off /till -> /messages
+admin off /till/day -> /messages
+admin off /till/drawer -> /messages
 admin off /validation -> /messages
 admin off /vat -> /messages
 admin off /vat-declarations -> /messages
@@ -1567,6 +1583,8 @@ owner on  /task-workbench/storyboard -> /task-workbench
 owner on  /templates/compare -> /onboarding
 owner on  /templates/detail -> /onboarding
 owner on  /till -> /money
+owner on  /till/day -> /money
+owner on  /till/drawer -> /money
 owner on  /validation -> (open)
 owner on  /vat -> (open)
 owner on  /vat-declarations -> (open)
@@ -1743,6 +1761,8 @@ owner off /task-workbench/storyboard -> /task-workbench
 owner off /templates/compare -> /onboarding
 owner off /templates/detail -> /onboarding
 owner off /till -> /messages
+owner off /till/day -> /messages
+owner off /till/drawer -> /messages
 owner off /validation -> (open)
 owner off /vat -> /messages
 owner off /vat-declarations -> /messages
