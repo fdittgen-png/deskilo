@@ -47,3 +47,15 @@ export function fail(
     context.status ?? 500,
   );
 }
+
+/** A database refusal answered as a refusal: its code, and its sentence only when it is one of
+ * ours (a `DK…` code the app words); any other database error says only "refused", never its text. */
+export function refuseDb(
+  error: { code?: string; message?: string },
+  status: number,
+): Response {
+  const code = error.code ?? "";
+  const ours = /^DK[A-Z0-9]{3}$/.test(code);
+  return ok({ error: ours ? (error.message ?? "refused") : "refused", code }, status);
+}
+
