@@ -178,8 +178,7 @@ class _ReminderQueueScreenState extends ConsumerState<ReminderQueueScreen> {
       final ReminderLetter letter;
       try {
         letter = await (widget.letterOf ?? _letterOf)(line, invoice);
-      } on Object catch (e, st) {
-        TraceLogger.instance.log(TraceLevel.info, 'money', 'reminder_queue_screen: Object handled', error: e, stackTrace: st);
+      } on Object catch (e, st) { TraceLogger.instance.log(TraceLevel.info, 'money', 'reminder_queue_screen: Object handled', error: e, stackTrace: st);
         return _settle(line, ReminderHandled.failed);
       }
       final result = await shareQueuedReminder(

@@ -41,7 +41,7 @@ final class DemoVisitProvider
   }
 }
 
-String _$demoVisitHash() => r'f4dcd8f4f00af8d479b5ec51119eb8da97752382';
+String _$demoVisitHash() => r'8fb536e1383e858ac9eb57892d75239822cc9874';
 
 abstract class _$DemoVisit extends $Notifier<DemoOrigin?> {
   DemoOrigin? build();
