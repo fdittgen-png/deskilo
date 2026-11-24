@@ -176,7 +176,7 @@ class _PlacesSheetState extends ConsumerState<StockPlacesBody> {
   }
 
   // read at the time, so a read that cannot be made is the page's own failure
-  Future<List<StockPlaceConfig>> _read() => StockReads(ref.read(stockConfigCommandsProvider)).places(widget.workspaceId);
+  Future<List<StockPlaceConfig>> _read() async => StockReads(ref.read(stockConfigCommandsProvider)).places(widget.workspaceId);
 
   Future<void> _edit(List<StockPlaceConfig> all, StockPlaceConfig? place) async {
     final saved = await _showStockPlaceEditor(
