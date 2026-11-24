@@ -7241,6 +7241,14 @@
   "@featureConfigurationTransferDesc": {
     "description": "#916 configuration transfer: featureConfigurationTransferDesc"
   },
+  "featureCounterOfflineCashDesc": "Bei verlorener Verbindung verkauft die Kasse weiter gegen Bargeld, speichert jeden Verkauf auf dem Gerät und sendet die Verkäufe der Reihe nach, sobald die Verbindung zurück ist. Andere Zahlarten warten auf die Verbindung.",
+  "@featureCounterOfflineCashDesc": {
+    "description": "#4373 feature description"
+  },
+  "featureCounterOfflineCashTitle": "Offline verkaufen, nur bar",
+  "@featureCounterOfflineCashTitle": {
+    "description": "#4373 feature name"
+  },
   "featureCounterReceiptsDesc": "Ein Verkauf an der Kasse ergibt einen unveränderlichen, einmal nummerierten Beleg mit der erhaltenen Zahlung. Er wird nur angeboten, wo der Vorgang des Landes unterstützt wird, und sagt klar, wenn nicht.",
   "featureCounterReceiptsTitle": "Kassenbelege",
   "featureCounterTillSessionsDesc": "Eine Kasse mit ihrem Wechselgeld eröffnen, die Schublade beim Abschluss zählen und den Tag mit seinem Bericht abschließen. Ein Verkauf braucht eine geöffnete Kasse; das erwartete Bargeld wird aus dem Eingenommenen abgeleitet, nie eingetippt.",
@@ -16659,6 +16667,10 @@
   "refusalCounterEssentials": "Für diesen Beleg fehlt etwas oder es ist nicht zulässig: Es wurde nichts nummeriert und nichts angenommen.",
   "refusalCounterGoods": "Waren können hier nicht verkauft oder zurückgenommen werden: Das Warenbuch ist aus, oder es gibt keinen Ort, von dem sie genommen oder an den sie zurückgelegt werden.",
   "refusalCounterNotOpen": "Dieser Beleg ist kein offener Entwurf mehr, oder für denselben Verkauf wurde schon ein Beleg ausgestellt.",
+  "refusalCounterOfflineConflict": "Ein von der Kasse unter dieser Nummer gesendeter Verkauf wurde bereits mit anderem Inhalt empfangen. Es wurde nichts erneut erfasst; sehen Sie in der Liste der Offline-Verkäufe nach.",
+  "@refusalCounterOfflineConflict": {
+    "description": "#4373 refusal"
+  },
   "refusalCounterTenderState": "Diese Kartenfreigabe ist noch offen, unbekannt oder schon abgeschlossen: Fragen Sie beim Anbieter nach, statt erneut anzufragen.",
   "refusalCounterTenders": "Die Zahlungen begleichen diesen Verkauf nicht genau, oder eine davon wird hier nicht angenommen.",
   "refusalCounterTill": "Die Kasse ist dafür nicht bereit: Öffnen Sie sie zuerst, oder sie ist schon offen oder geschlossen.",
@@ -19145,6 +19157,18 @@
   "settingHintCounterCustomerlessSales": "Erlaubt: Ein Verkauf kann ohne Kundennamen erfolgen. Abgelehnt: Jeder Verkauf nennt einen Kunden. Ein Verkauf ohne Kunden legt nie ein Konto, ein Mitglied oder ein Abonnement an.",
   "settingHintCounterDocumentChannel": "Geteilt (Nachricht oder Mail), gedruckt oder beides. Der Beleg ist in jedem Fall dasselbe unveränderliche Dokument.",
   "settingHintCounterFiscalObligation": "Was Sie zu den steuerlichen Vorgaben für einen Verkauf an der Kasse erklären: keine bedeutet, dass für Ihren Betrieb keine Kassenpflicht gilt (Ihre eigene Erklärung, auf jedem Beleg festgehalten); Kasse erforderlich bedeutet, dass eine gilt. Ein Beleg wird nur ausgestellt, wo der Vorgang Ihres Landes für den erklärten Fall unterstützt wird.",
+  "settingHintCounterOfflineMaxMinutes": "Wie lange nach dem Verbindungsverlust der Kasse ein offline getätigter Barverkauf beim Senden noch angenommen wird. Spätere Verkäufe werden abgelehnt und für die Inhaberin oder den Inhaber aufgelistet.",
+  "@settingHintCounterOfflineMaxMinutes": {
+    "description": "#4373 setting hint"
+  },
+  "settingHintCounterOfflineMaxSales": "Wie viele offline getätigte Barverkäufe eine Kassensitzung annimmt. Weitere werden abgelehnt und aufgelistet.",
+  "@settingHintCounterOfflineMaxSales": {
+    "description": "#4373 setting hint"
+  },
+  "settingHintCounterOfflinePriceTolerance": "Wie weit der Preis eines Offline-Verkaufs beim Senden in Prozent vom Preis des Artikels abweichen darf. 0 heißt: der Preis muss gleich sein.",
+  "@settingHintCounterOfflinePriceTolerance": {
+    "description": "#4373 setting hint"
+  },
   "settingHintCounterPaidOutLimit": "Der größte Betrag in Untereinheiten der Betriebswährung (Cent), den eine Entnahme aus der Schublade ohne jemanden haben darf, der ausgehende Zahlungen erfassen darf. 0 heißt keine Grenze.",
   "settingHintDirectoryGeocoderUrl": "Der Photon-kompatible Dienst, der eine veröffentlichte Adresse auf der Entdecken-Karte platziert: eine https-Adresse im öffentlichen Internet, ohne Benutzername, Passwort, Abfrage oder #. Leer lassen, um die Adresse zu verwenden, mit der diese App-Version gebaut wurde, sonst den öffentlichen Photon-Dienst.",
   "settingHintDirectoryTileUrlTemplate": "Der Kachelserver, aus dem die Entdecken-Karte gezeichnet wird, mit den Platzhaltern z, x und y in geschweiften Klammern in der Adresse (s in geschweiften Klammern für eine Subdomain ist erlaubt): https, im öffentlichen Internet, ohne Benutzername, Passwort oder #. Leer lassen, um den Server dieser App-Version zu verwenden, sonst OpenStreetMap. Ein neuer Host fragt jede Person erneut, bevor die Karte lädt.",
@@ -19385,6 +19409,18 @@
   "settingLabelCounterCustomerlessSales": "Verkäufe ohne genannten Kunden",
   "settingLabelCounterDocumentChannel": "Wie ein Kassenbeleg die Kasse verlässt",
   "settingLabelCounterFiscalObligation": "Steuerliche Vorgaben für Kassenverkäufe",
+  "settingLabelCounterOfflineMaxMinutes": "Längste Offline-Zeit (Minuten)",
+  "@settingLabelCounterOfflineMaxMinutes": {
+    "description": "#4373 setting label"
+  },
+  "settingLabelCounterOfflineMaxSales": "Höchstzahl Offline-Verkäufe je Kassensitzung",
+  "@settingLabelCounterOfflineMaxSales": {
+    "description": "#4373 setting label"
+  },
+  "settingLabelCounterOfflinePriceTolerance": "Erlaubte Preisabweichung offline (%)",
+  "@settingLabelCounterOfflinePriceTolerance": {
+    "description": "#4373 setting label"
+  },
   "settingLabelCounterPaidOutLimit": "Größte Entnahme ohne Freigabe",
   "settingLabelDirectoryGeocoderUrl": "Adresssuchdienst",
   "settingLabelDirectoryTileUrlTemplate": "Kachelserver der Karte",
@@ -23746,6 +23782,15 @@
   "tillOpReconcileTender": "Kartenzahlung abgleichen",
   "tillOpSignFiscal": "fiskalischen Beleg signieren",
   "tillPayCash": "Bar kassieren",
+  "tillPieceTwice": "Stück {code} ist schon im Warenkorb.",
+  "@tillPieceTwice": {
+    "description": "#4436 the till: a piece scanned a second time into the same basket",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
   "tillPricing": "Warenkorb wird berechnet …",
   "tillQuantityHint": "Eine genaue Menge, zum Beispiel 1 oder 0,350.",
   "tillQuantityRefused": "Geben Sie eine Menge über null mit höchstens sechs Dezimalstellen ein.",
@@ -23756,10 +23801,40 @@
   "@tillRetry": {
     "description": "#4366 the till: ask the server again"
   },
+  "tillScanUnknown": "{code} ist nichts, was diese Kasse verkauft.",
+  "@tillScanUnknown": {
+    "description": "#4436 the till: a scanned code that names nothing the till rings up",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
   "tillSoldTitle": "Verkauft",
   "tillTaxIncluded": "davon Steuer {amount}",
   "tillTitle": "Kasse",
   "tillTotalDue": "Zu zahlender Betrag: {amount}",
+  "tillTrackLot": "Charge {code} × {quantity}",
+  "@tillTrackLot": {
+    "description": "#4436 the till: a lot a sold line took, its code as received and the quantity taken from it",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      }
+    }
+  },
+  "tillTrackPiece": "Stück {code}",
+  "@tillTrackPiece": {
+    "description": "#4436 the till: a piece a sold line took, named by its tag",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
   "tipAvailabilityClosure": "Einen Tag schließen, den niemand buchen kann: auf „Schließtag hinzufügen“ tippen und bei Bedarf einen Grund angeben.",
   "tipAvailabilityDays": "Die Öffnungstage festlegen: die Wochentage unter „Geöffnete Wochentage“ an- oder abwählen.",
   "tipAvailabilityGrid": "Festlegen, wie Buchungen geteilt werden: eine „Buchungsraster“ wählen – freie Zeiträume, Slots, halbe oder ganze Tage.",

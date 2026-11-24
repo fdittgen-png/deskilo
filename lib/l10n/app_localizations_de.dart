@@ -11827,6 +11827,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Raumdatei (XML) trägt die gesamte Konfiguration — Tarife, rechtliche Identität, Buchungs- und Freigaberegeln, Rollen, Dokumentvorlagen, Standorte, Schließtage — und der Import wendet sie an, auch auf einen Raum, der schon Buchungen hat. Aus: die Datei trägt nur Einstellungen und Grundriss.';
 
   @override
+  String get featureCounterOfflineCashDesc =>
+      'Bei verlorener Verbindung verkauft die Kasse weiter gegen Bargeld, speichert jeden Verkauf auf dem Gerät und sendet die Verkäufe der Reihe nach, sobald die Verbindung zurück ist. Andere Zahlarten warten auf die Verbindung.';
+
+  @override
+  String get featureCounterOfflineCashTitle => 'Offline verkaufen, nur bar';
+
+  @override
   String get featureCounterReceiptsDesc =>
       'Ein Verkauf an der Kasse ergibt einen unveränderlichen, einmal nummerierten Beleg mit der erhaltenen Zahlung. Er wird nur angeboten, wo der Vorgang des Landes unterstützt wird, und sagt klar, wenn nicht.';
 
@@ -29317,6 +29324,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Dieser Beleg ist kein offener Entwurf mehr, oder für denselben Verkauf wurde schon ein Beleg ausgestellt.';
 
   @override
+  String get refusalCounterOfflineConflict =>
+      'Ein von der Kasse unter dieser Nummer gesendeter Verkauf wurde bereits mit anderem Inhalt empfangen. Es wurde nichts erneut erfasst; sehen Sie in der Liste der Offline-Verkäufe nach.';
+
+  @override
   String get refusalCounterTenderState =>
       'Diese Kartenfreigabe ist noch offen, unbekannt oder schon abgeschlossen: Fragen Sie beim Anbieter nach, statt erneut anzufragen.';
 
@@ -32489,6 +32500,18 @@ class AppLocalizationsDe extends AppLocalizations {
       'Was Sie zu den steuerlichen Vorgaben für einen Verkauf an der Kasse erklären: keine bedeutet, dass für Ihren Betrieb keine Kassenpflicht gilt (Ihre eigene Erklärung, auf jedem Beleg festgehalten); Kasse erforderlich bedeutet, dass eine gilt. Ein Beleg wird nur ausgestellt, wo der Vorgang Ihres Landes für den erklärten Fall unterstützt wird.';
 
   @override
+  String get settingHintCounterOfflineMaxMinutes =>
+      'Wie lange nach dem Verbindungsverlust der Kasse ein offline getätigter Barverkauf beim Senden noch angenommen wird. Spätere Verkäufe werden abgelehnt und für die Inhaberin oder den Inhaber aufgelistet.';
+
+  @override
+  String get settingHintCounterOfflineMaxSales =>
+      'Wie viele offline getätigte Barverkäufe eine Kassensitzung annimmt. Weitere werden abgelehnt und aufgelistet.';
+
+  @override
+  String get settingHintCounterOfflinePriceTolerance =>
+      'Wie weit der Preis eines Offline-Verkaufs beim Senden in Prozent vom Preis des Artikels abweichen darf. 0 heißt: der Preis muss gleich sein.';
+
+  @override
   String get settingHintCounterPaidOutLimit =>
       'Der größte Betrag in Untereinheiten der Betriebswährung (Cent), den eine Entnahme aus der Schublade ohne jemanden haben darf, der ausgehende Zahlungen erfassen darf. 0 heißt keine Grenze.';
 
@@ -32898,6 +32921,18 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get settingLabelCounterFiscalObligation =>
       'Steuerliche Vorgaben für Kassenverkäufe';
+
+  @override
+  String get settingLabelCounterOfflineMaxMinutes =>
+      'Längste Offline-Zeit (Minuten)';
+
+  @override
+  String get settingLabelCounterOfflineMaxSales =>
+      'Höchstzahl Offline-Verkäufe je Kassensitzung';
+
+  @override
+  String get settingLabelCounterOfflinePriceTolerance =>
+      'Erlaubte Preisabweichung offline (%)';
 
   @override
   String get settingLabelCounterPaidOutLimit => 'Größte Entnahme ohne Freigabe';
@@ -40983,6 +41018,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get tillPayCash => 'Bar kassieren';
 
   @override
+  String tillPieceTwice(String code) {
+    return 'Stück $code ist schon im Warenkorb.';
+  }
+
+  @override
   String get tillPricing => 'Warenkorb wird berechnet …';
 
   @override
@@ -41010,6 +41050,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get tillRetry => 'Erneut versuchen';
 
   @override
+  String tillScanUnknown(String code) {
+    return '$code ist nichts, was diese Kasse verkauft.';
+  }
+
+  @override
   String get tillSoldTitle => 'Verkauft';
 
   @override
@@ -41023,6 +41068,16 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String tillTotalDue(String amount) {
     return 'Zu zahlender Betrag: $amount';
+  }
+
+  @override
+  String tillTrackLot(String code, String quantity) {
+    return 'Charge $code × $quantity';
+  }
+
+  @override
+  String tillTrackPiece(String code) {
+    return 'Stück $code';
   }
 
   @override

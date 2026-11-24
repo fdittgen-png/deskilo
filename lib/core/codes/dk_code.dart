@@ -135,6 +135,7 @@ abstract final class DkCode {
   static const dkl13 = 'DKL13';
   static const dkl14 = 'DKL14';
   static const dkl15 = 'DKL15';
+  static const dkl16 = 'DKL16';
   static const dkm01 = 'DKM01';
   static const dkn01 = 'DKN01';
   static const dkp01 = 'DKP01';

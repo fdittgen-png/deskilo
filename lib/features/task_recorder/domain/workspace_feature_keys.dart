@@ -74,6 +74,7 @@ const Set<String> workspaceFeatureKeys = {
   'stockTagReads',
   'stockExpiryReport',
   'stockHandlingUnits',
+  'counterOfflineCash',
   'notificationGrouping',
   'bookingPolicies',
   'nfcSeatTags',
