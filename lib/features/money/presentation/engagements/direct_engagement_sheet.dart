@@ -8,6 +8,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../../core/failure/app_failure.dart';
 import '../../../../core/format/decimal_input.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
@@ -57,13 +58,13 @@ Future<bool> showDirectEngagementSheet(
           ),
         );
         switch (outcome) {
-          case FulfilmentDone():
+          case CommandDone():
             committed = true;
             return null;
-          case FulfilmentRefused(:final refusal):
+          case CommandRefused(refusal: Refusal(cause: final FulfilmentRefusal refusal)):
             requestId = null; // a refusal wrote nothing: the next try is a new request
             return engagementRefusalText(l10n, refusal);
-          case FulfilmentUnreached():
+          case _:
             return l10n.engagementUnreached; // the same request identity is kept
         }
       },

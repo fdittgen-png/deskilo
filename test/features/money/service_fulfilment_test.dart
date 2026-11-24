@@ -6,8 +6,11 @@
 // resolving to the quote's, append-only steps at an expected revision, one
 // request one step -- while it reads the quote and the invoices and changes none
 // of them. Read through the same JSON reader the real repository uses.
+import 'dart:async';
+
 import 'package:deskilo/core/demo/data/fake_customer_quotes.dart';
 import 'package:deskilo/core/demo/data/fake_service_fulfilments.dart';
+import 'package:deskilo/core/failure/app_failure.dart';
 import 'package:deskilo/features/money/application/service_fulfilment_commands.dart';
 import 'package:deskilo/features/money/domain/customer_quote.dart';
 import 'package:deskilo/features/money/domain/service_fulfilment.dart';
@@ -732,7 +735,7 @@ void main() {
           quantity: '3',
         ),
       );
-      final e = (opened as FulfilmentDone<FulfilmentOpened>).value.fulfilment;
+      final e = (opened as CommandDone<FulfilmentOpened>).value.fulfilment;
 
       final jump = await commands.step(
         _ws,
@@ -747,12 +750,16 @@ void main() {
         requestId: 'r-2',
       );
 
-      expect(jump, isA<FulfilmentRefused<ServiceFulfilment>>());
-      expect(started, isA<FulfilmentDone<ServiceFulfilment>>());
+      expect(
+        jump,
+        isA<CommandRefused<ServiceFulfilment>>()
+            .having((o) => o.refusal.cause, 'cause', isA<FulfilmentRefusal>()),
+      );
+      expect(started, isA<CommandDone<ServiceFulfilment>>());
       expect(
         await ServiceFulfilmentCommands(_Failing())
             .step(_ws, e, to: FulfilmentState.started, requestId: 'r-3'),
-        isA<FulfilmentUnreached<ServiceFulfilment>>(),
+        isA<CommandUnreached<ServiceFulfilment>>(),
       );
     });
   });
@@ -761,5 +768,6 @@ void main() {
 class _Failing implements ServiceFulfilmentRepository {
   @override
   dynamic noSuchMethod(Invocation invocation) =>
-      throw StateError('the connection is lost');
+      // #4413 -- a lost answer is a transport failure: not reached.
+      throw TimeoutException('the connection is lost');
 }
