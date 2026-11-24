@@ -44,13 +44,18 @@ InvoiceLifecycle invoiceLifecycleOf(Invoice invoice, InvoiceMatch? match) {
   if (invoice.isVoided) return InvoiceLifecycle.erroneous;
   if (match == null) return InvoiceLifecycle.open;
   if (match.pending) return InvoiceLifecycle.awaitingValidation;
-  if (match.resolution == 'refunded') return InvoiceLifecycle.refunded;
-  if (match.resolution == 'under_accepted') {
-    return match.writeoffAt == null
-        ? InvoiceLifecycle.partiallyPaid
-        : InvoiceLifecycle.remainderCancelled;
-  }
-  return InvoiceLifecycle.paid;
+  return switch (match.settles) {
+    MatchResolution.refunded => InvoiceLifecycle.refunded,
+    MatchResolution.underAccepted =>
+      match.writeoffAt == null
+          ? InvoiceLifecycle.partiallyPaid
+          : InvoiceLifecycle.remainderCancelled,
+    // A resolution this app does not know reads as a standing match.
+    MatchResolution.exact ||
+    MatchResolution.overCreditNote ||
+    MatchResolution.overForced ||
+    MatchResolution.unknown => InvoiceLifecycle.paid,
+  };
 }
 
 /// How one billing PERIOD stands once an invoice covers it (#510): the

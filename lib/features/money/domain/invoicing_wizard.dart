@@ -172,7 +172,7 @@ List<Invoice> openInvoicesOf(
 bool _closedBy(InvoiceMatch? match) =>
     match != null &&
     match.status == 'confirmed' &&
-    match.resolution != 'under_accepted';
+    match.settles != MatchResolution.underAccepted;
 
 /// A reminder the rules say is due.
 class WizardRemindItem {
@@ -255,7 +255,7 @@ class WizardCloseGroup {
           open: [],
           partial: [],
         );
-    if (match != null && match.resolution == 'under_accepted') {
+    if (match != null && match.settles == MatchResolution.underAccepted) {
       group.partial.add(invoice);
     } else {
       group.open.add(invoice);

@@ -35,6 +35,39 @@ Future<List<AccountActivity>> everyActivityPage(
   }
 }
 
+/// #4418 -- where one row of `my_financial_activity` stands, decoded once
+/// from its `status` text: a payment's (created, failed, reversed,
+/// confirmed, awaiting a match), an invoice's (issued, voided, regrouped)
+/// or a usage's (corrected).
+enum ActivityStatus {
+  created('created'),
+  failed('failed'),
+  reversed('reversed'),
+  confirmed('confirmed'),
+  awaitingMatch('awaiting_match'),
+  voided('voided'),
+  regrouped('regrouped'),
+  issued('issued'),
+  corrected('corrected'),
+
+  /// A status a newer server sent and this app does not know (#3730): the
+  /// row is shown without a status word.
+  unknown('');
+
+  const ActivityStatus(this.wire);
+
+  /// The name the server sends.
+  final String wire;
+
+  /// [raw] as this app reads it; a value it does not know is [unknown].
+  static ActivityStatus fromWire(String? raw) {
+    for (final s in values) {
+      if (s != unknown && s.wire == raw) return s;
+    }
+    return unknown;
+  }
+}
+
 class AccountActivity {
   const AccountActivity({
     required this.id,
@@ -84,6 +117,9 @@ class AccountActivity {
 
   final DateTime occurredAt;
   final int? amountCents, minutes;
+
+  /// [status] decoded.
+  ActivityStatus get state => ActivityStatus.fromWire(status);
   ActivityCursor get cursor => (at: occurredAt, id: id);
 
   /// #2387 — read through [JsonReader]; the context names the RPC.

@@ -155,7 +155,7 @@ class _InvoicePageBarState extends ConsumerState<InvoicePageBar> {
             .matchInvoice(
               invoiceId: invoice.id,
               paymentLedgerId: payment,
-              resolution: 'exact',
+              resolution: MatchResolution.exact.wire,
             );
         outcome = ConfirmOutcome.matched;
       },

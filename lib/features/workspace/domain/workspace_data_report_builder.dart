@@ -5,6 +5,8 @@
 // with the workbook's own rules (what a confirmed payment is, what a ledger
 // row does to a balance), so every total it prints is the sum of the
 // workbook's column for the same rows.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+
 import '../../../core/text/collation.dart';
 import '../../../core/time/workspace_time.dart';
 import 'member.dart';
@@ -153,7 +155,7 @@ DataReportTable _invoices(WorkspaceExportDetails d) {
     final closed =
         i.isVoided ||
         i.settledByInvoiceId != null ||
-        match?.resolution == 'refunded' ||
+        match?.settles == MatchResolution.refunded ||
         match?.writeoffAt != null;
     final open = closed ? 0 : i.totalCents - paid;
     final amounts = [i.netCents, i.vatCents, i.totalCents, paid, open];
