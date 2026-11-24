@@ -36,6 +36,12 @@ grant select on table public.feature_registry_entries to authenticated;
 create policy feature_registry_entries_select on public.feature_registry_entries for select to authenticated using (true);
 create policy mcp_delegated_deny on public.feature_registry_entries as restrictive for all to authenticated
   using (not public.mcp_is_delegated()) with check (not public.mcp_is_delegated());
+-- a table of `public` with row security and no workspace id is a personal surface (0564): only a first-party native
+-- session reads it (an identity-federation token reads no registry, and so no feature)
+drop policy if exists personal_native_session on public.feature_registry_entries;
+create policy personal_native_session on public.feature_registry_entries as restrictive for all to public
+  using ((select public.personal_native_session()))
+  with check ((select public.personal_native_session()));
 
 -- BEGIN FEATURE REGISTRY ROWS (dart run tool/build_feature_registry_sql.dart)
 insert into public.feature_registry_entries (feature_key, parent, default_on, core, countries) values
