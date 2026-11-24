@@ -9,30 +9,6 @@
 #
 # Update: run the database job; it writes this file and fails when it
 # differs. Copy the + side (keep this header).
-    ELSE ((piece_id IS NOT NULL) AND (item_id IS NOT NULL) AND (variant_id IS NULL) AND (lot_id IS NULL) AND (unit_code IS NULL) AND (location_id IS NULL))
-    ELSE 0
-    ELSE 1
-    WHEN 'item'::text THEN ((item_id IS NOT NULL) AND (variant_id IS NULL) AND (lot_id IS NULL) AND (unit_code IS NULL) AND (location_id IS NULL) AND (piece_id IS NULL))
-    WHEN 'lot'::text THEN ((item_id IS NOT NULL) AND (lot_id IS NOT NULL) AND (variant_id IS NULL) AND (unit_code IS NULL) AND (location_id IS NULL) AND (piece_id IS NULL))
-    WHEN 'place'::text THEN ((location_id IS NOT NULL) AND (item_id IS NULL) AND (variant_id IS NULL) AND (lot_id IS NULL) AND (unit_code IS NULL) AND (piece_id IS NULL))
-    WHEN 'unit'::text THEN ((item_id IS NOT NULL) AND (unit_code IS NOT NULL) AND (variant_id IS NULL) AND (lot_id IS NULL) AND (location_id IS NULL) AND (piece_id IS NULL))
-    WHEN 'variant'::text THEN ((item_id IS NOT NULL) AND (variant_id IS NOT NULL) AND (lot_id IS NULL) AND (unit_code IS NULL) AND (location_id IS NULL) AND (piece_id IS NULL))
-    WHEN (boolean_value IS NOT NULL) THEN 1
-    WHEN (date_value IS NOT NULL) THEN 1
-    WHEN (decimal_value IS NOT NULL) THEN 1
-    WHEN (desk_id IS NULL) THEN 0
-    WHEN (integer_value IS NOT NULL) THEN 1
-    WHEN (level_id IS NULL) THEN 0
-    WHEN (office_id IS NULL) THEN 0
-    WHEN (seat_id IS NULL) THEN 0
-    WHEN (text_value IS NOT NULL) THEN 1
-CASE
-CASE owner_kind
-END +
-END)
-END) +
-END) <= 1))
-END) = 1) OR ((seat_id IS NULL) AND (desk_id IS NULL) AND (office_id IS NULL) AND (level_id IS NULL) AND (space_label IS NOT NULL))))
 constraint accessories.accessories_name_check CHECK (((char_length(name) >= 1) AND (char_length(name) <= 80)))
 constraint accessories.accessories_pkey PRIMARY KEY (id)
 constraint accessories.accessories_supplement_cents_check CHECK ((supplement_cents >= 0))
@@ -2080,6 +2056,22 @@ constraint reservations.reservations_member_id_same_workspace FOREIGN KEY (works
 constraint reservations.reservations_office_id_fkey FOREIGN KEY (office_id) REFERENCES offices(id) ON DELETE RESTRICT
 constraint reservations.reservations_office_no_overlap EXCLUDE USING gist (office_id WITH =, tstzrange(starts_at, ends_at) WITH &&) WHERE (((status = ANY (ARRAY['reserved'::text, 'checked_in'::text])) AND (office_id IS NOT NULL)))
 constraint reservations.reservations_one_target CHECK ((((((
+CASE
+    WHEN (seat_id IS NULL) THEN 0
+    ELSE 1
+END +
+CASE
+    WHEN (desk_id IS NULL) THEN 0
+    ELSE 1
+END) +
+CASE
+    WHEN (office_id IS NULL) THEN 0
+    ELSE 1
+END) +
+CASE
+    WHEN (level_id IS NULL) THEN 0
+    ELSE 1
+END) = 1) OR ((seat_id IS NULL) AND (desk_id IS NULL) AND (office_id IS NULL) AND (level_id IS NULL) AND (space_label IS NOT NULL))))
 constraint reservations.reservations_pkey PRIMARY KEY (id)
 constraint reservations.reservations_seat_id_fkey FOREIGN KEY (seat_id) REFERENCES seats(id) ON DELETE RESTRICT
 constraint reservations.reservations_seat_no_overlap EXCLUDE USING gist (seat_id WITH =, tstzrange(starts_at, ends_at) WITH &&) WHERE (((status = ANY (ARRAY['reserved'::text, 'checked_in'::text])) AND (seat_id IS NOT NULL)))
@@ -2565,6 +2557,14 @@ constraint stock_tagged_units.system_columns_order CHECK ((modified_datetime >= 
 constraint stock_tagged_units.system_company_present CHECK ((company_id IS NOT NULL))
 constraint stock_tags.stock_tags_check CHECK (((state = 'retired'::text) = (retired_at IS NOT NULL)))
 constraint stock_tags.stock_tags_check1 CHECK (
+CASE owner_kind
+    WHEN 'item'::text THEN ((item_id IS NOT NULL) AND (variant_id IS NULL) AND (lot_id IS NULL) AND (unit_code IS NULL) AND (location_id IS NULL) AND (piece_id IS NULL))
+    WHEN 'variant'::text THEN ((item_id IS NOT NULL) AND (variant_id IS NOT NULL) AND (lot_id IS NULL) AND (unit_code IS NULL) AND (location_id IS NULL) AND (piece_id IS NULL))
+    WHEN 'lot'::text THEN ((item_id IS NOT NULL) AND (lot_id IS NOT NULL) AND (variant_id IS NULL) AND (unit_code IS NULL) AND (location_id IS NULL) AND (piece_id IS NULL))
+    WHEN 'unit'::text THEN ((item_id IS NOT NULL) AND (unit_code IS NOT NULL) AND (variant_id IS NULL) AND (lot_id IS NULL) AND (location_id IS NULL) AND (piece_id IS NULL))
+    WHEN 'place'::text THEN ((location_id IS NOT NULL) AND (item_id IS NULL) AND (variant_id IS NULL) AND (lot_id IS NULL) AND (unit_code IS NULL) AND (piece_id IS NULL))
+    ELSE ((piece_id IS NOT NULL) AND (item_id IS NOT NULL) AND (variant_id IS NULL) AND (lot_id IS NULL) AND (unit_code IS NULL) AND (location_id IS NULL))
+END)
 constraint stock_tags.stock_tags_code_check CHECK ((code ~ '^[0-9A-F]{8,128}$'::text))
 constraint stock_tags.stock_tags_owner_kind_check CHECK ((owner_kind = ANY (ARRAY['item'::text, 'variant'::text, 'lot'::text, 'unit'::text, 'place'::text, 'piece'::text])))
 constraint stock_tags.stock_tags_pkey PRIMARY KEY (id)
@@ -2838,6 +2838,26 @@ constraint workspace_field_values.workspace_field_values_definition_id_fkey FORE
 constraint workspace_field_values.workspace_field_values_hold_pair CHECK (((held_until IS NULL) = (hold_basis IS NULL)))
 constraint workspace_field_values.workspace_field_values_member_id_fkey FOREIGN KEY (member_id) REFERENCES members(id) ON DELETE CASCADE
 constraint workspace_field_values.workspace_field_values_one_column CHECK ((((((
+CASE
+    WHEN (text_value IS NOT NULL) THEN 1
+    ELSE 0
+END +
+CASE
+    WHEN (integer_value IS NOT NULL) THEN 1
+    ELSE 0
+END) +
+CASE
+    WHEN (decimal_value IS NOT NULL) THEN 1
+    ELSE 0
+END) +
+CASE
+    WHEN (date_value IS NOT NULL) THEN 1
+    ELSE 0
+END) +
+CASE
+    WHEN (boolean_value IS NOT NULL) THEN 1
+    ELSE 0
+END) <= 1))
 constraint workspace_field_values.workspace_field_values_pkey PRIMARY KEY (id)
 constraint workspace_field_values.workspace_field_values_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint workspace_licences.system_columns_order CHECK ((modified_datetime >= created_datetime))
