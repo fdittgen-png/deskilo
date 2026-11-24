@@ -275,7 +275,7 @@ final class VisibleSetupStatusProvider
 }
 
 String _$visibleSetupStatusHash() =>
-    r'65022deffd732881e7a17fa6bf9ce43d1ac40c19';
+    r'196590f113d6550c69c454120be5004b5900f6b4';
 
 /// #4223, #4232 — the setup status a business is shown: a business whose kind
 /// keeps places off has no place step in it, so no list, "Next" or resume line
