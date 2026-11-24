@@ -24,14 +24,15 @@ import '../domain/item_groups.dart';
 import '../domain/purchase_factor.dart';
 import '../domain/stock_config.dart';
 import '../domain/stock_service_creator.dart';
+import '../domain/workspace_units.dart';
 import 'item_group_text.dart';
+import 'measure_unit_text.dart';
 
 /// The units a group may set for its items (the registry's units of count, mass and volume).
-const _units = ['piece', 'g', 'kg', 'ml', 'cl', 'l'];
 
 /// What a sheet offers beside the group itself: the places a home zone is chosen from, the VAT rates, and whether the
 /// person may see and set what an item costs or sells for (manageServices and viewFinances).
-typedef GroupChoices = ({List<StockPlaceConfig> places, List<StockVatChoice> vat, bool finance});
+typedef GroupChoices = ({List<StockPlaceConfig> places, List<StockVatChoice> vat, bool finance, List<WorkspaceUnit> units});
 
 /// Opens the sheet of [group] (null: a new group); true when something was saved or deleted.
 Future<bool> showItemGroupSheet(
@@ -40,7 +41,7 @@ Future<bool> showItemGroupSheet(
   required String workspaceId,
   required ItemGroup? group,
   required List<ItemGroup> groups,
-  GroupChoices choices = const (places: <StockPlaceConfig>[], vat: <StockVatChoice>[], finance: false),
+  GroupChoices choices = const (places: <StockPlaceConfig>[], vat: <StockVatChoice>[], finance: false, units: <WorkspaceUnit>[]),
 }) {
   final l10n = context.l10n;
   final draft = _GroupDraft(port, workspaceId, group, groups, choices, appFormatOf(context).locale);
@@ -253,7 +254,12 @@ class _GroupDraft {
         key: const ValueKey('item-group-unit'),
         label: l10n.stockEditInventoryUnit,
         value: unit,
-        items: [(null, l10n.itemGroupNotSet), for (final u in _units) (u, u)],
+        items: [
+          (null, l10n.itemGroupNotSet),
+          for (final u in choices.units) (u.code, measureUnitName(l10n, u)),
+          // a unit the group already holds that the picker no longer offers (archived) stays visible
+          if (unit != null && !choices.units.any((u) => u.code == unit)) (unit, unit!),
+        ],
         onChanged: (v) => edit(() => unit = v),
       ),
       const FormGap(),

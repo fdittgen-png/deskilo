@@ -193,3 +193,31 @@ String _decimal(BigInt micro) {
   final digits = micro.abs().toString().padLeft(7, '0');
   return '${micro.isNegative ? '-' : ''}${digits.substring(0, digits.length - 6)}.${digits.substring(digits.length - 6)}';
 }
+
+/// The 13 units every business starts with, in the order of the server's seed (0951): the six of the original stock registry, then
+/// length, area and time. A built-in's code, dimension and factor are fixed; the business may give it a word of its own.
+const List<WorkspaceUnit> builtInUnits = [
+  WorkspaceUnit(code: 'piece', dimension: UnitDimension.count, factorNum: 1, factorDen: 1, unEceCode: 'C62', builtIn: true, sortOrder: 10),
+  WorkspaceUnit(code: 'g', dimension: UnitDimension.mass, factorNum: 1, factorDen: 1, unEceCode: 'GRM', builtIn: true, sortOrder: 20),
+  WorkspaceUnit(code: 'kg', dimension: UnitDimension.mass, factorNum: 1000, factorDen: 1, unEceCode: 'KGM', builtIn: true, sortOrder: 30),
+  WorkspaceUnit(code: 'ml', dimension: UnitDimension.volume, factorNum: 1, factorDen: 1, unEceCode: 'MLT', builtIn: true, sortOrder: 40),
+  WorkspaceUnit(code: 'cl', dimension: UnitDimension.volume, factorNum: 10, factorDen: 1, unEceCode: 'CLT', builtIn: true, sortOrder: 50),
+  WorkspaceUnit(code: 'l', dimension: UnitDimension.volume, factorNum: 1000, factorDen: 1, unEceCode: 'LTR', builtIn: true, sortOrder: 60),
+  WorkspaceUnit(code: 'mm', dimension: UnitDimension.length, factorNum: 1, factorDen: 1000, unEceCode: 'MMT', builtIn: true, sortOrder: 70),
+  WorkspaceUnit(code: 'cm', dimension: UnitDimension.length, factorNum: 1, factorDen: 100, unEceCode: 'CMT', builtIn: true, sortOrder: 80),
+  WorkspaceUnit(code: 'm', dimension: UnitDimension.length, factorNum: 1, factorDen: 1, unEceCode: 'MTR', builtIn: true, sortOrder: 90),
+  WorkspaceUnit(code: 'km', dimension: UnitDimension.length, factorNum: 1000, factorDen: 1, unEceCode: 'KMT', builtIn: true, sortOrder: 100),
+  WorkspaceUnit(code: 'm2', dimension: UnitDimension.area, factorNum: 1, factorDen: 1, unEceCode: 'MTK', builtIn: true, sortOrder: 110),
+  WorkspaceUnit(code: 'min', dimension: UnitDimension.time, factorNum: 1, factorDen: 1, unEceCode: 'MIN', builtIn: true, sortOrder: 120),
+  WorkspaceUnit(code: 'h', dimension: UnitDimension.time, factorNum: 60, factorDen: 1, unEceCode: 'HUR', builtIn: true, sortOrder: 130),
+];
+
+/// The units an item was counted in before a business had units of its own (0747): what the pickers offer while the feature is off.
+const Set<String> _originalStockUnitCodes = {'piece', 'g', 'kg', 'ml', 'cl', 'l'};
+
+/// The units a picker for what an item is counted in offers: the six of before while the feature is off, every unit that is not
+/// archived when it is on, and always [keep] (the unit the item already has, archived or not, so editing it never loses it).
+List<WorkspaceUnit> pickableUnits(List<WorkspaceUnit> all, {required bool unitsOn, String? keep}) => [
+  for (final u in all)
+    if (u.code == keep || (unitsOn ? !u.archived : _originalStockUnitCodes.contains(u.code))) u,
+];
