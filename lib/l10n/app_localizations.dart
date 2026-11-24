@@ -65912,7 +65912,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Yes, {age} or over'**
-  String tillAgeYes(int age);
+  String tillAgeYes(String age);
 
   /// #4366 the till
   ///

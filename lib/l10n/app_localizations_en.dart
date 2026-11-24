@@ -40958,7 +40958,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String tillAgeYes(int age) {
+  String tillAgeYes(String age) {
     return 'Yes, $age or over';
   }
 

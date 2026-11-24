@@ -41417,7 +41417,7 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String tillAgeYes(int age) {
+  String tillAgeYes(String age) {
     return 'Ja, $age oder älter';
   }
 

@@ -80,7 +80,7 @@ class _GroupDraft {
       tagMode = group?.params['tag_mode'] as String?,
       unit = group?.params['inventory_unit'] as String?,
       sold = group?.params['sold_by_weight'] as bool?,
-      depositItem = group?.params['deposit_item_id'] as String?,
+      depositItem = group?.params[groupParamDepositItem] as String?,
       zone = group?.params['home_zone_id'] as String?,
       vat = group?.params['vat_rate_id'] as String?,
       supply = group?.params['supply_class'] as String?,
@@ -90,10 +90,10 @@ class _GroupDraft {
         'shelf': '${group?.params['shelf_life_days'] ?? ''}',
         'count': '${group?.params['count_every_days'] ?? ''}',
         'age': '${group?.params['min_age'] ?? ''}',
-        'tillCategory': '${group?.params['till_category'] ?? ''}',
-        'keyColour': '${group?.params['quick_key_colour'] ?? ''}',
-        'depositMinor': '${group?.params['deposit_minor'] ?? ''}',
-        'labelTemplate': '${group?.params['label_template'] ?? ''}',
+        'tillCategory': '${group?.params[groupParamCategory] ?? ''}',
+        'keyColour': '${group?.params[groupParamColour] ?? ''}',
+        'depositMinor': '${group?.params[groupParamDepositMinor] ?? ''}',
+        'labelTemplate': '${group?.params[groupParamLabelTemplate] ?? ''}',
         'purchaseUnit': '${group?.params['default_purchase_unit'] ?? ''}',
         'factor': group?.params['default_purchase_factor_num'] == null
             ? ''
@@ -137,7 +137,6 @@ class _GroupDraft {
 
   int? _int(String key) => int.tryParse(fields.text(key));
 
-  /// A typed text, or null when it is empty (the setting is then not set).
   String? _text(String key) => fields.text(key).trim().isEmpty ? null : fields.text(key).trim();
 
   /// A decimal typed with the member's own separators, as the dot-decimal text the server reads; null when empty or not one.
@@ -164,11 +163,11 @@ class _GroupDraft {
       'count_every_days': _int('count'),
       'min_age': _int('age'),
       'sold_by_weight': sold,
-      'till_category': _text('tillCategory'),
-      'quick_key_colour': _text('keyColour'),
-      'deposit_item_id': depositItem,
-      'deposit_minor': _int('depositMinor'),
-      'label_template': _text('labelTemplate'),
+      groupParamCategory: _text('tillCategory'),
+      groupParamColour: _text('keyColour'),
+      groupParamDepositItem: depositItem,
+      groupParamDepositMinor: _int('depositMinor'),
+      groupParamLabelTemplate: _text('labelTemplate'),
       'default_purchase_unit': fields.text('purchaseUnit').isEmpty ? null : fields.text('purchaseUnit'),
       'default_purchase_factor_num': _factor?.num,
       'default_purchase_factor_den': _factor?.den,
@@ -334,12 +333,10 @@ class _GroupDraft {
       )
   ];
 
-  /// #4366 -- what the till reads: the category and colour of the item's quick key, its deposit and its label template.
+  /// #4366 -- what the till reads: the quick key's category and colour, the deposit and the label template.
   List<Widget> _tillFields(AppLocalizations l10n, void Function(void Function()) edit) => [
-      const FormGap(),
-      AppTextField(key: const ValueKey('item-group-till-category'), controller: fields['tillCategory'], fieldKey: 'tillCategory', label: l10n.itemGroupTillCategory, onChanged: (_) => _preview = null),
-      const FormGap(),
-      AppTextField(key: const ValueKey('item-group-key-colour'), controller: fields['keyColour'], fieldKey: 'keyColour', label: l10n.itemGroupKeyColour, onChanged: (_) => _preview = null),
+      const FormGap(), AppTextField(key: const ValueKey('item-group-till-category'), controller: fields['tillCategory'], fieldKey: 'tillCategory', label: l10n.itemGroupTillCategory, onChanged: (_) => _preview = null),
+      const FormGap(), AppTextField(key: const ValueKey('item-group-key-colour'), controller: fields['keyColour'], fieldKey: 'keyColour', label: l10n.itemGroupKeyColour, onChanged: (_) => _preview = null),
       const FormGap(),
       AppDropdownField<String?>(
         key: const ValueKey('item-group-deposit-item'),

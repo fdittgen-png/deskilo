@@ -53364,7 +53364,7 @@
     "description": "#4366 the till",
     "placeholders": {
       "age": {
-        "type": "int"
+        "type": "String"
       }
     }
   },

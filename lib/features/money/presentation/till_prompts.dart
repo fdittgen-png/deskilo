@@ -15,7 +15,7 @@ Future<bool> showTillAgeDialog(BuildContext context, {required String name, requ
       content: Text(l10n.tillAgeQuestion('$minAge')),
       actions: [
         TextButton(key: const ValueKey('till-age-no'), onPressed: () => Navigator.of(c).pop(false), child: Text(l10n.tillAgeNo)),
-        FilledButton(key: const ValueKey('till-age-yes'), onPressed: () => Navigator.of(c).pop(true), child: Text(l10n.tillAgeYes(minAge))),
+        FilledButton(key: const ValueKey('till-age-yes'), onPressed: () => Navigator.of(c).pop(true), child: Text(l10n.tillAgeYes('$minAge'))),
       ],
     ),
   );

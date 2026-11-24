@@ -41473,7 +41473,7 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String tillAgeYes(int age) {
+  String tillAgeYes(String age) {
     return 'Oui, $age ans ou plus';
   }
 
