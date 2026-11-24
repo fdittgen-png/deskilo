@@ -110,3 +110,49 @@ Future<bool> runGuarded(
     return false;
   }
 }
+
+/// #4402 -- a form's save on the same guarded path as [runGuarded]: its start
+/// and end in the trace, the watcher told, and what it threw traced under
+/// [domain]/[message]. It answers instead of showing a snackbar: null when
+/// [action] succeeded, else [problem]'s sentence for what it threw, which a
+/// sheet says under its fields (or the caller shows). The one place a save
+/// catches, so a screen never writes its own try/catch.
+Future<String?> guardSave({
+  required String domain,
+  required String message,
+  required Future<void> Function() action,
+  required String Function(Object error) problem,
+}) async {
+  final what = message.replaceFirst(RegExp(r'\s+failed$'), '');
+  TraceLogger.instance.log(TraceLevel.info, domain, '$what — started');
+  final watcher = guardedCommandWatcher;
+  final watched = watcher?.started(domain, message);
+  try {
+    await action();
+    TraceLogger.instance.log(TraceLevel.info, domain, '$what — done');
+    if (watched != null) watcher?.ended(watched);
+    return null;
+  } on Object catch (e, st) {
+    if (watched != null) watcher?.ended(watched, error: e);
+    TraceLogger.instance.warn(domain, message, error: e, stackTrace: st);
+    return problem(e);
+  }
+}
+
+/// #4402 -- a read a screen needs before it can go on (the item behind an
+/// editor, the variants of a sheet): [read]'s value, or, when it threw, the
+/// trace of it under [domain]/[message] and [fallback]'s answer for the error
+/// (which may say so on the screen). The one place such a read catches.
+Future<T> guardRead<T>({
+  required String domain,
+  required String message,
+  required Future<T> Function() read,
+  required T Function(Object error) fallback,
+}) async {
+  try {
+    return await read();
+  } on Object catch (e, st) {
+    TraceLogger.instance.warn(domain, message, error: e, stackTrace: st);
+    return fallback(e);
+  }
+}

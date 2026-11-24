@@ -120,7 +120,7 @@ void main() {
     });
     await expectLater(
       h.commands.putAway(_ws, _receipt, const [PutAwayAllocation(lineNo: 2, quantity: '13', locationId: 'p-1')], 'req-3'),
-      throwsA(isA<StockConfigRefused>().having((e) => (e.field, e.reason), 'field and reason', ('allocations[0].quantity', 'over_allocated'))),
+      throwsA(isA<StockConfigRefused>().having((e) => (e.field, e.reason), 'field and reason', ('allocations[0].quantity', StockRefusal.overAllocated))),
     );
   });
 

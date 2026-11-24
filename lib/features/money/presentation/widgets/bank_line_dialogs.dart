@@ -5,6 +5,7 @@
 // in its currency) and how a difference resolves; whether a movement that
 // resembles another statement's is a duplicate; which payment reported as
 // made a movement out reconciles, and why that reconciliation is undone.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/i18n/app_format.dart';
@@ -20,7 +21,7 @@ import '../bank_labels.dart';
 /// the note a difference needs.
 typedef BankMatchChoice = ({
   OpenInvoice invoice,
-  String overResolution,
+  MatchResolution overResolution,
   String note,
 });
 
@@ -53,7 +54,7 @@ class _BankMatchDialogState extends State<BankMatchDialog> {
   final _note = TextEditingController();
   late String? _invoiceId =
       widget.proposed ?? widget.suggestions.firstOrNull?.invoice.id;
-  String _over = 'over_credit_note';
+  MatchResolution _over = MatchResolution.overCreditNote;
   String? _error;
 
   @override
@@ -78,7 +79,7 @@ class _BankMatchDialogState extends State<BankMatchDialog> {
     final paid = widget.line.amountCents;
     final needsNote =
         paid < invoice.dueCents ||
-        (paid > invoice.dueCents && _over == 'over_forced');
+        (paid > invoice.dueCents && _over == MatchResolution.overForced);
     if (needsNote && _note.text.trim().isEmpty) {
       setState(() => _error = context.l10n.invoiceMatchNoteRequired);
       return;
@@ -134,22 +135,22 @@ class _BankMatchDialogState extends State<BankMatchDialog> {
             if (invoice != null && paid > invoice.dueCents) ...[
               const FormGap.small(),
               Text(l10n.invoiceMatchOver(money.formatMinor(paid - invoice.dueCents))),
-              RadioGroup<String>(
+              RadioGroup<MatchResolution>(
                 key: const ValueKey('bank-match-over-group'),
                 groupValue: _over,
                 onChanged: (v) => setState(() => _over = v ?? _over),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    RadioListTile<String>(
+                    RadioListTile<MatchResolution>(
                       key: const ValueKey('bank-match-credit-note'),
-                      value: 'over_credit_note',
+                      value: MatchResolution.overCreditNote,
                       contentPadding: EdgeInsets.zero,
                       title: Text(l10n.invoiceMatchCreditNote),
                     ),
-                    RadioListTile<String>(
+                    RadioListTile<MatchResolution>(
                       key: const ValueKey('bank-match-force'),
-                      value: 'over_forced',
+                      value: MatchResolution.overForced,
                       contentPadding: EdgeInsets.zero,
                       title: Text(l10n.invoiceMatchForce),
                     ),

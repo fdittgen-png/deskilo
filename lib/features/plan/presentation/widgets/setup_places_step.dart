@@ -15,7 +15,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/ui/inline_banner.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/setup_step_layout.dart';
 import '../../../../l10n/dictionary_labels.dart';
@@ -44,7 +44,16 @@ class SetupPlacesStep extends ConsumerWidget {
     final levelsAsync = ref.watch(levelsProvider);
     final levels = levelsAsync.value;
     if (levels == null) {
-      return levelsAsync.hasError ? const _LoadFailed() : const LoadingView();
+      return levelsAsync.hasError
+          ? Padding(
+              padding: AppSpacing.lgAll,
+              child: ReadFailureBanner(
+                key: const ValueKey('setup-places-failed'),
+                error: levelsAsync.error!,
+                onRetry: () => ref.invalidate(levelsProvider),
+              ),
+            )
+          : const LoadingView();
     }
     final plans = <Level, FloorPlan?>{
       for (final level in levels)
@@ -55,20 +64,6 @@ class SetupPlacesStep extends ConsumerWidget {
       preview: SetupBookablePlaces(plans: plans),
     );
   }
-}
-
-class _LoadFailed extends StatelessWidget {
-  const _LoadFailed();
-
-  @override
-  Widget build(BuildContext context) => Padding(
-    padding: AppSpacing.lgAll,
-    child: InlineBanner(
-      key: const ValueKey('setup-places-failed'),
-      icon: Icons.error_outline,
-      text: context.l10n.setupStepLoadFailed,
-    ),
-  );
 }
 
 class _PlacesForm extends StatelessWidget {

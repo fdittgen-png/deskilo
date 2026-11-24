@@ -92,6 +92,17 @@ class SupabaseStockConfigCommands implements StockConfigCommands {
   }, 'item_id');
 
   @override
+  Future<StockSaved> createItem(
+    String workspaceId,
+    NewStockItemDraft item,
+    String requestId,
+  ) => _save('create_stock_item_v1', {
+    'p_workspace_id': workspaceId,
+    'p_request_id': requestId,
+    'p_item': item.toJson(),
+  }, 'item_id');
+
+  @override
   Future<StockSaved> savePlace(
     String workspaceId, {
     required StockPlaceDraft place,

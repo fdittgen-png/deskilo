@@ -7283,10 +7283,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get consentTitle => 'Sus datos, sus derechos';
 
   @override
-  String get consentUnavailable =>
-      'No se pudo cargar su cuenta, así que todavía no hay nada que aceptar.';
-
-  @override
   String get consentVersion => 'Versión';
 
   @override
@@ -16081,6 +16077,37 @@ class AppLocalizationsEs extends AppLocalizations {
       'Este proyecto aún no responde como una instalación Deskilo. Instale primero el esquema.';
 
   @override
+  String instanceErrorReportCode(String code) {
+    return 'Código $code';
+  }
+
+  @override
+  String instanceErrorReportFacts(
+    String version,
+    String platform,
+    String time,
+  ) {
+    return '$version · $platform · $time';
+  }
+
+  @override
+  String get instanceErrorReportStack => 'Pila, ocultada por la app';
+
+  @override
+  String get instanceErrorReports => 'Informes de error';
+
+  @override
+  String get instanceErrorReportsHint =>
+      'Lo que enviaron las apps cuando algo falló, los más recientes primero. Los miembros de una empresa nunca los ven.';
+
+  @override
+  String get instanceErrorReportsNone =>
+      'No ha llegado ningún informe de error.';
+
+  @override
+  String get instanceErrorReportsOlder => 'Informes anteriores';
+
+  @override
   String get instanceFamilyChatgpt => 'ChatGPT';
 
   @override
@@ -18942,9 +18969,6 @@ class AppLocalizationsEs extends AppLocalizations {
       'Este grupo lo usan artículos: muévalos primero.';
 
   @override
-  String get itemGroupReasonNameDuplicate => 'Otro grupo ya tiene este nombre.';
-
-  @override
   String get itemGroupReasonNeedsSerial =>
       'Las etiquetas por pieza necesitan seguimiento por pieza.';
 
@@ -20900,10 +20924,6 @@ class AppLocalizationsEs extends AppLocalizations {
       'Genera un código personal ligado a este perfil. Quien lo canjee se hace con el perfil — reservas, facturas, suscripción — en cuanto usted apruebe la membresía.';
 
   @override
-  String get managedProfileIdentityUnavailable =>
-      'No se han podido leer estos datos, así que todavía no hay nada que editar. No se ha cambiado nada.';
-
-  @override
   String get managedProfileIntro =>
       'Esta persona aún no tiene cuenta. Usted reserva, factura y gestiona por ella; entréguele el perfil cuando se una.';
 
@@ -22685,10 +22705,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get memberMoneySettled => 'Nada pendiente.';
-
-  @override
-  String get memberMoneyUnavailable =>
-      'No se pudieron cargar las finanzas. Tire para actualizar.';
 
   @override
   String get memberMonthInProgress => 'Este mes';
@@ -25428,9 +25444,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get periodReservationsEmpty => 'Ninguna reserva en estos meses.';
 
   @override
-  String get periodReservationsFailed => 'No se pudieron leer las reservas.';
-
-  @override
   String periodReservationsLevel(String level) {
     return 'Solo en $level';
   }
@@ -26716,9 +26729,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get privacyAdminKind => 'Tipo de solicitud';
 
   @override
-  String get privacyAdminLoadFailed => 'No se pudieron leer las solicitudes.';
-
-  @override
   String get privacyAdminMember => 'Miembro';
 
   @override
@@ -26783,6 +26793,17 @@ class AppLocalizationsEs extends AppLocalizations {
   String privacyErasedIn(String space) {
     return 'Sus datos en $space se han borrado. Lo que el espacio debe conservar se mantiene durante su plazo de conservación; las demás instalaciones no se ven afectadas.';
   }
+
+  @override
+  String get privacyErrorReports => 'Enviar informes de error';
+
+  @override
+  String get privacyErrorReportsFailed =>
+      'No se pudo guardar la elección en este dispositivo.';
+
+  @override
+  String get privacyErrorReportsHint =>
+      'Cuando la app registra un error, un informe sin sus datos va a la instalación en la que ha iniciado sesión, para que su operador pueda corregirlo.';
 
   @override
   String get privacyExport => 'Exportar mis datos';
@@ -27043,6 +27064,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get processFilterEmpty => 'Ningún proceso coincide con este filtro.';
+
+  @override
+  String get processGoodsStock => 'Mercancías y existencias';
+
+  @override
+  String get processGoodsStockDesc =>
+      'Llevar, mover, contar y rastrear las mercancías que se venden.';
 
   @override
   String processHeldBack(int count) {
@@ -27311,10 +27339,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get profilesTitle => 'Perfiles';
-
-  @override
-  String get profilesUnavailable =>
-      'No se pudieron cargar sus espacios de trabajo.';
 
   @override
   String provenanceFromTemplate(String name) {
@@ -32294,6 +32318,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get settingGroupCompatibility => 'Versiones de la aplicación';
 
   @override
+  String get settingGroupDiagnostics => 'Informes de error';
+
+  @override
   String get settingGroupDirectory => 'Directorio de miembros';
 
   @override
@@ -32774,6 +32801,18 @@ class AppLocalizationsEs extends AppLocalizations {
       'Activado: un artículo de stock nuevo se propone en kilogramos en lugar de piezas (carnicería, panadería, mostrador). Cualquier artículo puede tener otra unidad.';
 
   @override
+  String get settingHintTraceReportMaxBytes =>
+      'El mayor informe de error que acepta esta instalación. La app acorta la pila del informe antes de enviarlo; un informe que siga siendo mayor se descarta.';
+
+  @override
+  String get settingHintTraceReportRetentionDays =>
+      'Cuántos días conserva esta instalación un informe de error. Los informes más antiguos se borran cuando llega uno nuevo.';
+
+  @override
+  String get settingHintTraceReportsPerHour =>
+      'Cuántos informes de error puede enviar una persona a esta instalación en una hora, sumando todos sus dispositivos. Los siguientes de esa hora se descartan, nunca se ponen en cola. 0 desactiva los informes de error para todos.';
+
+  @override
   String get settingHintVatViesEvidenceDays =>
       'Días que una comprobación válida del NIF-IVA sigue siendo lo bastante reciente para servir de prueba en una nueva factura. Un valor más corto pide una nueva comprobación antes; no prueba que una operación sea válida.';
 
@@ -33201,6 +33240,18 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingLabelStockWeighedGoods =>
       'Las mercancías se venden al peso';
+
+  @override
+  String get settingLabelTraceReportMaxBytes =>
+      'Tamaño máximo de un informe de error';
+
+  @override
+  String get settingLabelTraceReportRetentionDays =>
+      'Conservar los informes de error durante';
+
+  @override
+  String get settingLabelTraceReportsPerHour =>
+      'Informes de error por persona y hora';
 
   @override
   String get settingLabelVatViesEvidenceDays =>
@@ -35302,10 +35353,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get setupStepLeaveTitle => '¿Salir de este paso?';
 
   @override
-  String get setupStepLoadFailed =>
-      'No se ha podido cargar este paso. Inténtelo más tarde.';
-
-  @override
   String get setupStepNext => 'Siguiente paso';
 
   @override
@@ -37245,21 +37292,6 @@ class AppLocalizationsEs extends AppLocalizations {
       'Ambos números deben ser enteros mayores que cero.';
 
   @override
-  String get stockReasonGroupDepth => 'Un subgrupo no puede tener subgrupos.';
-
-  @override
-  String get stockReasonGroupHasMovements =>
-      'Este artículo tiene movimientos de stock: su unidad y su seguimiento quedan como se escribieron.';
-
-  @override
-  String get stockReasonGroupHasSubgroups =>
-      'Este grupo tiene subgrupos: muévalos o elimínelos primero.';
-
-  @override
-  String get stockReasonGroupInUse =>
-      'Este grupo lo usan artículos: muévalos primero.';
-
-  @override
   String get stockReasonGroupItemUnknown =>
       'Este artículo no es de este negocio.';
 
@@ -37276,19 +37308,8 @@ class AppLocalizationsEs extends AppLocalizations {
       'Un grupo nuevo necesita un nombre.';
 
   @override
-  String get stockReasonGroupNeedsSerial =>
-      'Las etiquetas por unidad exigen seguimiento por pieza.';
-
-  @override
-  String get stockReasonGroupNotOverridable =>
-      'Es una propuesta para artículos nuevos y no se fija por artículo.';
-
-  @override
   String get stockReasonGroupPlaceUnknown =>
       'Este lugar no es de este negocio.';
-
-  @override
-  String get stockReasonGroupUnknown => 'Este grupo no es de este negocio.';
 
   @override
   String get stockReasonGroupUnknownReference =>
@@ -37743,6 +37764,26 @@ class AppLocalizationsEs extends AppLocalizations {
   String get stockReorderToOrderTitle => 'Qué pedir';
 
   @override
+  String get stockRequiredArticle =>
+      'Introduzca la referencia de artículo del proveedor.';
+
+  @override
+  String get stockRequiredDestination =>
+      'Elija la ubicación a la que va la mercancía, distinta de la que deja.';
+
+  @override
+  String get stockRequiredItem => 'Elija un artículo.';
+
+  @override
+  String get stockRequiredPlace => 'Elija una ubicación.';
+
+  @override
+  String get stockRequiredSite => 'Elija un sitio.';
+
+  @override
+  String get stockRequiredSupplier => 'Elija un proveedor.';
+
+  @override
   String get stockReversalBackTo => 'Las mercancías vuelven a';
 
   @override
@@ -37967,24 +38008,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get stockTagKindUhf => 'Etiqueta UHF';
 
   @override
-  String get stockTagMalformed => 'Ese no es un código de etiqueta válido.';
-
-  @override
-  String get stockTagModeNone => 'Este artículo no usa etiquetas.';
-
-  @override
   String get stockTagNotInForce => 'Esta no es una etiqueta en uso aquí.';
 
   @override
   String get stockTagOnPiece =>
       'Esta etiqueta está en una pieza que sigue en stock.';
-
-  @override
-  String get stockTagOwnerUnknown => 'Este artículo o ubicación no se conoce.';
-
-  @override
-  String get stockTagPerUnit =>
-      'Este artículo se etiqueta pieza a pieza: etiquete sus piezas al recibirlas.';
 
   @override
   String stockTagPiece(String number) {
@@ -38615,6 +38643,34 @@ class AppLocalizationsEs extends AppLocalizations {
       'Reservar puestos o espacios completos según las reglas.';
 
   @override
+  String get subprocessStockControl => 'Recuentos y reposición';
+
+  @override
+  String get subprocessStockControlDesc =>
+      'Contar existencias, programar recuentos cíclicos y reponer a tiempo.';
+
+  @override
+  String get subprocessStockItems => 'Artículos y unidades';
+
+  @override
+  String get subprocessStockItemsDesc =>
+      'Artículos, grupos de artículos, unidades de medida y unidades de manipulación.';
+
+  @override
+  String get subprocessStockMovements => 'Recepción y movimientos';
+
+  @override
+  String get subprocessStockMovementsDesc =>
+      'Recibir entregas, retirar mercancías y gestionar devoluciones.';
+
+  @override
+  String get subprocessStockTracking => 'Trazabilidad';
+
+  @override
+  String get subprocessStockTrackingDesc =>
+      'Lotes, caducidad, escaneo y etiquetas que rastrean cada pieza.';
+
+  @override
   String get subprocessStructure => 'Estructura del espacio';
 
   @override
@@ -38956,6 +39012,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get supplyClassPropertyMeaning => 'Tributa donde están los locales.';
+
+  @override
+  String get supplyClassUnknown =>
+      'Una clase que esta app aún no conoce: se conserva tal como la tiene el servidor';
 
   @override
   String get supportChanged =>

@@ -98,7 +98,7 @@ void main() {
       throwsA(
         isA<StockConfigRefused>()
             .having((e) => e.field, 'field', 'units[0].factor_den')
-            .having((e) => e.reason, 'reason', 'factor_invalid'),
+            .having((e) => e.reason, 'reason', StockRefusal.factorInvalid),
       ),
     );
   });
@@ -137,7 +137,7 @@ void main() {
     });
     await expectLater(
       bad.commands.saveVariants(_ws, _item, variants: const [], expectedRevision: 4, requestId: 'r2'),
-      throwsA(isA<StockConfigRefused>().having((e) => e.reason, 'reason', 'variant_combination_duplicate')),
+      throwsA(isA<StockConfigRefused>().having((e) => e.reason, 'reason', StockRefusal.variantCombinationDuplicate)),
     );
   });
 

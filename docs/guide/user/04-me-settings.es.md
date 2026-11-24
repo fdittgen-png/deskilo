@@ -8,7 +8,7 @@ En este capítulo:
 - Su cuenta: [foto](help:user.profile.settings.photo), [datos personales](help:user.profile.settings.personal-info), [dirección](help:user.profile.settings.address), [NIF-IVA](help:user.profile.settings.vat-id), [condiciones de pago](help:user.profile.settings.payment-terms), [WhatsApp](help:user.profile.settings.whatsapp), [estado](help:user.profile.settings.status), [período de reserva predeterminado](help:user.profile.settings.default-period)
 - Su credencial: [la credencial](help:user.profile.settings.badge) y [su PIN](help:user.profile.settings.badge-pin)
 - Cómo se ve y se lee la app: [idioma](help:user.profile.settings.language), [tema](help:user.profile.settings.theme), [navegación](help:user.profile.settings.navigation), [números y fechas](help:user.profile.settings.regional-formats), [reloj](help:user.profile.settings.clock), [zona horaria](help:user.profile.settings.device-zone), [consejos](help:user.profile.settings.restore-hints), [cámara frontal](help:user.profile.settings.front-camera), [cuentas vinculadas](help:user.profile.settings.linked-accounts)
-- Privacidad y sus datos: [quién puede ver mis datos](help:user.privacy.visibility), [quién me ve](help:user.privacy.audiences), [perfil público](help:user.privacy.public-profile), [exportar](help:user.privacy.export), [borrar](help:user.privacy.erase), [solicitudes de derechos](help:user.privacy.requests), [push](help:user.privacy.push), [sus derechos](help:user.privacy.consent)
+- Privacidad y sus datos: [quién puede ver mis datos](help:user.privacy.visibility), [quién me ve](help:user.privacy.audiences), [perfil público](help:user.privacy.public-profile), [exportar](help:user.privacy.export), [borrar](help:user.privacy.erase), [solicitudes de derechos](help:user.privacy.requests), [push](help:user.privacy.push), [informes de error](help:user.privacy.error-reports), [sus derechos](help:user.privacy.consent)
 - [Su propio servidor](help:user.backend.server)
 
 <!-- anchor: user.settings.organisation -->
@@ -652,6 +652,29 @@ Usted quiere dejar de recibir notificaciones en este dispositivo, o volver a act
 
 - Desactivado, la app sigue funcionando y no se envía nada a este dispositivo.
 - Activado, la dirección de este dispositivo y cada notificación pasan por el servicio push.
+
+**Véase también:** [Tus datos, tus derechos](help:user.privacy.consent)
+
+<!-- anchor: user.privacy.error-reports -->
+### Enviar informes de error
+
+**Público:** Todos
+
+Usted quiere saber qué envía la app cuando algo falla, o impedirlo.
+
+<!-- image: user-privacy-error-reports -->
+
+**Pasos**
+
+1. Abra [Privacidad y datos](app:/privacy).
+2. Desactive o active **Enviar informes de error**. Está activado hasta que lo desactive, y la elección se guarda en este dispositivo.
+
+**Conviene saber**
+
+- Un informe solo va a la instalación en la que ha iniciado sesión, nunca a otra empresa. Su operador lo lee; las empresas de las que es miembro no lo ven.
+- Indica la versión de la app, la plataforma, el tipo de error y el lugar de la app donde ocurrió. Nunca lleva lo que usted escribió, el texto del error, una dirección de correo, un nombre ni una clave.
+- Cada persona envía como mucho un número fijado de informes por hora, un informe tiene un tamaño máximo y la instalación borra los informes tras un número fijado de días. El operador fija los tres.
+- Desactivado, nada sale del dispositivo: el error queda en el registro de este dispositivo. Un asistente conectado a su cuenta nunca envía un informe.
 
 **Véase también:** [Tus datos, tus derechos](help:user.privacy.consent)
 

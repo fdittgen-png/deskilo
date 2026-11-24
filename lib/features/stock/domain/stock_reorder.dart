@@ -8,6 +8,7 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 import 'stock_config.dart' show StockSaved;
+import 'stock_refusal.dart';
 
 /// A reorder point: at [siteId], when [itemId] (or one [variantId] of it) is at or below
 /// [reorderPoint], it is low. At most one of [reorderQuantity] (what to order) and [targetQuantity]
@@ -253,21 +254,21 @@ abstract interface class StockReorder {
 /// The mistakes of a reorder point that need no server to see (the server's own rules, said under
 /// the field it names): a level that is not a quantity, a quantity or a level to order up to that is
 /// not one, a level to order up to that is not above the point. [value] empty: the point only flags.
-Map<String, String> checkReorderPoint({required String point, required String value, required bool upTo}) {
+Map<String, StockRefusal> checkReorderPoint({required String point, required String value, required bool upTo}) {
   // #4393 -- the kernel's quantity grammar, not a copy of it: a number of at most six decimals, never negative.
   bool isQuantity(String t) => !t.startsWith('-') && ExactQuantity.tryParse(t).value != null;
-  final errors = <String, String>{};
+  final errors = <String, StockRefusal>{};
   final level = point.trim();
-  if (!isQuantity(level)) errors['reorder_point'] = 'quantity_invalid';
+  if (!isQuantity(level)) errors['reorder_point'] = StockRefusal.quantityInvalid;
   final v = value.trim();
   final field = upTo ? 'target_quantity' : 'reorder_quantity';
   if (v.isNotEmpty) {
     if (!isQuantity(v)) {
-      errors[field] = 'quantity_invalid';
+      errors[field] = StockRefusal.quantityInvalid;
     } else if (upTo && errors['reorder_point'] == null && ExactQuantity.parse(v).compareTo(ExactQuantity.parse(level)) <= 0) {
-      errors[field] = 'target_below_point';
+      errors[field] = StockRefusal.targetBelowPoint;
     } else if (!upTo && ExactQuantity.parse(v).compareTo(ExactQuantity.zero) <= 0) {
-      errors[field] = 'quantity_invalid';
+      errors[field] = StockRefusal.quantityInvalid;
     }
   }
   return errors;

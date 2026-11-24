@@ -9,6 +9,8 @@
 // Pure Dart.
 library;
 
+import 'invoice_missing.dart';
+
 /// Which explanation the issue form shows above a blocked submit.
 enum InvoiceIssueBlock {
   /// Nothing is missing, or there is nothing to issue yet.
@@ -47,9 +49,9 @@ class InvoiceIssueReadiness {
   /// The banner's explanation; [InvoiceIssueBlock.none] hides it.
   InvoiceIssueBlock get block => lineCount == 0 || missing.isEmpty
       ? InvoiceIssueBlock.none
-      : missing.contains('invoice_feature_disabled')
+      : missing.contains(InvoiceMissing.invoiceFeatureDisabled.wire)
       ? InvoiceIssueBlock.disabled
-      : missing.contains('vat_treatment_unreviewed')
+      : missing.contains(InvoiceMissing.vatTreatmentUnreviewed.wire)
       ? InvoiceIssueBlock.external
       : InvoiceIssueBlock.missing;
 

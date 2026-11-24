@@ -11,6 +11,7 @@ import '../../../../core/ui/inline_banner.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/issue_month_readiness.dart' show isBusinessEssential;
 import '../../domain/invoice_issue_readiness.dart';
+import '../../domain/invoice_missing.dart';
 import '../invoice_issue_block_text.dart';
 import 'invoice_missing_sales_tax.dart';
 
@@ -30,7 +31,9 @@ class InvoiceMissingBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ownFacts = missing.any(
-      (k) => isBusinessEssential(k) && k != 'invoice_feature_disabled',
+      (k) =>
+          isBusinessEssential(k) &&
+          InvoiceMissing.fromWire(k) != InvoiceMissing.invoiceFeatureDisabled,
     );
     return InlineBanner(
       key: const ValueKey('invoice-missing-essentials'),

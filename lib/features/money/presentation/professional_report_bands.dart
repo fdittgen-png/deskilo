@@ -16,11 +16,17 @@ ReportBands professionalReportBands({
   // them rather than replacing them with a generic management header.
   if (kind.slot is ReportRootSlot ||
       kind.slot is ReportProformaSlot ||
-      kind.isReminder || kind.id == 'vat_declaration' ||
-      // #4166 — a quote states its own reference, date and validity.
-      kind.id == 'quote' ||
-      kind.id == 'bi_analytics' || kind.id == 'workspace_configuration' ||
-      bookReportKinds.contains(kind.id) || kind.id == 'bank_reconciliation') {
+      kind.isReminder ||
+      bookReportKinds.contains(kind.id) ||
+      switch (kind.document) {
+        // #4166 — a quote states its own reference, date and validity.
+        ReportDocument.vatDeclaration ||
+        ReportDocument.quote ||
+        ReportDocument.biAnalytics ||
+        ReportDocument.workspaceConfiguration ||
+        ReportDocument.bankReconciliation => true,
+        _ => false,
+      }) {
     return content;
   }
   final title = reportKindLabel(l10n, kind);
@@ -42,12 +48,12 @@ ReportBands professionalReportBands({
     body: content.body,
     // Operational summaries and badge sheets must not request payment
     // or claim statutory late-payment penalties merely by sharing a style.
-    footer:
-        kind.id == 'agreement' ||
-            kind.id == 'coa' ||
-            kind.id == 'badges' ||
-            kind.id == 'space_codes'
-        ? content.footer
-        : '> {{ workspace }}\n> {{ workspace_address }}',
+    footer: switch (kind.document) {
+      ReportDocument.agreement ||
+      ReportDocument.coa ||
+      ReportDocument.badges ||
+      ReportDocument.spaceCodes => content.footer,
+      _ => '> {{ workspace }}\n> {{ workspace_address }}',
+    },
   );
 }

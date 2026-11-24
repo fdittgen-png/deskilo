@@ -246,5 +246,45 @@
   "subprocessDeliveryDesc": "Connect push, WhatsApp and electronic invoice delivery.",
   "@subprocessDeliveryDesc": {
     "description": "Shown as the text in process names (workspace)."
+  },
+  "processGoodsStock": "Goods & stock",
+  "@processGoodsStock": {
+    "description": "Shown as the title in process names (workspace)."
+  },
+  "subprocessStockItems": "Items and units",
+  "@subprocessStockItems": {
+    "description": "Shown as the title in process names (workspace)."
+  },
+  "subprocessStockMovements": "Receiving and movements",
+  "@subprocessStockMovements": {
+    "description": "Shown as the title in process names (workspace)."
+  },
+  "subprocessStockControl": "Counts and replenishment",
+  "@subprocessStockControl": {
+    "description": "Shown as the title in process names (workspace)."
+  },
+  "subprocessStockTracking": "Traceability",
+  "@subprocessStockTracking": {
+    "description": "Shown as the title in process names (workspace)."
+  },
+  "processGoodsStockDesc": "Keep, move, count and trace the goods the business sells.",
+  "@processGoodsStockDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
+  "subprocessStockItemsDesc": "Items, item groups, units of measure and handling units.",
+  "@subprocessStockItemsDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
+  "subprocessStockMovementsDesc": "Receive deliveries, take goods out and handle returns.",
+  "@subprocessStockMovementsDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
+  "subprocessStockControlDesc": "Count stock, schedule cycle counts and reorder in time.",
+  "@subprocessStockControlDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
+  "subprocessStockTrackingDesc": "Lots, expiry, scanning and tags that trace each piece.",
+  "@subprocessStockTrackingDesc": {
+    "description": "Shown as the text in process names (workspace)."
   }
 }

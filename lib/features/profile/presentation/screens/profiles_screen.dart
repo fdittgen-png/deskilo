@@ -13,7 +13,7 @@ import '../../../../core/text/initials.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../core/theme/status_colors.dart';
-import '../../../../core/ui/inline_banner.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../directory/presentation/account_portal_entry.dart';
@@ -183,7 +183,8 @@ class ProfilesScreen extends ConsumerWidget {
     // #1650 — a list that could not be fetched is not an empty list: the
     // router sends a member here rather than to onboarding, and the
     // screen says so and offers the retry instead of "Add a profile".
-    final unavailable = workspacesAsync.hasError && !workspacesAsync.hasValue;
+    final failure = workspacesAsync.hasValue ? null : workspacesAsync.error;
+    final unavailable = failure != null;
     final memberships = ref.watch(myMembershipsProvider).value ?? const [];
     final active = ref.watch(currentWorkspaceProvider).value;
     final defaultId = ref.watch(defaultWorkspaceIdProvider).value;
@@ -217,18 +218,16 @@ class ProfilesScreen extends ConsumerWidget {
           const EdgeInsets.only(bottom: kFabSafeBottom),
         ),
         children: [
-          if (unavailable)
-            InlineBanner(
+          if (failure != null)
+            ReadFailureBanner(
               key: const ValueKey('profiles-unavailable'),
-              icon: Icons.cloud_off_outlined,
-              text: l10n.profilesUnavailable,
-              actionLabel: l10n.commonRetry,
+              error: failure,
               // `refresh`, not `invalidate`: invalidate defers the rebuild
               // to the next frame, and with the router listening to this
               // keepAlive provider a deferred rebuild out of an error left
               // a notification unflushed at dispose (Riverpod 3.3.1 asserts
               // `_skippedNotification == null`); refresh rebuilds on the spot.
-              onAction: () => unawaited(ref.refresh(myWorkspacesProvider.future)),
+              onRetry: () => unawaited(ref.refresh(myWorkspacesProvider.future)),
             ),
           if (workspacesAsync.isLoading && !workspacesAsync.hasValue)
             const LinearProgressIndicator(),

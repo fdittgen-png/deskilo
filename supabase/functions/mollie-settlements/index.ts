@@ -20,6 +20,7 @@
 // spec: docs.mollie.com "List settlements" / "Get settlement" — field names as
 // documented, not verified against a live account.
 
+import { env as readEnv, KEYS } from "../_shared/config.ts";
 import { refuseDelegated } from "../_shared/delegated.ts";
 import { CORS, preflight } from "../_shared/cors.ts";
 import { recorderOf, scanSettlements } from "../_shared/mollie_settlements.ts";
@@ -57,12 +58,12 @@ export type Deps = {
 
 const defaultDeps: Deps = {
   caller: (authorization) =>
-    createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_ANON_KEY")!, {
+    createClient(readEnv(KEYS.supabaseUrl)!, readEnv(KEYS.supabaseAnonKey)!, {
       global: { headers: { Authorization: authorization } },
     }) as unknown as Db,
   service: () =>
-    createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!) as unknown as Db,
-  env: (name) => Deno.env.get(name),
+    createClient(readEnv(KEYS.supabaseUrl)!, readEnv(KEYS.supabaseServiceRoleKey)!) as unknown as Db,
+  env: readEnv,
   fetch: (input, init) => fetch(input, init),
 };
 

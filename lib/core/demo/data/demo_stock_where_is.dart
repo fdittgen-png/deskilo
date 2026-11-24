@@ -8,7 +8,6 @@ import 'package:deskilo/features/stock/domain/stock_page.dart';
 import 'package:deskilo/features/stock/domain/stock_where_is.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
-import '../../codes/dk_code.dart';
 import 'demo_stock_ledger.dart';
 import 'demo_stock_tags.dart';
 
@@ -23,7 +22,7 @@ class DemoStockWhereIs implements StockWhereIs {
   @override
   Future<WhereIsAnswer> whereIs(String workspaceId, String itemId, {String? lotId, DateTime? at}) async {
     final item = _ledger.mine(workspaceId) ? _ledger.itemOf(itemId) : null;
-    if (item == null) throw const StockConfigRefused('item_id', DkCode.dkg04);
+    if (item == null) throw const StockConfigRefused('item_id', StockRefusal.itemUnknown);
     final places = await _ledger.placeConfigs();
     final moves = [
       for (final m in _ledger.movements)

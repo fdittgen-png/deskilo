@@ -1,0 +1,10 @@
+{
+  "@@locale": "de",
+  "instanceErrorReports": "Fehlerberichte",
+  "instanceErrorReportsHint": "Was die Apps gesendet haben, als etwas schiefging, die neuesten zuerst. Mitglieder eines Unternehmens sehen sie nie.",
+  "instanceErrorReportsNone": "Es ist noch kein Fehlerbericht eingegangen.",
+  "instanceErrorReportsOlder": "Ältere Berichte",
+  "instanceErrorReportFacts": "{version} · {platform} · {time}",
+  "instanceErrorReportCode": "Code {code}",
+  "instanceErrorReportStack": "Stack, von der App geschwärzt"
+}

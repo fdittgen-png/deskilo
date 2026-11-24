@@ -20,6 +20,7 @@
 // session. The intent is opened AS that caller; credentials and the order-id
 // patch use the privileged client.
 
+import { env as readEnv, KEYS } from "../_shared/config.ts";
 import { refuseDelegated } from "../_shared/delegated.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
 import { CORS, preflight } from "../_shared/cors.ts";
@@ -53,8 +54,8 @@ export function handle(req: Request): Promise<Response> {
   return handleWith(
     req,
     createClient(
-      Deno.env.get("SUPABASE_URL")!,
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+      readEnv(KEYS.supabaseUrl)!,
+      readEnv(KEYS.supabaseServiceRoleKey)!,
     ),
   );
 }
@@ -321,8 +322,8 @@ export async function handleWith(
 /** The client that opens the intent as the caller (#1450). */
 function asCaller(token: string) {
   return createClient(
-    Deno.env.get("SUPABASE_URL")!,
-    Deno.env.get("SUPABASE_ANON_KEY")!,
+    readEnv(KEYS.supabaseUrl)!,
+    readEnv(KEYS.supabaseAnonKey)!,
     {
       global: { headers: { Authorization: `Bearer ${token}` } },
       auth: { persistSession: false, autoRefreshToken: false },

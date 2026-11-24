@@ -139,6 +139,9 @@ class _Config implements StockConfigCommands {
   }
 
   @override
+  Future<StockSaved> createItem(String workspaceId, NewStockItemDraft item, String requestId) => throw UnimplementedError('not used here');
+
+  @override
   Future<StockSaved> savePlace(String workspaceId, {required StockPlaceDraft place, required String requestId, String? placeId, int? expectedRevision}) async {
     if (failWith case final StockConfigFailure e) throw e;
     savedPlaces.add((place: place.toJson(), id: placeId, rev: expectedRevision));
@@ -302,7 +305,7 @@ void main() {
       });
 
       testWidgets('a refused home place says why and keeps the sheet', (tester) async {
-        final registry = _Registry()..failWith = const StockConfigRefused('home_location_id', 'home_invalid');
+        final registry = _Registry()..failWith = const StockConfigRefused('home_location_id', StockRefusal.homeInvalid);
         await _open(tester, _Config(), size, held: _manage, registry: registry);
         await tester.tap(find.byKey(const ValueKey('stock-home-i-Tea')));
         await _settle(tester);
@@ -345,7 +348,7 @@ void main() {
         await tester.tap(find.byKey(const ValueKey('stock-item-save')));
         await _settle(tester);
         expect(find.text(_en.stockEditStale), findsOneWidget);
-        config.failWith = const StockConfigRefused('codes[0].code', 'code_duplicate');
+        config.failWith = const StockConfigRefused('codes[0].code', StockRefusal.codeDuplicate);
         await tester.tap(find.byKey(const ValueKey('stock-item-save')));
         await _settle(tester);
         expect(find.text(_en.stockReasonCodeDuplicate), findsOneWidget);
@@ -448,7 +451,7 @@ void main() {
       });
 
       testWidgets('a place refused for its code says why and keeps the sheet', (tester) async {
-        final config = _Config()..failWith = const StockConfigRefused('code', 'code_duplicate');
+        final config = _Config()..failWith = const StockConfigRefused('code', StockRefusal.codeDuplicate);
         await _open(tester, config, size, held: _manage, screen: const StockPlacesScreen());
         await _settle(tester);
         await tester.tap(find.byKey(const ValueKey('stock-place-p-MAIN')));

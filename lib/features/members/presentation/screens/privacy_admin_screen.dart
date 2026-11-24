@@ -18,7 +18,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/adaptive/page_measures.dart';
 import '../../../../core/ui/adaptive/window_class.dart';
-import '../../../../core/ui/inline_banner.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../profile/application/privacy_admin.dart';
@@ -102,12 +102,10 @@ class _Body extends ConsumerWidget {
             const SizedBox(height: AppSpacing.lg),
             requests.when(
               loading: () => const LoadingView(),
-              error: (e, _) => InlineBanner(
+              error: (e, _) => ReadFailureBanner(
                 key: const ValueKey('privacy-admin-load-failed'),
-                icon: Icons.error_outline,
-                text: l10n.privacyAdminLoadFailed,
-                actionLabel: l10n.commonRetry,
-                onAction: () =>
+                error: e,
+                onRetry: () =>
                     ref.invalidate(workspaceRightsRequestsProvider(workspaceId)),
               ),
               data: (list) => list.isEmpty
