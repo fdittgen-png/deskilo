@@ -31,7 +31,6 @@ const _notUsed = {
   913, // billing access (#4164 B1), done in 0910-0911
   914, // billing access (#4164 B1), done in 0910-0911
   924, // reserved with 0922-0923 (#4432), not needed
-  926, // reserved by a branch not merged yet: it takes this off
   927, // reserved by a branch not merged yet: it takes this off
   928, // reserved by a branch not merged yet: it takes this off
   929, // reserved by a branch not merged yet: it takes this off

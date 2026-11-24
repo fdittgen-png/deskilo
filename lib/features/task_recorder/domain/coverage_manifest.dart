@@ -2,8 +2,7 @@
 //
 // #1881 — the frozen coverage manifest: every route the router registers, and what the task recorder does on it.
 //
-//   recorded — instrumented: its own seams name the steps; recorder — the
-//   recorder's own screens, never recorded; excluded — a protected screen
+//   recorded — instrumented: its own seams name the steps; recorder — the recorder's own screens, never recorded; excluded — a protected screen
 //   (sign-in, payment, messages, providers, secrets, identity, operator):
 //   one marker, its category, nothing of its contents; planned — a form
 //   with no seams of its own YET, noted by the generic layer (#2142), its
