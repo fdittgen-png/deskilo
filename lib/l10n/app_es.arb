@@ -19762,6 +19762,7 @@
   "@settingUnitPerHour": {
     "description": "#2485 settings: Unit."
   },
+  "settingUnitPlaceCode": "código de ubicación",
   "settingUnitQuarters": "trimestres",
   "settingUnitRequests": "consultas",
   "@settingUnitRequests": {
@@ -23902,7 +23903,6 @@
   "tillDaySessionLine": "{till}: esperado {expected}, contado {counted}, diferencia {difference}",
   "tillDaySessionReason": "Motivo: {reason}",
   "tillDaySessions": "Sesiones",
-  "tillDayTenderCard": "Tarjeta",
   "tillDayTenderCash": "Efectivo",
   "tillDayTenderOther": "Otro",
   "tillDayTitle": "Cierre del día",
@@ -24189,7 +24189,7 @@
   },
   "unblockAction": "Desbloquear",
   "unknownWireInvoiceKind": "Un tipo que esta versión de la aplicación no conoce",
-  "unknownWireKindFeatures": "Este tipo también ajusta {count, plural, =1{una función} other{{count} funciones}} que esta versión de la aplicación no conoce. Actualice la aplicación para elegirlo.",
+  "unknownWireKindFeatures": "Este tipo también ajusta {count, plural, one{una función} other{{count} funciones}} que esta versión de la aplicación no conoce. Actualice la aplicación para elegirlo.",
   "unknownWireReadOnly": "Esta versión de la aplicación no sabe qué es este registro: puede leerse, no modificarse. Actualice la aplicación para trabajar con él.",
   "unknownWireValue": "{value} (desconocido para esta versión de la aplicación)",
   "unreadableRowsNotice": "{count, plural, one{No se pudo mostrar 1 entrada: esta versión de la aplicación no la conoce. Actualiza la aplicación para verla.} other{No se pudieron mostrar {count} entradas: esta versión de la aplicación no las conoce. Actualiza la aplicación para verlas.}}",

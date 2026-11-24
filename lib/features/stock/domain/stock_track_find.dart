@@ -132,7 +132,7 @@ class TrackFindAnswer {
   factory TrackFindAnswer.fromJson(Object? json) {
     final r = JsonReader.of(json, context: 'stock_trace_find');
     // the server answers null pieces where the business does not use tags
-    final pieces = r.json['pieces'] is List ? r.listOrAbsent('pieces') : null;
+    final pieces = r.raw('pieces') is List ? r.listOrAbsent('pieces') : null;
     return TrackFindAnswer(
       code: r.stringOr('code'),
       lots: [for (final l in r.requiredList('lots')) TrackFindLot.fromJson(l)],

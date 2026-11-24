@@ -87,7 +87,6 @@
   "tillDayReceiptRange": "Tickets {first} a {last}",
   "tillDayByTender": "Cobros por medio de pago",
   "tillDayTenderCash": "Efectivo",
-  "tillDayTenderCard": "Tarjeta",
   "tillDayTenderOther": "Otro",
   "tillDayAmountLine": "{label}: {amount}",
   "tillDayByRate": "Ventas por tipo de impuesto",

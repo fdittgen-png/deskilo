@@ -19762,6 +19762,7 @@
   "@settingUnitPerHour": {
     "description": "#2485 settings: Unit."
   },
+  "settingUnitPlaceCode": "Lagerortcode",
   "settingUnitQuarters": "Quartale",
   "settingUnitRequests": "Anfragen",
   "@settingUnitRequests": {
@@ -23902,7 +23903,6 @@
   "tillDaySessionLine": "{till}: erwartet {expected}, gezählt {counted}, Differenz {difference}",
   "tillDaySessionReason": "Grund: {reason}",
   "tillDaySessions": "Sitzungen",
-  "tillDayTenderCard": "Karte",
   "tillDayTenderCash": "Bargeld",
   "tillDayTenderOther": "Sonstige",
   "tillDayTitle": "Tagesabschluss",
@@ -24189,7 +24189,7 @@
   },
   "unblockAction": "Blockierung aufheben",
   "unknownWireInvoiceKind": "Eine Art, die diese App-Version nicht kennt",
-  "unknownWireKindFeatures": "Diese Art stellt außerdem {count, plural, =1{eine Funktion} other{{count} Funktionen}} ein, die diese App-Version nicht kennt. Aktualisieren Sie die App, um sie zu wählen.",
+  "unknownWireKindFeatures": "Diese Art stellt außerdem {count, plural, one{eine Funktion} other{{count} Funktionen}} ein, die diese App-Version nicht kennt. Aktualisieren Sie die App, um sie zu wählen.",
   "unknownWireReadOnly": "Diese App-Version weiß nicht, was dieser Eintrag ist: Er kann gelesen, aber nicht geändert werden. Aktualisieren Sie die App, um damit zu arbeiten.",
   "unknownWireValue": "{value} (dieser App-Version nicht bekannt)",
   "unreadableRowsNotice": "{count, plural, one{1 Eintrag konnte nicht angezeigt werden: Diese Version der App kennt ihn nicht. Aktualisiere die App, um ihn zu sehen.} other{{count} Einträge konnten nicht angezeigt werden: Diese Version der App kennt sie nicht. Aktualisiere die App, um sie zu sehen.}}",

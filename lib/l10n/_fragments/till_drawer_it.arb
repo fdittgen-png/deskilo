@@ -87,7 +87,6 @@
   "tillDayReceiptRange": "Scontrini da {first} a {last}",
   "tillDayByTender": "Incassi per mezzo di pagamento",
   "tillDayTenderCash": "Contanti",
-  "tillDayTenderCard": "Carta",
   "tillDayTenderOther": "Altro",
   "tillDayAmountLine": "{label}: {amount}",
   "tillDayByRate": "Vendite per aliquota",

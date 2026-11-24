@@ -36,7 +36,7 @@ as $fn$
                               coalesce((p_line ->> 'vat_percent')::numeric, 0))
   end;
 $fn$;
-revoke execute on function public.invoice_line_net_cents(jsonb) from public, anon;
+revoke execute on function public.invoice_line_net_cents(jsonb) from public, anon, authenticated;
 
 create or replace function pg_temp.anchor_replace(p_def text, p_old text, p_new text)
 returns text

@@ -26,7 +26,7 @@ Future<void> showDayReport(BuildContext context, DayReport report, {required Str
 
 String _tenderName(AppLocalizations l10n, String kind) => switch (kind) {
   'cash' => l10n.tillDayTenderCash,
-  'card' => l10n.tillDayTenderCard,
+  'card' => l10n.paymentMethodCard,
   _ => l10n.tillDayTenderOther,
 };
 

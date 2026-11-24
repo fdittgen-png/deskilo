@@ -27,6 +27,7 @@ class Mirror {
 }
 
 const _service = 'lib/features/money/domain/service_item.dart';
+const _drawer = 'lib/features/money/domain/till_drawer_rules.dart';
 
 const _mirrors = <Mirror>[
   Mirror('MemberNoteRules.maxLength (0089)', 'lib/features/workspace/domain/member_note.dart', 'maxLength',
@@ -37,6 +38,10 @@ const _mirrors = <Mirror>[
   Mirror('ServiceLimits.maxMinutes (0711)', _service, 'maxMinutes', r'duration_minutes between \d+ and (\d+)'),
   Mirror('ServiceLimits.descriptionMaxLength (0711)', _service, 'descriptionMaxLength', r'char_length\(description\) <= (\d+)'),
   Mirror('ServiceLimits.categoryMaxLength (0711)', _service, 'categoryMaxLength', r'char_length\(category\) between 1 and (\d+)'),
+  Mirror('kTillNameMaxLength (0907)', _drawer, 'kTillNameMaxLength', r'name text not null check \(char_length\(btrim\(name\)\) between 1 and (\d+)\)',
+      migration: '0907'),
+  Mirror('kDrawerReasonMaxLength (0907)', _drawer, 'kDrawerReasonMaxLength',
+      r'difference_reason is null or char_length\(difference_reason\) <= (\d+)', migration: '0907'),
 ];
 
 /// RATCHET: numeric bound constants of `lib/` with no mirror row and no `// not-mirrored:` marker.

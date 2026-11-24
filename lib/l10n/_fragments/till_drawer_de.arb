@@ -87,7 +87,6 @@
   "tillDayReceiptRange": "Belege {first} bis {last}",
   "tillDayByTender": "Einnahmen nach Zahlungsart",
   "tillDayTenderCash": "Bargeld",
-  "tillDayTenderCard": "Karte",
   "tillDayTenderOther": "Sonstige",
   "tillDayAmountLine": "{label}: {amount}",
   "tillDayByRate": "Verkäufe nach Steuersatz",

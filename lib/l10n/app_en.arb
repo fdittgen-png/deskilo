@@ -42980,6 +42980,10 @@
   "@settingUnitPerHour": {
     "description": "#2485 settings: Unit."
   },
+  "settingUnitPlaceCode": "place code",
+  "@settingUnitPlaceCode": {
+    "description": "#4433 the unit of the selling place setting: a place is named by its code"
+  },
   "settingUnitQuarters": "quarters",
   "@settingUnitQuarters": {
     "description": "#2578 settings: unit of a count of quarters."
@@ -53075,10 +53079,6 @@
   "@tillDaySessions": {
     "description": "#4367 till sessions: the cash drawer"
   },
-  "tillDayTenderCard": "Card",
-  "@tillDayTenderCard": {
-    "description": "#4367 till sessions: the cash drawer"
-  },
   "tillDayTenderCash": "Cash",
   "@tillDayTenderCash": {
     "description": "#4367 till sessions: the cash drawer"
@@ -54085,7 +54085,7 @@
   "@unknownWireInvoiceKind": {
     "description": "#3730 the kind of an invoice whose kind a newer server sent and this app does not know."
   },
-  "unknownWireKindFeatures": "This kind also sets {count, plural, =1{one feature} other{{count} features}} this version of the app does not know. Update the app to choose it.",
+  "unknownWireKindFeatures": "This kind also sets {count, plural, one{one feature} other{{count} features}} this version of the app does not know. Update the app to choose it.",
   "@unknownWireKindFeatures": {
     "description": "#3730 the business kind chooser: the chosen kind's profile names features this app does not know, so saving it is refused.",
     "placeholders": {

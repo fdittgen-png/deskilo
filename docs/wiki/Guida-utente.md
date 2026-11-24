@@ -2522,6 +2522,7 @@ Vuole trovare una fattura, vedere se è pagata e ottenerne il PDF.
 - Tocchi l'icona del pagamento su una fattura aperta per passare a **Pagamenti**.
 - Se l'elenco è vuoto, lo spazio non Le ha ancora fatturato nulla; fattura un mese solo dopo la sua chiusura.
 - Le fatture non si possono modificare. Una fattura sbagliata è contrassegnata come **Errata** e sostituita da una nuova, e quella errata scompare dal Suo elenco. Quando più fatture vengono raggruppate in una, la fattura raggruppata le sostituisce nel suo elenco.
+- Una riga fatturata a ore, a giorni o a peso (ad esempio *1.5 h a 90 EUR*, oppure *0.75 kg a 12.5 EUR per 10 kg*) mostra sotto la descrizione la quantità esatta, la sua unità e il prezzo inserito, come li stampa il PDF; il suo importo è quello fissato all'emissione della fattura. Una riga registrata da una versione più recente dell'app è mostrata così com'è e indica che non può essere usata qui: per lavorarci occorre aggiornare l'app.
 
 **Vedi anche:** [Pagare quanto dovuto](#pagare-quanto-dovuto) · [Le Sue finanze in tutti gli spazi](#le-sue-finanze-in-tutti-gli-spazi)
 

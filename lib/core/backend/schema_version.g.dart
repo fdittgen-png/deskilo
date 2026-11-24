@@ -126,4 +126,4 @@ final class SchemaCompatibilityProvider
 }
 
 String _$schemaCompatibilityHash() =>
-    r'b25618f97d2ea7425ee1f521dd7d2c4a5943aa49';
+    r'bb0e3f1162ab4e44bc4ca59efc38049a527ba169';

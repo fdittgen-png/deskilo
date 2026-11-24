@@ -352,6 +352,7 @@ String settingUnitLabel(AppLocalizations l10n, String unit) => switch (unit) {
       'years' => l10n.settingUnitYears,
       'currency units' => l10n.settingUnitCurrencyUnits,
       'rows' => l10n.settingUnitRows,
+      'place code' => l10n.settingUnitPlaceCode,
       'requests' => l10n.settingUnitRequests,
       'attempts' => l10n.settingUnitAttempts,
       'per hour' => l10n.settingUnitPerHour,
