@@ -106,3 +106,4 @@ fileLength lib/core/demo/data/money_repository.dart // #4165 the Demo's standalo
 fileLength lib/features/task_recorder/domain/coverage_manifest.dart // #4165 one route row of the composer; the manifest is one list by design
 fileLength lib/features/workspace/domain/feature_manifest_part3.dart // #4165 one manifest entry of the standaloneInvoicing feature; the part is one map by design
 setState lib/features/money/presentation/standalone/standalone_invoice_screen.dart // #4165 the composer holds one draft, its checked revision, its request id and its outcome on one screen; a controller is the next step
+fileLength lib/core/demo/data/demo_till.dart // #4185 the Demo's till is one in-memory server: its readiness registry, offline sales and the counter's book (card tenders, corrections, refunds, returns) share one state, so the port cannot be split without a second copy of it

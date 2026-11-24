@@ -66,6 +66,9 @@ class TillSession {
 
   _Attempt? _draftAttempt;
   _Attempt? _finalAttempt;
+  _Attempt? _cardAttempt;
+  _Attempt? _answerAttempt;
+  List<TillTender>? _tenders;
   int _givenMinor = 0;
 
   /// The last draft the server answered: the receipt a new pricing continues.
@@ -88,7 +91,7 @@ class TillSession {
   }
 
   /// Whether the basket may still be changed: not once it is sold, and not while a sale is waiting to be confirmed.
-  bool get _open => _now.sold == null && !_now.unconfirmed;
+  bool get _open => _now.sold == null && !_now.unconfirmed && _now.card == null;
 
   String _linesKey(List<TillLine> lines) => [for (final l in lines) '${l.itemId}:${l.quantity}:${l.pieces.join('+')}'].join(',');
 
@@ -225,7 +228,63 @@ class TillSession {
       return;
     }
     _givenMinor = givenMinor;
-    await _finalize(draft);
+    await _finalize(draft, [TillTender(kind: 'cash', amountMinor: total)]);
+  });
+
+  /// #4185 -- asks the terminal for the total by card: the server records the authorization (its key is what the
+  /// terminal is given), and the till waits for the terminal's answer. A retry after a lost answer goes under the same
+  /// request id, so the authorization is recorded once.
+  Future<void> payCard() => _serial(() async {
+    final draft = _now.draft;
+    if (draft == null || !_open) return;
+    final total = draft.totals.grossMinor;
+    final key = '${draft.receiptId}|${draft.revision}|card:$total';
+    final prior = _cardAttempt;
+    final attempt = prior != null && prior.key == key ? prior : _Attempt(key, _requestIds());
+    _cardAttempt = attempt;
+    _set(_now.copyWith(problem: () => null));
+    try {
+      final asked = await port.requestCard(workspaceId, requestId: attempt.requestId, receiptId: draft.receiptId, amountMinor: total).timeout(callTimeout);
+      _set(_now.copyWith(card: () => asked));
+    } on Object catch (e, st) {
+      TraceLogger.instance.error('money', 'till card authorization not recorded', error: e, stackTrace: st);
+      if (serverAnswered(e)) _cardAttempt = null;
+      _set(_now.copyWith(problem: () => e));
+    }
+  });
+
+  /// #4185 -- the terminal's answer to the card asked: `accepted` makes the sale with it, `refused` leaves the sale to be
+  /// paid, `unknown` (no answer, the terminal is off) leaves it waiting in the receipts for someone who may see the
+  /// finances. The same answer again goes under the same request id.
+  Future<void> cardAnswer(String outcome, {String providerRef = ''}) => _serial(() async {
+    final card = _now.card;
+    final draft = _now.draft;
+    if (card == null || draft == null || _now.cardUnknown || _now.sold != null) return;
+    final key = '${card.tenderId}|$outcome|$providerRef';
+    final prior = _answerAttempt;
+    final attempt = prior != null && prior.key == key ? prior : _Attempt(key, _requestIds());
+    _answerAttempt = attempt;
+    _set(_now.copyWith(problem: () => null));
+    try {
+      final answer = await port
+          .resolveCard(workspaceId, requestId: attempt.requestId, tenderId: card.tenderId, outcome: outcome, providerRef: providerRef)
+          .timeout(callTimeout);
+      _answerAttempt = null;
+      switch (answer.state) {
+        case 'accepted':
+          _givenMinor = draft.totals.grossMinor;
+          await _finalize(draft, [TillTender(kind: 'card', amountMinor: card.amountMinor, tenderId: card.tenderId)]);
+        case 'refused':
+          _cardAttempt = null;
+          _set(_now.copyWith(card: () => null, problem: () => const TillCardDeclined()));
+        default:
+          _set(_now.withCardUnknown(value: true));
+      }
+    } on Object catch (e, st) {
+      TraceLogger.instance.error('money', 'till card answer not recorded', error: e, stackTrace: st);
+      if (serverAnswered(e)) _answerAttempt = null;
+      _set(_now.copyWith(problem: () => e));
+    }
   });
 
   /// Sends the sale again, under the request id it has: what a sale whose answer was lost does. The server answers with
@@ -236,10 +295,13 @@ class TillSession {
     await _finalize(draft);
   });
 
-  Future<void> _finalize(TillDraft draft) async {
+  /// Makes the sale with [tenders]; none given is the sale already sent, confirmed as it was.
+  Future<void> _finalize(TillDraft draft, [List<TillTender>? tenders]) async {
     final total = draft.totals.grossMinor;
+    final sent = tenders ?? _tenders ?? [TillTender(kind: 'cash', amountMinor: total)];
+    _tenders = sent;
     _set(_now.copyWith(problem: () => null));
-    final key = '${draft.receiptId}|${draft.revision}|cash:$total';
+    final key = '${draft.receiptId}|${draft.revision}|${[for (final t in sent) t.tenderId ?? '${t.kind}:${t.amountMinor}'].join(',')}';
     final prior = _finalAttempt;
     final attempt = prior != null && prior.key == key ? prior : _Attempt(key, _requestIds());
     _finalAttempt = attempt;
@@ -250,7 +312,7 @@ class TillSession {
             requestId: attempt.requestId,
             receiptId: draft.receiptId,
             expectedRevision: draft.revision,
-            tenders: [TillTender(kind: 'cash', amountMinor: total)],
+            tenders: sent,
           )
           .timeout(callTimeout);
       _finalAttempt = null;
@@ -258,7 +320,7 @@ class TillSession {
         TraceLogger.instance.warn('money', 'till sale ${sold.number} made after the till was closed');
         return;
       }
-      _set(_now.copyWith(sold: () => sold, change: () => _givenMinor - total).withUnconfirmed(value: false));
+      _set(_now.copyWith(sold: () => sold, change: () => _givenMinor - total, card: () => null).withUnconfirmed(value: false));
     } on Object catch (e, st) {
       TraceLogger.instance.error('money', 'till sale not confirmed', error: e, stackTrace: st);
       final refusal = knownRefusalOf(e);
@@ -269,6 +331,11 @@ class TillSession {
       }
       // The server answered: the sale was not made, whatever it said.
       _finalAttempt = null;
+      if (sent.any((t) => t.tenderId != null)) {
+        // The card's money is taken and the sale refused: it is not taken again here, the receipts settle it.
+        _set(_now.copyWith(problem: () => e).withCardUnknown(value: true).withUnconfirmed(value: false));
+        return;
+      }
       _set(_now.copyWith(problem: () => e).withUnconfirmed(value: false));
       if (refusal == KnownRefusal.counterChanged || refusal == KnownRefusal.counterNotOpen) {
         // This receipt is not the one to sell: the basket is priced again as it is, and says why if that fails too.
@@ -285,9 +352,12 @@ class TillSession {
 
   /// The next customer: an empty basket and nothing left of the last sale.
   void next() {
-    if (_queued > 0 || _now.unconfirmed) return;
+    if (_queued > 0 || _now.unconfirmed || (_now.card != null && !_now.cardUnknown && _now.sold == null)) return;
     _draftAttempt = null;
     _finalAttempt = null;
+    _cardAttempt = null;
+    _answerAttempt = null;
+    _tenders = null;
     _last = null;
     _offlineMode.clearSale();
     _set(const TillState());

@@ -233,14 +233,32 @@ class TillDraft {
   }
 }
 
-/// A tender: `cash` or `other`, an exact amount in minor units.
+/// A tender: `cash` or `other`, an exact amount in minor units; or (#4185) an accepted card authorization of the sale,
+/// named by its [tenderId] (the server knows its amount).
 class TillTender {
-  const TillTender({required this.kind, required this.amountMinor});
+  const TillTender({required this.kind, required this.amountMinor, this.tenderId});
 
   final String kind;
   final int amountMinor;
+  final String? tenderId;
 
-  Map<String, Object?> toJson() => {'kind': kind, 'amount_minor': amountMinor};
+  Map<String, Object?> toJson() => tenderId != null ? {'tender_id': tenderId} : {'kind': kind, 'amount_minor': amountMinor};
+}
+
+/// #4185 -- a card authorization asked of the terminal for a sale: the server's record of it, before any answer.
+class TillCardAsked {
+  const TillCardAsked({required this.tenderId, required this.providerKey, required this.amountMinor});
+
+  final String tenderId;
+
+  /// The key the authorization is asked under: typed on the terminal, and what its journal is searched for.
+  final String providerKey;
+  final int amountMinor;
+
+  factory TillCardAsked.fromJson(Object? json) {
+    final r = JsonReader.of(json, context: 'counter_tender_request');
+    return TillCardAsked(tenderId: r.string('tender_id'), providerKey: r.stringOr('provider_key'), amountMinor: r.intOrNull('amount_minor') ?? 0);
+  }
 }
 
 /// #4436 -- a track ID a goods line took: a lot (its code as received, the quantity taken from it, in the item's
@@ -320,6 +338,12 @@ abstract interface class TillPort {
 
   /// #4184 -- the finalized receipt [receiptId] as its frozen document, read by the versioned reader.
   Future<CounterReceiptDocument> receipt(String workspaceId, String receiptId);
+  /// #4185 -- records that a card authorization of [amountMinor] is asked for the open draft [receiptId].
+  Future<TillCardAsked> requestCard(String workspaceId, {required String requestId, required String receiptId, required int amountMinor});
+
+  /// #4185 -- records the terminal's answer to [tenderId]: `accepted`, `refused` or `unknown`; answers the state and
+  /// whether the money waits for a reconciliation (`needed`).
+  Future<({String state, String? reconciliation})> resolveCard(String workspaceId, {required String requestId, required String tenderId, required String outcome, String providerRef = ''});
 }
 
 /// #4366 -- an item the till offers as a key: what a tap rings up.

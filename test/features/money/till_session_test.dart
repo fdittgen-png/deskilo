@@ -41,6 +41,14 @@ class _Port implements TillPort {
   final _made = <String, TillSold>{};
 
   @override
+  Future<TillCardAsked> requestCard(String workspaceId, {required String requestId, required String receiptId, required int amountMinor}) =>
+      throw UnimplementedError('this fake takes no card');
+
+  @override
+  Future<({String state, String? reconciliation})> resolveCard(String workspaceId, {required String requestId, required String tenderId, required String outcome, String providerRef = ''}) =>
+      throw UnimplementedError('this fake takes no card');
+
+  @override
   Future<TillReadiness> readiness(String workspaceId) => throw UnimplementedError();
 
   @override
@@ -355,6 +363,14 @@ class _OnceLost implements TillPort {
   final void Function() _markLost;
 
   List<_Call> get drafts => _inner.drafts;
+
+  @override
+  Future<TillCardAsked> requestCard(String workspaceId, {required String requestId, required String receiptId, required int amountMinor}) =>
+      _inner.requestCard(workspaceId, requestId: requestId, receiptId: receiptId, amountMinor: amountMinor);
+
+  @override
+  Future<({String state, String? reconciliation})> resolveCard(String workspaceId, {required String requestId, required String tenderId, required String outcome, String providerRef = ''}) =>
+      _inner.resolveCard(workspaceId, requestId: requestId, tenderId: tenderId, outcome: outcome, providerRef: providerRef);
 
   @override
   Future<TillReadiness> readiness(String workspaceId) => _inner.readiness(workspaceId);

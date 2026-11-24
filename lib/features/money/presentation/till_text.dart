@@ -27,6 +27,7 @@ String tillOperationName(AppLocalizations l10n, String operation) => switch (ope
 String tillProblemText(AppLocalizations l10n, Object problem) {
   if (problem is String) return problem;
   if (problem is TillCashShort) return l10n.tillCashShort;
+  if (problem is TillCardDeclined) return l10n.counterSaleCardDeclined;
   if (problem is TillOfflineNoPrice) return l10n.tillOfflineNoPrice;
   if (problem is OfflineRecordRefused) {
     return switch (problem.refusal) {
