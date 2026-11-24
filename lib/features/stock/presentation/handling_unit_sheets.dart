@@ -103,7 +103,7 @@ Future<void> showMakeUnitSheet(
         const FormGap(),
         AppDropdownField<String>(
           key: const ValueKey('stock-unit-item'),
-          label: l10n.stockUnitItem,
+          label: l10n.expenseSupplyItem,
           value: item,
           items: [for (final i in items) (i.id, i.name)],
           onChanged: (v) {
@@ -115,7 +115,7 @@ Future<void> showMakeUnitSheet(
         AppTextField(
           key: const ValueKey('stock-unit-quantity'),
           controller: fields['quantity'],
-          label: l10n.stockUnitQuantity,
+          label: l10n.purchasesQuantity,
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
           inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]'))],
         ),

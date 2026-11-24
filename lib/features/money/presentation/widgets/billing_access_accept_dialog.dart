@@ -116,7 +116,7 @@ class _AcceptDialogState extends State<_AcceptDialog> {
                 AppTextField(
                   key: const ValueKey('billing-access-code-field'),
                   controller: _code,
-                  label: l10n.billingAccessCodeField,
+                  label: l10n.spaceScanField,
                   enabled: preview == null && !_busy,
                   autofocus: true,
                   textInputAction: TextInputAction.done,

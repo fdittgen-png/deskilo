@@ -26,7 +26,6 @@
   "billingAccessEnter": "Utiliser un code de facturation",
   "billingAccessEnterTitle": "Lire les factures d'une entreprise",
   "billingAccessEnterIntro": "Une entreprise qui vous facture peut vous remettre un code. Il vous permet de lire, depuis votre compte, les factures établies à votre nom. Vous ne devenez pas membre.",
-  "billingAccessCodeField": "Code",
   "billingAccessCheck": "Vérifier le code",
   "billingAccessPreviewLine": "{business} vous invite à lire les factures établies à l'ordre de {name}.",
   "billingAccessPreviewUnnamed": "{business} vous invite à lire les factures qu'elle a établies à votre nom.",

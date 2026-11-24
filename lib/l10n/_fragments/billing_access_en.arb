@@ -134,10 +134,6 @@
   "@billingAccessEnterIntro": {
     "description": "the billing access of a customer to their own invoices (#4164)"
   },
-  "billingAccessCodeField": "Code",
-  "@billingAccessCodeField": {
-    "description": "the billing access of a customer to their own invoices (#4164)"
-  },
   "billingAccessCheck": "Check the code",
   "@billingAccessCheck": {
     "description": "the billing access of a customer to their own invoices (#4164)"
