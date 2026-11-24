@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #4436 (0933): the trace finds the sale from the track ID, and the track ID from the sale. A lot code as received, a
+-- #4436 (0942): the trace finds the sale from the track ID, and the track ID from the sale. A lot code as received, a
 -- label code or a tag answers its lots or pieces and the counter receipt lines that sold them; a receipt is named only to
 -- a finance reader; a sold line's chain names the track IDs it took; an unknown code answers nothing; an empty code, a
 -- member of another business and an assistant are refused. Rolled back.

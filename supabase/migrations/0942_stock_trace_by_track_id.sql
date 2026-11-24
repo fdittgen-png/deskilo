@@ -214,4 +214,4 @@ revoke execute on function public.stock_trace_chain_v1(uuid, uuid, uuid, uuid, u
 grant execute on function public.stock_trace_chain_v1(uuid, uuid, uuid, uuid, uuid, int) to authenticated;
 
 notify pgrst, 'reload schema';
-select public.set_deskilo_schema_version(933);
+select public.set_deskilo_schema_version(942);

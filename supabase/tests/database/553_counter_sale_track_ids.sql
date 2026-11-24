@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #4436 (0932): a sale of a traced good names the track ID it was received with. A lot-tracked item sold without a lot
+-- #4436 (0941): a sale of a traced good names the track ID it was received with. A lot-tracked item sold without a lot
 -- leaves from the lots on hand, the first to expire first and never an expired one, one movement per lot, each linked to
 -- its receipt line; the line and the receipt freeze the lot codes with their quantities, and the pieces with their tags;
 -- the finalize answers them and a replay answers the same; a later change of a lot never alters the issued receipt; the

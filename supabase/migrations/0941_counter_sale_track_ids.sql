@@ -364,4 +364,4 @@ revoke execute on function public.counter_receipt_finalize_v1(uuid, uuid, uuid, 
 grant execute on function public.counter_receipt_finalize_v1(uuid, uuid, uuid, int, jsonb) to authenticated;
 
 notify pgrst, 'reload schema';
-select public.set_deskilo_schema_version(932);
+select public.set_deskilo_schema_version(941);

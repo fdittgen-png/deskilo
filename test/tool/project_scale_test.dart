@@ -35,8 +35,14 @@ const _notUsed = {
   929, // reserved by a branch not merged yet: it takes this off
   930, // reserved by a branch not merged yet: it takes this off
   931, // reserved by a branch not merged yet: it takes this off
-  932, // reserved by a branch not merged yet: it takes this off
-  933, // reserved by a branch not merged yet: it takes this off
+  932, // reserved for #4436, renumbered above the applied baseline
+  933, // reserved for #4436, renumbered above the applied baseline
+  935, // reserved by a branch not merged yet: it takes this off
+  936, // reserved by a branch not merged yet: it takes this off
+  937, // reserved by a branch not merged yet: it takes this off
+  938, // reserved by a branch not merged yet: it takes this off
+  939, // reserved by a branch not merged yet: it takes this off
+  940, // reserved by a branch not merged yet: it takes this off
 };
 
 int _valueOf(List<Measure> all, String startsWith) => all
