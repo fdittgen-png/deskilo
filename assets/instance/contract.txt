@@ -3223,7 +3223,7 @@ routine public.counter_offline_actor(p_workspace_id uuid) -> uuid | function | d
 routine public.counter_offline_body_total(p_workspace_id uuid, p_body jsonb, p_digits integer) -> bigint | function | definer | stable | exec:service_role | body:2628b4f30ce6
 routine public.counter_offline_frozen_guard() -> trigger | function | invoker | volatile | exec:service_role | body:46b7fe95de2a
 routine public.counter_offline_gap_list(p_session_id uuid) -> jsonb | function | definer | stable | exec:service_role | body:567066e980a1
-routine public.counter_offline_gaps(p_session_id uuid, p_devices uuid[]) -> jsonb | function | definer | stable | exec:service_role | body:a629034bd78e
+routine public.counter_offline_gaps(p_session_id uuid, p_devices uuid[]) -> jsonb | function | definer | stable | exec:service_role | body:d75982a0db7c
 routine public.counter_offline_list_v1(p_workspace_id uuid, p_session_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:965bd6b91c33
 routine public.counter_offline_sync_v1(p_workspace_id uuid, p_session_id uuid, p_offline_since timestamp with time zone, p_sales jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:eef50bcac091
 routine public.counter_open_session(p_workspace_id uuid, p_till text) -> uuid | function | definer | volatile | exec:service_role | body:3fb1d7861f42

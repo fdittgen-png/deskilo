@@ -108,7 +108,7 @@ List<File> _scanned() => [
 /// write the new number; a new one is a defect.
 const _untracedOnCeiling = <String, int>{
   // the two detail readers of presentation/till_drawer/drawer_text.dart
-  'features/money': 1,
+  'features/money': 0,
   'packages/deskilo_task_recording': 2,
 };
 

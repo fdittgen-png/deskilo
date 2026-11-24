@@ -24,7 +24,7 @@ const _budget = 0;
 /// its fixtures spell a code on purpose). Most are inside a double-quoted
 /// or raw string, where a constant cannot stand; the till's tests are
 /// still to come. Only falls.
-const _testBudget = 37;
+const _testBudget = 36;
 
 /// The quoted codes of [source]: comment lines and what follows a trailing `//` are not code.
 List<String> quotedCodes(String source) => [
