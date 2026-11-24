@@ -1042,10 +1042,6 @@
   "@acctTargetsIntro": {
     "description": "#2370 Accounting systems sheet: what the sheet shows."
   },
-  "acctTargetsLoadFailed": "The accounting systems could not be loaded.",
-  "@acctTargetsLoadFailed": {
-    "description": "#2370 Accounting systems sheet: the connections or transfers could not be read."
-  },
   "acctTargetsNoApiTarget": "No accounting system of this country is reached by a connection yet: the books go by file, from the accounting export.",
   "@acctTargetsNoApiTarget": {
     "description": "#2370 Accounting systems sheet: no system of the country is reached by a connection."
@@ -7205,10 +7201,6 @@
   "@bookPeriodsInvalid": {
     "description": "#2365 accounting periods"
   },
-  "bookPeriodsLoadFailed": "The periods could not be loaded.",
-  "@bookPeriodsLoadFailed": {
-    "description": "#2365 accounting periods"
-  },
   "bookPeriodsNoExports": "No export yet.",
   "@bookPeriodsNoExports": {
     "description": "#2365 accounting periods"
@@ -13219,10 +13211,6 @@
   },
   "equipmentInvalid": "Choose a purchase line, and for a decision give its basis.",
   "@equipmentInvalid": {
-    "description": "#2576 equipment register"
-  },
-  "equipmentLoadFailed": "The equipment could not be loaded.",
-  "@equipmentLoadFailed": {
     "description": "#2576 equipment register"
   },
   "equipmentRegister": "Register equipment",
@@ -26130,10 +26118,6 @@
   "@leaseCommitmentsIntro": {
     "description": "#2575 commitment matching"
   },
-  "leaseCommitmentsLoadFailed": "The commitments could not be loaded.",
-  "@leaseCommitmentsLoadFailed": {
-    "description": "#2575 commitment matching"
-  },
   "leaseDeposit": "Deposit {amount}",
   "@leaseDeposit": {
     "description": "#2569 premises lease",
@@ -26257,10 +26241,6 @@
         "type": "String"
       }
     }
-  },
-  "leaseLoadFailed": "The lease could not be loaded.",
-  "@leaseLoadFailed": {
-    "description": "#2569 premises lease"
   },
   "leaseMatchAction": "Match a bill",
   "@leaseMatchAction": {
@@ -32708,10 +32688,6 @@
   "@payConfigSettlementsReviewTitle": {
     "description": "#3510 settlement reports refused and kept for review"
   },
-  "payConfigSettlementsReviewUnreadable": "The settlement reports to review could not be read.",
-  "@payConfigSettlementsReviewUnreadable": {
-    "description": "#3510 settlement reports refused and kept for review"
-  },
   "payConfigTitle": "Online payments",
   "@payConfigTitle": {
     "description": "Owner screen to configure online-payment providers (0047)"
@@ -34692,10 +34668,6 @@
   "portalSendCode": "Send sign-in code",
   "@portalSendCode": {
     "description": "Shown as the text in connection dialog (directory)."
-  },
-  "portalSourceUnavailable": "A server is unavailable. This overview is incomplete. Tap to retry.",
-  "@portalSourceUnavailable": {
-    "description": "Shown as the text in account messenger sections (directory), and 5 other places."
   },
   "portalUseCode": "Use an email code",
   "@portalUseCode": {
@@ -39782,10 +39754,6 @@
   "@reportImagesEmpty": {
     "description": "Report WYSIWYG editor + image library (#488)"
   },
-  "reportImagesLoadFailed": "Could not load report images. Try again.",
-  "@reportImagesLoadFailed": {
-    "description": "Shown as the label in report image picker (money)."
-  },
   "reportImagesOpenLibrary": "Open the picture library",
   "@reportImagesOpenLibrary": {
     "description": "#3984 the action of the snack that tells an original was too large: opens the picture library"
@@ -40456,10 +40424,6 @@
   "@retentionHoldsEmpty": {
     "description": "#2571 retention holds and dispositions"
   },
-  "retentionHoldsLoadFailed": "The holds could not be read.",
-  "@retentionHoldsLoadFailed": {
-    "description": "#2571 retention holds and dispositions"
-  },
   "retentionHoldsTitle": "Legal holds",
   "@retentionHoldsTitle": {
     "description": "#2571 retention holds and dispositions"
@@ -41022,10 +40986,6 @@
   },
   "roomRentLevels": "Floors",
   "@roomRentLevels": {
-    "description": "#2568 rented rooms"
-  },
-  "roomRentLoadFailed": "The rented rooms could not be loaded.",
-  "@roomRentLoadFailed": {
     "description": "#2568 rented rooms"
   },
   "roomRentNeedSupplier": "Add the lessor as a supplier first.",
@@ -49974,10 +49934,6 @@
   "@suppliersArchivedTag": {
     "description": "#2567 suppliers"
   },
-  "suppliersBalanceUnavailable": "Balance unavailable",
-  "@suppliersBalanceUnavailable": {
-    "description": "#3070 supplier outstanding balance"
-  },
   "suppliersBank": "Bank details",
   "@suppliersBank": {
     "description": "#2567 suppliers"
@@ -54993,10 +54949,6 @@
         "type": "String"
       }
     }
-  },
-  "valuationLoadFailed": "The valuations could not be loaded.",
-  "@valuationLoadFailed": {
-    "description": "#2576 accountant valuations"
   },
   "valuationManual": "Type in one asset",
   "@valuationManual": {

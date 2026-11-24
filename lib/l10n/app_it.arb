@@ -333,7 +333,6 @@
   "acctStateTitle": "Nuovo lavoro contabile",
   "acctTargetNotDeliveredYet": "Nessun documento viene ancora inviato a questo sistema: la connessione e le sue corrispondenze sono conservate per l'invio, che per esso non è ancora attivo.",
   "acctTargetsIntro": "Dove va la contabilità di ogni emittente. Un sistema collegato riceve i documenti da sé; gli altri ricevono i file esportati dalla contabilità. Ogni trasferimento è elencato qui sotto con l'impronta di ciò che ha portato.",
-  "acctTargetsLoadFailed": "Non è stato possibile caricare i sistemi contabili.",
   "acctTargetsNoApiTarget": "Nessun sistema contabile di questo paese è ancora raggiunto da un collegamento: la contabilità parte tramite file, dall'esportazione contabile.",
   "acctTargetsNotConnected": "Non collegato",
   "acctTargetsTitle": "Sistemi contabili",
@@ -3146,10 +3145,6 @@
   },
   "bookPeriodsInvalid": "Scelga entrambi i giorni e indichi un motivo dove richiesto.",
   "@bookPeriodsInvalid": {
-    "description": "#2365 accounting periods"
-  },
-  "bookPeriodsLoadFailed": "Non è stato possibile caricare i periodi.",
-  "@bookPeriodsLoadFailed": {
     "description": "#2365 accounting periods"
   },
   "bookPeriodsNoExports": "Ancora nessuna esportazione.",
@@ -6361,10 +6356,6 @@
   },
   "equipmentInvalid": "Scelga una riga d'acquisto e, per una decisione, ne indichi il fondamento.",
   "@equipmentInvalid": {
-    "description": "#2576 equipment register"
-  },
-  "equipmentLoadFailed": "Impossibile caricare le attrezzature.",
-  "@equipmentLoadFailed": {
     "description": "#2576 equipment register"
   },
   "equipmentRegister": "Registra un'attrezzatura",
@@ -11954,10 +11945,6 @@
   "@leaseCommitmentsIntro": {
     "description": "#2575 commitment matching"
   },
-  "leaseCommitmentsLoadFailed": "Impossibile caricare le scadenze.",
-  "@leaseCommitmentsLoadFailed": {
-    "description": "#2575 commitment matching"
-  },
   "leaseDeposit": "Deposito {amount}",
   "@leaseDeposit": {
     "description": "#2569 premises lease",
@@ -12081,10 +12068,6 @@
         "type": "String"
       }
     }
-  },
-  "leaseLoadFailed": "Impossibile caricare il contratto.",
-  "@leaseLoadFailed": {
-    "description": "#2569 premises lease"
   },
   "leaseMatchAction": "Abbina una fattura",
   "@leaseMatchAction": {
@@ -14327,7 +14310,6 @@
   "payConfigSettlementsFetch": "Recupera i pagamenti",
   "payConfigSettlementsFetched": "{count} pagamenti registrati",
   "payConfigSettlementsReviewTitle": "Liquidazioni da verificare",
-  "payConfigSettlementsReviewUnreadable": "Non è stato possibile leggere le liquidazioni da verificare.",
   "payConfigTitle": "Pagamenti online",
   "payFieldApiKey": "Chiave API",
   "payFieldClientId": "Client ID",
@@ -15079,7 +15061,6 @@
   "portalSavePreview": "Salva e mostra la vista esterna",
   "portalSearch": "Cerca posti",
   "portalSendCode": "Invia codice di accesso",
-  "portalSourceUnavailable": "Un server non è disponibile. La panoramica è incompleta. Tocchi per riprovare.",
   "portalUseCode": "Usa un codice via email",
   "portalUseWorkspaceInfo": "Usa le informazioni dello spazio",
   "portalVisibilityLink": "Chi può trovarmi e scrivermi",
@@ -17783,7 +17764,6 @@
   "@reportImagesEmpty": {
     "description": "Report WYSIWYG editor + image library (#488)"
   },
-  "reportImagesLoadFailed": "Impossibile caricare le immagini dei report. Riprovi.",
   "reportImagesOpenLibrary": "Apri la libreria di immagini",
   "reportImagesOversized": "{count, plural, one{{count} immagine salvata è più grande di quanto si stampa} other{{count} immagini salvate sono più grandi di quanto si stampano}}",
   "reportImagesTitle": "Immagini dei report",
@@ -18225,7 +18205,6 @@
   "retentionHoldSaveFailed": "Non è stato possibile salvare il blocco. Non è cambiato nulla.",
   "retentionHoldSince": "{what} · {issuer} · dal {date}",
   "retentionHoldsEmpty": "Nessun blocco attivo. Un blocco conserva i documenti oltre il periodo di conservazione, per una verifica o una controversia.",
-  "retentionHoldsLoadFailed": "Non è stato possibile leggere i blocchi.",
   "retentionHoldsTitle": "Blocchi di conservazione",
   "retentionKeptHold": "Conservato per un blocco di conservazione: {reason}",
   "retentionKeptReview": "Conservato finché una persona non verifica la regola di conservazione",
@@ -18711,10 +18690,6 @@
   },
   "roomRentLevels": "Piani",
   "@roomRentLevels": {
-    "description": "#2568 rented rooms"
-  },
-  "roomRentLoadFailed": "Non è stato possibile caricare le sale in affitto.",
-  "@roomRentLoadFailed": {
     "description": "#2568 rented rooms"
   },
   "roomRentNeedSupplier": "Aggiungete prima il locatore come fornitore.",
@@ -22592,10 +22567,6 @@
   "@suppliersArchivedTag": {
     "description": "#2567 suppliers"
   },
-  "suppliersBalanceUnavailable": "Saldo non disponibile",
-  "@suppliersBalanceUnavailable": {
-    "description": "#3070 supplier outstanding balance"
-  },
   "suppliersBank": "Coordinate bancarie",
   "@suppliersBank": {
     "description": "#2567 suppliers"
@@ -24680,10 +24651,6 @@
         "type": "String"
       }
     }
-  },
-  "valuationLoadFailed": "Non è stato possibile caricare le valutazioni.",
-  "@valuationLoadFailed": {
-    "description": "#2576 accountant valuations"
   },
   "valuationManual": "Inserire un bene",
   "@valuationManual": {

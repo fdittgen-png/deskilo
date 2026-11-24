@@ -803,10 +803,6 @@ class AppLocalizationsFr extends AppLocalizations {
       'Où va la comptabilité de chaque émetteur. Un système connecté reçoit les pièces lui-même ; les autres reçoivent les fichiers exportés de la comptabilité. Chaque transfert est listé ci-dessous avec l\'empreinte de ce qu\'il a porté.';
 
   @override
-  String get acctTargetsLoadFailed =>
-      'Les systèmes comptables n\'ont pas pu être chargés.';
-
-  @override
   String get acctTargetsNoApiTarget =>
       'Aucun système comptable de ce pays n\'est encore joint par une connexion : la comptabilité part par fichier, depuis l\'export comptable.';
 
@@ -5520,10 +5516,6 @@ class AppLocalizationsFr extends AppLocalizations {
       'Choisissez les deux jours et donnez une raison là où elle est demandée.';
 
   @override
-  String get bookPeriodsLoadFailed =>
-      'Les périodes n\'ont pas pu être chargées.';
-
-  @override
   String get bookPeriodsNoExports => 'Aucun export pour l\'instant.';
 
   @override
@@ -10174,10 +10166,6 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get equipmentInvalid =>
       'Choisissez une ligne d\'achat et, pour une décision, indiquez son fondement.';
-
-  @override
-  String get equipmentLoadFailed =>
-      'Les équipements n\'ont pas pu être chargés.';
 
   @override
   String get equipmentRegister => 'Enregistrer un équipement';
@@ -20067,10 +20055,6 @@ class AppLocalizationsFr extends AppLocalizations {
       'Le loyer que le bail attend chaque mois et les factures qui l’ont remplacé. Une facture affectée à un mois remplace son attente ; elle n’ajoute jamais un second coût.';
 
   @override
-  String get leaseCommitmentsLoadFailed =>
-      'Les échéances n’ont pas pu être chargées.';
-
-  @override
   String leaseDeposit(String amount) {
     return 'Dépôt de garantie $amount';
   }
@@ -20153,9 +20137,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String leaseLessor(String name) {
     return 'Bailleur : $name';
   }
-
-  @override
-  String get leaseLoadFailed => 'Le bail n’a pas pu être chargé.';
 
   @override
   String get leaseMatchAction => 'Rapprocher une facture';
@@ -25083,10 +25064,6 @@ class AppLocalizationsFr extends AppLocalizations {
       'Relevés de versement à vérifier';
 
   @override
-  String get payConfigSettlementsReviewUnreadable =>
-      'Les relevés de versement à vérifier n\'ont pas pu être lus.';
-
-  @override
   String get payConfigTitle => 'Paiements en ligne';
 
   @override
@@ -26657,10 +26634,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get portalSendCode => 'Envoyer le code de connexion';
-
-  @override
-  String get portalSourceUnavailable =>
-      'Un serveur est indisponible. Cette vue est incomplète. Appuyez pour réessayer.';
 
   @override
   String get portalUseCode => 'Utiliser un code par e-mail';
@@ -30714,10 +30687,6 @@ class AppLocalizationsFr extends AppLocalizations {
       'Aucune image — téléversez votre logo, un tampon ou une signature et référencez-la avec ![nom].';
 
   @override
-  String get reportImagesLoadFailed =>
-      'Impossible de charger les images des rapports. Réessayez.';
-
-  @override
   String get reportImagesOpenLibrary => 'Ouvrir la bibliothèque d’images';
 
   @override
@@ -31269,10 +31238,6 @@ class AppLocalizationsFr extends AppLocalizations {
       'Aucune conservation imposée. Elle garde des pièces au-delà de leur durée de conservation, pour un contrôle ou un litige.';
 
   @override
-  String get retentionHoldsLoadFailed =>
-      'Les conservations imposées n’ont pas pu être lues.';
-
-  @override
   String get retentionHoldsTitle => 'Conservations imposées';
 
   @override
@@ -31682,10 +31647,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get roomRentLevels => 'Étages';
-
-  @override
-  String get roomRentLoadFailed =>
-      'Les salles louées n\'ont pas pu être chargées.';
 
   @override
   String get roomRentNeedSupplier =>
@@ -38878,9 +38839,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get suppliersArchivedTag => 'archivé';
 
   @override
-  String get suppliersBalanceUnavailable => 'Solde indisponible';
-
-  @override
   String get suppliersBank => 'Coordonnées bancaires';
 
   @override
@@ -42827,10 +42785,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String valuationIssueTooMany(String limit) {
     return 'Le fichier a plus de lignes qu\'un lot n\'en contient ($limit).';
   }
-
-  @override
-  String get valuationLoadFailed =>
-      'Les valorisations n\'ont pas pu être chargées.';
 
   @override
   String get valuationManual => 'Saisir un bien';

@@ -14,6 +14,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -40,17 +41,18 @@ class SetupDocumentsStep extends ConsumerWidget {
     final rates = ref.watch(vatRatesProvider);
     return switch (ref.watch(invoicePdfTemplateProvider)) {
       AsyncValue(hasValue: true, :final value)
+          // #4414 kept: the sample waits for the rates' answer, whichever
           when rates.hasValue || rates.hasError =>
         _DocumentsPage(
           workspaceId: workspaceId,
           stored: value ?? InvoicePdfTemplate.empty,
         ),
-      AsyncError() => Padding(
+      AsyncError(:final error) => Padding(
         padding: AppSpacing.lgAll,
-        child: InlineBanner(
+        child: ReadFailureBanner(
           key: const ValueKey('setup-documents-failed'),
-          icon: Icons.error_outline,
-          text: context.l10n.setupStepLoadFailed,
+          error: error,
+          onRetry: () => ref.invalidate(invoicePdfTemplateProvider),
         ),
       ),
       _ => const LoadingView(),

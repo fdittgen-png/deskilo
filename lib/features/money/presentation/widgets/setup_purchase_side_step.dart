@@ -11,7 +11,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/ui/inline_banner.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/setup_step_layout.dart';
 import '../../../../l10n/dictionary_labels.dart';
@@ -130,12 +130,15 @@ class SetupPurchaseSideStep extends ConsumerWidget {
           key: ValueKey('setup-$stepId-preview'),
         ),
       ),
-      AsyncError() => Padding(
+      AsyncError(:final error) => Padding(
         padding: AppSpacing.lgAll,
-        child: InlineBanner(
+        child: ReadFailureBanner(
           key: ValueKey('setup-$stepId-failed'),
-          icon: Icons.error_outline,
-          text: l10n.setupStepLoadFailed,
+          error: error,
+          onRetry: () => ref
+              ..invalidate(premisesLeasesProvider(workspaceId))
+              ..invalidate(workspaceAssetsProvider(workspaceId))
+              ..invalidate(suppliersProvider(workspaceId)),
         ),
       ),
       _ => const LoadingView(),

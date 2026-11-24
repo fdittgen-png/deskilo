@@ -333,7 +333,6 @@
   "acctStateTitle": "Nuevo trabajo contable",
   "acctTargetNotDeliveredYet": "Todavía no se envía ningún documento a este sistema: la conexión y sus correspondencias se conservan para el envío, que aún no funciona para él.",
   "acctTargetsIntro": "Adónde va la contabilidad de cada emisor. Un sistema conectado recibe los documentos por sí mismo; los demás reciben los ficheros exportados de la contabilidad. Cada transferencia figura abajo con la huella de lo que llevó.",
-  "acctTargetsLoadFailed": "No se han podido cargar los sistemas contables.",
   "acctTargetsNoApiTarget": "Ningún sistema contable de este país se alcanza todavía por conexión: la contabilidad sale por fichero, desde la exportación contable.",
   "acctTargetsNotConnected": "Sin conectar",
   "acctTargetsTitle": "Sistemas contables",
@@ -3146,10 +3145,6 @@
   },
   "bookPeriodsInvalid": "Elija los dos días e indique un motivo donde se pida.",
   "@bookPeriodsInvalid": {
-    "description": "#2365 accounting periods"
-  },
-  "bookPeriodsLoadFailed": "No se pudieron cargar los periodos.",
-  "@bookPeriodsLoadFailed": {
     "description": "#2365 accounting periods"
   },
   "bookPeriodsNoExports": "Aún no hay exportaciones.",
@@ -6361,10 +6356,6 @@
   },
   "equipmentInvalid": "Elija una línea de compra y, para una decisión, indique su fundamento.",
   "@equipmentInvalid": {
-    "description": "#2576 equipment register"
-  },
-  "equipmentLoadFailed": "No se pudieron cargar los equipos.",
-  "@equipmentLoadFailed": {
     "description": "#2576 equipment register"
   },
   "equipmentRegister": "Registrar un equipo",
@@ -11954,10 +11945,6 @@
   "@leaseCommitmentsIntro": {
     "description": "#2575 commitment matching"
   },
-  "leaseCommitmentsLoadFailed": "No se pudieron cargar los vencimientos.",
-  "@leaseCommitmentsLoadFailed": {
-    "description": "#2575 commitment matching"
-  },
   "leaseDeposit": "Fianza {amount}",
   "@leaseDeposit": {
     "description": "#2569 premises lease",
@@ -12081,10 +12068,6 @@
         "type": "String"
       }
     }
-  },
-  "leaseLoadFailed": "No se pudo cargar el contrato.",
-  "@leaseLoadFailed": {
-    "description": "#2569 premises lease"
   },
   "leaseMatchAction": "Conciliar una factura",
   "@leaseMatchAction": {
@@ -14327,7 +14310,6 @@
   "payConfigSettlementsFetch": "Obtener los pagos",
   "payConfigSettlementsFetched": "{count} pagos registrados",
   "payConfigSettlementsReviewTitle": "Liquidaciones por revisar",
-  "payConfigSettlementsReviewUnreadable": "No se pudieron leer las liquidaciones por revisar.",
   "payConfigTitle": "Pagos en línea",
   "payFieldApiKey": "Clave API",
   "payFieldClientId": "Client ID",
@@ -15079,7 +15061,6 @@
   "portalSavePreview": "Guardar y ver la vista externa",
   "portalSearch": "Buscar lugares",
   "portalSendCode": "Enviar código de acceso",
-  "portalSourceUnavailable": "Un servidor no está disponible. Esta vista está incompleta. Toque para reintentar.",
   "portalUseCode": "Usar un código por correo",
   "portalUseWorkspaceInfo": "Usar la información del espacio",
   "portalVisibilityLink": "Quién puede encontrarme y escribirme",
@@ -17783,7 +17764,6 @@
   "@reportImagesEmpty": {
     "description": "Report WYSIWYG editor + image library (#488)"
   },
-  "reportImagesLoadFailed": "No se pudieron cargar las imágenes de los informes. Inténtelo de nuevo.",
   "reportImagesOpenLibrary": "Abrir la biblioteca de imágenes",
   "reportImagesOversized": "{count, plural, one{{count} imagen guardada es más grande de lo que se imprime} other{{count} imágenes guardadas son más grandes de lo que se imprimen}}",
   "reportImagesTitle": "Imágenes de informes",
@@ -18225,7 +18205,6 @@
   "retentionHoldSaveFailed": "No se ha podido guardar la retención. No ha cambiado nada.",
   "retentionHoldSince": "{what} · {issuer} · desde el {date}",
   "retentionHoldsEmpty": "No hay ninguna retención. Una retención conserva los registros más allá de su plazo, para una auditoría o un litigio.",
-  "retentionHoldsLoadFailed": "No se han podido leer las retenciones.",
   "retentionHoldsTitle": "Retenciones legales",
   "retentionKeptHold": "Se conserva por una retención legal: {reason}",
   "retentionKeptReview": "Se conserva hasta que una persona revise la regla de conservación",
@@ -18711,10 +18690,6 @@
   },
   "roomRentLevels": "Plantas",
   "@roomRentLevels": {
-    "description": "#2568 rented rooms"
-  },
-  "roomRentLoadFailed": "No se pudieron cargar las salas alquiladas.",
-  "@roomRentLoadFailed": {
     "description": "#2568 rented rooms"
   },
   "roomRentNeedSupplier": "Añada primero al arrendador como proveedor.",
@@ -22592,10 +22567,6 @@
   "@suppliersArchivedTag": {
     "description": "#2567 suppliers"
   },
-  "suppliersBalanceUnavailable": "Saldo no disponible",
-  "@suppliersBalanceUnavailable": {
-    "description": "#3070 supplier outstanding balance"
-  },
   "suppliersBank": "Datos bancarios",
   "@suppliersBank": {
     "description": "#2567 suppliers"
@@ -24680,10 +24651,6 @@
         "type": "String"
       }
     }
-  },
-  "valuationLoadFailed": "No se pudieron cargar las valoraciones.",
-  "@valuationLoadFailed": {
-    "description": "#2576 accountant valuations"
   },
   "valuationManual": "Introducir un bien",
   "@valuationManual": {

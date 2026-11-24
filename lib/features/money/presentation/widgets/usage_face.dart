@@ -23,6 +23,7 @@ import '../../../../core/theme/status_colors.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/adaptive/task_surface.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/kit/records_table.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -74,9 +75,12 @@ class UsageFace extends ConsumerWidget {
               ),
           ],
         ),
-      AsyncError() => Padding(
+      AsyncError(:final error) => Padding(
           padding: const EdgeInsets.all(AppSpacing.md),
-          child: Text(l10n.workspaceGenericError),
+          child: ReadFailureBanner(
+            error: error,
+            onRetry: () => ref.invalidate(usageReadProvider(period)),
+          ),
         ),
       _ => const Padding(
           padding: EdgeInsets.all(AppSpacing.md),

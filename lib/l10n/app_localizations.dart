@@ -1388,12 +1388,6 @@ abstract class AppLocalizations {
   /// **'Where the books of each issuer go. A connected system receives the documents itself; any other receives the files exported from the books. Every transfer is listed below with the digest of what it carried.'**
   String get acctTargetsIntro;
 
-  /// #2370 Accounting systems sheet: the connections or transfers could not be read.
-  ///
-  /// In en, this message translates to:
-  /// **'The accounting systems could not be loaded.'**
-  String get acctTargetsLoadFailed;
-
   /// #2370 Accounting systems sheet: no system of the country is reached by a connection.
   ///
   /// In en, this message translates to:
@@ -8632,12 +8626,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Choose both days, and give a reason where one is asked.'**
   String get bookPeriodsInvalid;
-
-  /// #2365 accounting periods
-  ///
-  /// In en, this message translates to:
-  /// **'The periods could not be loaded.'**
-  String get bookPeriodsLoadFailed;
 
   /// #2365 accounting periods
   ///
@@ -16166,12 +16154,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Choose a purchase line, and for a decision give its basis.'**
   String get equipmentInvalid;
-
-  /// #2576 equipment register
-  ///
-  /// In en, this message translates to:
-  /// **'The equipment could not be loaded.'**
-  String get equipmentLoadFailed;
 
   /// #2576 equipment register
   ///
@@ -31505,12 +31487,6 @@ abstract class AppLocalizations {
   /// **'The rent the lease expects each month and the bills that replaced it. A bill allocated to a month replaces its expectation; it never adds a second cost.'**
   String get leaseCommitmentsIntro;
 
-  /// #2575 commitment matching
-  ///
-  /// In en, this message translates to:
-  /// **'The commitments could not be loaded.'**
-  String get leaseCommitmentsLoadFailed;
-
   /// #2569 premises lease
   ///
   /// In en, this message translates to:
@@ -31654,12 +31630,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Lessor: {name}'**
   String leaseLessor(String name);
-
-  /// #2569 premises lease
-  ///
-  /// In en, this message translates to:
-  /// **'The lease could not be loaded.'**
-  String get leaseLoadFailed;
 
   /// #2575 commitment matching
   ///
@@ -39579,12 +39549,6 @@ abstract class AppLocalizations {
   /// **'Settlement reports to review'**
   String get payConfigSettlementsReviewTitle;
 
-  /// #3510 settlement reports refused and kept for review
-  ///
-  /// In en, this message translates to:
-  /// **'The settlement reports to review could not be read.'**
-  String get payConfigSettlementsReviewUnreadable;
-
   /// Owner screen to configure online-payment providers (0047)
   ///
   /// In en, this message translates to:
@@ -42163,12 +42127,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Send sign-in code'**
   String get portalSendCode;
-
-  /// Shown as the text in account messenger sections (directory), and 5 other places.
-  ///
-  /// In en, this message translates to:
-  /// **'A server is unavailable. This overview is incomplete. Tap to retry.'**
-  String get portalSourceUnavailable;
 
   /// Shown as the title in connection dialog (directory).
   ///
@@ -48756,12 +48714,6 @@ abstract class AppLocalizations {
   /// **'No image yet — upload your logo, a stamp or a signature and reference it with ![name].'**
   String get reportImagesEmpty;
 
-  /// Shown as the label in report image picker (money).
-  ///
-  /// In en, this message translates to:
-  /// **'Could not load report images. Try again.'**
-  String get reportImagesLoadFailed;
-
   /// #3984 the action of the snack that tells an original was too large: opens the picture library
   ///
   /// In en, this message translates to:
@@ -49671,12 +49623,6 @@ abstract class AppLocalizations {
   /// #2571 retention holds and dispositions
   ///
   /// In en, this message translates to:
-  /// **'The holds could not be read.'**
-  String get retentionHoldsLoadFailed;
-
-  /// #2571 retention holds and dispositions
-  ///
-  /// In en, this message translates to:
   /// **'Legal holds'**
   String get retentionHoldsTitle;
 
@@ -50321,12 +50267,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Floors'**
   String get roomRentLevels;
-
-  /// #2568 rented rooms
-  ///
-  /// In en, this message translates to:
-  /// **'The rented rooms could not be loaded.'**
-  String get roomRentLoadFailed;
 
   /// #2568 rented rooms
   ///
@@ -61552,12 +61492,6 @@ abstract class AppLocalizations {
   /// **'archived'**
   String get suppliersArchivedTag;
 
-  /// #3070 supplier outstanding balance
-  ///
-  /// In en, this message translates to:
-  /// **'Balance unavailable'**
-  String get suppliersBalanceUnavailable;
-
   /// #2567 suppliers
   ///
   /// In en, this message translates to:
@@ -67939,12 +67873,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The file has more rows than one batch holds ({limit}).'**
   String valuationIssueTooMany(String limit);
-
-  /// #2576 accountant valuations
-  ///
-  /// In en, this message translates to:
-  /// **'The valuations could not be loaded.'**
-  String get valuationLoadFailed;
 
   /// #2576 accountant valuations
   ///

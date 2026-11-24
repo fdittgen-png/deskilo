@@ -797,10 +797,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'Where the books of each issuer go. A connected system receives the documents itself; any other receives the files exported from the books. Every transfer is listed below with the digest of what it carried.';
 
   @override
-  String get acctTargetsLoadFailed =>
-      'The accounting systems could not be loaded.';
-
-  @override
   String get acctTargetsNoApiTarget =>
       'No accounting system of this country is reached by a connection yet: the books go by file, from the accounting export.';
 
@@ -5466,9 +5462,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'Choose both days, and give a reason where one is asked.';
 
   @override
-  String get bookPeriodsLoadFailed => 'The periods could not be loaded.';
-
-  @override
   String get bookPeriodsNoExports => 'No export yet.';
 
   @override
@@ -10059,9 +10052,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get equipmentInvalid =>
       'Choose a purchase line, and for a decision give its basis.';
-
-  @override
-  String get equipmentLoadFailed => 'The equipment could not be loaded.';
 
   @override
   String get equipmentRegister => 'Register equipment';
@@ -19842,10 +19832,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'The rent the lease expects each month and the bills that replaced it. A bill allocated to a month replaces its expectation; it never adds a second cost.';
 
   @override
-  String get leaseCommitmentsLoadFailed =>
-      'The commitments could not be loaded.';
-
-  @override
   String leaseDeposit(String amount) {
     return 'Deposit $amount';
   }
@@ -19928,9 +19914,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String leaseLessor(String name) {
     return 'Lessor: $name';
   }
-
-  @override
-  String get leaseLoadFailed => 'The lease could not be loaded.';
 
   @override
   String get leaseMatchAction => 'Match a bill';
@@ -24805,10 +24788,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get payConfigSettlementsReviewTitle => 'Settlement reports to review';
 
   @override
-  String get payConfigSettlementsReviewUnreadable =>
-      'The settlement reports to review could not be read.';
-
-  @override
   String get payConfigTitle => 'Online payments';
 
   @override
@@ -26353,10 +26332,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get portalSendCode => 'Send sign-in code';
-
-  @override
-  String get portalSourceUnavailable =>
-      'A server is unavailable. This overview is incomplete. Tap to retry.';
 
   @override
   String get portalUseCode => 'Use an email code';
@@ -30364,10 +30339,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'No image yet — upload your logo, a stamp or a signature and reference it with ![name].';
 
   @override
-  String get reportImagesLoadFailed =>
-      'Could not load report images. Try again.';
-
-  @override
   String get reportImagesOpenLibrary => 'Open the picture library';
 
   @override
@@ -30910,9 +30881,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'No hold is in place. A hold keeps records past their retention period, for an audit or a dispute.';
 
   @override
-  String get retentionHoldsLoadFailed => 'The holds could not be read.';
-
-  @override
   String get retentionHoldsTitle => 'Legal holds';
 
   @override
@@ -31316,9 +31284,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get roomRentLevels => 'Floors';
-
-  @override
-  String get roomRentLoadFailed => 'The rented rooms could not be loaded.';
 
   @override
   String get roomRentNeedSupplier => 'Add the lessor as a supplier first.';
@@ -38396,9 +38361,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get suppliersArchivedTag => 'archived';
 
   @override
-  String get suppliersBalanceUnavailable => 'Balance unavailable';
-
-  @override
   String get suppliersBank => 'Bank details';
 
   @override
@@ -42289,9 +42251,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String valuationIssueTooMany(String limit) {
     return 'The file has more rows than one batch holds ($limit).';
   }
-
-  @override
-  String get valuationLoadFailed => 'The valuations could not be loaded.';
 
   @override
   String get valuationManual => 'Type in one asset';

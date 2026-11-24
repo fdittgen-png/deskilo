@@ -15,6 +15,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_sheet.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -139,6 +140,7 @@ class _HmrcSubmitSheetState extends ConsumerState<_HmrcSubmitSheet> {
     final workspaceId = widget.declaration.workspaceId;
     final client = ref.watch(hmrcClientValuesProvider);
     ref.listen(hmrcStateProvider(workspaceId), (previous, next) {
+      // #4414 kept: a new answer clears the check, whatever it is
       if (next.isLoading || next.hasError) {
         _checkedAtHmrc = false;
         _checkedMarker = null;
@@ -179,9 +181,12 @@ class _HmrcSubmitSheetState extends ConsumerState<_HmrcSubmitSheet> {
               ),
               (AsyncData(value: final values?), AsyncData(value: final s)) =>
                 _body(l10n, s, values),
-              (AsyncError(), _) || (_, AsyncError()) => InlineBanner(
-                icon: Icons.error_outline,
-                text: l10n.hmrcRefusalOther,
+              (AsyncError(:final error), _) ||
+              (_, AsyncError(:final error)) => ReadFailureBanner(
+                error: error,
+                onRetry: () => ref
+                  ..invalidate(hmrcClientValuesProvider)
+                  ..invalidate(hmrcStateProvider(workspaceId)),
               ),
               _ => const LoadingView(),
             },

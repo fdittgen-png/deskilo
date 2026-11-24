@@ -43,10 +43,6 @@
       }
     }
   },
-  "payConfigSettlementsReviewUnreadable": "The settlement reports to review could not be read.",
-  "@payConfigSettlementsReviewUnreadable": {
-    "description": "#3510 settlement reports refused and kept for review"
-  },
   "eventTypeSettlementReview": "Settlement to review",
   "@eventTypeSettlementReview": {
     "description": "#3510 the alert that a settlement report waits for review"

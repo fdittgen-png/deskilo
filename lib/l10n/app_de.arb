@@ -333,7 +333,6 @@
   "acctStateTitle": "Neue Buchhaltungsarbeit",
   "acctTargetNotDeliveredYet": "An dieses System wird noch kein Beleg gesendet: die Verbindung und ihre Zuordnungen bleiben für die Übermittlung erhalten, die für dieses System noch nicht läuft.",
   "acctTargetsIntro": "Wohin die Bücher jedes Ausstellers gehen. Ein verbundenes System empfängt die Belege selbst; jedes andere die aus den Büchern exportierten Dateien. Jede Übertragung steht unten mit dem Hashwert dessen, was sie getragen hat.",
-  "acctTargetsLoadFailed": "Die Buchhaltungssysteme konnten nicht geladen werden.",
   "acctTargetsNoApiTarget": "Noch kein Buchhaltungssystem dieses Landes wird über eine Verbindung erreicht: Die Bücher gehen per Datei, aus dem Buchhaltungsexport.",
   "acctTargetsNotConnected": "Nicht verbunden",
   "acctTargetsTitle": "Buchhaltungssysteme",
@@ -3146,10 +3145,6 @@
   },
   "bookPeriodsInvalid": "Wählen Sie beide Tage und nennen Sie einen Grund, wo einer verlangt wird.",
   "@bookPeriodsInvalid": {
-    "description": "#2365 accounting periods"
-  },
-  "bookPeriodsLoadFailed": "Die Perioden konnten nicht geladen werden.",
-  "@bookPeriodsLoadFailed": {
     "description": "#2365 accounting periods"
   },
   "bookPeriodsNoExports": "Noch kein Export.",
@@ -6361,10 +6356,6 @@
   },
   "equipmentInvalid": "Wählen Sie eine Einkaufszeile und nennen Sie bei einer Entscheidung deren Grundlage.",
   "@equipmentInvalid": {
-    "description": "#2576 equipment register"
-  },
-  "equipmentLoadFailed": "Die Anlagen konnten nicht geladen werden.",
-  "@equipmentLoadFailed": {
     "description": "#2576 equipment register"
   },
   "equipmentRegister": "Anlage erfassen",
@@ -11954,10 +11945,6 @@
   "@leaseCommitmentsIntro": {
     "description": "#2575 commitment matching"
   },
-  "leaseCommitmentsLoadFailed": "Die Fälligkeiten konnten nicht geladen werden.",
-  "@leaseCommitmentsLoadFailed": {
-    "description": "#2575 commitment matching"
-  },
   "leaseDeposit": "Kaution {amount}",
   "@leaseDeposit": {
     "description": "#2569 premises lease",
@@ -12081,10 +12068,6 @@
         "type": "String"
       }
     }
-  },
-  "leaseLoadFailed": "Der Mietvertrag konnte nicht geladen werden.",
-  "@leaseLoadFailed": {
-    "description": "#2569 premises lease"
   },
   "leaseMatchAction": "Rechnung zuordnen",
   "@leaseMatchAction": {
@@ -14327,7 +14310,6 @@
   "payConfigSettlementsFetch": "Auszahlungen abrufen",
   "payConfigSettlementsFetched": "{count} Auszahlungen erfasst",
   "payConfigSettlementsReviewTitle": "Zu prüfende Abrechnungsmeldungen",
-  "payConfigSettlementsReviewUnreadable": "Die zu prüfenden Abrechnungsmeldungen konnten nicht gelesen werden.",
   "payConfigTitle": "Online-Zahlungen",
   "payFieldApiKey": "API-Schlüssel",
   "payFieldClientId": "Client-ID",
@@ -15079,7 +15061,6 @@
   "portalSavePreview": "Speichern und externe Ansicht öffnen",
   "portalSearch": "Orte suchen",
   "portalSendCode": "Anmeldecode senden",
-  "portalSourceUnavailable": "Ein Server ist nicht erreichbar. Diese Übersicht ist unvollständig. Zum Wiederholen antippen.",
   "portalUseCode": "E-Mail-Code verwenden",
   "portalUseWorkspaceInfo": "Arbeitsbereichsangaben verwenden",
   "portalVisibilityLink": "Wer mich finden und mir schreiben darf",
@@ -17783,7 +17764,6 @@
   "@reportImagesEmpty": {
     "description": "Report WYSIWYG editor + image library (#488)"
   },
-  "reportImagesLoadFailed": "Berichtsbilder konnten nicht geladen werden. Erneut versuchen.",
   "reportImagesOpenLibrary": "Bildbibliothek öffnen",
   "reportImagesOversized": "{count, plural, one{1 gespeichertes Bild ist größer, als es gedruckt wird} other{{count} gespeicherte Bilder sind größer, als sie gedruckt werden}}",
   "reportImagesTitle": "Berichtsbilder",
@@ -18225,7 +18205,6 @@
   "retentionHoldSaveFailed": "Die Sperre konnte nicht gespeichert werden. Nichts wurde geändert.",
   "retentionHoldSince": "{what} · {issuer} · seit {date}",
   "retentionHoldsEmpty": "Keine Sperre aktiv. Eine Sperre hält Unterlagen über ihre Aufbewahrungsfrist hinaus, etwa für eine Prüfung oder einen Streitfall.",
-  "retentionHoldsLoadFailed": "Die Sperren konnten nicht gelesen werden.",
   "retentionHoldsTitle": "Aufbewahrungssperren",
   "retentionKeptHold": "Wegen einer Aufbewahrungssperre behalten: {reason}",
   "retentionKeptReview": "Aufbewahrt, bis eine Person die Aufbewahrungsregel prüft",
@@ -18711,10 +18690,6 @@
   },
   "roomRentLevels": "Etagen",
   "@roomRentLevels": {
-    "description": "#2568 rented rooms"
-  },
-  "roomRentLoadFailed": "Die gemieteten Räume konnten nicht geladen werden.",
-  "@roomRentLoadFailed": {
     "description": "#2568 rented rooms"
   },
   "roomRentNeedSupplier": "Legen Sie den Vermieter zuerst als Lieferanten an.",
@@ -22592,10 +22567,6 @@
   "@suppliersArchivedTag": {
     "description": "#2567 suppliers"
   },
-  "suppliersBalanceUnavailable": "Saldo nicht verfügbar",
-  "@suppliersBalanceUnavailable": {
-    "description": "#3070 supplier outstanding balance"
-  },
   "suppliersBank": "Bankverbindung",
   "@suppliersBank": {
     "description": "#2567 suppliers"
@@ -24680,10 +24651,6 @@
         "type": "String"
       }
     }
-  },
-  "valuationLoadFailed": "Die Bewertungen konnten nicht geladen werden.",
-  "@valuationLoadFailed": {
-    "description": "#2576 accountant valuations"
   },
   "valuationManual": "Einen Vermögenswert erfassen",
   "@valuationManual": {

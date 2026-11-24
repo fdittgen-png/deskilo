@@ -801,10 +801,6 @@ class AppLocalizationsIt extends AppLocalizations {
       'Dove va la contabilità di ogni emittente. Un sistema collegato riceve i documenti da sé; gli altri ricevono i file esportati dalla contabilità. Ogni trasferimento è elencato qui sotto con l\'impronta di ciò che ha portato.';
 
   @override
-  String get acctTargetsLoadFailed =>
-      'Non è stato possibile caricare i sistemi contabili.';
-
-  @override
   String get acctTargetsNoApiTarget =>
       'Nessun sistema contabile di questo paese è ancora raggiunto da un collegamento: la contabilità parte tramite file, dall\'esportazione contabile.';
 
@@ -5497,10 +5493,6 @@ class AppLocalizationsIt extends AppLocalizations {
       'Scelga entrambi i giorni e indichi un motivo dove richiesto.';
 
   @override
-  String get bookPeriodsLoadFailed =>
-      'Non è stato possibile caricare i periodi.';
-
-  @override
   String get bookPeriodsNoExports => 'Ancora nessuna esportazione.';
 
   @override
@@ -10135,9 +10127,6 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get equipmentInvalid =>
       'Scelga una riga d\'acquisto e, per una decisione, ne indichi il fondamento.';
-
-  @override
-  String get equipmentLoadFailed => 'Impossibile caricare le attrezzature.';
 
   @override
   String get equipmentRegister => 'Registra un\'attrezzatura';
@@ -19998,9 +19987,6 @@ class AppLocalizationsIt extends AppLocalizations {
       'Il canone che il contratto si aspetta ogni mese e le fatture che lo hanno sostituito. Una fattura assegnata a un mese ne sostituisce l’attesa; non aggiunge mai un secondo costo.';
 
   @override
-  String get leaseCommitmentsLoadFailed => 'Impossibile caricare le scadenze.';
-
-  @override
   String leaseDeposit(String amount) {
     return 'Deposito $amount';
   }
@@ -20083,9 +20069,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String leaseLessor(String name) {
     return 'Locatore: $name';
   }
-
-  @override
-  String get leaseLoadFailed => 'Impossibile caricare il contratto.';
 
   @override
   String get leaseMatchAction => 'Abbina una fattura';
@@ -25010,10 +24993,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get payConfigSettlementsReviewTitle => 'Liquidazioni da verificare';
 
   @override
-  String get payConfigSettlementsReviewUnreadable =>
-      'Non è stato possibile leggere le liquidazioni da verificare.';
-
-  @override
   String get payConfigTitle => 'Pagamenti online';
 
   @override
@@ -26576,10 +26555,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get portalSendCode => 'Invia codice di accesso';
-
-  @override
-  String get portalSourceUnavailable =>
-      'Un server non è disponibile. La panoramica è incompleta. Tocchi per riprovare.';
 
   @override
   String get portalUseCode => 'Usa un codice via email';
@@ -30623,10 +30598,6 @@ class AppLocalizationsIt extends AppLocalizations {
       'Nessuna immagine — carichi il suo logo, un timbro o una firma e vi faccia riferimento con ![nome].';
 
   @override
-  String get reportImagesLoadFailed =>
-      'Impossibile caricare le immagini dei report. Riprovi.';
-
-  @override
   String get reportImagesOpenLibrary => 'Apri la libreria di immagini';
 
   @override
@@ -31174,10 +31145,6 @@ class AppLocalizationsIt extends AppLocalizations {
       'Nessun blocco attivo. Un blocco conserva i documenti oltre il periodo di conservazione, per una verifica o una controversia.';
 
   @override
-  String get retentionHoldsLoadFailed =>
-      'Non è stato possibile leggere i blocchi.';
-
-  @override
   String get retentionHoldsTitle => 'Blocchi di conservazione';
 
   @override
@@ -31586,10 +31553,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get roomRentLevels => 'Piani';
-
-  @override
-  String get roomRentLoadFailed =>
-      'Non è stato possibile caricare le sale in affitto.';
 
   @override
   String get roomRentNeedSupplier =>
@@ -38754,9 +38717,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get suppliersArchivedTag => 'archiviato';
 
   @override
-  String get suppliersBalanceUnavailable => 'Saldo non disponibile';
-
-  @override
   String get suppliersBank => 'Coordinate bancarie';
 
   @override
@@ -42698,10 +42658,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String valuationIssueTooMany(String limit) {
     return 'Il file ha più righe di quante ne contenga un lotto ($limit).';
   }
-
-  @override
-  String get valuationLoadFailed =>
-      'Non è stato possibile caricare le valutazioni.';
 
   @override
   String get valuationManual => 'Inserire un bene';
