@@ -14,7 +14,7 @@
   },
   "tillOfflineRecorded": "Registrada sin conexión · venta {seq} de esta caja",
   "@tillOfflineRecorded": {
-    "description": "#4373 the receipt of a sale made offline: its number on this till",
+    "description": "#4373 the receipt of a sale made offline: its number on this till [not a count: seq]",
     "placeholders": {
       "seq": {
         "type": "int"
@@ -52,7 +52,7 @@
   },
   "tillOfflineReportRefused": "Se rechazó la venta {seq}: {reason} Su efectivo permanece en el recuento del cajón.",
   "@tillOfflineReportRefused": {
-    "description": "#4373 the answer of the send: a sale the server refused, with its reason",
+    "description": "#4373 the answer of the send: a sale the server refused, with its reason [not a count: seq]",
     "placeholders": {
       "seq": {
         "type": "int"

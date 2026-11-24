@@ -41669,7 +41669,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count ventes restent',
-      one: '1 vente reste',
+      one: '$count vente reste',
     );
     return '$_temp0 sur cet appareil pour un responsable.';
   }
@@ -41724,7 +41724,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count ventes ont été enregistrées.',
-      one: '1 vente a été enregistrée.',
+      one: '$count vente a été enregistrée.',
     );
     return '$_temp0';
   }

@@ -5,6 +5,8 @@
 // ways it says no (a line it holds no price for). The logic is `till_session_offline.dart`; the words are in `till_text.dart`.
 import 'package:flutter/foundation.dart';
 
+import '../../../core/failure/app_failure.dart' show TypedRefusal;
+
 import '../domain/till_offline.dart';
 import '../domain/till_offline_queue.dart';
 
@@ -30,7 +32,7 @@ class TillOfflineKit {
 }
 
 /// A line the till has no price for on the device: nothing is guessed, the basket is not sold offline.
-class TillOfflineNoPrice implements Exception {
+class TillOfflineNoPrice implements TypedRefusal {
   const TillOfflineNoPrice();
 }
 

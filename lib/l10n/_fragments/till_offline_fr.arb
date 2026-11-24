@@ -14,7 +14,7 @@
   },
   "tillOfflineRecorded": "Enregistrée hors ligne · vente {seq} de cette caisse",
   "@tillOfflineRecorded": {
-    "description": "#4373 the receipt of a sale made offline: its number on this till",
+    "description": "#4373 the receipt of a sale made offline: its number on this till [not a count: seq]",
     "placeholders": {
       "seq": {
         "type": "int"
@@ -41,7 +41,7 @@
   "@tillOfflineReportTitle": {
     "description": "#4373 the answer of the send: title"
   },
-  "tillOfflineReportAccepted": "{count, plural, one{1 vente a été enregistrée.} other{{count} ventes ont été enregistrées.}}",
+  "tillOfflineReportAccepted": "{count, plural, one{{count} vente a été enregistrée.} other{{count} ventes ont été enregistrées.}}",
   "@tillOfflineReportAccepted": {
     "description": "#4373 the answer of the send: how many sales were recorded",
     "placeholders": {
@@ -52,7 +52,7 @@
   },
   "tillOfflineReportRefused": "La vente {seq} a été refusée : {reason} Ses espèces restent dans le comptage du tiroir.",
   "@tillOfflineReportRefused": {
-    "description": "#4373 the answer of the send: a sale the server refused, with its reason",
+    "description": "#4373 the answer of the send: a sale the server refused, with its reason [not a count: seq]",
     "placeholders": {
       "seq": {
         "type": "int"
@@ -71,7 +71,7 @@
       }
     }
   },
-  "tillOfflineKept": "{count, plural, one{1 vente reste} other{{count} ventes restent}} sur cet appareil pour un responsable.",
+  "tillOfflineKept": "{count, plural, one{{count} vente reste} other{{count} ventes restent}} sur cet appareil pour un responsable.",
   "@tillOfflineKept": {
     "description": "#4373 the answer of the send: sales that stay on the device",
     "placeholders": {

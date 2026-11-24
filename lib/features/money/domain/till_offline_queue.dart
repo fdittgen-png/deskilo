@@ -12,6 +12,9 @@
 // read (the sales in it would be lost): it refuses to go on until someone decides.
 import 'dart:convert';
 
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show JsonReader;
+
+import '../../../core/failure/app_failure.dart' show TypedRefusal;
 import '../../../core/trace/trace_logger.dart';
 import 'till_offline.dart';
 import 'till_quantity.dart';
@@ -24,7 +27,7 @@ abstract interface class OfflineStore {
 }
 
 /// The sale could not be recorded: [refusal] says why (a typed basket is never lost: it stays in the till).
-class OfflineRecordRefused implements Exception {
+class OfflineRecordRefused implements TypedRefusal {
   const OfflineRecordRefused(this.refusal);
 
   final OfflineRefusal refusal;
@@ -32,7 +35,7 @@ class OfflineRecordRefused implements Exception {
 
 /// The offline state on the device could not be read (a version this app does not know, or text that is not ours). Nothing is
 /// written over it: the sales it may hold are not lost. [TillOfflineQueue.discardUnreadable] drops it, on someone's decision.
-class OfflineStoreUnreadable implements Exception {
+class OfflineStoreUnreadable implements TypedRefusal {
   const OfflineStoreUnreadable();
 }
 
@@ -117,33 +120,35 @@ class TillOfflineQueue {
     }
   }
 
-  void _read(Object? j) {
-    if (j is! Map) throw const FormatException('offline state');
-    final version = j['v'];
+  void _read(Object? json) {
+    final r = JsonReader.of(json, context: 'offline.state');
+    final version = r.integer('v');
     if (version != 1 && version != _version) throw const FormatException('offline state version');
-    for (final p in (j['prices'] as List? ?? const [])) {
+    for (final p in r.listOrAbsent('prices')) {
       final price = OfflinePrice.fromJson(p);
       _prices[price.itemId] = price;
     }
     if (version == 1) {
       // one session, as the first release kept it
-      final id = j['session_id'] as String?;
-      if (id != null) _readLane(id, j);
+      final id = r.stringOrNull('session_id');
+      if (id != null) _readLane(id, r);
       _current = id;
       return;
     }
-    _deviceId = j['device_id'] as String?;
-    for (final l in (j['lanes'] as List? ?? const [])) {
-      _readLane((l as Map)['session_id']! as String, l);
+    _deviceId = r.stringOrNull('device_id');
+    for (final l in r.listOrAbsent('lanes')) {
+      final lane = JsonReader.of(l, context: 'offline.lane');
+      _readLane(lane.string('session_id'), lane);
     }
-    _current = j['current'] as String?;
+    _current = r.stringOrNull('current');
   }
 
-  void _readLane(String id, Map<dynamic, dynamic> j) {
+  void _readLane(String id, JsonReader j) {
+    final since = j.stringOrNull('offline_since');
     final lane = _Lane(id)
-      ..nextSeq = (j['next_seq'] as num?)?.toInt() ?? 1
-      ..since = j['offline_since'] == null ? null : DateTime.parse(j['offline_since'] as String).toUtc();
-    for (final s in (j['sales'] as List? ?? const [])) {
+      ..nextSeq = j.intOrNull('next_seq') ?? 1
+      ..since = since == null ? null : DateTime.parse(since).toUtc();
+    for (final s in j.listOrAbsent('sales')) {
       lane.pending.add(OfflineSale.fromJson(s));
     }
     _lanes[id] = lane;

@@ -6,6 +6,7 @@
 // session was closed says the sales stay for a manager, and offline data that cannot be read stops offline selling until a manager
 // drops it after a warning.
 import 'package:deskilo/app/routes/till_route.dart';
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/core/demo/data/demo_stock_config_commands.dart';
 import 'package:deskilo/core/demo/data/demo_stock_ledger.dart';
 import 'package:deskilo/core/demo/data/demo_stock_queries.dart';
@@ -41,7 +42,7 @@ class _Mem implements OfflineStore {
 class _ClosedSession implements TillOfflinePort {
   @override
   Future<OfflineSyncAnswer> sync(String workspaceId, {required String sessionId, required DateTime offlineSince, required List<OfflineSale> sales, required int minorDigits}) =>
-      throw const PostgrestException(message: 'open the till first', code: 'DKL12');
+      throw const PostgrestException(message: 'open the till first', code: DkCode.dkl12);
 
   @override
   Future<OfflineList> list(String workspaceId, {required String sessionId}) async => const OfflineList(sales: [], gaps: []);

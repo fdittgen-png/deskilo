@@ -61,7 +61,7 @@ const _exceptionClassCeiling = <String, int>{
   'features/directory': 2,
   'features/mcp': 4,
   'features/me': 7,
-  'features/money': 26,
+  'features/money': 25,
   'features/profile': 1,
   'features/reservations': 7,
   'features/stock': 2,
