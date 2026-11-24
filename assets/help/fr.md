@@ -2862,6 +2862,18 @@ Ouvrez **Ventes et encaissements** puis **Clients facturés**. C'est ici que vou
 
 Choisissez **Ajouter un client** et indiquez une société ou un nom, l'adresse postale, le code pays, le numéro de TVA et une adresse e-mail pour la facture. Le numéro de TVA n'est contrôlé que dans sa forme, jamais vérifié. **Facturé comme** (entreprise ou particulier) détermine les mentions légales et le traitement de la taxe ; seule une personne autorisée à émettre des factures peut le modifier. Choisissez un client pour le modifier. Si quelqu'un d'autre l'a modifié depuis votre ouverture, rien n'est enregistré et il vous est demandé de le rouvrir. Si la liste ne peut pas être lue, réessayez plutôt que de la croire vide. Modifier un client ne réécrit jamais une facture déjà émise : chacune garde le nom et l'adresse avec lesquels elle a été émise.
 
+### Accès par compte d'un client facturé
+
+**Public:** Administrateur·rice · Propriétaire
+
+Ouvrez **Ventes et encaissements** puis **Clients facturés**, et choisissez la clé à côté d'un client (**Accès par compte**). C'est ici que vous permettez à un client de lire ses propres factures depuis son propre compte, sans en faire un membre. Il faut le droit de gérer les clients facturés.
+
+Choisissez **Créer un code d'invitation**. Le code s'affiche une seule fois, avec son dernier jour : remettez-le au client tout de suite, car il ne peut plus être relu. Le client le saisit dans **Utiliser un code de facturation** sous **Mes finances**, vérifie qui l'invite et accepte. D'ici là, l'invitation attend. Un code ne sert qu'à un compte ; un client peut être lu par plusieurs comptes, invités chacun à part, et un compte peut lire plusieurs clients : une personne qui achète pour elle-même et pour une entreprise garde donc deux débiteurs distincts.
+
+La liste montre chaque invitation comme invitée, en lecture, expirée ou terminée. **Mettre fin à l'accès** arrête la lecture à partir de là ; rien n'est effacé, les factures et leur historique restent tels quels. Le client n'est jamais un membre : aucune réservation, aucun annuaire, aucune communauté, aucun rôle ni forfait ne découle de l'accès. Si la liste ne peut pas être lue, réessayez plutôt que de la croire vide ; si une réponse n'arrive pas, choisissez à nouveau **Créer un code d'invitation** : la même demande donne la même invitation, jamais une seconde.
+
+**Voir aussi :** [Clients facturés](help:user.money.customers.billing)
+
 ### Devis
 
 **Public:** Administrateur·rice · Propriétaire
@@ -2962,7 +2974,7 @@ Vous voulez dire une fois ce qu’une famille d’articles a en commun — combi
 
 Ouvrez **Stock → Groupes d’articles** (il faut la fonction *Groupes d’articles* sous la gestion du stock). Un groupe a un nom, se place au sommet ou dans un autre groupe (un seul niveau de sous-groupes) et porte les réglages que vous choisissez : **suivi**, **durée de conservation**, **mode de puce**, **unité de stock**, **compter tous les n jours**, **âge minimum** et **vendu au poids**. Un réglage laissé *Non défini* n’est pas décidé à ce niveau.
 
-- **Un article suit son groupe tant qu’il n’a pas sa propre valeur.** La valeur en vigueur est celle de l’article s’il en a une, sinon celle de son sous-groupe, sinon celle de son groupe. Ouvrez **Groupe et réglages hérités** d’un article (l’icône de dossier sur sa ligne dans **Stock → Articles**) pour voir d’où vient chaque réglage (*Du groupe Boissons depuis le 3 déc.* ou *Valeur propre*), le déplacer dans un autre groupe et rendre une valeur propre avec **Utiliser la valeur du groupe**.
+- **Un article suit son groupe tant qu’il n’a pas sa propre valeur.** La valeur en vigueur est celle de l’article s’il en a une, sinon celle de son sous-groupe, sinon celle de son groupe. Ouvrez **Groupe et réglages hérités** d’un article (l’icône de dossier sur sa ligne dans **Stock → Articles**) pour voir d’où vient chaque réglage (*Du groupe Boissons depuis le 3 déc.* ou *Valeur propre*), le déplacer dans un autre groupe et rendre une valeur propre avec **Utiliser la valeur du groupe**. Dans les **réglages de stock** de l’article, *Valeur propre* s’affiche à côté d’un réglage pour lequel l’article garde sa propre valeur face à son groupe (suivi, durée de conservation, unité de stock).
 - **Chaque changement est prévisualisé.** En enregistrant un groupe, vous voyez d’abord ce que le changement atteint : *s’applique à 1, 1 gardent leur propre valeur, 0 ne peuvent pas être atteints*. Rien n’est appliqué avant un deuxième enregistrement ; toute modification entre-temps demande un nouvel aperçu. Un article que le changement ne peut pas atteindre (par exemple une unité sur un article qui a déjà des mouvements) est listé, et le changement du groupe est enregistré pour les autres.
 - **Propositions et prix.** Un groupe peut proposer à un nouvel article une **unité d'achat par défaut** avec son facteur (un nombre ou une fraction comme 1/3), un **seuil et une quantité de réapprovisionnement** et une **zone de rangement** : ils sont copiés dans un nouvel article comme point de départ et n'atteignent aucun article existant. Le **taux de TVA**, la **nature de la prestation**, l'**arrondi du prix** et la **marge cible sur le coût** ne sont montrés et réglés que par qui peut gérer les services et voir les finances ; pour tous les autres, ils ne sont ni montrés ni modifiés par un enregistrement.
 - **Historique.** La feuille du groupe liste chaque changement avec le nombre d’articles atteints ; la ligne d’origine d’un article dit depuis quand.
@@ -3026,6 +3038,22 @@ Avec la fonction *Puces* activée, un article a un **mode de puce**, posé sur s
 - Le mode d'un article qui a déjà des puces ne change pas tant que ses puces ne sont pas retirées ou que son stock n'est pas nul ; le changement d'un groupe saute alors l'article et le liste comme conservé. Une puce sur un emplacement désigne toujours un seul emplacement.
 - Un code de puce est une étiquette UHF (EPC ; un SGTIN-96 est lu par le serveur comme GTIN et numéro de série) ou une puce NFC, enregistré en hexadécimal majuscule et unique dans l'entreprise entre articles, pièces et emplacements. Lier et retirer demandent le droit de gérer le stock ; lire demande celui de le voir.
 
+### Unités de manutention
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous voulez que les marchandises voyagent dans la palette ou le carton où elles sont arrivées, ou dans des boîtes à vous, et savoir quand même où est chaque lot et chaque pièce.
+
+Avec la fonction *Unités de manutention* activée, ouvrez **Stock → Unités de manutention**. Une unité a un code à vous (et l'étiquette du fournisseur quand elle est arrivée sur une palette étiquetée), un genre (palette, carton, caisse, boîte), un emplacement et un contenu : des articles avec leur lot, leur quantité et leurs pièces. La liste montre les unités ouvertes, à un emplacement ou partout.
+
+- **Créer une unité.** Appuyez sur *Créer une unité* : son code, son genre, son emplacement et son contenu. Une unité ne réclame que du stock **en vrac** à cet emplacement (ce que l'emplacement détient moins ce que d'autres unités y détiennent déjà) ; en demander plus est refusé et dit combien est en vrac.
+- **Déplacer.** *Déplacer* emmène tout le contenu vers un autre emplacement en une seule demande : chaque lot et chaque pièce garde sa trace. Si quelqu'un a déplacé ou défait l'unité depuis votre lecture, le déplacement est refusé et vous relisez.
+- **Défaire.** *Défaire* laisse le contenu où il est, en vrac, et l'unité n'est plus ouverte.
+- **Reconditionner en boîtes.** *Reconditionner en boîtes* sort une quantité d'une unité et la met dans des boîtes à vous (un nombre de boîtes, une quantité dans chacune). Ce qui entre est exactement ce qui est sorti : le total du stock ne change jamais, et un lot suivi à travers le reconditionnement se retrouve des deux côtés. Un reconditionnement se fait en un emplacement ; déplacez ensuite les nouvelles boîtes.
+
+- Un stock emballé dans une unité ne peut pas être sorti en vrac : le serveur refuse et nomme l'unité. Déplacez ou défaites d'abord l'unité.
+- Le suivi d'un article se choisit par article (ou s'hérite de son groupe) : non suivi, par lot (avec date limite là où elle est posée) ou par pièce (une puce par pièce).
+
 ### Le rapport de péremption
 
 **Public:** Administrateur·rice · Propriétaire
@@ -3062,6 +3090,7 @@ Ouvrez une ligne du **Stock** pour voir **Où est-ce** pour cet article (ou ce l
 - **Maintenant** est ce que le stock tient à cet instant ; **À une date…** montre ce qu'il tenait à la fin de ce jour, rejoué depuis les mouvements. Regarder ne change rien.
 - Les emplacements sur une étagère s'additionnent toujours à la quantité affichée en haut.
 - À un jour passé, les marchandises en route ne sont pas montrées ; les pièces le sont, depuis le jour où elles sont suivies (une pièce faite avant n'a pas d'historique avant).
+- Touchez un emplacement qui tient un lot pour voir **Tous les mouvements** de ce lot, de la livraison par laquelle il est arrivé jusqu'à sa sortie ; le bouton chronologie d'une pièce montre **Tous les mouvements de cette pièce**. Un document que vous ne pouvez pas voir est nommé par son type, jamais omis.
 
 ### Valeur du stock et origine des marchandises
 
@@ -3140,6 +3169,28 @@ Vous appartenez à plusieurs espaces et vous voulez toutes vos factures, vos pai
 - L'historique complet, l'usage et les autres serveurs sont accessibles depuis le même écran.
 
 **Voir aussi:** [Vos factures](help:user.money.invoices)
+
+### Factures qu'une entreprise a établies à votre nom en tant que client
+
+**Public:** Membre
+
+Une entreprise qui vous facture peut vous remettre un code, pour que vous lisiez ses factures depuis votre propre compte, sans la rejoindre.
+
+**Étapes**
+
+1. Ouvrez [Mes finances](app:/money) et, sous **À payer**, choisissez **Utiliser un code de facturation**.
+2. Saisissez le code et choisissez **Vérifier le code**. Vous voyez quelle entreprise vous invite et à quel nom ses factures sont établies.
+3. Choisissez **Accepter**. Les factures apparaissent sous **Facturé en tant que client**.
+
+**Bon à savoir**
+
+- Une carte par entreprise et par débiteur : une personne qui achète pour elle-même et pour une entreprise a deux cartes, et deux débiteurs d'une même entreprise ne sont jamais additionnés. Les montants de devises différentes ne le sont pas non plus.
+- Ces factures ne sont pas comptées avec ce que vous devez en tant que membre, et ne figurent ni dans vos listes de membre ni dans vos exports.
+- Un code inutilisable (erroné, expiré, retiré ou déjà pris par un autre compte) reçoit toujours la même réponse : demandez-en un nouveau à l'entreprise.
+- Accepter ne fait pas de vous un membre de l'entreprise. L'entreprise peut mettre fin à l'accès, et vous aussi ; rien n'est effacé à la fin.
+- Payer ces factures d'ici n'est pas encore proposé.
+
+**Voir aussi :** [Vos finances dans tous vos espaces](help:user.money.finances)
 
 ### Vos activités en un coup d'œil
 

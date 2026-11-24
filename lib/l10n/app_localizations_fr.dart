@@ -5018,6 +5018,159 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get billingAccessAccept => 'Accepter';
+
+  @override
+  String billingAccessAccepted(String business) {
+    return 'C\'est fait. Les factures que $business a établies à votre nom apparaissent désormais dans vos finances, à part de ce que vous devez en tant que membre.';
+  }
+
+  @override
+  String get billingAccessAction => 'Accès par compte';
+
+  @override
+  String billingAccessActive(String date) {
+    return 'Lit les factures depuis le $date';
+  }
+
+  @override
+  String get billingAccessAlreadyHeld =>
+      'Vous avez déjà cet accès ; l\'accepter à nouveau ne change rien.';
+
+  @override
+  String get billingAccessCheck => 'Vérifier le code';
+
+  @override
+  String get billingAccessCodeCopied => 'Code copié';
+
+  @override
+  String get billingAccessCodeCopy => 'Copier le code';
+
+  @override
+  String get billingAccessCodeField => 'Code';
+
+  @override
+  String billingAccessCodeOnce(String date) {
+    return 'Remettez ce code au client maintenant. Il n\'est affiché qu\'une fois et ne peut plus être relu. Il est valable jusqu\'au $date.';
+  }
+
+  @override
+  String get billingAccessCodeTitle => 'Code d\'invitation';
+
+  @override
+  String get billingAccessCodeUnusable =>
+      'Ce code est inutilisable. Il peut être erroné, expiré, retiré ou déjà pris par un autre compte. Demandez-en un nouveau à l\'entreprise.';
+
+  @override
+  String get billingAccessEnter => 'Utiliser un code de facturation';
+
+  @override
+  String get billingAccessEnterIntro =>
+      'Une entreprise qui vous facture peut vous remettre un code. Il vous permet de lire, depuis votre compte, les factures établies à votre nom. Vous ne devenez pas membre.';
+
+  @override
+  String get billingAccessEnterTitle => 'Lire les factures d\'une entreprise';
+
+  @override
+  String billingAccessExpired(String date) {
+    return 'Invitation expirée le $date';
+  }
+
+  @override
+  String get billingAccessFailed =>
+      'La réponse n\'est pas arrivée. On ne sait pas si quelque chose a changé ; réessayez.';
+
+  @override
+  String billingAccessGroupOpen(String amounts) {
+    return 'Reste dû : $amounts';
+  }
+
+  @override
+  String get billingAccessGroupSettled => 'Rien d\'ouvert';
+
+  @override
+  String billingAccessGroupTitle(String business, String ref) {
+    return '$business · compte $ref';
+  }
+
+  @override
+  String get billingAccessIntro =>
+      'Invitez ce client à lire ses propres factures depuis son propre compte. Il ne devient pas membre et ne voit rien d\'autre de votre activité.';
+
+  @override
+  String get billingAccessInvite => 'Créer un code d\'invitation';
+
+  @override
+  String billingAccessInvited(String date) {
+    return 'Invité le $date, pas encore accepté';
+  }
+
+  @override
+  String get billingAccessLoadFailed =>
+      'Les invitations n\'ont pas pu être lues. Ce n\'est pas une liste vide.';
+
+  @override
+  String get billingAccessNone => 'Aucune invitation pour l\'instant.';
+
+  @override
+  String get billingAccessNotACustomer =>
+      'Seul un client facturé peut être invité. Rien n\'a été modifié.';
+
+  @override
+  String get billingAccessNotAllowed =>
+      'Vous ne pouvez pas inviter de clients à un compte ici. Rien n\'a été modifié.';
+
+  @override
+  String get billingAccessPaymentSoon =>
+      'Payer ces factures d\'ici viendra avec une prochaine mise à jour.';
+
+  @override
+  String billingAccessPreviewLine(String business, String name) {
+    return '$business vous invite à lire les factures établies à l\'ordre de $name.';
+  }
+
+  @override
+  String billingAccessPreviewUnnamed(String business) {
+    return '$business vous invite à lire les factures qu\'elle a établies à votre nom.';
+  }
+
+  @override
+  String get billingAccessReasonTooLong =>
+      'Le motif est trop long. Raccourcissez-le ; rien n\'a été modifié.';
+
+  @override
+  String get billingAccessRequestReused =>
+      'Cette demande a déjà servi pour une autre invitation. Fermez cette fenêtre et rouvrez-la ; rien n\'a été modifié.';
+
+  @override
+  String get billingAccessRevoke => 'Mettre fin à l\'accès';
+
+  @override
+  String get billingAccessRevokeNote =>
+      'Mettre fin à l\'accès n\'efface rien : les factures et leur historique restent tels quels.';
+
+  @override
+  String billingAccessRevoked(String date) {
+    return 'Accès terminé le $date';
+  }
+
+  @override
+  String get billingAccessSectionNote =>
+      'Factures qu\'une entreprise a établies à votre nom, lues grâce à l\'accès qu\'elle vous a donné. Elles ne sont pas comptées avec ce que vous devez en tant que membre.';
+
+  @override
+  String get billingAccessSectionTitle => 'Facturé en tant que client';
+
+  @override
+  String billingAccessTitle(String name) {
+    return 'Accès par compte : $name';
+  }
+
+  @override
+  String get billingAccessUnknownGrant =>
+      'Cet accès n\'existe plus. Fermez la liste et rouvrez-la ; rien n\'a été modifié.';
+
+  @override
   String get billingAddBand => 'Ajouter un palier';
 
   @override
@@ -5149,7 +5302,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get billingCustomersNoAccount =>
-      'Les personnes et entreprises que vous facturez. Elles n\'ont pas de compte et ne voient rien de votre activité.';
+      'Les personnes et entreprises que vous facturez. Ce ne sont pas des membres et elles ne voient rien de votre activité, sauf si vous les invitez à lire leurs propres factures depuis leur propre compte.';
 
   @override
   String get billingCustomersRetry => 'Réessayer';
@@ -38033,6 +38186,134 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get stockTransfersTitle => 'Transferts';
+
+  @override
+  String stockUnitChangedNow(String place) {
+    return 'L\'unité est maintenant à $place : relisez-la.';
+  }
+
+  @override
+  String get stockUnitCode => 'Code de l\'unité';
+
+  @override
+  String get stockUnitContent => 'Contenu';
+
+  @override
+  String get stockUnitContentNone => 'Rien dedans.';
+
+  @override
+  String get stockUnitItem => 'Article';
+
+  @override
+  String get stockUnitKind => 'Genre';
+
+  @override
+  String get stockUnitKindBox => 'Boîte';
+
+  @override
+  String get stockUnitKindCarton => 'Carton';
+
+  @override
+  String get stockUnitKindCrate => 'Caisse';
+
+  @override
+  String get stockUnitKindOther => 'Autre';
+
+  @override
+  String get stockUnitKindPallet => 'Palette';
+
+  @override
+  String get stockUnitLabelCode =>
+      'Étiquette du fournisseur (SSCC), le cas échéant';
+
+  @override
+  String stockUnitLoose(String quantity) {
+    return '$quantity en vrac ici';
+  }
+
+  @override
+  String stockUnitMade(String unit) {
+    return '$unit créée.';
+  }
+
+  @override
+  String get stockUnitMake => 'Créer une unité';
+
+  @override
+  String get stockUnitMove => 'Déplacer';
+
+  @override
+  String get stockUnitMoveTo => 'Déplacer vers';
+
+  @override
+  String stockUnitMoved(String unit, String place) {
+    return '$unit déplacée vers $place.';
+  }
+
+  @override
+  String stockUnitNestedIn(String unit) {
+    return 'Dans $unit';
+  }
+
+  @override
+  String get stockUnitPlace => 'Emplacement';
+
+  @override
+  String get stockUnitQuantity => 'Quantité';
+
+  @override
+  String get stockUnitRepack => 'Reconditionner en boîtes';
+
+  @override
+  String get stockUnitRepackBoxes => 'Nombre de boîtes';
+
+  @override
+  String get stockUnitRepackEach => 'Quantité par boîte';
+
+  @override
+  String get stockUnitRepackItem => 'Ce qu\'il faut reconditionner';
+
+  @override
+  String stockUnitRepacked(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count boîtes créées.',
+      one: '1 boîte créée.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get stockUnitUnpack => 'Défaire';
+
+  @override
+  String get stockUnitUnpackHint => 'Son contenu reste où il est, en vrac.';
+
+  @override
+  String stockUnitUnpacked(String unit) {
+    return '$unit défaite.';
+  }
+
+  @override
+  String get stockUnitsAllPlaces => 'Tous les emplacements';
+
+  @override
+  String get stockUnitsChooseItem => 'Choisir un article';
+
+  @override
+  String get stockUnitsEmpty =>
+      'Aucune unité pour l\'instant. Créez-en une à partir du stock en vrac d\'un emplacement.';
+
+  @override
+  String get stockUnitsIntro =>
+      'Une palette, un carton ou une caisse à vous : elle se déplace avec tout son contenu, et chaque lot et chaque pièce reste traçable.';
+
+  @override
+  String get stockUnitsReadFailed => 'Les unités n\'ont pas pu être lues.';
+
+  @override
+  String get stockUnitsTitle => 'Unités de manutention';
 
   @override
   String get stockValueBasis =>
