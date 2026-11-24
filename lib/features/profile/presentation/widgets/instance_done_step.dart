@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../../core/data/external_hosts.dart';
 import '../../../../core/instance/instance_doctor.dart';
 import '../../../../core/instance/management_api.dart';
 import '../../../../core/l10n/context_l10n.dart';
@@ -9,7 +10,7 @@ import '../../../../core/theme/app_spacing.dart';
 import 'instance_doctor_panel.dart';
 
 /// Where a personal access token is created, and revoked.
-const String supabaseTokensUrl = 'https://supabase.com/dashboard/account/tokens';
+const String supabaseTokensUrl = '${ExternalHosts.supabase}/dashboard/account/tokens';
 
 /// A wizard paragraph.
 class WizardText extends StatelessWidget {

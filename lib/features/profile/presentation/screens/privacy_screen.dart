@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/data/external_hosts.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/help/help_hint.dart';
@@ -28,7 +29,7 @@ import '../widgets/privacy_choice_tiles.dart';
 import '../widgets/rights_requests_tile.dart';
 
 /// The policy the store listings, the README and the help all point at.
-const _kPrivacyPolicyUrl = 'https://fdittgen-png.github.io/deskilo/privacy.html';
+const _kPrivacyPolicyUrl = '${ExternalHosts.projectSite}privacy.html';
 
 /// Settings → Privacy & data (#719): the four GDPR rights a member
 /// exercises themselves, on one screen, with the policy beside them.

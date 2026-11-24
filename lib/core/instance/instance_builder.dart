@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:meta/meta.dart';
 
+import '../data/external_hosts.dart';
 import 'app_url_setting.dart';
 import 'instance_bundle.dart';
 import 'instance_network.dart';
@@ -53,9 +54,9 @@ String generateDatabasePassword([Random? random]) {
 /// Where the app lives on the web and what its sign-in links look like:
 /// what the new instance's auth must allow.
 abstract final class InstanceAuthConfig {
-  static const String siteUrl = 'https://fdittgen-png.github.io/deskilo/';
+  static const String siteUrl = ExternalHosts.projectSite;
   static const String redirectAllowList =
-      'deskilo://**,https://fdittgen-png.github.io/deskilo/**';
+      'deskilo://**,${ExternalHosts.projectSite}**';
 
   /// The deployment base is the authority for a web-created instance.
   /// Never include transient flow parameters or fragments in saved config.
