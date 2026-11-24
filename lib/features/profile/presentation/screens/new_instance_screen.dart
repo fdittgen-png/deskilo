@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/backend/backend_settings.dart';
+import '../../../../core/data/external_hosts.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/instance/instance_builder.dart';
@@ -14,6 +15,7 @@ import '../../../../core/instance/instance_readiness.dart';
 import '../../../../core/instance/management_api.dart';
 import '../../../../core/instance/personal_home_probe_provider.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -50,7 +52,7 @@ class NewInstanceScreen extends ConsumerStatefulWidget {
 enum _Step { account, project, schema, functions, signIn, enrol, done }
 
 class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
-  static const String supabaseUrl = 'https://supabase.com';
+  static const String supabaseUrl = ExternalHosts.supabase;
   static const String tokensUrl = supabaseTokensUrl;
 
   final _token = TextEditingController();
@@ -257,7 +259,7 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
       context,
       l10n.backendServerSaved,
     );
-    context.go('/server');
+    context.go(Routes.server);
   }
 
   bool get _nextEnabled => switch (_step) {

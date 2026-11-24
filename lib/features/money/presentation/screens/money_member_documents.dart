@@ -27,6 +27,7 @@ import '../../domain/invoice_pdf_template.dart';
 import '../../domain/invoice_report.dart';
 import '../../domain/report_data_letters.dart';
 import '../../domain/report_facts.dart';
+import '../../domain/report_kind.dart';
 import '../../domain/statement.dart';
 import '../../providers/money_providers.dart';
 import '../../providers/usage_providers.dart';
@@ -73,7 +74,8 @@ class MoneyMemberDocuments {
             _ref.read(myMemberProvider).value?.preferredLocaleOverride ??
             _ref.read(myProfileProvider).value?.preferredLocale ?? '');
     final docL10n = l10nForLanguage(language);
-    if (docId == 'usage') {
+    final document = ReportDocument.fromId(docId);
+    if (document == ReportDocument.usage) {
       // #873 — the figures come from the statement and the records.
       await _ref.read(memberStatementProvider(me.id, period).future);
       // #2590 — printing the letter is the person's own action, so the month
@@ -90,8 +92,9 @@ class MoneyMemberDocuments {
     }
     // #3680 — the facts are read (awaited) for the letter being printed.
     final agreement =
-        docId == 'agreement' ? await readAgreementFacts(_ref) : null;
-    final payments = docId != 'agreement' && docId != 'usage'
+        document == ReportDocument.agreement ? await readAgreementFacts(_ref) : null;
+    final payments = document != ReportDocument.agreement &&
+            document != ReportDocument.usage
         ? await readPaymentsFacts(_ref, period)
         : null;
     if (!_context.mounted) return;
@@ -102,9 +105,9 @@ class MoneyMemberDocuments {
         payments: payments);
     final report = renderLetterDoc(_context, _ref,
         docId: docId, data: data, language: language);
-    final title = switch (docId) {
-      'agreement' => docL10n.reportDocAgreement,
-      'usage' => docL10n.reportDocUsage,
+    final title = switch (document) {
+      ReportDocument.agreement => docL10n.reportDocAgreement,
+      ReportDocument.usage => docL10n.reportDocUsage,
       _ => docL10n.reportDocPayments,
     };
     // #514 — the shared triad: quick view / save / share.
@@ -135,13 +138,13 @@ class MoneyMemberDocuments {
     AgreementFacts? agreement,
     PaymentsFacts? payments,
   }) =>
-      switch (docId) {
-        'agreement' => agreementReportData(
+      switch (ReportDocument.fromId(docId)) {
+        ReportDocument.agreement => agreementReportData(
             reportStringsFor(_context, l10n: docL10n, localeName: language),
             agreement!,
             memberName: who.name,
             subscriptionPct: who.pct, reference: requireWorkspaceTaxReference(_ref)),
-        'usage' => usageReportData(_context, _ref,
+        ReportDocument.usage => usageReportData(_context, _ref,
             period: period,
             memberId: who.id,
             memberName: who.name,

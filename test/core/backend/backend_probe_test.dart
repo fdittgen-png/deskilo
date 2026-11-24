@@ -223,7 +223,7 @@ void main() {
       PostgrestException pg(String? code, [String message = '']) =>
           PostgrestException(message: message, code: code);
       final table = <PostgrestException, BackendProbeResult>{
-        pg('42P01', 'relation "workspaces" does not exist'):
+        pg(PgCode.undefinedTable, 'relation "workspaces" does not exist'):
             BackendProbeResult.schemaMissing,
         pg(PgCode.pgrstJwtExpired, 'JWT expired'): BackendProbeResult.badKey,
         pg('401', 'Invalid API key'): BackendProbeResult.badKey,

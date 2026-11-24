@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../core/ui/app_sheet.dart';
@@ -99,7 +100,7 @@ class InboxHeader extends ConsumerWidget {
             ),
           FilledButton.tonalIcon(
             key: const ValueKey('unified-inbox-people'),
-            onPressed: () => context.push('/account-messages'),
+            onPressed: () => context.push(Routes.accountMessages),
             icon: const Icon(Icons.edit_outlined),
             label: Text(l10n.newConversationTitle),
           ),

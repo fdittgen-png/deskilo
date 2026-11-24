@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import 'money_faces_view.dart';
 
@@ -68,7 +69,7 @@ class DocumentsFaceActions extends StatelessWidget {
       if (showDocumentLibrary)
         OutlinedButton.icon(
           key: const ValueKey('document-library-button'),
-          onPressed: () => context.push('/documents'),
+          onPressed: () => context.push(Routes.documents),
           icon: const Icon(Icons.folder_open_outlined),
           label: fittedLabel(l10n.featureDocuments),
         ),

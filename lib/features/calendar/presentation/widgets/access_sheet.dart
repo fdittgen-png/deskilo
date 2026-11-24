@@ -8,6 +8,7 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_sheet.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -112,10 +113,10 @@ class _AccessSheet extends ConsumerWidget {
                     l10n.accessRuleReminders,
                   ),
                 ]),
-              AsyncError() => Padding(
-                  padding: AppSpacing.lgAll,
-                  child: Text(l10n.workspaceGenericError),
-                ),
+              AsyncError(:final error) => ReadFailureBanner(
+                error: error,
+                onRetry: () => ref.invalidate(whoCanAccessMeProvider),
+              ),
               _ => const LoadingView(),
             },
             if (logOn) ...[
@@ -158,10 +159,10 @@ class _AccessSheet extends ConsumerWidget {
                         subtitle: Text(format.dateTime(e.at)),
                       ),
                   ]),
-                AsyncError() => Padding(
-                    padding: AppSpacing.lgH,
-                    child: Text(l10n.workspaceGenericError),
-                  ),
+                AsyncError(:final error) => ReadFailureBanner(
+                  error: error,
+                  onRetry: () => ref.invalidate(dataAccessLogProvider),
+                ),
                 _ => const LoadingView(),
               },
             ],

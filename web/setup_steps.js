@@ -68,6 +68,10 @@ const STEPS=[
   selectEl(T('fedFactBatch'),'federation.factBatch',opts(FED_FACT_BATCH),T('fedFactBatchHint'),null,'identity'),
   // #3732 — every installation decides how long an older app stays accepted.
   selectEl(T('appSupportWindow'),'appSupport.windowDays',opts(APP_SUPPORT_WINDOW),T('appSupportWindowHint'),null,'identity'),
+  // #4416 — every installation receives its apps' error reports, within these limits.
+  selectEl(T('traceReportsPerHour'),'traceReports.perHour',opts(TRACE_PER_HOUR),T('traceReportsPerHourHint'),null,'identity'),
+  selectEl(T('traceReportMaxBytes'),'traceReports.maxBytes',opts(TRACE_MAX_BYTES),T('traceReportMaxBytesHint'),null,'identity'),
+  selectEl(T('traceReportRetention'),'traceReports.retentionDays',opts(TRACE_RETENTION),T('traceReportRetentionHint'),null,'identity'),
   ...(S.network.roles==='combined'?[selectEl(T('dirPageSize'),'directory.pageSize',opts(DIR_PAGE),T('dirPageSizeHint'),null,'identity'),selectEl(T('dirQueryLength'),'directory.queryLength',opts(DIR_QUERY),T('dirQueryLengthHint'),null,'identity')]:[]),
   // #2556 — every server reads its part of the inbox one page at a time.
   selectEl(T('inboxPageSize'),'inbox.pageSize',opts(INBOX_PAGE),T('inboxPageSizeHint'),null,'identity'),

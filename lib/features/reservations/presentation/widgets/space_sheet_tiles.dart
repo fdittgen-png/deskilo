@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../plan/domain/seat.dart';
 import '../../../plan/providers/plan_focus_controller.dart';
 import '../../domain/space_bookability.dart';
@@ -78,7 +79,7 @@ class SpaceShowOnPlanButton extends ConsumerWidget {
       Navigator.of(context).popUntil(
         (route) => route is! ModalBottomSheetRoute && route is! RawDialogRoute,
       );
-      context.go('/plan');
+      context.go(Routes.plan);
     },
   );
 }

@@ -8,6 +8,7 @@ import 'invoice_clauses.dart';
 import 'invoice_kind.dart';
 import 'invoice_line_snapshot.dart';
 import 'line_track.dart';
+import 'match_resolution.dart';
 import 'vat_rate.dart';
 
 part 'invoice.freezed.dart';
@@ -120,6 +121,10 @@ sealed class InvoiceMatch with _$InvoiceMatch {
   const InvoiceMatch._();
 
   bool get pending => status == 'pending';
+
+  /// #4418 -- [resolution] decoded: a value this app does not know is
+  /// [MatchResolution.unknown].
+  MatchResolution get settles => MatchResolution.fromWire(resolution);
 }
 
 /// One party of an invoice as the document FROZE it (0069) — the legal

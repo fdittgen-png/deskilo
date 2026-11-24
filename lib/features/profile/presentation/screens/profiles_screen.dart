@@ -8,11 +8,12 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/text/initials.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../core/theme/status_colors.dart';
-import '../../../../core/ui/inline_banner.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../directory/presentation/account_portal_entry.dart';
@@ -182,7 +183,8 @@ class ProfilesScreen extends ConsumerWidget {
     // #1650 — a list that could not be fetched is not an empty list: the
     // router sends a member here rather than to onboarding, and the
     // screen says so and offers the retry instead of "Add a profile".
-    final unavailable = workspacesAsync.hasError && !workspacesAsync.hasValue;
+    final failure = workspacesAsync.hasValue ? null : workspacesAsync.error;
+    final unavailable = failure != null;
     final memberships = ref.watch(myMembershipsProvider).value ?? const [];
     final active = ref.watch(currentWorkspaceProvider).value;
     final defaultId = ref.watch(defaultWorkspaceIdProvider).value;
@@ -193,7 +195,7 @@ class ProfilesScreen extends ConsumerWidget {
         actions: [
           const ApplicationRequestsEntry(), const AccountPortalEntry(),
           IconButton(key: const ValueKey('profiles-account-activity-title'), tooltip: l10n.accountActivityTitle,
-            onPressed: () => context.push('/account-activity'),
+            onPressed: () => context.push(Routes.accountActivity),
             icon: const Icon(Icons.receipt_long_outlined)),
           // #763 — one dot for the whole switcher, in the app bar.
           HelpDot(l10n.helpTopicSettings,
@@ -205,7 +207,7 @@ class ProfilesScreen extends ConsumerWidget {
           ? null
           : FloatingActionButton.extended(
               key: const ValueKey('profiles-add'),
-              onPressed: () => context.push('/onboarding'),
+              onPressed: () => context.push(Routes.onboarding),
               icon: const Icon(Icons.add),
               label: Text(l10n.profilesAdd),
             ),
@@ -216,18 +218,16 @@ class ProfilesScreen extends ConsumerWidget {
           const EdgeInsets.only(bottom: kFabSafeBottom),
         ),
         children: [
-          if (unavailable)
-            InlineBanner(
+          if (failure != null)
+            ReadFailureBanner(
               key: const ValueKey('profiles-unavailable'),
-              icon: Icons.cloud_off_outlined,
-              text: l10n.profilesUnavailable,
-              actionLabel: l10n.commonRetry,
+              error: failure,
               // `refresh`, not `invalidate`: invalidate defers the rebuild
               // to the next frame, and with the router listening to this
               // keepAlive provider a deferred rebuild out of an error left
               // a notification unflushed at dispose (Riverpod 3.3.1 asserts
               // `_skippedNotification == null`); refresh rebuilds on the spot.
-              onAction: () => unawaited(ref.refresh(myWorkspacesProvider.future)),
+              onRetry: () => unawaited(ref.refresh(myWorkspacesProvider.future)),
             ),
           if (workspacesAsync.isLoading && !workspacesAsync.hasValue)
             const LinearProgressIndicator(),

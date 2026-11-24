@@ -11,6 +11,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/backend/backend_settings.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/inline_banner.dart';
@@ -90,7 +91,7 @@ class _InvitationJoinPanelState extends ConsumerState<InvitationJoinPanel> {
   }
 
   Future<void> _scan() async {
-    final payload = await context.push<String>('/scan-join');
+    final payload = await context.push<String>(Routes.scanJoin);
     if (!mounted || payload == null || payload.isEmpty) return;
     widget.code.text = payload;
     await _review();
@@ -151,7 +152,7 @@ class _InvitationJoinPanelState extends ConsumerState<InvitationJoinPanel> {
         .read(pendingInvitationsProvider)
         .keep(invitation, widget.code.text);
     if (!mounted) return;
-    await context.push('/server', extra: target);
+    await context.push(Routes.server, extra: target);
   }
 
   @override

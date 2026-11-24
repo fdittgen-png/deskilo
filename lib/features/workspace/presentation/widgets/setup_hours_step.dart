@@ -12,6 +12,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/time/work_hours.dart';
@@ -154,7 +155,7 @@ class _OpenAvailability extends StatelessWidget {
       alignment: AlignmentDirectional.centerStart,
       child: TextButton(
         key: const ValueKey('setup-hours-open-availability'),
-        onPressed: () => context.push('/availability'),
+        onPressed: () => context.push(Routes.availability),
         child: Text(context.l10n.setupHoursOpenAvailability),
       ),
     ),

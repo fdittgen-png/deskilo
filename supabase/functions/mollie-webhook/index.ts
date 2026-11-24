@@ -20,6 +20,7 @@
 // nothing is credited (_shared/mollie_payment_rules.ts). A paid payment shown charged back
 // or refunded is recorded as reversed instead.
 
+import { env as readEnv, KEYS } from "../_shared/config.ts";
 import { configOf } from "../_shared/webhook_guard.ts";
 import { createClient, SupabaseClient } from "npm:@supabase/supabase-js@2";
 import { mollieApi } from "../_shared/providers.ts";
@@ -65,10 +66,10 @@ export interface Deps {
 const defaultDeps: Deps = {
   admin: () =>
     createClient(
-      Deno.env.get("SUPABASE_URL")!,
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+      readEnv(KEYS.supabaseUrl)!,
+      readEnv(KEYS.supabaseServiceRoleKey)!,
     ),
-  env: (name) => Deno.env.get(name),
+  env: readEnv,
   fetch: (input, init) => fetch(input, init),
   allowTest: () => allowsTestPayments(),
 };

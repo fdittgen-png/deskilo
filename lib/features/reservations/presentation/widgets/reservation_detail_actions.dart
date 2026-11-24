@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/time/workspace_time.dart';
 import '../../../../core/trace/act_trace.dart';
@@ -95,7 +96,7 @@ class ReservationDetailActions {
     // every remaining sheet/dialog first (field report).
     Navigator.of(context).popUntil((route) =>
         route is! ModalBottomSheetRoute && route is! RawDialogRoute);
-    context.go('/plan');
+    context.go(Routes.plan);
   }
 
   /// Closes the sheet after an action; a pane stays.

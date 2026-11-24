@@ -11,10 +11,11 @@ import 'package:flutter/services.dart';
 
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
-import '../../../core/trace/trace_logger.dart';
+import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../l10n/app_localizations.dart';
+import '../application/stock_reads.dart';
 import '../domain/item_groups.dart';
 import '../domain/stock_config.dart';
 import '../domain/stock_config_check.dart';
@@ -32,16 +33,17 @@ Future<bool> showStockItemEditor(
   ({bool lots, bool keep, ItemGroups? groups}) options = (lots: false, keep: false, groups: null),
 }) async {
   final l10n = context.l10n;
-  final StockItemConfig? config;
-  try {
-    config = await commands.item(workspaceId, itemId);
-  } on Object catch (e, st) {
-    TraceLogger.instance.error('stock', 'the item could not be read for its editor', error: e, stackTrace: st);
-    if (context.mounted) AppSnack.error(context, l10n.stockReadFailed);
-    return false;
-  }
+  final config = await guardRead<StockItemConfig?>(
+    domain: 'stock',
+    message: 'the item could not be read for its editor',
+    read: () => StockReads(commands).item(workspaceId, itemId),
+    fallback: (_) {
+      if (context.mounted) AppSnack.error(context, l10n.stockReadFailed);
+      return null;
+    },
+  );
   if (config == null || !context.mounted) return false;
-  final own = await _ownValues(options.groups, workspaceId, itemId);
+  final own = await _ownValues(StockReads(commands, groups: options.groups), workspaceId, itemId);
   if (!context.mounted) return false;
   final editor = _ItemDraft(config, lotsOn: options.lots, keepInStock: options.keep, own: own);
   return showAppFormSheet(
@@ -101,17 +103,12 @@ class _CodeRow {
 
 /// The settings in which the item of a group keeps a value of its own against the group's. Without groups, or when the
 /// read fails, nothing is marked: the mark is information, never a reason to keep the editor closed.
-Future<Set<String>> _ownValues(ItemGroups? groups, String workspaceId, String itemId) async {
-  if (groups == null) return const {};
-  try {
-    final effective = await groups.effective(workspaceId, itemId);
-    if (effective.groupId == null) return const {};
-    return {for (final e in effective.params.entries) if (e.value.own) e.key};
-  } on Object catch (e, st) {
-    TraceLogger.instance.warn('stock', 'the own values of an item were not read for its editor', error: e, stackTrace: st);
-    return const {};
-  }
-}
+Future<Set<String>> _ownValues(StockReads reads, String workspaceId, String itemId) => guardRead(
+  domain: 'stock',
+  message: 'the own values of an item were not read for its editor',
+  read: () => reads.ownValues(workspaceId, itemId),
+  fallback: (_) => const <String>{},
+);
 
 class _ItemDraft {
   _ItemDraft(this.config, {required this.lotsOn, bool keepInStock = false, this.own = const {}})
@@ -170,22 +167,23 @@ class _ItemDraft {
 
   FieldErrors validate(AppLocalizations l10n) => {
     if (lotsOn && shelfLife.text.trim().isNotEmpty && (int.tryParse(shelfLife.text.trim()) ?? 0) <= 0)
-      'shelf_life_days': stockReasonText(l10n, 'out_of_range'),
+      'shelf_life_days': stockRefusalText(l10n, StockRefusal.outOfRange),
     for (final e in checkStockItem(
       units: [for (final u in units) u.draft],
       codes: [for (final c in codes) c.draft],
     ).entries)
-      e.key: stockReasonText(l10n, e.value),
+      e.key: stockRefusalText(l10n, e.value),
   };
 
   Future<String?> save(AppLocalizations l10n, StockConfigCommands commands, String workspaceId) async {
-    try {
-      await commands.saveItem(workspaceId, current, requestId);
-      return null;
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'the stock settings of an item were not saved', error: e, stackTrace: st);
-      return stockSaveProblem(l10n, e);
-    }
+    return guardSave(
+      domain: 'stock',
+      message: 'the stock settings of an item were not saved',
+      action: () async {
+        await commands.saveItem(workspaceId, current, requestId);
+      },
+      problem: (e) => stockProblemText(l10n, e),
+    );
   }
 
   List<Widget> fields(BuildContext context, VoidCallback refresh) {

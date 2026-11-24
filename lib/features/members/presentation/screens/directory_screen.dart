@@ -13,6 +13,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -237,10 +238,9 @@ class _DirectoryScreenState extends ConsumerState<DirectoryScreen> {
           );
         },
       ),
-      AsyncError() => Center(
-        child: Text(
-          l10n.workspaceGenericError,
-        ),
+      AsyncError(:final error) => ReadFailureBanner(
+        error: error,
+        onRetry: () => ref.invalidate(workspaceMembersProvider),
       ),
       _ => const LoadingView(),
     };

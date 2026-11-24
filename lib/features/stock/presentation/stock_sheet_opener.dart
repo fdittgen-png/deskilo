@@ -1,0 +1,48 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+//
+// How a stock page opens a sheet that chooses among the stock's items and
+// places: the two reads are asked together, the sheet opens only while the
+// page is still there, the reads the sheet changed are asked again when it
+// says it changed something, and a read that failed is said once and opens
+// nothing.
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/misc.dart' show ProviderOrFamily;
+
+import '../../../core/l10n/context_l10n.dart';
+import '../../../core/trace/guarded.dart';
+import '../../../core/ui/app_snack.dart';
+import '../providers/stock_providers.dart';
+
+/// The opener of a stock page: [open] reads the items and places of a business together, then shows a sheet with them.
+class StockSheetOpener {
+  const StockSheetOpener(this._ref);
+
+  final WidgetRef _ref;
+
+  /// Reads the items and places of [workspaceId] together, then shows [sheet] with them; when it answers true,
+  /// [reads] are asked again. [what] names the sheet in the trace when the reads failed.
+  Future<void> open(
+    BuildContext context,
+    String workspaceId, {
+    required String what,
+    required Future<bool> Function(StockSheetChoices choices) sheet,
+    List<ProviderOrFamily> reads = const [],
+  }) async {
+    final choices = await guardRead<StockSheetChoices?>(
+      domain: 'stock',
+      message: 'the $what sheet could not read the stock',
+      read: () => _ref.read(stockSheetChoicesProvider(workspaceId).future),
+      fallback: (_) {
+        if (context.mounted) AppSnack.error(context, context.l10n.stockReadFailed);
+        return null;
+      },
+    );
+    if (choices == null || !context.mounted) return;
+    if (await sheet(choices) && context.mounted) {
+      for (final p in reads) {
+        _ref.invalidate(p);
+      }
+    }
+  }
+}

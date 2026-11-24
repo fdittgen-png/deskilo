@@ -17,6 +17,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/shell/space_entry.dart';
 import '../../../core/l10n/context_l10n.dart';
+import '../../../core/navigation/routes.dart';
 import '../../../core/storage/space_prefs_store.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
@@ -232,7 +233,7 @@ Widget? _action(
     PersonalSpaceAction.requestStatus => OutlinedButton(
       key: ValueKey('my-space-request-$id'),
       style: OutlinedButton.styleFrom(minimumSize: _target),
-      onPressed: () => context.push('/applications'),
+      onPressed: () => context.push(Routes.applications),
       child: Text(l10n.mySpacesRequestStatus),
     ),
     _ => null,

@@ -162,9 +162,5 @@
   "privacyAdminOpenTile": "Personal data and rights requests",
   "@privacyAdminOpenTile": {
     "description": "Shown as the title in privacy screen (profile)."
-  },
-  "privacyAdminLoadFailed": "The requests could not be read.",
-  "@privacyAdminLoadFailed": {
-    "description": "Shown as the text in privacy admin screen (members)."
   }
 }

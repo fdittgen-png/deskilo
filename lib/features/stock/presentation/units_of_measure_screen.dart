@@ -8,22 +8,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/help/help_anchors.dart';
-import '../../../core/help/help_dot.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
-import '../../../core/ui/async_read_body.dart';
-import '../../../core/ui/kit/page_title.dart';
-import '../../../core/ui/loading_view.dart';
-import '../../workspace/providers/workspace_providers.dart';
 import '../domain/measure_unit_form.dart';
 import '../domain/stock_config.dart';
 import '../domain/workspace_units.dart';
 import '../providers/workspace_units_providers.dart';
 import 'measure_unit_sheet.dart';
 import 'measure_unit_text.dart';
+import 'stock_config_text.dart';
+import 'stock_page_shell.dart';
 
 class UnitsOfMeasureScreen extends ConsumerWidget {
   const UnitsOfMeasureScreen({super.key});
@@ -31,38 +28,30 @@ class UnitsOfMeasureScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final workspaceId = ref.watch(currentWorkspaceProvider).value?.id;
-    final units = workspaceId == null ? null : ref.watch(workspaceUnitListProvider(workspaceId));
-    return Scaffold(
-      appBar: AppBar(
-        title: PageTitle(l10n.featureUnitsOfMeasureTitle),
-        actions: [HelpDot(l10n.featureUnitsOfMeasureTitle, anchor: HelpAnchor.settingsUnits)],
-      ),
-      floatingActionButton: units?.value == null
-          ? null
-          : FloatingActionButton.extended(
-              key: const ValueKey('measure-units-new'),
-              onPressed: () => _edit(context, ref, workspaceId!, units!.value!, null),
-              icon: const Icon(Icons.add),
-              label: Text(l10n.measureUnitNew),
-            ),
-      body: switch (units) {
-        null => const LoadingView(),
-        AsyncData(:final value) => _Units(
-          workspaceId: workspaceId!,
+    return StockPageShell(
+      title: l10n.featureUnitsOfMeasureTitle,
+      anchor: HelpAnchor.settingsUnits,
+      // a unit is added once the units are read: a new one is checked against them
+      floatingActionButton: (ref, workspaceId) => switch (ref.watch(workspaceUnitListProvider(workspaceId)).value) {
+        null => null,
+        final all => FloatingActionButton.extended(
+          key: const ValueKey('measure-units-new'),
+          onPressed: () => _edit(context, ref, workspaceId, all, null),
+          icon: const Icon(Icons.add),
+          label: Text(l10n.measureUnitNew),
+        ),
+      },
+      body: (context, ref, workspaceId) => StockRead(
+        keyName: 'measure-units',
+        value: ref.watch(workspaceUnitListProvider(workspaceId)),
+        onRetry: () => ref.invalidate(workspaceUnitListProvider(workspaceId)),
+        data: (value) => _Units(
+          workspaceId: workspaceId,
           units: value,
           onEdit: (u) => _edit(context, ref, workspaceId, value, u),
           onArchive: (u) => _archive(context, ref, workspaceId, u),
         ),
-        AsyncError(:final error) => Center(
-          child: ReadFailureBanner(
-            error: error,
-            onRetry: () => ref.invalidate(workspaceUnitListProvider(workspaceId!)),
-            retryKey: const ValueKey('measure-units-retry'),
-          ),
-        ),
-        _ => const LoadingView(),
-      },
+      ),
     );
   }
 
@@ -83,7 +72,7 @@ class UnitsOfMeasureScreen extends ConsumerWidget {
       ref.invalidate(workspaceUnitListProvider(workspaceId));
     } on StockConfigRefused catch (e, stack) {
       TraceLogger.instance.warn('stock', 'archiving a unit was refused: ${e.reason}', error: e, stackTrace: stack);
-      if (context.mounted) AppSnack.error(context, measureUnitReasonText(l10n, e.reason));
+      if (context.mounted) AppSnack.error(context, stockRefusalText(l10n, e.reason, subject: StockSubject.measureUnit));
     }
   }
 }

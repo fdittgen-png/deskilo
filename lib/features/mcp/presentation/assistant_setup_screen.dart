@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/l10n/context_l10n.dart';
+import '../../../core/navigation/routes.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
@@ -258,7 +259,7 @@ class _AssistantSetupScreenState extends ConsumerState<AssistantSetupScreen> {
         button(
           'customise',
           l10n.assistantSetupCustomise,
-          () => context.push('/settings/assistants'),
+          () => context.push(Routes.settingsAssistants),
         ),
       ],
       AssistantSetupStep.eligibility => [
@@ -278,7 +279,7 @@ class _AssistantSetupScreenState extends ConsumerState<AssistantSetupScreen> {
           button(
             'review',
             l10n.assistantSetupReview,
-            () => context.push('/database/assistant-approvals'),
+            () => context.push(Routes.databaseAssistantApprovals),
           ),
       ],
       _ => const [],
