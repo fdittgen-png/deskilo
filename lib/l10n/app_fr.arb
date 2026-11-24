@@ -24234,7 +24234,7 @@
   "tillReceiptCorrects": "Corrige le ticket {number}",
   "tillReceiptDisagrees": "Les montants de ce ticket ne concordent pas entre eux. Il est affiché tel qu'il a été figé ; prévenez votre administrateur.",
   "tillReceiptIssuedUnder": "Émis selon : {specification} ({version})",
-  "tillReceiptLine": "{label} : {quantity} {unit}",
+  "tillReceiptLine": "{label} : {quantity} {unit}  {amount}",
   "tillReceiptNumber": "Ticket {number}",
   "tillReceiptPrintNote": "Aucune imprimante de tickets n'est reliée à l'application : imprimez depuis le menu de partage.",
   "tillReceiptShare": "Partager le ticket",

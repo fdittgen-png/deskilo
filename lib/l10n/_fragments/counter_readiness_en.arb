@@ -109,7 +109,7 @@
       }
     }
   },
-  "tillReceiptLine": "{label}: {quantity} {unit}",
+  "tillReceiptLine": "{label}: {quantity} {unit}  {amount}",
   "@tillReceiptLine": {
     "description": "#4184 the counter receipt document",
     "placeholders": {
@@ -120,6 +120,9 @@
         "type": "String"
       },
       "unit": {
+        "type": "String"
+      },
+      "amount": {
         "type": "String"
       }
     }

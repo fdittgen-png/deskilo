@@ -24234,7 +24234,7 @@
   "tillReceiptCorrects": "Corregge lo scontrino {number}",
   "tillReceiptDisagrees": "Gli importi di questo scontrino non concordano tra loro. Viene mostrato così come è stato fissato; ne informi la Sua amministrazione.",
   "tillReceiptIssuedUnder": "Emesso secondo: {specification} ({version})",
-  "tillReceiptLine": "{label}: {quantity} {unit}",
+  "tillReceiptLine": "{label}: {quantity} {unit}  {amount}",
   "tillReceiptNumber": "Scontrino {number}",
   "tillReceiptPrintNote": "Nessuna stampante di scontrini è collegata all'app: stampi dal menu di condivisione.",
   "tillReceiptShare": "Condividere lo scontrino",

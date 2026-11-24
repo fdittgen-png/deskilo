@@ -13,13 +13,14 @@ import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/share/text_sharer.dart';
 import '../../../core/theme/app_spacing.dart';
+import '../../../core/trace/refusal_text.dart';
 import '../../../core/ui/app_sheet.dart';
+import '../../../core/ui/async_read_body.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/counter_receipt_document.dart';
 import '../providers/till_providers.dart';
-import 'till_text.dart';
 
 /// The lines of [doc] as words, one per line of the document, in the order a receipt prints them.
 List<String> _counterReceiptLines(AppLocalizations l10n, AppFormat format, CounterReceiptDocument doc) {
@@ -30,7 +31,7 @@ List<String> _counterReceiptLines(AppLocalizations l10n, AppFormat format, Count
     l10n.tillReceiptNumber(doc.number),
     if (doc.issuedAt != null) format.dateTime(doc.issuedAt!),
     if (corrects != null) l10n.tillReceiptCorrects(corrects.number),
-    for (final l in doc.lines) '${l10n.tillReceiptLine(l.label, l.quantity, l.unit).trim()}  ${money.formatMinor(l.grossMinor)}',
+    for (final l in doc.lines) l10n.tillReceiptLine(l.label, l.quantity, l.unit, money.formatMinor(l.grossMinor)),
     for (final t in doc.taxBreakdown) l10n.tillReceiptTaxLine(t.percent, money.formatMinor(t.taxMinor), money.formatMinor(t.netMinor)),
     l10n.tillReceiptTotal(money.formatMinor(doc.totals.grossMinor)),
     if (op.specification.isNotEmpty) l10n.tillReceiptIssuedUnder(op.specification, op.specificationVersion),
@@ -68,9 +69,11 @@ class _CounterReceiptSheet extends ConsumerWidget {
           .watch(counterReceiptProvider((workspaceId: workspaceId, receiptId: receiptId)))
           .when(
             loading: () => const LoadingView(),
-            error: (e, _) => Text(
-              e is CounterReceiptUnreadable ? l10n.tillReceiptUnreadable : tillProblemText(l10n, e),
-              key: const ValueKey('counter-receipt-problem'),
+            error: (e, _) => ReadFailureBanner(
+              error: e,
+              onRetry: () => ref.invalidate(counterReceiptProvider((workspaceId: workspaceId, receiptId: receiptId))),
+              retryKey: const ValueKey('counter-receipt-retry'),
+              refusal: e is CounterReceiptUnreadable ? l10n.tillReceiptUnreadable : knownRefusalText(l10n, e),
             ),
             data: (doc) => _CounterReceiptView(document: doc, channel: _channel(ref)),
           ),

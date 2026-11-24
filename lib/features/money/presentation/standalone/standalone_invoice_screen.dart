@@ -165,27 +165,28 @@ class _State extends ConsumerState<StandaloneInvoiceScreen> {
   }
 
   void _settle(CommandOutcome<StandaloneIssued> outcome) {
-    switch (outcome) {
-      case CommandDone(:final value):
-        setState(() => _busy = false);
-        context.go('$invoicesPath/${value.invoiceId}');
-      case CommandRefused(:final refusal):
-        setState(() {
-          _busy = false;
+    setState(() {
+      _busy = false;
+      switch (outcome) {
+        case CommandRefused(:final refusal):
           _unknown = null;
           _refused = true;
           _missing = standaloneRefusalKeys(refusal);
           _preview = null;
-        });
+        case CommandUnreached():
+          _unknown = outcome;
+        case CommandDone() || CommandHeld():
+          break;
+      }
+    });
+    switch (outcome) {
+      case CommandDone(:final value):
+        context.go('$invoicesPath/${value.invoiceId}');
       case CommandHeld():
         // A validation policy holds the invoice: nothing is issued yet.
-        setState(() => _busy = false);
         AppSnack.info(context, context.l10n.validationSentForApproval);
-      case CommandUnreached():
-        setState(() {
-          _busy = false;
-          _unknown = outcome;
-        });
+      case CommandRefused() || CommandUnreached():
+        break;
     }
   }
 

@@ -66459,8 +66459,13 @@ abstract class AppLocalizations {
   /// #4184 the counter receipt document
   ///
   /// In en, this message translates to:
-  /// **'{label}: {quantity} {unit}'**
-  String tillReceiptLine(String label, String quantity, String unit);
+  /// **'{label}: {quantity} {unit}  {amount}'**
+  String tillReceiptLine(
+    String label,
+    String quantity,
+    String unit,
+    String amount,
+  );
 
   /// #4366 the till
   ///

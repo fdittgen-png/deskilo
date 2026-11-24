@@ -18,7 +18,7 @@
   "tillReceiptShare": "Beleg teilen",
   "tillReceiptPrintNote": "Mit der App ist kein Belegdrucker verbunden: Drucken Sie über das Teilen-Menü.",
   "tillReceiptCorrects": "Berichtigt Beleg {number}",
-  "tillReceiptLine": "{label}: {quantity} {unit}",
+  "tillReceiptLine": "{label}: {quantity} {unit}  {amount}",
   "tillReceiptTaxLine": "MwSt. {percent} %: {tax} auf {net}",
   "tillReceiptTotal": "Summe {amount}",
   "tillReceiptIssuedUnder": "Ausgestellt nach: {specification} ({version})",

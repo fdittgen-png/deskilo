@@ -802,7 +802,7 @@ const Set<String> uiKeys = {
   'counter-receipt',
   'counter-receipt-disagrees',
   'counter-receipt-print-note',
-  'counter-receipt-problem',
+  'counter-receipt-retry',
   'counter-receipt-share',
   'country-change-body',
   'country-change-cancel',

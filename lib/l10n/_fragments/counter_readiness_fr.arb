@@ -18,7 +18,7 @@
   "tillReceiptShare": "Partager le ticket",
   "tillReceiptPrintNote": "Aucune imprimante de tickets n'est reliée à l'application : imprimez depuis le menu de partage.",
   "tillReceiptCorrects": "Corrige le ticket {number}",
-  "tillReceiptLine": "{label} : {quantity} {unit}",
+  "tillReceiptLine": "{label} : {quantity} {unit}  {amount}",
   "tillReceiptTaxLine": "TVA {percent} % : {tax} sur {net}",
   "tillReceiptTotal": "Total {amount}",
   "tillReceiptIssuedUnder": "Émis selon : {specification} ({version})",

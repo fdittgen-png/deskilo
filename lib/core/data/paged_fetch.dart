@@ -39,7 +39,7 @@ const int kConfigurationListCap = 5000;
 /// Every row of a configuration list [build] selects, page by page as [fetchAllPages] reads (to an empty page,
 /// never stopped by the server's own row cap), refused past [kConfigurationListCap]. [build] orders by a unique key
 /// last.
-Future<List<Map<String, dynamic>>> fetchConfigurationList({
+Future<PostgrestList> fetchConfigurationList({
   required String table,
   required PostgrestTransformBuilder<PostgrestList> Function() build,
 }) => fetchAllPages(table: table, build: build, maxRows: kConfigurationListCap);
