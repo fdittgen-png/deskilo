@@ -607,6 +607,19 @@ Wählen Sie **Lieferantenverbindlichkeiten anzeigen**, um dessen Rechnungen und 
 
 Wählen Sie **Kunden hinzufügen** und geben Sie eine Firma oder einen Namen, die Anschrift, den Ländercode, die USt-IdNr. und eine E-Mail-Adresse für die Rechnung an. Die USt-IdNr. wird nur auf ihre Form geprüft, nie bestätigt. **Abgerechnet als** (Unternehmen oder Privatperson) bestimmt die Pflichtangaben und die steuerliche Behandlung; nur wer Rechnungen ausstellen darf, kann es ändern. Wählen Sie einen Kunden, um ihn zu bearbeiten. Hat jemand anderes den Kunden seit dem Öffnen geändert, wird nichts gespeichert und Sie öffnen ihn erneut. Lässt sich die Liste nicht lesen, versuchen Sie es erneut, statt sie für leer zu halten. Eine Änderung schreibt nie eine bereits ausgestellte Rechnung um: Jede behält Namen und Anschrift, mit denen sie ausgestellt wurde.
 
+<!-- anchor: user.money.customers.access -->
+### Kontozugang für einen Rechnungskunden
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Öffnen Sie **Verkauf & Zahlungseingang** und dann **Rechnungskunden**, und wählen Sie den Schlüssel neben einem Kunden (**Kontozugang**). Hier lassen Sie einen Kunden seine eigenen Rechnungen in seinem eigenen Konto lesen, ohne ihn zum Mitglied zu machen. Sie brauchen das Recht, Rechnungskunden zu verwalten.
+
+Wählen Sie **Einladungscode erstellen**. Der Code wird einmal angezeigt, mit seinem letzten Tag: Geben Sie ihn dem Kunden sofort weiter, denn er kann nicht erneut gelesen werden. Der Kunde gibt ihn unter **Meine Finanzen** bei **Rechnungscode verwenden** ein, prüft, wer ihn einlädt, und nimmt an. Bis dahin wartet die Einladung nur. Ein Code gilt für ein Konto; ein Kunde kann von mehreren Konten gelesen werden, jedes einzeln eingeladen, und ein Konto kann mehrere Kunden lesen: Wer privat und für ein Unternehmen kauft, behält so zwei getrennte Schuldner.
+
+Die Liste zeigt jede Einladung als eingeladen, liest, abgelaufen oder beendet. **Zugang beenden** stoppt das Lesen ab dann; nichts wird gelöscht, die Rechnungen und ihr Verlauf bleiben unverändert. Der Kunde ist nie ein Mitglied: Aus dem Zugang folgen keine Buchung, kein Verzeichnis, keine Community, keine Rolle und kein Tarif. Kann die Liste nicht gelesen werden, versuchen Sie es erneut, statt sie für leer zu halten; kommt eine Antwort nicht an, wählen Sie **Einladungscode erstellen** noch einmal: Dieselbe Anfrage ergibt dieselbe Einladung, nie eine zweite.
+
+**Siehe auch:** [Rechnungskunden](help:user.money.customers.billing)
+
 <!-- anchor: user.money.quotes -->
 ### Angebote
 
@@ -918,6 +931,29 @@ Sie gehören mehreren Spaces an und möchten alle Ihre Rechnungen, Zahlungen und
 - Vollständiger Verlauf, Nutzung und andere Server sind von demselben Bildschirm aus erreichbar.
 
 **Siehe auch:** [Ihre Rechnungen](help:user.money.invoices)
+
+<!-- anchor: user.money.finances.billed -->
+### Rechnungen, die ein Betrieb als Kunde auf Sie ausgestellt hat
+
+**Zielgruppe:** Mitglied
+
+Ein Betrieb, der Ihnen Rechnungen stellt, kann Ihnen einen Code geben, damit Sie lesen, was er Ihnen in Rechnung stellt, in Ihrem eigenen Konto, ohne ihm beizutreten.
+
+**Schritte**
+
+1. Öffnen Sie [Meine Finanzen](app:/money) und wählen Sie unter **Ausstehend** **Rechnungscode verwenden**.
+2. Geben Sie den Code ein und wählen Sie **Code prüfen**. Sie sehen, welcher Betrieb Sie einlädt und auf wen seine Rechnungen ausgestellt sind.
+3. Wählen Sie **Annehmen**. Die Rechnungen erscheinen unter **Als Kunde in Rechnung gestellt**.
+
+**Gut zu wissen**
+
+- Eine Karte pro Betrieb und pro Schuldner: Wer privat und für ein Unternehmen kauft, hat zwei Karten, und zwei Schuldner eines Betriebs werden nie addiert. Beträge verschiedener Währungen werden ebenfalls nie addiert.
+- Diese Rechnungen zählen nicht zu dem, was Sie als Mitglied schulden, und stehen weder in Ihren Mitgliederlisten noch in Ihren Exporten.
+- Ein Code, der nicht verwendet werden kann (falsch, abgelaufen, zurückgezogen oder schon von einem anderen Konto angenommen), bekommt immer dieselbe Antwort: Fragen Sie den Betrieb nach einem neuen.
+- Annehmen macht Sie nicht zum Mitglied des Betriebs. Der Betrieb kann den Zugang beenden, und Sie auch; beim Beenden wird nichts gelöscht.
+- Diese Rechnungen von hier aus zu bezahlen, wird noch nicht angeboten.
+
+**Siehe auch:** [Ihre Finanzen in allen Workspaces](help:user.money.finances)
 
 <!-- anchor: user.money.businesses -->
 ### Ihre Unternehmen auf einen Blick

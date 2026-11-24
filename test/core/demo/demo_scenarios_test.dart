@@ -1589,9 +1589,11 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
   WorkspaceFeature.billingCustomers: _action(
     _owner,
     'Ada adds Studio Nord, a business with no account, to her billing '
-    'customers',
+    'customers, then invites Nordlicht GmbH to read its own invoices: the '
+    'code is accepted and the customer is held apart from the members',
     (w) async {
-      final customers = w.house(DemoSpaceKey.home).stores.billingCustomers;
+      final stores = w.house(DemoSpaceKey.home).stores;
+      final customers = stores.billingCustomers;
       final before = (await customers.fetch(demoFirstSpaceId)).length;
       await customers.create(
         demoFirstSpaceId,
@@ -1599,9 +1601,23 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
         capacity: 'business',
       );
       final after = await customers.fetch(demoFirstSpaceId);
+      // #4164 B2 — the invitation, its acceptance and the customer's reads.
+      final access = stores.billingAccess;
+      final invitation = await access.invite(
+        demoFirstSpaceId,
+        'demo-customer-nordlicht',
+        'scenario-1',
+      );
+      final preview = await access.preview(invitation.code);
+      await access.accept(invitation.code);
       return before > 0 &&
           after.length == before + 1 &&
-          after.any((c) => c.displayName == 'Studio Nord');
+          after.any((c) => c.displayName == 'Studio Nord') &&
+          preview.billedAs == 'Nordlicht GmbH' &&
+          access.heldSubjects.containsAll({
+            'demo-customer-weiss',
+            'demo-customer-nordlicht',
+          });
     },
   ),
   // #4166 — the owner sends a quote to a billing customer: the first send takes

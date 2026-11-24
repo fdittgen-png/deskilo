@@ -4996,6 +4996,159 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get billingAccessAccept => 'Accettare';
+
+  @override
+  String billingAccessAccepted(String business) {
+    return 'Fatto. Le fatture che $business ha emesso a Suo nome compaiono ora nelle Sue finanze, separate da ciò che deve come membro.';
+  }
+
+  @override
+  String get billingAccessAction => 'Accesso con account';
+
+  @override
+  String billingAccessActive(String date) {
+    return 'Legge le fatture dal $date';
+  }
+
+  @override
+  String get billingAccessAlreadyHeld =>
+      'Ha già questo accesso; accettarlo di nuovo non cambia nulla.';
+
+  @override
+  String get billingAccessCheck => 'Verificare il codice';
+
+  @override
+  String get billingAccessCodeCopied => 'Codice copiato';
+
+  @override
+  String get billingAccessCodeCopy => 'Copiare il codice';
+
+  @override
+  String get billingAccessCodeField => 'Codice';
+
+  @override
+  String billingAccessCodeOnce(String date) {
+    return 'Consegni subito questo codice al cliente. Viene mostrato una sola volta e non può essere riletto. È valido fino al $date.';
+  }
+
+  @override
+  String get billingAccessCodeTitle => 'Codice d\'invito';
+
+  @override
+  String get billingAccessCodeUnusable =>
+      'Questo codice non può essere usato. Può essere errato, scaduto, ritirato o già preso da un altro account. Ne chieda uno nuovo all\'azienda.';
+
+  @override
+  String get billingAccessEnter => 'Usare un codice di fatturazione';
+
+  @override
+  String get billingAccessEnterIntro =>
+      'Un\'azienda che Le fattura può darLe un codice. Con esso legge, dal Suo account, le fatture emesse a Suo nome. Non diventa un membro.';
+
+  @override
+  String get billingAccessEnterTitle => 'Leggere le fatture di un\'azienda';
+
+  @override
+  String billingAccessExpired(String date) {
+    return 'Invito scaduto il $date';
+  }
+
+  @override
+  String get billingAccessFailed =>
+      'La risposta non è arrivata. Non risulta cambiato nulla; riprovi.';
+
+  @override
+  String billingAccessGroupOpen(String amounts) {
+    return 'Ancora aperto: $amounts';
+  }
+
+  @override
+  String get billingAccessGroupSettled => 'Nulla di aperto';
+
+  @override
+  String billingAccessGroupTitle(String business, String ref) {
+    return '$business · account $ref';
+  }
+
+  @override
+  String get billingAccessIntro =>
+      'Inviti questo cliente a leggere le proprie fatture dal proprio account. Non diventa un membro e non vede nient\'altro della Sua attività.';
+
+  @override
+  String get billingAccessInvite => 'Creare un codice d\'invito';
+
+  @override
+  String billingAccessInvited(String date) {
+    return 'Invitato il $date, non ancora accettato';
+  }
+
+  @override
+  String get billingAccessLoadFailed =>
+      'Non è stato possibile leggere gli inviti. Non è un elenco vuoto.';
+
+  @override
+  String get billingAccessNone => 'Nessun invito per ora.';
+
+  @override
+  String get billingAccessNotACustomer =>
+      'Si può invitare solo un cliente fatturato. Non è stato modificato nulla.';
+
+  @override
+  String get billingAccessNotAllowed =>
+      'Qui non è consentito invitare clienti a un account. Non è stato modificato nulla.';
+
+  @override
+  String get billingAccessPaymentSoon =>
+      'Pagare queste fatture da qui arriverà con un aggiornamento successivo.';
+
+  @override
+  String billingAccessPreviewLine(String business, String name) {
+    return '$business La invita a leggere le fatture intestate a $name.';
+  }
+
+  @override
+  String billingAccessPreviewUnnamed(String business) {
+    return '$business La invita a leggere le fatture che ha emesso a Suo nome.';
+  }
+
+  @override
+  String get billingAccessReasonTooLong =>
+      'Il motivo è troppo lungo. Lo accorci; non è stato modificato nulla.';
+
+  @override
+  String get billingAccessRequestReused =>
+      'Questa richiesta è già stata usata per un altro invito. Chiuda questa finestra e la riapra; non è stato modificato nulla.';
+
+  @override
+  String get billingAccessRevoke => 'Terminare l\'accesso';
+
+  @override
+  String get billingAccessRevokeNote =>
+      'Terminare l\'accesso non cancella nulla: le fatture e la loro cronologia restano come sono.';
+
+  @override
+  String billingAccessRevoked(String date) {
+    return 'Accesso terminato il $date';
+  }
+
+  @override
+  String get billingAccessSectionNote =>
+      'Fatture che un\'azienda ha emesso a Suo nome, lette con l\'accesso che Le ha dato. Non sono conteggiate con ciò che deve come membro.';
+
+  @override
+  String get billingAccessSectionTitle => 'Fatturato come cliente';
+
+  @override
+  String billingAccessTitle(String name) {
+    return 'Accesso con account: $name';
+  }
+
+  @override
+  String get billingAccessUnknownGrant =>
+      'Questo accesso non esiste più. Chiuda l\'elenco e lo riapra; non è stato modificato nulla.';
+
+  @override
   String get billingAddBand => 'Aggiungi fascia';
 
   @override
@@ -5127,7 +5280,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get billingCustomersNoAccount =>
-      'Le persone e le aziende a cui si fattura. Non hanno un account e non vedono nulla dell\'attività.';
+      'Le persone e le aziende a cui si fattura. Non sono membri e non vedono nulla dell\'attività, a meno che non le si inviti a leggere le proprie fatture dal proprio account.';
 
   @override
   String get billingCustomersRetry => 'Riprovare';

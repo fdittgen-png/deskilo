@@ -41,6 +41,7 @@ import 'demo_trade_city_commerce.dart';
 import 'demo_trade_city_space.dart';
 import 'seed/demo_asset_seed.dart';
 import 'seed/demo_beans_bill_seed.dart';
+import 'seed/demo_billing_access_seed.dart';
 import 'seed/demo_billing_customer_seed.dart';
 import 'seed/demo_book_period_seed.dart';
 import 'seed/demo_city_bank_seed.dart';
@@ -101,6 +102,9 @@ class DemoSpaceStores {
     DemoSpaceKey.freelancer => seedFreelancerBillingCustomers(),
     _ => FakeBillingCustomerRepository(),
   };
+
+  /// #4164 B2 — the account's billing-access grants, kept for the session.
+  late final billingAccess = seedDemoBillingAccess(fixture);
 
   /// #4166 — the space's customer quotes (the Demo's reference organisation
   /// seeds two; every other space starts with none).

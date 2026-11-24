@@ -20,7 +20,7 @@
   "@billingCustomersTitle": {
     "description": "the billing customers screen and editor (#4164)"
   },
-  "billingCustomersNoAccount": "The people and businesses you invoice. They have no account and see nothing of your business.",
+  "billingCustomersNoAccount": "The people and businesses you invoice. They are not members and see nothing of your business, unless you invite them to read their own invoices from their own account.",
   "@billingCustomersNoAccount": {
     "description": "the billing customers screen and editor (#4164)"
   },

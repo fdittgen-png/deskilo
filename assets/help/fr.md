@@ -2862,6 +2862,18 @@ Ouvrez **Ventes et encaissements** puis **Clients facturés**. C'est ici que vou
 
 Choisissez **Ajouter un client** et indiquez une société ou un nom, l'adresse postale, le code pays, le numéro de TVA et une adresse e-mail pour la facture. Le numéro de TVA n'est contrôlé que dans sa forme, jamais vérifié. **Facturé comme** (entreprise ou particulier) détermine les mentions légales et le traitement de la taxe ; seule une personne autorisée à émettre des factures peut le modifier. Choisissez un client pour le modifier. Si quelqu'un d'autre l'a modifié depuis votre ouverture, rien n'est enregistré et il vous est demandé de le rouvrir. Si la liste ne peut pas être lue, réessayez plutôt que de la croire vide. Modifier un client ne réécrit jamais une facture déjà émise : chacune garde le nom et l'adresse avec lesquels elle a été émise.
 
+### Accès par compte d'un client facturé
+
+**Public:** Administrateur·rice · Propriétaire
+
+Ouvrez **Ventes et encaissements** puis **Clients facturés**, et choisissez la clé à côté d'un client (**Accès par compte**). C'est ici que vous permettez à un client de lire ses propres factures depuis son propre compte, sans en faire un membre. Il faut le droit de gérer les clients facturés.
+
+Choisissez **Créer un code d'invitation**. Le code s'affiche une seule fois, avec son dernier jour : remettez-le au client tout de suite, car il ne peut plus être relu. Le client le saisit dans **Utiliser un code de facturation** sous **Mes finances**, vérifie qui l'invite et accepte. D'ici là, l'invitation attend. Un code ne sert qu'à un compte ; un client peut être lu par plusieurs comptes, invités chacun à part, et un compte peut lire plusieurs clients : une personne qui achète pour elle-même et pour une entreprise garde donc deux débiteurs distincts.
+
+La liste montre chaque invitation comme invitée, en lecture, expirée ou terminée. **Mettre fin à l'accès** arrête la lecture à partir de là ; rien n'est effacé, les factures et leur historique restent tels quels. Le client n'est jamais un membre : aucune réservation, aucun annuaire, aucune communauté, aucun rôle ni forfait ne découle de l'accès. Si la liste ne peut pas être lue, réessayez plutôt que de la croire vide ; si une réponse n'arrive pas, choisissez à nouveau **Créer un code d'invitation** : la même demande donne la même invitation, jamais une seconde.
+
+**Voir aussi :** [Clients facturés](help:user.money.customers.billing)
+
 ### Devis
 
 **Public:** Administrateur·rice · Propriétaire
@@ -3078,6 +3090,7 @@ Ouvrez une ligne du **Stock** pour voir **Où est-ce** pour cet article (ou ce l
 - **Maintenant** est ce que le stock tient à cet instant ; **À une date…** montre ce qu'il tenait à la fin de ce jour, rejoué depuis les mouvements. Regarder ne change rien.
 - Les emplacements sur une étagère s'additionnent toujours à la quantité affichée en haut.
 - À un jour passé, les marchandises en route ne sont pas montrées ; les pièces le sont, depuis le jour où elles sont suivies (une pièce faite avant n'a pas d'historique avant).
+- Touchez un emplacement qui tient un lot pour voir **Tous les mouvements** de ce lot, de la livraison par laquelle il est arrivé jusqu'à sa sortie ; le bouton chronologie d'une pièce montre **Tous les mouvements de cette pièce**. Un document que vous ne pouvez pas voir est nommé par son type, jamais omis.
 
 ### Valeur du stock et origine des marchandises
 
@@ -3156,6 +3169,28 @@ Vous appartenez à plusieurs espaces et vous voulez toutes vos factures, vos pai
 - L'historique complet, l'usage et les autres serveurs sont accessibles depuis le même écran.
 
 **Voir aussi:** [Vos factures](help:user.money.invoices)
+
+### Factures qu'une entreprise a établies à votre nom en tant que client
+
+**Public:** Membre
+
+Une entreprise qui vous facture peut vous remettre un code, pour que vous lisiez ses factures depuis votre propre compte, sans la rejoindre.
+
+**Étapes**
+
+1. Ouvrez [Mes finances](app:/money) et, sous **À payer**, choisissez **Utiliser un code de facturation**.
+2. Saisissez le code et choisissez **Vérifier le code**. Vous voyez quelle entreprise vous invite et à quel nom ses factures sont établies.
+3. Choisissez **Accepter**. Les factures apparaissent sous **Facturé en tant que client**.
+
+**Bon à savoir**
+
+- Une carte par entreprise et par débiteur : une personne qui achète pour elle-même et pour une entreprise a deux cartes, et deux débiteurs d'une même entreprise ne sont jamais additionnés. Les montants de devises différentes ne le sont pas non plus.
+- Ces factures ne sont pas comptées avec ce que vous devez en tant que membre, et ne figurent ni dans vos listes de membre ni dans vos exports.
+- Un code inutilisable (erroné, expiré, retiré ou déjà pris par un autre compte) reçoit toujours la même réponse : demandez-en un nouveau à l'entreprise.
+- Accepter ne fait pas de vous un membre de l'entreprise. L'entreprise peut mettre fin à l'accès, et vous aussi ; rien n'est effacé à la fin.
+- Payer ces factures d'ici n'est pas encore proposé.
+
+**Voir aussi :** [Vos finances dans tous vos espaces](help:user.money.finances)
 
 ### Vos activités en un coup d'œil
 

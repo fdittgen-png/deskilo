@@ -2862,6 +2862,18 @@ Open **Sales & collections** and then **Billing customers**. This is where you k
 
 Choose **Add a customer** and give a company or a name, the postal address, the country code, the VAT number and an e-mail address for the invoice. The VAT number is checked for its shape only, never verified. **Billed as** (business or person) decides the legal mentions and the tax treatment of what you invoice; only someone who may issue invoices can change it. Choose a customer to edit it. If someone else changed the customer since you opened it, nothing is saved and you are asked to open it again. If the list cannot be read, retry rather than treating it as empty. Changing a customer never rewrites an invoice already issued: each keeps the name and address it was issued with.
 
+### Account access for a billing customer
+
+**Audience:** Administrator · Owner
+
+Open **Sales & collections** and then **Billing customers**, and choose the key beside a customer (**Account access**). This is where you let a customer read their own invoices from their own account, without making them a member. You need the right to manage billing customers.
+
+Choose **Create an invitation code**. The code is shown once, with its last day: give it to the customer now, because it cannot be read again. The customer enters it in **Use a billing code** under **My finances**, checks who invites them and accepts. Until then the invitation only waits. A code can be used by one account; one customer can be read by several accounts, each invited on its own, and one account can read several customers, so a person buying personally and for a company keeps two separate debtors.
+
+The list shows each invitation as invited, reading, expired or ended. **End access** stops the reading from then on; nothing is erased, and the invoices and their history stay as they are. The customer is never a member: no booking, directory, community, role or plan follows from the access. If the list cannot be read, retry rather than treating it as empty; if an answer does not arrive, press **Create an invitation code** again: the same request gives the same invitation, never a second one.
+
+**See also:** [Billing customers](help:user.money.customers.billing)
+
 ### Quotes
 
 **Audience:** Administrator · Owner
@@ -3078,6 +3090,7 @@ Open any line of **Stock** to see **Where is it** for that item (or that lot): e
 - **Now** is what the stock holds at this moment; **On a day…** shows what it held when that day was over, replayed from the movements. Nothing is changed by looking.
 - The places on a shelf always add up to the quantity shown on top.
 - At a past day the goods on the road are not shown; the pieces are, from the day they are followed (a piece made before has no history before it).
+- Tap a place that holds a lot to see **Every movement of this lot**, from the delivery it came with to where it went out; the timeline button of a piece shows **Every movement of this piece**. A document you may not see is named by its kind, never left out.
 
 ### Stock value and where goods came from
 
@@ -3156,6 +3169,28 @@ You belong to several spaces and want all your invoices, payments and reminders 
 - Full history, usage and other servers are reachable from the same screen.
 
 **See also:** [Your invoices](help:user.money.invoices)
+
+### Invoices a business made out to you as a customer
+
+**Audience:** Member
+
+A business that invoices you can give you a code, so you read what it invoices you from your own account, without joining it.
+
+**Steps**
+
+1. Open [My finances](app:/money) and, under **Outstanding**, choose **Use a billing code**.
+2. Enter the code and choose **Check the code**. You see which business invites you and in whose name its invoices are made out.
+3. Choose **Accept**. The invoices appear under **Billed to you as a customer**.
+
+**Good to know**
+
+- One card per business and per debtor: a person buying personally and for a company has two cards, and two debtors of one business are never added together. Amounts of different currencies are never added either.
+- These invoices are not counted with what you owe as a member, and they are not in your member lists or exports.
+- A code that cannot be used (wrong, expired, withdrawn, or already taken by another account) always gets the same answer: ask the business for a new one.
+- Accepting makes you no member of the business. The business can end the access, and so can you; nothing is erased when it ends.
+- Paying these invoices from here is not offered yet.
+
+**See also:** [Your finances across spaces](help:user.money.finances)
 
 ### Your businesses at a glance
 

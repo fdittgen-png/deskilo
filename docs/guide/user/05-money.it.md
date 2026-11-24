@@ -607,6 +607,19 @@ Aprire **Vendite e incassi** e poi **Clienti fatturati**. Qui si tengono le pers
 
 Scegliere **Aggiungere un cliente** e indicare un'azienda o un nome, l'indirizzo postale, il codice paese, la partita IVA e un indirizzo e-mail per la fattura. La partita IVA è controllata solo nella forma, mai verificata. **Fatturato come** (azienda o privato) determina le diciture legali e il trattamento fiscale; solo chi può emettere fatture può modificarlo. Scegliere un cliente per modificarlo. Se qualcun altro lo ha cambiato dopo l'apertura, non viene salvato nulla e si deve riaprirlo. Se l'elenco non può essere letto, riprovare invece di darlo per vuoto. Modificare un cliente non riscrive mai una fattura già emessa: ognuna conserva il nome e l'indirizzo con cui è stata emessa.
 
+<!-- anchor: user.money.customers.access -->
+### Accesso con account per un cliente fatturato
+
+**Destinatari:** Amministratore · Proprietario
+
+Apra **Vendite e incassi** e poi **Clienti fatturati**, e scelga la chiave accanto a un cliente (**Accesso con account**). Qui permette a un cliente di leggere le proprie fatture dal proprio account, senza farne un membro. Serve il diritto di gestire i clienti fatturati.
+
+Scelga **Creare un codice d'invito**. Il codice viene mostrato una sola volta, con il suo ultimo giorno: lo consegni subito al cliente, perché non può essere riletto. Il cliente lo inserisce in **Usare un codice di fatturazione**, sotto **Le mie finanze**, verifica chi lo invita e accetta. Fino ad allora l'invito resta in attesa. Un codice vale per un account; un cliente può essere letto da più account, ciascuno invitato a parte, e un account può leggere più clienti: chi acquista a titolo personale e per un'azienda mantiene due debitori distinti.
+
+L'elenco mostra ogni invito come invitato, in lettura, scaduto o terminato. **Terminare l'accesso** ferma la lettura da quel momento; non viene cancellato nulla, le fatture e la loro cronologia restano come sono. Il cliente non è mai un membro: dall'accesso non derivano prenotazioni, elenco, community, ruolo né piano. Se l'elenco non può essere letto, riprovi invece di crederlo vuoto; se una risposta non arriva, scelga di nuovo **Creare un codice d'invito**: la stessa richiesta dà lo stesso invito, mai un secondo.
+
+**Vedere anche:** [Clienti fatturati](help:user.money.customers.billing)
+
 <!-- anchor: user.money.quotes -->
 ### Preventivi
 
@@ -918,6 +931,29 @@ Appartiene a più spazi e vuole tutte le Sue fatture, i Suoi pagamenti e i Suoi 
 - Cronologia completa, utilizzo e altri server sono raggiungibili dalla stessa schermata.
 
 **Vedi anche:** [Le Sue fatture](help:user.money.invoices)
+
+<!-- anchor: user.money.finances.billed -->
+### Fatture che un'azienda ha emesso a Suo nome come cliente
+
+**Destinatari:** Membro
+
+Un'azienda che Le fattura può darLe un codice, così che legga ciò che Le fattura dal Suo account, senza unirsi all'azienda.
+
+**Passaggi**
+
+1. Apra [Le mie finanze](app:/money) e, sotto **Da pagare**, scelga **Usare un codice di fatturazione**.
+2. Inserisca il codice e scelga **Verificare il codice**. Vede quale azienda La invita e a nome di chi emette le fatture.
+3. Scelga **Accettare**. Le fatture compaiono sotto **Fatturato come cliente**.
+
+**Da sapere**
+
+- Una scheda per azienda e per debitore: chi acquista a titolo personale e per un'azienda ha due schede, e due debitori di una stessa azienda non vengono mai sommati. Gli importi di valute diverse non vengono sommati nemmeno.
+- Queste fatture non sono conteggiate con ciò che deve come membro e non compaiono nei Suoi elenchi di membro né nelle esportazioni.
+- Un codice che non può essere usato (errato, scaduto, ritirato o già preso da un altro account) riceve sempre la stessa risposta: ne chieda uno nuovo all'azienda.
+- Accettare non La rende membro dell'azienda. L'azienda può terminare l'accesso, e anche Lei; alla fine non viene cancellato nulla.
+- Pagare queste fatture da qui non è ancora previsto.
+
+**Vedere anche:** [Le Sue finanze in tutti gli spazi](help:user.money.finances)
 
 <!-- anchor: user.money.businesses -->
 ### Le attività a colpo d'occhio
