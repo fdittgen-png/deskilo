@@ -8,6 +8,7 @@
 import { assertEquals } from "jsr:@std/assert@1";
 import { handle } from "./handler.ts";
 import { KIOSK_HEADER } from "./badge_guard.ts";
+import { guard } from "../_shared/serve.ts";
 
 const DEVICE = "00000000-0000-4000-8000-000000003675";
 const CREDENTIAL = "ab".repeat(32);
@@ -86,4 +87,30 @@ Deno.test("the PIN step: a refusal and a lock answer alike on a kiosk and elsewh
 Deno.test("a browser kiosk may send its header: the preflight allows it", async () => {
   const res = await handle(new Request("http://x", { method: "OPTIONS" }), db(() => ({})).deps);
   assertEquals(res.headers.get("Access-Control-Allow-Headers")?.includes(KIOSK_HEADER), true);
+});
+
+// #4412 -- an uncaught error is the envelope: a code and the request id, never the error's own words.
+Deno.test("#4412 badge-signin: a thrown error answers the envelope and no internal message", async () => {
+  const saved = console.error;
+  console.error = () => {};
+  try {
+    const answer = await guard("badge-signin", (req) =>
+      handle(req, {
+        rpc: () => Promise.reject(new Error("service role key sb_secret_xyz is wrong")),
+        emailOf: () => Promise.resolve(null),
+        tokenFor: () => Promise.resolve(null),
+      }))(
+      new Request("http://x", {
+        method: "POST",
+        body: JSON.stringify({ uid: UID }),
+        headers: { "x-request-id": "r-badge" },
+      }),
+    );
+    assertEquals(answer.status, 500);
+    const text = await answer.text();
+    assertEquals(JSON.parse(text), { error: "internal_error", request_id: "r-badge" });
+    assertEquals(/secret|sb_|wrong/i.test(text), false);
+  } finally {
+    console.error = saved;
+  }
 });
