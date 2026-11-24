@@ -530,7 +530,7 @@ Future<InvoicingOverview> invoicingOverview(Ref ref) async {
   bool stillOpen(InvoiceMatch? match) =>
       match == null ||
       match.pending ||
-      (match.resolution == 'under_accepted' && match.writeoffAt == null);
+      (match.settles == MatchResolution.underAccepted && match.writeoffAt == null);
   // #831 — a settled source is documentation under its settlement.
   final fold = ref
       .watch(enabledFeaturesSyncProvider)

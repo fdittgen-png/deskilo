@@ -13,7 +13,7 @@ import '../../../../core/links/link_launcher.dart';
 import '../../../../core/privacy/privacy_policy.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
-import '../../../../core/ui/inline_banner.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../providers/profile_providers.dart';
 import '../widgets/privacy_notice_view.dart';
@@ -48,7 +48,7 @@ class _ConsentScreenState extends ConsumerState<ConsentScreen> {
     // never accepted: the form would record a fresh acceptance over an
     // unknown state. The router sends here for both; only this screen
     // can tell them apart, and it answers the failure with a retry.
-    final unavailable = profileAsync.hasError && !profileAsync.isLoading;
+    final failure = profileAsync.isLoading ? null : profileAsync.error;
     return Scaffold(
       appBar: AppBar(
         title: PageTitle(l10n.consentTitle),
@@ -128,13 +128,11 @@ class _ConsentScreenState extends ConsumerState<ConsentScreen> {
               ],
             ),
           ),
-          if (unavailable)
-            InlineBanner(
+          if (failure != null)
+            ReadFailureBanner(
               key: const ValueKey('consent-unavailable'),
-              icon: Icons.cloud_off_outlined,
-              text: l10n.consentUnavailable,
-              actionLabel: l10n.commonRetry,
-              onAction: () => ref.invalidate(myProfileProvider),
+              error: failure,
+              onRetry: () => ref.invalidate(myProfileProvider),
             )
           else if (!widget.review)
             Material(

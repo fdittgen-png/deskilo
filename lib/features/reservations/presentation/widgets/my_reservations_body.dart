@@ -28,6 +28,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/refusal_text.dart';
 import '../../../../core/ui/app_date_picker.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -58,8 +59,9 @@ class MyReservationsBody extends ConsumerWidget {
         : ref.watch(myReservationsWindowControllerProvider);
     return switch (window) {
       AsyncData(:final value) => _Feed(window: value, filter: filter),
+      // #4414 kept: _Problem is the shared read failure (ReadFailureBanner)
       AsyncError(:final error) => _Problem(
-          text: problemWords(context.l10n, error),
+          error: error,
           onRetry: () => past
               ? ref.invalidate(myPastReservationsWindowControllerProvider)
               : ref.invalidate(myReservationsWindowControllerProvider),
@@ -137,9 +139,9 @@ class _Feed extends ConsumerWidget {
               title: l10n.myReservationsEmpty,
             )
           : _List(query: query, composition: loaded, shown: shown, visits: visits);
-    } else if (composed.hasError) {
+    } else if (composed.hasError) { // #4414 kept: shown by _Problem below
       body = _Problem(
-        text: problemWords(l10n, composed.error!),
+        error: composed.error!,
         onRetry: () =>
             ref.invalidate(myReservationsComposerProvider(query)),
       );
@@ -290,26 +292,29 @@ String _tabWords(AppLocalizations l10n, MyReservationsTab tab) =>
     };
 
 /// A failure with the way to try again, in words.
+/// A failed read of the bookings: the shared read failure, a typed refusal
+/// (a host that does not answer this, a timeout) in its own words.
 class _Problem extends StatelessWidget {
-  const _Problem({required this.text, required this.onRetry});
+  const _Problem({required this.error, required this.onRetry});
 
-  final String text;
+  final Object error;
   final VoidCallback onRetry;
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final typed = switch (error) {
+      MyReservationsRefused() || TimeoutException() => problemWords(l10n, error),
+      _ => knownRefusalText(l10n, error),
+    };
     return ListView(
       padding: AppSpacing.gutterAll,
       children: [
-        InlineBanner(icon: Icons.error_outline, text: text),
-        const SizedBox(height: AppSpacing.sm),
-        Align(
-          alignment: Alignment.centerLeft,
-          child: TextButton(
-            key: const ValueKey('my-reservations-retry'),
-            onPressed: onRetry,
-            child: Text(context.l10n.commonRetry),
-          ),
+        ReadFailureBanner(
+          error: error,
+          refusal: typed,
+          retryKey: const ValueKey('my-reservations-retry'),
+          onRetry: onRetry,
         ),
       ],
     );

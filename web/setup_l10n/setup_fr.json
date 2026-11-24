@@ -740,6 +740,12 @@
  "fedFactBatchHint": "Le nombre maximal de faits d'adhésion qu'un serveur d'espaces envoie à son domicile personnel en une minute. Un serveur renouvelle chaque relation vivante une fois par actualisation du statut d'identité : il suit au plus ce nombre multiplié par les secondes d'actualisation divisées par 60 relations (500 et 300 secondes : 2 500). Augmentez-le quand le médecin d'instance signale un retard d'envoi. Se règle dans les paramètres de l'app.",
  "appSupportWindow": "Délai de prise en charge des anciennes applications",
  "appSupportWindowHint": "Combien de jours une ancienne application reste acceptée après qu'une plus récente est disponible sur le canal de distribution le plus lent. L'application la plus ancienne acceptée par l'installation n'est relevée qu'après ce délai, pour que chaque membre ait le temps de la mettre à jour. Se règle dans les paramètres de l'app.",
+ "traceReportsPerHour": "Rapports d'erreur par personne et par heure",
+ "traceReportsPerHourHint": "Combien de rapports d'erreur une personne connectée peut envoyer à cette installation en une heure, tous ses appareils confondus. Les rapports suivants de cette heure sont abandonnés. Aucun désactive les rapports d'erreur. Se règle dans les paramètres de l'app.",
+ "traceReportMaxBytes": "Taille maximale d'un rapport d'erreur",
+ "traceReportMaxBytesHint": "Le plus grand rapport d'erreur que cette installation accepte ; l'application raccourcit la pile d'un rapport pour qu'il tienne. Se règle dans les paramètres de l'app.",
+ "traceReportRetention": "Durée de conservation des rapports d'erreur",
+ "traceReportRetentionHint": "Combien de temps cette installation conserve un rapport d'erreur avant de le supprimer. Se règle dans les paramètres de l'app.",
  "supLookupWait": "Attente de la recherche fournisseur",
  "supLookupWaitHint": "Durée pendant laquelle le serveur attend le registre des sociétés (VIES) quand quelqu'un recherche le numéro de TVA d'un fournisseur, avant d'indiquer que le registre n'a pas répondu. Se règle dans les paramètres de l'app.",
  "supLookupRate": "Recherches fournisseur par minute",
@@ -882,5 +888,10 @@
  "counterPaidOutLimitHint": "Un retrait au-delà exige une personne pouvant enregistrer des paiements sortants. Réglé dans les paramètres de l'app.",
  "counterCashReasons": "Motifs des entrées et sorties d'espèces",
  "counterCashReasonsHint": "Séparés par des virgules, par exemple monnaie, dépense, autre. Réglé dans les paramètres de l'app.",
- "optNoLimit": "Aucune limite"
+ "optNoLimit": "Aucune limite",
+ "optPerHour": "{n} par heure",
+ "optPerHourDefault": "{n} par heure (par défaut)",
+ "optKilobytes": "{n} Ko",
+ "optKilobytesDefault": "{n} Ko (par défaut)",
+ "optReportsOff": "Aucun (rapports d'erreur désactivés)"
 }

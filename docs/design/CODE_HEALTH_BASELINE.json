@@ -329,21 +329,17 @@
 
       "lib/features/calendar/presentation/screens/calendar_screen.dart": 1,
 
-      "lib/features/calendar/presentation/widgets/access_sheet.dart": 2,
+      "lib/features/editor/presentation/screens/editor_screen.dart": 1,
 
-      "lib/features/editor/presentation/screens/editor_screen.dart": 2,
-
-      "lib/features/editor/presentation/screens/level_canvas_screen.dart": 1,
-
-      "lib/features/events/presentation/screens/validation_settings_screen.dart": 2,
+      "lib/features/events/presentation/screens/validation_settings_screen.dart": 1,
 
       "lib/features/events/presentation/widgets/pending_decisions_section.dart": 1,
 
-      "lib/features/kiosk/presentation/screens/kiosk_screen.dart": 2,
+      "lib/features/kiosk/presentation/screens/kiosk_screen.dart": 1,
 
       "lib/features/members/presentation/member_profile_link.dart": 1,
 
-      "lib/features/members/presentation/screens/directory_screen.dart": 2,
+      "lib/features/members/presentation/screens/directory_screen.dart": 1,
 
       "lib/features/members/presentation/screens/managed_profile_screen.dart": 1,
 
@@ -419,7 +415,7 @@
 
       "lib/features/money/presentation/widgets/wizard_steps_payments.dart": 1,
 
-      "lib/features/plan/presentation/screens/accessories_screen.dart": 2,
+      "lib/features/plan/presentation/screens/accessories_screen.dart": 1,
 
       "lib/features/plan/presentation/widgets/admin_seat_actions.dart": 1,
 
@@ -429,7 +425,7 @@
 
       "lib/features/profile/presentation/screens/developer_screen.dart": 2,
 
-      "lib/features/profile/presentation/screens/personal_info_screen.dart": 2,
+      "lib/features/profile/presentation/screens/personal_info_screen.dart": 1,
 
       "lib/features/profile/presentation/screens/privacy_screen.dart": 2,
 
@@ -717,7 +713,7 @@
     {"id":"lib/features/mcp/data/supabase_mcp_admin_repository.dart#SupabaseMcpAdminRepository.savePolicy({required String workspaceId,required int expectedRevision,required String mutationId,required bool enabled,required Set<String> operations,required String targetCeiling,required Set<String> optionalFields})","cog":0,"cyc":1,"len":23,"params":7},
     {"id":"lib/features/mcp/domain/mcp_access_status.dart#McpAccessStatus.new.derive(McpContextRef context,{McpGoogleSignIn? google,required IdentityBindingStatus? identity,required DatabaseCapabilities? capabilities,required McpPolicy? policy,required ConsentOptions? options,required List<McpConnectionInfo>? connections})","cog":17,"cyc":15,"len":44,"params":7},
     {"id":"lib/features/mcp/presentation/mcp_consent_screen.dart#_McpConsentScreenState.build(BuildContext context)","cog":39,"cyc":24,"len":144,"params":1},
-    {"id":"lib/features/members/presentation/widgets/member_money_card.dart#MemberMoneyCard.build(BuildContext context,WidgetRef ref)","cog":30,"cyc":30,"len":153,"params":2},
+    {"id":"lib/features/members/presentation/widgets/member_money_card.dart#MemberMoneyCard.build(BuildContext context,WidgetRef ref)","cog":29,"cyc":30,"len":152,"params":2},
     {"id":"lib/features/money/application/book_repartition.dart#Repartitions.book({required String workspaceId,required String title,required int amountCents,required String period,required RepartitionRule rule,required List<RepartitionShare> shares,bool remember})","cog":0,"cyc":1,"len":20,"params":7},
     {"id":"lib/features/money/application/book_repartition.dart#bookRepartition(MoneyRepository repository,{required String workspaceId,required String title,required int amountCents,required String period,required RepartitionRule rule,required List<RepartitionShare> shares,bool remember})","cog":3,"cyc":3,"len":27,"params":8},
     {"id":"lib/features/money/application/declare_vat.dart#VatDeclarations.report({required String workspaceId,required Iterable<Invoice> invoices,required Map<String, InvoiceMatch> matches,required DateTime start,required DateTime end,required String zeroCategory,required VatTaxPointBasis basis,required TaxReferenceSet reference,required DateTime Function(DateTime instant) dayOf})","cog":1,"cyc":2,"len":26,"params":9},

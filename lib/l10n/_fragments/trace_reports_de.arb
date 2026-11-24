@@ -1,0 +1,13 @@
+{
+  "@@locale": "de",
+  "settingGroupDiagnostics": "Fehlerberichte",
+  "settingLabelTraceReportsPerHour": "Fehlerberichte pro Person und Stunde",
+  "settingHintTraceReportsPerHour": "Wie viele Fehlerberichte eine Person in einer Stunde an diese Installation senden darf, über alle ihre Geräte zusammen. Weitere Berichte in dieser Stunde werden verworfen, nie zurückgestellt. 0 schaltet Fehlerberichte für alle ab.",
+  "settingLabelTraceReportMaxBytes": "Größter Fehlerbericht",
+  "settingHintTraceReportMaxBytes": "Der größte Fehlerbericht, den diese Installation annimmt. Die App kürzt den Stack des Berichts vor dem Senden; ein Bericht, der dann noch größer ist, wird verworfen.",
+  "settingLabelTraceReportRetentionDays": "Fehlerberichte aufbewahren für",
+  "settingHintTraceReportRetentionDays": "Wie viele Tage diese Installation einen Fehlerbericht aufbewahrt. Ältere Berichte werden gelöscht, sobald ein neuer eintrifft.",
+  "privacyErrorReports": "Fehlerberichte senden",
+  "privacyErrorReportsHint": "Wenn die App einen Fehler aufzeichnet, geht ein Bericht ohne Ihre Daten an die Installation, bei der Sie angemeldet sind, damit ihr Betreiber ihn beheben kann.",
+  "privacyErrorReportsFailed": "Die Auswahl konnte auf diesem Gerät nicht gespeichert werden."
+}

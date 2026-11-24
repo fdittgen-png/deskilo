@@ -2,12 +2,15 @@
 import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '../data/server_error.dart';
 import 'trace_logger.dart';
 
 /// Builds the app's file-backed [TraceLogger]: entries persist to
 /// `<application support>/deskilo-trace.log` (#144).
-TraceLogger createAppTraceLogger() =>
-    TraceLogger(directoryProvider: getApplicationSupportDirectory);
+TraceLogger createAppTraceLogger() => TraceLogger(
+  directoryProvider: getApplicationSupportDirectory,
+  errorCodeOf: serverErrorCode,
+);
 
 /// Routes framework and platform errors through [logger] without changing
 /// existing crash semantics: the previous [FlutterError.onError] handler

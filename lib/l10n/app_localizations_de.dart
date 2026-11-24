@@ -7299,10 +7299,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get consentTitle => 'Ihre Daten, Ihre Rechte';
 
   @override
-  String get consentUnavailable =>
-      'Ihr Konto konnte nicht geladen werden, daher gibt es noch nichts zu akzeptieren.';
-
-  @override
   String get consentVersion => 'Version';
 
   @override
@@ -16126,6 +16122,37 @@ class AppLocalizationsDe extends AppLocalizations {
       'Dieses Projekt antwortet noch nicht als Deskilo-Installation. Installieren Sie zuerst das Schema.';
 
   @override
+  String instanceErrorReportCode(String code) {
+    return 'Code $code';
+  }
+
+  @override
+  String instanceErrorReportFacts(
+    String version,
+    String platform,
+    String time,
+  ) {
+    return '$version · $platform · $time';
+  }
+
+  @override
+  String get instanceErrorReportStack => 'Stack, von der App geschwärzt';
+
+  @override
+  String get instanceErrorReports => 'Fehlerberichte';
+
+  @override
+  String get instanceErrorReportsHint =>
+      'Was die Apps gesendet haben, als etwas schiefging, die neuesten zuerst. Mitglieder eines Unternehmens sehen sie nie.';
+
+  @override
+  String get instanceErrorReportsNone =>
+      'Es ist noch kein Fehlerbericht eingegangen.';
+
+  @override
+  String get instanceErrorReportsOlder => 'Ältere Berichte';
+
+  @override
   String get instanceFamilyChatgpt => 'ChatGPT';
 
   @override
@@ -20955,10 +20982,6 @@ class AppLocalizationsDe extends AppLocalizations {
       'Erzeugt einen persönlichen Code für dieses Profil. Wer ihn einlöst, übernimmt das Profil — Reservierungen, Rechnungen, Abo — sobald Sie die Mitgliedschaft bestätigen.';
 
   @override
-  String get managedProfileIdentityUnavailable =>
-      'Diese Angaben konnten nicht gelesen werden, es gibt also noch nichts zu bearbeiten. Es wurde nichts geändert.';
-
-  @override
   String get managedProfileIntro =>
       'Diese Person hat noch kein Konto. Sie buchen, fakturieren und verwalten für sie; übergeben Sie das Profil, wenn sie beitritt.';
 
@@ -22746,10 +22769,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get memberMoneySettled => 'Nichts offen.';
-
-  @override
-  String get memberMoneyUnavailable =>
-      'Finanzen konnten nicht geladen werden. Zum Aktualisieren ziehen.';
 
   @override
   String get memberMonthInProgress => 'Dieser Monat';
@@ -25500,10 +25519,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get periodReservationsEmpty => 'Keine Buchung in diesen Monaten.';
 
   @override
-  String get periodReservationsFailed =>
-      'Die Buchungen konnten nicht gelesen werden.';
-
-  @override
   String periodReservationsLevel(String level) {
     return 'Nur auf $level';
   }
@@ -26796,10 +26811,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get privacyAdminKind => 'Art der Anfrage';
 
   @override
-  String get privacyAdminLoadFailed =>
-      'Die Anfragen konnten nicht gelesen werden.';
-
-  @override
   String get privacyAdminMember => 'Mitglied';
 
   @override
@@ -26863,6 +26874,17 @@ class AppLocalizationsDe extends AppLocalizations {
   String privacyErasedIn(String space) {
     return 'Ihre Daten in $space sind gelöscht. Was der Bereich aufbewahren muss, bleibt für seine Aufbewahrungsfrist; andere Installationen sind nicht betroffen.';
   }
+
+  @override
+  String get privacyErrorReports => 'Fehlerberichte senden';
+
+  @override
+  String get privacyErrorReportsFailed =>
+      'Die Auswahl konnte auf diesem Gerät nicht gespeichert werden.';
+
+  @override
+  String get privacyErrorReportsHint =>
+      'Wenn die App einen Fehler aufzeichnet, geht ein Bericht ohne Ihre Daten an die Installation, bei der Sie angemeldet sind, damit ihr Betreiber ihn beheben kann.';
 
   @override
   String get privacyExport => 'Meine Daten exportieren';
@@ -27393,10 +27415,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get profilesTitle => 'Profile';
-
-  @override
-  String get profilesUnavailable =>
-      'Ihre Arbeitsbereiche konnten nicht geladen werden.';
 
   @override
   String provenanceFromTemplate(String name) {
@@ -32384,6 +32402,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get settingGroupCompatibility => 'App-Versionen';
 
   @override
+  String get settingGroupDiagnostics => 'Fehlerberichte';
+
+  @override
   String get settingGroupDirectory => 'Mitgliederverzeichnis';
 
   @override
@@ -32864,6 +32885,18 @@ class AppLocalizationsDe extends AppLocalizations {
       'An: Ein neuer Lagerartikel wird in Kilogramm statt in Stück vorgeschlagen (Metzgerei, Bäckerei, Theke). Jeder Artikel kann weiterhin eine andere Einheit erhalten.';
 
   @override
+  String get settingHintTraceReportMaxBytes =>
+      'Der größte Fehlerbericht, den diese Installation annimmt. Die App kürzt den Stack des Berichts vor dem Senden; ein Bericht, der dann noch größer ist, wird verworfen.';
+
+  @override
+  String get settingHintTraceReportRetentionDays =>
+      'Wie viele Tage diese Installation einen Fehlerbericht aufbewahrt. Ältere Berichte werden gelöscht, sobald ein neuer eintrifft.';
+
+  @override
+  String get settingHintTraceReportsPerHour =>
+      'Wie viele Fehlerberichte eine Person in einer Stunde an diese Installation senden darf, über alle ihre Geräte zusammen. Weitere Berichte in dieser Stunde werden verworfen, nie zurückgestellt. 0 schaltet Fehlerberichte für alle ab.';
+
+  @override
   String get settingHintVatViesEvidenceDays =>
       'Tage, die eine gültige Prüfung der USt-IdNr. aktuell genug bleibt, um auf einer neuen Rechnung als Nachweis zu dienen. Ein kürzerer Wert verlangt früher eine neue Prüfung; er beweist nicht, dass ein Geschäft gültig ist.';
 
@@ -33274,6 +33307,17 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingLabelStockWeighedGoods => 'Ware wird nach Gewicht verkauft';
+
+  @override
+  String get settingLabelTraceReportMaxBytes => 'Größter Fehlerbericht';
+
+  @override
+  String get settingLabelTraceReportRetentionDays =>
+      'Fehlerberichte aufbewahren für';
+
+  @override
+  String get settingLabelTraceReportsPerHour =>
+      'Fehlerberichte pro Person und Stunde';
 
   @override
   String get settingLabelVatViesEvidenceDays =>
@@ -35383,10 +35427,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get setupStepLeaveTitle => 'Diesen Schritt verlassen?';
-
-  @override
-  String get setupStepLoadFailed =>
-      'Dieser Schritt konnte nicht geladen werden. Versuchen Sie es später erneut.';
 
   @override
   String get setupStepNext => 'Nächster Schritt';
@@ -39065,6 +39105,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get supplyClassPropertyMeaning =>
       'Steuerbar dort, wo die Räumlichkeiten liegen.';
+
+  @override
+  String get supplyClassUnknown =>
+      'Eine Klasse, die diese App noch nicht kennt: bleibt so, wie der Server sie hat';
 
   @override
   String get supportChanged =>

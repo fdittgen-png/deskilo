@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/i18n/app_format.dart';
@@ -11,7 +12,7 @@ import '../../application/payment_candidates.dart';
 /// payment plus the resolution its amount demands.
 typedef MatchChoice = ({
   String paymentLedgerId,
-  String resolution,
+  MatchResolution resolution,
   String note,
 });
 
@@ -49,7 +50,7 @@ class _MatchInvoiceDialogState extends State<MatchInvoiceDialog> {
       .where((entry) => entry.id == widget.selected)
       .firstOrNull
       ?.id;
-  String _overResolution = 'over_credit_note';
+  MatchResolution _overResolution = MatchResolution.overCreditNote;
   String? _error;
 
   @override
@@ -68,12 +69,12 @@ class _MatchInvoiceDialogState extends State<MatchInvoiceDialog> {
     if (payment == null) return;
     final paid = payment.leftCents;
     final resolution = paid == widget.dueCents
-        ? 'exact'
+        ? MatchResolution.exact
         : paid > widget.dueCents
             ? _overResolution
-            : 'under_accepted';
-    final noteRequired =
-        resolution == 'over_forced' || resolution == 'under_accepted';
+            : MatchResolution.underAccepted;
+    final noteRequired = resolution == MatchResolution.overForced ||
+        resolution == MatchResolution.underAccepted;
     if (noteRequired && _note.text.trim().isEmpty) {
       setState(() =>
           _error = l10n.invoiceMatchNoteRequired);
@@ -147,21 +148,21 @@ class _MatchInvoiceDialogState extends State<MatchInvoiceDialog> {
                         .formatMinor(paid - widget.dueCents)),
                 style: Theme.of(context).textTheme.bodySmall,
               ),
-              RadioGroup<String>(
+              RadioGroup<MatchResolution>(
                 key: const ValueKey('invoicing-dashboard-invoice-match-credit-note'),
                 groupValue: _overResolution,
                 onChanged: (v) =>
                     setState(() => _overResolution = v ?? _overResolution),
                 child: Column(mainAxisSize: MainAxisSize.min, children: [
-                  RadioListTile<String>(
+                  RadioListTile<MatchResolution>(
                     key: const ValueKey('invoice-match-credit-note'),
-                    value: 'over_credit_note',
+                    value: MatchResolution.overCreditNote,
                     contentPadding: EdgeInsets.zero,
                     title: Text(l10n.invoiceMatchCreditNote),
                   ),
-                  RadioListTile<String>(
+                  RadioListTile<MatchResolution>(
                     key: const ValueKey('invoice-match-force'),
-                    value: 'over_forced',
+                    value: MatchResolution.overForced,
                     contentPadding: EdgeInsets.zero,
                     title: Text(l10n.invoiceMatchForce),
                   ),

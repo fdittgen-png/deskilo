@@ -1670,7 +1670,7 @@ In diesem Kapitel:
 - Ihr Konto: [Foto](#ihr-konto-und-foto), [persönliche Angaben](#persönliche-angaben), [Adresse](#ihre-adresse), [USt-IdNr.](#ihre-ust-idnr), [Zahlungsbedingungen](#ihre-zahlungsbedingungen), [WhatsApp](#ihre-whatsapp-nummer), [Status](#ihre-statuszeile), [Standard-Buchungszeitraum](#standard-buchungszeitraum)
 - Ihr Badge: [das Badge](#ihr-badge) und [seine PIN](#ihre-badge-pin)
 - Wie die App aussieht und liest: [Sprache](#app-sprache), [Design](#design), [Navigation](#navigationsstil), [Zahlen und Daten](#zahlen-und-daten), [Uhr](#uhr), [Zeitzone](#zeiten-in-meiner-zeitzone-anzeigen), [Hinweise](#hinweise-wiederherstellen), [Frontkamera](#frontkamera-zum-scannen), [verknüpfte Konten](#verknüpfte-konten)
-- Datenschutz und Ihre Daten: [wer meine Daten sehen kann](#datenschutz-wer-meine-daten-sehen-kann), [wer mich sieht](#wählen-wer-mich-sieht), [öffentliches Profil](#ein-öffentliches-profil-veröffentlichen), [Export](#meine-daten-exportieren), [Löschen](#meine-daten-löschen), [Anträge auf Betroffenenrechte](#anträge-auf-betroffenenrechte), [Push](#push-benachrichtigungen-auf-diesem-gerät), [Ihre Rechte](#ihre-daten-ihre-rechte)
+- Datenschutz und Ihre Daten: [wer meine Daten sehen kann](#datenschutz-wer-meine-daten-sehen-kann), [wer mich sieht](#wählen-wer-mich-sieht), [öffentliches Profil](#ein-öffentliches-profil-veröffentlichen), [Export](#meine-daten-exportieren), [Löschen](#meine-daten-löschen), [Anträge auf Betroffenenrechte](#anträge-auf-betroffenenrechte), [Push](#push-benachrichtigungen-auf-diesem-gerät), [Fehlerberichte](#fehlerberichte-senden), [Ihre Rechte](#ihre-daten-ihre-rechte)
 - [Ihr eigener Server](#ihr-eigener-server)
 
 <!-- anchor: user.settings.organisation -->
@@ -2314,6 +2314,29 @@ Sie möchten verhindern, dass Benachrichtigungen an dieses Gerät gesendet werde
 
 - Ist es aus, funktioniert die App weiter, und an dieses Gerät wird nichts gesendet.
 - Ist es an, gehen die Adresse dieses Geräts und jede Benachrichtigung an den Push-Dienst.
+
+**Siehe auch:** [Ihre Daten, Ihre Rechte](#ihre-daten-ihre-rechte)
+
+<!-- anchor: user.privacy.error-reports -->
+### Fehlerberichte senden
+
+**Zielgruppe:** Alle
+
+Sie möchten wissen, was die App sendet, wenn etwas schiefgeht, oder es abstellen.
+
+<!-- image: user-privacy-error-reports -->
+
+**Schritte**
+
+1. Öffnen Sie [Datenschutz & Daten](https://fdittgen-png.github.io/deskilo/#/privacy).
+2. Schalten Sie **Fehlerberichte senden** aus oder ein. Es ist an, bis Sie es ausschalten, und die Wahl bleibt auf diesem Gerät gespeichert.
+
+**Gut zu wissen**
+
+- Ein Bericht geht nur an die Installation, bei der Sie angemeldet sind, nie an ein anderes Unternehmen. Ihr Betreiber liest ihn; die Unternehmen, bei denen Sie Mitglied sind, sehen ihn nicht.
+- Er nennt die App-Version, die Plattform, die Art des Fehlers und die Stelle der App, an der er auftrat. Er enthält nie, was Sie eingegeben haben, den Text des Fehlers, eine E-Mail-Adresse, einen Namen oder einen Schlüssel.
+- Jede Person sendet höchstens eine festgelegte Zahl von Berichten pro Stunde, ein Bericht hat eine Größengrenze, und die Installation löscht Berichte nach einer festgelegten Zahl von Tagen. Alle drei legt der Betreiber fest.
+- Ist es aus, verlässt nichts das Gerät: Der Fehler bleibt im Protokoll dieses Geräts. Ein mit Ihrem Konto verbundener Assistent sendet nie einen Bericht.
 
 **Siehe auch:** [Ihre Daten, Ihre Rechte](#ihre-daten-ihre-rechte)
 
@@ -6910,7 +6933,7 @@ Das, was die tägliche Arbeit umgibt: die Testseite eines Space und die echte, A
 In diesem Kapitel:
 - [Ein Space hat zwei Seiten](#ein-space-hat-zwei-seiten) · [Eine Seite betreten](#die-echte-oder-die-testseite-betreten) · [Ein Testspace](#wofür-ein-testspace-da-ist) · [Wer ausrollen darf](#wer-ausrollen-und-in-die-produktion-darf) · [Zwischen den Seiten ausrollen](#zwischen-den-beiden-seiten-ausrollen) · [Status des Workspace und das Jahresarchiv](#status-des-workspace-und-das-jahresarchiv)
 - [Ihr eigener Server](#einen-eigenen-server-betreiben) · [Wenn eine Installation eine neuere App verlangt](#wenn-eine-installation-eine-neuere-app-verlangt) · [Eine neue Version veröffentlichen](#eine-neue-version-veröffentlichen-zuerst-der-server)
-- [Assistenten](#assistenten-was-sie-sind) · [Einen Assistenten verbinden](#einen-assistenten-verbinden) · [Freigaben](#freigaben-und-bestätigungen-für-assistenten) · [Was Assistenten dürfen](#was-assistenten-in-einem-workspace-dürfen)
+- [Assistenten](#assistenten-was-sie-sind) · [Einen Assistenten verbinden](#einen-assistenten-verbinden) · [Freigaben](#freigaben-und-bestätigungen-für-assistenten) · [Was Assistenten dürfen](#was-assistenten-in-einem-workspace-dürfen) · [Fehlerberichte](#fehlerberichte)
 - [Der Aufgabenrekorder](#der-aufgabenrekorder-und-geführte-touren) · [Eine Aufgabe aufzeichnen](#eine-aufgabe-aufzeichnen) · [Eine Aufzeichnung prüfen](#eine-aufzeichnung-prüfen-bearbeiten-und-exportieren) · [Eine Anleitung erstellen](#aus-einer-aufzeichnung-eine-anleitung-erstellen) · [Einer Anleitung folgen](#einer-anleitung-folgen) · [Das Kreismenü](#das-kreismenü) · [Eine Anleitung bearbeiten](#eine-anleitung-bearbeiten-oder-reparieren) · [Datenschutz der Aufzeichnungen](#was-eine-aufzeichnung-behält)
 - [Der Demo-Workspace](#der-demo-workspace) · [Aufnahmemodus](#aufnahmemodus)
 - [Plattformen](#deskilo-auf-ihren-geräten) · [Supportdetails](#supportdetails) · [Wenn etwas nicht funktioniert](#wenn-etwas-nicht-funktioniert)
@@ -7209,6 +7232,29 @@ Sie entscheiden, welche Dienste ein Workspace Assistenten anbietet.
 - Das ist für Personen mit der Integrations-Berechtigung; Inhaber haben sie immer.
 
 **Siehe auch:** [Ein Funktionsschalter](#ein-funktionsschalter)
+
+<!-- anchor: user.advanced.error-reports -->
+### Fehlerberichte
+
+**Zielgruppe:** Betreiber:in
+
+Sie betreiben die Installation und möchten sehen, was in den angemeldeten Apps schiefgegangen ist.
+
+<!-- image: user-advanced-error-reports -->
+
+**Schritte**
+
+1. Öffnen Sie [Installation: Assistenten](https://fdittgen-png.github.io/deskilo/#/installation/assistants).
+2. Tippen Sie auf **Fehlerberichte**. Die neuesten stehen oben.
+3. Tippen Sie auf einen Bericht, um seinen von der App geschwärzten Stack zu lesen. **Ältere Berichte** liest die nächsten.
+
+**Gut zu wissen**
+
+- Ein Bericht nennt die Stelle in der App und die Art des Fehlers, seinen Code, die App-Version, die Plattform und die Zeit. Er enthält nie, was eine Person eingegeben hat, eine E-Mail-Adresse, einen Namen oder einen Schlüssel.
+- Nur der Betreiber der Installation liest sie; die Unternehmen der Installation sehen sie nie.
+- In den Einstellungen legen **Fehlerberichte pro Person und Stunde**, **Größter Fehlerbericht** und **Fehlerberichte aufbewahren für** fest, wie viele ankommen, wie groß und wie lange. Jede Person kann Berichte auf ihrem Gerät ausschalten.
+
+**Siehe auch:** [Fehlerberichte senden](#fehlerberichte-senden)
 
 <!-- anchor: user.advanced.recorder -->
 ### Der Aufgabenrekorder und geführte Touren

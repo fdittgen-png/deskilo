@@ -22,11 +22,12 @@ void main() {
 
     const banner = ValueKey('reserve-availability-unavailable');
     expect(find.byKey(banner), findsOneWidget);
-    expect(find.textContaining('no seat is shown as free'), findsOneWidget);
+    expect(find.byKey(const ValueKey('read-failure')), findsOneWidget);
 
     repo.failWindowReads = false;
     await tester.tap(find.descendant(
-        of: find.byKey(banner), matching: find.text('Retry')));
+        of: find.byKey(banner),
+        matching: find.byKey(const ValueKey('inline-banner-action'))));
     await tester.pumpAndSettle();
     expect(find.byKey(banner), findsNothing);
   });
@@ -45,7 +46,8 @@ void main() {
 
       repo.failWindowReads = false;
       await tester.tap(find.descendant(
-          of: find.byKey(banner), matching: find.text('Retry')));
+          of: find.byKey(banner),
+        matching: find.byKey(const ValueKey('inline-banner-action'))));
       await tester.pumpAndSettle();
       expect(find.byKey(banner), findsNothing);
       expect(find.byKey(ValueKey('reserve-$view-grid')), findsOneWidget);
@@ -61,7 +63,8 @@ void main() {
     expect(find.byKey(const ValueKey('reserve-plan-canvas')), findsNothing);
     repo.failWindowReads = false;
     await tester.tap(find.descendant(
-        of: find.byKey(banner), matching: find.text('Retry')));
+        of: find.byKey(banner),
+        matching: find.byKey(const ValueKey('inline-banner-action'))));
     await tester.pumpAndSettle();
     expect(find.byKey(banner), findsNothing);
     expect(find.byKey(const ValueKey('reserve-plan-canvas')), findsOneWidget);

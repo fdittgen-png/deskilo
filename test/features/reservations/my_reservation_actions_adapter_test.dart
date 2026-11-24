@@ -185,7 +185,7 @@ void main() {
   // #4315 — the host's own refusal reaches the card as the typed refusal, through the one
   // conversion of the booking writes, with its values read; never as the transport's error.
   test('a coded refusal of check-in or cancel is the typed refusal, its detail value read', () async {
-    b.refusal = (status: 400, code: 'DKK17', message: 'check-in is not open yet', details: '{"minutes": 45}');
+    b.refusal = (status: 400, code: DkCode.dkk17, message: 'check-in is not open yet', details: '{"minutes": 45}');
     for (final run in [() => actions().checkIn(_row, _item), () => actions().cancel(_row, _item)]) {
       await expectLater(
         run(),

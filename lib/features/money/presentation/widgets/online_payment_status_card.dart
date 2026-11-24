@@ -33,10 +33,15 @@ class OnlinePaymentStatusCard extends StatelessWidget {
   /// later capture of the same month has superseded.
   static List<PaymentIntent> shown(List<PaymentIntent> intents, String period) {
     final ofMonth = intents.where((i) => i.period == period).toList();
-    final captured = ofMonth.any((i) => i.status == 'captured');
+    final captured = ofMonth.any((i) => i.state == PaymentIntentStatus.captured);
     return [
       for (final i in ofMonth)
-        if (i.status == 'created' || i.status == 'reversed' || (i.status == 'failed' && !captured)) i,
+        if (switch (i.state) {
+          PaymentIntentStatus.created || PaymentIntentStatus.reversed => true,
+          PaymentIntentStatus.failed => !captured,
+          PaymentIntentStatus.captured || PaymentIntentStatus.unknown => false,
+        })
+          i,
     ];
   }
 
@@ -54,17 +59,23 @@ class OnlinePaymentStatusCard extends StatelessWidget {
             ListTile(
               key: ValueKey('online-payment-${intent.status}-${intent.id}'),
               leading: Icon(
-                switch (intent.status) {
-                  'failed' => Icons.error_outline,
-                  'reversed' => Icons.undo_outlined,
-                  _ => Icons.hourglass_top_outlined,
+                switch (intent.state) {
+                  PaymentIntentStatus.failed => Icons.error_outline,
+                  PaymentIntentStatus.reversed => Icons.undo_outlined,
+                  PaymentIntentStatus.created ||
+                  PaymentIntentStatus.captured ||
+                  PaymentIntentStatus.unknown => Icons.hourglass_top_outlined,
                 },
-                color: intent.status == 'failed' ? scheme.error : null,
+                color: intent.state == PaymentIntentStatus.failed
+                    ? scheme.error
+                    : null,
               ),
-              title: Text(switch (intent.status) {
-                'failed' => l10n.payOnlineFailedTitle,
-                'reversed' => l10n.payOnlineReversedTitle,
-                _ => l10n.payOnlinePendingTitle,
+              title: Text(switch (intent.state) {
+                PaymentIntentStatus.failed => l10n.payOnlineFailedTitle,
+                PaymentIntentStatus.reversed => l10n.payOnlineReversedTitle,
+                PaymentIntentStatus.created ||
+                PaymentIntentStatus.captured ||
+                PaymentIntentStatus.unknown => l10n.payOnlinePendingTitle,
               }),
               subtitle: Text(_detail(l10n, intent, currency)),
             ),
@@ -83,10 +94,11 @@ class OnlinePaymentStatusCard extends StatelessWidget {
         ? intent.provider
         : paymentProviderLabel(l10n, provider);
     final amount = currency.formatMinor(intent.amountCents);
-    return switch (intent.status) {
-      'failed' => l10n.payOnlineFailedDetail(intent.reference, amount, via),
+    return switch (intent.state) {
+      PaymentIntentStatus.failed =>
+        l10n.payOnlineFailedDetail(intent.reference, amount, via),
       // #3925 — the amount the provider reversed, when it is part of it.
-      'reversed' => switch (intent.reversedMinor(currencyCode)) {
+      PaymentIntentStatus.reversed => switch (intent.reversedMinor(currencyCode)) {
         final part? when part != intent.amountCents =>
           l10n.payOnlineReversedPartDetail(
             intent.reference,
@@ -96,7 +108,10 @@ class OnlinePaymentStatusCard extends StatelessWidget {
           ),
         _ => l10n.payOnlineReversedDetail(intent.reference, amount, via),
       },
-      _ => l10n.payOnlinePendingDetail(intent.reference, amount, via),
+      PaymentIntentStatus.created ||
+      PaymentIntentStatus.captured ||
+      PaymentIntentStatus.unknown =>
+        l10n.payOnlinePendingDetail(intent.reference, amount, via),
     };
   }
 }

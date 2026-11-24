@@ -4196,7 +4196,6 @@
   "consentRightsBody": "Auskunft, Berichtigung, Export (Art. 20), Löschung (Art. 17) und Widerspruch — jedes ein Knopf in Einstellungen → Datenschutz & Daten. Für alles andere: fdittgen@gmail.com. Sie können diese Einwilligung jederzeit widerrufen, indem Sie den Workspace verlassen und Ihre Daten löschen.",
   "consentRightsTitle": "Ihre Rechte",
   "consentTitle": "Ihre Daten, Ihre Rechte",
-  "consentUnavailable": "Ihr Konto konnte nicht geladen werden, daher gibt es noch nichts zu akzeptieren.",
   "consentVersion": "Version",
   "consentVersionNumber": "Version {version}",
   "consentWhatBody": "Ihr Konto (E-Mail, Anzeigename, gehashtes Passwort), Ihr Profil, wie Sie es ausfüllen (Foto, Status, Adresse, WhatsApp-Nummer — je optional), und was Sie in einem Space tun: Reservierungen und Check-ins, Nachrichten, Ausgaben und Verbräuche, Ihr Abonnement, Rechnungen und Zahlungen. Alles liegt auf dem Server, auf dem Ihr Space läuft: auf dem gemeinsamen Referenzserver in der EU (Supabase, eu-central-1); auf einem Server, den eine Gemeinschaft selbst betreibt, dort, wo ihr Betreiber es gewählt hat. Einstellungen → Datenschutz & Daten zeigt den Hinweis dieses Servers: wer ihn betreibt, wo die Daten liegen und wer sie erhält.",
@@ -9318,6 +9317,13 @@
   "instanceEnrolRun": "Bei diesem persönlichen Zuhause registrieren",
   "instanceEnrolSame": "Eine Installation registriert sich nicht selbst.",
   "instanceEnrolUnreadable": "Dieses Projekt antwortet noch nicht als Deskilo-Installation. Installieren Sie zuerst das Schema.",
+  "instanceErrorReportCode": "Code {code}",
+  "instanceErrorReportFacts": "{version} · {platform} · {time}",
+  "instanceErrorReportStack": "Stack, von der App geschwärzt",
+  "instanceErrorReports": "Fehlerberichte",
+  "instanceErrorReportsHint": "Was die Apps gesendet haben, als etwas schiefging, die neuesten zuerst. Mitglieder eines Unternehmens sehen sie nie.",
+  "instanceErrorReportsNone": "Es ist noch kein Fehlerbericht eingegangen.",
+  "instanceErrorReportsOlder": "Ältere Berichte",
   "instanceFamilyChatgpt": "ChatGPT",
   "instanceFamilyClaude": "Claude",
   "instanceFamilyLoopback": "Desktop- oder Kommandozeilen-Assistent",
@@ -12720,10 +12726,6 @@
   "@managedProfileHandOverHint": {
     "description": "#887 managed profiles: managedProfileHandOverHint"
   },
-  "managedProfileIdentityUnavailable": "Diese Angaben konnten nicht gelesen werden, es gibt also noch nichts zu bearbeiten. Es wurde nichts geändert.",
-  "@managedProfileIdentityUnavailable": {
-    "description": "#1561 shown when the managed identity could not be read, so the form is not offered"
-  },
   "managedProfileIntro": "Diese Person hat noch kein Konto. Sie buchen, fakturieren und verwalten für sie; übergeben Sie das Profil, wenn sie beitritt.",
   "@managedProfileIntro": {
     "description": "#887 managed profiles: managedProfileIntro"
@@ -13398,10 +13400,6 @@
   "memberMoneySettled": "Nichts offen.",
   "@memberMoneySettled": {
     "description": "#704 - the money section of a member profile"
-  },
-  "memberMoneyUnavailable": "Finanzen konnten nicht geladen werden. Zum Aktualisieren ziehen.",
-  "@memberMoneyUnavailable": {
-    "description": "#709 - the money section of a profile could not be read"
   },
   "memberMonthInProgress": "Dieser Monat",
   "@memberMonthInProgress": {
@@ -14633,7 +14631,6 @@
   "pendingNotUpdated": "Status nicht aktualisiert — der Server ist nicht erreichbar. Ihre Anfrage bleibt unverändert.",
   "pendingStillWaiting": "Wartet weiter auf Freigabe.",
   "periodReservationsEmpty": "Keine Buchung in diesen Monaten.",
-  "periodReservationsFailed": "Die Buchungen konnten nicht gelesen werden.",
   "periodReservationsLevel": "Nur auf {level}",
   "periodReservationsTitle": "Buchungen von {period}",
   "periodReservationsUnknownLevel": "Das ist keine Ebene dieses Raums.",
@@ -15248,7 +15245,6 @@
   "privacyAdminIncidentTitle": "Datenschutzvorfall erfassen",
   "privacyAdminIntro": "Die Anfragen der Mitglieder zu ihren persönlichen Daten und die Vorfälle, die Sie erfassen. Jede Anfrage wird innerhalb eines Kalendermonats beantwortet.",
   "privacyAdminKind": "Art der Anfrage",
-  "privacyAdminLoadFailed": "Die Anfragen konnten nicht gelesen werden.",
   "privacyAdminMember": "Mitglied",
   "privacyAdminOpenTile": "Persönliche Daten und Rechteanfragen",
   "privacyAdminOutcomeKind": "Was mit den Daten geschah",
@@ -15313,6 +15309,9 @@
       }
     }
   },
+  "privacyErrorReports": "Fehlerberichte senden",
+  "privacyErrorReportsFailed": "Die Auswahl konnte auf diesem Gerät nicht gespeichert werden.",
+  "privacyErrorReportsHint": "Wenn die App einen Fehler aufzeichnet, geht ein Bericht ohne Ihre Daten an die Installation, bei der Sie angemeldet sind, damit ihr Betreiber ihn beheben kann.",
   "privacyExport": "Meine Daten exportieren",
   "@privacyExport": {
     "description": "#719 - privacy & data"
@@ -15591,7 +15590,6 @@
     "description": "#974 profiles site: profilesSitePick"
   },
   "profilesTitle": "Profile",
-  "profilesUnavailable": "Ihre Arbeitsbereiche konnten nicht geladen werden.",
   "provenanceFromTemplate": "Aus Vorlage „{name}“",
   "provenanceProductDefault": "Produktstandard",
   "provenanceResetToDefault": "Auf Produktstandard zurücksetzen",
@@ -19154,6 +19152,7 @@
   },
   "settingGroupBusiness": "Geschäft",
   "settingGroupCompatibility": "App-Versionen",
+  "settingGroupDiagnostics": "Fehlerberichte",
   "settingGroupDirectory": "Mitgliederverzeichnis",
   "@settingGroupDirectory": {
     "description": "#2486 settings: Settings group title."
@@ -19442,6 +19441,9 @@
   "settingHintStockTagReadUnitAsQuantity": "Bei einer Massenumlagerung wird eine Etikette auf einem Stück eines nicht stückweise geführten Artikels als Menge 1 dieses Artikels aufgenommen. Aus: Eine solche Etikette wird ausgelassen und aufgelistet.",
   "settingHintStockTagRebindGraceDays": "Wie viele Tage nach dem Entfernen ein Etikettencode wieder gebunden werden darf. 0 heißt sofort. Ein gültiges Etikett wird nie doppelt gebunden.",
   "settingHintStockWeighedGoods": "An: Ein neuer Lagerartikel wird in Kilogramm statt in Stück vorgeschlagen (Metzgerei, Bäckerei, Theke). Jeder Artikel kann weiterhin eine andere Einheit erhalten.",
+  "settingHintTraceReportMaxBytes": "Der größte Fehlerbericht, den diese Installation annimmt. Die App kürzt den Stack des Berichts vor dem Senden; ein Bericht, der dann noch größer ist, wird verworfen.",
+  "settingHintTraceReportRetentionDays": "Wie viele Tage diese Installation einen Fehlerbericht aufbewahrt. Ältere Berichte werden gelöscht, sobald ein neuer eintrifft.",
+  "settingHintTraceReportsPerHour": "Wie viele Fehlerberichte eine Person in einer Stunde an diese Installation senden darf, über alle ihre Geräte zusammen. Weitere Berichte in dieser Stunde werden verworfen, nie zurückgestellt. 0 schaltet Fehlerberichte für alle ab.",
   "settingHintVatViesEvidenceDays": "Tage, die eine gültige Prüfung der USt-IdNr. aktuell genug bleibt, um auf einer neuen Rechnung als Nachweis zu dienen. Ein kürzerer Wert verlangt früher eine neue Prüfung; er beweist nicht, dass ein Geschäft gültig ist.",
   "@settingHintVatViesEvidenceDays": {
     "description": "#2487 retention settings"
@@ -19699,6 +19701,9 @@
   "settingLabelStockTagReadUnitAsQuantity": "Ein gelesenes Stück in einer Umlagerung zählt als eins seines Artikels",
   "settingLabelStockTagRebindGraceDays": "Tage, bevor ein entferntes Etikett neu vergeben wird",
   "settingLabelStockWeighedGoods": "Ware wird nach Gewicht verkauft",
+  "settingLabelTraceReportMaxBytes": "Größter Fehlerbericht",
+  "settingLabelTraceReportRetentionDays": "Fehlerberichte aufbewahren für",
+  "settingLabelTraceReportsPerHour": "Fehlerberichte pro Person und Stunde",
   "settingLabelVatViesEvidenceDays": "Aktualität der USt-IdNr.-Prüfung",
   "@settingLabelVatViesEvidenceDays": {
     "description": "#2487 retention settings"
@@ -20509,7 +20514,6 @@
   "setupStepLeave": "Verlassen",
   "setupStepLeaveMessage": "Ihre Antworten sind noch nicht übernommen. Sie bleiben als Entwurf gespeichert, und Sie finden sie hier wieder, wenn Sie zurückkommen.",
   "setupStepLeaveTitle": "Diesen Schritt verlassen?",
-  "setupStepLoadFailed": "Dieser Schritt konnte nicht geladen werden. Versuchen Sie es später erneut.",
   "setupStepNext": "Nächster Schritt",
   "@setupStepNext": {
     "description": "#3076 — on a step page of the guide: goes on to the next step still to do."
@@ -22927,6 +22931,7 @@
   "supplyClassLabel": "Leistungsort",
   "supplyClassProperty": "Mit den Räumlichkeiten verbunden",
   "supplyClassPropertyMeaning": "Steuerbar dort, wo die Räumlichkeiten liegen.",
+  "supplyClassUnknown": "Eine Klasse, die diese App noch nicht kennt: bleibt so, wie der Server sie hat",
   "supportChanged": "Der Kontext hat sich geändert. Erstellen Sie eine neue Vorschau.",
   "supportDay": "Letzte 24 Stunden",
   "supportDemo": "Demo: simulierter lokaler Kontext",

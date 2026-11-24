@@ -42,6 +42,25 @@ Set<String> _memberRows() {
 }
 
 void main() {
+  test('#4441 — a class from a newer server is unknown, never property or '
+      'general, and picks no rule', () {
+    expect(SupplyClass.fromWire('cultural_event'), SupplyClass.unknown);
+    expect(SupplyClass.fromWire('general'), SupplyClass.general);
+    expect(SupplyClass.fromWire('property'), SupplyClass.property);
+    expect(
+      () => supplyVatCategory(
+        treatment: VatTreatment.auto,
+        supply: SupplyClass.unknown,
+        sellerVatRegistered: true,
+        sellerCountry: 'FR',
+        buyerCountry: 'DE',
+        buyerCapacity: 'business',
+        reference: ActiveTaxReference.current,
+      ),
+      throwsA(isA<UnknownSupplyClass>()),
+    );
+  });
+
   test('every SQL case of the rule gives the same answer in Dart', () {
     final sql = File('supabase/tests/database/167_place_of_supply.sql')
         .readAsStringSync();

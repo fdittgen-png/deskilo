@@ -7245,10 +7245,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get consentTitle => 'Your data, your rights';
 
   @override
-  String get consentUnavailable =>
-      'Your account could not be loaded, so there is nothing to accept yet.';
-
-  @override
   String get consentVersion => 'Version';
 
   @override
@@ -15971,6 +15967,36 @@ class AppLocalizationsEn extends AppLocalizations {
       'This project does not answer as a Deskilo installation yet. Install the schema first.';
 
   @override
+  String instanceErrorReportCode(String code) {
+    return 'Code $code';
+  }
+
+  @override
+  String instanceErrorReportFacts(
+    String version,
+    String platform,
+    String time,
+  ) {
+    return '$version · $platform · $time';
+  }
+
+  @override
+  String get instanceErrorReportStack => 'Stack, redacted by the app';
+
+  @override
+  String get instanceErrorReports => 'Error reports';
+
+  @override
+  String get instanceErrorReportsHint =>
+      'What the apps sent when something went wrong, newest first. Members of a business never see them.';
+
+  @override
+  String get instanceErrorReportsNone => 'No error report has arrived.';
+
+  @override
+  String get instanceErrorReportsOlder => 'Older reports';
+
+  @override
   String get instanceFamilyChatgpt => 'ChatGPT';
 
   @override
@@ -20760,10 +20786,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'Mints a personal code bound to this profile. Whoever redeems it takes the profile over — reservations, invoices, subscription — once you approve the membership.';
 
   @override
-  String get managedProfileIdentityUnavailable =>
-      'These details could not be read, so there is nothing to edit yet. Nothing has been changed.';
-
-  @override
   String get managedProfileIntro =>
       'This person has no account yet. You book, invoice and manage for them; hand the profile over when they join.';
 
@@ -22528,10 +22550,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get memberMoneySettled => 'Nothing outstanding.';
-
-  @override
-  String get memberMoneyUnavailable =>
-      'Money could not be loaded. Pull to refresh.';
 
   @override
   String get memberMonthInProgress => 'This month';
@@ -25259,9 +25277,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get periodReservationsEmpty => 'No booking in these months.';
 
   @override
-  String get periodReservationsFailed => 'The bookings could not be read.';
-
-  @override
   String periodReservationsLevel(String level) {
     return 'On $level only';
   }
@@ -26535,9 +26550,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get privacyAdminKind => 'Kind of request';
 
   @override
-  String get privacyAdminLoadFailed => 'The requests could not be read.';
-
-  @override
   String get privacyAdminMember => 'Member';
 
   @override
@@ -26601,6 +26613,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String privacyErasedIn(String space) {
     return 'Your data in $space is erased. What the space must keep stays for its retention period; other installations are not affected.';
   }
+
+  @override
+  String get privacyErrorReports => 'Send error reports';
+
+  @override
+  String get privacyErrorReportsFailed =>
+      'The choice could not be saved on this device.';
+
+  @override
+  String get privacyErrorReportsHint =>
+      'When the app records an error, a report without your data goes to the installation you are signed in to, so its operator can fix it.';
 
   @override
   String get privacyExport => 'Export my data';
@@ -27125,9 +27148,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get profilesTitle => 'Profiles';
-
-  @override
-  String get profilesUnavailable => 'Your workspaces could not be loaded.';
 
   @override
   String provenanceFromTemplate(String name) {
@@ -32058,6 +32078,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingGroupCompatibility => 'App versions';
 
   @override
+  String get settingGroupDiagnostics => 'Error reports';
+
+  @override
   String get settingGroupDirectory => 'Member directory';
 
   @override
@@ -32538,6 +32561,18 @@ class AppLocalizationsEn extends AppLocalizations {
       'On: a new stock item is proposed in kilograms instead of pieces (a butcher, a bakery, a grocery counter). Any item can still be given another unit.';
 
   @override
+  String get settingHintTraceReportMaxBytes =>
+      'The largest error report this installation accepts. The app shortens the report\'s stack to fit before it sends; a report still larger is dropped.';
+
+  @override
+  String get settingHintTraceReportRetentionDays =>
+      'How many days this installation keeps an error report. Older reports are deleted when a new one arrives.';
+
+  @override
+  String get settingHintTraceReportsPerHour =>
+      'How many error reports one person may send to this installation in an hour, from all their devices together. Further reports in that hour are dropped, never queued. 0 turns error reports off for everybody.';
+
+  @override
   String get settingHintVatViesEvidenceDays =>
       'Days a valid VAT-number check stays recent enough to stand as evidence on a new invoice. A shorter value asks for a fresh check sooner; it is not proof that a transaction is valid.';
 
@@ -32932,6 +32967,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingLabelStockWeighedGoods => 'Goods are sold by weight';
+
+  @override
+  String get settingLabelTraceReportMaxBytes => 'Largest error report';
+
+  @override
+  String get settingLabelTraceReportRetentionDays => 'Error reports kept for';
+
+  @override
+  String get settingLabelTraceReportsPerHour =>
+      'Error reports per person and hour';
 
   @override
   String get settingLabelVatViesEvidenceDays => 'VAT-number check freshness';
@@ -35015,10 +35060,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get setupStepLeaveTitle => 'Leave this step?';
-
-  @override
-  String get setupStepLoadFailed =>
-      'This step could not be loaded. Try again later.';
 
   @override
   String get setupStepNext => 'Next step';
@@ -38641,6 +38682,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get supplyClassPropertyMeaning => 'Taxed where the premises are.';
+
+  @override
+  String get supplyClassUnknown =>
+      'A class this app does not know yet: kept as the server has it';
 
   @override
   String get supportChanged => 'The context changed. Prepare a new preview.';

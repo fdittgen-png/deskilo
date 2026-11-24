@@ -89,7 +89,7 @@ int? _stillDue(Invoice invoice, InvoiceMatch? match) {
   if (match == null) return invoice.totalCents;
   final standingPartial =
       !match.pending &&
-      match.resolution == 'under_accepted' &&
+      match.settles == MatchResolution.underAccepted &&
       match.writeoffAt == null;
   return standingPartial ? invoice.totalCents - match.paidCents : null;
 }
