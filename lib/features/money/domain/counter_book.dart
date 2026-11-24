@@ -84,17 +84,19 @@ class CounterBookLine {
   }
 }
 
-/// What a tender was paid with; the wire word is read once, here.
+/// What a tender was paid with; the wire word is read once, here. A word from the future is [unknown]: shown as it
+/// came, never counted as cash or card.
 enum TenderKind {
   cash('cash'),
   card('card'),
-  other('other');
+  other('other'),
+  unknown('unknown');
 
   const TenderKind(this.wire);
 
   final String wire;
 
-  static TenderKind of(String wire) => values.firstWhere((k) => k.wire == wire, orElse: () => other);
+  static TenderKind of(String wire) => values.firstWhere((k) => k.wire == wire, orElse: () => unknown);
 }
 
 /// Where a tender stands; a word from the future is [unknown], the neutral state that is settled by hand.
@@ -143,7 +145,7 @@ class CounterBookTender {
   final String providerKey;
   final String providerRef;
 
-  /// The kind as an enum; a kind from the future reads as [TenderKind.other].
+  /// The kind as an enum; a kind from the future reads as [TenderKind.unknown].
   TenderKind get tenderKind => TenderKind.of(kind);
 
   /// The state as an enum; a state from the future reads as [TenderState.unknown].

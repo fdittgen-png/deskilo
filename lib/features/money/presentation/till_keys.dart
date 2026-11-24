@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
+import '../../../core/ui/edge_fade_scroll.dart';
 import '../../../core/ui/loading_view.dart';
 import '../domain/counter_till.dart';
 import 'till_text.dart';
@@ -52,12 +53,10 @@ class _TillKeysState extends State<TillKeys> {
         return Column(
           children: [
             if (categories.isNotEmpty)
-              SizedBox(
-                height: 56,
-                child: ListView(
-                  key: const ValueKey('till-categories'),
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.xs),
+              EdgeFadeScroll(
+                key: const ValueKey('till-categories'),
+                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.xs),
+                child: Row(
                   children: [
                     for (final c in [null, ...categories])
                       Padding(
@@ -82,6 +81,7 @@ class _TillKeysState extends State<TillKeys> {
                   crossAxisSpacing: AppSpacing.sm,
                 ),
                 itemCount: keys.length,
+                // recorder-key-exempt: hands the callback on; the button inside carries till-key-<id>
                 itemBuilder: (context, i) => _Key(item: keys[i], onTap: widget.onTap),
               ),
             ),

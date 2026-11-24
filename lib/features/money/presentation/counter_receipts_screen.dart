@@ -108,10 +108,11 @@ String _tenderState(AppLocalizations l10n, CounterBookTender t) {
   };
 }
 
-String _tenderKind(AppLocalizations l10n, TenderKind kind) => switch (kind) {
+String _tenderKind(AppLocalizations l10n, CounterBookTender t) => switch (t.tenderKind) {
   TenderKind.cash => l10n.counterSaleTenderCash,
   TenderKind.card => l10n.counterSaleTenderCard,
   TenderKind.other => l10n.counterSaleTenderOther,
+  TenderKind.unknown => t.kind,
 };
 
 /// The request id of each one-tap act, per receipt revision, for as long as the app runs.
@@ -229,7 +230,7 @@ class _Receipt extends ConsumerWidget {
                 Text(l10n.counterSaleLeft('${book.leftOf(line)} ${line.unit}'.trim()), style: theme.textTheme.bodySmall),
             ],
             for (final t in r.tenders) ...[
-              Text(l10n.counterSaleTenderLine(_tenderKind(l10n, t.tenderKind), money.formatMinor(t.amountMinor), _tenderState(l10n, t))),
+              Text(l10n.counterSaleTenderLine(_tenderKind(l10n, t), money.formatMinor(t.amountMinor), _tenderState(l10n, t))),
               if (t.tenderKind == TenderKind.card && t.providerKey.isNotEmpty) Text(l10n.counterSaleReference(t.providerKey), style: theme.textTheme.bodySmall),
             ],
             if (r.isCorrection)

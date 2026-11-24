@@ -11,7 +11,6 @@ import '../../../core/help/help_anchors.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
-import '../../../core/trace/trace_logger.dart';
 import '../../workspace/domain/workspace_permission.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/item_groups.dart';
@@ -65,12 +64,12 @@ class _GroupList extends ConsumerWidget {
     final finance = held.contains(WorkspacePermission.manageServices) && held.contains(WorkspacePermission.viewFinances);
     final vat = finance ? await ref.read(stockServiceCreatorProvider)?.vatChoices(workspaceId) ?? const <StockVatChoice>[] : const <StockVatChoice>[];
     // the deposit item is a choice too
-    var items = const <StockItem>[];
-    try {
-      items = await ref.read(stockItemsProvider(workspaceId).future);
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'the items could not be read for a group', error: e, stackTrace: st);
-    }
+    final items = await guardRead(
+      domain: 'stock',
+      message: 'the items could not be read for a group',
+      read: () => ref.read(stockItemsProvider(workspaceId).future),
+      fallback: (_) => const <StockItem>[],
+    );
     final units = await pickableUnitsOf(ref, workspaceId, keep: group?.params['inventory_unit'] as String?);
     if (!context.mounted) return;
     final saved = await showItemGroupSheet(context, ref.read(itemGroupsProvider), workspaceId: workspaceId, group: group, groups: groups, choices: (places: places, vat: vat, finance: finance, items: items, units: units));
