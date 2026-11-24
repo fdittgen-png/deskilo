@@ -6,6 +6,8 @@
 // uses. Amounts are MINOR units; a quantity is an exact decimal string; nothing here prices a line.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show JsonReader;
 
+import 'till_quantity.dart';
+
 /// One operation of the counter in the business's country, under the case the owner declared.
 class TillOperation {
   const TillOperation({required this.operation, required this.outcome, required this.reason, required this.note});
@@ -71,7 +73,10 @@ class TillLine {
   /// exactly these pieces, and the server refuses a quantity that is not their number.
   final List<String> pieces;
 
-  TillLine withQuantity(String q) => TillLine(itemId: itemId, name: name, quantity: q, unit: unit, pieces: pieces);
+  /// The line at quantity [q]. Named pieces stay only when [q] is exactly their number: any other quantity (a tap on the item's key, a
+  /// typed number) leaves the line a plain quantity of the item, because the server refuses a quantity that is not the number of its
+  /// named pieces (DKG25) and would say so only after the cash was taken.
+  TillLine withQuantity(String q) => TillLine(itemId: itemId, name: name, quantity: q, unit: unit, pieces: tillQuantityOf(q) == '${pieces.length}' ? pieces : const []);
 
   /// The line with the piece tagged [tag] added: one more, named.
   TillLine withPiece(String tag) =>
