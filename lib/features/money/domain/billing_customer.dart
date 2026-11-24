@@ -8,6 +8,8 @@
 // here, and the server's own refusals come back as [BillingCustomerRefusal].
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
+import '../../../core/failure/app_failure.dart';
+
 /// What a customer is billed under, and how to reach them.
 class BillingPartyDraft {
   const BillingPartyDraft({
@@ -174,7 +176,7 @@ enum BillingCustomerRefusalKind {
   other,
 }
 
-class BillingCustomerRefusal implements Exception {
+class BillingCustomerRefusal implements TypedRefusal {
   const BillingCustomerRefusal(this.kind, {this.cause});
 
   final BillingCustomerRefusalKind kind;
@@ -182,6 +184,17 @@ class BillingCustomerRefusal implements Exception {
 
   @override
   String toString() => 'BillingCustomerRefusal($kind)';
+}
+
+/// A draft that breaks a rule needing no server ([validateBillingParty]):
+/// nothing was sent; [problems] say which fields.
+class BillingDraftInvalid implements TypedRefusal {
+  const BillingDraftInvalid(this.problems);
+
+  final Map<String, BillingPartyProblem> problems;
+
+  @override
+  String toString() => 'BillingDraftInvalid(${problems.keys.join(', ')})';
 }
 
 /// The seller's billing customers (RPCs of 0821).
