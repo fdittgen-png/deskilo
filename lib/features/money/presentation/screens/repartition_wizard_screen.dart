@@ -11,6 +11,7 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/failure/outcome_or_throw.dart';
 import '../../../../core/format/decimal_input.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
@@ -106,7 +107,7 @@ class _State extends ConsumerState<RepartitionWizardScreen> {
     if (workspace == null || cents == null || shares.isEmpty) return;
     setState(() => _busy = true);
     final rule = _effectiveRule();
-    BookRepartitionOutcome? outcome;
+    var notBooked = false;
     final ok = await runGuarded(
       context,
       domain: 'money',
@@ -115,7 +116,7 @@ class _State extends ConsumerState<RepartitionWizardScreen> {
       action: () async {
         // The order is the decision, so it lives in the command
         // (#1532): the rule first, the money second.
-        outcome = await ref.read(repartitionsProvider).book(
+        final outcome = await ref.read(repartitionsProvider).book(
           workspaceId: workspace.id,
           title: _title.text.trim(),
           amountCents: cents,
@@ -124,6 +125,9 @@ class _State extends ConsumerState<RepartitionWizardScreen> {
           shares: shares,
           remember: _remember,
         );
+        notBooked = isRepartitionNotBooked(outcome);
+        // A failed distribution is said by the guarded path.
+        if (!notBooked) valueOrThrow(outcome);
       },
     );
     if (!mounted) return;
@@ -131,7 +135,7 @@ class _State extends ConsumerState<RepartitionWizardScreen> {
     // `RepartitionNotBooked` is a refusal, not a crash: the rule could
     // not be saved and NOTHING was distributed, so the sheet stays open
     // on the same amounts and Book can simply be pressed again.
-    if (ok && outcome is RepartitionNotBooked) {
+    if (ok && notBooked) {
       AppSnack.error(
           context,
           l10n.repartitionRuleNotSaved);
