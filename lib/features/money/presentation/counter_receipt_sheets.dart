@@ -137,6 +137,7 @@ Future<bool> showCounterRefundSheet(
         Text(l10n.counterSaleRefunded(money.formatMinor(correction.refundedMinor), money.formatMinor(correction.totalMinor))),
         const FormGap(),
         AppChoiceChips<String>(
+          key: const ValueKey('counter-refund-kind'),
           choices: [
             AppChoice(value: 'cash', label: l10n.counterSaleTenderCash, key: const ValueKey('counter-refund-kind-cash')),
             AppChoice(value: 'other', label: l10n.counterSaleTenderOther, key: const ValueKey('counter-refund-kind-other')),
@@ -233,6 +234,7 @@ Future<bool> showCounterTenderAnswerSheet(
         Text(l10n.counterSaleReference(tender.providerKey)),
         const FormGap(),
         AppChoiceChips<String>(
+          key: const ValueKey('counter-answer-outcome'),
           choices: [
             AppChoice(value: 'accepted', label: l10n.counterSaleCardAccepted, key: const ValueKey('counter-answer-accepted')),
             AppChoice(value: 'refused', label: l10n.counterSaleCardRefused, key: const ValueKey('counter-answer-refused')),

@@ -3220,6 +3220,17 @@ La cassa cerca da sola la connessione, e **Cerca subito la connessione** lo fa s
 
 Tre impostazioni dell'attività limitano ciò che viene accettato: **Durata massima offline (minuti)**, **Massimo di vendite offline per sessione di cassa** e **Differenza di prezzo ammessa offline (%)**. Se i dati offline del dispositivo non sono leggibili, non si vende nulla offline finché un responsabile non decide; **Elimina i dati offline** li elimina dopo un avviso, perché le vendite non ancora inviate vanno perse definitivamente.
 
+<!-- anchor: user.money.till.receipts -->
+### Scontrini e risposte della carta alla cassa
+
+**Destinatari:** Amministratore · Proprietario
+
+Incassa con carta al banco, oppure una vendita va rettificata dopo, e vuole vedere cosa ha fatto la cassa e cosa è ancora in attesa.
+
+**Incassare con carta** chiede il totale al terminale; la risposta del terminale decide la vendita: **Accettata** la conclude, **Rifiutata** lascia il carrello da pagare in altro modo e **Nessuna risposta** lascia la vendita sotto **In attesa della risposta della carta** negli **Scontrini di cassa** (si aprono con **Scontrini** dalla cassa), dove la carta non viene mai richiesta di nuovo. Chi può vedere le finanze registra ciò che il terminale ha mostrato e la vendita viene conclusa una sola volta.
+
+Gli **Scontrini di cassa** elencano ciò che la cassa ha fatto. **Rettificare questa vendita** emette una rettifica come nuovo scontrino che cita l'originale, per la quantità di ogni riga indicata (al massimo quanto resta alla riga) con un **Motivo**. **Restituire denaro** restituisce l'importo di una rettifica (al massimo quanto accredita) e la merce ripresa viene registrata su di essa; nulla viene mai restituito due volte.
+
 <!-- anchor: user.money.stock.rfid -->
 ### Tag RFID: uno per lotto o uno per pezzo
 

@@ -3220,6 +3220,17 @@ Die Kasse sucht ihre Verbindung von selbst wieder, **Verbindung jetzt suchen** t
 
 Drei Einstellungen des Betriebs begrenzen, was angenommen wird: **Längste Offline-Zeit (Minuten)**, **Höchstzahl Offline-Verkäufe je Kassensitzung** und **Erlaubte Preisabweichung offline (%)**. Sind die Offline-Daten des Geräts nicht lesbar, wird offline nichts verkauft, bis eine Leitung entscheidet; **Offline-Daten verwerfen** verwirft sie nach einer Warnung, denn noch nicht gesendete Verkäufe gehen endgültig verloren.
 
+<!-- anchor: user.money.till.receipts -->
+### Belege und Kartenantworten an der Kasse
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie kassieren am Tresen mit Karte oder müssen einen Verkauf nachträglich korrigieren und möchten sehen, was die Kasse erstellt hat und was noch wartet.
+
+**Mit Karte kassieren** fragt das Terminal nach dem Gesamtbetrag; die Antwort des Terminals entscheidet den Verkauf: **Angenommen** schließt ihn ab, **Abgelehnt** lässt den Warenkorb anders bezahlen, und bei **Keine Antwort** bleibt der Verkauf unter **Warten auf eine Kartenantwort** in den **Kassenbelegen** (über **Belege** an der Kasse), wo die Karte nie erneut angefragt wird. Wer die Finanzen sehen darf, erfasst, was das Terminal gezeigt hat, und der Verkauf wird einmal abgeschlossen.
+
+ Die **Kassenbelege** listen, was die Kasse erstellt hat. **Diesen Verkauf korrigieren** stellt eine Korrektur als neuen Beleg aus, der das Original nennt, für die Menge jeder genannten Zeile (höchstens, was die Zeile noch hat) mit einem **Grund**. **Geld zurückgeben** zahlt den Betrag einer Korrektur zurück (höchstens, was sie gutschreibt), die zurückgenommene Ware wird dazu erfasst; nichts wird zweimal zurückgegeben.
+
 <!-- anchor: user.money.stock.rfid -->
 ### RFID-Tags: eines pro Charge oder eines pro Stück
 

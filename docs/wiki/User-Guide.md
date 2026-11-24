@@ -3220,6 +3220,17 @@ The till looks for its connection again by itself, and **Look for the connection
 
 Three settings of the business bound what is accepted: **Longest offline period (minutes)**, **Most offline sales per till session** and **Price difference allowed offline (%)**. If the offline data of the device cannot be read, nothing is sold offline until a manager decides; **Discard the offline data** drops it after a warning, because sales not yet sent are lost for good.
 
+<!-- anchor: user.money.till.receipts -->
+### Receipts and card answers at the till
+
+**Audience:** Administrator · Owner
+
+You take a card at the counter, or a sale needs to be corrected afterwards, and you want to see what the counter has made and what is still waiting.
+
+**Take card** asks the terminal for the total; the terminal's answer decides the sale: **Accepted** makes it, **Declined** leaves the basket to be paid another way, and **No answer** leaves the sale under **Waiting for a card answer** in **Counter receipts** (opened with **Receipts** from the till), where it is never asked again. Someone who may see the finances records what the terminal showed, and the sale is completed once.
+
+**Counter receipts** lists what the till made. **Correct this sale** issues a correction as a new receipt that cites the original, for the quantity of each line you name (at most what the line has left) with a **Reason**. **Give money back** gives back the amount of a correction (at most what it credits) and the goods taken back are recorded against it; nothing is ever given back twice.
+
 <!-- anchor: user.money.stock.rfid -->
 ### RFID tags: one per batch or one per piece
 

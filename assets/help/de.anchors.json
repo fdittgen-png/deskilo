@@ -141,6 +141,7 @@
   "user.money.till": "Kasse",
   "user.money.till-drawer": "Kasse öffnen, zählen und schließen",
   "user.money.till-offline": "Wenn die Kasse offline ist",
+  "user.money.till.receipts": "Belege und Kartenantworten an der Kasse",
   "user.money.stock.rfid": "RFID-Tags: eines pro Charge oder eines pro Stück",
   "user.money.stock.units": "Packeinheiten",
   "user.money.stock.expiry": "Der Verfallsbericht",

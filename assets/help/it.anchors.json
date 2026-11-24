@@ -141,6 +141,7 @@
   "user.money.till": "Cassa",
   "user.money.till-drawer": "Aprire la cassa, contare e chiudere",
   "user.money.till-offline": "Quando la cassa è offline",
+  "user.money.till.receipts": "Scontrini e risposte della carta alla cassa",
   "user.money.stock.rfid": "Tag RFID: uno per lotto o uno per pezzo",
   "user.money.stock.units": "Unità di movimentazione",
   "user.money.stock.expiry": "Il rapporto di scadenza",
