@@ -41728,6 +41728,23 @@ class AppLocalizationsFr extends AppLocalizations {
   String get tillDrawerClosedTitle => 'Caisse fermée';
 
   @override
+  String get tillDrawerConsoleEmpty =>
+      'Aucune vente n\'est ouverte sur un terminal. Ce qu\'un terminal enregistre s\'affiche ici dès qu\'il est choisi, avec les prix donnés par Deskilo.';
+
+  @override
+  String tillDrawerConsoleLine(String quantity, String label) {
+    return '$quantity × $label';
+  }
+
+  @override
+  String tillDrawerConsoleRevision(String revision) {
+    return 'Vente ouverte, modification $revision';
+  }
+
+  @override
+  String get tillDrawerConsoleTitle => 'Console du terminal';
+
+  @override
   String get tillDrawerCounted => 'Espèces comptées dans le tiroir';
 
   @override

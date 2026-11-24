@@ -374,6 +374,10 @@ CounterRefundCheck counterRefundCheck(int? amountMinor, int leftMinor) {
 abstract interface class CounterBookPort {
   Future<CounterBook> book(String workspaceId);
 
+  /// The business's newest open draft with its lines -- what a terminal is ringing up now, as the server priced it; null
+  /// when no sale is open.
+  Future<CounterBookReceipt?> openDraft(String workspaceId);
+
   /// A correction of sale [originalId]: a new receipt; answers its number.
   Future<String> correct(String workspaceId, {required String requestId, required String originalId, required List<CounterBookQuantity> lines, required String reason});
 

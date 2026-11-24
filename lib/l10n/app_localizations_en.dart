@@ -41211,6 +41211,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tillDrawerClosedTitle => 'Till closed';
 
   @override
+  String get tillDrawerConsoleEmpty =>
+      'No sale is open on a terminal. What a terminal rings up appears here as it is chosen, with the prices Deskilo gives it.';
+
+  @override
+  String tillDrawerConsoleLine(String quantity, String label) {
+    return '$quantity × $label';
+  }
+
+  @override
+  String tillDrawerConsoleRevision(String revision) {
+    return 'Open sale, change $revision';
+  }
+
+  @override
+  String get tillDrawerConsoleTitle => 'Terminal console';
+
+  @override
   String get tillDrawerCounted => 'Cash counted in the drawer';
 
   @override

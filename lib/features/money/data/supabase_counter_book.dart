@@ -30,6 +30,29 @@ class SupabaseCounterBook implements CounterBookPort {
   List<Map<String, Object?>> _rows(Object? rows) => [for (final r in rows as List) Map<String, Object?>.from(r as Map)];
 
   @override
+  Future<CounterBookReceipt?> openDraft(String workspaceId) async {
+    final newest = _rows(await _client
+        .from(counterReceiptsTable)
+        .select('id, kind, state, currency, total_minor, tax_minor, revision, number, finalized_at, corrects_receipt_id, till_session_id, frozen')
+        .eq('workspace_id', workspaceId)
+        .eq('state', 'draft')
+        .order('modified_datetime', ascending: false)
+        .limit(1));
+    if (newest.isEmpty) return null;
+    final id = newest.first['id'] as String;
+    final lines = await fetchAllPages(
+      table: 'counter_receipt_lines',
+      build: () => _client
+          .from('counter_receipt_lines')
+          .select('id, receipt_id, line_no, corrects_line_id, gross_minor, frozen')
+          .eq('workspace_id', workspaceId)
+          .eq('receipt_id', id)
+          .order('line_no', ascending: true),
+    );
+    return CounterBookReceipt.fromJson(newest.first, lines: [for (final l in lines) CounterBookLine.fromJson(l)], tenders: const []);
+  }
+
+  @override
   Future<CounterBook> book(String workspaceId) async {
     final issued = _rows(await _client
         .from(counterReceiptsTable)
