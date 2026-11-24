@@ -2,7 +2,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../data/external_hosts.dart';
+import '../links/external_hosts.dart';
 import '../links/link_launcher.dart';
 
 /// The published guide site: one page per language for the user guide

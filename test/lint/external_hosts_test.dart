@@ -2,7 +2,7 @@
 //
 // #4423 -- a web address outside this app is spelled once. A host quoted in
 // two or more hand-written files of lib/ is a second caller that should read
-// `ExternalHosts` (lib/core/data/external_hosts.dart). The generated
+// `ExternalHosts` (lib/core/links/external_hosts.dart). The generated
 // translations and the Demo's invented addresses are not callers. The list
 // is held empty.
 import 'package:flutter_test/flutter_test.dart';

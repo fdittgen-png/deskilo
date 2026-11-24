@@ -5,6 +5,7 @@
 // connection returns and the sales are sent in order, a second send of the same batch records nothing twice, the drawer counted
 // exactly, the day closed with them, and a sale sent into the closed session refused. Shared by the scenario checklist and the
 // journey test.
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/features/money/domain/till_day.dart';
 import 'package:deskilo/features/money/domain/till_drawer.dart';
 import 'package:deskilo/features/money/domain/till_offline.dart';
@@ -102,5 +103,5 @@ Future<bool> tillOfflineJourney() async {
       f.expectedMinor == 15000 + f.totalMinor &&
       f.closed.differenceMinor == 0 &&
       f.day.sessions.length == 1 &&
-      f.sentIntoClosed == 'DKL12';
+      f.sentIntoClosed == DkCode.dkl12;
 }

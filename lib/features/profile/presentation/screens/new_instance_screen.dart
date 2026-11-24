@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/backend/backend_settings.dart';
-import '../../../../core/data/external_hosts.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/instance/instance_builder.dart';
@@ -15,6 +14,7 @@ import '../../../../core/instance/instance_readiness.dart';
 import '../../../../core/instance/management_api.dart';
 import '../../../../core/instance/personal_home_probe_provider.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/links/external_hosts.dart';
 import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
@@ -404,8 +404,7 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
         ),
         if (_orgs.isNotEmpty) ...[
           const SizedBox(height: AppSpacing.md),
-          WizardText(l10n.instanceOrganisationLabel,
-              style: Theme.of(context).textTheme.labelLarge),
+          WizardText(l10n.instanceOrganisationLabel, style: Theme.of(context).textTheme.labelLarge),
           RadioGroup<String>(
             key: const ValueKey('new-instance-radio-group'),
             groupValue: _org,
@@ -477,8 +476,7 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
           ),
         if (_existing.isNotEmpty && _project == null) ...[
           const SizedBox(height: AppSpacing.md),
-          WizardText(l10n.instanceUseExisting,
-              style: Theme.of(context).textTheme.labelLarge),
+          WizardText(l10n.instanceUseExisting, style: Theme.of(context).textTheme.labelLarge),
           for (final p in _existing)
             ListTile(
               key: ValueKey('instance-existing-${p.ref}'),

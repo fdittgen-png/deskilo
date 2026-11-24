@@ -6,11 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../core/data/external_hosts.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/help/help_hint.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/links/external_hosts.dart';
 import '../../../../core/links/link_launcher.dart';
 import '../../../../core/navigation/routes.dart';
 import '../../../../core/share/file_sharer.dart';

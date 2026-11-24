@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/trace/trace_logger.dart';
+import '../../../core/trace/guarded.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../data/supabase_workspace_units.dart';
@@ -20,12 +20,12 @@ final workspaceUnitListProvider = FutureProvider.autoDispose.family<List<Workspa
 /// archived, while the feature is on (none while it is off). A read that fails offers none, never an error.
 final lineUnitsProvider = FutureProvider.family<List<WorkspaceUnit>, String>((ref, workspaceId) async {
   if (!ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.unitsOfMeasure)) return const <WorkspaceUnit>[];
-  try {
-    return pickableUnits(await ref.watch(workspaceUnitListProvider(workspaceId).future), unitsOn: true);
-  } on Object catch (e, st) {
-    TraceLogger.instance.warn('money', 'the units could not be read for a line', error: e, stackTrace: st);
-    return const <WorkspaceUnit>[];
-  }
+  return guardRead(
+    domain: 'money',
+    message: 'the units could not be read for a line',
+    read: () async => pickableUnits(await ref.watch(workspaceUnitListProvider(workspaceId).future), unitsOn: true),
+    fallback: (_) => const <WorkspaceUnit>[],
+  );
 });
 
 /// #4442 -- the units a picker of what an item is counted in offers for [workspaceId]: the six of before while the feature is off,
@@ -34,10 +34,10 @@ final lineUnitsProvider = FutureProvider.family<List<WorkspaceUnit>, String>((re
 Future<List<WorkspaceUnit>> pickableUnitsOf(WidgetRef ref, String workspaceId, {String? keep}) async {
   final on = ref.read(enabledFeaturesSyncProvider).contains(WorkspaceFeature.unitsOfMeasure);
   if (!on) return pickableUnits(builtInUnits, unitsOn: false, keep: keep);
-  try {
-    return pickableUnits(await ref.read(workspaceUnitListProvider(workspaceId).future), unitsOn: true, keep: keep);
-  } on Object catch (e, st) {
-    TraceLogger.instance.warn('stock', 'the units could not be read for a picker', error: e, stackTrace: st);
-    return pickableUnits(builtInUnits, unitsOn: false, keep: keep);
-  }
+  return guardRead(
+    domain: 'stock',
+    message: 'the units could not be read for a picker',
+    read: () async => pickableUnits(await ref.read(workspaceUnitListProvider(workspaceId).future), unitsOn: true, keep: keep),
+    fallback: (_) => pickableUnits(builtInUnits, unitsOn: false, keep: keep),
+  );
 }

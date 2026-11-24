@@ -1,6 +1,6 @@
 # #4423 -- literal row-key subscripts per file outside data/ and domain/*from_json*.
 # Only falls: test/lint/row_key_budget_test.dart explains and records.
-# total 1670 in 281 files
+# total 1659 in 278 files
 6 lib/app/desk_calendar/desk_calendar.dart
 8 lib/app/entry_intents.dart
 1 lib/app/resume_places.dart
@@ -202,7 +202,6 @@
 1 lib/features/stock/presentation/item_group_text.dart
 1 lib/features/stock/presentation/item_groups_screen.dart
 14 lib/features/stock/presentation/measure_unit_sheet.dart
-2 lib/features/stock/presentation/put_away_tags.dart
 2 lib/features/stock/presentation/stock_count_task_screen.dart
 2 lib/features/stock/presentation/stock_counts_screen.dart
 7 lib/features/stock/presentation/stock_cycle_plan_sheet.dart
@@ -211,7 +210,6 @@
 3 lib/features/stock/presentation/stock_place_editor.dart
 4 lib/features/stock/presentation/stock_reorder_point_sheet.dart
 2 lib/features/stock/presentation/stock_reversal_sheet.dart
-1 lib/features/stock/presentation/stock_tag_text.dart
 1 lib/features/stock/presentation/stock_variants_editor.dart
 17 lib/features/task_recorder/guide/guide_codec.dart
 2 lib/features/task_recorder/guide/guide_compiler.dart
@@ -238,7 +236,6 @@
 6 lib/features/workspace/domain/feature_registry_sql.dart
 4 lib/features/workspace/domain/holiday_import.dart
 6 lib/features/workspace/domain/instance_responsibles.dart
-8 lib/features/workspace/domain/instance_trace_report.dart
 1 lib/features/workspace/domain/invitation_answer.dart
 7 lib/features/workspace/domain/invite_uri.dart
 28 lib/features/workspace/domain/kpi_contract.dart
