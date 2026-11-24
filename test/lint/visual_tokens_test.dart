@@ -99,6 +99,8 @@ void main() {
       padding: const EdgeInsets.only(left: 0),
       padding: const EdgeInsets.all(AppSpacing.md),
       // padding: EdgeInsets.all(8) in a comment
+      padding: const pw.EdgeInsets.only(top: 8),
+      pw.SizedBox(height: 8),
       const SizedBox(height: 8),
       const SizedBox(width: AppSpacing.sm),
       SizedBox(width: 0, height: 0),

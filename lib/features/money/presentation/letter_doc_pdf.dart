@@ -16,7 +16,6 @@ import 'package:pdf/widgets.dart' as pw;
 
 import '../../../core/files/file_names.dart';
 import '../../../core/l10n/context_l10n.dart';
-import '../../../core/theme/app_spacing.dart';
 import '../domain/invoice_pdf.dart';
 import '../domain/invoice_report.dart';
 import '../domain/report_kind.dart';
@@ -100,7 +99,7 @@ Future<({Uint8List bytes, String fileName})> letterPdfOf(
         additionalBody: [
           for (final notice in mandatoryNotices)
             pw.Padding(
-              padding: const pw.EdgeInsets.only(top: AppSpacing.sm),
+              padding: const pw.EdgeInsets.only(top: 8),
               child: pw.Text(notice),
             ),
         ],
