@@ -231,6 +231,10 @@ class DemoStandaloneInvoiceCommands implements StandaloneInvoiceCommands {
     final buyer = _m.invoiceQueries.buyers.of?.call(d.draft.subjectMemberId) ??
         (name: d.draft.subjectMemberId, address: '');
     final id = 'inv-${_m.nextInvoiceNumber}';
+    final invoiceLines = [for (final l in p['lines']! as List) invoiceLineFromSnapshot(l as Map)];
+    // #4433, #4436 -- the goods leave the store, and what each line took is frozen with the invoice
+    final sold = _sold(d.draft.lines);
+    final took = sold.isEmpty ? const <int, List<LineTrack>>{} : await goods!.sellOnInvoice(id, sold);
     _m.invoices.insert(
       0,
       Invoice(
@@ -240,9 +244,11 @@ class DemoStandaloneInvoiceCommands implements StandaloneInvoiceCommands {
         number: number,
         issuedAt: _m.clock(),
         title: d.draft.serviceDay,
-        lines: [
-          for (final l in p['lines']! as List) invoiceLineFromSnapshot(l as Map),
-        ],
+        lines: invoiceLines,
+        lineTracks: {
+          for (final MapEntry(:key, :value) in took.entries)
+            if (invoiceLines[key - 1].commercialLineId case final lineId? when value.isNotEmpty) lineId: value,
+        },
         totalCents: p['total_cents']! as int,
         currency: currency,
         memberName: buyer.name,
@@ -258,10 +264,6 @@ class DemoStandaloneInvoiceCommands implements StandaloneInvoiceCommands {
         (counter > _m.nextInvoiceNumber ? counter : _m.nextInvoiceNumber) + 1;
     if (series.stored) {
       _m.numberSequences['invoice'] = series.copyWith(nextValue: counter + 1);
-    }
-    final sold = _sold(d.draft.lines);
-    if (sold.isNotEmpty) {
-      await goods!.sellOnInvoice(id, [for (final s in sold) (itemId: s.itemId, quantity: s.quantity)]);
     }
     _drafts[draftId] = (draft: d.draft, revision: d.revision, invoiceId: id);
     _m.invoiceReceipts[key] = id;
@@ -283,6 +285,8 @@ abstract interface class DemoInvoiceGoods {
   /// The index of the first line the main store cannot serve, or null.
   int? shortLine(List<({String itemId, ExactQuantity quantity})> lines);
 
-  /// Moves the goods of an issued invoice out of the main store, linked to it.
-  Future<void> sellOnInvoice(String invoiceId, List<({String itemId, ExactQuantity quantity})> lines);
+  /// Moves the goods of an issued invoice out of the main store, linked to it, and answers the track IDs each line took
+  /// (by the line's number on the invoice): the lots it was taken from, as received. A line that took nothing traced has
+  /// none.
+  Future<Map<int, List<LineTrack>>> sellOnInvoice(String invoiceId, List<({int n, String itemId, ExactQuantity quantity})> lines);
 }

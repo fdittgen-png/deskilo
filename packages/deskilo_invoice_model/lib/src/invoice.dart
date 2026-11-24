@@ -337,8 +337,6 @@ sealed class Invoice with _$Invoice implements SystemStamped {
     /// workspace's current term, the way such documents always printed.
     DateTime? dueOn,
 
-    /// #4436 (0945) — the track IDs frozen on the goods lines, by the line's stable id (`commercial.line_id`): the
-    /// lots and pieces a line took. Read from the embedded `invoice_line_tracks`; empty on an invoice without any.
     @Default(<String, List<LineTrack>>{}) Map<String, List<LineTrack>> lineTracks,
 
     /// #1913 — on what basis [dueOn] was frozen: `document_term`,
@@ -436,12 +434,11 @@ sealed class Invoice with _$Invoice implements SystemStamped {
     kind: InvoiceKind.fromWire(row['kind'] as String?),
     settledByInvoiceId: row['settled_by_invoice_id'] as String?,
     settles: [
-      for (final source in (row['settles'] as List? ?? const []))
-        SettledSource.fromSnapshot(source as Map),
+      for (final source in (row['settles'] as List? ?? const [])) SettledSource.fromSnapshot(source as Map),
     ],
     dueOn: _maturityDueOn(row['invoice_maturities']),
     maturityBasis: _maturityOf(row['invoice_maturities'])?['basis'] as String?,
-    lineTracks: _lineTracksOf(row['invoice_line_tracks']),
+    lineTracks: lineTracksByLineId(row['invoice_line_tracks']),
     legalSnapshot: switch (row['legal_snapshot']) {
       final Map<dynamic, dynamic> json => json.cast<String, Object?>(),
       _ => null,
@@ -493,28 +490,16 @@ sealed class Invoice with _$Invoice implements SystemStamped {
   );
 }
 
-/// #1913 — the embedded `invoice_maturities` row: PostgREST returns the
-/// one-to-one relation as an object, older servers as a list or nothing.
+/// #1913 — the embedded `invoice_maturities` row (an object, on older servers a list of one or nothing).
 Map<Object?, Object?>? _maturityOf(Object? embedded) => switch (embedded) {
-      final Map<Object?, Object?> map => map,
-      final List<Object?> list when list.isNotEmpty && list.first is Map =>
-        list.first! as Map<Object?, Object?>,
-      _ => null,
-    };
-
-/// #4436 -- the embedded `invoice_line_tracks` rows (`[{line_id, tracks}]`) as the tracks by line id.
-Map<String, List<LineTrack>> _lineTracksOf(Object? embedded) => {
-  if (embedded is List)
-    for (final row in embedded)
-      if (row is Map && '${row['line_id'] ?? ''}'.isNotEmpty)
-        '${row['line_id']}': lineTracksFromSnapshot(row['tracks']),
+  final Map<Object?, Object?> map => map,
+  final List<Object?> list when list.isNotEmpty && list.first is Map => list.first! as Map<Object?, Object?>,
+  _ => null,
 };
 
 DateTime? _maturityDueOn(Object? embedded) {
-  final raw = _maturityOf(embedded)?['due_on'] as String?;
-  if (raw == null) return null;
-  final day = DateTime.parse(raw);
-  return DateTime(day.year, day.month, day.day);
+  final day = DateTime.tryParse('${_maturityOf(embedded)?['due_on'] ?? ''}');
+  return day == null ? null : DateTime(day.year, day.month, day.day);
 }
 
 /// The breakdown the documents render, one entry per rate: the SNAPSHOT wins

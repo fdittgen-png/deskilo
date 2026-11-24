@@ -248,13 +248,7 @@ Map<String, Object?> _lineData(ReportStrings strings, Invoice invoice,
   // #4436 -- the track IDs frozen on a goods line; a line that took nothing traced carries neither key
   final tracks = invoice.lineTracks[line.commercialLineId] ?? const <LineTrack>[];
   return {
-    if (tracks.isNotEmpty) ...{
-      'track_ids': tracks.map((t) => t.text).join(', '),
-      'tracks': [
-        for (final t in tracks)
-          {'kind': t.kind.wire, 'code': t.code, 'quantity': t.quantity, 'expires_on': t.expiresOn, 'text': t.text},
-      ],
-    },
+    ...lineTrackFields(tracks),
     'label': invoiceLineText(strings, line,
         association: association, period: invoice.period),
     // #1002 — what the line IS, its percentage and its month, so a design

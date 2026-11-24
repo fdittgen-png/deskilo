@@ -67,3 +67,23 @@ List<LineTrack> lineTracksFromSnapshot(Object? snapshot) {
         ),
   ];
 }
+
+/// The embedded `invoice_line_tracks` rows (`[{line_id, tracks}]`) as the tracks by line id; a row without a line id,
+/// and anything that is not a list, reads as none.
+Map<String, List<LineTrack>> lineTracksByLineId(Object? embedded) => {
+  if (embedded is List)
+    for (final row in embedded)
+      if (row is Map && '${row['line_id'] ?? ''}'.isNotEmpty) '${row['line_id']}': lineTracksFromSnapshot(row['tracks']),
+};
+
+/// What a printed line row carries for its tracks: `track_ids` (one text) and `tracks` (each `{kind, code, quantity,
+/// expires_on, text}`); nothing at all for a line that took nothing traced, so an untraced document is byte-identical.
+Map<String, Object?> lineTrackFields(List<LineTrack> tracks) => tracks.isEmpty
+    ? const {}
+    : {
+        'track_ids': tracks.map((t) => t.text).join(', '),
+        'tracks': [
+          for (final t in tracks)
+            {'kind': t.kind.wire, 'code': t.code, 'quantity': t.quantity, 'expires_on': t.expiresOn, 'text': t.text},
+        ],
+      };

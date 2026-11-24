@@ -1881,9 +1881,7 @@ mixin _$Invoice {
 /// `invoice_maturities`. Null when the server recorded none (an
 /// invoice issued before 0331): the app then falls back to the
 /// workspace's current term, the way such documents always printed.
- DateTime? get dueOn;/// #4436 (0945) — the track IDs frozen on the goods lines, by the line's stable id (`commercial.line_id`): the
-/// lots and pieces a line took. Read from the embedded `invoice_line_tracks`; empty on an invoice without any.
- Map<String, List<LineTrack>> get lineTracks;/// #1913 — on what basis [dueOn] was frozen: `document_term`,
+ DateTime? get dueOn; Map<String, List<LineTrack>> get lineTracks;/// #1913 — on what basis [dueOn] was frozen: `document_term`,
 /// `default_term` (the unagreed default; needs review) or `unknown`.
  String? get maturityBasis;/// #1916 (0349) — the legal clauses and facts frozen at issue, raw.
 /// Null on an invoice issued before 0349: legacy, evidence unknown.
@@ -2222,11 +2220,7 @@ class _Invoice extends Invoice {
 /// invoice issued before 0331): the app then falls back to the
 /// workspace's current term, the way such documents always printed.
 @override final  DateTime? dueOn;
-/// #4436 (0945) — the track IDs frozen on the goods lines, by the line's stable id (`commercial.line_id`): the
-/// lots and pieces a line took. Read from the embedded `invoice_line_tracks`; empty on an invoice without any.
  final  Map<String, List<LineTrack>> _lineTracks;
-/// #4436 (0945) — the track IDs frozen on the goods lines, by the line's stable id (`commercial.line_id`): the
-/// lots and pieces a line took. Read from the embedded `invoice_line_tracks`; empty on an invoice without any.
 @override@JsonKey() Map<String, List<LineTrack>> get lineTracks {
   if (_lineTracks is EqualUnmodifiableMapView) return _lineTracks;
   // ignore: implicit_dynamic_type

@@ -103,6 +103,13 @@ class InvoiceDetailSections {
                         key: ValueKey('invoice-detail-line-measure-$i'),
                         style: theme.textTheme.bodySmall,
                       ),
+                    // #4436 -- the lots and pieces a goods line took, frozen with the invoice.
+                    if (invoiceLineTracksText(l10n, invoice.lineTracks[position.commercialLineId] ?? const []) case final tracks?)
+                      Text(
+                        tracks,
+                        key: ValueKey('invoice-detail-line-tracks-$i'),
+                        style: theme.textTheme.bodySmall,
+                      ),
                   ],
                 ),
               ),
