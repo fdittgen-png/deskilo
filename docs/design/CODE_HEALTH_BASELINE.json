@@ -645,17 +645,7 @@
 
       "lib/features/money/presentation/till_drawer/till_drawer_screen.dart": 1,
 
-      "lib/features/money/presentation/till_screen.dart": 1,
-
-      "lib/features/stock/presentation/stock_chain_section.dart": 1,
-
-      "lib/features/stock/presentation/stock_cycle_counts_screen.dart": 1,
-
-      "lib/features/stock/presentation/stock_document_goods_block.dart": 1,
-
-      "lib/features/stock/presentation/stock_first_run.dart": 2,
-
-      "lib/features/stock/presentation/stock_screen.dart": 2
+      "lib/features/money/presentation/till_screen.dart": 1
     }
   },
   "functions": [

@@ -114,7 +114,7 @@ Map<String, StockRefusal> checkStockVariants(List<({Map<String, String> values, 
 /// #4403 -- what the server refuses of a place beyond its own fields: a code taken among its siblings (0836:499,
 /// 0855:140-145), a parent that is the place itself (0836:507), a level under the wrong level or under none, checked
 /// when the place is made or its kind or parent changes (0855:155-166), and a use that is not picking or reserve
-/// (0855:133). [places] are the business's, by id; [old] is the place as it was and [placeId] its id. Null: none.
+/// (0855:133). [places] are the business's, by id; [old] is the place as it was (none for a new one). Null: none.
 StockConfigRefused? stockPlaceSaveRefusal(
   Map<String, StockPlaceConfig> places, {
   required String code,
@@ -122,8 +122,8 @@ StockConfigRefused? stockPlaceSaveRefusal(
   required String? parentId,
   required String? pickRole,
   StockPlaceConfig? old,
-  String? placeId,
 }) {
+  final placeId = old?.id;
   if (places.values.any((p) => p.code == code && p.parentId == parentId && p.id != placeId)) {
     return const StockConfigRefused('code', StockRefusal.codeDuplicate);
   }

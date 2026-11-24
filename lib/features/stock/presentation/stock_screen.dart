@@ -13,6 +13,7 @@ import 'package:go_router/go_router.dart';
 import '../../../core/i18n/app_format.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
+import '../../../core/navigation/routes.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/ui/empty_state.dart';
 import '../../../core/ui/loading_view.dart';
@@ -201,7 +202,7 @@ class _OnHandList extends ConsumerWidget {
           style: Theme.of(context).textTheme.titleMedium,
         ),
         // #4434 -- where else the item is, and where it was on a past day
-        onTap: () => context.push('/stock/where/${row.itemId}${row.lotId == null ? '' : '?lot=${row.lotId}'}'),
+        onTap: () => context.push(Routes.stockWhere(row.itemId, lotId: row.lotId)),
       ),
     );
   }
@@ -236,7 +237,7 @@ class _MovementsList extends ConsumerWidget {
           l10n.stockQuantityWithUnit(appFormatOf(context).quantity(m.quantity), m.unit),
           style: Theme.of(context).textTheme.titleMedium,
         ),
-        onTap: () => context.push('/stock/movements/${m.id}'),
+        onTap: () => context.push(Routes.stockMovement(m.id)),
       ),
     );
   }

@@ -250,7 +250,7 @@ class DemoStockConfigCommands implements StockConfigCommands {
     final parentId = body.containsKey('parent_id') ? body['parent_id'] as String? : old?.parentId;
     final kind = body['kind'] as String? ?? old?.kind ?? 'shelf';
     final pick = body.containsKey('pick_role') ? body['pick_role'] as String? : old?.pickRole;
-    final refused = stockPlaceSaveRefusal(_places, code: code, kind: kind, parentId: parentId, pickRole: pick, old: old, placeId: placeId);
+    final refused = stockPlaceSaveRefusal(_places, code: code, kind: kind, parentId: parentId, pickRole: pick, old: old);
     if (refused != null) throw refused;
     final id = placeId ?? 'demo-place-new-${_next++}';
     final revision = (old?.revision ?? 0) + 1;

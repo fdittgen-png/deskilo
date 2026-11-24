@@ -15,6 +15,7 @@ import '../../../core/help/help_anchors.dart';
 import '../../../core/i18n/app_format.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
+import '../../../core/navigation/routes.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/ui/loading_view.dart';
@@ -115,7 +116,7 @@ class _TaskTile extends StatelessWidget {
         },
       ),
       trailing: open ? const Icon(Icons.chevron_right) : null,
-      onTap: open ? () => context.push('/stock/cycle-counts/${task.taskId}') : null,
+      onTap: open ? () => context.push(Routes.stockCycleCount(task.taskId)) : null,
     );
   }
 }

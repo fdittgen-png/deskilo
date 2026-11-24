@@ -498,7 +498,7 @@ class StockLedger {
 
   /// One allocation [i] of a put-away as 0840 stock_put_away_apply reads it, in its order: a stock item
   /// (0840:330), the order line's unit by its exact factor (0840:332-338), a quantity above zero (0840:340-345),
-  /// never more than the line received, earlier allocations counted ([already], 0840:347-351), a real place of the
+  /// never more than [left] of what the line received, earlier allocations counted (0840:347-351), a real place of the
   /// business (0840:372-374), a variant when the item has some (0840:368-369), and the lot code and the date its
   /// tracking asks for (0840:391-399). Answers the quantity in the line's unit and in the inventory unit.
   ({ExactQuantity entered, ExactQuantity inventory}) putAwayPart(
@@ -506,8 +506,7 @@ class StockLedger {
     required StockItemConfig? item,
     required String unit,
     required PutAwayAllocation part,
-    required ExactQuantity already,
-    required ExactQuantity received,
+    required ExactQuantity left,
     required bool hasVariants,
   }) {
     if (item == null || !item.stockable) throw StockConfigRefused('allocations[$i].line', StockRefusal.itemNotStocked);
@@ -522,7 +521,7 @@ class StockLedger {
     if (inventory == null || inventory <= ExactQuantity.zero) {
       throw StockConfigRefused('allocations[$i].quantity', StockRefusal.quantityInvalid);
     }
-    if (already + qty > received) throw StockConfigRefused('allocations[$i].quantity', StockRefusal.overAllocated);
+    if (qty > left) throw StockConfigRefused('allocations[$i].quantity', StockRefusal.overAllocated);
     if (!_real(part.locationId)) throw StockConfigRefused('allocations[$i].location_id', StockRefusal.locationForeign);
     if (hasVariants && part.variantId == null) throw StockConfigRefused('allocations[$i].variant_id', StockRefusal.variantRequired);
     if ((item.tracking == 'lot' || item.tracking == 'expiry') && (part.lotCode ?? '').isEmpty) {

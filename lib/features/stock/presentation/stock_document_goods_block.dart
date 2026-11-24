@@ -13,6 +13,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
+import '../../../core/navigation/routes.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../domain/stock_page.dart';
 import '../domain/stock_trace.dart';
@@ -66,7 +67,7 @@ class StockDocumentGoodsBlock extends ConsumerWidget {
                 ),
               ),
               trailing: const Icon(Icons.chevron_right),
-              onTap: () => context.push('/stock/movements/${r.movementId}'),
+              onTap: () => context.push(Routes.stockMovement(r.movementId)),
             ),
           if (!walk.complete && walk.next != null)
             TextButton(

@@ -201,8 +201,7 @@ class DemoStockReceivingCommands implements StockReceivingCommands {
       item: item,
       unit: unit,
       part: a,
-      already: already,
-      received: exactOfReceived(received),
+      left: exactOfReceived(received) - already,
       hasVariants: variants,
     );
     running[a.lineNo] = (running[a.lineNo] ?? ExactQuantity.zero) + qty;
