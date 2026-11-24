@@ -7,6 +7,8 @@
 import 'package:deskilo/core/demo/data/demo_stock_config_commands.dart';
 import 'package:deskilo/core/demo/data/demo_stock_ledger.dart';
 import 'package:deskilo/core/demo/data/demo_stock_queries.dart';
+import 'package:deskilo/core/i18n/app_format.dart';
+import 'package:deskilo/core/i18n/format_controller.dart';
 import 'package:deskilo/core/ui/dropdown_field.dart';
 import 'package:deskilo/features/stock/domain/stock_config.dart' show StockConfigFailure, StockConfigRefused, StockSaved;
 import 'package:deskilo/features/stock/domain/stock_reorder.dart';
@@ -121,7 +123,12 @@ Future<void> _open(WidgetTester tester, _Reorder reorder, Size size, {Set<Worksp
     size: size,
     locale: locale,
     overrides: [
-      ...standardTestOverrides(),
+      // a test that names a language also formats in it (the member's format locale)
+      ...standardTestOverrides(pinFormats: locale == null),
+      if (locale != null) ...[
+        appFormatProvider.overrideWithValue(AppFormat(locale: locale.languageCode == 'de' ? 'de_DE' : 'en_US', currencyCode: 'EUR')),
+        personalFormatProvider.overrideWithValue(AppFormat(locale: locale.languageCode == 'de' ? 'de_DE' : 'en_US', currencyCode: 'EUR')),
+      ],
       stockReorderProvider.overrideWithValue(reorder),
       stockConfigCommandsProvider.overrideWithValue(config),
       stockQueriesProvider.overrideWithValue(DemoStockQueries(DemoStockLedger('ws-1', config))),

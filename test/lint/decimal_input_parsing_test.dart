@@ -30,10 +30,13 @@ void main() {
   // #4425 -- nor by turning a comma into a dot by hand (which reads `1.234,5`
   // as nothing and sends grouped input as typed), nor by a field that lets only
   // digits and a dot be typed (a comma keyboard cannot type its decimal at all).
-  test('no screen or application file reads a decimal comma by hand', () {
+  test('no screen, application or domain file reads a decimal comma by hand', () {
+    // a domain parser of what a person typed (a rate, a factor) is in scope too
     final files = handWrittenDartFiles('lib').where(
-      (f) => RegExp(r'^lib/features/[^/]+/(presentation|application)/')
-          .hasMatch(f.path),
+      (f) =>
+          RegExp(r'^lib/features/[^/]+/(presentation|application|domain)/')
+              .hasMatch(f.path) &&
+          !_tillLeft.contains(f.path),
     );
     final hits = scanLines(files, _byHand);
     expect(
@@ -66,3 +69,7 @@ void main() {
 bool _byHand(String line) =>
     RegExp(r"replaceAll\(',',\s*'\.'\)").hasMatch(line) ||
     line.contains(r"RegExp(r'[0-9.]')");
+
+/// The till's own quantity parser, left to the till's workstream (#4425); the
+/// list only shrinks.
+const _tillLeft = {'lib/features/money/domain/till_quantity.dart'};

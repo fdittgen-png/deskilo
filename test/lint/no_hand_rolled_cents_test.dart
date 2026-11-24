@@ -19,4 +19,16 @@ void main() {
         reason: 'use parseMinorInput / centsToMajor (lib/core/format/cents.dart):'
             '\n${hits.join('\n')}');
   });
+
+  // #4424 -- nor, in any screen, a value held in minor units divided by a
+  // literal 100 to show or prefill it: a yen or a dinar has its own digits.
+  test('no screen divides a minor amount by a literal 100', () {
+    final hits = scanLines(
+      handWrittenDartFiles('lib/features').where((f) => f.path.contains('/presentation/')),
+      (line) => RegExp(r'\w*Minor!?\s*/\s*100\b').hasMatch(line),
+    );
+    expect(hits, isEmpty,
+        reason: 'use amountInputText / AppFormat.money (lib/core/format):\n${hits.join('\n')}');
+    expect(RegExp(r'\w*Minor!?\s*/\s*100\b').hasMatch(r"'${plan!.highValueMinor! / 100}'"), isTrue);
+  });
 }

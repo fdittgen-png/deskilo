@@ -9,6 +9,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../core/i18n/app_format.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
@@ -34,7 +35,7 @@ Future<bool> showCountPlanSheet(
   CountPlan? plan,
 }) {
   final l10n = context.l10n;
-  final draft = _PlanDraft(choices, plan, today);
+  final draft = _PlanDraft(choices, plan, today, appFormatOf(context));
   return showAppFormSheet(
     context,
     AppFormSheet(
@@ -50,7 +51,7 @@ Future<bool> showCountPlanSheet(
 }
 
 class _PlanDraft {
-  _PlanDraft(this.choices, this.plan, String today)
+  _PlanDraft(this.choices, this.plan, String today, AppFormat format)
     : scope = plan?.scope ?? CountScope.places,
       places = {...?plan?.locationIds},
       items = {...?plan?.itemIds},
@@ -59,7 +60,11 @@ class _PlanDraft {
       due = plan?.nextDueOn ?? today,
       fields = FormControllers({
         'name': plan?.name ?? '',
-        'threshold': plan?.highValueMinor == null ? '' : '${plan!.highValueMinor! / 100}',
+        // the threshold in the business's currency, written as the member's format reads it back
+        'threshold': switch (plan?.highValueMinor) {
+          final minor? => amountInputText(minor, currency: format.currencyCode, locale: format.locale),
+          null => '',
+        },
         'every': '${plan?.intervalDays ?? 14}',
       });
 

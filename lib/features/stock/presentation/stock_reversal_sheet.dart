@@ -14,6 +14,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../core/format/decimal_input.dart';
+import '../../../core/i18n/app_format.dart';
+import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/trace/refusal_text.dart';
@@ -54,7 +56,7 @@ Future<bool> showStockReversalSheet(
     allows: allows,
     kind: kind,
     places: stockRealPlaces(places),
-    locale: Localizations.localeOf(context).toString(),
+    format: appFormatOf(context),
   );
   return showAppFormSheet(
     context,
@@ -80,14 +82,16 @@ class _ReversalDraft {
     required this.allows,
     required this.kind,
     required this.places,
-    required this.locale,
-  }) : fields = FormControllers({'quantity': allows.remaining.text, 'note': ''});
+    required this.format,
+  }) : fields = FormControllers({'quantity': format.quantity(allows.remaining, grouped: false), 'note': ''});
 
   final StockMovementRow source;
   final StockReversible allows;
   final StockReturnKind kind;
   final List<StockPlaceConfig> places;
-  final String locale;
+  /// The member's format: what the quantity field is written and read in.
+  final AppFormat format;
+  String get locale => format.locale;
   final FormControllers fields;
 
   /// One identity of each per form: the return, its line and the request, so a
@@ -106,7 +110,7 @@ class _ReversalDraft {
     return {
       if (needsPlace && place == null) 'place': stockReasonText(l10n, 'location_foreign'),
       if (q == null || q <= ExactQuantity.zero) 'quantity': stockReasonText(l10n, 'quantity_invalid'),
-      if (q != null && q > allows.remaining) 'quantity': l10n.stockReversalMoreThanRemains(allows.remaining.text, source.unit),
+      if (q != null && q > allows.remaining) 'quantity': l10n.stockReversalMoreThanRemains(format.quantity(allows.remaining), source.unit),
     };
   }
 
@@ -141,7 +145,7 @@ class _ReversalDraft {
     return [
       Text(
         key: const ValueKey('stock-reversal-source'),
-        l10n.stockReversalSource(source.itemLabel, source.fromLocationCode, source.toLocationCode, source.quantity.text, source.unit),
+        l10n.stockReversalSource(source.itemLabel, source.fromLocationCode, source.toLocationCode, appFormatOf(context).quantity(source.quantity), source.unit),
         style: theme,
       ),
       const FormGap(),
@@ -149,7 +153,7 @@ class _ReversalDraft {
         key: const ValueKey('stock-reversal-remaining'),
         allows.fullyReversed
             ? l10n.stockReversalFully
-            : l10n.stockReversalRemaining(allows.remaining.text, source.unit, allows.reversed.text),
+            : l10n.stockReversalRemaining(appFormatOf(context).quantity(allows.remaining), source.unit, appFormatOf(context).quantity(allows.reversed)),
         style: theme,
       ),
       const FormGap(),

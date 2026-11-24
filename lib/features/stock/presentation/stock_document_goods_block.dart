@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/trace_logger.dart';
@@ -101,8 +102,8 @@ class _State extends ConsumerState<StockDocumentGoodsBlock> {
               title: Text(
                 l10n.stockGoodsRow(
                   items[r.itemId]?.name ?? r.itemId,
-                  l10n.stockQuantityWithUnit(r.enteredQuantity.text, r.enteredUnit),
-                  l10n.stockQuantityWithUnit(r.quantity.text, items[r.itemId]?.unit ?? ''),
+                  l10n.stockQuantityWithUnit(appFormatOf(context).quantity(r.enteredQuantity), r.enteredUnit),
+                  l10n.stockQuantityWithUnit(appFormatOf(context).quantity(r.quantity), items[r.itemId]?.unit ?? ''),
                 ),
               ),
               trailing: const Icon(Icons.chevron_right),

@@ -226,7 +226,7 @@ Future<void> showRepackSheet(
           key: const ValueKey('stock-unit-repack-item'),
           label: l10n.stockUnitRepackItem,
           value: line,
-          items: [for (final l in lines) (l, '${l.itemName} · ${l.quantity.text} ${l.unit}')],
+          items: [for (final l in lines) (l, '${l.itemName} · ${appFormatOf(context).quantity(l.quantity)} ${l.unit}')],
           onChanged: (v) {
             line = v;
             refresh();
