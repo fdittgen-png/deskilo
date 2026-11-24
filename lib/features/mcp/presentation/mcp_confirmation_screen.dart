@@ -8,6 +8,7 @@ import '../../../core/l10n/context_l10n.dart';
 import '../../../core/mcp/mcp_operations.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
+import '../../../core/ui/async_read_body.dart';
 import '../../../core/ui/inline_banner.dart';
 import '../../../core/ui/kit/page_bar.dart';
 import '../../../core/ui/loading_view.dart';
@@ -78,9 +79,16 @@ class _McpConfirmationScreenState extends ConsumerState<McpConfirmationScreen> {
       ),
       body: confirmation.when(
         loading: () => const LoadingView(),
-        error: (e, _) => _message(
-          l10n.mcpConfirmUnavailable,
-          Icons.cloud_off_outlined,
+        error: (e, _) => ListView(
+          padding: AppSpacing.gutterAll,
+          children: [
+            ReadFailureBanner(
+              error: e,
+              onRetry: () => ref.invalidate(
+                actionConfirmationProvider(widget.confirmationId),
+              ),
+            ),
+          ],
         ),
         data: (c) => ListView(
           padding: AppSpacing.gutterAll,
@@ -123,15 +131,6 @@ class _McpConfirmationScreenState extends ConsumerState<McpConfirmationScreen> {
       ),
     );
   }
-
-  Widget _message(String text, IconData icon) => Padding(
-    padding: AppSpacing.gutterAll,
-    child: InlineBanner(
-      key: const ValueKey('mcp-confirm-message'),
-      icon: icon,
-      text: text,
-    ),
-  );
 
   Widget _resultBanner(AppLocalizations l10n, ConfirmationStatus status) {
     final (text, icon, severity) = switch (status) {

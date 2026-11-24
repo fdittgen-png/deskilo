@@ -26,6 +26,7 @@ import {
 } from "./accounting_delivery.ts";
 import { type Posting, type PostingParty, postingSha256 } from "./accounting_postings.ts";
 import { businessCentral, EXTERNAL_NUMBER_LENGTH, PARTY_NUMBER_LENGTH } from "./accounting_business_central.ts";
+import { asFetch } from "./testing/as_fetch.ts";
 
 /** The rules of `record_accounting_delivery` the kit relies on, with the
  * remote id and version a `sent` draft leaves. */
@@ -163,7 +164,7 @@ function company(
     return done;
   };
   const companyPath = `companies(${opts.companyId ?? COMPANY})`;
-  const fetcher = (async (input: string | URL | Request, init?: RequestInit) => {
+  const fetcher = asFetch((input: string | URL | Request, init?: RequestInit) => {
     const url = new URL(String(input));
     const method = init?.method ?? "GET";
     const headers = (init?.headers ?? {}) as Record<string, string>;
@@ -285,7 +286,7 @@ function company(
       return Response.json(row, { status: 201 });
     }
     return problem(400, "BadRequest", rest);
-  }) as typeof fetch;
+  });
   return { held, calls, st, fetcher };
 }
 

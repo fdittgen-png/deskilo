@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -58,13 +59,13 @@ class StarredMessagesScreen extends ConsumerWidget {
               ),
             ),
           ),
-        AsyncError() => Center(
-            child: TextButton(
-              key: const ValueKey('starred-retry'),
-              onPressed: () => ref.invalidate(starredMessagesProvider),
-              child: Text(l10n.commonRetry),
-            ),
+        AsyncError(:final error) => Center(
+          child: ReadFailureBanner(
+            error: error,
+            retryKey: const ValueKey('starred-retry'),
+            onRetry: () => ref.invalidate(starredMessagesProvider),
           ),
+        ),
         _ => const LoadingView(),
       },
     );

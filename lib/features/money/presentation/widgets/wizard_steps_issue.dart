@@ -3,6 +3,7 @@ import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/failure/app_failure.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -135,24 +136,23 @@ class _WizardIssueStepState extends ConsumerState<WizardIssueStep> {
     var done = 0;
     for (final item in todo) {
       if (_skipped.contains(item.memberId)) continue;
-      var outcome = await issuance.issue(
-        InvoiceIssueAttempt(
-          workspaceId: workspaceId,
-          memberId: item.memberId,
-          period: period,
-          kind: kind,
-          requestId: _requestIds.putIfAbsent(item.memberId, newRequestId),
-          direct: true,
-        ),
+      final attempt = InvoiceIssueAttempt(
+        workspaceId: workspaceId,
+        memberId: item.memberId,
+        period: period,
+        kind: kind,
+        requestId: _requestIds.putIfAbsent(item.memberId, newRequestId),
+        direct: true,
       );
-      if (outcome is InvoiceIssueUnknown && mounted) {
+      var outcome = await issuance.issue(attempt);
+      if (outcome is CommandUnreached<String> && mounted) {
         var current = outcome;
-        final resolved = await showCommandUnknownDialog<InvoiceIssueOutcome>(
+        final resolved = await showCommandUnknownDialog<CommandOutcome<String>>(
           context,
           body: l10n.invoiceIssueUnknownBody,
           check: () async {
-            final looked = await issuance.look(current);
-            if (looked is InvoiceIssueUnknown) {
+            final looked = await issuance.look(attempt, current);
+            if (looked is CommandUnreached<String>) {
               current = looked;
               return null;
             }
@@ -163,17 +163,17 @@ class _WizardIssueStepState extends ConsumerState<WizardIssueStep> {
       }
       if (!mounted) return;
       switch (outcome) {
-        case InvoiceIssued():
+        case CommandDone():
           done++;
           _requestIds.remove(item.memberId);
-        case InvoiceIssueRefused():
+        case CommandRefused():
           // A definite refusal committed nothing: a later try is a new act.
           _requestIds.remove(item.memberId);
           AppSnack.error(context, l10n.wizardIssueFailed(item.memberName));
-        case InvoiceIssueHeld():
+        case CommandHeld():
           _requestIds.remove(item.memberId);
           AppSnack.info(context, l10n.validationSentForApproval);
-        case InvoiceIssueUnknown():
+        case CommandUnreached():
           // Retained: the next "issue all" sends the SAME id, which replays
           // the constituent if it did commit.
           AppSnack.error(context, l10n.wizardIssueFailed(item.memberName));

@@ -8,6 +8,7 @@
 // test-inventory: structure is the invariant — the submit button must remain disabled while a check is required.
 import 'dart:async';
 
+import 'package:deskilo/core/failure/app_failure.dart';
 import 'package:deskilo/core/links/link_launcher.dart';
 import 'package:deskilo/features/money/data/supabase_hmrc_repository.dart';
 import 'package:deskilo/features/money/domain/hmrc_submission.dart';
@@ -22,6 +23,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/hmrc_outcomes.dart';
 import '../../helpers/test_workspace_context.dart';
 import 'support/filing_product.dart';
 
@@ -57,7 +59,7 @@ class _FakeHmrc implements HmrcRepository {
   _FakeHmrc(this.stateNow, this.outcome);
 
   HmrcState stateNow;
-  final Future<HmrcOutcome> Function() outcome;
+  final Future<CommandOutcome<HmrcFiling>> Function() outcome;
   final submitted = <Map<String, num>>[];
   final markers = <String?>[];
   int connects = 0;
@@ -76,7 +78,7 @@ class _FakeHmrc implements HmrcRepository {
   }
 
   @override
-  Future<HmrcOutcome> submit({
+  Future<CommandOutcome<HmrcFiling>> submit({
     required String declarationId,
     required String connectionId,
     required Map<String, num> boxes,
@@ -86,8 +88,8 @@ class _FakeHmrc implements HmrcRepository {
     submitted.add(boxes);
     markers.add(recoveryMarker);
     final result = await outcome();
-    if (result is HmrcUnconfirmed ||
-        (result is HmrcRefused && result.refusal == HmrcRefusal.alreadySubmitted)) {
+    if (result is CommandUnreached ||
+        hmrcRefusalOf(result)?.refusal == HmrcRefusal.alreadySubmitted) {
       stateNow = HmrcState(vrn: stateNow.vrn, connection: stateNow.connection,
         unconfirmedDeclarationIds: [declarationId], recoveryMarkers: {declarationId: 'attempt-1'});
     }
@@ -104,10 +106,10 @@ Future<_FakeHmrc> _pump(
   WidgetTester tester, {
   HmrcState state = _connected,
   HmrcClientValues? client = _values,
-  Future<HmrcOutcome> Function()? outcome,
+  Future<CommandOutcome<HmrcFiling>> Function()? outcome,
   List<Uri>? launched,
 }) async {
-  final fake = _FakeHmrc(state, outcome ?? () async => const HmrcFiled(HmrcReceipt(formBundleNumber: '256660290587')));
+  final fake = _FakeHmrc(state, outcome ?? () async => hmrcFiled(const HmrcReceipt(formBundleNumber: '256660290587')));
   tester.view.physicalSize = const Size(800, 2200);
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
@@ -166,7 +168,7 @@ void main() {
   });
 
   testWidgets('one activation is one submission, even when tapped twice', (tester) async {
-    final gate = Completer<HmrcOutcome>();
+    final gate = Completer<CommandOutcome<HmrcFiling>>();
     final fake = await _pump(tester, outcome: () => gate.future);
     final button = find.byKey(const ValueKey('hmrc-submit'));
     await tester.tap(button);
@@ -174,7 +176,7 @@ void main() {
     await tester.tap(button, warnIfMissed: false);
     await tester.pump();
     expect(fake.submitted, hasLength(1));
-    gate.complete(const HmrcFiled(HmrcReceipt(formBundleNumber: '1')));
+    gate.complete(hmrcFiled(const HmrcReceipt(formBundleNumber: '1')));
     await tester.pump();
     expect(fake.submitted, hasLength(1));
   });
@@ -185,7 +187,7 @@ void main() {
     await tester.pump();
     await tester.pump();
     expect(find.text(_en.hmrcFiled('256660290587')), findsOneWidget);
-    await _pump(tester, outcome: () async => const HmrcFiled(HmrcReceipt(formBundleNumber: 'D-1'), demo: true));
+    await _pump(tester, outcome: () async => hmrcFiled(const HmrcReceipt(formBundleNumber: 'D-1'), demo: true));
     await tester.tap(find.byKey(const ValueKey('hmrc-submit')));
     await tester.pump();
     await tester.pump();
@@ -193,13 +195,13 @@ void main() {
   });
 
   testWidgets('every other outcome is said in words and none says filed', (tester) async {
-    final cases = <HmrcOutcome, String>{
-      const HmrcUnconfirmed(): _en.hmrcUnconfirmed,
-      const HmrcRefused(HmrcRefusal.alreadySubmitted): _en.hmrcRefusalAlreadySubmitted,
-      const HmrcRefused(HmrcRefusal.figuresDiffer): _en.hmrcRefusalFiguresDiffer,
-      const HmrcRefused(HmrcRefusal.acquisitionNotSupported): _en.hmrcRefusalAcquisitionNotSupported,
-      const HmrcRefused(HmrcRefusal.inFlight): _en.hmrcRefusalInFlight,
-      const HmrcAcceptedNotRecorded(HmrcReceipt(formBundleNumber: 'K-9')): _en.hmrcAcceptedNotRecorded('K-9'),
+    final cases = <CommandOutcome<HmrcFiling>, String>{
+      hmrcUnconfirmed(): _en.hmrcUnconfirmed,
+      hmrcRefused(HmrcRefusal.alreadySubmitted): _en.hmrcRefusalAlreadySubmitted,
+      hmrcRefused(HmrcRefusal.figuresDiffer): _en.hmrcRefusalFiguresDiffer,
+      hmrcRefused(HmrcRefusal.acquisitionNotSupported): _en.hmrcRefusalAcquisitionNotSupported,
+      hmrcRefused(HmrcRefusal.inFlight): _en.hmrcRefusalInFlight,
+      hmrcAcceptedNotRecorded(const HmrcReceipt(formBundleNumber: 'K-9')): _en.hmrcAcceptedNotRecorded('K-9'),
     };
     for (final entry in cases.entries) {
       await _pump(tester, outcome: () async => entry.key);
@@ -216,8 +218,8 @@ void main() {
     final fake = await _pump(tester, outcome: () async {
       calls++;
       return calls == 1
-          ? const HmrcUnconfirmed(code: 'CLIENT')
-          : const HmrcFiled(HmrcReceipt(formBundleNumber: 'R-2'));
+          ? hmrcUnconfirmed(code: 'CLIENT')
+          : hmrcFiled(const HmrcReceipt(formBundleNumber: 'R-2'));
     });
     final submit = find.byKey(const ValueKey('hmrc-submit'));
     await tester.tap(submit);
@@ -240,7 +242,7 @@ void main() {
   });
 
   testWidgets('duplicate refusal remains uncertain until checked, with no invented receipt', (tester) async {
-    final fake = await _pump(tester, outcome: () async => const HmrcRefused(HmrcRefusal.alreadySubmitted));
+    final fake = await _pump(tester, outcome: () async => hmrcRefused(HmrcRefusal.alreadySubmitted));
     final submit = find.byKey(const ValueKey('hmrc-submit'));
     await tester.tap(submit);
     await tester.pump();
@@ -270,7 +272,7 @@ void main() {
     var attempt = 0;
     final fake = await _pump(tester, outcome: () async {
       if (attempt++ == 0) throw StateError('connection lost');
-      return const HmrcRefused(HmrcRefusal.inFlight);
+      return hmrcRefused(HmrcRefusal.inFlight);
     });
     final submit = find.byKey(const ValueKey('hmrc-submit'));
     await tester.tap(submit);
@@ -403,10 +405,8 @@ void main() {
   });
 
   test('the function\'s refusals map to outcomes by their error, never by status alone', () {
-    HmrcRefusal? kind(int status, Map<String, Object?> body) => switch (hmrcOutcomeOfRefusal(status, body)) {
-      HmrcRefused(:final refusal) => refusal,
-      _ => null,
-    };
+    HmrcRefusal? kind(int status, Map<String, Object?> body) =>
+        hmrcRefusalOf(hmrcOutcomeOfRefusal(status, body))?.refusal;
     expect(kind(409, {'error': 'already_submitted'}), HmrcRefusal.alreadySubmitted);
     expect(kind(409, {'error': 'in_flight'}), HmrcRefusal.inFlight);
     expect(kind(409, {'error': 'accepted_for_other_figures'}), HmrcRefusal.acceptedForOtherFigures);
@@ -416,10 +416,10 @@ void main() {
     expect(kind(403, {}), HmrcRefusal.notAllowed);
     expect(kind(422, {'error': 'weird'}), HmrcRefusal.other);
     // A server fault that names nothing we know may have come after the post.
-    expect(hmrcOutcomeOfRefusal(500, {'error': 'weird'}), isA<HmrcUnconfirmed>());
-    expect(hmrcOutcomeOfRefusal(0, 'SocketException'), isA<HmrcUnconfirmed>());
-    expect(hmrcOutcomeOfRefusal(504, {'error': 'unconfirmed'}), isA<HmrcUnconfirmed>());
-    expect(hmrcOutcomeOfRefusal(500, {'error': 'accepted_not_recorded', 'receipt': {'formBundleNumber': 'R'}}), isA<HmrcAcceptedNotRecorded>());
+    expect(hmrcOutcomeOfRefusal(500, {'error': 'weird'}), isHmrcUnconfirmed);
+    expect(hmrcOutcomeOfRefusal(0, 'SocketException'), isHmrcUnconfirmed);
+    expect(hmrcOutcomeOfRefusal(504, {'error': 'unconfirmed'}), isHmrcUnconfirmed);
+    expect(hmrcOutcomeOfRefusal(500, {'error': 'accepted_not_recorded', 'receipt': {'formBundleNumber': 'R'}}), isHmrcAcceptedNotRecorded);
   });
 }
 

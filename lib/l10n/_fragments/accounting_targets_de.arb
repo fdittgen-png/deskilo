@@ -5,7 +5,6 @@
   "acctTargetsTitle": "Buchhaltungssysteme",
   "acctTargetsIntro": "Wohin die Bücher jedes Ausstellers gehen. Ein verbundenes System empfängt die Belege selbst; jedes andere die aus den Büchern exportierten Dateien. Jede Übertragung steht unten mit dem Hashwert dessen, was sie getragen hat.",
   "acctTargetsNoApiTarget": "Noch kein Buchhaltungssystem dieses Landes wird über eine Verbindung erreicht: Die Bücher gehen per Datei, aus dem Buchhaltungsexport.",
-  "acctTargetsLoadFailed": "Die Buchhaltungssysteme konnten nicht geladen werden.",
   "acctTargetsNotConnected": "Nicht verbunden",
   "acctConnStatusPending": "Wartet auf die Anmeldung",
   "acctConnStatusConnected": "Verbunden",

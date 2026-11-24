@@ -126,7 +126,7 @@ void main() {
     );
     await tester.pumpAndSettle();
     expect(find.text(_sentence), findsOneWidget);
-    expect(find.text(AppLocalizationsEn().paymentMatchFailed), findsNothing);
+    expect(find.text(AppLocalizationsEn().readStateFailed), findsNothing);
   });
 
   testWidgets('the home names the credits as not known, not as a failed '

@@ -17,6 +17,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/time/workspace_time.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/kpi_contract.dart';
@@ -100,8 +101,9 @@ class _CapacityKpiCardState extends ConsumerState<CapacityKpiCard> {
             ),
             switch (kpi) {
               AsyncData(:final value) => _Figure(kpi: value),
+              // #4414 kept: a forbidden figure as itself, the rest is shared
               AsyncError(:final error) => _Failure(
-                forbidden: error is KpiForbidden,
+                error: error,
                 onRetry: () => ref.invalidate(provider),
               ),
               _ => const LoadingView(),
@@ -114,33 +116,24 @@ class _CapacityKpiCardState extends ConsumerState<CapacityKpiCard> {
 }
 
 class _Failure extends StatelessWidget {
-  const _Failure({required this.forbidden, required this.onRetry});
+  const _Failure({required this.error, required this.onRetry});
 
-  final bool forbidden;
+  final Object error;
   final VoidCallback onRetry;
 
   @override
   Widget build(BuildContext context) {
-    final l10n = context.l10n;
-    if (forbidden) {
+    if (error is KpiForbidden) {
       return Text(
-        l10n.capacityKpiForbidden,
+        context.l10n.capacityKpiForbidden,
         key: const ValueKey('capacity-kpi-forbidden'),
       );
     }
-    return Wrap(
-      crossAxisAlignment: WrapCrossAlignment.center,
-      children: [
-        Text(
-          l10n.capacityKpiUnavailable,
-          key: const ValueKey('capacity-kpi-unavailable'),
-        ),
-        TextButton(
-          key: const ValueKey('capacity-kpi-retry'),
-          onPressed: onRetry,
-          child: Text(l10n.capacityKpiRetry),
-        ),
-      ],
+    return ReadFailureBanner(
+      key: const ValueKey('capacity-kpi-unavailable'),
+      error: error,
+      retryKey: const ValueKey('capacity-kpi-retry'),
+      onRetry: onRetry,
     );
   }
 }

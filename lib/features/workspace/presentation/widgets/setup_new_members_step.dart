@@ -94,7 +94,7 @@ class _SetupNewMembersStepState extends ConsumerState<SetupNewMembersStep> {
           form: _form(
             context,
             defaults: defaults,
-            failed: stored.hasError && !stored.hasValue,
+            failure: stored.hasValue ? null : stored.error,
             questions: questions,
             questionsOn: questionsOn,
           ),
@@ -113,7 +113,7 @@ class _SetupNewMembersStepState extends ConsumerState<SetupNewMembersStep> {
   Widget _form(
     BuildContext context, {
     required NewMemberDefaults? defaults,
-    required bool failed,
+    required Object? failure,
     required List<WorkspaceField> questions,
     required bool questionsOn,
   }) {
@@ -127,7 +127,7 @@ class _SetupNewMembersStepState extends ConsumerState<SetupNewMembersStep> {
         NewMemberDefaultsTiles(
           key: const ValueKey('setup-new-members-defaults'),
           defaults: defaults,
-          failed: failed,
+          failure: failure,
           onRetry: () => ref.invalidate(newMemberDefaultsProvider),
           enabled: !busy,
           onSubscriptionChanged: (pct) =>

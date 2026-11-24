@@ -125,6 +125,7 @@ class NextCommitmentSection extends ConsumerWidget {
       children: [
         if (value != null)
           _NextBody(window: value)
+        // #4414 kept: the overview names the source that failed, Try again
         else if (window.hasError)
           SourceUnavailable(
             key: const ValueKey('me-overview-next-unavailable'),
@@ -154,6 +155,7 @@ class _NextBody extends ConsumerWidget {
     final composed = ref.watch(myReservationsComposerProvider(query));
     final composition = composed.value;
     if (composition == null) {
+      // #4414 kept: the overview names the source that failed, Try again
       return composed.hasError
           ? SourceUnavailable(
               key: const ValueKey('me-overview-next-unavailable'),

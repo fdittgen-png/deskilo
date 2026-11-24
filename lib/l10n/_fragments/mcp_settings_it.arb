@@ -1,6 +1,5 @@
 {
   "mcpPolicyTitle": "Accesso degli assistenti",
-  "mcpPolicyUnavailable": "Impossibile caricare le impostazioni degli assistenti. Riprovi più tardi.",
   "mcpPolicySwitched": "Ha cambiato spazio. Riapra questa pagina per modificare l'altro spazio.",
   "mcpPolicyExplain": "Scelga cosa possono fare gli assistenti in questo spazio. Un membro ha comunque bisogno dell'approvazione di questo database, del ruolo adatto, e deve scegliere questo spazio quando collega il suo assistente.",
   "mcpPolicyFeatureOff": "Gli assistenti sono disattivati nelle funzioni di questo spazio. Può comunque restringere o disattivare i servizi qui sotto.",
@@ -33,7 +32,6 @@
   "mcpRemoveWorkspace": "Rimuovi questo spazio",
   "mcpReviewTitle": "Approvazioni degli assistenti",
   "mcpReviewNotAdmin": "Solo gli amministratori di questo database esaminano le approvazioni.",
-  "mcpReviewUnavailable": "Impossibile caricare le richieste. Un esame richiede il suo secondo fattore; riprovi.",
   "mcpReviewExplain": "Approvare consente a una persona di collegare assistenti su questo database, negli spazi i cui proprietari lo permettono. Non concede iscrizione né ruolo.",
   "mcpReviewEmpty": "Nessuna richiesta in attesa.",
   "mcpReviewReject": "Rifiuta",

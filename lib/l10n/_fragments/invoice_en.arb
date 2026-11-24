@@ -928,10 +928,6 @@
   "@invoiceEInvoiceStaleIdentity": {
     "description": "Explains that the invoice snapshot predates the completed legal identity"
   },
-  "einvoiceConfigUnavailable": "The platform settings could not be loaded. Check your connection and try again.",
-  "@einvoiceConfigUnavailable": {
-    "description": "Shown when the e-invoice platform status probe fails"
-  },
   "einvoiceEnvTitle": "Send to which platform?",
   "@einvoiceEnvTitle": {
     "description": "Title of the environment picker sheet (#393), shown only in developer mode."

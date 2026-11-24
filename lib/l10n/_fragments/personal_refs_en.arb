@@ -24,10 +24,6 @@
   "@meRefDefault": {
     "description": "#2563 Me home: badge on the default workspace"
   },
-  "meRefsUnavailable": "Your places elsewhere could not be read.",
-  "@meRefsUnavailable": {
-    "description": "#2563 Me home: the references could not be read"
-  },
   "meRefStatusUnknown": "Membership status this version cannot read",
   "@meRefStatusUnknown": {
     "description": "#3913 A place on another server whose membership status this app version does not know: shown instead of a status it is not."

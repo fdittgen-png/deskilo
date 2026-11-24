@@ -125,7 +125,6 @@
   "accessoriesSupplement": "Suplemento por media jornada",
   "accessoriesTitle": "Accesorios",
   "accountActivityEmpty": "No hay registros que mostrar.",
-  "accountActivityFailed": "No se pudo cargar su historial financiero. Toque para reintentar.",
   "accountActivityScope": "Todos sus perfiles en este servidor, incluidas las afiliaciones anteriores. Las monedas se muestran por separado.",
   "accountActivityTitle": "Mi consumo y mis pagos",
   "accountCardTitle": "Su cuenta",
@@ -334,7 +333,6 @@
   "acctStateTitle": "Nuevo trabajo contable",
   "acctTargetNotDeliveredYet": "Todavía no se envía ningún documento a este sistema: la conexión y sus correspondencias se conservan para el envío, que aún no funciona para él.",
   "acctTargetsIntro": "Adónde va la contabilidad de cada emisor. Un sistema conectado recibe los documentos por sí mismo; los demás reciben los ficheros exportados de la contabilidad. Cada transferencia figura abajo con la huella de lo que llevó.",
-  "acctTargetsLoadFailed": "No se han podido cargar los sistemas contables.",
   "acctTargetsNoApiTarget": "Ningún sistema contable de este país se alcanza todavía por conexión: la contabilidad sale por fichero, desde la exportación contable.",
   "acctTargetsNotConnected": "Sin conectar",
   "acctTargetsTitle": "Sistemas contables",
@@ -513,10 +511,6 @@
   "applicationsEmpty": "No hay solicitudes de acceso.",
   "@applicationsEmpty": {
     "description": "Workspace admission history and discussion (#1791)"
-  },
-  "applicationsLoadFailed": "No se pudieron cargar sus solicitudes de acceso. Inténtelo de nuevo.",
-  "@applicationsLoadFailed": {
-    "description": "Admission action failure (#1791)"
   },
   "applicationsTitle": "Solicitudes de acceso",
   "@applicationsTitle": {
@@ -867,7 +861,6 @@
     "description": "#662 - badge sign-in"
   },
   "badgePinReviewNotice": "La longitud de este PIN antiguo es desconocida o inferior al mínimo actual. Pida al miembro que lo cambie en sus propios ajustes. Su PIN actual sigue funcionando.",
-  "badgePinReviewUnavailable": "El estado de revisión del PIN no está disponible. Reinténtelo antes de dar por hecho que cumple el mínimo actual.",
   "badgePinSaveFailed": "No se pudo contactar con el servidor. Su PIN no ha cambiado: inténtelo de nuevo.",
   "@badgePinSaveFailed": {
     "description": "#1086 the PIN save or clear could not reach the server"
@@ -3004,7 +2997,6 @@
   "billingCustomerVatInvalid": "Esto no parece un número de IVA. Solo se comprueba su forma, no su existencia.",
   "billingCustomersAdd": "Añadir un cliente",
   "billingCustomersEmpty": "Aún no hay clientes facturados. Añada el primero para facturarle sin pedirle que cree una cuenta.",
-  "billingCustomersLoadFailed": "No se pudieron leer los clientes. No es una lista vacía.",
   "billingCustomersNoAccount": "Las personas y empresas a las que factura. No son miembros y no ven nada de su negocio, salvo que las invite a leer sus propias facturas desde su propia cuenta.",
   "billingCustomersRetry": "Reintentar",
   "billingCustomersSearch": "Buscar clientes",
@@ -3153,10 +3145,6 @@
   },
   "bookPeriodsInvalid": "Elija los dos días e indique un motivo donde se pida.",
   "@bookPeriodsInvalid": {
-    "description": "#2365 accounting periods"
-  },
-  "bookPeriodsLoadFailed": "No se pudieron cargar los periodos.",
-  "@bookPeriodsLoadFailed": {
     "description": "#2365 accounting periods"
   },
   "bookPeriodsNoExports": "Aún no hay exportaciones.",
@@ -3884,10 +3872,6 @@
       }
     }
   },
-  "capacityKpiRetry": "Reintentar",
-  "@capacityKpiRetry": {
-    "description": "#1918 capacity KPI"
-  },
   "capacityKpiRooms": "Salas sin puestos: {count}, {reserved} de {offered} horas-sala reservadas",
   "@capacityKpiRooms": {
     "description": "#1918 capacity KPI",
@@ -4153,7 +4137,6 @@
   "compareRemove": "Quitar de la comparación",
   "compareSearch": "Buscar un ajuste",
   "compareTitle": "Comparar plantillas",
-  "compareUnavailable": "No se pudieron leer estas plantillas para compararlas. No se afirma nada.",
   "compareUnknown": "Desconocido",
   "compareYes": "Sí",
   "composerAttach": "Adjuntar una referencia",
@@ -6003,7 +5986,6 @@
   "einvoiceConfigTitle": "Plataforma de facturación electrónica",
   "einvoiceConfigToken": "Token o credencial",
   "einvoiceConfigTokenSet": "Hay un token guardado (escriba uno nuevo para reemplazarlo).",
-  "einvoiceConfigUnavailable": "No se pudo cargar la configuración de la plataforma. Compruebe la conexión e inténtelo de nuevo.",
   "einvoiceCustomerSectionHelp": "Adónde van las facturas para el cliente: su punto de acceso Peppol, portal o la API acordada — separado de la plataforma gubernamental.",
   "@einvoiceCustomerSectionHelp": {
     "description": "E-invoicing config: customer delivery section help (#568)"
@@ -6219,10 +6201,6 @@
   "@engagementsIntro": {
     "description": "service engagements (#4178)"
   },
-  "engagementsLoadFailed": "No se pudieron leer los servicios. Esto no es una lista vacía.",
-  "@engagementsLoadFailed": {
-    "description": "service engagements (#4178)"
-  },
   "engagementsNew": "Nuevo servicio",
   "@engagementsNew": {
     "description": "service engagements (#4178)"
@@ -6378,10 +6356,6 @@
   },
   "equipmentInvalid": "Elija una línea de compra y, para una decisión, indique su fundamento.",
   "@equipmentInvalid": {
-    "description": "#2576 equipment register"
-  },
-  "equipmentLoadFailed": "No se pudieron cargar los equipos.",
-  "@equipmentLoadFailed": {
     "description": "#2576 equipment register"
   },
   "equipmentRegister": "Registrar un equipo",
@@ -11971,10 +11945,6 @@
   "@leaseCommitmentsIntro": {
     "description": "#2575 commitment matching"
   },
-  "leaseCommitmentsLoadFailed": "No se pudieron cargar los vencimientos.",
-  "@leaseCommitmentsLoadFailed": {
-    "description": "#2575 commitment matching"
-  },
   "leaseDeposit": "Fianza {amount}",
   "@leaseDeposit": {
     "description": "#2569 premises lease",
@@ -12098,10 +12068,6 @@
         "type": "String"
       }
     }
-  },
-  "leaseLoadFailed": "No se pudo cargar el contrato.",
-  "@leaseLoadFailed": {
-    "description": "#2569 premises lease"
   },
   "leaseMatchAction": "Conciliar una factura",
   "@leaseMatchAction": {
@@ -12588,7 +12554,6 @@
   "libraryPartial": "Una parte de esta plantilla no puede aplicarse aquí y se deja fuera.",
   "libraryPlanNames": "Estos nombres viajan con el plano: {names}",
   "libraryPreviewChanges": "Ver los cambios",
-  "libraryPreviewFailed": "No se pudieron previsualizar los cambios. No se aplicó nada.",
   "libraryPreviewTitle": "Qué cambiaría « {name} »",
   "libraryProcessOff": "{feature} desactivada",
   "@libraryProcessOff": {
@@ -13001,7 +12966,6 @@
   "mcpPolicyStale": "Alguien cambió estos ajustes mientras tanto. Revise los ajustes actuales y guarde de nuevo.",
   "mcpPolicySwitched": "Ha cambiado de espacio. Vuelva a abrir esta página para editar el otro espacio.",
   "mcpPolicyTitle": "Acceso de asistentes",
-  "mcpPolicyUnavailable": "No se pudieron cargar los ajustes de asistentes. Inténtelo más tarde.",
   "mcpRefusalClientNotApproved": "Este asistente aún no está aprobado en este servidor. El operador aprueba cada asistente una vez; pídaselo y vuelva a conectar desde el asistente.",
   "mcpRefusalClientNotApprovedNamed": "Este asistente aún no está aprobado en este servidor. El operador aprueba cada asistente una vez; pídaselo y vuelva a conectar desde el asistente. Esperando al operador del servidor: {names}.",
   "mcpRefusalNoIdentity": "Confirme primero su identidad en DesKilo en Asistentes y vuelva a conectar desde el asistente.",
@@ -13017,7 +12981,6 @@
   "mcpRequestRevoked": "Retirada",
   "mcpRequestUnknown": "Respuesta ilegible",
   "mcpRequestsAnsweredTitle": "Respondidas recientemente",
-  "mcpRequestsUnavailable": "No se pudieron leer las solicitudes de sus asistentes. Vuelva a abrir esta página más tarde.",
   "mcpRequestsWaitingTitle": "Pendiente de su confirmación",
   "mcpReviewApprove": "Aprobar",
   "mcpReviewChanged": "Esta solicitud cambió u otro administrador decidió antes. No se hizo nada.",
@@ -13029,7 +12992,6 @@
   "mcpReviewReject": "Rechazar",
   "mcpReviewSecondFactor": "Esa base de datos necesita su segundo factor en su propia sesión. No se decidió nada.",
   "mcpReviewTitle": "Aprobaciones de asistentes",
-  "mcpReviewUnavailable": "No se pudieron cargar las solicitudes. Una revisión necesita su segundo factor; inténtelo de nuevo.",
   "mcpStateAfterPrevious": "Después del paso anterior",
   "mcpStateAllowed": "Permitido",
   "mcpStateApproved": "Aprobada",
@@ -13067,7 +13029,6 @@
   "mcpUsagePending": "Pendientes de validación",
   "mcpUsageRefusals": "Rechazadas",
   "mcpUsageRequests": "Solicitudes",
-  "mcpUsageUnavailable": "No se pudo cargar el uso.",
   "mcpUsageWorkspaceTitle": "Uso de asistentes, últimos 30 días",
   "meAccountInMe": "Mi cuenta está en Yo",
   "meAccountInMeBody": "Foto, idioma, tema e inicios de sesión son suyos en todos los espacios.",
@@ -13108,7 +13069,6 @@
   "meDataWorkspaceSuperseded": "La cuenta conectada cambió mientras se leía la exportación. No se ofreció nada.",
   "meDataWorkspaceUnnamed": "Negocio {id}",
   "meDataWorkspacesEmpty": "Su cuenta aún no nombra ningún negocio.",
-  "meDataWorkspacesFailed": "No se pudieron leer los negocios de su cuenta. No se exportó nada.",
   "meDataWorkspacesScope": "Cada negocio exporta lo que conserva sobre usted — afiliación, reservas, cuenta y facturas — desde su propio servidor, un archivo por negocio. La parte de su cuenta personal es la tarjeta de arriba.",
   "meDataWorkspacesTitle": "Sus datos en cada negocio",
   "meDemoSessionBadgeHint": "Está explorando un negocio de demostración. Nada de esto sale de este dispositivo.",
@@ -13190,7 +13150,6 @@
   "meOverviewView": "Ver",
   "mePlaceMember": "Miembro",
   "mePlaceRequestSent": "Solicitud enviada · esperando respuesta",
-  "mePlacesLoadFailed": "No se pudieron cargar sus lugares.",
   "mePrivacySelfServiceOff": "Este negocio gestiona él mismo las solicitudes de datos. Presente una solicitud de derechos y el administrador de datos personales la responderá.",
   "meRealBusiness": "Negocio real",
   "meRefDefault": "Predeterminado",
@@ -13200,7 +13159,6 @@
   "meRefUnnamed": "Un lugar en otro servidor",
   "meRefUnverified": "Membresía aún no verificada",
   "meRefsTitle": "Lugares en otros servidores",
-  "meRefsUnavailable": "No se pudieron leer sus lugares en otros servidores.",
   "meRunASpace": "¿Dirige usted un negocio?",
   "meRunASpaceAction": "Configurarlo",
   "meSectionMine": "Mi historial y mis datos",
@@ -13928,10 +13886,6 @@
   "@newMemberDefaultsTitle": {
     "description": "#1294 the new-member defaults section title"
   },
-  "newMemberDefaultsUnavailable": "No se han podido leer ahora mismo. Al guardar se quedan como están.",
-  "@newMemberDefaultsUnavailable": {
-    "description": "#1563 shown when the new-member defaults could not be read, so Save omits them"
-  },
   "newMemberDefaultsUnset": "Nada elegido: los nuevos miembros empiezan al 100 % y las reservas se bloquean cuando se agota el derecho.",
   "@newMemberDefaultsUnset": {
     "description": "#1294 shown when nothing is configured, naming the product defaults"
@@ -14356,7 +14310,6 @@
   "payConfigSettlementsFetch": "Obtener los pagos",
   "payConfigSettlementsFetched": "{count} pagos registrados",
   "payConfigSettlementsReviewTitle": "Liquidaciones por revisar",
-  "payConfigSettlementsReviewUnreadable": "No se pudieron leer las liquidaciones por revisar.",
   "payConfigTitle": "Pagos en línea",
   "payFieldApiKey": "Clave API",
   "payFieldClientId": "Client ID",
@@ -14426,7 +14379,6 @@
   "paymentMatchCandidate": "{number} · {amount} pendientes",
   "paymentMatchDecide": "Otro importe: usted elige cómo saldar la diferencia",
   "paymentMatchEmpty": "Ningún pago espera una factura.",
-  "paymentMatchFailed": "No se pudieron leer los pagos.",
   "paymentMatchHeader": "{amount} recibidos el {date}",
   "paymentMatchIntro": "Se recibió un pago que aún no está asignado. Elija la factura que paga.",
   "paymentMatchInvoiceGone": "Esta factura ya no está abierta: la lista se vuelve a leer.",
@@ -15109,7 +15061,6 @@
   "portalSavePreview": "Guardar y ver la vista externa",
   "portalSearch": "Buscar lugares",
   "portalSendCode": "Enviar código de acceso",
-  "portalSourceUnavailable": "Un servidor no está disponible. Esta vista está incompleta. Toque para reintentar.",
   "portalUseCode": "Usar un código por correo",
   "portalUseWorkspaceInfo": "Usar la información del espacio",
   "portalVisibilityLink": "Quién puede encontrarme y escribirme",
@@ -15580,7 +15531,6 @@
   "publicProfilePublishBody": "Cualquier persona en Internet, con sesión o sin ella, podrá leer su nombre, su profesión y su presentación en su enlace. Sus datos de contacto, su presencia y sus lugares siguen siendo privados.",
   "publicProfilePublishTitle": "¿Publicar un perfil público?",
   "publicProfilePublishedInfo": "Información publicada por este negocio. La falta de información no significa que un equipamiento no esté disponible.",
-  "publicProfileRefreshFailed": "No se ha podido actualizar la página de este negocio. Se muestra la información ya cargada.",
   "publicProfileRefreshing": "Actualizando la información publicada…",
   "publicProfileRegularHours": "Horario habitual en la zona horaria del negocio; las excepciones y la disponibilidad actual pueden variar.",
   "publicProfileTakesInquiries": "Acepta consultas",
@@ -16471,10 +16421,8 @@
   "quoteValidUntil": "Válido hasta el {date}",
   "quotesEmpty": "Aún no hay presupuestos. Haga el primero para un cliente facturado.",
   "quotesIntro": "Ofertas a sus clientes facturados. Un presupuesto enviado nunca cambia; una modificación es otra revisión. No se factura nada hasta que convierta uno aceptado.",
-  "quotesLoadFailed": "No se pudieron leer los presupuestos. No es una lista vacía.",
   "quotesNew": "Nuevo presupuesto",
   "quotesNotAllowed": "No puede leer los presupuestos de este negocio.",
-  "quotesRetry": "Reintentar",
   "quotesTitle": "Presupuestos",
   "readStateDenied": "No tiene acceso a esto. Si lo necesita, pídaselo a un administrador del espacio.",
   "@readStateDenied": {
@@ -17816,7 +17764,6 @@
   "@reportImagesEmpty": {
     "description": "Report WYSIWYG editor + image library (#488)"
   },
-  "reportImagesLoadFailed": "No se pudieron cargar las imágenes de los informes. Inténtelo de nuevo.",
   "reportImagesOpenLibrary": "Abrir la biblioteca de imágenes",
   "reportImagesOversized": "{count, plural, one{{count} imagen guardada es más grande de lo que se imprime} other{{count} imágenes guardadas son más grandes de lo que se imprimen}}",
   "reportImagesTitle": "Imágenes de informes",
@@ -18258,7 +18205,6 @@
   "retentionHoldSaveFailed": "No se ha podido guardar la retención. No ha cambiado nada.",
   "retentionHoldSince": "{what} · {issuer} · desde el {date}",
   "retentionHoldsEmpty": "No hay ninguna retención. Una retención conserva los registros más allá de su plazo, para una auditoría o un litigio.",
-  "retentionHoldsLoadFailed": "No se han podido leer las retenciones.",
   "retentionHoldsTitle": "Retenciones legales",
   "retentionKeptHold": "Se conserva por una retención legal: {reason}",
   "retentionKeptReview": "Se conserva hasta que una persona revise la regla de conservación",
@@ -18744,10 +18690,6 @@
   },
   "roomRentLevels": "Plantas",
   "@roomRentLevels": {
-    "description": "#2568 rented rooms"
-  },
-  "roomRentLoadFailed": "No se pudieron cargar las salas alquiladas.",
-  "@roomRentLoadFailed": {
     "description": "#2568 rented rooms"
   },
   "roomRentNeedSupplier": "Añada primero al arrendador como proveedor.",
@@ -19811,10 +19753,6 @@
   },
   "settingsFrontCamera": "Escanear con la cámara frontal",
   "settingsFrontCameraDesc": "Las tarjetas se leen con la cámara del lado de la pantalla — desactívelo para usar la cámara trasera.",
-  "settingsLoadFailed": "No se pudieron cargar los ajustes.",
-  "@settingsLoadFailed": {
-    "description": "#2484 settings: Error text."
-  },
   "settingsOfflineRegistry": "Se muestran los valores por defecto integrados: no se pudo contactar con el servidor, por ahora no se puede cambiar nada.",
   "@settingsOfflineRegistry": {
     "description": "#2484 settings: Banner: the editor shows the bundled registry."
@@ -22629,10 +22567,6 @@
   "@suppliersArchivedTag": {
     "description": "#2567 suppliers"
   },
-  "suppliersBalanceUnavailable": "Saldo no disponible",
-  "@suppliersBalanceUnavailable": {
-    "description": "#3070 supplier outstanding balance"
-  },
   "suppliersBank": "Datos bancarios",
   "@suppliersBank": {
     "description": "#2567 suppliers"
@@ -23683,10 +23617,6 @@
     "description": "#2477 tax reference: Field: label of a rate."
   },
   "taxRefLanguages": "Idiomas oficiales (ISO 639-1, el habitual primero)",
-  "taxRefLoadFailed": "No se pudieron cargar los datos de referencia.",
-  "@taxRefLoadFailed": {
-    "description": "#2477 tax reference: error text when the list cannot load."
-  },
   "taxRefMemberEmpty": "Un Estado miembro no tiene más campos.",
   "@taxRefMemberEmpty": {
     "description": "#2477 tax reference: Hint in the form of an EU member."
@@ -23850,7 +23780,6 @@
   "templateWidenCount": "{count, plural, one{1 ajuste pasa a ser legible, tal como lo contiene ahora la plantilla.} other{{count} ajustes pasan a ser legibles, tal como los contiene ahora la plantilla.}}",
   "templateWidenExcluded": "{count, plural, one{1 tipo de valor nunca sale con ella (datos bancarios, sedes, direcciones…).} other{{count} tipos de valores nunca salen con ella (datos bancarios, sedes, direcciones…).}}",
   "templateWidenTitle": "¿Hacer esta plantilla legible para: {audience}?",
-  "templatesLoadFailed": "No se pudieron cargar las plantillas.",
   "themeDark": "Oscuro",
   "themeLight": "Claro",
   "themeSystem": "Predeterminado del sistema",
@@ -24723,10 +24652,6 @@
       }
     }
   },
-  "valuationLoadFailed": "No se pudieron cargar las valoraciones.",
-  "@valuationLoadFailed": {
-    "description": "#2576 accountant valuations"
-  },
   "valuationManual": "Introducir un bien",
   "@valuationManual": {
     "description": "#2576 accountant valuations"
@@ -25550,18 +25475,9 @@
       }
     }
   },
-  "visibilityOnServerUnavailable": "{host} no respondió. Inténtelo más tarde.",
-  "@visibilityOnServerUnavailable": {
-    "placeholders": {
-      "host": {
-        "type": "String"
-      }
-    }
-  },
   "visibilityPresence": "Hoy en el lugar",
   "visibilityPreviewCanWrite": "Puede iniciar una conversación con usted",
   "visibilityPreviewCannotWrite": "No puede iniciar una conversación con usted",
-  "visibilityPreviewFailed": "No se pudo cargar la vista previa.",
   "visibilityPreviewMySpaces": "Un miembro de mis lugares",
   "visibilityPreviewNobody": "Solo yo",
   "visibilityPreviewNothing": "No ven nada de usted.",
@@ -25578,9 +25494,7 @@
   "visibilitySpaceOnServer": "en el servidor {installation}",
   "visibilitySpaceUnlisted": "Un lugar que ya no aparece en la lista",
   "visibilitySpaceUnverified": "Verificación no disponible",
-  "visibilitySpacesUnavailable": "Sus lugares no se pueden listar ahora.",
   "visibilityTitle": "Quién me ve",
-  "visibilityUnavailable": "No se puede leer ahora quién ve qué de usted. No se ha cambiado nada.",
   "visibilityUnconfirmedTitle": "No se ha podido confirmar su cambio",
   "visibilityUnsupported": "Su hogar personal aún no puede guardar este ajuste: quienes lo gestionan deben actualizarlo. No se ha cambiado nada.",
   "visibilityWidenAction": "Ampliar",

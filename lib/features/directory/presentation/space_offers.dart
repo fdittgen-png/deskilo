@@ -79,6 +79,7 @@ class _SpaceOffersState extends ConsumerState<SpaceOffers> {
       ref.watch(pendingAdmissionsProvider),
     ];
     final failed = reads
+        // #4414 kept: picks the failure the caller shows
         .where((r) => r.hasError && !r.isLoading && !r.hasValue)
         .firstOrNull;
     return (unknown: reads.any((r) => !r.hasValue), failure: failed?.error);

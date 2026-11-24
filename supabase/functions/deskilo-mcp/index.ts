@@ -52,6 +52,8 @@ import {
 } from "npm:@modelcontextprotocol/sdk@1.30.1/types.js";
 import { createClient, SupabaseClient } from "npm:@supabase/supabase-js@2";
 import { delegatedClient } from "../_shared/delegated.ts";
+import { logLine } from "../_shared/log.ts";
+import { answer } from "../_shared/respond.ts";
 import { verifyLocally } from "../_shared/local_jwt.ts";
 import { validateInput } from "../_shared/mcp_validate.ts";
 import { placeImageBase64 } from "../_shared/place_image.ts";
@@ -95,22 +97,20 @@ function cors(origin: string | null): Record<string, string> {
     : {};
 }
 
-function resourceUrl(req: Request): string {
+function resourceUrl(): string {
   // The canonical resource comes from configuration, never from Host.
   return env("DESKILO_MCP_RESOURCE") || `${env("SUPABASE_URL")}/functions/v1/deskilo-mcp`;
 }
 
+/** The shared JSON answer (#4412) with this function's own, allow-listed CORS, never the shared `*`. */
 function jsonResponse(body: unknown, status: number, headers: Record<string, string> = {}) {
-  return new Response(JSON.stringify(body), {
-    status,
-    headers: { ...headers, "Content-Type": "application/json" },
-  });
+  return answer(body, status, headers);
 }
 
-function unauthorized(req: Request, headers: Record<string, string>) {
+function unauthorized(headers: Record<string, string>) {
   return jsonResponse({ error: "unauthorized" }, 401, {
     ...headers,
-    "WWW-Authenticate": `Bearer resource_metadata="${resourceUrl(req)}${METADATA_PATH}"`,
+    "WWW-Authenticate": `Bearer resource_metadata="${resourceUrl()}${METADATA_PATH}"`,
   });
 }
 
@@ -676,7 +676,7 @@ export async function handle(req: Request): Promise<Response> {
     // the endpoint's own well-known path and its path-suffixed form; the
     // host's root well-known path is not routed to a function.
     return jsonResponse({
-      resource: resourceUrl(req),
+      resource: resourceUrl(),
       resource_name: "DesKilo",
       authorization_servers: [`${env("SUPABASE_URL")}/auth/v1`],
       bearer_methods_supported: ["header"],
@@ -696,7 +696,7 @@ export async function handle(req: Request): Promise<Response> {
   }
   const authorization = req.headers.get("Authorization") ?? "";
   if (!authorization.startsWith("Bearer ") || delegatedClient(authorization) === null) {
-    return unauthorized(req, headers);
+    return unauthorized(headers);
   }
   const controller = new AbortController();
   const signal = AbortSignal.any([controller.signal, req.signal]);
@@ -725,12 +725,12 @@ export async function handle(req: Request): Promise<Response> {
     });
     // #2393 — a forged, unsigned, foreign or expired bearer costs no Auth call.
     if (await verifyLocally(authorization.slice(7), env("SUPABASE_URL"), signal) === "invalid") {
-      return unauthorized(req, headers);
+      return unauthorized(headers);
     }
     signal.throwIfAborted();
     const { data: user, error: userError } = await db.auth.getUser(authorization.slice(7));
     signal.throwIfAborted();
-    if (userError || !user?.user) return unauthorized(req, headers);
+    if (userError || !user?.user) return unauthorized(headers);
     const structured = (req.headers.get("mcp-protocol-version") ?? STRUCTURED_SINCE) >= STRUCTURED_SINCE;
     const server = buildServer(db, installation, signal, structured);
     const transport = new WebStandardStreamableHTTPServerTransport({
@@ -748,8 +748,10 @@ export async function handle(req: Request): Promise<Response> {
     if (signal.aborted) return jsonResponse({ error: "request_timeout" }, 504, headers);
     // A correlation, never the arguments: the JSON-RPC id and this request's id.
     const rpcId = (body as { id?: unknown } | undefined)?.id;
-    console.error("deskilo-mcp failed", e instanceof Error ? e.name : "error",
-      JSON.stringify({ jsonrpc_id: typeof rpcId === "number" || typeof rpcId === "string" ? rpcId : null, request: correlation }));
+    logLine("error", "deskilo-mcp", "failed", {
+      type: e instanceof Error ? e.name : "error",
+      jsonrpc_id: typeof rpcId === "number" || typeof rpcId === "string" ? rpcId : null,
+    }, correlation);
     return jsonResponse({ jsonrpc: "2.0", id: null, error: { code: -32603, message: "Internal error" } }, 500, headers);
   } finally {
     clearTimeout(deadline);

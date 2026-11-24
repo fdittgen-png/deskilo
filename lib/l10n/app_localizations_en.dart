@@ -163,10 +163,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accountActivityEmpty => 'No records to display.';
 
   @override
-  String get accountActivityFailed =>
-      'Could not load your financial history. Tap to retry.';
-
-  @override
   String get accountActivityScope =>
       'All your profiles on this server, including previous memberships. Currencies are shown separately.';
 
@@ -801,10 +797,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'Where the books of each issuer go. A connected system receives the documents itself; any other receives the files exported from the books. Every transfer is listed below with the digest of what it carried.';
 
   @override
-  String get acctTargetsLoadFailed =>
-      'The accounting systems could not be loaded.';
-
-  @override
   String get acctTargetsNoApiTarget =>
       'No accounting system of this country is reached by a connection yet: the books go by file, from the accounting export.';
 
@@ -1118,10 +1110,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get applicationsEmpty => 'No workspace requests.';
-
-  @override
-  String get applicationsLoadFailed =>
-      'Could not load your workspace requests. Please try again.';
 
   @override
   String get applicationsTitle => 'Workspace requests';
@@ -2126,10 +2114,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get badgePinReviewNotice =>
       'This PIN predates length tracking or is shorter than the current minimum. Ask the member to change it in their own settings. Their existing PIN keeps working.';
-
-  @override
-  String get badgePinReviewUnavailable =>
-      'PIN review status is unavailable. Try again before assuming this PIN meets the current minimum.';
 
   @override
   String get badgePinSaveFailed =>
@@ -5241,10 +5225,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'No billing customers yet. Add the first one to invoice it without asking it to create an account.';
 
   @override
-  String get billingCustomersLoadFailed =>
-      'The customers could not be read. This is not an empty list.';
-
-  @override
   String get billingCustomersNoAccount =>
       'The people and businesses you invoice. They are not members and see nothing of your business, unless you invite them to read their own invoices from their own account.';
 
@@ -5480,9 +5460,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get bookPeriodsInvalid =>
       'Choose both days, and give a reason where one is asked.';
-
-  @override
-  String get bookPeriodsLoadFailed => 'The periods could not be loaded.';
 
   @override
   String get bookPeriodsNoExports => 'No export yet.';
@@ -6627,9 +6604,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get capacityKpiRetry => 'Try again';
-
-  @override
   String capacityKpiRooms(String count, String reserved, String offered) {
     return 'Rooms without seats: $count, $reserved of $offered room-hours reserved';
   }
@@ -7082,10 +7056,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get compareTitle => 'Compare templates';
-
-  @override
-  String get compareUnavailable =>
-      'These templates could not be read to compare them. Nothing is claimed either way.';
 
   @override
   String get compareUnknown => 'Unknown';
@@ -9697,10 +9667,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'A token is stored (type a new one to replace it).';
 
   @override
-  String get einvoiceConfigUnavailable =>
-      'The platform settings could not be loaded. Check your connection and try again.';
-
-  @override
   String get einvoiceCustomerSectionHelp =>
       'Where invoices go for the customer: their Peppol access point, portal or agreed upload API — separate from the government platform.';
 
@@ -9943,10 +9909,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'Follow each service you were ordered: ordered, started, done. The quote, the invoice and the payments stay as they are beside it.';
 
   @override
-  String get engagementsLoadFailed =>
-      'The engagements could not be read. This is not an empty list.';
-
-  @override
   String get engagementsNew => 'New engagement';
 
   @override
@@ -10090,9 +10052,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get equipmentInvalid =>
       'Choose a purchase line, and for a decision give its basis.';
-
-  @override
-  String get equipmentLoadFailed => 'The equipment could not be loaded.';
 
   @override
   String get equipmentRegister => 'Register equipment';
@@ -19873,10 +19832,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'The rent the lease expects each month and the bills that replaced it. A bill allocated to a month replaces its expectation; it never adds a second cost.';
 
   @override
-  String get leaseCommitmentsLoadFailed =>
-      'The commitments could not be loaded.';
-
-  @override
   String leaseDeposit(String amount) {
     return 'Deposit $amount';
   }
@@ -19959,9 +19914,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String leaseLessor(String name) {
     return 'Lessor: $name';
   }
-
-  @override
-  String get leaseLoadFailed => 'The lease could not be loaded.';
 
   @override
   String get leaseMatchAction => 'Match a bill';
@@ -20541,10 +20493,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get libraryPreviewChanges => 'Preview changes';
-
-  @override
-  String get libraryPreviewFailed =>
-      'The changes could not be previewed. Nothing was applied.';
 
   @override
   String libraryPreviewTitle(String name) {
@@ -21661,10 +21609,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mcpPolicyTitle => 'Assistant access';
 
   @override
-  String get mcpPolicyUnavailable =>
-      'The assistant settings could not be loaded. Try again later.';
-
-  @override
   String get mcpRefusalClientNotApproved =>
       'This assistant is not approved on this server yet. The operator approves each assistant once; ask them, then connect again from the assistant.';
 
@@ -21719,10 +21663,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mcpRequestsAnsweredTitle => 'Answered recently';
 
   @override
-  String get mcpRequestsUnavailable =>
-      'Your assistants\' requests could not be read. Open this page again later.';
-
-  @override
   String get mcpRequestsWaitingTitle => 'Waiting for your confirmation';
 
   @override
@@ -21758,10 +21698,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mcpReviewTitle => 'Assistant approvals';
-
-  @override
-  String get mcpReviewUnavailable =>
-      'The requests could not be loaded. A review needs your second factor; try again.';
 
   @override
   String get mcpStateAfterPrevious => 'After the step above';
@@ -21877,9 +21813,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mcpUsageRequests => 'Requests';
 
   @override
-  String get mcpUsageUnavailable => 'Usage could not be loaded.';
-
-  @override
   String get mcpUsageWorkspaceTitle => 'Assistant use, last 30 days';
 
   @override
@@ -21985,10 +21918,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get meDataWorkspacesEmpty => 'Your account names no business yet.';
-
-  @override
-  String get meDataWorkspacesFailed =>
-      'The businesses your account names could not be read. Nothing was exported.';
 
   @override
   String get meDataWorkspacesScope =>
@@ -22264,9 +22193,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mePlaceRequestSent => 'Request sent · waiting for an answer';
 
   @override
-  String get mePlacesLoadFailed => 'Your places could not be loaded.';
-
-  @override
   String get mePrivacySelfServiceOff =>
       'This business handles data requests itself. File a rights request and the personal data admin will answer it.';
 
@@ -22293,9 +22219,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get meRefsTitle => 'Places elsewhere';
-
-  @override
-  String get meRefsUnavailable => 'Your places elsewhere could not be read.';
 
   @override
   String get meRunASpace => 'Run a business yourself?';
@@ -24041,10 +23964,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get newMemberDefaultsTitle => 'New members';
 
   @override
-  String get newMemberDefaultsUnavailable =>
-      'These could not be read just now. Saving leaves them exactly as they are.';
-
-  @override
   String get newMemberDefaultsUnset =>
       'Nothing chosen — new members start at 100% with bookings blocked once the entitlement is used.';
 
@@ -24869,10 +24788,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get payConfigSettlementsReviewTitle => 'Settlement reports to review';
 
   @override
-  String get payConfigSettlementsReviewUnreadable =>
-      'The settlement reports to review could not be read.';
-
-  @override
   String get payConfigTitle => 'Online payments';
 
   @override
@@ -25078,9 +24993,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get paymentMatchEmpty => 'No payment is waiting for an invoice.';
-
-  @override
-  String get paymentMatchFailed => 'The payments could not be read.';
 
   @override
   String paymentMatchHeader(String amount, String date) {
@@ -26422,10 +26334,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get portalSendCode => 'Send sign-in code';
 
   @override
-  String get portalSourceUnavailable =>
-      'A server is unavailable. This overview is incomplete. Tap to retry.';
-
-  @override
   String get portalUseCode => 'Use an email code';
 
   @override
@@ -27246,10 +27154,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get publicProfilePublishedInfo =>
       'Information published by this business. Missing information does not mean that a facility is absent.';
-
-  @override
-  String get publicProfileRefreshFailed =>
-      'Could not refresh this business’s page. Showing the information already loaded.';
 
   @override
   String get publicProfileRefreshing => 'Refreshing published information…';
@@ -28543,18 +28447,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'Offers to your billing customers. A sent quote never changes; an amendment is another revision. Nothing is invoiced until you convert an accepted one.';
 
   @override
-  String get quotesLoadFailed =>
-      'The quotes could not be read. This is not an empty list.';
-
-  @override
   String get quotesNew => 'New quote';
 
   @override
   String get quotesNotAllowed =>
       'You may not read the quotes of this business.';
-
-  @override
-  String get quotesRetry => 'Try again';
 
   @override
   String get quotesTitle => 'Quotes';
@@ -30442,10 +30339,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'No image yet — upload your logo, a stamp or a signature and reference it with ![name].';
 
   @override
-  String get reportImagesLoadFailed =>
-      'Could not load report images. Try again.';
-
-  @override
   String get reportImagesOpenLibrary => 'Open the picture library';
 
   @override
@@ -30988,9 +30881,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'No hold is in place. A hold keeps records past their retention period, for an audit or a dispute.';
 
   @override
-  String get retentionHoldsLoadFailed => 'The holds could not be read.';
-
-  @override
   String get retentionHoldsTitle => 'Legal holds';
 
   @override
@@ -31394,9 +31284,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get roomRentLevels => 'Floors';
-
-  @override
-  String get roomRentLoadFailed => 'The rented rooms could not be loaded.';
 
   @override
   String get roomRentNeedSupplier => 'Add the lessor as a supplier first.';
@@ -33091,9 +32978,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get settingsFrontCameraDesc =>
       'Badges are read with the screen-side camera — turn off to use the back camera.';
-
-  @override
-  String get settingsLoadFailed => 'The settings could not be loaded.';
 
   @override
   String get settingsOfflineRegistry =>
@@ -38477,9 +38361,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get suppliersArchivedTag => 'archived';
 
   @override
-  String get suppliersBalanceUnavailable => 'Balance unavailable';
-
-  @override
   String get suppliersBank => 'Bank details';
 
   @override
@@ -40371,9 +40252,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'Official languages (ISO 639-1, usual one first)';
 
   @override
-  String get taxRefLoadFailed => 'The reference data could not be loaded.';
-
-  @override
   String get taxRefMemberEmpty => 'A member state has no further fields.';
 
   @override
@@ -40635,9 +40513,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String templateWidenTitle(String audience) {
     return 'Make this template readable by: $audience?';
   }
-
-  @override
-  String get templatesLoadFailed => 'The templates could not be loaded.';
 
   @override
   String get themeDark => 'Dark';
@@ -42378,9 +42253,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get valuationLoadFailed => 'The valuations could not be loaded.';
-
-  @override
   String get valuationManual => 'Type in one asset';
 
   @override
@@ -43271,11 +43143,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String visibilityOnServerUnavailable(String host) {
-    return '$host did not answer. Try again later.';
-  }
-
-  @override
   String get visibilityPresence => 'At the place today';
 
   @override
@@ -43284,9 +43151,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get visibilityPreviewCannotWrite =>
       'Cannot start a conversation with you';
-
-  @override
-  String get visibilityPreviewFailed => 'The preview could not be loaded.';
 
   @override
   String get visibilityPreviewMySpaces => 'A member of my places';
@@ -43343,15 +43207,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get visibilitySpaceUnverified => 'Verification unavailable';
 
   @override
-  String get visibilitySpacesUnavailable =>
-      'Your places cannot be listed right now.';
-
-  @override
   String get visibilityTitle => 'Who sees me';
-
-  @override
-  String get visibilityUnavailable =>
-      'Who sees what of you cannot be read right now. Nothing was changed.';
 
   @override
   String get visibilityUnconfirmedTitle => 'Your change could not be confirmed';

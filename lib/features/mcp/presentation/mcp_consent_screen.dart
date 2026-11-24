@@ -6,6 +6,7 @@ import '../../../core/l10n/context_l10n.dart';
 import '../../../core/links/link_launcher.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
+import '../../../core/ui/async_read_body.dart';
 import '../../../core/ui/inline_banner.dart';
 import '../../../core/ui/kit/page_bar.dart';
 import '../../../core/ui/loading_view.dart';
@@ -159,6 +160,7 @@ class _McpConsentScreenState extends ConsumerState<McpConsentScreen> {
       ),
       body: consent.when(
         loading: () => const LoadingView(),
+        // #4414 kept: a typed refusal as itself; the rest is the read failure
         error: (e, _) => switch (mcpConsentRefusal(e)) {
           final r? => ConsentBanner(
             'mcp-consent-refused-${r.name}',
@@ -166,11 +168,10 @@ class _McpConsentScreenState extends ConsumerState<McpConsentScreen> {
             Icons.lock_outline,
             InlineBannerSeverity.error,
           ),
-          null => ConsentBanner(
-            'mcp-consent-unavailable',
-            l10n.mcpConsentUnavailable,
-            Icons.cloud_off_outlined,
-            InlineBannerSeverity.error,
+          null => ReadFailureBanner(
+            error: e,
+            onRetry: () =>
+                ref.invalidate(mcpConsentProvider(widget.authorizationId)),
           ),
         },
         data: (c) {

@@ -19,11 +19,11 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/kit/kit_card.dart';
 import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/kit/status_chip.dart';
 import '../../../../core/ui/loading_view.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../application/credit_move_commands.dart';
 import '../../application/payment_candidates.dart';
 import '../../application/unassigned_money.dart';
@@ -169,7 +169,19 @@ class _PaymentsToMatchScreenState extends ConsumerState<PaymentsToMatchScreen> {
     return Scaffold(
       appBar: pageBar(context, title: l10n.paymentMatchTitle),
       body: money.hasError && !money.isLoading
-          ? _failed(l10n, unreadable: unassignedMoneyUnreadable(money))
+          ? Padding(
+              padding: AppSpacing.mdAll,
+              child: ReadFailureBanner(
+                key: const ValueKey('payment-match-failed'),
+                error: money.error!,
+                // #3913 — unknown because ledger entries could not be read.
+                refusal: unassignedMoneyUnreadable(money)
+                    ? l10n.invoicingUnassignedUnreadable
+                    : null,
+                retryKey: const ValueKey('payment-match-retry'),
+                onRetry: () => ref.invalidate(unassignedMoneyProvider),
+              ),
+            )
           : known == null || receivables == null
           ? const LoadingView()
           : _list(
@@ -179,27 +191,6 @@ class _PaymentsToMatchScreenState extends ConsumerState<PaymentsToMatchScreen> {
     );
   }
 
-  Widget _failed(AppLocalizations l10n, {required bool unreadable}) => Padding(
-    padding: AppSpacing.mdAll,
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // #3913 — unknown because ledger entries could not be read: said so.
-        Text(
-          unreadable
-              ? l10n.invoicingUnassignedUnreadable
-              : l10n.paymentMatchFailed,
-          key: const ValueKey('payment-match-failed'),
-        ),
-        TextButton(
-          key: const ValueKey('payment-match-retry'),
-          style: TextButton.styleFrom(minimumSize: const Size(48, 48)),
-          onPressed: () => ref.invalidate(unassignedMoneyProvider),
-          child: Text(l10n.commonRetry),
-        ),
-      ],
-    ),
-  );
 
   Widget _list(BuildContext context, List<PaymentToMatch> rows) {
     final l10n = context.l10n;

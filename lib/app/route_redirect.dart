@@ -126,6 +126,7 @@ RouteFacts _factsOf(
     auth: signedIn ? AuthFact.signedIn : AuthFact.signedOut,
     privacy: privacyFactOf(
         loading: profile.isLoading,
+        // #4414 kept: a redirect's fact, not a view
         failed: profile.hasError,
         accepted: profile.value?.privacyAcceptedVersion ==
             ref.read(requiredPrivacyVersionProvider)),
@@ -135,6 +136,7 @@ RouteFacts _factsOf(
     workspaces: workspacesFactOf(
         loading: workspaces.isLoading,
         count: workspaces.value?.length,
+        // #4414 kept: a redirect's fact, not a view
         failed: workspaces.hasError),
     membership: member.isLoading && !member.hasValue
         ? MembershipFact.loading

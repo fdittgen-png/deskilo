@@ -7,6 +7,7 @@
 // language is required, never chosen here; a delegated token and a
 // malformed body are refused before any call.
 import { assertEquals } from "jsr:@std/assert@1";
+import { guard } from "../_shared/serve.ts";
 import { type Db, handle, parseSendRequest } from "./index.ts";
 import type { OrderMailResult, SendOrder } from "../_shared/resend.ts";
 
@@ -264,4 +265,33 @@ Deno.test("a delegated token is refused before any call", async () => {
   );
   assertEquals(res.status, 403);
   assertEquals(h.calls.length, 0);
+});
+
+// #4412 -- an uncaught error is the envelope: a code and the request id, never the error's own words.
+Deno.test("#4412 send-invoice-email: a thrown error answers the envelope and no internal message", async () => {
+  const saved = console.error;
+  console.error = () => {};
+  try {
+    const answer = await guard("send-invoice-email", (req) =>
+      handle(req, {
+        caller: () => {
+          throw new Error("anon key sb_publishable_xyz rejected");
+        },
+        service: () => {
+          throw new Error("unused");
+        },
+      }))(
+      new Request("http://x", {
+        method: "POST",
+        body: JSON.stringify(body),
+        headers: { Authorization: "Bearer tok", "x-request-id": "r-mail" },
+      }),
+    );
+    assertEquals(answer.status, 500);
+    const text = await answer.text();
+    assertEquals(JSON.parse(text), { error: "internal_error", request_id: "r-mail" });
+    assertEquals(/sb_|anon|rejected/i.test(text), false);
+  } finally {
+    console.error = saved;
+  }
 });

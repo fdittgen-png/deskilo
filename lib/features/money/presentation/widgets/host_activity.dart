@@ -10,6 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/account_activity.dart';
@@ -36,10 +37,10 @@ class HostActivity extends ConsumerWidget {
               ),
         ],
       ),
-      AsyncError() => TextButton(
-        key: const ValueKey('host-activity-hosts-unavailable'),
-        onPressed: () => ref.invalidate(financeHostsProvider),
-        child: Text(context.l10n.portalSourceUnavailable),
+      AsyncError(:final error) => ReadFailureBanner(
+        error: error,
+        retryKey: const ValueKey('host-activity-hosts-unavailable'),
+        onRetry: () => ref.invalidate(financeHostsProvider),
       ),
       _ => const LoadingView(),
     };
@@ -119,10 +120,10 @@ class _HostSectionState extends ConsumerState<_HostSection> {
             ),
             // This host alone did not answer: its own Try again re-reads
             // this page of it, the other hosts stay as they are.
-            AsyncError() => TextButton(
-              key: ValueKey('host-activity-retry-${host.installationId}'),
-              onPressed: () => ref.invalidate(provider),
-              child: Text(l10n.portalSourceUnavailable),
+            AsyncError(:final error) => ReadFailureBanner(
+              error: error,
+              retryKey: ValueKey('host-activity-retry-${host.installationId}'),
+              onRetry: () => ref.invalidate(provider),
             ),
             _ => const LoadingView(),
           },

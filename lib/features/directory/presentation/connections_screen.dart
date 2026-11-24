@@ -7,6 +7,7 @@ import '../../../core/backend/connected_installations.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
+import '../../../core/ui/async_read_body.dart';
 import '../../../core/ui/kit/page_bar.dart';
 import '../../../core/ui/loading_view.dart';
 import 'connection_dialog.dart';
@@ -43,11 +44,11 @@ class ConnectionsScreen extends ConsumerWidget {
             for (final row in rows) _ConnectionTile(row),
           ],
         ),
-        AsyncError() => Center(
-          child: TextButton(
-            key: const ValueKey('connections-retry'),
-            onPressed: () => ref.invalidate(connectedSourcesProvider),
-            child: Text(l.commonRetry),
+        AsyncError(:final error) => Center(
+          child: ReadFailureBanner(
+            error: error,
+            retryKey: const ValueKey('connections-retry'),
+            onRetry: () => ref.invalidate(connectedSourcesProvider),
           ),
         ),
         _ => const LoadingView(),
@@ -76,6 +77,7 @@ class _ConnectionTile extends ConsumerWidget {
             ? (l.connectionSessionNotSaved)
             : (l.connectionUsable),
       AsyncData(value: final f?) => connectionFailureText(l, f),
+      // #4414 kept: a failed health check is the connection's verdict
       AsyncError() =>
         l.connectionMalformed,
       _ => l.connectionChecking,
@@ -83,10 +85,11 @@ class _ConnectionTile extends ConsumerWidget {
     final key = switch (health) {
       AsyncData(value: null) => 'usable',
       AsyncData(value: final f?) => f.reason.name,
-      AsyncError() => 'malformed',
+      AsyncError() => 'malformed', // #4414 kept: the verdict's key
       _ => 'checking',
     };
     final recovery = failure == null
+        // #4414 kept: the verdict's recovery
         ? (health.hasError
               ? ConnectionRecovery.retry
               : ConnectionRecovery.none)

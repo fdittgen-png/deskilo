@@ -17,6 +17,11 @@
 // a retry of a refused event as refused, never as delivered (#2563).
 
 import { createClient, SupabaseClient } from "npm:@supabase/supabase-js@2";
+import { describeError, logLine } from "../_shared/log.ts";
+import { ok } from "../_shared/respond.ts";
+import { guard } from "../_shared/serve.ts";
+
+const FN = "federation-inbox";
 
 /// The envelope this function forwards; every other header stays here.
 export const ENVELOPE_HEADERS = [
@@ -75,10 +80,7 @@ const defaultDeps: Deps = {
 
 function answer(status: number, outcome: string, firstOutcome?: string): Response {
   const body = firstOutcome === undefined ? { outcome } : { outcome, first_outcome: firstOutcome };
-  return new Response(JSON.stringify(body), {
-    status,
-    headers: { "Content-Type": "application/json" },
-  });
+  return ok(body, status);
 }
 
 function base64(bytes: Uint8Array): string {
@@ -111,14 +113,14 @@ export async function handle(req: Request, deps: Deps = defaultDeps): Promise<Re
     p_body_b64: base64(raw),
   });
   if (error) {
-    console.error("federation inbox unavailable", error.message);
+    logLine("error", FN, "unavailable", { error: describeError(error) });
     return answer(500, "unavailable");
   }
   const result = data as { outcome?: unknown; first_outcome?: unknown } | null;
   const outcome = String(result?.outcome ?? "");
   const status = STATUS[outcome];
   if (status === undefined) {
-    console.error("federation inbox gave no known outcome");
+    logLine("error", FN, "unknown_outcome", { outcome });
     return answer(500, "unavailable");
   }
   const first = result?.first_outcome;
@@ -128,4 +130,7 @@ export async function handle(req: Request, deps: Deps = defaultDeps): Promise<Re
   return answer(status, outcome);
 }
 
-if (import.meta.main) Deno.serve((req) => handle(req));
+/** The function as it is served: whatever [handle] throws is the envelope (#4412). */
+export const serve = (deps: Deps = defaultDeps) => guard(FN, (req) => handle(req, deps));
+
+if (import.meta.main) Deno.serve(serve());

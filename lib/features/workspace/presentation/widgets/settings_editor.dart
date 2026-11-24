@@ -14,6 +14,7 @@ import '../../../../core/settings/settings.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_sheet.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -53,7 +54,10 @@ class SettingsEditor extends ConsumerWidget {
     final async = ref.watch(settingsSetProvider(workspaceId));
     return async.when(
       loading: () => const LoadingView(),
-      error: (e, st) => Text(l10n.settingsLoadFailed),
+      error: (e, st) => ReadFailureBanner(
+        error: e,
+        onRetry: () => ref.invalidate(settingsSetProvider(workspaceId)),
+      ),
       data: (set) {
         final offline = set.revision == 'defaults' && set.definitions.isNotEmpty;
         final shown = [

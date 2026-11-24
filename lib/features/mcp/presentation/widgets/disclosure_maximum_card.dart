@@ -57,6 +57,7 @@ class DisclosureMaximumCard extends ConsumerWidget {
               ),
             ...state.when(
               loading: () => const [LoadingView()],
+              // #4414 kept: the maximum reads as locked until it is unlocked
               error: (e, _) => [
                 const SizedBox(height: AppSpacing.sm),
                 Text(

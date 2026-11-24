@@ -13,6 +13,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/kit/kit_metrics.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -40,29 +41,19 @@ class SettlementReviewList extends ConsumerWidget {
     final read = ref.watch(settlementReviewListProvider(workspaceId));
     final reviews = read.value;
     if (reviews == null) {
-      if (!read.hasError) return const SizedBox.shrink();
-      return Padding(
-        padding: const EdgeInsets.only(top: AppSpacing.sm),
-        child: Row(
-          children: [
-            Expanded(
-              child: Text(
-                l10n.payConfigSettlementsReviewUnreadable,
-                key: const ValueKey('settlement-reviews-unreadable'),
-              ),
-            ),
-            TextButton(
-              key: const ValueKey('settlement-reviews-retry'),
-              style: TextButton.styleFrom(
-                minimumSize: const Size.square(KitMetrics.minTarget),
-              ),
-              onPressed: () =>
-                  ref.invalidate(settlementReviewListProvider(workspaceId)),
-              child: Text(l10n.commonRetry),
-            ),
-          ],
-        ),
-      );
+      if (read.error case final error?) {
+        return Padding(
+          padding: const EdgeInsets.only(top: AppSpacing.sm),
+          child: ReadFailureBanner(
+            key: const ValueKey('settlement-reviews-unreadable'),
+            error: error,
+            retryKey: const ValueKey('settlement-reviews-retry'),
+            onRetry: () =>
+                ref.invalidate(settlementReviewListProvider(workspaceId)),
+          ),
+        );
+      }
+      return const SizedBox.shrink();
     }
     final waiting = [
       for (final r in reviews)

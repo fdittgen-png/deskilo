@@ -378,6 +378,7 @@ class _IndicatorTile extends ConsumerWidget {
           locale,
           value.currency,
         ),
+      // #4414 kept: a tile's figure; the module's page shows the failure
       AsyncData() || AsyncError() => l10n.overviewUnavailable,
       _ => '…',
     };

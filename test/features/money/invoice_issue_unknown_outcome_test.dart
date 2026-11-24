@@ -7,6 +7,7 @@
 // archive of the attempt's own workspace and, when the invoice exists, hands
 // back the ORIGINAL invoice id.
 import 'package:deskilo/core/codes/pg_code.dart';
+import 'package:deskilo/core/failure/app_failure.dart';
 import 'package:deskilo/core/validation/pending_validation.dart';
 import 'package:deskilo/features/money/application/issue_invoice.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
@@ -74,6 +75,10 @@ Future<void> _submitTheForm(WidgetTester tester) async {
   await tester.tap(find.byKey(const ValueKey('invoice-submit')));
   await tester.pumpAndSettle();
 }
+
+/// An answer that was lost.
+CommandUnreached<String> _lost() =>
+    CommandUnreached<String>(Defect(StateError('lost')));
 
 void main() {
   group('the issue form', () {
@@ -163,7 +168,7 @@ void main() {
 
         final outcome = await issuance.issue(attempt);
 
-        expect(outcome, isA<InvoiceIssueUnknown>());
+        expect(outcome, isA<CommandUnreached<String>>());
         expect(commands.calls, 1);
         expect(
           commands.last?.buyerReference,
@@ -175,8 +180,8 @@ void main() {
           _ScriptedCommands(const PendingValidationException('evt-1')),
           _Archive(const []),
         ).issue(attempt);
-        expect(held, isA<InvoiceIssueHeld>());
-        expect((held as InvoiceIssueHeld).eventId, 'evt-1');
+        expect(held, isA<CommandHeld<String>>());
+        expect((held as CommandHeld<String>).eventId, 'evt-1');
       },
     );
 
@@ -192,7 +197,7 @@ void main() {
           ),
           _Archive(const []),
         ).issue(attempt);
-        expect(refused, isA<InvoiceIssueRefused>());
+        expect(refused, isA<CommandRefused<String>>());
 
         final gateway = await InvoiceIssuance(
           _ScriptedCommands(
@@ -200,7 +205,7 @@ void main() {
           ),
           _Archive(const []),
         ).issue(attempt);
-        expect(gateway, isA<InvoiceIssueUnknown>());
+        expect(gateway, isA<CommandUnreached<String>>());
       },
     );
 
@@ -212,30 +217,30 @@ void main() {
         _invoice('voided', voided: true),
         _invoice('original'),
       ]);
-      final unknown = InvoiceIssueUnknown(attempt, StateError('lost'));
+      final unknown = _lost();
 
       final found = await InvoiceIssuance(
         _ScriptedCommands(null),
         archive,
-      ).look(unknown);
+      ).look(attempt, unknown);
 
       expect(archive.asked, ['ws-captured']);
-      expect((found as InvoiceIssued).invoiceId, 'original');
+      expect((found as CommandDone<String>).value, 'original');
     });
 
     test('a look that finds nothing, or cannot read, stays unknown', () async {
-      final unknown = InvoiceIssueUnknown(attempt, StateError('lost'));
+      final unknown = _lost();
       final empty = await InvoiceIssuance(
         _ScriptedCommands(null),
         _Archive([_invoice('x', period: '2026-01')]),
-      ).look(unknown);
+      ).look(attempt, unknown);
       expect(empty, same(unknown));
 
       final denied = await InvoiceIssuance(
         _ScriptedCommands(null),
         _Archive(const [], failWith: StateError('denied')),
-      ).look(unknown);
-      expect(denied, isA<InvoiceIssueUnknown>());
+      ).look(attempt, unknown);
+      expect(denied, isA<CommandUnreached<String>>());
     });
   });
 }

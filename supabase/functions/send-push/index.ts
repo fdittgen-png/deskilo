@@ -15,6 +15,7 @@
 import { mayTriggerPush } from "./push_caller.ts";
 import { refuseDelegated } from "../_shared/delegated.ts";
 import { createClient, type SupabaseClient } from "npm:@supabase/supabase-js@2";
+import { logLine } from "../_shared/log.ts";
 
 // Built on first use (not at import), so the helpers can be tested.
 let client: SupabaseClient | null = null;
@@ -471,7 +472,7 @@ export async function handle(
     await deliver(req, supabase ?? db());
   } catch {
     // Delivery diagnostics belong in private logs, never an identifier oracle.
-    console.error("send-push delivery failed");
+    logLine("error", "send-push", "delivery_failed");
   }
   return Response.json({ accepted: true }, { status: 202 });
 }
@@ -681,7 +682,7 @@ async function deliver(req: Request, supabase: SupabaseClient): Promise<void> {
       await supabase.from("push_endpoints").delete().eq("endpoint", ep.endpoint);
     }
   }
-  console.info("send-push delivery outcomes", tally);
+  logLine("info", "send-push", "delivery_outcomes", { ...tally });
 }
 
 if (import.meta.main) Deno.serve((req) => handle(req));

@@ -9,6 +9,7 @@ import '../../../../core/settings/messaging_windows.dart';
 import '../../../../core/text/collation.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/kit/row_menu.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -142,11 +143,11 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
                 servers,
                 l10n,
               ),
-              AsyncError() => Center(
-                child: TextButton(
-                  key: const ValueKey('unified-inbox-retry'),
-                  onPressed: () => ref.invalidate(messengerInboxProvider),
-                  child: Text(l10n.commonRetry),
+              AsyncError(:final error) => Center(
+                child: ReadFailureBanner(
+                  error: error,
+                  retryKey: const ValueKey('unified-inbox-retry'),
+                  onRetry: () => ref.invalidate(messengerInboxProvider),
                 ),
               ),
               _ => const LoadingView(),

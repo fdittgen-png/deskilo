@@ -125,7 +125,7 @@ const _stateFloor = 12;
 Future<void> _pumpDefaults(
   WidgetTester tester, {
   required NewMemberDefaults? defaults,
-  bool failed = false,
+  Object? failure,
   VoidCallback? onRetry,
   ValueChanged<int>? onChanged,
 }) async {
@@ -135,7 +135,7 @@ Future<void> _pumpDefaults(
         child: NewMemberDefaultsTiles(
           defaults: defaults,
           enabled: true,
-          failed: failed,
+          failure: failure,
           onRetry: onRetry,
           onSubscriptionChanged: onChanged ?? (_) {},
           onOveragePolicyChanged: (_) {},
@@ -235,10 +235,12 @@ void main() {
         'again', (tester) async {
       var retried = 0;
       await _pumpDefaults(tester,
-          defaults: null, failed: true, onRetry: () => retried++);
+          defaults: null,
+          failure: StateError('offline'),
+          onRetry: () => retried++);
 
       expect(find.byType(InlineBanner), findsOneWidget);
-      expect(find.textContaining('could not be read'), findsOneWidget);
+      expect(find.byKey(const ValueKey('read-failure')), findsOneWidget);
       expect(find.byType(LoadingView), findsNothing,
           reason: 'a failure that still shows a spinner is a read that '
               'never answers');

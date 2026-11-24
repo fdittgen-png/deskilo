@@ -146,7 +146,7 @@ class AccountingStatusGrid extends ConsumerWidget {
     final status = _accountingStatusOf(ref, workspaceId);
     String figure<T>(AsyncValue<T> v, String Function(T) say) => switch (v) {
       AsyncData(:final value) => say(value),
-      AsyncError() => l.accountingStatusNotRead,
+      AsyncError() => l.accountingStatusNotRead, // #4414 kept: a status line
       _ => l.myReservationsLoadingMore,
     };
     final export = status.lastExport.value;

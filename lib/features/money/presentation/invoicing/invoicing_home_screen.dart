@@ -151,6 +151,7 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
           _wide = isWideNavigationWidth(box.maxWidth);
           final home = switch (invoices) {
             AsyncData(:final value) => _home(context, value),
+            // #4414 kept: the home's source banner names the failed invoices
             AsyncError() => _home(context, const []),
             _ => const LoadingView(),
           };
@@ -316,8 +317,9 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
       ],
       failed: {
         ...ref.watch(invoicingFailedSourcesProvider),
+        // #4414 kept: the failed sources the banner names
         if (received.hasError) InvoicingSource.payments,
-        if (overview.hasError) InvoicingSource.toInvoice,
+        if (overview.hasError) InvoicingSource.toInvoice, // #4414 kept: same
       },
       holdsUnassigned: holdsUnassigned,
       creditsKnown: creditsKnown,

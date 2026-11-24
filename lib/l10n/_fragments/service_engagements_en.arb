@@ -4,7 +4,6 @@
   "engagementsIntro": "Follow each service you were ordered: ordered, started, done. The quote, the invoice and the payments stay as they are beside it.",
   "engagementsNew": "New engagement",
   "engagementsEmpty": "No engagement yet. Open one from an accepted quote, or add one directly.",
-  "engagementsLoadFailed": "The engagements could not be read. This is not an empty list.",
   "engagementStateOrdered": "Ordered",
   "engagementStateStarted": "Started",
   "engagementStateDone": "Done",
@@ -43,9 +42,6 @@
     "description": "service engagements (#4178)"
   },
   "@engagementsEmpty": {
-    "description": "service engagements (#4178)"
-  },
-  "@engagementsLoadFailed": {
     "description": "service engagements (#4178)"
   },
   "@engagementStateOrdered": {

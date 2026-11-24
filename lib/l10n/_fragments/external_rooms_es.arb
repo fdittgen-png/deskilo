@@ -176,10 +176,6 @@
   "@roomRentLevelRefused": {
     "description": "#2568 rented rooms"
   },
-  "roomRentLoadFailed": "No se pudieron cargar las salas alquiladas.",
-  "@roomRentLoadFailed": {
-    "description": "#2568 rented rooms"
-  },
   "roomOfferUnitHalfDay": "media jornada",
   "@roomOfferUnitHalfDay": {
     "description": "#2575 rented room offer"

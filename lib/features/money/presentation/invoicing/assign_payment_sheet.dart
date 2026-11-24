@@ -19,6 +19,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/adaptive/task_surface.dart' show TaskSession;
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../core/ui/kit/kit_action_button.dart';
@@ -230,21 +231,21 @@ class _AssignPaymentBodyState extends ConsumerState<_AssignPaymentBody> {
         ?.where((p) => p.id == widget.paymentId)
         .firstOrNull;
     if (payment == null) return [_close(context)];
-    // What each invoice can take now is the server's answer, never worked
-    // out here: an invoice whose payment awaits approval is shown, not
-    // offered.
+    // What each invoice can take now is the server's answer, never worked out
+    // here: an invoice whose payment awaits approval is shown, not offered.
     final capacityRead = ref.watch(paymentCapacityProvider(widget.paymentId));
     final capacity = capacityRead.value;
     if (capacity == null) {
-      if (capacityRead.hasError) {
-        return [
-          AssignPaymentCapacityFailed(
-            onRetry: () =>
-                ref.invalidate(paymentCapacityProvider(widget.paymentId)),
-          ),
-        ];
-      }
-      return const [LoadingView()];
+      return [
+        if (capacityRead.error case final error?)
+          ReadFailureBanner(
+            error: error,
+            retryKey: const ValueKey('assign-payment-retry-capacity'),
+            onRetry: () => ref.invalidate(paymentCapacityProvider(widget.paymentId)),
+          )
+        else
+          const LoadingView(),
+      ];
     }
     final rows = invoicesToPay(
       receivables: receivables,

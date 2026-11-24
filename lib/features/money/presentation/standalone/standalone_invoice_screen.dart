@@ -21,6 +21,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/text/collation.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../core/time/calendar_days.dart';
+import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/kit/page_title.dart';
@@ -174,6 +175,10 @@ class _State extends ConsumerState<StandaloneInvoiceScreen> {
           _missing = standaloneRefusalKeys(refusal);
           _preview = null;
         });
+      case CommandHeld():
+        // A validation policy holds the invoice: nothing is issued yet.
+        setState(() => _busy = false);
+        AppSnack.info(context, context.l10n.validationSentForApproval);
       case CommandUnreached():
         setState(() {
           _busy = false;

@@ -118,13 +118,7 @@ void main() {
     );
     await tester.pumpAndSettle();
     expect(_key('visibility-unavailable'), findsOneWidget);
-    expect(
-      find.text(
-        'Who sees what of you cannot be read right now. '
-        'Nothing was changed.',
-      ),
-      findsOneWidget,
-    );
+    expect(_key('read-failure'), findsOneWidget);
     expect(
       _key('visibility-field-about'),
       findsNothing,

@@ -97,6 +97,7 @@ class StartPlace {
 StartPlace startPlace(Ref ref) {
   if (!ref.watch(personalShellEnabledProvider)) return StartPlace.none;
   final stored = ref.watch(storedResumePlacesProvider);
+  // #4414 kept: where to start, not a view: a failed read starts nowhere
   if (stored.hasError) return StartPlace.none;
   if (stored.isLoading) return StartPlace.waiting;
   final places = stored.value;
@@ -117,6 +118,7 @@ StartPlace startPlace(Ref ref) {
 /// entered; null while that is not known yet.
 bool? _enterable(Ref ref, WorkspaceResume last) {
   final context = ref.watch(workspaceContextProvider);
+  // #4414 kept: a resume target is checked, not shown
   if (context.hasError) return false;
   if (context.isLoading) return null;
   final target = context.value?.target;
@@ -126,12 +128,14 @@ bool? _enterable(Ref ref, WorkspaceResume last) {
     return false;
   }
   final listed = ref.watch(myWorkspacesProvider);
+  // #4414 kept: a resume target is checked, not shown
   if (listed.hasError) return false;
   if (listed.isLoading) return null;
   if (!(listed.value ?? const []).any((w) => w.id == target.workspaceId)) {
     return false;
   }
   final member = ref.watch(myMemberProvider);
+  // #4414 kept: a resume target is checked, not shown
   if (member.hasError) return false;
   if (member.isLoading) return null;
   final me = member.value;

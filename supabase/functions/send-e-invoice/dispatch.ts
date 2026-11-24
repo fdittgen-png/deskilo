@@ -9,6 +9,7 @@ import type { Submission } from "./connectors.ts";
 import { redact, safeError } from "./connectors/common.ts";
 import { clientDetail } from "./connectors/safe_fetch.ts";
 import type { TransmissionStore } from "./store.ts";
+import { logLine } from "../_shared/log.ts";
 /** What a prepared transmission needs to leave: its record, the stored
  * artifact's hash, and where it goes. */
 export interface Dispatch {
@@ -51,7 +52,7 @@ export async function dispatchPrepared(
   try {
     artifact = await store.artifact(id);
   } catch (error) {
-    console.error("send-e-invoice: artifact read failed", safeError(error));
+    logLine("error", "send-e-invoice", "artifact_read_failed", { error: safeError(error) });
     return json({ error: "artifact_unavailable" }, 500);
   }
   if (
@@ -67,7 +68,7 @@ export async function dispatchPrepared(
   try {
     claim = await store.claim(id, owner, DISPATCH_WINDOW_SECONDS, d.binding);
   } catch (error) {
-    console.error("send-e-invoice: claim failed", safeError(error));
+    logLine("error", "send-e-invoice", "claim_failed", { error: safeError(error) });
     return json({ error: "claim_failed" }, 500);
   }
   if (!claim.claimed && claim.detail === "binding_changed") {
@@ -110,10 +111,7 @@ export async function dispatchPrepared(
   );
   // #3090 — the provider's own words are for the server log only.
   if (outcome.status !== "accepted") {
-    console.error(
-      `send-e-invoice: transmission ${outcome.status}`,
-      redact(outcome.detail),
-    );
+    logLine("error", "send-e-invoice", `transmission_${outcome.status}`, { detail: redact(outcome.detail) });
   }
 
   // 5. RECORD against this owner and generation. If the write is lost the
@@ -134,7 +132,7 @@ export async function dispatchPrepared(
       outcome.receipt,
     );
   } catch (error) {
-    console.error("send-e-invoice: outcome write failed", safeError(error));
+    logLine("error", "send-e-invoice", "outcome_write_failed", { error: safeError(error) });
   }
   if (!recorded) {
     return answer(
@@ -159,7 +157,7 @@ export async function dispatchPrepared(
         "",
       );
     } catch (error) {
-      console.error("send-e-invoice: verdict write failed", safeError(error));
+      logLine("error", "send-e-invoice", "verdict_write_failed", { error: safeError(error) });
     }
   }
   return answer(

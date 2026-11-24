@@ -1,12 +1,4 @@
 {
-  "visibilityUnavailable": "Who sees what of you cannot be read right now. Nothing was changed.",
-  "@visibilityUnavailable": {
-    "description": "#2558 — the privacy card when the saved settings cannot be read; a retry follows."
-  },
-  "visibilitySpacesUnavailable": "Your places cannot be listed right now.",
-  "@visibilitySpacesUnavailable": {
-    "description": "#2558 — the chosen-spaces picker when the list of spaces cannot be read."
-  },
   "visibilitySpaceUnlisted": "A place that is no longer listed",
   "@visibilitySpaceUnlisted": {
     "description": "#2558 — a saved chosen space the list no longer names; it stays chosen until the person unticks it."

@@ -176,7 +176,7 @@ void main() {
       find.byKey(const ValueKey('setup-guide-workspace-unavailable')),
       findsOneWidget,
     );
-    await tester.tap(find.text('Refresh'));
+    await tester.tap(find.byKey(const ValueKey('inline-banner-action')));
     await tester.pumpAndSettle();
     expect(reads, 2);
     expect(

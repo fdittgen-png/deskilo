@@ -14,6 +14,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
+import '../../../core/ui/async_read_body.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../workspace/domain/member.dart';
 import '../../workspace/presentation/member_labels.dart';
@@ -48,12 +49,11 @@ class PersonalRefsSection extends ConsumerWidget {
     final answer = ref.watch(personalWorkspaceRefsProvider);
     if (answer.hasError) {
       return Padding(
-        key: const ValueKey('me-refs-unavailable'),
         padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
-        child: Text(
-          l10n.meRefsUnavailable,
-          style: Theme.of(context).textTheme.bodySmall
-              ?.copyWith(color: scheme.onSurfaceVariant),
+        child: ReadFailureBanner(
+          key: const ValueKey('me-refs-unavailable'),
+          error: answer.error!,
+          onRetry: () => ref.invalidate(personalWorkspaceRefsProvider),
         ),
       );
     }

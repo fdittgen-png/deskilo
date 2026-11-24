@@ -9,7 +9,6 @@
   "billingCustomersEmpty": "Nessun cliente fatturato per ora. Si aggiunga il primo per fatturargli senza chiedergli di creare un account.",
   "billingCustomersAdd": "Aggiungere un cliente",
   "billingCustomersSearch": "Cercare un cliente",
-  "billingCustomersLoadFailed": "Non è stato possibile leggere i clienti. Non è un elenco vuoto.",
   "billingCustomersUnavailable": "I clienti fatturati non sono ancora disponibili su questa installazione. Non è stato modificato nulla.",
   "billingCustomersRetry": "Riprovare",
   "billingCustomerNewTitle": "Nuovo cliente fatturato",

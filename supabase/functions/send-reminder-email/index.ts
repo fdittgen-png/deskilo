@@ -36,6 +36,11 @@ import { refuseDelegated } from "../_shared/delegated.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
 import { CORS, preflight } from "../_shared/cors.ts";
 import { type OrderMailResult, sendOrderViaResend } from "../_shared/resend.ts";
+import { logLine } from "../_shared/log.ts";
+import { ok, refuse, refuseDb } from "../_shared/respond.ts";
+import { guard } from "../_shared/serve.ts";
+
+const FN = "send-reminder-email";
 
 /** The most a request body may weigh: the ids and the base64 PDF Resend
  * accepts (resend.ts bounds the PDF at 8 MB of base64). */
@@ -107,11 +112,6 @@ export type Deps = {
   send?: typeof sendOrderViaResend;
 };
 
-const json = (body: unknown, status = 200) =>
-  new Response(JSON.stringify(body), {
-    status,
-    headers: { ...CORS, "Content-Type": "application/json" },
-  });
 
 type Attempt = {
   id: string;
@@ -164,22 +164,22 @@ export async function handle(req: Request, deps: Deps): Promise<Response> {
   const delegated = refuseDelegated(req, CORS);
   if (delegated) return delegated;
   const authorization = req.headers.get("Authorization") ?? "";
-  if (!authorization) return json({ error: "not signed in" }, 401);
+  if (!authorization) return refuse("not signed in", 401);
   if (Number(req.headers.get("content-length") ?? "0") > MAX_BODY_BYTES) {
-    return json({ error: "body too large" }, 400);
+    return refuse("body too large", 400);
   }
   const text = await req.text();
   if (text.length > MAX_BODY_BYTES) {
-    return json({ error: "body too large" }, 400);
+    return refuse("body too large", 400);
   }
   let payload: unknown;
   try {
     payload = JSON.parse(text);
   } catch {
-    return json({ error: "invalid body" }, 400);
+    return refuse("invalid body", 400);
   }
   const parsed = parseSendRequest(payload);
-  if ("error" in parsed) return json({ error: parsed.error }, 400);
+  if ("error" in parsed) return ok({ error: parsed.error }, 400);
 
   // 1. Who may send, decided by the database with the caller's token.
   const begun = await deps.caller(authorization).rpc(
@@ -199,17 +199,17 @@ export async function handle(req: Request, deps: Deps): Promise<Response> {
       : e.code === "55000" || e.code === "40001"
       ? 409
       : 400;
-    return json({ error: e.message ?? "refused", code: e.code ?? "" }, status);
+    return refuseDb(e, status);
   }
   const attempt = attemptOf(begun.data);
-  if (!attempt) return json({ error: "no attempt" }, 500);
+  if (!attempt) return refuse("no attempt", 500);
   // A replayed attempt that already has its outcome is answered as it is:
   // never sent a second time.
-  if (attempt.state !== "pending") return json(begun.data);
+  if (attempt.state !== "pending") return ok(begun.data);
   // A pending attempt is sent by the call that opened it or a young replay
   // only; an older one may have left: a person decides it.
   if (!attempt.sendable) {
-    return json({
+    return ok({
       error:
         "an earlier e-mail of this reminder has no confirmed outcome: decide it by hand",
       code: "55000",
@@ -248,13 +248,13 @@ export async function handle(req: Request, deps: Deps): Promise<Response> {
     ...outcomeOf(result),
   });
   if (finished.error) {
-    console.error("send-reminder-email: the outcome could not be recorded");
-    return json({
+    logLine("error", FN, "outcome_not_recorded");
+    return ok({
       error: "the outcome could not be recorded",
       state: "pending",
     }, 502);
   }
-  return json(finished.data);
+  return ok(finished.data);
 }
 
 if (import.meta.main) {
@@ -267,5 +267,5 @@ if (import.meta.main) {
     service: () =>
       createClient(url, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!),
   };
-  Deno.serve((req) => handle(req, deps));
+  Deno.serve(guard(FN, (req) => handle(req, deps)));
 }

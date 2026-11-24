@@ -59,7 +59,7 @@ mixin ConversationLinkFollowing<T extends ConsumerStatefulWidget>
     _linkWatch = ref.listenManual(messengerInboxProvider, (_, inbox) {
       final (verdict, entry) = switch (inbox) {
         AsyncData(:final value) => authorizeLink(value, link),
-        AsyncError() => (LinkVerdict.unreachable, null),
+        AsyncError() => (LinkVerdict.unreachable, null), // #4414 kept: a verdict
         _ => (LinkVerdict.pending, null),
       };
       if (verdict != LinkVerdict.pending) answer(verdict, entry);

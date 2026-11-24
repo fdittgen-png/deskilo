@@ -3,10 +3,6 @@
   "@mcpPolicyTitle": {
     "description": "#1626 #1627 #1628 mcp_settings"
   },
-  "mcpPolicyUnavailable": "The assistant settings could not be loaded. Try again later.",
-  "@mcpPolicyUnavailable": {
-    "description": "#1626 #1627 #1628 mcp_settings"
-  },
   "mcpPolicySwitched": "You switched workspace. Reopen this page to edit the other workspace.",
   "@mcpPolicySwitched": {
     "description": "#1626 #1627 #1628 mcp_settings"
@@ -138,10 +134,6 @@
   },
   "mcpReviewNotAdmin": "Only this database's administrators review approvals.",
   "@mcpReviewNotAdmin": {
-    "description": "#1626 #1627 #1628 mcp_settings"
-  },
-  "mcpReviewUnavailable": "The requests could not be loaded. A review needs your second factor; try again.",
-  "@mcpReviewUnavailable": {
     "description": "#1626 #1627 #1628 mcp_settings"
   },
   "mcpReviewExplain": "Approving lets a person connect assistants on this database, in the workspaces whose owners allow it. It grants no membership or role.",

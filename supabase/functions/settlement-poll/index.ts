@@ -25,6 +25,11 @@ import { recorderOf, type ScanResult, scanSettlements } from "../_shared/mollie_
 import { mollieApi } from "../_shared/providers.ts";
 import { sameSecret } from "../_shared/same_secret.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
+import { describeError, logLine } from "../_shared/log.ts";
+import { ok, refuse } from "../_shared/respond.ts";
+import { guard } from "../_shared/serve.ts";
+
+const FN = "settlement-poll";
 
 export const POLL_SECRET_HEADER = "x-deskilo-poll-secret";
 /** The most pages one workspace is read per run (50 a page). */
@@ -59,8 +64,6 @@ const defaultDeps: Deps = {
   now: () => Date.now(),
 };
 
-const json = (body: unknown, status = 200) =>
-  new Response(JSON.stringify(body), { status, headers: { "Content-Type": "application/json" } });
 
 /** The database job's secret, or the exact service credential. */
 export function mayPoll(req: Request, secret: string | undefined, serviceKey: string | undefined): boolean {
@@ -88,11 +91,11 @@ export function resultOf(r: ScanResult): Row {
 type Claim = { workspace_id: string; backfilled: boolean; continuation: string | null; lease_token: string; api_key: string };
 
 export async function handle(req: Request, deps: Deps = defaultDeps): Promise<Response> {
-  if (req.method !== "POST") return json({ error: "method_not_allowed" }, 405);
+  if (req.method !== "POST") return refuse("method_not_allowed", 405);
   const delegated = refuseDelegated(req);
   if (delegated) return delegated;
   if (!mayPoll(req, deps.env("SETTLEMENT_POLL_SECRET"), deps.env("SUPABASE_SERVICE_ROLE_KEY"))) {
-    return json({ error: "not allowed" }, 401);
+    return refuse("not allowed", 401);
   }
   const service = deps.service();
   const started = deps.now();
@@ -105,8 +108,8 @@ export async function handle(req: Request, deps: Deps = defaultDeps): Promise<Re
       p_run_started: runStarted,
     });
     if (claimed.error) {
-      console.error("settlement poll claim failed", String((claimed.error as Row).message ?? claimed.error));
-      return json({ error: "claim_failed", read }, 500);
+      logLine("error", FN, "claim_failed", { error: describeError(claimed.error) });
+      return refuse("claim_failed", 500, undefined, { read });
     }
     const one = ((claimed.data ?? []) as Claim[])[0];
     if (!one) break;
@@ -130,14 +133,17 @@ export async function handle(req: Request, deps: Deps = defaultDeps): Promise<Re
     if (finished.error || finished.data !== true) {
       // The lease ran out under this read: what it recorded stays recorded
       // (the recorder is idempotent), its continuation is not kept.
-      console.error("settlement poll result not kept", {
+      logLine("error", FN, "result_not_kept", {
         workspace: one.workspace_id,
-        error: finished.error ? String((finished.error as Row).message ?? finished.error) : "lease lost",
+        error: finished.error ? describeError(finished.error) : "lease lost",
       });
     }
     read.push({ workspace: one.workspace_id, ...result, kept: !finished.error && finished.data === true });
   }
-  return json({ read });
+  return ok({ read });
 }
 
-if (import.meta.main) Deno.serve((req) => handle(req));
+/** The function as it is served: whatever [handle] throws is the envelope (#4412). */
+export const serve = (deps: Deps = defaultDeps) => guard(FN, (req) => handle(req, deps));
+
+if (import.meta.main) Deno.serve(serve());

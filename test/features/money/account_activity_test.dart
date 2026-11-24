@@ -165,9 +165,7 @@ void main() {
     expect(find.text('No records to display.'), findsNothing);
     repo.unavailable = false;
     repo.records[AccountActivityKind.invoices] = [entry(7)];
-    await tester.tap(
-      find.text('Could not load your financial history. Tap to retry.'),
-    );
+    await tester.tap(find.byKey(const ValueKey('account-activity-failed')));
     await tester.pumpAndSettle();
     expect(find.text('Office 7'), findsOneWidget);
   });

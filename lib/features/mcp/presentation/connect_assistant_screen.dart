@@ -13,6 +13,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
+import '../../../core/ui/async_read_body.dart';
 import '../../../core/ui/kit/page_bar.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../auth/providers/auth_providers.dart';
@@ -82,7 +83,10 @@ class _ConnectAssistantScreenState
           _section(l10n.mcpConnectBeforeTitle),
           scope.when(
             loading: () => const LoadingView(),
-            error: (_, _) => const ConnectUnavailable(),
+            error: (e, _) => ReadFailureBanner(
+              error: e,
+              onRetry: () => ref.invalidate(currentMcpContextProvider),
+            ),
             data: (captured) => captured == null
                 ? Text(
                     key: const ValueKey('mcp-connect-no-workspace'),

@@ -76,6 +76,7 @@ class MeHomeTab extends ConsumerWidget {
     final linked = linkedRead.value ?? const [];
     // #3683 -- "not in a space yet" is said only once both lists were read.
     final answered = spacesRead.hasValue && linkedRead.hasValue;
+    // #4414 kept: shown below with ReadFailureBanner
     final failed = spacesRead.hasError || linkedRead.hasError;
     final rows = pairSides(spaces).length;
     // #2563 — a workspace my account names elsewhere is not "nothing".

@@ -13,6 +13,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../application/einvoice_inbox.dart';
 import '../../domain/einvoice_inbox.dart';
@@ -237,7 +238,10 @@ class EInvoiceInboxSection extends ConsumerWidget {
                 ),
             ],
           ),
-          AsyncError() => Text(l10n.eInvoiceInboxRefused),
+          AsyncError(:final error) => ReadFailureBanner(
+            error: error,
+            onRetry: () => ref.invalidate(eInvoiceInboxProvider(workspaceId)),
+          ),
           _ => const LinearProgressIndicator(),
         },
       ],

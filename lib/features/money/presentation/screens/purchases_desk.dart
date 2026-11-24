@@ -160,7 +160,7 @@ class PurchasesDesk extends ConsumerWidget {
             rows: rows,
             suppliersRead: switch (supplierRead) {
               AsyncData() => _SuppliersRead.read,
-              AsyncError() => _SuppliersRead.failed,
+              AsyncError() => _SuppliersRead.failed, // #4414 kept: a column's state
               _ => _SuppliersRead.loading,
             },
             state: switch (purchases) {

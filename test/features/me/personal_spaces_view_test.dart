@@ -250,7 +250,7 @@ void main() {
       final router = await _pump(tester, me: me);
       await goTo(tester, router, '/me/spaces');
       expect(_key('my-spaces-unavailable'), findsOneWidget);
-      expect(find.text('Your places could not be read.'), findsOneWidget);
+      expect(_key('read-failure'), findsOneWidget);
       expect(_key('my-spaces-empty'), findsNothing);
       expect(_key('my-spaces-count'), findsNothing);
 

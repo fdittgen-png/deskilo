@@ -4,7 +4,7 @@
 // with the costs Mollie kept, once; who may ask; a refused key is permanent, a
 // transient failure is retried.
 import { assertEquals } from "jsr:@std/assert@1";
-import { handle, settlementOf } from "./index.ts";
+import { handle, serve, settlementOf } from "./index.ts";
 
 const WS = "00000000-0000-4000-8000-000000000001";
 
@@ -198,4 +198,34 @@ Deno.test("#3510: the answer lists the reports waiting for review; a failed read
   assertEquals((await ok.json()).reviews, waiting);
   const failed = await call(fakes({ reviews: { data: null, error: { message: "boom" } } }), () => Promise.resolve(page([])));
   assertEquals((await failed.json()).reviews, null);
+});
+
+// #4412 -- an uncaught error is the envelope: a code and the request id, never the error's own words.
+Deno.test("#4412 mollie-settlements: a thrown error answers the envelope and no internal message", async () => {
+  const saved = console.error;
+  console.error = () => {};
+  try {
+    const answer = await serve({
+      caller: () => {
+        throw new Error("anon key sb_publishable_xyz rejected");
+      },
+      service: () => {
+        throw new Error("unused");
+      },
+      env: () => undefined,
+      fetch: () => Promise.reject(new Error("unused")),
+    })(
+      new Request("http://x", {
+        method: "POST",
+        body: JSON.stringify({ workspace_id: WS }),
+        headers: { Authorization: "Bearer tok", "x-request-id": "r-mollie" },
+      }),
+    );
+    assertEquals(answer.status, 500);
+    const text = await answer.text();
+    assertEquals(JSON.parse(text), { error: "internal_error", request_id: "r-mollie" });
+    assertEquals(/sb_|anon|rejected/i.test(text), false);
+  } finally {
+    console.error = saved;
+  }
 });

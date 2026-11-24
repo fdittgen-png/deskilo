@@ -686,9 +686,9 @@ export function sageAccounting(ctx: AdapterContext): PostingAdapter {
           }
           const problem = problemOfPosting(p, maps, business);
           if (problem) return refused(problem);
-          if (sale) return createSale(p, entity, party, maps, credited);
-          if (entity === "ContactPayment") return createPayment(p, key, party, maps);
-          return createJournal(p, key, maps);
+          if (sale) return await createSale(p, entity, party, maps, credited);
+          if (entity === "ContactPayment") return await createPayment(p, key, party, maps);
+          return await createJournal(p, key, maps);
         },
       };
     },

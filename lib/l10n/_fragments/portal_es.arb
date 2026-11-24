@@ -8,7 +8,6 @@
   "portalEmailCode": "Código de acceso por correo",
   "portalUseCode": "Usar un código por correo",
   "portalSendCode": "Enviar código de acceso",
-  "portalSourceUnavailable": "Un servidor no está disponible. Esta vista está incompleta. Toque para reintentar.",
   "portalDiscover": "Buscar un lugar",
   "portalRegisterDirectory": "Vincular un servidor al directorio global",
   "portalPublication": "Página pública del espacio",

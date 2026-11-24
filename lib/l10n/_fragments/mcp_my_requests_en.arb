@@ -45,9 +45,5 @@
   "mcpRequestUnknown": "Answer not readable",
   "@mcpRequestUnknown": {
     "description": "#3978 mcp_my_requests"
-  },
-  "mcpRequestsUnavailable": "Your assistants' requests could not be read. Open this page again later.",
-  "@mcpRequestsUnavailable": {
-    "description": "#3978 mcp_my_requests"
   }
 }

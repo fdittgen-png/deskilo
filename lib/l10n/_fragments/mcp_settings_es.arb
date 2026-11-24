@@ -1,6 +1,5 @@
 {
   "mcpPolicyTitle": "Acceso de asistentes",
-  "mcpPolicyUnavailable": "No se pudieron cargar los ajustes de asistentes. Inténtelo más tarde.",
   "mcpPolicySwitched": "Ha cambiado de espacio. Vuelva a abrir esta página para editar el otro espacio.",
   "mcpPolicyExplain": "Elija qué pueden hacer los asistentes en este espacio. Un miembro sigue necesitando la aprobación de esta base de datos, el rol adecuado, y debe elegir este espacio al conectar su asistente.",
   "mcpPolicyFeatureOff": "Los asistentes están desactivados en las funciones de este espacio. Aún puede restringir o desactivar los servicios de abajo.",
@@ -33,7 +32,6 @@
   "mcpRemoveWorkspace": "Quitar este espacio",
   "mcpReviewTitle": "Aprobaciones de asistentes",
   "mcpReviewNotAdmin": "Solo los administradores de esta base de datos revisan las aprobaciones.",
-  "mcpReviewUnavailable": "No se pudieron cargar las solicitudes. Una revisión necesita su segundo factor; inténtelo de nuevo.",
   "mcpReviewExplain": "Aprobar permite a una persona conectar asistentes en esta base de datos, en los espacios cuyos propietarios lo admiten. No otorga membresía ni rol.",
   "mcpReviewEmpty": "No hay solicitudes pendientes.",
   "mcpReviewReject": "Rechazar",
