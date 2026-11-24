@@ -4580,7 +4580,7 @@ routine public.stock_trace_purchase(p_workspace_id uuid, p_movement_id uuid, p_r
 routine public.stock_trace_reader(p_workspace_id uuid) -> void | function | definer | stable | exec:service_role | body:a2700635ef0c
 routine public.stock_trace_settlement(p_workspace_id uuid, p_obligation_id uuid) -> jsonb | function | definer | stable | exec:service_role | body:2f049070461e
 routine public.stock_trace_step(p_workspace_id uuid, m stock_movements) -> jsonb | function | definer | stable | exec:service_role | body:174b6e5361d7
-routine public.stock_tracks_of(p_workspace_id uuid, p_movements uuid[]) -> jsonb | function | definer | stable | exec:service_role | body:17f40de03abc
+routine public.stock_tracks_of(p_workspace_id uuid, p_movements uuid[]) -> jsonb | function | definer | stable | exec:service_role | body:c5991087aa1b
 routine public.stock_transfer_load_v1(p_workspace_id uuid, p_request_id uuid, p_to_location_id uuid, p_lines jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:659abd3337f7
 routine public.stock_transfer_receive_v1(p_workspace_id uuid, p_request_id uuid, p_transfer_id uuid, p_lines jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:da146b514dee
 routine public.stock_transfer_v1(p_workspace_id uuid, p_request_id uuid, p_lines jsonb, p_occurred_at timestamp with time zone) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:20cbe40c6baa

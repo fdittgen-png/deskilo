@@ -868,29 +868,29 @@ q "update public.counter_till_sessions set opened_at = now() - interval '3 hours
 sreq1=$(uid); sreq2=$(uid)
 ssales="[{\"seq\": 1, \"request_id\": \"$sreq1\", \"occurred_at\": \"$(date -u -v-100M +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || date -u -d '100 minutes ago' +%Y-%m-%dT%H:%M:%SZ)\", \"cash_given_minor\": 200, \"change_minor\": 80, \"body\": {\"lines\": [{\"item_id\": \"$sitem\", \"quantity\": \"1\", \"unit_price\": \"1.20\"}]}}, {\"seq\": 2, \"request_id\": \"$sreq2\", \"occurred_at\": \"$(date -u -v-99M +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || date -u -d '99 minutes ago' +%Y-%m-%dT%H:%M:%SZ)\", \"cash_given_minor\": 120, \"change_minor\": 0, \"body\": {\"lines\": [{\"item_id\": \"$sitem\", \"quantity\": \"1\", \"unit_price\": \"1.20\"}]}}]"
 ssince=$(date -u -v-101M +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || date -u -d '101 minutes ago' +%Y-%m-%dT%H:%M:%SZ)
-psql "$url" -X -qAt -v ON_ERROR_STOP=1 >"$scratch/holder21" 2>&1 <<SQL &
+psql "$url" -X -qAt -v ON_ERROR_STOP=1 >"$scratch/holder22" 2>&1 <<SQL &
 begin;
 $as_owner
 select 'sent ' || (public.counter_offline_sync_v1('$ws', '$ssession', '$ssince', '$ssales'::jsonb) ->> 'accepted');
 reset role;
-\\! touch '$scratch/ready21'
+\\! touch '$scratch/ready22'
 select pg_sleep(4);
 commit;
 SQL
-holder21=$!
-wait_marker "$scratch/ready21" "$scratch/holder21"
-PGAPPNAME="transfer-race-offline" psql "$url" -X -qAt -v ON_ERROR_STOP=1 >"$scratch/contender21" 2>&1 <<SQL &
+holder22=$!
+wait_marker "$scratch/ready22" "$scratch/holder22"
+PGAPPNAME="transfer-race-offline" psql "$url" -X -qAt -v ON_ERROR_STOP=1 >"$scratch/contender22" 2>&1 <<SQL &
 begin;
 $as_owner
 select 'replayed ' || (select count(*) from jsonb_array_elements(public.counter_offline_sync_v1('$ws', '$ssession', '$ssince', '$ssales'::jsonb) -> 'results') r where r ->> 'replayed' = 'true');
 commit;
 SQL
-contender21=$!
+contender22=$!
 wait_lock "transfer-race-offline"
-wait "$holder21" || { echo "::error::the first device failed: $(tr '\n' ' ' < "$scratch/holder21")" >&2; exit 1; }
-wait "$contender21" || { echo "::error::the second device failed: $(tr '\n' ' ' < "$scratch/contender21")" >&2; exit 1; }
-grep -qx "sent 2" "$scratch/holder21" || { echo "::error::the first device did not have both sales accepted: $(tr '\n' ' ' < "$scratch/holder21")" >&2; exit 1; }
-grep -qx "replayed 2" "$scratch/contender21" || { echo "::error::the second device did not get both as replays: $(tr '\n' ' ' < "$scratch/contender21")" >&2; exit 1; }
+wait "$holder22" || { echo "::error::the first device failed: $(tr '\n' ' ' < "$scratch/holder22")" >&2; exit 1; }
+wait "$contender22" || { echo "::error::the second device failed: $(tr '\n' ' ' < "$scratch/contender22")" >&2; exit 1; }
+grep -qx "sent 2" "$scratch/holder22" || { echo "::error::the first device did not have both sales accepted: $(tr '\n' ' ' < "$scratch/holder22")" >&2; exit 1; }
+grep -qx "replayed 2" "$scratch/contender22" || { echo "::error::the second device did not get both as replays: $(tr '\n' ' ' < "$scratch/contender22")" >&2; exit 1; }
 expect "(S) each offline sale is one receipt" "$(q "select count(*) from public.counter_receipts where till_session_id = '$ssession' and state = 'finalized' and source_kind = 'offline_till'")" "2"
 expect "(S) and one received row" "$(q "select count(*) from public.counter_offline_sales where till_session_id = '$ssession' and state = 'accepted'")" "2"
 
