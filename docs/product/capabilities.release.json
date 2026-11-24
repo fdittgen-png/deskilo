@@ -1572,6 +1572,12 @@
       "capabilities": []
     },
     {
+      "key": "counterOfflineCash",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "counterReceipts",
       "maturity": "beta",
       "lifecycle": "active",
@@ -2309,12 +2315,6 @@
     },
     {
       "key": "stockHandlingUnits",
-      "maturity": "beta",
-      "lifecycle": "active",
-      "capabilities": []
-    },
-    {
-      "key": "counterOfflineCash",
       "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
