@@ -110,3 +110,107 @@ Map<String, StockRefusal> checkStockVariants(List<({Map<String, String> values, 
   }
   return errors;
 }
+
+/// #4403 -- what the server refuses of a place beyond its own fields: a code taken among its siblings (0836:499,
+/// 0855:140-145), a parent that is the place itself (0836:507), a level under the wrong level or under none, checked
+/// when the place is made or its kind or parent changes (0855:155-166), and a use that is not picking or reserve
+/// (0855:133). [places] are the business's, by id; [old] is the place as it was (none for a new one). Null: none.
+StockConfigRefused? stockPlaceSaveRefusal(
+  Map<String, StockPlaceConfig> places, {
+  required String code,
+  required String kind,
+  required String? parentId,
+  required String? pickRole,
+  StockPlaceConfig? old,
+}) {
+  final placeId = old?.id;
+  if (places.values.any((p) => p.code == code && p.parentId == parentId && p.id != placeId)) {
+    return const StockConfigRefused('code', StockRefusal.codeDuplicate);
+  }
+  if (parentId != null && parentId == placeId) return const StockConfigRefused('parent_id', StockRefusal.locationCycle);
+  final level = stockKindLevel(kind);
+  if (level != null && (old == null || kind != old.kind || parentId != old.parentId)) {
+    if (parentId == null) {
+      if (level != 1) return const StockConfigRefused('parent_id', StockRefusal.levelParentMissing);
+    } else if (stockKindLevel(places[parentId]?.kind ?? '') != level - 1) {
+      return const StockConfigRefused('parent_id', StockRefusal.levelParentWrong);
+    }
+  }
+  if (pickRole != null && pickRole != 'picking' && pickRole != 'reserve') {
+    return const StockConfigRefused('pick_role', StockRefusal.pickRoleUnknown);
+  }
+  return null;
+}
+
+/// The address of a place under [parentId]: its parent's address, then its own [code] (0855, the address trigger).
+String stockAddressUnder(Map<String, StockPlaceConfig> places, String? parentId, String code) =>
+    parentId == null ? code : '${places[parentId]?.addressPath ?? ''}$stockAddressJoint$code';
+
+/// Everything below [parentId] in [places] takes the address of its parent again, as the server's trigger does.
+void stockReaddressBelow(Map<String, StockPlaceConfig> places, String parentId) {
+  for (final c in places.values.where((p) => p.parentId == parentId).toList()) {
+    places[c.id] = StockPlaceConfig(
+      id: c.id, revision: c.revision, kind: c.kind, code: c.code, name: c.name, barcode: c.barcode,
+      parentId: c.parentId, active: c.active, virtual: c.virtual,
+      receivesFromSuppliers: c.receivesFromSuppliers, pickRole: c.pickRole,
+      addressPath: stockAddressUnder(places, c.parentId, c.code),
+    );
+    stockReaddressBelow(places, c.id);
+  }
+}
+
+/// #4403 -- what the server refuses of a dimension (0837:469-492): a name of 1 to 60 characters, not taken by
+/// another dimension of the business, and value labels that are not empty and not repeated. [others] are the names
+/// of the business's other dimensions. Null: none.
+StockConfigRefused? stockDimensionRefusal(String name, Iterable<String> others, List<String> labels) {
+  if (name.isEmpty || name.length > 60) return const StockConfigRefused('name', StockRefusal.nameMalformed);
+  if (others.contains(name)) return const StockConfigRefused('name', StockRefusal.nameDuplicate);
+  final seen = <String>{};
+  for (var i = 0; i < labels.length; i++) {
+    final label = labels[i].trim();
+    if (label.isEmpty) return StockConfigRefused('values[$i].label', StockRefusal.nameMalformed);
+    if (!seen.add(label)) return StockConfigRefused('values[$i].label', StockRefusal.nameDuplicate);
+  }
+  return null;
+}
+
+/// #4403 -- the first refusal of the server for the variants of one item, in its order (0837:579-595): values
+/// chosen, a price not below zero, each value one of a dimension of the business, a combination not repeated.
+/// [valuesOf] answers the value ids of a dimension (null for one the business does not have). Null: none.
+StockConfigRefused? stockVariantsRefusal(
+  List<({Map<String, String> values, int? priceCents})> variants,
+  Set<String>? Function(String dimensionId) valuesOf,
+) {
+  final seen = <String>{};
+  for (var i = 0; i < variants.length; i++) {
+    final v = variants[i];
+    if (v.values.isEmpty) return StockConfigRefused('variants[$i].values', StockRefusal.variantValuesMissing);
+    if ((v.priceCents ?? 0) < 0) return StockConfigRefused('variants[$i].price_cents', StockRefusal.priceInvalid);
+    if (v.values.entries.any((e) => valuesOf(e.key)?.contains(e.value) != true)) {
+      return StockConfigRefused('variants[$i].values', StockRefusal.valueForeign);
+    }
+    final canonical = (v.values.entries.toList()..sort((a, b) => a.key.compareTo(b.key))).map((e) => '${e.key}:${e.value}').join(',');
+    if (!seen.add(canonical)) return StockConfigRefused('variants[$i].values', StockRefusal.variantCombinationDuplicate);
+  }
+  return null;
+}
+
+/// #4403 -- what the server refuses of a supplier's article, in its order (0837:723-738): a supplier of the
+/// business, an item of it, a reference of 1 to 80 characters, a purchase unit the item lists, and a reference the
+/// supplier does not already use. Null: none.
+StockConfigRefused? supplierMappingRefusal({
+  required bool supplierKnown,
+  required StockItemConfig? item,
+  required String articleRef,
+  required String? purchaseUnit,
+  required bool refTaken,
+}) {
+  if (!supplierKnown) return const StockConfigRefused('supplier_id', StockRefusal.supplierForeign);
+  if (item == null) return const StockConfigRefused('item_id', StockRefusal.itemForeign);
+  if (articleRef.isEmpty || articleRef.length > 80) return const StockConfigRefused('article_ref', StockRefusal.codeMalformed);
+  if (purchaseUnit != null && !item.units.any((u) => u.unit == purchaseUnit)) {
+    return const StockConfigRefused('purchase_unit', StockRefusal.unitNotOfItem);
+  }
+  if (refTaken) return const StockConfigRefused('article_ref', StockRefusal.mappingDuplicate);
+  return null;
+}

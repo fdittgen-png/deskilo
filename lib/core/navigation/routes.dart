@@ -90,6 +90,8 @@ abstract final class Routes {
   static const setup = '/setup';
   static const setupLaunch = '/setup/launch';
   static const setupLevels = '/setup/levels';
+  static const stockItemsAdd = '/stock/items?add=1';
+  static const stockPlacesAdd = '/stock/places?add=1';
   static const stockSettings = '/stock/settings';
   static const tillReceipts = '/till/receipts';
   static const validation = '/validation';
@@ -113,4 +115,8 @@ abstract final class Routes {
   static String moneyQuoteEdit(String id) => '/money/quotes/$id/edit';
   static String reservation(String id) => '/res/$id';
   static String setupStep(String id) => '/setup/step/$id';
+  static String stockCycleCount(String taskId) => '/stock/cycle-counts/$taskId';
+  static String stockMovement(String id) => '/stock/movements/$id';
+  static String stockWhere(String itemId, {String? lotId}) =>
+      '/stock/where/$itemId${lotId == null ? '' : '?lot=$lotId'}';
 }

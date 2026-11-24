@@ -11,6 +11,7 @@ import 'package:deskilo/features/money/domain/purchase_order.dart';
 import 'package:deskilo/features/money/domain/purchase_order_receipt.dart';
 import 'package:deskilo/features/stock/domain/put_away_progress.dart' show exactOfReceived;
 import 'package:deskilo/features/stock/domain/stock_config.dart';
+import 'package:deskilo/features/stock/domain/stock_ledger_rules.dart';
 import 'package:deskilo/features/stock/domain/stock_receiving.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
@@ -108,11 +109,10 @@ class DemoStockReceivingCommands implements StockReceivingCommands {
     final receipt = _orders.receipts.where((r) => r.id == receiptId).firstOrNull;
     if (receipt == null) throw _refused('receipt', StockRefusal.receiptUnknown);
     final order = _orders.orders.firstWhere((o) => o.id == receipt.orderId);
-    final places = (await _config.places(workspaceId)).where((p) => !p.virtual && p.active).map((p) => p.id).toSet();
     final running = <int, ExactQuantity>{};
     final planned = <ReceiptAllocation>[];
     for (var i = 0; i < allocations.length; i++) {
-      planned.add(await _plan(receipt, order, places, running, i, allocations[i]));
+      planned.add(await _plan(receipt, order, running, i, allocations[i]));
     }
     await _checkPieces(planned, allocations);
     // booked on the ledger the Stock screen reads: one movement per part, from the supplier
@@ -183,7 +183,6 @@ class DemoStockReceivingCommands implements StockReceivingCommands {
   Future<ReceiptAllocation> _plan(
     PurchaseOrderReceipt receipt,
     PurchaseOrder order,
-    Set<String> places,
     Map<int, ExactQuantity> running,
     int i,
     PutAwayAllocation a,
@@ -192,30 +191,26 @@ class DemoStockReceivingCommands implements StockReceivingCommands {
     final received = receipt.lines[a.lineNo];
     if (line == null || received == null) throw _refused('allocations[$i].line', StockRefusal.lineUnknown);
     final item = line.serviceId == null ? null : await _config.item(workspaceId, line.serviceId!);
-    if (item == null || !item.stockable) throw _refused('allocations[$i].line', StockRefusal.itemNotStocked);
-    final unit = line.unit.isEmpty ? item.inventoryUnit : line.unit;
-    final factor = unit == item.inventoryUnit
-        ? (1, 1)
-        : item.units.where((u) => u.unit == unit).map((u) => (u.factorNum, u.factorDen)).firstOrNull;
-    if (factor == null) throw _refused('allocations[$i].line', StockRefusal.unitUnmapped);
-    final qty = ExactQuantity.tryParse(a.quantity).value;
-    if (qty == null || qty <= ExactQuantity.zero) throw _refused('allocations[$i].quantity', StockRefusal.quantityInvalid);
-    // in the inventory unit, as the server records it: round(q * num / den, 6) (0840)
-    final inventory = qty.scaled(factor.$1, factor.$2, round: true).value;
-    if (inventory == null || inventory <= ExactQuantity.zero) throw _refused('allocations[$i].quantity', StockRefusal.quantityInvalid);
+    final unit = line.unit.isEmpty ? item?.inventoryUnit ?? '' : line.unit;
     final already = _rows
             .where((r) => r.row.receiptLineId == '${receipt.id}:${a.lineNo}')
             .fold(ExactQuantity.zero, (s, r) => s + r.row.enteredQuantity) +
         (running[a.lineNo] ?? ExactQuantity.zero);
-    if (already + qty > exactOfReceived(received)) throw _refused('allocations[$i].quantity', StockRefusal.overAllocated);
+    final variants = item != null && (await _config.variants(workspaceId, item.itemId)).any((v) => v.active);
+    final (entered: qty, :inventory) = _ledger.core.putAwayPart(
+      i,
+      item: item,
+      unit: unit,
+      part: a,
+      left: exactOfReceived(received) - already,
+      hasVariants: variants,
+    );
     running[a.lineNo] = (running[a.lineNo] ?? ExactQuantity.zero) + qty;
-    if (!places.contains(a.locationId)) throw _refused('allocations[$i].location_id', StockRefusal.locationForeign);
-    await _checkVariantAndLot(item, a, i);
     final n = _next++;
     return ReceiptAllocation(
       id: 'demo-alloc-$n',
       receiptLineId: '${receipt.id}:${a.lineNo}',
-      itemId: item.itemId,
+      itemId: item!.itemId,
       variantId: a.variantId,
       lotId: 'demo-lot-$n',
       locationId: a.locationId,
@@ -228,13 +223,5 @@ class DemoStockReceivingCommands implements StockReceivingCommands {
       supplierName: order.supplierName,
       lineText: line.description,
     );
-  }
-
-  /// A variant when the item has some, and the lot code and date its tracking asks for.
-  Future<void> _checkVariantAndLot(StockItemConfig item, PutAwayAllocation a, int i) async {
-    final variants = (await _config.variants(workspaceId, item.itemId)).where((v) => v.active);
-    if (variants.isNotEmpty && a.variantId == null) throw _refused('allocations[$i].variant_id', StockRefusal.variantRequired);
-    if ((item.tracking == 'lot' || item.tracking == 'expiry') && (a.lotCode ?? '').isEmpty) throw _refused('allocations[$i].lot.code', StockRefusal.lotCodeRequired);
-    if (item.tracking == 'expiry' && a.expiresOn == null) throw _refused('allocations[$i].lot.expires_on', StockRefusal.expiryRequired);
   }
 }

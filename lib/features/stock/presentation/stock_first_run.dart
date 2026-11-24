@@ -10,6 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/l10n/context_l10n.dart';
+import '../../../core/navigation/routes.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../workspace/domain/workspace_permission.dart';
@@ -56,7 +57,7 @@ class StockFirstRun extends ConsumerWidget {
                     key: const ValueKey('stock-first-place'),
                     icon: const Icon(Icons.place_outlined),
                     label: Text(l10n.stockFirstRunPlace),
-                    onPressed: () => context.push('/stock/places?add=1'),
+                    onPressed: () => context.push(Routes.stockPlacesAdd),
                   ),
                 if (noPlace && noItem) const SizedBox(height: AppSpacing.sm),
                 if (noItem)
@@ -64,7 +65,7 @@ class StockFirstRun extends ConsumerWidget {
                     key: const ValueKey('stock-first-item'),
                     icon: const Icon(Icons.category_outlined),
                     label: Text(l10n.stockFirstRunItem),
-                    onPressed: () => context.push('/stock/items?add=1'),
+                    onPressed: () => context.push(Routes.stockItemsAdd),
                   ),
                 const SizedBox(height: AppSpacing.md),
               ],

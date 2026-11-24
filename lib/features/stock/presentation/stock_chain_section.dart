@@ -12,6 +12,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
+import '../../../core/navigation/routes.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/ui/app_sheet.dart';
 import '../../../l10n/app_localizations.dart';
@@ -110,7 +111,7 @@ class StockChainSection extends ConsumerWidget {
                       if (s.pieces != null && s.pieces! > 0) l10n.stockChainPieces(s.pieces!),
                       ?_documentText(l10n, s.document),
                     ].join(' · ')),
-                    onTap: s.movementId == movementId ? null : () => context.push('/stock/movements/${s.movementId}'),
+                    onTap: s.movementId == movementId ? null : () => context.push(Routes.stockMovement(s.movementId)),
                   ),
                 if (value.truncated) Text(l10n.stockChainTruncated, key: const ValueKey('stock-chain-truncated')),
               ],
