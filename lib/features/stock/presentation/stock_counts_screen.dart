@@ -16,6 +16,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/format/decimal_input.dart';
 import '../../../core/help/help_anchors.dart';
 import '../../../core/help/help_dot.dart';
+import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
@@ -172,7 +173,9 @@ class _CountTile extends ConsumerWidget {
     final l10n = context.l10n;
     final unit = item?.unit ?? '';
     final difference = count.difference;
-    final sign = difference > ExactQuantity.zero ? '+${difference.text}' : difference.text;
+    final fmt = appFormatOf(context);
+    // the quantities in the member's format (1,5 in French), the difference with its sign
+    final sign = difference > ExactQuantity.zero ? '+${fmt.quantity(difference)}' : fmt.quantity(difference);
     final open = count.state == StockCountState.recorded;
     return Card(
       key: ValueKey('stock-count-${count.countId}'),
@@ -185,8 +188,8 @@ class _CountTile extends ConsumerWidget {
               l10n.stockCountsLine(
                 item?.name ?? count.itemId,
                 place == null ? count.locationId : place!.code,
-                '${count.observed.text} $unit',
-                '${count.baseline.text} $unit',
+                fmt.quantity(count.observed, unit: unit),
+                fmt.quantity(count.baseline, unit: unit),
                 '$sign $unit',
               ),
             ),

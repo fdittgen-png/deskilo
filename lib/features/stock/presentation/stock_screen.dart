@@ -203,7 +203,7 @@ class _OnHandList extends ConsumerWidget {
           '${row.lotCode == null ? l10n.stockNoLot : l10n.stockLotLabel(row.lotCode!)}',
         ),
         trailing: Text(
-          l10n.stockQuantityWithUnit(row.quantity.text, row.unit),
+          l10n.stockQuantityWithUnit(appFormatOf(context).quantity(row.quantity), row.unit),
           style: Theme.of(context).textTheme.titleMedium,
         ),
         // #4434 -- where else the item is, and where it was on a past day
@@ -239,7 +239,7 @@ class _MovementsList extends ConsumerWidget {
           '${day.format(stockDayOf(ref, m.occurredAt))}',
         ),
         trailing: Text(
-          l10n.stockQuantityWithUnit(m.quantity.text, m.unit),
+          l10n.stockQuantityWithUnit(appFormatOf(context).quantity(m.quantity), m.unit),
           style: Theme.of(context).textTheme.titleMedium,
         ),
         onTap: () => context.push('/stock/movements/${m.id}'),
