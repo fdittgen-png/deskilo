@@ -21,7 +21,6 @@ import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../core/ui/kit/page_title.dart';
 import '../../../core/ui/loading_view.dart';
-import '../../../l10n/app_localizations.dart';
 import '../../workspace/domain/workspace_permission.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/stock_config.dart';
@@ -30,6 +29,7 @@ import '../domain/stock_page.dart';
 import '../providers/stock_providers.dart';
 import 'stock_cycle_plan_sheet.dart';
 import 'stock_day.dart';
+import 'stock_read_failed.dart';
 
 class StockCycleCountsScreen extends ConsumerWidget {
   const StockCycleCountsScreen({super.key});
@@ -67,16 +67,8 @@ String _day(BuildContext context, String iso) {
 }
 
 /// A read that failed says so and can be asked again.
-Widget _failed(AppLocalizations l10n, String key, VoidCallback retry) => Center(
-  key: ValueKey('$key-failed'),
-  child: Column(
-    mainAxisSize: MainAxisSize.min,
-    children: [
-      Text(l10n.stockReadFailed),
-      TextButton(key: ValueKey('$key-retry'), onPressed: retry, child: Text(l10n.identityConnectRetry)),
-    ],
-  ),
-);
+Widget _failed(Object error, String key, VoidCallback retry) =>
+    StockReadFailed(keyName: key, error: error, onRetry: retry);
 
 class _Tasks extends ConsumerWidget {
   const _Tasks({required this.workspaceId});
@@ -93,7 +85,7 @@ class _Tasks extends ConsumerWidget {
         .watch(provider)
         .when(
           loading: () => const LoadingView(),
-          error: (_, _) => _failed(l10n, 'stock-cycle-tasks', () => ref.invalidate(provider)),
+          error: (e, _) => _failed(e, 'stock-cycle-tasks', () => ref.invalidate(provider)),
           data: (tasks) => tasks.isEmpty
               ? Center(child: Text(l10n.stockCycleNoTasks, key: const ValueKey('stock-cycle-no-tasks')))
               : ListView(
@@ -170,7 +162,7 @@ class _Plans extends ConsumerWidget {
         .watch(provider)
         .when(
           loading: () => const LoadingView(),
-          error: (_, _) => _failed(l10n, 'stock-cycle-plans', () => ref.invalidate(provider)),
+          error: (e, _) => _failed(e, 'stock-cycle-plans', () => ref.invalidate(provider)),
           data: (plans) => ListView(
             padding: const EdgeInsets.all(AppSpacing.md),
             children: [
@@ -234,7 +226,7 @@ class _History extends ConsumerWidget {
         .watch(provider)
         .when(
           loading: () => const LoadingView(),
-          error: (_, _) => _failed(l10n, 'stock-cycle-history', () => ref.invalidate(provider)),
+          error: (e, _) => _failed(e, 'stock-cycle-history', () => ref.invalidate(provider)),
           data: (rows) => rows.isEmpty
               ? Center(child: Text(l10n.stockCycleHistoryEmpty, key: const ValueKey('stock-cycle-history-empty')))
               : ListView(

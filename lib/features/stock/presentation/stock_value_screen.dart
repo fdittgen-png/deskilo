@@ -23,6 +23,7 @@ import '../domain/stock_page.dart';
 import '../domain/stock_trace.dart';
 import '../providers/stock_providers.dart';
 import 'stock_day.dart';
+import 'stock_read_failed.dart';
 
 class StockValueScreen extends ConsumerWidget {
   const StockValueScreen({super.key});
@@ -42,16 +43,7 @@ class StockValueScreen extends ConsumerWidget {
       final provider = stockValuationProvider(workspaceId);
       body = switch (ref.watch(provider)) {
         AsyncLoading() => const LoadingView(),
-        AsyncError() => Center(
-          key: const ValueKey('stock-value-failed'),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(l10n.stockReadFailed),
-              TextButton(key: const ValueKey('stock-value-retry'), onPressed: () => ref.invalidate(provider), child: Text(l10n.identityConnectRetry)),
-            ],
-          ),
-        ),
+        AsyncError(:final error) => StockReadFailed(keyName: 'stock-value', error: error, onRetry: () => ref.invalidate(provider)),
         AsyncData(:final value) => _Value(valuation: value, workspaceId: workspaceId),
       };
     }
