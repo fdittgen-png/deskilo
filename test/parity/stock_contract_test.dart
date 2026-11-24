@@ -13,6 +13,7 @@ import 'package:deskilo/features/stock/domain/stock_refusal.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../lint/lint_sources.dart';
+import 'stock_scenarios.dart';
 
 final _call = RegExp(
   r"stock_config_refuse\(((?:[^()']|'[^']*'|\((?:[^()']|'[^']*'|\([^()]*\))*\))*?),\s*'([a-z0-9_]+)'\s*\)",
@@ -40,7 +41,6 @@ Set<String> serverStockReasons() => {
 /// #4403 -- the reasons no pgTAP file names and no Demo fake gives yet, each with where the server raises it and
 /// why it is not proven yet. The list only shrinks: a reason proven since leaves it (the test says so).
 const _notYetProven = <String, String>{
-  'default_sale_twice': 'save_stock_item_v1 (0836), a second default sale unit: the Demo checks the purchase twin only',
   'has_tags': 'a tag mode changed while tags are bound (0886): no pgTAP case binds a tag first',
   'inexact': 'workspace_unit_convert (0951), an answer six decimals cannot hold: the Demo rounds before it asks',
   'kind_unknown': 'save_stock_item_v1 (0836), a code kind that is not gtin or own: the screen offers only those two',
@@ -55,12 +55,20 @@ const _notYetProven = <String, String>{
   'tag_owner_inactive': 'stock_tag_bind_v1 (0886), a tag bound to a deactivated item or place',
   'tag_owner_unknown': 'stock_tag_bind_v1 (0886), a tag bound to an owner of another business',
   'tracking_unsupported': 'save_stock_item_v1 (0836, 0931), a tracking the business has not turned on',
-  'unit_duplicate': 'save_stock_item_v1 (0836), one packaging unit twice: the Demo checks it, under its own name only',
   'unit_fixed': 'workspace_units_guard (0951), a built-in unit given another factor',
   'unknown_reference': 'item_group_save_core (0883), a parameter naming a row of another business',
 };
 
-/// Each reason named by a pgTAP file of the database job, given by a Demo fake, or on [_notYetProven].
+/// The domain files the Demo's stock fakes delegate their rules to (#4403): a reason they give is the Demo's.
+const _delegates = [
+  'lib/features/stock/domain/stock_ledger.dart',
+  'lib/features/stock/domain/stock_count_tasks.dart',
+  'lib/features/stock/domain/handling_unit_book.dart',
+  'lib/features/stock/domain/stock_config_check.dart',
+];
+
+/// Each reason named by a pgTAP file of the database job, given by a Demo fake (or the domain rules it delegates
+/// to), refused by a row of the scenario table, or on [_notYetProven].
 Set<String> unprovenReasons() {
   final demo = StringBuffer();
   for (final f in Directory('lib/core/demo/data').listSync().whereType<File>()) {
@@ -69,11 +77,17 @@ Set<String> unprovenReasons() {
       demo.write(f.readAsStringSync());
     }
   }
+  for (final path in _delegates) {
+    demo.write(File(path).readAsStringSync());
+  }
+  final table = {for (final s in stockScenarios) if (s.outcome.startsWith('refused ')) s.outcome.split(' ')[1]};
   final pg = [for (final f in sqlFiles('supabase/tests/database')) f.readAsStringSync()].join('\n');
   final shown = demo.toString();
   return {
     for (final r in StockRefusal.values)
-      if (r != StockRefusal.other && !shown.contains('StockRefusal.${r.name}') && !RegExp('\\b${r.wire}\\b').hasMatch(pg)) r.wire,
+      if (r != StockRefusal.other && !table.contains(r.wire) && !shown.contains('StockRefusal.${r.name}') &&
+          !RegExp('\\b${r.wire}\\b').hasMatch(pg))
+        r.wire,
   };
 }
 
@@ -105,10 +119,33 @@ void main() {
     expect(StockRefusal.fromWire('never_heard_of'), StockRefusal.other);
   });
 
+  // #4403 -- a reason the SQL gains fails 'the enum holds exactly' until it is a StockRefusal; then this test fails
+  // until a pgTAP file, the Demo (or the domain rules it delegates to) or a row of the scenario table gives it, or
+  // it is listed here with where the server raises it and why it is not proven yet.
   test('each reason is proven by a pgTAP file or a Demo fake, or listed with where it is raised and why not yet', () {
     final unproven = unprovenReasons();
     expect(unproven.difference(_notYetProven.keys.toSet()), isEmpty,
         reason: 'a reason no pgTAP file names and no Demo fake gives: prove it, or list it with why');
     expect(_notYetProven.keys.toSet().difference(unproven), isEmpty, reason: 'it is proven now: take it off the list');
+  });
+
+  test('the scenario table holds against the domain ledger, row by row', () {
+    final world = StockScenarioWorld();
+    for (final s in stockScenarios) {
+      if (s.given.isNotEmpty) expect(world.balances(s.given), s.given, reason: '${s.id} given');
+      expect(world.run(s), s.outcome, reason: '${s.id} ${s.name}');
+      expect(world.balances(s.then), s.then, reason: '${s.id} then');
+    }
+  });
+
+  test('the same table is the pgTAP 568 against the RPCs, row for row', () {
+    final sql = File('supabase/tests/database/568_stock_contract.sql').readAsStringSync();
+    for (final s in stockScenarios) {
+      for (final line in stockScenarioSql(s)) {
+        expect(sql.contains(line), isTrue, reason: 'a row of the table is not in 568 as it is here: $line');
+      }
+    }
+    expect("pg_temp.run('".allMatches(sql).length, stockScenarios.length, reason: '568 runs a row the table does not have');
+    expect(stockScenarios.map((s) => s.id).toSet().length, stockScenarios.length, reason: 'a row id is used twice');
   });
 }
