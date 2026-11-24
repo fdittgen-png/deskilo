@@ -32,8 +32,12 @@
 //                        file (#1305)
 //   helpCards            `HelpHint(` / `GettingStartedCard(` mounts per
 //                        library (#1853)
+//   inlineRoute          a route path written inline where the app opens a
+//                        page: `context.go|push|replace|pushReplacement('/`
+//                        and `location: '/`, per lib/ file (#4422); the path
+//                        is a `Routes` symbol instead
 //
-// The last six have a default of none: any use without an entry fails.
+// The last seven have a default of none: any use without an entry fails.
 //
 // The reason an entry is exempt lives in
 // docs/design/CODE_HEALTH_BUDGET_REASONS.txt, `<category> <key> // <reason>`;
@@ -71,6 +75,7 @@ const List<String> budgetCategories = [
   'fontWeight',
   'rawSpinner',
   'helpCards',
+  'inlineRoute',
 ];
 
 /// What a category allows without an entry, and how much headroom an entry
@@ -86,6 +91,7 @@ const Map<String, ({int floor, int headroom})> _rules = {
   'fontWeight': (floor: 0, headroom: 0),
   'rawSpinner': (floor: 0, headroom: 0),
   'helpCards': (floor: 0, headroom: 0),
+  'inlineRoute': (floor: 0, headroom: 0),
 };
 
 /// The budgets as held in the JSON.
@@ -159,6 +165,7 @@ class BudgetActuals {
     this.fontWeight = const {},
     this.rawSpinner = const {},
     this.helpCards = const {},
+    this.inlineRoute = const {},
   });
 
   final int partOfFiles;
@@ -176,6 +183,7 @@ class BudgetActuals {
   final Map<String, int> fontWeight;
   final Map<String, int> rawSpinner;
   final Map<String, int> helpCards;
+  final Map<String, int> inlineRoute;
 
   /// The measured value per key of [category].
   Map<String, int> of(String category) => switch (category) {
@@ -189,6 +197,7 @@ class BudgetActuals {
         'fontWeight' => fontWeight,
         'rawSpinner' => rawSpinner,
         'helpCards' => helpCards,
+        'inlineRoute' => inlineRoute,
         _ => throw ArgumentError(category),
       };
 }
@@ -262,6 +271,22 @@ String _readLibrary(File file) {
   return (all: all, gettingStarted: gettingStarted);
 }
 
+/// #4422 — a route path written inline where a page is opened: the call
+/// may break its line before the literal.
+final RegExp _inlineRoute = RegExp(
+  r"context\.(go|push|replace|pushReplacement)(<[^>]*>)?\(\s*'/"
+  r"|\blocation:\s*'/",
+);
+
+/// Inline route paths in [source], comment lines skipped.
+int inlineRouteCountOf(String source) => _inlineRoute
+    .allMatches(source)
+    .where((m) {
+      final start = source.lastIndexOf('\n', m.start) + 1;
+      return !source.substring(start, m.start).trimLeft().startsWith('//');
+    })
+    .length;
+
 bool _isPresentation(String path) =>
     path != 'lib/app/theme.dart' &&
     (path.contains('/presentation/') || path.startsWith('lib/app/'));
@@ -301,9 +326,12 @@ BudgetActuals measureBudgetActuals() {
   final colorLiteral = <String, int>{};
   final fontWeight = <String, int>{};
   final rawSpinner = <String, int>{};
+  final inlineRoute = <String, int>{};
   for (final file in files) {
     final path = file.path.replaceAll(r'\', '/');
     final isPart = _isPartFile(file);
+    final routes = inlineRouteCountOf(file.readAsStringSync());
+    if (routes > 0) inlineRoute[path] = routes;
     if (path.contains('/presentation/') || path.startsWith('lib/app/')) {
       final n = _rawSpinnerCall.allMatches(file.readAsStringSync()).length;
       if (n > 0) rawSpinner[path] = n;
@@ -348,6 +376,7 @@ BudgetActuals measureBudgetActuals() {
     fontWeight: fontWeight,
     rawSpinner: rawSpinner,
     helpCards: helpCards,
+    inlineRoute: inlineRoute,
   );
 }
 

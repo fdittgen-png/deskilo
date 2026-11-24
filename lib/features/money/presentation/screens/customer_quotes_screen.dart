@@ -11,6 +11,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/kit/page_title.dart';
@@ -36,7 +37,7 @@ class CustomerQuotesScreen extends ConsumerWidget {
           if (canIssue && workspace != null)
             OutlinedButton.icon(
               key: const ValueKey('quote-new'),
-              onPressed: () => context.go('/money/quotes/new/edit'),
+              onPressed: () => context.go(Routes.moneyQuoteNew),
               icon: const Icon(Icons.add),
               label: Text(l10n.quotesNew),
             ),
@@ -132,7 +133,7 @@ class _QuoteRow extends StatelessWidget {
         ].join(' · '),
       ),
       trailing: totals == null ? null : Text(quoteAmount(context, totals)),
-      onTap: () => context.go('/money/quotes/${quote.id}'),
+      onTap: () => context.go(Routes.moneyQuote(quote.id)),
     );
   }
 }

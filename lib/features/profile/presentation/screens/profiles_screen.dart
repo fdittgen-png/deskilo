@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/text/initials.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
@@ -194,7 +195,7 @@ class ProfilesScreen extends ConsumerWidget {
         actions: [
           const ApplicationRequestsEntry(), const AccountPortalEntry(),
           IconButton(key: const ValueKey('profiles-account-activity-title'), tooltip: l10n.accountActivityTitle,
-            onPressed: () => context.push('/account-activity'),
+            onPressed: () => context.push(Routes.accountActivity),
             icon: const Icon(Icons.receipt_long_outlined)),
           // #763 — one dot for the whole switcher, in the app bar.
           HelpDot(l10n.helpTopicSettings,
@@ -206,7 +207,7 @@ class ProfilesScreen extends ConsumerWidget {
           ? null
           : FloatingActionButton.extended(
               key: const ValueKey('profiles-add'),
-              onPressed: () => context.push('/onboarding'),
+              onPressed: () => context.push(Routes.onboarding),
               icon: const Icon(Icons.add),
               label: Text(l10n.profilesAdd),
             ),

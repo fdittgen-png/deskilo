@@ -9,6 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/dictionary_labels.dart';
 import '../../domain/workspace_feature.dart';
@@ -63,7 +64,7 @@ class SetupResumeBanner extends ConsumerWidget {
         trailing: TextButton(
           key: const ValueKey('setup-resume-open'),
           onPressed: () async {
-            await context.push('/setup');
+            await context.push(Routes.setup);
             ref.invalidate(workspaceSetupStatusProvider(workspaceId));
           },
           child: Text(l10n.setupGuideResume),

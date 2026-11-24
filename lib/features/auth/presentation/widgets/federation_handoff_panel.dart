@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../application/federation_handoff_controller.dart';
@@ -135,7 +136,7 @@ class _FederationHandoffSectionState
                 ? null
                 : () {
                     _controller.dismiss();
-                    unawaited(context.push('/server'));
+                    unawaited(context.push(Routes.server));
                   },
             onUseExistingAccount: widget.onUseExistingAccount == null
                 ? null

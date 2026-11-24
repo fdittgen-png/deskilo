@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../auth/domain/database_capabilities.dart';
@@ -121,7 +122,7 @@ class _WorkspaceRow extends ConsumerWidget {
             alignment: Alignment.centerRight,
             child: TextButton(
               key: ValueKey('mcp-connect-ws-${r.id}-setup'),
-              onPressed: () => context.push('/settings/assistant-setup'),
+              onPressed: () => context.push(Routes.settingsAssistantSetup),
               child: Text(l10n.mcpConnectOpenSetup),
             ),
           ),

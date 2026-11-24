@@ -635,6 +635,27 @@
       "lib/features/workspace/presentation/widgets/badge_manager_dialog.dart": 1,
 
       "lib/features/workspace/presentation/widgets/feature_capability_list.dart": 1
+    },
+    "inlineRoute": {
+      "lib/features/calendar/presentation/screens/calendar_hub_screen.dart": 2,
+
+      "lib/features/money/presentation/screens/customer_quote_editor_screen.dart": 1,
+
+      "lib/features/money/presentation/screens/vat_declarations_screen.dart": 1,
+
+      "lib/features/money/presentation/till_drawer/till_drawer_screen.dart": 1,
+
+      "lib/features/money/presentation/till_screen.dart": 1,
+
+      "lib/features/stock/presentation/stock_chain_section.dart": 1,
+
+      "lib/features/stock/presentation/stock_cycle_counts_screen.dart": 1,
+
+      "lib/features/stock/presentation/stock_document_goods_block.dart": 1,
+
+      "lib/features/stock/presentation/stock_first_run.dart": 2,
+
+      "lib/features/stock/presentation/stock_screen.dart": 2
     }
   },
   "functions": [

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../auth/providers/auth_providers.dart';
 import '../../../workspace/domain/workspace_feature.dart';
@@ -44,7 +45,7 @@ class McpSettingsTiles extends ConsumerWidget {
             key: const ValueKey('settings-assistants'),
             leading: const Icon(Icons.smart_toy_outlined),
             title: Text(l10n.mcpAssistantsTitle),
-            onTap: () => context.push('/assistants'),
+            onTap: () => context.push(Routes.assistants),
           ),
         // #2145 — the journey to a first call, for every member here.
         if (on)
@@ -60,14 +61,14 @@ class McpSettingsTiles extends ConsumerWidget {
             key: const ValueKey('settings-assistant-setup'),
             leading: const Icon(Icons.checklist_outlined),
             title: Text(l10n.assistantSetupTitle),
-            onTap: () => context.push('/settings/assistant-setup'),
+            onTap: () => context.push(Routes.settingsAssistantSetup),
           ),
         if (on && manages)
           ListTile(
             key: const ValueKey('settings-assistant-policy'),
             leading: const Icon(Icons.admin_panel_settings_outlined),
             title: Text(l10n.mcpPolicyTitle),
-            onTap: () => context.push('/settings/assistants'),
+            onTap: () => context.push(Routes.settingsAssistants),
           ),
         // #1827 B — only the instance operator gets an answer here.
         const _InstanceConsoleTile(),
@@ -76,7 +77,7 @@ class McpSettingsTiles extends ConsumerWidget {
             key: const ValueKey('settings-assistant-review'),
             leading: const Icon(Icons.how_to_reg_outlined),
             title: Text(l10n.mcpReviewTitle),
-            onTap: () => context.push('/database/assistant-approvals'),
+            onTap: () => context.push(Routes.databaseAssistantApprovals),
           ),
       ],
     );
@@ -123,7 +124,7 @@ class _InstanceConsoleTileState extends ConsumerState<_InstanceConsoleTile> {
               trailing: _NoticeBadge(
                 count: ref.watch(myInstanceNoticesProvider).value?.unread ?? 0,
               ),
-              onTap: () => context.push('/installation/assistants'),
+              onTap: () => context.push(Routes.installationAssistants),
             )
           : const SizedBox.shrink(),
     );

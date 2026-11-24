@@ -12,6 +12,7 @@ import '../../../../core/help/help_dot.dart';
 import '../../../../core/help/help_hint.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/links/link_launcher.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/share/file_sharer.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
@@ -144,7 +145,7 @@ class PrivacyScreen extends ConsumerWidget {
             title: Text(l10n.privacyAdminOpenTile),
             subtitle: Text(l10n.privacyAdminIntro),
             trailing: const Icon(Icons.chevron_right),
-            onTap: () => context.push('/members/privacy'),
+            onTap: () => context.push(Routes.membersPrivacy),
           ),
         // #1915 — rights requests: filed, dated, answered or refused.
         RightsRequestsTile(
@@ -172,7 +173,7 @@ class PrivacyScreen extends ConsumerWidget {
           ),
           subtitle: Text(l10n.consentReviewHint),
           trailing: const Icon(Icons.chevron_right),
-          onTap: () => context.push('/consent?review=1'),
+          onTap: () => context.push(Routes.consentReview),
         ),
         ListTile(
           key: const ValueKey('privacy-policy'),
@@ -279,6 +280,6 @@ class PrivacyScreen extends ConsumerWidget {
     if (!ok || !context.mounted) return;
     AppSnack.success(context, l10n.privacyErasedIn(workspace.name));
     await signOutAndForget(ref);
-    if (context.mounted) context.go('/auth');
+    if (context.mounted) context.go(Routes.auth);
   }
 }

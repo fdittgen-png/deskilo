@@ -14,6 +14,7 @@ import '../../../core/i18n/app_format.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/i18n/time_zones.dart';
 import '../../../core/l10n/context_l10n.dart';
+import '../../../core/navigation/routes.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../core/theme/personal_theme.dart';
@@ -347,7 +348,7 @@ class _NothingBooked extends StatelessWidget {
           style: FilledButton.styleFrom(
             minimumSize: const Size(0, PersonalShellMetrics.minTarget),
           ),
-          onPressed: () => context.go('/me/spaces'),
+          onPressed: () => context.go(Routes.meSpaces),
           child: Text(l10n.meNextBook),
         ),
       ],

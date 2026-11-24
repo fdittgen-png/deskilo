@@ -9,6 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/privacy/recording_banner.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
@@ -80,7 +81,7 @@ class _ManagedProfileScreenState extends ConsumerState<ManagedProfileScreen> {
     );
     if (createdId != null) {
       // Straight to the member page: the next step is the handover.
-      context.pushReplacement('/member/$createdId');
+      context.pushReplacement(Routes.member(createdId!));
     } else if (context.canPop()) {
       context.pop();
     }

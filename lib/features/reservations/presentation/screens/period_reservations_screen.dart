@@ -11,6 +11,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/workspace_time.dart';
 import '../../../../core/ui/async_read_body.dart';
@@ -124,7 +125,7 @@ class PeriodReservationsScreen extends ConsumerWidget {
                   '${format.time(r.startsAt)}–${format.time(r.endsAt)}',
                 ),
                 trailing: const Icon(Icons.chevron_right),
-                onTap: () => context.push('/res/${r.id}'),
+                onTap: () => context.push(Routes.reservation(r.id)),
               ),
             ],
           ],

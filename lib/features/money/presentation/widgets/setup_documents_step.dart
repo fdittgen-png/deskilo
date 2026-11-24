@@ -11,6 +11,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -183,7 +184,7 @@ class _DocumentsPageState extends ConsumerState<_DocumentsPage> {
                 alignment: AlignmentDirectional.centerStart,
                 child: TextButton(
                   key: const ValueKey('setup-documents-open-designer'),
-                  onPressed: () => context.push('/reports?section=documents'),
+                  onPressed: () => context.push(Routes.reportsDocuments),
                   child: Text(l10n.setupGrowDocumentsOpenDesigner),
                 ),
               ),

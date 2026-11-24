@@ -7,6 +7,7 @@ import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -40,7 +41,7 @@ class BackendHowTo extends ConsumerWidget {
             padding: const EdgeInsets.only(bottom: AppSpacing.sm),
             child: FilledButton.icon(
               key: const ValueKey('backend-new-instance'),
-              onPressed: () => context.push('/server/new-instance'),
+              onPressed: () => context.push(Routes.serverNewInstance),
               icon: const Icon(Icons.auto_fix_high_outlined),
               label: Text(l10n.instanceCreateButton),
             ),

@@ -11,6 +11,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/failure/app_failure.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../domain/service_fulfilment.dart';
 import '../../providers/service_fulfilment_providers.dart';
@@ -54,7 +55,7 @@ class _State extends ConsumerState<FollowLineButton> {
       case CommandDone(:final value):
         _requestId = null;
         ref.invalidate(serviceFulfilmentsProvider(widget.workspaceId));
-        context.go('/money/engagements/${value.fulfilment.id}');
+        context.go(Routes.moneyEngagement(value.fulfilment.id));
       case CommandRefused(refusal: Refusal(cause: final FulfilmentRefusal refusal)):
         _requestId = null;
         AppSnack.error(context, engagementRefusalText(l10n, refusal));

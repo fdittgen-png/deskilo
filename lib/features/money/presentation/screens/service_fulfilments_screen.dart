@@ -11,6 +11,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/kit/page_title.dart';
@@ -133,7 +134,7 @@ class _Row extends StatelessWidget {
       title: Text(engagementScopeLine(item.scope)),
       subtitle: Text([?customer, engagementSourceLine(l10n, item)].join(' · ')),
       trailing: Text(engagementStateLabel(l10n, item.state), key: ValueKey('engagement-state-${item.id}')),
-      onTap: () => context.go('/money/engagements/${item.id}'),
+      onTap: () => context.go(Routes.moneyEngagement(item.id)),
     );
   }
 }

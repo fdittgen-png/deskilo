@@ -9,6 +9,7 @@ import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/help/help_hint.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/text/initials.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/adaptive/window_class.dart';
@@ -199,7 +200,7 @@ class MembersScreen extends ConsumerWidget {
                   // and with their current values; the sheet stays for
                   // the flag off.
                   onTap: () => features.contains(WorkspaceFeature.memberPage)
-                      ? context.push('/member/${member.id}')
+                      ? context.push(Routes.member(member.id))
                       : _memberSheet(
                     context,
                     ref,
@@ -245,7 +246,7 @@ class MembersScreen extends ConsumerWidget {
               key: const ValueKey('members-add-managed'),
               icon: const Icon(Icons.person_add_alt_1_outlined),
               tooltip: l10n.managedProfileAdd,
-              onPressed: () => context.push('/members/managed'),
+              onPressed: () => context.push(Routes.membersManaged),
             ),
           // Invite entry point (#195): the members list is where owners
           // notice someone is missing. Links to the owner-only workspace
@@ -259,7 +260,7 @@ class MembersScreen extends ConsumerWidget {
               onPressed: () => switch (ref.read(currentWorkspaceProvider).value) {
                 final ws? when desk => showInviteSheet(context,
                     workspace: ws, role: InviteRole.user, asTask: true),
-                _ => context.push('/workspace-code'),
+                _ => context.push(Routes.workspaceCode),
               },
             ),
           if (isOwner && features.contains(WorkspaceFeature.moneyTab))
@@ -267,7 +268,7 @@ class MembersScreen extends ConsumerWidget {
             key: const ValueKey('members-billing-title'),
             icon: const Icon(Icons.tune),
             tooltip: l10n.billingTitle,
-            onPressed: () => context.push('/billing'),
+            onPressed: () => context.push(Routes.billing),
           ),
     ];
   }

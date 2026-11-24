@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/help/guide_site.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/trace_logger.dart';
@@ -148,7 +149,7 @@ class _PendingApprovalScreenState extends ConsumerState<PendingApprovalScreen> {
                   children: [
                     TextButton.icon(
                       key: const ValueKey('pending-switch'),
-                      onPressed: () => context.go('/me'),
+                      onPressed: () => context.go(Routes.me),
                       icon: const Icon(Icons.switch_account_outlined),
                       label: Text(l10n.spaceBackToMe),
                     ),
