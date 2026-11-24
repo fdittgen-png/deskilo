@@ -25,6 +25,7 @@ import '../domain/stock_config.dart' show StockPlaceConfig, stockAddress;
 import '../domain/stock_reorder.dart';
 import '../providers/stock_providers.dart';
 import 'stock_config_text.dart';
+import 'stock_read_failed.dart';
 import 'stock_reorder_point_sheet.dart';
 
 class StockReorderScreen extends ConsumerWidget {
@@ -82,29 +83,6 @@ class StockReorderScreen extends ConsumerWidget {
 }
 
 /// A read that failed: said as such, with its retry; never an empty list.
-class _ReadFailed extends StatelessWidget {
-  const _ReadFailed({required this.keyName, required this.onRetry});
-
-  final String keyName;
-  final VoidCallback onRetry;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = context.l10n;
-    return Column(
-      key: ValueKey('$keyName-failed'),
-      children: [
-        Text(l10n.stockReadFailed),
-        TextButton(
-          key: ValueKey('$keyName-retry'),
-          onPressed: onRetry,
-          child: Text(l10n.identityConnectRetry),
-        ),
-      ],
-    );
-  }
-}
-
 class _LowList extends ConsumerWidget {
   const _LowList({required this.workspaceId});
 
@@ -117,7 +95,8 @@ class _LowList extends ConsumerWidget {
         .watch(stockLowProvider(workspaceId))
         .when(
           loading: () => const LoadingView(),
-          error: (_, _) => _ReadFailed(
+          error: (e, _) => StockReadFailed(
+            error: e,
             keyName: 'stock-reorder-low',
             onRetry: () => ref.invalidate(stockLowProvider(workspaceId)),
           ),
@@ -157,7 +136,8 @@ class _ToOrder extends ConsumerWidget {
         .watch(stockReplenishmentProvider(workspaceId))
         .when(
           loading: () => const LoadingView(),
-          error: (_, _) => _ReadFailed(
+          error: (e, _) => StockReadFailed(
+            error: e,
             keyName: 'stock-reorder-order',
             onRetry: () => ref.invalidate(stockReplenishmentProvider(workspaceId)),
           ),
@@ -241,7 +221,8 @@ class _PointsList extends ConsumerWidget {
         .watch(stockReorderPointsProvider(workspaceId))
         .when(
           loading: () => const LoadingView(),
-          error: (_, _) => _ReadFailed(
+          error: (e, _) => StockReadFailed(
+            error: e,
             keyName: 'stock-reorder-points',
             onRetry: () => ref.invalidate(stockReorderPointsProvider(workspaceId)),
           ),

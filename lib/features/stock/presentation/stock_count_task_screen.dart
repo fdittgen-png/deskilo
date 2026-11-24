@@ -32,6 +32,7 @@ import '../domain/stock_page.dart';
 import '../providers/stock_providers.dart';
 import 'stock_bulk_read_sheet.dart';
 import 'stock_config_text.dart';
+import 'stock_read_failed.dart';
 
 class StockCountTaskScreen extends ConsumerStatefulWidget {
   const StockCountTaskScreen({required this.taskId, super.key});
@@ -245,16 +246,7 @@ class _State extends ConsumerState<StockCountTaskScreen> {
         .watch(provider)
         .when(
           loading: () => const LoadingView(),
-          error: (_, _) => Center(
-            key: const ValueKey('stock-cycle-task-failed'),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(l10n.stockReadFailed),
-                TextButton(key: const ValueKey('stock-cycle-task-retry'), onPressed: () => ref.invalidate(provider), child: Text(l10n.identityConnectRetry)),
-              ],
-            ),
-          ),
+          error: (e, _) => StockReadFailed(keyName: 'stock-cycle-task', error: e, onRetry: () => ref.invalidate(provider)),
           data: (task) => ListView(
             padding: const EdgeInsets.all(AppSpacing.md),
             children: [

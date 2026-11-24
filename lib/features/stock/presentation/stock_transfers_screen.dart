@@ -34,6 +34,7 @@ import 'stock_config_text.dart';
 import 'stock_day.dart';
 import 'stock_move_sheets.dart';
 import 'stock_place_text.dart';
+import 'stock_read_failed.dart';
 
 class StockTransfersScreen extends ConsumerWidget {
   const StockTransfersScreen({super.key});
@@ -124,17 +125,7 @@ class _OnTheWay extends ConsumerWidget {
     final transfers = ref.watch(openTransfersProvider(workspaceId));
     return transfers.when(
       loading: () => const LoadingView(),
-      error: (e, st) => Column(
-        key: const ValueKey('stock-transfers-failed'),
-        children: [
-          Text(l10n.stockReadFailed),
-          TextButton(
-            key: const ValueKey('stock-transfers-retry'),
-            onPressed: () => ref.invalidate(openTransfersProvider(workspaceId)),
-            child: Text(l10n.identityConnectRetry),
-          ),
-        ],
-      ),
+      error: (e, st) => StockReadFailed(keyName: 'stock-transfers', error: e, onRetry: () => ref.invalidate(openTransfersProvider(workspaceId))),
       data: (list) => list.isEmpty
           ? Padding(
               key: const ValueKey('stock-transfers-empty'),

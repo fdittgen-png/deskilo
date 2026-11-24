@@ -17,6 +17,7 @@ import '../../../core/ui/app_sheet.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/stock_trace_chain.dart';
 import '../providers/stock_providers.dart';
+import 'stock_read_failed.dart';
 
 /// The words of a movement's reason; an unknown reason is shown as it came.
 String stockMoveReasonText(AppLocalizations l10n, String reason) => switch (reason) {
@@ -91,18 +92,7 @@ class StockChainSection extends ConsumerWidget {
     final fmt = appFormatOf(context);
     final body = switch (ref.watch(provider)) {
       AsyncLoading() => const LinearProgressIndicator(),
-      AsyncError() => Column(
-        key: const ValueKey('stock-chain-failed'),
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(l10n.stockReadFailed),
-          TextButton(
-            key: const ValueKey('stock-chain-retry'),
-            onPressed: () => ref.invalidate(provider),
-            child: Text(l10n.identityConnectRetry),
-          ),
-        ],
-      ),
+      AsyncError(:final error) => StockReadFailed(keyName: 'stock-chain', error: error, onRetry: () => ref.invalidate(provider)),
       AsyncData(:final value) => value.steps.length < 2 && value.took.isEmpty
           ? Text(l10n.stockChainEmpty, key: const ValueKey('stock-chain-empty'))
           : Column(

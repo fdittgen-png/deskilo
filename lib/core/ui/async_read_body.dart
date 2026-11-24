@@ -19,10 +19,18 @@ import 'loading_view.dart';
 /// no access, or a plain failure; with "Try again" repeating the same read.
 /// Announced once when it appears (a live region), never the list around it.
 class ReadFailureBanner extends StatelessWidget {
-  const ReadFailureBanner({super.key, required this.error, required this.onRetry});
+  const ReadFailureBanner({
+    super.key,
+    required this.error,
+    required this.onRetry,
+    this.retryKey = const ValueKey('inline-banner-action'),
+  });
 
   final Object error;
   final VoidCallback onRetry;
+
+  /// The Try again button's key, for a screen that names its own retry.
+  final Key retryKey;
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +50,7 @@ class ReadFailureBanner extends StatelessWidget {
         // have just been given the access: the way forward stays.
         actionLabel: l10n.commonRetry,
         onAction: onRetry,
+        actionKey: retryKey,
       ),
     );
   }
