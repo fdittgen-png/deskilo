@@ -847,8 +847,12 @@ migration after it keeps an older app right:
   (the floor does not exist yet, so for now: nothing is removed);
 - from the next migration on, the line after `-- risk:` is
   `-- apps: additive | needs app at least N | breaks apps below N`. The lint
-  that requires it is K4 (#3731), not yet written: until then a reviewer
-  checks it.
+  that requires it is K4 (#3731, `test/lint/consumer_contract_test.dart`,
+  scanner `tool/migration_apps.dart`): `additive` drops, renames and changes
+  no function's parameters without defaults; `breaks apps below N` raises
+  `deskilo_app_floor()` to N in the same file. The PR text and the ready line
+  carry one sentence: what an app of the last release does after this
+  migration (the database job's consumer-contract step proves the structure).
 Anything stored or exchanged with a version of its own gets a row in that
 record's table, with what its reader does with a higher version (refuse,
 ignore, show generically); reading an unknown or missing value as a known
