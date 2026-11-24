@@ -29,6 +29,16 @@ import '../domain/invoice_action_commands.dart';
 import '../domain/invoice_queries.dart';
 import 'command_failure.dart';
 
+/// Whether an open [invoice] may be regrouped: not voided, not already
+/// regrouped or a regrouping itself, not of a kind this app does not know
+/// (#3730), and with no payment waiting to be matched ([pendingMatch]).
+bool mayRegroup(Invoice invoice, Object? pendingMatch) =>
+    !invoice.isVoided &&
+    invoice.settledByInvoiceId == null &&
+    invoice.kind != InvoiceKind.settlement &&
+    invoice.kind != InvoiceKind.unknown &&
+    pendingMatch == null;
+
 /// The invoices of [memberId] that may be regrouped, from the open list.
 ///
 /// Pure: it takes what the overview already computed rather than asking
@@ -40,12 +50,7 @@ List<Invoice> settlementCandidates(
     [
       for (final entry in open)
         if (entry.invoice.memberId == memberId &&
-            !entry.invoice.isVoided &&
-            entry.invoice.settledByInvoiceId == null &&
-            entry.invoice.kind != InvoiceKind.settlement &&
-            // #3730 — a kind this app does not know is never regrouped.
-            entry.invoice.kind != InvoiceKind.unknown &&
-            entry.pendingMatch == null)
+            mayRegroup(entry.invoice, entry.pendingMatch))
           entry.invoice,
     ];
 
