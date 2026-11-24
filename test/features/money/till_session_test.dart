@@ -5,6 +5,8 @@
 // had, and a receipt the server says moved is priced again once.
 import 'dart:async';
 
+import 'package:deskilo/core/codes/dk_code.dart';
+import 'package:deskilo/core/codes/pg_code.dart';
 import 'package:deskilo/features/money/domain/counter_receipt_document.dart';
 import 'package:deskilo/features/money/domain/counter_till.dart';
 import 'package:deskilo/features/money/presentation/till_session.dart';
@@ -65,7 +67,7 @@ class _Port implements TillPort {
       failNextDraft = null;
       throw e;
     }
-    if (receiptId != null && expectedRevision != _revision) throw const PostgrestException(message: 'moved', code: 'DKL10');
+    if (receiptId != null && expectedRevision != _revision) throw const PostgrestException(message: 'moved', code: DkCode.dkl10);
     final d = TillDraft(
       receiptId: receiptId ?? 'r-1',
       revision: ++_revision,
@@ -86,7 +88,7 @@ class _Port implements TillPort {
     }
     final seen = _made[requestId];
     if (seen != null) return seen;
-    if (_made.isNotEmpty) throw const PostgrestException(message: 'already issued', code: 'DKL04');
+    if (_made.isNotEmpty) throw const PostgrestException(message: 'already issued', code: DkCode.dkl04);
     final sold = TillSold(receiptId: receiptId, number: 'R-${++_sold}', totals: TillTotals(netMinor: 0, taxMinor: 0, grossMinor: tenders.single.amountMinor, currency: 'EUR'));
     _made[requestId] = sold;
     if (failNextFinalize case final e?) {
@@ -120,7 +122,7 @@ void main() {
     final s = _session(port);
     await _ring(s, 'milk');
     expect(s.state.value.draft, isNotNull);
-    port.failNextDraft = const PostgrestException(message: 'no price', code: 'DKL02');
+    port.failNextDraft = const PostgrestException(message: 'no price', code: DkCode.dkl02);
     await _ring(s, 'beans');
     expect(s.state.value.draft, isNull);
     expect(s.state.value.problem, isA<PostgrestException>());
@@ -214,7 +216,7 @@ void main() {
     final port = _Port();
     final s = _session(port);
     await _ring(s, 'milk');
-    port.refuseNextFinalize = const PostgrestException(message: 'bad', code: '22023');
+    port.refuseNextFinalize = const PostgrestException(message: 'bad', code: PgCode.invalidParameterValue);
     await s.payCash(100);
     expect(s.state.value.unconfirmed, isFalse);
     expect(s.state.value.problem, isA<PostgrestException>());
@@ -253,7 +255,7 @@ void main() {
     final port = _Port();
     final s = _session(port);
     await _ring(s, 'milk');
-    port.refuseNextFinalize = const PostgrestException(message: 'moved', code: 'DKL10');
+    port.refuseNextFinalize = const PostgrestException(message: 'moved', code: DkCode.dkl10);
     await s.payCash(100);
     expect(s.state.value.unconfirmed, isFalse);
     expect(s.state.value.sold, isNull);

@@ -391,13 +391,15 @@ void main() {
     await pumpServices(tester, money: money, workspace: workspace);
 
     await tester.tap(find.text('Coffee'));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
     final unknown = find.byKey(const ValueKey('supply-class-unknown'));
     await tester.ensureVisible(unknown);
     expect(unknown, findsOneWidget);
     expect(find.byKey(const ValueKey('supply-class-field')), findsNothing);
     await tester.tap(find.byKey(const ValueKey('services-save')));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
 
     expect(money.services.singleWhere((s) => s.name == 'Coffee').supplyClass,
         SupplyClass.unknown,

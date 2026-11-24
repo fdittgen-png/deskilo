@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:meta/meta.dart';
 
-import '../data/external_hosts.dart';
+import '../links/external_hosts.dart';
 import 'app_url_setting.dart';
 import 'instance_bundle.dart';
 import 'instance_network.dart';

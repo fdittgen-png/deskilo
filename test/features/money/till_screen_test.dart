@@ -5,6 +5,7 @@
 // of the total is refused before anything is sent, the exact amount makes the sale and the next customer starts clean,
 // a country that is not ready offers nothing and says which operation, and a server refusal is said in words.
 import 'package:deskilo/app/routes/till_route.dart';
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/core/demo/data/demo_stock_config_commands.dart';
 import 'package:deskilo/core/demo/data/demo_stock_ledger.dart';
 import 'package:deskilo/core/demo/data/demo_stock_queries.dart';
@@ -385,7 +386,7 @@ void main() {
       });
 
       testWidgets('a refusal of the server is said in words under the basket', (tester) async {
-        await _open(tester, _RefusingTill('DKL06'), size);
+        await _open(tester, _RefusingTill(DkCode.dkl06), size);
         await _tap(tester, 'till-key-demo-item-milk');
         await _tap(tester, 'till-pay');
         await _tap(tester, 'till-cash-exact');
