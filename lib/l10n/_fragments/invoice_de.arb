@@ -383,7 +383,6 @@
   "fecAccountRevenue": "Erlöse",
   "fecMissingSiren": "Der FEC-Dateiname enthält die Registernummer — tragen Sie sie zuerst unter Rechtliche Identität ein.",
   "invoiceEInvoiceStaleIdentity": "Ihre rechtliche Identität ist jetzt vollständig, diese Rechnung wurde aber vorher signiert und behält, womit sie ausgestellt wurde. Als fehlerhaft markieren und eine Ersatzrechnung ausstellen, damit sie die neue Identität trägt.",
-  "einvoiceConfigUnavailable": "Die Plattform-Einstellungen konnten nicht geladen werden. Verbindung prüfen und erneut versuchen.",
   "einvoiceEnvTitle": "An welche Plattform senden?",
   "einvoiceEnvProd": "Produktion",
   "einvoiceEnvUat": "UAT (Testplattform)",

@@ -125,7 +125,6 @@
   "accessoriesSupplement": "Suplemento por media jornada",
   "accessoriesTitle": "Accesorios",
   "accountActivityEmpty": "No hay registros que mostrar.",
-  "accountActivityFailed": "No se pudo cargar su historial financiero. Toque para reintentar.",
   "accountActivityScope": "Todos sus perfiles en este servidor, incluidas las afiliaciones anteriores. Las monedas se muestran por separado.",
   "accountActivityTitle": "Mi consumo y mis pagos",
   "accountCardTitle": "Su cuenta",
@@ -2999,7 +2998,6 @@
   "billingCustomerVatInvalid": "Esto no parece un número de IVA. Solo se comprueba su forma, no su existencia.",
   "billingCustomersAdd": "Añadir un cliente",
   "billingCustomersEmpty": "Aún no hay clientes facturados. Añada el primero para facturarle sin pedirle que cree una cuenta.",
-  "billingCustomersLoadFailed": "No se pudieron leer los clientes. No es una lista vacía.",
   "billingCustomersNoAccount": "Las personas y empresas a las que factura. No son miembros y no ven nada de su negocio, salvo que las invite a leer sus propias facturas desde su propia cuenta.",
   "billingCustomersRetry": "Reintentar",
   "billingCustomersSearch": "Buscar clientes",
@@ -5993,7 +5991,6 @@
   "einvoiceConfigTitle": "Plataforma de facturación electrónica",
   "einvoiceConfigToken": "Token o credencial",
   "einvoiceConfigTokenSet": "Hay un token guardado (escriba uno nuevo para reemplazarlo).",
-  "einvoiceConfigUnavailable": "No se pudo cargar la configuración de la plataforma. Compruebe la conexión e inténtelo de nuevo.",
   "einvoiceCustomerSectionHelp": "Adónde van las facturas para el cliente: su punto de acceso Peppol, portal o la API acordada — separado de la plataforma gubernamental.",
   "@einvoiceCustomerSectionHelp": {
     "description": "E-invoicing config: customer delivery section help (#568)"
@@ -6207,10 +6204,6 @@
   },
   "engagementsIntro": "Siga cada servicio pedido: pedido, iniciado, terminado. El presupuesto, la factura y los pagos quedan como están.",
   "@engagementsIntro": {
-    "description": "service engagements (#4178)"
-  },
-  "engagementsLoadFailed": "No se pudieron leer los servicios. Esto no es una lista vacía.",
-  "@engagementsLoadFailed": {
     "description": "service engagements (#4178)"
   },
   "engagementsNew": "Nuevo servicio",
@@ -14404,7 +14397,6 @@
   "paymentMatchCandidate": "{number} · {amount} pendientes",
   "paymentMatchDecide": "Otro importe: usted elige cómo saldar la diferencia",
   "paymentMatchEmpty": "Ningún pago espera una factura.",
-  "paymentMatchFailed": "No se pudieron leer los pagos.",
   "paymentMatchHeader": "{amount} recibidos el {date}",
   "paymentMatchIntro": "Se recibió un pago que aún no está asignado. Elija la factura que paga.",
   "paymentMatchInvoiceGone": "Esta factura ya no está abierta: la lista se vuelve a leer.",
@@ -16448,10 +16440,8 @@
   "quoteValidUntil": "Válido hasta el {date}",
   "quotesEmpty": "Aún no hay presupuestos. Haga el primero para un cliente facturado.",
   "quotesIntro": "Ofertas a sus clientes facturados. Un presupuesto enviado nunca cambia; una modificación es otra revisión. No se factura nada hasta que convierta uno aceptado.",
-  "quotesLoadFailed": "No se pudieron leer los presupuestos. No es una lista vacía.",
   "quotesNew": "Nuevo presupuesto",
   "quotesNotAllowed": "No puede leer los presupuestos de este negocio.",
-  "quotesRetry": "Reintentar",
   "quotesTitle": "Presupuestos",
   "readStateDenied": "No tiene acceso a esto. Si lo necesita, pídaselo a un administrador del espacio.",
   "@readStateDenied": {
@@ -23656,10 +23646,6 @@
     "description": "#2477 tax reference: Field: label of a rate."
   },
   "taxRefLanguages": "Idiomas oficiales (ISO 639-1, el habitual primero)",
-  "taxRefLoadFailed": "No se pudieron cargar los datos de referencia.",
-  "@taxRefLoadFailed": {
-    "description": "#2477 tax reference: error text when the list cannot load."
-  },
   "taxRefMemberEmpty": "Un Estado miembro no tiene más campos.",
   "@taxRefMemberEmpty": {
     "description": "#2477 tax reference: Hint in the form of an EU member."

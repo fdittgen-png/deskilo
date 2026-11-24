@@ -150,11 +150,11 @@ void main() {
     repo.failNext = http.ClientException('connection closed');
     container.invalidate(billingCustomersProvider(id));
     await tester.pumpAndSettle();
-    expect(find.text(_en.billingCustomersLoadFailed), findsOneWidget);
+    expect(find.byKey(const ValueKey('read-failure')), findsOneWidget);
     expect(find.text(_en.billingCustomersEmpty), findsNothing);
     await tester.tap(find.byKey(const ValueKey('billing-customers-retry')));
     await tester.pumpAndSettle();
-    expect(find.text(_en.billingCustomersLoadFailed), findsNothing);
+    expect(find.byKey(const ValueKey('read-failure')), findsNothing);
     expect(find.text(_en.billingCustomersEmpty), findsOneWidget);
   });
 }

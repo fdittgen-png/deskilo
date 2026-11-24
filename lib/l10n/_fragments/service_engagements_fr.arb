@@ -4,7 +4,6 @@
   "engagementsIntro": "Suivez chaque prestation commandée : commandée, commencée, terminée. Le devis, la facture et les paiements restent tels quels à côté.",
   "engagementsNew": "Nouvelle prestation",
   "engagementsEmpty": "Aucune prestation pour l'instant. Ouvrez-en une depuis un devis accepté, ou ajoutez-en une directement.",
-  "engagementsLoadFailed": "Les prestations n'ont pas pu être lues. Ce n'est pas une liste vide.",
   "engagementStateOrdered": "Commandée",
   "engagementStateStarted": "Commencée",
   "engagementStateDone": "Terminée",
@@ -43,9 +42,6 @@
     "description": "service engagements (#4178)"
   },
   "@engagementsEmpty": {
-    "description": "service engagements (#4178)"
-  },
-  "@engagementsLoadFailed": {
     "description": "service engagements (#4178)"
   },
   "@engagementStateOrdered": {

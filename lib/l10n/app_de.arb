@@ -125,7 +125,6 @@
   "accessoriesSupplement": "Aufpreis pro halbem Tag",
   "accessoriesTitle": "Zubehör",
   "accountActivityEmpty": "Keine Einträge vorhanden.",
-  "accountActivityFailed": "Ihr Finanzverlauf konnte nicht geladen werden. Zum Wiederholen antippen.",
   "accountActivityScope": "Alle Ihre Profile auf diesem Server, auch frühere Mitgliedschaften. Währungen werden getrennt angezeigt.",
   "accountActivityTitle": "Mein Verbrauch und meine Zahlungen",
   "accountCardTitle": "Ihr Konto",
@@ -2999,7 +2998,6 @@
   "billingCustomerVatInvalid": "Das sieht nicht wie eine USt-IdNr. aus. Geprüft wird nur die Form, nicht das Bestehen.",
   "billingCustomersAdd": "Kunden hinzufügen",
   "billingCustomersEmpty": "Noch keine Rechnungskunden. Legen Sie den ersten an, um ihm eine Rechnung zu stellen, ohne dass er ein Konto anlegen muss.",
-  "billingCustomersLoadFailed": "Die Kunden konnten nicht gelesen werden. Das ist keine leere Liste.",
   "billingCustomersNoAccount": "Die Personen und Unternehmen, denen Sie Rechnungen stellen. Sie sind keine Mitglieder und sehen nichts von Ihrem Betrieb, es sei denn, Sie laden sie ein, ihre eigenen Rechnungen in ihrem eigenen Konto zu lesen.",
   "billingCustomersRetry": "Erneut versuchen",
   "billingCustomersSearch": "Kunden suchen",
@@ -5993,7 +5991,6 @@
   "einvoiceConfigTitle": "E-Rechnungs-Plattform",
   "einvoiceConfigToken": "Token oder Zugangsdaten",
   "einvoiceConfigTokenSet": "Ein Token ist gespeichert (neues eingeben, um es zu ersetzen).",
-  "einvoiceConfigUnavailable": "Die Plattform-Einstellungen konnten nicht geladen werden. Verbindung prüfen und erneut versuchen.",
   "einvoiceCustomerSectionHelp": "Wohin Rechnungen für den Kunden gehen: sein Peppol-Zugangspunkt, Portal oder die vereinbarte Upload-API — getrennt von der staatlichen Plattform.",
   "@einvoiceCustomerSectionHelp": {
     "description": "E-invoicing config: customer delivery section help (#568)"
@@ -6207,10 +6204,6 @@
   },
   "engagementsIntro": "Verfolgen Sie jede bestellte Leistung: bestellt, begonnen, erledigt. Angebot, Rechnung und Zahlungen bleiben daneben unverändert.",
   "@engagementsIntro": {
-    "description": "service engagements (#4178)"
-  },
-  "engagementsLoadFailed": "Die Aufträge konnten nicht gelesen werden. Das ist keine leere Liste.",
-  "@engagementsLoadFailed": {
     "description": "service engagements (#4178)"
   },
   "engagementsNew": "Neuer Auftrag",
@@ -14404,7 +14397,6 @@
   "paymentMatchCandidate": "{number} · {amount} offen",
   "paymentMatchDecide": "Anderer Betrag: Sie wählen, wie die Differenz beglichen wird",
   "paymentMatchEmpty": "Keine Zahlung wartet auf eine Rechnung.",
-  "paymentMatchFailed": "Die Zahlungen konnten nicht gelesen werden.",
   "paymentMatchHeader": "{amount} eingegangen am {date}",
   "paymentMatchIntro": "Eine Zahlung ist eingegangen und noch nicht zugeordnet. Wählen Sie die Rechnung, die sie begleicht.",
   "paymentMatchInvoiceGone": "Diese Rechnung ist nicht mehr offen: Die Liste wird neu gelesen.",
@@ -16448,10 +16440,8 @@
   "quoteValidUntil": "Gültig bis {date}",
   "quotesEmpty": "Noch keine Angebote. Erstellen Sie das erste für einen Rechnungskunden.",
   "quotesIntro": "Angebote an Ihre Rechnungskunden. Ein gesendetes Angebot ändert sich nie; eine Änderung ist eine weitere Revision. Es wird nichts berechnet, bis Sie ein angenommenes Angebot umwandeln.",
-  "quotesLoadFailed": "Die Angebote konnten nicht gelesen werden. Das ist keine leere Liste.",
   "quotesNew": "Neues Angebot",
   "quotesNotAllowed": "Sie dürfen die Angebote dieses Unternehmens nicht lesen.",
-  "quotesRetry": "Erneut versuchen",
   "quotesTitle": "Angebote",
   "readStateDenied": "Dafür haben Sie keinen Zugriff. Fragen Sie bei Bedarf eine Administratorin oder einen Administrator des Arbeitsbereichs.",
   "@readStateDenied": {
@@ -23656,10 +23646,6 @@
     "description": "#2477 tax reference: Field: label of a rate."
   },
   "taxRefLanguages": "Amtssprachen (ISO 639-1, die übliche zuerst)",
-  "taxRefLoadFailed": "Die Referenzdaten konnten nicht geladen werden.",
-  "@taxRefLoadFailed": {
-    "description": "#2477 tax reference: error text when the list cannot load."
-  },
   "taxRefMemberEmpty": "Ein Mitgliedstaat hat keine weiteren Felder.",
   "@taxRefMemberEmpty": {
     "description": "#2477 tax reference: Hint in the form of an EU member."

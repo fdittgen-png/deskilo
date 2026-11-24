@@ -163,10 +163,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get accountActivityEmpty => 'Keine Einträge vorhanden.';
 
   @override
-  String get accountActivityFailed =>
-      'Ihr Finanzverlauf konnte nicht geladen werden. Zum Wiederholen antippen.';
-
-  @override
   String get accountActivityScope =>
       'Alle Ihre Profile auf diesem Server, auch frühere Mitgliedschaften. Währungen werden getrennt angezeigt.';
 
@@ -5274,10 +5270,6 @@ class AppLocalizationsDe extends AppLocalizations {
       'Noch keine Rechnungskunden. Legen Sie den ersten an, um ihm eine Rechnung zu stellen, ohne dass er ein Konto anlegen muss.';
 
   @override
-  String get billingCustomersLoadFailed =>
-      'Die Kunden konnten nicht gelesen werden. Das ist keine leere Liste.';
-
-  @override
   String get billingCustomersNoAccount =>
       'Die Personen und Unternehmen, denen Sie Rechnungen stellen. Sie sind keine Mitglieder und sehen nichts von Ihrem Betrieb, es sei denn, Sie laden sie ein, ihre eigenen Rechnungen in ihrem eigenen Konto zu lesen.';
 
@@ -9770,10 +9762,6 @@ class AppLocalizationsDe extends AppLocalizations {
       'Ein Token ist gespeichert (neues eingeben, um es zu ersetzen).';
 
   @override
-  String get einvoiceConfigUnavailable =>
-      'Die Plattform-Einstellungen konnten nicht geladen werden. Verbindung prüfen und erneut versuchen.';
-
-  @override
   String get einvoiceCustomerSectionHelp =>
       'Wohin Rechnungen für den Kunden gehen: sein Peppol-Zugangspunkt, Portal oder die vereinbarte Upload-API — getrennt von der staatlichen Plattform.';
 
@@ -10017,10 +10005,6 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get engagementsIntro =>
       'Verfolgen Sie jede bestellte Leistung: bestellt, begonnen, erledigt. Angebot, Rechnung und Zahlungen bleiben daneben unverändert.';
-
-  @override
-  String get engagementsLoadFailed =>
-      'Die Aufträge konnten nicht gelesen werden. Das ist keine leere Liste.';
 
   @override
   String get engagementsNew => 'Neuer Auftrag';
@@ -25271,10 +25255,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get paymentMatchEmpty => 'Keine Zahlung wartet auf eine Rechnung.';
 
   @override
-  String get paymentMatchFailed =>
-      'Die Zahlungen konnten nicht gelesen werden.';
-
-  @override
   String paymentMatchHeader(String amount, String date) {
     return '$amount eingegangen am $date';
   }
@@ -28774,18 +28754,11 @@ class AppLocalizationsDe extends AppLocalizations {
       'Angebote an Ihre Rechnungskunden. Ein gesendetes Angebot ändert sich nie; eine Änderung ist eine weitere Revision. Es wird nichts berechnet, bis Sie ein angenommenes Angebot umwandeln.';
 
   @override
-  String get quotesLoadFailed =>
-      'Die Angebote konnten nicht gelesen werden. Das ist keine leere Liste.';
-
-  @override
   String get quotesNew => 'Neues Angebot';
 
   @override
   String get quotesNotAllowed =>
       'Sie dürfen die Angebote dieses Unternehmens nicht lesen.';
-
-  @override
-  String get quotesRetry => 'Erneut versuchen';
 
   @override
   String get quotesTitle => 'Angebote';
@@ -40776,10 +40749,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get taxRefLanguages => 'Amtssprachen (ISO 639-1, die übliche zuerst)';
-
-  @override
-  String get taxRefLoadFailed =>
-      'Die Referenzdaten konnten nicht geladen werden.';
 
   @override
   String get taxRefMemberEmpty =>

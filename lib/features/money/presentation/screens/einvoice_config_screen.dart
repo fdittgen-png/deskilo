@@ -8,7 +8,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../core/ui/inline_banner.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/kit/form_scroll.dart';
 import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -179,23 +179,6 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
     _customerHeader.text = status.fields['customer_auth_header'] ?? '';
     _customerField.text = status.fields['customer_field_name'] ?? '';
   }
-
-  Widget _errorBody(AppLocalizations l10n) => FormScroll(
-        padding: AppSpacing.gutterAll,
-        children: [
-          InlineBanner(
-            key: const ValueKey('einvoice-config-error'),
-            icon: Icons.cloud_off_outlined,
-            text: l10n.einvoiceConfigUnavailable,
-          ),
-          const SizedBox(height: AppSpacing.md),
-          FilledButton(
-            key: const ValueKey('einvoice-config-retry'),
-            onPressed: () => ref.invalidate(eInvoiceStatusProvider),
-            child: Text(l10n.commonRetry),
-          ),
-        ],
-      );
 
   /// The generic connector's endpoint and credential fields.
   List<Widget> _genericFields(
@@ -409,7 +392,17 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
       // (field report): a failing RPC is now something the owner can see
       // and retry, not a blank page.
       body: switch (statusAsync) {
-        AsyncError() => _errorBody(l10n),
+        AsyncError(:final error) => FormScroll(
+            padding: AppSpacing.gutterAll,
+            children: [
+              ReadFailureBanner(
+                key: const ValueKey('einvoice-config-error'),
+                error: error,
+                retryKey: const ValueKey('einvoice-config-retry'),
+                onRetry: () => ref.invalidate(eInvoiceStatusProvider),
+              ),
+            ],
+          ),
         _ when status == null => const LoadingView(),
         _ => FormScroll(
               padding: AppSpacing.gutterAll,

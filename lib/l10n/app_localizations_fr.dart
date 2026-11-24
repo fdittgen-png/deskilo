@@ -163,10 +163,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get accountActivityEmpty => 'Aucun enregistrement à afficher.';
 
   @override
-  String get accountActivityFailed =>
-      'Impossible de charger votre historique financier. Appuyez pour réessayer.';
-
-  @override
   String get accountActivityScope =>
       'Tous vos profils sur ce serveur, y compris vos anciennes adhésions. Les devises restent séparées.';
 
@@ -5286,10 +5282,6 @@ class AppLocalizationsFr extends AppLocalizations {
       'Aucun client facturé pour l\'instant. Ajoutez le premier pour le facturer sans lui demander de créer un compte.';
 
   @override
-  String get billingCustomersLoadFailed =>
-      'Les clients n\'ont pas pu être lus. Ce n\'est pas une liste vide.';
-
-  @override
   String get billingCustomersNoAccount =>
       'Les personnes et entreprises que vous facturez. Ce ne sont pas des membres et elles ne voient rien de votre activité, sauf si vous les invitez à lire leurs propres factures depuis leur propre compte.';
 
@@ -9792,10 +9784,6 @@ class AppLocalizationsFr extends AppLocalizations {
       'Un jeton est enregistré (saisissez-en un nouveau pour le remplacer).';
 
   @override
-  String get einvoiceConfigUnavailable =>
-      'Impossible de charger la configuration de la plateforme. Vérifiez votre connexion et réessayez.';
-
-  @override
   String get einvoiceCustomerSectionHelp =>
       'Où partent les factures destinées au client : son point d’accès Peppol, son portail ou l’API convenue — distinct de la plateforme gouvernementale.';
 
@@ -10039,10 +10027,6 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get engagementsIntro =>
       'Suivez chaque prestation commandée : commandée, commencée, terminée. Le devis, la facture et les paiements restent tels quels à côté.';
-
-  @override
-  String get engagementsLoadFailed =>
-      'Les prestations n\'ont pas pu être lues. Ce n\'est pas une liste vide.';
 
   @override
   String get engagementsNew => 'Nouvelle prestation';
@@ -25314,9 +25298,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get paymentMatchEmpty => 'Aucun paiement n\'attend de facture.';
 
   @override
-  String get paymentMatchFailed => 'Les paiements n\'ont pas pu être lus.';
-
-  @override
   String paymentMatchHeader(String amount, String date) {
     return '$amount reçus le $date';
   }
@@ -28816,18 +28797,11 @@ class AppLocalizationsFr extends AppLocalizations {
       'Offres à vos clients facturés. Un devis envoyé ne change jamais ; une modification est une autre révision. Rien n\'est facturé avant que vous convertissiez un devis accepté.';
 
   @override
-  String get quotesLoadFailed =>
-      'Les devis n\'ont pas pu être lus. Ce n\'est pas une liste vide.';
-
-  @override
   String get quotesNew => 'Nouveau devis';
 
   @override
   String get quotesNotAllowed =>
       'Vous ne pouvez pas lire les devis de cette activité.';
-
-  @override
-  String get quotesRetry => 'Réessayer';
 
   @override
   String get quotesTitle => 'Devis';
@@ -40828,10 +40802,6 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get taxRefLanguages =>
       'Langues officielles (ISO 639-1, l\'usuelle en premier)';
-
-  @override
-  String get taxRefLoadFailed =>
-      'Les données de référence n\'ont pas pu être chargées.';
 
   @override
   String get taxRefMemberEmpty => 'Un État membre n\'a pas d\'autres champs.';

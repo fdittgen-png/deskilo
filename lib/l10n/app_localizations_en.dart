@@ -163,10 +163,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accountActivityEmpty => 'No records to display.';
 
   @override
-  String get accountActivityFailed =>
-      'Could not load your financial history. Tap to retry.';
-
-  @override
   String get accountActivityScope =>
       'All your profiles on this server, including previous memberships. Currencies are shown separately.';
 
@@ -5233,10 +5229,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'No billing customers yet. Add the first one to invoice it without asking it to create an account.';
 
   @override
-  String get billingCustomersLoadFailed =>
-      'The customers could not be read. This is not an empty list.';
-
-  @override
   String get billingCustomersNoAccount =>
       'The people and businesses you invoice. They are not members and see nothing of your business, unless you invite them to read their own invoices from their own account.';
 
@@ -9682,10 +9674,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'A token is stored (type a new one to replace it).';
 
   @override
-  String get einvoiceConfigUnavailable =>
-      'The platform settings could not be loaded. Check your connection and try again.';
-
-  @override
   String get einvoiceCustomerSectionHelp =>
       'Where invoices go for the customer: their Peppol access point, portal or agreed upload API — separate from the government platform.';
 
@@ -9926,10 +9914,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get engagementsIntro =>
       'Follow each service you were ordered: ordered, started, done. The quote, the invoice and the payments stay as they are beside it.';
-
-  @override
-  String get engagementsLoadFailed =>
-      'The engagements could not be read. This is not an empty list.';
 
   @override
   String get engagementsNew => 'New engagement';
@@ -25032,9 +25016,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get paymentMatchEmpty => 'No payment is waiting for an invoice.';
 
   @override
-  String get paymentMatchFailed => 'The payments could not be read.';
-
-  @override
   String paymentMatchHeader(String amount, String date) {
     return '$amount received $date';
   }
@@ -28491,18 +28472,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'Offers to your billing customers. A sent quote never changes; an amendment is another revision. Nothing is invoiced until you convert an accepted one.';
 
   @override
-  String get quotesLoadFailed =>
-      'The quotes could not be read. This is not an empty list.';
-
-  @override
   String get quotesNew => 'New quote';
 
   @override
   String get quotesNotAllowed =>
       'You may not read the quotes of this business.';
-
-  @override
-  String get quotesRetry => 'Try again';
 
   @override
   String get quotesTitle => 'Quotes';
@@ -40314,9 +40288,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get taxRefLanguages =>
       'Official languages (ISO 639-1, usual one first)';
-
-  @override
-  String get taxRefLoadFailed => 'The reference data could not be loaded.';
 
   @override
   String get taxRefMemberEmpty => 'A member state has no further fields.';

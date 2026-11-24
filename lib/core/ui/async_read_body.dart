@@ -24,10 +24,16 @@ class ReadFailureBanner extends StatelessWidget {
     required this.error,
     required this.onRetry,
     this.retryKey = const ValueKey('inline-banner-action'),
+    this.refusal,
   });
 
   final Object error;
   final VoidCallback onRetry;
+
+  /// #4414 — a typed refusal's own words (a quote this person may not see,
+  /// a feature switched off): said instead of the classified ones, with the
+  /// same Try again. Null words the failure by its kind.
+  final String? refusal;
 
   /// The Try again button's key, for a screen that names its own retry.
   final Key retryKey;
@@ -36,6 +42,7 @@ class ReadFailureBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final (icon, text) = switch (classifyReadFailure(error)) {
+      _ when refusal != null => (Icons.lock_outline, refusal!),
       ReadFailure.transient => (Icons.cloud_off_outlined, l10n.readStateOffline),
       ReadFailure.denied => (Icons.lock_outline, l10n.readStateDenied),
       ReadFailure.other => (Icons.error_outline, l10n.readStateFailed),

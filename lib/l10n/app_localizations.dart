@@ -374,12 +374,6 @@ abstract class AppLocalizations {
   /// **'No records to display.'**
   String get accountActivityEmpty;
 
-  /// Shown as a text in account activity screen (money), and 2 other places.
-  ///
-  /// In en, this message translates to:
-  /// **'Could not load your financial history. Tap to retry.'**
-  String get accountActivityFailed;
-
   /// Shown as a text in account activity screen (money).
   ///
   /// In en, this message translates to:
@@ -8240,12 +8234,6 @@ abstract class AppLocalizations {
   /// the billing customers screen and editor (#4164)
   ///
   /// In en, this message translates to:
-  /// **'The customers could not be read. This is not an empty list.'**
-  String get billingCustomersLoadFailed;
-
-  /// the billing customers screen and editor (#4164)
-  ///
-  /// In en, this message translates to:
   /// **'The people and businesses you invoice. They are not members and see nothing of your business, unless you invite them to read their own invoices from their own account.'**
   String get billingCustomersNoAccount;
 
@@ -15525,12 +15513,6 @@ abstract class AppLocalizations {
   /// **'A token is stored (type a new one to replace it).'**
   String get einvoiceConfigTokenSet;
 
-  /// Shown when the e-invoice platform status probe fails
-  ///
-  /// In en, this message translates to:
-  /// **'The platform settings could not be loaded. Check your connection and try again.'**
-  String get einvoiceConfigUnavailable;
-
   /// E-invoicing config: customer delivery section help (#568)
   ///
   /// In en, this message translates to:
@@ -15944,12 +15926,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Follow each service you were ordered: ordered, started, done. The quote, the invoice and the payments stay as they are beside it.'**
   String get engagementsIntro;
-
-  /// service engagements (#4178)
-  ///
-  /// In en, this message translates to:
-  /// **'The engagements could not be read. This is not an empty list.'**
-  String get engagementsLoadFailed;
 
   /// service engagements (#4178)
   ///
@@ -39950,12 +39926,6 @@ abstract class AppLocalizations {
   /// **'No payment is waiting for an invoice.'**
   String get paymentMatchEmpty;
 
-  /// #3587 R1-f: payments to match (paymentMatchFailed)
-  ///
-  /// In en, this message translates to:
-  /// **'The payments could not be read.'**
-  String get paymentMatchFailed;
-
   /// #3587 R1-f: payments to match (paymentMatchHeader)
   ///
   /// In en, this message translates to:
@@ -45735,12 +45705,6 @@ abstract class AppLocalizations {
   /// customer quotes: the quotes list, editor and detail (#4166)
   ///
   /// In en, this message translates to:
-  /// **'The quotes could not be read. This is not an empty list.'**
-  String get quotesLoadFailed;
-
-  /// customer quotes: the quotes list, editor and detail (#4166)
-  ///
-  /// In en, this message translates to:
   /// **'New quote'**
   String get quotesNew;
 
@@ -45749,12 +45713,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You may not read the quotes of this business.'**
   String get quotesNotAllowed;
-
-  /// customer quotes: the quotes list, editor and detail (#4166)
-  ///
-  /// In en, this message translates to:
-  /// **'Try again'**
-  String get quotesRetry;
 
   /// customer quotes: the quotes list, editor and detail (#4166)
   ///
@@ -64881,12 +64839,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Official languages (ISO 639-1, usual one first)'**
   String get taxRefLanguages;
-
-  /// #2477 tax reference: error text when the list cannot load.
-  ///
-  /// In en, this message translates to:
-  /// **'The reference data could not be loaded.'**
-  String get taxRefLoadFailed;
 
   /// #2477 tax reference: Hint in the form of an EU member.
   ///

@@ -43,10 +43,6 @@
   "@paymentMatchEmpty": {
     "description": "#3587 R1-f: payments to match (paymentMatchEmpty)"
   },
-  "paymentMatchFailed": "The payments could not be read.",
-  "@paymentMatchFailed": {
-    "description": "#3587 R1-f: payments to match (paymentMatchFailed)"
-  },
   "paymentMatchRefused": "The payment could not be matched. Try again.",
   "@paymentMatchRefused": {
     "description": "#3587 R1-f: said when matching a payment to an invoice was refused"

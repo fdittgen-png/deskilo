@@ -125,7 +125,6 @@
   "accessoriesSupplement": "Supplemento per mezza giornata",
   "accessoriesTitle": "Accessori",
   "accountActivityEmpty": "Nessun dato da mostrare.",
-  "accountActivityFailed": "Impossibile caricare la cronologia finanziaria. Tocchi per riprovare.",
   "accountActivityScope": "Tutti i suoi profili su questo server, comprese le iscrizioni precedenti. Le valute sono mostrate separatamente.",
   "accountActivityTitle": "I miei consumi e pagamenti",
   "accountCardTitle": "Il suo conto",
@@ -2999,7 +2998,6 @@
   "billingCustomerVatInvalid": "Non sembra una partita IVA. Si controlla solo la forma, non l'esistenza.",
   "billingCustomersAdd": "Aggiungere un cliente",
   "billingCustomersEmpty": "Nessun cliente fatturato per ora. Si aggiunga il primo per fatturargli senza chiedergli di creare un account.",
-  "billingCustomersLoadFailed": "Non è stato possibile leggere i clienti. Non è un elenco vuoto.",
   "billingCustomersNoAccount": "Le persone e le aziende a cui si fattura. Non sono membri e non vedono nulla dell'attività, a meno che non le si inviti a leggere le proprie fatture dal proprio account.",
   "billingCustomersRetry": "Riprovare",
   "billingCustomersSearch": "Cercare un cliente",
@@ -5993,7 +5991,6 @@
   "einvoiceConfigTitle": "Piattaforma di fatturazione elettronica",
   "einvoiceConfigToken": "Token o credenziale",
   "einvoiceConfigTokenSet": "Un token è salvato (digitane uno nuovo per sostituirlo).",
-  "einvoiceConfigUnavailable": "Impossibile caricare la configurazione della piattaforma. Controlli la connessione e riprovi.",
   "einvoiceCustomerSectionHelp": "Dove vanno le fatture per il cliente: il suo punto di accesso Peppol, il portale o l’API concordata — separato dalla piattaforma governativa.",
   "@einvoiceCustomerSectionHelp": {
     "description": "E-invoicing config: customer delivery section help (#568)"
@@ -6207,10 +6204,6 @@
   },
   "engagementsIntro": "Seguite ogni servizio ordinato: ordinato, avviato, concluso. Il preventivo, la fattura e i pagamenti restano invariati accanto.",
   "@engagementsIntro": {
-    "description": "service engagements (#4178)"
-  },
-  "engagementsLoadFailed": "Non è stato possibile leggere i servizi. Non è un elenco vuoto.",
-  "@engagementsLoadFailed": {
     "description": "service engagements (#4178)"
   },
   "engagementsNew": "Nuovo servizio",
@@ -14404,7 +14397,6 @@
   "paymentMatchCandidate": "{number} · {amount} aperti",
   "paymentMatchDecide": "Altro importo: sceglie come saldare la differenza",
   "paymentMatchEmpty": "Nessun pagamento attende una fattura.",
-  "paymentMatchFailed": "Non è stato possibile leggere i pagamenti.",
   "paymentMatchHeader": "{amount} ricevuti il {date}",
   "paymentMatchIntro": "È stato ricevuto un pagamento non ancora assegnato. Scelga la fattura che paga.",
   "paymentMatchInvoiceGone": "Questa fattura non è più aperta: l'elenco viene riletto.",
@@ -16448,10 +16440,8 @@
   "quoteValidUntil": "Valido fino al {date}",
   "quotesEmpty": "Nessun preventivo per ora. Crearne il primo per un cliente fatturato.",
   "quotesIntro": "Offerte ai clienti fatturati. Un preventivo inviato non cambia mai; una modifica è un'altra revisione. Non si fattura nulla finché non si converte uno accettato.",
-  "quotesLoadFailed": "I preventivi non hanno potuto essere letti. Non è un elenco vuoto.",
   "quotesNew": "Nuovo preventivo",
   "quotesNotAllowed": "Non è consentito leggere i preventivi di questa attività.",
-  "quotesRetry": "Riprovare",
   "quotesTitle": "Preventivi",
   "readStateDenied": "Non ha accesso a questo. Se serve, lo chieda a un amministratore dello spazio.",
   "@readStateDenied": {
@@ -23656,10 +23646,6 @@
     "description": "#2477 tax reference: Field: label of a rate."
   },
   "taxRefLanguages": "Lingue ufficiali (ISO 639-1, la consueta per prima)",
-  "taxRefLoadFailed": "Impossibile caricare i dati di riferimento.",
-  "@taxRefLoadFailed": {
-    "description": "#2477 tax reference: error text when the list cannot load."
-  },
   "taxRefMemberEmpty": "Uno Stato membro non ha altri campi.",
   "@taxRefMemberEmpty": {
     "description": "#2477 tax reference: Hint in the form of an EU member."

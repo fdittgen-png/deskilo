@@ -125,7 +125,6 @@
   "accessoriesSupplement": "Supplément par demi-journée",
   "accessoriesTitle": "Accessoires",
   "accountActivityEmpty": "Aucun enregistrement à afficher.",
-  "accountActivityFailed": "Impossible de charger votre historique financier. Appuyez pour réessayer.",
   "accountActivityScope": "Tous vos profils sur ce serveur, y compris vos anciennes adhésions. Les devises restent séparées.",
   "accountActivityTitle": "Ma consommation et mes paiements",
   "accountCardTitle": "Votre compte",
@@ -2999,7 +2998,6 @@
   "billingCustomerVatInvalid": "Ceci ne ressemble pas à un numéro de TVA. Seule sa forme est vérifiée, pas son existence.",
   "billingCustomersAdd": "Ajouter un client",
   "billingCustomersEmpty": "Aucun client facturé pour l'instant. Ajoutez le premier pour le facturer sans lui demander de créer un compte.",
-  "billingCustomersLoadFailed": "Les clients n'ont pas pu être lus. Ce n'est pas une liste vide.",
   "billingCustomersNoAccount": "Les personnes et entreprises que vous facturez. Ce ne sont pas des membres et elles ne voient rien de votre activité, sauf si vous les invitez à lire leurs propres factures depuis leur propre compte.",
   "billingCustomersRetry": "Réessayer",
   "billingCustomersSearch": "Rechercher un client",
@@ -5993,7 +5991,6 @@
   "einvoiceConfigTitle": "Plateforme de facturation électronique",
   "einvoiceConfigToken": "Jeton ou identifiant",
   "einvoiceConfigTokenSet": "Un jeton est enregistré (saisissez-en un nouveau pour le remplacer).",
-  "einvoiceConfigUnavailable": "Impossible de charger la configuration de la plateforme. Vérifiez votre connexion et réessayez.",
   "einvoiceCustomerSectionHelp": "Où partent les factures destinées au client : son point d’accès Peppol, son portail ou l’API convenue — distinct de la plateforme gouvernementale.",
   "@einvoiceCustomerSectionHelp": {
     "description": "E-invoicing config: customer delivery section help (#568)"
@@ -6207,10 +6204,6 @@
   },
   "engagementsIntro": "Suivez chaque prestation commandée : commandée, commencée, terminée. Le devis, la facture et les paiements restent tels quels à côté.",
   "@engagementsIntro": {
-    "description": "service engagements (#4178)"
-  },
-  "engagementsLoadFailed": "Les prestations n'ont pas pu être lues. Ce n'est pas une liste vide.",
-  "@engagementsLoadFailed": {
     "description": "service engagements (#4178)"
   },
   "engagementsNew": "Nouvelle prestation",
@@ -14404,7 +14397,6 @@
   "paymentMatchCandidate": "{number} · {amount} dus",
   "paymentMatchDecide": "Autre montant : vous choisissez comment régler l'écart",
   "paymentMatchEmpty": "Aucun paiement n'attend de facture.",
-  "paymentMatchFailed": "Les paiements n'ont pas pu être lus.",
   "paymentMatchHeader": "{amount} reçus le {date}",
   "paymentMatchIntro": "Un paiement a été reçu et n'est pas encore affecté. Choisissez la facture qu'il règle.",
   "paymentMatchInvoiceGone": "Cette facture n'est plus ouverte : la liste est relue.",
@@ -16448,10 +16440,8 @@
   "quoteValidUntil": "Valable jusqu'au {date}",
   "quotesEmpty": "Aucun devis pour l'instant. Faites le premier pour un client facturé.",
   "quotesIntro": "Offres à vos clients facturés. Un devis envoyé ne change jamais ; une modification est une autre révision. Rien n'est facturé avant que vous convertissiez un devis accepté.",
-  "quotesLoadFailed": "Les devis n'ont pas pu être lus. Ce n'est pas une liste vide.",
   "quotesNew": "Nouveau devis",
   "quotesNotAllowed": "Vous ne pouvez pas lire les devis de cette activité.",
-  "quotesRetry": "Réessayer",
   "quotesTitle": "Devis",
   "readStateDenied": "Vous n’avez pas accès à cette page. Demandez à un administrateur de l’espace si vous en avez besoin.",
   "@readStateDenied": {
@@ -23656,10 +23646,6 @@
     "description": "#2477 tax reference: Field: label of a rate."
   },
   "taxRefLanguages": "Langues officielles (ISO 639-1, l'usuelle en premier)",
-  "taxRefLoadFailed": "Les données de référence n'ont pas pu être chargées.",
-  "@taxRefLoadFailed": {
-    "description": "#2477 tax reference: error text when the list cannot load."
-  },
   "taxRefMemberEmpty": "Un État membre n'a pas d'autres champs.",
   "@taxRefMemberEmpty": {
     "description": "#2477 tax reference: Hint in the form of an EU member."

@@ -163,10 +163,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get accountActivityEmpty => 'Nessun dato da mostrare.';
 
   @override
-  String get accountActivityFailed =>
-      'Impossibile caricare la cronologia finanziaria. Tocchi per riprovare.';
-
-  @override
   String get accountActivityScope =>
       'Tutti i suoi profili su questo server, comprese le iscrizioni precedenti. Le valute sono mostrate separatamente.';
 
@@ -5264,10 +5260,6 @@ class AppLocalizationsIt extends AppLocalizations {
       'Nessun cliente fatturato per ora. Si aggiunga il primo per fatturargli senza chiedergli di creare un account.';
 
   @override
-  String get billingCustomersLoadFailed =>
-      'Non è stato possibile leggere i clienti. Non è un elenco vuoto.';
-
-  @override
   String get billingCustomersNoAccount =>
       'Le persone e le aziende a cui si fattura. Non sono membri e non vedono nulla dell\'attività, a meno che non le si inviti a leggere le proprie fatture dal proprio account.';
 
@@ -9752,10 +9744,6 @@ class AppLocalizationsIt extends AppLocalizations {
       'Un token è salvato (digitane uno nuovo per sostituirlo).';
 
   @override
-  String get einvoiceConfigUnavailable =>
-      'Impossibile caricare la configurazione della piattaforma. Controlli la connessione e riprovi.';
-
-  @override
   String get einvoiceCustomerSectionHelp =>
       'Dove vanno le fatture per il cliente: il suo punto di accesso Peppol, il portale o l’API concordata — separato dalla piattaforma governativa.';
 
@@ -10000,10 +9988,6 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get engagementsIntro =>
       'Seguite ogni servizio ordinato: ordinato, avviato, concluso. Il preventivo, la fattura e i pagamenti restano invariati accanto.';
-
-  @override
-  String get engagementsLoadFailed =>
-      'Non è stato possibile leggere i servizi. Non è un elenco vuoto.';
 
   @override
   String get engagementsNew => 'Nuovo servizio';
@@ -25238,9 +25222,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get paymentMatchEmpty => 'Nessun pagamento attende una fattura.';
 
   @override
-  String get paymentMatchFailed => 'Non è stato possibile leggere i pagamenti.';
-
-  @override
   String paymentMatchHeader(String amount, String date) {
     return '$amount ricevuti il $date';
   }
@@ -28728,18 +28709,11 @@ class AppLocalizationsIt extends AppLocalizations {
       'Offerte ai clienti fatturati. Un preventivo inviato non cambia mai; una modifica è un\'altra revisione. Non si fattura nulla finché non si converte uno accettato.';
 
   @override
-  String get quotesLoadFailed =>
-      'I preventivi non hanno potuto essere letti. Non è un elenco vuoto.';
-
-  @override
   String get quotesNew => 'Nuovo preventivo';
 
   @override
   String get quotesNotAllowed =>
       'Non è consentito leggere i preventivi di questa attività.';
-
-  @override
-  String get quotesRetry => 'Riprovare';
 
   @override
   String get quotesTitle => 'Preventivi';
@@ -40703,9 +40677,6 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get taxRefLanguages =>
       'Lingue ufficiali (ISO 639-1, la consueta per prima)';
-
-  @override
-  String get taxRefLoadFailed => 'Impossibile caricare i dati di riferimento.';
 
   @override
   String get taxRefMemberEmpty => 'Uno Stato membro non ha altri campi.';

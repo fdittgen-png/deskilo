@@ -244,7 +244,7 @@ void main() {
       'with Try again', (tester) async {
     repo.capacityFails = Exception('offline');
     await open(tester);
-    expect(_key('assign-payment-failed-capacity'), findsOneWidget);
+    expect(_key('read-failure'), findsOneWidget);
     expect(_key('assign-payment-confirm'), findsNothing);
     repo.capacityFails = null;
     await tester.tap(_key('assign-payment-retry-capacity'));

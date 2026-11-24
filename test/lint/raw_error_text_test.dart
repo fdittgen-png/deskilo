@@ -71,7 +71,7 @@ const _ownErrorBranchCeiling = <String, int>{
   'events': 2,
   'kiosk': 1,
   'members': 4,
-  'money': 98,
+  'money': 53,
   'plan': 2,
   'profile': 3,
   'reservations': 11,

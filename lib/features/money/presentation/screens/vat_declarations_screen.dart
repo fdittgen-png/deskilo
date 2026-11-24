@@ -21,6 +21,7 @@ import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/adaptive/long_task_page.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/kit/page_title.dart';
@@ -486,8 +487,9 @@ class _VatDeclarationsScreenState
                           ),
                       ],
                     ),
-                  AsyncError() => Text(
-                      l10n.workspaceGenericError,
+                  AsyncError(:final error) => ReadFailureBanner(
+                      error: error,
+                      onRetry: () => ref.invalidate(vatDeclarationsProvider),
                     ),
                   _ => const LoadingView(),
                 },

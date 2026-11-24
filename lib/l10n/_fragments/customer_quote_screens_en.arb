@@ -16,16 +16,8 @@
   "@quotesNew": {
     "description": "customer quotes: the quotes list, editor and detail (#4166)"
   },
-  "quotesLoadFailed": "The quotes could not be read. This is not an empty list.",
-  "@quotesLoadFailed": {
-    "description": "customer quotes: the quotes list, editor and detail (#4166)"
-  },
   "quotesNotAllowed": "You may not read the quotes of this business.",
   "@quotesNotAllowed": {
-    "description": "customer quotes: the quotes list, editor and detail (#4166)"
-  },
-  "quotesRetry": "Try again",
-  "@quotesRetry": {
     "description": "customer quotes: the quotes list, editor and detail (#4166)"
   },
   "quoteStatusSent": "Sent",

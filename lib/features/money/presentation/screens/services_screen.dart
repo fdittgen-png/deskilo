@@ -12,6 +12,7 @@ import '../../../../core/shortcuts/app_shortcuts.dart';
 import '../../../../core/shortcuts/shortcut_scope.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/adaptive/window_class.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/kit/records_table.dart';
@@ -167,10 +168,9 @@ class ServicesScreen extends ConsumerWidget {
             ),
           ],
         ),
-        AsyncError() => Center(
-            child: Text(
-              l10n.workspaceGenericError,
-            ),
+        AsyncError(:final error) => ReadFailureBanner(
+            error: error,
+            onRetry: () => ref.invalidate(allServicesProvider),
           ),
         _ => const LoadingView(),
       },

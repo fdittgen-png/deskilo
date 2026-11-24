@@ -216,10 +216,6 @@
   "@accountActivityEmpty": {
     "description": "Shown as a text in account activity screen (money), and 2 other places."
   },
-  "accountActivityFailed": "Could not load your financial history. Tap to retry.",
-  "@accountActivityFailed": {
-    "description": "Shown as a text in account activity screen (money), and 2 other places."
-  },
   "accountActivityScope": "All your profiles on this server, including previous memberships. Currencies are shown separately.",
   "@accountActivityScope": {
     "description": "Shown as a text in account activity screen (money)."
@@ -6878,10 +6874,6 @@
   "@billingCustomersEmpty": {
     "description": "the billing customers screen and editor (#4164)"
   },
-  "billingCustomersLoadFailed": "The customers could not be read. This is not an empty list.",
-  "@billingCustomersLoadFailed": {
-    "description": "the billing customers screen and editor (#4164)"
-  },
   "billingCustomersNoAccount": "The people and businesses you invoice. They are not members and see nothing of your business, unless you invite them to read their own invoices from their own account.",
   "@billingCustomersNoAccount": {
     "description": "the billing customers screen and editor (#4164)"
@@ -12721,10 +12713,6 @@
   "@einvoiceConfigTokenSet": {
     "description": "Shown instead of the stored token"
   },
-  "einvoiceConfigUnavailable": "The platform settings could not be loaded. Check your connection and try again.",
-  "@einvoiceConfigUnavailable": {
-    "description": "Shown when the e-invoice platform status probe fails"
-  },
   "einvoiceCustomerSectionHelp": "Where invoices go for the customer: their Peppol access point, portal or agreed upload API — separate from the government platform.",
   "@einvoiceCustomerSectionHelp": {
     "description": "E-invoicing config: customer delivery section help (#568)"
@@ -13027,10 +13015,6 @@
   },
   "engagementsIntro": "Follow each service you were ordered: ordered, started, done. The quote, the invoice and the payments stay as they are beside it.",
   "@engagementsIntro": {
-    "description": "service engagements (#4178)"
-  },
-  "engagementsLoadFailed": "The engagements could not be read. This is not an empty list.",
-  "@engagementsLoadFailed": {
     "description": "service engagements (#4178)"
   },
   "engagementsNew": "New engagement",
@@ -33004,10 +32988,6 @@
   "@paymentMatchEmpty": {
     "description": "#3587 R1-f: payments to match (paymentMatchEmpty)"
   },
-  "paymentMatchFailed": "The payments could not be read.",
-  "@paymentMatchFailed": {
-    "description": "#3587 R1-f: payments to match (paymentMatchFailed)"
-  },
   "paymentMatchHeader": "{amount} received {date}",
   "@paymentMatchHeader": {
     "description": "#3587 R1-f: payments to match (paymentMatchHeader)",
@@ -37500,20 +37480,12 @@
   "@quotesIntro": {
     "description": "customer quotes: the quotes list, editor and detail (#4166)"
   },
-  "quotesLoadFailed": "The quotes could not be read. This is not an empty list.",
-  "@quotesLoadFailed": {
-    "description": "customer quotes: the quotes list, editor and detail (#4166)"
-  },
   "quotesNew": "New quote",
   "@quotesNew": {
     "description": "customer quotes: the quotes list, editor and detail (#4166)"
   },
   "quotesNotAllowed": "You may not read the quotes of this business.",
   "@quotesNotAllowed": {
-    "description": "customer quotes: the quotes list, editor and detail (#4166)"
-  },
-  "quotesRetry": "Try again",
-  "@quotesRetry": {
     "description": "customer quotes: the quotes list, editor and detail (#4166)"
   },
   "quotesTitle": "Quotes",
@@ -52428,10 +52400,6 @@
   "taxRefLanguages": "Official languages (ISO 639-1, usual one first)",
   "@taxRefLanguages": {
     "description": "#3850 document languages: taxRefLanguages"
-  },
-  "taxRefLoadFailed": "The reference data could not be loaded.",
-  "@taxRefLoadFailed": {
-    "description": "#2477 tax reference: error text when the list cannot load."
   },
   "taxRefMemberEmpty": "A member state has no further fields.",
   "@taxRefMemberEmpty": {

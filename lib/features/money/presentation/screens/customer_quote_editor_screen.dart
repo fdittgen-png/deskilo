@@ -18,6 +18,7 @@ import '../../../../core/failure/app_failure.dart';
 import '../../../../core/features/enabled_feature_keys.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_typography.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -234,7 +235,13 @@ class _EditorState extends ConsumerState<CustomerQuoteEditorScreen> {
           .watch(customerQuoteProvider((workspaceId: id, quoteId: widget.quoteId)))
           .when(
             loading: () => const LoadingView(),
-            error: (e, _) => Center(child: Text(l10n.quotesLoadFailed)),
+            error: (e, _) => ReadFailureBanner(
+              error: e,
+              refusal: e is QuoteRefusal ? quoteRefusalText(l10n, e) : null,
+              onRetry: () => ref.invalidate(
+                customerQuoteProvider((workspaceId: id, quoteId: widget.quoteId)),
+              ),
+            ),
             // the working draft is read once; edits are the form's from here on
             data: (quote) => _body(context, id, quote),
           );
