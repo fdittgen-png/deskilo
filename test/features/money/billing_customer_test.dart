@@ -82,12 +82,12 @@ void main() {
       expect(p.capacity, 'consumer');
       expect(p.displayName, 'Hanna Weiss');
       expect(
-        BillingParty.fromJson({'subject_id': 'm2', 'company': 'Lumi'})
+        BillingParty.fromJson({'subject_id': 'm2', 'revision': 1, 'company': 'Lumi'})
             .displayName,
         'Lumi',
       );
       expect(
-        BillingParty.fromJson({'subject_id': 'm2', 'capacity': 'x'}).capacity,
+        BillingParty.fromJson({'subject_id': 'm2', 'revision': 1, 'capacity': 'x'}).capacity,
         isNull,
       );
     });
