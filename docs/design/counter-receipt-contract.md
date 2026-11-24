@@ -89,37 +89,38 @@ Feature **`counterOfflineCash`** (under `counterTillSessions`, off by default). 
 
 ### 7.1 `counter_offline_sync_v1(p_workspace_id, p_session_id, p_offline_since, p_sales)`
 
-Rights as §4 (`issueInvoices`, `counterReceipts`, `counterTillSessions`, `counterOfflineCash` on; an assistant is refused). `p_session_id` is the till session the sales were made in; `p_offline_since` the device time the till lost its connection (the start of the offline period). `p_sales[]`, at most 200 per call, in the order they were made:
+Rights as §4 (`issueInvoices`, `counterReceipts`, `counterTillSessions`, `counterOfflineCash` on; an assistant is refused). Whoever works the till may send into the OPEN session of their business, as they sell in it online; the member who sent each sale is recorded. A session already closed takes nothing: the whole call is refused (DKL12) and nothing is recorded, so its counted cash never moves. `p_session_id` is the till session the sales were made in; `p_offline_since` the device time the till lost its connection (the start of the offline period). `p_sales[]`, at most 200 per call, in the order they were made:
 
 | field | meaning |
 |---|---|
-| `seq` | the device sequence number of this sale, an integer ≥ 1, **gapless per till session** |
+| `seq` | the device sequence number of this sale, an integer ≥ 1, **gapless per device within a till session** |
+| `device_id` | uuid, the name the device keeps for itself; two devices of one session both number from 1. Absent: the one legacy device |
 | `request_id` | uuid, one per sale, kept by the device for every retry |
 | `occurred_at` | the device clock when the sale was made (recorded, never used as the receipt's issue time) |
 | `body` | a draft body as in §1 (lines at the prices and VAT in force when the till went offline; `till_id` is set by the server) |
-| `cash_given_minor` | integer ≥ the total: what the customer handed over (the change is the difference) |
+| `cash_given_minor` | integer ≥ the total: what the customer handed over |
+| `change_minor` | integer, 0 ≤ change ≤ `cash_given_minor`: what was given back; `cash_given_minor − change_minor` is the total of the sale, and for a refused sale the cash that stays in the drawer. It may not exceed what the body's own lines price to (plus `counter.offline_price_tolerance_percent`): more is refused for the whole call (DKL02) |
 
-Each sale runs through the ordinary draft and finalize commands (§1, §2) with ONE cash tender of exactly the total, in its own sub-transaction: a refused sale does not stop the others. The answer is `{results: [{seq, request_id, state: "accepted" | "refused", receipt_id, number, reason, replayed}], gaps: [<missing seq numbers below the highest recorded>], accepted, refused}`.
+Each sale runs through the ordinary draft and finalize commands (§1, §2) with ONE cash tender of exactly the total, in its own sub-transaction: a refused sale does not stop the others. The answer is `{results: [{seq, request_id, state: "accepted" | "refused", receipt_id, number, reason, replayed}], gaps: [<missing seq numbers below the highest recorded of each device sending>], accepted, refused}`.
 
 A sale is **refused** (`state: "refused"`, recorded, listed for the owner; its cash stays in the drawer figure) with `reason`:
 
 | reason | when |
 |---|---|
-| `session` | the session is not of this business, or not open at sync |
 | `before_session` | `occurred_at` is before the session was opened (the session must exist before the offline period) |
 | `too_long` | `occurred_at` is later than `p_offline_since` by more than `counter.offline_max_minutes` |
 | `too_many` | the session already holds `counter.offline_max_sales` offline sales |
 | `clock` | `occurred_at` is in the future of the server |
-| `price` | a line's price differs from the item's current price by more than `counter.offline_price_tolerance_percent` |
-| `item` | an item of a line is not active any more |
+| `price` | a line's price of one base unit (`unit_price` divided by `base_quantity`, however it is written) differs from the item's current price by more than `counter.offline_price_tolerance_percent` |
+| `item` | an item of a line is not active any more, or a line names no item |
 | `cash` | `cash_given_minor` is below the total |
 | `refused:<code>` | the sale command refused it (DKL/DKG code of §3) |
 
-A sale already received (same `request_id`, same content) answers its first result with `replayed: true` and is never recorded twice; the same `request_id` with other content, or a `seq` already holding another request, is refused for the whole call (DKL13). A `seq` missing between recorded ones is **reported** in `gaps`, never filled; a late sale carrying a missing `seq` is accepted into it.
+A sale already received (same `request_id`, same content) answers its first result with `replayed: true` and is never recorded twice; the same `request_id` with other content, or a `seq` already holding another request, is refused for the whole call (DKL16). A `seq` missing between recorded ones of a device is **reported** in `gaps`, never filled; a late sale carrying a missing `seq` is accepted into it.
 
 ### 7.2 Reading
 
-`counter_offline_list_v1(p_workspace_id, p_session_id)` (needs `viewFinances`, or `issueInvoices` for the caller's own sessions): `{sales: [{seq, state, reason, receipt_id, number, total_minor, cash_given_minor, change_minor, occurred_at, fiscal: "not_signed"}], gaps}`. Every offline receipt is listed `fiscal: "not_signed"` until the country's signing (Germany CS7 #4369, France CS9 #4371) decides otherwise; nothing here claims compliance.
+`counter_offline_list_v1(p_workspace_id, p_session_id)` (needs `viewFinances`, or `issueInvoices` for the caller's own sessions): `{sales: [{device_id, seq, state, reason, receipt_id, number, total_minor, cash_given_minor, change_minor, occurred_at, fiscal: "not_signed"}], gaps: [{device_id, seq}]}`. Every offline receipt is listed `fiscal: "not_signed"` until the country's signing (Germany CS7 #4369, France CS9 #4371) decides otherwise; nothing here claims compliance.
 
 ### 7.3 The drawer
 
@@ -131,4 +132,4 @@ A sale already received (same `request_id`, same content) answers its first resu
 
 ### 7.5 Refusal
 
-DKL13: a request id or sequence number already holds another sale. DKG01 when `counterOfflineCash` is off.
+DKL16: a request id, or a sequence number of the same device, already holds another sale. DKL12: the session is closed (the whole call). DKL02: a sale's cash is out of its bounds. DKG01 when `counterOfflineCash` is off.
