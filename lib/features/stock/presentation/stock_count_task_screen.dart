@@ -15,8 +15,7 @@ import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
-import '../../../core/trace/refusal_text.dart';
-import '../../../core/trace/trace_logger.dart';
+import '../../../core/trace/guarded.dart';
 import '../../../core/ui/adaptive/task_surface.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../core/ui/form_kit.dart';
@@ -55,33 +54,37 @@ class _State extends ConsumerState<StockCountTaskScreen> {
     final code = _scan.text.trim();
     if (code.isEmpty) return;
     final l10n = context.l10n;
-    try {
-      // The same resolver every other scan uses: the registry's size does not matter. A code that names a variant or a
-      // lot opens only the line of that variant or lot; one that names neither and fits several pending lines (an item
-      // kept in two places) asks which, instead of taking the first.
-      final answer = await ref.read(stockCodeResolverProvider).resolve(workspaceId, code);
-      final itemId = answer.item?.id;
-      final fits = itemId == null || itemId.isEmpty
-          ? const <CountTaskLine>[]
-          : [
-              for (final l in task.lines)
-                if (l.state == CountLineState.pending &&
-                    l.itemId == itemId &&
-                    (answer.variantId == null || l.variantId == answer.variantId) &&
-                    (answer.lotId == null || l.lotId == answer.lotId))
-                  l,
-            ];
-      if (!mounted) return;
-      final line = fits.length > 1 ? await _choose(fits, places) : fits.firstOrNull;
-      if (!mounted) return;
-      setState(() => _scanProblem = line == null ? l10n.stockCycleScanNone : null);
-      if (line == null) return;
-      _scan.clear();
-      await _countSheet(workspaceId, line, items[line.itemId]?.unit ?? '');
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'the barcodes could not be read', error: e, stackTrace: st);
-      if (mounted) AppSnack.error(context, l10n.stockReadFailed);
-    }
+    await guardRead<void>(
+      domain: 'stock',
+      message: 'the barcodes could not be read',
+      read: () async {
+        // The same resolver every other scan uses: the registry's size does not matter. A code that names a variant or a
+        // lot opens only the line of that variant or lot; one that names neither and fits several pending lines (an item
+        // kept in two places) asks which, instead of taking the first.
+        final answer = await ref.read(stockCodeResolverProvider).resolve(workspaceId, code);
+        final itemId = answer.item?.id;
+        final fits = itemId == null || itemId.isEmpty
+            ? const <CountTaskLine>[]
+            : [
+                for (final l in task.lines)
+                  if (l.state == CountLineState.pending &&
+                      l.itemId == itemId &&
+                      (answer.variantId == null || l.variantId == answer.variantId) &&
+                      (answer.lotId == null || l.lotId == answer.lotId))
+                    l,
+              ];
+        if (!mounted) return;
+        final line = fits.length > 1 ? await _choose(fits, places) : fits.firstOrNull;
+        if (!mounted) return;
+        setState(() => _scanProblem = line == null ? l10n.stockCycleScanNone : null);
+        if (line == null) return;
+        _scan.clear();
+        await _countSheet(workspaceId, line, items[line.itemId]?.unit ?? '');
+      },
+      fallback: (_) {
+        if (mounted) AppSnack.error(context, l10n.stockReadFailed);
+      },
+    );
   }
 
   /// Which of several pending lines the scanned code is for: one button per line, by its place.
@@ -113,13 +116,14 @@ class _State extends ConsumerState<StockCountTaskScreen> {
         workspaceId: workspaceId,
         confirmLabel: l10n.stockBulkReadConfirm,
         onConfirm: (resolution, codes) async {
-          try {
-            answer = await ref.read(stockCycleCountsProvider).countByTagRead(workspaceId, requestId: requestId, taskId: widget.taskId, codes: codes);
-            return null;
-          } on Object catch (e, st) {
-            TraceLogger.instance.warn('stock', 'a bulk read was not counted', error: e, stackTrace: st);
-            return knownRefusalText(l10n, e) ?? stockSaveProblem(l10n, e);
-          }
+          return guardSave(
+            domain: 'stock',
+            message: 'a bulk read was not counted',
+            action: () async {
+              answer = await ref.read(stockCycleCountsProvider).countByTagRead(workspaceId, requestId: requestId, taskId: widget.taskId, codes: codes);
+            },
+            problem: (e) => stockProblemText(l10n, e),
+          );
         },
       ),
     );
@@ -150,17 +154,18 @@ class _State extends ConsumerState<StockCountTaskScreen> {
         submitLabel: l10n.stockEditSave,
         submitKey: const ValueKey('stock-cycle-count-save'),
         onDispose: fields.dispose,
-        validate: () => observed() != null ? const {} : {'observed': stockReasonText(l10n, 'quantity_invalid')},
+        validate: () => observed() != null ? const {} : {'observed': stockRefusalText(l10n, StockRefusal.quantityInvalid)},
         onSubmit: () async {
-          try {
-            result = await ref
-                .read(stockCycleCountsProvider)
-                .countLine(workspaceId, line.lineId, observed()!, requestId);
-            return null;
-          } on Object catch (e, st) {
-            TraceLogger.instance.warn('stock', 'a line was not counted', error: e, stackTrace: st);
-            return knownRefusalText(l10n, e) ?? stockSaveProblem(l10n, e);
-          }
+          return guardSave(
+            domain: 'stock',
+            message: 'a line was not counted',
+            action: () async {
+              result = await ref
+                  .read(stockCycleCountsProvider)
+                  .countLine(workspaceId, line.lineId, observed()!, requestId);
+            },
+            problem: (e) => stockProblemText(l10n, e),
+          );
         },
         builder: (context, refresh) => [
           StockQuantityField(
@@ -192,13 +197,14 @@ class _State extends ConsumerState<StockCountTaskScreen> {
         onDispose: fields.dispose,
         validate: () => fields.text('reason').trim().isEmpty ? {'reason': l10n.stockCycleSkipReason} : const {},
         onSubmit: () async {
-          try {
-            await ref.read(stockCycleCountsProvider).skipLine(workspaceId, line.lineId, fields.text('reason').trim(), requestId);
-            return null;
-          } on Object catch (e, st) {
-            TraceLogger.instance.warn('stock', 'a line was not skipped', error: e, stackTrace: st);
-            return knownRefusalText(l10n, e) ?? stockSaveProblem(l10n, e);
-          }
+          return guardSave(
+            domain: 'stock',
+            message: 'a line was not skipped',
+            action: () async {
+              await ref.read(stockCycleCountsProvider).skipLine(workspaceId, line.lineId, fields.text('reason').trim(), requestId);
+            },
+            problem: (e) => stockProblemText(l10n, e),
+          );
         },
         builder: (context, refresh) => [
           AppTextField(

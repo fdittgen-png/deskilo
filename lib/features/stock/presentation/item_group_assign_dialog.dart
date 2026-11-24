@@ -16,13 +16,14 @@ import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
-import '../../../core/trace/trace_logger.dart';
+import '../../../core/trace/guarded.dart';
 import '../../../core/ui/dropdown_field.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/item_groups.dart';
 import '../providers/stock_providers.dart';
 import 'item_group_text.dart';
+import 'stock_config_text.dart';
 
 /// Opens the group and inherited settings of the item [itemId].
 Future<void> showItemGroupAssign(BuildContext context, {required String workspaceId, required String itemId, required String itemName}) =>
@@ -90,45 +91,54 @@ class _AssignDialogState extends ConsumerState<_AssignDialog> {
     final now = _view.value;
     final target = now.chosen ? now.target : current;
     final key = target ?? '';
-    try {
-      if (now.previewOf != key) {
-        final preview = await port.assign(widget.workspaceId, requestId: newRequestId(), itemId: widget.itemId, expectedRevision: revision, groupId: target, apply: false);
-        if (mounted) _view.value = _view.value.said(null).previewing(preview.unchanged ? null : key, preview.unchanged ? null : preview.affected);
-        return;
-      }
-      await port.assign(widget.workspaceId, requestId: newRequestId(), itemId: widget.itemId, expectedRevision: revision, groupId: target);
-      if (!mounted) return;
-      ref.invalidate(itemGroupListProvider(widget.workspaceId));
-      _reload(say: l10n.itemGroupMoved);
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'an item was not moved to a group', error: e, stackTrace: st);
-      if (mounted) _view.value = _view.value.said(itemGroupProblem(l10n, e));
-    }
+    final problem = await guardSave(
+      domain: 'stock',
+      message: 'an item was not moved to a group',
+      action: () async {
+        if (now.previewOf != key) {
+          final preview = await port.assign(widget.workspaceId, requestId: newRequestId(), itemId: widget.itemId, expectedRevision: revision, groupId: target, apply: false);
+          if (mounted) _view.value = _view.value.said(null).previewing(preview.unchanged ? null : key, preview.unchanged ? null : preview.affected);
+          return;
+        }
+        await port.assign(widget.workspaceId, requestId: newRequestId(), itemId: widget.itemId, expectedRevision: revision, groupId: target);
+        if (!mounted) return;
+        ref.invalidate(itemGroupListProvider(widget.workspaceId));
+        _reload(say: l10n.itemGroupMoved);
+      },
+      problem: (e) => stockProblemText(l10n, e, subject: StockSubject.group),
+    );
+    if (problem != null && mounted) _view.value = _view.value.said(problem);
   }
 
   /// Gives the item its own value for [parameter], whatever its group says; the server refuses what cannot hold (a tag
   /// per piece needs tracking by piece) and the refusal is said here.
   Future<void> _setOwn(int revision, String parameter, Object value) async {
     final l10n = context.l10n;
-    try {
-      await ref.read(itemGroupsProvider).setOverride(widget.workspaceId, newRequestId(), (itemId: widget.itemId, expectedRevision: revision, parameter: parameter, mode: 'set', value: value));
-      _reload();
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'an item was not given its own value', error: e, stackTrace: st);
-      // the field shows the value in force: read it again, so a refused choice does not stay on the screen
-      if (mounted) _reload(say: itemGroupProblem(l10n, e));
-    }
+    final problem = await guardSave(
+      domain: 'stock',
+      message: 'an item was not given its own value',
+      action: () async {
+        await ref.read(itemGroupsProvider).setOverride(widget.workspaceId, newRequestId(), (itemId: widget.itemId, expectedRevision: revision, parameter: parameter, mode: 'set', value: value));
+        _reload();
+      },
+      problem: (e) => stockProblemText(l10n, e, subject: StockSubject.group),
+    );
+    // the field shows the value in force: read it again, so a refused choice does not stay on the screen
+    if (problem != null && mounted) _reload(say: problem);
   }
 
   Future<void> _useGroup(int revision, String parameter) async {
     final l10n = context.l10n;
-    try {
-      await ref.read(itemGroupsProvider).setOverride(widget.workspaceId, newRequestId(), (itemId: widget.itemId, expectedRevision: revision, parameter: parameter, mode: 'inherit', value: null));
-      _reload();
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'an item was not given back to its group', error: e, stackTrace: st);
-      if (mounted) _view.value = _view.value.said(itemGroupProblem(l10n, e));
-    }
+    final problem = await guardSave(
+      domain: 'stock',
+      message: 'an item was not given back to its group',
+      action: () async {
+        await ref.read(itemGroupsProvider).setOverride(widget.workspaceId, newRequestId(), (itemId: widget.itemId, expectedRevision: revision, parameter: parameter, mode: 'inherit', value: null));
+        _reload();
+      },
+      problem: (e) => stockProblemText(l10n, e, subject: StockSubject.group),
+    );
+    if (problem != null && mounted) _view.value = _view.value.said(problem);
   }
 
   @override

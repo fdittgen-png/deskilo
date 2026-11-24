@@ -18814,10 +18814,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'This group is used by items: move them first.';
 
   @override
-  String get itemGroupReasonNameDuplicate =>
-      'Another group already has this name.';
-
-  @override
   String get itemGroupReasonNeedsSerial =>
       'Per-piece tags need tracking by piece.';
 
@@ -36942,21 +36938,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'Both numbers must be whole numbers above zero.';
 
   @override
-  String get stockReasonGroupDepth => 'A sub-group cannot have sub-groups.';
-
-  @override
-  String get stockReasonGroupHasMovements =>
-      'This item has stock movements: its unit and tracking stay as they were written.';
-
-  @override
-  String get stockReasonGroupHasSubgroups =>
-      'This group has sub-groups: move or delete them first.';
-
-  @override
-  String get stockReasonGroupInUse =>
-      'This group is used by items: move them first.';
-
-  @override
   String get stockReasonGroupItemUnknown =>
       'This item is not one of this business\'s.';
 
@@ -36972,20 +36953,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockReasonGroupNameRequired => 'A new group needs a name.';
 
   @override
-  String get stockReasonGroupNeedsSerial =>
-      'Per-unit tags need tracking by piece.';
-
-  @override
-  String get stockReasonGroupNotOverridable =>
-      'This is a proposal for new items and is not set per item.';
-
-  @override
   String get stockReasonGroupPlaceUnknown =>
       'This place is not one of this business\'s.';
-
-  @override
-  String get stockReasonGroupUnknown =>
-      'This group is not one of this business\'s.';
 
   @override
   String get stockReasonGroupUnknownReference =>
@@ -37435,6 +37404,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockReorderToOrderTitle => 'What to order';
 
   @override
+  String get stockRequiredArticle => 'Enter the supplier\'s article reference.';
+
+  @override
+  String get stockRequiredDestination =>
+      'Choose the place the goods go to, another than the one they leave.';
+
+  @override
+  String get stockRequiredItem => 'Choose an item.';
+
+  @override
+  String get stockRequiredPlace => 'Choose a place.';
+
+  @override
+  String get stockRequiredSite => 'Choose a site.';
+
+  @override
+  String get stockRequiredSupplier => 'Choose a supplier.';
+
+  @override
   String get stockReversalBackTo => 'Goods come back to';
 
   @override
@@ -37657,24 +37645,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockTagKindUhf => 'UHF label';
 
   @override
-  String get stockTagMalformed => 'That is not a valid tag code.';
-
-  @override
-  String get stockTagModeNone => 'This item does not use tags.';
-
-  @override
   String get stockTagNotInForce => 'This is not a tag in force here.';
 
   @override
   String get stockTagOnPiece =>
       'This tag is on a piece that is still in stock.';
-
-  @override
-  String get stockTagOwnerUnknown => 'This item or place is not known.';
-
-  @override
-  String get stockTagPerUnit =>
-      'This item is tagged piece by piece: tag its pieces when they are received.';
 
   @override
   String stockTagPiece(String number) {

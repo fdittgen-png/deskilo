@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
+import '../../../core/trace/guarded.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_sheet.dart';
 import '../../../core/ui/form_kit.dart';
@@ -157,8 +158,8 @@ Future<bool> _showMappingEditor(
       submitKey: const ValueKey('stock-mapping-save'),
       onDispose: draft.article.dispose,
       validate: () => {
-        if (draft.supplier == null) 'supplier_id': stockReasonText(l10n, 'supplier_foreign'),
-        if (draft.article.text.trim().isEmpty) 'article_ref': stockReasonText(l10n, 'code_malformed'),
+        if (draft.supplier == null) 'supplier_id': l10n.stockRequiredSupplier,
+        if (draft.article.text.trim().isEmpty) 'article_ref': l10n.stockRequiredArticle,
       },
       onSubmit: () => draft.save(l10n, commands, workspaceId),
       builder: draft.build,
@@ -184,26 +185,27 @@ class _MappingDraft {
   final String requestId = newRequestId();
 
   Future<String?> save(AppLocalizations l10n, StockConfigCommands commands, String workspaceId) async {
-    try {
-      await commands.saveMapping(
-        workspaceId,
-        mapping: SupplierMappingDraft(
-          supplierId: supplier,
-          itemId: data.item.itemId,
-          variantId: variant,
-          articleRef: article.text.trim(),
-          purchaseUnit: unit,
-          active: true,
-        ),
-        requestId: requestId,
-        mappingId: mapping?.id,
-        expectedRevision: mapping?.revision,
-      );
-      return null;
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'a supplier article was not saved', error: e, stackTrace: st);
-      return stockSaveProblem(l10n, e);
-    }
+    return guardSave(
+      domain: 'stock',
+      message: 'a supplier article was not saved',
+      action: () async {
+        await commands.saveMapping(
+          workspaceId,
+          mapping: SupplierMappingDraft(
+            supplierId: supplier,
+            itemId: data.item.itemId,
+            variantId: variant,
+            articleRef: article.text.trim(),
+            purchaseUnit: unit,
+            active: true,
+          ),
+          requestId: requestId,
+          mappingId: mapping?.id,
+          expectedRevision: mapping?.revision,
+        );
+      },
+      problem: (e) => stockProblemText(l10n, e),
+    );
   }
 
   List<Widget> build(BuildContext context, VoidCallback refresh) {

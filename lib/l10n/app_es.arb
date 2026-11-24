@@ -11363,7 +11363,6 @@
   "itemGroupReasonHasMovements": "ya tiene movimientos",
   "itemGroupReasonHasSubgroups": "Este grupo tiene subgrupos: elimínelos primero.",
   "itemGroupReasonInUse": "Este grupo lo usan artículos: muévalos primero.",
-  "itemGroupReasonNameDuplicate": "Otro grupo ya tiene este nombre.",
   "itemGroupReasonNeedsSerial": "Las etiquetas por pieza necesitan seguimiento por pieza.",
   "itemGroupReasonNotOverridable": "Este ajuste no puede tener un valor propio.",
   "itemGroupReorderPoint": "Punto de pedido por defecto",
@@ -21859,18 +21858,11 @@
   "@stockReasonFactorInvalid": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
-  "stockReasonGroupDepth": "Un subgrupo no puede tener subgrupos.",
-  "stockReasonGroupHasMovements": "Este artículo tiene movimientos de stock: su unidad y su seguimiento quedan como se escribieron.",
-  "stockReasonGroupHasSubgroups": "Este grupo tiene subgrupos: muévalos o elimínelos primero.",
-  "stockReasonGroupInUse": "Este grupo lo usan artículos: muévalos primero.",
   "stockReasonGroupItemUnknown": "Este artículo no es de este negocio.",
   "stockReasonGroupNameDuplicate": "Un grupo de este nivel ya tiene este nombre.",
   "stockReasonGroupNameLength": "El nombre de un grupo tiene de 1 a 80 caracteres.",
   "stockReasonGroupNameRequired": "Un grupo nuevo necesita un nombre.",
-  "stockReasonGroupNeedsSerial": "Las etiquetas por unidad exigen seguimiento por pieza.",
-  "stockReasonGroupNotOverridable": "Es una propuesta para artículos nuevos y no se fija por artículo.",
   "stockReasonGroupPlaceUnknown": "Este lugar no es de este negocio.",
-  "stockReasonGroupUnknown": "Este grupo no es de este negocio.",
   "stockReasonGroupUnknownReference": "Un lugar, artículo o tipo nombrado aquí no es de este negocio.",
   "stockReasonGroupValueRequired": "Indique un valor o use el del grupo.",
   "stockReasonGroupVatRateUnknown": "Este tipo de IVA no es uno de los activos de este negocio.",
@@ -22150,6 +22142,30 @@
   "stockReorderTitle": "Reposición",
   "stockReorderToOrderEmpty": "No hay nada que pedir.",
   "stockReorderToOrderTitle": "Qué pedir",
+  "stockRequiredArticle": "Introduzca la referencia de artículo del proveedor.",
+  "@stockRequiredArticle": {
+    "description": "#4402 the supplier article sheet: said under the article reference when it is empty (the app's own check)"
+  },
+  "stockRequiredDestination": "Elija la ubicación a la que va la mercancía, distinta de la que deja.",
+  "@stockRequiredDestination": {
+    "description": "#4402 the move sheet: said under the destination when none is chosen, or when it is the place the goods leave (the app's own check)"
+  },
+  "stockRequiredItem": "Elija un artículo.",
+  "@stockRequiredItem": {
+    "description": "#4402 a stock sheet: said under the item field when no item is chosen yet (the app's own check, not a refusal of the server)"
+  },
+  "stockRequiredPlace": "Elija una ubicación.",
+  "@stockRequiredPlace": {
+    "description": "#4402 a stock sheet: said under a place field when no place is chosen yet (the app's own check, not a refusal of the server)"
+  },
+  "stockRequiredSite": "Elija un sitio.",
+  "@stockRequiredSite": {
+    "description": "#4402 the reorder point sheet: said under the site when none is chosen yet (the app's own check, not a refusal of the server)"
+  },
+  "stockRequiredSupplier": "Elija un proveedor.",
+  "@stockRequiredSupplier": {
+    "description": "#4402 the supplier article sheet: said under the supplier when none is chosen yet (the app's own check)"
+  },
   "stockReversalBackTo": "Las mercancías vuelven a",
   "stockReversalCorrectionOpen": "Corregir este movimiento",
   "stockReversalCorrectionTitle": "Corregir un movimiento",
@@ -22226,12 +22242,8 @@
   "stockTagBoundElsewhere": "Esta etiqueta ya está asociada a {owner}.",
   "stockTagKindNfc": "Chip NFC",
   "stockTagKindUhf": "Etiqueta UHF",
-  "stockTagMalformed": "Ese no es un código de etiqueta válido.",
-  "stockTagModeNone": "Este artículo no usa etiquetas.",
   "stockTagNotInForce": "Esta no es una etiqueta en uso aquí.",
   "stockTagOnPiece": "Esta etiqueta está en una pieza que sigue en stock.",
-  "stockTagOwnerUnknown": "Este artículo o ubicación no se conoce.",
-  "stockTagPerUnit": "Este artículo se etiqueta pieza a pieza: etiquete sus piezas al recibirlas.",
   "stockTagPiece": "Pieza {number}",
   "@stockTagPiece": {
     "description": "#4362 G13 tags: the name of one piece in the list of pieces",

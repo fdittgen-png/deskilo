@@ -27,7 +27,7 @@ class DemoStockOperations implements StockOperations {
   final DemoStockLedger _ledger;
   final DemoStockConfigCommands _config;
 
-  static StockConfigRefused _refused(String field, String reason) => StockConfigRefused(field, reason);
+  static StockConfigRefused _refused(String field, StockRefusal reason) => StockConfigRefused(field, reason);
 
   bool _mine(String id) => _ledger.mine(id);
 
@@ -38,22 +38,22 @@ class DemoStockOperations implements StockOperations {
   /// What a line asks of the ledger, in the item's inventory unit.
   Future<({StockItem item, ExactQuantity quantity})> _quantity(StockLineDraft line, int i) async {
     final item = _ledger.itemOf(line.itemId);
-    if (item == null) throw _refused('lines[$i].item_id', 'item_foreign');
+    if (item == null) throw _refused('lines[$i].item_id', StockRefusal.itemForeign);
     final ExactQuantity entered;
     try {
       entered = ExactQuantity.parse(line.quantity);
     } on ExactQuantityException {
-      throw _refused('lines[$i].quantity', 'quantity_invalid');
+      throw _refused('lines[$i].quantity', StockRefusal.quantityInvalid);
     }
-    if (entered <= ExactQuantity.zero) throw _refused('lines[$i].quantity', 'quantity_invalid');
+    if (entered <= ExactQuantity.zero) throw _refused('lines[$i].quantity', StockRefusal.quantityInvalid);
     final unit = line.unit;
     if (unit == null || unit == item.unit) return (item: item, quantity: entered);
     final config = await _config.item(_ledger.workspaceId, item.id);
     final factor = config?.units.where((u) => u.unit == unit).firstOrNull;
-    if (factor == null) throw _refused('lines[$i].unit', 'unit_unmapped');
+    if (factor == null) throw _refused('lines[$i].unit', StockRefusal.unitUnmapped);
     // as the server records it: round(q * num / den, 6) (0840)
     final converted = entered.scaled(factor.factorNum, factor.factorDen, round: true).value;
-    if (converted == null) throw _refused('lines[$i].quantity', 'quantity_invalid');
+    if (converted == null) throw _refused('lines[$i].quantity', StockRefusal.quantityInvalid);
     return (item: item, quantity: converted);
   }
 
@@ -87,7 +87,7 @@ class DemoStockOperations implements StockOperations {
   @override
   Future<StockCommandResult> transfer(String workspaceId, List<StockLineDraft> lines, String requestId) async {
     if (_ledger.answers[requestId] case final done?) return done;
-    if (!_mine(workspaceId) || lines.isEmpty) throw _refused('request', 'malformed');
+    if (!_mine(workspaceId) || lines.isEmpty) throw _refused('request', StockRefusal.malformed);
     final places = await _real();
     final all = (await _config.places(workspaceId)).toList();
     final asked = <({StockItem item, ExactQuantity quantity})>[];
@@ -95,10 +95,10 @@ class DemoStockOperations implements StockOperations {
       final l = lines[i];
       final to = l.toLocationId;
       if (!places.containsKey(l.fromLocationId) || to == null || !places.containsKey(to) || to == l.fromLocationId) {
-        throw _refused('lines[$i]', 'location_foreign');
+        throw _refused('lines[$i]', StockRefusal.locationForeign);
       }
       if (stockSiteOf(l.fromLocationId, all) != stockSiteOf(to, all)) {
-        throw _refused('lines[$i]', 'transfer_needs_transit');
+        throw _refused('lines[$i]', StockRefusal.transferNeedsTransit);
       }
       asked.add(await _quantity(l, i));
     }
@@ -119,14 +119,14 @@ class DemoStockOperations implements StockOperations {
     String requestId,
   ) async {
     if (_ledger.answers[requestId] case final done?) return done;
-    if (!_mine(workspaceId) || lines.isEmpty) throw _refused('request', 'malformed');
+    if (!_mine(workspaceId) || lines.isEmpty) throw _refused('request', StockRefusal.malformed);
     final places = await _real();
     final all = (await _config.places(workspaceId)).toList();
-    if (!places.containsKey(toLocationId)) throw _refused('to_location_id', 'location_foreign');
-    if (lines.map((l) => l.fromLocationId).toSet().length > 1) throw _refused('lines', 'one_source');
+    if (!places.containsKey(toLocationId)) throw _refused('to_location_id', StockRefusal.locationForeign);
+    if (lines.map((l) => l.fromLocationId).toSet().length > 1) throw _refused('lines', StockRefusal.oneSource);
     final from = lines.first.fromLocationId;
-    if (!places.containsKey(from)) throw _refused('lines[0]', 'location_foreign');
-    if (stockSiteOf(from, all) == stockSiteOf(toLocationId, all)) throw _refused('to_location_id', 'same_site');
+    if (!places.containsKey(from)) throw _refused('lines[0]', StockRefusal.locationForeign);
+    if (stockSiteOf(from, all) == stockSiteOf(toLocationId, all)) throw _refused('to_location_id', StockRefusal.sameSite);
     final asked = <({StockItem item, ExactQuantity quantity})>[
       for (var i = 0; i < lines.length; i++) await _quantity(lines[i], i),
     ];
@@ -173,9 +173,9 @@ class DemoStockOperations implements StockOperations {
     String requestId,
   ) async {
     if (_ledger.answers[requestId] case final done?) return done;
-    if (!_mine(workspaceId) || lines.isEmpty) throw _refused('request', 'malformed');
+    if (!_mine(workspaceId) || lines.isEmpty) throw _refused('request', StockRefusal.malformed);
     final transfer = _ledger.transfer(transferId);
-    if (transfer == null) throw _refused('transfer', 'transfer_unknown');
+    if (transfer == null) throw _refused('transfer', StockRefusal.transferUnknown);
     final places = await _real();
     final all = (await _config.places(workspaceId)).toList();
     final received = {for (final l in transfer.lines) l.id: l.received};
@@ -183,20 +183,20 @@ class DemoStockOperations implements StockOperations {
     for (var i = 0; i < lines.length; i++) {
       final d = lines[i];
       final line = transfer.lines.where((l) => l.id == d.lineId).firstOrNull;
-      if (line == null) throw _refused('lines[$i].line_id', 'transfer_unknown');
+      if (line == null) throw _refused('lines[$i].line_id', StockRefusal.transferUnknown);
       final ExactQuantity quantity;
       try {
         quantity = ExactQuantity.parse(d.quantity);
       } on ExactQuantityException {
-        throw _refused('lines[$i].quantity', 'quantity_invalid');
+        throw _refused('lines[$i].quantity', StockRefusal.quantityInvalid);
       }
-      if (quantity <= ExactQuantity.zero) throw _refused('lines[$i].quantity', 'quantity_invalid');
+      if (quantity <= ExactQuantity.zero) throw _refused('lines[$i].quantity', StockRefusal.quantityInvalid);
       final sofar = received[line.id]! + quantity;
-      if (sofar > line.loaded) throw _refused('lines[$i].quantity', 'receive_over');
+      if (sofar > line.loaded) throw _refused('lines[$i].quantity', StockRefusal.receiveOver);
       received[line.id] = sofar;
       final to = d.toLocationId ?? transfer.toLocationId;
       if (!places.containsKey(to) || stockSiteOf(to, all) != stockSiteOf(transfer.toLocationId, all)) {
-        throw _refused('lines[$i].to', 'wrong_site');
+        throw _refused('lines[$i].to', StockRefusal.wrongSite);
       }
       plan.add((line: line, quantity: quantity, to: to));
     }
@@ -243,11 +243,11 @@ class DemoStockOperations implements StockOperations {
     String requestId,
   ) async {
     if (_ledger.answers[requestId] case final done?) return done;
-    if (!_mine(workspaceId) || lines.isEmpty) throw _refused('request', 'malformed');
+    if (!_mine(workspaceId) || lines.isEmpty) throw _refused('request', StockRefusal.malformed);
     final places = await _real();
     final asked = <({StockItem item, ExactQuantity quantity})>[];
     for (var i = 0; i < lines.length; i++) {
-      if (!places.containsKey(lines[i].fromLocationId)) throw _refused('lines[$i]', 'location_foreign');
+      if (!places.containsKey(lines[i].fromLocationId)) throw _refused('lines[$i]', StockRefusal.locationForeign);
       asked.add(await _quantity(lines[i], i));
     }
     _checkOnHand(asked, [for (final l in lines) l.fromLocationId]);

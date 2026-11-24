@@ -12,13 +12,13 @@ import '../../../core/help/help_dot.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
-import '../../../core/trace/trace_logger.dart';
+import '../../../core/trace/guarded.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/stock_config.dart';
 import '../domain/stock_tags.dart';
 import '../providers/stock_providers.dart';
+import 'stock_config_text.dart';
 import 'stock_nfc_button.dart';
-import 'stock_tag_text.dart';
 
 /// Opens the tags of [owner]; [name] is what the title names.
 Future<void> showStockTagsDialog(BuildContext context, {required String workspaceId, required TagOwner owner, required String name}) =>
@@ -55,44 +55,52 @@ class _TagsDialogState extends ConsumerState<_TagsDialog> {
   Future<void> _bind(String uid) async {
     final l10n = context.l10n;
     final code = uid.toUpperCase();
-    try {
-      final answer = await ref.read(stockTagsStoreProvider).bind(
-        widget.workspaceId,
-        requestId: _requests.putIfAbsent(code, newRequestId),
-        code: code,
-        owner: widget.owner,
-      );
-      // answered: the next read of the same chip is a new request (and says "already bound here")
-      _requests.remove(code);
-      if (!mounted) return;
-      setState(() {
-        _problem = null;
-        _status = answer.replayed ? l10n.stockTagsAlready(answer.tag.code) : l10n.stockTagsBound(answer.tag.code);
-      });
-      _reload();
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'a tag was not bound', error: e, stackTrace: st);
-      // a refusal is an answer: a new attempt is a new request; an unknown outcome (the connection) keeps its
-      // request id, so the retry answers once
-      if (e is StockConfigFailure) _requests.remove(code);
-      if (mounted) setState(() => _problem = stockTagProblem(l10n, e));
-    }
+    final problem = await guardSave(
+      domain: 'stock',
+      message: 'a tag was not bound',
+      action: () async {
+        final answer = await ref.read(stockTagsStoreProvider).bind(
+          widget.workspaceId,
+          requestId: _requests.putIfAbsent(code, newRequestId),
+          code: code,
+          owner: widget.owner,
+        );
+        // answered: the next read of the same chip is a new request (and says "already bound here")
+        _requests.remove(code);
+        if (!mounted) return;
+        setState(() {
+          _problem = null;
+          _status = answer.replayed ? l10n.stockTagsAlready(answer.tag.code) : l10n.stockTagsBound(answer.tag.code);
+        });
+        _reload();
+      },
+      problem: (e) {
+        // a refusal is an answer: a new attempt is a new request; an unknown outcome (the connection) keeps its
+        // request id, so the retry answers once
+        if (e is StockConfigFailure) _requests.remove(code);
+        return stockProblemText(l10n, e, subject: StockSubject.tag);
+      },
+    );
+    if (problem != null && mounted) setState(() => _problem = problem);
   }
 
   Future<void> _retire(StockTag tag, String reason) async {
     final l10n = context.l10n;
-    try {
-      await ref.read(stockTagsStoreProvider).retire(widget.workspaceId, requestId: newRequestId(), code: tag.code, reason: reason);
-      if (!mounted) return;
-      setState(() {
-        _problem = null;
-        _status = l10n.stockTagsRetired(tag.code);
-      });
-      _reload();
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'a tag was not retired', error: e, stackTrace: st);
-      if (mounted) setState(() => _problem = stockTagProblem(l10n, e));
-    }
+    final problem = await guardSave(
+      domain: 'stock',
+      message: 'a tag was not retired',
+      action: () async {
+        await ref.read(stockTagsStoreProvider).retire(widget.workspaceId, requestId: newRequestId(), code: tag.code, reason: reason);
+        if (!mounted) return;
+        setState(() {
+          _problem = null;
+          _status = l10n.stockTagsRetired(tag.code);
+        });
+        _reload();
+      },
+      problem: (e) => stockProblemText(l10n, e, subject: StockSubject.tag),
+    );
+    if (problem != null && mounted) setState(() => _problem = problem);
   }
 
   String _reasonLabel(AppLocalizations l10n, String reason) => switch (reason) {

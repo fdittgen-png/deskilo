@@ -19,6 +19,7 @@ import '../domain/workspace_units.dart';
 import '../providers/workspace_units_providers.dart';
 import 'measure_unit_sheet.dart';
 import 'measure_unit_text.dart';
+import 'stock_config_text.dart';
 import 'stock_page_shell.dart';
 
 class UnitsOfMeasureScreen extends ConsumerWidget {
@@ -71,7 +72,7 @@ class UnitsOfMeasureScreen extends ConsumerWidget {
       ref.invalidate(workspaceUnitListProvider(workspaceId));
     } on StockConfigRefused catch (e, stack) {
       TraceLogger.instance.warn('stock', 'archiving a unit was refused: ${e.reason}', error: e, stackTrace: stack);
-      if (context.mounted) AppSnack.error(context, measureUnitReasonText(l10n, e.reason));
+      if (context.mounted) AppSnack.error(context, stockRefusalText(l10n, e.reason, subject: StockSubject.measureUnit));
     }
   }
 }

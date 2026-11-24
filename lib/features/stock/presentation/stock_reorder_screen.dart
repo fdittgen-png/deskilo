@@ -13,7 +13,7 @@ import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
-import '../../../core/trace/trace_logger.dart';
+import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../l10n/app_localizations.dart';
@@ -244,23 +244,26 @@ class _GroupCardState extends ConsumerState<_GroupCard> {
 
   Future<void> _draft(AppLocalizations l10n) async {
     setState(() => _busy = true);
-    try {
-      final draft = await ref.read(stockReorderProvider).createDraft(
-        widget.workspaceId,
-        supplierId: widget.group.supplierId,
-        lines: widget.group.lines,
-        requestId: _requestId,
-      );
-      _requestId = newRequestId();
-      if (!mounted) return;
-      AppSnack.success(context, l10n.stockReorderDraftCreated(draft.number ?? ''));
-      ref.invalidate(stockReplenishmentProvider(widget.workspaceId));
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'a replenishment draft was not made', error: e, stackTrace: st);
-      if (mounted) AppSnack.error(context, stockSaveProblem(l10n, e));
-    } finally {
-      if (mounted) setState(() => _busy = false);
-    }
+    final problem = await guardSave(
+      domain: 'stock',
+      message: 'a replenishment draft was not made',
+      action: () async {
+        final draft = await ref.read(stockReorderProvider).createDraft(
+          widget.workspaceId,
+          supplierId: widget.group.supplierId,
+          lines: widget.group.lines,
+          requestId: _requestId,
+        );
+        _requestId = newRequestId();
+        if (!mounted) return;
+        AppSnack.success(context, l10n.stockReorderDraftCreated(draft.number ?? ''));
+        ref.invalidate(stockReplenishmentProvider(widget.workspaceId));
+      },
+      problem: (e) => stockProblemText(l10n, e),
+    );
+    if (!mounted) return;
+    if (problem != null) AppSnack.error(context, problem);
+    setState(() => _busy = false);
   }
 
   @override

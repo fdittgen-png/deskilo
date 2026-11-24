@@ -16,8 +16,7 @@ import '../../../core/i18n/app_format.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
-import '../../../core/trace/refusal_text.dart';
-import '../../../core/trace/trace_logger.dart';
+import '../../../core/trace/guarded.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/stock_config.dart';
@@ -107,34 +106,35 @@ class _ReversalDraft {
   FieldErrors validate(AppLocalizations l10n) {
     final q = quantity;
     return {
-      if (needsPlace && place == null) 'place': stockReasonText(l10n, 'location_foreign'),
-      if (q == null || q <= ExactQuantity.zero) 'quantity': stockReasonText(l10n, 'quantity_invalid'),
+      if (needsPlace && place == null) 'place': l10n.stockRequiredPlace,
+      if (q == null || q <= ExactQuantity.zero) 'quantity': stockRefusalText(l10n, StockRefusal.quantityInvalid),
       if (q != null && q > allows.remaining) 'quantity': l10n.stockReversalMoreThanRemains(format.quantity(allows.remaining), source.unit),
     };
   }
 
   Future<String?> submit(AppLocalizations l10n, StockReversals reversals, String workspaceId) async {
-    try {
-      await reversals.makeReturn(
-        workspaceId,
-        returnId,
-        kind,
-        [
-          (
-            lineId: lineId,
-            sourceMovementId: source.id,
-            quantity: quantity!.text,
-            locationId: needsPlace ? place : null,
-            note: fields.text('note').trim(),
-          ),
-        ],
-        requestId,
-      );
-      return null;
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'goods were not reversed', error: e, stackTrace: st);
-      return knownRefusalText(l10n, e) ?? stockSaveProblem(l10n, e);
-    }
+    return guardSave(
+      domain: 'stock',
+      message: 'goods were not reversed',
+      action: () async {
+        await reversals.makeReturn(
+          workspaceId,
+          returnId,
+          kind,
+          [
+            (
+              lineId: lineId,
+              sourceMovementId: source.id,
+              quantity: quantity!.text,
+              locationId: needsPlace ? place : null,
+              note: fields.text('note').trim(),
+            ),
+          ],
+          requestId,
+        );
+      },
+      problem: (e) => stockProblemText(l10n, e),
+    );
   }
 
   List<Widget> build(BuildContext context, VoidCallback refresh) {

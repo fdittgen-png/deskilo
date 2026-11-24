@@ -58,7 +58,7 @@ class _Commands implements StockConfigCommands {
   Future<StockSaved> saveItem(String workspaceId, StockItemConfig config, String requestId) async {
     if (failFirstSave) {
       failFirstSave = false;
-      throw const StockConfigRefused('inventory_unit', 'unit_unknown');
+      throw const StockConfigRefused('inventory_unit', StockRefusal.unitUnknown);
     }
     saved.add((config: config, request: requestId));
     return (id: config.itemId, revision: 2, replayed: false);

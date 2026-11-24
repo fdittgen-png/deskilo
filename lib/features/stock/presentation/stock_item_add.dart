@@ -13,7 +13,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/l10n/context_l10n.dart';
-import '../../../core/trace/trace_logger.dart';
+import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/domain/workspace_permission.dart';
@@ -35,14 +35,16 @@ class StockItemAdd {
   /// Chooses how to add an item and does it; true when an item was made.
   Future<bool> run(BuildContext context, String workspaceId) async {
     final l10n = context.l10n;
-    final List<StockItem> candidates;
-    try {
-      candidates = await _ref.read(stockQueriesProvider).unstocked(workspaceId);
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'the services that may become items could not be read', error: e, stackTrace: st);
-      if (context.mounted) AppSnack.error(context, l10n.stockReadFailed);
-      return false;
-    }
+    final candidates = await guardRead<List<StockItem>?>(
+      domain: 'stock',
+      message: 'the services that may become items could not be read',
+      read: () => _ref.read(stockQueriesProvider).unstocked(workspaceId),
+      fallback: (_) {
+        if (context.mounted) AppSnack.error(context, l10n.stockReadFailed);
+        return null;
+      },
+    );
+    if (candidates == null) return false;
     if (!context.mounted) return false;
     final held = _ref.read(myPermissionsProvider);
     final mayCreate = _ref.read(stockServiceCreatorProvider) != null && held.contains(WorkspacePermission.manageServices);
@@ -107,26 +109,30 @@ class StockItemAdd {
   Future<bool> _newItem(BuildContext context, String workspaceId) async {
     final creator = _ref.read(stockServiceCreatorProvider);
     if (creator == null) return false;
-    try {
-      final vat = await creator.vatChoices(workspaceId);
-      final places = await _ref.read(stockPlaceConfigsProvider(workspaceId).future);
-      if (!context.mounted) return false;
-      return await showNewStockItemSheet(
-        context,
-        (creator: creator, commands: _ref.read(stockConfigCommandsProvider), registry: _ref.read(stockRegistryProvider)),
-        workspaceId: workspaceId,
-        choices: (
-          vat: vat,
-          places: places,
-          separator: _ref.read(stockAddressSeparatorProvider),
-          currency: _ref.read(currentWorkspaceProvider).value?.currencyCode ?? '',
-          unit: _ref.read(stockWeighedGoodsProvider) ? 'kg' : 'piece',
-        ),
-      );
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'the new item sheet could not read what it needs', error: e, stackTrace: st);
-      if (context.mounted) AppSnack.error(context, context.l10n.stockReadFailed);
-      return false;
-    }
+    return guardRead(
+      domain: 'stock',
+      message: 'the new item sheet could not read what it needs',
+      read: () async {
+        final vat = await creator.vatChoices(workspaceId);
+        final places = await _ref.read(stockPlaceConfigsProvider(workspaceId).future);
+        if (!context.mounted) return false;
+        return await showNewStockItemSheet(
+          context,
+          (creator: creator, commands: _ref.read(stockConfigCommandsProvider), registry: _ref.read(stockRegistryProvider)),
+          workspaceId: workspaceId,
+          choices: (
+            vat: vat,
+            places: places,
+            separator: _ref.read(stockAddressSeparatorProvider),
+            currency: _ref.read(currentWorkspaceProvider).value?.currencyCode ?? '',
+            unit: _ref.read(stockWeighedGoodsProvider) ? 'kg' : 'piece',
+          ),
+        );
+      },
+      fallback: (_) {
+        if (context.mounted) AppSnack.error(context, context.l10n.stockReadFailed);
+        return false;
+      },
+    );
   }
 }

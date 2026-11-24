@@ -19027,10 +19027,6 @@ class AppLocalizationsFr extends AppLocalizations {
       'Ce groupe est utilisé par des articles : déplacez-les d’abord.';
 
   @override
-  String get itemGroupReasonNameDuplicate =>
-      'Un autre groupe porte déjà ce nom.';
-
-  @override
   String get itemGroupReasonNeedsSerial =>
       'Les puces par pièce demandent un suivi à la pièce.';
 
@@ -37402,22 +37398,6 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les deux nombres doivent être des entiers supérieurs à zéro.';
 
   @override
-  String get stockReasonGroupDepth =>
-      'Un sous-groupe ne peut pas avoir de sous-groupes.';
-
-  @override
-  String get stockReasonGroupHasMovements =>
-      'Cet article a des mouvements de stock : son unité et son suivi restent tels qu\'écrits.';
-
-  @override
-  String get stockReasonGroupHasSubgroups =>
-      'Ce groupe a des sous-groupes : déplacez-les ou supprimez-les d\'abord.';
-
-  @override
-  String get stockReasonGroupInUse =>
-      'Ce groupe est utilisé par des articles : déplacez-les d\'abord.';
-
-  @override
   String get stockReasonGroupItemUnknown =>
       'Cet article n\'est pas un article de cette entreprise.';
 
@@ -37434,20 +37414,8 @@ class AppLocalizationsFr extends AppLocalizations {
       'Un nouveau groupe a besoin d\'un nom.';
 
   @override
-  String get stockReasonGroupNeedsSerial =>
-      'Une étiquette par unité exige un suivi à la pièce.';
-
-  @override
-  String get stockReasonGroupNotOverridable =>
-      'C\'est une proposition pour les nouveaux articles, elle ne se règle pas par article.';
-
-  @override
   String get stockReasonGroupPlaceUnknown =>
       'Ce lieu n\'est pas un lieu de cette entreprise.';
-
-  @override
-  String get stockReasonGroupUnknown =>
-      'Ce groupe n\'est pas un groupe de cette entreprise.';
 
   @override
   String get stockReasonGroupUnknownReference =>
@@ -37906,6 +37874,26 @@ class AppLocalizationsFr extends AppLocalizations {
   String get stockReorderToOrderTitle => 'Que commander';
 
   @override
+  String get stockRequiredArticle =>
+      'Saisissez la référence d’article du fournisseur.';
+
+  @override
+  String get stockRequiredDestination =>
+      'Choisissez l’emplacement où vont les marchandises, autre que celui qu’elles quittent.';
+
+  @override
+  String get stockRequiredItem => 'Choisissez un article.';
+
+  @override
+  String get stockRequiredPlace => 'Choisissez un emplacement.';
+
+  @override
+  String get stockRequiredSite => 'Choisissez un site.';
+
+  @override
+  String get stockRequiredSupplier => 'Choisissez un fournisseur.';
+
+  @override
   String get stockReversalBackTo => 'Les marchandises reviennent à';
 
   @override
@@ -38129,24 +38117,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get stockTagKindUhf => 'Étiquette UHF';
 
   @override
-  String get stockTagMalformed => 'Ce n’est pas un code de puce valide.';
-
-  @override
-  String get stockTagModeNone => 'Cet article n’utilise pas de puces.';
-
-  @override
   String get stockTagNotInForce => 'Ce n’est pas une puce en service ici.';
 
   @override
   String get stockTagOnPiece => 'Cette puce est sur une pièce encore en stock.';
-
-  @override
-  String get stockTagOwnerUnknown =>
-      'Cet article ou cet emplacement est inconnu.';
-
-  @override
-  String get stockTagPerUnit =>
-      'Cet article est étiqueté pièce par pièce : étiquetez ses pièces à la réception.';
 
   @override
   String stockTagPiece(String number) {

@@ -5,7 +5,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/l10n/context_l10n.dart';
-import '../../../core/trace/trace_logger.dart';
+import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
 import '../domain/item_groups.dart';
 import '../domain/put_away_progress.dart';
@@ -72,24 +72,28 @@ Future<PutAwayContext?> loadPutAwayContext(
   required List<DeliveredLineProgress> lines,
 }) async {
   final config = services.config;
-  try {
-    final places = await services.queries.places(workspaceId);
-    final items = <int, StockItemConfig>{};
-    final variants = <int, List<StockVariant>>{};
-    final perUnit = <int>{};
-    for (final l in lines) {
-      final id = l.serviceId;
-      if (id == null) continue;
-      final item = await config.item(workspaceId, id);
-      if (item == null || !item.stockable) continue;
-      items[l.lineNo] = item;
-      variants[l.lineNo] = [for (final v in await config.variants(workspaceId, id)) if (v.active) v];
-      if (await tagsEachPiece(services.groups, workspaceId, id)) perUnit.add(l.lineNo);
-    }
-    return PutAwayContext(places: places, items: items, variants: variants, currency: services.currency, perUnit: perUnit);
-  } on Object catch (e, st) {
-    TraceLogger.instance.error('stock', 'the put-away could not read the stock side', error: e, stackTrace: st);
-    if (context.mounted) AppSnack.error(context, context.l10n.stockReadFailed);
-    return null;
-  }
+  return guardRead<PutAwayContext?>(
+    domain: 'stock',
+    message: 'the put-away could not read the stock side',
+    read: () async {
+      final places = await services.queries.places(workspaceId);
+      final items = <int, StockItemConfig>{};
+      final variants = <int, List<StockVariant>>{};
+      final perUnit = <int>{};
+      for (final l in lines) {
+        final id = l.serviceId;
+        if (id == null) continue;
+        final item = await config.item(workspaceId, id);
+        if (item == null || !item.stockable) continue;
+        items[l.lineNo] = item;
+        variants[l.lineNo] = [for (final v in await config.variants(workspaceId, id)) if (v.active) v];
+        if (await tagsEachPiece(services.groups, workspaceId, id)) perUnit.add(l.lineNo);
+      }
+      return PutAwayContext(places: places, items: items, variants: variants, currency: services.currency, perUnit: perUnit);
+    },
+    fallback: (_) {
+      if (context.mounted) AppSnack.error(context, context.l10n.stockReadFailed);
+      return null;
+    },
+  );
 }

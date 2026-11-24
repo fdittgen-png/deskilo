@@ -13,7 +13,7 @@ import '../../../core/i18n/app_format.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
-import '../../../core/trace/trace_logger.dart';
+import '../../../core/trace/guarded.dart';
 import '../../../core/ui/dropdown_field.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../l10n/app_localizations.dart';
@@ -104,18 +104,15 @@ class _PointDraft {
 
   FieldErrors validate(AppLocalizations l10n) {
     _choiceErrors.clear();
-    final errors = <String, String>{
-      if (item == null) 'item': 'item_foreign',
-      if (site == null) 'site': 'site_unknown',
-      ...checkReorderPoint(point: _dot('level'), value: _dot('value'), upTo: upTo),
-    };
     final shown = {
-      for (final e in errors.entries)
+      if (item == null) 'item': l10n.stockRequiredItem,
+      if (site == null) 'site': l10n.stockRequiredSite,
+      for (final e in checkReorderPoint(point: _dot('level'), value: _dot('value'), upTo: upTo).entries)
         switch (e.key) {
           'reorder_point' => 'level',
           'reorder_quantity' || 'target_quantity' => 'value',
           final k => k,
-        }: stockReasonText(l10n, e.value),
+        }: stockRefusalText(l10n, e.value),
     };
     for (final k in ['item', 'site']) {
       final sentence = shown[k];
@@ -126,25 +123,26 @@ class _PointDraft {
 
   Future<String?> submit(AppLocalizations l10n, StockReorder reorder, String workspaceId) async {
     final value = _dot('value');
-    try {
-      await reorder.savePoint(
-        workspaceId,
-        point: StockReorderPointDraft(
-          target: isNew ? (item: item, variant: variant, site: site) : null,
-          point: _dot('level'),
-          value: value,
-          upTo: upTo,
-          active: active,
-        ),
-        requestId: requestId,
-        pointId: point?.id,
-        expectedRevision: point?.revision,
-      );
-      return null;
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'a reorder point was not saved', error: e, stackTrace: st);
-      return stockSaveProblem(l10n, e);
-    }
+    return guardSave(
+      domain: 'stock',
+      message: 'a reorder point was not saved',
+      action: () async {
+        await reorder.savePoint(
+          workspaceId,
+          point: StockReorderPointDraft(
+            target: isNew ? (item: item, variant: variant, site: site) : null,
+            point: _dot('level'),
+            value: value,
+            upTo: upTo,
+            active: active,
+          ),
+          requestId: requestId,
+          pointId: point?.id,
+          expectedRevision: point?.revision,
+        );
+      },
+      problem: (e) => stockProblemText(l10n, e),
+    );
   }
 
   /// The variants of the chosen item, read once per item.
@@ -152,12 +150,12 @@ class _PointDraft {
     final id = item;
     if (id == null || id == _variantsOf) return;
     _variantsOf = id;
-    try {
-      variants = [for (final v in await config.variants(workspaceId, id)) if (v.id != null && v.active) v];
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'the variants could not be read', error: e, stackTrace: st);
-      variants = const [];
-    }
+    variants = await guardRead(
+      domain: 'stock',
+      message: 'the variants could not be read',
+      read: () async => [for (final v in await config.variants(workspaceId, id)) if (v.id != null && v.active) v],
+      fallback: (_) => const [],
+    );
     refresh();
   }
 

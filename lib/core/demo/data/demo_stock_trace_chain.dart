@@ -25,7 +25,7 @@ class DemoStockTraceChain implements StockTraceChainReader {
     if (counterLineId != null) {
       final line = sold?.call().where((l) => l.lineId == counterLineId).firstOrNull;
       // an unknown line is refused, as the server refuses it
-      if (line == null || !_ledger.mine(workspaceId)) throw const StockConfigRefused('counter_line_id', 'unknown');
+      if (line == null || !_ledger.mine(workspaceId)) throw const StockConfigRefused('counter_line_id', StockRefusal.unknown);
       return TraceChain(
         subject: 'sale_line',
         steps: const [],

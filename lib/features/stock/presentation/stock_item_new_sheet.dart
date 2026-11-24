@@ -12,7 +12,6 @@ import 'package:flutter/services.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
-import '../../../core/trace/refusal_text.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/dropdown_field.dart';
 import '../../../core/ui/form_kit.dart';
@@ -136,7 +135,7 @@ class _NewItemDraft {
       return null;
     } on Object catch (e, st) {
       TraceLogger.instance.warn('stock', 'a new item was not saved', error: e, stackTrace: st);
-      return knownRefusalText(l10n, e) ?? stockSaveProblem(l10n, e);
+      return stockProblemText(l10n, e);
     }
   }
 

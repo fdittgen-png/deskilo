@@ -308,7 +308,7 @@ class _UnitActions extends ConsumerWidget {
       return null;
     } on StockConfigFailure catch (e, st) {
       TraceLogger.instance.error('stock', 'a unit could not be unpacked', error: e.runtimeType, stackTrace: st);
-      return stockSaveProblem(l10n, e);
+      return stockProblemText(l10n, e);
     }
   }
 }

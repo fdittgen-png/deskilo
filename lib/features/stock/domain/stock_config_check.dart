@@ -40,73 +40,73 @@ String stockCodeField(int index, String part) => 'codes[$index].$part';
 /// twice, an empty or repeated code, a code naming a unit the item lacks.
 /// The map is keyed by the server's field name; the value is the server's
 /// reason, so one text table serves both.
-Map<String, String> checkStockItem({
+Map<String, StockRefusal> checkStockItem({
   required List<StockUnitDraft> units,
   required List<StockCodeDraft> codes,
 }) {
-  final errors = <String, String>{};
+  final errors = <String, StockRefusal>{};
   final seen = <String>{};
   for (var i = 0; i < units.length; i++) {
     final u = units[i];
     if (u.unit.trim().isEmpty) {
-      errors[stockUnitField(i, 'unit')] = 'unit_unknown';
+      errors[stockUnitField(i, 'unit')] = StockRefusal.unitUnknown;
     } else if (!seen.add(u.unit.trim())) {
-      errors[stockUnitField(i, 'unit')] = 'unit_duplicate';
+      errors[stockUnitField(i, 'unit')] = StockRefusal.unitDuplicate;
     }
     if (u.factorNum <= 0 || u.factorDen <= 0) {
-      errors[stockUnitField(i, 'factor_den')] = 'factor_invalid';
+      errors[stockUnitField(i, 'factor_den')] = StockRefusal.factorInvalid;
     }
   }
   if (units.where((u) => u.defaultPurchase).length > 1) {
-    errors['units'] = 'default_purchase_twice';
+    errors['units'] = StockRefusal.defaultPurchaseTwice;
   } else if (units.where((u) => u.defaultSale).length > 1) {
-    errors['units'] = 'default_sale_twice';
+    errors['units'] = StockRefusal.defaultSaleTwice;
   }
   final codeSeen = <String>{};
   for (var i = 0; i < codes.length; i++) {
     final c = codes[i];
     if (c.code.trim().isEmpty) {
-      errors[stockCodeField(i, 'code')] = 'code_malformed';
+      errors[stockCodeField(i, 'code')] = StockRefusal.codeMalformed;
     } else if (!codeSeen.add(c.code.trim())) {
-      errors[stockCodeField(i, 'code')] = 'code_duplicate';
+      errors[stockCodeField(i, 'code')] = StockRefusal.codeDuplicate;
     } else if (c.kind == 'gtin' && !RegExp(r'^[0-9]{8,14}$').hasMatch(c.code.trim())) {
-      errors[stockCodeField(i, 'code')] = 'gtin_length';
+      errors[stockCodeField(i, 'code')] = StockRefusal.gtinLength;
     }
     if (c.unit != null && !units.any((u) => u.unit.trim() == c.unit)) {
-      errors[stockCodeField(i, 'unit')] = 'unit_unknown';
+      errors[stockCodeField(i, 'unit')] = StockRefusal.unitUnknown;
     }
   }
   return errors;
 }
 
 /// The mistakes of a place that need no server to see.
-Map<String, String> checkStockPlace({
+Map<String, StockRefusal> checkStockPlace({
   required String code,
   required String name,
   required String barcode,
 }) => {
-  if (code.trim().isEmpty) 'code': 'code_malformed',
-  if (name.trim().length > 80) 'name': 'too_long',
-  if (barcode.trim().length > 64) 'barcode': 'code_malformed',
+  if (code.trim().isEmpty) 'code': StockRefusal.codeMalformed,
+  if (name.trim().length > 80) 'name': StockRefusal.tooLong,
+  if (barcode.trim().length > 64) 'barcode': StockRefusal.codeMalformed,
 };
 
 /// The mistakes in the variants of one item that need no server to see: a
 /// variant with no value chosen, two with the same combination, a price
 /// below zero. Keyed by the server's field name; the value is its reason.
-Map<String, String> checkStockVariants(List<({Map<String, String> values, int? priceCents})> variants) {
-  final errors = <String, String>{};
+Map<String, StockRefusal> checkStockVariants(List<({Map<String, String> values, int? priceCents})> variants) {
+  final errors = <String, StockRefusal>{};
   final seen = <String>{};
   for (var i = 0; i < variants.length; i++) {
     final v = variants[i];
     if (v.values.isEmpty) {
-      errors['variants[$i].values'] = 'variant_values_missing';
+      errors['variants[$i].values'] = StockRefusal.variantValuesMissing;
       continue;
     }
     final canonical = (v.values.entries.toList()..sort((a, b) => a.key.compareTo(b.key)))
         .map((e) => '${e.key}:${e.value}')
         .join(',');
-    if (!seen.add(canonical)) errors['variants[$i].values'] = 'variant_combination_duplicate';
-    if ((v.priceCents ?? 0) < 0) errors['variants[$i].price_cents'] = 'price_invalid';
+    if (!seen.add(canonical)) errors['variants[$i].values'] = StockRefusal.variantCombinationDuplicate;
+    if ((v.priceCents ?? 0) < 0) errors['variants[$i].price_cents'] = StockRefusal.priceInvalid;
   }
   return errors;
 }

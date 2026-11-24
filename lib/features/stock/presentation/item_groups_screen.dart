@@ -10,7 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/help/help_anchors.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
-import '../../../core/trace/trace_logger.dart';
+import '../../../core/trace/guarded.dart';
 import '../../workspace/domain/workspace_permission.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/item_groups.dart';
@@ -51,12 +51,12 @@ class _GroupList extends ConsumerWidget {
 
   Future<void> _open(BuildContext context, WidgetRef ref, ItemGroup? group) async {
     // the home zones are a choice, not a need: a failed read opens the sheet without them
-    var places = const <StockPlaceConfig>[];
-    try {
-      places = await ref.read(stockPlaceConfigsProvider(workspaceId).future);
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'the places could not be read for a group', error: e, stackTrace: st);
-    }
+    final places = await guardRead(
+      domain: 'stock',
+      message: 'the places could not be read for a group',
+      read: () => ref.read(stockPlaceConfigsProvider(workspaceId).future),
+      fallback: (_) => const <StockPlaceConfig>[],
+    );
     // what an item costs or sells for: only for someone who may manage services AND see the finances
     final held = ref.read(myPermissionsProvider);
     final finance = held.contains(WorkspacePermission.manageServices) && held.contains(WorkspacePermission.viewFinances);

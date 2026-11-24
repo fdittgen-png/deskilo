@@ -8,25 +8,24 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show ExactQuanti
 import 'package:flutter/material.dart';
 
 import '../../../core/l10n/context_l10n.dart';
-import '../../../core/trace/trace_logger.dart';
+import '../../../core/trace/guarded.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/item_groups.dart';
 import '../domain/stock_config.dart';
 import 'stock_config_text.dart';
 import 'stock_nfc_button.dart';
-import 'stock_tag_text.dart';
 
 /// Whether the item's effective tag mode (its own, its group's, the business's) is one tag per piece. An answer
 /// that could not be read leaves the line untagged: the server then refuses the put-away and says why (DKG25).
 Future<bool> tagsEachPiece(ItemGroups? groups, String workspaceId, String itemId) async {
   if (groups == null) return false;
-  try {
-    return (await groups.effective(workspaceId, itemId)).params['tag_mode']?.value == 'per_unit';
-  } on Object catch (e, st) {
-    TraceLogger.instance.warn('stock', 'the tag mode of an item could not be read', error: e, stackTrace: st);
-    return false;
-  }
+  return guardRead(
+    domain: 'stock',
+    message: 'the tag mode of an item could not be read',
+    read: () async => (await groups.effective(workspaceId, itemId)).params['tag_mode']?.value == 'per_unit',
+    fallback: (_) => false,
+  );
 }
 
 /// [quantity] (in [unit]) in the item's inventory unit as a whole number of pieces; null when it is not one.
@@ -79,8 +78,8 @@ class PieceTags {
 
 /// What a refused put-away says: a refused piece is named by its place among the line's tags.
 String putAwayProblem(AppLocalizations l10n, Object e) {
-  if (e is! StockTagRefused) return stockSaveProblem(l10n, e);
-  final text = stockTagProblem(l10n, e);
+  if (e is! StockTagRefused) return stockProblemText(l10n, e);
+  final text = stockProblemText(l10n, e, subject: StockSubject.tag);
   final unit = e.detail['unit'];
   return unit is int ? l10n.stockPutAwayPieceProblem(unit, text) : text;
 }

@@ -178,7 +178,8 @@ void main() {
         await _settle(tester);
         await tester.tap(find.byKey(const ValueKey('stock-move-submit')));
         await _settle(tester);
-        expect(find.text(_en.stockReasonItemForeign), findsOneWidget);
+        // #4402 -- a missing choice is the app's own check, in words of its own
+        expect(find.text(_en.stockRequiredItem), findsOneWidget);
         expect(find.text(_en.stockReasonQuantityInvalid), findsOneWidget);
         expect(w.ledger.openTransfers.length, 1);
       });

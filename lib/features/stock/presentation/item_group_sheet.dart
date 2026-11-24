@@ -17,7 +17,7 @@ import '../../../core/i18n/app_format.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
-import '../../../core/trace/trace_logger.dart';
+import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../core/ui/dropdown_field.dart';
 import '../../../core/ui/form_kit.dart';
@@ -27,6 +27,7 @@ import '../domain/purchase_factor.dart';
 import '../domain/stock_config.dart';
 import '../domain/stock_service_creator.dart';
 import 'item_group_text.dart';
+import 'stock_config_text.dart';
 import 'stock_quantity_field.dart';
 
 /// The units a group may set for its items (the registry's units of count, mass and volume).
@@ -183,25 +184,29 @@ class _GroupDraft {
 
   Future<String?> submit(AppLocalizations l10n) async {
     final now = jsonEncode(body());
-    try {
-      if (_preview == null || _previewOf != now) {
-        final preview = await port.save(workspaceId, requestId: requestId, groupId: _id, expectedRevision: group?.revision ?? 0, body: body(), apply: false);
-        _previewOf = now;
-        _preview = preview;
-        // nothing is reached: there is nothing to confirm
-        if (preview.impact.isEmpty && preview.skipped.isEmpty) return await _apply(l10n);
-        return l10n.itemGroupConfirm;
-      }
-      return await _apply(l10n);
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'an item group was not saved', error: e, stackTrace: st);
-      return itemGroupProblem(l10n, e);
-    }
+    String? confirm;
+    final problem = await guardSave(
+      domain: 'stock',
+      message: 'an item group was not saved',
+      action: () async {
+        if (_preview == null || _previewOf != now) {
+          final preview = await port.save(workspaceId, requestId: requestId, groupId: _id, expectedRevision: group?.revision ?? 0, body: body(), apply: false);
+          _previewOf = now;
+          _preview = preview;
+          // nothing is reached: there is nothing to confirm
+          if (preview.impact.isEmpty && preview.skipped.isEmpty) return _apply();
+          confirm = l10n.itemGroupConfirm;
+          return;
+        }
+        await _apply();
+      },
+      problem: (e) => stockProblemText(l10n, e, subject: StockSubject.group),
+    );
+    return problem ?? confirm;
   }
 
-  Future<String?> _apply(AppLocalizations l10n) async {
+  Future<void> _apply() async {
     await port.save(workspaceId, requestId: requestId, groupId: _id, expectedRevision: group?.revision ?? 0, body: body());
-    return null;
   }
 
   List<Widget> build(BuildContext context, VoidCallback refresh) {
@@ -393,14 +398,17 @@ class _GroupDraft {
   Future<void> _delete(BuildContext context) async {
     final l10n = context.l10n;
     final navigator = Navigator.of(context);
-    try {
-      await port.delete(workspaceId, requestId: newRequestId(), groupId: group!.id, expectedRevision: group!.revision);
-      if (context.mounted) AppSnack.info(context, l10n.itemGroupDeleted);
-      navigator.pop(true);
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'an item group was not deleted', error: e, stackTrace: st);
-      if (context.mounted) AppSnack.error(context, itemGroupProblem(l10n, e));
-    }
+    final problem = await guardSave(
+      domain: 'stock',
+      message: 'an item group was not deleted',
+      action: () async {
+        await port.delete(workspaceId, requestId: newRequestId(), groupId: group!.id, expectedRevision: group!.revision);
+        if (context.mounted) AppSnack.info(context, l10n.itemGroupDeleted);
+        navigator.pop(true);
+      },
+      problem: (e) => stockProblemText(l10n, e, subject: StockSubject.group),
+    );
+    if (problem != null && context.mounted) AppSnack.error(context, problem);
   }
 }
 

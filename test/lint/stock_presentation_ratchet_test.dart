@@ -10,8 +10,10 @@
 //  - a decimal field built by hand instead of `StockQuantityField`: what is
 //    left is no stock quantity (a price, a money threshold, an exchange rate,
 //    a margin, a unit's factor);
-//  - `on Object catch` anywhere in the stock feature (one guarded path takes
-//    them over).
+//  - `on Object catch` anywhere in the stock feature: a save or a read goes
+//    through the shared guarded path (`guardSave`, `guardRead` in
+//    lib/core/trace/guarded.dart, #4402); what is left reads the server's
+//    answer at the data boundary or traces a page read.
 import 'package:flutter_test/flutter_test.dart';
 
 import 'lint_sources.dart';
@@ -38,13 +40,14 @@ int _count(String root, RegExp pattern, {String? skipFile}) {
 }
 
 /// Measured on 24 Nov 2026 before the sweep: 15 pages, 9 retry labels,
-/// 2 chips, 17 decimal fields, 52 catches. Only falls.
+/// 2 chips, 17 decimal fields, 52 catches (47 after the page shell, 6 after
+/// the guarded path). Only falls.
 const _ceilings = <String, int>{
   'hand-built pages': 0,
   'connect wording as retry': 0,
   'plain chips as status': 0,
   'hand-built decimal fields': 5,
-  'on Object catch': 47,
+  'on Object catch': 6,
 };
 
 Map<String, int> _measure() => {

@@ -11363,7 +11363,6 @@
   "itemGroupReasonHasMovements": "il a déjà des mouvements",
   "itemGroupReasonHasSubgroups": "Ce groupe a des sous-groupes : supprimez-les d’abord.",
   "itemGroupReasonInUse": "Ce groupe est utilisé par des articles : déplacez-les d’abord.",
-  "itemGroupReasonNameDuplicate": "Un autre groupe porte déjà ce nom.",
   "itemGroupReasonNeedsSerial": "Les puces par pièce demandent un suivi à la pièce.",
   "itemGroupReasonNotOverridable": "Ce réglage ne peut pas avoir de valeur propre.",
   "itemGroupReorderPoint": "Seuil de réapprovisionnement par défaut",
@@ -21859,18 +21858,11 @@
   "@stockReasonFactorInvalid": {
     "description": "#4169 the stock editors: a text under a field the server refused"
   },
-  "stockReasonGroupDepth": "Un sous-groupe ne peut pas avoir de sous-groupes.",
-  "stockReasonGroupHasMovements": "Cet article a des mouvements de stock : son unité et son suivi restent tels qu'écrits.",
-  "stockReasonGroupHasSubgroups": "Ce groupe a des sous-groupes : déplacez-les ou supprimez-les d'abord.",
-  "stockReasonGroupInUse": "Ce groupe est utilisé par des articles : déplacez-les d'abord.",
   "stockReasonGroupItemUnknown": "Cet article n'est pas un article de cette entreprise.",
   "stockReasonGroupNameDuplicate": "Un groupe de ce niveau porte déjà ce nom.",
   "stockReasonGroupNameLength": "Le nom d'un groupe compte de 1 à 80 caractères.",
   "stockReasonGroupNameRequired": "Un nouveau groupe a besoin d'un nom.",
-  "stockReasonGroupNeedsSerial": "Une étiquette par unité exige un suivi à la pièce.",
-  "stockReasonGroupNotOverridable": "C'est une proposition pour les nouveaux articles, elle ne se règle pas par article.",
   "stockReasonGroupPlaceUnknown": "Ce lieu n'est pas un lieu de cette entreprise.",
-  "stockReasonGroupUnknown": "Ce groupe n'est pas un groupe de cette entreprise.",
   "stockReasonGroupUnknownReference": "Un lieu, un article ou un taux nommé ici n'appartient pas à cette entreprise.",
   "stockReasonGroupValueRequired": "Donnez une valeur, ou reprenez celle du groupe.",
   "stockReasonGroupVatRateUnknown": "Ce taux de TVA n'est pas un des taux actifs de cette entreprise.",
@@ -22150,6 +22142,30 @@
   "stockReorderTitle": "Réapprovisionnement",
   "stockReorderToOrderEmpty": "Il n’y a rien à commander.",
   "stockReorderToOrderTitle": "Que commander",
+  "stockRequiredArticle": "Saisissez la référence d’article du fournisseur.",
+  "@stockRequiredArticle": {
+    "description": "#4402 the supplier article sheet: said under the article reference when it is empty (the app's own check)"
+  },
+  "stockRequiredDestination": "Choisissez l’emplacement où vont les marchandises, autre que celui qu’elles quittent.",
+  "@stockRequiredDestination": {
+    "description": "#4402 the move sheet: said under the destination when none is chosen, or when it is the place the goods leave (the app's own check)"
+  },
+  "stockRequiredItem": "Choisissez un article.",
+  "@stockRequiredItem": {
+    "description": "#4402 a stock sheet: said under the item field when no item is chosen yet (the app's own check, not a refusal of the server)"
+  },
+  "stockRequiredPlace": "Choisissez un emplacement.",
+  "@stockRequiredPlace": {
+    "description": "#4402 a stock sheet: said under a place field when no place is chosen yet (the app's own check, not a refusal of the server)"
+  },
+  "stockRequiredSite": "Choisissez un site.",
+  "@stockRequiredSite": {
+    "description": "#4402 the reorder point sheet: said under the site when none is chosen yet (the app's own check, not a refusal of the server)"
+  },
+  "stockRequiredSupplier": "Choisissez un fournisseur.",
+  "@stockRequiredSupplier": {
+    "description": "#4402 the supplier article sheet: said under the supplier when none is chosen yet (the app's own check)"
+  },
   "stockReversalBackTo": "Les marchandises reviennent à",
   "stockReversalCorrectionOpen": "Corriger ce mouvement",
   "stockReversalCorrectionTitle": "Corriger un mouvement",
@@ -22226,12 +22242,8 @@
   "stockTagBoundElsewhere": "Cette puce est déjà associée à {owner}.",
   "stockTagKindNfc": "Puce NFC",
   "stockTagKindUhf": "Étiquette UHF",
-  "stockTagMalformed": "Ce n’est pas un code de puce valide.",
-  "stockTagModeNone": "Cet article n’utilise pas de puces.",
   "stockTagNotInForce": "Ce n’est pas une puce en service ici.",
   "stockTagOnPiece": "Cette puce est sur une pièce encore en stock.",
-  "stockTagOwnerUnknown": "Cet article ou cet emplacement est inconnu.",
-  "stockTagPerUnit": "Cet article est étiqueté pièce par pièce : étiquetez ses pièces à la réception.",
   "stockTagPiece": "Pièce {number}",
   "@stockTagPiece": {
     "description": "#4362 G13 tags: the name of one piece in the list of pieces",

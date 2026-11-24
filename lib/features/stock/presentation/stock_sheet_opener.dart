@@ -10,7 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show ProviderOrFamily;
 
 import '../../../core/l10n/context_l10n.dart';
-import '../../../core/trace/trace_logger.dart';
+import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
 import '../providers/stock_providers.dart';
 
@@ -25,20 +25,16 @@ Future<void> openStockSheet(
   required Future<bool> Function(StockSheetChoices choices) open,
   List<ProviderOrFamily> reads = const [],
 }) async {
-  final StockSheetChoices choices;
-  try {
-    choices = await ref.read(stockSheetChoicesProvider(workspaceId).future);
-  } on Object catch (e, st) {
-    TraceLogger.instance.warn(
-      'stock',
-      'the $what sheet could not read the stock',
-      error: e,
-      stackTrace: st,
-    );
-    if (context.mounted) AppSnack.error(context, context.l10n.stockReadFailed);
-    return;
-  }
-  if (!context.mounted) return;
+  final choices = await guardRead<StockSheetChoices?>(
+    domain: 'stock',
+    message: 'the $what sheet could not read the stock',
+    read: () => ref.read(stockSheetChoicesProvider(workspaceId).future),
+    fallback: (_) {
+      if (context.mounted) AppSnack.error(context, context.l10n.stockReadFailed);
+      return null;
+    },
+  );
+  if (choices == null || !context.mounted) return;
   if (await open(choices) && context.mounted) {
     for (final p in reads) {
       ref.invalidate(p);

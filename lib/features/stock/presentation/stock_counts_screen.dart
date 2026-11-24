@@ -17,8 +17,7 @@ import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
-import '../../../core/trace/refusal_text.dart';
-import '../../../core/trace/trace_logger.dart';
+import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../core/ui/kit/status_chip.dart';
@@ -228,18 +227,20 @@ class _CountTile extends ConsumerWidget {
 
   Future<void> _decide(BuildContext context, WidgetRef ref, StockCountDecision decision) async {
     final l10n = context.l10n;
-    try {
-      await ref.read(stockReversalsProvider).decideCount(workspaceId, count.countId, decision, newRequestId());
-      ref
-        ..invalidate(stockCountsProvider(workspaceId))
-        ..invalidate(stockOnHandWalkProvider)
-        ..invalidate(stockMovementsWalkProvider);
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'a count was not decided', error: e, stackTrace: st);
-      // a stale or decided count is read again: what the screen shows follows the server
-      ref.invalidate(stockCountsProvider(workspaceId));
-      if (context.mounted) AppSnack.error(context, knownRefusalText(l10n, e) ?? stockSaveProblem(l10n, e));
-    }
+    final problem = await guardSave(
+      domain: 'stock',
+      message: 'a count was not decided',
+      action: () async {
+        await ref.read(stockReversalsProvider).decideCount(workspaceId, count.countId, decision, newRequestId());
+        ref
+          ..invalidate(stockOnHandWalkProvider)
+          ..invalidate(stockMovementsWalkProvider);
+      },
+      problem: (e) => stockProblemText(l10n, e),
+    );
+    // decided or refused, the count is read again: a stale or decided count shows what the server holds
+    ref.invalidate(stockCountsProvider(workspaceId));
+    if (problem != null && context.mounted) AppSnack.error(context, problem);
   }
 }
 
@@ -285,28 +286,29 @@ class _CountDraft {
   ExactQuantity? get observed => stockQuantityOrNull(fields.text('observed'), locale: locale);
 
   FieldErrors validate(AppLocalizations l10n) => {
-    if (item == null) 'item': stockReasonText(l10n, 'item_foreign'),
-    if (place == null) 'place': stockReasonText(l10n, 'location_foreign'),
-    if (observed == null || observed! < ExactQuantity.zero) 'observed': stockReasonText(l10n, 'quantity_invalid'),
+    if (item == null) 'item': l10n.stockRequiredItem,
+    if (place == null) 'place': l10n.stockRequiredPlace,
+    if (observed == null || observed! < ExactQuantity.zero) 'observed': stockRefusalText(l10n, StockRefusal.quantityInvalid),
   };
 
   Future<String?> submit(AppLocalizations l10n, StockReversals reversals, String workspaceId) async {
-    try {
-      await reversals.recordCount(workspaceId, (
-        countId: countId,
-        itemId: item!,
-        locationId: place!,
-        observed: observed!.text,
-        requestId: requestId,
-        variantId: null,
-        lotId: null,
-        reason: fields.text('reason').trim(),
-      ));
-      return null;
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'a count was not recorded', error: e, stackTrace: st);
-      return knownRefusalText(l10n, e) ?? stockSaveProblem(l10n, e);
-    }
+    return guardSave(
+      domain: 'stock',
+      message: 'a count was not recorded',
+      action: () async {
+        await reversals.recordCount(workspaceId, (
+          countId: countId,
+          itemId: item!,
+          locationId: place!,
+          observed: observed!.text,
+          requestId: requestId,
+          variantId: null,
+          lotId: null,
+          reason: fields.text('reason').trim(),
+        ));
+      },
+      problem: (e) => stockProblemText(l10n, e),
+    );
   }
 
   List<Widget> build(BuildContext context, VoidCallback refresh) {

@@ -41,7 +41,7 @@ Future<String?> _guard(AppLocalizations l10n, Future<void> Function() act) async
     return null;
   } on StockConfigFailure catch (e, stack) {
     TraceLogger.instance.warn('stock', 'a handling unit command was refused', error: e, stackTrace: stack);
-    return stockSaveProblem(l10n, e);
+    return stockProblemText(l10n, e);
   }
 }
 
@@ -193,7 +193,7 @@ Future<void> showRepackSheet(
         final l = line;
         final n = int.tryParse(fields['boxes'].text.trim()) ?? 0;
         final each = stockQuantityOrNull(fields['each'].text, locale: appFormatOf(context).locale);
-        if (each == null) throw const StockConfigRefused('each', 'quantity_invalid');
+        if (each == null) throw const StockConfigRefused('each', StockRefusal.quantityInvalid);
         var total = ExactQuantity.zero;
         for (var i = 0; i < n; i++) {
           total = total + each;

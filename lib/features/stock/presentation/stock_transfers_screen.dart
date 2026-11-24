@@ -15,7 +15,7 @@ import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
-import '../../../core/trace/trace_logger.dart';
+import '../../../core/trace/guarded.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../core/ui/kit/status_chip.dart';
 import '../../../l10n/app_localizations.dart';
@@ -255,29 +255,30 @@ class _ReceiveDraft {
     for (final l in lines) {
       final q = _typed(l);
       if (q == null || q < ExactQuantity.zero) {
-        errors[l.id] = stockReasonText(l10n, 'quantity_invalid');
+        errors[l.id] = stockRefusalText(l10n, StockRefusal.quantityInvalid);
       } else if (q > l.inTransit) {
-        errors[l.id] = stockReasonText(l10n, 'receive_over');
+        errors[l.id] = stockRefusalText(l10n, StockRefusal.receiveOver);
       } else if (q > ExactQuantity.zero) {
         any = true;
       }
     }
-    if (!any && errors.isEmpty && lines.isNotEmpty) errors[lines.first.id] = stockReasonText(l10n, 'quantity_invalid');
+    if (!any && errors.isEmpty && lines.isNotEmpty) errors[lines.first.id] = stockRefusalText(l10n, StockRefusal.quantityInvalid);
     return errors;
   }
 
   Future<String?> submit(AppLocalizations l10n, StockOperations operations, String workspaceId) async {
-    try {
-      await operations.receive(workspaceId, transfer.id, [
-        for (final l in lines)
-          if ((_typed(l) ?? ExactQuantity.zero) > ExactQuantity.zero)
-            (lineId: l.id, quantity: _typed(l)!.text, toLocationId: to),
-      ], requestId);
-      return null;
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'goods were not received', error: e, stackTrace: st);
-      return stockSaveProblem(l10n, e);
-    }
+    return guardSave(
+      domain: 'stock',
+      message: 'goods were not received',
+      action: () async {
+        await operations.receive(workspaceId, transfer.id, [
+          for (final l in lines)
+            if ((_typed(l) ?? ExactQuantity.zero) > ExactQuantity.zero)
+              (lineId: l.id, quantity: _typed(l)!.text, toLocationId: to),
+        ], requestId);
+      },
+      problem: (e) => stockProblemText(l10n, e),
+    );
   }
 
   List<Widget> build(BuildContext context, VoidCallback refresh) {

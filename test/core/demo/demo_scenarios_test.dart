@@ -1357,7 +1357,7 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
         return false;
       } on StockConfigRefused catch (e) {
         final rows = await receiving.allocationsOfOrder(demoFirstSpaceId, 'demo-order-${w.now.year}-5');
-        return e.reason == 'over_allocated' && rows.map((a) => a.enteredQuantity.text).toList().join() == '20';
+        return e.reason == StockRefusal.overAllocated && rows.map((a) => a.enteredQuantity.text).toList().join() == '20';
       }
     },
   ),
@@ -1509,7 +1509,7 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
       try {
         await units.save(demoFirstSpaceId, requestId: 'req-2', draft: const MeasureUnitDraft(code: 'km', factorNum: 999));
       } on StockConfigRefused catch (e) {
-        refused = e.reason == 'registry_unit';
+        refused = e.reason == StockRefusal.registryUnit;
       }
       return metres && kilometres && refused && all.length == 14;
     },

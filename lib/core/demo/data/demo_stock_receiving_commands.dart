@@ -37,7 +37,7 @@ class DemoStockReceivingCommands implements StockReceivingCommands {
   final Map<String, PutAwayResult> _answers = {};
   int _next = 1;
 
-  static StockConfigRefused _refused(String field, String reason) => StockConfigRefused(field, reason);
+  static StockConfigRefused _refused(String field, StockRefusal reason) => StockConfigRefused(field, reason);
 
   bool _mine(String id) => id == workspaceId;
 
@@ -60,7 +60,7 @@ class DemoStockReceivingCommands implements StockReceivingCommands {
     String requestId,
   ) async {
     if (_answers[requestId] case final done?) return (receiptId: done.receiptId, replayed: true, allocations: done.allocations);
-    if (!_mine(workspaceId)) throw _refused('receipt', 'receipt_unknown');
+    if (!_mine(workspaceId)) throw _refused('receipt', StockRefusal.receiptUnknown);
     final written = await _apply(receiptId, allocations);
     return _answers[requestId] = (receiptId: receiptId, replayed: false, allocations: written);
   }
@@ -73,9 +73,9 @@ class DemoStockReceivingCommands implements StockReceivingCommands {
     String requestId,
   ) async {
     if (_answers[requestId] case final done?) return (receiptId: done.receiptId, replayed: true, allocations: done.allocations);
-    if (!_mine(workspaceId)) throw _refused('receipt', 'receipt_unknown');
+    if (!_mine(workspaceId)) throw _refused('receipt', StockRefusal.receiptUnknown);
     final i = _orders.orders.indexWhere((o) => o.id == delivery.orderId);
-    if (i < 0) throw _refused('request', 'malformed');
+    if (i < 0) throw _refused('request', StockRefusal.malformed);
     final savedOrder = _orders.orders[i];
     final savedReceipts = [..._orders.receipts];
     final order = savedOrder;
@@ -106,7 +106,7 @@ class DemoStockReceivingCommands implements StockReceivingCommands {
 
   Future<List<ReceiptAllocation>> _apply(String receiptId, List<PutAwayAllocation> allocations) async {
     final receipt = _orders.receipts.where((r) => r.id == receiptId).firstOrNull;
-    if (receipt == null) throw _refused('receipt', 'receipt_unknown');
+    if (receipt == null) throw _refused('receipt', StockRefusal.receiptUnknown);
     final order = _orders.orders.firstWhere((o) => o.id == receipt.orderId);
     final places = (await _config.places(workspaceId)).where((p) => !p.virtual && p.active).map((p) => p.id).toSet();
     final running = <int, ExactQuantity>{};
@@ -170,7 +170,7 @@ class DemoStockReceivingCommands implements StockReceivingCommands {
       final store = tags;
       final mode = await store?.tagModeOf?.call(planned[i].itemId);
       if (store == null || mode != 'per_unit') {
-        if (read.isNotEmpty) throw _refused('units', 'units_not_tracked');
+        if (read.isNotEmpty) throw _refused('units', StockRefusal.unitsNotTracked);
         continue;
       }
       if (planned[i].inventoryQuantity != ExactQuantity.parse('${read.length}')) {
@@ -190,26 +190,26 @@ class DemoStockReceivingCommands implements StockReceivingCommands {
   ) async {
     final line = order.lines.where((l) => l.lineNo == a.lineNo).firstOrNull;
     final received = receipt.lines[a.lineNo];
-    if (line == null || received == null) throw _refused('allocations[$i].line', 'line_unknown');
+    if (line == null || received == null) throw _refused('allocations[$i].line', StockRefusal.lineUnknown);
     final item = line.serviceId == null ? null : await _config.item(workspaceId, line.serviceId!);
-    if (item == null || !item.stockable) throw _refused('allocations[$i].line', 'item_not_stocked');
+    if (item == null || !item.stockable) throw _refused('allocations[$i].line', StockRefusal.itemNotStocked);
     final unit = line.unit.isEmpty ? item.inventoryUnit : line.unit;
     final factor = unit == item.inventoryUnit
         ? (1, 1)
         : item.units.where((u) => u.unit == unit).map((u) => (u.factorNum, u.factorDen)).firstOrNull;
-    if (factor == null) throw _refused('allocations[$i].line', 'unit_unmapped');
+    if (factor == null) throw _refused('allocations[$i].line', StockRefusal.unitUnmapped);
     final qty = ExactQuantity.tryParse(a.quantity).value;
-    if (qty == null || qty <= ExactQuantity.zero) throw _refused('allocations[$i].quantity', 'quantity_invalid');
+    if (qty == null || qty <= ExactQuantity.zero) throw _refused('allocations[$i].quantity', StockRefusal.quantityInvalid);
     // in the inventory unit, as the server records it: round(q * num / den, 6) (0840)
     final inventory = qty.scaled(factor.$1, factor.$2, round: true).value;
-    if (inventory == null || inventory <= ExactQuantity.zero) throw _refused('allocations[$i].quantity', 'quantity_invalid');
+    if (inventory == null || inventory <= ExactQuantity.zero) throw _refused('allocations[$i].quantity', StockRefusal.quantityInvalid);
     final already = _rows
             .where((r) => r.row.receiptLineId == '${receipt.id}:${a.lineNo}')
             .fold(ExactQuantity.zero, (s, r) => s + r.row.enteredQuantity) +
         (running[a.lineNo] ?? ExactQuantity.zero);
-    if (already + qty > exactOfReceived(received)) throw _refused('allocations[$i].quantity', 'over_allocated');
+    if (already + qty > exactOfReceived(received)) throw _refused('allocations[$i].quantity', StockRefusal.overAllocated);
     running[a.lineNo] = (running[a.lineNo] ?? ExactQuantity.zero) + qty;
-    if (!places.contains(a.locationId)) throw _refused('allocations[$i].location_id', 'location_foreign');
+    if (!places.contains(a.locationId)) throw _refused('allocations[$i].location_id', StockRefusal.locationForeign);
     await _checkVariantAndLot(item, a, i);
     final n = _next++;
     return ReceiptAllocation(
@@ -233,8 +233,8 @@ class DemoStockReceivingCommands implements StockReceivingCommands {
   /// A variant when the item has some, and the lot code and date its tracking asks for.
   Future<void> _checkVariantAndLot(StockItemConfig item, PutAwayAllocation a, int i) async {
     final variants = (await _config.variants(workspaceId, item.itemId)).where((v) => v.active);
-    if (variants.isNotEmpty && a.variantId == null) throw _refused('allocations[$i].variant_id', 'variant_required');
-    if ((item.tracking == 'lot' || item.tracking == 'expiry') && (a.lotCode ?? '').isEmpty) throw _refused('allocations[$i].lot.code', 'lot_code_required');
-    if (item.tracking == 'expiry' && a.expiresOn == null) throw _refused('allocations[$i].lot.expires_on', 'expiry_required');
+    if (variants.isNotEmpty && a.variantId == null) throw _refused('allocations[$i].variant_id', StockRefusal.variantRequired);
+    if ((item.tracking == 'lot' || item.tracking == 'expiry') && (a.lotCode ?? '').isEmpty) throw _refused('allocations[$i].lot.code', StockRefusal.lotCodeRequired);
+    if (item.tracking == 'expiry' && a.expiresOn == null) throw _refused('allocations[$i].lot.expires_on', StockRefusal.expiryRequired);
   }
 }

@@ -14,7 +14,7 @@ import 'package:go_router/go_router.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
-import '../../../core/trace/trace_logger.dart';
+import '../../../core/trace/guarded.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/stock_config.dart';
@@ -138,10 +138,10 @@ class _MoveDraft {
   ExactQuantity? get quantity => stockQuantityOrNull(fields.text('quantity'), locale: locale);
 
   FieldErrors validate(AppLocalizations l10n) => {
-    if (item == null) 'item': stockReasonText(l10n, 'item_foreign'),
-    if (from == null) 'from': stockReasonText(l10n, 'location_foreign'),
-    if (!takeOut && (to == null || to == from)) 'to': stockReasonText(l10n, 'location_foreign'),
-    if (quantity == null || quantity! <= ExactQuantity.zero) 'quantity': stockReasonText(l10n, 'quantity_invalid'),
+    if (item == null) 'item': l10n.stockRequiredItem,
+    if (from == null) 'from': l10n.stockRequiredPlace,
+    if (!takeOut && (to == null || to == from)) 'to': l10n.stockRequiredDestination,
+    if (quantity == null || quantity! <= ExactQuantity.zero) 'quantity': stockRefusalText(l10n, StockRefusal.quantityInvalid),
   };
 
   Future<String?> submit(AppLocalizations l10n, StockOperations operations, String workspaceId) async {
@@ -151,19 +151,22 @@ class _MoveDraft {
       fromLocationId: from!,
       toLocationId: takeOut ? null : to,
     );
+    scanner?.pause();
     try {
-      scanner?.pause();
-      if (takeOut) {
-        await operations.takeOut(workspaceId, reason, [line], requestId);
-      } else if (betweenSites) {
-        await operations.load(workspaceId, to!, [line], requestId);
-      } else {
-        await operations.transfer(workspaceId, [line], requestId);
-      }
-      return null;
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn('stock', 'goods were not moved', error: e, stackTrace: st);
-      return stockSaveProblem(l10n, e);
+      return await guardSave(
+        domain: 'stock',
+        message: 'goods were not moved',
+        action: () async {
+          if (takeOut) {
+            await operations.takeOut(workspaceId, reason, [line], requestId);
+          } else if (betweenSites) {
+            await operations.load(workspaceId, to!, [line], requestId);
+          } else {
+            await operations.transfer(workspaceId, [line], requestId);
+          }
+        },
+        problem: (e) => stockProblemText(l10n, e),
+      );
     } finally {
       scanner?.resume();
     }
