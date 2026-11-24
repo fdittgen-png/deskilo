@@ -21,4 +21,11 @@ void main() {
     expect(tillQuantityOf('1000000000000'), isNull);
   });
   test('the sum of two quantities is exact', () => expect(tillQuantitySum('0.1', '0.2'), '0.3'));
+  test('the suggested cash is the amount and the next whole 1-2-5 steps of the currency, from its decimals', () {
+    expect(tillCashSuggestions(1340, minorDigits: 2), [1340, 1400, 1500, 2000]);
+    expect(tillCashSuggestions(210, minorDigits: 2), [210, 300, 400, 500]);
+    // a currency without decimals steps in its own whole units
+    expect(tillCashSuggestions(1340, minorDigits: 0), [1340, 1350, 1400, 1500]);
+    expect(tillCashSuggestions(0, minorDigits: 2), isEmpty);
+  });
 }

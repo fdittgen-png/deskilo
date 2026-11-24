@@ -11391,6 +11391,14 @@
   "itemGroupCountEvery": "Zählen alle (Tage)",
   "itemGroupDelete": "Gruppe löschen",
   "itemGroupDeleted": "Gruppe gelöscht.",
+  "itemGroupDepositAmount": "Pfandbetrag (kleinste Einheit)",
+  "@itemGroupDepositAmount": {
+    "description": "#4366 item groups: the till parameters"
+  },
+  "itemGroupDepositItem": "Pfandartikel",
+  "@itemGroupDepositItem": {
+    "description": "#4366 item groups: the till parameters"
+  },
   "itemGroupFailed": "Die Artikelgruppen konnten nicht gelesen werden.",
   "itemGroupFinanceHint": "Diese Einstellungen brauchen das Recht, Leistungen zu verwalten und die Finanzen zu sehen.",
   "@itemGroupFinanceHint": {
@@ -11408,6 +11416,14 @@
   "itemGroupHomeZone": "Standard-Lagerzone",
   "@itemGroupHomeZone": {
     "description": "#4361 G12 proposals: the home zone a group proposes to an item"
+  },
+  "itemGroupKeyColour": "Farbe der Schnelltaste (#rrggbb)",
+  "@itemGroupKeyColour": {
+    "description": "#4366 item groups: the till parameters"
+  },
+  "itemGroupLabelTemplate": "Etikettenvorlage",
+  "@itemGroupLabelTemplate": {
+    "description": "#4366 item groups: the till parameters"
   },
   "itemGroupMargin": "Zielmarge auf die Kosten (%)",
   "@itemGroupMargin": {
@@ -11489,6 +11505,10 @@
   },
   "itemGroupTagNone": "Keine Tags",
   "itemGroupTagUnit": "Ein Tag pro Stück",
+  "itemGroupTillCategory": "Kassenkategorie",
+  "@itemGroupTillCategory": {
+    "description": "#4366 item groups: the till parameters"
+  },
   "itemGroupTrackingSerial": "Pro Stück (seriell)",
   "itemGroupUseGroup": "Wert der Gruppe verwenden",
   "itemGroupYes": "Ja",
@@ -23925,12 +23945,47 @@
   "@threadRefsIn": {
     "description": "Me thread: which workspace the references speak about"
   },
+  "tillAgeConfirmedLine": "Alter {age}+ bestätigt",
+  "@tillAgeConfirmedLine": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "age": {
+        "type": "int"
+      }
+    }
+  },
+  "tillAgeNo": "Nein, nicht verkaufen",
+  "@tillAgeNo": {
+    "description": "#4366 the till"
+  },
+  "tillAgeQuestion": "Dieser Artikel ist für Kundschaft ab {age} Jahren. Ist die Person mindestens {age}?",
+  "@tillAgeQuestion": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "age": {
+        "type": "int"
+      }
+    }
+  },
+  "tillAgeYes": "Ja, {age} oder älter",
+  "@tillAgeYes": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "age": {
+        "type": "int"
+      }
+    }
+  },
   "tillBasketEmpty": "Tippen Sie auf einen Artikel, um einen Verkauf zu beginnen.",
   "tillBasketTitle": "Warenkorb",
   "tillCashExact": "Passend",
   "tillCashGiven": "Gegeben",
   "tillCashInvalid": "Geben Sie den gegebenen Betrag als Zahl ein.",
   "tillCashShort": "Der gegebene Betrag ist kleiner als die Summe.",
+  "tillCategoryAll": "Alle",
+  "@tillCategoryAll": {
+    "description": "#4366 the till"
+  },
   "tillChangeDue": "Rückgeld: {amount}",
   "tillConfirmSale": "Verkauf bestätigen",
   "@tillConfirmSale": {
@@ -23967,6 +24022,19 @@
   "tillDayToday": "Abzuschließender Tag: {date}",
   "tillDeclarationNone": "keine Pflicht zu einer Fiskalkasse",
   "tillDeclarationRegister": "eine Fiskalkasse ist vorgeschrieben",
+  "tillDepositLine": "Pfand",
+  "@tillDepositLine": {
+    "description": "#4366 the till"
+  },
+  "tillDepositMissing": "Das Pfand von {name} ist an der Kasse nicht verkäuflich. Nichts wurde hinzugefügt.",
+  "@tillDepositMissing": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "tillDrawerAddTill": "Kasse hinzufügen",
   "tillDrawerAmountInvalid": "Geben Sie einen Betrag ein.",
   "tillDrawerAmountZero": "Der Betrag muss größer als null sein.",
@@ -24060,6 +24128,10 @@
     "description": "#4366 the till: title of the question asked when leaving with a sale waiting to be confirmed"
   },
   "tillNextCustomer": "Nächster Kunde",
+  "tillNotForCounter": "Dieser Artikel ist an der Kasse nicht verkäuflich.",
+  "@tillNotForCounter": {
+    "description": "#4366 the till"
+  },
   "tillNotReady": "In Ihrem Land noch nicht bereit: {operation}",
   "tillNotReadyHint": "Es wird nichts nummeriert und nichts kassiert, solange der Vorgang des Landes nicht unterstützt wird.",
   "tillOfflineBanner": "Offline – nur Barzahlung. Die Verkäufe bleiben auf diesem Gerät und werden gesendet, sobald die Verbindung wieder da ist.",
@@ -24243,9 +24315,13 @@
   "@tillRetry": {
     "description": "#4366 the till: ask the server again"
   },
-  "tillScanUnknown": "{code} ist nichts, was diese Kasse verkauft.",
+  "tillScanLabel": "Code scannen",
+  "@tillScanLabel": {
+    "description": "#4366 the till"
+  },
+  "tillScanUnknown": "Der Code {code} bezeichnet keinen Artikel. Nichts wurde hinzugefügt.",
   "@tillScanUnknown": {
-    "description": "#4436 the till: a scanned code that names nothing the till rings up",
+    "description": "#4366 the till",
     "placeholders": {
       "code": {
         "type": "String"
@@ -24273,6 +24349,23 @@
     "description": "#4436 the till: a piece a sold line took, named by its tag",
     "placeholders": {
       "code": {
+        "type": "String"
+      }
+    }
+  },
+  "tillWeighFirst": "Wiegen Sie diesen Artikel zuerst.",
+  "@tillWeighFirst": {
+    "description": "#4366 the till"
+  },
+  "tillWeightHint": "Das genaue Gewicht der Waage, zum Beispiel 0,350.",
+  "@tillWeightHint": {
+    "description": "#4366 the till"
+  },
+  "tillWeightTitle": "Gewicht in {unit}",
+  "@tillWeightTitle": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "unit": {
         "type": "String"
       }
     }

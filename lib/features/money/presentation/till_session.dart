@@ -95,17 +95,33 @@ class TillSession {
 
   String _linesKey(List<TillLine> lines) => [for (final l in lines) '${l.itemId}:${l.quantity}:${l.pieces.join('+')}'].join(',');
 
-  /// Rings up one more of [itemId]: a new line, or one more on the line it already has.
-  Future<void> add({required String itemId, required String name, required String unit}) => _serial(() {
+  /// Rings up [quantity] (one by default) of [itemId]: a new line, or more on the line it already has. [ageConfirmed] is
+  /// the age the operator confirmed for the line; [deposit] is the item whose deposit goes with it, as a line that
+  /// follows this one's quantity. A quantity that is not exact and above zero rings up nothing and says so.
+  Future<void> add({
+    required String itemId,
+    required String name,
+    required String unit,
+    String quantity = '1',
+    int? ageConfirmed,
+    ({String itemId, String name, String unit})? deposit,
+  }) => _serial(() {
+    final q = tillQuantityOf(quantity);
     if (!_open) return Future.value();
-    final lines = [..._now.lines];
-    final at = lines.indexWhere((l) => l.itemId == itemId);
-    if (at < 0) {
-      lines.add(TillLine(itemId: itemId, name: name, quantity: '1', unit: unit));
-    } else {
-      final more = tillQuantitySum(lines[at].quantity, '1');
-      if (more != null) lines[at] = lines[at].withQuantity(more);
+    if (q == null) {
+      _set(_now.copyWith(problem: () => const TillQuantityMissing()));
+      return Future.value();
     }
+    final lines = [..._now.lines];
+    final at = lines.indexWhere((l) => l.itemId == itemId && l.depositFor == null);
+    if (at < 0) {
+      lines.add(TillLine(itemId: itemId, name: name, quantity: q, unit: unit, ageConfirmed: ageConfirmed));
+    } else {
+      final more = tillQuantitySum(lines[at].quantity, q);
+      if (more == null) return Future.value();
+      lines[at] = TillLine(itemId: itemId, name: name, quantity: more, unit: unit, ageConfirmed: ageConfirmed ?? lines[at].ageConfirmed);
+    }
+    if (deposit != null) _followDeposit(lines, itemId, deposit);
     return _price(lines);
   });
 
@@ -129,21 +145,47 @@ class TillSession {
       });
 
   /// Sets the quantity of line [index] to [typed]; false when it is not an exact quantity above zero.
+
+  /// Keeps the deposit line of [itemId] at the quantity of the line it belongs to.
+  void _followDeposit(List<TillLine> lines, String itemId, ({String itemId, String name, String unit}) deposit) {
+    final parent = lines.indexWhere((l) => l.itemId == itemId && l.depositFor == null);
+    final at = lines.indexWhere((l) => l.depositFor == itemId);
+    final line = TillLine(itemId: deposit.itemId, name: deposit.name, quantity: lines[parent].quantity, unit: deposit.unit, depositFor: itemId);
+    if (at < 0) {
+      lines.insert(parent + 1, line);
+    } else {
+      lines[at] = line;
+    }
+  }
+
+  /// Sets the quantity of line [index] to [typed]; false when it is not an exact quantity above zero. The deposit line
+  /// that belongs to it follows.
   Future<bool> setQuantity(int index, String typed) async {
     final q = tillQuantityOf(typed);
     if (q == null || index < 0 || index >= _now.lines.length) return false;
     await _serial(() {
       if (!_open || index >= _now.lines.length) return Future.value();
       final lines = [..._now.lines];
-      lines[index] = lines[index].withQuantity(q);
+      final line = lines[index];
+      lines[index] = line.withQuantity(q);
+      if (line.depositFor == null) {
+        for (var i = 0; i < lines.length; i++) {
+          if (lines[i].depositFor == line.itemId) lines[i] = lines[i].withQuantity(q);
+        }
+      }
       return _price(lines);
     });
     return true;
   }
 
+  /// Takes line [index] out; a line's deposit goes with it.
   Future<void> remove(int index) => _serial(() {
     if (!_open || index < 0 || index >= _now.lines.length) return Future.value();
-    return _price([..._now.lines]..removeAt(index));
+    final gone = _now.lines[index];
+    return _price([
+      for (var i = 0; i < _now.lines.length; i++)
+        if (i != index && (gone.depositFor != null || _now.lines[i].depositFor != gone.itemId)) _now.lines[i],
+    ]);
   });
 
   /// Prices the basket again as it is: the retry of a pricing that failed, under the request id it already had.

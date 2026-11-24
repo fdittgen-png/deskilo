@@ -111,5 +111,25 @@
   "itemGroupReasonNameDuplicate": "Un altro gruppo ha già questo nome.",
   "itemGroupReasonNotOverridable": "Questa impostazione non può avere un valore proprio.",
   "itemGroupReasonHasMovements": "ha già movimenti",
-  "itemGroupFailed": "Non è stato possibile leggere i gruppi di articoli."
+  "itemGroupFailed": "Non è stato possibile leggere i gruppi di articoli.",
+  "itemGroupTillCategory": "Categoria in cassa",
+  "@itemGroupTillCategory": {
+    "description": "#4366 item groups: the till parameters"
+  },
+  "itemGroupKeyColour": "Colore del tasto rapido (#rrggbb)",
+  "@itemGroupKeyColour": {
+    "description": "#4366 item groups: the till parameters"
+  },
+  "itemGroupDepositItem": "Articolo di cauzione",
+  "@itemGroupDepositItem": {
+    "description": "#4366 item groups: the till parameters"
+  },
+  "itemGroupDepositAmount": "Importo della cauzione (centesimi)",
+  "@itemGroupDepositAmount": {
+    "description": "#4366 item groups: the till parameters"
+  },
+  "itemGroupLabelTemplate": "Modello di etichetta",
+  "@itemGroupLabelTemplate": {
+    "description": "#4366 item groups: the till parameters"
+  }
 }

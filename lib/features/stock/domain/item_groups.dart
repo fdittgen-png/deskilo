@@ -17,6 +17,11 @@ const itemGroupEditable = [
   'count_every_days',
   'min_age',
   'sold_by_weight',
+  'till_category',
+  'quick_key_colour',
+  'deposit_item_id',
+  'deposit_minor',
+  'label_template',
   'vat_rate_id',
   'supply_class',
 ];

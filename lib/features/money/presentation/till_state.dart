@@ -79,6 +79,11 @@ class TillCardDeclined implements TypedRefusal {
   const TillCardDeclined();
 }
 
+/// A weighed or counted line was rung up without a quantity above zero: the till asks for the weight first.
+class TillQuantityMissing implements TypedRefusal {
+  const TillQuantityMissing();
+}
+
 /// The server's draft does not describe the basket on the screen: it is not sold.
 class TillDraftMismatch implements Exception {
   const TillDraftMismatch();

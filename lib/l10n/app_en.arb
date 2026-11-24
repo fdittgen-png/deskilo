@@ -24869,6 +24869,14 @@
   "@itemGroupDeleted": {
     "description": "#4361 G12 item groups: itemGroupDeleted"
   },
+  "itemGroupDepositAmount": "Deposit amount (minor units)",
+  "@itemGroupDepositAmount": {
+    "description": "#4366 item groups: the till parameters"
+  },
+  "itemGroupDepositItem": "Deposit item",
+  "@itemGroupDepositItem": {
+    "description": "#4366 item groups: the till parameters"
+  },
   "itemGroupFailed": "The item groups could not be read.",
   "@itemGroupFailed": {
     "description": "#4361 G12 item groups: itemGroupFailed"
@@ -24931,6 +24939,14 @@
   "itemGroupHomeZone": "Default home zone",
   "@itemGroupHomeZone": {
     "description": "#4361 G12 proposals: the home zone a group proposes to an item"
+  },
+  "itemGroupKeyColour": "Quick-key colour (#rrggbb)",
+  "@itemGroupKeyColour": {
+    "description": "#4366 item groups: the till parameters"
+  },
+  "itemGroupLabelTemplate": "Label template",
+  "@itemGroupLabelTemplate": {
+    "description": "#4366 item groups: the till parameters"
   },
   "itemGroupMargin": "Target margin on cost (%)",
   "@itemGroupMargin": {
@@ -25125,6 +25141,10 @@
   "itemGroupTagUnit": "One tag per piece",
   "@itemGroupTagUnit": {
     "description": "#4361 G12 item groups: itemGroupTagUnit"
+  },
+  "itemGroupTillCategory": "Till category",
+  "@itemGroupTillCategory": {
+    "description": "#4366 item groups: the till parameters"
   },
   "itemGroupTrackingSerial": "By piece (serial)",
   "@itemGroupTrackingSerial": {
@@ -53241,6 +53261,37 @@
   "@threadRefsIn": {
     "description": "Me thread: which workspace the references speak about"
   },
+  "tillAgeConfirmedLine": "age {age}+ confirmed",
+  "@tillAgeConfirmedLine": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "age": {
+        "type": "int"
+      }
+    }
+  },
+  "tillAgeNo": "No, do not sell",
+  "@tillAgeNo": {
+    "description": "#4366 the till"
+  },
+  "tillAgeQuestion": "This item is for customers aged {age} or over. Is the customer at least {age}?",
+  "@tillAgeQuestion": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "age": {
+        "type": "int"
+      }
+    }
+  },
+  "tillAgeYes": "Yes, {age} or over",
+  "@tillAgeYes": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "age": {
+        "type": "int"
+      }
+    }
+  },
   "tillBasketEmpty": "Tap an item to start a sale.",
   "@tillBasketEmpty": {
     "description": "#4366 the till"
@@ -53263,6 +53314,10 @@
   },
   "tillCashShort": "The cash given is less than the total.",
   "@tillCashShort": {
+    "description": "#4366 the till"
+  },
+  "tillCategoryAll": "All",
+  "@tillCategoryAll": {
     "description": "#4366 the till"
   },
   "tillChangeDue": "Change due: {amount}",
@@ -53508,6 +53563,19 @@
   "tillDeclarationRegister": "a fiscal register is required",
   "@tillDeclarationRegister": {
     "description": "#4184 the counter readiness"
+  },
+  "tillDepositLine": "deposit",
+  "@tillDepositLine": {
+    "description": "#4366 the till"
+  },
+  "tillDepositMissing": "The deposit of {name} is not for sale at the counter. Nothing was added.",
+  "@tillDepositMissing": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   },
   "tillDrawerAddTill": "Add a till",
   "@tillDrawerAddTill": {
@@ -53910,6 +53978,10 @@
   "@tillNextCustomer": {
     "description": "#4366 the till"
   },
+  "tillNotForCounter": "This item is not for sale at the counter.",
+  "@tillNotForCounter": {
+    "description": "#4366 the till"
+  },
   "tillNotReady": "Not ready in your country: {operation}",
   "@tillNotReady": {
     "description": "#4366 the till",
@@ -54288,9 +54360,13 @@
   "@tillRetry": {
     "description": "#4366 the till: ask the server again"
   },
-  "tillScanUnknown": "{code} is not something this till sells.",
+  "tillScanLabel": "Scan a code",
+  "@tillScanLabel": {
+    "description": "#4366 the till"
+  },
+  "tillScanUnknown": "The code {code} names no item. Nothing was added.",
   "@tillScanUnknown": {
-    "description": "#4436 the till: a scanned code that names nothing the till rings up",
+    "description": "#4366 the till",
     "placeholders": {
       "code": {
         "type": "String"
@@ -54340,6 +54416,23 @@
     "description": "#4436 the till: a piece a sold line took, named by its tag",
     "placeholders": {
       "code": {
+        "type": "String"
+      }
+    }
+  },
+  "tillWeighFirst": "Weigh this item first.",
+  "@tillWeighFirst": {
+    "description": "#4366 the till"
+  },
+  "tillWeightHint": "The exact weight from the scale, for example 0.350.",
+  "@tillWeightHint": {
+    "description": "#4366 the till"
+  },
+  "tillWeightTitle": "Weight in {unit}",
+  "@tillWeightTitle": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "unit": {
         "type": "String"
       }
     }

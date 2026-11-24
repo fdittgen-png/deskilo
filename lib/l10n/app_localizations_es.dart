@@ -19069,6 +19069,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get itemGroupDeleted => 'Grupo eliminado.';
 
   @override
+  String get itemGroupDepositAmount => 'Importe del depósito (céntimos)';
+
+  @override
+  String get itemGroupDepositItem => 'Artículo de depósito';
+
+  @override
   String get itemGroupFailed => 'No se pudieron leer los grupos de artículos.';
 
   @override
@@ -19112,6 +19118,12 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get itemGroupHomeZone => 'Zona de almacén por defecto';
+
+  @override
+  String get itemGroupKeyColour => 'Color de la tecla rápida (#rrggbb)';
+
+  @override
+  String get itemGroupLabelTemplate => 'Plantilla de etiqueta';
 
   @override
   String get itemGroupMargin => 'Margen objetivo sobre el coste (%)';
@@ -19275,6 +19287,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get itemGroupTagUnit => 'Una etiqueta por pieza';
+
+  @override
+  String get itemGroupTillCategory => 'Categoría en caja';
 
   @override
   String get itemGroupTrackingSerial => 'Por pieza (serie)';
@@ -41234,6 +41249,24 @@ class AppLocalizationsEs extends AppLocalizations {
   String get threadRefsIn => 'Referencias en';
 
   @override
+  String tillAgeConfirmedLine(int age) {
+    return 'edad $age+ confirmada';
+  }
+
+  @override
+  String get tillAgeNo => 'No, no vender';
+
+  @override
+  String tillAgeQuestion(int age) {
+    return 'Este artículo es para clientes de $age años o más. ¿Tiene el cliente al menos $age?';
+  }
+
+  @override
+  String tillAgeYes(int age) {
+    return 'Sí, $age o más';
+  }
+
+  @override
   String get tillBasketEmpty => 'Toque un artículo para empezar una venta.';
 
   @override
@@ -41250,6 +41283,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get tillCashShort => 'El efectivo entregado es inferior al total.';
+
+  @override
+  String get tillCategoryAll => 'Todos';
 
   @override
   String tillChangeDue(String amount) {
@@ -41391,6 +41427,14 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get tillDeclarationRegister => 'se exige una caja fiscal';
+
+  @override
+  String get tillDepositLine => 'depósito';
+
+  @override
+  String tillDepositMissing(String name) {
+    return 'El depósito de $name no está a la venta en el mostrador. No se ha añadido nada.';
+  }
 
   @override
   String get tillDrawerAddTill => 'Añadir una caja';
@@ -41689,6 +41733,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get tillNextCustomer => 'Siguiente cliente';
 
   @override
+  String get tillNotForCounter =>
+      'Este artículo no está a la venta en el mostrador.';
+
+  @override
   String tillNotReady(String operation) {
     return 'Aún no está listo en su país: $operation';
   }
@@ -41961,8 +42009,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get tillRetry => 'Reintentar';
 
   @override
+  String get tillScanLabel => 'Escanear un código';
+
+  @override
   String tillScanUnknown(String code) {
-    return '$code no es algo que venda esta caja.';
+    return 'El código $code no designa ningún artículo. No se ha añadido nada.';
   }
 
   @override
@@ -41989,6 +42040,18 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String tillTrackPiece(String code) {
     return 'Pieza $code';
+  }
+
+  @override
+  String get tillWeighFirst => 'Pese primero este artículo.';
+
+  @override
+  String get tillWeightHint =>
+      'El peso exacto de la balanza, por ejemplo 0,350.';
+
+  @override
+  String tillWeightTitle(String unit) {
+    return 'Peso en $unit';
   }
 
   @override

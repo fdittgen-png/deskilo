@@ -111,5 +111,25 @@
   "itemGroupReasonNameDuplicate": "Un autre groupe porte déjà ce nom.",
   "itemGroupReasonNotOverridable": "Ce réglage ne peut pas avoir de valeur propre.",
   "itemGroupReasonHasMovements": "il a déjà des mouvements",
-  "itemGroupFailed": "Les groupes d’articles n’ont pas pu être lus."
+  "itemGroupFailed": "Les groupes d’articles n’ont pas pu être lus.",
+  "itemGroupTillCategory": "Catégorie en caisse",
+  "@itemGroupTillCategory": {
+    "description": "#4366 item groups: the till parameters"
+  },
+  "itemGroupKeyColour": "Couleur de la touche (#rrggbb)",
+  "@itemGroupKeyColour": {
+    "description": "#4366 item groups: the till parameters"
+  },
+  "itemGroupDepositItem": "Article de consigne",
+  "@itemGroupDepositItem": {
+    "description": "#4366 item groups: the till parameters"
+  },
+  "itemGroupDepositAmount": "Montant de la consigne (centimes)",
+  "@itemGroupDepositAmount": {
+    "description": "#4366 item groups: the till parameters"
+  },
+  "itemGroupLabelTemplate": "Modèle d'étiquette",
+  "@itemGroupLabelTemplate": {
+    "description": "#4366 item groups: the till parameters"
+  }
 }
