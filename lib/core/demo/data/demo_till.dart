@@ -28,6 +28,9 @@ PostgrestException _refused(String code, String message, {String? reason}) =>
 /// gift basket is tracked piece by piece: its pieces are of lot BASKET-1, and a sale names each piece scanned by its tag.
 const _tracedLots = <String, String>{'demo-item-milk': 'MILK-12', 'demo-item-basket': 'BASKET-1'};
 
+/// The Demo's bag of coffee beans, which the seeded book sells.
+const _beansName = 'Coffee beans';
+
 /// The prices of Demo items the stock registry does not carry (the T-shirt the variants are edited on), in cents.
 const _unstocked = <String, int>{'demo-item-shirt': 1900, 'demo-item-basket': 3900, 'demo-item-apples': 1800};
 
@@ -604,14 +607,14 @@ class DemoTill implements TillPort, TillOfflinePort, CounterBookPort {
     final milk = DemoStockRegistry.catalogue['demo-item-milk']!.$2;
     final beans = DemoStockRegistry.catalogue['demo-item-beans']!.$2;
     const sold = 'demo-receipt-seed-1';
-    final cash = _Rec(id: sold, kind: 'sale', lines: [line(sold, 1, 'Oat milk', '2', 'l', 2 * milk), line(sold, 2, 'Coffee beans', '1', 'kg', beans)], totals: totals(2 * milk + beans))
+    final cash = _Rec(id: sold, kind: 'sale', lines: [line(sold, 1, 'Oat milk', '2', 'l', 2 * milk), line(sold, 2, _beansName, '1', 'kg', beans)], totals: totals(2 * milk + beans))
       ..state = 'finalized'
       ..number = _number()
       ..finalizedAt = DateTime.utc(2026, 11, 23, 9);
     cash.tenders.add(CounterBookTender(id: 'demo-tender-${++_tenderSeq}', part: 1, kind: 'cash', amountMinor: 2 * milk + beans, state: 'accepted'));
     _book[sold] = cash;
     const open = 'demo-receipt-seed-2';
-    final waiting = _Rec(id: open, kind: 'sale', lines: [line(open, 1, 'Coffee beans', '1', 'kg', beans)], totals: totals(beans), revision: ++_revision);
+    final waiting = _Rec(id: open, kind: 'sale', lines: [line(open, 1, _beansName, '1', 'kg', beans)], totals: totals(beans), revision: ++_revision);
     final card = CounterBookTender(
       id: 'demo-tender-${++_tenderSeq}',
       part: 1,
@@ -627,7 +630,7 @@ class DemoTill implements TillPort, TillOfflinePort, CounterBookPort {
       receiptId: open,
       revision: waiting.revision,
       totals: waiting.totals,
-      lines: [TillPricedLine(label: 'Coffee beans', grossMinor: beans, quantity: '1')],
+      lines: [TillPricedLine(label: _beansName, grossMinor: beans, quantity: '1')],
       issueReceipt: 'supported',
     );
   }

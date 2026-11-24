@@ -7,6 +7,9 @@ import '../domain/till_drawer.dart';
 
 /// #4367 -- the till sessions' commands and the table reads behind the port. A refusal is thrown as the server sent it
 /// (`knownRefusalText` and the drawer's own words read its code and reason); an answer of the wrong shape throws.
+/// The table of the till sessions, read by this file and by the counter's book.
+const String counterTillSessionsTable = 'counter_till_sessions';
+
 class SupabaseTillDrawer implements TillDrawerPort {
   SupabaseTillDrawer(this._client);
 
@@ -25,7 +28,7 @@ class SupabaseTillDrawer implements TillDrawerPort {
   Future<List<DrawerTill>> tills(String workspaceId) async {
     final tills = await _client.from('counter_tills').select('id, name, active, site_id').eq('workspace_id', workspaceId).order('name');
     final sessions = await _client
-        .from('counter_till_sessions')
+        .from(counterTillSessionsTable)
         .select('id, till_id, float_minor, opened_by_member_id')
         .eq('workspace_id', workspaceId)
         .eq('state', 'open');

@@ -356,7 +356,7 @@ Future<bool> _counterBookJourney(_World w) async {
       return false;
     } on PostgrestException catch (e) {
       book = await till.book(demoFirstSpaceId);
-      return e.code == 'DKL08' &&
+      return e.code == DkCode.dkl08 &&
           number == again &&
           book.waiting.isEmpty &&
           book.leftOf(milk) == '1' &&

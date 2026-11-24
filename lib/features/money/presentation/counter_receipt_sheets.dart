@@ -12,6 +12,7 @@ import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/trace/trace_logger.dart';
+import '../../../core/ui/form_choice_controls.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/counter_book.dart';
@@ -135,15 +136,14 @@ Future<bool> showCounterRefundSheet(
       builder: (context, refresh) => [
         Text(l10n.counterSaleRefunded(money.formatMinor(correction.refundedMinor), money.formatMinor(correction.totalMinor))),
         const FormGap(),
-        SegmentedButton<String>(
-          key: const ValueKey('counter-refund-kind'),
-          segments: [
-            ButtonSegment(value: 'cash', label: Text(l10n.counterSaleTenderCash)),
-            ButtonSegment(value: 'other', label: Text(l10n.counterSaleTenderOther)),
+        AppChoiceChips<String>(
+          choices: [
+            AppChoice(value: 'cash', label: l10n.counterSaleTenderCash, key: const ValueKey('counter-refund-kind-cash')),
+            AppChoice(value: 'other', label: l10n.counterSaleTenderOther, key: const ValueKey('counter-refund-kind-other')),
           ],
-          selected: {kind},
-          onSelectionChanged: (s) {
-            kind = s.first;
+          selected: kind,
+          onSelected: (v) {
+            kind = v;
             refresh();
           },
         ),
@@ -154,6 +154,7 @@ Future<bool> showCounterRefundSheet(
           fieldKey: 'amount',
           label: l10n.counterSaleRefundAmount(money.formatMinor(left)),
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          inputFormatters: _quantityChars,
         ),
       ],
     ),
@@ -231,16 +232,15 @@ Future<bool> showCounterTenderAnswerSheet(
         Text(l10n.counterSaleCardAskedTitle(money.formatMinor(tender.amountMinor))),
         Text(l10n.counterSaleReference(tender.providerKey)),
         const FormGap(),
-        SegmentedButton<String>(
-          key: const ValueKey('counter-answer-outcome'),
-          segments: [
-            ButtonSegment(value: 'accepted', label: Text(l10n.counterSaleCardAccepted)),
-            ButtonSegment(value: 'refused', label: Text(l10n.counterSaleCardRefused)),
-            if (tender.state == 'requested') ButtonSegment(value: 'unknown', label: Text(l10n.counterSaleCardNoAnswer)),
+        AppChoiceChips<String>(
+          choices: [
+            AppChoice(value: 'accepted', label: l10n.counterSaleCardAccepted, key: const ValueKey('counter-answer-accepted')),
+            AppChoice(value: 'refused', label: l10n.counterSaleCardRefused, key: const ValueKey('counter-answer-refused')),
+            if (tender.state == 'requested') AppChoice(value: 'unknown', label: l10n.counterSaleCardNoAnswer, key: const ValueKey('counter-answer-unknown')),
           ],
-          selected: {outcome},
-          onSelectionChanged: (s) {
-            outcome = s.first;
+          selected: outcome,
+          onSelected: (v) {
+            outcome = v;
             refresh();
           },
         ),

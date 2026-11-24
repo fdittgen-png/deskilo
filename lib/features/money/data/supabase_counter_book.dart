@@ -3,6 +3,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/trace/trace_logger.dart';
 import '../domain/counter_book.dart';
+import 'supabase_counter_till.dart' show counterReceiptsTable;
+import 'supabase_till_drawer.dart' show counterTillSessionsTable;
 
 /// #4185 -- the counter's book behind the port: the receipts, their lines, tenders and refunds are read under their
 /// row policies (issueInvoices or viewFinances, the counter feature on); the goods taken back are read where the stock
@@ -24,12 +26,12 @@ class SupabaseCounterBook implements CounterBookPort {
     }
   }
 
-  List<Map<String, dynamic>> _rows(Object? rows) => [for (final r in rows as List) Map<String, dynamic>.from(r as Map)];
+  List<Map<String, Object?>> _rows(Object? rows) => [for (final r in rows as List) Map<String, Object?>.from(r as Map)];
 
   @override
   Future<CounterBook> book(String workspaceId) async {
     final issued = _rows(await _client
-        .from('counter_receipts')
+        .from(counterReceiptsTable)
         .select('id, kind, state, currency, total_minor, tax_minor, revision, number, finalized_at, corrects_receipt_id, till_session_id, frozen')
         .eq('workspace_id', workspaceId)
         .eq('state', 'finalized')
@@ -45,9 +47,9 @@ class SupabaseCounterBook implements CounterBookPort {
     final issuedIds = {for (final r in issued) r['id'] as String};
     final draftIds = {for (final t in cardDrafts) t['receipt_id'] as String}.difference(issuedIds);
     final drafts = draftIds.isEmpty
-        ? <Map<String, dynamic>>[]
+        ? <Map<String, Object?>>[]
         : _rows(await _client
-              .from('counter_receipts')
+              .from(counterReceiptsTable)
               .select('id, kind, state, currency, total_minor, tax_minor, revision, number, finalized_at, corrects_receipt_id, till_session_id, frozen')
               .eq('workspace_id', workspaceId)
               .eq('state', 'draft')
@@ -71,7 +73,7 @@ class SupabaseCounterBook implements CounterBookPort {
     final sessions = {for (final r in all) if (r['till_session_id'] != null) r['till_session_id'] as String};
     final tillOf = <String, String>{};
     if (sessions.isNotEmpty) {
-      for (final s in _rows(await _client.from('counter_till_sessions').select('id, till_id').inFilter('id', sessions.toList()))) {
+      for (final s in _rows(await _client.from(counterTillSessionsTable).select('id, till_id').inFilter('id', sessions.toList()))) {
         tillOf[s['id'] as String] = s['till_id'] as String;
       }
     }

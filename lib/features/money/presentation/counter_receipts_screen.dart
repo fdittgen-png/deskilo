@@ -19,6 +19,7 @@ import '../../../core/share/text_sharer.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
+import '../../../core/ui/async_read_body.dart';
 import '../../../core/ui/kit/page_title.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
@@ -44,24 +45,9 @@ class CounterReceiptsScreen extends ConsumerWidget {
       ),
       body: workspaceId == null
           ? const LoadingView()
-          : ref.watch(counterBookProvider(workspaceId)).when(
-              loading: () => const LoadingView(),
-              error: (e, _) => Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(AppSpacing.lg),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(tillProblemText(l10n, e), textAlign: TextAlign.center),
-                      TextButton(
-                        key: const ValueKey('counter-receipts-retry'),
-                        onPressed: () => ref.invalidate(counterBookProvider(workspaceId)),
-                        child: Text(l10n.tillRetry),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+          : AsyncReadBody<CounterBook>(
+              value: ref.watch(counterBookProvider(workspaceId)),
+              onRetry: () => ref.invalidate(counterBookProvider(workspaceId)),
               data: (book) => _Book(workspaceId: workspaceId, book: book),
             ),
     );

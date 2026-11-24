@@ -17,7 +17,8 @@ import 'till_quantity.dart';
 const int _decimals = 6;
 final int _scale = math.pow(10, _decimals).toInt();
 
-/// The longest reason a correction or a return carries (the server holds it to the same length).
+/// The longest reason a correction or a return carries.
+// not-mirrored: the server cuts a longer reason to 200 characters (left()), it does not refuse it
 const int counterReasonMaxLength = 200;
 final RegExp _shape = RegExp(r'^[0-9]{1,12}(\.[0-9]{1,6})?$');
 
