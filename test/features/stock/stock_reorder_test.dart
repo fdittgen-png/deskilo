@@ -224,8 +224,8 @@ void main() {
       });
 
       // #4425 -- a level typed with the member's decimal separator: 15,5 in German and 15.5 in English save the same
-      for (final (code, typed) in [('de', '15,5'), ('en', '15.5')]) {
-        testWidgets('a level typed $typed in $code is saved as 15.5', (tester) async {
+      for (final (code, typed, saved) in [('de', '15,5', '15.5'), ('en', '15.5', '15.5'), ('de', '1.234,5', '1234.5'), ('en', '1,234.5', '1234.5')]) {
+        testWidgets('a level typed $typed in $code is saved as $saved', (tester) async {
           final reorder = _Reorder();
           await _open(tester, reorder, size, locale: Locale(code));
           await _reveal(tester, find.byKey(const ValueKey('stock-point-pt-beans')));
@@ -234,7 +234,7 @@ void main() {
           await tester.enterText(find.byKey(const ValueKey('stock-point-level')), typed);
           await tester.tap(find.byKey(const ValueKey('stock-point-save')));
           await _settle(tester);
-          expect(reorder.saved.single.point['reorder_point'], '15.5');
+          expect(reorder.saved.single.point['reorder_point'], saved);
         });
       }
 
