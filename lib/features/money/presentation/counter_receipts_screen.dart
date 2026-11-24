@@ -100,18 +100,18 @@ String _title(AppLocalizations l10n, CounterBook book, CounterBookReceipt r, Mon
 
 String _tenderState(AppLocalizations l10n, CounterBookTender t) {
   if (t.needsReconciliation) return l10n.counterSaleStateReconcile;
-  return switch (t.state) {
-    'requested' => l10n.counterSaleStateRequested,
-    'unknown' => l10n.counterSaleStateUnknown,
-    'refused' => l10n.counterSaleStateRefused,
-    _ => l10n.counterSaleStateAccepted,
+  return switch (t.tenderState) {
+    TenderState.requested => l10n.counterSaleStateRequested,
+    TenderState.unknown => l10n.counterSaleStateUnknown,
+    TenderState.refused => l10n.counterSaleStateRefused,
+    TenderState.recorded || TenderState.accepted => l10n.counterSaleStateAccepted,
   };
 }
 
-String _tenderKind(AppLocalizations l10n, String kind) => switch (kind) {
-  'cash' => l10n.counterSaleTenderCash,
-  'card' => l10n.counterSaleTenderCard,
-  _ => l10n.counterSaleTenderOther,
+String _tenderKind(AppLocalizations l10n, TenderKind kind) => switch (kind) {
+  TenderKind.cash => l10n.counterSaleTenderCash,
+  TenderKind.card => l10n.counterSaleTenderCard,
+  TenderKind.other => l10n.counterSaleTenderOther,
 };
 
 /// The request id of each one-tap act, per receipt revision, for as long as the app runs.
@@ -229,8 +229,8 @@ class _Receipt extends ConsumerWidget {
                 Text(l10n.counterSaleLeft('${book.leftOf(line)} ${line.unit}'.trim()), style: theme.textTheme.bodySmall),
             ],
             for (final t in r.tenders) ...[
-              Text(l10n.counterSaleTenderLine(_tenderKind(l10n, t.kind), money.formatMinor(t.amountMinor), _tenderState(l10n, t))),
-              if (t.kind == 'card' && t.providerKey.isNotEmpty) Text(l10n.counterSaleReference(t.providerKey), style: theme.textTheme.bodySmall),
+              Text(l10n.counterSaleTenderLine(_tenderKind(l10n, t.tenderKind), money.formatMinor(t.amountMinor), _tenderState(l10n, t))),
+              if (t.tenderKind == TenderKind.card && t.providerKey.isNotEmpty) Text(l10n.counterSaleReference(t.providerKey), style: theme.textTheme.bodySmall),
             ],
             if (r.isCorrection)
               Text(l10n.counterSaleRefunded(money.formatMinor(r.refundedMinor), money.formatMinor(r.totalMinor))),

@@ -3,5 +3,4 @@
 # a read moved onto fetchAllPages (a list that grows with the business) or fetchConfigurationList (a
 # configuration list) leaves it. Left: the till drawer, which belongs to the till workstream.
 lib/features/money/data/supabase_till_drawer.dart 'counter_day_closes'
-lib/features/money/data/supabase_till_drawer.dart 'counter_till_sessions'
 lib/features/money/data/supabase_till_drawer.dart 'counter_tills'

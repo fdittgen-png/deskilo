@@ -91,6 +91,7 @@ abstract final class Routes {
   static const setupLaunch = '/setup/launch';
   static const setupLevels = '/setup/levels';
   static const stockSettings = '/stock/settings';
+  static const tillReceipts = '/till/receipts';
   static const validation = '/validation';
   static const vat = '/vat';
   static const vatDeclarations = '/vat-declarations';

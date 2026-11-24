@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/paged_fetch.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/counter_book.dart';
 import 'supabase_counter_till.dart' show counterReceiptsTable;
@@ -38,42 +39,62 @@ class SupabaseCounterBook implements CounterBookPort {
         .order('finalized_at', ascending: false)
         .limit(issuedShown));
     // the drafts a card authorization was asked for: the ones a lost answer can leave waiting
-    final cardDrafts = _rows(await _client
-        .from('counter_tenders')
-        .select('receipt_id')
-        .eq('workspace_id', workspaceId)
-        .eq('kind', 'card')
-        .neq('state', 'refused'));
+    final cardDrafts = await fetchAllPages(
+      table: 'counter_tenders',
+      build: () => _client.from('counter_tenders').select('id, receipt_id').eq('workspace_id', workspaceId).eq('kind', 'card').neq('state', 'refused').order('id', ascending: true),
+    );
     final issuedIds = {for (final r in issued) r['id'] as String};
     final draftIds = {for (final t in cardDrafts) t['receipt_id'] as String}.difference(issuedIds);
     final drafts = draftIds.isEmpty
         ? <Map<String, Object?>>[]
-        : _rows(await _client
-              .from(counterReceiptsTable)
-              .select('id, kind, state, currency, total_minor, tax_minor, revision, number, finalized_at, corrects_receipt_id, till_session_id, frozen')
-              .eq('workspace_id', workspaceId)
-              .eq('state', 'draft')
-              .inFilter('id', draftIds.toList()));
+        : await fetchAllIn(
+            table: counterReceiptsTable,
+            ids: draftIds.toList(),
+            build: (chunk) => _client
+                .from(counterReceiptsTable)
+                .select('id, kind, state, currency, total_minor, tax_minor, revision, number, finalized_at, corrects_receipt_id, till_session_id, frozen')
+                .eq('workspace_id', workspaceId)
+                .eq('state', 'draft')
+                .inFilter('id', chunk)
+                .order('id', ascending: true),
+          );
     final all = [...drafts, ...issued];
     if (all.isEmpty) return const CounterBook([]);
     final ids = [for (final r in all) r['id'] as String];
-    final lines = _rows(await _client
-        .from('counter_receipt_lines')
-        .select('id, receipt_id, line_no, corrects_line_id, gross_minor, frozen')
-        .eq('workspace_id', workspaceId)
-        .inFilter('receipt_id', ids)
-        .order('line_no'));
-    final tenders = _rows(await _client
-        .from('counter_tenders')
-        .select('id, receipt_id, part, kind, amount_minor, state, reconciliation, provider_key, provider_ref')
-        .eq('workspace_id', workspaceId)
-        .inFilter('receipt_id', ids)
-        .order('part'));
-    final refunds = _rows(await _client.from('counter_refunds').select('receipt_id, amount_minor').eq('workspace_id', workspaceId).inFilter('receipt_id', ids));
+    final lines = await fetchAllIn(
+      table: 'counter_receipt_lines',
+      ids: ids,
+      build: (chunk) => _client
+          .from('counter_receipt_lines')
+          .select('id, receipt_id, line_no, corrects_line_id, gross_minor, frozen')
+          .eq('workspace_id', workspaceId)
+          .inFilter('receipt_id', chunk)
+          .order('id', ascending: true),
+    );
+    final tenders = await fetchAllIn(
+      table: 'counter_tenders',
+      ids: ids,
+      build: (chunk) => _client
+          .from('counter_tenders')
+          .select('id, receipt_id, part, kind, amount_minor, state, reconciliation, provider_key, provider_ref')
+          .eq('workspace_id', workspaceId)
+          .inFilter('receipt_id', chunk)
+          .order('id', ascending: true),
+    );
+    final refunds = await fetchAllIn(
+      table: 'counter_refunds',
+      ids: ids,
+      build: (chunk) => _client.from('counter_refunds').select('id, receipt_id, amount_minor').eq('workspace_id', workspaceId).inFilter('receipt_id', chunk).order('id', ascending: true),
+    );
     final sessions = {for (final r in all) if (r['till_session_id'] != null) r['till_session_id'] as String};
     final tillOf = <String, String>{};
     if (sessions.isNotEmpty) {
-      for (final s in _rows(await _client.from(counterTillSessionsTable).select('id, till_id').inFilter('id', sessions.toList()))) {
+      final found = await fetchAllIn(
+        table: counterTillSessionsTable,
+        ids: sessions.toList(),
+        build: (chunk) => _client.from(counterTillSessionsTable).select('id, till_id').inFilter('id', chunk).order('id', ascending: true),
+      );
+      for (final s in found) {
         tillOf[s['id'] as String] = s['till_id'] as String;
       }
     }
@@ -111,12 +132,17 @@ class SupabaseCounterBook implements CounterBookPort {
   /// the return command bounds what is taken back again on the server.
   Future<Map<String, int>> _returned(String workspaceId, List<String> receiptIds) async {
     try {
-      final rows = _rows(await _client
-          .from('stock_movements')
-          .select('counter_line_id, quantity:entered_quantity::text')
-          .eq('workspace_id', workspaceId)
-          .eq('reason', 'return_in')
-          .inFilter('counter_receipt_id', receiptIds));
+      final rows = await fetchAllIn(
+        table: 'stock_movements',
+        ids: receiptIds,
+        build: (chunk) => _client
+            .from('stock_movements')
+            .select('id, counter_line_id, quantity:entered_quantity::text')
+            .eq('workspace_id', workspaceId)
+            .eq('reason', 'return_in')
+            .inFilter('counter_receipt_id', chunk)
+            .order('id', ascending: true),
+      );
       final out = <String, int>{};
       for (final m in rows) {
         final line = m['counter_line_id'] as String?;

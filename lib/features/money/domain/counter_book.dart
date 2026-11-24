@@ -84,6 +84,34 @@ class CounterBookLine {
   }
 }
 
+/// What a tender was paid with; the wire word is read once, here.
+enum TenderKind {
+  cash('cash'),
+  card('card'),
+  other('other');
+
+  const TenderKind(this.wire);
+
+  final String wire;
+
+  static TenderKind of(String wire) => values.firstWhere((k) => k.wire == wire, orElse: () => other);
+}
+
+/// Where a tender stands; a word from the future is [unknown], the neutral state that is settled by hand.
+enum TenderState {
+  recorded('recorded'),
+  requested('requested'),
+  accepted('accepted'),
+  refused('refused'),
+  unknown('unknown');
+
+  const TenderState(this.wire);
+
+  final String wire;
+
+  static TenderState of(String wire) => values.firstWhere((s) => s.wire == wire, orElse: () => unknown);
+}
+
 /// A tender of a receipt. A card tender moves `requested` -> `accepted` | `refused` | `unknown`; cash and other are
 /// recorded `accepted` by the sale itself.
 class CounterBookTender {
@@ -115,8 +143,14 @@ class CounterBookTender {
   final String providerKey;
   final String providerRef;
 
+  /// The kind as an enum; a kind from the future reads as [TenderKind.other].
+  TenderKind get tenderKind => TenderKind.of(kind);
+
+  /// The state as an enum; a state from the future reads as [TenderState.unknown].
+  TenderState get tenderState => TenderState.of(state);
+
   /// The answer has not been recorded, or was lost: it is settled, never asked again.
-  bool get open => kind == 'card' && (state == 'requested' || state == 'unknown');
+  bool get open => tenderKind == TenderKind.card && (tenderState == TenderState.requested || tenderState == TenderState.unknown);
   bool get needsReconciliation => state == 'accepted' && reconciliation == 'needed';
 
   /// Money taken that settles the sale.

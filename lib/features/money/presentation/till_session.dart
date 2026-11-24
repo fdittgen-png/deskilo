@@ -11,6 +11,7 @@ import 'package:flutter/foundation.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/trace/refusal_text.dart';
 import '../../../core/trace/trace_logger.dart';
+import '../domain/counter_book.dart' show TenderKind, TenderState;
 import '../domain/counter_till.dart';
 import '../domain/till_quantity.dart';
 import 'till_offline_controller.dart';
@@ -270,14 +271,14 @@ class TillSession {
           .resolveCard(workspaceId, requestId: attempt.requestId, tenderId: card.tenderId, outcome: outcome, providerRef: providerRef)
           .timeout(callTimeout);
       _answerAttempt = null;
-      switch (answer.state) {
-        case 'accepted':
+      switch (TenderState.of(answer.state)) {
+        case TenderState.accepted:
           _givenMinor = draft.totals.grossMinor;
-          await _finalize(draft, [TillTender(kind: 'card', amountMinor: card.amountMinor, tenderId: card.tenderId)]);
-        case 'refused':
+          await _finalize(draft, [TillTender(kind: TenderKind.card.wire, amountMinor: card.amountMinor, tenderId: card.tenderId)]);
+        case TenderState.refused:
           _cardAttempt = null;
           _set(_now.withCard(null).copyWith(problem: () => const TillCardDeclined()));
-        default:
+        case TenderState.recorded || TenderState.requested || TenderState.unknown:
           _set(_now.withCardUnknown(value: true));
       }
     } on Object catch (e, st) {
