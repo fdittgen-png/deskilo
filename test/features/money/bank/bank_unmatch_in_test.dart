@@ -212,7 +212,7 @@ void main() {
   test('refused on the repository itself, with the code and the sentence the '
       'person reads', () async {
     final l10n = englishL10n;
-    Future<void> refused(int n, String code, KnownRefusal family, [String? words]) async {
+    Future<void> refused(int n, String code, String sentence, [String? words]) async {
       final id = (await line(n)).id;
       PostgrestException? error;
       try {
@@ -221,23 +221,24 @@ void main() {
         error = e;
       }
       expect(error?.code, code, reason: 'line $n');
-      expect(knownRefusalOf(error!), family, reason: 'line $n');
-      final sentence = knownRefusalText(l10n, error)!;
-      if (words != null) expect(sentence, contains(words), reason: 'line $n');
+      // #4413 -- the bank's codes are worded by money's table, not a core family.
+      final said = knownRefusalText(l10n, error!)!;
+      expect(said, sentence, reason: 'line $n');
+      if (words != null) expect(said, contains(words), reason: 'line $n');
       expect(bank.unmatches.containsKey('q$n'), isFalse, reason: 'nothing is on record');
     }
 
-    await refused(2, DkCode.dkb04, KnownRefusal.bankMatchBeyondLink, 'credit note');
-    await refused(6, DkCode.dkb04, KnownRefusal.bankMatchBeyondLink, 'settlement');
+    await refused(2, DkCode.dkb04, l10n.refusalBankMatchBeyondLink, 'credit note');
+    await refused(6, DkCode.dkb04, l10n.refusalBankMatchBeyondLink, 'settlement');
     // A match whose amount its payments do not explain is not restated.
     money.invoiceMatchesStore['id-I3'] = money.invoiceMatchesStore['id-I3']!
         .copyWith(paidCents: 15001);
-    await refused(3, DkCode.dkb05, KnownRefusal.bankMatchSeveralPayments, 'without guessing');
-    await refused(7, DkCode.dkb01, KnownRefusal.bankLineDecided);
-    await refused(8, DkCode.dkb02, KnownRefusal.bankLineRefused);
+    await refused(3, DkCode.dkb05, l10n.refusalBankMatchSeveralPayments, 'without guessing');
+    await refused(7, DkCode.dkb01, l10n.refusalBankLineDecided);
+    await refused(8, DkCode.dkb02, l10n.refusalBankLineRefused);
 
     bank.booksClosedThrough = DateTime.utc(2999);
-    await refused(5, DkCode.dkb06, KnownRefusal.bankMatchClosedPeriod, 'closed period');
+    await refused(5, DkCode.dkb06, l10n.refusalBankMatchClosedPeriod, 'closed period');
     expect(money.invoiceMatchesStore.containsKey('id-I4'), isTrue, reason: 'the match is still there');
   });
 

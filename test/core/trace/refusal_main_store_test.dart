@@ -21,21 +21,21 @@ void main() {
   test('less than the sale asks says what the main store holds and links to that item', () {
     final e = _refusal(DkCode.dkg03, _json);
     expect(knownRefusalText(_en, e), _en.refusalMainStoreShort('0.500000', '1'));
-    expect(refusalStockLinkOf(e), '/stock?item=i-1');
+    expect(refusalLinkOf(e), '/stock?item=i-1');
   });
 
   test('only expired goods left says so, and links too', () {
     final e = _refusal(DkCode.dkg15, _json);
     expect(knownRefusalText(_en, e), _en.refusalMainStoreExpired('0.500000', '1'));
-    expect(refusalStockLinkOf(e), '/stock?item=i-1');
+    expect(refusalLinkOf(e), '/stock?item=i-1');
   });
 
   test('a refusal of a move, or a detail that is not ours, keeps the generic words and no link', () {
     for (final details in [null, 'not json', '{"scope": "elsewhere"}', '{"scope": "main_store"}']) {
       final e = _refusal(DkCode.dkg03, details);
       expect(knownRefusalText(_en, e), _en.refusalStockNotEnough, reason: '$details');
-      expect(refusalStockLinkOf(e), isNull, reason: '$details');
+      expect(refusalLinkOf(e), isNull, reason: '$details');
     }
-    expect(refusalStockLinkOf(_refusal(DkCode.dkg05, _json)), isNull);
+    expect(refusalLinkOf(_refusal(DkCode.dkg05, _json)), isNull);
   });
 }

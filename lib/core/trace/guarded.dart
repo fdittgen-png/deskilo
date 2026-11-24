@@ -96,7 +96,7 @@ Future<bool> runGuarded(
       // where the caller's generic text would only say "try again".
       final l10n = context.l10n;
       // #4170 — a sale refused for what the main store holds links to that item's stock
-      final stockLink = isTransientNetworkFailure(e) ? null : refusalStockLinkOf(e);
+      final stockLink = isTransientNetworkFailure(e) ? null : refusalLinkOf(e);
       AppSnack.error(
         context,
         isTransientNetworkFailure(e)

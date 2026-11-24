@@ -104,12 +104,14 @@ void main() {
     });
 
     test('an accounting connection explains its own refusals (#2370, DKA01-03)', () {
-      expect(knownRefusalOf(_pg('already connected', code: DkCode.dka01)), KnownRefusal.changedMeanwhile);
+      // #4413 -- the accounting connection's words are money's, not a core family.
+      expect(knownRefusalText(englishL10n, _pg('already connected', code: DkCode.dka01)),
+          englishL10n.refusalChangedMeanwhile);
       final closed = _pg('this connection has delivered: revoke it and connect again', code: DkCode.dka02);
-      expect(knownRefusalOf(closed), KnownRefusal.accountingConnectionClosed);
+      expect(knownRefusalOf(closed), isNull);
       expect(knownRefusalText(englishL10n, closed), contains('Revoke it and connect again'));
       final value = _pg('paste the whole token', code: DkCode.dka03);
-      expect(knownRefusalOf(value), KnownRefusal.accountingValueRefused);
+      expect(knownRefusalText(englishL10n, value), englishL10n.refusalAccountingValue);
       expect(knownRefusalText(englishL10n, value), contains('check the token'));
       // The codes are the server's: the migration still raises each.
       final sql = File('supabase/migrations/0595_accounting_connections.sql').readAsStringSync();
@@ -129,12 +131,13 @@ void main() {
 
     test('a bank statement explains its own refusals (#2380, DKB01-03)', () {
       final decided = _pg('this movement already settles an invoice', code: DkCode.dkb01);
-      expect(knownRefusalOf(decided), KnownRefusal.bankLineDecided);
+      // #4413 -- the bank's words are money's, not a core family.
+      expect(knownRefusalOf(decided), isNull);
       expect(knownRefusalText(englishL10n, decided), contains('decided meanwhile'));
-      expect(knownRefusalOf(_pg('money out settles no invoice', code: DkCode.dkb02)),
-          KnownRefusal.bankLineRefused);
-      expect(knownRefusalOf(_pg('too many movements', code: DkCode.dkb03)),
-          KnownRefusal.bankFileRefused);
+      expect(knownRefusalText(englishL10n, _pg('money out settles no invoice', code: DkCode.dkb02)),
+          englishL10n.refusalBankLineRefused);
+      expect(knownRefusalText(englishL10n, _pg('too many movements', code: DkCode.dkb03)),
+          englishL10n.refusalBankFileRefused);
       // The codes are the server's: the migration still raises each.
       final sql = File('supabase/migrations/0603_bank_statements.sql').readAsStringSync();
       for (final code in [DkCode.dkb01, DkCode.dkb02, DkCode.dkb03]) {

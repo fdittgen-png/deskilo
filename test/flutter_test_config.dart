@@ -9,6 +9,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:deskilo/app/refusals_wiring.dart';
 import 'package:deskilo/core/demo/demo_loader.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
@@ -23,5 +24,7 @@ Future<void> testExecutable(FutureOr<void> Function() testMain) async {
   // test file, so entering the Demo in a test is immediate as on a device
   // that already has it.
   await loadDemoLibrary();
+  // #4413 — the features' refusal words, as main.dart registers them.
+  registerFeatureRefusals();
   await testMain();
 }
