@@ -3,6 +3,7 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:meta/meta.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/failure/app_failure.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/hmrc_submission.dart';
 
@@ -43,7 +44,7 @@ class SupabaseHmrcRepository implements HmrcRepository {
   }
 
   @override
-  Future<HmrcOutcome> submit({
+  Future<CommandOutcome<HmrcFiling>> submit({
     required String declarationId,
     required String connectionId,
     required Map<String, num> boxes,
@@ -66,9 +67,9 @@ class SupabaseHmrcRepository implements HmrcRepository {
       final receipt = data is Map ? HmrcReceipt.fromJson(data['receipt']) : null;
       if (receipt == null || receipt.formBundleNumber.isEmpty) {
         // A success without a receipt is not a filing.
-        return const HmrcUnconfirmed(code: 'NO_RECEIPT');
+        return hmrcUnconfirmed(code: 'NO_RECEIPT');
       }
-      return HmrcFiled(receipt);
+      return hmrcFiled(receipt);
     } on FunctionException catch (e, st) {
       TraceLogger.instance.warn(
         'money',
@@ -84,7 +85,7 @@ class SupabaseHmrcRepository implements HmrcRepository {
         'hmrc submit failed (${e.runtimeType})',
         stackTrace: st,
       );
-      return const HmrcUnconfirmed(code: 'CLIENT');
+      return hmrcUnconfirmed(code: 'CLIENT');
     }
   }
 }
@@ -114,17 +115,17 @@ const _refusalOfError = <String, HmrcRefusal>{
 /// `error` and never by the status alone. Public so the mapping is tested
 /// without a network.
 @visibleForTesting
-HmrcOutcome hmrcOutcomeOfRefusal(int status, Object? details) {
+CommandOutcome<HmrcFiling> hmrcOutcomeOfRefusal(int status, Object? details) {
   final body = JsonReader.orEmpty(details, context: 'accounting-connect');
   final error = body.stringOr('error');
   final code = body.stringOr('code');
   if (error == 'accepted_not_recorded') {
-    return HmrcAcceptedNotRecorded(HmrcReceipt.fromJson(details is Map ? details['receipt'] : null));
+    return hmrcAcceptedNotRecorded(HmrcReceipt.fromJson(details is Map ? details['receipt'] : null));
   }
-  if (error == 'unconfirmed' || status == 504) return HmrcUnconfirmed(code: code);
+  if (error == 'unconfirmed' || status == 504) return hmrcUnconfirmed(code: code);
   if (error == 'fraud_headers_missing') {
     final missing = details is Map ? details['missing'] : null;
-    return HmrcRefused(
+    return hmrcRefused(
       HmrcRefusal.fraudHeadersMissing,
       missing: [for (final m in missing is List ? missing : const []) '$m'],
     );
@@ -134,9 +135,9 @@ HmrcOutcome hmrcOutcomeOfRefusal(int status, Object? details) {
   // that names nothing we know may have come after the post: unconfirmed,
   // not a safe "nothing is filed".
   if (known == null && (status < 100 || status >= 500)) {
-    return HmrcUnconfirmed(code: status < 100 ? 'CLIENT' : code);
+    return hmrcUnconfirmed(code: status < 100 ? 'CLIENT' : code);
   }
-  return HmrcRefused(
+  return hmrcRefused(
     known ?? (status == 403 ? HmrcRefusal.notAllowed : HmrcRefusal.other),
     code: code,
   );

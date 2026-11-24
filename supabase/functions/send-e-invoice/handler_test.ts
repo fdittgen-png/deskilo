@@ -7,6 +7,7 @@
 
 import { assertEquals } from "jsr:@std/assert@1";
 import { handle } from "./handler.ts";
+import { guard } from "../_shared/serve.ts";
 import { clients } from "./connectors/es_verifactu.ts";
 import type {
   Artifact,
@@ -1874,4 +1875,28 @@ Deno.test("#4324: a request holding a document the row replaced sends nothing", 
   assertEquals(r.status, 409);
   assertEquals(r.body.error, "binding_changed");
   assertEquals(p.posts.length, 0);
+});
+
+// #4412 -- an uncaught error is the envelope: a code and the request id, never the error's own words.
+Deno.test("#4412 send-e-invoice: a thrown error answers the envelope and no internal message", async () => {
+  const saved = console.error;
+  console.error = () => {};
+  try {
+    const store = new Proxy({}, {
+      get: () => () => Promise.reject(new Error("service role key sb_secret_xyz is wrong")),
+    }) as unknown as FakeStore;
+    const answer = await guard("send-e-invoice", (req) => handle(req, { store }))(
+      new Request("https://f.test/send", {
+        method: "POST",
+        headers: { Authorization: "Bearer t", "x-request-id": "r-einv" },
+        body: JSON.stringify(bodyOf()),
+      }),
+    );
+    assertEquals(answer.status, 500);
+    const text = await answer.text();
+    assertEquals(JSON.parse(text), { error: "internal_error", request_id: "r-einv" });
+    assertEquals(/secret|sb_|wrong/i.test(text), false);
+  } finally {
+    console.error = saved;
+  }
 });

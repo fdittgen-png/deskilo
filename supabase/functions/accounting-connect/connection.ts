@@ -5,6 +5,8 @@
 // connection with its secrets (service role only) and the one writer of
 // those secrets. No secret leaves this function in an answer.
 
+import { describeError, logLine } from "../_shared/log.ts";
+import { ok } from "../_shared/respond.ts";
 import { CORS } from "../_shared/cors.ts";
 import {
   clientEnvName,
@@ -69,11 +71,11 @@ export type Deps = {
   sleep?: (ms: number) => Promise<void>;
 };
 
-export const json = (body: unknown, status = 200) =>
-  new Response(JSON.stringify(body), {
-    status,
-    headers: { ...CORS, "Content-Type": "application/json" },
-  });
+/** The function's answers, with its CORS, through the shared helper (#4412). */
+export const json = (body: unknown, status = 200) => ok(body, status, CORS);
+
+/** The function's name in its log lines. */
+export const FN = "accounting-connect";
 
 /** The OAuth description of target [id]: the static table, or HMRC's, which
  * takes its hosts from the installation's chosen environment (exact approved
@@ -251,7 +253,7 @@ export async function storeLeased(
     p_secrets: write.secrets,
     p_patch: write.patch,
   });
-  if (error) console.error("accounting-connect: the credentials were not stored (lease)");
+  if (error) logLine("error", FN, "credentials_not_stored_lease", { error: describeError(error) });
   return !error;
 }
 
@@ -275,7 +277,7 @@ export async function store(
     p_patch: write.patch,
   });
   if (error) {
-    console.error("accounting-connect: the credentials were not stored");
+    logLine("error", FN, "credentials_not_stored", { error: describeError(error) });
   }
   return !error;
 }

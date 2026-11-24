@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
+import '../../../core/ui/async_read_body.dart';
 import '../../../core/ui/kit/kit_card.dart';
 import '../domain/public_workspace.dart';
 import '../providers/directory_providers.dart';
@@ -21,40 +22,33 @@ class PublicProfileRefreshNotice extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final current = state;
+    // #4414 kept: shown only while a refresh runs or failed (the banner below)
     if (current == null || (!current.isLoading && !current.hasError)) {
       return const SizedBox.shrink();
     }
     final l = context.l10n;
+    void retry() => ref.invalidate(
+      publicWorkspaceDetailProvider(
+        workspace.source,
+        workspace.key,
+        workspace.id,
+      ),
+    );
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
-      child: KitCard(
-        key: const ValueKey('public-profile-refresh-notice'),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Semantics(
-              liveRegion: true,
-              child: Text(
-                current.isLoading
-                    ? l.publicProfileRefreshing
-                    : l.publicProfileRefreshFailed,
+      child: current.isLoading
+          ? KitCard(
+              key: const ValueKey('public-profile-refresh-notice'),
+              child: Semantics(
+                liveRegion: true,
+                child: Text(l.publicProfileRefreshing),
               ),
+            )
+          : ReadFailureBanner(
+              error: current.error!,
+              retryKey: const ValueKey('public-profile-retry'),
+              onRetry: retry,
             ),
-            if (!current.isLoading)
-              TextButton(
-                key: const ValueKey('public-profile-retry'),
-                onPressed: () => ref.invalidate(
-                  publicWorkspaceDetailProvider(
-                    workspace.source,
-                    workspace.key,
-                    workspace.id,
-                  ),
-                ),
-                child: Text(l.commonRetry),
-              ),
-          ],
-        ),
-      ),
     );
   }
 }

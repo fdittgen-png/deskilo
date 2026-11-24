@@ -9,6 +9,7 @@
 // nothing.
 import { assert, assertEquals } from "jsr:@std/assert@1";
 import { type Deps, handle } from "./index.ts";
+import { asFetch } from "../_shared/testing/as_fetch.ts";
 
 const WS = "11111111-1111-4111-8111-111111111111";
 const SITE = "22222222-2222-4222-8222-222222222222";
@@ -152,7 +153,7 @@ function pennylane(codes: [number, string][] = [[1, "VE"], [2, "BQ"]]) {
   let next = 900;
   const st = { posts: 0, loseNextAnswer: false, gets: 0 };
   const fetcher =
-    (async (input: string | URL | Request, init?: RequestInit) => {
+    asFetch((input: string | URL | Request, init?: RequestInit) => {
       const url = new URL(String(input));
       const path = url.pathname.replace(/^.*\/v2\//, "");
       if (path === "journals") {
@@ -180,7 +181,7 @@ function pennylane(codes: [number, string][] = [[1, "VE"], [2, "BQ"]]) {
         return Response.json(entry, { status: 201 });
       }
       return new Response("not found", { status: 404 });
-    }) as typeof fetch;
+    });
   return { entries, st, fetcher };
 }
 
@@ -659,7 +660,7 @@ Deno.test("a period without a credit note reads no invoice", async () => {
  * code says: one tax line at 20 % on the line's net. */
 function quickbooks() {
   const st = { posts: 0 };
-  const fetcher = (async (input: string | URL | Request, init?: RequestInit) => {
+  const fetcher = asFetch((input: string | URL | Request, init?: RequestInit) => {
     const url = new URL(String(input));
     if (url.pathname.includes("/companyinfo/")) return Response.json({ CompanyInfo: { Country: "CA" } });
     if (url.pathname.endsWith("/preferences")) {
@@ -698,7 +699,7 @@ function quickbooks() {
       });
     }
     return new Response("not found", { status: 404 });
-  }) as typeof fetch;
+  });
   return { st, fetcher };
 }
 

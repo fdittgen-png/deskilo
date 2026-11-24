@@ -15,6 +15,7 @@ import '../../core/i18n/format_controller.dart';
 import '../../core/l10n/context_l10n.dart';
 import '../../core/theme/app_spacing.dart';
 import '../../core/time/clock.dart';
+import '../../core/ui/async_read_body.dart';
 import '../../features/money/domain/fee_band.dart';
 import '../../features/money/providers/money_providers.dart';
 import '../../features/workspace/domain/member.dart';
@@ -148,7 +149,15 @@ class _Estimate extends ConsumerWidget {
     final children = <Widget>[
       Text(l.memberPlanEstimate, style: theme.textTheme.titleSmall),
     ];
-    if (read.hasError || (read.hasValue && statement == null)) {
+    if (read.hasError && !read.hasValue) {
+      children.add(
+        ReadFailureBanner(
+          error: read.error!,
+          onRetry: () =>
+              ref.invalidate(memberStatementProvider(memberId, period)),
+        ),
+      );
+    } else if (read.hasValue && statement == null) {
       children.add(
         Text(
           l.memberPlanEstimateUnavailable,

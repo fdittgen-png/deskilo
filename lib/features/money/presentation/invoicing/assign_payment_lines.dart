@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/ui/kit/kit_metrics.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/assign_payment_plan.dart';
 import '../../application/receivables.dart';
@@ -28,35 +27,6 @@ class AssignPaymentWaitingLine extends StatelessWidget {
       style: Theme.of(context).textTheme.bodySmall,
     ),
   );
-}
-
-/// The list of what each invoice can take could not be read.
-class AssignPaymentCapacityFailed extends StatelessWidget {
-  const AssignPaymentCapacityFailed({super.key, required this.onRetry});
-
-  final VoidCallback onRetry;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = context.l10n;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          l10n.assignPaymentReadFailedInvoices,
-          key: const ValueKey('assign-payment-failed-capacity'),
-        ),
-        TextButton(
-          key: const ValueKey('assign-payment-retry-capacity'),
-          style: TextButton.styleFrom(
-            minimumSize: const Size.square(KitMetrics.minTarget),
-          ),
-          onPressed: onRetry,
-          child: Text(l10n.commonRetry),
-        ),
-      ],
-    );
-  }
 }
 
 /// Why the server refused, in the app's own words.

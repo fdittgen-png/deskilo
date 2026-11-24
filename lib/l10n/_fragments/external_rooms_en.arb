@@ -176,10 +176,6 @@
   "@roomRentLevelRefused": {
     "description": "#2568 rented rooms"
   },
-  "roomRentLoadFailed": "The rented rooms could not be loaded.",
-  "@roomRentLoadFailed": {
-    "description": "#2568 rented rooms"
-  },
   "roomOfferUnitHalfDay": "half day",
   "@roomOfferUnitHalfDay": {
     "description": "#2575 rented room offer"

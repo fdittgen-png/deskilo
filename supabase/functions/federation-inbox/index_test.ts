@@ -8,7 +8,7 @@
 // never a 2xx. The signature, digest, replay and expiry rules themselves are
 // proved in the database (pgTAP 272).
 import { assertEquals } from "jsr:@std/assert@1";
-import { handle, MAX_BODY_BYTES } from "./index.ts";
+import { handle, MAX_BODY_BYTES, serve } from "./index.ts";
 
 type Result = { data: unknown; error: { message: string } | null };
 
@@ -151,5 +151,30 @@ Deno.test("only a duplicate carries a first outcome, and only a named one", asyn
       "{}",
     );
     assertEquals(res.body, { outcome: "duplicate" });
+  }
+});
+
+// #4412 -- an uncaught error is the envelope: a code and the request id, never the error's own words.
+Deno.test("#4412 federation-inbox: a thrown error answers the envelope and no internal message", async () => {
+  const saved = console.error;
+  console.error = () => {};
+  try {
+    const answer = await serve({
+      admin: () => {
+        throw new Error("service role key sb_secret_xyz is wrong");
+      },
+    })(
+      new Request("https://x.test/functions/v1/federation-inbox", {
+        method: "POST",
+        body: "{}",
+        headers: { "x-request-id": "r-fed" },
+      }),
+    );
+    assertEquals(answer.status, 500);
+    const text = await answer.text();
+    assertEquals(JSON.parse(text), { error: "internal_error", request_id: "r-fed" });
+    assertEquals(/secret|sb_|wrong/i.test(text), false);
+  } finally {
+    console.error = saved;
   }
 });

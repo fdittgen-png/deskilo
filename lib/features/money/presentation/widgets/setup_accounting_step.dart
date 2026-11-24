@@ -20,8 +20,8 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
-import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/setup_step_layout.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -94,12 +94,12 @@ class SetupAccountingStep extends ConsumerWidget {
             sites: sites,
           ),
         ),
-        AsyncError() => Padding(
+        AsyncError(:final error) => Padding(
           padding: AppSpacing.lgAll,
-          child: InlineBanner(
+          child: ReadFailureBanner(
             key: const ValueKey('setup-accounting-failed'),
-            icon: Icons.error_outline,
-            text: context.l10n.setupStepLoadFailed,
+            error: error,
+            onRetry: () => ref.invalidate(bookProfilesProvider),
           ),
         ),
         _ => const LoadingView(),

@@ -5,6 +5,7 @@
 // back, nothing is written again, and an invoice that merely looks like the
 // attempt (same member and month) is never taken for it.
 import 'package:deskilo/core/demo/data/money_repository.dart';
+import 'package:deskilo/core/failure/app_failure.dart';
 import 'package:deskilo/core/validation/pending_validation.dart';
 import 'package:deskilo/features/money/application/issue_invoice.dart';
 import 'package:deskilo/features/money/data/command_receipt_decoder.dart';
@@ -111,6 +112,10 @@ class _LossyReplace extends FakeInvoiceActionCommands {
   }
 }
 
+/// An answer that was lost.
+CommandUnreached<String> _lost() =>
+    CommandUnreached<String>(Defect(StateError('lost')));
+
 void main() {
   late _Server server;
   late InvoiceIssuance issuance;
@@ -122,14 +127,18 @@ void main() {
   test(
     'a lost answer after the commit is recovered by the request id',
     () async {
-      final unknown = await issuance.issue(_attempt('req-1'));
-      expect(unknown, isA<InvoiceIssueUnknown>());
-      final found = await issuance.look(unknown as InvoiceIssueUnknown);
-      expect(found, isA<InvoiceIssued>());
+      final attempt = _attempt('req-1');
+      final unknown = await issuance.issue(attempt);
+      expect(unknown, isA<CommandUnreached<String>>());
+      final found = await issuance.look(
+        attempt,
+        unknown as CommandUnreached<String>,
+      );
+      expect(found, isA<CommandDone<String>>());
       final original = (await server.fetchInvoices('ws-1')).single.id;
-      expect((found as InvoiceIssued).invoiceId, original);
+      expect((found as CommandDone<String>).value, original);
       // Looking twice reads again and never writes again.
-      await issuance.look(unknown);
+      await issuance.look(attempt, unknown);
       expect(server.issueCalls, 1);
       expect(server.legacyCalls, 0);
       expect(server.outcomeReads, 2);
@@ -150,13 +159,9 @@ void main() {
           requestId: 'someone-else',
         ),
       );
-      final unknown = InvoiceIssueUnknown(
-        _attempt('req-2'),
-        StateError('lost'),
-      );
-      final out = await issuance.look(unknown);
-      expect(out, isA<InvoiceIssueUnknown>());
-      expect(out.attempt.requestId, 'req-2');
+      final unknown = _lost();
+      final out = await issuance.look(_attempt('req-2'), unknown);
+      expect(out, same(unknown), reason: 'still unknown, the attempt kept');
     },
   );
 
@@ -170,35 +175,35 @@ void main() {
         requestId: 'same-id',
       ),
     );
-    final out = await issuance.look(
-      InvoiceIssueUnknown(_attempt('same-id'), StateError('lost')),
-    );
-    expect(out, isA<InvoiceIssueUnknown>());
+    final out = await issuance.look(_attempt('same-id'), _lost());
+    expect(out, isA<CommandUnreached<String>>());
     expect(server.readIds.single, 'ws-1|same-id');
   });
 
   test('pending and declined receipts resolve with their event', () async {
-    final unknown = InvoiceIssueUnknown(_attempt('req-3'), StateError('lost'));
+    final attempt = _attempt('req-3');
+    final unknown = _lost();
     server.receiptOnRead = const CommandReceipt(
       CommandReceiptState.pending,
       eventId: 'ev-1',
     );
-    expect((await issuance.look(unknown) as InvoiceIssueHeld).eventId, 'ev-1');
+    expect(
+      (await issuance.look(attempt, unknown) as CommandHeld<String>).eventId,
+      'ev-1',
+    );
     server.receiptOnRead = const CommandReceipt(
       CommandReceiptState.refused,
       eventId: 'ev-1',
     );
-    final declined = await issuance.look(unknown) as InvoiceIssueRefused;
-    expect(declined.error, isA<InvoiceIssueDeclined>());
+    final declined =
+        await issuance.look(attempt, unknown) as CommandRefused<String>;
+    expect(declined.refusal.cause, isA<InvoiceIssueDeclined>());
   });
 
   test('an unreadable receipt keeps the attempt unknown', () async {
     server.readFails = Exception('offline');
-    final out = await issuance.look(
-      InvoiceIssueUnknown(_attempt('req-4'), StateError('lost')),
-    );
-    expect(out, isA<InvoiceIssueUnknown>());
-    expect(out.attempt.requestId, 'req-4');
+    final out = await issuance.look(_attempt('req-4'), _lost());
+    expect(out, isA<CommandUnreached<String>>());
   });
 
   test('an attempt without a request id keeps the legacy path', () async {
@@ -212,7 +217,7 @@ void main() {
     final out = await issuance.issue(attempt);
     expect(server.legacyCalls, 1);
     expect(server.issueCalls, 0);
-    expect(out, isA<InvoiceIssueRefused>()); // unknown replaced invoice
+    expect(out, isA<CommandRefused<String>>()); // unknown replaced invoice
   });
 
   test(
@@ -236,14 +241,16 @@ void main() {
       );
       expect(attempt.hasReceipt, isTrue);
       final out = await withActions.issue(attempt);
-      expect(out, isA<InvoiceIssueUnknown>());
-      final found =
-          await withActions.look(out as InvoiceIssueUnknown) as InvoiceIssued;
+      expect(out, isA<CommandUnreached<String>>());
+      final found = await withActions.look(
+        attempt,
+        out as CommandUnreached<String>,
+      ) as CommandDone<String>;
       final replacement = server.invoices.firstWhere(
         (i) => i.replacesInvoiceId == erroneous,
       );
-      expect(found.invoiceId, replacement.id);
-      await withActions.look(out);
+      expect(found.value, replacement.id);
+      await withActions.look(attempt, out);
       expect(lossy.sends, 1, reason: 'looking never sends again');
       expect(
         server.invoices.where((i) => i.replacesInvoiceId == erroneous),

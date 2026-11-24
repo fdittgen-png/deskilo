@@ -28,10 +28,6 @@
   "@leaseEmpty": {
     "description": "#2569 premises lease"
   },
-  "leaseLoadFailed": "No se pudo cargar el contrato.",
-  "@leaseLoadFailed": {
-    "description": "#2569 premises lease"
-  },
   "leaseSaved": "Guardado",
   "@leaseSaved": {
     "description": "#2569 premises lease"
@@ -324,10 +320,6 @@
   "@leaseCommitmentsEmpty": {
     "description": "#2575 commitment matching"
   },
-  "leaseCommitmentsLoadFailed": "No se pudieron cargar los vencimientos.",
-  "@leaseCommitmentsLoadFailed": {
-    "description": "#2575 commitment matching"
-  },
   "leaseCommitmentExpected": "Esperado",
   "@leaseCommitmentExpected": {
     "description": "#2575 commitment matching"
@@ -542,10 +534,6 @@
   },
   "equipmentEmpty": "Aún no hay equipos registrados.",
   "@equipmentEmpty": {
-    "description": "#2576 equipment register"
-  },
-  "equipmentLoadFailed": "No se pudieron cargar los equipos.",
-  "@equipmentLoadFailed": {
     "description": "#2576 equipment register"
   },
   "equipmentRegister": "Registrar un equipo",

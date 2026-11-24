@@ -214,7 +214,7 @@ class _Found extends StatelessWidget {
             key: ValueKey('stock-track-sale-$i'),
             contentPadding: EdgeInsets.zero,
             title: Text(
-              '${_receiptText(l10n, sale.document)} · ${sale.quantity.text}',
+              '${_receiptText(l10n, sale.document)} · ${appFormatOf(context).quantity(sale.quantity)}',
             ),
             subtitle: Text(fmt.date(sale.at)),
             trailing: sale.lineId == null ? null : const Icon(Icons.timeline),

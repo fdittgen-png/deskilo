@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/help/help_anchors.dart';
+import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
@@ -86,8 +87,8 @@ class _LowList extends ConsumerWidget {
               subtitle: Text(
                 l10n.stockReorderLowRow(
                   r.siteCode,
-                  l10n.stockQuantityWithUnit(r.onHand.text, r.unit),
-                  l10n.stockQuantityWithUnit(r.reorderPoint.text, r.unit),
+                  l10n.stockQuantityWithUnit(appFormatOf(context).quantity(r.onHand), r.unit),
+                  l10n.stockQuantityWithUnit(appFormatOf(context).quantity(r.reorderPoint), r.unit),
                 ),
               ),
             ),
@@ -132,7 +133,7 @@ class _ToOrder extends ConsumerWidget {
                 contentPadding: EdgeInsets.zero,
                 title: Text(g.itemName),
                 subtitle: Text(
-                  l10n.stockReorderGapRow(g.siteCode, l10n.stockQuantityWithUnit(g.quantity.text, g.unit)),
+                  l10n.stockReorderGapRow(g.siteCode, l10n.stockQuantityWithUnit(appFormatOf(context).quantity(g.quantity), g.unit)),
                 ),
               ),
           ],
@@ -174,9 +175,9 @@ class _PointsList extends ConsumerWidget {
     }
   }
 
-  String _rule(AppLocalizations l10n, StockReorderPoint p, String unit) {
-    if (p.targetQuantity != null) return l10n.stockReorderRuleTarget(l10n.stockQuantityWithUnit(p.targetQuantity!.text, unit));
-    if (p.reorderQuantity != null) return l10n.stockReorderRuleQuantity(l10n.stockQuantityWithUnit(p.reorderQuantity!.text, unit));
+  String _rule(BuildContext context, AppLocalizations l10n, StockReorderPoint p, String unit) {
+    if (p.targetQuantity != null) return l10n.stockReorderRuleTarget(l10n.stockQuantityWithUnit(appFormatOf(context).quantity(p.targetQuantity!), unit));
+    if (p.reorderQuantity != null) return l10n.stockReorderRuleQuantity(l10n.stockQuantityWithUnit(appFormatOf(context).quantity(p.reorderQuantity!), unit));
     return l10n.stockReorderRuleNone;
   }
 
@@ -210,8 +211,8 @@ class _PointsList extends ConsumerWidget {
                     [
                       l10n.stockReorderPointRow(
                         site == null ? p.siteId : stockAddress(site, separator),
-                        l10n.stockQuantityWithUnit(p.reorderPoint.text, unit),
-                        _rule(l10n, p, unit),
+                        l10n.stockQuantityWithUnit(appFormatOf(context).quantity(p.reorderPoint), unit),
+                        _rule(context, l10n, p, unit),
                       ),
                       if (!p.active) l10n.stockReorderPointInactive,
                     ].join(' · '),
@@ -287,7 +288,7 @@ class _GroupCardState extends ConsumerState<_GroupCard> {
               Text(
                 l10n.stockReorderGroupLine(
                   line.itemName,
-                  l10n.stockQuantityWithUnit(line.quantity.text, line.unit),
+                  l10n.stockQuantityWithUnit(appFormatOf(context).quantity(line.quantity), line.unit),
                   line.siteCode,
                 ),
                 key: ValueKey('stock-order-line-${line.pointId}'),

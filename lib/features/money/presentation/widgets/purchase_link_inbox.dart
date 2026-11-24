@@ -120,7 +120,11 @@ class _LinkInboxDialogState extends ConsumerState<_LinkInboxDialog> {
                 ),
             ],
           ),
-          AsyncError() => Text(l10n.purchaseLinkInboxFailed),
+          AsyncError(:final error) => ReadFailureBanner(
+            error: error,
+            onRetry: () =>
+                ref.invalidate(eInvoiceInboxProvider(widget.workspaceId)),
+          ),
           _ => const LinearProgressIndicator(),
         },
       ),

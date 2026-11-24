@@ -8,17 +8,19 @@
 // document without one is refused, named. Pure Dart.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
+import '../../../core/format/decimal_input.dart';
+
 /// The most decimals a rate may carry (the server stores the same scale).
 const int _scale = 10;
 
 /// Why a typed rate is not one.
 enum ExchangeRateEntryError { notANumber, notPositive, tooPrecise }
 
-/// [text] as a rate (a decimal point or a comma), or why it is not one.
+/// [text] as a rate (a decimal point or a comma, read by the input seam), or why it is not one.
 ({ExactDecimal? rate, ExchangeRateEntryError? error}) parseExchangeRate(
   String text,
 ) {
-  final s = text.trim().replaceAll(',', '.');
+  final s = decimalTextFromInput(text, grouping: false) ?? '';
   if (!RegExp(r'^\d+(\.\d+)?$').hasMatch(s)) {
     return (rate: null, error: ExchangeRateEntryError.notANumber);
   }

@@ -33,6 +33,10 @@ import { paypalApi } from "../_shared/providers.ts";
 import { paypalFeeOf } from "../_shared/provider_settlement.ts";
 import { approvedOrderMatches, captureApprovedOrder, paypalMatches } from "../_shared/paypal_capture.ts";
 import { attachOrder, intentIdOf, provisionalIntent } from "../_shared/provisional_intent.ts";
+import { describeError, logLine } from "../_shared/log.ts";
+import { guard } from "../_shared/serve.ts";
+
+const FN = "paypal-webhook";
 
 type Intent = {
   id: string;
@@ -137,7 +141,7 @@ export async function handle(req: Request, deps: Deps = defaultDeps): Promise<Re
   };
   const { data: byOrder, error: lookupError } = await lookupOnce();
   if (lookupError) {
-    console.error("paypal webhook: intent lookup failed");
+    logLine("error", FN, "intent_lookup_failed");
     return respond("lookup_failed", 500);
   }
   // #3917 -- an intent whose provider answer was uncertain does not know its
@@ -154,7 +158,7 @@ export async function handle(req: Request, deps: Deps = defaultDeps): Promise<Re
       "id, order_id, workspace_id, amount_cents, currency, reference, status",
     );
     if (provisional.error) {
-      console.error("paypal webhook: intent lookup failed");
+      logLine("error", FN, "intent_lookup_failed");
       return respond("lookup_failed", 500);
     }
     intent = provisional.data;
@@ -164,7 +168,7 @@ export async function handle(req: Request, deps: Deps = defaultDeps): Promise<Re
       // the two reads: read it by the order once more.
       const again = await lookupOnce();
       if (again.error) {
-        console.error("paypal webhook: intent lookup failed");
+        logLine("error", FN, "intent_lookup_failed");
         return respond("lookup_failed", 500);
       }
       intent = again.data;
@@ -174,11 +178,11 @@ export async function handle(req: Request, deps: Deps = defaultDeps): Promise<Re
   if (attach && !attachTo) {
     // A waiting intent the event names, but no order of its own to place it
     // by: PayPal redelivers, and nothing is written meanwhile.
-    console.error("paypal webhook: an event naming a waiting intent names no order", event.event_type);
+    logLine("error", FN, "no_order_named", { detail: event.event_type });
     return respond("order_unplaced", 500);
   }
   if (!intent) {
-    console.log("paypal webhook: unknown order, ignoring", reversalCapture ?? orderIdOf(resource));
+    logLine("info", FN, "unknown_order_ignoring", { detail: reversalCapture ?? orderIdOf(resource) });
     return respond("ok", 200);
   }
   let orderId = intent.order_id;
@@ -188,11 +192,11 @@ export async function handle(req: Request, deps: Deps = defaultDeps): Promise<Re
   try {
     cfg = await paypalConfig(admin, intent.workspace_id, deps.env);
   } catch (e) {
-    console.error("paypal webhook credential read failed", String(e));
+    logLine("error", FN, "credential_read_failed", { error: describeError(e) });
     return respond("config_unavailable", 500);
   }
   if (!cfg.webhook_id || !cfg.client_id) {
-    console.log("paypal webhook not configured for workspace", intent.workspace_id);
+    logLine("info", FN, "not_configured_for_workspace", { detail: intent.workspace_id });
     return respond("not_configured", 200);
   }
 
@@ -223,33 +227,31 @@ export async function handle(req: Request, deps: Deps = defaultDeps): Promise<Re
     if (!verifyRes.ok) throw new Error(`verify ${verifyRes.status}`);
     const verification = await verifyRes.json();
     if (verification.verification_status !== "SUCCESS") {
-      console.error("paypal webhook verification FAILED", {
-        status: verification.verification_status,
-      });
+      logLine("error", FN, "verification_failed", { status: verification.verification_status });
       return respond("verification_failed", 400);
     }
   } catch (e) {
-    console.error("paypal webhook verification error", String(e));
+    logLine("error", FN, "verification_error", { error: describeError(e) });
     return respond("verification_error", 500);
   }
   // #3905 -- a sandbox event settles nothing in a production ledger, unless
   // the installation takes test payments.
   if (!processesEvents(cfg, deps.allowTest())) {
-    console.log("paypal test event ignored");
+    logLine("info", FN, "test_event_ignored");
     return respond("ok", 200);
   }
   if (attach) {
     const { error, outcome } = await attachOrder(admin, attach, attachTo);
     if (error) {
-      console.error("paypal webhook: order attach failed");
+      logLine("error", FN, "order_attach_failed");
       return respond("attach_failed", 500);
     }
     if (outcome === "other") {
-      console.log("paypal webhook: the named intent holds another order, ignoring");
+      logLine("info", FN, "intent_holds_another_order");
       return respond("ok", 200);
     }
     orderId = attachTo;
-    console.log("paypal webhook: order attached to its intent", { orderId, outcome });
+    logLine("info", FN, "order_attached_to_its_intent", { orderId, outcome });
   }
 
   const settle = async (
@@ -258,11 +260,9 @@ export async function handle(req: Request, deps: Deps = defaultDeps): Promise<Re
     capture: Record<string, unknown>,
   ): Promise<Response> => {
     if (!paypalMatches(intent, amount)) {
-      console.error("paypal capture does not match the intent", {
-        orderId,
+      logLine("error", FN, "capture_does_not_match_the_intent", { orderId,
         amount,
-        expected: [intent.amount_cents, intent.currency],
-      });
+        expected: [intent.amount_cents, intent.currency] });
       return respond("amount_mismatch", 500);
     }
     const { error } = await admin.rpc("settle_online_payment", {
@@ -272,10 +272,10 @@ export async function handle(req: Request, deps: Deps = defaultDeps): Promise<Re
       p_amount_cents: intent.amount_cents,
     });
     if (error) {
-      console.error("paypal settle failed", error.message);
+      logLine("error", FN, "settle_failed", { error: describeError(error) });
       return respond("settle_failed", 500);
     }
-    console.log("paypal capture settled", { orderId, capture: captureId });
+    logLine("info", FN, "capture_settled", { orderId, capture: captureId });
     // #2380 — what PayPal kept of it and paid on, recorded once (0687). A
     // capture without its breakdown records nothing; a failed record is
     // retried by PayPal, the settlement above being idempotent.
@@ -290,7 +290,7 @@ export async function handle(req: Request, deps: Deps = defaultDeps): Promise<Re
         p_transaction_id: fee.transactionId,
       });
       if (recorded.error) {
-        console.error("paypal fee record failed", recorded.error.message);
+        logLine("error", FN, "fee_record_failed", { error: describeError(recorded.error) });
         return respond("fee_record_failed", 500);
       }
     }
@@ -307,15 +307,15 @@ export async function handle(req: Request, deps: Deps = defaultDeps): Promise<Re
       p_reason: reversalReason(type, resource),
     });
     if (error) {
-      console.error("paypal reversal record failed", error.message);
+      logLine("error", FN, "reversal_record_failed", { error: describeError(error) });
       return respond("reversal_record_failed", 500);
     }
     if (state === "created") {
       // The capture is not recorded yet: PayPal delivers this again.
-      console.log("paypal reversal before its capture, retry", orderId);
+      logLine("info", FN, "reversal_before_its_capture_retry", { orderId });
       return respond("not_ready", 503);
     }
-    console.log("paypal payment reversed", { orderId, type });
+    logLine("info", FN, "payment_reversed", { orderId, type });
     return respond("ok", 200);
   }
   if (type === "PAYMENT.CAPTURE.COMPLETED") {
@@ -328,7 +328,7 @@ export async function handle(req: Request, deps: Deps = defaultDeps): Promise<Re
     // #1638 — refuse a foreign or altered order BEFORE any capture: the
     // approved order must carry our reference, amount and currency.
     if (!approvedOrderMatches(intent, resource)) {
-      console.error("paypal approved order does not match the intent", { orderId });
+      logLine("error", FN, "approved_order_does_not_match_the_intent", { orderId });
       return respond("order_mismatch", 409);
     }
     if (intent.status === "captured") return respond("ok", 200);
@@ -341,25 +341,25 @@ export async function handle(req: Request, deps: Deps = defaultDeps): Promise<Re
       try {
         return await settle(captured.id, captured.amount, captured.raw);
       } catch (e) {
-        console.error("paypal capture error", String(e));
+        logLine("error", FN, "capture_error", { error: describeError(e) });
         return respond("capture_error", 500);
       }
     }
     if (captured.kind === "pending") {
       // PENDING and friends: the capture exists, the money has not moved;
       // PAYMENT.CAPTURE.COMPLETED settles it later.
-      console.log("paypal capture not completed yet", orderId);
+      logLine("info", FN, "capture_not_completed_yet", { orderId });
       return respond("ok", 200);
     }
     if (captured.stage === "capture") {
-      console.error("paypal capture failed", redactedProviderLog(captured.status ?? 0, captured.detail));
+      logLine("error", FN, "capture_failed", { detail: redactedProviderLog(captured.status ?? 0, captured.detail) });
       return respond("capture_failed", 500);
     }
     if (captured.stage === "read") {
-      console.error("paypal order read failed", captured.status);
+      logLine("error", FN, "order_read_failed", { detail: captured.status });
       return respond("order_read_failed", 500);
     }
-    console.error("paypal capture error", captured.detail);
+    logLine("error", FN, "capture_error", { detail: captured.detail });
     return respond("capture_error", 500);
   }
   if (type === "PAYMENT.CAPTURE.DENIED" || type === "CHECKOUT.ORDER.VOIDED") {
@@ -369,11 +369,14 @@ export async function handle(req: Request, deps: Deps = defaultDeps): Promise<Re
       p_provider: "paypal",
       p_order_id: orderId,
     });
-    console.log("paypal payment marked failed", { orderId, type });
+    logLine("info", FN, "payment_marked_failed", { orderId, type });
     return respond("ok", 200);
   }
-  console.log("paypal webhook ignored event", type);
+  logLine("info", FN, "ignored_event", { type });
   return respond("ok", 200);
 }
 
-if (import.meta.main) Deno.serve((req) => handle(req));
+/** The function as it is served: whatever [handle] throws is the envelope (#4412). */
+export const serve = (deps: Deps = defaultDeps) => guard(FN, (req) => handle(req, deps));
+
+if (import.meta.main) Deno.serve(serve());

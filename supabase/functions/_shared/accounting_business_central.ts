@@ -554,7 +554,7 @@ export function businessCentral(ctx: AdapterContext): PostingAdapter {
   }
 
   /** The sale documents of [entity] holding the legal number [number]. */
-  async function salesNumbered(entity: "salesInvoices" | "salesCreditMemos", number: string): Promise<Row[] | string> {
+  function salesNumbered(entity: "salesInvoices" | "salesCreditMemos", number: string): Promise<Row[] | string> {
     return all(`${entity}?${eq("externalDocumentNumber", number)}`);
   }
 
@@ -880,9 +880,9 @@ export function businessCentral(ctx: AdapterContext): PostingAdapter {
           }
           const problem = problemOfPosting(p, maps, company, codeOf(p));
           if (problem) return refused(problem);
-          if (entity === "salesInvoices" || entity === "salesCreditMemos") return createSale(p, entity, party, maps, credited);
-          if (entity === "customerPayments") return createPayment(p, key, party);
-          return createJournal(p, key, party, maps);
+          if (entity === "salesInvoices" || entity === "salesCreditMemos") return await createSale(p, entity, party, maps, credited);
+          if (entity === "customerPayments") return await createPayment(p, key, party);
+          return await createJournal(p, key, party, maps);
         },
         async post(draft) {
           if (!company) return refused("the Business Central company was not read before the delivery");

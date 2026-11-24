@@ -3,7 +3,6 @@
   "meDataWorkspacesTitle": "Ihre Daten in jedem Betrieb",
   "meDataWorkspacesScope": "Jeder Betrieb exportiert, was er über Sie hält – Mitgliedschaft, Buchungen, Konto und Rechnungen – von seinem eigenen Server, eine Datei je Betrieb. Der Teil Ihres persönlichen Kontos ist die Karte oben.",
   "meDataWorkspacesEmpty": "Ihr Konto nennt noch keinen Betrieb.",
-  "meDataWorkspacesFailed": "Die Betriebe Ihres Kontos konnten nicht gelesen werden. Es wurde nichts exportiert.",
   "meDataWorkspaceUnnamed": "Betrieb {id}",
   "meDataWorkspaceExport": "Exportieren",
   "meDataWorkspaceHostUnavailable": "Der Server dieses Betriebs ist von hier aus nicht erreichbar. Es wurde nichts exportiert.",

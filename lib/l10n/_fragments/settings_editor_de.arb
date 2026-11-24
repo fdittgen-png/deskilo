@@ -20,10 +20,6 @@
   "@settingsEmpty": {
     "description": "#2484 settings: Empty editor."
   },
-  "settingsLoadFailed": "Die Einstellungen konnten nicht geladen werden.",
-  "@settingsLoadFailed": {
-    "description": "#2484 settings: Error text."
-  },
   "settingsOfflineRegistry": "Es werden die eingebauten Standardwerte gezeigt: Der Server ist nicht erreichbar, daher lässt sich jetzt nichts ändern.",
   "@settingsOfflineRegistry": {
     "description": "#2484 settings: Banner: the editor shows the bundled registry."

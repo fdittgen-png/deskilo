@@ -19,7 +19,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../core/ui/inline_banner.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/setup_draft_form.dart';
 import '../../../../core/ui/setup_step_layout.dart';
@@ -67,19 +67,26 @@ class SetupPricingStep extends ConsumerWidget {
         ? ref.watch(creditProductsProvider)
         : const AsyncData(<CreditProduct>[]);
     final all = [bands, levels, packages, carnets];
-    if (all.any((v) => v.hasError && !v.hasValue)) {
+    // #4414 kept: the first failed read, shown with ReadFailureBanner below
+    final failed = all.where((v) => v.hasError && !v.hasValue).firstOrNull;
+    if (failed != null) {
       return Padding(
         padding: AppSpacing.lgAll,
-        child: InlineBanner(
+        child: ReadFailureBanner(
           key: const ValueKey('setup-pricing-failed'),
-          icon: Icons.error_outline,
-          text: context.l10n.setupStepLoadFailed,
+          error: failed.error!,
+          onRetry: () => ref
+            ..invalidate(feeBandsProvider)
+            ..invalidate(subscriptionLevelsProvider)
+            ..invalidate(allPackagesProvider)
+            ..invalidate(creditProductsProvider),
         ),
       );
     }
     if (all.any((v) => !v.hasValue)) return const LoadingView();
     // #3283 — what a level buys, on this workspace's own month.
     final days = ref.watch(monthOpenDaysProvider);
+    // #4414 kept: the example says a failed month itself
     final basis = (openDays: days.value, failed: days.hasError && !days.hasValue); // empty-ok: an unread month shows no example, a failed one says so
     return _PricingPage(
       basis: basis,

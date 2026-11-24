@@ -13,10 +13,6 @@
   "@suppliersNoOutstanding": {
     "description": "#3070 supplier outstanding balance"
   },
-  "suppliersBalanceUnavailable": "Saldo no disponible",
-  "@suppliersBalanceUnavailable": {
-    "description": "#3070 supplier outstanding balance"
-  },
   "suppliersViewPayables": "Ver pagos pendientes del proveedor",
   "@suppliersViewPayables": {
     "description": "#3070 supplier outstanding balance"

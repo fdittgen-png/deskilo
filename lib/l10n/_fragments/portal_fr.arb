@@ -8,7 +8,6 @@
   "portalEmailCode": "Code de connexion par e-mail",
   "portalUseCode": "Utiliser un code par e-mail",
   "portalSendCode": "Envoyer le code de connexion",
-  "portalSourceUnavailable": "Un serveur est indisponible. Cette vue est incomplète. Appuyez pour réessayer.",
   "portalDiscover": "Trouver un lieu",
   "portalRegisterDirectory": "Relier un serveur à l’annuaire global",
   "portalPublication": "Page publique de l’espace",

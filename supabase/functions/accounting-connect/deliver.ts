@@ -36,9 +36,6 @@ import {
   type DeliveryResult,
 } from "../_shared/accounting_delivery.ts";
 import {
-  connectedWrite,
-  expiredWrite,
-  isFailure,
   refreshTokens,
 } from "../_shared/accounting_oauth.ts";
 import {
@@ -65,7 +62,6 @@ import {
   json,
   refreshExclusive,
   resolved,
-  store,
   targetOf,
   UUID,
 } from "./connection.ts";

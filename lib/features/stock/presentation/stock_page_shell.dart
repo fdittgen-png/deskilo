@@ -58,7 +58,7 @@ class StockPageShell extends ConsumerWidget {
   final PreferredSizeWidget? bottom;
 
   /// Shown once the open business is known.
-  final Widget Function(String workspaceId)? floatingActionButton;
+  final Widget? Function(WidgetRef ref, String workspaceId)? floatingActionButton;
 
   /// The body is drawn in the reading column, centred.
   final bool reading;
@@ -106,7 +106,7 @@ class StockPageShell extends ConsumerWidget {
       ),
       floatingActionButton: workspaceId == null
           ? null
-          : floatingActionButton?.call(workspaceId),
+          : floatingActionButton?.call(ref, workspaceId),
       body: content ?? const LoadingView(),
     );
   }

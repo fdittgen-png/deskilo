@@ -49,7 +49,7 @@ class StandaloneLineForm {
       itemId = from?.itemId,
       goodsUnit = from != null && from.isGoods ? (code: from.unitCode, label: from.unitLabel, un: from.unEceCode) : null,
       description = TextEditingController(text: from?.description),
-      quantity = TextEditingController(text: from?.quantity),
+      quantityField = TextEditingController(text: from?.quantity),
       price = TextEditingController(text: from?.unitPrice),
       tags = TextEditingController(text: from?.pieceTags.join(', '));
 
@@ -72,7 +72,7 @@ class StandaloneLineForm {
   String? itemId;
   ({String code, String label, String un})? goodsUnit;
   final TextEditingController description;
-  final TextEditingController quantity;
+  final TextEditingController quantityField;
   final TextEditingController price;
 
   /// The tags of the pieces sold, for an item tracked piece by piece.
@@ -89,7 +89,7 @@ class StandaloneLineForm {
 
   void dispose() {
     description.dispose();
-    quantity.dispose();
+    quantityField.dispose();
     price.dispose();
     tags.dispose();
   }
@@ -104,7 +104,7 @@ class StandaloneLineForm {
     final base = from ?? _newLine;
     return base.copyWith(
       description: description.text.trim(),
-      quantity: decimalTextFromInput(quantity.text, locale: locale, grouping: false) ?? quantity.text.trim(),
+      quantity: decimalTextFromInput(quantityField.text, locale: locale, grouping: false) ?? quantityField.text.trim(),
       unit: goodsUnit ??
           (code: unit, label: keep ? from.unitLabel : _unitLabel(context, unit), un: keep ? from.unEceCode : (listed.isEmpty ? '' : listed.first.un)),
       unitPrice: decimalTextFromInput(price.text, locale: locale) ?? price.text.trim(),
@@ -198,7 +198,7 @@ class StandaloneLineEditor extends StatelessWidget {
                 Expanded(
                   child: AppTextField(
                     key: ValueKey('standalone-line-$index-quantity'),
-                    controller: form.quantity,
+                    controller: form.quantityField,
                     label: l.standaloneInvoiceLineQuantity,
                     enabled: enabled,
                     onChanged: (_) => onChanged(),

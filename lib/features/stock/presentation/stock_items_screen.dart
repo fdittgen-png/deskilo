@@ -298,7 +298,7 @@ class _RegistryRow extends ConsumerWidget {
       if (row.homeAddressPath == null) l10n.stockRegistryNoHome,
       if (row.homeAddressPath != null)
         l10n.stockRegistryHome(row.homeAddressPath!.split(stockAddressJoint).join(separator)),
-      l10n.stockRegistryOnHand(l10n.stockQuantityWithUnit(row.onHand.text, row.unit)),
+      l10n.stockRegistryOnHand(l10n.stockQuantityWithUnit(appFormatOf(context).quantity(row.onHand), row.unit)),
     ].join(' · ');
   }
 

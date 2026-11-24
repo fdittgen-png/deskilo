@@ -12,6 +12,7 @@ import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -98,7 +99,10 @@ class BookPeriodsView extends ConsumerWidget {
           ),
         overview.when(
           loading: () => const LoadingView(),
-          error: (_, _) => Text(l10n.bookPeriodsLoadFailed),
+          error: (e, _) => ReadFailureBanner(
+            error: e,
+            onRetry: () => ref.invalidate(bookPeriodsProvider(workspaceId)),
+          ),
           data: (o) => Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

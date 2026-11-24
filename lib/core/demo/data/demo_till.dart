@@ -4,6 +4,12 @@
 // reference business's shop catalogue (a price on the GROSS basis, half away from zero once per line, the totals the
 // sums of the lines); a sale numbers the receipt from a counter of its own and answers the same sale again under the
 // same request id. A country that is not ready is a Demo choice: [ready] false answers the server's `unavailable`.
+//
+// #4184 -- the readiness is the server's registry for the case the Demo's owners declared (no fiscal register
+// obligation): France, Germany and Spain are supported with the specification each row rests on, Italy is
+// unavailable, and a country the registry does not name has no operation at all. A sale freezes its version-1
+// document, read back through the same versioned reader as the server's.
+import 'package:deskilo/features/money/domain/counter_receipt_document.dart';
 import 'package:deskilo/features/money/domain/counter_till.dart';
 import 'package:deskilo/features/money/domain/till_offline.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
@@ -24,6 +30,50 @@ const _tracedLots = <String, String>{'demo-item-milk': 'MILK-12', 'demo-item-bas
 /// The prices of Demo items the stock registry does not carry (the T-shirt the variants are edited on), in cents.
 const _unstocked = <String, int>{'demo-item-shirt': 1900, 'demo-item-basket': 3900, 'demo-item-apples': 1800};
 
+/// One registry row of the declared case `none`, as `counter_country_operations` carries it (0893).
+typedef _Row = ({String specification, String version, String from, bool supported, String note});
+
+const _supportedOps = ['issue_receipt', 'correct_receipt', 'reconcile_tender'];
+
+const _evidence = {
+  'issue_receipt': 'pgTAP 520 (finalize, number once, frozen original) and 521 (totals in 0, 2 and 3 decimals)',
+  'correct_receipt': 'pgTAP 522 (a correction is a new receipt citing the original)',
+  'reconcile_tender': 'pgTAP 523 (tender states and reconciliation)',
+};
+
+const _registry = <String, _Row>{
+  'FR': (
+    specification: 'Code général des impôts, annexe II, art. 242 nonies A (mentions des factures)',
+    version: '2026-11',
+    from: '2013-01-01',
+    supported: true,
+    note: '',
+  ),
+  'DE': (
+    specification: 'Umsatzsteuer-Durchführungsverordnung, § 33 (Rechnungen über Kleinbeträge)',
+    version: '2026-11',
+    from: '2017-01-01',
+    supported: true,
+    note: '',
+  ),
+  'ES': (
+    specification: 'Real Decreto 1619/2012, art. 4 y 7 (factura simplificada)',
+    version: '2026-11',
+    from: '2013-01-01',
+    supported: true,
+    note: '',
+  ),
+  'IT': (
+    specification: 'Decreto legislativo 127/2015, art. 2 (memorizzazione e trasmissione telematica dei corrispettivi)',
+    version: 'D.Lgs. 127/2015',
+    from: '2020-01-01',
+    supported: false,
+    note:
+        "The retail sale in Italy is recorded through the telematic transmission of the day's takings; a receipt of this kind is not that, and no adapter transmits it.",
+  ),
+};
+
+
 /// #4436 -- one traced line a sale froze: its receipt, when, and the track IDs it took, as `counter_line_tracks` keeps them.
 typedef DemoSoldLine = ({String lineId, String receiptId, String number, DateTime at, List<TillTrack> tracks});
 
@@ -33,6 +83,8 @@ class DemoTill implements TillPort, TillOfflinePort {
   final String country;
   final String currency;
   final int vatPercent;
+
+  /// False makes every operation unavailable, whatever the registry says.
   final bool ready;
   final int minorDigits;
 
@@ -59,8 +111,14 @@ class DemoTill implements TillPort, TillOfflinePort {
   int _revision = 0;
   int _sales = 0;
   final Map<String, TillDraft> _drafts = {};
+  final Map<String, List<Map<String, Object?>>> _frozenLines = {};
   final Map<String, TillSold> _done = {};
   final Map<String, TillDraft> _answered = {};
+  final Map<String, Map<String, Object?>> _frozen = {};
+
+  _Row? get _row => _registry[country];
+
+  bool get _supported => ready && (_row?.supported ?? false);
 
   /// The basket each open draft priced: what its sale takes.
   final Map<String, List<TillLine>> _lines = {};
@@ -68,18 +126,29 @@ class DemoTill implements TillPort, TillOfflinePort {
   @override
   Future<TillReadiness> readiness(String workspaceId) async {
     _line();
-    return _readiness();
+    final row = _row;
+    if (row == null) return TillReadiness(country: country, fiscalObligation: 'none', ready: false, operations: const []);
+    final ok = ready && row.supported;
+    return TillReadiness(
+      country: country,
+      fiscalObligation: 'none',
+      ready: ok,
+      operations: [
+        for (final op in _supportedOps)
+          TillOperation(
+            operation: op,
+            outcome: ok ? 'supported' : 'unavailable',
+            reason: ok ? '' : 'unavailable',
+            note: row.note,
+            specification: row.specification,
+            specificationVersion: row.version,
+            effectiveFrom: row.from,
+            adapter: row.supported ? 'counter_receipt_v1' : '',
+            evidence: row.supported ? _evidence[op]! : 'tests: pgTAP 519 (the registry says unavailable)',
+          ),
+      ],
+    );
   }
-
-  TillReadiness _readiness() => TillReadiness(
-    country: country,
-    fiscalObligation: 'none',
-    ready: ready,
-    operations: [
-      for (final op in const ['issue_receipt', 'correct_receipt', 'reconcile_tender'])
-        TillOperation(operation: op, outcome: ready ? 'supported' : 'unavailable', reason: ready ? '' : 'unavailable', note: ''),
-    ],
-  );
 
   @override
   Future<TillDraft> draft(String workspaceId, {required String requestId, required List<TillLine> lines, String? receiptId, int? expectedRevision, String? tillId}) async {
@@ -97,6 +166,7 @@ class DemoTill implements TillPort, TillOfflinePort {
     var gross = 0;
     var tax = 0;
     final priced = <TillPricedLine>[];
+    final frozen = <Map<String, Object?>>[];
     for (final l in lines) {
       final unit = DemoStockRegistry.catalogue[l.itemId]?.$2 ?? _unstocked[l.itemId];
       if (unit == null) throw _refused(DkCode.dkl02, 'line_${priced.length + 1}_unit_price');
@@ -105,20 +175,36 @@ class DemoTill implements TillPort, TillOfflinePort {
       gross += amount;
       tax += lineTax;
       priced.add(TillPricedLine(label: l.name, grossMinor: amount, quantity: l.quantity));
+      frozen.add(_frozenLine(l, amount, lineTax));
     }
     final draft = TillDraft(
       receiptId: id,
       revision: ++_revision,
       totals: TillTotals(netMinor: gross - tax, taxMinor: tax, grossMinor: gross, currency: currency),
       lines: priced,
-      issueReceipt: ready ? 'supported' : 'unavailable',
+      issueReceipt: _supported ? 'supported' : 'unavailable',
     );
     _drafts[id] = draft;
     if (tillId != null) _tillOf[id] = tillId;
     _lines[id] = lines;
+    _frozenLines[id] = frozen;
     _answered[requestId] = draft;
     return draft;
   }
+
+  /// A line as the server freezes it: the `commercial` v1 facts, amounts as decimal strings of minor units.
+  Map<String, Object?> _frozenLine(TillLine l, int gross, int tax) => {
+    'kind': 'goods',
+    'label': l.name,
+    'amount_cents': gross,
+    'vat_percent': vatPercent,
+    'commercial': {
+      'version': 1,
+      'quantity': l.quantity,
+      'unit': {'code': l.unit, 'label': l.unit},
+      'amounts': {'currency': currency, 'net_minor': '${gross - tax}', 'tax_minor': '$tax', 'gross_minor': '$gross', 'rule': 'half_up_per_line'},
+    },
+  };
 
   /// [unit] (minor units of one inventory unit) times [quantity] (an exact decimal text), half away from zero.
   int _times(int unit, String quantity) {
@@ -134,7 +220,7 @@ class DemoTill implements TillPort, TillOfflinePort {
     final again = _done[requestId];
     if (again != null) return again;
     final draft = _drafts[receiptId];
-    if (!ready) throw _refused(DkCode.dkl01, 'the country operation is not supported');
+    if (!_supported) throw _refused(DkCode.dkl01, 'the country operation is not supported');
     if (draft == null) throw _refused(DkCode.dkl04, 'this receipt is not an open draft');
     if (draft.revision != expectedRevision) throw _refused(DkCode.dkl10, 'this receipt changed meanwhile');
     if (tenders.fold<int>(0, (a, t) => a + t.amountMinor) != draft.totals.grossMinor) throw _refused(DkCode.dkl06, 'tender_sum');
@@ -157,6 +243,31 @@ class DemoTill implements TillPort, TillOfflinePort {
       }
     }
     _lines.remove(receiptId);
+    final row = _row!;
+    final t = draft.totals;
+    _frozen[receiptId] = {
+      'version': 1,
+      'number': sold.number,
+      'currency': currency,
+      'price_basis': 'gross',
+      'lines': _frozenLines.remove(receiptId),
+      'totals': {'net_minor': '${t.netMinor}', 'tax_minor': '${t.taxMinor}', 'gross_minor': '${t.grossMinor}', 'currency': currency},
+      'tax_breakdown': [
+        {'percent': vatPercent, 'category': 'S', 'gross_minor': '${t.grossMinor}', 'net_minor': '${t.netMinor}', 'tax_minor': '${t.taxMinor}'},
+      ],
+      'source': {'kind': 'counter', 'ref': ''},
+      'operation': {
+        'country': country,
+        'operation': 'issue_receipt',
+        'regime': 'none',
+        'specification': row.specification,
+        'specification_version': row.version,
+        'effective_from': row.from,
+        'adapter': 'counter_receipt_v1',
+        'confirmed': false,
+      },
+      'corrects': null,
+    };
     _drafts.remove(receiptId);
     final till = _tillOf.remove(receiptId);
     if (till != null) drawer?.recordCashSale(till, tenders.where((t) => t.kind == 'cash').fold(0, (a, t) => a + t.amountMinor), number: sold.number);
@@ -206,5 +317,13 @@ class DemoTill implements TillPort, TillOfflinePort {
     final seen = {for (final r in rows) r.seq};
     final top = seen.fold<int>(0, (a, b) => a > b ? a : b);
     return [for (var n = 1; n <= top; n++) if (!seen.contains(n)) n];
+  }
+
+  @override
+  Future<CounterReceiptDocument> receipt(String workspaceId, String receiptId) async {
+    _line();
+    final frozen = _frozen[receiptId];
+    if (frozen == null) throw _refused(DkCode.dkl04, 'this receipt is not finalized');
+    return CounterReceiptDocument.decode(frozen);
   }
 }

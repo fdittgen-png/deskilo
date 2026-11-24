@@ -72,7 +72,7 @@ void main() {
       onProgress: (m, p) => progress.add('$m:${p.name}'),
     );
     expect(report.allIssued, isTrue);
-    expect(report.outcomes.keys, ['ben', 'anna']);
+    expect(report.lines.keys, ['ben', 'anna']);
     expect(repo.invoices, hasLength(2));
     expect(actions.sent, ['ben:req-1', 'anna:req-2']);
     expect(progress, ['ben:issuing', 'ben:done', 'anna:issuing', 'anna:done']);
@@ -141,7 +141,7 @@ void main() {
       memberIds: const [],
       requestId: id,
     );
-    expect(report.outcomes, isEmpty);
+    expect(report.lines, isEmpty);
     expect(report.allIssued, isFalse);
     expect(actions.sent, isEmpty);
   });

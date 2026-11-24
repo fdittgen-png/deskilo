@@ -10,6 +10,7 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show ExactQuanti
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/form_kit.dart';
@@ -92,10 +93,11 @@ class StockPurchaseOrderSeam implements PurchaseOrderStockSeam {
             putAway: ExactQuantity.zero,
           ),
     ];
+    final format = appFormatOf(context);
     final loaded = await loadPutAwayContext(context, _services(ref), workspaceId: workspaceId, lines: lines);
     if (loaded == null) return null;
     return _ReceiptPutAway(
-      PutAwayDraft(loaded, order, lines, followsDelivery: true),
+      PutAwayDraft(loaded, order, lines, format: format, followsDelivery: true),
       ref.read(stockReceivingCommandsProvider),
     );
   }
@@ -188,7 +190,7 @@ class _DeliveryActions extends ConsumerWidget {
     return [
       for (final p in lines)
         Text(
-          l10n.stockPutAwayProgress(p.description, p.putAway.text, p.remaining.text),
+          l10n.stockPutAwayProgress(p.description, appFormatOf(context).quantity(p.putAway), appFormatOf(context).quantity(p.remaining)),
           key: ValueKey('purchase-order-putaway-${order.reference}-${delivery.id}-${p.lineNo}'),
         ),
       if (lines.any((p) => p.remaining > ExactQuantity.zero))

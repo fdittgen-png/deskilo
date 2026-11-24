@@ -28,10 +28,6 @@
   "@leaseEmpty": {
     "description": "#2569 premises lease"
   },
-  "leaseLoadFailed": "Le bail n’a pas pu être chargé.",
-  "@leaseLoadFailed": {
-    "description": "#2569 premises lease"
-  },
   "leaseSaved": "Enregistré",
   "@leaseSaved": {
     "description": "#2569 premises lease"
@@ -324,10 +320,6 @@
   "@leaseCommitmentsEmpty": {
     "description": "#2575 commitment matching"
   },
-  "leaseCommitmentsLoadFailed": "Les échéances n’ont pas pu être chargées.",
-  "@leaseCommitmentsLoadFailed": {
-    "description": "#2575 commitment matching"
-  },
   "leaseCommitmentExpected": "Attendu",
   "@leaseCommitmentExpected": {
     "description": "#2575 commitment matching"
@@ -542,10 +534,6 @@
   },
   "equipmentEmpty": "Aucun équipement enregistré pour l'instant.",
   "@equipmentEmpty": {
-    "description": "#2576 equipment register"
-  },
-  "equipmentLoadFailed": "Les équipements n'ont pas pu être chargés.",
-  "@equipmentLoadFailed": {
     "description": "#2576 equipment register"
   },
   "equipmentRegister": "Enregistrer un équipement",

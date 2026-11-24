@@ -68,7 +68,7 @@ void main() {
     expect(find.byKey(const ValueKey('setup-vat-regime-hint')), findsOneWidget);
     final usual = find.byKey(const ValueKey('setup-vat-usual'));
     expect(
-      find.descendant(of: usual, matching: find.text('19 %')),
+      find.descendant(of: usual, matching: find.text('19%')),
       findsOneWidget,
     );
     expect(money.vatRates, isEmpty, reason: 'nothing is stored before');
@@ -107,7 +107,7 @@ void main() {
       find.byKey(const ValueKey('setup-vat-rate-0')),
     );
     expect((standard.leading! as Icon).icon, Icons.star);
-    expect((standard.trailing! as Text).data, '19 %');
+    expect((standard.trailing! as Text).data, '19%');
     expect(find.byKey(const ValueKey('setup-vat-usual')), findsNothing);
 
     final split = vatSplit(SampleInvoice.grossCents, 19);

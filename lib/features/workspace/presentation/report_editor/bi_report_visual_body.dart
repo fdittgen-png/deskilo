@@ -107,6 +107,7 @@ class BiVisualBody extends ConsumerWidget {
               selection: selection,
               onPick: onPick,
             ),
+            // #4414 kept: on the canvas a tap selects the card, so no button
             AsyncError() => _unavailable(l10n),
             _ => const LinearProgressIndicator(),
           };

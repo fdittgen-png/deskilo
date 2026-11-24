@@ -128,7 +128,7 @@ class _SaveTemplateSheetState extends ConsumerState<_SaveTemplateSheet> {
         future: _publication,
         builder: (context, snap) {
           final publication = snap.data;
-          if (publication == null && !snap.hasError) {
+          if (publication == null && !snap.hasError) { // #4414 kept: waiting
             return const SizedBox(height: 200, child: LoadingView());
           }
           final groups = publication?.groups ?? const <TemplateGroup>[];

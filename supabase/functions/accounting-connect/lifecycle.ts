@@ -25,7 +25,8 @@
 //        is delivered to it.
 
 import { revokeToken } from "../_shared/accounting_oauth.ts";
-import { clientOf, type Deps, json, manageableRpc, resolved, STATUS_DETAIL_LENGTH, store, targetIdOf, targetOf, UUID } from "./connection.ts";
+import { describeError, logLine } from "../_shared/log.ts";
+import { clientOf, type Deps, FN, json, manageableRpc, resolved, STATUS_DETAIL_LENGTH, store, targetIdOf, targetOf, UUID } from "./connection.ts";
 import { adapterContext, deliveryAdapters } from "./deliver.ts";
 
 type Remote = "revoked" | "failed" | "not_supported";
@@ -56,7 +57,7 @@ export async function revoke(deps: Deps, authorization: string, body: Record<str
     if (token) {
       const done = await revokeToken(deps.fetcher ?? fetch, target, client, token, refresh ? "refresh_token" : "access_token");
       remote = done.ok ? "revoked" : "failed";
-      if (!done.ok) console.error(`accounting-connect: ${held.target_id} did not confirm the revocation (${done.detail})`);
+      if (!done.ok) logLine("error", FN, "revocation_unconfirmed", { target: held.target_id, detail: done.detail });
     }
   }
   // The outcome is recorded on the revoked row by the service role alone
@@ -67,7 +68,7 @@ export async function revoke(deps: Deps, authorization: string, body: Record<str
     p_connection_id: connectionId,
     p_outcome: remote,
   });
-  if (recorded.error) console.error("accounting-connect: the revocation outcome was not recorded");
+  if (recorded.error) logLine("error", FN, "revocation_not_recorded", { error: describeError(recorded.error) });
   const connection = !recorded.error && recorded.data ? recorded.data : revoked.data;
   return json({ connection, remote_revocation: remote });
 }

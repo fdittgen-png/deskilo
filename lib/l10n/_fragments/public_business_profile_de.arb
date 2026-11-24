@@ -5,6 +5,5 @@
   "publicProfileRegularHours": "Reguläre Zeiten in der Zeitzone des Betriebs; Ausnahmen und aktuelle Verfügbarkeit können abweichen.",
   "publicProfileTakesInquiries": "Nimmt Anfragen an",
   "publicProfileContacts": "Kontaktmöglichkeiten",
-  "publicProfileRefreshing": "Veröffentlichte Angaben werden aktualisiert…",
-  "publicProfileRefreshFailed": "Die Seite dieses Betriebs konnte nicht aktualisiert werden. Die bereits geladenen Angaben werden angezeigt."
+  "publicProfileRefreshing": "Veröffentlichte Angaben werden aktualisiert…"
 }

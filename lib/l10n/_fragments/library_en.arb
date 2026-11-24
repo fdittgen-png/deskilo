@@ -159,10 +159,6 @@
   "@libraryNothingToApply": {
     "description": "Template apply preview (#1280): libraryNothingToApply"
   },
-  "libraryPreviewFailed": "The changes could not be previewed. Nothing was applied.",
-  "@libraryPreviewFailed": {
-    "description": "Template apply sheet when the server preview could not be loaded (#1280)"
-  },
   "libraryPublishGroups": "What travels",
   "@libraryPublishGroups": {
     "description": "Template publish flow (#1280): libraryPublishGroups"
@@ -360,10 +356,6 @@
   "libraryProcessTechnical": "Technical",
   "@libraryProcessTechnical": {
     "description": "Template apply preview (#1330): the heading for reserved capabilities no process lists"
-  },
-  "templatesLoadFailed": "The templates could not be loaded.",
-  "@templatesLoadFailed": {
-    "description": "#1660 library"
   },
   "onboardingTemplatesFailedEmpty": "The templates could not be loaded, so this space would start empty. Go back to try again.",
   "@onboardingTemplatesFailedEmpty": {

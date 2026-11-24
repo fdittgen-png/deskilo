@@ -13,7 +13,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/format/amount_input.dart';
 import '../../../core/format/decimal_input.dart';
+import '../../../core/i18n/app_format.dart';
+import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/trace/trace_logger.dart';
@@ -83,13 +86,13 @@ class _Part {
 class PutAwayDraft {
   /// [followsDelivery]: the quantities start empty, meaning everything the
   /// delivery being recorded brings of the line.
-  PutAwayDraft(this.context, this.order, List<DeliveredLineProgress> lines, {this.followsDelivery = false})
+  PutAwayDraft(this.context, this.order, List<DeliveredLineProgress> lines, {required this.format, this.followsDelivery = false})
     : _lines = lines,
       _parts = [
         for (final l in lines)
           if (context.items.containsKey(l.lineNo) && l.remaining > ExactQuantity.zero)
             // a line tagged piece by piece counts what was read: it starts at none
-            _Part(l, followsDelivery ? '' : (context.perUnit.contains(l.lineNo) ? '0' : l.remaining.text)),
+            _Part(l, followsDelivery ? '' : (context.perUnit.contains(l.lineNo) ? '0' : format.quantity(l.remaining, grouped: false))),
       ] {
     for (final p in _parts) {
       p.place = context.places.isEmpty ? null : context.places.first.id;
@@ -97,6 +100,9 @@ class PutAwayDraft {
   }
 
   final PutAwayContext context;
+
+  /// The member's format: what a line's quantity is prefilled in.
+  final AppFormat format;
   final PurchaseOrder order;
   final bool followsDelivery;
   final List<DeliveredLineProgress> _lines;
@@ -265,7 +271,9 @@ class PutAwayDraft {
           expiresOn: p.expiry.date == null ? null : isoDay(p.expiry.date!),
           tags: context.perUnit.contains(p.line.lineNo) ? List.unmodifiable(p.tags.codes) : const [],
           cost: switch (p.cost) {
-            'entered' => PutAwayCost.known(totalMinor: int.tryParse(p.total.text.trim()) ?? -1),
+            'entered' => PutAwayCost.known(
+              totalMinor: readAmountInput(p.total.text, locale: format.locale, currency: context.currency, allowNegative: false).minor ?? -1,
+            ),
             'order' => PutAwayCost.orderPrice(
               sourceRate: order.currency != context.currency && p.rate.text.trim().isNotEmpty
                 ? decimalTextFromInput(p.rate.text, grouping: false) ?? p.rate.text.trim()
@@ -391,13 +399,13 @@ class PutAwayDraft {
         },
       ),
       if (p.cost == 'entered')
-        AppTextField(
+        AppAmountField(
           key: ValueKey('putaway-$n-total'),
           controller: p.total,
           fieldKey: 'putaway-$n-total',
           label: l10n.stockPutAwayCostTotal,
-          keyboardType: TextInputType.number,
-          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+          currency: this.context.currency,
+          allowNegative: false,
         ),
       if (p.cost == 'order' && foreign)
         AppTextField(
@@ -449,7 +457,7 @@ Future<bool> showPutAwaySheet(
   final l10n = context.l10n;
   final loaded = await loadPutAwayContext(context, services, workspaceId: workspaceId, lines: lines);
   if (loaded == null || !context.mounted) return false;
-  final draft = PutAwayDraft(loaded, order, lines);
+  final draft = PutAwayDraft(loaded, order, lines, format: appFormatOf(context));
   if (draft.isEmpty) {
     AppSnack.info(context, l10n.stockPutAwayNothing);
     return false;

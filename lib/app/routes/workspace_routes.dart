@@ -9,6 +9,7 @@ import 'package:go_router/go_router.dart';
 import '../../core/ui/wizard_navigation.dart';
 import '../../features/auth/providers/auth_providers.dart';
 import '../../features/plan/presentation/widgets/setup_places_step.dart';
+import '../../features/stock/presentation/units_of_measure_screen.dart';
 import '../../features/workspace/domain/bi_modules.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
@@ -202,6 +203,18 @@ List<RouteBase> _settingsRoutes(RouteEnv env) {
         ),
       ),
       builder: (context, state) => const QuestionsScreen(),
+    ),
+    // #4442 — the units of measure of this business and their conversions.
+    GoRoute(
+      path: '/settings/units',
+      redirect: env.guard(
+        const RouteAccess(
+          features: [WorkspaceFeature.unitsOfMeasure],
+          permission: WorkspacePermission.workspaceSettings,
+          to: '/settings',
+        ),
+      ),
+      builder: (context, state) => const UnitsOfMeasureScreen(),
     ),
     GoRoute(
       path: '/reports',

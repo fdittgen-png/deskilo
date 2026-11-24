@@ -31,6 +31,11 @@ import { parsePaymentOrderRequest } from "./request.ts";
 import { continuationOf } from "./continuation.ts";
 import { runtimeDeps } from "./types.ts";
 import type { Provider } from "./types.ts";
+import { describeError, logLine } from "../_shared/log.ts";
+import { ok, refuse } from "../_shared/respond.ts";
+import { guard } from "../_shared/serve.ts";
+
+const FN = "create-payment-order";
 
 // The pure pieces stay importable from here (index_test.ts, docs).
 export { effectiveConfig, isProvider, missingFields } from "./config.ts";
@@ -41,11 +46,6 @@ export {
   reuseVerdict,
 } from "./outcome.ts";
 
-const json = (body: unknown, status = 200) =>
-  new Response(JSON.stringify(body), {
-    status,
-    headers: { ...CORS, "Content-Type": "application/json" },
-  });
 
 // ── handler ───────────────────────────────────────────────────────────
 
@@ -76,7 +76,7 @@ export async function handleWith(
   // carries no JWT, so any auth or body work would refuse the
   // browser's question instead of answering it.
   if (req.method === "OPTIONS") return preflight();
-  if (req.method !== "POST") return json({ error: "method_not_allowed" }, 405);
+  if (req.method !== "POST") return refuse("method_not_allowed", 405);
   // #1614 — a delegated (MCP) token never opens a payment.
   const delegated = refuseDelegated(req, CORS);
   if (delegated) return delegated;
@@ -84,11 +84,11 @@ export async function handleWith(
   try {
     body = await req.json();
   } catch {
-    return json({ error: "invalid_json" }, 400);
+    return refuse("invalid_json", 400);
   }
 
   const workspaceId = body.workspace_id as string;
-  if (!workspaceId) return json({ error: "invalid_request" }, 400);
+  if (!workspaceId) return refuse("invalid_request", 400);
 
   // AuthN for EVERY action (security audit): the config probe used to
   // answer unauthenticated callers, disclosing which payment providers
@@ -99,8 +99,8 @@ export async function handleWith(
   );
   const { data: userData, error: userError } = await admin.auth.getUser(token);
   if (userError || !userData?.user) {
-    console.error("payment auth failed", userError?.message);
-    return json({ error: "unauthorized" }, 401);
+    logLine("error", FN, "payment_auth_failed", { error: describeError(userError) });
+    return refuse("unauthorized", 401);
   }
 
   // Config probe: which providers can THIS workspace charge with?
@@ -112,7 +112,7 @@ export async function handleWith(
       .eq("user_id", userData.user.id)
       .eq("status", "active")
       .maybeSingle();
-    if (!caller) return json({ error: "unauthorized" }, 403);
+    if (!caller) return refuse("unauthorized", 403);
     const providers: Provider[] = [];
     const missing: Record<string, string[]> = {};
     for (const provider of Object.keys(REQUIRED) as Provider[]) {
@@ -129,10 +129,10 @@ export async function handleWith(
       missing[provider] = gap;
       if (gap.length === 0) providers.push(provider);
     }
-    console.log("payment config probe", { workspaceId, providers, missing });
+    logLine("info", FN, "payment_config_probe", { workspaceId, providers, missing });
     // #3556 — this function takes a payment's claim of invoices: an app
     // pays a selection only where its host's function says so.
-    return json({ providers, missing, claims: true, continuations: true, standalone: true });
+    return ok({ providers, missing, claims: true, continuations: true, standalone: true });
   }
 
   const continued = await continuationOf(body, () => callerOf(token));
@@ -144,7 +144,7 @@ export async function handleWith(
   // or its providers is answered.
   const rawMemberId = typeof body.member_id === "string" ? body.member_id : "";
   if (!UUID.test(rawMemberId)) {
-    return json({ error: "not_your_bill" }, 403);
+    return refuse("not_your_bill", 403);
   }
   const { data: member } = await admin
     .from("members")
@@ -155,8 +155,8 @@ export async function handleWith(
     !member || member.user_id !== userData.user.id ||
     member.workspace_id !== workspaceId || member.status !== "active"
   ) {
-    console.error("payment member mismatch", { workspaceId });
-    return json({ error: "not_your_bill" }, 403);
+    logLine("error", FN, "payment_member_mismatch", { workspaceId });
+    return refuse("not_your_bill", 403);
   }
 
   // #917 — a DEVELOPMENT workspace never opens a payment order: the
@@ -169,7 +169,7 @@ export async function handleWith(
     .eq("id", workspaceId)
     .maybeSingle();
   if ((ws?.environment ?? "dev") !== "prod") {
-    return json({
+    return ok({
       error: "development_workspace",
       detail:
         "This workspace is a development one: it does not take payments. " +
@@ -180,7 +180,7 @@ export async function handleWith(
   // #1138 — the currency is the WORKSPACE's, never the body's.
   const currency = String(continued?.currency ?? ws?.currency_code ?? "EUR").toUpperCase();
   const parsed = parsePaymentOrderRequest(body, currency);
-  if (!parsed.ok) return json(parsed.body, parsed.status);
+  if (!parsed.ok) return ok(parsed.body, parsed.status);
   const { provider, memberId, amountCents, period, requestId, invoiceIds, standalone } = parsed.request;
 
   let cfg: Record<string, string>;
@@ -188,23 +188,23 @@ export async function handleWith(
     cfg = await effectiveConfig(admin, workspaceId, provider);
   } catch {
     // #2014 — no provider call on configuration we could not read.
-    console.error("payment config unavailable", { provider });
-    return json({ error: "config_unavailable" }, 503);
+    logLine("error", FN, "payment_config_unavailable", { provider });
+    return refuse("config_unavailable", 503);
   }
   const gap = missingFields(cfg, provider);
   if (gap.length > 0) {
-    console.log("payment provider not configured", { provider, gap });
-    return json({ status: "not_configured", provider, missing: gap });
+    logLine("info", FN, "payment_provider_not_configured", { provider, gap });
+    return ok({ status: "not_configured", provider, missing: gap });
   }
   // #3905 -- a production workspace takes real money only: test credentials
   // open no order, unless the installation takes test payments.
   if (refusesTestCredentials(cfg, provider, allowsTestPayments())) {
-    console.log("payment provider holds test credentials", { provider });
-    return json({ error: "test_keys", provider }, 409);
+    logLine("info", FN, "payment_provider_holds_test_credentials", { provider });
+    return refuse("test_keys", 409, undefined, { provider });
   }
 
   // The order is for the member checked above, whatever the parse read.
-  if (memberId !== member.id) return json({ error: "not_your_bill" }, 403);
+  if (memberId !== member.id) return refuse("not_your_bill", 403);
 
   // #928 — a readable per-workspace reference (PAY-2026-0117) drawn by
   // the number-sequence framework inside the intent's own insert; the
@@ -252,8 +252,8 @@ export async function handleWith(
   if (openError || !intent?.reference) {
     const refused = claimRefusal(openError);
     if (refused) return refused;
-    console.error("payment intent open failed", openError?.message);
-    return json({ error: "intent_open_failed" }, 500);
+    logLine("error", FN, "payment_intent_open_failed", { error: describeError(openError) });
+    return refuse("intent_open_failed", 500);
   }
   const reference: string = intent.reference;
   // #2014 B — a retry of the same request answers from the intent it
@@ -263,10 +263,10 @@ export async function handleWith(
   if (intent.reused) {
     const verdict = reuseVerdict(intent);
     if (verdict === "paid") {
-      return json({ status: "paid", provider, order_id: intent.order_id });
+      return ok({ status: "paid", provider, order_id: intent.order_id });
     }
     if (verdict !== "resend") {
-      return json({ error: verdict === "failed" ? "intent_failed" : "intent_stale", provider }, 409);
+      return ok({ error: verdict === "failed" ? "intent_failed" : "intent_stale", provider }, 409);
     }
   }
   const key = idempotencyKey(String(intent.id));
@@ -294,17 +294,17 @@ export async function handleWith(
       // A reused intent already associated keeps its association.
       .like("order_id", "pending:%");
     if (insertError) {
-      console.error("payment intent update failed", insertError.message);
-      return json({ error: "intent_insert_failed" }, 500);
+      logLine("error", FN, "payment_intent_update_failed", { error: describeError(insertError) });
+      return refuse("intent_insert_failed", 500);
     }
-    console.log("payment order created", {
+    logLine("info", FN, "payment_order_created", {
       provider,
       orderId: order.orderId,
       amountCents,
       currency,
       period,
     });
-    return json({
+    return ok({
       status: "created",
       provider,
       order_id: order.orderId,
@@ -339,7 +339,7 @@ export function claimRefusal(
   error: { code?: string | null } | null | undefined,
 ): Response | null {
   const code = error?.code ?? "";
-  return /^DKC\d{2}$/.test(code) ? json({ error: "claim_refused", code }, 409) : null;
+  return /^DKC\d{2}$/.test(code) ? refuse("claim_refused", 409, undefined, { code }) : null;
 }
 
 /** #3556 — the intent is handed to its provider BEFORE the provider is
@@ -360,11 +360,11 @@ export async function handedThen<T>(
 ): Promise<{ ok: true; value: T } | { ok: false; response: Response }> {
   const { data, error } = await admin.rpc("hand_payment_intent", { p_intent: intentId });
   if (error) {
-    console.error("payment intent hand-over failed", error.message);
-    return { ok: false, response: json({ error: "intent_insert_failed" }, 500) };
+    logLine("error", FN, "payment_intent_hand_over_failed", { error: describeError(error) });
+    return { ok: false, response: refuse("intent_insert_failed", 500) };
   }
   if (data !== true) {
-    return { ok: false, response: json({ error: "intent_stale", provider }, 409) };
+    return { ok: false, response: refuse("intent_stale", 409, undefined, { provider }) };
   }
   return { ok: true, value: await call() };
 }
@@ -384,15 +384,18 @@ export async function orderFailure(
 ): Promise<Response> {
   const outcome = failureOutcome(e, resent);
   const status = e instanceof ProviderRefusal ? e.status : null;
-  console.error("payment order failed", { provider, outcome, status });
+  logLine("error", FN, "payment_order_failed", { provider, outcome, status });
   if (outcome === "failed") {
     // Only an intent still in its first state is marked failed: an intent
     // the provider already settled keeps its status.
     await admin.from("payment_intents").update({ status: "failed" })
       .eq("id", intentId).eq("status", "created");
-    return json({ error: "provider_error", provider }, 502);
+    return refuse("provider_error", 502, undefined, { provider });
   }
-  return json({ error: "outcome_unknown", provider }, 503);
+  return refuse("outcome_unknown", 503, undefined, { provider });
 }
 
-if (import.meta.main) Deno.serve(handle);
+/** The function as it is served: whatever [handle] throws is the envelope (#4412). */
+export const serve = guard(FN, (req) => handle(req));
+
+if (import.meta.main) Deno.serve(serve);

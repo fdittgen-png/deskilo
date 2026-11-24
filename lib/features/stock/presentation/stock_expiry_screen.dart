@@ -11,6 +11,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/help/help_anchors.dart';
+import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/time/clock.dart';
@@ -221,7 +222,7 @@ class _RowTile extends StatelessWidget {
         if (r.tag.isNotEmpty) r.tag,
         r.locationCode,
         if (r.locationName.isNotEmpty) r.locationName,
-        '${r.quantity.text} ${r.unit}'.trim(),
+        '${appFormatOf(context).quantity(r.quantity)} ${r.unit}'.trim(),
       ].join(' · ')),
       trailing: Text(_days(l10n), style: r.days < 0 ? TextStyle(color: Theme.of(context).colorScheme.error) : null),
     );

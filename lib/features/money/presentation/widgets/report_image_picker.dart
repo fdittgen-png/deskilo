@@ -168,11 +168,10 @@ class _Images extends ConsumerWidget {
     final l10n = context.l10n;
     if (library.isLoading) return const LoadingView();
     if (library.hasError) {
-      return TextButton.icon(
-        key: const ValueKey('report-images-retry'),
-        onPressed: () => ref.invalidate(reportImagesProvider),
-        icon: const Icon(Icons.refresh),
-        label: Text(l10n.reportImagesLoadFailed),
+      return ReadFailureBanner(
+        error: library.error!,
+        retryKey: const ValueKey('report-images-retry'),
+        onRetry: () => ref.invalidate(reportImagesProvider),
       );
     }
     final images = library.requireValue;
@@ -198,6 +197,7 @@ class _ImageTile extends ConsumerWidget {
       leading: SizedBox(
         width: 40,
         height: 40,
+        // #4414 kept: one picture's mark in its tile; the tile retries it
         child: bytes.hasError
             ? Tooltip(
                 message: reportImageReason(l10n, bytes.error!),
@@ -216,6 +216,7 @@ class _ImageTile extends ConsumerWidget {
               ),
       ),
       title: Text(name, maxLines: 1, overflow: TextOverflow.ellipsis),
+      // #4414 kept: one picture's own retry in its tile
       trailing: bytes.hasError
           ? IconButton(
               key: ValueKey('report-image-retry-$name'),

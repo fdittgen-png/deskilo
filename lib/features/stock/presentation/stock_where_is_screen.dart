@@ -94,7 +94,7 @@ class _Answer extends StatelessWidget {
             Text(answer.itemName, key: const ValueKey('stock-where-item'), style: theme.textTheme.titleLarge),
             const SizedBox(height: AppSpacing.xs),
             Text(
-              l10n.stockWhereIsOnHand(l10n.stockQuantityWithUnit(answer.onHand.text, answer.unit)),
+              l10n.stockWhereIsOnHand(l10n.stockQuantityWithUnit(appFormatOf(context).quantity(answer.onHand), answer.unit)),
               key: const ValueKey('stock-where-on-hand'),
               style: theme.textTheme.titleMedium,
             ),
@@ -166,7 +166,7 @@ List<Widget> _places(BuildContext context, WhereIsAnswer answer, String workspac
         contentPadding: EdgeInsets.zero,
         title: Text(_placeTitle(p)),
         subtitle: Text(_what(context, p)),
-        trailing: Text(l10n.stockQuantityWithUnit(p.quantity.text, answer.unit), style: Theme.of(context).textTheme.titleMedium),
+        trailing: Text(l10n.stockQuantityWithUnit(appFormatOf(context).quantity(p.quantity), answer.unit), style: Theme.of(context).textTheme.titleMedium),
         onTap: p.lotId == null ? null : () => showStockChainSheet(context, workspaceId: workspaceId, lotId: p.lotId),
       ),
   ];
@@ -183,7 +183,7 @@ List<Widget> _transit(BuildContext context, WhereIsAnswer answer) {
         key: ValueKey('stock-where-transit-${t.transferId}-${t.lotId ?? ''}'),
         contentPadding: EdgeInsets.zero,
         title: Text(l10n.stockWhereIsTransitLine(t.fromCode, t.toCode)),
-        trailing: Text(l10n.stockQuantityWithUnit(t.quantity.text, answer.unit), style: Theme.of(context).textTheme.titleMedium),
+        trailing: Text(l10n.stockQuantityWithUnit(appFormatOf(context).quantity(t.quantity), answer.unit), style: Theme.of(context).textTheme.titleMedium),
       ),
   ];
 }
@@ -200,7 +200,7 @@ List<Widget> _away(BuildContext context, WhereIsAnswer answer) {
         contentPadding: EdgeInsets.zero,
         title: Text(_placeTitle(p)),
         subtitle: Text(_what(context, p)),
-        trailing: Text(l10n.stockQuantityWithUnit(p.quantity.text, answer.unit)),
+        trailing: Text(l10n.stockQuantityWithUnit(appFormatOf(context).quantity(p.quantity), answer.unit)),
       ),
     for (final d in answer.documents)
       ListTile(
@@ -209,7 +209,7 @@ List<Widget> _away(BuildContext context, WhereIsAnswer answer) {
         contentPadding: EdgeInsets.zero,
         title: Text('${d.reason} \u00b7 ${d.fromCode} \u2192 ${d.toCode}'),
         subtitle: Text(appFormatOf(context).date(d.occurredAt)),
-        trailing: Text(l10n.stockQuantityWithUnit(d.quantity.text, answer.unit)),
+        trailing: Text(l10n.stockQuantityWithUnit(appFormatOf(context).quantity(d.quantity), answer.unit)),
       ),
   ];
 }

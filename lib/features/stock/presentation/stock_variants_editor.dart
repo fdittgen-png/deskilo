@@ -9,8 +9,10 @@
 // a value left out is kept, not deleted, so a variant that names it keeps its
 // label.
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
+import '../../../core/format/amount_input.dart';
+import '../../../core/i18n/app_format.dart';
+import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
@@ -48,7 +50,7 @@ Future<bool> showStockVariantsEditor(
     return false;
   }
   if (item == null || !context.mounted) return false;
-  final draft = _VariantsDraft(commands, workspaceId, item, dimensions, variants);
+  final draft = _VariantsDraft(commands, workspaceId, item, dimensions, variants, appFormatOf(context));
   return showAppFormSheet(
     context,
     AppFormSheet(
@@ -64,23 +66,34 @@ Future<bool> showStockVariantsEditor(
 }
 
 class _VariantRow {
-  _VariantRow({this.id, Map<String, String>? values, int? price, this.active = true})
+  _VariantRow({required this.format, this.id, Map<String, String>? values, int? price, this.active = true})
     : values = {...?values},
-      price = TextEditingController(text: price?.toString() ?? '');
+      price = TextEditingController(
+        text: price == null ? '' : amountInputText(price, currency: format.currencyCode, locale: format.locale),
+      );
 
+  /// The member's format and the business's currency: what the price is typed and read in.
+  final AppFormat format;
   final String? id;
   final Map<String, String> values;
   final TextEditingController price;
   bool active;
 
-  int? get priceCents => int.tryParse(price.text.trim());
+  AmountRead get _read =>
+      readAmountInput(price.text, locale: format.locale, currency: format.currencyCode, allowNegative: false);
+
+  /// The price in minor units, or null when none is typed (or what is typed is no amount, said under the field).
+  int? get priceCents => _read.minor;
+  AmountInputProblem? get priceProblem => _read.problem;
 }
 
 class _VariantsDraft {
-  _VariantsDraft(this.commands, this.workspaceId, this.item, this.dimensions, List<StockVariant> variants)
+  _VariantsDraft(this.commands, this.workspaceId, this.item, this.dimensions, List<StockVariant> variants, this.format)
     : rows = [
-        for (final v in variants) _VariantRow(id: v.id, values: v.values, price: v.priceCents, active: v.active),
+        for (final v in variants) _VariantRow(format: format, id: v.id, values: v.values, price: v.priceCents, active: v.active),
       ];
+
+  final AppFormat format;
 
   final StockConfigCommands commands;
   final String workspaceId;
@@ -104,6 +117,9 @@ class _VariantsDraft {
       for (final r in rows) (values: r.values, priceCents: r.priceCents),
     ]).entries)
       e.key: stockReasonText(l10n, e.value),
+    for (final (i, r) in rows.indexed)
+      if (r.priceProblem case final problem?)
+        'variants[$i].price_cents': amountInputProblemText(l10n, problem, currency: format.currencyCode),
   };
 
   Future<String?> save(AppLocalizations l10n) async {
@@ -142,7 +158,7 @@ class _VariantsDraft {
             onPressed: _active.isEmpty
                 ? null
                 : () {
-                    rows.add(_VariantRow());
+                    rows.add(_VariantRow(format: format));
                     refresh();
                   },
           ),
@@ -201,13 +217,13 @@ class _VariantsDraft {
       Row(
         children: [
           Expanded(
-            child: AppTextField(
+            child: AppAmountField(
               key: ValueKey('stock-variant-$i-price'),
               controller: r.price,
               fieldKey: 'variants[$i].price_cents',
               label: l10n.stockVariantPrice,
-              keyboardType: TextInputType.number,
-              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              currency: format.currencyCode,
+              allowNegative: false,
             ),
           ),
           IconButton(

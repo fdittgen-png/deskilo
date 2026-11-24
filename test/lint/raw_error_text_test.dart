@@ -33,10 +33,17 @@ final _errorBranch = RegExp(
   r'AsyncError\(|\berror:\s*\(\s*\w+\s*,|\.hasError\b',
 );
 
-/// The shared views a failed read is shown with.
+/// The shared views a failed read is shown with (the records kit's
+/// [RecordsFailed] words a denial as the read state does, #4097).
 final _sharedView = RegExp(
-  r'ReadFailureBanner|AsyncReadBody|ReadsAnswer|StockReadFailed',
+  r'ReadFailureBanner|AsyncReadBody|ReadsAnswer|StockReadFailed|'
+  r'RecordsFailed|RecordsState\.failed',
 );
+
+/// An error branch that is no view of a failed read, said with its reason
+/// on its own line or the line above: `// #4414 kept: <reason>` (a read's
+/// state steering logic, a redirect, or a typed refusal worded as itself).
+final _kept = RegExp(r'//\s*#4414 kept:\s*\S');
 
 /// The error branches of [source] whose next lines show no shared view.
 int ownErrorBranches(String source) {
@@ -45,6 +52,9 @@ int ownErrorBranches(String source) {
   for (var i = 0; i < lines.length; i++) {
     if (lines[i].trimLeft().startsWith('//')) continue;
     if (!_errorBranch.hasMatch(lines[i])) continue;
+    if (_kept.hasMatch(lines[i]) || (i > 0 && _kept.hasMatch(lines[i - 1]))) {
+      continue;
+    }
     final next = lines.sublist(i, (i + 4).clamp(0, lines.length)).join('\n');
     if (!_sharedView.hasMatch(next)) n++;
   }
@@ -55,22 +65,17 @@ int ownErrorBranches(String source) {
 /// read their own way, per feature, measured on 24 Nov 2026 after stock's
 /// sweep. Only falls: a branch moved onto the shared view lowers its feature.
 const _ownErrorBranchCeiling = <String, int>{
-  'app': 19,
   'auth': 2,
   'calendar': 5,
-  'directory': 25,
   'editor': 2,
   'events': 2,
   'kiosk': 1,
-  'mcp': 18,
-  'me': 20,
   'members': 4,
-  'money': 104,
+  'money': 6, // till* only, b5's lane
   'plan': 2,
   'profile': 3,
   'reservations': 11,
   'stock': 14,
-  'workspace': 37,
 };
 
 String _featureOf(String path) {
@@ -90,6 +95,19 @@ void main() {
       0,
     );
     expect(ownErrorBranches('error: (e, _) => StockReadFailed(keyName: k,'), 0);
+    expect(ownErrorBranches('AsyncError() => RecordsState.failed,'), 0);
+    // kept with its reason, on the line or the line above; never without one
+    expect(
+      ownErrorBranches(
+        '// #4414 kept: the redirect waits\nif (a.hasError) return null;',
+      ),
+      0,
+    );
+    expect(
+      ownErrorBranches('if (a.hasError) return null; // #4414 kept: logic'),
+      0,
+    );
+    expect(ownErrorBranches('// #4414 kept:\nif (a.hasError) return null;'), 1);
   });
 
   test(

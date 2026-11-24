@@ -9,6 +9,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/refusal_text.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/vat/retention.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -46,10 +47,11 @@ class RetentionHoldsSection extends ConsumerWidget {
         Text(l10n.retentionHoldsTitle, style: theme.textTheme.titleSmall),
         // A refused or failed read is said as such, never as "no hold".
         if (loaded case AsyncError(:final error))
-          Text(
-            knownRefusalText(l10n, error) ?? l10n.retentionHoldsLoadFailed,
+          ReadFailureBanner(
             key: const ValueKey('retention-holds-failed'),
-            style: theme.textTheme.bodySmall,
+            error: error,
+            refusal: knownRefusalText(l10n, error),
+            onRetry: () => ref.invalidate(retentionHoldsProvider),
           )
         else if (!loaded.hasValue)
           const LinearProgressIndicator()

@@ -156,7 +156,7 @@ class _PurchaseApprovalsViewState extends ConsumerState<PurchaseApprovalsView> {
     if (pages.any((p) => p.isLoading)) return const LoadingView();
     final resolved = [
       for (final p in pages)
-        if (!p.hasError) p.requireValue,
+        if (!p.hasError) p.requireValue, // #4414 kept: the answered pages
     ];
     final ids = <String>{};
     final unstable =
@@ -239,6 +239,7 @@ class _VisiblePendingReceipts extends ConsumerWidget {
     final l10n = context.l10n;
     final receipts = ref.watch(purchasesProvider(workspaceId));
     if (receipts.isLoading) return const LoadingView();
+    // #4414 kept: beside the bills' failure it names the receipts read
     if (receipts.hasError) {
       return Column(
         children: [

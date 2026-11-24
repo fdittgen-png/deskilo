@@ -8,6 +8,7 @@ import type { Environment, Destination } from "../common.ts";
 import { SANDBOX, status as askStatus, SANDBOX_ENVIRONMENT } from "../connectors.ts";
 import { redact } from "../connectors/common.ts";
 import { clientDetail } from "../connectors/safe_fetch.ts";
+import { logLine } from "../../_shared/log.ts";
 
 export const status: Action = async (ctx) => {
   const { store, fetchImpl, payload, workspaceId, mayIssue, fullCfg } = ctx;
@@ -77,7 +78,7 @@ export const status: Action = async (ctx) => {
     // #3881 -- a readable answer with no verdict yet: the provider holds
     // the upload (an uncertain upload settles accepted) and what it said
     // is kept; the document has no verdict and no query error.
-    console.log("send-e-invoice: no document verdict yet");
+    logLine("info", "send-e-invoice", "no_document_verdict_yet");
     await store.lookup(
       sent.id,
       sent.phase === "uncertain" ? "accepted" : null,
@@ -87,7 +88,7 @@ export const status: Action = async (ctx) => {
       "",
     );
   } else {
-    console.error("send-e-invoice: status query failed", redact(asked.detail));
+    logLine("error", "send-e-invoice", "status_query_failed", { error: redact(asked.detail) });
     await store.lookup(
       sent.id,
       null,

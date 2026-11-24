@@ -20,6 +20,7 @@
 // verified against a live account.
 
 import { toMinor } from "./money.ts";
+import { describeError, logLine } from "./log.ts";
 
 /** One page of the list, as Mollie pages it. */
 export const PAGE_SIZE = 50;
@@ -166,7 +167,7 @@ export async function scanSettlements(o: ScanOptions): Promise<ScanResult> {
         signal: AbortSignal.timeout(o.callTimeoutMs),
       });
       if (res.status >= 400 && res.status < 500 && res.status !== 429) {
-        console.error("mollie settlements refused", { status: res.status });
+        logLine("error", "mollie-settlements", "refused", { status: res.status });
         r.failure = { kind: "refused", status: res.status };
         return r;
       }
@@ -176,7 +177,7 @@ export async function scanSettlements(o: ScanOptions): Promise<ScanResult> {
       }
       list = (await res.json()) as Row;
     } catch (e) {
-      console.error("mollie settlements read failed", String(e));
+      logLine("error", "mollie-settlements", "read_failed", { error: describeError(e) });
       r.failure = { kind: "unreachable" };
       return r;
     }
@@ -192,7 +193,7 @@ export async function scanSettlements(o: ScanOptions): Promise<ScanResult> {
       }
       const recorded = await o.record(one);
       if ("error" in recorded) {
-        console.error("mollie settlement record failed", recorded.error);
+        logLine("error", "mollie-settlements", "record_failed", { error: describeError(recorded.error) });
         r.failure = { kind: "record_failed", settlement: one.id };
         return r;
       }

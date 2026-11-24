@@ -20,6 +20,7 @@ import '../../core/i18n/format_controller.dart';
 import '../../core/l10n/context_l10n.dart';
 import '../../core/theme/app_spacing.dart';
 import '../../core/time/clock.dart';
+import '../../core/ui/async_read_body.dart';
 import '../../core/ui/empty_state.dart';
 import '../../core/ui/inline_banner.dart';
 import '../../core/ui/loading_view.dart';
@@ -126,14 +127,21 @@ class _DeskBookingPaneState extends ConsumerState<DeskBookingPane> {
           title: l10n.noteRefGone,
         ),
         // #3884 — it exists, but this version cannot show it: not "failed".
+        // #4414 kept: a typed answer worded as itself, not a failed read
         AsyncError(:final error) when error is ReservationUnreadable =>
           EmptyState(
             icon: Icons.visibility_off_outlined,
             title: l10n.reservationUnreadable,
           ),
-        AsyncError() => EmptyState(
-          icon: Icons.error_outline,
-          title: l10n.periodReservationsFailed,
+        AsyncError(:final error) => ListView(
+          padding: AppSpacing.mdAll,
+          children: [
+            ReadFailureBanner(
+              error: error,
+              onRetry: () =>
+                  ref.invalidate(deskBookingByIdProvider(widget.bookingId)),
+            ),
+          ],
         ),
         _ => const LoadingView(),
       },

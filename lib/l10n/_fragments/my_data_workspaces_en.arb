@@ -12,10 +12,6 @@
   "@meDataWorkspacesEmpty": {
     "description": "#2557 C3 no workspace to export from."
   },
-  "meDataWorkspacesFailed": "The businesses your account names could not be read. Nothing was exported.",
-  "@meDataWorkspacesFailed": {
-    "description": "#2557 C3 the workspace list could not be read."
-  },
   "meDataWorkspaceUnnamed": "Business {id}",
   "@meDataWorkspaceUnnamed": {
     "description": "#2557 C3 a workspace whose name may not be read.",

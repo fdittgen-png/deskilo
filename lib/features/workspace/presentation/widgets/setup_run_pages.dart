@@ -12,9 +12,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/ui/inline_banner.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/setup_draft_form.dart';
 import '../../domain/member.dart';
@@ -217,12 +216,12 @@ class _ApprovalsHost extends ConsumerWidget {
                 (id: m.id, isOwner: m.isOwner, isAdmin: m.isAdmin),
           ],
         ),
-        AsyncError() => Padding(
+        AsyncError(:final error) => Padding(
           padding: AppSpacing.lgAll,
-          child: InlineBanner(
+          child: ReadFailureBanner(
             key: const ValueKey('setup-approvals-members-failed'),
-            icon: Icons.error_outline,
-            text: context.l10n.setupStepLoadFailed,
+            error: error,
+            onRetry: () => ref.invalidate(workspaceMembersProvider),
           ),
         ),
         _ => const LoadingView(),

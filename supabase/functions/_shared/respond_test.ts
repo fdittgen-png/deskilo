@@ -3,7 +3,7 @@
 // never carries the error's own words, the logger keeps secrets, personal data and cycles out of its lines, and a
 // request id is never echoed raw.
 import { assert, assertEquals } from "jsr:@std/assert@1";
-import { fail, INTERNAL_ERROR, ok, refuse } from "./respond.ts";
+import { fail, INTERNAL_ERROR, ok, refuse, refuseDb } from "./respond.ts";
 import { describeError, logLine, redactFields, requestIdOf, scrub } from "./log.ts";
 import { guard } from "./serve.ts";
 
@@ -154,4 +154,19 @@ Deno.test("#4412 describeError never throws and a field cannot override what ide
   }
   const line = JSON.parse(lines[0]);
   assertEquals([line.level, line.fn, line.code, line.request_id], ["info", "real_fn", "real_code", "r-9"]);
+});
+
+Deno.test("#4412 a database refusal says its own sentence only for a DK code", async () => {
+  const ours = await refuseDb({ code: "DKP04", message: "the order changed" }, 409).json();
+  assertEquals(ours, { error: "the order changed", code: "DKP04" });
+  const raw = await refuseDb({ code: "42P01", message: 'relation "x" does not exist' }, 400).json();
+  assertEquals(raw, { error: "refused", code: "42P01" });
+});
+
+Deno.test("#4412 a database client's error is described by its code and message", () => {
+  assertEquals(describeError({ code: "42501", message: "permission denied" }), {
+    type: "42501",
+    message: "permission denied",
+  });
+  assertEquals(describeError({ message: "no rows" }).type, "object");
 });

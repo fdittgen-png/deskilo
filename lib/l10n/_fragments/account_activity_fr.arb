@@ -2,7 +2,6 @@
   "accountActivityTitle": "Ma consommation et mes paiements",
   "accountActivityScope": "Tous vos profils sur ce serveur, y compris vos anciennes adhésions. Les devises restent séparées.",
   "accountActivityEmpty": "Aucun enregistrement à afficher.",
-  "accountActivityFailed": "Impossible de charger votre historique financier. Appuyez pour réessayer.",
   "accountPaymentConfirmed": "Paiement confirmé",
   "accountPaymentAwaitingMatch": "Reçu, en attente de rapprochement",
   "accountInvoiceVoided": "Facture annulée",

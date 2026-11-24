@@ -12,6 +12,7 @@
 // this: `_book` returns early when `currentWorkspaceProvider` is null,
 // as it is in that harness, so its Book button writes nothing at all.
 import 'package:deskilo/core/demo/data/money_repository.dart';
+import 'package:deskilo/core/failure/app_failure.dart';
 import 'package:deskilo/features/money/application/book_repartition.dart';
 import 'package:deskilo/features/money/domain/workspace_status.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
@@ -48,7 +49,7 @@ const _shares = [
 
 const _rule = RepartitionRule(method: RepartitionMethod.equal);
 
-Future<BookRepartitionOutcome> _book(
+Future<CommandOutcome<RepartitionBooked>> _book(
   FakeMoneyRepository repo, {
   bool remember = true,
 }) =>
@@ -70,7 +71,7 @@ void main() {
 
     final outcome = await _book(repo);
 
-    expect(outcome, isA<RepartitionNotBooked>());
+    expect(isRepartitionNotBooked(outcome), isTrue);
     expect(repo.repartitions, isEmpty,
         reason: 'the rule is the cheap write and it goes first, so when '
             'it fails nobody has been charged and pressing Book again '
@@ -81,7 +82,12 @@ void main() {
       () async {
     final repo = _DistributionRefuses();
 
-    await expectLater(_book(repo), throwsA(isA<StateError>()));
+    final outcome = await _book(repo);
+    expect(
+      outcome,
+      isA<CommandRefused<RepartitionBooked>>()
+          .having((o) => o.refusal.cause, 'cause', isA<StateError>()),
+    );
 
     expect(repo.repartitionRule, _rule,
         reason: 'the leftover of this order is a remembered preference — '
@@ -95,8 +101,8 @@ void main() {
 
     final outcome = await _book(repo);
 
-    expect(outcome, isA<RepartitionBooked>());
-    expect((outcome as RepartitionBooked).ruleRemembered, isTrue);
+    expect(outcome, isA<CommandDone<RepartitionBooked>>());
+    expect((outcome as CommandDone<RepartitionBooked>).value.ruleRemembered, isTrue);
     expect(repo.repartitionRule, _rule);
     expect(repo.repartitions, hasLength(1));
   });
@@ -109,9 +115,9 @@ void main() {
 
     final outcome = await _book(repo, remember: false);
 
-    expect(outcome, isA<RepartitionBooked>(),
+    expect(outcome, isA<CommandDone<RepartitionBooked>>(),
         reason: 'the refusing rule writer is never called');
-    expect((outcome as RepartitionBooked).ruleRemembered, isFalse);
+    expect((outcome as CommandDone<RepartitionBooked>).value.ruleRemembered, isFalse);
     expect(repo.repartitions, hasLength(1));
   });
 }

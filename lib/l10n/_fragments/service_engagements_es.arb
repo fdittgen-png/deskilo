@@ -4,7 +4,6 @@
   "engagementsIntro": "Siga cada servicio pedido: pedido, iniciado, terminado. El presupuesto, la factura y los pagos quedan como están.",
   "engagementsNew": "Nuevo servicio",
   "engagementsEmpty": "Todavía no hay servicios. Abra uno desde un presupuesto aceptado o añada uno directamente.",
-  "engagementsLoadFailed": "No se pudieron leer los servicios. Esto no es una lista vacía.",
   "engagementStateOrdered": "Pedido",
   "engagementStateStarted": "Iniciado",
   "engagementStateDone": "Terminado",
@@ -43,9 +42,6 @@
     "description": "service engagements (#4178)"
   },
   "@engagementsEmpty": {
-    "description": "service engagements (#4178)"
-  },
-  "@engagementsLoadFailed": {
     "description": "service engagements (#4178)"
   },
   "@engagementStateOrdered": {

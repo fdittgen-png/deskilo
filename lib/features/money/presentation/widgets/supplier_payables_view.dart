@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../domain/purchase.dart';
 import '../../domain/supplier_payables_page.dart';
@@ -48,6 +49,7 @@ class _SupplierPayablesViewState extends ConsumerState<SupplierPayablesView> {
     });
   }
 
+  /// The pages no longer chain (the list moved under them): read again.
   Widget _unavailable(BuildContext context) => Column(
     children: [
       Text(context.l10n.suppliersPayablesUnavailable),
@@ -85,8 +87,13 @@ class _SupplierPayablesViewState extends ConsumerState<SupplierPayablesView> {
     if (pages.any((page) => page.isLoading)) {
       return const SizedBox(height: AppSpacing.xl, child: LoadingView());
     }
-    if (pages.any((page) => page.hasError)) {
-      return _unavailable(context);
+    final failed = pages.where((page) => page.hasError).firstOrNull;
+    if (failed != null) {
+      return ReadFailureBanner(
+        error: failed.error!,
+        retryKey: const ValueKey('supplier-payables-retry'),
+        onRetry: _restart,
+      );
     }
     final resolved = [for (final page in pages) page.requireValue];
     for (var i = 0; i < resolved.length - 1; i++) {

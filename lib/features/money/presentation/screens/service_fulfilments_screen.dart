@@ -12,7 +12,7 @@ import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/ui/form_kit.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../domain/service_fulfilment.dart';
@@ -89,24 +89,15 @@ class _Body extends ConsumerWidget {
         Expanded(
           child: all.when(
             loading: () => const LoadingView(),
-            error: (error, _) => Center(
-              child: Padding(
-                padding: const EdgeInsets.all(AppSpacing.md),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      error is FulfilmentRefusal ? engagementRefusalText(l10n, error) : l10n.engagementsLoadFailed,
-                      textAlign: TextAlign.center,
-                    ),
-                    const FormGap(),
-                    OutlinedButton(
-                      key: const ValueKey('engagements-retry'),
-                      onPressed: () => ref.invalidate(serviceFulfilmentsProvider(workspaceId)),
-                      child: Text(l10n.identityConnectRetry),
-                    ),
-                  ],
-                ),
+            error: (error, _) => Padding(
+              padding: const EdgeInsets.all(AppSpacing.md),
+              child: ReadFailureBanner(
+                error: error,
+                refusal: error is FulfilmentRefusal
+                    ? engagementRefusalText(l10n, error)
+                    : null,
+                retryKey: const ValueKey('engagements-retry'),
+                onRetry: () => ref.invalidate(serviceFulfilmentsProvider(workspaceId)),
               ),
             ),
             data: (items) => items.isEmpty

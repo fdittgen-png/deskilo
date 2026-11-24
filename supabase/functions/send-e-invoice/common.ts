@@ -5,6 +5,7 @@
 // answer of a send, and the context an action receives.
 
 import { CORS } from "../_shared/cors.ts";
+import { ok } from "../_shared/respond.ts";
 import { requiredFields } from "./connectors.ts";
 import type { Phase, TransmissionStore } from "./store.ts";
 
@@ -40,11 +41,8 @@ export interface Deps {
   fetchImpl?: typeof fetch;
 }
 
-export const json = (body: unknown, status = 200) =>
-  new Response(JSON.stringify(body), {
-    status,
-    headers: { ...CORS, "Content-Type": "application/json" },
-  });
+/** The function's answers, with its CORS, through the shared helper (#4412). */
+export const json = (body: unknown, status = 200) => ok(body, status, CORS);
 
 /** Where a document may be sent. 'prod' is the unsuffixed key set that
  * predates environments; 'uat'/'dev' read the suffixed keys (0074). */

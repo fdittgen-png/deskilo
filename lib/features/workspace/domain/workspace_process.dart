@@ -172,6 +172,8 @@ const workspaceProcesses = <WorkspaceProcess>[
       WorkspaceFeature.stockHandlingUnits,
       // #4373
       WorkspaceFeature.counterOfflineCash,
+      // #4442
+      WorkspaceFeature.unitsOfMeasure,
     ]),
   ]),
   WorkspaceProcess('billingPayments', [

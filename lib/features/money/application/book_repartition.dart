@@ -24,33 +24,36 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:meta/meta.dart';
 
+import '../../../core/data/app_failure_from.dart';
+import '../../../core/failure/app_failure.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/money_repository.dart';
 import '../domain/workspace_status.dart';
 
-/// What happened to a cost somebody tried to share.
-sealed class BookRepartitionOutcome {
-  const BookRepartitionOutcome();
-}
-
 /// Distributed. [id] is the repartition; [ruleRemembered] says whether
 /// the rule was also saved for next time.
-@visibleForTesting
-class RepartitionBooked extends BookRepartitionOutcome {
+final class RepartitionBooked {
   const RepartitionBooked({required this.id, required this.ruleRemembered});
   final String id;
   final bool ruleRemembered;
 }
 
-/// Nothing was written at all, because the rule could not be saved.
-///
-/// Its own outcome rather than a rethrow: "nothing happened" is the
-/// thing the caller has to be able to say, and it is only true because
-/// the rule is written first.
-class RepartitionNotBooked extends BookRepartitionOutcome {
-  const RepartitionNotBooked(this.error);
+/// Nothing was written at all, because the rule could not be saved: the
+/// refusal's cause, so the caller can say "nothing happened" — true only
+/// because the rule is written first.
+final class _RepartitionNotBooked implements TypedRefusal {
+  const _RepartitionNotBooked(this.error);
   final Object error;
+
+  @override
+  String toString() => '_RepartitionNotBooked($error)';
 }
+
+/// Whether [outcome] is a repartition refused because its rule could not be
+/// saved (nothing was distributed).
+bool isRepartitionNotBooked(CommandOutcome<RepartitionBooked> outcome) =>
+    outcome is CommandRefused<RepartitionBooked> &&
+    outcome.refusal.cause is _RepartitionNotBooked;
 
 /// Saves [rule] when [remember], then distributes [amountCents] across
 /// [shares].
@@ -103,7 +106,7 @@ class Repartitions {
   }
 
   /// The wizard's path: remember the rule, then move the money.
-  Future<BookRepartitionOutcome> book({
+  Future<CommandOutcome<RepartitionBooked>> book({
     required String workspaceId,
     required String title,
     required int amountCents,
@@ -137,7 +140,7 @@ class DistributedExpense {
 }
 
 @visibleForTesting
-Future<BookRepartitionOutcome> bookRepartition(
+Future<CommandOutcome<RepartitionBooked>> bookRepartition(
   MoneyRepository repository, {
   required String workspaceId,
   required String title,
@@ -155,16 +158,11 @@ Future<BookRepartitionOutcome> bookRepartition(
       // it; catching here is the point — nothing has been distributed,
       // so nothing is half-done.
       TraceLogger.instance.warn('money', 'rule not saved', error: e, stackTrace: st);
-      return RepartitionNotBooked(e);
+      return CommandRefused(Refusal(cause: _RepartitionNotBooked(e)));
     }
   }
-  final id = await repository.distributeExpense(
-    workspaceId: workspaceId,
-    title: title,
-    amountCents: amountCents,
-    method: rule.method,
-    period: period,
-    shares: shares,
-  );
-  return RepartitionBooked(id: id, ruleRemembered: remember);
+  return runCommand(() async => RepartitionBooked(
+    id: await repository.distributeExpense(workspaceId: workspaceId, title: title, amountCents: amountCents, method: rule.method, period: period, shares: shares),
+    ruleRemembered: remember,
+  ), what: 'repartition not distributed');
 }

@@ -9,6 +9,9 @@
 // invented, and nothing is retried automatically.
 
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:meta/meta.dart';
+
+import '../../../core/failure/app_failure.dart';
 
 /// The state of the workspace's HMRC sign-in.
 enum HmrcLink { pending, connected, expired, error }
@@ -125,31 +128,25 @@ enum HmrcRefusal {
   other,
 }
 
-/// The outcome of one submission.
-sealed class HmrcOutcome {
-  const HmrcOutcome();
-}
-
-/// HMRC accepted the return and it is filed, with HMRC's receipt. A [demo]
-/// receipt is simulated: no HMRC call was made.
-class HmrcFiled extends HmrcOutcome {
-  const HmrcFiled(this.receipt, {this.demo = false});
+/// What HMRC took. [recorded] false: HMRC took the return but it could not
+/// be recorded here; the receipt is kept on the server and a new attempt
+/// files it without posting again. A [demo] receipt is simulated: no HMRC
+/// call was made.
+final class HmrcFiling {
+  const HmrcFiling(this.receipt, {this.demo = false, this.recorded = true});
 
   final HmrcReceipt receipt;
   final bool demo;
+  final bool recorded;
 }
 
-/// HMRC took the return but it could not be recorded here: the receipt is
-/// kept on the server and a new attempt files it without posting again.
-class HmrcAcceptedNotRecorded extends HmrcOutcome {
-  const HmrcAcceptedNotRecorded(this.receipt);
-
-  final HmrcReceipt receipt;
-}
-
-/// Refused; nothing was filed.
-class HmrcRefused extends HmrcOutcome {
-  const HmrcRefused(this.refusal, {this.code = '', this.missing = const []});
+/// Refused; nothing was filed. The cause of the submission's refusal.
+final class HmrcRefusalCause implements TypedRefusal {
+  const HmrcRefusalCause(
+    this.refusal, {
+    this.code = '',
+    this.missing = const [],
+  });
 
   final HmrcRefusal refusal;
 
@@ -158,15 +155,62 @@ class HmrcRefused extends HmrcOutcome {
 
   /// The fraud-prevention values the browser did not supply.
   final List<String> missing;
+
+  @override
+  String toString() => 'HmrcRefusalCause($refusal, $code)';
 }
 
 /// The return may have reached HMRC (timeout, empty answer): nothing is
-/// filed here, and the person checks at HMRC before trying again.
-class HmrcUnconfirmed extends HmrcOutcome {
+/// filed here, and the person checks at HMRC before trying again. The cause
+/// of the submission's not-reached outcome.
+@visibleForTesting
+final class HmrcUnconfirmed implements Exception {
   const HmrcUnconfirmed({this.code = ''});
 
   final String code;
+
+  @override
+  String toString() => 'HmrcUnconfirmed($code)';
 }
+
+/// Filed and recorded, with HMRC's receipt.
+CommandOutcome<HmrcFiling> hmrcFiled(HmrcReceipt receipt, {bool demo = false}) =>
+    CommandDone(HmrcFiling(receipt, demo: demo));
+
+/// HMRC took it; it could not be recorded here.
+CommandOutcome<HmrcFiling> hmrcAcceptedNotRecorded(HmrcReceipt receipt) =>
+    CommandDone(HmrcFiling(receipt, recorded: false));
+
+/// Refused; nothing was filed.
+CommandOutcome<HmrcFiling> hmrcRefused(
+  HmrcRefusal refusal, {
+  String code = '',
+  List<String> missing = const [],
+}) => CommandRefused(
+  Refusal(
+    code: code.isEmpty ? null : code,
+    cause: HmrcRefusalCause(refusal, code: code, missing: missing),
+  ),
+);
+
+/// It may have reached HMRC: nothing is filed here.
+CommandOutcome<HmrcFiling> hmrcUnconfirmed({String code = ''}) =>
+    CommandUnreached(TransportFailure(HmrcUnconfirmed(code: code)));
+
+/// The refusal of [outcome], or null when it was not refused.
+HmrcRefusalCause? hmrcRefusalOf(CommandOutcome<HmrcFiling>? outcome) =>
+    switch (outcome) {
+      CommandRefused(refusal: Refusal(cause: final HmrcRefusalCause cause)) =>
+        cause,
+      _ => null,
+    };
+
+/// The filing of [outcome] when HMRC took it, recorded or not.
+HmrcFiling? hmrcFilingOf(CommandOutcome<HmrcFiling>? outcome) =>
+    switch (outcome) {
+      CommandDone(:final value) => value,
+      _ => null,
+    };
 
 /// What only the person's browser knows (HMRC's fraud-prevention headers of
 /// connection method WEB_APP_VIA_SERVER). The server adds its own side and
@@ -215,7 +259,7 @@ abstract interface class HmrcRepository {
 
   /// Submits the prepared return [declarationId]. [boxes] are the nine boxes
   /// the screen shows (pounds); the server compares them with its own.
-  Future<HmrcOutcome> submit({
+  Future<CommandOutcome<HmrcFiling>> submit({
     required String declarationId,
     required String connectionId,
     required Map<String, num> boxes,

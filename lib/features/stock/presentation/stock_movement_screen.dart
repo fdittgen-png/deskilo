@@ -7,7 +7,6 @@
 // nothing, or of another business) says so, and a failed read can be asked
 // again.
 
-import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show exponentOf;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -33,27 +32,6 @@ import 'stock_place_text.dart';
 import 'stock_read_failed.dart';
 import 'stock_reversal_sheet.dart';
 import 'stock_trace_section.dart';
-
-@visibleForTesting
-/// A cost in minor units of [currency] (`250.5`) as the major amount it is
-/// (`2.505`), moving the decimal point and nothing else: no float.
-String stockCostText(String minor, String currency) {
-  final exponent = exponentOf(currency);
-  final negative = minor.startsWith('-');
-  final body = negative ? minor.substring(1) : minor;
-  final point = body.indexOf('.');
-  final whole = point < 0 ? body : body.substring(0, point);
-  final fraction = point < 0 ? '' : body.substring(point + 1);
-  final digits = (whole + fraction).padLeft(exponent + 1 + fraction.length, '0');
-  final cut = digits.length - fraction.length - exponent;
-  var text = '${digits.substring(0, cut)}.${digits.substring(cut)}';
-  text = text
-      .replaceFirst(RegExp(r'0+$'), '')
-      .replaceFirst(RegExp(r'\.$'), '');
-  final padded = exponent > 0 && !text.contains('.') ? '$text.${'0' * exponent}' : text;
-  final trimmedLeading = padded.replaceFirst(RegExp(r'^0+(?=\d)'), '');
-  return '${negative ? '-' : ''}$trimmedLeading $currency';
-}
 
 class StockMovementScreen extends ConsumerWidget {
   const StockMovementScreen({required this.movementId, super.key});
@@ -111,7 +89,7 @@ class _Detail extends ConsumerWidget {
         ? l10n.stockCostNotShown
         : m.unitCost == null
         ? l10n.stockCostUnknown
-        : stockCostText(m.unitCost!, currency);
+        : appFormatOf(context).exactMinor(m.unitCost!, currency);
     Widget row(String key, String label, String value) => ListTile(
       key: ValueKey('stock-movement-$key'),
       title: Text(label),
@@ -131,12 +109,12 @@ class _Detail extends ConsumerWidget {
         row(
           'stored',
           l10n.stockStoredLabel,
-          l10n.stockQuantityWithUnit(m.quantity.text, m.unit),
+          l10n.stockQuantityWithUnit(appFormatOf(context).quantity(m.quantity), m.unit),
         ),
         row(
           'entered',
           l10n.stockEnteredLabel,
-          l10n.stockQuantityWithUnit(m.enteredQuantity.text, m.enteredUnit),
+          l10n.stockQuantityWithUnit(appFormatOf(context).quantity(m.enteredQuantity), m.enteredUnit),
         ),
         row('when', l10n.stockWhenLabel, day),
         row('reason', l10n.creditMoveReasonLabel, stockMoveReasonText(l10n, m.reason)),
@@ -192,14 +170,14 @@ class _Reversals extends ConsumerWidget {
                 title: Text(
                   a.fullyReversed
                       ? l10n.stockReversalFully
-                      : l10n.stockReversalRemaining(a.remaining.text, movement.unit, a.reversed.text),
+                      : l10n.stockReversalRemaining(appFormatOf(context).quantity(a.remaining), movement.unit, appFormatOf(context).quantity(a.reversed)),
                 ),
               ),
               for (final r in a.reversals)
                 ListTile(
                   dense: true,
                   key: ValueKey('stock-reversal-${r.lineId}'),
-                  title: Text(l10n.stockReversalEntry(_kindText(l10n, r.kind), r.quantity.text, movement.unit)),
+                  title: Text(l10n.stockReversalEntry(_kindText(l10n, r.kind), appFormatOf(context).quantity(r.quantity), movement.unit)),
                 ),
               if (mayManage && !a.fullyReversed)
                 Padding(

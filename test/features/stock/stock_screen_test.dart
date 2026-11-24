@@ -281,11 +281,14 @@ void main() {
       expect(find.byKey(const ValueKey('stock-movement-none')), findsOneWidget);
     });
 
-    test('a cost in minor units is shown as the major amount it is, with no float', () {
-      expect(stockCostText('250.5', 'EUR'), '2.505 EUR');
-      expect(stockCostText('100', 'EUR'), '1.00 EUR');
-      expect(stockCostText('5', 'EUR'), '0.05 EUR');
-      expect(stockCostText('1.5', 'JPY'), '1.5 JPY');
+    test('a cost in minor units is shown as the major amount it is, with no float, in the member format', () {
+      const en = AppFormat(locale: 'en_US', currencyCode: 'EUR');
+      expect(en.exactMinor('250.5', 'EUR'), '2.505 EUR');
+      expect(en.exactMinor('100', 'EUR'), '1.00 EUR');
+      expect(en.exactMinor('5', 'EUR'), '0.05 EUR');
+      expect(en.exactMinor('1.5', 'JPY'), '1.5 JPY');
+      expect(en.exactMinor('123456789', 'EUR'), '1,234,567.89 EUR');
+      expect(const AppFormat(locale: 'de_DE', currencyCode: 'EUR').exactMinor('250.5', 'EUR'), '2,505 EUR');
     });
   });
 }

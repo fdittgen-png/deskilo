@@ -24,6 +24,9 @@ class DemoStockConfigCommands implements StockConfigCommands {
 
   final String workspaceId;
 
+  /// #4442 -- whether an item of the business has [code] as a packaging unit (a box of 6): a unit of measure cannot take it.
+  bool packages(String businessId, String code) => _mine(businessId) && _items.values.any((i) => i.units.any((u) => u.unit == code));
+
   final Map<String, StockItemConfig> _items = {
     'demo-item-beans': const StockItemConfig(
       itemId: 'demo-item-beans', revision: 1, stockable: true, purchasable: true, sellable: true,

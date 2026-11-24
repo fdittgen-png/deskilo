@@ -30,7 +30,6 @@ import '../../../core/theme/personal_theme.dart';
 import '../../../core/ui/async_read_body.dart';
 import '../../../core/ui/empty_state.dart';
 import '../../../core/ui/form_kit.dart';
-import '../../../core/ui/inline_banner.dart';
 import '../../visits/domain/guest_participation.dart';
 import '../../visits/presentation/my_visits_section.dart';
 import '../../visits/providers/visits_providers.dart';
@@ -93,31 +92,27 @@ class _PersonalSpacesState extends ConsumerState<PersonalSpacesView> {
   /// search and the filters over what was loaded.
   List<Widget> _status(
     BuildContext context, {
-    required bool localFailed,
-    required bool failed,
+    required Object? localFailure,
+    required Object? failure,
     required bool loading,
     required bool empty,
     required bool noMatch,
   }) {
     final l10n = context.l10n;
     return [
-      if (localFailed) ...[
-        InlineBanner(
+      if (localFailure != null) ...[
+        ReadFailureBanner(
           key: const ValueKey('my-spaces-local-unavailable'),
-          icon: Icons.cloud_off_outlined,
-          text: l10n.mePlacesLoadFailed,
-          actionLabel: l10n.commonRetry,
-          onAction: () => unawaited(ref.refresh(myWorkspacesProvider.future)),
+          error: localFailure,
+          onRetry: () => unawaited(ref.refresh(myWorkspacesProvider.future)),
         ),
         const SizedBox(height: AppSpacing.sm),
       ],
-      if (failed)
-        InlineBanner(
+      if (failure != null)
+        ReadFailureBanner(
           key: const ValueKey('my-spaces-unavailable'),
-          icon: Icons.cloud_off_outlined,
-          text: l10n.mySpacesUnavailable,
-          actionLabel: l10n.commonRetry,
-          onAction: _retry,
+          error: failure,
+          onRetry: _retry,
         )
       else if (loading)
         const LinearProgressIndicator(key: ValueKey('my-spaces-loading'))
@@ -173,10 +168,10 @@ class _PersonalSpacesState extends ConsumerState<PersonalSpacesView> {
         ref.watch(myGuestVisitsProvider).value ?? const <GuestParticipation>[];
     // #1650 — this server's spaces could not be read: entry needs them, so
     // the page says so beside the references it could read.
-    final localFailed = localAsync.hasError && !localAsync.hasValue;
+    final localFailure = localAsync.hasValue ? null : localAsync.error;
     // A failed read is never an empty list; a refresh keeps what was shown.
-    final failed = answer.hasError && !answer.isLoading;
-    final loaded = failed ? null : refsOfCurrentAccount(answer);
+    final failure = answer.isLoading ? null : answer.error;
+    final loaded = failure != null ? null : refsOfCurrentAccount(answer);
     final all = loaded?.refs ?? const <PersonalWorkspaceRef>[];
     final ordered = loaded == null
         ? const <PersonalSpaceRow>[]
@@ -203,8 +198,8 @@ class _PersonalSpacesState extends ConsumerState<PersonalSpacesView> {
       const SizedBox(height: AppSpacing.md),
       ..._status(
         context,
-        localFailed: localFailed,
-        failed: failed,
+        localFailure: localFailure,
+        failure: failure,
         loading: loaded == null,
         empty: all.isEmpty && visits.isEmpty,
         noMatch: rows.isEmpty && !showVisits,

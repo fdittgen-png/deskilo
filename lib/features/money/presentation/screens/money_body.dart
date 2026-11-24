@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/help/help_hint.dart';
-import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_frame.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../widgets/invoice_overview.dart';
 import '../widgets/money_attention_body.dart';
@@ -31,7 +31,6 @@ class MoneyBody extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = context.l10n;
     final data = MoneyViewData.watch(ref, ops.period);
     final actions = MoneyActionSet.build(
       context,
@@ -80,10 +79,9 @@ class MoneyBody extends ConsumerWidget {
             pages: content.pages(),
           ),
         AsyncData() => classic,
-        AsyncError() => Center(
-            child: Text(
-              l10n.workspaceGenericError,
-            ),
+        AsyncError(:final error) => ReadFailureBanner(
+            error: error,
+            onRetry: () => MoneyViewData.retry(ref),
           ),
         _ => const LoadingView(),
       },

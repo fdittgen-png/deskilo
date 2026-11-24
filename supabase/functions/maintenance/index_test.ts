@@ -6,7 +6,7 @@
 // API in batches when it is, names every file it could not remove, and
 // records its run with its lease.
 import { assertEquals } from "jsr:@std/assert@1";
-import { handle, MAINTENANCE_SECRET_HEADER, REMOVE_BATCH } from "./index.ts";
+import { handle, MAINTENANCE_SECRET_HEADER, REMOVE_BATCH, serve } from "./index.ts";
 
 const SECRET = "maintenance-secret";
 
@@ -174,4 +174,31 @@ Deno.test("while another run holds the lease, nothing is read, removed or record
   assertEquals(body.skipped, "leased");
   assertEquals(fake.removals, []);
   assertEquals(finish(fake), undefined);
+});
+
+// #4412 -- an uncaught error is the envelope: a code and the request id, never the error's own words.
+Deno.test("#4412 maintenance: a thrown error answers the envelope and no internal message", async () => {
+  const saved = console.error;
+  console.error = () => {};
+  try {
+    const answer = await serve({
+      service: () => {
+        throw new Error("service role key sb_secret_xyz is wrong");
+      },
+      env: (n) => (n === "MAINTENANCE_SECRET" ? SECRET : undefined),
+      now: () => 1_800_000_000_000,
+    })(
+      new Request("http://x/maintenance", {
+        method: "POST",
+        headers: { [MAINTENANCE_SECRET_HEADER]: SECRET, "x-request-id": "r-mnt" },
+        body: JSON.stringify({ job: "invoice-originals-sweep" }),
+      }),
+    );
+    assertEquals(answer.status, 500);
+    const text = await answer.text();
+    assertEquals(JSON.parse(text), { error: "internal_error", request_id: "r-mnt" });
+    assertEquals(/secret|sb_|wrong/i.test(text), false);
+  } finally {
+    console.error = saved;
+  }
 });

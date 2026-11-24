@@ -383,7 +383,6 @@
   "fecAccountRevenue": "Ventes",
   "fecMissingSiren": "Le FEC porte le nom de votre numéro d'immatriculation — renseignez-le d'abord dans Identité légale.",
   "invoiceEInvoiceStaleIdentity": "Votre identité légale est complète, mais cette facture a été signée avant et conserve ce avec quoi elle a été émise. Marquez-la erronée puis émettez un remplacement pour porter la nouvelle identité.",
-  "einvoiceConfigUnavailable": "Impossible de charger la configuration de la plateforme. Vérifiez votre connexion et réessayez.",
   "einvoiceEnvTitle": "Envoyer vers quelle plateforme ?",
   "einvoiceEnvProd": "Production",
   "einvoiceEnvUat": "UAT (plateforme de test)",
