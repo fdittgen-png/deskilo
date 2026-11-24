@@ -19,6 +19,7 @@ import '../demo_fixture.dart';
 import '../demo_persona.dart';
 import '../demo_space_ids.dart';
 import '../demo_spaces.dart';
+import 'demo_freelancer_seed.dart' show demoKesslerChiaraId, demoKesslerLindnerId;
 
 /// The Demo's grants, over the customers each space keeps.
 FakeBillingAccessRepository seedDemoBillingAccess(DemoFixture fixture) {
@@ -61,10 +62,6 @@ FakeBillingAccessRepository seedDemoBillingAccess(DemoFixture fixture) {
       principal: DemoPersona.admin.userId,
     );
 }
-
-/// #4168 — Kessler Conseil's customers who read their own invoices.
-const demoKesslerLindnerId = 'kessler-customer-lindner';
-const demoKesslerChiaraId = 'kessler-customer-chiara';
 
 const _weiss = 'demo-customer-weiss';
 const _nordlicht = 'demo-customer-nordlicht';

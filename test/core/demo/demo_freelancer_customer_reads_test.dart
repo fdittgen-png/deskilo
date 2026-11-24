@@ -13,7 +13,8 @@ import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/core/demo/demo_persona.dart';
 import 'package:deskilo/core/demo/demo_space_ids.dart';
 import 'package:deskilo/core/demo/demo_spaces.dart';
-import 'package:deskilo/core/demo/seed/demo_billing_access_seed.dart';
+import 'package:deskilo/core/demo/seed/demo_freelancer_seed.dart'
+    show demoKesslerChiaraId, demoKesslerLindnerId;
 import 'package:deskilo/features/money/application/customer_quote_commands.dart';
 import 'package:deskilo/features/money/domain/billing_access.dart';
 import 'package:deskilo/features/money/domain/customer_quote.dart';

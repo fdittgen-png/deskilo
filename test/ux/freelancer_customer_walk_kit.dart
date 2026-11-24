@@ -6,6 +6,7 @@
 // Kessler Conseil made out to Lindner Beratung, read through the grant she
 // accepted, and not the invoice of another of its customers.
 import 'package:deskilo/core/demo/demo_persona.dart';
+import 'package:deskilo/l10n/app_localizations_en.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
@@ -30,12 +31,9 @@ final _card = find.byWidgetPredicate(
 );
 
 Future<void> walkLindnerReads(WidgetTester tester, Size size) async {
-  await pumpDemo(
-    tester,
-    persona: DemoPersona.owner,
-    openHub: false,
-    size: size,
-  );
+  // The Demo starts as Ada, the owner of the head and of the practice.
+  expect(initialDemoPersona, DemoPersona.owner);
+  await pumpDemo(tester, openHub: false, size: size);
   GoRouter.of(tester.element(find.byType(Scaffold).first))
       .go('/me/data?view=finances');
   await _settle(tester);
@@ -53,6 +51,11 @@ Future<void> walkLindnerReads(WidgetTester tester, Size size) async {
   expect(card, findsOneWidget, reason: 'read through her grant');
   await tester.ensureVisible(card);
   await tester.pump();
+  expect(
+    tester.widget<Text>(card).data,
+    AppLocalizationsEn().billingAccessGroupSettled,
+    reason: 'the EUR 108.00 is paid: nothing of it is open',
+  );
   expect(
     find.byKey(
       const ValueKey('billed-invoice-kessler-a3'),
