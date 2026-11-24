@@ -19,8 +19,7 @@ import '../../app/finance_hosts_wiring.dart';
 import '../../app/private_values_wiring.dart';
 import '../../features/calendar/providers/calendar_providers.dart';
 import '../../features/events/providers/event_providers.dart';
-import '../../features/me/providers/me_providers.dart'
-    show myReservationsSourcesFromMe, pendingAdmissionsFromMe;
+import '../../features/me/providers/me_providers.dart' show myReservationsSourcesFromMe, pendingAdmissionsFromMe;
 import '../../features/money/domain/hmrc_submission.dart';
 import '../../features/money/domain/till_drawer.dart' show DrawerSettings;
 import '../../features/money/providers/bank_statement_providers.dart';
@@ -90,6 +89,7 @@ import 'data/workspace_repository.dart' show FakeWorkspaceMembership;
 import 'demo_finance_commands.dart';
 import 'demo_fixture.dart';
 import 'demo_space_pick.dart';
+import 'demo_unit_overrides.dart';
 
 /// Demo's one fictional installation: nothing is verified against a
 /// server, and every client borrows the fakes (#1625).
@@ -311,9 +311,8 @@ List<Override> _moneyPortOverrides(FakeMoneyRepository Function(Ref ref) money, 
   accountingSourceQueriesProvider.overrideWith(
     (ref) => money(ref).accountingSource,
   ),
-  // #4161 — the reference business keeps a small shop stock, and so does the shop (#4365): each business its
-  // own goods ledger in memory, made when it is first read and kept for the session. The reference business's
-  // purchase orders, deliveries and cycle counts stay its own.
+  // #4161 — the reference business keeps a small shop stock, and so does the shop (#4365): each its own goods ledger in memory,
+  // made when first read and kept for the session; the reference business's purchase orders, deliveries and cycle counts stay its own.
   stockQueriesProvider.overrideWith((ref) => DemoStockQueries(stocks.of(ref).ledger)),
   // #4169 — and edits its units, codes and places in memory.
   stockConfigCommandsProvider.overrideWith((ref) => stocks.of(ref).config),
@@ -325,6 +324,7 @@ List<Override> _moneyPortOverrides(FakeMoneyRepository Function(Ref ref) money, 
   stockCodeResolverProvider.overrideWith((ref) => stocks.of(ref).codeResolver),
   // #4363 — and keeps tags (an NFC chip on a shelf and on the mugs) in memory.
   stockTagsStoreProvider.overrideWith((ref) => stocks.of(ref).tags),
+  ...demoUnitOverrides((ref) => stocks.of(ref).ledger.itemList.map((i) => i.unit), (ref, ws, code) => stocks.of(ref).config.packages(ws, code)), // #4442
   // #4435 — and keeps handling units (a pallet and a carton at the main store) over that same ledger.
   stockHandlingUnitsProvider.overrideWith((ref) => stocks.of(ref).units),
   // #4431 — the expiry report answers from the lots the Demo keeps with their dates.

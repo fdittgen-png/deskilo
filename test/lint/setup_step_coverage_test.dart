@@ -76,6 +76,8 @@ const _switches = <WorkspaceFeature>{
   WorkspaceFeature.stockHandlingUnits,
   // #4373 — asked for on the till, not in the setup guide.
   WorkspaceFeature.counterOfflineCash,
+  // #4442 — asked for in Settings, not in the setup guide.
+  WorkspaceFeature.unitsOfMeasure,
   // Booking and the plan read what is already set up.
   WorkspaceFeature.seriesBooking,
   WorkspaceFeature.seatDayTimeline,

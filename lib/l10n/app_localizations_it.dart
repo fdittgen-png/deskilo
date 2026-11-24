@@ -12922,6 +12922,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featureUniqueMonogramsTitle => 'Iniziali avatar distinte';
 
   @override
+  String get featureUnitsOfMeasureDesc =>
+      'Il titolare e gli amministratori gestiscono le unità di misura dell’attività e le loro conversioni (1 km = 1000 m, 1 kg = 1000 g). Articoli, preventivi e fatture sono misurati con esse. Le unità di base ci sono sempre; attivando questa opzione compare la schermata per gestirle.';
+
+  @override
+  String get featureUnitsOfMeasureTitle => 'Unità di misura';
+
+  @override
   String get featureUsageInvoicesDesc =>
       'Finito il mese, quanto è realmente costato oltre l\'abbonamento — eccedenze, supplementi, servizi — è fatturato a parte. Disattivato: resta sulla fattura del mese.';
 
@@ -22534,6 +22541,101 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get meWhereSpacesLive => 'Dove si trovano i miei posti';
+
+  @override
+  String get measureDimensionArea => 'Superficie';
+
+  @override
+  String get measureDimensionCount => 'Quantità';
+
+  @override
+  String get measureDimensionLength => 'Lunghezza';
+
+  @override
+  String get measureDimensionMass => 'Massa';
+
+  @override
+  String get measureDimensionTime => 'Tempo';
+
+  @override
+  String get measureDimensionVolume => 'Volume';
+
+  @override
+  String get measureReasonDimension => 'Scelga che cosa misura questa unità.';
+
+  @override
+  String get measureReasonEce =>
+      'Un codice UN/ECE è formato da due o tre lettere maiuscole o cifre.';
+
+  @override
+  String get measureReasonFixed =>
+      'Questa unità è fissa e non può essere modificata né rimossa.';
+
+  @override
+  String get measureReasonInUse =>
+      'Questa unità è in uso, quindi la sua grandezza e il suo fattore non possono più cambiare. Crei invece una nuova unità.';
+
+  @override
+  String get measureReasonInexact =>
+      'Il risultato non può essere scritto esattamente con sei decimali.';
+
+  @override
+  String get measureReasonName => 'Una nuova unità ha bisogno di un nome.';
+
+  @override
+  String get measureUnitArchive => 'Archivia';
+
+  @override
+  String get measureUnitArchivedTag => 'Archiviata';
+
+  @override
+  String get measureUnitBuiltIn => 'Di base';
+
+  @override
+  String get measureUnitCodeField => 'Codice dell’unità';
+
+  @override
+  String get measureUnitCodeHelp =>
+      'Lettere minuscole, cifre e trattini bassi. Non potrà più cambiare.';
+
+  @override
+  String get measureUnitDimensionField => 'Misura';
+
+  @override
+  String get measureUnitEceField =>
+      'Codice UN/ECE (per le fatture elettroniche)';
+
+  @override
+  String get measureUnitEdit => 'Modifica unità';
+
+  @override
+  String get measureUnitFactorField => 'Un’unità equivale a';
+
+  @override
+  String measureUnitFactorHelp(String base) {
+    return 'Contata in $base, l’unità di base di ciò che misura: 1000 per un km, 0,001 per un mm.';
+  }
+
+  @override
+  String measureUnitLine(String unit, String value, String base) {
+    return '1 $unit = $value $base';
+  }
+
+  @override
+  String get measureUnitNameField => 'Il suo nome per l’unità';
+
+  @override
+  String get measureUnitNew => 'Nuova unità';
+
+  @override
+  String get measureUnitRestore => 'Mostra di nuovo';
+
+  @override
+  String get measureUnitsIntro =>
+      'Le unità in cui sono misurati i suoi articoli, preventivi e fatture, e come si convertono: 1 km = 1000 m. Le unità di base ci sono sempre; aggiunga le sue, per esempio una matassa di cavo da 50 m.';
+
+  @override
+  String get measureUnitsSubtitle => 'Le sue unità e le loro conversioni';
 
   @override
   String get memberAccountTitle => 'Il mio account';

@@ -373,5 +373,13 @@
   "featureCounterOfflineCashDesc": "Quando la connessione cade, la cassa continua a vendere in contanti, registra ogni vendita sul dispositivo e invia le vendite in ordine al ritorno della connessione. Gli altri metodi di pagamento attendono la connessione.",
   "@featureCounterOfflineCashDesc": {
     "description": "#4373 feature description"
+  },
+  "featureUnitsOfMeasureTitle": "Unità di misura",
+  "@featureUnitsOfMeasureTitle": {
+    "description": "#4442 feature name"
+  },
+  "featureUnitsOfMeasureDesc": "Il titolare e gli amministratori gestiscono le unità di misura dell’attività e le loro conversioni (1 km = 1000 m, 1 kg = 1000 g). Articoli, preventivi e fatture sono misurati con esse. Le unità di base ci sono sempre; attivando questa opzione compare la schermata per gestirle.",
+  "@featureUnitsOfMeasureDesc": {
+    "description": "#4442 feature description"
   }
 }

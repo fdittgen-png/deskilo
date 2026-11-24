@@ -3890,6 +3890,31 @@ Vuole che le sue fatture e lettere siano stampate sulla carta che usa il suo pae
 
 **Vedi anche:** [Paese](help:user.workspace.settings.country)
 
+### Unità di misura
+
+**Destinatari:** Proprietario · Amministratore con il permesso
+
+I suoi articoli, preventivi e fatture sono misurati in unità, e alcune unità si convertono in altre: 1 km sono 1000 m. Ogni attività parte con quelle usuali (pezzo, g, kg, ml, cl, l, mm, cm, m, km, m², min, h); lei aggiunge le sue, per esempio una matassa di cavo da 50 m.
+
+<!-- image: user-workspace-settings--units -->
+
+**Passaggi**
+
+1. Attivi **Unità di misura** in **Funzionalità** (è disattivata finché non la richiede).
+2. In [Unità di misura](app:/settings/units), tocchi **Nuova unità**.
+3. Compili **Codice dell’unità** (non potrà più cambiare), **Il suo nome per l’unità**, **Misura** e **Un’unità equivale a** nell’unità di base di ciò che misura: 1000 per un km contato in m, 0,001 per un mm.
+4. Se vuole, compili **Codice UN/ECE (per le fatture elettroniche)**, che le fatture elettroniche riportano (KMT per un km).
+5. Tocchi **Salva**.
+
+**Da sapere**
+
+- Un’unità di base mantiene la sua grandezza e il suo fattore; può darle un nome suo.
+- Un’unità in uso (un articolo contato con essa, un movimento di magazzino, un preventivo o una riga di fattura) mantiene per sempre grandezza e fattore: una correzione è una nuova unità. Un’unità che nessuno usa può essere archiviata (**Archivia**) e mostrata di nuovo (**Mostra di nuovo**).
+- Una conversione è esatta: 2,5 km sono 2500 m. Due tipi di unità non si convertono mai, e un risultato che sei decimali non possono contenere viene rifiutato, mai arrotondato.
+- Solo il proprietario e gli amministratori autorizzati a modificare le impostazioni dello spazio gestiscono le unità.
+
+**Vedi anche:** [Carta dei documenti](help:user.workspace.settings.paper)
+
 ### Organizzazione
 
 **Destinatari:** Proprietario
