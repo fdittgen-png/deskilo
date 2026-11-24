@@ -71,11 +71,10 @@ class DenominationRows extends ChangeNotifier {
 
 /// The rows as fields, with the total counted so far under them.
 class DenominationFields extends StatelessWidget {
-  const DenominationFields({super.key, required this.rows, required this.currency, this.error});
+  const DenominationFields({super.key, required this.rows, required this.currency});
 
   final DenominationRows rows;
   final String currency;
-  final String? error;
 
   @override
   Widget build(BuildContext context) {
@@ -84,6 +83,7 @@ class DenominationFields extends StatelessWidget {
       listenable: rows,
       builder: (context, _) {
         final total = rows.read(context)?.totalMinor;
+        final error = FormErrorsScope.maybeOf(context)?.errors['amount'];
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -140,7 +140,7 @@ class DenominationFields extends StatelessWidget {
                 key: const ValueKey('drawer-denom-total'),
                 style: Theme.of(context).textTheme.titleSmall,
               ),
-            if (error != null) Text(error!, key: const ValueKey('drawer-denom-error'), style: TextStyle(color: Theme.of(context).colorScheme.error)),
+            if (error != null) Text(error, key: const ValueKey('drawer-denom-error'), style: TextStyle(color: Theme.of(context).colorScheme.error)),
           ],
         );
       },

@@ -57,7 +57,6 @@ Future<bool> showCashEntrySheet(
         }
       },
       builder: (context, refresh) {
-        final reasonError = FormErrorsScope.maybeOf(context)?.errors['reason'];
         return [
           Wrap(
             spacing: 8,
@@ -105,11 +104,18 @@ Future<bool> showCashEntrySheet(
                 ),
             ],
           ),
-          if (reasonError != null)
-            Padding(
-              padding: const EdgeInsets.only(top: 8),
-              child: Text(reasonError, key: const ValueKey('drawer-entry-reason-error'), style: TextStyle(color: Theme.of(context).colorScheme.error)),
-            ),
+          // read under the sheet's own scope: the builder's context sits above it
+          Builder(
+            builder: (c) {
+              final reasonError = FormErrorsScope.maybeOf(c)?.errors['reason'];
+              return reasonError == null
+                  ? const SizedBox.shrink()
+                  : Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: Text(reasonError, key: const ValueKey('drawer-entry-reason-error'), style: TextStyle(color: Theme.of(c).colorScheme.error)),
+                    );
+            },
+          ),
         ];
       },
     ),

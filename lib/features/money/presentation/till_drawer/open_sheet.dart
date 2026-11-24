@@ -64,7 +64,7 @@ Future<bool> showOpenTillSheet(
       },
       builder: (context, refresh) => [
         if (byDenomination)
-          DenominationFields(rows: rows, currency: currency, error: FormErrorsScope.maybeOf(context)?.errors['amount'])
+          DenominationFields(rows: rows, currency: currency)
         else
           AppAmountField(
             key: const ValueKey('drawer-float'),

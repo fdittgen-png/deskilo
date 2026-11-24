@@ -97,7 +97,6 @@ Future<DrawerClosed?> showCloseTillSheet(
       },
       builder: (context, refresh) {
         refreshSheet = refresh;
-        final scope = FormErrorsScope.maybeOf(context);
         final counted = countedMinor();
         final difference = counted != null && known() != null ? counted - known()! : null;
         return [
@@ -115,7 +114,7 @@ Future<DrawerClosed?> showCloseTillSheet(
             const FormGap(),
           ],
           if (byDenomination)
-            DenominationFields(rows: rows, currency: currency, error: scope?.errors['amount'])
+            DenominationFields(rows: rows, currency: currency)
           else
             AppAmountField(
               key: const ValueKey('drawer-counted'),
