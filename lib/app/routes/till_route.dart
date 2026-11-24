@@ -34,6 +34,7 @@ class TillRoute extends ConsumerWidget {
 
 /// #4436 -- what a scanned code rings up at the till: an item by its own code or its tag, one piece by its tag.
 /// A variant, a lot, a package unit or a place is not something the till rings up yet: it names nothing here.
+@visibleForTesting
 TillScan tillScanOf(StockCodeResolution r) {
   final item = r.item;
   if (item == null || item.id.isEmpty || r.unit != null || r.variantId != null) return TillScanUnknown(r.code);
