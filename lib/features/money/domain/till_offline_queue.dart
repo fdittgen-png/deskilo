@@ -82,6 +82,9 @@ class TillOfflineQueue {
 
   /// Whether any session of this device has sales waiting.
   bool get hasPending => _lanes.values.any((l) => l.pending.isNotEmpty);
+
+  /// How many sales wait to be sent, in every session of the device.
+  int get pendingCount => _lanes.values.fold(0, (a, l) => a + l.pending.length);
   Map<String, OfflinePrice> get prices => Map.unmodifiable(_prices);
 
   /// What the sales waiting add up to: the cash that is in the drawer and not yet on the server (every session of the device).

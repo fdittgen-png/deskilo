@@ -265,9 +265,13 @@ abstract interface class TillPort {
 
 /// #4366 -- an item the till offers as a key: what a tap rings up.
 class TillKey {
-  const TillKey({required this.id, required this.name, required this.unit});
+  const TillKey({required this.id, required this.name, required this.unit, this.grossMinor});
 
   final String id;
   final String name;
   final String unit;
+
+  /// #4373 -- the item's price, gross, minor units of one unit, when the route knows it: what the till falls back on when it sells
+  /// offline. The server prices every online sale; this is never used for one.
+  final int? grossMinor;
 }

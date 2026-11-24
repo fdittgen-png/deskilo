@@ -147,6 +147,8 @@ Future<void> main() async {
         tillSessionsFromApp, // #4367
         drawerSettingsFromApp, // #4367
         tillOfflinePortFromApp, // #4373
+        tillOfflineStoreFromApp, // #4373
+        tillOfflineEnabledFromApp, // #4373
         businessDayFromApp, // #4426
         privateValuesFromAccount, // #2552
         eventSourceOpenersFromMoney, // #2573

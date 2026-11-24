@@ -4,13 +4,20 @@
 // quantities), has the server price it after every change (a draft under a request id of its own), and makes the sale
 // in ONE command that numbers the receipt and takes the tender. It prices nothing itself and keeps no second sale path:
 // a refusal is the server's, kept as it came so the screen can say it in words.
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 
 import '../../../core/ids/request_id.dart';
 import '../../../core/trace/refusal_text.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/counter_till.dart';
+import '../domain/till_offline.dart';
+import '../domain/till_offline_queue.dart';
 import '../domain/till_quantity.dart';
+import 'till_offline_mode.dart';
+
+part 'till_session_offline.dart';
 
 /// What the till shows: the basket, its price, a sale made, or the refusal of the last act.
 @immutable
@@ -95,6 +102,12 @@ class TillSession {
   /// carries no till). The cashier's choice among several open tills stays here while the basket is being served.
   final ValueNotifier<String?> chosenTill = ValueNotifier(null);
   String? tillId;
+
+  /// #4373 -- what the till shows of selling offline, and what it needs to do it (null: the business sells online only).
+  final ValueNotifier<TillOfflineStatus> offline = ValueNotifier(const TillOfflineStatus());
+  TillOfflineKit? offlineKit;
+  String? offlineSessionId;
+  Timer? _reconnectTimer;
 
   /// Every act runs after the one before it: two taps never send the same receipt and revision, and the answer of a sale
   /// is never dropped for a tap that came after it.
@@ -192,12 +205,22 @@ class TillSession {
       _last = null;
       return;
     }
+    // selling offline: the device prices the basket from what it holds, until the connection is back
+    if (offline.value.active) {
+      _priceOffline(lines);
+      return;
+    }
     try {
       final draft = await _draft(lines, receiptId: _last?.receiptId, revision: _last?.revision, reuse: again ? _draftAttempt : null);
       if (!_describes(draft, lines)) throw const TillDraftMismatch();
       _set(_now.copyWith(draft: () => draft));
     } on Object catch (e, st) {
       TraceLogger.instance.error('money', 'till pricing refused', error: e, stackTrace: st);
+      // no answer at all: the till goes on selling for cash, when the business has that on and the till has its session
+      if (_connectionLost(e) && await _enterOffline()) {
+        _priceOffline(lines);
+        return;
+      }
       _set(_now.copyWith(draft: () => null, problem: () => e));
     }
   }
@@ -244,6 +267,7 @@ class TillSession {
   Future<void> payCash(int givenMinor) => _serial(() async {
     final draft = _now.draft;
     if (draft == null || _now.sold != null) return;
+    if (offline.value.active) return _payOffline(givenMinor);
     // A sale that may have been made is confirmed as it was sent, whatever the cash typed now.
     if (_now.unconfirmed) return _finalize(draft);
     final total = draft.totals.grossMinor;
@@ -316,6 +340,7 @@ class TillSession {
     _draftAttempt = null;
     _finalAttempt = null;
     _last = null;
+    _setOffline(offline.value.copyWith(sale: () => null));
     _set(const TillState());
   }
 
@@ -329,6 +354,8 @@ class TillSession {
 
   void dispose() {
     _disposed = true;
+    _stopReconnect();
+    offline.dispose();
     chosenTill.dispose();
     state.dispose();
   }
