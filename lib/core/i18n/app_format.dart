@@ -134,16 +134,45 @@ class AppFormat {
   /// holds and none added (`1.5` is `1,5` in fr_FR and de_DE, `1,234.5` in
   /// en_US), with [unit] after it when one is given. No `double` in between:
   /// the whole part is grouped by the locale and the fraction kept as stored.
-  String quantity(ExactQuantity value, {String? unit}) {
-    final text = value.text;
+  ///
+  /// [grouped] off writes the whole part without grouping: the text a field
+  /// is prefilled with, read back by the ungrouped input seam.
+  String quantity(ExactQuantity value, {String? unit, bool grouped = true}) {
+    final signed = _exactText(value.text, grouped: grouped);
+    return unit == null || unit.isEmpty ? signed : '$signed $unit';
+  }
+
+  /// #4424 -- an amount held in minor units with a fraction of its own
+  /// (`250.5` cents of a euro is 2.505 EUR: a unit cost), in the member's
+  /// format with every digit it holds and the currency's code after it. The
+  /// point moves by the currency's own minor digits, as text: no double.
+  String exactMinor(String minor, String currency) {
+    final exponent = exponentOf(currency);
+    final negative = minor.startsWith('-');
+    final body = negative ? minor.substring(1) : minor;
+    final point = body.indexOf('.');
+    final whole = point < 0 ? body : body.substring(0, point);
+    final fraction = point < 0 ? '' : body.substring(point + 1);
+    final digits = (whole + fraction).padLeft(exponent + 1 + fraction.length, '0');
+    final cut = digits.length - fraction.length - exponent;
+    var major = digits.substring(0, cut).replaceFirst(RegExp(r'^0+(?=\d)'), '');
+    var decimals = digits.substring(cut).replaceFirst(RegExp(r'0+$'), '');
+    if (decimals.length < exponent) decimals = decimals.padRight(exponent, '0');
+    major = decimals.isEmpty ? major : '$major.$decimals';
+    return '${_exactText(negative ? '-$major' : major)} $currency';
+  }
+
+  /// A canonical decimal text (`-1234.5`) in the member's format: the whole
+  /// part grouped when [grouped], the fraction kept as it is.
+  String _exactText(String text, {bool grouped = true}) {
     final negative = text.startsWith('-');
     final body = negative ? text.substring(1) : text;
     final dot = body.indexOf('.');
     final format = NumberFormat.decimalPattern(locale);
-    final whole = format.format(int.parse(dot < 0 ? body : body.substring(0, dot)));
+    final wholeDigits = dot < 0 ? body : body.substring(0, dot);
+    final whole = grouped ? format.format(int.parse(wholeDigits)) : wholeDigits;
     final number = dot < 0 ? whole : '$whole${format.symbols.DECIMAL_SEP}${body.substring(dot + 1)}';
-    final signed = negative ? '${format.symbols.MINUS_SIGN}$number' : number;
-    return unit == null || unit.isEmpty ? signed : '$signed $unit';
+    return negative ? '${format.symbols.MINUS_SIGN}$number' : number;
   }
 
   /// A fraction as a percentage (`0.081` is `8.1 %`): the locale's percent

@@ -181,7 +181,7 @@ class _State extends ConsumerState<StockCountTaskScreen> {
     if (!done || !mounted) return;
     _refresh(workspaceId);
     final difference = result?.difference;
-    AppSnack.success(context, difference == null ? l10n.stockCycleCounted : l10n.stockCycleCountedDifference(difference.text));
+    AppSnack.success(context, difference == null ? l10n.stockCycleCounted : l10n.stockCycleCountedDifference(appFormatOf(context).quantity(difference)));
   }
 
   Future<void> _skipSheet(String workspaceId, CountTaskLine line) async {

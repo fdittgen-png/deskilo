@@ -3,6 +3,8 @@
 // #4361 (G12) -- the factor of a group's default purchase unit, typed as one number a person writes: `12` (a carton of
 // twelve), `0.5` or the fraction `1/3` (a third of a litre). The server keeps it exact as two whole numbers; this
 // reads the text into them and writes them back, never through a double.
+import '../../../core/format/decimal_input.dart';
+
 typedef PurchaseFactor = ({int num, int den});
 
 int _gcd(int a, int b) => b == 0 ? a : _gcd(b, a % b);
@@ -10,7 +12,7 @@ int _gcd(int a, int b) => b == 0 ? a : _gcd(b, a % b);
 /// [text] as a factor above zero in lowest terms, or null when it is not one: a whole number, a decimal with a point or a
 /// comma (at most six decimals) or `a/b`.
 PurchaseFactor? parsePurchaseFactor(String text) {
-  final t = text.trim().replaceAll(',', '.');
+  final t = text.trim();
   final fraction = RegExp(r'^([0-9]{1,9})\s*/\s*([0-9]{1,9})$').firstMatch(t);
   int? num;
   int? den;
@@ -18,7 +20,8 @@ PurchaseFactor? parsePurchaseFactor(String text) {
     num = int.parse(fraction[1]!);
     den = int.parse(fraction[2]!);
   } else {
-    final decimal = RegExp(r'^([0-9]{1,9})(?:\.([0-9]{1,6}))?$').firstMatch(t);
+    // a decimal with a point or a comma, read by the input seam
+    final decimal = RegExp(r'^([0-9]{1,9})(?:\.([0-9]{1,6}))?$').firstMatch(decimalTextFromInput(t, grouping: false) ?? '');
     if (decimal == null) return null;
     final fractionDigits = decimal[2] ?? '';
     num = int.parse('${decimal[1]}$fractionDigits');

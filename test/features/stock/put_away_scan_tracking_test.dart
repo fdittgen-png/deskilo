@@ -2,6 +2,7 @@
 //
 // #4360 (G11) -- what a scanned GS1 label sets on a put-away line follows what the item tracks: an item that is not
 // tracked takes no lot, a lot-tracked item takes the lot and no expiry, an expiry-tracked item takes both.
+import 'package:deskilo/core/i18n/app_format.dart';
 import 'package:deskilo/features/money/domain/purchase_order.dart';
 import 'package:deskilo/features/stock/domain/put_away_progress.dart';
 import 'package:deskilo/features/stock/domain/stock_config.dart';
@@ -43,6 +44,7 @@ PutAwayDraft _draft(String tracking) => PutAwayDraft(
     lines: [],
   ),
   [DeliveredLineProgress(lineNo: 1, description: 'Oat milk', unit: 'l', serviceId: null, received: ExactQuantity.parse('6'), putAway: ExactQuantity.zero)],
+  format: const AppFormat(locale: 'en_US', currencyCode: 'EUR'),
 );
 
 PutAwayAllocation _scanned(String tracking) {
