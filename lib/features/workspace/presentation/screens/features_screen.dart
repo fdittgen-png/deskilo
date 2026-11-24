@@ -12,6 +12,7 @@ import '../../domain/feature_lifecycle.dart';
 import '../../domain/feature_switch_rows.dart';
 import '../../domain/workspace_feature.dart';
 import '../../providers/workspace_providers.dart';
+import '../../providers/workspace_schema_providers.dart';
 import '../feature_copy.dart';
 import '../feature_names.dart';
 import '../widgets/feature_capability_list.dart';
@@ -121,6 +122,7 @@ class _FeaturesScreenState extends ConsumerState<FeaturesScreen> {
                       key: const ValueKey('features-table'),
                       raw: raw,
                       country: workspace.countryCode,
+                      schema: ref.watch(currentWorkspaceSchemaProvider),
                       onChanged: (feature, {required value}) =>
                           switchWorkspaceFeature(context, ref,
                               workspace: workspace, enabled: raw,
@@ -145,6 +147,7 @@ class _FeaturesScreenState extends ConsumerState<FeaturesScreen> {
                       rows: rows,
                       raw: raw,
                       country: workspace.countryCode,
+                      schema: ref.watch(currentWorkspaceSchemaProvider),
                       assessments: widget.assessments,
                       // Hidden while filtering: somebody who typed a name
                       // is past being introduced. The list takes the

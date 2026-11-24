@@ -320,6 +320,7 @@
   "user.advanced.deploy": "Zwischen den beiden Seiten ausrollen",
   "user.advanced.status-archive": "Status des Workspace und das Jahresarchiv",
   "user.advanced.own-server": "Einen eigenen Server betreiben",
+  "user.advanced.app-floor": "Wenn eine Installation eine neuere App verlangt",
   "user.advanced.assistants": "Assistenten: was sie sind",
   "user.advanced.assistants-connect": "Einen Assistenten verbinden",
   "user.advanced.assistants-approve": "Freigaben und Bestätigungen für Assistenten",

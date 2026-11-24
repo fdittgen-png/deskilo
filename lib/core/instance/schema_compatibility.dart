@@ -14,9 +14,33 @@
 /// land without the app saying it needs it.
 const int requiredSchemaVersion = 943;
 
+/// #3729 (K2) — the schema this build CANNOT WORK without: below it an
+/// installation is told to update. [requiredSchemaVersion] only says what
+/// this build was made against, and moves with every migration; this one
+/// moves only with a change the app cannot work without, and every move
+/// carries its reason in [appNeedsHistory]. A feature may need more still
+/// (`FeatureManifestEntry.since`); it never needs less than this.
+const int appNeedsSchemaVersion = 934;
+
+/// Every value [appNeedsSchemaVersion] took, oldest first, each with the one
+/// line that says why the app cannot work below it. Pinned by
+/// `test/lint/schema_needs_pin_test.dart`: the last entry is the constant,
+/// and it is never above [requiredSchemaVersion].
+const List<({int number, String reason})> appNeedsHistory = [
+  (
+    number: 934,
+    reason: 'the baseline of the split (#3729): the schema this app was '
+        'built against when "needs at least" was introduced; no older '
+        'schema has been proven to work, so none is claimed',
+  ),
+];
+
 /// How a server's schema compares with what this app needs.
 enum SchemaCompatibility {
-  /// The server runs exactly this app's schema.
+  /// The server runs a schema this app can work with: at least what it
+  /// needs ([appNeedsSchemaVersion]) and not newer than what it was built
+  /// against. Since #3729 this includes an older but sufficient server; what
+  /// a single feature needs is judged by its own number, never by this word.
   current,
 
   /// The server is older than this app, or predates the version marker.
@@ -34,12 +58,18 @@ enum SchemaCompatibility {
 }
 
 /// Compares [server] — the value of `deskilo_schema_version()`, or null
-/// when the server has no such function — with [required].
+/// when the server has no such function — with what the app [needs] and
+/// what it was built against ([required]).
 ///
 /// A missing function is `behind`, not `unknown`: the server ANSWERED, and
 /// what it said is that it predates 0226.
-SchemaCompatibility compareSchema(int? server, {int required = requiredSchemaVersion}) {
-  if (server == null || server < required) return SchemaCompatibility.behind;
+SchemaCompatibility compareSchema(
+  int? server, {
+  int required = requiredSchemaVersion,
+  int needs = appNeedsSchemaVersion,
+}) {
+  // What the app needs is never above what it was built against.
+  if (server == null || server < (needs < required ? needs : required)) return SchemaCompatibility.behind;
   if (server > required) return SchemaCompatibility.ahead;
   return SchemaCompatibility.current;
 }

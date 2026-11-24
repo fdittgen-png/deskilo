@@ -120,7 +120,9 @@ class RouteFacts {
   const RouteFacts({
     required this.auth,
     this.schema = SchemaCompatibility.unknown,
+    this.hostSchema = SchemaCompatibility.unknown,
     this.appFloor = AppFloorVerdict.unknown,
+    this.hostAppFloor = AppFloorVerdict.unknown,
     this.privacy = PrivacyFact.accepted,
     this.workspaces = WorkspacesFact.some,
     this.membership = MembershipFact.active,
@@ -133,8 +135,19 @@ class RouteFacts {
   final AuthFact auth;
   final SchemaCompatibility schema;
 
+  /// #3729 — how the installation hosting the CURRENT workspace compares with
+  /// what this app needs. Judged on its own: a business on an old
+  /// installation closes its own routes, never the account's (Me, the
+  /// Server screen, the help) and never another installation's.
+  final SchemaCompatibility hostSchema;
+
   /// #3726 — how the installation's floor judges this app.
   final AppFloorVerdict appFloor;
+
+  /// #3726 — how the floor of the installation hosting the CURRENT
+  /// workspace judges this app: below it, that workspace's routes go to the
+  /// app update screen and the account's pages stay open.
+  final AppFloorVerdict hostAppFloor;
   final PrivacyFact privacy;
   final WorkspacesFact workspaces;
   final MembershipFact membership;
@@ -156,8 +169,16 @@ enum RouteReason {
   schemaBehind,
   schemaCurrent,
 
+  /// #3729 — the installation hosting the workspace is older than the app
+  /// needs: the workspace's routes go to the notice, the account's stay.
+  hostSchemaBehind,
+
   /// #3726 — the installation accepts only newer apps.
   appBelowFloor,
+
+  /// #3726 — the installation hosting the workspace accepts only newer
+  /// apps: the workspace's routes go to the notice, the account's stay.
+  hostAppBelowFloor,
 
   /// #3726 — the app is accepted: the update screen sends home.
   appAccepted,
@@ -260,6 +281,16 @@ RouteDecision? _schemaDecision(
   final path = request.location;
   final schemaGate = schemaGateRedirect(facts.schema, path);
   if (facts.schema != SchemaCompatibility.behind) {
+    if (facts.hostSchema == SchemaCompatibility.behind &&
+        !(path == '/demo' || demoEntry != null)) {
+      if (path == kSchemaUpdateRoute) return const RouteDecision.stay();
+      if (classifyRoute(path) == RouteClass.workspace) {
+        return const RouteDecision.go(
+          kSchemaUpdateRoute,
+          RouteReason.hostSchemaBehind,
+        );
+      }
+    }
     return schemaGate == null
         ? _appFloorDecision(request, facts, demoEntry)
         : RouteDecision.go(facts.home, RouteReason.schemaCurrent);
@@ -281,6 +312,16 @@ RouteDecision? _appFloorDecision(
   final path = request.location;
   final gate = appFloorGateRedirect(facts.appFloor, path);
   if (facts.appFloor != AppFloorVerdict.below) {
+    if (facts.hostAppFloor == AppFloorVerdict.below &&
+        !(path == '/demo' || demoEntry != null)) {
+      if (path == kAppUpdateRoute) return const RouteDecision.stay();
+      if (classifyRoute(path) == RouteClass.workspace) {
+        return const RouteDecision.go(
+          kAppUpdateRoute,
+          RouteReason.hostAppBelowFloor,
+        );
+      }
+    }
     return gate == null ? null : RouteDecision.go(facts.home, RouteReason.appAccepted);
   }
   if (path == '/demo' || demoEntry != null) return null;

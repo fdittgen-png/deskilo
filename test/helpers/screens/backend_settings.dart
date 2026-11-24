@@ -122,7 +122,7 @@ class _Transport implements BackendProbeTransport {
     final report = await owner.pending(url).future;
     return switch (report.result) {
       BackendProbeResult.ahead => requiredSchemaVersion + 1,
-      BackendProbeResult.behind => requiredSchemaVersion - 1,
+      BackendProbeResult.behind => appNeedsSchemaVersion - 1,
       _ => requiredSchemaVersion,
     };
   }

@@ -6804,7 +6804,7 @@ Lo que rodea al trabajo diario: la cara de pruebas de un espacio y la real, los 
 
 En este capítulo:
 - [Un espacio tiene dos caras](#un-espacio-tiene-dos-caras) · [Entre en una cara](#entre-en-la-cara-real-o-en-la-de-pruebas) · [Un espacio de prueba](#para-qué-sirve-un-espacio-de-prueba) · [Quién puede desplegar](#quién-puede-desplegar-y-entrar-en-producción) · [Despliegue entre las caras](#despliegue-entre-las-dos-caras) · [Situación del espacio y archivo del ejercicio](#situación-del-espacio-y-archivo-del-ejercicio)
-- [Su propio servidor](#gestione-su-propio-servidor)
+- [Su propio servidor](#gestione-su-propio-servidor) · [Cuando una instalación exige una aplicación más reciente](#cuando-una-instalación-exige-una-aplicación-más-reciente)
 - [Asistentes](#asistentes-qué-son) · [Conecte un asistente](#conecte-un-asistente) · [Aprobaciones](#aprobaciones-y-confirmaciones-de-los-asistentes) · [Qué pueden hacer los asistentes](#qué-pueden-hacer-los-asistentes-en-un-espacio)
 - [El grabador de tareas](#el-grabador-de-tareas-y-las-visitas-guiadas) · [Grabe una tarea](#grabe-una-tarea) · [Revise una grabación](#revise-edite-y-exporte-una-grabación) · [Cree una guía](#cree-una-guía-a-partir-de-una-grabación) · [Siga una guía](#siga-una-guía) · [El menú circular](#el-menú-circular) · [Edite una guía](#edite-o-repare-una-guía) · [Privacidad de las grabaciones](#qué-conserva-una-grabación)
 - [El espacio de demostración](#el-espacio-de-demostración) · [Modo grabación](#modo-grabación)
@@ -6965,6 +6965,29 @@ Quiere los datos de su comunidad en un servidor que usted controle, o pertenece 
 - Un operador puede activar los asistentes para toda la instalación; véase [Aprobaciones](#aprobaciones-y-confirmaciones-de-los-asistentes).
 
 **Véase también:** [Su propio servidor](#su-propio-servidor)
+
+<!-- anchor: user.advanced.app-floor -->
+### Cuando una instalación exige una aplicación más reciente
+
+**Público:** Operador/a · Propietario
+
+Una instalación puede indicar que solo se use con ella una aplicación más reciente. Quiere saber cuándo está justificado y qué verán sus probadores y miembros.
+
+**Pasos**
+
+1. Suba el mínimo solo cuando una aplicación antigua sería errónea y no simplemente incompleta: una corrección de seguridad o un cambio en el significado de los datos guardados. Que falte una función no es motivo.
+2. Súbalo en un cambio aparte y solo cuando la aplicación más reciente lleve disponible para todos los probadores y miembros el periodo de soporte. Los probadores de la instalación de referencia quedan bloqueados en cuanto se sube el mínimo.
+3. Avise antes a las personas de qué aplicación instalar y dónde: la tienda de la que la instalaron, la página de versiones o recargando la aplicación web.
+4. Después, abra la aplicación en un dispositivo antiguo y compruebe que aparece **Esta aplicación necesita una actualización**.
+
+**Conviene saber**
+
+- Una aplicación por debajo del mínimo ve una sola pantalla, **Esta aplicación necesita una actualización**, con cómo actualizar en su plataforma, **Comprobar de nuevo**, **Ajustes del servidor** y **Cerrar sesión**. La ayuda, la privacidad y la demo siguen abiertas.
+- El mínimo pertenece a una instalación: la misma aplicación sigue funcionando en todas las demás instalaciones de la persona. Cuando solo la instalación de una empresa rechaza la aplicación, solo esa empresa muestra la pantalla, que entonces ofrece también **Volver a Yo**; sus demás empresas siguen abiertas.
+- Si no se puede leer el mínimo, la aplicación no se bloquea. Un rechazo ya leído se mantiene hasta que una respuesta más reciente lo levante, y la aplicación vuelve a preguntar al regresar.
+- El mínimo es una cortesía para las aplicaciones que lo conocen, no un cerrojo: las reglas de dinero y permisos las decide el servidor, sea cual sea la aplicación.
+
+**Véase también:** [Gestione su propio servidor](#gestione-su-propio-servidor) · [Plataformas](#deskilo-en-sus-dispositivos)
 
 <!-- anchor: user.advanced.assistants -->
 ### Asistentes: qué son

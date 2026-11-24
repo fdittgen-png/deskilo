@@ -90,7 +90,8 @@ Future<SchemaCompatibility> schemaCompatibility(Ref ref) async {
       TraceLogger.instance.warn(
         'backend',
         'schema $result: server ${server ?? 'has no marker'}, '
-            'app needs $requiredSchemaVersion',
+            'app needs $appNeedsSchemaVersion, built against '
+            '$requiredSchemaVersion',
       );
     }
     return result;

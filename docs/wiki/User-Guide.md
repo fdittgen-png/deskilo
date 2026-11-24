@@ -6804,7 +6804,7 @@ The things around the everyday work: the test side of a space and the real one, 
 
 In this chapter:
 - [A space has two sides](#a-space-has-two-sides) · [Enter a side](#enter-the-real-side-or-the-test-side) · [A test space](#what-a-test-space-is-for) · [Who may deploy](#who-may-deploy-and-enter-production) · [Deploy between the sides](#deploy-between-the-two-sides) · [Workspace status and the year archive](#workspace-status-and-the-year-archive)
-- [Your own server](#run-your-own-server)
+- [Your own server](#run-your-own-server) · [When an installation requires a newer app](#when-an-installation-requires-a-newer-app)
 - [Assistants](#assistants-what-they-are) · [Connect an assistant](#connect-an-assistant) · [Approvals](#approvals-and-confirmations-for-assistants) · [What assistants may do](#what-assistants-may-do-in-a-workspace)
 - [The task recorder](#the-task-recorder-and-guided-tours) · [Record a task](#record-a-task) · [Review a recording](#review-edit-and-export-a-recording) · [Make a guide](#make-a-guide-from-a-recording) · [Follow a guide](#follow-a-guide) · [The circle menu](#the-circle-menu) · [Edit a guide](#edit-or-repair-a-guide) · [Privacy of recordings](#what-a-recording-keeps)
 - [The demo workspace](#the-demo-workspace) · [Filming mode](#filming-mode)
@@ -6965,6 +6965,29 @@ You want your community's data on a server you control, or you belong to an orga
 - An operator can switch assistants on for the whole installation — see [Approvals](#approvals-and-confirmations-for-assistants).
 
 **See also:** [Your own server](#your-own-server)
+
+<!-- anchor: user.advanced.app-floor -->
+### When an installation requires a newer app
+
+**Audience:** Operator · Owner
+
+An installation can say that only a newer app may be used with it. You want to know when that is justified and what your testers and members will see.
+
+**Steps**
+
+1. Raise the floor only when an old app would be wrong, not merely incomplete: a security fix, or a change in what stored data means. Missing features are not a reason.
+2. Raise it in a change of its own, and only after the newer app has been available to every tester and member for the support period. Testers on the reference installation are blocked the moment the floor is raised.
+3. Tell people first which app to install, and where: the store they installed from, the releases page, or reloading the web app.
+4. Afterwards, open the app on an older device and check that **This app needs an update** appears.
+
+**Good to know**
+
+- An app below the floor sees one screen, **This app needs an update**, with how to update on its platform, **Check again**, **Server settings** and **Sign out**. Help, privacy and the demo stay open.
+- The floor belongs to one installation: the same app keeps working on every other installation the person uses. When only the installation of one business refuses the app, only that business shows the screen, which then also offers **Back to Me**; your other businesses stay open.
+- If the floor cannot be read, the app is not blocked. A refusal that was already read stays until a newer answer lifts it, and the app asks again when you return to it.
+- The floor is a courtesy to apps that know it, not a lock: money and permission rules are decided by the server whatever the app.
+
+**See also:** [Run your own server](#run-your-own-server) · [Platforms](#deskilo-on-your-devices)
 
 <!-- anchor: user.advanced.assistants -->
 ### Assistants: what they are

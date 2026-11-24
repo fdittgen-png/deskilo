@@ -201,7 +201,7 @@ void main() {
       final ahead = await probe(ScriptedTransport(version: requiredSchemaVersion + 1));
       expect(ahead.result, BackendProbeResult.ahead);
       expect(ahead.usable, isTrue);
-      final behind = await probe(ScriptedTransport(version: requiredSchemaVersion - 1));
+      final behind = await probe(ScriptedTransport(version: appNeedsSchemaVersion - 1));
       expect(behind.result, BackendProbeResult.behind);
       expect(behind.usable, isFalse);
       final none = await probe(ScriptedTransport());

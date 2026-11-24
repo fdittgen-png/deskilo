@@ -7,7 +7,7 @@ Ce qui entoure le travail de tous les jours : le côté test d'un espace et le c
 
 Dans ce chapitre :
 - [Un espace a deux côtés](help:user.advanced.environments) · [Entrer d'un côté](help:user.advanced.enter-environment) · [Un espace de test](help:user.advanced.test-space) · [Qui peut déployer](help:user.advanced.deploy-permissions) · [Déployer entre les côtés](help:user.advanced.deploy) · [Situation de l'espace et archive de l'exercice](help:user.advanced.status-archive)
-- [Votre propre serveur](help:user.advanced.own-server)
+- [Votre propre serveur](help:user.advanced.own-server) · [Quand une installation exige une application plus récente](help:user.advanced.app-floor)
 - [Les assistants](help:user.advanced.assistants) · [Connecter un assistant](help:user.advanced.assistants-connect) · [Les autorisations](help:user.advanced.assistants-approve) · [Ce que les assistants peuvent faire](help:user.advanced.assistants-policy)
 - [L'enregistreur de tâches](help:user.advanced.recorder) · [Enregistrer une tâche](help:user.advanced.recorder-record) · [Relire un enregistrement](help:user.advanced.recorder-review) · [Créer un guide](help:user.advanced.guide-make) · [Suivre un guide](help:user.advanced.guide-play) · [Le menu rond](help:user.advanced.guide-circle) · [Modifier un guide](help:user.advanced.guide-edit) · [Confidentialité des enregistrements](help:user.advanced.recorder-privacy)
 - [L'espace de démonstration](help:user.advanced.demo) · [Mode tournage](help:user.advanced.filming)
@@ -168,6 +168,29 @@ Vous voulez les données de votre communauté sur un serveur que vous maîtrisez
 - Un opérateur peut activer les assistants pour toute l'installation — voir [Les autorisations](help:user.advanced.assistants-approve).
 
 **Voir aussi:** [Votre propre serveur](help:user.backend.server)
+
+<!-- anchor: user.advanced.app-floor -->
+### Quand une installation exige une application plus récente
+
+**Public:** Opérateur·rice · Propriétaire
+
+Une installation peut indiquer que seule une application plus récente peut l'utiliser. Vous voulez savoir quand c'est justifié et ce que verront vos testeurs et vos membres.
+
+**Étapes**
+
+1. Relevez le seuil seulement quand une ancienne application serait fausse, et non simplement incomplète : un correctif de sécurité, ou un changement de sens des données enregistrées. Une fonction manquante n'est pas une raison.
+2. Relevez-le dans une modification à part, et seulement après que l'application plus récente a été disponible pour tous les testeurs et membres pendant la période de prise en charge. Les testeurs de l'installation de référence sont bloqués dès que le seuil est relevé.
+3. Dites d'abord aux personnes quelle application installer et où : le store d'origine, la page des versions, ou le rechargement de l'application web.
+4. Ensuite, ouvrez l'application sur un ancien appareil et vérifiez que **Cette application doit être mise à jour** apparaît.
+
+**Bon à savoir**
+
+- Une application sous le seuil voit un seul écran, **Cette application doit être mise à jour**, avec la façon de la mettre à jour sur sa plateforme, **Vérifier à nouveau**, **Réglages du serveur** et **Se déconnecter**. L'aide, la confidentialité et la démo restent ouvertes.
+- Le seuil appartient à une seule installation : la même application continue de fonctionner sur toutes les autres installations de la personne. Quand seule l'installation d'une entreprise refuse l'application, seule cette entreprise affiche l'écran, qui propose alors aussi **Retour à Moi** ; vos autres entreprises restent ouvertes.
+- Si le seuil ne peut pas être lu, l'application n'est pas bloquée. Un refus déjà lu reste en place jusqu'à ce qu'une réponse plus récente le lève, et l'application redemande au retour.
+- Le seuil est une courtoisie pour les applications qui le connaissent, pas un verrou : les règles d'argent et de droits sont décidées par le serveur, quelle que soit l'application.
+
+**Voir aussi :** [Faire tourner votre propre serveur](help:user.advanced.own-server) · [Plateformes](help:user.advanced.platforms)
 
 <!-- anchor: user.advanced.assistants -->
 ### Les assistants : ce que c'est

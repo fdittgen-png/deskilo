@@ -5,7 +5,7 @@
 // the server.
 import 'dart:io';
 
-import 'package:deskilo/core/backend/schema_version.dart';
+import 'package:deskilo/core/backend/installation_schema.dart';
 import 'package:deskilo/core/instance/schema_compatibility.dart';
 import 'package:deskilo/features/workspace/domain/feature_lifecycle.dart';
 import 'package:deskilo/features/workspace/domain/feature_operation.dart';
@@ -117,30 +117,36 @@ void main() {
     }
   });
 
-  test('only a server at least as new as this build is said to keep work', () {
+  test('only an installation at least as new as the classes is said to keep '
+      'work (#3729: its own number, not the build\'s)', () {
     for (final f in featureOperationClasses.keys) {
+      final since = featureOperationSince[f]!;
+      expect(serverKeepsExistingWork(f, since), isTrue, reason: f.name);
+      expect(serverKeepsExistingWork(f, since + 100), isTrue, reason: f.name);
       expect(
-        serverKeepsExistingWork(f, SchemaCompatibility.current),
-        isTrue,
-        reason: '${f.name}: this build needs its classes',
+        serverKeepsExistingWork(f, since - 1),
+        isFalse,
+        reason: '${f.name}: an older installation still stops existing work',
       );
-      expect(serverKeepsExistingWork(f, SchemaCompatibility.ahead), isTrue);
-      for (final c in [
-        SchemaCompatibility.behind,
-        SchemaCompatibility.unknown,
-        null,
-      ]) {
-        expect(serverKeepsExistingWork(f, c), isFalse, reason: '$c');
-      }
+      expect(
+        serverKeepsExistingWork(f, null),
+        isFalse,
+        reason: '${f.name}: an unreadable one is not claimed to',
+      );
     }
     expect(
-      serverKeepsExistingWork(
-        WorkspaceFeature.kioskMode,
-        SchemaCompatibility.current,
-      ),
+      serverKeepsExistingWork(WorkspaceFeature.kioskMode, requiredSchemaVersion),
       isFalse,
       reason: 'an unclassified feature claims nothing',
     );
+  });
+
+  test('an operation floor is never earlier than its feature\'s own', () {
+    for (final f in featureOperationSince.keys) {
+      final own = featureManifest[f]?.since;
+      if (own == null) continue;
+      expect(featureOperationSince[f], greaterThanOrEqualTo(own), reason: f.name);
+    }
   });
 
   test('every classified feature says from which server schema it holds', () {
@@ -200,7 +206,8 @@ void main() {
     Future<FakeWorkspaceRepository> pump(
       WidgetTester tester, {
       Map<String, dynamic> flags = const {},
-      SchemaCompatibility compatibility = SchemaCompatibility.current,
+      InstallationSchemaSource installation =
+          const FixedInstallationSchemaSource(),
     }) async {
       tester.view.physicalSize = const Size(800, 30000);
       tester.view.devicePixelRatio = 1;
@@ -215,9 +222,9 @@ void main() {
                 WorkspaceFeature.accessorySupplements: _alpha,
               },
             ), overrides: [
-            ...standardTestOverrides(workspace: workspace),
-            schemaCompatibilityProvider.overrideWith(
-              (_) async => compatibility,
+            ...standardTestOverrides(
+              workspace: workspace,
+              installationSchema: installation,
             ),
           ]);
       await tester.pumpAndSettle();
@@ -284,24 +291,28 @@ void main() {
     testWidgets('an older or silent server is not claimed to keep open work', (
       tester,
     ) async {
-      for (final c in [SchemaCompatibility.behind, SchemaCompatibility.unknown]) {
+      for (final (name, source) in const [
+        ('older', FixedInstallationSchemaSource(number: 355)),
+        ('unreadable', FixedInstallationSchemaSource(unavailable: true)),
+        ('no marker', FixedInstallationSchemaSource(number: null)),
+      ]) {
         await pump(
           tester,
           flags: const {'customRoles': false},
-          compatibility: c,
+          installation: source,
         );
         final note = find.descendant(
           of: tile(WorkspaceFeature.customRoles),
           matching: find.textContaining('could not confirm'),
         );
-        expect(note, findsOneWidget, reason: c.name);
+        expect(note, findsOneWidget, reason: name);
         expect(
           find.descendant(
             of: tile(WorkspaceFeature.customRoles),
             matching: find.textContaining('can still be answered'),
           ),
           findsNothing,
-          reason: c.name,
+          reason: name,
         );
       }
     });

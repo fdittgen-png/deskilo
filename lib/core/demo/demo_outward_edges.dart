@@ -20,9 +20,13 @@
 // repositories — and each of them talks to a server.
 import 'dart:typed_data';
 
+import 'package:flutter_riverpod/misc.dart' show Override;
+
 import '../backend/app_floor.dart';
+import '../backend/installation_schema.dart';
 import '../backend/schema_version.dart';
 import '../files/file_types.dart';
+import '../instance/app_compatibility.dart';
 import '../instance/schema_compatibility.dart';
 import '../push/push_connector.dart';
 import '../push/push_endpoint_repository.dart';
@@ -56,6 +60,19 @@ class DemoOutwardEdges {
   /// reason: a floor on a configured backend must not send the Demo to the
   /// app-update screen.
   final DemoAppFloorSource appFloor = DemoAppFloorSource();
+
+  /// #3729 — the installation a Demo workspace lives on answers this build's
+  /// schema, so a feature's `since` never withholds it.
+  final DemoInstallationSchemaSource installationSchema =
+      DemoInstallationSchemaSource();
+
+  /// The three compatibility questions the Demo answers itself: the schema,
+  /// the app floor and the schema of the installation hosting a workspace.
+  List<Override> get compatibilityOverrides => [
+    schemaVersionSourceProvider.overrideWithValue(schema),
+    appFloorSourceProvider.overrideWithValue(appFloor),
+    installationSchemaSourceProvider.overrideWithValue(installationSchema),
+  ];
 
   /// Nothing reached the device or the network.
   bool get nothingLeft =>
@@ -170,6 +187,19 @@ class DemoAppFloorSource implements AppFloorSource {
     reads++;
     return null;
   }
+}
+
+/// #3729 — the schema of the installation hosting a Demo workspace: this
+/// build's own, for the reason the schema probe above gives. The Demo
+/// withholds no feature, and refuses no app, for an installation it does
+/// not talk to.
+class DemoInstallationSchemaSource implements InstallationSchemaSource {
+  @override
+  Future<InstallationAnswer> read(String workspaceId) async => (
+    installationId: 'demo',
+    number: requiredSchemaVersion,
+    floor: AppFloorVerdict.accepted,
+  );
 }
 
 class DemoSchemaVersionSource implements SchemaVersionSource {

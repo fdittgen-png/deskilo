@@ -100,8 +100,10 @@ class ServerFactsCard extends ConsumerWidget {
       switch (version) {
         SchemaCompatibility.current =>
           l10n.backendVersionCurrent(requiredSchemaVersion),
+        // What the app cannot work without (#3729), not what it was built
+        // against.
         SchemaCompatibility.behind =>
-          l10n.backendVersionBehind(requiredSchemaVersion),
+          l10n.backendVersionBehind(appNeedsSchemaVersion),
         SchemaCompatibility.ahead => l10n.backendVersionAhead,
         SchemaCompatibility.unknown => l10n.backendVersionUnknown,
       };

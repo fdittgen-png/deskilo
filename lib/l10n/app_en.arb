@@ -16211,6 +16211,18 @@
   "@featureNavigationStyleDesc": {
     "description": "#969 navigation style: featureNavigationStyleDesc"
   },
+  "featureNeedsNewerInstallation": "This installation is too old for this feature. It needs {feature} from schema {since}; ask whoever runs the server to update it.",
+  "@featureNeedsNewerInstallation": {
+    "description": "#3729 Note under a feature's switch, for an administrator: the installation hosting the workspace is older than the feature needs",
+    "placeholders": {
+      "feature": {
+        "type": "String"
+      },
+      "since": {
+        "type": "String"
+      }
+    }
+  },
   "featureNfcBadges": "RFID / NFC badges",
   "@featureNfcBadges": {
     "description": "Feature switch: RFID/NFC card check-in at a kiosk (0046)"
@@ -41487,6 +41499,21 @@
   "schemaUpdateOperator": "If you run this server: apply the missing migrations with `dart run tool/instance.dart install --ref <project>`. Only what is missing runs.",
   "@schemaUpdateOperator": {
     "description": "#1312 What the person running the server should do; the command stays untranslated"
+  },
+  "schemaUpdateRunning": "This installation runs version {version}, so migrations {from} to {to} are missing.",
+  "@schemaUpdateRunning": {
+    "description": "#3729 For the person who runs the server, on the update screen: the schema the installation reports and the range of migrations it lacks",
+    "placeholders": {
+      "version": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
   },
   "schemaUpdateServer": "Server settings",
   "@schemaUpdateServer": {

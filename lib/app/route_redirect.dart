@@ -25,6 +25,7 @@ import '../features/workspace/domain/member.dart';
 import '../features/workspace/domain/workspace_feature.dart';
 import '../features/workspace/providers/workspace_providers.dart';
 import '../features/workspace/providers/workspace_roles_providers.dart';
+import '../features/workspace/providers/workspace_schema_providers.dart';
 import 'entry_intent.dart';
 import 'entry_intents.dart';
 import 'entry_resumption.dart';
@@ -115,6 +116,12 @@ RouteFacts _factsOf(
   return RouteFacts(
     schema: ref.read(schemaCompatibilityProvider).value ??
         SchemaCompatibility.unknown,
+    hostSchema:
+        ref.read(currentWorkspaceInstallationSchemaProvider)?.verdict ??
+            SchemaCompatibility.unknown,
+    hostAppFloor:
+        ref.read(currentWorkspaceInstallationSchemaProvider)?.floor ??
+            AppFloorVerdict.unknown,
     appFloor: ref.read(appFloorProvider).value ?? AppFloorVerdict.unknown,
     auth: signedIn ? AuthFact.signedIn : AuthFact.signedOut,
     privacy: privacyFactOf(

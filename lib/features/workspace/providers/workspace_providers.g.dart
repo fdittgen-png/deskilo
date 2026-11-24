@@ -1346,7 +1346,7 @@ final class EnabledFeaturesProvider
   }
 }
 
-String _$enabledFeaturesHash() => r'3d8ac3c86c85f932d0294c1f4a2f118bbf4b9a67';
+String _$enabledFeaturesHash() => r'6f9215c2bc7a242c09a6a121a798cf27ec5c2de7';
 
 /// Sync convenience over [enabledFeatures] for build methods and router
 /// redirects. While the workspace is still loading it falls back to ALL

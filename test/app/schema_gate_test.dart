@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #1312 — the app refuses a server whose schema is older than it needs,
+// #1312 — the app refuses a server whose schema is older than it needs
+// (#3729: what it cannot work without, not what it was built against),
 // and ONLY that: a current or newer server boots as before, and a check
 // that could not be asked (offline) never blocks. Signed out or signed in,
 // a behind server lands on the update screen, and the Server screen stays
@@ -53,12 +54,25 @@ void main() {
     });
   });
 
-  testWidgets('a server one version behind lands on the update screen',
+  testWidgets('a server one version below what the app needs lands on the '
+      'update screen, which names that number and offers signing out',
       (tester) async {
-    await _boot(tester, const FixedSchemaVersionSource(requiredSchemaVersion - 1));
+    await _boot(tester, const FixedSchemaVersionSource(appNeedsSchemaVersion - 1));
     expect(find.byKey(_update), findsOneWidget);
     expect(find.text('This server needs an update'), findsOneWidget);
-    expect(find.textContaining('version $requiredSchemaVersion'), findsOneWidget);
+    expect(find.textContaining('version $appNeedsSchemaVersion'), findsOneWidget);
+    expect(find.byKey(const ValueKey('schema-update-sign-out')), findsOneWidget);
+    expect(find.byKey(const ValueKey('schema-update-me')), findsNothing,
+        reason: 'the personal server is the old one: Me is closed too');
+  });
+
+  // #3729 — between what the app needs and what it was built against is
+  // supported: older, but sufficient.
+  testWidgets('a server older than built-against but not than needs boots',
+      (tester) async {
+    await _boot(tester, const FixedSchemaVersionSource(appNeedsSchemaVersion));
+    expect(find.byKey(_update), findsNothing);
+    expect(find.text('Calendar'), findsWidgets);
   });
 
   testWidgets('a server with no marker is behind too, even signed out',
@@ -88,7 +102,7 @@ void main() {
 
   testWidgets('the Server screen stays reachable from the update screen',
       (tester) async {
-    await _boot(tester, const FixedSchemaVersionSource(requiredSchemaVersion - 1));
+    await _boot(tester, const FixedSchemaVersionSource(appNeedsSchemaVersion - 1));
     await tester.tap(find.byKey(const ValueKey('schema-update-server')));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('backend-status')), findsOneWidget);
@@ -97,7 +111,7 @@ void main() {
   // #3885 — silence at start is asked again once, when the person returns.
   testWidgets('a check that got no answer is asked again on return to the '
       'foreground and then gates', (tester) async {
-    final source = _FlakySource(requiredSchemaVersion - 1);
+    final source = _FlakySource(appNeedsSchemaVersion - 1);
     await _boot(tester, source);
     expect(find.byKey(_update), findsNothing, reason: 'silence never blocks');
     expect(source.asked, 1);

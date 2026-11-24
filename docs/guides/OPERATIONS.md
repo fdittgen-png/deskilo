@@ -153,7 +153,7 @@ doctor's "Schema is behind" alarm is for.
 
 ## Version compatibility
 
-The decision record is [ADR 0053](../decisions/0053-compatibility-of-app-installation-and-features.md): three numbers, what a person sees per installation, the rules of change. The table below is what is supported today. The app carries its compatibility number (#3726); an installation states its floor with `deskilo_app_floor()`, which arrives in a later migration. Until then every installation answers "no floor".
+The decision record is [ADR 0053](../decisions/0053-compatibility-of-app-installation-and-features.md): three numbers, what a person sees per installation, the rules of change. The table below is what is supported today. The app carries its compatibility number (#3726); an installation states its floor with `deskilo_app_floor()` (migration 0900; default none, so every installation answers "no floor" until a later, separate migration raises it). The guide section is "When an installation requires a newer app" (`user.advanced.app-floor`).
 
 | | |
 |---|---|

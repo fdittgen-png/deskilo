@@ -6804,7 +6804,7 @@ Das, was die tägliche Arbeit umgibt: die Testseite eines Space und die echte, A
 
 In diesem Kapitel:
 - [Ein Space hat zwei Seiten](#ein-space-hat-zwei-seiten) · [Eine Seite betreten](#die-echte-oder-die-testseite-betreten) · [Ein Testspace](#wofür-ein-testspace-da-ist) · [Wer ausrollen darf](#wer-ausrollen-und-in-die-produktion-darf) · [Zwischen den Seiten ausrollen](#zwischen-den-beiden-seiten-ausrollen) · [Status des Workspace und das Jahresarchiv](#status-des-workspace-und-das-jahresarchiv)
-- [Ihr eigener Server](#einen-eigenen-server-betreiben)
+- [Ihr eigener Server](#einen-eigenen-server-betreiben) · [Wenn eine Installation eine neuere App verlangt](#wenn-eine-installation-eine-neuere-app-verlangt)
 - [Assistenten](#assistenten-was-sie-sind) · [Einen Assistenten verbinden](#einen-assistenten-verbinden) · [Freigaben](#freigaben-und-bestätigungen-für-assistenten) · [Was Assistenten dürfen](#was-assistenten-in-einem-workspace-dürfen)
 - [Der Aufgabenrekorder](#der-aufgabenrekorder-und-geführte-touren) · [Eine Aufgabe aufzeichnen](#eine-aufgabe-aufzeichnen) · [Eine Aufzeichnung prüfen](#eine-aufzeichnung-prüfen-bearbeiten-und-exportieren) · [Eine Anleitung erstellen](#aus-einer-aufzeichnung-eine-anleitung-erstellen) · [Einer Anleitung folgen](#einer-anleitung-folgen) · [Das Kreismenü](#das-kreismenü) · [Eine Anleitung bearbeiten](#eine-anleitung-bearbeiten-oder-reparieren) · [Datenschutz der Aufzeichnungen](#was-eine-aufzeichnung-behält)
 - [Der Demo-Workspace](#der-demo-workspace) · [Aufnahmemodus](#aufnahmemodus)
@@ -6965,6 +6965,29 @@ Sie möchten die Daten Ihrer Gemeinschaft auf einem Server, den Sie kontrolliere
 - Ein Betreiber kann Assistenten für die ganze Installation einschalten — siehe [Freigaben](#freigaben-und-bestätigungen-für-assistenten).
 
 **Siehe auch:** [Ihr eigener Server](#ihr-eigener-server)
+
+<!-- anchor: user.advanced.app-floor -->
+### Wenn eine Installation eine neuere App verlangt
+
+**Zielgruppe:** Betreiber:in · Inhaber
+
+Eine Installation kann festlegen, dass nur eine neuere App mit ihr benutzt werden darf. Sie möchten wissen, wann das gerechtfertigt ist und was Ihre Tester und Mitglieder sehen.
+
+**Schritte**
+
+1. Heben Sie die Untergrenze nur an, wenn eine alte App falsch statt nur unvollständig wäre: bei einer Sicherheitskorrektur oder wenn sich die Bedeutung gespeicherter Daten ändert. Fehlende Funktionen sind kein Grund.
+2. Heben Sie sie in einer eigenen Änderung an, und erst, nachdem die neuere App allen Testern und Mitgliedern über die Unterstützungsdauer zur Verfügung stand. Tester auf der Referenzinstallation sind gesperrt, sobald die Untergrenze angehoben wird.
+3. Sagen Sie den Leuten vorher, welche App sie installieren sollen und wo: im Store, aus dem sie sie haben, auf der Seite der Veröffentlichungen oder durch Neuladen der Web-App.
+4. Öffnen Sie danach die App auf einem älteren Gerät und prüfen Sie, dass **Diese App braucht ein Update** erscheint.
+
+**Gut zu wissen**
+
+- Eine App unter der Untergrenze sieht einen einzigen Bildschirm, **Diese App braucht ein Update**, mit dem Weg zum Update auf ihrer Plattform, **Erneut prüfen**, **Server-Einstellungen** und **Abmelden**. Hilfe, Datenschutz und die Demo bleiben offen.
+- Die Untergrenze gehört zu einer Installation: Dieselbe App arbeitet auf allen anderen Installationen der Person weiter. Lehnt nur die Installation eines Unternehmens die App ab, zeigt nur dieses Unternehmen den Bildschirm, der dann auch **Zurück zu Ich** anbietet; Ihre anderen Unternehmen bleiben offen.
+- Lässt sich die Untergrenze nicht lesen, wird die App nicht gesperrt. Eine bereits gelesene Ablehnung bleibt, bis eine neuere Antwort sie aufhebt, und die App fragt bei der Rückkehr erneut.
+- Die Untergrenze ist ein Entgegenkommen an Apps, die sie kennen, keine Sperre: Geld- und Berechtigungsregeln entscheidet der Server, egal welche App anfragt.
+
+**Siehe auch:** [Einen eigenen Server betreiben](#einen-eigenen-server-betreiben) · [Plattformen](#deskilo-auf-ihren-geräten)
 
 <!-- anchor: user.advanced.assistants -->
 ### Assistenten: was sie sind

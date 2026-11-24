@@ -17,6 +17,10 @@ const Map<WorkspaceFeature, FeatureManifestEntry> stockFeatureManifest = {
     tier: FeatureTier.platform,
     requires: WorkspaceFeature.services,
     defaultOn: false,
+    // #3729 — its server side is the stock registries, ledger and templates
+    // of 0746 to 0748: an installation below 748 does not offer it, nor any
+    // feature under it.
+    since: 748,
   ),
   // #4169 — lots and expiry: an item tracked by lot or by expiry date, with
   // its shelf life. Asked for, under the goods ledger. Off: no item is
