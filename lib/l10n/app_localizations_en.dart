@@ -40171,6 +40171,275 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tillConfirmSale => 'Confirm the sale';
 
   @override
+  String get tillDrawerAddTill => 'Add a till';
+
+  @override
+  String get tillDrawerAmountInvalid => 'Type an amount.';
+
+  @override
+  String get tillDrawerAmountZero => 'The amount must be above zero.';
+
+  @override
+  String get tillDrawerBanked => 'Taken to the bank';
+
+  @override
+  String get tillDrawerBankedAbove =>
+      'The bank amount cannot be more than the counted cash.';
+
+  @override
+  String get tillDrawerBankedHelp =>
+      'The part of the counted cash taken to the bank. Leave empty if none.';
+
+  @override
+  String tillDrawerBreakdown(
+    String float,
+    String sales,
+    String paidIn,
+    String paidOut,
+  ) {
+    return 'Float $float, sales $sales, paid in $paidIn, paid out $paidOut';
+  }
+
+  @override
+  String get tillDrawerCashAction => 'Paid in or out';
+
+  @override
+  String get tillDrawerChoose => 'Sell on which till?';
+
+  @override
+  String get tillDrawerCloseAction => 'Count and close';
+
+  @override
+  String get tillDrawerCloseSubmit => 'Close the till';
+
+  @override
+  String tillDrawerCloseTitle(String till) {
+    return 'Count and close $till';
+  }
+
+  @override
+  String tillDrawerClosedBanked(String amount) {
+    return 'Taken to the bank: $amount.';
+  }
+
+  @override
+  String tillDrawerClosedCard(String amount) {
+    return 'Card payments still unanswered: $amount. They are not counted as cash.';
+  }
+
+  @override
+  String tillDrawerClosedCounts(String expected, String counted) {
+    return 'Expected $expected, counted $counted.';
+  }
+
+  @override
+  String tillDrawerClosedOver(String amount) {
+    return 'Over by $amount.';
+  }
+
+  @override
+  String get tillDrawerClosedSame => 'The count matches the expected cash.';
+
+  @override
+  String tillDrawerClosedShort(String amount) {
+    return 'Short by $amount.';
+  }
+
+  @override
+  String get tillDrawerClosedTitle => 'Till closed';
+
+  @override
+  String get tillDrawerCounted => 'Cash counted in the drawer';
+
+  @override
+  String get tillDrawerCountedHelp => 'Count what is in the drawer.';
+
+  @override
+  String get tillDrawerCountedHelpBlind =>
+      'Count what is in the drawer. The expected cash is shown after the count.';
+
+  @override
+  String get tillDrawerDenomAdd => 'Add a denomination';
+
+  @override
+  String get tillDrawerDenomCount => 'How many';
+
+  @override
+  String get tillDrawerDenomIncomplete =>
+      'Every row needs a value above zero and a number of pieces, and no value twice.';
+
+  @override
+  String get tillDrawerDenomRemove => 'Remove this row';
+
+  @override
+  String tillDrawerDenomTotal(String amount) {
+    return 'Total counted: $amount';
+  }
+
+  @override
+  String get tillDrawerDenomValue => 'Value of a note or coin';
+
+  @override
+  String get tillDrawerDifferenceAsked =>
+      'The count differs from the expected cash. Say why to close the till.';
+
+  @override
+  String tillDrawerDifferenceLive(String amount) {
+    return 'Difference: $amount';
+  }
+
+  @override
+  String get tillDrawerDifferenceReason => 'Why does the count differ?';
+
+  @override
+  String get tillDrawerDifferenceReasonMissing => 'Say why the count differs.';
+
+  @override
+  String get tillDrawerEditTill => 'Edit the till';
+
+  @override
+  String get tillDrawerEntryAmount => 'Amount';
+
+  @override
+  String get tillDrawerEntryDone => 'Cash entry recorded.';
+
+  @override
+  String tillDrawerEntryLimit(String limit) {
+    return 'Above $limit, a paid-out is recorded by someone who may record outgoing payments.';
+  }
+
+  @override
+  String get tillDrawerEntryPaidIn => 'Paid in';
+
+  @override
+  String get tillDrawerEntryPaidOut => 'Paid out';
+
+  @override
+  String get tillDrawerEntryReason => 'Reason';
+
+  @override
+  String get tillDrawerEntryReasonMissing => 'Choose a reason.';
+
+  @override
+  String get tillDrawerEntrySubmit => 'Record';
+
+  @override
+  String get tillDrawerEntryTitle => 'Paid in or out';
+
+  @override
+  String tillDrawerExpected(String amount) {
+    return 'Expected cash: $amount';
+  }
+
+  @override
+  String get tillDrawerExpectedHidden =>
+      'The expected cash is shown after you count the drawer.';
+
+  @override
+  String get tillDrawerFailed => 'The till could not do that. Try again.';
+
+  @override
+  String get tillDrawerFloat => 'Float in the drawer';
+
+  @override
+  String get tillDrawerFloatHelp =>
+      'The cash the drawer starts with, counted now.';
+
+  @override
+  String get tillDrawerLoadFailed => 'The tills could not be read.';
+
+  @override
+  String get tillDrawerManage => 'Tills and drawers';
+
+  @override
+  String get tillDrawerNameMissing => 'Give the till a name.';
+
+  @override
+  String get tillDrawerNoTills =>
+      'There is no till yet. Add the first one to start counting a drawer.';
+
+  @override
+  String get tillDrawerNoTillsPerson =>
+      'No till has been set up yet. Someone who manages the sites adds it.';
+
+  @override
+  String get tillDrawerOpenAction => 'Open the till';
+
+  @override
+  String get tillDrawerOpenFirstBody =>
+      'Open a till with its float before selling.';
+
+  @override
+  String get tillDrawerOpenFirstTitle => 'No till is open';
+
+  @override
+  String tillDrawerOpenTitle(String till) {
+    return 'Open $till';
+  }
+
+  @override
+  String get tillDrawerRefusalAboveLimit =>
+      'A paid-out this large is recorded by someone who may record outgoing payments.';
+
+  @override
+  String get tillDrawerRefusalAlreadyOpen =>
+      'This till is already open. Count and close it before opening it again or switching it off.';
+
+  @override
+  String get tillDrawerRefusalDenominations =>
+      'The counts by denomination do not add up to the amount.';
+
+  @override
+  String get tillDrawerRefusalDifference =>
+      'The count differs from the expected cash. Say why before closing.';
+
+  @override
+  String get tillDrawerRefusalNameTaken =>
+      'Another till of this business already has this name.';
+
+  @override
+  String get tillDrawerRefusalOpenFirst =>
+      'Open the till first: a sale needs an open session on its till.';
+
+  @override
+  String get tillDrawerRefusalReasonUnknown =>
+      'This reason is not on the business\'s list. Choose one from the list.';
+
+  @override
+  String get tillDrawerRefusalSessionGone =>
+      'This session is not open any more.';
+
+  @override
+  String get tillDrawerRefusalTillUnknown =>
+      'This is not an active till of this business.';
+
+  @override
+  String get tillDrawerStateClosed => 'Closed';
+
+  @override
+  String get tillDrawerStateOff => 'Switched off';
+
+  @override
+  String tillDrawerStateOpen(String float) {
+    return 'Open · float $float';
+  }
+
+  @override
+  String get tillDrawerTillActive => 'In use';
+
+  @override
+  String get tillDrawerTillName => 'Name of the till';
+
+  @override
+  String get tillDrawerTillNewTitle => 'New till';
+
+  @override
+  String get tillDrawerTillSave => 'Save the till';
+
+  @override
+  String get tillDrawerTitle => 'Till drawer';
+
+  @override
   String get tillFailed => 'The till could not do that. Try again.';
 
   @override

@@ -91,6 +91,11 @@ class TillSession {
   /// The state the screen listens to.
   final ValueNotifier<TillState> state = ValueNotifier(const TillState());
 
+  /// The till the sales are made on: set by the screen when the business runs till sessions, null otherwise (a sale then
+  /// carries no till). The cashier's choice among several open tills stays here while the basket is being served.
+  final ValueNotifier<String?> chosenTill = ValueNotifier(null);
+  String? tillId;
+
   /// Every act runs after the one before it: two taps never send the same receipt and revision, and the answer of a sale
   /// is never dropped for a tap that came after it.
   Future<void> _tail = Future.value();
@@ -190,10 +195,10 @@ class TillSession {
 
   Future<TillDraft> _draft(List<TillLine> lines, {String? receiptId, int? revision, _Attempt? reuse}) async {
     Future<TillDraft> call(String? rid, int? rev, {_Attempt? same}) {
-      final key = '${_linesKey(lines)}|${rid ?? ''}|${rev ?? ''}';
+      final key = '${_linesKey(lines)}|${rid ?? ''}|${rev ?? ''}|${tillId ?? ''}';
       final attempt = same != null && same.key == key ? same : _Attempt(key, _requestIds(), receiptId: rid, revision: rev);
       _draftAttempt = attempt;
-      return port.draft(workspaceId, requestId: attempt.requestId, lines: lines, receiptId: rid, expectedRevision: rev).timeout(callTimeout);
+      return port.draft(workspaceId, requestId: attempt.requestId, lines: lines, receiptId: rid, expectedRevision: rev, tillId: tillId).timeout(callTimeout);
     }
 
     try {
@@ -300,10 +305,12 @@ class TillSession {
   void leave() {
     if (_queued > 0 || _now.unconfirmed) return;
     next();
+    chosenTill.value = null;
   }
 
   void dispose() {
     _disposed = true;
+    chosenTill.dispose();
     state.dispose();
   }
 }

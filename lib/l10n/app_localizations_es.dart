@@ -40501,6 +40501,276 @@ class AppLocalizationsEs extends AppLocalizations {
   String get tillConfirmSale => 'Confirmar la venta';
 
   @override
+  String get tillDrawerAddTill => 'Añadir una caja';
+
+  @override
+  String get tillDrawerAmountInvalid => 'Escriba un importe.';
+
+  @override
+  String get tillDrawerAmountZero => 'El importe debe ser mayor que cero.';
+
+  @override
+  String get tillDrawerBanked => 'Llevado al banco';
+
+  @override
+  String get tillDrawerBankedAbove =>
+      'El importe al banco no puede superar el efectivo contado.';
+
+  @override
+  String get tillDrawerBankedHelp =>
+      'La parte del efectivo contado que se lleva al banco. Déjelo vacío si no hay.';
+
+  @override
+  String tillDrawerBreakdown(
+    String float,
+    String sales,
+    String paidIn,
+    String paidOut,
+  ) {
+    return 'Fondo $float, ventas $sales, entradas $paidIn, salidas $paidOut';
+  }
+
+  @override
+  String get tillDrawerCashAction => 'Entrada o salida de efectivo';
+
+  @override
+  String get tillDrawerChoose => '¿En qué caja vender?';
+
+  @override
+  String get tillDrawerCloseAction => 'Contar y cerrar';
+
+  @override
+  String get tillDrawerCloseSubmit => 'Cerrar la caja';
+
+  @override
+  String tillDrawerCloseTitle(String till) {
+    return 'Contar y cerrar $till';
+  }
+
+  @override
+  String tillDrawerClosedBanked(String amount) {
+    return 'Llevado al banco: $amount.';
+  }
+
+  @override
+  String tillDrawerClosedCard(String amount) {
+    return 'Pagos con tarjeta sin respuesta: $amount. No cuentan como efectivo.';
+  }
+
+  @override
+  String tillDrawerClosedCounts(String expected, String counted) {
+    return 'Esperado $expected, contado $counted.';
+  }
+
+  @override
+  String tillDrawerClosedOver(String amount) {
+    return 'Sobran $amount.';
+  }
+
+  @override
+  String get tillDrawerClosedSame =>
+      'El recuento coincide con el efectivo esperado.';
+
+  @override
+  String tillDrawerClosedShort(String amount) {
+    return 'Faltan $amount.';
+  }
+
+  @override
+  String get tillDrawerClosedTitle => 'Caja cerrada';
+
+  @override
+  String get tillDrawerCounted => 'Efectivo contado en el cajón';
+
+  @override
+  String get tillDrawerCountedHelp => 'Cuente lo que hay en el cajón.';
+
+  @override
+  String get tillDrawerCountedHelpBlind =>
+      'Cuente lo que hay en el cajón. El efectivo esperado se muestra después de contar.';
+
+  @override
+  String get tillDrawerDenomAdd => 'Añadir una denominación';
+
+  @override
+  String get tillDrawerDenomCount => 'Cuántos';
+
+  @override
+  String get tillDrawerDenomIncomplete =>
+      'Cada fila necesita un valor mayor que cero y un número de piezas, sin valores repetidos.';
+
+  @override
+  String get tillDrawerDenomRemove => 'Quitar esta fila';
+
+  @override
+  String tillDrawerDenomTotal(String amount) {
+    return 'Total contado: $amount';
+  }
+
+  @override
+  String get tillDrawerDenomValue => 'Valor de un billete o moneda';
+
+  @override
+  String get tillDrawerDifferenceAsked =>
+      'El recuento difiere del efectivo esperado. Indique el motivo para cerrar la caja.';
+
+  @override
+  String tillDrawerDifferenceLive(String amount) {
+    return 'Diferencia: $amount';
+  }
+
+  @override
+  String get tillDrawerDifferenceReason => '¿Por qué difiere el recuento?';
+
+  @override
+  String get tillDrawerDifferenceReasonMissing =>
+      'Indique por qué difiere el recuento.';
+
+  @override
+  String get tillDrawerEditTill => 'Editar la caja';
+
+  @override
+  String get tillDrawerEntryAmount => 'Importe';
+
+  @override
+  String get tillDrawerEntryDone => 'Movimiento de efectivo registrado.';
+
+  @override
+  String tillDrawerEntryLimit(String limit) {
+    return 'Por encima de $limit, una salida la registra quien puede registrar pagos salientes.';
+  }
+
+  @override
+  String get tillDrawerEntryPaidIn => 'Entrada';
+
+  @override
+  String get tillDrawerEntryPaidOut => 'Salida';
+
+  @override
+  String get tillDrawerEntryReason => 'Motivo';
+
+  @override
+  String get tillDrawerEntryReasonMissing => 'Elija un motivo.';
+
+  @override
+  String get tillDrawerEntrySubmit => 'Registrar';
+
+  @override
+  String get tillDrawerEntryTitle => 'Entrada o salida de efectivo';
+
+  @override
+  String tillDrawerExpected(String amount) {
+    return 'Efectivo esperado: $amount';
+  }
+
+  @override
+  String get tillDrawerExpectedHidden =>
+      'El efectivo esperado se muestra después de contar el cajón.';
+
+  @override
+  String get tillDrawerFailed => 'La caja no pudo hacerlo. Inténtelo de nuevo.';
+
+  @override
+  String get tillDrawerFloat => 'Fondo del cajón';
+
+  @override
+  String get tillDrawerFloatHelp =>
+      'El efectivo con el que empieza el cajón, contado ahora.';
+
+  @override
+  String get tillDrawerLoadFailed => 'No se pudieron leer las cajas.';
+
+  @override
+  String get tillDrawerManage => 'Cajas y cajones';
+
+  @override
+  String get tillDrawerNameMissing => 'Dé un nombre a la caja.';
+
+  @override
+  String get tillDrawerNoTills =>
+      'Todavía no hay ninguna caja. Añada la primera para empezar a contar un cajón.';
+
+  @override
+  String get tillDrawerNoTillsPerson =>
+      'Todavía no se ha creado ninguna caja. La añade quien gestiona las sedes.';
+
+  @override
+  String get tillDrawerOpenAction => 'Abrir la caja';
+
+  @override
+  String get tillDrawerOpenFirstBody =>
+      'Abra una caja con su fondo antes de vender.';
+
+  @override
+  String get tillDrawerOpenFirstTitle => 'Ninguna caja está abierta';
+
+  @override
+  String tillDrawerOpenTitle(String till) {
+    return 'Abrir $till';
+  }
+
+  @override
+  String get tillDrawerRefusalAboveLimit =>
+      'Una salida de este importe la registra quien puede registrar pagos salientes.';
+
+  @override
+  String get tillDrawerRefusalAlreadyOpen =>
+      'Esta caja ya está abierta. Cuéntela y ciérrela antes de abrirla de nuevo o desactivarla.';
+
+  @override
+  String get tillDrawerRefusalDenominations =>
+      'Los recuentos por denominación no suman el importe.';
+
+  @override
+  String get tillDrawerRefusalDifference =>
+      'El recuento difiere del efectivo esperado. Indique el motivo antes de cerrar.';
+
+  @override
+  String get tillDrawerRefusalNameTaken =>
+      'Otra caja de este negocio ya tiene este nombre.';
+
+  @override
+  String get tillDrawerRefusalOpenFirst =>
+      'Abra primero la caja: una venta necesita una sesión abierta en su caja.';
+
+  @override
+  String get tillDrawerRefusalReasonUnknown =>
+      'Este motivo no está en la lista del negocio. Elija uno de la lista.';
+
+  @override
+  String get tillDrawerRefusalSessionGone => 'Esta sesión ya no está abierta.';
+
+  @override
+  String get tillDrawerRefusalTillUnknown =>
+      'No es una caja activa de este negocio.';
+
+  @override
+  String get tillDrawerStateClosed => 'Cerrada';
+
+  @override
+  String get tillDrawerStateOff => 'Desactivada';
+
+  @override
+  String tillDrawerStateOpen(String float) {
+    return 'Abierta · fondo $float';
+  }
+
+  @override
+  String get tillDrawerTillActive => 'En uso';
+
+  @override
+  String get tillDrawerTillName => 'Nombre de la caja';
+
+  @override
+  String get tillDrawerTillNewTitle => 'Caja nueva';
+
+  @override
+  String get tillDrawerTillSave => 'Guardar la caja';
+
+  @override
+  String get tillDrawerTitle => 'Cajón de caja';
+
+  @override
   String get tillFailed => 'La caja no pudo hacerlo. Inténtelo de nuevo.';
 
   @override

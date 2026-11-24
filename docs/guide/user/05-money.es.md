@@ -762,6 +762,21 @@ Pulse **Cobrar en efectivo** y escriba el **Efectivo entregado** (o **Importe ex
 
 Donde su país aún no permite la caja, esta nombra la operación que falta y no ofrece nada: nada se numera ni se cobra. Una línea de mercancía necesita la gestión de stock; el rechazo del servidor se dice con palabras. Los pagos con tarjeta, descuentos, reembolsos y devoluciones no forman parte de esta primera caja.
 
+<!-- anchor: user.money.till-drawer -->
+### Abrir la caja, contar y cerrar
+
+**Público:** Administrador/a · Propietario
+
+Usted lleva un cajón de caja y quiere saber que el dinero que contiene es correcto al final del día.
+
+Abra **Cajón de caja** en el menú de ventas (requiere la función de sesiones de caja y el derecho de emitir facturas o de ver las finanzas). Cada caja del negocio aparece con su estado. Quien gestiona las sedes añade una caja con **Añadir una caja** y puede renombrarla o desactivarla.
+
+Pulse **Abrir la caja**, escriba el **Fondo del cajón** (o, si su negocio cuenta por denominación, el valor de cada billete o moneda y cuántos hay) y confirme. Una caja tiene una sola sesión abierta a la vez, y con las sesiones de caja la caja solo vende sobre una sesión abierta: sin ninguna abierta, ofrece **Abrir la caja** en lugar de vender.
+
+**Entrada o salida de efectivo** registra el dinero puesto en el cajón o sacado de él, con un **Motivo** elegido de la lista de su negocio. Una salida por encima del límite del negocio la registra quien puede registrar pagos salientes.
+
+**Contar y cerrar** pide el **Efectivo contado en el cajón** y lo que se **Lleva al banco**. Cuando el negocio cuenta a ciegas, el efectivo esperado no se muestra antes del recuento; quien puede ver las finanzas lo ve, y la diferencia mientras escribe. Un recuento que difiere del efectivo esperado solo se cierra con su motivo, que la caja pide. Tras el cierre, la caja dice lo esperado, lo contado y la diferencia. Los pagos con tarjeta sin respuesta se listan aparte y nunca cuentan como efectivo.
+
 <!-- anchor: user.money.stock.rfid -->
 ### Etiquetas RFID: una por lote o una por pieza
 

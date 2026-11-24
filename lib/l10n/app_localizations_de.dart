@@ -40632,6 +40632,278 @@ class AppLocalizationsDe extends AppLocalizations {
   String get tillConfirmSale => 'Verkauf bestätigen';
 
   @override
+  String get tillDrawerAddTill => 'Kasse hinzufügen';
+
+  @override
+  String get tillDrawerAmountInvalid => 'Geben Sie einen Betrag ein.';
+
+  @override
+  String get tillDrawerAmountZero => 'Der Betrag muss größer als null sein.';
+
+  @override
+  String get tillDrawerBanked => 'Zur Bank gebracht';
+
+  @override
+  String get tillDrawerBankedAbove =>
+      'Der Bankbetrag darf das gezählte Bargeld nicht übersteigen.';
+
+  @override
+  String get tillDrawerBankedHelp =>
+      'Der Teil des gezählten Bargelds, der zur Bank gebracht wird. Leer lassen, wenn nichts.';
+
+  @override
+  String tillDrawerBreakdown(
+    String float,
+    String sales,
+    String paidIn,
+    String paidOut,
+  ) {
+    return 'Wechselgeld $float, Verkäufe $sales, Einlagen $paidIn, Entnahmen $paidOut';
+  }
+
+  @override
+  String get tillDrawerCashAction => 'Einlage oder Entnahme';
+
+  @override
+  String get tillDrawerChoose => 'An welcher Kasse verkaufen?';
+
+  @override
+  String get tillDrawerCloseAction => 'Zählen und schließen';
+
+  @override
+  String get tillDrawerCloseSubmit => 'Kasse schließen';
+
+  @override
+  String tillDrawerCloseTitle(String till) {
+    return '$till zählen und schließen';
+  }
+
+  @override
+  String tillDrawerClosedBanked(String amount) {
+    return 'Zur Bank gebracht: $amount.';
+  }
+
+  @override
+  String tillDrawerClosedCard(String amount) {
+    return 'Noch unbeantwortete Kartenzahlungen: $amount. Sie zählen nicht als Bargeld.';
+  }
+
+  @override
+  String tillDrawerClosedCounts(String expected, String counted) {
+    return 'Erwartet $expected, gezählt $counted.';
+  }
+
+  @override
+  String tillDrawerClosedOver(String amount) {
+    return 'Überschuss von $amount.';
+  }
+
+  @override
+  String get tillDrawerClosedSame =>
+      'Die Zählung entspricht dem erwarteten Bargeld.';
+
+  @override
+  String tillDrawerClosedShort(String amount) {
+    return 'Es fehlen $amount.';
+  }
+
+  @override
+  String get tillDrawerClosedTitle => 'Kasse geschlossen';
+
+  @override
+  String get tillDrawerCounted => 'Im Fach gezähltes Bargeld';
+
+  @override
+  String get tillDrawerCountedHelp => 'Zählen Sie, was in der Schublade liegt.';
+
+  @override
+  String get tillDrawerCountedHelpBlind =>
+      'Zählen Sie, was in der Schublade liegt. Das erwartete Bargeld wird nach dem Zählen angezeigt.';
+
+  @override
+  String get tillDrawerDenomAdd => 'Stückelung hinzufügen';
+
+  @override
+  String get tillDrawerDenomCount => 'Anzahl';
+
+  @override
+  String get tillDrawerDenomIncomplete =>
+      'Jede Zeile braucht einen Wert über null und eine Stückzahl, und kein Wert darf doppelt vorkommen.';
+
+  @override
+  String get tillDrawerDenomRemove => 'Diese Zeile entfernen';
+
+  @override
+  String tillDrawerDenomTotal(String amount) {
+    return 'Gezählt insgesamt: $amount';
+  }
+
+  @override
+  String get tillDrawerDenomValue => 'Wert eines Scheins oder einer Münze';
+
+  @override
+  String get tillDrawerDifferenceAsked =>
+      'Die Zählung weicht vom erwarteten Bargeld ab. Nennen Sie den Grund, um die Kasse zu schließen.';
+
+  @override
+  String tillDrawerDifferenceLive(String amount) {
+    return 'Differenz: $amount';
+  }
+
+  @override
+  String get tillDrawerDifferenceReason => 'Warum weicht die Zählung ab?';
+
+  @override
+  String get tillDrawerDifferenceReasonMissing =>
+      'Nennen Sie den Grund der Abweichung.';
+
+  @override
+  String get tillDrawerEditTill => 'Kasse bearbeiten';
+
+  @override
+  String get tillDrawerEntryAmount => 'Betrag';
+
+  @override
+  String get tillDrawerEntryDone => 'Bargeldbewegung erfasst.';
+
+  @override
+  String tillDrawerEntryLimit(String limit) {
+    return 'Über $limit wird eine Entnahme von jemandem erfasst, der ausgehende Zahlungen erfassen darf.';
+  }
+
+  @override
+  String get tillDrawerEntryPaidIn => 'Einlage';
+
+  @override
+  String get tillDrawerEntryPaidOut => 'Entnahme';
+
+  @override
+  String get tillDrawerEntryReason => 'Grund';
+
+  @override
+  String get tillDrawerEntryReasonMissing => 'Wählen Sie einen Grund.';
+
+  @override
+  String get tillDrawerEntrySubmit => 'Erfassen';
+
+  @override
+  String get tillDrawerEntryTitle => 'Einlage oder Entnahme';
+
+  @override
+  String tillDrawerExpected(String amount) {
+    return 'Erwartetes Bargeld: $amount';
+  }
+
+  @override
+  String get tillDrawerExpectedHidden =>
+      'Das erwartete Bargeld wird nach dem Zählen der Schublade angezeigt.';
+
+  @override
+  String get tillDrawerFailed =>
+      'Die Kasse konnte das nicht ausführen. Versuchen Sie es erneut.';
+
+  @override
+  String get tillDrawerFloat => 'Wechselgeld in der Schublade';
+
+  @override
+  String get tillDrawerFloatHelp =>
+      'Das Bargeld, mit dem die Schublade beginnt, jetzt gezählt.';
+
+  @override
+  String get tillDrawerLoadFailed => 'Die Kassen konnten nicht gelesen werden.';
+
+  @override
+  String get tillDrawerManage => 'Kassen und Schubladen';
+
+  @override
+  String get tillDrawerNameMissing => 'Geben Sie der Kasse einen Namen.';
+
+  @override
+  String get tillDrawerNoTills =>
+      'Es gibt noch keine Kasse. Legen Sie die erste an, um eine Schublade zu zählen.';
+
+  @override
+  String get tillDrawerNoTillsPerson =>
+      'Es ist noch keine Kasse angelegt. Wer die Standorte verwaltet, legt sie an.';
+
+  @override
+  String get tillDrawerOpenAction => 'Kasse öffnen';
+
+  @override
+  String get tillDrawerOpenFirstBody =>
+      'Öffnen Sie vor dem Verkauf eine Kasse mit ihrem Wechselgeld.';
+
+  @override
+  String get tillDrawerOpenFirstTitle => 'Keine Kasse ist offen';
+
+  @override
+  String tillDrawerOpenTitle(String till) {
+    return '$till öffnen';
+  }
+
+  @override
+  String get tillDrawerRefusalAboveLimit =>
+      'Eine so hohe Entnahme erfasst jemand, der ausgehende Zahlungen erfassen darf.';
+
+  @override
+  String get tillDrawerRefusalAlreadyOpen =>
+      'Diese Kasse ist schon offen. Zählen und schließen Sie sie, bevor Sie sie erneut öffnen oder abschalten.';
+
+  @override
+  String get tillDrawerRefusalDenominations =>
+      'Die Zählungen nach Stückelung ergeben nicht den Betrag.';
+
+  @override
+  String get tillDrawerRefusalDifference =>
+      'Die Zählung weicht vom erwarteten Bargeld ab. Nennen Sie den Grund vor dem Schließen.';
+
+  @override
+  String get tillDrawerRefusalNameTaken =>
+      'Eine andere Kasse dieses Betriebs hat diesen Namen schon.';
+
+  @override
+  String get tillDrawerRefusalOpenFirst =>
+      'Öffnen Sie zuerst die Kasse: Ein Verkauf braucht eine offene Sitzung an seiner Kasse.';
+
+  @override
+  String get tillDrawerRefusalReasonUnknown =>
+      'Dieser Grund steht nicht auf der Liste des Betriebs. Wählen Sie einen aus der Liste.';
+
+  @override
+  String get tillDrawerRefusalSessionGone =>
+      'Diese Sitzung ist nicht mehr offen.';
+
+  @override
+  String get tillDrawerRefusalTillUnknown =>
+      'Das ist keine aktive Kasse dieses Betriebs.';
+
+  @override
+  String get tillDrawerStateClosed => 'Geschlossen';
+
+  @override
+  String get tillDrawerStateOff => 'Abgeschaltet';
+
+  @override
+  String tillDrawerStateOpen(String float) {
+    return 'Offen · Wechselgeld $float';
+  }
+
+  @override
+  String get tillDrawerTillActive => 'In Benutzung';
+
+  @override
+  String get tillDrawerTillName => 'Name der Kasse';
+
+  @override
+  String get tillDrawerTillNewTitle => 'Neue Kasse';
+
+  @override
+  String get tillDrawerTillSave => 'Kasse speichern';
+
+  @override
+  String get tillDrawerTitle => 'Kassenschublade';
+
+  @override
   String get tillFailed =>
       'Die Kasse konnte das nicht ausführen. Versuchen Sie es erneut.';
 

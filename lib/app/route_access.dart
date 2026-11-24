@@ -76,6 +76,8 @@ const Map<String, Set<WorkspacePermission>> routePermissions = {
   '/money/quotes': {_P.issueInvoices, _P.viewFinances},
   // #4366 — the till sells at the counter: a member who may issue invoices.
   '/till': {_P.issueInvoices},
+  // #4367 — the cash drawer of the till: the counter opens and closes its session; the finances read every one.
+  '/till/drawer': {_P.issueInvoices, _P.viewFinances},
   '/money/quotes/:id': {_P.issueInvoices, _P.viewFinances},
   '/money/quotes/:id/edit': {_P.issueInvoices},
   // #4178 — the engagements read under the right to issue or the finances.

@@ -93,6 +93,14 @@ List<RouteBase> _invoicingRoutes(RouteEnv env) {
       ),
       builder: (context, state) => const TillRoute(),
     ),
+    // #4367 — the cash drawer of the tills: open with a float, cash in and out, count and close.
+    GoRoute(
+      path: '/till/drawer',
+      redirect: env.guard(
+        const RouteAccess(features: [WorkspaceFeature.counterTillSessions], to: '/till'),
+      ),
+      builder: (context, state) => const TillDrawerRoute(),
+    ),
     GoRoute(
       path: '/invoices',
       redirect: env.guard(

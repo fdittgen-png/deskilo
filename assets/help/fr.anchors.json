@@ -137,6 +137,7 @@
   "user.money.stock.scanning": "Travailler avec un scanner",
   "user.money.stock.nfc": "Puces avec le NFC du téléphone",
   "user.money.till": "Caisse",
+  "user.money.till-drawer": "Ouvrir la caisse, compter et fermer",
   "user.money.stock.rfid": "Puces RFID : une par lot ou une par pièce",
   "user.money.stock.expiry": "Le rapport de péremption",
   "user.money.stock.bulkread": "Lecture de nombreuses étiquettes",

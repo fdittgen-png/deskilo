@@ -106,6 +106,7 @@ import '../../helpers/demo_payment_journeys.dart';
 import '../../helpers/demo_plan_booking_journeys.dart';
 import '../../helpers/demo_settings_shell_journeys.dart';
 import '../../helpers/demo_standalone_journey.dart';
+import '../../helpers/demo_till_drawer_journey.dart';
 import '../../helpers/demo_vies_export_journeys.dart';
 import '../../helpers/demo_whatsapp_journeys.dart';
 
@@ -1717,6 +1718,19 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
     'the preview and the issued invoice state the exact quantity, and the same '
     'request never issues twice',
     (_) => standaloneInvoiceJourney(),
+  ),
+  // #4184 — a sale at the counter: rung up, priced by the server, paid in cash and numbered.
+  WorkspaceFeature.counterReceipts: _action(
+    _owner,
+    'Ada rings up a litre of milk at the counter, takes the cash and the sale is numbered',
+    (_) => tillSaleJourney(),
+  ),
+  // #4367 — the cash drawer: open with a float, sell, pay out, count and close.
+  WorkspaceFeature.counterTillSessions: _action(
+    _owner,
+    'Ada opens the front counter with a 100.00 float, sells for cash, pays 5.00 out, counts the drawer and closes it; a '
+    'short count at the market stall closes only with its reason',
+    (_) => tillDrawerJourney(),
   ),
 };
 

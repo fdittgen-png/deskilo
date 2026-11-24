@@ -762,6 +762,21 @@ Press **Take cash** and type the **Cash given** (or **Exact amount**). Less than
 
 Where your country does not yet allow the counter, the till says which operation is missing and offers nothing: nothing is numbered and nothing is taken. A goods line needs stock management on; a refusal of the server is shown in words. Card payments, discounts, refunds and returns are not part of this first till.
 
+<!-- anchor: user.money.till-drawer -->
+### Open the till, count and close it
+
+**Audience:** Administrator · Owner
+
+You work a cash drawer and want to know that the money in it is right at the end of the day.
+
+Open **Till drawer** in the sales menu (it needs the till sessions feature and the right to issue invoices or to see the finances). Every till of the business is listed with its state. Someone who manages the sites adds a till with **Add a till** and can rename it or switch it off.
+
+Press **Open the till**, type the **Float in the drawer** (or, when your business counts by denomination, the value of each note or coin and how many) and confirm. A till has one open session at a time, and with till sessions on the till sells only on an open session: with none open it offers **Open the till** instead of selling.
+
+**Paid in or out** records cash put into or taken out of the drawer, with a **Reason** chosen from your business's list. A paid-out above the business's limit is recorded by someone who may record outgoing payments.
+
+**Count and close** asks for the **Cash counted in the drawer** and what is **Taken to the bank**. When the business counts blind, the expected cash is not shown before the count; someone who may see the finances sees it, and the difference as they type. A count that differs from the expected cash is closed only with its reason, which the till asks for. After the close the till says what was expected, what was counted and the difference. Card payments still unanswered are listed apart and never counted as cash.
+
 <!-- anchor: user.money.stock.rfid -->
 ### RFID tags: one per batch or one per piece
 

@@ -163,7 +163,8 @@ abstract interface class TillPort {
   Future<TillReadiness> readiness(String workspaceId);
 
   /// Prices [lines]; [receiptId] and [expectedRevision] replace the lines of an open draft, both null make a new one.
-  Future<TillDraft> draft(String workspaceId, {required String requestId, required List<TillLine> lines, String? receiptId, int? expectedRevision});
+  /// [tillId] names the till the sale is made on: a business that runs till sessions needs one with an open session.
+  Future<TillDraft> draft(String workspaceId, {required String requestId, required List<TillLine> lines, String? receiptId, int? expectedRevision, String? tillId});
 
   Future<TillSold> finalize(String workspaceId, {required String requestId, required String receiptId, required int expectedRevision, required List<TillTender> tenders});
 }

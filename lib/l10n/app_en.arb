@@ -52184,6 +52184,375 @@
   "@tillConfirmSale": {
     "description": "#4366 the till: the sale was sent and its answer was lost; send it again under the same request"
   },
+  "tillDrawerAddTill": "Add a till",
+  "@tillDrawerAddTill": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerAmountInvalid": "Type an amount.",
+  "@tillDrawerAmountInvalid": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerAmountZero": "The amount must be above zero.",
+  "@tillDrawerAmountZero": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerBanked": "Taken to the bank",
+  "@tillDrawerBanked": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerBankedAbove": "The bank amount cannot be more than the counted cash.",
+  "@tillDrawerBankedAbove": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerBankedHelp": "The part of the counted cash taken to the bank. Leave empty if none.",
+  "@tillDrawerBankedHelp": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerBreakdown": "Float {float}, sales {sales}, paid in {paidIn}, paid out {paidOut}",
+  "@tillDrawerBreakdown": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "float": {
+        "type": "String"
+      },
+      "sales": {
+        "type": "String"
+      },
+      "paidIn": {
+        "type": "String"
+      },
+      "paidOut": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDrawerCashAction": "Paid in or out",
+  "@tillDrawerCashAction": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerChoose": "Sell on which till?",
+  "@tillDrawerChoose": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerCloseAction": "Count and close",
+  "@tillDrawerCloseAction": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerCloseSubmit": "Close the till",
+  "@tillDrawerCloseSubmit": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerCloseTitle": "Count and close {till}",
+  "@tillDrawerCloseTitle": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "till": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDrawerClosedBanked": "Taken to the bank: {amount}.",
+  "@tillDrawerClosedBanked": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDrawerClosedCard": "Card payments still unanswered: {amount}. They are not counted as cash.",
+  "@tillDrawerClosedCard": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDrawerClosedCounts": "Expected {expected}, counted {counted}.",
+  "@tillDrawerClosedCounts": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "expected": {
+        "type": "String"
+      },
+      "counted": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDrawerClosedOver": "Over by {amount}.",
+  "@tillDrawerClosedOver": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDrawerClosedSame": "The count matches the expected cash.",
+  "@tillDrawerClosedSame": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerClosedShort": "Short by {amount}.",
+  "@tillDrawerClosedShort": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDrawerClosedTitle": "Till closed",
+  "@tillDrawerClosedTitle": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerCounted": "Cash counted in the drawer",
+  "@tillDrawerCounted": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerCountedHelp": "Count what is in the drawer.",
+  "@tillDrawerCountedHelp": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerCountedHelpBlind": "Count what is in the drawer. The expected cash is shown after the count.",
+  "@tillDrawerCountedHelpBlind": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerDenomAdd": "Add a denomination",
+  "@tillDrawerDenomAdd": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerDenomCount": "How many",
+  "@tillDrawerDenomCount": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerDenomIncomplete": "Every row needs a value above zero and a number of pieces, and no value twice.",
+  "@tillDrawerDenomIncomplete": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerDenomRemove": "Remove this row",
+  "@tillDrawerDenomRemove": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerDenomTotal": "Total counted: {amount}",
+  "@tillDrawerDenomTotal": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDrawerDenomValue": "Value of a note or coin",
+  "@tillDrawerDenomValue": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerDifferenceAsked": "The count differs from the expected cash. Say why to close the till.",
+  "@tillDrawerDifferenceAsked": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerDifferenceLive": "Difference: {amount}",
+  "@tillDrawerDifferenceLive": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDrawerDifferenceReason": "Why does the count differ?",
+  "@tillDrawerDifferenceReason": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerDifferenceReasonMissing": "Say why the count differs.",
+  "@tillDrawerDifferenceReasonMissing": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerEditTill": "Edit the till",
+  "@tillDrawerEditTill": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerEntryAmount": "Amount",
+  "@tillDrawerEntryAmount": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerEntryDone": "Cash entry recorded.",
+  "@tillDrawerEntryDone": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerEntryLimit": "Above {limit}, a paid-out is recorded by someone who may record outgoing payments.",
+  "@tillDrawerEntryLimit": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDrawerEntryPaidIn": "Paid in",
+  "@tillDrawerEntryPaidIn": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerEntryPaidOut": "Paid out",
+  "@tillDrawerEntryPaidOut": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerEntryReason": "Reason",
+  "@tillDrawerEntryReason": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerEntryReasonMissing": "Choose a reason.",
+  "@tillDrawerEntryReasonMissing": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerEntrySubmit": "Record",
+  "@tillDrawerEntrySubmit": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerEntryTitle": "Paid in or out",
+  "@tillDrawerEntryTitle": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerExpected": "Expected cash: {amount}",
+  "@tillDrawerExpected": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDrawerExpectedHidden": "The expected cash is shown after you count the drawer.",
+  "@tillDrawerExpectedHidden": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerFailed": "The till could not do that. Try again.",
+  "@tillDrawerFailed": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerFloat": "Float in the drawer",
+  "@tillDrawerFloat": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerFloatHelp": "The cash the drawer starts with, counted now.",
+  "@tillDrawerFloatHelp": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerLoadFailed": "The tills could not be read.",
+  "@tillDrawerLoadFailed": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerManage": "Tills and drawers",
+  "@tillDrawerManage": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerNameMissing": "Give the till a name.",
+  "@tillDrawerNameMissing": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerNoTills": "There is no till yet. Add the first one to start counting a drawer.",
+  "@tillDrawerNoTills": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerNoTillsPerson": "No till has been set up yet. Someone who manages the sites adds it.",
+  "@tillDrawerNoTillsPerson": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerOpenAction": "Open the till",
+  "@tillDrawerOpenAction": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerOpenFirstBody": "Open a till with its float before selling.",
+  "@tillDrawerOpenFirstBody": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerOpenFirstTitle": "No till is open",
+  "@tillDrawerOpenFirstTitle": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerOpenTitle": "Open {till}",
+  "@tillDrawerOpenTitle": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "till": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDrawerRefusalAboveLimit": "A paid-out this large is recorded by someone who may record outgoing payments.",
+  "@tillDrawerRefusalAboveLimit": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerRefusalAlreadyOpen": "This till is already open. Count and close it before opening it again or switching it off.",
+  "@tillDrawerRefusalAlreadyOpen": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerRefusalDenominations": "The counts by denomination do not add up to the amount.",
+  "@tillDrawerRefusalDenominations": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerRefusalDifference": "The count differs from the expected cash. Say why before closing.",
+  "@tillDrawerRefusalDifference": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerRefusalNameTaken": "Another till of this business already has this name.",
+  "@tillDrawerRefusalNameTaken": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerRefusalOpenFirst": "Open the till first: a sale needs an open session on its till.",
+  "@tillDrawerRefusalOpenFirst": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerRefusalReasonUnknown": "This reason is not on the business's list. Choose one from the list.",
+  "@tillDrawerRefusalReasonUnknown": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerRefusalSessionGone": "This session is not open any more.",
+  "@tillDrawerRefusalSessionGone": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerRefusalTillUnknown": "This is not an active till of this business.",
+  "@tillDrawerRefusalTillUnknown": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerStateClosed": "Closed",
+  "@tillDrawerStateClosed": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerStateOff": "Switched off",
+  "@tillDrawerStateOff": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerStateOpen": "Open · float {float}",
+  "@tillDrawerStateOpen": {
+    "description": "#4367 till sessions: the cash drawer",
+    "placeholders": {
+      "float": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDrawerTillActive": "In use",
+  "@tillDrawerTillActive": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerTillName": "Name of the till",
+  "@tillDrawerTillName": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerTillNewTitle": "New till",
+  "@tillDrawerTillNewTitle": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerTillSave": "Save the till",
+  "@tillDrawerTillSave": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
+  "tillDrawerTitle": "Till drawer",
+  "@tillDrawerTitle": {
+    "description": "#4367 till sessions: the cash drawer"
+  },
   "tillFailed": "The till could not do that. Try again.",
   "@tillFailed": {
     "description": "#4366 the till"

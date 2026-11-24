@@ -8,6 +8,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/help/help_anchors.dart';
 import '../../../core/help/help_dot.dart';
@@ -17,7 +18,11 @@ import '../../../core/ui/adaptive/window_class.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../core/ui/kit/page_title.dart';
 import '../../../core/ui/loading_view.dart';
+import '../../workspace/domain/workspace_feature.dart';
+import '../../workspace/providers/workspace_providers.dart' show enabledFeaturesSyncProvider;
 import '../domain/counter_till.dart';
+import '../domain/till_drawer.dart';
+import '../providers/till_drawer_providers.dart';
 import '../providers/till_providers.dart';
 import 'till_basket.dart';
 import 'till_cash_dialog.dart';
@@ -64,7 +69,7 @@ class _Readiness extends ConsumerWidget {
             onRetry: () => ref.invalidate(tillReadinessProvider(workspaceId)),
           ),
           data: (readiness) => readiness.ready
-              ? _Till(key: ValueKey('till-$workspaceId'), workspaceId: workspaceId, keys: keys)
+              ? _SessionGate(workspaceId: workspaceId, keys: keys)
               : _Notice(
                   key: const ValueKey('till-not-ready'),
                   text: l10n.tillNotReady(
@@ -74,6 +79,105 @@ class _Readiness extends ConsumerWidget {
                 ),
         );
   }
+}
+
+/// #4367 -- a business that runs till sessions sells only on a till with an open session: the open tills are read, the one
+/// that sells is chosen (the only one open, or the cashier's pick), and with none open the till offers to open one. A
+/// business that does not run them sells as before, on no till.
+class _SessionGate extends ConsumerWidget {
+  const _SessionGate({required this.workspaceId, required this.keys});
+
+  final String workspaceId;
+  final AsyncValue<List<TillKey>> keys;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
+    final sessions = ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.counterTillSessions);
+    if (!sessions) return _Till(key: ValueKey('till-$workspaceId'), workspaceId: workspaceId, keys: keys);
+    return ref
+        .watch(tillDrawerProvider(workspaceId))
+        .when(
+          loading: () => const LoadingView(),
+          error: (e, _) => _Notice(text: tillProblemText(l10n, e), onRetry: () => ref.invalidate(tillDrawerProvider(workspaceId))),
+          data: (tills) {
+            final open = [for (final t in tills) if (t.isOpen && t.active) t];
+            if (open.isEmpty) return _OpenFirst(workspaceId: workspaceId);
+            final session = ref.read(tillSessionProvider(workspaceId));
+            return ValueListenableBuilder<String?>(
+              valueListenable: session.chosenTill,
+              builder: (context, chosen, _) {
+                final till = open.where((t) => t.id == chosen).firstOrNull ?? (open.length == 1 ? open.first : null);
+                if (till == null) return _ChooseTill(tills: open, onPick: (t) => session.chosenTill.value = t.id);
+                return _Till(key: ValueKey('till-$workspaceId-${till.id}'), workspaceId: workspaceId, keys: keys, till: till);
+              },
+            );
+          },
+        );
+  }
+}
+
+/// No till is open: the till says so and goes to the drawer to open one.
+class _OpenFirst extends ConsumerWidget {
+  const _OpenFirst({required this.workspaceId});
+
+  final String workspaceId;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
+    return Center(
+      key: const ValueKey('till-open-first'),
+      child: Padding(
+        padding: const EdgeInsets.all(AppSpacing.lg),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(l10n.tillDrawerOpenFirstTitle, style: Theme.of(context).textTheme.titleMedium, textAlign: TextAlign.center),
+            const FormGap(),
+            Text(l10n.tillDrawerOpenFirstBody, textAlign: TextAlign.center),
+            const FormGap(),
+            FilledButton(
+              key: const ValueKey('till-open-the-till'),
+              onPressed: () async {
+                await context.push('/till/drawer');
+                ref.invalidate(tillDrawerProvider(workspaceId));
+              },
+              child: Text(l10n.tillDrawerOpenAction),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Several tills are open: the cashier says which one this sale is made on.
+class _ChooseTill extends StatelessWidget {
+  const _ChooseTill({required this.tills, required this.onPick});
+
+  final List<DrawerTill> tills;
+  final void Function(DrawerTill) onPick;
+
+  @override
+  Widget build(BuildContext context) => Center(
+    key: const ValueKey('till-choose'),
+    child: Padding(
+      padding: const EdgeInsets.all(AppSpacing.lg),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(context.l10n.tillDrawerChoose, style: Theme.of(context).textTheme.titleMedium, textAlign: TextAlign.center),
+          const FormGap(),
+          for (final t in tills)
+            Padding(
+              padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+              child: FilledButton.tonal(key: ValueKey('till-choose-${t.id}'), onPressed: () => onPick(t), child: Text(t.name)),
+            ),
+        ],
+      ),
+    ),
+  );
 }
 
 class _Notice extends StatelessWidget {
@@ -103,17 +207,20 @@ class _Notice extends StatelessWidget {
 }
 
 class _Till extends ConsumerStatefulWidget {
-  const _Till({super.key, required this.workspaceId, required this.keys});
+  const _Till({super.key, required this.workspaceId, required this.keys, this.till});
 
   final String workspaceId;
   final AsyncValue<List<TillKey>> keys;
+
+  /// The till this sale is made on; null for a business that does not run till sessions.
+  final DrawerTill? till;
 
   @override
   ConsumerState<_Till> createState() => _TillState();
 }
 
 class _TillState extends ConsumerState<_Till> {
-  late final TillSession _session = ref.read(tillSessionProvider(widget.workspaceId));
+  late final TillSession _session = ref.read(tillSessionProvider(widget.workspaceId))..tillId = widget.till?.id;
 
   @override
   void dispose() {

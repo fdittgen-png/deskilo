@@ -3150,6 +3150,21 @@ Drücken Sie **Bar kassieren** und geben Sie **Gegeben** ein (oder **Passend**).
 
 Wo Ihr Land die Kasse noch nicht erlaubt, nennt die Kasse den fehlenden Vorgang und bietet nichts an: nichts wird nummeriert und nichts kassiert. Eine Warenzeile braucht die Lagerverwaltung; eine Ablehnung des Servers erscheint in Worten. Kartenzahlung, Rabatte, Erstattungen und Rückgaben gehören nicht zu dieser ersten Kasse.
 
+<!-- anchor: user.money.till-drawer -->
+### Kasse öffnen, zählen und schließen
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie führen eine Kassenschublade und wollen am Tagesende wissen, dass das Geld darin stimmt.
+
+Öffnen Sie **Kassenschublade** im Verkaufsmenü (es braucht die Funktion Kassensitzungen und das Recht, Rechnungen auszustellen oder die Finanzen zu sehen). Jede Kasse des Betriebs steht mit ihrem Zustand in der Liste. Wer die Standorte verwaltet, legt mit **Kasse hinzufügen** eine Kasse an und kann sie umbenennen oder abschalten.
+
+Tippen Sie auf **Kasse öffnen**, geben Sie das **Wechselgeld in der Schublade** ein (oder, wenn Ihr Betrieb nach Stückelung zählt, den Wert jedes Scheins oder jeder Münze und die Anzahl) und bestätigen Sie. Eine Kasse hat jeweils eine offene Sitzung, und mit Kassensitzungen verkauft die Kasse nur auf einer offenen Sitzung: ohne offene Sitzung bietet sie **Kasse öffnen** statt des Verkaufs an.
+
+**Einlage oder Entnahme** erfasst Bargeld, das in die Schublade gelegt oder entnommen wird, mit einem **Grund** aus der Liste Ihres Betriebs. Eine Entnahme über dem Limit des Betriebs erfasst, wer ausgehende Zahlungen erfassen darf.
+
+**Zählen und schließen** fragt nach dem **Im Fach gezählten Bargeld** und dem, was **Zur Bank gebracht** wird. Zählt der Betrieb blind, wird das erwartete Bargeld vor dem Zählen nicht angezeigt; wer die Finanzen sehen darf, sieht es und beim Eintippen die Differenz. Eine Zählung, die vom erwarteten Bargeld abweicht, wird nur mit ihrem Grund geschlossen, den die Kasse erfragt. Nach dem Schließen nennt die Kasse das Erwartete, das Gezählte und die Differenz. Unbeantwortete Kartenzahlungen stehen getrennt und zählen nie als Bargeld.
+
 <!-- anchor: user.money.stock.rfid -->
 ### RFID-Tags: eines pro Charge oder eines pro Stück
 

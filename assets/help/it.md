@@ -3010,6 +3010,20 @@ Prema **Incassare in contanti** e digiti i **Contanti dati** (o **Importo esatto
 
 Dove il suo paese non consente ancora la cassa, questa indica l'operazione mancante e non offre nulla: nulla viene numerato né incassato. Una riga di merce richiede la gestione del magazzino; un rifiuto del server è detto a parole. Pagamenti con carta, sconti, rimborsi e resi non fanno parte di questa prima cassa.
 
+### Aprire la cassa, contare e chiudere
+
+**Destinatari:** Amministratore · Proprietario
+
+Si gestisce un cassetto di cassa e si vuole sapere che il denaro al suo interno sia corretto a fine giornata.
+
+Aprire **Cassetto di cassa** nel menu delle vendite (richiede la funzione sessioni di cassa e il diritto di emettere fatture o di vedere le finanze). Ogni cassa dell'attività è elencata con il suo stato. Chi gestisce le sedi aggiunge una cassa con **Aggiungere una cassa** e può rinominarla o disattivarla.
+
+Premere **Aprire la cassa**, digitare il **Fondo cassa nel cassetto** (o, se l'attività conta per taglio, il valore di ogni banconota o moneta e quanti pezzi) e confermare. Una cassa ha una sola sessione aperta alla volta e, con le sessioni di cassa, la cassa vende solo su una sessione aperta: senza sessione aperta propone **Aprire la cassa** invece di vendere.
+
+**Versamento o prelievo** registra il denaro messo nel cassetto o prelevato, con un **Motivo** scelto dall'elenco dell'attività. Un prelievo oltre il limite dell'attività viene registrato da chi può registrare i pagamenti in uscita.
+
+**Contare e chiudere** chiede i **Contanti contati nel cassetto** e quanto viene **Portato in banca**. Quando l'attività conta alla cieca, i contanti attesi non vengono mostrati prima del conteggio; chi può vedere le finanze li vede, insieme alla differenza mentre digita. Un conteggio che differisce dai contanti attesi si chiude solo con il suo motivo, che la cassa richiede. Dopo la chiusura la cassa indica quanto era atteso, quanto è stato contato e la differenza. I pagamenti con carta senza risposta sono elencati a parte e mai contati come contanti.
+
 ### Tag RFID: uno per lotto o uno per pezzo
 
 **Destinatari:** Amministratore · Proprietario

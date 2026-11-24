@@ -64654,6 +64654,449 @@ abstract class AppLocalizations {
   /// **'Confirm the sale'**
   String get tillConfirmSale;
 
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Add a till'**
+  String get tillDrawerAddTill;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Type an amount.'**
+  String get tillDrawerAmountInvalid;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'The amount must be above zero.'**
+  String get tillDrawerAmountZero;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Taken to the bank'**
+  String get tillDrawerBanked;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'The bank amount cannot be more than the counted cash.'**
+  String get tillDrawerBankedAbove;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'The part of the counted cash taken to the bank. Leave empty if none.'**
+  String get tillDrawerBankedHelp;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Float {float}, sales {sales}, paid in {paidIn}, paid out {paidOut}'**
+  String tillDrawerBreakdown(
+    String float,
+    String sales,
+    String paidIn,
+    String paidOut,
+  );
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Paid in or out'**
+  String get tillDrawerCashAction;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Sell on which till?'**
+  String get tillDrawerChoose;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Count and close'**
+  String get tillDrawerCloseAction;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Close the till'**
+  String get tillDrawerCloseSubmit;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Count and close {till}'**
+  String tillDrawerCloseTitle(String till);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Taken to the bank: {amount}.'**
+  String tillDrawerClosedBanked(String amount);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Card payments still unanswered: {amount}. They are not counted as cash.'**
+  String tillDrawerClosedCard(String amount);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Expected {expected}, counted {counted}.'**
+  String tillDrawerClosedCounts(String expected, String counted);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Over by {amount}.'**
+  String tillDrawerClosedOver(String amount);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'The count matches the expected cash.'**
+  String get tillDrawerClosedSame;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Short by {amount}.'**
+  String tillDrawerClosedShort(String amount);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Till closed'**
+  String get tillDrawerClosedTitle;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Cash counted in the drawer'**
+  String get tillDrawerCounted;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Count what is in the drawer.'**
+  String get tillDrawerCountedHelp;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Count what is in the drawer. The expected cash is shown after the count.'**
+  String get tillDrawerCountedHelpBlind;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Add a denomination'**
+  String get tillDrawerDenomAdd;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'How many'**
+  String get tillDrawerDenomCount;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Every row needs a value above zero and a number of pieces, and no value twice.'**
+  String get tillDrawerDenomIncomplete;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Remove this row'**
+  String get tillDrawerDenomRemove;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Total counted: {amount}'**
+  String tillDrawerDenomTotal(String amount);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Value of a note or coin'**
+  String get tillDrawerDenomValue;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'The count differs from the expected cash. Say why to close the till.'**
+  String get tillDrawerDifferenceAsked;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Difference: {amount}'**
+  String tillDrawerDifferenceLive(String amount);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Why does the count differ?'**
+  String get tillDrawerDifferenceReason;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Say why the count differs.'**
+  String get tillDrawerDifferenceReasonMissing;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Edit the till'**
+  String get tillDrawerEditTill;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get tillDrawerEntryAmount;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Cash entry recorded.'**
+  String get tillDrawerEntryDone;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Above {limit}, a paid-out is recorded by someone who may record outgoing payments.'**
+  String tillDrawerEntryLimit(String limit);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Paid in'**
+  String get tillDrawerEntryPaidIn;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Paid out'**
+  String get tillDrawerEntryPaidOut;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Reason'**
+  String get tillDrawerEntryReason;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a reason.'**
+  String get tillDrawerEntryReasonMissing;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Record'**
+  String get tillDrawerEntrySubmit;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Paid in or out'**
+  String get tillDrawerEntryTitle;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Expected cash: {amount}'**
+  String tillDrawerExpected(String amount);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'The expected cash is shown after you count the drawer.'**
+  String get tillDrawerExpectedHidden;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'The till could not do that. Try again.'**
+  String get tillDrawerFailed;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Float in the drawer'**
+  String get tillDrawerFloat;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'The cash the drawer starts with, counted now.'**
+  String get tillDrawerFloatHelp;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'The tills could not be read.'**
+  String get tillDrawerLoadFailed;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Tills and drawers'**
+  String get tillDrawerManage;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Give the till a name.'**
+  String get tillDrawerNameMissing;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'There is no till yet. Add the first one to start counting a drawer.'**
+  String get tillDrawerNoTills;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'No till has been set up yet. Someone who manages the sites adds it.'**
+  String get tillDrawerNoTillsPerson;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Open the till'**
+  String get tillDrawerOpenAction;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Open a till with its float before selling.'**
+  String get tillDrawerOpenFirstBody;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'No till is open'**
+  String get tillDrawerOpenFirstTitle;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Open {till}'**
+  String tillDrawerOpenTitle(String till);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'A paid-out this large is recorded by someone who may record outgoing payments.'**
+  String get tillDrawerRefusalAboveLimit;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'This till is already open. Count and close it before opening it again or switching it off.'**
+  String get tillDrawerRefusalAlreadyOpen;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'The counts by denomination do not add up to the amount.'**
+  String get tillDrawerRefusalDenominations;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'The count differs from the expected cash. Say why before closing.'**
+  String get tillDrawerRefusalDifference;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Another till of this business already has this name.'**
+  String get tillDrawerRefusalNameTaken;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Open the till first: a sale needs an open session on its till.'**
+  String get tillDrawerRefusalOpenFirst;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'This reason is not on the business\'s list. Choose one from the list.'**
+  String get tillDrawerRefusalReasonUnknown;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'This session is not open any more.'**
+  String get tillDrawerRefusalSessionGone;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'This is not an active till of this business.'**
+  String get tillDrawerRefusalTillUnknown;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Closed'**
+  String get tillDrawerStateClosed;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Switched off'**
+  String get tillDrawerStateOff;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Open · float {float}'**
+  String tillDrawerStateOpen(String float);
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'In use'**
+  String get tillDrawerTillActive;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Name of the till'**
+  String get tillDrawerTillName;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'New till'**
+  String get tillDrawerTillNewTitle;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Save the till'**
+  String get tillDrawerTillSave;
+
+  /// #4367 till sessions: the cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Till drawer'**
+  String get tillDrawerTitle;
+
   /// #4366 the till
   ///
   /// In en, this message translates to:

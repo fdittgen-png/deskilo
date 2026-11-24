@@ -3150,6 +3150,21 @@ Appuyez sur **Encaisser en espèces** et saisissez les **Espèces remises** (ou 
 
 Là où votre pays n'autorise pas encore la caisse, elle nomme l'opération manquante et ne propose rien : rien n'est numéroté ni encaissé. Une ligne de marchandise demande la gestion de stock ; un refus du serveur est dit en mots. Paiements par carte, remises, remboursements et retours ne font pas partie de cette première caisse.
 
+<!-- anchor: user.money.till-drawer -->
+### Ouvrir la caisse, compter et fermer
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous tenez un tiroir-caisse et voulez savoir que l'argent qu'il contient est juste en fin de journée.
+
+Ouvrez **Tiroir-caisse** dans le menu des ventes (il demande la fonction sessions de caisse et le droit d'émettre des factures ou de voir les finances). Chaque caisse de l'entreprise est listée avec son état. Une personne qui gère les sites ajoute une caisse avec **Ajouter une caisse** et peut la renommer ou la désactiver.
+
+Appuyez sur **Ouvrir la caisse**, saisissez le **Fond de caisse** (ou, si votre entreprise compte par coupure, la valeur de chaque billet ou pièce et leur nombre) et confirmez. Une caisse n'a qu'une session ouverte à la fois, et avec les sessions de caisse la caisse ne vend que sur une session ouverte : sans session ouverte, elle propose **Ouvrir la caisse** au lieu de vendre.
+
+**Entrée ou sortie d'espèces** enregistre l'argent mis dans le tiroir ou retiré, avec un **Motif** choisi dans la liste de votre entreprise. Une sortie au-delà de la limite de l'entreprise est enregistrée par une personne qui peut enregistrer des paiements sortants.
+
+**Compter et fermer** demande les **Espèces comptées dans le tiroir** et ce qui est **Déposé à la banque**. Quand l'entreprise compte à l'aveugle, les espèces attendues ne s'affichent pas avant le comptage ; une personne qui peut voir les finances les voit, ainsi que l'écart pendant la saisie. Un comptage qui diffère des espèces attendues ne se ferme qu'avec son motif, que la caisse demande. Après la fermeture, la caisse indique ce qui était attendu, ce qui a été compté et l'écart. Les paiements par carte sans réponse sont listés à part et jamais comptés comme espèces.
+
 <!-- anchor: user.money.stock.rfid -->
 ### Puces RFID : une par lot ou une par pièce
 
