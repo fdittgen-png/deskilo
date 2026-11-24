@@ -5,9 +5,12 @@
 // carnets with a balance to spend, and the VAT declarations of the last
 // two quarters — one submitted, one a draft — computed from the bills the
 // session actually holds.
+import '../../../features/money/domain/accounting_view.dart';
 import '../../../features/money/domain/credit_product.dart';
 import '../../../features/money/domain/price_negotiation.dart';
 import '../../../features/money/domain/vat_declaration.dart';
+import '../../../features/money/domain/vat_period_lock.dart';
+import '../../../features/money/domain/vat_tax_point.dart';
 import '../data/credit_repository.dart';
 import '../data/money_repository.dart';
 
@@ -56,19 +59,35 @@ void seedDemoCarnets(FakeCreditRepository credits) {
 
 /// The last two quarters' declarations, from the session's own bills.
 void seedDemoVatDeclarations(FakeMoneyRepository money, DateTime now) {
+  // French service VAT is due on receipts unless the issuer opted for
+  // debits. Keep seeded returns and subsequent preparations on that basis.
+  money.vatReturnBasis = vatTaxPointBasis('FR', null);
+  final view = accountingView(money.invoices, money.invoiceMatchesStore);
+  final ledger = vatTaxPointLedger(
+    view.invoices,
+    matches: view.matches,
+    instalments: money.invoiceInstalmentsStore,
+    basis: money.vatReturnBasis,
+  );
   final quarter = (now.month - 1) ~/ 3;
   final thisQuarter = DateTime(now.year, quarter * 3 + 1);
   VatDeclaration declaration(DateTime start, {required bool submitted}) {
     final end = DateTime(start.year, start.month + 3, 0);
-    final bills = [
-      for (final i in money.invoices)
-        if (!i.issuedAt.isBefore(start) &&
-            !i.issuedAt.isAfter(end) &&
-            i.totalCents > 0)
-          i,
-    ];
-    final gross = bills.fold(0, (n, i) => n + i.totalCents);
-    final net = (gross / 1.2).round();
+    final amounts = vatReturnAmountsOf(
+      ledger,
+      start: start,
+      end: end,
+      locks: vatPeriodLocksOf(money.vatDeclarations),
+      declared: money.vatDeclared,
+    );
+    final lines = vatReturnLinesOf(
+      amounts,
+      declarations: money.vatDeclarations,
+    );
+    if (submitted) money.vatDeclared.addAll(vatDeclaredBy(amounts));
+    final net = lines.fold(0, (int n, line) => n + line.netCents);
+    final vat = lines.fold(0, (int n, line) => n + line.vatCents);
+    final count = amounts.map((a) => a.invoiceId).toSet().length;
     final label = 'T${(start.month - 1) ~/ 3 + 1}';
     return VatDeclaration(
       id: 'demo-vat-${start.year}-$label',
@@ -76,20 +95,14 @@ void seedDemoVatDeclarations(FakeMoneyRepository money, DateTime now) {
       periodStart: start,
       periodEnd: end,
       status: submitted ? 'filed' : 'prepared',
-      lines: [
-        VatDeclarationLine(
-          percent: 20,
-          grossCents: gross,
-          netCents: net,
-          vatCents: gross - net,
-          invoiceCount: bills.length,
-        ),
-      ],
+      lines: lines,
       totalNetCents: net,
-      totalVatCents: gross - net,
+      totalVatCents: vat,
       currency: 'EUR',
-      invoiceCount: bills.length,
-      createdAt: end.add(const Duration(days: 5)),
+      invoiceCount: count,
+      createdAt: end.add(const Duration(days: 5)).isAfter(now)
+          ? now
+          : end.add(const Duration(days: 5)),
       submittedAt: submitted ? end.add(const Duration(days: 12)) : null,
       submittedChannel: submitted ? 'manual' : '',
       submittedReceipt: submitted ? 'EFI-${start.year}-$label' : '',
@@ -97,14 +110,16 @@ void seedDemoVatDeclarations(FakeMoneyRepository money, DateTime now) {
     );
   }
 
-  money.vatDeclarations.addAll([
+  money.vatDeclarations.add(
     declaration(
       DateTime(thisQuarter.year, thisQuarter.month - 6),
       submitted: true,
     ),
+  );
+  money.vatDeclarations.add(
     declaration(
       DateTime(thisQuarter.year, thisQuarter.month - 3),
       submitted: false,
     ),
-  ]);
+  );
 }

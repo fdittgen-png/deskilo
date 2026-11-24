@@ -72,7 +72,9 @@ class DemoTaxReporting implements TaxReportingRepository {
       totalVatCents: lines.fold(0, (sum, l) => sum + l.vatCents),
       currency: 'EUR',
       invoiceCount: documents.length,
-      createdAt: DateTime.utc(2026, 8, 11),
+      createdAt: existing != -1
+          ? _m.vatDeclarations[existing].createdAt
+          : _m.clock(),
     );
     if (existing != -1) {
       _m.vatDeclarations[existing] = declaration;
@@ -114,10 +116,11 @@ class DemoTaxReporting implements TaxReportingRepository {
       currency: d.currency,
       invoiceCount: d.invoiceCount,
       createdAt: d.createdAt,
-      submittedAt: DateTime.utc(2026, 8, 11, 12),
+      submittedAt: _m.clock(),
       submittedChannel: channel,
       submittedReceipt: receipt.trim(),
-      number: 'DECL-2026-${(index + 1).toString().padLeft(4, '0')}',
+      number:
+          'DECL-${_m.clock().year}-${(index + 1).toString().padLeft(4, '0')}',
     );
   }
 
