@@ -1,0 +1,114 @@
+{
+  "contract": "embedded_till/v1",
+  "implements": [
+    "basket",
+    "quantity_keypad",
+    "cash",
+    "next_customer",
+    "category_pages"
+  ],
+  "cases": [
+    {
+      "name": "accepts_known_capabilities",
+      "document": {
+        "protocol": {
+          "major": 1,
+          "minor": 0
+        },
+        "capabilities_required": [
+          "basket",
+          "cash"
+        ]
+      },
+      "expect": "accept"
+    },
+    {
+      "name": "accepts_added_optional_field",
+      "document": {
+        "protocol": {
+          "major": 1,
+          "minor": 0
+        },
+        "capabilities_required": [
+          "basket",
+          "cash"
+        ],
+        "extra_optional": "x"
+      },
+      "expect": "accept"
+    },
+    {
+      "name": "accepts_higher_minor",
+      "document": {
+        "protocol": {
+          "major": 1,
+          "minor": 7
+        },
+        "capabilities_required": [
+          "basket",
+          "cash"
+        ]
+      },
+      "expect": "accept"
+    },
+    {
+      "name": "rejects_unknown_major",
+      "document": {
+        "protocol": {
+          "major": 2,
+          "minor": 0
+        },
+        "capabilities_required": [
+          "basket",
+          "cash"
+        ]
+      },
+      "expect": "unsupported:protocol_major"
+    },
+    {
+      "name": "rejects_missing_protocol",
+      "document": {
+        "capabilities_required": []
+      },
+      "expect": "unsupported:protocol_missing"
+    },
+    {
+      "name": "rejects_unknown_capability",
+      "document": {
+        "protocol": {
+          "major": 1,
+          "minor": 0
+        },
+        "capabilities_required": [
+          "basket",
+          "hologram"
+        ]
+      },
+      "expect": "unsupported:capability_unknown"
+    },
+    {
+      "name": "rejects_capability_the_terminal_lacks",
+      "document": {
+        "protocol": {
+          "major": 1,
+          "minor": 0
+        },
+        "capabilities_required": [
+          "basket",
+          "drawer_command"
+        ]
+      },
+      "expect": "unsupported:capability_not_implemented"
+    },
+    {
+      "name": "rejects_missing_capabilities",
+      "document": {
+        "protocol": {
+          "major": 1,
+          "minor": 0
+        }
+      },
+      "expect": "unsupported:capabilities_missing"
+    }
+  ]
+}

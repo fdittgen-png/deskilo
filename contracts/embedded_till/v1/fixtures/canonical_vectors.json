@@ -1,0 +1,81 @@
+{
+  "contract": "embedded_till/v1",
+  "vectors": [
+    {
+      "name": "keys_sorted_by_utf8_bytes",
+      "input": {
+        "b": 1,
+        "a": "x",
+        "B": true
+      },
+      "canonical": "{\"B\":true,\"a\":\"x\",\"b\":1}",
+      "sha256": "91bfae84ad92229d7a6b18db52244e98bf775ec86bd66cc5e112f2f3f454bb2f"
+    },
+    {
+      "name": "astral_after_bmp_high",
+      "input": {
+        "￮": 1,
+        "😀": 2,
+        "z": 3
+      },
+      "canonical": "{\"z\":3,\"￮\":1,\"😀\":2}",
+      "sha256": "8afc72ae27b0fcd9e70c2a0c520b1822ad958a310528a9dab12e2b8ea5376b76"
+    },
+    {
+      "name": "escapes",
+      "input": {
+        "s": "quote\" back\\ ctl\u0001 tab\t nl\n é 😀"
+      },
+      "canonical": "{\"s\":\"quote\\\" back\\\\ ctl\\u0001 tab\\u0009 nl\\u000a é 😀\"}",
+      "sha256": "d69e02d8649c9f90db991d566291f0cb41456e941d3e34cee1b86bb68ae63bb4"
+    },
+    {
+      "name": "nested_and_arrays",
+      "input": {
+        "pages": [
+          {
+            "keys": [
+              {
+                "id": "1",
+                "label": "Oat milk"
+              }
+            ],
+            "id": "p1"
+          }
+        ],
+        "v": 0
+      },
+      "canonical": "{\"pages\":[{\"id\":\"p1\",\"keys\":[{\"id\":\"1\",\"label\":\"Oat milk\"}]}],\"v\":0}",
+      "sha256": "635fdca69a3ffabf2dcd9e862b69045bbe9ac726022024be1af26a80a7f2ae89"
+    },
+    {
+      "name": "integers_decimal",
+      "input": {
+        "zero": 0,
+        "neg": -7,
+        "big": 9007199254740993
+      },
+      "canonical": "{\"big\":9007199254740993,\"neg\":-7,\"zero\":0}",
+      "sha256": "92cde06fd2daf26fcaad2d25d48fe05ad79df3c5bd4287f8b9664b45688af2bb"
+    },
+    {
+      "name": "empty_containers",
+      "input": {
+        "a": [],
+        "o": {}
+      },
+      "canonical": "{\"a\":[],\"o\":{}}",
+      "sha256": "9bee7ebfc94b459dacb8cbc72cb2900e61f0aa42189df18329f84f92568f4f89"
+    }
+  ],
+  "refuse": [
+    {
+      "name": "null_is_absent",
+      "input_json": "{\"a\":null}"
+    },
+    {
+      "name": "float_is_refused",
+      "input_json": "{\"a\":1.5}"
+    }
+  ]
+}

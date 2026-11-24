@@ -1,0 +1,1114 @@
+{
+  "contract": "embedded_till/v1",
+  "cases": [
+    {
+      "name": "bakery_default",
+      "omitted": 0,
+      "profile": {
+        "protocol": {
+          "major": 1,
+          "minor": 0
+        },
+        "currency": {
+          "code": "EUR",
+          "exponent": 2
+        },
+        "layout": {
+          "source": "generated_default",
+          "version": "default-1"
+        },
+        "capabilities_required": [
+          "basket",
+          "cash",
+          "category_pages",
+          "next_customer",
+          "quantity_keypad"
+        ],
+        "pages": [
+          {
+            "id": "p1",
+            "keys": [
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000000030",
+                "label": "Coffee",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000000031",
+                "label": "Tea",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              }
+            ]
+          },
+          {
+            "id": "p2",
+            "title": "Bread",
+            "keys": [
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000000001",
+                "label": "Baguette",
+                "unit": "piece",
+                "state": "available",
+                "colour": "#c8a165",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000000002",
+                "label": "Sourdough",
+                "unit": "piece",
+                "state": "available",
+                "colour": "#c8a165",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000000003",
+                "label": "Rye",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              }
+            ]
+          },
+          {
+            "id": "p3",
+            "title": "Deli",
+            "keys": [
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000000040",
+                "label": "Cheese",
+                "unit": "kg",
+                "state": "available"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000000041",
+                "label": "Red wine",
+                "unit": "piece",
+                "state": "unavailable",
+                "fixed_quantity": "1",
+                "reason": "age_confirmation"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000000042",
+                "label": "Oat milk",
+                "unit": "l",
+                "state": "unavailable",
+                "fixed_quantity": "1",
+                "reason": "deposit"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000000050",
+                "label": "Crème brûlée aux fruits rouges de la maison t",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1",
+                "shortened": true
+              }
+            ]
+          },
+          {
+            "id": "p4",
+            "title": "Pastry",
+            "keys": [
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000000010",
+                "label": "Pastry 0",
+                "unit": "piece",
+                "state": "available",
+                "colour": "#ff8800",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000000011",
+                "label": "Pastry 1",
+                "unit": "piece",
+                "state": "available",
+                "colour": "#ff8800",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000000012",
+                "label": "Pastry 2",
+                "unit": "piece",
+                "state": "available",
+                "colour": "#ff8800",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000000013",
+                "label": "Pastry 3",
+                "unit": "piece",
+                "state": "available",
+                "colour": "#ff8800",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000000014",
+                "label": "Pastry 4",
+                "unit": "piece",
+                "state": "available",
+                "colour": "#ff8800",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000000015",
+                "label": "Pastry 5",
+                "unit": "piece",
+                "state": "available",
+                "colour": "#ff8800",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000000016",
+                "label": "Pastry 6",
+                "unit": "piece",
+                "state": "available",
+                "colour": "#ff8800",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000000017",
+                "label": "Pastry 7",
+                "unit": "piece",
+                "state": "available",
+                "colour": "#ff8800",
+                "fixed_quantity": "1"
+              }
+            ]
+          },
+          {
+            "id": "p5",
+            "title": "Pastry",
+            "keys": [
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000000018",
+                "label": "Pastry 8",
+                "unit": "piece",
+                "state": "available",
+                "colour": "#ff8800",
+                "fixed_quantity": "1"
+              }
+            ]
+          }
+        ],
+        "profile_version": "7ce8ff3280577f1e431b40fc9377ad7252a0a262df6972d538b68328063953e6"
+      }
+    },
+    {
+      "name": "over_the_page_ceiling",
+      "omitted": 4,
+      "profile": {
+        "protocol": {
+          "major": 1,
+          "minor": 0
+        },
+        "currency": {
+          "code": "CHF",
+          "exponent": 2
+        },
+        "layout": {
+          "source": "generated_default",
+          "version": "default-1"
+        },
+        "capabilities_required": [
+          "basket",
+          "cash",
+          "category_pages",
+          "next_customer",
+          "quantity_keypad"
+        ],
+        "pages": [
+          {
+            "id": "p1",
+            "title": "Cat 00",
+            "keys": [
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001000",
+                "label": "Item 000",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001001",
+                "label": "Item 001",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001002",
+                "label": "Item 002",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001003",
+                "label": "Item 003",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001004",
+                "label": "Item 004",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001005",
+                "label": "Item 005",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001006",
+                "label": "Item 006",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001007",
+                "label": "Item 007",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              }
+            ]
+          },
+          {
+            "id": "p2",
+            "title": "Cat 01",
+            "keys": [
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001008",
+                "label": "Item 008",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001009",
+                "label": "Item 009",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001010",
+                "label": "Item 010",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001011",
+                "label": "Item 011",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001012",
+                "label": "Item 012",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001013",
+                "label": "Item 013",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001014",
+                "label": "Item 014",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001015",
+                "label": "Item 015",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              }
+            ]
+          },
+          {
+            "id": "p3",
+            "title": "Cat 02",
+            "keys": [
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001016",
+                "label": "Item 016",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001017",
+                "label": "Item 017",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001018",
+                "label": "Item 018",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001019",
+                "label": "Item 019",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001020",
+                "label": "Item 020",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001021",
+                "label": "Item 021",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001022",
+                "label": "Item 022",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001023",
+                "label": "Item 023",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              }
+            ]
+          },
+          {
+            "id": "p4",
+            "title": "Cat 03",
+            "keys": [
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001024",
+                "label": "Item 024",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001025",
+                "label": "Item 025",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001026",
+                "label": "Item 026",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001027",
+                "label": "Item 027",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001028",
+                "label": "Item 028",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001029",
+                "label": "Item 029",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001030",
+                "label": "Item 030",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001031",
+                "label": "Item 031",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              }
+            ]
+          },
+          {
+            "id": "p5",
+            "title": "Cat 04",
+            "keys": [
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001032",
+                "label": "Item 032",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001033",
+                "label": "Item 033",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001034",
+                "label": "Item 034",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001035",
+                "label": "Item 035",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001036",
+                "label": "Item 036",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001037",
+                "label": "Item 037",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001038",
+                "label": "Item 038",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001039",
+                "label": "Item 039",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              }
+            ]
+          },
+          {
+            "id": "p6",
+            "title": "Cat 05",
+            "keys": [
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001040",
+                "label": "Item 040",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001041",
+                "label": "Item 041",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001042",
+                "label": "Item 042",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001043",
+                "label": "Item 043",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001044",
+                "label": "Item 044",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001045",
+                "label": "Item 045",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001046",
+                "label": "Item 046",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001047",
+                "label": "Item 047",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              }
+            ]
+          },
+          {
+            "id": "p7",
+            "title": "Cat 06",
+            "keys": [
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001048",
+                "label": "Item 048",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001049",
+                "label": "Item 049",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001050",
+                "label": "Item 050",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001051",
+                "label": "Item 051",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001052",
+                "label": "Item 052",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001053",
+                "label": "Item 053",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001054",
+                "label": "Item 054",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001055",
+                "label": "Item 055",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              }
+            ]
+          },
+          {
+            "id": "p8",
+            "title": "Cat 07",
+            "keys": [
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001056",
+                "label": "Item 056",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001057",
+                "label": "Item 057",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001058",
+                "label": "Item 058",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001059",
+                "label": "Item 059",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001060",
+                "label": "Item 060",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001061",
+                "label": "Item 061",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001062",
+                "label": "Item 062",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001063",
+                "label": "Item 063",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              }
+            ]
+          },
+          {
+            "id": "p9",
+            "title": "Cat 08",
+            "keys": [
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001064",
+                "label": "Item 064",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001065",
+                "label": "Item 065",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001066",
+                "label": "Item 066",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001067",
+                "label": "Item 067",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001068",
+                "label": "Item 068",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001069",
+                "label": "Item 069",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001070",
+                "label": "Item 070",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001071",
+                "label": "Item 071",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              }
+            ]
+          },
+          {
+            "id": "p10",
+            "title": "Cat 09",
+            "keys": [
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001072",
+                "label": "Item 072",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001073",
+                "label": "Item 073",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001074",
+                "label": "Item 074",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001075",
+                "label": "Item 075",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001076",
+                "label": "Item 076",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001077",
+                "label": "Item 077",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001078",
+                "label": "Item 078",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001079",
+                "label": "Item 079",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              }
+            ]
+          },
+          {
+            "id": "p11",
+            "title": "Cat 10",
+            "keys": [
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001080",
+                "label": "Item 080",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001081",
+                "label": "Item 081",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001082",
+                "label": "Item 082",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001083",
+                "label": "Item 083",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001084",
+                "label": "Item 084",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001085",
+                "label": "Item 085",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001086",
+                "label": "Item 086",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001087",
+                "label": "Item 087",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              }
+            ]
+          },
+          {
+            "id": "p12",
+            "title": "Cat 11",
+            "keys": [
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001088",
+                "label": "Item 088",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001089",
+                "label": "Item 089",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001090",
+                "label": "Item 090",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001091",
+                "label": "Item 091",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001092",
+                "label": "Item 092",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001093",
+                "label": "Item 093",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001094",
+                "label": "Item 094",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              },
+              {
+                "kind": "item",
+                "item_id": "00000000-0000-4000-8000-000000001095",
+                "label": "Item 095",
+                "unit": "piece",
+                "state": "available",
+                "fixed_quantity": "1"
+              }
+            ]
+          }
+        ],
+        "profile_version": "99067cdfb2c1ddb171ff43190241caac8f3391a3b1f71a335fe8865f5a63ef43"
+      }
+    },
+    {
+      "name": "no_keys",
+      "omitted": 0,
+      "profile": {
+        "protocol": {
+          "major": 1,
+          "minor": 0
+        },
+        "currency": {
+          "code": "JPY",
+          "exponent": 0
+        },
+        "layout": {
+          "source": "generated_default",
+          "version": "default-1"
+        },
+        "capabilities_required": [
+          "basket",
+          "cash",
+          "category_pages",
+          "next_customer",
+          "quantity_keypad"
+        ],
+        "pages": [],
+        "profile_version": "c7ae06985770330286e895041d0c68d26e47f18ac47722588aa6955ea14d2b57"
+      }
+    }
+  ]
+}
