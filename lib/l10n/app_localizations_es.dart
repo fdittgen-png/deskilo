@@ -7472,6 +7472,16 @@ class AppLocalizationsEs extends AppLocalizations {
   String get conversationYesterday => 'Ayer';
 
   @override
+  String counterLotsExpired(String held, String asked, String expired) {
+    return 'Solo $held de los $asked pedidos se pueden vender aquí: $expired más han caducado. No se vendió nada.';
+  }
+
+  @override
+  String counterLotsShort(String held, String asked) {
+    return 'Solo hay aquí $held de los $asked pedidos. No se vendió nada.';
+  }
+
+  @override
   String countryChangeBody(String country, String features) {
     return 'En $country estas funciones no están disponibles y dejan de funcionar: $features. Sus interruptores se conservan: vuelven si restablece el país.';
   }

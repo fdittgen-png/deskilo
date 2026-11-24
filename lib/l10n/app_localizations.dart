@@ -11711,6 +11711,18 @@ abstract class AppLocalizations {
   /// **'Yesterday'**
   String get conversationYesterday;
 
+  /// #4436 a counter sale refused for its lots (DKG03, scope lots)
+  ///
+  /// In en, this message translates to:
+  /// **'Only {held} of the {asked} asked for is fit to sell here: {expired} more is past its date. Nothing was sold.'**
+  String counterLotsExpired(String held, String asked, String expired);
+
+  /// #4436 a counter sale refused for its lots (DKG03, scope lots)
+  ///
+  /// In en, this message translates to:
+  /// **'Only {held} of the {asked} asked for is here. Nothing was sold.'**
+  String counterLotsShort(String held, String asked);
+
   /// #2454 country change
   ///
   /// In en, this message translates to:

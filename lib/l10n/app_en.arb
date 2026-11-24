@@ -9729,6 +9729,33 @@
   "@conversationYesterday": {
     "description": "#687 - messaging centre"
   },
+  "counterLotsExpired": "Only {held} of the {asked} asked for is fit to sell here: {expired} more is past its date. Nothing was sold.",
+  "@counterLotsExpired": {
+    "description": "#4436 a counter sale refused for its lots (DKG03, scope lots)",
+    "placeholders": {
+      "held": {
+        "type": "String"
+      },
+      "asked": {
+        "type": "String"
+      },
+      "expired": {
+        "type": "String"
+      }
+    }
+  },
+  "counterLotsShort": "Only {held} of the {asked} asked for is here. Nothing was sold.",
+  "@counterLotsShort": {
+    "description": "#4436 a counter sale refused for its lots (DKG03, scope lots)",
+    "placeholders": {
+      "held": {
+        "type": "String"
+      },
+      "asked": {
+        "type": "String"
+      }
+    }
+  },
   "countryChangeBody": "In {country} these features are not available and stop working: {features}. Their switches are kept: they return if you change the country back.",
   "@countryChangeBody": {
     "description": "#2454 country change",

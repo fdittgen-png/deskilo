@@ -8,6 +8,7 @@ import '../../../l10n/app_localizations.dart';
 import '../domain/counter_till.dart';
 import '../domain/till_offline.dart';
 import '../domain/till_offline_queue.dart';
+import 'counter_lots_refusal.dart';
 import 'till_drawer/drawer_text.dart';
 import 'till_offline_mode.dart';
 import 'till_session.dart';
@@ -34,7 +35,7 @@ String tillProblemText(AppLocalizations l10n, Object problem) {
       _ => l10n.tillFailed,
     };
   }
-  return drawerRefusalText(l10n, problem) ?? knownRefusalText(l10n, problem) ?? l10n.tillFailed;
+  return drawerRefusalText(l10n, problem) ?? counterLotsRefusalText(l10n, problem) ?? knownRefusalText(l10n, problem) ?? l10n.tillFailed;
 }
 
 /// #4436 -- the track IDs a sold line took, in words: each lot with its quantity, each piece by its tag.
