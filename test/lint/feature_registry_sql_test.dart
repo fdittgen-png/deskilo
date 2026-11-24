@@ -1,45 +1,25 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #1333 — the server's feature registry IS the Dart manifest.
+// #1333, #4396 -- the server's feature registry IS the Dart manifest.
 //
-// Server gates decide whether a feature is on through
-// `public.feature_effective`, which reads `public.feature_registry()`:
-// per key, the parent, the default and the tier. A second hand-typed copy
-// of that map would drift the first time somebody added a feature — which
-// is how five gates came to ignore their parents in the first place
-// (#1332).
+// Server gates decide whether a feature is on through `public.feature_effective`, which reads `public.feature_registry()`:
+// per key, the parent, the default and the tier. A second hand-typed copy of that map would drift the first time somebody
+// added a feature -- which is how five gates came to ignore their parents in the first place (#1332).
 //
-// So the SQL is GENERATED from `featureManifest`
-// (`dart run tool/build_feature_registry_sql.dart`), and this test requires
-// the latest migration defining the function to contain exactly that text.
-// Adding, removing or re-parenting a feature, or changing its default or
-// tier, fails here — naming the feature — until a migration carries the
-// regenerated registry.
+// Since 0949 the registry is ROWS (`feature_registry_entries`), read by a `feature_registry()` that is never restated.
+// A migration that adds, re-parents or removes a feature carries the rows of that one change between the markers
+// `dart run tool/build_feature_registry_sql.dart` writes; this test accumulates every block in migration order and
+// requires the manifest. Adding, removing or re-parenting a feature, or changing its default or tier, fails here --
+// naming the feature -- until a migration carries its rows.
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:deskilo/features/workspace/domain/feature_registry_sql.dart';
 import 'package:flutter_test/flutter_test.dart';
+
 import 'lint_sources.dart';
 
-const _definition = 'create or replace function public.feature_registry()';
-
-/// The latest migration that defines the registry, and its JSON literal.
-({String file, Map<String, dynamic> registry})? _latestRegistry() {
-  final files = sqlFiles('supabase/migrations');
-  for (final f in files.reversed) {
-    final sql = f.readAsStringSync();
-    final at = sql.indexOf(_definition);
-    if (at < 0) continue;
-    final open = sql.indexOf("select '", at) + "select '".length;
-    final close = sql.indexOf("'::jsonb", open);
-    return (
-      file: f.uri.pathSegments.last,
-      registry: jsonDecode(sql.substring(open, close)) as Map<String, dynamic>,
-    );
-  }
-  return null;
-}
+/// The migration that makes the registry rows: from it on, nothing restates the function.
+const _rowsFrom = '0949';
 
 /// What differs between the generated registry and [stored], by feature.
 List<String> registryDrift(Map<String, dynamic> stored) {
@@ -56,24 +36,41 @@ List<String> registryDrift(Map<String, dynamic> stored) {
   ];
 }
 
+Map<String, String> _migrations() => {
+  for (final f in sqlFiles('supabase/migrations')) f.uri.pathSegments.last.substring(0, 4): f.readAsStringSync(),
+};
+
 void main() {
-  test('the latest feature_registry() equals featureManifest', () {
-    final latest = _latestRegistry();
-    expect(latest, isNotNull, reason: 'no migration defines $_definition');
-    final drift = registryDrift(latest!.registry);
+  test('the rows the migrations accumulate equal featureManifest', () {
+    final sources = _migrations();
+    final stored = accumulatedFeatureRegistry([for (final k in sources.keys.toList()..sort()) sources[k]!]);
+    final drift = registryDrift(stored);
     expect(drift, isEmpty,
-        reason: '${latest.file} carries a registry that is not the Dart '
-            'manifest:\n${drift.join('\n')}\n\n'
-            'Write a new migration containing the output of\n'
-            '  dart run tool/build_feature_registry_sql.dart');
+        reason: 'the migrations carry a registry that is not the Dart manifest:\n${drift.join('\n')}\n\n'
+            'Put the output of\n  dart run tool/build_feature_registry_sql.dart\ninto the migration that adds the feature.');
   });
 
-  test('the migration carries the generated statement verbatim', () {
-    final latest = _latestRegistry()!;
-    final sql = File('supabase/migrations/${latest.file}').readAsStringSync();
-    expect(sql, contains(featureRegistrySql()),
-        reason: 'paste the tool output unchanged — a hand-edited registry is '
-            'the second copy this test exists to forbid');
+  test('the generator writes exactly what is missing, and nothing when nothing is', () {
+    final sources = _migrations();
+    final stored = accumulatedFeatureRegistry([for (final k in sources.keys.toList()..sort()) sources[k]!]);
+    expect(featureRegistryRowsSql(stored), isNull);
+    final fewer = {...stored}
+      ..remove('moneyTab')
+      ..['ghost'] = {'parent': null, 'default': true, 'core': true};
+    final block = featureRegistryRowsSql(fewer)!;
+    expect(block, contains("('moneyTab', null, true, true, null)"));
+    expect("('".allMatches(block), hasLength(1), reason: 'only the missing row');
+    expect(block, contains("delete from public.feature_registry_entries where feature_key = 'ghost';"));
+    // the block it writes is read back as the manifest
+    expect(registryDrift(accumulatedFeatureRegistry([...sources.values, block])), isEmpty);
+  });
+
+  test('no migration after 0949 restates feature_registry(): a feature is a row', () {
+    final restated = [
+      for (final MapEntry(:key, :value) in _migrations().entries)
+        if (key.compareTo(_rowsFrom) > 0 && RegExp(r'create\s+or\s+replace\s+function\s+public\.feature_registry\s*\(', caseSensitive: false).hasMatch(value)) key,
+    ];
+    expect(restated, isEmpty, reason: 'insert the row between the feature registry markers instead (0949)');
   });
 
   group('the drift check can fail', () {
@@ -98,6 +95,30 @@ void main() {
 
     test('the generated registry has no drift against itself', () {
       expect(registryDrift(generated()), isEmpty);
+    });
+  });
+
+  group('the block reader', () {
+    const open = featureRegistryRowsBegin;
+    const close = featureRegistryRowsEnd;
+
+    test('later rows replace earlier ones, a deletion removes, a country list is read', () {
+      final stored = accumulatedFeatureRegistry([
+        '$open\ninsert into public.feature_registry_entries (feature_key, parent, default_on, core, countries) values\n'
+            "('a', null, true, true, null),\n('b', 'a', false, false, array['GB', '@eu'])\non conflict (feature_key) do update set parent = excluded.parent;\n$close",
+        "-- another migration\n$open\ninsert into public.feature_registry_entries (feature_key, parent, default_on, core, countries) values\n('a', null, false, true, null)\non conflict (feature_key) do update set parent = excluded.parent;\n"
+            "delete from public.feature_registry_entries where feature_key = 'b';\n$close",
+      ]);
+      expect(stored, {'a': {'parent': null, 'default': false, 'core': true}});
+      final countries = accumulatedFeatureRegistry([
+        "$open\ninsert into public.feature_registry_entries (feature_key, parent, default_on, core, countries) values\n('b', 'a', false, false, array['GB', '@eu'])\n$close",
+      ]);
+      expect(countries['b'], {'parent': 'a', 'default': false, 'core': false, 'countries': ['GB', '@eu']});
+    });
+
+    test('a block that is not closed is refused, and text outside the markers is not read', () {
+      expect(() => accumulatedFeatureRegistry(['$open\n']), throwsFormatException);
+      expect(accumulatedFeatureRegistry(["('x', null, true, true, null)"]), isEmpty);
     });
   });
 }
