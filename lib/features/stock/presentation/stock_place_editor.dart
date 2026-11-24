@@ -139,7 +139,7 @@ class _PlacesSheetState extends ConsumerState<StockPlacesBody> {
     final l10n = context.l10n;
     final labels = [
       for (final p in shown)
-        if (!p.virtual && p.active && p.kind != 'in_transit')
+        if (p.isAddressable && p.active)
           PlaceLabel(
             address: stockAddress(p, separator),
             barcode: p.barcode ?? stockAddress(p, separator),

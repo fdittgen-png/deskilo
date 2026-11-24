@@ -60341,6 +60341,12 @@ abstract class AppLocalizations {
   /// **'Stock rules'**
   String get stockSettingsValues;
 
+  /// #4401 a state, scope or kind a newer server sent that this app does not know: shown instead of a guess
+  ///
+  /// In en, this message translates to:
+  /// **'Not known to this app'**
+  String get stockStateUnknown;
+
   /// #4161 the quantity as stored, in the inventory unit
   ///
   /// In en, this message translates to:

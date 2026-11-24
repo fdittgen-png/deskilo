@@ -19,13 +19,18 @@ enum TraceState {
   unavailable,
 
   /// A list of recorded items.
-  listed;
+  listed,
 
+  /// A state a newer server sent and this app does not know: it says nothing, neither linked nor not.
+  unknown;
+
+  /// An absent state is nothing recorded, as the server answers a layer it has no row for.
   static TraceState of(String? wire) => switch (wire) {
     'linked' => linked,
     'listed' => listed,
     'unavailable' => unavailable,
-    _ => notLinked,
+    'not_linked' || null => notLinked,
+    _ => unknown,
   };
 }
 

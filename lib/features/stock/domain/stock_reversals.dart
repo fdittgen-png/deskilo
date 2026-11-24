@@ -86,11 +86,13 @@ enum StockCountState {
   recorded,
   applied,
   rejected,
-  cancelled;
+  cancelled,
+  /// A value a newer server sent and this app does not know: shown as not known, and nothing is done on a guess.
+  unknown;
 
   static StockCountState fromWire(String wire) => values.firstWhere(
-    (s) => s.name == wire,
-    orElse: () => StockCountState.recorded,
+    (s) => s != unknown && s.name == wire,
+    orElse: () => StockCountState.unknown,
   );
 }
 

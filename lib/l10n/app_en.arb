@@ -48928,6 +48928,10 @@
   "@stockSettingsValues": {
     "description": "the stock pages and group (#4299)"
   },
+  "stockStateUnknown": "Not known to this app",
+  "@stockStateUnknown": {
+    "description": "#4401 a state, scope or kind a newer server sent that this app does not know: shown instead of a guess"
+  },
   "stockStoredLabel": "Stored",
   "@stockStoredLabel": {
     "description": "#4161 the quantity as stored, in the inventory unit"

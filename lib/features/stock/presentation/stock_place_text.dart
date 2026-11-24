@@ -12,7 +12,7 @@ import '../providers/stock_providers.dart';
 /// A place's own title: its address, then its name when it has one. The system's places (a
 /// supplier, a customer, the in-transit place) are their code.
 String stockPlaceTitle(StockPlaceConfig p, String separator) {
-  final base = p.virtual || p.kind == 'in_transit' ? p.code : stockAddress(p, separator);
+  final base = p.isAddressable ? stockAddress(p, separator) : p.code;
   return p.name.isEmpty ? base : '$base · ${p.name}';
 }
 
@@ -24,6 +24,6 @@ final stockAddressesProvider = Provider.autoDispose.family<Map<String, String>, 
   return {
     if (places != null)
       for (final p in places)
-        p.id: p.virtual || p.kind == 'in_transit' ? p.code : stockAddress(p, separator),
+        p.id: p.isAddressable ? stockAddress(p, separator) : p.code,
   };
 });

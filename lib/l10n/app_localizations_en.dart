@@ -37649,6 +37649,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockSettingsValues => 'Stock rules';
 
   @override
+  String get stockStateUnknown => 'Not known to this app';
+
+  @override
   String get stockStoredLabel => 'Stored';
 
   @override

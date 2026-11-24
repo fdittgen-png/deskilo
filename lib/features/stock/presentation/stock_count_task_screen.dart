@@ -316,6 +316,7 @@ class _LineTile extends StatelessWidget {
             CountLineState.counted => l10n.stockCycleLineCounted,
             CountLineState.skipped => l10n.stockCycleLineSkipped(line.skipReason ?? ''),
             CountLineState.pending => '',
+            CountLineState.unknown => l10n.stockStateUnknown,
           },
         ].where((t) => t.isNotEmpty).join(' · '),
       ),

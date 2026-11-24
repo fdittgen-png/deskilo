@@ -26,6 +26,7 @@ String unitKindText(AppLocalizations l10n, HandlingUnitKind kind) => switch (kin
   HandlingUnitKind.crate => l10n.stockUnitKindCrate,
   HandlingUnitKind.box => l10n.stockUnitKindBox,
   HandlingUnitKind.other => l10n.stockUnitKindOther,
+  HandlingUnitKind.unknown => l10n.stockStateUnknown,
 };
 
 /// A quantity typed in the member's format (1,5 or 1.5) as the exact text the server reads; what is no quantity is

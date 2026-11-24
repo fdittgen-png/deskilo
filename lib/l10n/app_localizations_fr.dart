@@ -38124,6 +38124,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get stockSettingsValues => 'Règles du stock';
 
   @override
+  String get stockStateUnknown => 'Inconnu de cette application';
+
+  @override
   String get stockStoredLabel => 'Enregistré';
 
   @override

@@ -12,10 +12,12 @@ enum HandlingUnitKind {
   carton,
   crate,
   box,
-  other;
+  other,
+  /// A value a newer server sent and this app does not know: shown as not known, and nothing is done on a guess.
+  unknown;
 
   static HandlingUnitKind of(String? wire) =>
-      HandlingUnitKind.values.firstWhere((k) => k.name == wire, orElse: () => HandlingUnitKind.other);
+      HandlingUnitKind.values.firstWhere((k) => k != unknown && k.name == wire, orElse: () => HandlingUnitKind.unknown);
 }
 
 /// Where a unit is in its life: open (it holds goods), unpacked (its content is loose at its place), retired.
