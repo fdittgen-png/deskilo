@@ -26,7 +26,6 @@ import 'lint_sources.dart';
 /// it are classified by the consumer-contract check, not by a header.
 const int _appsLineFrom = 898;
 
-
 ConsumerContract _of(String source) {
   final c = ConsumerContract();
   extractInto(
@@ -221,6 +220,41 @@ h(c) => c.from('t').upsert({'e': 1}, onConflict: 'k1, k2');''');
         old,
       );
       expect(added.single, contains('fn_a(p_x, p_y)'));
+    });
+
+    test('additive may drop and recreate a function to add a defaulted '
+        'parameter, and only then', () {
+      const recreate =
+          'drop function if exists public.fn_a(int);\n'
+          'create function public.fn_a(p_x int, p_y int default 0) returns int as \$\$ select 1 \$\$ language sql;';
+      expect(run('-- apps: additive', recreate, old), isEmpty);
+      const recreateNarrower =
+          'drop function if exists public.fn_a(int);\n'
+          'create function public.fn_a() returns int as \$\$ select 1 \$\$ language sql;';
+      expect(
+        run('-- apps: additive', recreateNarrower, old).single,
+        contains('fn_a'),
+      );
+      const dropsAnother =
+          'drop function if exists public.fn_b(int);\n'
+          'create function public.fn_a(p_x int, p_y int default 0) returns int as \$\$ select 1 \$\$ language sql;';
+      expect(
+        run('-- apps: additive', dropsAnother, old).single,
+        contains('drops or renames'),
+      );
+    });
+
+    test('additive that removes a default an old call omits fails', () {
+      const defaulted =
+          'create function public.fn_a(p_x int default 1) returns int as \$\$ select 1 \$\$ language sql;';
+      expect(
+        run(
+          '-- apps: additive',
+          'create or replace function public.fn_a(p_x int) returns int as \$\$ select 1 \$\$ language sql;',
+          defaulted,
+        ).single,
+        contains('fn_a(p_x)'),
+      );
     });
 
     test('a comment that mentions drop table does not count', () {

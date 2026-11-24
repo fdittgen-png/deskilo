@@ -22,14 +22,20 @@ final _dropsOrRenames = RegExp(
   r'\b(drop\s+(table|column|function|view|materialized\s+view|type)|rename\s+(column|to))\b',
   caseSensitive: false,
 );
+final _dropFunction = RegExp(
+  r'drop\s+function\s+(?:if\s+exists\s+)?(?:public\.)?"?(\w+)"?',
+  caseSensitive: false,
+);
 final _createFunction = RegExp(
   r'create\s+(?:or\s+replace\s+)?function\s+(?:public\.)?"?(\w+)"?\s*\(',
   caseSensitive: false,
 );
 
 /// The SQL without line comments (a `--` inside a string is rare enough).
-String stripSqlComments(String sql) =>
-    sql.split('\n').map((l) => l.trimLeft().startsWith('--') ? '' : l).join('\n');
+String stripSqlComments(String sql) => sql
+    .split('\n')
+    .map((l) => l.trimLeft().startsWith('--') ? '' : l)
+    .join('\n');
 
 /// Every `create [or replace] function` of [sql] with its parameters.
 List<FunctionDef> functionDefs(String sql) {
@@ -67,10 +73,18 @@ List<FunctionDef> functionDefs(String sql) {
       final words = t.split(RegExp(r'\s+'));
       var n = 0;
       while (n < words.length - 1 &&
-          const {'in', 'out', 'inout', 'variadic'}.contains(words[n].toLowerCase())) {
+          const {
+            'in',
+            'out',
+            'inout',
+            'variadic',
+          }.contains(words[n].toLowerCase())) {
         n++;
       }
-      final hasDefault = RegExp(r'\bdefault\b|:?=', caseSensitive: false).hasMatch(t);
+      final hasDefault = RegExp(
+        r'\bdefault\b|:?=',
+        caseSensitive: false,
+      ).hasMatch(t);
       params[words[n].replaceAll('"', '')] = hasDefault;
     }
     out.add(FunctionDef(m.group(1)!.toLowerCase(), params));
@@ -100,25 +114,37 @@ List<String> appsFindings(
   final body = stripSqlComments(sql);
   final found = <String>[];
   if (line.contains('additive')) {
-    final hit = body.split('\n').where(_dropsOrRenames.hasMatch).toList();
+    final defs = functionDefs(sql);
+    final recreated = {for (final d in defs) d.name};
+    // A function dropped and created again in the same file is the
+    // documented way to add a defaulted parameter (two overloads would make
+    // every call ambiguous); its new parameter list is judged below.
+    final hit = body.split('\n').where(_dropsOrRenames.hasMatch).where((l) {
+      final m = _dropFunction.firstMatch(l);
+      return m == null || !recreated.contains(m.group(1)!.toLowerCase());
+    }).toList();
     if (hit.isNotEmpty) {
       found.add(
         '$fileName: says additive but drops or renames: ${hit.first.trim()}',
       );
     }
-    for (final d in functionDefs(sql)) {
+    for (final d in defs) {
       final olds = earlier[d.name];
       if (olds == null || olds.isEmpty) continue;
+      // Compatible with one earlier list: every old parameter is still
+      // there, one an old call could omit still has its default, and every
+      // new one has a default.
       final compatible = olds.any(
         (o) =>
             o.keys.every(d.params.containsKey) &&
+            o.entries.every((e) => !e.value || d.params[e.key]!) &&
             d.params.entries.every((e) => o.containsKey(e.key) || e.value),
       );
       if (!compatible) {
         found.add(
           '$fileName: says additive but changes the parameters of '
           '${d.name}(${d.params.keys.join(', ')}) without defaulting the new '
-          'ones or keeping the old ones; a changed signature is a new '
+          'ones, keeping the old ones and their defaults; a changed signature is a new '
           'function, or the line is `needs app at least N`',
         );
       }
@@ -127,12 +153,15 @@ List<String> appsFindings(
   final breaks = RegExp(r'breaks apps below (\d+)').firstMatch(line);
   if (breaks != null) {
     final raises = RegExp(
-      r'deskilo_app_floor\s*\(\s*\)[\s\S]*?select\s+' + breaks.group(1)! + r'\b',
+      r'deskilo_app_floor\s*\(\s*\)[\s\S]*?select\s+' +
+          breaks.group(1)! +
+          r'\b',
       caseSensitive: false,
     );
-    if (!RegExp(r'create\s+or\s+replace\s+function\s+public\.deskilo_app_floor',
-            caseSensitive: false)
-        .hasMatch(body) ||
+    if (!RegExp(
+          r'create\s+or\s+replace\s+function\s+public\.deskilo_app_floor',
+          caseSensitive: false,
+        ).hasMatch(body) ||
         !raises.hasMatch(body)) {
       found.add(
         '$fileName: says breaks apps below ${breaks.group(1)} but does not '
