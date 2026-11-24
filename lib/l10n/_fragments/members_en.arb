@@ -244,7 +244,7 @@
   "@memberContactHeading": {
     "description": "#704 - the contact section of a member profile"
   },
-  "memberPlanShare": "Plan {pct}%",
+  "memberPlanShare": "Plan {pct}",
   "@memberPlanShare": {
     "description": "#704 - the contact section of a member profile",
     "placeholders": {

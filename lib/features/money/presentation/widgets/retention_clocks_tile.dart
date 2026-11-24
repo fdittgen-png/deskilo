@@ -56,7 +56,7 @@ class RetentionClocksTile extends ConsumerWidget {
       leading: const Icon(Icons.history_toggle_off_outlined),
       title: Text(l10n.retentionTitle),
       subtitle: Text(
-        [for (final r in rules) '${retentionClassName(l10n, r.docClass)}: ${r.years}'].join(' · '),
+        [for (final r in rules) l10n.labelledValue(retentionClassName(l10n, r.docClass), '${r.years}')].join(' · '),
       ),
       trailing: const Icon(Icons.chevron_right),
       onTap: () => showDialog<void>(

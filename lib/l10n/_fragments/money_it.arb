@@ -246,11 +246,11 @@
   "@paymentAccountNumberLabel": {
     "description": "#711 - globalization"
   },
-  "paymentSortCodeLabel": "Sort code",
+  "paymentSortCodeLabel": "Codice filiale (sort code)",
   "@paymentSortCodeLabel": {
     "description": "#711 - globalization"
   },
-  "paymentRoutingNumberLabel": "Routing number",
+  "paymentRoutingNumberLabel": "Numero di instradamento (ABA)",
   "@paymentRoutingNumberLabel": {
     "description": "#711 - globalization"
   },

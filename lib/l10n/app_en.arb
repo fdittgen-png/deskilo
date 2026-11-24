@@ -10502,7 +10502,7 @@
       }
     }
   },
-  "datevProblemAutomatic": "{percent} % would be booked to {account}, the automatic account of another rate",
+  "datevProblemAutomatic": "{percent} would be booked to {account}, the automatic account of another rate",
   "@datevProblemAutomatic": {
     "description": "DATEV export (#2375): a rate is booked to the automatic account of another rate",
     "placeholders": {
@@ -10623,7 +10623,7 @@
       }
     }
   },
-  "datevProblemTaxKey": "no BU-Schlüssel is recorded for {percent} % on account {account}",
+  "datevProblemTaxKey": "no BU-Schlüssel is recorded for {percent} on account {account}",
   "@datevProblemTaxKey": {
     "description": "DATEV export (#2375): no BU key for a rate booked to a non-automatic account",
     "placeholders": {
@@ -24560,15 +24560,6 @@
   "@itemGroupMargin": {
     "description": "#4361 G12 finance parameters of an item group"
   },
-  "itemGroupMarginValue": "{percent} %",
-  "@itemGroupMarginValue": {
-    "description": "#4361 G12: a target margin as the group shows it; the percent arrives formatted",
-    "placeholders": {
-      "percent": {
-        "type": "String"
-      }
-    }
-  },
   "itemGroupMinAge": "Minimum age for a sale",
   "@itemGroupMinAge": {
     "description": "#4361 G12 item groups: itemGroupMinAge"
@@ -26032,6 +26023,18 @@
   "labelWithValue": "{label}: {value}",
   "@labelWithValue": {
     "description": "#3652 A label with its value on one line, e.g. \"Total: 12.00\". One message so the language places the colon (French has a space before it).",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "labelledValue": "{label}: {value}",
+  "@labelledValue": {
+    "description": "#4429 a label and its value on one line, the way the language joins them (French puts a space before the colon)",
     "placeholders": {
       "label": {
         "type": "String"
@@ -27552,7 +27555,7 @@
       }
     }
   },
-  "mcpConfirmNewShare": "New subscription share: {pct} %",
+  "mcpConfirmNewShare": "New subscription share: {pct}",
   "@mcpConfirmNewShare": {
     "description": "#1619 mcp_confirmation",
     "placeholders": {
@@ -27608,7 +27611,7 @@
   "@mcpConfirmRefuse": {
     "description": "#1619 mcp_confirmation"
   },
-  "mcpConfirmShareFrom": "New subscription share: {pct} % from {date}",
+  "mcpConfirmShareFrom": "New subscription share: {pct} from {date}",
   "@mcpConfirmShareFrom": {
     "description": "#3937 mcp_confirmation: the share and the day it applies from",
     "placeholders": {
@@ -29941,7 +29944,7 @@
       }
     }
   },
-  "memberPlanShare": "Plan {pct}%",
+  "memberPlanShare": "Plan {pct}",
   "@memberPlanShare": {
     "description": "#704 - the contact section of a member profile",
     "placeholders": {
@@ -43865,18 +43868,9 @@
       }
     }
   },
-  "setupGrowVatPreviewRate": "VAT {rate} %",
+  "setupGrowVatPreviewRate": "VAT {rate}",
   "@setupGrowVatPreviewRate": {
     "description": "#2875 setup grow steps: setupGrowVatPreviewRate",
-    "placeholders": {
-      "rate": {
-        "type": "String"
-      }
-    }
-  },
-  "setupGrowVatRate": "{rate} %",
-  "@setupGrowVatRate": {
-    "description": "#2875 setup grow steps: setupGrowVatRate",
     "placeholders": {
       "rate": {
         "type": "String"
@@ -46900,9 +46894,9 @@
   "@stockCycleEveryDays": {
     "description": "#4295 cycle counts"
   },
-  "stockCycleHistoryAccuracy": "{count, plural, one{1 count} other{{count} counts}}, {percent} % exact",
+  "stockCycleHistoryAccuracy": "{count, plural, one{1 count} other{{count} counts}}, {percent} exact",
   "@stockCycleHistoryAccuracy": {
-    "description": "#4295 cycle counts",
+    "description": "#4295 cycle counts: how many counts and the share of them that was exact; percent arrives formatted with its own sign (AppFormat.ratePercent)",
     "placeholders": {
       "count": {
         "type": "int"

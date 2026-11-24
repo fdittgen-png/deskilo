@@ -58,9 +58,9 @@ Future<void> showTaxReferenceHistorySheet(
             ListTile(
               contentPadding: EdgeInsets.zero,
               title: Text(
-                taxValueSummary(v.value, appFormatOf(context).locale).isEmpty
+                taxValueSummary(context.l10n, v.value, appFormatOf(context).locale).isEmpty
                     ? v.country
-                    : taxValueSummary(v.value, appFormatOf(context).locale),
+                    : taxValueSummary(context.l10n, v.value, appFormatOf(context).locale),
               ),
               subtitle: Text(
                 '${v.validTo == null ? l10n.taxRefValidFromDate(appFormatOf(context).isoDay(v.validFrom)) : l10n.taxRefValidFromUntilDate(appFormatOf(context).isoDay(v.validFrom), appFormatOf(context).isoDay(v.validTo!))}'

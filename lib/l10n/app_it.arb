@@ -4702,7 +4702,7 @@
   },
   "datevDebtorBase": "Conto Debitor del membro n. 0",
   "datevProblemAccountLength": "il conto {account} non ha {length} cifre",
-  "datevProblemAutomatic": "il {percent} % sarebbe registrato su {account}, il conto automatico di un'altra aliquota",
+  "datevProblemAutomatic": "il {percent} sarebbe registrato su {account}, il conto automatico di un'altra aliquota",
   "datevProblemBooksBlocked": "I libri non hanno potuto registrare gli acquisti: {subjects}",
   "@datevProblemBooksBlocked": {
     "description": "DATEV export (#2375): the books could not post the purchases, with the missing roles or rates",
@@ -4744,7 +4744,7 @@
       }
     }
   },
-  "datevProblemTaxKey": "nessun BU-Schlüssel è registrato per il {percent} % sul conto {account}",
+  "datevProblemTaxKey": "nessun BU-Schlüssel è registrato per il {percent} sul conto {account}",
   "datevVoucherLinks": "Allegare i PDF delle fatture e collegarli da ogni riga (Beleglink)",
   "decisionSurfaceEmpty": "Niente la aspetta",
   "@decisionSurfaceEmpty": {
@@ -10629,7 +10629,7 @@
   "invoicePdfReplaces": "Sostituisce",
   "invoicePdfReplacesNumber": "Sostituisce {number}",
   "invoicePdfReserved": "riservato",
-  "invoicePdfSalesTax": "Sales tax",
+  "invoicePdfSalesTax": "Imposta sulle vendite",
   "@invoicePdfSalesTax": {
     "description": "#2362 sales tax: invoicePdfSalesTax"
   },
@@ -11351,15 +11351,6 @@
   "@itemGroupMargin": {
     "description": "#4361 G12 finance parameters of an item group"
   },
-  "itemGroupMarginValue": "{percent} %",
-  "@itemGroupMarginValue": {
-    "description": "#4361 G12: a target margin as the group shows it; the percent arrives formatted",
-    "placeholders": {
-      "percent": {
-        "type": "String"
-      }
-    }
-  },
   "itemGroupMinAge": "Età minima per una vendita",
   "itemGroupMove": "Sposta",
   "itemGroupMoveReaches": "{count, plural, one{Spostarlo cambia 1 impostazione.} other{Spostarlo cambia {count} impostazioni.}}",
@@ -11865,6 +11856,7 @@
   "kitScrollBack": "Scorri indietro",
   "kitScrollForward": "Scorri avanti",
   "labelWithValue": "{label}: {value}",
+  "labelledValue": "{label}: {value}",
   "languageAvailableHint": "DesKilo è disponibile nelle lingue seguenti. Su un dispositivo impostato in un'altra lingua, viene mostrato in {fallback}.",
   "languageNameCS": "Ceco",
   "@languageNameCS": {
@@ -12799,14 +12791,14 @@
   "mcpConfirmFieldChange": "{field}: {from} → {to}",
   "mcpConfirmInvitee": "Invito per",
   "mcpConfirmLevel": "{process}: {level}",
-  "mcpConfirmNewShare": "Nuova quota di abbonamento: {pct} %",
+  "mcpConfirmNewShare": "Nuova quota di abbonamento: {pct}",
   "mcpConfirmNewStatus": "Nuovo stato: {status}",
   "mcpConfirmNotFound": "Non c'è nessuna richiesta di questo tipo per Lei.",
   "mcpConfirmPauseOpen": "Pausa dal {from}, fino alla ripresa",
   "mcpConfirmPauseUntil": "Pausa dal {from} al {to}",
   "mcpConfirmPeriod": "Periodo: {period}",
   "mcpConfirmRefuse": "La sua risposta: rifiuta",
-  "mcpConfirmShareFrom": "Nuova quota di abbonamento: {pct} % dal {date}",
+  "mcpConfirmShareFrom": "Nuova quota di abbonamento: {pct} dal {date}",
   "mcpConfirmStale": "Questa richiesta non corrisponde più ai dati attuali o al suo accesso. Non è stato fatto nulla.",
   "mcpConfirmStepDone": "Verrà segnato come fatto.",
   "mcpConfirmStepLater": "Verrà messo da parte per dopo.",
@@ -13447,7 +13439,7 @@
   "memberPlanJoinedUnknown": "Non registrata",
   "memberPlanPausedNoDates": "Sospeso: per questa sospensione non è registrata alcuna data",
   "memberPlanPausedSince": "Sospeso dal {date}",
-  "memberPlanShare": "Piano {pct}%",
+  "memberPlanShare": "Piano {pct}",
   "@memberPlanShare": {
     "description": "#704 - the contact section of a member profile",
     "placeholders": {
@@ -14466,11 +14458,11 @@
   "@paymentRemindersWhen": {
     "description": "#2332: when automatic payment reminders run"
   },
-  "paymentRoutingNumberLabel": "Routing number",
+  "paymentRoutingNumberLabel": "Numero di instradamento (ABA)",
   "@paymentRoutingNumberLabel": {
     "description": "#711 - globalization"
   },
-  "paymentSortCodeLabel": "Sort code",
+  "paymentSortCodeLabel": "Codice filiale (sort code)",
   "@paymentSortCodeLabel": {
     "description": "#711 - globalization"
   },
@@ -20037,8 +20029,7 @@
   "setupGrowVatOpen": "Modifica le aliquote IVA",
   "setupGrowVatPreviewNoVat": "Non si addebita IVA: una riga di {gross} viene fatturata così com'è.",
   "setupGrowVatPreviewNote": "Una riga di esempio di {gross}, IVA inclusa, scomposta come in una fattura:",
-  "setupGrowVatPreviewRate": "IVA {rate} %",
-  "setupGrowVatRate": "{rate} %",
+  "setupGrowVatPreviewRate": "IVA {rate}",
   "setupGrowVatUsualNote": "Un punto di partenza, non una consulenza fiscale: il Suo commercialista conferma quale aliquota si applica a ciò che vende.",
   "setupGrowVatUsualTitle": "Le aliquote abituali del Suo paese",
   "setupGuidanceTitle": "Indicazioni e verifiche",
@@ -21138,7 +21129,7 @@
   "stockCycleCounted": "Contato.",
   "stockCycleCountedDifference": "Contato. Differenza rispetto al registrato: {difference}",
   "stockCycleEveryDays": "Ogni quanti giorni",
-  "stockCycleHistoryAccuracy": "{count, plural, one{1 conteggio} other{{count} conteggi}}, {percent} % esatti",
+  "stockCycleHistoryAccuracy": "{count, plural, one{1 conteggio} other{{count} conteggi}}, {percent} esatti",
   "stockCycleHistoryEmpty": "Non è ancora stato contato nulla.",
   "stockCycleHistoryLast": "Ultimo conteggio il {date}",
   "stockCycleHistoryRow": "{item} · {place}",

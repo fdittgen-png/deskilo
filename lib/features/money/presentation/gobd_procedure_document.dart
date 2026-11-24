@@ -10,6 +10,7 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:intl/intl.dart';
 
+import '../../../core/i18n/rate_format.dart';
 import '../../../core/instance/schema_compatibility.dart';
 import '../../../core/vat/retention.dart';
 import '../../../l10n/app_localizations.dart';
@@ -152,7 +153,6 @@ String _sequence(AppLocalizations l10n, NumberSequence s) {
 
 /// Why a DATEV export was refused, in words, one problem per clause.
 String datevProblemsText(AppLocalizations l10n, List<DatevProblem> problems) {
-  final rate = NumberFormat.decimalPattern(l10n.localeName);
   return problems
       .map(
         (p) => switch (p) {
@@ -179,9 +179,9 @@ String datevProblemsText(AppLocalizations l10n, List<DatevProblem> problems) {
           DatevBooksBlocked(:final subjects) =>
             l10n.datevProblemBooksBlocked(subjects.join(', ')),
           DatevTaxKeyMissing(:final percent, :final account) =>
-            l10n.datevProblemTaxKey(rate.format(percent), account),
+            l10n.datevProblemTaxKey(ratePercentText(percent, locale: l10n.localeName), account),
           DatevAutomaticClash(:final percent, :final account) =>
-            l10n.datevProblemAutomatic(rate.format(percent), account),
+            l10n.datevProblemAutomatic(ratePercentText(percent, locale: l10n.localeName), account),
         },
       )
       .join('; ');

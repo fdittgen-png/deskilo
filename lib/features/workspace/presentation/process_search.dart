@@ -11,6 +11,7 @@
 //
 // There are no aliases: the registry has none (#1327 audit), and a
 // hand-kept synonym list in one language would be wrong in four.
+import '../../../core/text/collation.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/workspace_feature.dart';
 import '../domain/workspace_process.dart';
@@ -57,11 +58,11 @@ List<ProcessSearchHit> searchProcesses(
   String query, {
   List<WorkspaceProcess> processes = workspaceProcesses,
 }) {
-  final needle = query.trim().toLowerCase();
+  final needle = foldForSearch(query.trim());
   if (needle.isEmpty) return const [];
   bool found(String title, String description) =>
-      title.toLowerCase().contains(needle) ||
-      description.toLowerCase().contains(needle);
+      foldForSearch(title).contains(needle) ||
+      foldForSearch(description).contains(needle);
 
   final hits = <ProcessSearchHit>[];
   for (final process in processes) {

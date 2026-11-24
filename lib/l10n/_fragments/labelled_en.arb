@@ -1,0 +1,15 @@
+{
+  "@@locale": "en",
+  "labelledValue": "{label}: {value}",
+  "@labelledValue": {
+    "description": "#4429 a label and its value on one line, the way the language joins them (French puts a space before the colon)",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      }
+    }
+  }
+}

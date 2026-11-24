@@ -6,6 +6,7 @@
 // Pure Dart.
 library;
 
+import '../../../core/text/collation.dart';
 import 'workspace_feature.dart';
 
 /// The words a switch row is found by: its name, its description and its
@@ -46,8 +47,8 @@ typedef FeatureRowText = ({String name, String description, String? requires});
 /// An empty query finds every row.
 bool _matches(String query, FeatureRowText text) {
   if (query.isEmpty) return true;
-  final needle = query.toLowerCase();
-  return text.name.toLowerCase().contains(needle) ||
-      text.description.toLowerCase().contains(needle) ||
-      (text.requires ?? '').toLowerCase().contains(needle);
+  final needle = foldForSearch(query);
+  return foldForSearch(text.name).contains(needle) ||
+      foldForSearch(text.description).contains(needle) ||
+      foldForSearch(text.requires ?? '').contains(needle);
 }

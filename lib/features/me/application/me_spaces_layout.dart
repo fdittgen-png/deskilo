@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../core/storage/space_prefs_store.dart';
+import '../../../core/text/collation.dart';
 import '../../workspace/domain/organisation.dart';
 import '../../workspace/domain/workspace.dart';
 import '../domain/space_pairs.dart';
@@ -49,11 +50,11 @@ class MeSpacesLayout {
         spaceRowKeyOf(sides.first): sides,
     };
     String nameOf(String key) => rows[key]!.first.name;
-    final words = query.trim().toLowerCase();
+    final words = foldForSearch(query.trim());
     final filtered = words.isNotEmpty;
     final visible = [
       for (final key in rows.keys)
-        if (!filtered || nameOf(key).toLowerCase().contains(words)) key,
+        if (!filtered || foldForSearch(nameOf(key)).contains(words)) key,
     ];
     final housed = <String>{};
     final groups = _organisationGroups(organisations, rows, visible, housed);

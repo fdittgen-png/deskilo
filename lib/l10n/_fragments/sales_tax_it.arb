@@ -56,7 +56,7 @@
   "@invoicePdfExemptCertificate": {
     "description": "#2362 sales tax: invoicePdfExemptCertificate"
   },
-  "invoicePdfSalesTax": "Sales tax",
+  "invoicePdfSalesTax": "Imposta sulle vendite",
   "@invoicePdfSalesTax": {
     "description": "#2362 sales tax: invoicePdfSalesTax"
   },

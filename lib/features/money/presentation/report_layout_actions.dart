@@ -17,6 +17,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 import '../../../core/country/country_catalog.dart';
+import '../../../core/text/collation.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../workspace/domain/workspace_feature.dart';
@@ -179,7 +180,7 @@ Future<Uint8List?> layoutImage(WidgetRef ref, String name) async {
   if (name != _logoRole) return null;
   final names = await ref.read(reportImagesProvider.future);
   final named = names.firstWhere(
-    (n) => n.toLowerCase().contains(_logoRole),
+    (n) => foldForSearch(n).contains(_logoRole),
     orElse: () => names.length == 1 ? names.first : '',
   );
   if (named.isEmpty) return null;

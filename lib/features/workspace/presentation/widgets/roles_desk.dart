@@ -13,6 +13,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/text/collation.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/adaptive/page_measures.dart';
 import '../../../../core/ui/adaptive/task_choice.dart';
@@ -336,13 +337,11 @@ class _Permissions extends StatelessWidget {
     AppLocalizations l,
     List<WorkspacePermission> all,
   ) {
-    final needle = filter.text.trim().toLowerCase();
+    final needle = foldForSearch(filter.text.trim());
     if (needle.isEmpty) return all;
     return [
       for (final p in all)
-        if ('${permissionLabel(l, p)} ${permissionAllows(l, p)}'
-            .toLowerCase()
-            .contains(needle))
+        if (foldForSearch('${permissionLabel(l, p)} ${permissionAllows(l, p)}').contains(needle))
           p,
     ];
   }

@@ -67,7 +67,7 @@
       }
     }
   },
-  "datevProblemTaxKey": "no BU-Schlüssel is recorded for {percent} % on account {account}",
+  "datevProblemTaxKey": "no BU-Schlüssel is recorded for {percent} on account {account}",
   "@datevProblemTaxKey": {
     "description": "DATEV export (#2375): no BU key for a rate booked to a non-automatic account",
     "placeholders": {
@@ -79,7 +79,7 @@
       }
     }
   },
-  "datevProblemAutomatic": "{percent} % would be booked to {account}, the automatic account of another rate",
+  "datevProblemAutomatic": "{percent} would be booked to {account}, the automatic account of another rate",
   "@datevProblemAutomatic": {
     "description": "DATEV export (#2375): a rate is booked to the automatic account of another rate",
     "placeholders": {

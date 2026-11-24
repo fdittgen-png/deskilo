@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/text/collation.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/form_kit.dart';
@@ -322,7 +323,7 @@ class _MapDialogState extends ConsumerState<_MapDialog> {
                   ),
                   items: [
                     for (final e in (names.entries.toList()
-                      ..sort((a, b) => a.value.compareTo(b.value))))
+                      ..sort((a, b) => compareNames(a.value, b.value))))
                       DropdownMenuItem(value: e.key, child: Text(e.value)),
                   ],
                   onChanged: editing ? null : (id) => setState(() => _member = id),

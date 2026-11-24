@@ -8,6 +8,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/i18n/app_format.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/navigation/list_detail_route.dart';
@@ -64,7 +65,7 @@ class StockTraceSection extends ConsumerWidget {
 
 String _day(BuildContext context, String? iso) {
   final at = iso == null ? null : DateTime.tryParse(iso);
-  return at == null ? (iso ?? '') : MaterialLocalizations.of(context).formatMediumDate(at);
+  return at == null ? (iso ?? '') : appFormatOf(context).dates(DateShape.date).format(at);
 }
 
 class _Purchase extends StatelessWidget {

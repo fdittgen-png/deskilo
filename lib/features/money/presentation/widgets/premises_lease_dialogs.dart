@@ -51,7 +51,7 @@ class LeaseDateButton extends StatelessWidget {
         if (d != null) onPicked(d);
       },
       child: Text(
-        '$label: ${value == null ? '–' : material.formatMediumDate(value!)}',
+        context.l10n.labelledValue(label, value == null ? '–' : material.formatMediumDate(value!)),
       ),
     );
   }

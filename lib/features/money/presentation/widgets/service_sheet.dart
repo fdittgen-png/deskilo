@@ -15,6 +15,7 @@ import '../../../../core/help/help_dot.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/ids/request_id.dart' show newRequestId;
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/text/collation.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/adaptive/task_surface.dart';
@@ -316,10 +317,10 @@ class _CategoryFieldState extends State<_CategoryField> {
     textEditingController: widget.controller,
     focusNode: _focus,
     optionsBuilder: (value) {
-      final typed = value.text.trim().toLowerCase();
+      final typed = foldForSearch(value.text.trim());
       return [
         for (final c in widget.categories)
-          if (typed.isEmpty || c.toLowerCase().contains(typed)) c,
+          if (typed.isEmpty || foldForSearch(c).contains(typed)) c,
       ];
     },
     fieldViewBuilder: (context, controller, focusNode, onSubmit) =>

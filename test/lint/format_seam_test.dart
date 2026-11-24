@@ -34,7 +34,7 @@ const _allowed = <String, (int, String)>{
     "a document: the book reports print in the document's locale",
   ),
   'lib/features/money/presentation/gobd_procedure_document.dart': (
-    2,
+    1,
     "a document: the GoBD procedure document prints in its own language",
   ),
   'lib/features/money/presentation/invoice_documents.dart': (
@@ -153,6 +153,9 @@ const _ceilings = <String, int>{
   'WorkspaceTime.display': 0,
 };
 
+/// #4427 -- `MaterialLocalizations.format*Date(` left in presentation.
+const _materialDateCeiling = 37;
+
 final _kinds = [
   LiteralKind('DateFormat.', RegExp(r'\bDateFormat\.')),
   LiteralKind('NumberFormat.', RegExp(r'\bNumberFormat\.')),
@@ -180,6 +183,33 @@ void main() {
           reason: '$path: $n raw format calls, pinned at $pinned. A new one '
               'goes through AppFormat; a removed one lowers the pin.');
     }
+  });
+
+  // #4427 -- a date in a screen follows the member's format locale
+  // (AppFormat.dates), not the interface language MaterialLocalizations
+  // formats in. Recorded at 43 on b4e4bde00; stock is at 0.
+  test('MaterialLocalizations date formats in presentation only fall', () {
+    final kind = LiteralKind(
+      'format*Date(',
+      RegExp(r'\.format(Compact|Medium|Full|Short)Date\('),
+    );
+    final perFile = countLiterals(presentation, [kind])[kind.name]!;
+    expect(
+      total(perFile),
+      lessThanOrEqualTo(_materialDateCeiling),
+      reason: ratchetMessage(
+        rule: 'dates (#4427): use AppFormat.dates(DateShape.x) or AppFormat.date',
+        kind: kind.name,
+        ceiling: _materialDateCeiling,
+        actual: total(perFile),
+        perFile: perFile,
+      ),
+    );
+    final stock = {
+      for (final e in perFile.entries)
+        if (e.key.startsWith('lib/features/stock/')) e.key: e.value,
+    };
+    expect(stock, isEmpty, reason: 'stock formats every date through AppFormat');
   });
 
   test('presentation never formats a time with DateFormat.Hm or .jm', () {

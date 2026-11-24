@@ -139,9 +139,9 @@ class _TaxReferenceScreenState extends ConsumerState<TaxReferenceScreen> {
               ListTile(
                 key: ValueKey('tax-reference-${r.domain.wire}-${r.country}-${r.key}'),
                 contentPadding: EdgeInsets.zero,
-                title: Text(taxValueSummary(r.value, appFormatOf(context).locale).isEmpty
+                title: Text(taxValueSummary(context.l10n, r.value, appFormatOf(context).locale).isEmpty
                     ? r.country
-                    : taxValueSummary(r.value, appFormatOf(context).locale)),
+                    : taxValueSummary(context.l10n, r.value, appFormatOf(context).locale)),
                 subtitle: Text('${r.country} · ${r.key} · '
                     '${l10n.taxRefValidFromDate(appFormatOf(context).isoDay(r.validFrom))} · ${r.source}'),
                 leading: Icon(

@@ -6,23 +6,24 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/i18n/rate_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../l10n/app_localizations.dart';
 import 'tax_reference_component_fields.dart';
 
 /// A one-line reading of a value, for lists.
-String taxValueSummary(TaxValue v, String? locale) => switch (v) {
+String taxValueSummary(AppLocalizations l10n, TaxValue v, String? locale) => switch (v) {
   RateValue() => '${v.label} (${ratePercentText(v.percent, locale: locale)})',
   EuMemberValue() => v.aliasOf,
   ExemptionTextValue() => v.text,
   VatIdPatternValue() => v.pattern,
   CatalogueNoteValue() => v.text,
-  GroupExampleValue() => '${v.group}: ${v.text}',
+  GroupExampleValue() => l10n.labelledValue(v.group, v.text),
   ThresholdValue() => '${v.cents} ${v.currency} (${v.effect})',
   TaxPointValue() => v.standard,
-  MandateValue() => '${v.duty}: ${v.from}',
+  MandateValue() => l10n.labelledValue(v.duty, v.from),
   IssuingGateValue() => v.issues ? v.currency : '-',
   FormBoxValue() => v.label,
   AccountMapValue() =>
-    '${v.role}: ${v.account.isNotEmpty ? v.account : v.taxCode}',
+    l10n.labelledValue(v.role, v.account.isNotEmpty ? v.account : v.taxCode),
   SalesTaxValue() => '${v.state} ${ratePercentText(v.percent, locale: locale)}',
   TaxabilityValue() => v.status,
   RateComponentValue() => rateComponentsText(v).replaceAll('\n', ' + '),

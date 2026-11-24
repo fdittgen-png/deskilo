@@ -4702,7 +4702,7 @@
   },
   "datevDebtorBase": "Compte Debitor du membre n° 0",
   "datevProblemAccountLength": "le compte {account} n'a pas {length} chiffres",
-  "datevProblemAutomatic": "{percent} % serait comptabilisé sur {account}, le compte automatique d'un autre taux",
+  "datevProblemAutomatic": "{percent} serait comptabilisé sur {account}, le compte automatique d'un autre taux",
   "datevProblemBooksBlocked": "Les écritures n'ont pas pu comptabiliser les achats : {subjects}",
   "@datevProblemBooksBlocked": {
     "description": "DATEV export (#2375): the books could not post the purchases, with the missing roles or rates",
@@ -4744,7 +4744,7 @@
       }
     }
   },
-  "datevProblemTaxKey": "aucun BU-Schlüssel n'est enregistré pour {percent} % sur le compte {account}",
+  "datevProblemTaxKey": "aucun BU-Schlüssel n'est enregistré pour {percent} sur le compte {account}",
   "datevVoucherLinks": "Joindre les PDF des factures et les lier depuis chaque ligne (Beleglink)",
   "decisionSurfaceEmpty": "Rien ne vous attend",
   "@decisionSurfaceEmpty": {
@@ -11351,15 +11351,6 @@
   "@itemGroupMargin": {
     "description": "#4361 G12 finance parameters of an item group"
   },
-  "itemGroupMarginValue": "{percent} %",
-  "@itemGroupMarginValue": {
-    "description": "#4361 G12: a target margin as the group shows it; the percent arrives formatted",
-    "placeholders": {
-      "percent": {
-        "type": "String"
-      }
-    }
-  },
   "itemGroupMinAge": "Âge minimum pour une vente",
   "itemGroupMove": "Déplacer",
   "itemGroupMoveReaches": "{count, plural, one{Le déplacement change {count} réglage.} other{Le déplacement change {count} réglages.}}",
@@ -11865,6 +11856,7 @@
   "kitScrollBack": "Faire défiler en arrière",
   "kitScrollForward": "Faire défiler en avant",
   "labelWithValue": "{label} : {value}",
+  "labelledValue": "{label} : {value}",
   "languageAvailableHint": "DesKilo existe dans les langues ci-dessous. Sur un appareil réglé dans une autre langue, il s'affiche en {fallback}.",
   "languageNameCS": "Tchèque",
   "@languageNameCS": {
@@ -12799,14 +12791,14 @@
   "mcpConfirmFieldChange": "{field} : {from} → {to}",
   "mcpConfirmInvitee": "Invitation pour",
   "mcpConfirmLevel": "{process} : {level}",
-  "mcpConfirmNewShare": "Nouvelle part d'abonnement : {pct} %",
+  "mcpConfirmNewShare": "Nouvelle part d'abonnement : {pct}",
   "mcpConfirmNewStatus": "Nouveau statut : {status}",
   "mcpConfirmNotFound": "Aucune demande de ce type ne vous concerne.",
   "mcpConfirmPauseOpen": "Pause à partir du {from}, jusqu'à la reprise",
   "mcpConfirmPauseUntil": "Pause du {from} au {to}",
   "mcpConfirmPeriod": "Période : {period}",
   "mcpConfirmRefuse": "Votre réponse : refuser",
-  "mcpConfirmShareFrom": "Nouvelle part d'abonnement : {pct} % à partir du {date}",
+  "mcpConfirmShareFrom": "Nouvelle part d'abonnement : {pct} à partir du {date}",
   "mcpConfirmStale": "Cette demande ne correspond plus aux données actuelles ou à vos accès. Rien n'a été fait.",
   "mcpConfirmStepDone": "Elle sera marquée comme faite.",
   "mcpConfirmStepLater": "Elle sera mise de côté pour plus tard.",
@@ -13447,7 +13439,7 @@
   "memberPlanJoinedUnknown": "Non enregistrée",
   "memberPlanPausedNoDates": "Suspendu : aucune date n'est enregistrée pour cette suspension",
   "memberPlanPausedSince": "Suspendu depuis le {date}",
-  "memberPlanShare": "Forfait {pct} %",
+  "memberPlanShare": "Forfait {pct}",
   "@memberPlanShare": {
     "description": "#704 - the contact section of a member profile",
     "placeholders": {
@@ -14466,11 +14458,11 @@
   "@paymentRemindersWhen": {
     "description": "#2332: when automatic payment reminders run"
   },
-  "paymentRoutingNumberLabel": "Routing number",
+  "paymentRoutingNumberLabel": "Numéro de routage (ABA)",
   "@paymentRoutingNumberLabel": {
     "description": "#711 - globalization"
   },
-  "paymentSortCodeLabel": "Sort code",
+  "paymentSortCodeLabel": "Code guichet (sort code)",
   "@paymentSortCodeLabel": {
     "description": "#711 - globalization"
   },
@@ -20037,8 +20029,7 @@
   "setupGrowVatOpen": "Modifier les taux de TVA",
   "setupGrowVatPreviewNoVat": "Aucune TVA n'est facturée : une ligne de {gross} est facturée telle quelle.",
   "setupGrowVatPreviewNote": "Une ligne d'exemple de {gross}, TVA comprise, ventilée comme sur une facture :",
-  "setupGrowVatPreviewRate": "TVA {rate} %",
-  "setupGrowVatRate": "{rate} %",
+  "setupGrowVatPreviewRate": "TVA {rate}",
   "setupGrowVatUsualNote": "Un point de départ, pas un conseil fiscal : votre expert-comptable confirme quel taux s'applique à ce que vous vendez.",
   "setupGrowVatUsualTitle": "Les taux habituels de votre pays",
   "setupGuidanceTitle": "Conseils et vérifications",
@@ -21138,7 +21129,7 @@
   "stockCycleCounted": "Compté.",
   "stockCycleCountedDifference": "Compté. Écart avec le stock enregistré : {difference}",
   "stockCycleEveryDays": "Tous les combien de jours",
-  "stockCycleHistoryAccuracy": "{count, plural, one{{count} comptage} other{{count} comptages}}, {percent} % exacts",
+  "stockCycleHistoryAccuracy": "{count, plural, one{{count} comptage} other{{count} comptages}}, {percent} exacts",
   "stockCycleHistoryEmpty": "Rien n’a encore été compté.",
   "stockCycleHistoryLast": "Dernier comptage le {date}",
   "stockCycleHistoryRow": "{item} · {place}",
@@ -21150,7 +21141,7 @@
   "stockCycleNoPlans": "Aucun plan pour l’instant : rien n’est compté selon un calendrier.",
   "stockCycleNoTasks": "Rien à compter pour l’instant.",
   "stockCyclePlanActive": "Utilisé",
-  "stockCyclePlanEvery": "tous les {count, plural, one{{count} jour} other{{count} jours}}",
+  "stockCyclePlanEvery": "Intervalle : {count, plural, one{{count} jour} other{{count} jours}}",
   "stockCyclePlanItemsCount": "{count, plural, one{{count} article} other{{count} articles}}",
   "stockCyclePlanName": "Nom",
   "stockCyclePlanNameRequired": "Donnez un nom au plan.",

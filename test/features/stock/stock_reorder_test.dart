@@ -113,12 +113,13 @@ class _Reorder implements StockReorder {
   }
 }
 
-Future<void> _open(WidgetTester tester, _Reorder reorder, Size size, {Set<WorkspacePermission>? held}) async {
+Future<void> _open(WidgetTester tester, _Reorder reorder, Size size, {Set<WorkspacePermission>? held, Locale? locale}) async {
   final config = DemoStockConfigCommands('ws-1');
   await pumpApp(
     tester,
     const StockReorderScreen(),
     size: size,
+    locale: locale,
     overrides: [
       ...standardTestOverrides(),
       stockReorderProvider.overrideWithValue(reorder),
@@ -221,6 +222,21 @@ void main() {
         expect((syrup.subtitle! as Text).data, contains(_en.stockReorderPointInactive));
         expect(find.byKey(const ValueKey('stock-point-add')), findsNothing);
       });
+
+      // #4425 -- a level typed with the member's decimal separator: 15,5 in German and 15.5 in English save the same
+      for (final (code, typed) in [('de', '15,5'), ('en', '15.5')]) {
+        testWidgets('a level typed $typed in $code is saved as 15.5', (tester) async {
+          final reorder = _Reorder();
+          await _open(tester, reorder, size, locale: Locale(code));
+          await _reveal(tester, find.byKey(const ValueKey('stock-point-pt-beans')));
+          await tester.tap(find.byKey(const ValueKey('stock-point-pt-beans')));
+          await _settle(tester);
+          await tester.enterText(find.byKey(const ValueKey('stock-point-level')), typed);
+          await tester.tap(find.byKey(const ValueKey('stock-point-save')));
+          await _settle(tester);
+          expect(reorder.saved.single.point['reorder_point'], '15.5');
+        });
+      }
 
       testWidgets('a point is changed at the revision read; its item and site are fixed', (tester) async {
         final reorder = _Reorder();

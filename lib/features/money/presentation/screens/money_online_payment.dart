@@ -368,7 +368,7 @@ class MoneyOnlinePayment {
     final lines = [
       for (final entry in config.missing.entries)
         if (entry.value.isNotEmpty)
-          '${entry.key}: ${entry.value.join(', ')}',
+          l10n.labelledValue(entry.key, entry.value.join(', ')),
     ];
     await showDialog<void>(
       context: _context,

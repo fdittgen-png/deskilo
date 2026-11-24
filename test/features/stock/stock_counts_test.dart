@@ -10,6 +10,8 @@ import 'package:deskilo/core/demo/data/demo_stock_config_commands.dart';
 import 'package:deskilo/core/demo/data/demo_stock_ledger.dart';
 import 'package:deskilo/core/demo/data/demo_stock_queries.dart';
 import 'package:deskilo/core/demo/data/demo_stock_reversals.dart';
+import 'package:deskilo/core/i18n/app_format.dart';
+import 'package:deskilo/core/i18n/format_controller.dart';
 import 'package:deskilo/features/stock/domain/stock_reversals.dart';
 import 'package:deskilo/features/stock/presentation/stock_counts_screen.dart';
 import 'package:deskilo/features/stock/providers/stock_providers.dart';
@@ -40,13 +42,15 @@ class _World {
 const _count = {WorkspacePermission.viewStock, WorkspacePermission.manageStock};
 const _approve = {...{WorkspacePermission.viewStock, WorkspacePermission.manageStock}, WorkspacePermission.approveStockAdjustments};
 
-Future<void> _open(WidgetTester tester, _World w, Size size, {Set<WorkspacePermission> held = _approve}) async {
+Future<void> _open(WidgetTester tester, _World w, Size size, {Set<WorkspacePermission> held = _approve, AppFormat? format}) async {
   await pumpApp(
     tester,
     const StockCountsScreen(),
     size: size,
     overrides: [
-      ...standardTestOverrides(),
+      // a test that pins its own format replaces the standard one
+      ...standardTestOverrides(pinFormats: format == null),
+      if (format != null) ...[appFormatProvider.overrideWithValue(format), personalFormatProvider.overrideWithValue(format)],
       stockQueriesProvider.overrideWithValue(DemoStockQueries(w.ledger)),
       stockConfigCommandsProvider.overrideWithValue(w.config),
       stockReversalsProvider.overrideWithValue(w.reversals),
@@ -96,6 +100,15 @@ StockCountDraft _draft(String observed, String request) => (
 void main() {
   for (final (name, size) in [('phone', const Size(390, 844)), ('desk', const Size(1440, 900))]) {
     group('on a $name', () {
+      // #4424 -- the quantities read in the member's format: 12,5 kg in French
+      testWidgets('a French format shows what the book held as 12,5 kg', (tester) async {
+        final w = _World();
+        await _open(tester, w, size, format: const AppFormat(locale: 'fr_FR', currencyCode: 'EUR'));
+        await _recordCount(tester, '10');
+        expect(find.textContaining('12,5 kg'), findsOneWidget);
+        expect(find.textContaining('12.5 kg'), findsNothing);
+      });
+
       testWidgets('a count moves nothing and waits for its approval, visibly', (tester) async {
         final w = _World();
         await _open(tester, w, size);

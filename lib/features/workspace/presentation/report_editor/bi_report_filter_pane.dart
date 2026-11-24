@@ -47,7 +47,7 @@ class BiFilterPane extends ConsumerWidget {
     String valueOf(BiReportFilter f) =>
         [for (final v in f.values) names[f.dimension]?[v] ?? v].join(', ');
     String text(BiReportFilter f, String scope) {
-      final what = '${biDimensionName(l10n, f.dimension)}: ${valueOf(f)}';
+      final what = l10n.labelledValue(biDimensionName(l10n, f.dimension), valueOf(f));
       return f.positive
           ? l10n.biEditorFilterOnly(what, scope)
           : l10n.biEditorFilterExcept(what, scope);

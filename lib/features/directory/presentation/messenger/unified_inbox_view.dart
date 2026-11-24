@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/settings/messaging_windows.dart';
+import '../../../../core/text/collation.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/kit/row_menu.dart';
@@ -169,12 +170,12 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
         e.flags?.pinned ?? marks.pinned.contains(e.key);
     bool archivedOf(InboxEntry e) =>
         e.flags?.archived ?? marks.archived.contains(e.key);
-    final needle = _query.trim().toLowerCase();
+    final needle = foldForSearch(_query.trim());
     bool matches(InboxEntry e) =>
         needle.isEmpty ||
-        e.title.toLowerCase().contains(needle) ||
-        e.lastBody.toLowerCase().contains(needle) ||
-        e.workspaceName.toLowerCase().contains(needle);
+        foldForSearch(e.title).contains(needle) ||
+        foldForSearch(e.lastBody).contains(needle) ||
+        foldForSearch(e.workspaceName).contains(needle);
     // Pinned first, then newest activity (the merge already sorts by it).
     final shown = [
       for (final e in inbox.entries)

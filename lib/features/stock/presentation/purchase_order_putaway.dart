@@ -13,7 +13,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-
 import '../../../core/format/decimal_input.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
@@ -268,7 +267,9 @@ class PutAwayDraft {
           cost: switch (p.cost) {
             'entered' => PutAwayCost.known(totalMinor: int.tryParse(p.total.text.trim()) ?? -1),
             'order' => PutAwayCost.orderPrice(
-              sourceRate: order.currency != context.currency && p.rate.text.trim().isNotEmpty ? p.rate.text.trim() : null,
+              sourceRate: order.currency != context.currency && p.rate.text.trim().isNotEmpty
+                ? decimalTextFromInput(p.rate.text, grouping: false) ?? p.rate.text.trim()
+                : null,
             ),
             _ => const PutAwayCost.unknown(),
           },
@@ -405,8 +406,8 @@ class PutAwayDraft {
           fieldKey: 'putaway-$n-rate',
           label: l10n.stockPutAwayCostRate(this.context.currency),
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
-          // the rate is sent as typed and the server reads a dot only (0840): no comma here
-          inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.]'))],
+          // typed with the member's decimal separator; sent as the dot text the server reads (0840)
+          inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]'))],
         ),
       const FormGap(),
     ];

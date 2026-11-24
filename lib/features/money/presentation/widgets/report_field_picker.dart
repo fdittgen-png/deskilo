@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/text/collation.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -308,14 +309,14 @@ class _FieldPickerSheetState extends State<_FieldPickerSheet> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
-    final q = _query.trim().toLowerCase();
+    final q = foldForSearch(_query.trim());
     final fields = [
       ...InvoicePdfTemplate.placeholders,
       for (final key in widget.textKeys) 'text.$key',
     ].where((f) =>
         q.isEmpty ||
         f.contains(q) ||
-        reportFieldMeaning(f, l10n).toLowerCase().contains(q)).toList();
+        foldForSearch(reportFieldMeaning(f, l10n)).contains(q)).toList();
     final groups = <ReportFieldGroup, List<String>>{};
     for (final f in fields) {
       groups.putIfAbsent(reportFieldGroup(f), () => []).add(f);

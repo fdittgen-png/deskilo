@@ -6,6 +6,7 @@
 // named for a screen reader.
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/form_kit.dart';
 
@@ -133,7 +134,7 @@ class BiStepper extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Row(
     children: [
-      Expanded(child: Text('$label: $value')),
+      Expanded(child: Text(context.l10n.labelledValue(label, value))),
       IconButton(
         key: ValueKey('$keyPrefix-less'),
         tooltip: less,

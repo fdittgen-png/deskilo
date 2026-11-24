@@ -154,11 +154,11 @@ class _PanelState<T extends RefFilterable> extends State<_Panel<T>> {
           ? b.value.id.compareTo(a.value.id)
           : compareNames(a.value.label, b.value.label),
     );
-    final needle = (_search[facet.key] ?? '').toLowerCase();
+    final needle = foldForSearch(_search[facet.key] ?? '');
     if (needle.isNotEmpty) {
       options = [
         for (final o in options)
-          if (o.value.label.toLowerCase().contains(needle)) o,
+          if (foldForSearch(o.value.label).contains(needle)) o,
       ];
     }
     final chosen = _filter.selected[facet.key] ?? const <String>{};

@@ -3,6 +3,7 @@
 // #4361 (G12) -- the words of item groups: a parameter's name, a value as a person reads it, a group in one line,
 // and what a refused command says (a sub-group of a sub-group, per-piece tags without tracking by piece, a group
 // still in use...). Anything else falls back to the stock's own wording.
+import '../../../core/i18n/rate_format.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/item_groups.dart';
 import '../domain/purchase_factor.dart';
@@ -47,7 +48,7 @@ String itemGroupValueText(AppLocalizations l10n, String param, Object? value) {
     'sold_by_weight' => value == true ? l10n.itemGroupYes : l10n.itemGroupNo,
     'supply_class' => value == 'property' ? l10n.itemGroupSupplyProperty : l10n.itemGroupSupplyGeneral,
     'price_rounding' => value == 'none' ? l10n.itemGroupRoundingNone : '$value',
-    'target_margin_bps' => l10n.itemGroupMarginValue(percentOfMarginBps((value as num).toInt())),
+    'target_margin_bps' => ratePercentText((value as num) / 100, locale: l10n.localeName),
     'vat_rate_id' || 'home_zone_id' => l10n.itemGroupSet,
     _ => '$value',
   };
@@ -56,10 +57,10 @@ String itemGroupValueText(AppLocalizations l10n, String param, Object? value) {
 /// A group's own settings in one line.
 String itemGroupSummary(AppLocalizations l10n, ItemGroup g) => [
   for (final p in itemGroupEditable)
-    if (g.params[p] != null) '${itemGroupParamLabel(l10n, p)}: ${itemGroupValueText(l10n, p, g.params[p])}',
+    if (g.params[p] != null) l10n.labelledValue(itemGroupParamLabel(l10n, p), itemGroupValueText(l10n, p, g.params[p])),
   for (final p in itemGroupProposals)
     // the factor is one number: its numerator speaks for the pair
-    if (g.params[p] != null && p != 'default_purchase_factor_den') '${itemGroupParamLabel(l10n, p)}: ${_proposalText(l10n, g, p)}',
+    if (g.params[p] != null && p != 'default_purchase_factor_den') l10n.labelledValue(itemGroupParamLabel(l10n, p), _proposalText(l10n, g, p)),
 ].join(' · ');
 
 /// A proposal of [g] as a person reads it: the factor as one number or a fraction, the home zone as set.

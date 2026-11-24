@@ -11,6 +11,7 @@
 // add is loaded; it is per currency and never one sum across currencies.
 import 'package:flutter/widgets.dart';
 
+import '../../text/collation.dart';
 import '../adaptive/window_class.dart';
 
 /// One column of a records table.
@@ -250,11 +251,11 @@ List<T> queryRows<T>(
   required List<RecordChip<T>> chips,
   required List<RecordColumn<T>> columns,
 }) {
-  final needle = query.text.trim().toLowerCase();
+  final needle = foldForSearch(query.text.trim());
   final chip = chips.where((c) => c.id == query.chip).firstOrNull;
   final kept = [
     for (final r in rows)
-      if ((needle.isEmpty || searchText(r).toLowerCase().contains(needle)) &&
+      if ((needle.isEmpty || foldForSearch(searchText(r)).contains(needle)) &&
           (chip == null || chip.keeps(r)))
         r,
   ];
@@ -282,10 +283,10 @@ Map<String, int> chipCounts<T>(
   required String Function(T row) searchText,
   required List<RecordChip<T>> chips,
 }) {
-  final needle = text.trim().toLowerCase();
+  final needle = foldForSearch(text.trim());
   final matching = [
     for (final r in rows)
-      if (needle.isEmpty || searchText(r).toLowerCase().contains(needle)) r,
+      if (needle.isEmpty || foldForSearch(searchText(r)).contains(needle)) r,
   ];
   return {for (final c in chips) c.id: matching.where(c.keeps).length};
 }

@@ -6,6 +6,8 @@
 // loading, empty and failed states, a failed read never shown as empty; and
 // one movement at its address, whose cost a reader without the right is told
 // is not shown (not zero).
+import 'package:deskilo/core/i18n/app_format.dart';
+import 'package:deskilo/core/i18n/format_controller.dart';
 import 'package:deskilo/features/stock/application/stock_view.dart';
 import 'package:deskilo/features/stock/domain/stock_page.dart';
 import 'package:deskilo/features/stock/domain/stock_queries.dart';
@@ -139,16 +141,18 @@ class _NoPurchase implements StockTraceReader {
   Future<StockValuation> valuation(String workspaceId, {DateTime? at}) => throw UnimplementedError();
 }
 
-Future<void> _open(WidgetTester tester, _Stock stock, Size size, {Widget? home, Set<WorkspacePermission>? held}) async {
+Future<void> _open(WidgetTester tester, _Stock stock, Size size, {Widget? home, Set<WorkspacePermission>? held, AppFormat? format}) async {
   await pumpApp(
     tester,
     home ?? const StockScreen(),
     size: size,
     overrides: [
-      ...standardTestOverrides(),
+      // a test that pins its own format replaces the standard one
+      ...standardTestOverrides(pinFormats: format == null),
       stockQueriesProvider.overrideWithValue(stock),
       stockTraceReaderProvider.overrideWithValue(_NoPurchase()),
       if (held != null) myPermissionsProvider.overrideWithValue(held),
+      if (format != null) ...[appFormatProvider.overrideWithValue(format), personalFormatProvider.overrideWithValue(format)],
     ],
   );
   await tester.pumpAndSettle();
@@ -235,6 +239,17 @@ void main() {
         await tester.pumpAndSettle();
         expect(find.text('0.333333 l'), findsNWidgets(2));
         expect(find.byKey(const ValueKey('stock-movement-m-1')), findsOneWidget);
+      });
+
+      // #4427 -- the date follows the member's format locale, not the interface language
+      testWidgets('an English screen with a German format shows the movement on 3.3.2026', (tester) async {
+        final stock = _Stock(movements: [_move('m-1')]);
+        await _open(tester, stock, size,
+            home: const StockScreen(tab: StockTab.movements), format: const AppFormat(locale: 'de_DE', currencyCode: 'EUR'));
+        await tester.pumpAndSettle();
+        expect(find.text(_en.stockTabMovements), findsWidgets, reason: 'the interface is English');
+        expect(find.textContaining('3.3.2026'), findsOneWidget);
+        expect(find.textContaining('3/3/2026'), findsNothing);
       });
     });
   }
