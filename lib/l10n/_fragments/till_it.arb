@@ -51,5 +51,26 @@
   "@tillLeaveGo": {
     "description": "#4366 the till: leave the till with the sale still waiting"
   },
-  "tillFailed": "La cassa non ha potuto eseguirlo. Riprovi."
+  "tillFailed": "La cassa non ha potuto eseguirlo. Riprovi.",
+  "tillTrackLot": "Lotto {code} × {quantity}",
+  "@tillTrackLot": {
+    "description": "#4436 the till: a lot a sold line took, its code as received and the quantity taken from it",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      }
+    }
+  },
+  "tillTrackPiece": "Pezzo {code}",
+  "@tillTrackPiece": {
+    "description": "#4436 the till: a piece a sold line took, named by its tag",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  }
 }

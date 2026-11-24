@@ -52317,6 +52317,27 @@
       }
     }
   },
+  "tillTrackLot": "Lot {code} × {quantity}",
+  "@tillTrackLot": {
+    "description": "#4436 the till: a lot a sold line took, its code as received and the quantity taken from it",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      }
+    }
+  },
+  "tillTrackPiece": "Piece {code}",
+  "@tillTrackPiece": {
+    "description": "#4436 the till: a piece a sold line took, named by its tag",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
   "tipAvailabilityClosure": "To close a day nobody can book: tap “Add closure day” and give a reason if you like.",
   "@tipAvailabilityClosure": {
     "description": "Tip (#2313) on the availability surface: a scenario \"To …: …\"."

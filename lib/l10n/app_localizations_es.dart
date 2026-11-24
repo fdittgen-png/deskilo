@@ -40596,6 +40596,16 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String tillTrackLot(String code, String quantity) {
+    return 'Lote $code × $quantity';
+  }
+
+  @override
+  String tillTrackPiece(String code) {
+    return 'Pieza $code';
+  }
+
+  @override
   String get tipAvailabilityClosure =>
       'Para cerrar un día que nadie podrá reservar: toque «Añadir día de cierre» e indique un motivo si quiere.';
 

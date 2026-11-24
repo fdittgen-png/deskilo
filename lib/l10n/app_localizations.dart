@@ -64816,6 +64816,18 @@ abstract class AppLocalizations {
   /// **'Total to pay: {amount}'**
   String tillTotalDue(String amount);
 
+  /// #4436 the till: a lot a sold line took, its code as received and the quantity taken from it
+  ///
+  /// In en, this message translates to:
+  /// **'Lot {code} × {quantity}'**
+  String tillTrackLot(String code, String quantity);
+
+  /// #4436 the till: a piece a sold line took, named by its tag
+  ///
+  /// In en, this message translates to:
+  /// **'Piece {code}'**
+  String tillTrackPiece(String code);
+
   /// Tip (#2313) on the availability surface: a scenario "To …: …".
   ///
   /// In en, this message translates to:

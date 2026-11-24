@@ -143,17 +143,67 @@ class TillTender {
   Map<String, Object?> toJson() => {'kind': kind, 'amount_minor': amountMinor};
 }
 
+/// #4436 -- a track ID a goods line took: a lot (its code as received, the quantity taken from it, in the item's
+/// inventory unit) or a piece (its tag).
+class TillTrack {
+  const TillTrack({required this.kind, required this.code, this.quantity});
+
+  /// `lot` or `piece`.
+  final String kind;
+
+  /// The lot's code as received (else its label code), or the piece's tag; empty when the lot has no code.
+  final String code;
+
+  /// The quantity taken from a lot; null for a piece.
+  final String? quantity;
+
+  bool get isPiece => kind == 'piece';
+
+  factory TillTrack.fromJson(Object? json) {
+    final r = JsonReader.of(json, context: 'counter_receipt_finalize.lines.tracks');
+    return TillTrack(kind: r.string('kind'), code: r.stringOr('code'), quantity: r.stringOrNull('quantity'));
+  }
+}
+
+/// #4436 -- what one goods line of a sale took, as the receipt froze it.
+class TillSoldLine {
+  const TillSoldLine({required this.lineNo, required this.tracks});
+
+  /// The line's place on the receipt, from 1: the basket's line of the same place.
+  final int lineNo;
+  final List<TillTrack> tracks;
+
+  factory TillSoldLine.fromJson(Object? json) {
+    final r = JsonReader.of(json, context: 'counter_receipt_finalize.lines');
+    return TillSoldLine(lineNo: r.integer('line_no'), tracks: [for (final t in r.listOrAbsent('tracks')) TillTrack.fromJson(t)]);
+  }
+}
+
 /// A sale made: its number and totals.
 class TillSold {
-  const TillSold({required this.receiptId, required this.number, required this.totals});
+  const TillSold({required this.receiptId, required this.number, required this.totals, this.lines = const []});
 
   final String receiptId;
   final String number;
   final TillTotals totals;
 
+  /// #4436 -- the goods lines and the track IDs each took; a line that is not goods is not listed.
+  final List<TillSoldLine> lines;
+
+  /// The track IDs the basket's line [lineNo] (from 1) took; empty when it took none.
+  List<TillTrack> tracksOf(int lineNo) => [
+    for (final l in lines)
+      if (l.lineNo == lineNo) ...l.tracks,
+  ];
+
   factory TillSold.fromJson(Object? json) {
     final r = JsonReader.of(json, context: 'counter_receipt_finalize');
-    return TillSold(receiptId: r.string('receipt_id'), number: r.string('number'), totals: TillTotals.fromJson(r.raw('totals')));
+    return TillSold(
+      receiptId: r.string('receipt_id'),
+      number: r.string('number'),
+      totals: TillTotals.fromJson(r.raw('totals')),
+      lines: [for (final l in r.listOrAbsent('lines')) TillSoldLine.fromJson(l)],
+    );
   }
 }
 

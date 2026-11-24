@@ -17,6 +17,7 @@
 --     (else its label code) with the quantity taken from it, and each piece with its tag code. A later change of a lot
 --     or a tag never alters an issued receipt. Pieces are named only where the business uses tags.
 --   * The finalize answers the tracks of its goods lines (`lines`), so the till can say them; a replay answers the same.
+--   * A call without its request id, receipt or tenders is refused with the counter's DKL02 (it was a bare 22023).
 --   * Version 1 of the frozen receipt keeps its keys: `tracks` is an added key of a line, which the version-1 reader
 --     passes through with the line.
 
@@ -89,7 +90,8 @@ begin
       raise exception 'name the pieces: % named for a quantity of %', jsonb_array_length(v_units), trim_scale(v_qty)
         using errcode = 'DKG25';
     end if;
-    begin v_lot := nullif(p_input ->> 'lot_id', '')::uuid; exception when others then v_lot := null; end;
+    v_lot := case when coalesce(p_input ->> 'lot_id', '') ~ '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+                  then (p_input ->> 'lot_id')::uuid end;
     -- each piece goes with its own lot (a lot the line names wins, and the stock path checks it)
     select coalesce(jsonb_agg(jsonb_strip_nulls(jsonb_build_object(
              'quantity', g.n::text, 'unit', v_item.inventory_unit, 'lot_id', g.lot, 'units', g.units)) order by g.first), '[]'::jsonb)
@@ -175,7 +177,8 @@ declare
 begin
   v_me := public.counter_actor(p_workspace_id);
   if p_request_id is null or p_receipt_id is null or coalesce(jsonb_typeof(p_tenders), '') <> 'array' then
-    raise exception 'a receipt is finalized with a request id, its revision and its tenders' using errcode = '22023';
+    -- #4436: refused with the counter's code for a receipt that misses its essentials (was a bare 22023)
+    perform public.refuse('DKL02', null, 'a receipt is finalized with a request id, its revision and its tenders');
   end if;
   v_digest := md5(p_receipt_id::text || '|' || coalesce(p_expected_revision::text, '') || '|' || p_tenders::text);
   v_done := public.purchase_request_begin(p_workspace_id, p_request_id, 'counter_finalize', v_digest);

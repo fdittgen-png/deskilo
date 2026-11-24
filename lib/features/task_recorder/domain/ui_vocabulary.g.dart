@@ -6144,6 +6144,7 @@ const List<String> uiKeyPatterns = [
   'till-key-{}',
   'till-line-{}',
   'till-remove-{}',
+  'till-tracks-{}',
   'till-{}',
   'timeline-block-{}',
   'timeline-free-{}',

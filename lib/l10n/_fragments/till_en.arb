@@ -168,5 +168,26 @@
   "tillFailed": "The till could not do that. Try again.",
   "@tillFailed": {
     "description": "#4366 the till"
+  },
+  "tillTrackLot": "Lot {code} × {quantity}",
+  "@tillTrackLot": {
+    "description": "#4436 the till: a lot a sold line took, its code as received and the quantity taken from it",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      }
+    }
+  },
+  "tillTrackPiece": "Piece {code}",
+  "@tillTrackPiece": {
+    "description": "#4436 the till: a piece a sold line took, named by its tag",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
   }
 }

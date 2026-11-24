@@ -3010,6 +3010,8 @@ Prema **Incassare in contanti** e digiti i **Contanti dati** (o **Importo esatto
 
 Dove il suo paese non consente ancora la cassa, questa indica l'operazione mancante e non offre nulla: nulla viene numerato né incassato. Una riga di merce richiede la gestione del magazzino; un rifiuto del server è detto a parole. Pagamenti con carta, sconti, rimborsi e resi non fanno parte di questa prima cassa.
 
+Un articolo tracciato indica da dove è stato preso. Quando vende un articolo gestito a lotti senza scegliere un lotto, la vendita lo preleva dai lotti in giacenza, prima quello che scade per primo e mai uno scaduto; sotto la riga venduta la cassa mostra il codice di ogni lotto come è stato ricevuto, con la quantità prelevata, per esempio **Lotto SUP-A × 2 · Lotto SUP-B × 1**, e ogni pezzo con la sua etichetta. Questi identificativi di tracciabilità sono fissati con lo scontrino: modificare in seguito un lotto o un'etichetta non altera mai uno scontrino già emesso. Nel magazzino, la tracciabilità di un lotto o di un pezzo indica lo scontrino che lo ha venduto.
+
 ### Tag RFID: uno per lotto o uno per pezzo
 
 **Destinatari:** Amministratore · Proprietario

@@ -3010,6 +3010,8 @@ Drücken Sie **Bar kassieren** und geben Sie **Gegeben** ein (oder **Passend**).
 
 Wo Ihr Land die Kasse noch nicht erlaubt, nennt die Kasse den fehlenden Vorgang und bietet nichts an: nichts wird nummeriert und nichts kassiert. Eine Warenzeile braucht die Lagerverwaltung; eine Ablehnung des Servers erscheint in Worten. Kartenzahlung, Rabatte, Erstattungen und Rückgaben gehören nicht zu dieser ersten Kasse.
 
+Ein rückverfolgter Artikel nennt, woraus er entnommen wurde. Verkaufen Sie einen chargengeführten Artikel, ohne eine Charge zu wählen, entnimmt der Verkauf ihn den vorrätigen Chargen, die zuerst ablaufende zuerst und nie eine abgelaufene; unter der verkauften Zeile zeigt die Kasse den Code jeder Charge wie beim Wareneingang mit der entnommenen Menge, zum Beispiel **Charge SUP-A × 2 · Charge SUP-B × 1**, und jedes Stück mit seinem Tag. Diese Rückverfolgungs-IDs werden mit dem Beleg festgeschrieben: Eine spätere Änderung einer Charge oder eines Tags ändert einen bereits ausgestellten Beleg nie. Im Lager nennt die Rückverfolgung einer Charge oder eines Stücks den Beleg, mit dem es verkauft wurde.
+
 ### RFID-Tags: eines pro Charge oder eines pro Stück
 
 **Zielgruppe:** Administrator:in · Inhaber

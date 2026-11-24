@@ -23676,6 +23676,27 @@
   "tillTaxIncluded": "de los cuales impuesto {amount}",
   "tillTitle": "Caja",
   "tillTotalDue": "Total a pagar: {amount}",
+  "tillTrackLot": "Lote {code} × {quantity}",
+  "@tillTrackLot": {
+    "description": "#4436 the till: a lot a sold line took, its code as received and the quantity taken from it",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      }
+    }
+  },
+  "tillTrackPiece": "Pieza {code}",
+  "@tillTrackPiece": {
+    "description": "#4436 the till: a piece a sold line took, named by its tag",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
   "tipAvailabilityClosure": "Para cerrar un día que nadie podrá reservar: toque «Añadir día de cierre» e indique un motivo si quiere.",
   "tipAvailabilityDays": "Para fijar los días de apertura: marca los días bajo «Días de apertura».",
   "tipAvailabilityGrid": "Para elegir cómo se dividen las reservas: escoge una «Granularidad de las reservas»: periodos libres, franjas, medias jornadas o jornadas completas.",

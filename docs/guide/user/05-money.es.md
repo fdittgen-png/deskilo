@@ -762,6 +762,8 @@ Pulse **Cobrar en efectivo** y escriba el **Efectivo entregado** (o **Importe ex
 
 Donde su país aún no permite la caja, esta nombra la operación que falta y no ofrece nada: nada se numera ni se cobra. Una línea de mercancía necesita la gestión de stock; el rechazo del servidor se dice con palabras. Los pagos con tarjeta, descuentos, reembolsos y devoluciones no forman parte de esta primera caja.
 
+Un artículo trazado indica de dónde se tomó. Cuando vende un artículo seguido por lote sin elegir un lote, la venta lo toma de los lotes en existencia, primero el que caduca antes y nunca uno caducado; bajo la línea vendida, la caja muestra el código de cada lote tal como se recibió, con la cantidad tomada, por ejemplo **Lote SUP-A × 2 · Lote SUP-B × 1**, y cada pieza por su etiqueta. Estos identificadores de trazabilidad quedan fijados con el ticket: cambiar más tarde un lote o una etiqueta nunca altera un ticket ya emitido. En las existencias, la trazabilidad de un lote o de una pieza indica el ticket que lo vendió.
+
 <!-- anchor: user.money.stock.rfid -->
 ### Etiquetas RFID: una por lote o una por pieza
 

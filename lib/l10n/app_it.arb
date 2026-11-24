@@ -23676,6 +23676,27 @@
   "tillTaxIncluded": "di cui imposta {amount}",
   "tillTitle": "Cassa",
   "tillTotalDue": "Totale da pagare: {amount}",
+  "tillTrackLot": "Lotto {code} × {quantity}",
+  "@tillTrackLot": {
+    "description": "#4436 the till: a lot a sold line took, its code as received and the quantity taken from it",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      }
+    }
+  },
+  "tillTrackPiece": "Pezzo {code}",
+  "@tillTrackPiece": {
+    "description": "#4436 the till: a piece a sold line took, named by its tag",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
   "tipAvailabilityClosure": "Per chiudere un giorno che nessuno potrà prenotare: tocchi «Aggiungi giorno di chiusura» e indichi un motivo, se vuole.",
   "tipAvailabilityDays": "Per impostare i giorni di apertura: selezioni i giorni sotto «Giorni di apertura».",
   "tipAvailabilityGrid": "Per scegliere come si dividono le prenotazioni: scelga una «Granularità delle prenotazioni» — periodi liberi, fasce, mezze giornate o giornate intere.",
