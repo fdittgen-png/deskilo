@@ -356,6 +356,14 @@
   "@featureStockExpiryReportDesc": {
     "description": "#4431 the expiry report feature: what it does"
   },
+  "featureStockHandlingUnitsTitle": "Packeinheiten",
+  "featureStockHandlingUnitsDesc": "Ware bewegt sich in der Palette oder dem Karton, in dem sie ankam, oder in den eigenen umgepackten Einheiten des Ladens und bleibt über das Umpacken rückverfolgbar.",
+  "@featureStockHandlingUnitsTitle": {
+    "description": "#4435 the handling units feature: its name"
+  },
+  "@featureStockHandlingUnitsDesc": {
+    "description": "#4435 the handling units feature: what it does"
+  },
   "featureStockTagReadsTitle": "Viele Etiketten lesen",
   "featureStockTagReadsDesc": "Ein UHF-Lesegerät im Tastaturmodus liest viele Etiketten auf einmal zum Wareneingang, Umlagern und Zählen: Die Etiketten werden gesammelt, entdoppelt und aufgelöst, und nichts wird gesendet, bevor die Person bestätigt.",
   "featureCounterOfflineCashTitle": "Offline verkaufen, nur bar",

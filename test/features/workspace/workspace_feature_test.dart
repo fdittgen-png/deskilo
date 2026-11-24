@@ -86,6 +86,7 @@ const Set<WorkspaceFeature> defaultOffFeatures = {
   WorkspaceFeature.counterTillSessions,
   WorkspaceFeature.stockTagReads,
   WorkspaceFeature.stockExpiryReport,
+  WorkspaceFeature.stockHandlingUnits,
   WorkspaceFeature.counterOfflineCash,
   // #4165 — a customer invoice without a member-month is asked for.
   WorkspaceFeature.standaloneInvoicing,
@@ -277,6 +278,7 @@ void main() {
       'counterTillSessions': true,
       'stockTagReads': true,
       'stockExpiryReport': true,
+      'stockHandlingUnits': true,
       'counterOfflineCash': true,
       'standaloneInvoicing': true,
       'billingCustomers': true,

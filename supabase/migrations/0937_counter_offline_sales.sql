@@ -319,7 +319,7 @@ $fn$;
 revoke execute on function public.counter_offline_sync_v1(uuid, uuid, timestamptz, jsonb) from public, anon;
 grant execute on function public.counter_offline_sync_v1(uuid, uuid, timestamptz, jsonb) to authenticated;
 
--- restates 0922
+-- restates 0930
 create or replace function public.export_workspace_records(p_workspace_id uuid)
 returns jsonb language plpgsql stable security definer set search_path = public as $fn$
 declare
@@ -354,6 +354,8 @@ declare
     'stock_balances',
     -- #4362 the tags bound to items, places and pieces, and the named pieces
     'stock_tags', 'stock_tagged_units', 'stock_movement_units',
+    'stock_handling_units', 'stock_handling_unit_lines', 'stock_handling_unit_pieces', 'stock_movement_handling_units',
+    'stock_repacks', 'stock_repack_lines',
     -- #4184 the counter's receipts, their lines and their tenders
     'counter_receipts', 'counter_receipt_lines', 'counter_tenders', 'counter_refunds',
     -- #4367 the tills, their sessions, the cash entries and the day closes

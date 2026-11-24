@@ -12507,6 +12507,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureStockExpiryReportTitle => 'The expiry report';
 
   @override
+  String get featureStockHandlingUnitsDesc =>
+      'Goods move in the pallet or carton they were received in, or in the store\'s own repackaged units, and stay traceable through the repack.';
+
+  @override
+  String get featureStockHandlingUnitsTitle => 'Handling units';
+
+  @override
   String get featureStockItemGroupsDesc =>
       'Group items so that their settings are shared: tracking, shelf life, tag mode, units, VAT, the till and more. An item inherits its group\'s value unless it keeps its own; a change to a group shows how many items it reaches before it is saved.';
 
@@ -29022,6 +29029,18 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get refusalStockUnit =>
       'This item has no such unit. Add the unit to the item, or enter the quantity in a unit it lists.';
+
+  @override
+  String get refusalStockUnitChanged =>
+      'This unit changed since you read it: someone moved or unpacked it. Read it again.';
+
+  @override
+  String get refusalStockUnitCodeTaken =>
+      'This unit code is already used in this business. Choose another code.';
+
+  @override
+  String get refusalStockUnitContent =>
+      'What the unit holds does not fit: the quantity, the lot, the piece or the place. Check the content.';
 
   @override
   String get refusalStockVariant =>

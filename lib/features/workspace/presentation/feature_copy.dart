@@ -324,6 +324,7 @@ String _stockDescription(AppLocalizations l10n, WorkspaceFeature feature) =>
       WorkspaceFeature.counterTillSessions => l10n.featureCounterTillSessionsDesc,
       WorkspaceFeature.stockTagReads => l10n.featureStockTagReadsDesc,
       WorkspaceFeature.stockExpiryReport => l10n.featureStockExpiryReportDesc,
+      WorkspaceFeature.stockHandlingUnits => l10n.featureStockHandlingUnitsDesc,
       WorkspaceFeature.counterOfflineCash => l10n.featureCounterOfflineCashDesc,
       _ => feature.name,
     };

@@ -72,6 +72,8 @@ const _switches = <WorkspaceFeature>{
   WorkspaceFeature.stockTagReads,
   // #4431 — asked for on its own screen, not in the setup guide.
   WorkspaceFeature.stockExpiryReport,
+  // #4435 — asked for on its own screens, not in the setup guide.
+  WorkspaceFeature.stockHandlingUnits,
   // #4373 — asked for on the till, not in the setup guide.
   WorkspaceFeature.counterOfflineCash,
   // Booking and the plan read what is already set up.

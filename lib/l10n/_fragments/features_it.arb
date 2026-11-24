@@ -356,6 +356,14 @@
   "@featureStockExpiryReportDesc": {
     "description": "#4431 the expiry report feature: what it does"
   },
+  "featureStockHandlingUnitsTitle": "Unità di movimentazione",
+  "featureStockHandlingUnitsDesc": "Le merci si spostano nel bancale o nel cartone in cui sono arrivate, o nelle unità riconfezionate del negozio, e restano tracciabili attraverso il riconfezionamento.",
+  "@featureStockHandlingUnitsTitle": {
+    "description": "#4435 the handling units feature: its name"
+  },
+  "@featureStockHandlingUnitsDesc": {
+    "description": "#4435 the handling units feature: what it does"
+  },
   "featureStockTagReadsTitle": "Lettura di molte etichette",
   "featureStockTagReadsDesc": "Un lettore UHF in modalità tastiera legge molte etichette insieme per ricevere, spostare e contare: le etichette sono raccolte, deduplicate e risolte, e nulla viene inviato finché la persona non conferma.",
   "featureCounterOfflineCashTitle": "Vendere offline, solo in contanti",

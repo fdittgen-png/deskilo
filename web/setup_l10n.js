@@ -1594,6 +1594,10 @@ window.SETUP_L10N={
     "The expiry report",
     "Prints, at a date you choose, every lot or piece in stock that is expired at that date or expires after it, with a layout you can edit like the other reports."
    ],
+   "stockHandlingUnits": [
+    "Handling units",
+    "Goods move in the pallet or carton they were received in, or in the store's own repackaged units, and stay traceable through the repack."
+   ],
    "counterOfflineCash": [
     "Selling offline, cash only",
     "When the connection is lost the till keeps selling for cash, records each sale on the device and sends the sales in order once the connection returns. Other ways to pay wait for the connection."
@@ -3587,6 +3591,10 @@ window.SETUP_L10N={
    "stockExpiryReport": [
     "Le rapport de péremption",
     "Imprime, à une date choisie, chaque lot ou pièce en stock périmé à cette date ou qui périme après, avec une mise en page modifiable comme les autres rapports."
+   ],
+   "stockHandlingUnits": [
+    "Unités de manutention",
+    "Les marchandises circulent dans la palette ou le carton où elles sont arrivées, ou dans les unités reconditionnées du magasin, et restent traçables à travers le reconditionnement."
    ],
    "counterOfflineCash": [
     "Vendre hors ligne, en espèces seulement",
@@ -5582,6 +5590,10 @@ window.SETUP_L10N={
     "Der Verfallsbericht",
     "Druckt zu einem gewählten Datum jede Charge oder jedes Stück im Bestand, die an diesem Datum abgelaufen sind oder danach ablaufen, mit einem Layout, das Sie wie die anderen Berichte bearbeiten können."
    ],
+   "stockHandlingUnits": [
+    "Packeinheiten",
+    "Ware bewegt sich in der Palette oder dem Karton, in dem sie ankam, oder in den eigenen umgepackten Einheiten des Ladens und bleibt über das Umpacken rückverfolgbar."
+   ],
    "counterOfflineCash": [
     "Offline verkaufen, nur bar",
     "Bei verlorener Verbindung verkauft die Kasse weiter gegen Bargeld, speichert jeden Verkauf auf dem Gerät und sendet die Verkäufe der Reihe nach, sobald die Verbindung zurück ist. Andere Zahlarten warten auf die Verbindung."
@@ -7576,6 +7588,10 @@ window.SETUP_L10N={
     "El informe de caducidad",
     "Imprime, en una fecha elegida, cada lote o pieza en stock caducado en esa fecha o que caduca después, con un diseño editable como los demás informes."
    ],
+   "stockHandlingUnits": [
+    "Unidades de manipulación",
+    "La mercancía se mueve en el palé o la caja en que llegó, o en las unidades reenvasadas de la tienda, y sigue siendo trazable a través del reenvasado."
+   ],
    "counterOfflineCash": [
     "Vender sin conexión, solo en efectivo",
     "Si se pierde la conexión, la caja sigue vendiendo en efectivo, guarda cada venta en el dispositivo y envía las ventas en orden cuando vuelve la conexión. Los demás medios de pago esperan la conexión."
@@ -9569,6 +9585,10 @@ window.SETUP_L10N={
    "stockExpiryReport": [
     "Il rapporto di scadenza",
     "Stampa, a una data scelta, ogni lotto o pezzo in magazzino scaduto a quella data o che scade dopo, con un layout modificabile come gli altri rapporti."
+   ],
+   "stockHandlingUnits": [
+    "Unità di movimentazione",
+    "Le merci si spostano nel bancale o nel cartone in cui sono arrivate, o nelle unità riconfezionate del negozio, e restano tracciabili attraverso il riconfezionamento."
    ],
    "counterOfflineCash": [
     "Vendere offline, solo in contanti",

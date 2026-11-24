@@ -9,6 +9,30 @@
 #
 # Update: run the database job; it writes this file and fails when it
 # differs. Copy the + side (keep this header).
+    ELSE ((piece_id IS NOT NULL) AND (item_id IS NOT NULL) AND (variant_id IS NULL) AND (lot_id IS NULL) AND (unit_code IS NULL) AND (location_id IS NULL))
+    ELSE 0
+    ELSE 1
+    WHEN 'item'::text THEN ((item_id IS NOT NULL) AND (variant_id IS NULL) AND (lot_id IS NULL) AND (unit_code IS NULL) AND (location_id IS NULL) AND (piece_id IS NULL))
+    WHEN 'lot'::text THEN ((item_id IS NOT NULL) AND (lot_id IS NOT NULL) AND (variant_id IS NULL) AND (unit_code IS NULL) AND (location_id IS NULL) AND (piece_id IS NULL))
+    WHEN 'place'::text THEN ((location_id IS NOT NULL) AND (item_id IS NULL) AND (variant_id IS NULL) AND (lot_id IS NULL) AND (unit_code IS NULL) AND (piece_id IS NULL))
+    WHEN 'unit'::text THEN ((item_id IS NOT NULL) AND (unit_code IS NOT NULL) AND (variant_id IS NULL) AND (lot_id IS NULL) AND (location_id IS NULL) AND (piece_id IS NULL))
+    WHEN 'variant'::text THEN ((item_id IS NOT NULL) AND (variant_id IS NOT NULL) AND (lot_id IS NULL) AND (unit_code IS NULL) AND (location_id IS NULL) AND (piece_id IS NULL))
+    WHEN (boolean_value IS NOT NULL) THEN 1
+    WHEN (date_value IS NOT NULL) THEN 1
+    WHEN (decimal_value IS NOT NULL) THEN 1
+    WHEN (desk_id IS NULL) THEN 0
+    WHEN (integer_value IS NOT NULL) THEN 1
+    WHEN (level_id IS NULL) THEN 0
+    WHEN (office_id IS NULL) THEN 0
+    WHEN (seat_id IS NULL) THEN 0
+    WHEN (text_value IS NOT NULL) THEN 1
+CASE
+CASE owner_kind
+END +
+END)
+END) +
+END) <= 1))
+END) = 1) OR ((seat_id IS NULL) AND (desk_id IS NULL) AND (office_id IS NULL) AND (level_id IS NULL) AND (space_label IS NOT NULL))))
 constraint accessories.accessories_name_check CHECK (((char_length(name) >= 1) AND (char_length(name) <= 80)))
 constraint accessories.accessories_pkey PRIMARY KEY (id)
 constraint accessories.accessories_supplement_cents_check CHECK ((supplement_cents >= 0))
@@ -2056,22 +2080,6 @@ constraint reservations.reservations_member_id_same_workspace FOREIGN KEY (works
 constraint reservations.reservations_office_id_fkey FOREIGN KEY (office_id) REFERENCES offices(id) ON DELETE RESTRICT
 constraint reservations.reservations_office_no_overlap EXCLUDE USING gist (office_id WITH =, tstzrange(starts_at, ends_at) WITH &&) WHERE (((status = ANY (ARRAY['reserved'::text, 'checked_in'::text])) AND (office_id IS NOT NULL)))
 constraint reservations.reservations_one_target CHECK ((((((
-CASE
-    WHEN (seat_id IS NULL) THEN 0
-    ELSE 1
-END +
-CASE
-    WHEN (desk_id IS NULL) THEN 0
-    ELSE 1
-END) +
-CASE
-    WHEN (office_id IS NULL) THEN 0
-    ELSE 1
-END) +
-CASE
-    WHEN (level_id IS NULL) THEN 0
-    ELSE 1
-END) = 1) OR ((seat_id IS NULL) AND (desk_id IS NULL) AND (office_id IS NULL) AND (level_id IS NULL) AND (space_label IS NOT NULL))))
 constraint reservations.reservations_pkey PRIMARY KEY (id)
 constraint reservations.reservations_seat_id_fkey FOREIGN KEY (seat_id) REFERENCES seats(id) ON DELETE RESTRICT
 constraint reservations.reservations_seat_no_overlap EXCLUDE USING gist (seat_id WITH =, tstzrange(starts_at, ends_at) WITH &&) WHERE (((status = ANY (ARRAY['reserved'::text, 'checked_in'::text])) AND (seat_id IS NOT NULL)))
@@ -2384,6 +2392,35 @@ constraint stock_counts.stock_counts_workspace_id_location_id_fkey FOREIGN KEY (
 constraint stock_counts.stock_counts_workspace_id_lot_id_fkey FOREIGN KEY (workspace_id, lot_id) REFERENCES stock_lots(workspace_id, id) ON DELETE CASCADE
 constraint stock_counts.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint stock_counts.system_company_present CHECK ((company_id IS NOT NULL))
+constraint stock_handling_unit_lines.stock_handling_unit_lines_pkey PRIMARY KEY (id)
+constraint stock_handling_unit_lines.stock_handling_unit_lines_quantity_check CHECK ((quantity > (0)::numeric))
+constraint stock_handling_unit_lines.stock_handling_unit_lines_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint stock_handling_unit_lines.stock_handling_unit_lines_workspace_id_id_key UNIQUE (workspace_id, id)
+constraint stock_handling_unit_lines.stock_handling_unit_lines_workspace_id_item_id_fkey FOREIGN KEY (workspace_id, item_id) REFERENCES services(workspace_id, id) ON DELETE CASCADE
+constraint stock_handling_unit_lines.stock_handling_unit_lines_workspace_id_lot_id_fkey FOREIGN KEY (workspace_id, lot_id) REFERENCES stock_lots(workspace_id, id) ON DELETE CASCADE
+constraint stock_handling_unit_lines.stock_handling_unit_lines_workspace_id_unit_id_fkey FOREIGN KEY (workspace_id, unit_id) REFERENCES stock_handling_units(workspace_id, id) ON DELETE CASCADE
+constraint stock_handling_unit_lines.stock_handling_unit_lines_workspace_id_variant_id_fkey FOREIGN KEY (workspace_id, variant_id) REFERENCES item_variants(workspace_id, id)
+constraint stock_handling_unit_lines.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint stock_handling_unit_lines.system_company_present CHECK ((company_id IS NOT NULL))
+constraint stock_handling_unit_pieces.stock_handling_unit_pieces_pkey PRIMARY KEY (piece_id)
+constraint stock_handling_unit_pieces.stock_handling_unit_pieces_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint stock_handling_unit_pieces.stock_handling_unit_pieces_workspace_id_piece_id_fkey FOREIGN KEY (workspace_id, piece_id) REFERENCES stock_tagged_units(workspace_id, id) ON DELETE CASCADE
+constraint stock_handling_unit_pieces.stock_handling_unit_pieces_workspace_id_unit_line_id_fkey FOREIGN KEY (workspace_id, unit_line_id) REFERENCES stock_handling_unit_lines(workspace_id, id) ON DELETE CASCADE
+constraint stock_handling_unit_pieces.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint stock_handling_unit_pieces.system_company_present CHECK ((company_id IS NOT NULL))
+constraint stock_handling_units.stock_handling_units_check CHECK ((parent_unit_id IS DISTINCT FROM id))
+constraint stock_handling_units.stock_handling_units_code_check CHECK (((btrim(code) <> ''::text) AND (length(code) <= 64)))
+constraint stock_handling_units.stock_handling_units_kind_check CHECK ((kind = ANY (ARRAY['pallet'::text, 'carton'::text, 'crate'::text, 'box'::text, 'other'::text])))
+constraint stock_handling_units.stock_handling_units_label_code_check CHECK (((label_code IS NULL) OR ((btrim(label_code) <> ''::text) AND (length(label_code) <= 64))))
+constraint stock_handling_units.stock_handling_units_pkey PRIMARY KEY (id)
+constraint stock_handling_units.stock_handling_units_revision_check CHECK ((revision >= 1))
+constraint stock_handling_units.stock_handling_units_state_check CHECK ((state = ANY (ARRAY['open'::text, 'unpacked'::text, 'retired'::text])))
+constraint stock_handling_units.stock_handling_units_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint stock_handling_units.stock_handling_units_workspace_id_id_key UNIQUE (workspace_id, id)
+constraint stock_handling_units.stock_handling_units_workspace_id_location_id_fkey FOREIGN KEY (workspace_id, location_id) REFERENCES stock_locations(workspace_id, id)
+constraint stock_handling_units.stock_handling_units_workspace_id_parent_unit_id_fkey FOREIGN KEY (workspace_id, parent_unit_id) REFERENCES stock_handling_units(workspace_id, id)
+constraint stock_handling_units.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint stock_handling_units.system_company_present CHECK ((company_id IS NOT NULL))
 constraint stock_location_kinds.stock_location_kinds_key_check CHECK ((key ~ '^[a-z_]{1,20}$'::text))
 constraint stock_location_kinds.stock_location_kinds_level_check CHECK (((level >= 1) AND (level <= 5)))
 constraint stock_location_kinds.stock_location_kinds_pkey PRIMARY KEY (key)
@@ -2417,6 +2454,11 @@ constraint stock_lots.stock_lots_workspace_id_id_key UNIQUE (workspace_id, id)
 constraint stock_lots.stock_lots_workspace_id_item_id_fkey FOREIGN KEY (workspace_id, item_id) REFERENCES services(workspace_id, id) ON DELETE CASCADE
 constraint stock_lots.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint stock_lots.system_company_present CHECK ((company_id IS NOT NULL))
+constraint stock_movement_handling_units.stock_movement_handling_units_pkey PRIMARY KEY (movement_id, unit_id)
+constraint stock_movement_handling_units.stock_movement_handling_units_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint stock_movement_handling_units.stock_movement_handling_units_workspace_id_unit_id_fkey FOREIGN KEY (workspace_id, unit_id) REFERENCES stock_handling_units(workspace_id, id) ON DELETE CASCADE
+constraint stock_movement_handling_units.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint stock_movement_handling_units.system_company_present CHECK ((company_id IS NOT NULL))
 constraint stock_movement_units.stock_movement_units_movement_fkey FOREIGN KEY (movement_id) REFERENCES stock_movements(id)
 constraint stock_movement_units.stock_movement_units_pkey PRIMARY KEY (movement_id, unit_id)
 constraint stock_movement_units.stock_movement_units_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
@@ -2477,6 +2519,21 @@ constraint stock_reorder_points.stock_reorder_points_workspace_id_item_id_fkey F
 constraint stock_reorder_points.stock_reorder_points_workspace_id_site_id_fkey FOREIGN KEY (workspace_id, site_id) REFERENCES stock_locations(workspace_id, id)
 constraint stock_reorder_points.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint stock_reorder_points.system_company_present CHECK ((company_id IS NOT NULL))
+constraint stock_repack_lines.stock_repack_lines_direction_check CHECK ((direction = ANY (ARRAY['out'::text, 'in'::text])))
+constraint stock_repack_lines.stock_repack_lines_pkey PRIMARY KEY (id)
+constraint stock_repack_lines.stock_repack_lines_quantity_check CHECK ((quantity > (0)::numeric))
+constraint stock_repack_lines.stock_repack_lines_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint stock_repack_lines.stock_repack_lines_workspace_id_item_id_fkey FOREIGN KEY (workspace_id, item_id) REFERENCES services(workspace_id, id) ON DELETE CASCADE
+constraint stock_repack_lines.stock_repack_lines_workspace_id_repack_id_fkey FOREIGN KEY (workspace_id, repack_id) REFERENCES stock_repacks(workspace_id, id) ON DELETE CASCADE
+constraint stock_repack_lines.stock_repack_lines_workspace_id_unit_id_fkey FOREIGN KEY (workspace_id, unit_id) REFERENCES stock_handling_units(workspace_id, id)
+constraint stock_repack_lines.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint stock_repack_lines.system_company_present CHECK ((company_id IS NOT NULL))
+constraint stock_repacks.stock_repacks_pkey PRIMARY KEY (id)
+constraint stock_repacks.stock_repacks_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint stock_repacks.stock_repacks_workspace_id_id_key UNIQUE (workspace_id, id)
+constraint stock_repacks.stock_repacks_workspace_id_request_id_key UNIQUE (workspace_id, request_id)
+constraint stock_repacks.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint stock_repacks.system_company_present CHECK ((company_id IS NOT NULL))
 constraint stock_returns.stock_returns_kind_check CHECK ((kind = ANY (ARRAY['customer'::text, 'supplier'::text, 'correction'::text])))
 constraint stock_returns.stock_returns_pkey PRIMARY KEY (id)
 constraint stock_returns.stock_returns_workspace_id_actor_member_id_fkey FOREIGN KEY (workspace_id, actor_member_id) REFERENCES members(workspace_id, id)
@@ -2508,14 +2565,6 @@ constraint stock_tagged_units.system_columns_order CHECK ((modified_datetime >= 
 constraint stock_tagged_units.system_company_present CHECK ((company_id IS NOT NULL))
 constraint stock_tags.stock_tags_check CHECK (((state = 'retired'::text) = (retired_at IS NOT NULL)))
 constraint stock_tags.stock_tags_check1 CHECK (
-CASE owner_kind
-    WHEN 'item'::text THEN ((item_id IS NOT NULL) AND (variant_id IS NULL) AND (lot_id IS NULL) AND (unit_code IS NULL) AND (location_id IS NULL) AND (piece_id IS NULL))
-    WHEN 'variant'::text THEN ((item_id IS NOT NULL) AND (variant_id IS NOT NULL) AND (lot_id IS NULL) AND (unit_code IS NULL) AND (location_id IS NULL) AND (piece_id IS NULL))
-    WHEN 'lot'::text THEN ((item_id IS NOT NULL) AND (lot_id IS NOT NULL) AND (variant_id IS NULL) AND (unit_code IS NULL) AND (location_id IS NULL) AND (piece_id IS NULL))
-    WHEN 'unit'::text THEN ((item_id IS NOT NULL) AND (unit_code IS NOT NULL) AND (variant_id IS NULL) AND (lot_id IS NULL) AND (location_id IS NULL) AND (piece_id IS NULL))
-    WHEN 'place'::text THEN ((location_id IS NOT NULL) AND (item_id IS NULL) AND (variant_id IS NULL) AND (lot_id IS NULL) AND (unit_code IS NULL) AND (piece_id IS NULL))
-    ELSE ((piece_id IS NOT NULL) AND (item_id IS NOT NULL) AND (variant_id IS NULL) AND (lot_id IS NULL) AND (unit_code IS NULL) AND (location_id IS NULL))
-END)
 constraint stock_tags.stock_tags_code_check CHECK ((code ~ '^[0-9A-F]{8,128}$'::text))
 constraint stock_tags.stock_tags_owner_kind_check CHECK ((owner_kind = ANY (ARRAY['item'::text, 'variant'::text, 'lot'::text, 'unit'::text, 'place'::text, 'piece'::text])))
 constraint stock_tags.stock_tags_pkey PRIMARY KEY (id)
@@ -2789,26 +2838,6 @@ constraint workspace_field_values.workspace_field_values_definition_id_fkey FORE
 constraint workspace_field_values.workspace_field_values_hold_pair CHECK (((held_until IS NULL) = (hold_basis IS NULL)))
 constraint workspace_field_values.workspace_field_values_member_id_fkey FOREIGN KEY (member_id) REFERENCES members(id) ON DELETE CASCADE
 constraint workspace_field_values.workspace_field_values_one_column CHECK ((((((
-CASE
-    WHEN (text_value IS NOT NULL) THEN 1
-    ELSE 0
-END +
-CASE
-    WHEN (integer_value IS NOT NULL) THEN 1
-    ELSE 0
-END) +
-CASE
-    WHEN (decimal_value IS NOT NULL) THEN 1
-    ELSE 0
-END) +
-CASE
-    WHEN (date_value IS NOT NULL) THEN 1
-    ELSE 0
-END) +
-CASE
-    WHEN (boolean_value IS NOT NULL) THEN 1
-    ELSE 0
-END) <= 1))
 constraint workspace_field_values.workspace_field_values_pkey PRIMARY KEY (id)
 constraint workspace_field_values.workspace_field_values_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint workspace_licences.system_columns_order CHECK ((modified_datetime >= created_datetime))
@@ -3301,7 +3330,7 @@ routine public.export_floor_plan(p_workspace_id uuid) -> jsonb | function | defi
 routine public.export_my_data(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:60e99a54bb53
 routine public.export_my_personal_data_v1() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:d7b715189c7e
 routine public.export_workspace_configuration(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:92590453f1db
-routine public.export_workspace_records(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:849d6e2f9d0a
+routine public.export_workspace_records(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e351bbded11e
 routine public.extend_rights_request(p_request_id uuid, p_reason text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:04408416313f
 routine public.feature_available_in(p_country text, p_key text) -> boolean | function | invoker | stable | exec:authenticated,service_role | body:afd99a4fede6
 routine public.feature_effective(p_workspace_id uuid, p_key text) -> boolean | function | invoker | stable | exec:authenticated,service_role | body:1d4c5b503042
@@ -4255,7 +4284,7 @@ routine public.save_room_rental_v1(p_workspace_id uuid, p_office_id uuid, p_supp
 routine public.save_setup_journey(p_workspace_id uuid, p_answers jsonb, p_levels jsonb, p_expected_version integer, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:3ea7b7ed1f4c
 routine public.save_setup_step_draft(p_workspace_id uuid, p_step text, p_payload jsonb, p_expected_version integer, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:fdb127d50874
 routine public.save_standalone_invoice_draft_v1(p_workspace_id uuid, p_draft_id uuid, p_expected_revision integer, p_subject uuid, p_service_date date, p_due_on date, p_buyer_reference text, p_purchase_order text, p_lines jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:469627be70ed
-routine public.save_stock_item_v1(p_workspace_id uuid, p_item_id uuid, p_expected_revision integer, p_request_id uuid, p_item jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:d0b4cdefe887
+routine public.save_stock_item_v1(p_workspace_id uuid, p_item_id uuid, p_expected_revision integer, p_request_id uuid, p_item jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:83c9c7d6b403
 routine public.save_stock_location_v1(p_workspace_id uuid, p_place_id uuid, p_expected_revision integer, p_request_id uuid, p_place jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:7caa3b8e9970
 routine public.save_stock_reorder_point_v1(p_workspace_id uuid, p_point_id uuid, p_expected_revision integer, p_request_id uuid, p_point jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:222f8211fec5
 routine public.save_supplier(p_workspace_id uuid, p_supplier_id uuid, p_name text, p_tax_id text, p_tax_id_kind text, p_street text, p_postal_code text, p_city text, p_country_code text, p_contact text, p_number text, p_subdivision text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:527806d558d6
@@ -4463,6 +4492,22 @@ routine public.stock_goods_trace_v1(p_workspace_id uuid, p_movement_id uuid, p_l
 routine public.stock_gtin_check_digit(p_body text) -> integer | function | invoker | immutable | exec:service_role | body:af80192ad887
 routine public.stock_gtin_valid(p_code text) -> boolean | function | invoker | immutable | exec:service_role | body:f1fa32962018
 routine public.stock_home_check() -> trigger | function | invoker | volatile | exec:service_role | body:8e9860157b8c
+routine public.stock_hu_add_line(p_workspace_id uuid, p_unit uuid, p_location uuid, p_line jsonb) -> void | function | definer | volatile | exec:service_role | body:014614507b8a
+routine public.stock_hu_claims_check() -> trigger | function | definer | volatile | exec:service_role | body:ca43c78833ee
+routine public.stock_hu_json(p_workspace_id uuid, p_unit uuid) -> jsonb | function | definer | stable | exec:service_role | body:098588ea92e2
+routine public.stock_hu_lock(p_workspace_id uuid, p_unit uuid, p_revision integer) -> stock_handling_units | function | definer | volatile | exec:service_role | body:c28ecc145639
+routine public.stock_hu_lock_items(p_workspace_id uuid, p_lines jsonb) -> void | function | definer | volatile | exec:service_role | body:48d6583d615a
+routine public.stock_hu_loose(p_workspace_id uuid, p_item uuid, p_variant uuid, p_lot uuid, p_location uuid, p_except uuid) -> numeric | function | definer | stable | exec:service_role | body:bd4d1131d6c1
+routine public.stock_hu_lot_trace_v1(p_workspace_id uuid, p_item_id uuid, p_lot_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:ab494a58799a
+routine public.stock_hu_make_v1(p_workspace_id uuid, p_request_id uuid, p_unit jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:3c12da28729a
+routine public.stock_hu_move_v1(p_workspace_id uuid, p_request_id uuid, p_unit_id uuid, p_to uuid, p_revision integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f33e7fed8dfd
+routine public.stock_hu_page_v1(p_workspace_id uuid, p_location_id uuid, p_state text, p_limit integer, p_after jsonb) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:30e97dfd0b96
+routine public.stock_hu_pieces_check() -> trigger | function | definer | volatile | exec:service_role | body:1711b0042ca7
+routine public.stock_hu_repack_v1(p_workspace_id uuid, p_request_id uuid, p_sources jsonb, p_targets jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:865b46521dcb
+routine public.stock_hu_require(p_workspace_id uuid) -> void | function | definer | stable | exec:service_role | body:43c5ed5abefe
+routine public.stock_hu_unpack_v1(p_workspace_id uuid, p_request_id uuid, p_unit_id uuid, p_revision integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:d50bef302c6d
+routine public.stock_hu_uuid(p_text text, p_what text) -> uuid | function | invoker | immutable | exec:service_role | body:4834156f4d74
+routine public.stock_hu_v1(p_workspace_id uuid, p_unit_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:ee9b0bc22e32
 routine public.stock_initialized(p_workspace_id uuid) -> boolean | function | definer | stable | exec:service_role | body:1c264a71eaa3
 routine public.stock_locations_address() -> trigger | function | invoker | volatile | exec:service_role | body:431f5aea467c
 routine public.stock_locations_address_follow() -> trigger | function | invoker | volatile | exec:service_role | body:af7484d9fbf7
@@ -4580,7 +4625,7 @@ routine public.tell_owners_kiosk_device(p_workspace_id uuid, p_change text, p_de
 routine public.template_blocked_validations(p_tables jsonb, p_selected text[]) -> jsonb | function | invoker | immutable | exec:service_role | body:c094ee38e47a
 routine public.template_compatibility(p_template workspace_templates, p_groups text[]) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:99d317191047
 routine public.template_customizations(p_workspace_id uuid, p_template workspace_templates, p_groups jsonb) -> jsonb | function | definer | stable | exec:service_role | body:9906b0d4a427
-routine public.template_field_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:1a332f8f806d
+routine public.template_field_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:0ee6f2a88fe0
 routine public.template_local_needs(p_template_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:680fc4d8017c
 routine public.template_local_slot_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:41d51bce65a7
 routine public.template_outline(p_template_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e7a5648e8753
@@ -5176,6 +5221,7 @@ trigger space_inquiry_messages.inquiry_messages_refs_guard CREATE TRIGGER inquir
 trigger space_inquiry_messages.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.space_inquiry_messages FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger standalone_invoice_drafts.quote_draft_guard CREATE TRIGGER quote_draft_guard BEFORE DELETE OR UPDATE ON public.standalone_invoice_drafts FOR EACH ROW EXECUTE FUNCTION quote_draft_guard()
 trigger standalone_invoice_drafts.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.standalone_invoice_drafts FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger stock_balances.stock_hu_claims CREATE CONSTRAINT TRIGGER stock_hu_claims AFTER INSERT OR UPDATE OF quantity ON public.stock_balances DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION stock_hu_claims_check()
 trigger stock_balances.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.stock_balances FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger stock_count_plans.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.stock_count_plans FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger stock_count_task_lines.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.stock_count_task_lines FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
@@ -5184,12 +5230,16 @@ trigger stock_count_tasks.zz_system_columns_stamp CREATE TRIGGER zz_system_colum
 trigger stock_counts.stock_counts_cancel_recounts CREATE TRIGGER stock_counts_cancel_recounts AFTER UPDATE OF state ON public.stock_counts FOR EACH ROW WHEN (((old.state = 'recorded'::text) AND (new.state = 'cancelled'::text))) EXECUTE FUNCTION stock_count_cancel_recounts()
 trigger stock_counts.stock_counts_guard CREATE TRIGGER stock_counts_guard BEFORE DELETE OR UPDATE ON public.stock_counts FOR EACH ROW EXECUTE FUNCTION stock_counts_guard()
 trigger stock_counts.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.stock_counts FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger stock_handling_unit_lines.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.stock_handling_unit_lines FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger stock_handling_unit_pieces.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.stock_handling_unit_pieces FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger stock_handling_units.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.stock_handling_units FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger stock_location_kinds.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.stock_location_kinds FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger stock_locations.stock_locations_address CREATE TRIGGER stock_locations_address BEFORE INSERT OR UPDATE OF code, parent_id ON public.stock_locations FOR EACH ROW EXECUTE FUNCTION stock_locations_address()
 trigger stock_locations.stock_locations_address_follow CREATE TRIGGER stock_locations_address_follow AFTER UPDATE ON public.stock_locations FOR EACH ROW WHEN ((old.address_path IS DISTINCT FROM new.address_path)) EXECUTE FUNCTION stock_locations_address_follow()
 trigger stock_locations.stock_locations_keep_history CREATE TRIGGER stock_locations_keep_history BEFORE DELETE ON public.stock_locations FOR EACH ROW EXECUTE FUNCTION stock_locations_keep_history()
 trigger stock_locations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.stock_locations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger stock_lots.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.stock_lots FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger stock_movement_handling_units.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.stock_movement_handling_units FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger stock_movement_units.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.stock_movement_units FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger stock_movements.stock_movements_append_only CREATE TRIGGER stock_movements_append_only BEFORE DELETE OR UPDATE ON public.stock_movements FOR EACH ROW EXECUTE FUNCTION stock_movements_append_only()
 trigger stock_movements.stock_movements_apply CREATE TRIGGER stock_movements_apply AFTER INSERT ON public.stock_movements FOR EACH ROW EXECUTE FUNCTION stock_movements_apply()
@@ -5200,10 +5250,13 @@ trigger stock_reasons.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_s
 trigger stock_receipt_allocations.stock_receipt_allocations_keep CREATE TRIGGER stock_receipt_allocations_keep BEFORE DELETE OR UPDATE ON public.stock_receipt_allocations FOR EACH ROW EXECUTE FUNCTION keep_receiving_history()
 trigger stock_receipt_allocations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.stock_receipt_allocations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger stock_reorder_points.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.stock_reorder_points FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger stock_repack_lines.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.stock_repack_lines FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger stock_repacks.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.stock_repacks FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger stock_returns.stock_returns_append_only CREATE TRIGGER stock_returns_append_only BEFORE DELETE OR UPDATE ON public.stock_returns FOR EACH ROW EXECUTE FUNCTION stock_returns_append_only()
 trigger stock_returns.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.stock_returns FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger stock_reversals.stock_reversals_append_only CREATE TRIGGER stock_reversals_append_only BEFORE DELETE OR UPDATE ON public.stock_reversals FOR EACH ROW EXECUTE FUNCTION stock_returns_append_only()
 trigger stock_reversals.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.stock_reversals FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger stock_tagged_units.stock_hu_pieces CREATE CONSTRAINT TRIGGER stock_hu_pieces AFTER UPDATE OF state, location_id ON public.stock_tagged_units DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION stock_hu_pieces_check()
 trigger stock_tagged_units.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.stock_tagged_units FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger stock_tags.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.stock_tags FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger stock_transfer_lines.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.stock_transfer_lines FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
