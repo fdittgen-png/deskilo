@@ -10,16 +10,26 @@ import { describeError, logLine } from "./log.ts";
 
 const JSON_HEADERS = { ...CORS, "Content-Type": "application/json" };
 
-/** A success: [body] as JSON. */
-export function ok(
+/** [body] as JSON with only the [headers] given: for a function whose CORS is not the shared one
+ * (deskilo-mcp answers allow-listed origins only). Every other answer is [ok]. */
+export function answer(
   body: unknown,
   status = 200,
   headers: Record<string, string> = {},
 ): Response {
   return new Response(JSON.stringify(body), {
     status,
-    headers: { ...JSON_HEADERS, ...headers },
+    headers: { ...headers, "Content-Type": "application/json" },
   });
+}
+
+/** A success: [body] as JSON. */
+export function ok(
+  body: unknown,
+  status = 200,
+  headers: Record<string, string> = {},
+): Response {
+  return answer(body, status, { ...JSON_HEADERS, ...headers });
 }
 
 /** A refusal the caller can act on: a stable [code], the HTTP [status], words safe to show in [detail]. */

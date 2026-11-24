@@ -6,6 +6,7 @@ import type { Action } from "../common.ts";
 import { json, sha256, bindingOf, answer, clipDeclared } from "../common.ts";
 import { safeError } from "../connectors/common.ts";
 import { dispatchPrepared } from "../dispatch.ts";
+import { logLine } from "../../_shared/log.ts";
 
 export const send: Action = async (ctx) => {
   const { store, fetchImpl, payload, workspaceId, userId, cfg, environment, destination, provider, missing } = ctx;
@@ -59,7 +60,7 @@ try {
     declared: clipDeclared(payload.declared),
   });
 } catch (error) {
-  console.error("send-e-invoice: prepare failed", safeError(error));
+  logLine("error", "send-e-invoice", "prepare_failed", { error: safeError(error) });
   return json({ error: "prepare_failed" }, 500);
 }
 if (prepared.outcome === "unknown_invoice" || !prepared.id) {

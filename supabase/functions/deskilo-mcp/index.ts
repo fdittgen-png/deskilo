@@ -52,6 +52,8 @@ import {
 } from "npm:@modelcontextprotocol/sdk@1.30.1/types.js";
 import { createClient, SupabaseClient } from "npm:@supabase/supabase-js@2";
 import { delegatedClient } from "../_shared/delegated.ts";
+import { logLine } from "../_shared/log.ts";
+import { answer } from "../_shared/respond.ts";
 import { verifyLocally } from "../_shared/local_jwt.ts";
 import { validateInput } from "../_shared/mcp_validate.ts";
 import { placeImageBase64 } from "../_shared/place_image.ts";
@@ -100,11 +102,9 @@ function resourceUrl(req: Request): string {
   return env("DESKILO_MCP_RESOURCE") || `${env("SUPABASE_URL")}/functions/v1/deskilo-mcp`;
 }
 
+/** The shared JSON answer (#4412) with this function's own, allow-listed CORS, never the shared `*`. */
 function jsonResponse(body: unknown, status: number, headers: Record<string, string> = {}) {
-  return new Response(JSON.stringify(body), {
-    status,
-    headers: { ...headers, "Content-Type": "application/json" },
-  });
+  return answer(body, status, headers);
 }
 
 function unauthorized(req: Request, headers: Record<string, string>) {
@@ -748,8 +748,10 @@ export async function handle(req: Request): Promise<Response> {
     if (signal.aborted) return jsonResponse({ error: "request_timeout" }, 504, headers);
     // A correlation, never the arguments: the JSON-RPC id and this request's id.
     const rpcId = (body as { id?: unknown } | undefined)?.id;
-    console.error("deskilo-mcp failed", e instanceof Error ? e.name : "error",
-      JSON.stringify({ jsonrpc_id: typeof rpcId === "number" || typeof rpcId === "string" ? rpcId : null, request: correlation }));
+    logLine("error", "deskilo-mcp", "failed", {
+      type: e instanceof Error ? e.name : "error",
+      jsonrpc_id: typeof rpcId === "number" || typeof rpcId === "string" ? rpcId : null,
+    }, correlation);
     return jsonResponse({ jsonrpc: "2.0", id: null, error: { code: -32603, message: "Internal error" } }, 500, headers);
   } finally {
     clearTimeout(deadline);

@@ -5,6 +5,7 @@
 import type { Action } from "../common.ts";
 import { json } from "../common.ts";
 import { safeError } from "../connectors/common.ts";
+import { logLine } from "../../_shared/log.ts";
 
 export const resolve: Action = async (ctx) => {
   const { store, payload, workspaceId, userId } = ctx;
@@ -36,7 +37,7 @@ export const resolve: Action = async (ctx) => {
     if (code === "22023") {
       return json({ error: "a reason and the evidence are required" }, 400);
     }
-    console.error("send-e-invoice: resolve failed", safeError(error));
+    logLine("error", "send-e-invoice", "resolve_failed", { error: safeError(error) });
     return json({ error: "resolve_failed" }, 500);
   }
 };
