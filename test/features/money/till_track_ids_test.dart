@@ -295,7 +295,13 @@ void main() {
         );
         await _settle(tester);
         await _tap(tester, 'till-key-demo-item-milk');
+        // The beans are sold by weight: the key asks the weight first.
         await _tap(tester, 'till-key-demo-item-beans');
+        await tester.enterText(
+          find.byKey(const ValueKey('till-quantity')),
+          '1',
+        );
+        await _tap(tester, 'till-quantity-confirm');
         expect(
           find.byKey(const ValueKey('till-tracks-demo-item-milk')),
           findsNothing,
