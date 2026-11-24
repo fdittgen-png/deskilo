@@ -696,7 +696,8 @@ wait "$holder21" || { echo "::error::the first bulk move failed: $(tr '\n' ' ' <
 wait "$contender21" || true
 grep -qx moved "$scratch/holder21" || { echo "::error::the first bulk move did not complete: $(tr '\n' ' ' < "$scratch/holder21")" >&2; exit 1; }
 # refused for its pieces, naming where they went (0925: the pieces are asked before the quantity check tells DKG03)
-grep -q "DKG26" "$scratch/contender21" || { echo "::error::the second bulk move was not refused for its pieces (DKG26): $(tr '\n' ' ' < "$scratch/contender21")" >&2; exit 1; }
+# psql prints the message, not the SQLSTATE: the piece refusal is read by its message text, its detail by its keys
+grep -q "a named piece is not where this movement takes it from" "$scratch/contender21" || { echo "::error::the second bulk move was not refused for its pieces (DKG26): $(tr '\n' ' ' < "$scratch/contender21")" >&2; exit 1; }
 grep -q "\"place\"" "$scratch/contender21" || { echo "::error::the refusal does not name the new place: $(tr '\n' ' ' < "$scratch/contender21")" >&2; exit 1; }
 expect "(R) the three pieces moved once" "$(q "select count(*) from public.stock_tagged_units where item_id = '$pitem' and location_id = '$shelf' and state = 'in_stock'")" "3"
 
