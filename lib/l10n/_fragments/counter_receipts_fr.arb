@@ -25,5 +25,33 @@
   "refusalCounterTill": "La caisse n'est pas prête pour cela : ouvrez-la d'abord, ou elle est déjà ouverte ou fermée.",
   "refusalCounterCashEntry": "Cette écriture d'espèces n'est pas acceptée : le motif n'est pas dans la liste, le montant dépasse votre limite, ou les nombres ne correspondent pas.",
   "refusalCounterDayClose": "La journée ne peut pas être clôturée : une caisse est encore ouverte, ou la journée est déjà clôturée.",
-  "refusalCounterDayOpen": "La journée de cette caisse est déjà clôturée : elle sera ouverte à nouveau demain."
+  "refusalCounterDayOpen": "La journée de cette caisse est déjà clôturée : elle sera ouverte à nouveau demain.",
+  "settingLabelCounterOfflineMaxMinutes": "Durée maximale hors ligne (minutes)",
+  "@settingLabelCounterOfflineMaxMinutes": {
+    "description": "#4373 setting label"
+  },
+  "settingHintCounterOfflineMaxMinutes": "Combien de temps après la perte de connexion de la caisse une vente en espèces faite hors ligne est encore acceptée à l'envoi. Les ventes plus tardives sont refusées et listées pour le gérant.",
+  "@settingHintCounterOfflineMaxMinutes": {
+    "description": "#4373 setting hint"
+  },
+  "settingLabelCounterOfflineMaxSales": "Nombre maximal de ventes hors ligne par session de caisse",
+  "@settingLabelCounterOfflineMaxSales": {
+    "description": "#4373 setting label"
+  },
+  "settingHintCounterOfflineMaxSales": "Combien de ventes en espèces faites hors ligne une session de caisse accepte. Les suivantes sont refusées et listées pour le gérant.",
+  "@settingHintCounterOfflineMaxSales": {
+    "description": "#4373 setting hint"
+  },
+  "settingLabelCounterOfflinePriceTolerance": "Écart de prix toléré hors ligne (%)",
+  "@settingLabelCounterOfflinePriceTolerance": {
+    "description": "#4373 setting label"
+  },
+  "settingHintCounterOfflinePriceTolerance": "De combien, en pourcentage, le prix d'une vente hors ligne peut différer du prix de l'article à l'envoi. 0 signifie que le prix doit être identique.",
+  "@settingHintCounterOfflinePriceTolerance": {
+    "description": "#4373 setting hint"
+  },
+  "refusalCounterOfflineConflict": "Une vente envoyée par la caisse sous ce numéro a déjà été reçue avec un autre contenu. Rien n'a été enregistré de nouveau ; consultez la liste des ventes hors ligne.",
+  "@refusalCounterOfflineConflict": {
+    "description": "#4373 refusal"
+  }
 }

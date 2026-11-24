@@ -171,6 +171,9 @@ enum KnownRefusal {
   counterDayClose,
   counterDayOpen,
 
+  /// #4373 (0937) -- DKL16: a request id or a sequence number of an offline sale already holds another sale.
+  counterOfflineConflict,
+
   /// #4362 (0887) — DKG25: the pieces of a piece-tracked item must be named;
   /// DKG26: a named piece is not where the movement takes it from.
   stockNamePieces,
@@ -266,6 +269,7 @@ const Map<String, KnownRefusal> _codedRefusals = {
   DkCode.dkl13: KnownRefusal.counterCashEntry,
   DkCode.dkl14: KnownRefusal.counterDayClose,
   DkCode.dkl15: KnownRefusal.counterDayOpen,
+  DkCode.dkl16: KnownRefusal.counterOfflineConflict,
   // #4008 — a member who left (0782).
   DkCode.dkm01: KnownRefusal.memberReturnsAsNew,
 };
@@ -400,6 +404,7 @@ String? _counterRefusalText(AppLocalizations l10n, KnownRefusal refusal) => swit
       KnownRefusal.counterCashEntry => l10n.refusalCounterCashEntry,
       KnownRefusal.counterDayClose => l10n.refusalCounterDayClose,
       KnownRefusal.counterDayOpen => l10n.refusalCounterDayOpen,
+      KnownRefusal.counterOfflineConflict => l10n.refusalCounterOfflineConflict,
       _ => null,
     };
 

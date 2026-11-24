@@ -118,8 +118,7 @@ enum WorkspaceFeature {
   /// beyond the subscription. Off, the extras stay on the whole-month invoice.
   usageInvoices,
 
-  /// #804 — several open invoices regrouped into one the member pays,
-  /// with the originals kept and traceable.
+  /// #804 — several open invoices regrouped into one the member pays, the originals kept and traceable.
   invoiceSettlement,
 
   /// #812 — the journey of an invoice told as one process on every
@@ -447,7 +446,8 @@ enum WorkspaceFeature {
   counterReceipts,
   counterTillSessions,
   stockTagReads,
-  stockExpiryReport;
+  stockExpiryReport,
+  counterOfflineCash;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;

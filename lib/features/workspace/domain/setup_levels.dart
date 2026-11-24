@@ -295,6 +295,8 @@ const Map<SetupProcess, List<SetupLevel>> setupLevels = {
         WorkspaceFeature.stockTagReads,
         // #4431
         WorkspaceFeature.stockExpiryReport,
+        // #4373
+        WorkspaceFeature.counterOfflineCash,
       },
     ),
   ],

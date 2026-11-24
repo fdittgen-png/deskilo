@@ -11707,6 +11707,14 @@ class AppLocalizationsFr extends AppLocalizations {
       'Le fichier de l\'espace (XML) emporte toute la configuration — tarifs, identité légale, règles de réservation et de validation, rôles, maquettes de documents, sites, jours de fermeture — et l\'import l\'applique, même sur un espace qui a déjà des réservations. Désactivé : le fichier n\'emporte que les réglages et le plan.';
 
   @override
+  String get featureCounterOfflineCashDesc =>
+      'Quand la connexion est perdue, la caisse continue de vendre en espèces, enregistre chaque vente sur l\'appareil et envoie les ventes dans l\'ordre au retour de la connexion. Les autres moyens de paiement attendent la connexion.';
+
+  @override
+  String get featureCounterOfflineCashTitle =>
+      'Vendre hors ligne, en espèces seulement';
+
+  @override
   String get featureCounterReceiptsDesc =>
       'Une vente au comptoir donne un ticket immuable, numéroté une seule fois, avec le règlement reçu. Il n\'est proposé que là où l\'opération du pays est prise en charge, et dit clairement quand elle ne l\'est pas.';
 
@@ -29198,6 +29206,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Ce ticket n\'est plus un brouillon ouvert, ou un ticket a déjà été émis pour la même vente.';
 
   @override
+  String get refusalCounterOfflineConflict =>
+      'Une vente envoyée par la caisse sous ce numéro a déjà été reçue avec un autre contenu. Rien n\'a été enregistré de nouveau ; consultez la liste des ventes hors ligne.';
+
+  @override
   String get refusalCounterTenderState =>
       'Cette autorisation par carte est encore ouverte, inconnue ou déjà réglée : interrogez le prestataire au lieu de redemander.';
 
@@ -32367,6 +32379,18 @@ class AppLocalizationsFr extends AppLocalizations {
       'Ce que vous déclarez sur les règles fiscales d\'une vente au comptoir : aucune signifie qu\'aucune obligation fiscale de caisse ne s\'applique à votre entreprise (votre propre déclaration, inscrite sur chaque ticket) ; caisse requise signifie qu\'une obligation s\'applique. Un ticket n\'est émis que là où l\'opération de votre pays est prise en charge dans le cas que vous déclarez.';
 
   @override
+  String get settingHintCounterOfflineMaxMinutes =>
+      'Combien de temps après la perte de connexion de la caisse une vente en espèces faite hors ligne est encore acceptée à l\'envoi. Les ventes plus tardives sont refusées et listées pour le gérant.';
+
+  @override
+  String get settingHintCounterOfflineMaxSales =>
+      'Combien de ventes en espèces faites hors ligne une session de caisse accepte. Les suivantes sont refusées et listées pour le gérant.';
+
+  @override
+  String get settingHintCounterOfflinePriceTolerance =>
+      'De combien, en pourcentage, le prix d\'une vente hors ligne peut différer du prix de l\'article à l\'envoi. 0 signifie que le prix doit être identique.';
+
+  @override
   String get settingHintCounterPaidOutLimit =>
       'Le plus grand montant, en unités mineures de la devise de l\'entreprise (centimes), d\'un retrait du tiroir sans une personne pouvant enregistrer des paiements sortants. 0 signifie aucune limite.';
 
@@ -32782,6 +32806,18 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingLabelCounterFiscalObligation =>
       'Règles fiscales des ventes au comptoir';
+
+  @override
+  String get settingLabelCounterOfflineMaxMinutes =>
+      'Durée maximale hors ligne (minutes)';
+
+  @override
+  String get settingLabelCounterOfflineMaxSales =>
+      'Nombre maximal de ventes hors ligne par session de caisse';
+
+  @override
+  String get settingLabelCounterOfflinePriceTolerance =>
+      'Écart de prix toléré hors ligne (%)';
 
   @override
   String get settingLabelCounterPaidOutLimit =>

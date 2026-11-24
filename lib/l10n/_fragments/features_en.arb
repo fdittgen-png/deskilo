@@ -953,5 +953,13 @@
   },
   "@featureStockTagReadsDesc": {
     "description": "#4364 feature description"
+  },
+  "featureCounterOfflineCashTitle": "Selling offline, cash only",
+  "@featureCounterOfflineCashTitle": {
+    "description": "#4373 feature name"
+  },
+  "featureCounterOfflineCashDesc": "When the connection is lost the till keeps selling for cash, records each sale on the device and sends the sales in order once the connection returns. Other ways to pay wait for the connection.",
+  "@featureCounterOfflineCashDesc": {
+    "description": "#4373 feature description"
   }
 }

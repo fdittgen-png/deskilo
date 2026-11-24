@@ -357,5 +357,13 @@
     "description": "#4431 the expiry report feature: what it does"
   },
   "featureStockTagReadsTitle": "Viele Etiketten lesen",
-  "featureStockTagReadsDesc": "Ein UHF-Lesegerät im Tastaturmodus liest viele Etiketten auf einmal zum Wareneingang, Umlagern und Zählen: Die Etiketten werden gesammelt, entdoppelt und aufgelöst, und nichts wird gesendet, bevor die Person bestätigt."
+  "featureStockTagReadsDesc": "Ein UHF-Lesegerät im Tastaturmodus liest viele Etiketten auf einmal zum Wareneingang, Umlagern und Zählen: Die Etiketten werden gesammelt, entdoppelt und aufgelöst, und nichts wird gesendet, bevor die Person bestätigt.",
+  "featureCounterOfflineCashTitle": "Offline verkaufen, nur bar",
+  "@featureCounterOfflineCashTitle": {
+    "description": "#4373 feature name"
+  },
+  "featureCounterOfflineCashDesc": "Bei verlorener Verbindung verkauft die Kasse weiter gegen Bargeld, speichert jeden Verkauf auf dem Gerät und sendet die Verkäufe der Reihe nach, sobald die Verbindung zurück ist. Andere Zahlarten warten auf die Verbindung.",
+  "@featureCounterOfflineCashDesc": {
+    "description": "#4373 feature description"
+  }
 }
