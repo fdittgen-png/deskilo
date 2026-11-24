@@ -10655,6 +10655,12 @@ abstract class AppLocalizations {
   /// **'Choose the invoices this payment is for.'**
   String get claimRefusedEmpty;
 
+  /// #4165 a payment of invoices without a month named one that has a month (DKC16)
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly invoices are paid with their month, apart from invoices without one. Nothing was charged.'**
+  String get claimRefusedMonthlyInStandalone;
+
   /// #3556 Refusal: invoices of several months in one payment
   ///
   /// In en, this message translates to:
@@ -10702,6 +10708,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This payment was already sent as another one. Check the declared payments, then try again.'**
   String get claimRefusedRequestChanged;
+
+  /// #4165 a payment with a month named an invoice without one (DKC14)
+  ///
+  /// In en, this message translates to:
+  /// **'An invoice without a month is paid on its own, apart from monthly invoices. Nothing was charged.'**
+  String get claimRefusedStandaloneInMonthly;
 
   /// #3556 Refusal: retrying a payment whose invoices were withdrawn
   ///
@@ -22114,6 +22126,18 @@ abstract class AppLocalizations {
   /// **'A payment is for one business in one currency: {business}.'**
   String financesSelectionOneBusiness(String business);
 
+  /// #4165 the kind of a selection of monthly invoices: an invoice without a month cannot join it
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly invoices are paid with their month, apart from invoices without one.'**
+  String get financesSelectionOnlyMonthly;
+
+  /// #4165 the kind of a selection of invoices without a month: a monthly invoice cannot join it
+  ///
+  /// In en, this message translates to:
+  /// **'Invoices without a month are paid together, apart from monthly invoices.'**
+  String get financesSelectionOnlyStandalone;
+
   /// #3556 Selection bar: how many invoices are selected and what they still owe; {amount} names its currency
   ///
   /// In en, this message translates to:
@@ -22131,6 +22155,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The documents of {host} could not be read right now; what is shown comes from your other spaces.'**
   String financesSourceUnavailable(String host);
+
+  /// #4165 the one amount paid or declared for invoices without a month; amount: formatted money
+  ///
+  /// In en, this message translates to:
+  /// **'Total: {amount}'**
+  String financesStandaloneTotal(String amount);
 
   /// Me › Finances
   ///
@@ -39811,6 +39841,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Online payment reversed'**
   String get payOnlineReversedTitle;
+
+  /// #4165 the business's payment service does not take invoices without a month
+  ///
+  /// In en, this message translates to:
+  /// **'This business\'s payment service must be updated before invoices without a month can be paid online.'**
+  String get payOnlineStandaloneUnsupported;
 
   /// #3556 A retried online payment the server ended (failed or too old): start a new one
   ///

@@ -55,6 +55,8 @@ void wireDecisionEffects(
       period: e.payload['period'] as String? ?? yearMonth(at.year, at.month),
       createdAt: at,
       occurredOn: occurredOn,
+      // #4165 — a declared payment of invoices without a month keeps its mode
+      allocationMode: e.payload['allocation_mode'] as String? ?? 'legacy',
     ));
     return id;
   }

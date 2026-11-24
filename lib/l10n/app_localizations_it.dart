@@ -6810,6 +6810,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Scelga le fatture che questo pagamento salda.';
 
   @override
+  String get claimRefusedMonthlyInStandalone =>
+      'Le fatture mensili si pagano con il loro mese, separatamente dalle fatture senza mese. Non è stato addebitato nulla.';
+
+  @override
   String get claimRefusedMonths =>
       'Un pagamento salda le fatture di un solo mese. Non è stato addebitato nulla.';
 
@@ -6840,6 +6844,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get claimRefusedRequestChanged =>
       'Questo pagamento è già stato inviato con altri dati. Controlli i pagamenti dichiarati e riprovi.';
+
+  @override
+  String get claimRefusedStandaloneInMonthly =>
+      'Una fattura senza mese si paga da sola, separatamente dalle fatture mensili. Non è stato addebitato nulla.';
 
   @override
   String get claimRefusedWithdrawn =>
@@ -13728,6 +13736,14 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get financesSelectionOnlyMonthly =>
+      'Le fatture mensili si pagano con il loro mese, separatamente dalle fatture senza mese.';
+
+  @override
+  String get financesSelectionOnlyStandalone =>
+      'Le fatture senza mese si pagano insieme, separatamente dalle fatture mensili.';
+
+  @override
   String financesSelectionSummary(int count, String amount) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -13744,6 +13760,11 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String financesSourceUnavailable(String host) {
     return 'I documenti di $host non sono stati letti per ora; quanto mostrato proviene dai Suoi altri spazi.';
+  }
+
+  @override
+  String financesStandaloneTotal(String amount) {
+    return 'Totale: $amount';
   }
 
   @override
@@ -25154,6 +25175,10 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get payOnlineReversedTitle => 'Pagamento online stornato';
+
+  @override
+  String get payOnlineStandaloneUnsupported =>
+      'Il servizio di pagamento di questa attività deve essere aggiornato prima che le fatture senza mese possano essere pagate online.';
 
   @override
   String get payOnlineStartAgain =>

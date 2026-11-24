@@ -667,9 +667,6 @@ const Map<String, Set<String>> _notExportedColumns = {
     'kind',
   },
   'payment_intents': {
-    // #4165 B1 — the allocation mode is the server's rule of how a payment is spent; the
-    // Payments sheet states it once the app reads it (#4165 B2 removes this).
-    'allocation_mode',
     // #2380 — the provider's settlement facts of a payment (its fee, net,
     // their currency, its transaction and payout): what the provider
     // reports and keeps; the export carries the payment itself.
@@ -699,9 +696,6 @@ const Map<String, Set<String>> _notExportedColumns = {
     'source_xml',
   },
   'ledger_entries': {
-    // #4165 B1 — the allocation mode is the server's rule of how a payment is spent; the
-    // Payments sheet states it once the app reads it (#4165 B2 removes this).
-    'allocation_mode',
     // A description as frozen facts (#3809): what a document prints in its
     // own language. The export carries the description itself, the fallback
     // text that says the same.

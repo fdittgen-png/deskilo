@@ -2874,6 +2874,29 @@ Die Liste zeigt jede Einladung als eingeladen, liest, abgelaufen oder beendet. *
 
 **Siehe auch:** [Rechnungskunden](help:user.money.customers.billing)
 
+### Eine Kundenrechnung ohne Monat
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie haben heute eine Leistung für einen benannten Kunden erbracht (eine Beratung, eine Stunde, ein vereinbartes Ergebnis) und wollen sie jetzt abrechnen, ohne Buchung, Abonnement oder Monat dahinter. Sie brauchen das Recht, Rechnungen auszustellen, und die Funktion **Einzelrechnungen**.
+
+**Schritte**
+
+1. Öffnen Sie **Rechnungen** und wählen Sie **Kundenrechnung ohne Monat**.
+2. Wählen Sie den Kunden, dann Leistungsdatum und Fälligkeit.
+3. Fügen Sie die Zeilen hinzu: eine Beschreibung, eine Menge, eine Einheit und einen Preis. Ein Artikel aus dem Katalog ist optional, eine Einzelleistung schreiben Sie in Worten.
+4. Wählen Sie **Rechnung prüfen**. Die Vorschau zeigt Beträge und Steuer genau so, wie sie ausgestellt werden, oder was noch fehlt.
+5. Wählen Sie **Rechnung ausstellen**, um zu bestätigen. Die Rechnung wird nummeriert, wie ausgestellt aufbewahrt und geöffnet.
+
+**Gut zu wissen**
+
+- Die Rechnung hat keinen Abrechnungsmonat: Eine zweite, eigene Rechnung desselben Kunden im selben Monat ist eine eigene Rechnung, und die Monatsrechnung, falls vorhanden, bleibt unberührt.
+- Beträge und Steuer berechnet immer der Server, nie der Bildschirm; der Preis steht in der Währung des Betriebs.
+- Ihr Entwurf bleibt beim Ändern der Fenstergröße oder nach einer abgelehnten Prüfung erhalten. Kommt die Antwort auf **Rechnung ausstellen** nicht an, stellt dieselbe Bestätigung nie eine zweite Rechnung aus: Suchen Sie sie erneut.
+- Spätere Änderungen an Katalog oder Kunde ändern eine ausgestellte Rechnung nie.
+
+**Siehe auch:** [Rechnungskunden](help:user.money.customers.billing) · [Rechnungen ohne Monat bezahlen](help:user.money.finances.standalone)
+
 ### Angebote
 
 **Zielgruppe:** Administrator:in · Inhaber
@@ -3209,6 +3232,28 @@ Ein Betrieb, der Ihnen Rechnungen stellt, kann Ihnen einen Code geben, damit Sie
 - Diese Rechnungen von hier aus zu bezahlen, wird noch nicht angeboten.
 
 **Siehe auch:** [Ihre Finanzen in allen Workspaces](help:user.money.finances)
+
+### Rechnungen ohne Monat bezahlen
+
+**Zielgruppe:** Mitglied
+
+Ein Betrieb hat Ihnen Rechnungen ausgestellt, die zu keinem Monat gehören. Sie werden zusammen und für sich bezahlt.
+
+**Schritte**
+
+1. Öffnen Sie [Meine Finanzen](app:/money) und haken Sie die Rechnungen ohne Monat an, die Sie bezahlen wollen. Sie gehören zu einem Betrieb und einer Währung.
+2. Eine Leiste zeigt, wie viele Sie angehakt haben, und ihre Summe. Wählen Sie **Bezahlen** für die Online-Zahlung oder **Ich habe bezahlt**, wenn Sie schon anders bezahlt haben.
+3. Die Bestätigung listet die Rechnungen und eine Summe. Bestätigen Sie: Es öffnet sich eine Zahlung, oder es wird eine Meldung gesendet.
+
+**Gut zu wissen**
+
+- Rechnungen ohne Monat und Monatsrechnungen werden nie zusammen bezahlt: Ist eine Art angehakt, lässt sich die andere nicht anhaken, und eine Zeile sagt es. Lehnt der Betrieb eine Mischung trotzdem ab, erfahren Sie es, und es wird nichts belastet.
+- Der Betrag ist, was die Rechnungen noch offen haben. Hat er sich geändert, aktualisieren Sie und versuchen Sie es erneut.
+- Ging die Antwort unterwegs verloren, wählen Sie **Bezahlen** erneut: Es ist dieselbe Zahlung, wiedergefunden, nie eine zweite. Eine Zahlung gilt erst als bezahlt, wenn der Betrieb sie erhalten hat.
+- Das Geld wird in dem Monat gebucht, in dem es eintrifft. Was eine Rechnung nicht aufnimmt, bleibt Ihr Guthaben beim Betrieb, bis es zugeordnet wird.
+- Ein Betrieb, dessen Zahlungsdienst zu alt ist, sagt das, bevor etwas gesendet wird.
+
+**Siehe auch:** [Ihre Finanzen über Spaces hinweg](help:user.money.finances)
 
 ### Ihre Unternehmen auf einen Blick
 

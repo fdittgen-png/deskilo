@@ -18,6 +18,8 @@ const helpAnchorIndex = <String>{
   HelpAnchor.moneyBillingCustomers,
   HelpAnchor.moneyBillingAccess,
   HelpAnchor.moneyBilledToYou,
+  HelpAnchor.moneyStandaloneInvoice,
+  HelpAnchor.moneyStandalonePayment,
   HelpAnchor.moneyQuotes,
   HelpAnchor.moneyEngagements,
   HelpAnchor.moneyStock,

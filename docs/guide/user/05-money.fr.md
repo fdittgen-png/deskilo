@@ -621,6 +621,30 @@ La liste montre chaque invitation comme invitée, en lecture, expirée ou termin
 
 **Voir aussi :** [Clients facturés](help:user.money.customers.billing)
 
+<!-- anchor: user.money.invoices.standalone -->
+### Une facture client sans mois
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous avez rendu un service à un client désigné aujourd'hui (une consultation, un cours, un livrable convenu) et vous voulez le facturer tout de suite, sans réservation, sans abonnement ni mois derrière. Il faut le droit d'émettre des factures et la fonction **Factures ponctuelles**.
+
+**Étapes**
+
+1. Ouvrez **Factures** et choisissez **Facture client sans mois**.
+2. Choisissez le client, puis la date de la prestation et l'échéance.
+3. Ajoutez les lignes : une description, une quantité, une unité et un prix. Choisir un article du catalogue est facultatif : une prestation ponctuelle s'écrit en toutes lettres.
+4. Choisissez **Vérifier la facture**. L'aperçu montre les montants et la taxe exactement comme ils seront émis, ou ce qui manque encore.
+5. Choisissez **Émettre la facture** pour confirmer. La facture est numérotée, conservée telle qu'émise et ouverte.
+
+**Bon à savoir**
+
+- La facture n'a pas de mois de facturation : une seconde facture distincte du même client le même mois est sa propre facture, et la facture mensuelle, s'il y en a une, reste intacte.
+- Les montants et la taxe sont toujours calculés par le serveur, jamais repris de l'écran ; le prix est dans la devise de l'établissement.
+- Votre brouillon reste tel quel quand vous redimensionnez la fenêtre ou qu'une vérification est refusée. Si la réponse à **Émettre la facture** n'arrive pas, la même confirmation n'émet jamais une seconde facture : cherchez-la à nouveau.
+- Modifier ensuite le catalogue ou le client ne change jamais une facture émise.
+
+**Voir aussi :** [Clients facturés](help:user.money.customers.billing) · [Payer des factures sans mois](help:user.money.finances.standalone)
+
 <!-- anchor: user.money.quotes -->
 ### Devis
 
@@ -974,6 +998,29 @@ Une entreprise qui vous facture peut vous remettre un code, pour que vous lisiez
 - Payer ces factures d'ici n'est pas encore proposé.
 
 **Voir aussi :** [Vos finances dans tous vos espaces](help:user.money.finances)
+
+<!-- anchor: user.money.finances.standalone -->
+### Payer des factures sans mois
+
+**Public:** Membre
+
+Une entreprise vous a émis des factures qui n'appartiennent à aucun mois. Elles se règlent ensemble, à part.
+
+**Étapes**
+
+1. Ouvrez [Mes finances](app:/money) et cochez les factures sans mois à payer. Elles relèvent d'une seule entreprise et d'une seule devise.
+2. Une barre indique combien vous en avez cochées et leur total. Choisissez **Payer** pour payer en ligne, ou **J’ai payé** si vous avez déjà payé autrement.
+3. La confirmation liste les factures et un seul total. Confirmez : un paiement en ligne s'ouvre, ou une seule déclaration est envoyée.
+
+**Bon à savoir**
+
+- Les factures sans mois et les factures mensuelles ne se règlent jamais ensemble : une fois un type coché, l'autre ne peut plus l'être, et une ligne le dit. Si l'entreprise refuse tout de même un mélange, vous en êtes informé et rien n'est débité.
+- Le montant est ce que les factures doivent encore. S'il a changé, actualisez et recommencez.
+- Si la réponse s'est perdue en route, choisissez à nouveau **Payer** : c'est le même paiement, retrouvé, jamais un second. Un paiement n'est affiché comme payé qu'une fois reçu par l'entreprise.
+- L'argent est comptabilisé le mois où il arrive. Ce qu'une facture ne prend pas reste votre crédit auprès de l'entreprise jusqu'à son affectation.
+- Une entreprise dont le service de paiement est trop ancien le dit avant tout envoi.
+
+**Voir aussi :** [Vos finances entre espaces](help:user.money.finances)
 
 <!-- anchor: user.money.businesses -->
 ### Vos activités en un coup d'œil

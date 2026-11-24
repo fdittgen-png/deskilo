@@ -21,5 +21,7 @@ String claimRefusalText(AppLocalizations l10n, ClaimRefusal r) => switch (r) {
   ClaimRefusal.withdrawn => l10n.claimRefusedWithdrawn,
   ClaimRefusal.decided => l10n.claimRefusedDecided,
   ClaimRefusal.requestChanged => l10n.claimRefusedRequestChanged,
+  ClaimRefusal.standaloneInMonthly => l10n.claimRefusedStandaloneInMonthly,
+  ClaimRefusal.monthlyInStandalone => l10n.claimRefusedMonthlyInStandalone,
   ClaimRefusal.other => l10n.claimRefusedOther,
 };

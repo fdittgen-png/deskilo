@@ -19,7 +19,10 @@ mixin _$LedgerEntry {
  DateTime get createdAt;/// When the money actually moved (0070). A transfer made on the 3rd
 /// and recorded on the 26th is dated the 3rd; null on entries booked
 /// before 0070 and on those where booking IS the event.
- DateTime? get occurredOn;/// #992 — the server's stamp on this row.
+ DateTime? get occurredOn;/// #4165 (0901) — how the entry is spent: `legacy` by the month rules,
+/// `explicit` only by the allocations that name it (a payment of invoices
+/// without a month, posted in the month it arrived).
+ String get allocationMode;/// #992 — the server's stamp on this row.
  SystemColumns get system;
 /// Create a copy of LedgerEntry
 /// with the given fields replaced by the non-null parameter values.
@@ -32,20 +35,20 @@ $LedgerEntryCopyWith<LedgerEntry> get copyWith => _$LedgerEntryCopyWithImpl<Ledg
 @override
 bool operator ==(Object other) {
   final _this = this as LedgerEntry;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LedgerEntry&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.memberId, _this.memberId) || other.memberId == _this.memberId)&&(identical(other.kind, _this.kind) || other.kind == _this.kind)&&(identical(other.category, _this.category) || other.category == _this.category)&&(identical(other.amountCents, _this.amountCents) || other.amountCents == _this.amountCents)&&(identical(other.description, _this.description) || other.description == _this.description)&&(identical(other.period, _this.period) || other.period == _this.period)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt)&&(identical(other.occurredOn, _this.occurredOn) || other.occurredOn == _this.occurredOn)&&(identical(other.system, _this.system) || other.system == _this.system));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LedgerEntry&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.memberId, _this.memberId) || other.memberId == _this.memberId)&&(identical(other.kind, _this.kind) || other.kind == _this.kind)&&(identical(other.category, _this.category) || other.category == _this.category)&&(identical(other.amountCents, _this.amountCents) || other.amountCents == _this.amountCents)&&(identical(other.description, _this.description) || other.description == _this.description)&&(identical(other.period, _this.period) || other.period == _this.period)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt)&&(identical(other.occurredOn, _this.occurredOn) || other.occurredOn == _this.occurredOn)&&(identical(other.allocationMode, _this.allocationMode) || other.allocationMode == _this.allocationMode)&&(identical(other.system, _this.system) || other.system == _this.system));
 }
 
 
 @override
 int get hashCode {
   final _this = this as LedgerEntry;
-  return Object.hash(runtimeType,_this.id,_this.memberId,_this.kind,_this.category,_this.amountCents,_this.description,_this.period,_this.createdAt,_this.occurredOn,_this.system);
+  return Object.hash(runtimeType,_this.id,_this.memberId,_this.kind,_this.category,_this.amountCents,_this.description,_this.period,_this.createdAt,_this.occurredOn,_this.allocationMode,_this.system);
 }
 
 @override
 String toString() {
   final _this = this as LedgerEntry;
-  return 'LedgerEntry(id: ${_this.id}, memberId: ${_this.memberId}, kind: ${_this.kind}, category: ${_this.category}, amountCents: ${_this.amountCents}, description: ${_this.description}, period: ${_this.period}, createdAt: ${_this.createdAt}, occurredOn: ${_this.occurredOn}, system: ${_this.system})';
+  return 'LedgerEntry(id: ${_this.id}, memberId: ${_this.memberId}, kind: ${_this.kind}, category: ${_this.category}, amountCents: ${_this.amountCents}, description: ${_this.description}, period: ${_this.period}, createdAt: ${_this.createdAt}, occurredOn: ${_this.occurredOn}, allocationMode: ${_this.allocationMode}, system: ${_this.system})';
 }
 
 
@@ -56,7 +59,7 @@ abstract mixin class $LedgerEntryCopyWith<$Res>  {
   factory $LedgerEntryCopyWith(LedgerEntry value, $Res Function(LedgerEntry) _then) = _$LedgerEntryCopyWithImpl;
 @useResult
 $Res call({
- String id, String memberId, LedgerKind kind, LedgerCategory category, int amountCents, String description, String period, DateTime createdAt, DateTime? occurredOn, SystemColumns system
+ String id, String memberId, LedgerKind kind, LedgerCategory category, int amountCents, String description, String period, DateTime createdAt, DateTime? occurredOn, String allocationMode, SystemColumns system
 });
 
 
@@ -73,7 +76,7 @@ class _$LedgerEntryCopyWithImpl<$Res>
 
 /// Create a copy of LedgerEntry
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? memberId = null,Object? kind = null,Object? category = null,Object? amountCents = null,Object? description = null,Object? period = null,Object? createdAt = null,Object? occurredOn = freezed,Object? system = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? memberId = null,Object? kind = null,Object? category = null,Object? amountCents = null,Object? description = null,Object? period = null,Object? createdAt = null,Object? occurredOn = freezed,Object? allocationMode = null,Object? system = null,}) {
   return _then(LedgerEntry(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,memberId: null == memberId ? _self.memberId : memberId // ignore: cast_nullable_to_non_nullable
@@ -84,7 +87,8 @@ as int,description: null == description ? _self.description : description // ign
 as String,period: null == period ? _self.period : period // ignore: cast_nullable_to_non_nullable
 as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,occurredOn: freezed == occurredOn ? _self.occurredOn : occurredOn // ignore: cast_nullable_to_non_nullable
-as DateTime?,system: null == system ? _self.system : system // ignore: cast_nullable_to_non_nullable
+as DateTime?,allocationMode: null == allocationMode ? _self.allocationMode : allocationMode // ignore: cast_nullable_to_non_nullable
+as String,system: null == system ? _self.system : system // ignore: cast_nullable_to_non_nullable
 as SystemColumns,
   ));
 }
@@ -167,10 +171,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String memberId,  LedgerKind kind,  LedgerCategory category,  int amountCents,  String description,  String period,  DateTime createdAt,  DateTime? occurredOn,  SystemColumns system)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String memberId,  LedgerKind kind,  LedgerCategory category,  int amountCents,  String description,  String period,  DateTime createdAt,  DateTime? occurredOn,  String allocationMode,  SystemColumns system)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _LedgerEntry() when $default != null:
-return $default(_that.id,_that.memberId,_that.kind,_that.category,_that.amountCents,_that.description,_that.period,_that.createdAt,_that.occurredOn,_that.system);case _:
+return $default(_that.id,_that.memberId,_that.kind,_that.category,_that.amountCents,_that.description,_that.period,_that.createdAt,_that.occurredOn,_that.allocationMode,_that.system);case _:
   return orElse();
 
 }
@@ -188,10 +192,10 @@ return $default(_that.id,_that.memberId,_that.kind,_that.category,_that.amountCe
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String memberId,  LedgerKind kind,  LedgerCategory category,  int amountCents,  String description,  String period,  DateTime createdAt,  DateTime? occurredOn,  SystemColumns system)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String memberId,  LedgerKind kind,  LedgerCategory category,  int amountCents,  String description,  String period,  DateTime createdAt,  DateTime? occurredOn,  String allocationMode,  SystemColumns system)  $default,) {final _that = this;
 switch (_that) {
 case _LedgerEntry():
-return $default(_that.id,_that.memberId,_that.kind,_that.category,_that.amountCents,_that.description,_that.period,_that.createdAt,_that.occurredOn,_that.system);}
+return $default(_that.id,_that.memberId,_that.kind,_that.category,_that.amountCents,_that.description,_that.period,_that.createdAt,_that.occurredOn,_that.allocationMode,_that.system);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -205,10 +209,10 @@ return $default(_that.id,_that.memberId,_that.kind,_that.category,_that.amountCe
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String memberId,  LedgerKind kind,  LedgerCategory category,  int amountCents,  String description,  String period,  DateTime createdAt,  DateTime? occurredOn,  SystemColumns system)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String memberId,  LedgerKind kind,  LedgerCategory category,  int amountCents,  String description,  String period,  DateTime createdAt,  DateTime? occurredOn,  String allocationMode,  SystemColumns system)?  $default,) {final _that = this;
 switch (_that) {
 case _LedgerEntry() when $default != null:
-return $default(_that.id,_that.memberId,_that.kind,_that.category,_that.amountCents,_that.description,_that.period,_that.createdAt,_that.occurredOn,_that.system);case _:
+return $default(_that.id,_that.memberId,_that.kind,_that.category,_that.amountCents,_that.description,_that.period,_that.createdAt,_that.occurredOn,_that.allocationMode,_that.system);case _:
   return null;
 
 }
@@ -220,7 +224,7 @@ return $default(_that.id,_that.memberId,_that.kind,_that.category,_that.amountCe
 
 
 class _LedgerEntry extends LedgerEntry {
-  const _LedgerEntry({required this.id, required this.memberId, required this.kind, required this.category, required this.amountCents, required this.description, required this.period, required this.createdAt, this.occurredOn, this.system = SystemColumns.none}): super._();
+  const _LedgerEntry({required this.id, required this.memberId, required this.kind, required this.category, required this.amountCents, required this.description, required this.period, required this.createdAt, this.occurredOn, this.allocationMode = 'legacy', this.system = SystemColumns.none}): super._();
   
 
 @override final  String id;
@@ -236,6 +240,10 @@ class _LedgerEntry extends LedgerEntry {
 /// and recorded on the 26th is dated the 3rd; null on entries booked
 /// before 0070 and on those where booking IS the event.
 @override final  DateTime? occurredOn;
+/// #4165 (0901) — how the entry is spent: `legacy` by the month rules,
+/// `explicit` only by the allocations that name it (a payment of invoices
+/// without a month, posted in the month it arrived).
+@override@JsonKey() final  String allocationMode;
 /// #992 — the server's stamp on this row.
 @override@JsonKey() final  SystemColumns system;
 
@@ -249,18 +257,18 @@ _$LedgerEntryCopyWith<_LedgerEntry> get copyWith => __$LedgerEntryCopyWithImpl<_
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _LedgerEntry&&(identical(other.id, id) || other.id == id)&&(identical(other.memberId, memberId) || other.memberId == memberId)&&(identical(other.kind, kind) || other.kind == kind)&&(identical(other.category, category) || other.category == category)&&(identical(other.amountCents, amountCents) || other.amountCents == amountCents)&&(identical(other.description, description) || other.description == description)&&(identical(other.period, period) || other.period == period)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.occurredOn, occurredOn) || other.occurredOn == occurredOn)&&(identical(other.system, system) || other.system == system));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _LedgerEntry&&(identical(other.id, id) || other.id == id)&&(identical(other.memberId, memberId) || other.memberId == memberId)&&(identical(other.kind, kind) || other.kind == kind)&&(identical(other.category, category) || other.category == category)&&(identical(other.amountCents, amountCents) || other.amountCents == amountCents)&&(identical(other.description, description) || other.description == description)&&(identical(other.period, period) || other.period == period)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.occurredOn, occurredOn) || other.occurredOn == occurredOn)&&(identical(other.allocationMode, allocationMode) || other.allocationMode == allocationMode)&&(identical(other.system, system) || other.system == system));
 }
 
 
 @override
 int get hashCode {
-    return Object.hash(runtimeType,id,memberId,kind,category,amountCents,description,period,createdAt,occurredOn,system);
+    return Object.hash(runtimeType,id,memberId,kind,category,amountCents,description,period,createdAt,occurredOn,allocationMode,system);
 }
 
 @override
 String toString() {
-    return 'LedgerEntry(id: $id, memberId: $memberId, kind: $kind, category: $category, amountCents: $amountCents, description: $description, period: $period, createdAt: $createdAt, occurredOn: $occurredOn, system: $system)';
+    return 'LedgerEntry(id: $id, memberId: $memberId, kind: $kind, category: $category, amountCents: $amountCents, description: $description, period: $period, createdAt: $createdAt, occurredOn: $occurredOn, allocationMode: $allocationMode, system: $system)';
 }
 
 
@@ -271,7 +279,7 @@ abstract mixin class _$LedgerEntryCopyWith<$Res> implements $LedgerEntryCopyWith
   factory _$LedgerEntryCopyWith(_LedgerEntry value, $Res Function(_LedgerEntry) _then) = __$LedgerEntryCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String memberId, LedgerKind kind, LedgerCategory category, int amountCents, String description, String period, DateTime createdAt, DateTime? occurredOn, SystemColumns system
+ String id, String memberId, LedgerKind kind, LedgerCategory category, int amountCents, String description, String period, DateTime createdAt, DateTime? occurredOn, String allocationMode, SystemColumns system
 });
 
 
@@ -288,7 +296,7 @@ class __$LedgerEntryCopyWithImpl<$Res>
 
 /// Create a copy of LedgerEntry
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? memberId = null,Object? kind = null,Object? category = null,Object? amountCents = null,Object? description = null,Object? period = null,Object? createdAt = null,Object? occurredOn = freezed,Object? system = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? memberId = null,Object? kind = null,Object? category = null,Object? amountCents = null,Object? description = null,Object? period = null,Object? createdAt = null,Object? occurredOn = freezed,Object? allocationMode = null,Object? system = null,}) {
   return _then(_LedgerEntry(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,memberId: null == memberId ? _self.memberId : memberId // ignore: cast_nullable_to_non_nullable
@@ -299,7 +307,8 @@ as int,description: null == description ? _self.description : description // ign
 as String,period: null == period ? _self.period : period // ignore: cast_nullable_to_non_nullable
 as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,occurredOn: freezed == occurredOn ? _self.occurredOn : occurredOn // ignore: cast_nullable_to_non_nullable
-as DateTime?,system: null == system ? _self.system : system // ignore: cast_nullable_to_non_nullable
+as DateTime?,allocationMode: null == allocationMode ? _self.allocationMode : allocationMode // ignore: cast_nullable_to_non_nullable
+as String,system: null == system ? _self.system : system // ignore: cast_nullable_to_non_nullable
 as SystemColumns,
   ));
 }

@@ -3969,6 +3969,7 @@
   "claimRefusedCurrency": "Eine dieser Rechnungen ist in einer anderen Währung, als der Betrieb Zahlungen annimmt. Es wurde nichts belastet.",
   "claimRefusedDecided": "Das Unternehmen hat über diese Zahlung bereits entschieden.",
   "claimRefusedEmpty": "Wählen Sie die Rechnungen, die diese Zahlung begleicht.",
+  "claimRefusedMonthlyInStandalone": "Monatsrechnungen werden mit ihrem Monat bezahlt, getrennt von Rechnungen ohne Monat. Es wurde nichts belastet.",
   "claimRefusedMonths": "Eine Zahlung begleicht die Rechnungen eines Monats. Es wurde nichts belastet.",
   "claimRefusedNotMyPayment": "Diese Zahlung können Sie nicht zurückziehen.",
   "claimRefusedNotProcessing": "Diese Zahlung wird nicht mehr bearbeitet. Aktualisieren Sie, um ihren Stand zu sehen.",
@@ -3977,6 +3978,7 @@
   "claimRefusedOther": "Der Betrieb hat diese Rechnungen für diese Zahlung abgelehnt. Aktualisieren Sie und versuchen Sie es erneut.",
   "claimRefusedOtherMonth": "Diese Rechnungen gehören zu einem anderen Monat als diese Zahlung. Es wurde nichts belastet.",
   "claimRefusedRequestChanged": "Diese Zahlung wurde bereits anders gemeldet. Prüfen Sie die gemeldeten Zahlungen und versuchen Sie es erneut.",
+  "claimRefusedStandaloneInMonthly": "Eine Rechnung ohne Monat wird für sich bezahlt, getrennt von Monatsrechnungen. Es wurde nichts belastet.",
   "claimRefusedWithdrawn": "Sie haben diese Zahlung zurückgezogen. Wählen Sie die Rechnungen erneut aus, um sie zu bezahlen.",
   "coOwnerAction": "Mit-Inhaberschaft",
   "coOwnerActivate": "Jetzt zum Inhaber machen",
@@ -8525,6 +8527,8 @@
   "financesSelectionInvoiceAmount": "{number} · {amount}",
   "financesSelectionMonthAmount": "{month}: {amount}",
   "financesSelectionOneBusiness": "Eine Zahlung gilt einem Betrieb in einer Währung: {business}.",
+  "financesSelectionOnlyMonthly": "Monatsrechnungen werden mit ihrem Monat bezahlt, getrennt von Rechnungen ohne Monat.",
+  "financesSelectionOnlyStandalone": "Rechnungen ohne Monat werden zusammen bezahlt, getrennt von Monatsrechnungen.",
   "financesSelectionSummary": "{count, plural, one{1 Rechnung ausgewählt · {amount}} other{{count} Rechnungen ausgewählt · {amount}}}",
   "financesShowAmount": "Betrag anzeigen",
   "financesSourceUnavailable": "Die Dokumente von {host} konnten gerade nicht gelesen werden; angezeigt wird, was aus Ihren anderen Räumen stammt.",
@@ -8536,6 +8540,7 @@
       }
     }
   },
+  "financesStandaloneTotal": "Gesamt: {amount}",
   "financesStateClosed": "Abgeschlossen",
   "@financesStateClosed": {
     "description": "Me › Finances"
@@ -14383,6 +14388,7 @@
   "payOnlineReversedDetail": "Die Zahlung {reference} ({amount} über {provider}) wurde vom Anbieter rückgängig gemacht (eine Erstattung oder ein Widerspruch). Das Unternehmen berichtigt Ihren Saldo.",
   "payOnlineReversedPartDetail": "Von der Zahlung {reference} ({amount} über {provider}) hat der Anbieter {reversed} rückgängig gemacht (eine Erstattung oder ein Widerspruch). Das Unternehmen berichtigt Ihren Saldo.",
   "payOnlineReversedTitle": "Online-Zahlung rückgängig gemacht",
+  "payOnlineStandaloneUnsupported": "Der Zahlungsdienst dieses Betriebs muss aktualisiert werden, bevor Rechnungen ohne Monat online bezahlt werden können.",
   "payOnlineStartAgain": "Diese Zahlung kann nicht mehr fortgesetzt werden. Starten Sie die Zahlung erneut.",
   "payOnlineTestKeys": "Online-Zahlung ist nicht verfügbar: Der Zahlungsanbieter ist mit Testzugangsdaten eingerichtet. Das Unternehmen muss seine Live-Schlüssel eingeben.",
   "paymentAccountNumberLabel": "Kontonummer",

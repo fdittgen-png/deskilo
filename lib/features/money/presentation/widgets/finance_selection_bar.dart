@@ -11,6 +11,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/help/help_anchors.dart';
+import '../../../../core/help/help_dot.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -42,7 +44,6 @@ class _BarState extends ConsumerState<FinanceSelectionBar> {
   /// one provider checkout per tap; the other months stay selected.
   Future<void> _pay(FinanceSelection selection) async {
     final commands = ref.read(financeSelectionCommandsProvider);
-    final first = selection.months.first;
     if (_tooMany(selection)) return;
     final confirmed = await confirmFinanceSelection(
       context,
@@ -57,12 +58,17 @@ class _BarState extends ConsumerState<FinanceSelectionBar> {
     }
     try {
       if (!mounted) return;
+      // #4165 — invoices without a month are one payment, whatever their
+      // issue dates; monthly ones are paid a month at a time.
+      final first = selection.isStandalone ? null : selection.months.first;
+      final paid = first?.invoices ?? selection.invoices;
       final started = await MoneyOnlinePayment(this, ref).pay(
-        first.cents, first.period,
-        invoiceIds: [for (final i in first.invoices) i.id], captured: captured,
+        first?.cents ?? selection.cents, first?.period ?? '',
+        invoiceIds: [for (final i in paid) i.id], captured: captured,
+        standalone: selection.isStandalone,
       );
       if (started) {
-        ref.read(financeSelectionControllerProvider.notifier).remove(first.invoices);
+        ref.read(financeSelectionControllerProvider.notifier).remove(paid);
       }
     } finally {
       captured.release();
@@ -74,9 +80,9 @@ class _BarState extends ConsumerState<FinanceSelectionBar> {
   /// A month over the payment function's limit is said before anything is
   /// sent.
   bool _tooMany(FinanceSelection selection) {
-    if (selection.months.every(
-      (m) => m.invoices.length <= maxClaimedInvoices,
-    )) {
+    if (selection.isStandalone
+        ? selection.count <= maxClaimedInvoices
+        : selection.months.every((m) => m.invoices.length <= maxClaimedInvoices)) {
       return false;
     }
     AppSnack.error(
@@ -222,6 +228,11 @@ class _BarState extends ConsumerState<FinanceSelectionBar> {
     final total = personalFormatOf(context)
         .moneyNamed(selection.currency!)
         .formatMinor(selection.cents);
+    // #4165 — a selection is of one kind: said once, so a checkbox that
+    // will not tick has its reason in view
+    final kindNote = selection.isStandalone
+        ? l10n.financesSelectionOnlyStandalone
+        : l10n.financesSelectionOnlyMonthly;
     return Material(
       key: const ValueKey('finances-selection-bar'),
       elevation: 3,
@@ -264,6 +275,22 @@ class _BarState extends ConsumerState<FinanceSelectionBar> {
                   selection.workspaceName ?? '',
                 ),
                 style: theme.textTheme.bodySmall,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      kindNote,
+                      key: const ValueKey('finances-selection-kind'),
+                      style: theme.textTheme.bodySmall,
+                    ),
+                  ),
+                  if (selection.isStandalone)
+                    HelpDot(
+                      l10n.standaloneInvoiceMore,
+                      anchor: HelpAnchor.moneyStandalonePayment,
+                    ),
+                ],
               ),
               const SizedBox(height: AppSpacing.sm),
               Wrap(

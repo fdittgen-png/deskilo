@@ -125,6 +125,8 @@ FinanceOverview _overviewOf(
     final open = i.settledByInvoiceId == null && paid < i.totalCents;
     return FinanceInvoice(
       period: i.period,
+      // #4165 — the v2 reader names whose debt each row is: the member
+      financialSubjectId: i.memberId,
       inPayment: claim != null,
       claimPaymentId: declared ? null : claim,
       claimCanContinue: money.paymentGateway.continuationState(claim) == 'ready',

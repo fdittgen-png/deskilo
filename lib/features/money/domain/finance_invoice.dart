@@ -129,6 +129,12 @@ class FinanceInvoice {
   /// names invoices is of their month. Null from a host that does not say.
   final String? period;
 
+  /// #4165 — an invoice without a month (a standalone customer invoice),
+  /// owed by a financial subject the host names. A host that names no
+  /// subject (the v1 reader) cannot say it is paid as one: it stays
+  /// unselectable, as any invoice whose month is not known.
+  bool get isStandalone => period == null && financialSubjectId != null;
+
   /// #3556 (0797) — the invoice is in a payment being processed (online or
   /// declared): not for another.
   final bool inPayment;

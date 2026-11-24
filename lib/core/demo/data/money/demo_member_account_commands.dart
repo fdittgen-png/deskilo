@@ -36,16 +36,49 @@ class DemoMemberAccountCommands implements MemberAccountCommands {
       if (refuseAfter == 0) throw ClaimRefused(r);
       refuseAfter -= 1;
     }
+    // #4165 — the app sends a retry after a lost answer under the request id
+    // of its first attempt, and the server answers the one declaration it
+    // made: the Demo answers the declaration that still holds these invoices
+    final first = claim.standalone ? _declaredOf(memberId, claim) : null;
+    if (first != null) return first;
     checkDemoClaim(_m, memberId: memberId, claim: claim, currency: _m.invoiceCommands.currency);
     final id = await recordPayment(
       workspaceId: workspaceId,
       memberId: memberId,
       amountCents: claim.amountCents,
-      period: claim.period,
+      period: claim.standalone ? null : claim.period,
     );
+    if (claim.standalone) _spendOnlyByAllocations(id);
+
     // #3556 — the invoices it pays wait for the business's approval.
     _m.claims[id] = [...claim.invoiceIds];
     return id;
+  }
+
+  /// #4165 — a standalone declaration is spent only by the allocations that name it (0901): its event says so.
+  void _spendOnlyByAllocations(String eventId) {
+    final events = _m.eventRepository?.events;
+    final at = events?.indexWhere((e) => e.id == eventId) ?? -1;
+    if (events == null || at < 0) return;
+    events[at] = events[at].copyWith(payload: {...events[at].payload, 'allocation_mode': 'explicit'});
+  }
+
+  /// The pending declaration of exactly the invoices of [claim], if any.
+  String? _declaredOf(String memberId, InvoiceClaim claim) {
+    final ids = {...claim.invoiceIds};
+    for (final e in _m.claims.entries) {
+      if (e.key.startsWith('evt-payment-') &&
+          e.value.length == ids.length &&
+          e.value.toSet().containsAll(ids) &&
+          _m.eventRepository?.events.any((x) =>
+                  x.id == e.key &&
+                  x.status == EventStatus.pending &&
+                  x.subjectMemberId == memberId) ==
+              true) {
+        return e.key;
+      }
+    }
+    return null;
   }
 
   @override
@@ -339,11 +372,22 @@ void checkDemoClaim(
       invoices.any((i) => i.memberId != memberId)) {
     throw const ClaimRefused(ClaimRefusal.notYours);
   }
-  if ({for (final i in invoices) i.period}.length > 1) {
-    throw const ClaimRefused(ClaimRefusal.months);
-  }
-  if (invoices.first.period != claim.period) {
-    throw const ClaimRefused(ClaimRefusal.otherMonth);
+  // #4165 — a month's invoices and invoices without one are paid apart (0820
+  // answers DKC14 on the monthly path, 0901 DKC16 on the standalone one)
+  if (claim.standalone) {
+    if (invoices.any((i) => i.period != null)) {
+      throw const ClaimRefused(ClaimRefusal.monthlyInStandalone);
+    }
+  } else {
+    if (invoices.any((i) => i.period == null)) {
+      throw const ClaimRefused(ClaimRefusal.standaloneInMonthly);
+    }
+    if ({for (final i in invoices) i.period}.length > 1) {
+      throw const ClaimRefused(ClaimRefusal.months);
+    }
+    if (invoices.first.period != claim.period) {
+      throw const ClaimRefused(ClaimRefusal.otherMonth);
+    }
   }
   if (invoices.any((i) => i.currency.toUpperCase() != currency.toUpperCase())) {
     throw const ClaimRefused(ClaimRefusal.currency);

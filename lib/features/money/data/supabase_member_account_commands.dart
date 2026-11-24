@@ -22,11 +22,15 @@ class SupabaseMemberAccountCommands implements MemberAccountCommands {
   /// of the same words is a new payment.
   final Map<String, String> _attempts = {};
 
-  Future<String> _declared(String key, Map<String, Object?> params) async {
+  Future<String> _declared(
+    String key,
+    Map<String, Object?> params, {
+    String function = 'record_payment',
+  }) async {
     final id = _attempts.putIfAbsent(key, newRequestId);
     try {
       final result = await _client.rpc<Object?>(
-        'record_payment',
+        function,
         params: {...params, 'p_request_id': id},
       );
       _attempts.remove(key);
@@ -71,6 +75,26 @@ class SupabaseMemberAccountCommands implements MemberAccountCommands {
     required InvoiceClaim claim,
   }) async {
     final ids = [...claim.invoiceIds]..sort();
+    if (claim.standalone) {
+      // #4165 — invoices without a month, to the subject named, under the
+      // request id its first attempt took (a lost answer is sent again as
+      // the same declaration, never a second one).
+      return _claimed(
+        () => _declared(
+          [workspaceId, memberId, claim.amountCents, 'standalone', ...ids].join('|'),
+          {
+            'p_workspace_id': workspaceId,
+            'p_financial_subject_id': memberId,
+            'p_amount_cents': claim.amountCents,
+            'p_note': '',
+            'p_method': '',
+            'p_paid_on': null,
+            'p_invoice_ids': claim.invoiceIds,
+          },
+          function: 'record_standalone_payment_v1',
+        ),
+      );
+    }
     return _claimed(
       () => _declared(
         [workspaceId, memberId, claim.amountCents, claim.period, ...ids].join('|'),

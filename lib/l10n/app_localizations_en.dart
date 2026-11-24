@@ -6768,6 +6768,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get claimRefusedEmpty => 'Choose the invoices this payment is for.';
 
   @override
+  String get claimRefusedMonthlyInStandalone =>
+      'Monthly invoices are paid with their month, apart from invoices without one. Nothing was charged.';
+
+  @override
   String get claimRefusedMonths =>
       'A payment is for the invoices of one month. Nothing was charged.';
 
@@ -6797,6 +6801,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get claimRefusedRequestChanged =>
       'This payment was already sent as another one. Check the declared payments, then try again.';
+
+  @override
+  String get claimRefusedStandaloneInMonthly =>
+      'An invoice without a month is paid on its own, apart from monthly invoices. Nothing was charged.';
 
   @override
   String get claimRefusedWithdrawn =>
@@ -13626,6 +13634,14 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get financesSelectionOnlyMonthly =>
+      'Monthly invoices are paid with their month, apart from invoices without one.';
+
+  @override
+  String get financesSelectionOnlyStandalone =>
+      'Invoices without a month are paid together, apart from monthly invoices.';
+
+  @override
   String financesSelectionSummary(int count, String amount) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -13642,6 +13658,11 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String financesSourceUnavailable(String host) {
     return 'The documents of $host could not be read right now; what is shown comes from your other spaces.';
+  }
+
+  @override
+  String financesStandaloneTotal(String amount) {
+    return 'Total: $amount';
   }
 
   @override
@@ -24947,6 +24968,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get payOnlineReversedTitle => 'Online payment reversed';
+
+  @override
+  String get payOnlineStandaloneUnsupported =>
+      'This business\'s payment service must be updated before invoices without a month can be paid online.';
 
   @override
   String get payOnlineStartAgain =>

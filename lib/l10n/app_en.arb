@@ -8885,6 +8885,10 @@
   "@claimRefusedEmpty": {
     "description": "#3556 Refusal: the payment named no invoice"
   },
+  "claimRefusedMonthlyInStandalone": "Monthly invoices are paid with their month, apart from invoices without one. Nothing was charged.",
+  "@claimRefusedMonthlyInStandalone": {
+    "description": "#4165 a payment of invoices without a month named one that has a month (DKC16)"
+  },
   "claimRefusedMonths": "A payment is for the invoices of one month. Nothing was charged.",
   "@claimRefusedMonths": {
     "description": "#3556 Refusal: invoices of several months in one payment"
@@ -8916,6 +8920,10 @@
   "claimRefusedRequestChanged": "This payment was already sent as another one. Check the declared payments, then try again.",
   "@claimRefusedRequestChanged": {
     "description": "#4321 — a declaration sent again under the request id of another payment (DKC15)"
+  },
+  "claimRefusedStandaloneInMonthly": "An invoice without a month is paid on its own, apart from monthly invoices. Nothing was charged.",
+  "@claimRefusedStandaloneInMonthly": {
+    "description": "#4165 a payment with a month named an invoice without one (DKC14)"
   },
   "claimRefusedWithdrawn": "You withdrew this payment. Select the invoices again to pay them.",
   "@claimRefusedWithdrawn": {
@@ -17953,6 +17961,14 @@
       }
     }
   },
+  "financesSelectionOnlyMonthly": "Monthly invoices are paid with their month, apart from invoices without one.",
+  "@financesSelectionOnlyMonthly": {
+    "description": "#4165 the kind of a selection of monthly invoices: an invoice without a month cannot join it"
+  },
+  "financesSelectionOnlyStandalone": "Invoices without a month are paid together, apart from monthly invoices.",
+  "@financesSelectionOnlyStandalone": {
+    "description": "#4165 the kind of a selection of invoices without a month: a monthly invoice cannot join it"
+  },
   "financesSelectionSummary": "{count, plural, one{1 invoice selected · {amount}} other{{count} invoices selected · {amount}}}",
   "@financesSelectionSummary": {
     "description": "#3556 Selection bar: how many invoices are selected and what they still owe; {amount} names its currency",
@@ -17974,6 +17990,15 @@
     "description": "Me › Finances: a connected host whose documents could not be read is named above the lists; the rest is complete",
     "placeholders": {
       "host": {
+        "type": "String"
+      }
+    }
+  },
+  "financesStandaloneTotal": "Total: {amount}",
+  "@financesStandaloneTotal": {
+    "description": "#4165 the one amount paid or declared for invoices without a month; amount: formatted money",
+    "placeholders": {
+      "amount": {
         "type": "String"
       }
     }
@@ -32884,6 +32909,10 @@
   "payOnlineReversedTitle": "Online payment reversed",
   "@payOnlineReversedTitle": {
     "description": "#3905 card title on the bill: an online payment the provider reversed (a refund or a dispute)"
+  },
+  "payOnlineStandaloneUnsupported": "This business's payment service must be updated before invoices without a month can be paid online.",
+  "@payOnlineStandaloneUnsupported": {
+    "description": "#4165 the business's payment service does not take invoices without a month"
   },
   "payOnlineStartAgain": "This payment can no longer be continued. Start the payment again.",
   "@payOnlineStartAgain": {
