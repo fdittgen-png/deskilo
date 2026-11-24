@@ -7557,11 +7557,6 @@ class AppLocalizationsEs extends AppLocalizations {
       'Una cantidad exacta mayor que cero, con seis decimales como máximo.';
 
   @override
-  String counterSaleReasonShown(String reason) {
-    return 'Motivo: $reason';
-  }
-
-  @override
   String get counterSaleReceiptsEmpty =>
       'Todavía no hay tickets. Una venta hecha en la caja aparece aquí.';
 
@@ -7637,9 +7632,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get counterSaleShareTitle => 'Ticket';
 
   @override
-  String get counterSaleStateAccepted => 'aceptada';
-
-  @override
   String get counterSaleStateReconcile =>
       'aceptada para una oferta que cambió: por conciliar';
 
@@ -7660,9 +7652,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get counterSaleTaxLabel => 'Impuestos incluidos';
-
-  @override
-  String get counterSaleTenderCard => 'Tarjeta';
 
   @override
   String get counterSaleTenderCash => 'Efectivo';

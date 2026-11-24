@@ -7518,11 +7518,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'An exact quantity above zero, with at most six decimals.';
 
   @override
-  String counterSaleReasonShown(String reason) {
-    return 'Reason: $reason';
-  }
-
-  @override
   String get counterSaleReceiptsEmpty =>
       'No receipt yet. A sale made at the till appears here.';
 
@@ -7598,9 +7593,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get counterSaleShareTitle => 'Receipt';
 
   @override
-  String get counterSaleStateAccepted => 'accepted';
-
-  @override
   String get counterSaleStateReconcile =>
       'accepted for an offer that changed: to reconcile';
 
@@ -7620,9 +7612,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get counterSaleTaxLabel => 'Tax included';
-
-  @override
-  String get counterSaleTenderCard => 'Card';
 
   @override
   String get counterSaleTenderCash => 'Cash';
