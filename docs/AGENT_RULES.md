@@ -850,7 +850,9 @@ migration after it keeps an older app right:
   `-- apps: additive | needs app at least N | breaks apps below N`. The lint
   that requires it is K4 (#3731, `test/lint/consumer_contract_test.dart`,
   scanner `tool/migration_apps.dart`): `additive` drops, renames and changes
-  no function's parameters without defaults; `breaks apps below N` raises
+  no function's parameters without defaults (a function dropped and created
+  again in the same file to add a defaulted parameter is judged by its new
+  list, and an old parameter keeps its default); `breaks apps below N` raises
   `deskilo_app_floor()` to N in the same file. The PR text and the ready line
   carry one sentence: what an app of the last release does after this
   migration (the database job's consumer-contract step proves the structure).

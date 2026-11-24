@@ -27,7 +27,7 @@ status; an object the app writes whole is merged, never replaced; remove or narr
 nothing until the installation's floor allows it (it does not exist yet: remove
 nothing). From the next migration the line after `-- risk:` is
 `-- apps: additive | needs app at least N | breaks apps below N`, required from 0898 by
-`test/lint/consumer_contract_test.dart` (an `additive` file drops and renames nothing and changes no function's parameters without defaults; `breaks apps below N` raises `deskilo_app_floor()` to N in the same file). The
+`test/lint/consumer_contract_test.dart` (an `additive` file drops and renames nothing and changes no function's parameters without defaults; the drop-and-recreate below is judged by the new list; `breaks apps below N` raises `deskilo_app_floor()` to N in the same file). The
 database job proves every released app's calls and columns are still served
 (`scripts/consumer_contract_check.sh`); say in the PR text and the ready line, in one sentence, what an app of the
 last release does after the change. Rules: AGENT_RULES, "Every migration ends with its version".
