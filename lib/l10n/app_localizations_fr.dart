@@ -5047,9 +5047,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get billingAccessCodeCopy => 'Copier le code';
 
   @override
-  String get billingAccessCodeField => 'Code';
-
-  @override
   String billingAccessCodeOnce(String date) {
     return 'Remettez ce code au client maintenant. Il n\'est affiché qu\'une fois et ne peut plus être relu. Il est valable jusqu\'au $date.';
   }
@@ -38202,9 +38199,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get stockUnitContentNone => 'Rien dedans.';
 
   @override
-  String get stockUnitItem => 'Article';
-
-  @override
   String get stockUnitKind => 'Genre';
 
   @override
@@ -38259,9 +38253,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get stockUnitPlace => 'Emplacement';
 
   @override
-  String get stockUnitQuantity => 'Quantité';
-
-  @override
   String get stockUnitRepack => 'Reconditionner en boîtes';
 
   @override
@@ -38279,7 +38270,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count boîtes créées.',
-      one: '1 boîte créée.',
+      one: '$count boîte créée.',
     );
     return '$_temp0';
   }

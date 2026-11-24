@@ -59,14 +59,6 @@
   "@stockUnitPlace": {
     "description": "#4435 handling units"
   },
-  "stockUnitItem": "Item",
-  "@stockUnitItem": {
-    "description": "#4435 handling units"
-  },
-  "stockUnitQuantity": "Quantity",
-  "@stockUnitQuantity": {
-    "description": "#4435 handling units"
-  },
   "stockUnitContent": "Content",
   "@stockUnitContent": {
     "description": "#4435 handling units"

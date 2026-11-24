@@ -26,7 +26,6 @@
   "billingAccessEnter": "Rechnungscode verwenden",
   "billingAccessEnterTitle": "Rechnungen eines Betriebs lesen",
   "billingAccessEnterIntro": "Ein Betrieb, der Ihnen Rechnungen stellt, kann Ihnen einen Code geben. Damit lesen Sie in Ihrem Konto die auf Sie ausgestellten Rechnungen. Sie werden kein Mitglied.",
-  "billingAccessCodeField": "Code",
   "billingAccessCheck": "Code prüfen",
   "billingAccessPreviewLine": "{business} lädt Sie ein, die auf {name} ausgestellten Rechnungen zu lesen.",
   "billingAccessPreviewUnnamed": "{business} lädt Sie ein, die auf Sie ausgestellten Rechnungen zu lesen.",
