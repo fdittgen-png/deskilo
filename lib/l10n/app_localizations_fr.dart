@@ -7025,6 +7025,20 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String commercialLineMeasure(String quantity, String price) {
+    return '$quantity à $price';
+  }
+
+  @override
+  String commercialLineMeasurePer(String quantity, String price, String base) {
+    return '$quantity à $price pour $base';
+  }
+
+  @override
+  String get commercialLineUnreadable =>
+      'Enregistré par une version plus récente : ces données sont affichées telles quelles et ne peuvent pas être utilisées ici';
+
+  @override
   String get commonCancel => 'Annuler';
 
   @override

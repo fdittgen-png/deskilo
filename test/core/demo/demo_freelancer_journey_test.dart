@@ -19,6 +19,7 @@ import 'package:deskilo/core/demo/demo_space_fulfilments.dart';
 import 'package:deskilo/core/demo/demo_space_ids.dart';
 import 'package:deskilo/core/demo/demo_space_stores.dart';
 import 'package:deskilo/core/demo/demo_spaces.dart';
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/application/customer_quote_commands.dart';
 import 'package:deskilo/features/money/application/receivables_answers.dart';
 import 'package:deskilo/features/money/domain/business_receivables.dart';
@@ -27,6 +28,7 @@ import 'package:deskilo/features/money/domain/dunning.dart';
 import 'package:deskilo/features/money/domain/service_fulfilment.dart';
 import 'package:deskilo/features/money/presentation/invoice_journey.dart';
 import 'package:deskilo/features/money/presentation/invoicing/receivables_adapter.dart';
+import 'package:deskilo/features/money/presentation/widgets/invoice_line_measure.dart';
 import 'package:deskilo/features/money/providers/business_receivables_providers.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
@@ -149,6 +151,53 @@ void main() {
     expect(invoices.single.totalCents, 64200);
     expect(invoices.single.memberName, 'Domaine des Aires');
     expect((await theQuote()).status, QuoteStatus.converted);
+  });
+
+  test('#4162: the issued invoice keeps 1.5 h at 90.00 exactly, its sheet '
+      'says so, and its tax point declares the frozen net', () async {
+    final quote = await theQuote();
+    final prep = await commands.prepareConversion(
+      demoFreelancerSpaceId,
+      quote.id,
+      serviceDate: today,
+      dueOn: today.add(const Duration(days: 30)),
+    );
+    final ready = (prep as QuoteDone<QuoteConversionPrep>).value;
+    final issued =
+        ((await commands.convert(
+                  demoFreelancerSpaceId,
+                  quote.id,
+                  draftRevision: ready.draftRevision,
+                  requestId: 'request-measure',
+                ))
+                as QuoteDone<QuoteConverted>)
+            .value;
+    final invoice = space.money.invoices.firstWhere(
+      (i) => i.id == issued.invoiceId,
+    );
+    final consulting = invoice.lines.first;
+    final facts = consulting.exactFacts!;
+    expect(facts.quantity.text, '1.5');
+    expect(facts.unit.unEceCode, 'HUR');
+    expect(consulting.authoritativeNetCents, 13500);
+    expect(
+      invoiceLineMeasureText(AppLocalizationsEn(), consulting),
+      '1.5 h at 90 EUR',
+    );
+    expect(
+      {for (final l in invoice.lines) l.exactFacts!.lineId}.length,
+      invoice.lines.length,
+      reason: 'each line keeps its own identity',
+    );
+    final declared = vatTaxPointLedger(
+      [invoice],
+      matches: const {},
+      instalments: const {},
+      basis: VatTaxPointBasis.invoiceDate,
+      dayOf: (d) => DateTime(d.year, d.month, d.day),
+      reference: ActiveTaxReference.current,
+    );
+    expect(declared.fold<int>(0, (s, a) => s + a.netCents), 53500);
   });
 
   test('the training engagement is done before its invoice, and the invoice, '

@@ -134,6 +134,7 @@ Quiere encontrar una factura, ver si está pagada y obtener su PDF.
 - Pulse el icono de pago en una factura abierta para ir a **Pagos**.
 - Si la lista está vacía, el espacio todavía no le ha facturado; factura un mes cuando lo cierra.
 - Las facturas no se pueden editar. Una factura equivocada se marca como **Errónea** y se sustituye por una nueva; la errónea desaparece de su lista. Cuando varias facturas se agrupan en una, la factura agrupada las sustituye en su lista.
+- Una línea facturada por horas, por días o por peso (por ejemplo *1.5 h a 90 EUR*, o *0.75 kg a 12.5 EUR por 10 kg*) muestra bajo su concepto la cantidad exacta, su unidad y el precio introducido, tal como los imprime el PDF; su importe es el fijado al emitir la factura. Una línea registrada por una versión más reciente de la aplicación se muestra tal cual e indica que no se puede usar aquí: actualice la aplicación para trabajar con ella.
 
 **Véase también:** [Pague lo que debe](help:user.money.payments) · [Sus finanzas en todos sus espacios](help:user.money.finances)
 

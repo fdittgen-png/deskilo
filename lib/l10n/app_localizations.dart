@@ -10931,6 +10931,24 @@ abstract class AppLocalizations {
   /// **'{first}, {second}'**
   String commaPair(String first, String second);
 
+  /// #4162 an issued commercial line in the invoice sheet: its exact quantity with its unit, at the price entered (e.g. '1.5 h at 90 EUR')
+  ///
+  /// In en, this message translates to:
+  /// **'{quantity} at {price}'**
+  String commercialLineMeasure(String quantity, String price);
+
+  /// #4162 the same, for a price quoted for more than one unit (e.g. '30 kg at 12.5 EUR per 10 kg')
+  ///
+  /// In en, this message translates to:
+  /// **'{quantity} at {price} per {base}'**
+  String commercialLineMeasurePer(String quantity, String price, String base);
+
+  /// #4162 an issued line whose facts this version of the app cannot interpret: shown, never used
+  ///
+  /// In en, this message translates to:
+  /// **'Recorded by a newer version: these facts are shown as written and cannot be used here'**
+  String get commercialLineUnreadable;
+
   /// Generic cancel action in dialogs
   ///
   /// In en, this message translates to:

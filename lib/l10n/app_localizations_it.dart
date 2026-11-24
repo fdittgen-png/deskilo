@@ -6998,6 +6998,20 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String commercialLineMeasure(String quantity, String price) {
+    return '$quantity a $price';
+  }
+
+  @override
+  String commercialLineMeasurePer(String quantity, String price, String base) {
+    return '$quantity a $price per $base';
+  }
+
+  @override
+  String get commercialLineUnreadable =>
+      'Registrato da una versione più recente: questi dati sono mostrati così come sono e non possono essere usati qui';
+
+  @override
   String get commonCancel => 'Annulla';
 
   @override

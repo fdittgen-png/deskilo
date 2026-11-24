@@ -30,6 +30,17 @@ extension InvoiceLineCommercial on InvoiceLine {
     final CommercialLineV1 v1 => v1.quantity.text,
     final CommercialLineUnsupported u => u.rawQuantity,
   };
+
+  /// The net the server froze on a commercial line it can interpret, in
+  /// minor units; null on a legacy line (and on one this reader cannot
+  /// interpret), whose net a reader derives from its gross as it always did.
+  /// A reader that has the frozen net never recomputes a different one.
+  int? get frozenNetMinor => exactFacts?.amounts.netMinor;
+
+  /// The line's net in minor units: the frozen net of a commercial line,
+  /// else the legacy split of its gross at its rate.
+  int get authoritativeNetCents =>
+      frozenNetMinor ?? vatSplit(amountCents, vatPercent).netCents;
 }
 
 extension InvoiceLinePrinted on InvoiceLine {

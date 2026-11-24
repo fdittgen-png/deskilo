@@ -38,6 +38,7 @@ import 'package:meta/meta.dart';
 
 import 'invoice.dart';
 import 'invoice_kind.dart';
+import 'invoice_line_commercial.dart';
 import 'vat_rate.dart';
 import 'vat_tax_point_policy.dart';
 
@@ -99,9 +100,10 @@ List<VatTaxPointAmount> taxPointsOf(
   final net = <double, int>{};
   for (final line in invoice.lines) {
     gross[line.vatPercent] = (gross[line.vatPercent] ?? 0) + line.amountCents;
+    // #4162 -- a commercial line contributes the net the server froze on
+    // it, never a split recomputed from its gross; a legacy line splits.
     net[line.vatPercent] =
-        (net[line.vatPercent] ?? 0) +
-        vatSplit(line.amountCents, line.vatPercent).netCents;
+        (net[line.vatPercent] ?? 0) + line.authoritativeNetCents;
   }
   if (gross.isEmpty) return const [];
   final total = gross.values.fold(0, (s, c) => s + c);
