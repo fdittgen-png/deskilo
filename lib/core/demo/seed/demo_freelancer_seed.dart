@@ -289,8 +289,10 @@ void seedFreelancerInvoices(FakeMoneyRepository money, DateTime today) {
   // Chiara declared her payment of the EUR 60.00 invoice; Bruno has not
   // confirmed it yet: a pending payment event of hers (what the invoicing home
   // counts "to confirm") and the claim on the invoice it names (0797), so it is
-  // owed but no longer "to collect".
-  const declaredId = 'kessler-declared-a2';
+  // owed but no longer "to collect". Its id is a declaration's (the
+  // `evt-payment-` the Demo's own declarations take), so Me reads it as the
+  // event she may take back and drops the claim once Bruno decides it.
+  const declaredId = 'evt-payment-kessler-a2';
   final declaredOn = today.subtract(const Duration(days: 2));
   money.eventRepository?.events.add(
     WorkspaceEvent(

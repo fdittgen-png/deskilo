@@ -60,8 +60,11 @@ FinanceOverview demoFinanceOverview(DemoFixture fixture) {
   );
 }
 
-/// The invoices [subject] owes [money]'s business, as a billing-grant row:
-/// apart from the account's own, and payable only once #4165 accepts a grant.
+/// The invoices [subject] owes [money]'s business, as a billing-grant row
+/// (`access: billing_grant`): apart from the account's own and otherwise the
+/// very row the business's member reads, payable on the same terms (open, in
+/// no claim), since `my_finance_overview_v2` decides that per invoice, not per
+/// access.
 List<FinanceInvoice> _billedOf(
   FakeMoneyRepository money,
   String subject,
@@ -80,10 +83,20 @@ List<FinanceInvoice> _billedOf(
       paidCents: i.paidCents,
       currency: i.currency,
       state: i.state,
+      reminderCount: i.reminderCount,
+      lastReminderAt: i.lastReminderAt,
       stillDueCents: i.stillDueCents,
+      awaitingCents: i.awaitingCents,
       period: i.period,
       inPayment: i.inPayment,
+      claimPaymentId: i.claimPaymentId,
+      claimCanContinue: i.claimCanContinue,
+      claimPaymentState: i.claimPaymentState,
       claimEventId: i.claimEventId,
+      claimHandedAt: i.claimHandedAt,
+      claimSettling: i.claimSettling,
+      paymentReceived: i.paymentReceived,
+      payable: i.payable,
       timezone: i.timezone,
       financialSubjectId: subject,
       billingOnly: true,

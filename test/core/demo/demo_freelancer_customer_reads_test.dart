@@ -42,11 +42,8 @@ void main() {
     expect(invoice.totalCents, 10800);
     expect(invoice.state, FinanceState.paid);
     expect(groups.single.openByCurrency, isEmpty, reason: 'nothing is open');
-    expect(
-      invoice.payable,
-      isFalse,
-      reason: 'a grant pays nothing yet (#4165)',
-    );
+    expect(invoice.paidCents, 10800);
+    expect(invoice.payable, isFalse, reason: 'paid in full: nothing to pay');
     expect(
       demoFinanceOverview(fixture).invoices
           .where((i) => i.workspaceId == demoFreelancerSpaceId),
@@ -62,6 +59,13 @@ void main() {
     expect(chiara.map((g) => g.subjectId), [demoKesslerChiaraId]);
     expect(chiara.single.invoices.single.number, 'KC-2026-0002');
     expect(chiara.single.openByCurrency, {'EUR': 6000});
+    final sixty = chiara.single.invoices.single;
+    expect(sixty.claimEventId, isNotNull, reason: 'she declared paying it');
+    expect(
+      sixty.payable,
+      isFalse,
+      reason: 'her declaration waits for Bruno: it is not paid twice',
+    );
 
     fixture.becomePersona(DemoPersona.owner);
     expect(
@@ -174,6 +178,42 @@ void main() {
             .any((c) => c.subjectId == demoKesslerLindnerId),
         isTrue,
       );
+    },
+  );
+
+  test(
+    'an answer lost on the way grants nothing; the same code accepted again '
+    'reads the invoice, once',
+    () async {
+      final access = fixture.stores.home.billingAccess;
+      fixture.becomePersona(DemoPersona.member);
+      final grant = (await access.grantsOf(
+        demoFreelancerSpaceId,
+        demoKesslerLindnerId,
+      )).single;
+      await access.revoke(grant.id, reason: 'new contact');
+      final invitation = await access.invite(
+        demoFreelancerSpaceId,
+        demoKesslerLindnerId,
+        'reads-invite-3',
+      );
+
+      fixture.becomePersona(DemoPersona.owner);
+      access.failNext = Exception('the connection dropped');
+      await expectLater(access.accept(invitation.code), throwsException);
+      expect(kessler(), isEmpty, reason: 'nothing was accepted');
+
+      final accepted = await access.accept(invitation.code);
+      expect(accepted.replayed, isFalse);
+      expect(
+        [
+          for (final g in kessler())
+            for (final i in g.invoices) i.number,
+        ],
+        ['KC-2026-0003'],
+      );
+      expect((await access.accept(invitation.code)).replayed, isTrue);
+      expect(kessler(), hasLength(1));
     },
   );
 }
