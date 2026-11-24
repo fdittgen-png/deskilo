@@ -41509,7 +41509,7 @@ class AppLocalizationsIt extends AppLocalizations {
       'Le vendite non ancora inviate vanno perse definitivamente. Elimini i dati solo dopo il controllo di un responsabile.';
 
   @override
-  String get tillOfflineDiscardConfirm => 'Elimina';
+  String get tillOfflineDiscardConfirm => 'Elimina i dati';
 
   @override
   String tillOfflineGaps(String numbers) {

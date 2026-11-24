@@ -41590,7 +41590,7 @@ class AppLocalizationsDe extends AppLocalizations {
       'Noch nicht gesendete Verkäufe gehen endgültig verloren. Verwerfen Sie die Daten erst, nachdem eine Leitung sie geprüft hat.';
 
   @override
-  String get tillOfflineDiscardConfirm => 'Verwerfen';
+  String get tillOfflineDiscardConfirm => 'Daten verwerfen';
 
   @override
   String tillOfflineGaps(String numbers) {

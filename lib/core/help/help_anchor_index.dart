@@ -39,6 +39,7 @@ const helpAnchorIndex = <String>{
   HelpAnchor.moneyStockBulkRead,
   HelpAnchor.moneyTill,
   HelpAnchor.moneyTillDrawer,
+  HelpAnchor.moneyTillOffline,
   HelpAnchor.advancedDeploy,
   HelpAnchor.advancedTroubleshooting,
   HelpAnchor.invoicingAccountingExport,

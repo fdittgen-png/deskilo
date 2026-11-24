@@ -41116,7 +41116,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Sales that were not sent yet are lost for good. Only discard the data after a manager has checked.';
 
   @override
-  String get tillOfflineDiscardConfirm => 'Discard';
+  String get tillOfflineDiscardConfirm => 'Discard the data';
 
   @override
   String tillOfflineGaps(String numbers) {

@@ -5,6 +5,7 @@
 // when the connection returns; the server (`counter_offline_sync_v1`, contract section 7) checks every rule again. Nothing here
 // takes anything but cash, claims a fiscal signature, or prices a line the device has no price for. Amounts are MINOR units.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show JsonReader;
+import 'package:flutter/foundation.dart' show visibleForTesting;
 
 import 'till_quantity.dart';
 
@@ -44,6 +45,9 @@ class OfflineLine {
     return OfflineLine(itemId: r.string('item_id'), name: r.stringOr('name'), quantity: r.string('quantity'), unitMinor: r.integer('unit_minor'));
   }
 }
+
+/// How often an offline till looks for its connection again: a technical interval, nothing a business sets.
+const Duration kOfflineReconnectEvery = Duration(seconds: 20);
 
 /// The reasons the device refuses to record a sale itself.
 enum OfflineRefusal { noPrice, badQuantity, empty, cashShort }
@@ -127,6 +131,7 @@ class OfflineSale {
 }
 
 /// [minor] as the decimal text of major units with exactly [digits] decimals (`120` with 2 is `1.20`).
+@visibleForTesting
 String majorText(int minor, int digits) {
   if (digits <= 0) return '$minor';
   final sign = minor < 0 ? '-' : '';

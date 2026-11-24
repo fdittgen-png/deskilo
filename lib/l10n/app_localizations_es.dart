@@ -41452,7 +41452,7 @@ class AppLocalizationsEs extends AppLocalizations {
       'Las ventas que aún no se enviaron se pierden para siempre. Descarte los datos solo después de que un responsable los haya revisado.';
 
   @override
-  String get tillOfflineDiscardConfirm => 'Descartar';
+  String get tillOfflineDiscardConfirm => 'Descartar los datos';
 
   @override
   String tillOfflineGaps(String numbers) {

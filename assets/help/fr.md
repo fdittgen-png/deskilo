@@ -2416,6 +2416,7 @@ Vous voulez retrouver une facture, voir si elle est payée et obtenir son PDF.
 - Touchez l'icône de paiement sur une facture en cours pour aller à **Paiements**.
 - Si la liste est vide, l'espace ne vous a pas encore facturé ; il facture un mois une fois celui-ci clôturé.
 - Les factures ne se modifient pas. Une facture erronée est marquée **Erronée** et remplacée par une nouvelle, et l'erronée disparaît de votre liste. Quand des factures sont regroupées en une seule, la facture regroupée les remplace dans votre liste.
+- Une ligne facturée à l'heure, au jour ou au poids (par exemple *1.5 h à 90 EUR*, ou *0.75 kg à 12.5 EUR pour 10 kg*) affiche sous son libellé la quantité exacte, son unité et le prix saisi, comme le PDF les imprime ; son montant est celui fixé à l'émission de la facture. Une ligne enregistrée par une version plus récente de l'application est affichée telle quelle et indique qu'elle ne peut pas être utilisée ici : mettez l'application à jour pour la traiter.
 
 **Voir aussi:** [Payer ce que vous devez](help:user.money.payments) · [Vos finances dans tous vos espaces](help:user.money.finances)
 
@@ -3062,6 +3063,18 @@ Appuyez sur **Ouvrir la caisse**, saisissez le **Fond de caisse** (ou, si votre 
 **Compter et fermer** demande les **Espèces comptées dans le tiroir** et ce qui est **Déposé à la banque**. Quand l'entreprise compte à l'aveugle, les espèces attendues ne s'affichent pas avant le comptage ; une personne qui peut voir les finances les voit, ainsi que l'écart pendant la saisie. Un comptage qui diffère des espèces attendues ne se ferme qu'avec son motif, que la caisse demande. Après la fermeture, la caisse indique ce qui était attendu, ce qui a été compté et l'écart. Les paiements par carte sans réponse sont listés à part et jamais comptés comme espèces.
 
 **Clôture de la journée.** Une personne qui peut voir les finances ouvre **Clôture de la journée** depuis le tiroir-caisse et appuie sur **Clôturer la journée** quand chaque caisse est fermée (une caisse encore ouverte est nommée et refuse la clôture). Les sessions fermées du jour forment un rapport numéroté : chaque session avec l'attendu, le compté, l'écart et son motif, les encaissements par moyen de paiement et par taux de taxe, les espèces entrées et sorties, les remboursements et la plage des numéros de tickets. **Journées clôturées** liste les rapports déjà faits ; une journée clôturée ne change jamais. C'est le registre propre de l'entreprise ; le contenu légal qu'un pays demande à une clôture de journée vient avec son propre module.
+
+### Quand la caisse est hors ligne
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous vendez au comptoir et la connexion est perdue : vous voulez continuer à vendre et être sûr que rien ne se perd ni ne se compte deux fois.
+
+Activez **Vendre hors ligne, en espèces seulement** (elle suppose la fonction des sessions de caisse). Quand un appel au serveur reste sans réponse, la caisse indique **Hors ligne — espèces uniquement. Les ventes sont conservées sur cet appareil et envoyées au retour de la connexion.** et continue à vendre en espèces uniquement, aux prix qu'elle avait lors de sa dernière connexion ; un article dont l'appareil n'a pas le prix n'est pas vendu. Chaque vente est conservée sur l'appareil sous le numéro suivant de sa session de caisse ; le reçu porte **Enregistrée hors ligne** avec ce numéro et **Non signé. Il est envoyé au serveur au retour de la connexion.** : il n'a pas de numéro de reçu tant que le serveur ne l'a pas reçu.
+
+La caisse cherche d'elle-même sa connexion, et **Chercher la connexion maintenant** le fait aussitôt. Quand la connexion revient, les ventes sont envoyées dans l'ordre, chacune sous le numéro avec lequel elle a été faite : une vente déjà reçue n'est donc jamais comptée deux fois. La caisse indique alors combien ont été enregistrées et, pour chaque vente refusée par le serveur, pourquoi (par exemple le prix a changé au-delà de ce qui est permis, ou l'article n'est plus vendu) ; les espèces d'une vente refusée restent dans le comptage du tiroir. Si la session a été fermée entre-temps, la caisse dit : « La session a été fermée : ces ventes restent sur l'appareil pour un responsable. » Les ventes restent sur l'appareil jusqu'à ce qu'un responsable les ait traitées.
+
+Trois réglages de l'entreprise bornent ce qui est accepté : **Durée maximale hors ligne (minutes)**, **Nombre maximal de ventes hors ligne par session de caisse** et **Écart de prix toléré hors ligne (%)**. Si les données hors ligne de l'appareil sont illisibles, rien ne se vend hors ligne tant qu'un responsable n'a pas décidé ; **Supprimer les données hors ligne** les supprime après un avertissement, car les ventes non encore envoyées sont perdues définitivement.
 
 ### Puces RFID : une par lot ou une par pièce
 

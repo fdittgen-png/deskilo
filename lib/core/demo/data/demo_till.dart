@@ -178,12 +178,15 @@ class DemoTill implements TillPort, TillOfflinePort {
         results.add(OfflineSaleResult(seq: again.seq, requestId: again.requestId, accepted: again.accepted, reason: again.reason, number: again.number, replayed: true));
         continue;
       }
+      // a session already closed takes no new sale, not even a refused one: its counted cash never moves
+      if (drawer != null && !drawer!.sessionIsOpen(sessionId)) throw _refused(DkCode.dkl12, 'open the till first');
       final priced = [for (final l in sale.lines) DemoStockRegistry.catalogue[l.itemId]?.$2 ?? _unstocked[l.itemId]];
       final reason = [for (var i = 0; i < priced.length; i++) if (priced[i] == null) 'item' else if (priced[i] != sale.lines[i].unitMinor) 'price'].firstOrNull ?? '';
       final number = reason.isEmpty ? 'R-${(++_sales).toString().padLeft(5, '0')}' : '';
       final result = OfflineSaleResult(seq: sale.seq, requestId: sale.requestId, accepted: reason.isEmpty, reason: reason, number: number, replayed: false);
       _offlineByRequest[sale.requestId] = result;
       results.add(result);
+      drawer?.recordOfflineSale(sessionId, cashMinor: reason.isEmpty ? sale.totalMinor : sale.cashGivenMinor - sale.changeMinor, accepted: reason.isEmpty, number: number);
       rows.add(OfflineSaleRow(
         seq: sale.seq, accepted: reason.isEmpty, reason: reason, number: number, totalMinor: reason.isEmpty ? sale.totalMinor : null,
         cashGivenMinor: sale.cashGivenMinor, changeMinor: sale.changeMinor, occurredAt: sale.occurredAt,

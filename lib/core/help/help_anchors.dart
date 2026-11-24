@@ -55,6 +55,7 @@ abstract final class HelpAnchor {
   static const moneyStockBulkRead = 'user.money.stock.bulkread';
   static const moneyTill = 'user.money.till';
   static const moneyTillDrawer = 'user.money.till-drawer';
+  static const moneyTillOffline = 'user.money.till-offline';
 
   /// #3527 — the Sales, Purchases and Cash pages.
   static const moneySales = 'user.money.sales';

@@ -66155,7 +66155,7 @@ abstract class AppLocalizations {
   /// #4373 drop the unreadable offline data: confirm
   ///
   /// In en, this message translates to:
-  /// **'Discard'**
+  /// **'Discard the data'**
   String get tillOfflineDiscardConfirm;
 
   /// #4373 the answer of the send: sale numbers the server finds missing

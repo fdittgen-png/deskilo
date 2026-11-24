@@ -24018,7 +24018,7 @@
   "@tillOfflineDiscardBody": {
     "description": "#4373 drop the unreadable offline data: the warning"
   },
-  "tillOfflineDiscardConfirm": "Descartar",
+  "tillOfflineDiscardConfirm": "Descartar los datos",
   "@tillOfflineDiscardConfirm": {
     "description": "#4373 drop the unreadable offline data: confirm"
   },

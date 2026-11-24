@@ -2522,6 +2522,7 @@ Vuole trovare una fattura, vedere se è pagata e ottenerne il PDF.
 - Tocchi l'icona del pagamento su una fattura aperta per passare a **Pagamenti**.
 - Se l'elenco è vuoto, lo spazio non Le ha ancora fatturato nulla; fattura un mese solo dopo la sua chiusura.
 - Le fatture non si possono modificare. Una fattura sbagliata è contrassegnata come **Errata** e sostituita da una nuova, e quella errata scompare dal Suo elenco. Quando più fatture vengono raggruppate in una, la fattura raggruppata le sostituisce nel suo elenco.
+- Una riga fatturata a ore, a giorni o a peso (ad esempio *1.5 h a 90 EUR*, oppure *0.75 kg a 12.5 EUR per 10 kg*) mostra sotto la descrizione la quantità esatta, la sua unità e il prezzo inserito, come li stampa il PDF; il suo importo è quello fissato all'emissione della fattura. Una riga registrata da una versione più recente dell'app è mostrata così com'è e indica che non può essere usata qui: per lavorarci occorre aggiornare l'app.
 
 **Vedi anche:** [Pagare quanto dovuto](#pagare-quanto-dovuto) · [Le Sue finanze in tutti gli spazi](#le-sue-finanze-in-tutti-gli-spazi)
 
@@ -3205,6 +3206,19 @@ Premere **Aprire la cassa**, digitare il **Fondo cassa nel cassetto** (o, se l'a
 **Contare e chiudere** chiede i **Contanti contati nel cassetto** e quanto viene **Portato in banca**. Quando l'attività conta alla cieca, i contanti attesi non vengono mostrati prima del conteggio; chi può vedere le finanze li vede, insieme alla differenza mentre digita. Un conteggio che differisce dai contanti attesi si chiude solo con il suo motivo, che la cassa richiede. Dopo la chiusura la cassa indica quanto era atteso, quanto è stato contato e la differenza. I pagamenti con carta senza risposta sono elencati a parte e mai contati come contanti.
 
 **Chiusura della giornata.** Chi può vedere le finanze apre **Chiusura della giornata** dal cassetto di cassa e preme **Chiudere la giornata** quando ogni cassa è chiusa (una cassa ancora aperta viene indicata e rifiuta la chiusura). Le sessioni chiuse della giornata diventano un rapporto numerato: ogni sessione con atteso, contato, differenza e motivo, gli incassi per mezzo di pagamento e per aliquota, i contanti versati e prelevati, i rimborsi e l'intervallo dei numeri degli scontrini. **Giornate chiuse** elenca i rapporti già fatti; una giornata chiusa non cambia mai. È la registrazione propria dell'attività; il contenuto legale che un paese richiede alla chiusura della giornata arriva con un proprio modulo.
+
+<!-- anchor: user.money.till-offline -->
+### Quando la cassa è offline
+
+**Destinatari:** Amministratore · Proprietario
+
+Vende al banco e la connessione si perde: vuole continuare a vendere ed essere certo che nulla vada perso o venga contato due volte.
+
+Attivi **Vendere offline, solo in contanti** (richiede la funzione delle sessioni di cassa). Quando una chiamata al server non riceve risposta, la cassa indica **Offline: solo contanti. Le vendite restano su questo dispositivo e vengono inviate quando la connessione torna.** e continua a vendere solo in contanti, ai prezzi che aveva all'ultimo collegamento; un articolo di cui il dispositivo non ha il prezzo non viene venduto. Ogni vendita resta sul dispositivo con il numero successivo della sua sessione di cassa; lo scontrino riporta **Registrata offline** con quel numero e **Non firmato. Viene inviato al server quando la connessione torna.**: non ha un numero di scontrino finché il server non l'ha ricevuto.
+
+La cassa cerca da sola la connessione, e **Cerca subito la connessione** lo fa subito. Quando la connessione torna, le vendite vengono inviate in ordine, ciascuna con il numero con cui è stata fatta, così una vendita già ricevuta non viene mai contata due volte. La cassa dice poi quante sono state registrate e, per ogni vendita rifiutata dal server, perché (ad esempio il prezzo è cambiato oltre il consentito, o l'articolo non è più in vendita); i contanti di una vendita rifiutata restano nel conteggio del cassetto. Se nel frattempo la sessione è stata chiusa, la cassa dice: «La sessione è stata chiusa: queste vendite restano sul dispositivo per un responsabile.» Le vendite restano sul dispositivo finché un responsabile non le ha trattate.
+
+Tre impostazioni dell'attività limitano ciò che viene accettato: **Durata massima offline (minuti)**, **Massimo di vendite offline per sessione di cassa** e **Differenza di prezzo ammessa offline (%)**. Se i dati offline del dispositivo non sono leggibili, non si vende nulla offline finché un responsabile non decide; **Elimina i dati offline** li elimina dopo un avviso, perché le vendite non ancora inviate vanno perse definitivamente.
 
 <!-- anchor: user.money.stock.rfid -->
 ### Tag RFID: uno per lotto o uno per pezzo

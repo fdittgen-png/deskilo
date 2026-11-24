@@ -140,6 +140,7 @@
   "user.money.stock.nfc": "Tags mit dem NFC des Telefons",
   "user.money.till": "Kasse",
   "user.money.till-drawer": "Kasse öffnen, zählen und schließen",
+  "user.money.till-offline": "Wenn die Kasse offline ist",
   "user.money.stock.rfid": "RFID-Tags: eines pro Charge oder eines pro Stück",
   "user.money.stock.units": "Packeinheiten",
   "user.money.stock.expiry": "Der Verfallsbericht",

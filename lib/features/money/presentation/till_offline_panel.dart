@@ -5,6 +5,8 @@
 // offline until a manager decides (and the way to drop the data, after a warning).
 import 'package:flutter/material.dart';
 
+import '../../../core/help/help_anchors.dart';
+import '../../../core/help/help_dot.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import 'till_offline_mode.dart';
@@ -36,7 +38,13 @@ class TillOfflinePanel extends StatelessWidget {
       key: const ValueKey('till-offline-banner'),
       color: scheme.tertiaryContainer,
       children: [
-        if (status.active) Text(l10n.tillOfflineBanner, style: Theme.of(context).textTheme.titleSmall),
+        if (status.active)
+          Row(
+            children: [
+              Expanded(child: Text(l10n.tillOfflineBanner, style: Theme.of(context).textTheme.titleSmall)),
+              HelpDot(l10n.tillOfflineReportTitle, anchor: HelpAnchor.moneyTillOffline),
+            ],
+          ),
         Wrap(
           spacing: AppSpacing.sm,
           crossAxisAlignment: WrapCrossAlignment.center,
