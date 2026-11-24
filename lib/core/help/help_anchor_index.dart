@@ -8,6 +8,7 @@ import 'help_anchors.dart';
 const helpAnchorIndex = <String>{
   HelpAnchor.workspacePublicPage,
   HelpAnchor.privacyBusinessSees,
+  HelpAnchor.privacyErrorReports,
   HelpAnchor.workspaceBusinessKind,
   HelpAnchor.moneySales,
   HelpAnchor.moneyPurchases,

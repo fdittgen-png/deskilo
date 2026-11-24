@@ -42578,6 +42578,24 @@ abstract class AppLocalizations {
   /// **'Your data in {space} is erased. What the space must keep stays for its retention period; other installations are not affected.'**
   String privacyErasedIn(String space);
 
+  /// #4416 Privacy switch: send the errors the app records to the installation
+  ///
+  /// In en, this message translates to:
+  /// **'Send error reports'**
+  String get privacyErrorReports;
+
+  /// #4416 Privacy switch: the switch could not be stored
+  ///
+  /// In en, this message translates to:
+  /// **'The choice could not be saved on this device.'**
+  String get privacyErrorReportsFailed;
+
+  /// #4416 Privacy switch: what is sent and where, under its name
+  ///
+  /// In en, this message translates to:
+  /// **'When the app records an error, a report without your data goes to the installation you are signed in to, so its operator can fix it.'**
+  String get privacyErrorReportsHint;
+
   /// #719 - privacy & data
   ///
   /// In en, this message translates to:

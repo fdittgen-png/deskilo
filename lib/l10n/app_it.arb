@@ -15313,6 +15313,9 @@
       }
     }
   },
+  "privacyErrorReports": "Inviare le segnalazioni di errore",
+  "privacyErrorReportsFailed": "Non è stato possibile salvare la scelta su questo dispositivo.",
+  "privacyErrorReportsHint": "Quando l'app registra un errore, una segnalazione senza i Suoi dati va all'installazione a cui ha effettuato l'accesso, perché il suo operatore possa correggerlo.",
   "privacyExport": "Esporta i miei dati",
   "@privacyExport": {
     "description": "#719 - privacy & data"

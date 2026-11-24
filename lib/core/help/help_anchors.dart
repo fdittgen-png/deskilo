@@ -195,6 +195,9 @@ abstract final class HelpAnchor {
   /// What a business a person joins can see of them (#3594).
   static const privacyBusinessSees = 'user.privacy.business-sees';
 
+  /// What an error report carries and where it goes (#4416).
+  static const privacyErrorReports = 'user.privacy.error-reports';
+
   /// Bands, or a positioned layout that wins over them.
   static const reportsEditor = 'user.money.reports.editor';
 

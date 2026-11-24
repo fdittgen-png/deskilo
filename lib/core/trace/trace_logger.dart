@@ -4,7 +4,7 @@ import 'dart:io';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../data/server_error.dart';
+import '../failure/app_failure.dart';
 import 'redaction.dart';
 
 part 'trace_logger.g.dart';
@@ -36,6 +36,9 @@ bool isTransientNetworkFailure(Object? error) {
   ];
   return marks.any(text.contains);
 }
+
+/// The code of a [Refusal], or null.
+String? _refusalCodeOf(Object error) => error is Refusal ? error.code : null;
 
 /// One diagnostic event captured by [TraceLogger] (#144).
 class TraceEntry {
@@ -76,7 +79,14 @@ class TraceLogger {
     this._directoryProvider,
     this.capacity = 500,
     this.maxFileBytes = 512 * 1024,
+    this.errorCodeOf = _refusalCodeOf,
   });
+
+  /// #4416 — the code an error carried (a refusal's, a database answer's),
+  /// never its sentence. A plain logger reads a [Refusal]'s; the app's reads
+  /// the database's too (`createAppTraceLogger`): this file stays free of the
+  /// server client, so the command-line tools that reach it still run.
+  final String? Function(Object error) errorCodeOf;
 
   /// Global fallback for call sites without a Riverpod ref (main-zone
   /// hooks, repositories). Set during bootstrap; defaults to a
@@ -128,7 +138,7 @@ class TraceLogger {
       error: error?.toString(),
       stack: stackTrace?.toString(),
       errorType: error?.runtimeType.toString(),
-      errorCode: error == null ? null : serverErrorCode(error),
+      errorCode: error == null ? null : errorCodeOf(error),
     );
     _buffer.add(entry);
     if (_buffer.length > capacity) {

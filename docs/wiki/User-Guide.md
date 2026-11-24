@@ -1670,7 +1670,7 @@ In this chapter:
 - Your account: [photo](#your-account-and-photo), [personal information](#personal-information), [address](#your-address), [VAT number](#your-vat-number), [payment terms](#your-payment-terms), [WhatsApp](#your-whatsapp-number), [status](#your-status-line), [default booking period](#default-booking-period)
 - Your badge: [the badge](#your-badge) and [its PIN](#your-badge-pin)
 - How the app looks and reads: [language](#app-language), [theme](#theme), [navigation](#navigation-style), [numbers and dates](#numbers-and-dates), [clock](#clock), [time zone](#show-times-in-my-time-zone), [hints](#restore-the-hints), [front camera](#front-camera-for-scanning), [linked accounts](#linked-accounts)
-- Privacy & your data: [who can see my data](#privacy-who-can-see-my-data), [who sees me](#choose-who-sees-me), [public profile](#publish-a-public-profile), [export](#export-my-data), [erase](#erase-my-data), [rights requests](#rights-requests), [push](#push-notifications-on-this-device), [your rights](#your-data-your-rights)
+- Privacy & your data: [who can see my data](#privacy-who-can-see-my-data), [who sees me](#choose-who-sees-me), [public profile](#publish-a-public-profile), [export](#export-my-data), [erase](#erase-my-data), [rights requests](#rights-requests), [push](#push-notifications-on-this-device), [error reports](#send-error-reports), [your rights](#your-data-your-rights)
 - [Your own server](#your-own-server)
 
 <!-- anchor: user.settings.organisation -->
@@ -2314,6 +2314,29 @@ You want to stop notifications from being sent to this device, or turn them back
 
 - Off, the app keeps working and nothing is sent to this device.
 - On, this device's address and each notification go to the push service.
+
+**See also:** [Your data, your rights](#your-data-your-rights)
+
+<!-- anchor: user.privacy.error-reports -->
+### Send error reports
+
+**Audience:** Everyone
+
+You want to know what the app sends when something goes wrong, or to stop it.
+
+<!-- image: user-privacy-error-reports -->
+
+**Steps**
+
+1. Open [Privacy & data](https://fdittgen-png.github.io/deskilo/#/privacy).
+2. Switch **Send error reports** off or on. It is on until you switch it off, and the choice is kept on this device.
+
+**Good to know**
+
+- A report goes only to the installation you are signed in to, never to another company. Its operator reads it; the businesses you belong to do not.
+- It says which app version, platform and kind of error, and where in the app it happened. It never carries what you typed, the error's own text, an e-mail address, a name or a key.
+- Each person sends at most a set number of reports an hour, a report has a size limit, and the installation deletes reports after a set number of days. The operator sets all three.
+- Off, nothing leaves the device: the error stays in this device's own log. An assistant connected to your account never sends a report.
 
 **See also:** [Your data, your rights](#your-data-your-rights)
 

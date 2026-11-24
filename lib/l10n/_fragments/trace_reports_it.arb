@@ -6,5 +6,8 @@
   "settingLabelTraceReportMaxBytes": "Dimensione massima di una segnalazione di errore",
   "settingHintTraceReportMaxBytes": "La segnalazione di errore più grande che questa installazione accetta. L'app accorcia lo stack della segnalazione prima dell'invio; una segnalazione ancora più grande viene scartata.",
   "settingLabelTraceReportRetentionDays": "Conservare le segnalazioni di errore per",
-  "settingHintTraceReportRetentionDays": "Per quanti giorni questa installazione conserva una segnalazione di errore. Le segnalazioni più vecchie vengono eliminate all'arrivo di una nuova."
+  "settingHintTraceReportRetentionDays": "Per quanti giorni questa installazione conserva una segnalazione di errore. Le segnalazioni più vecchie vengono eliminate all'arrivo di una nuova.",
+  "privacyErrorReports": "Inviare le segnalazioni di errore",
+  "privacyErrorReportsHint": "Quando l'app registra un errore, una segnalazione senza i Suoi dati va all'installazione a cui ha effettuato l'accesso, perché il suo operatore possa correggerlo.",
+  "privacyErrorReportsFailed": "Non è stato possibile salvare la scelta su questo dispositivo."
 }

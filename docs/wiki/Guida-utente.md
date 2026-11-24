@@ -1670,7 +1670,7 @@ In questo capitolo:
 - Il suo account: [foto](#il-suo-account-e-la-sua-foto), [dati personali](#dati-personali), [indirizzo](#il-suo-indirizzo), [partita IVA](#la-sua-partita-iva), [condizioni di pagamento](#le-sue-condizioni-di-pagamento), [WhatsApp](#il-suo-numero-whatsapp), [stato](#la-sua-riga-di-stato), [periodo di prenotazione predefinito](#periodo-di-prenotazione-predefinito)
 - Il suo badge: [il badge](#il-suo-badge) e [il suo PIN](#il-pin-del-suo-badge)
 - Aspetto e lettura dell'app: [lingua](#lingua-dellapp), [tema](#tema), [navigazione](#stile-di-navigazione), [numeri e date](#numeri-e-date), [orologio](#orologio), [fuso orario](#mostra-gli-orari-nel-mio-fuso), [suggerimenti](#ripristinare-i-suggerimenti), [fotocamera frontale](#fotocamera-frontale-per-la-scansione), [account collegati](#account-collegati)
-- Privacy e dati personali: [chi può vedere i miei dati](#privacy-chi-può-vedere-i-miei-dati), [chi mi vede](#scegliere-chi-mi-vede), [profilo pubblico](#pubblicare-un-profilo-pubblico), [esportazione](#esportare-i-miei-dati), [cancellazione](#cancellare-i-miei-dati), [richieste sui diritti](#richieste-sui-diritti), [notifiche push](#notifiche-push-su-questo-dispositivo), [i suoi diritti](#i-suoi-dati-i-suoi-diritti)
+- Privacy e dati personali: [chi può vedere i miei dati](#privacy-chi-può-vedere-i-miei-dati), [chi mi vede](#scegliere-chi-mi-vede), [profilo pubblico](#pubblicare-un-profilo-pubblico), [esportazione](#esportare-i-miei-dati), [cancellazione](#cancellare-i-miei-dati), [richieste sui diritti](#richieste-sui-diritti), [notifiche push](#notifiche-push-su-questo-dispositivo), [segnalazioni di errore](#inviare-le-segnalazioni-di-errore), [i suoi diritti](#i-suoi-dati-i-suoi-diritti)
 - [Il suo server](#il-suo-server)
 
 <!-- anchor: user.settings.organisation -->
@@ -2314,6 +2314,29 @@ Vuole che non vengano più inviate notifiche a questo dispositivo, oppure riatti
 
 - Disattivate, l'app continua a funzionare e nulla viene inviato a questo dispositivo.
 - Attivate, l'indirizzo di questo dispositivo e ogni notifica vanno al servizio push.
+
+**Vedi anche:** [I suoi dati, i suoi diritti](#i-suoi-dati-i-suoi-diritti)
+
+<!-- anchor: user.privacy.error-reports -->
+### Inviare le segnalazioni di errore
+
+**Destinatari:** Tutti
+
+Vuole sapere che cosa invia l'app quando qualcosa va storto, oppure impedirlo.
+
+<!-- image: user-privacy-error-reports -->
+
+**Passaggi**
+
+1. Apra [Privacy e dati](https://fdittgen-png.github.io/deskilo/#/privacy).
+2. Disattivi o attivi **Inviare le segnalazioni di errore**. Resta attivo finché non lo disattiva, e la scelta è conservata su questo dispositivo.
+
+**Da sapere**
+
+- Una segnalazione va solo all'installazione a cui ha effettuato l'accesso, mai a un'altra società. Il suo operatore la legge; le aziende di cui è membro non la vedono.
+- Indica la versione dell'app, la piattaforma, il tipo di errore e il punto dell'app in cui è avvenuto. Non contiene mai ciò che ha digitato, il testo dell'errore, un indirizzo e-mail, un nome o una chiave.
+- Ogni persona invia al massimo un numero stabilito di segnalazioni all'ora, una segnalazione ha una dimensione massima e l'installazione elimina le segnalazioni dopo un numero stabilito di giorni. L'operatore stabilisce tutti e tre.
+- Disattivato, nulla lascia il dispositivo: l'errore resta nel registro di questo dispositivo. Un assistente collegato al Suo account non invia mai una segnalazione.
 
 **Vedi anche:** [I suoi dati, i suoi diritti](#i-suoi-dati-i-suoi-diritti)
 

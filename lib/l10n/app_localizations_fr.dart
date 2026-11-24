@@ -26908,6 +26908,17 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get privacyErrorReports => 'Envoyer les rapports d\'erreur';
+
+  @override
+  String get privacyErrorReportsFailed =>
+      'Le choix n\'a pas pu être enregistré sur cet appareil.';
+
+  @override
+  String get privacyErrorReportsHint =>
+      'Quand l\'application enregistre une erreur, un rapport sans vos données part vers l\'installation à laquelle vous êtes connecté, pour que son opérateur puisse la corriger.';
+
+  @override
   String get privacyExport => 'Exporter mes données';
 
   @override

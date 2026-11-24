@@ -1670,7 +1670,7 @@ Dans ce chapitre :
 - Votre compte : [photo](#votre-compte-et-votre-photo), [informations personnelles](#informations-personnelles), [adresse](#votre-adresse), [numéro de TVA](#votre-numéro-de-tva), [conditions de paiement](#vos-conditions-de-paiement), [WhatsApp](#votre-numéro-whatsapp), [statut](#votre-ligne-de-statut), [période de réservation par défaut](#période-de-réservation-par-défaut)
 - Votre badge : [le badge](#votre-badge) et [son code](#le-code-de-votre-badge)
 - L'aspect et la lecture de l'application : [langue](#langue-de-lapplication), [thème](#thème), [navigation](#style-de-navigation), [nombres et dates](#nombres-et-dates), [horloge](#horloge), [fuseau horaire](#afficher-les-heures-dans-mon-fuseau), [astuces](#rétablir-les-astuces), [caméra avant](#caméra-avant-pour-scanner), [comptes liés](#comptes-liés)
-- Confidentialité et vos données : [qui peut voir mes données](#confidentialité--qui-peut-voir-mes-données), [qui me voit](#choisir-qui-me-voit), [profil public](#publier-un-profil-public), [export](#exporter-mes-données), [effacement](#effacer-mes-données), [demandes d'exercice de droits](#demandes-dexercice-de-droits), [notifications push](#notifications-push-sur-cet-appareil), [vos droits](#vos-données-vos-droits)
+- Confidentialité et vos données : [qui peut voir mes données](#confidentialité--qui-peut-voir-mes-données), [qui me voit](#choisir-qui-me-voit), [profil public](#publier-un-profil-public), [export](#exporter-mes-données), [effacement](#effacer-mes-données), [demandes d'exercice de droits](#demandes-dexercice-de-droits), [notifications push](#notifications-push-sur-cet-appareil), [rapports d'erreur](#envoyer-les-rapports-derreur), [vos droits](#vos-données-vos-droits)
 - [Votre propre serveur](#votre-propre-serveur)
 
 <!-- anchor: user.settings.organisation -->
@@ -2314,6 +2314,29 @@ Vous voulez cesser d'envoyer des notifications à cet appareil, ou les réactive
 
 - Désactivé, l'application continue de fonctionner et rien n'est envoyé à cet appareil.
 - Activé, l'adresse de cet appareil et chaque notification passent par le service de notifications push.
+
+**Voir aussi:** [Vos données, vos droits](#vos-données-vos-droits)
+
+<!-- anchor: user.privacy.error-reports -->
+### Envoyer les rapports d'erreur
+
+**Public:** Tout le monde
+
+Vous voulez savoir ce que l'application envoie quand quelque chose se passe mal, ou l'en empêcher.
+
+<!-- image: user-privacy-error-reports -->
+
+**Étapes**
+
+1. Ouvrez [Confidentialité et données](https://fdittgen-png.github.io/deskilo/#/privacy).
+2. Désactivez ou activez **Envoyer les rapports d'erreur**. Il reste activé tant que vous ne le désactivez pas, et le choix est conservé sur cet appareil.
+
+**Bon à savoir**
+
+- Un rapport part uniquement vers l'installation à laquelle vous êtes connecté, jamais vers une autre société. Son opérateur le lit ; les entreprises dont vous êtes membre ne le voient pas.
+- Il indique la version de l'application, la plateforme, le type d'erreur et l'endroit de l'application où elle s'est produite. Il ne contient jamais ce que vous avez saisi, le texte de l'erreur, une adresse e-mail, un nom ou une clé.
+- Chaque personne envoie au plus un nombre fixé de rapports par heure, un rapport a une taille maximale, et l'installation supprime les rapports après un nombre de jours fixé. L'opérateur règle les trois.
+- Désactivé, rien ne quitte l'appareil : l'erreur reste dans le journal de cet appareil. Un assistant relié à votre compte n'envoie jamais de rapport.
 
 **Voir aussi:** [Vos données, vos droits](#vos-données-vos-droits)
 

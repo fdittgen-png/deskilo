@@ -26865,6 +26865,17 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get privacyErrorReports => 'Fehlerberichte senden';
+
+  @override
+  String get privacyErrorReportsFailed =>
+      'Die Auswahl konnte auf diesem Gerät nicht gespeichert werden.';
+
+  @override
+  String get privacyErrorReportsHint =>
+      'Wenn die App einen Fehler aufzeichnet, geht ein Bericht ohne Ihre Daten an die Installation, bei der Sie angemeldet sind, damit ihr Betreiber ihn beheben kann.';
+
+  @override
   String get privacyExport => 'Meine Daten exportieren';
 
   @override

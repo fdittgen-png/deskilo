@@ -27,5 +27,17 @@
   "settingHintTraceReportRetentionDays": "How many days this installation keeps an error report. Older reports are deleted when a new one arrives.",
   "@settingHintTraceReportRetentionDays": {
     "description": "#4416 Platform setting trace.report_retention_days: what it decides, under its name"
+  },
+  "privacyErrorReports": "Send error reports",
+  "@privacyErrorReports": {
+    "description": "#4416 Privacy switch: send the errors the app records to the installation"
+  },
+  "privacyErrorReportsHint": "When the app records an error, a report without your data goes to the installation you are signed in to, so its operator can fix it.",
+  "@privacyErrorReportsHint": {
+    "description": "#4416 Privacy switch: what is sent and where, under its name"
+  },
+  "privacyErrorReportsFailed": "The choice could not be saved on this device.",
+  "@privacyErrorReportsFailed": {
+    "description": "#4416 Privacy switch: the switch could not be stored"
   }
 }

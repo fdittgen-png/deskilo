@@ -98,6 +98,7 @@
   "user.privacy.erase": "Erase my data",
   "user.privacy.requests": "Rights requests",
   "user.privacy.push": "Push notifications on this device",
+  "user.privacy.error-reports": "Send error reports",
   "user.privacy.consent": "Your data, your rights",
   "user.backend.server": "Your own server",
   "user.backend.how": "How to run your own",

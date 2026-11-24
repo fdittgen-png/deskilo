@@ -1670,7 +1670,7 @@ En este capítulo:
 - Su cuenta: [foto](#su-cuenta-y-su-foto), [datos personales](#datos-personales), [dirección](#su-dirección), [NIF-IVA](#su-nif-iva), [condiciones de pago](#sus-condiciones-de-pago), [WhatsApp](#su-número-de-whatsapp), [estado](#su-línea-de-estado), [período de reserva predeterminado](#período-de-reserva-predeterminado)
 - Su credencial: [la credencial](#su-credencial) y [su PIN](#el-pin-de-su-credencial)
 - Cómo se ve y se lee la app: [idioma](#idioma-de-la-app), [tema](#tema), [navegación](#estilo-de-navegación), [números y fechas](#números-y-fechas), [reloj](#reloj), [zona horaria](#mostrar-las-horas-en-mi-zona-horaria), [consejos](#restaurar-los-consejos), [cámara frontal](#cámara-frontal-para-escanear), [cuentas vinculadas](#cuentas-vinculadas)
-- Privacidad y sus datos: [quién puede ver mis datos](#privacidad-quién-puede-ver-mis-datos), [quién me ve](#elegir-quién-me-ve), [perfil público](#publicar-un-perfil-público), [exportar](#exportar-mis-datos), [borrar](#borrar-mis-datos), [solicitudes de derechos](#solicitudes-de-derechos), [push](#notificaciones-push-en-este-dispositivo), [sus derechos](#tus-datos-tus-derechos)
+- Privacidad y sus datos: [quién puede ver mis datos](#privacidad-quién-puede-ver-mis-datos), [quién me ve](#elegir-quién-me-ve), [perfil público](#publicar-un-perfil-público), [exportar](#exportar-mis-datos), [borrar](#borrar-mis-datos), [solicitudes de derechos](#solicitudes-de-derechos), [push](#notificaciones-push-en-este-dispositivo), [informes de error](#enviar-informes-de-error), [sus derechos](#tus-datos-tus-derechos)
 - [Su propio servidor](#su-propio-servidor)
 
 <!-- anchor: user.settings.organisation -->
@@ -2314,6 +2314,29 @@ Usted quiere dejar de recibir notificaciones en este dispositivo, o volver a act
 
 - Desactivado, la app sigue funcionando y no se envía nada a este dispositivo.
 - Activado, la dirección de este dispositivo y cada notificación pasan por el servicio push.
+
+**Véase también:** [Tus datos, tus derechos](#tus-datos-tus-derechos)
+
+<!-- anchor: user.privacy.error-reports -->
+### Enviar informes de error
+
+**Público:** Todos
+
+Usted quiere saber qué envía la app cuando algo falla, o impedirlo.
+
+<!-- image: user-privacy-error-reports -->
+
+**Pasos**
+
+1. Abra [Privacidad y datos](https://fdittgen-png.github.io/deskilo/#/privacy).
+2. Desactive o active **Enviar informes de error**. Está activado hasta que lo desactive, y la elección se guarda en este dispositivo.
+
+**Conviene saber**
+
+- Un informe solo va a la instalación en la que ha iniciado sesión, nunca a otra empresa. Su operador lo lee; las empresas de las que es miembro no lo ven.
+- Indica la versión de la app, la plataforma, el tipo de error y el lugar de la app donde ocurrió. Nunca lleva lo que usted escribió, el texto del error, una dirección de correo, un nombre ni una clave.
+- Cada persona envía como mucho un número fijado de informes por hora, un informe tiene un tamaño máximo y la instalación borra los informes tras un número fijado de días. El operador fija los tres.
+- Desactivado, nada sale del dispositivo: el error queda en el registro de este dispositivo. Un asistente conectado a su cuenta nunca envía un informe.
 
 **Véase también:** [Tus datos, tus derechos](#tus-datos-tus-derechos)
 

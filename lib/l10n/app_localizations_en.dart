@@ -26603,6 +26603,17 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get privacyErrorReports => 'Send error reports';
+
+  @override
+  String get privacyErrorReportsFailed =>
+      'The choice could not be saved on this device.';
+
+  @override
+  String get privacyErrorReportsHint =>
+      'When the app records an error, a report without your data goes to the installation you are signed in to, so its operator can fix it.';
+
+  @override
   String get privacyExport => 'Export my data';
 
   @override

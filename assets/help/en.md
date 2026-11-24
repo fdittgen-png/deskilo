@@ -1600,7 +1600,7 @@ In this chapter:
 - Your account: [photo](help:user.profile.settings.photo), [personal information](help:user.profile.settings.personal-info), [address](help:user.profile.settings.address), [VAT number](help:user.profile.settings.vat-id), [payment terms](help:user.profile.settings.payment-terms), [WhatsApp](help:user.profile.settings.whatsapp), [status](help:user.profile.settings.status), [default booking period](help:user.profile.settings.default-period)
 - Your badge: [the badge](help:user.profile.settings.badge) and [its PIN](help:user.profile.settings.badge-pin)
 - How the app looks and reads: [language](help:user.profile.settings.language), [theme](help:user.profile.settings.theme), [navigation](help:user.profile.settings.navigation), [numbers and dates](help:user.profile.settings.regional-formats), [clock](help:user.profile.settings.clock), [time zone](help:user.profile.settings.device-zone), [hints](help:user.profile.settings.restore-hints), [front camera](help:user.profile.settings.front-camera), [linked accounts](help:user.profile.settings.linked-accounts)
-- Privacy & your data: [who can see my data](help:user.privacy.visibility), [who sees me](help:user.privacy.audiences), [public profile](help:user.privacy.public-profile), [export](help:user.privacy.export), [erase](help:user.privacy.erase), [rights requests](help:user.privacy.requests), [push](help:user.privacy.push), [your rights](help:user.privacy.consent)
+- Privacy & your data: [who can see my data](help:user.privacy.visibility), [who sees me](help:user.privacy.audiences), [public profile](help:user.privacy.public-profile), [export](help:user.privacy.export), [erase](help:user.privacy.erase), [rights requests](help:user.privacy.requests), [push](help:user.privacy.push), [error reports](help:user.privacy.error-reports), [your rights](help:user.privacy.consent)
 - [Your own server](help:user.backend.server)
 
 ### How Settings is organised
@@ -2217,6 +2217,28 @@ You want to stop notifications from being sent to this device, or turn them back
 
 - Off, the app keeps working and nothing is sent to this device.
 - On, this device's address and each notification go to the push service.
+
+**See also:** [Your data, your rights](help:user.privacy.consent)
+
+### Send error reports
+
+**Audience:** Everyone
+
+You want to know what the app sends when something goes wrong, or to stop it.
+
+<!-- image: user-privacy-error-reports -->
+
+**Steps**
+
+1. Open [Privacy & data](app:/privacy).
+2. Switch **Send error reports** off or on. It is on until you switch it off, and the choice is kept on this device.
+
+**Good to know**
+
+- A report goes only to the installation you are signed in to, never to another company. Its operator reads it; the businesses you belong to do not.
+- It says which app version, platform and kind of error, and where in the app it happened. It never carries what you typed, the error's own text, an e-mail address, a name or a key.
+- Each person sends at most a set number of reports an hour, a report has a size limit, and the installation deletes reports after a set number of days. The operator sets all three.
+- Off, nothing leaves the device: the error stays in this device's own log. An assistant connected to your account never sends a report.
 
 **See also:** [Your data, your rights](help:user.privacy.consent)
 

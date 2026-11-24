@@ -26827,6 +26827,17 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get privacyErrorReports => 'Inviare le segnalazioni di errore';
+
+  @override
+  String get privacyErrorReportsFailed =>
+      'Non è stato possibile salvare la scelta su questo dispositivo.';
+
+  @override
+  String get privacyErrorReportsHint =>
+      'Quando l\'app registra un errore, una segnalazione senza i Suoi dati va all\'installazione a cui ha effettuato l\'accesso, perché il suo operatore possa correggerlo.';
+
+  @override
   String get privacyExport => 'Esporta i miei dati';
 
   @override

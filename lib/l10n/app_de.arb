@@ -15313,6 +15313,9 @@
       }
     }
   },
+  "privacyErrorReports": "Fehlerberichte senden",
+  "privacyErrorReportsFailed": "Die Auswahl konnte auf diesem Gerät nicht gespeichert werden.",
+  "privacyErrorReportsHint": "Wenn die App einen Fehler aufzeichnet, geht ein Bericht ohne Ihre Daten an die Installation, bei der Sie angemeldet sind, damit ihr Betreiber ihn beheben kann.",
   "privacyExport": "Meine Daten exportieren",
   "@privacyExport": {
     "description": "#719 - privacy & data"

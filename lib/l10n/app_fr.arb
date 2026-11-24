@@ -15313,6 +15313,9 @@
       }
     }
   },
+  "privacyErrorReports": "Envoyer les rapports d'erreur",
+  "privacyErrorReportsFailed": "Le choix n'a pas pu être enregistré sur cet appareil.",
+  "privacyErrorReportsHint": "Quand l'application enregistre une erreur, un rapport sans vos données part vers l'installation à laquelle vous êtes connecté, pour que son opérateur puisse la corriger.",
   "privacyExport": "Exporter mes données",
   "@privacyExport": {
     "description": "#719 - privacy & data"

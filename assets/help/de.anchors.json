@@ -98,6 +98,7 @@
   "user.privacy.erase": "Meine Daten löschen",
   "user.privacy.requests": "Anträge auf Betroffenenrechte",
   "user.privacy.push": "Push-Benachrichtigungen auf diesem Gerät",
+  "user.privacy.error-reports": "Fehlerberichte senden",
   "user.privacy.consent": "Ihre Daten, Ihre Rechte",
   "user.backend.server": "Ihr eigener Server",
   "user.backend.how": "So betreiben Sie einen eigenen",

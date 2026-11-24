@@ -1600,7 +1600,7 @@ In diesem Kapitel:
 - Ihr Konto: [Foto](help:user.profile.settings.photo), [persönliche Angaben](help:user.profile.settings.personal-info), [Adresse](help:user.profile.settings.address), [USt-IdNr.](help:user.profile.settings.vat-id), [Zahlungsbedingungen](help:user.profile.settings.payment-terms), [WhatsApp](help:user.profile.settings.whatsapp), [Status](help:user.profile.settings.status), [Standard-Buchungszeitraum](help:user.profile.settings.default-period)
 - Ihr Badge: [das Badge](help:user.profile.settings.badge) und [seine PIN](help:user.profile.settings.badge-pin)
 - Wie die App aussieht und liest: [Sprache](help:user.profile.settings.language), [Design](help:user.profile.settings.theme), [Navigation](help:user.profile.settings.navigation), [Zahlen und Daten](help:user.profile.settings.regional-formats), [Uhr](help:user.profile.settings.clock), [Zeitzone](help:user.profile.settings.device-zone), [Hinweise](help:user.profile.settings.restore-hints), [Frontkamera](help:user.profile.settings.front-camera), [verknüpfte Konten](help:user.profile.settings.linked-accounts)
-- Datenschutz und Ihre Daten: [wer meine Daten sehen kann](help:user.privacy.visibility), [wer mich sieht](help:user.privacy.audiences), [öffentliches Profil](help:user.privacy.public-profile), [Export](help:user.privacy.export), [Löschen](help:user.privacy.erase), [Anträge auf Betroffenenrechte](help:user.privacy.requests), [Push](help:user.privacy.push), [Ihre Rechte](help:user.privacy.consent)
+- Datenschutz und Ihre Daten: [wer meine Daten sehen kann](help:user.privacy.visibility), [wer mich sieht](help:user.privacy.audiences), [öffentliches Profil](help:user.privacy.public-profile), [Export](help:user.privacy.export), [Löschen](help:user.privacy.erase), [Anträge auf Betroffenenrechte](help:user.privacy.requests), [Push](help:user.privacy.push), [Fehlerberichte](help:user.privacy.error-reports), [Ihre Rechte](help:user.privacy.consent)
 - [Ihr eigener Server](help:user.backend.server)
 
 ### Wie die Einstellungen aufgebaut sind
@@ -2217,6 +2217,28 @@ Sie möchten verhindern, dass Benachrichtigungen an dieses Gerät gesendet werde
 
 - Ist es aus, funktioniert die App weiter, und an dieses Gerät wird nichts gesendet.
 - Ist es an, gehen die Adresse dieses Geräts und jede Benachrichtigung an den Push-Dienst.
+
+**Siehe auch:** [Ihre Daten, Ihre Rechte](help:user.privacy.consent)
+
+### Fehlerberichte senden
+
+**Zielgruppe:** Alle
+
+Sie möchten wissen, was die App sendet, wenn etwas schiefgeht, oder es abstellen.
+
+<!-- image: user-privacy-error-reports -->
+
+**Schritte**
+
+1. Öffnen Sie [Datenschutz & Daten](app:/privacy).
+2. Schalten Sie **Fehlerberichte senden** aus oder ein. Es ist an, bis Sie es ausschalten, und die Wahl bleibt auf diesem Gerät gespeichert.
+
+**Gut zu wissen**
+
+- Ein Bericht geht nur an die Installation, bei der Sie angemeldet sind, nie an ein anderes Unternehmen. Ihr Betreiber liest ihn; die Unternehmen, bei denen Sie Mitglied sind, sehen ihn nicht.
+- Er nennt die App-Version, die Plattform, die Art des Fehlers und die Stelle der App, an der er auftrat. Er enthält nie, was Sie eingegeben haben, den Text des Fehlers, eine E-Mail-Adresse, einen Namen oder einen Schlüssel.
+- Jede Person sendet höchstens eine festgelegte Zahl von Berichten pro Stunde, ein Bericht hat eine Größengrenze, und die Installation löscht Berichte nach einer festgelegten Zahl von Tagen. Alle drei legt der Betreiber fest.
+- Ist es aus, verlässt nichts das Gerät: Der Fehler bleibt im Protokoll dieses Geräts. Ein mit Ihrem Konto verbundener Assistent sendet nie einen Bericht.
 
 **Siehe auch:** [Ihre Daten, Ihre Rechte](help:user.privacy.consent)
 

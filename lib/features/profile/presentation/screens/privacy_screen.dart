@@ -159,6 +159,8 @@ class PrivacyScreen extends ConsumerWidget {
         const SpaceNoticeTile(),
         // #1914 — optional push delivery, off or on for this device.
         const PushOptOutTile(),
+        // #4416 — errors the app records, to this installation or not.
+        const ErrorReportsTile(),
         ListTile(
           key: const ValueKey('privacy-consent'),
           leading: const Icon(Icons.fact_check_outlined),
