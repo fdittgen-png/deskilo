@@ -16,7 +16,16 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../tool/dead_code/scan.dart';
 
 /// `path::name` → why it stays public, naming the issue that resolves it.
-const Map<String, String> _allowed = {};
+const Map<String, String> _allowed = {
+  // The offline till (CS11): the till screen is the consumer that makes them
+  // public on purpose.
+  'lib/features/money/domain/till_offline.dart::majorText':
+      '#4373 — the till screen shows the cash given and the change',
+  'lib/features/money/domain/till_offline_queue.dart::OfflineRecordRefused':
+      '#4373 — the till screen shows why an offline sale was refused',
+  'lib/features/money/domain/till_offline_queue.dart::OfflineBasketLine':
+      '#4373 — the till screen builds the basket it queues',
+};
 
 void main() {
   final findings = scanPublicSurface(Directory.current.path);

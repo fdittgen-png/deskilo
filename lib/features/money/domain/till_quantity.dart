@@ -33,3 +33,11 @@ String _text(int units) {
   final fraction = (units % _scale).toString().padLeft(6, '0').replaceFirst(RegExp(r'0+$'), '');
   return fraction.isEmpty ? '$whole' : '$whole.$fraction';
 }
+
+/// What [unitMinor] (minor units of one unit) times [quantity] (an exact quantity text) comes to, rounded half up once;
+/// null when [quantity] is not a quantity. The server rounds a line the same way (`half_up_per_line`).
+int? tillLineAmount(int unitMinor, String quantity) {
+  if (!_quantityShape.hasMatch(quantity)) return null;
+  final scaled = unitMinor * _units(quantity);
+  return (scaled + _scale ~/ 2) ~/ _scale;
+}

@@ -365,5 +365,13 @@
     "description": "#4435 the handling units feature: what it does"
   },
   "featureStockTagReadsTitle": "Lectura de muchas etiquetas",
-  "featureStockTagReadsDesc": "Un lector UHF en modo teclado lee muchas etiquetas a la vez para recibir, mover y contar: las etiquetas se reúnen, se eliminan duplicados y se resuelven, y no se envía nada hasta que la persona confirma."
+  "featureStockTagReadsDesc": "Un lector UHF en modo teclado lee muchas etiquetas a la vez para recibir, mover y contar: las etiquetas se reúnen, se eliminan duplicados y se resuelven, y no se envía nada hasta que la persona confirma.",
+  "featureCounterOfflineCashTitle": "Vender sin conexión, solo en efectivo",
+  "@featureCounterOfflineCashTitle": {
+    "description": "#4373 feature name"
+  },
+  "featureCounterOfflineCashDesc": "Si se pierde la conexión, la caja sigue vendiendo en efectivo, guarda cada venta en el dispositivo y envía las ventas en orden cuando vuelve la conexión. Los demás medios de pago esperan la conexión.",
+  "@featureCounterOfflineCashDesc": {
+    "description": "#4373 feature description"
+  }
 }

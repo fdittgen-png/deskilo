@@ -12,7 +12,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/help/help_anchors.dart';
 import '../../../core/help/help_dot.dart';
 import '../../../core/l10n/context_l10n.dart';
+import '../../../core/scan/scan_scope.dart';
 import '../../../core/theme/app_spacing.dart';
+import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/adaptive/window_class.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../core/ui/kit/page_title.dart';
@@ -24,13 +26,19 @@ import 'till_cash_dialog.dart';
 import 'till_session.dart';
 import 'till_text.dart';
 
+/// What a code scanned at the till rings up, as the route reads it from the stock (#4436).
+typedef TillScanReader = Future<TillScan> Function(String code);
+
 /// The till. [keys] are the items it offers, read by the route from the stock: the till does not know the stock.
 class TillScreen extends ConsumerWidget {
-  const TillScreen({super.key, required this.workspaceId, required this.keys});
+  const TillScreen({super.key, required this.workspaceId, required this.keys, this.scan});
 
   /// The open business; null while it is being read.
   final String? workspaceId;
   final AsyncValue<List<TillKey>> keys;
+
+  /// #4436 -- reads a scanned code (an item, or one piece by its tag); null where the business uses no scanner.
+  final TillScanReader? scan;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -40,17 +48,18 @@ class TillScreen extends ConsumerWidget {
         title: PageTitle(context.l10n.tillTitle),
         actions: [HelpDot(context.l10n.tillTitle, anchor: HelpAnchor.moneyTill)],
       ),
-      body: workspaceId == null ? const LoadingView() : _Readiness(workspaceId: workspaceId, keys: keys),
+      body: workspaceId == null ? const LoadingView() : _Readiness(workspaceId: workspaceId, keys: keys, scan: scan),
     );
   }
 }
 
 /// The till opens only where the country's operations are supported.
 class _Readiness extends ConsumerWidget {
-  const _Readiness({required this.workspaceId, required this.keys});
+  const _Readiness({required this.workspaceId, required this.keys, this.scan});
 
   final String workspaceId;
   final AsyncValue<List<TillKey>> keys;
+  final TillScanReader? scan;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -64,7 +73,7 @@ class _Readiness extends ConsumerWidget {
             onRetry: () => ref.invalidate(tillReadinessProvider(workspaceId)),
           ),
           data: (readiness) => readiness.ready
-              ? _Till(key: ValueKey('till-$workspaceId'), workspaceId: workspaceId, keys: keys)
+              ? _Till(key: ValueKey('till-$workspaceId'), workspaceId: workspaceId, keys: keys, scan: scan)
               : _Notice(
                   key: const ValueKey('till-not-ready'),
                   text: l10n.tillNotReady(
@@ -103,10 +112,11 @@ class _Notice extends StatelessWidget {
 }
 
 class _Till extends ConsumerStatefulWidget {
-  const _Till({super.key, required this.workspaceId, required this.keys});
+  const _Till({super.key, required this.workspaceId, required this.keys, this.scan});
 
   final String workspaceId;
   final AsyncValue<List<TillKey>> keys;
+  final TillScanReader? scan;
 
   @override
   ConsumerState<_Till> createState() => _TillState();
@@ -153,6 +163,29 @@ class _TillState extends ConsumerState<_Till> {
     if (!ok && mounted) _session.reject(l10n.tillQuantityRefused);
   }
 
+  /// #4436 -- a scanned code: an item rings one up, a piece's tag rings up that piece, anything else is said.
+  Future<void> _scanned(String code) async {
+    final l10n = context.l10n;
+    final scan = widget.scan;
+    if (scan == null) return;
+    final TillScan found;
+    try {
+      found = await scan(code);
+    } on Object catch (e, st) {
+      TraceLogger.instance.warn('money', 'a code scanned at the till could not be read', error: e, stackTrace: st);
+      _session.reject(l10n.tillFailed);
+      return;
+    }
+    switch (found) {
+      case TillScanItem(:final key):
+        await _session.add(itemId: key.id, name: key.name, unit: key.unit);
+      case TillScanPiece(:final key, :final tag):
+        await _session.addPiece(itemId: key.id, name: key.name, unit: key.unit, tag: tag, twice: l10n.tillPieceTwice(tag));
+      case TillScanUnknown(:final code):
+        _session.reject(l10n.tillScanUnknown(code));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
         return ValueListenableBuilder<TillState>(
@@ -162,7 +195,7 @@ class _TillState extends ConsumerState<_Till> {
         onPopInvokedWithResult: (didPop, _) {
           if (!didPop) unawaited(_asked(context));
         },
-        child: child!,
+        child: ScanScope(enabled: widget.scan != null, onScan: (code) => unawaited(_scanned(code)), child: child!),
       ),
       child: LayoutBuilder(
       builder: (context, box) {

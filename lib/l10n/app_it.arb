@@ -7241,6 +7241,14 @@
   "@featureConfigurationTransferDesc": {
     "description": "#916 configuration transfer: featureConfigurationTransferDesc"
   },
+  "featureCounterOfflineCashDesc": "Quando la connessione cade, la cassa continua a vendere in contanti, registra ogni vendita sul dispositivo e invia le vendite in ordine al ritorno della connessione. Gli altri metodi di pagamento attendono la connessione.",
+  "@featureCounterOfflineCashDesc": {
+    "description": "#4373 feature description"
+  },
+  "featureCounterOfflineCashTitle": "Vendere offline, solo in contanti",
+  "@featureCounterOfflineCashTitle": {
+    "description": "#4373 feature name"
+  },
   "featureCounterReceiptsDesc": "Una vendita al banco dà uno scontrino immutabile, numerato una sola volta, con il pagamento ricevuto. È offerto solo dove l'operazione del paese è supportata e dice chiaramente quando non lo è.",
   "featureCounterReceiptsTitle": "Scontrini di cassa",
   "featureCounterTillSessionsDesc": "Apra una cassa con il suo fondo, conti il cassetto alla chiusura e chiuda la giornata con il suo rapporto. Una vendita richiede una cassa aperta; il contante atteso si ricava da quanto incassato, mai digitato.",
@@ -16659,6 +16667,10 @@
   "refusalCounterEssentials": "A questo scontrino manca qualcosa o non è accettabile: non è stato numerato nulla e non è stato incassato nulla.",
   "refusalCounterGoods": "Qui le merci non si possono vendere né riprendere: il registro delle merci è spento, oppure non c'è un luogo da cui prenderle o in cui rimetterle.",
   "refusalCounterNotOpen": "Questo scontrino non è più una bozza aperta, oppure per la stessa vendita ne è già stato emesso uno.",
+  "refusalCounterOfflineConflict": "Una vendita inviata dalla cassa con questo numero è già stata ricevuta con un altro contenuto. Non è stato registrato nulla di nuovo; consultate l'elenco delle vendite offline.",
+  "@refusalCounterOfflineConflict": {
+    "description": "#4373 refusal"
+  },
   "refusalCounterTenderState": "Questa autorizzazione della carta è ancora aperta, sconosciuta o già conclusa: chieda al fornitore invece di richiederla di nuovo.",
   "refusalCounterTenders": "I pagamenti non saldano esattamente questa vendita, oppure uno di essi non è accettato qui.",
   "refusalCounterTill": "La cassa non è pronta per questo: la apra prima, oppure è già aperta o chiusa.",
@@ -19145,6 +19157,18 @@
   "settingHintCounterCustomerlessSales": "Consentite: si può vendere senza indicare un cliente. Rifiutate: ogni vendita ne indica uno. Una vendita senza cliente non crea mai un account, un socio o un abbonamento.",
   "settingHintCounterDocumentChannel": "Condiviso (messaggio o posta), stampato o entrambi. Lo scontrino è lo stesso documento immutabile in ogni caso.",
   "settingHintCounterFiscalObligation": "Ciò che dichiara sulle regole fiscali di una vendita al banco: nessuna significa che al Suo esercizio non si applica alcun obbligo fiscale di registratore (una Sua dichiarazione, annotata su ogni scontrino); registratore richiesto significa che si applica. Lo scontrino è emesso solo dove l'operazione del Suo paese è supportata nel caso dichiarato.",
+  "settingHintCounterOfflineMaxMinutes": "Per quanto tempo dopo la perdita della connessione una vendita in contanti fatta offline è ancora accettata all'invio. Le vendite successive sono rifiutate ed elencate per il titolare.",
+  "@settingHintCounterOfflineMaxMinutes": {
+    "description": "#4373 setting hint"
+  },
+  "settingHintCounterOfflineMaxSales": "Quante vendite in contanti fatte offline accetta una sessione di cassa. Le successive sono rifiutate ed elencate.",
+  "@settingHintCounterOfflineMaxSales": {
+    "description": "#4373 setting hint"
+  },
+  "settingHintCounterOfflinePriceTolerance": "Di quanto, in percentuale, il prezzo di una vendita offline può differire dal prezzo dell'articolo all'invio. 0 significa che il prezzo deve essere identico.",
+  "@settingHintCounterOfflinePriceTolerance": {
+    "description": "#4373 setting hint"
+  },
   "settingHintCounterPaidOutLimit": "L'importo massimo, in unità minori della valuta dell'attività (centesimi), di un prelievo dal cassetto senza qualcuno che possa registrare pagamenti in uscita. 0 significa nessun limite.",
   "settingHintDirectoryGeocoderUrl": "Il servizio compatibile con Photon che colloca un indirizzo pubblicato sulla mappa di scoperta: un indirizzo https sull'internet pubblica, senza nome utente, password, query né #. Lasci vuoto per usare l'indirizzo con cui è stata costruita questa versione dell'app, altrimenti il servizio pubblico Photon.",
   "settingHintDirectoryTileUrlTemplate": "Il server delle tessere da cui è disegnata la mappa di scoperta, con i segnaposto z, x e y tra parentesi graffe nell'indirizzo (s tra parentesi graffe per un sottodominio è ammesso): https, sull'internet pubblica, senza nome utente, password né #. Lasci vuoto per usare il server di questa versione dell'app, altrimenti OpenStreetMap. Un nuovo host chiede di nuovo a ogni persona prima che la mappa si carichi.",
@@ -19385,6 +19409,18 @@
   "settingLabelCounterCustomerlessSales": "Vendite senza cliente indicato",
   "settingLabelCounterDocumentChannel": "Come lo scontrino lascia il banco",
   "settingLabelCounterFiscalObligation": "Regole fiscali delle vendite al banco",
+  "settingLabelCounterOfflineMaxMinutes": "Durata massima offline (minuti)",
+  "@settingLabelCounterOfflineMaxMinutes": {
+    "description": "#4373 setting label"
+  },
+  "settingLabelCounterOfflineMaxSales": "Massimo di vendite offline per sessione di cassa",
+  "@settingLabelCounterOfflineMaxSales": {
+    "description": "#4373 setting label"
+  },
+  "settingLabelCounterOfflinePriceTolerance": "Differenza di prezzo ammessa offline (%)",
+  "@settingLabelCounterOfflinePriceTolerance": {
+    "description": "#4373 setting label"
+  },
   "settingLabelCounterPaidOutLimit": "Prelievo massimo senza autorizzazione",
   "settingLabelDirectoryGeocoderUrl": "Servizio di ricerca indirizzi",
   "settingLabelDirectoryTileUrlTemplate": "Server delle tessere della mappa",
@@ -23746,6 +23782,15 @@
   "tillOpReconcileTender": "riconciliazione di un pagamento con carta",
   "tillOpSignFiscal": "firma di uno scontrino fiscale",
   "tillPayCash": "Incassare in contanti",
+  "tillPieceTwice": "Il pezzo {code} è già nel carrello.",
+  "@tillPieceTwice": {
+    "description": "#4436 the till: a piece scanned a second time into the same basket",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
   "tillPricing": "Calcolo del carrello…",
   "tillQuantityHint": "Una quantità esatta, per esempio 1 oppure 0,350.",
   "tillQuantityRefused": "Inserisca una quantità superiore a zero con al massimo sei decimali.",
@@ -23756,10 +23801,40 @@
   "@tillRetry": {
     "description": "#4366 the till: ask the server again"
   },
+  "tillScanUnknown": "{code} non è un articolo venduto da questa cassa.",
+  "@tillScanUnknown": {
+    "description": "#4436 the till: a scanned code that names nothing the till rings up",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
   "tillSoldTitle": "Venduto",
   "tillTaxIncluded": "di cui imposta {amount}",
   "tillTitle": "Cassa",
   "tillTotalDue": "Totale da pagare: {amount}",
+  "tillTrackLot": "Lotto {code} × {quantity}",
+  "@tillTrackLot": {
+    "description": "#4436 the till: a lot a sold line took, its code as received and the quantity taken from it",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      }
+    }
+  },
+  "tillTrackPiece": "Pezzo {code}",
+  "@tillTrackPiece": {
+    "description": "#4436 the till: a piece a sold line took, named by its tag",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
   "tipAvailabilityClosure": "Per chiudere un giorno che nessuno potrà prenotare: tocchi «Aggiungi giorno di chiusura» e indichi un motivo, se vuole.",
   "tipAvailabilityDays": "Per impostare i giorni di apertura: selezioni i giorni sotto «Giorni di apertura».",
   "tipAvailabilityGrid": "Per scegliere come si dividono le prenotazioni: scelga una «Granularità delle prenotazioni» — periodi liberi, fasce, mezze giornate o giornate intere.",
