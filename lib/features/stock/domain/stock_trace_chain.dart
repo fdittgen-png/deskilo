@@ -35,7 +35,7 @@ class TraceDocument {
         _ => TraceDocumentKind.other,
       },
       id: r.stringOrNull('id'),
-      label: json['label']?.toString(),
+      label: r.textOrAbsent('label') ?? r.intOrNull('label')?.toString(),
       supplier: r.stringOrNull('supplier'),
       available: r.stringOr('state') != 'unavailable',
     );
@@ -68,17 +68,16 @@ class TraceStep {
 
   factory TraceStep.fromJson(Object? json) {
     final r = JsonReader.of(json, context: 'stock_trace_chain.step');
-    final m = json! as Map;
-    String code(String k) => (m[k] is Map ? (m[k] as Map)['code'] : null)?.toString() ?? '';
+    String code(String k) => r.objectOrNull(k)?.stringOr('code') ?? '';
     return TraceStep(
       movementId: r.string('movement_id'),
       at: DateTime.parse(r.string('at')),
       reason: r.string('reason'),
-      quantity: ExactQuantity.parse('${m['quantity']}'),
+      quantity: ExactQuantity.parse('${r.numeric('quantity')}'),
       fromCode: code('from'),
       toCode: code('to'),
       pieces: r.intOrNull('pieces'),
-      document: TraceDocument.fromJson(m['document']),
+      document: TraceDocument.fromJson(r.objectOrNull('document')?.json),
     );
   }
 }
@@ -101,14 +100,12 @@ class TraceChain {
 
   factory TraceChain.fromJson(Object? json) {
     final r = JsonReader.of(json, context: 'stock_trace_chain');
-    final m = json! as Map;
-    final lot = m['lot'] is Map ? m['lot'] as Map : const <String, Object?>{};
-    final piece = m['piece'] is Map ? m['piece'] as Map : const <String, Object?>{};
+    final piece = r.objectOrNull('piece');
     return TraceChain(
       subject: r.string('subject'),
-      lotCode: lot['code']?.toString(),
-      pieceTag: piece['tag']?.toString(),
-      piecePlace: piece['place'] is Map ? (piece['place'] as Map)['code']?.toString() : null,
+      lotCode: r.objectOrNull('lot')?.stringOrNull('code'),
+      pieceTag: piece?.stringOrNull('tag'),
+      piecePlace: piece?.objectOrNull('place')?.stringOrNull('code'),
       steps: [for (final s in r.list('steps')) TraceStep.fromJson(s)],
       truncated: r.boolOr('truncated', fallback: false),
     );
