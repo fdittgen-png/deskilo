@@ -15,6 +15,10 @@ extension InvoiceLineCommercial on InvoiceLine {
     _ => null,
   };
 
+  /// The line's stable id (`commercial.line_id`): what the stock movements and the frozen track IDs name it by.
+  /// Null on a legacy line.
+  String? get commercialLineId => exactFacts?.lineId;
+
   /// A commercial line this reader cannot interpret: it authorises no issue,
   /// correction, stock-out or export, and shows no default quantity.
   CommercialLineUnsupported? get unsupportedFacts => switch (commercial) {
