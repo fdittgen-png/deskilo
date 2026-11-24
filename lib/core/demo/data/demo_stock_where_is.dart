@@ -11,8 +11,6 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'demo_stock_ledger.dart';
 import 'demo_stock_tags.dart';
 
-typedef _Held = ({String place, String? lotId, String? lotCode, ExactQuantity quantity});
-
 class DemoStockWhereIs implements StockWhereIs {
   DemoStockWhereIs(this._ledger, this._tags);
 
@@ -24,11 +22,8 @@ class DemoStockWhereIs implements StockWhereIs {
     final item = _ledger.mine(workspaceId) ? _ledger.itemOf(itemId) : null;
     if (item == null) throw const StockConfigRefused('item_id', StockRefusal.itemUnknown);
     final places = await _ledger.placeConfigs();
-    final moves = [
-      for (final m in _ledger.movements)
-        if (m.itemId == itemId && (lotId == null || m.lotId == lotId) && (at == null || !m.occurredAt.isAfter(at))) m,
-    ];
-    final rows = _placesOf(_replay(moves), places);
+    final moves = _ledger.core.movesOf(itemId, lotId: lotId, at: at);
+    final rows = _ledger.core.whereIs(moves);
     var onHand = ExactQuantity.zero;
     for (final p in rows.where((p) => !p.isVirtual)) {
       onHand = onHand + p.quantity;
@@ -45,42 +40,6 @@ class DemoStockWhereIs implements StockWhereIs {
       transit: at == null ? _transit(itemId, lotId) : null,
       pieces: at == null ? _pieces(itemId, places) : null,
     );
-  }
-
-  /// Every movement adds to its place and takes from the one it left.
-  Map<String, _Held> _replay(List<StockMovementRow> moves) {
-    final held = <String, _Held>{};
-    void add(StockMovementRow m, String place, ExactQuantity q) {
-      final key = '$place|${m.lotId ?? ''}';
-      held[key] = (place: place, lotId: m.lotId, lotCode: m.lotCode, quantity: (held[key]?.quantity ?? ExactQuantity.zero) + q);
-    }
-
-    for (final m in moves) {
-      add(m, m.toLocationId, m.quantity);
-      add(m, m.fromLocationId, ExactQuantity.zero - m.quantity);
-    }
-    return held;
-  }
-
-  List<WhereIsPlace> _placesOf(Map<String, _Held> held, Map<String, StockPlaceConfig> places) {
-    final rows = [
-      for (final h in held.values)
-        if (h.quantity != ExactQuantity.zero)
-          WhereIsPlace(
-            locationId: h.place,
-            locationCode: places[h.place]?.code ?? '',
-            locationName: places[h.place]?.name ?? '',
-            locationKind: places[h.place]?.kind ?? '',
-            isVirtual: places[h.place]?.virtual ?? false,
-            quantity: h.quantity,
-            lotId: h.lotId,
-            lotCode: h.lotCode,
-          ),
-    ];
-    return rows..sort((a, b) {
-      if (a.isVirtual != b.isVirtual) return a.isVirtual ? 1 : -1;
-      return a.locationCode.compareTo(b.locationCode);
-    });
   }
 
   bool _leaves(String? kind) => kind == 'customer' || kind == 'loss';

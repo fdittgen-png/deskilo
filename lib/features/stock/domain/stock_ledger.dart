@@ -18,6 +18,7 @@ import 'stock_page.dart';
 import 'stock_receiving.dart';
 import 'stock_reversals.dart';
 import 'stock_sites.dart';
+import 'stock_where_is.dart';
 
 /// One movement to book: [quantity] (inventory unit) of [item] from [from] to [to], with what the person entered
 /// beside it.
@@ -234,6 +235,46 @@ class StockLedger {
     final k = _key(item.id, place, lotId);
     _keys.putIfAbsent(k, () => (item: item, place: place, lotId: lotId, lotCode: lotCode));
     _balances[k] = (_balances[k] ?? ExactQuantity.zero) + delta;
+  }
+
+  /// The movements of [itemId] (of its lot [lotId]) up to [at], newest first.
+  List<StockMovementRow> movesOf(String itemId, {String? lotId, DateTime? at}) => [
+    for (final m in _movements)
+      if (m.itemId == itemId && (lotId == null || m.lotId == lotId) && (at == null || !m.occurredAt.isAfter(at))) m,
+  ];
+
+  /// Where [moves] left the goods: each adds to the place it went to and takes from the one it left, the server's
+  /// own places included (0926 stock_where_is_v1 replays the movements the same way). A place with nothing is left
+  /// out; the real places come first, then by code.
+  List<WhereIsPlace> whereIs(List<StockMovementRow> moves) {
+    final places = _places();
+    final held = <String, ({String place, String? lotId, String? lotCode, ExactQuantity quantity})>{};
+    void add(StockMovementRow m, String place, ExactQuantity q) {
+      final key = '$place|${m.lotId ?? ''}';
+      held[key] = (place: place, lotId: m.lotId, lotCode: m.lotCode, quantity: (held[key]?.quantity ?? ExactQuantity.zero) + q);
+    }
+
+    for (final m in moves) {
+      add(m, m.toLocationId, m.quantity);
+      add(m, m.fromLocationId, ExactQuantity.zero - m.quantity);
+    }
+    return [
+      for (final h in held.values)
+        if (h.quantity != ExactQuantity.zero)
+          WhereIsPlace(
+            locationId: h.place,
+            locationCode: places[h.place]?.code ?? '',
+            locationName: places[h.place]?.name ?? '',
+            locationKind: places[h.place]?.kind ?? '',
+            isVirtual: places[h.place]?.virtual ?? false,
+            quantity: h.quantity,
+            lotId: h.lotId,
+            lotCode: h.lotCode,
+          ),
+    ]..sort((a, b) {
+      if (a.isVirtual != b.isVirtual) return a.isVirtual ? 1 : -1;
+      return a.locationCode.compareTo(b.locationCode);
+    });
   }
 
   // ── the transfers on their way ──────────────────────────────────────────
