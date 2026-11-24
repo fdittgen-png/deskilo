@@ -9,6 +9,7 @@ import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
@@ -365,7 +366,7 @@ class _VatScreenState extends ConsumerState<VatScreen> {
       padding: const EdgeInsets.only(top: AppSpacing.sm),
       child: OutlinedButton.icon(
         key: const ValueKey('vat-declarations-button'),
-        onPressed: () => context.go('/vat-declarations'),
+        onPressed: () => context.go(Routes.vatDeclarations),
         icon: const Icon(Icons.receipt_long_outlined),
         label: Row(mainAxisSize: MainAxisSize.min, children: [
           Text(l10n.vatDeclTitle),

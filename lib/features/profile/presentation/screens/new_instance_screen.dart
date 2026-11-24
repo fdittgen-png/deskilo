@@ -14,6 +14,7 @@ import '../../../../core/instance/instance_readiness.dart';
 import '../../../../core/instance/management_api.dart';
 import '../../../../core/instance/personal_home_probe_provider.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -257,7 +258,7 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
       context,
       l10n.backendServerSaved,
     );
-    context.go('/server');
+    context.go(Routes.server);
   }
 
   bool get _nextEnabled => switch (_step) {

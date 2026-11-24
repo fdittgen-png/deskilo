@@ -26,6 +26,7 @@ import 'package:go_router/go_router.dart';
 import '../../../core/i18n/app_format.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
+import '../../../core/navigation/routes.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/personal_theme.dart';
 import '../../../core/time/clock.dart';
@@ -307,7 +308,7 @@ class _SpaceActions extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     const target = Size(0, PersonalShellMetrics.minTarget);
-    void join() => context.push('/onboarding?join=1');
+    void join() => context.push(Routes.onboardingJoin);
     void discover() => context.go(MeTab.discover.path);
     return Wrap(
       spacing: AppSpacing.sm,
@@ -352,7 +353,7 @@ class _SpaceActions extends StatelessWidget {
           style: TextButton.styleFrom(minimumSize: target),
           icon: const Icon(Icons.add_business_outlined),
           label: Text(l10n.meCreateSpace),
-          onPressed: () => context.push('/onboarding'),
+          onPressed: () => context.push(Routes.onboarding),
         ),
       ],
     );

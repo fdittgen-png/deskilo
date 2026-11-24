@@ -6,6 +6,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/einvoice_channel_check.dart';
@@ -33,7 +34,7 @@ class EInvoiceGapsWarning extends StatelessWidget {
           '${l10n.invoiceEInvoiceGapsTitle}\n'
           '${[for (final gap in gaps) '• ${channelGapText(l10n, gap)}'].join('\n')}',
       actionLabel: ownFacts ? l10n.invoiceEInvoiceGapsOpenIdentity : null,
-      onAction: ownFacts ? () => context.push('/legal-identity') : null,
+      onAction: ownFacts ? () => context.push(Routes.legalIdentity) : null,
     );
   }
 }

@@ -13,6 +13,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -117,13 +118,13 @@ class _PlacesForm extends StatelessWidget {
           children: [
             FilledButton(
               key: const ValueKey('setup-places-open-editor'),
-              onPressed: () => context.push('/editor'),
+              onPressed: () => context.push(Routes.editor),
               child: Text(l10n.setupPlacesOpenEditor),
             ),
             if (libraryOn)
               OutlinedButton(
                 key: const ValueKey('setup-places-template'),
-                onPressed: () => context.push('/library'),
+                onPressed: () => context.push(Routes.library),
                 child: Text(l10n.setupPlacesFromTemplate),
               ),
           ],

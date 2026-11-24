@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
@@ -185,7 +186,7 @@ class RolesScreen extends ConsumerWidget {
         roles: roles,
         onToggle: (role, permission, current) => _toggle(context, ref,
             role: role, permission: permission, current: current),
-        onEditOwn: (_) => context.push('/settings/roles-of-this-space'),
+        onEditOwn: (_) => context.push(Routes.settingsRolesOfThisSpace),
       ),
     );
   }
@@ -251,7 +252,7 @@ class RolesScreen extends ConsumerWidget {
                 leading: const Icon(Icons.badge_outlined),
                 title: Text(l10n.rolesOwnRolesLink),
                 trailing: const Icon(Icons.chevron_right),
-                onTap: () => context.push('/settings/roles-of-this-space'),
+                onTap: () => context.push(Routes.settingsRolesOfThisSpace),
               ),
             ),
           for (final role in PermissionRole.values) ...[

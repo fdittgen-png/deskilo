@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/kit/page_title.dart';
@@ -44,7 +45,7 @@ class _ActivityState extends ConsumerState<AccountActivityScreen> {
           IconButton(
             key: const ValueKey('account-activity-portal-connections'),
             tooltip: l10n.portalConnections,
-            onPressed: () => context.push('/connections'),
+            onPressed: () => context.push(Routes.connections),
             icon: const Icon(Icons.dns_outlined),
           ),
         ],

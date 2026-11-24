@@ -14,6 +14,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/time/workspace_time.dart';
@@ -112,7 +113,7 @@ class BiScreen extends ConsumerWidget {
                 key: const ValueKey('bi-home'),
                 tooltip: MaterialLocalizations.of(context).backButtonTooltip,
                 icon: const Icon(Icons.arrow_back),
-                onPressed: () => context.go('/reserve'),
+                onPressed: () => context.go(Routes.reserve),
               ),
       ),
       body: DashboardScrollView(

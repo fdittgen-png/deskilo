@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/backend/connected_installation_providers.dart';
 import '../../../core/l10n/context_l10n.dart';
+import '../../../core/navigation/routes.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/kit/page_title.dart';
@@ -123,7 +124,7 @@ class _MessengerState extends ConsumerState<AccountMessengerScreen> {
           IconButton(
             key: const ValueKey('account-messenger-portal-connections'),
             tooltip: l.portalConnections,
-            onPressed: () => context.push('/connections'),
+            onPressed: () => context.push(Routes.connections),
             icon: const Icon(Icons.dns_outlined),
           ),
         ],
@@ -141,7 +142,7 @@ class _MessengerState extends ConsumerState<AccountMessengerScreen> {
             title: Text(l.portalVisibilityLink),
             subtitle: Text(l.portalVisibilityLinkBody),
             trailing: const Icon(Icons.chevron_right),
-            onTap: () => context.go('/me?tab=me'),
+            onTap: () => context.go(Routes.meTabMe),
           ),
           for (final server in servers.entries)
             if (server.key.isNotEmpty)

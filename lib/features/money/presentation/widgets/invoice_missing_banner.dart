@@ -6,6 +6,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/issue_month_readiness.dart' show isBusinessEssential;
@@ -38,7 +39,7 @@ class InvoiceMissingBanner extends StatelessWidget {
           '${invoiceIssueBlockTitle(l10n, block)}:\n'
           '${[for (final key in missing) '• ${invoiceMissingLabel(l10n, key)}'].join('\n')}',
       actionLabel: ownFacts ? l10n.invoiceEInvoiceGapsOpenIdentity : null,
-      onAction: ownFacts ? () => context.push('/legal-identity') : null,
+      onAction: ownFacts ? () => context.push(Routes.legalIdentity) : null,
     );
   }
 }

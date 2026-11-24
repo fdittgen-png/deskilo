@@ -13,6 +13,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -120,7 +121,7 @@ class _SetupServicesStepState extends ConsumerState<SetupServicesStep> {
             ),
             TextButton(
               key: const ValueKey('setup-services-open'),
-              onPressed: () => context.push('/services'),
+              onPressed: () => context.push(Routes.services),
               child: Text(l10n.setupServicesMore),
             ),
           ],

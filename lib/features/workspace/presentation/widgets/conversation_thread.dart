@@ -9,6 +9,7 @@ import '../../../../core/capture/capture_shield.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/navigation/feature_sheets.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
@@ -70,7 +71,7 @@ Future<void> showConversationThread(
       // The seed travels through the draft store, not the URL.
       ref.read(conversationDraftsProvider.notifier).set(conversationId, seedBody);
     }
-    await context.push('/conversation/$conversationId');
+    await context.push(Routes.conversation(conversationId));
     return;
   }
   return showAppSheet<void>(

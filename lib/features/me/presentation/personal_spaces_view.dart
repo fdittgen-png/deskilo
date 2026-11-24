@@ -23,6 +23,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/l10n/context_l10n.dart';
+import '../../../core/navigation/routes.dart';
 import '../../../core/storage/space_prefs_store.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
@@ -407,14 +408,14 @@ class _Actions extends ConsumerWidget {
             style: FilledButton.styleFrom(minimumSize: target),
             icon: const Icon(Icons.qr_code_2_outlined),
             label: Text(l10n.meJoinSpace),
-            onPressed: () => context.push('/onboarding?join=1'),
+            onPressed: () => context.push(Routes.onboardingJoin),
           )
         : OutlinedButton.icon(
             key: const ValueKey('my-spaces-join'),
             style: OutlinedButton.styleFrom(minimumSize: target),
             icon: const Icon(Icons.qr_code_2_outlined),
             label: Text(l10n.meJoinSpace),
-            onPressed: () => context.push('/onboarding?join=1'),
+            onPressed: () => context.push(Routes.onboardingJoin),
           );
     return Wrap(
       spacing: AppSpacing.sm,

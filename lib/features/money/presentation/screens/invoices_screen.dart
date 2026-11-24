@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/domain/workspace_permission.dart';
@@ -157,7 +158,7 @@ List<MoreEntry> _moreEntries(
       'invoice-register-button',
       Icons.table_rows_outlined,
       l10n.invoicingMoreRegister,
-      () => context.push('/invoice-register'),
+      () => context.push(Routes.invoiceRegister),
     ),
     if (templateOn)
       (

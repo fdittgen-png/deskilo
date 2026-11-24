@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/async_read_body.dart';
@@ -131,7 +132,7 @@ class _StatusCard extends ConsumerWidget {
                   key: const ValueKey('mcp-status-link-google'),
                   // Here the sign-in methods page IS the place: it links
                   // Google to this account.
-                  onPressed: () => context.push('/linked-accounts'),
+                  onPressed: () => context.push(Routes.linkedAccounts),
                   child: Text(l10n.mcpStatusLinkGoogle),
                 ),
               ),

@@ -21,6 +21,7 @@ import '../../../app/shell/shell_drawer.dart';
 import '../../../core/backend/backend_settings.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/navigation/navigation_style.dart';
+import '../../../core/navigation/routes.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/adaptive/window_class.dart';
 import '../../../l10n/app_localizations.dart';
@@ -135,7 +136,7 @@ Future<void> offerKeptInvitation(
     arrived
       ..markOfferedOn(active.url)
       ..hold(text);
-    context.go('/onboarding?join=1');
+    context.go(Routes.onboardingJoin);
   } on Object catch (e, st) {
     TraceLogger.instance.warn(
       'workspace',

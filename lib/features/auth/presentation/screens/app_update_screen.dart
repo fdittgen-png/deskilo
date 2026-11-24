@@ -8,6 +8,7 @@ import '../../../../core/backend/app_floor.dart';
 import '../../../../core/backend/installation_schema.dart';
 import '../../../../core/instance/app_compatibility.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../providers/auth_providers.dart';
 import '../../providers/sign_out.dart';
@@ -85,7 +86,7 @@ class AppUpdateScreen extends ConsumerWidget {
             const SizedBox(height: AppSpacing.sm),
             OutlinedButton.icon(
               key: const ValueKey('app-update-server'),
-              onPressed: () => context.push('/server'),
+              onPressed: () => context.push(Routes.server),
               icon: const Icon(Icons.dns_outlined),
               label: Text(l10n.schemaUpdateServer),
             ),
@@ -93,7 +94,7 @@ class AppUpdateScreen extends ConsumerWidget {
               const SizedBox(height: AppSpacing.sm),
               OutlinedButton.icon(
                 key: const ValueKey('app-update-me'),
-                onPressed: () => context.go('/me'),
+                onPressed: () => context.go(Routes.me),
                 icon: const Icon(Icons.switch_account_outlined),
                 label: Text(l10n.spaceBackToMe),
               ),

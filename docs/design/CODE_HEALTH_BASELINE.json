@@ -641,173 +641,15 @@
       "lib/features/workspace/presentation/widgets/feature_capability_list.dart": 1
     },
     "inlineRoute": {
-      "lib/app/house/house_prices.dart": 1,
-
-      "lib/app/shell/shell_app_bar.dart": 3,
-
-      "lib/app/shell/shell_destinations.dart": 2,
-
-      "lib/app/shell/shell_drawer.dart": 1,
-
-      "lib/features/auth/presentation/screens/app_update_screen.dart": 2,
-
-      "lib/features/auth/presentation/widgets/auth_form_sections.dart": 2,
-
-      "lib/features/auth/presentation/widgets/federation_handoff_panel.dart": 1,
-
       "lib/features/calendar/presentation/screens/calendar_hub_screen.dart": 2,
-
-      "lib/features/directory/presentation/account_messenger_screen.dart": 2,
-
-      "lib/features/directory/presentation/messenger/inbox_header.dart": 1,
-
-      "lib/features/directory/presentation/public_facets_editor.dart": 1,
-
-      "lib/features/directory/presentation/public_offer_preview.dart": 1,
-
-      "lib/features/directory/presentation/public_workspace_view.dart": 1,
-
-      "lib/features/directory/presentation/setup_public_page_step.dart": 1,
-
-      "lib/features/editor/presentation/screens/editor_screen.dart": 1,
-
-      "lib/features/editor/presentation/widgets/seat_properties_sheet.dart": 1,
-
-      "lib/features/events/presentation/widgets/setup_approvals_step.dart": 1,
-
-      "lib/features/mcp/presentation/assistant_setup_screen.dart": 2,
-
-      "lib/features/mcp/presentation/widgets/assistant_setup_parts.dart": 1,
-
-      "lib/features/mcp/presentation/widgets/connect_checklist_card.dart": 3,
-
-      "lib/features/mcp/presentation/widgets/connect_workspaces.dart": 1,
-
-      "lib/features/mcp/presentation/widgets/mcp_access_status_card.dart": 1,
-
-      "lib/features/mcp/presentation/widgets/mcp_consent_parts.dart": 1,
-
-      "lib/features/mcp/presentation/widgets/mcp_my_requests_section.dart": 1,
-
-      "lib/features/mcp/presentation/widgets/mcp_settings_tiles.dart": 5,
-
-      "lib/features/me/presentation/me_home_tab.dart": 1,
-
-      "lib/features/me/presentation/me_shell.dart": 1,
-
-      "lib/features/me/presentation/personal_first_visit.dart": 2,
-
-      "lib/features/me/presentation/personal_overview.dart": 2,
-
-      "lib/features/me/presentation/personal_overview_attention.dart": 1,
-
-      "lib/features/me/presentation/personal_overview_sections.dart": 1,
-
-      "lib/features/me/presentation/personal_space_card.dart": 1,
-
-      "lib/features/me/presentation/personal_space_compact_row.dart": 1,
-
-      "lib/features/me/presentation/personal_spaces_view.dart": 2,
-
-      "lib/features/members/presentation/screens/managed_profile_screen.dart": 1,
-
-      "lib/features/members/presentation/widgets/member_admin_tiles.dart": 1,
-
-      "lib/features/money/presentation/engagements/follow_line_button.dart": 1,
-
-      "lib/features/money/presentation/invoice_einvoice_actions.dart": 1,
-
-      "lib/features/money/presentation/invoicing/invoicing_home_screen.dart": 3,
-
-      "lib/features/money/presentation/screens/account_activity_screen.dart": 1,
-
-      "lib/features/money/presentation/screens/accounting_sign_in_return_screen.dart": 2,
-
-      "lib/features/money/presentation/screens/accounting_status.dart": 2,
 
       "lib/features/money/presentation/screens/customer_quote_editor_screen.dart": 1,
 
-      "lib/features/money/presentation/screens/customer_quote_screen.dart": 4,
-
-      "lib/features/money/presentation/screens/customer_quotes_screen.dart": 2,
-
-      "lib/features/money/presentation/screens/invoices_screen.dart": 1,
-
-      "lib/features/money/presentation/screens/legal_identity_screen.dart": 2,
-
-      "lib/features/money/presentation/screens/money_action_set.dart": 9,
-
-      "lib/features/money/presentation/screens/money_online_payment.dart": 1,
-
-      "lib/features/money/presentation/screens/purchase_orders_screen.dart": 1,
-
-      "lib/features/money/presentation/screens/service_fulfilments_screen.dart": 1,
-
       "lib/features/money/presentation/screens/vat_declarations_screen.dart": 1,
-
-      "lib/features/money/presentation/screens/vat_screen.dart": 1,
 
       "lib/features/money/presentation/till_drawer/till_drawer_screen.dart": 1,
 
       "lib/features/money/presentation/till_screen.dart": 1,
-
-      "lib/features/money/presentation/widgets/documents_face.dart": 1,
-
-      "lib/features/money/presentation/widgets/einvoice_gaps_warning.dart": 1,
-
-      "lib/features/money/presentation/widgets/invoice_missing_banner.dart": 1,
-
-      "lib/features/money/presentation/widgets/money_attention_body.dart": 1,
-
-      "lib/features/money/presentation/widgets/setup_documents_step.dart": 1,
-
-      "lib/features/money/presentation/widgets/setup_einvoicing_step.dart": 1,
-
-      "lib/features/money/presentation/widgets/setup_legal_identity_step.dart": 1,
-
-      "lib/features/money/presentation/widgets/setup_online_payments_step.dart": 1,
-
-      "lib/features/money/presentation/widgets/setup_pricing_step.dart": 1,
-
-      "lib/features/money/presentation/widgets/setup_reminders_step.dart": 1,
-
-      "lib/features/money/presentation/widgets/setup_services_step.dart": 1,
-
-      "lib/features/money/presentation/widgets/setup_vat_step.dart": 1,
-
-      "lib/features/plan/presentation/widgets/setup_places_step.dart": 2,
-
-      "lib/features/profile/presentation/screens/consent_screen.dart": 1,
-
-      "lib/features/profile/presentation/screens/new_instance_screen.dart": 1,
-
-      "lib/features/profile/presentation/screens/privacy_screen.dart": 3,
-
-      "lib/features/profile/presentation/screens/profiles_screen.dart": 2,
-
-      "lib/features/profile/presentation/screens/schema_update_screen.dart": 2,
-
-      "lib/features/profile/presentation/screens/settings_screen.dart": 4,
-
-      "lib/features/profile/presentation/widgets/account_settings_tiles.dart": 2,
-
-      "lib/features/profile/presentation/widgets/backend_how_to.dart": 1,
-
-      "lib/features/profile/presentation/widgets/backend_settings_tile.dart": 1,
-
-      "lib/features/profile/presentation/widgets/settings_advanced_section.dart": 1,
-
-      "lib/features/profile/presentation/widgets/settings_workspace_sections.dart": 18,
-
-      "lib/features/reservations/presentation/screens/period_reservations_screen.dart": 1,
-
-      "lib/features/reservations/presentation/screens/reference_link_screen.dart": 1,
-
-      "lib/features/reservations/presentation/widgets/getting_started_card.dart": 1,
-
-      "lib/features/reservations/presentation/widgets/reservation_detail_actions.dart": 1,
-
-      "lib/features/reservations/presentation/widgets/space_sheet_tiles.dart": 1,
 
       "lib/features/stock/presentation/stock_chain_section.dart": 1,
 
@@ -817,53 +659,7 @@
 
       "lib/features/stock/presentation/stock_first_run.dart": 2,
 
-      "lib/features/stock/presentation/stock_screen.dart": 2,
-
-      "lib/features/workspace/presentation/report_editor/bi_report_editor_screen.dart": 1,
-
-      "lib/features/workspace/presentation/screens/bi_screen.dart": 1,
-
-      "lib/features/workspace/presentation/screens/inbox_screen.dart": 1,
-
-      "lib/features/workspace/presentation/screens/members_screen.dart": 4,
-
-      "lib/features/workspace/presentation/screens/nfc_config_screen.dart": 1,
-
-      "lib/features/workspace/presentation/screens/pending_approval_screen.dart": 1,
-
-      "lib/features/workspace/presentation/screens/roles_screen.dart": 2,
-
-      "lib/features/workspace/presentation/screens/setup_guide_screen.dart": 2,
-
-      "lib/features/workspace/presentation/screens/workspace_overview_screen.dart": 2,
-
-      "lib/features/workspace/presentation/screens/workspace_settings_parameters.dart": 3,
-
-      "lib/features/workspace/presentation/screens/workspace_settings_screen.dart": 2,
-
-      "lib/features/workspace/presentation/widgets/application_requests_entry.dart": 1,
-
-      "lib/features/workspace/presentation/widgets/bi_report_section.dart": 1,
-
-      "lib/features/workspace/presentation/widgets/conversation_thread.dart": 1,
-
-      "lib/features/workspace/presentation/widgets/invitation_join_panel.dart": 2,
-
-      "lib/features/workspace/presentation/widgets/note_record_open.dart": 2,
-
-      "lib/features/workspace/presentation/widgets/settings_editor.dart": 1,
-
-      "lib/features/workspace/presentation/widgets/setup_hours_step.dart": 1,
-
-      "lib/features/workspace/presentation/widgets/setup_look_step.dart": 1,
-
-      "lib/features/workspace/presentation/widgets/setup_member_rights_step.dart": 1,
-
-      "lib/features/workspace/presentation/widgets/setup_new_members_step.dart": 1,
-
-      "lib/features/workspace/presentation/widgets/setup_no_invoicing_banner.dart": 1,
-
-      "lib/features/workspace/presentation/widgets/setup_resume_banner.dart": 1
+      "lib/features/stock/presentation/stock_screen.dart": 2
     }
   },
   "functions": [

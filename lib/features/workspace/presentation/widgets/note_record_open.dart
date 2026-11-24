@@ -9,6 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -42,7 +43,7 @@ Future<void> openRecordById(
   switch (kind) {
     case NoteRecordKind.alert:
       openInbox(ref, InboxTab.alerts);
-      context.go('/messages');
+      context.go(Routes.messages);
     case NoteRecordKind.validation:
       await showValidationTrailSheet(context, eventId: id);
     case NoteRecordKind.payment:
@@ -52,7 +53,7 @@ Future<void> openRecordById(
       // conversation about a payment actually happens.
       ref.read(moneyFaceControllerProvider.notifier).show(MoneyFace.payments);
       ref.read(moneyFocusControllerProvider.notifier).setPeriod(id);
-      context.go('/money');
+      context.go(Routes.money);
     case NoteRecordKind.invoice:
     case NoteRecordKind.refund:
       // A refund IS a credit note, so it opens as the document it is.

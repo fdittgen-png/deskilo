@@ -14,6 +14,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../app/theme.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
@@ -184,7 +185,7 @@ class _SetupLookStepState extends ConsumerState<SetupLookStep> {
             ),
             TextButton(
               key: const ValueKey('setup-look-more'),
-              onPressed: () => context.push('/settings/colours'),
+              onPressed: () => context.push(Routes.settingsColours),
               child: Text(l10n.setupLookMore),
             ),
           ],
