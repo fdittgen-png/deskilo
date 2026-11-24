@@ -14,8 +14,6 @@
   "stockUnitKindBox": "Boîte",
   "stockUnitKindOther": "Autre",
   "stockUnitPlace": "Emplacement",
-  "stockUnitItem": "Article",
-  "stockUnitQuantity": "Quantité",
   "stockUnitContent": "Contenu",
   "stockUnitContentNone": "Rien dedans.",
   "stockUnitMove": "Déplacer",
@@ -30,7 +28,7 @@
   "stockUnitMade": "{unit} créée.",
   "stockUnitMoved": "{unit} déplacée vers {place}.",
   "stockUnitUnpacked": "{unit} défaite.",
-  "stockUnitRepacked": "{count, plural, one{1 boîte créée.} other{{count} boîtes créées.}}",
+  "stockUnitRepacked": "{count, plural, one{{count} boîte créée.} other{{count} boîtes créées.}}",
   "stockUnitChangedNow": "L'unité est maintenant à {place} : relisez-la.",
   "stockUnitsChooseItem": "Choisir un article",
   "stockUnitLoose": "{quantity} en vrac ici"

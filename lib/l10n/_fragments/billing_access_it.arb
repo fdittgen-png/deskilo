@@ -26,7 +26,6 @@
   "billingAccessEnter": "Usare un codice di fatturazione",
   "billingAccessEnterTitle": "Leggere le fatture di un'azienda",
   "billingAccessEnterIntro": "Un'azienda che Le fattura può darLe un codice. Con esso legge, dal Suo account, le fatture emesse a Suo nome. Non diventa un membro.",
-  "billingAccessCodeField": "Codice",
   "billingAccessCheck": "Verificare il codice",
   "billingAccessPreviewLine": "{business} La invita a leggere le fatture intestate a {name}.",
   "billingAccessPreviewUnnamed": "{business} La invita a leggere le fatture che ha emesso a Suo nome.",

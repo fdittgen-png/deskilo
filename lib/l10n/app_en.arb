@@ -6558,10 +6558,6 @@
   "@billingAccessCodeCopy": {
     "description": "the billing access of a customer to their own invoices (#4164)"
   },
-  "billingAccessCodeField": "Code",
-  "@billingAccessCodeField": {
-    "description": "the billing access of a customer to their own invoices (#4164)"
-  },
   "billingAccessCodeOnce": "Give this code to the customer now. It is shown only once and cannot be read again. It is valid until {date}.",
   "@billingAccessCodeOnce": {
     "description": "the billing access of a customer to their own invoices (#4164)",
@@ -49062,10 +49058,6 @@
   "@stockUnitContentNone": {
     "description": "#4435 handling units"
   },
-  "stockUnitItem": "Item",
-  "@stockUnitItem": {
-    "description": "#4435 handling units"
-  },
   "stockUnitKind": "Kind",
   "@stockUnitKind": {
     "description": "#4435 handling units"
@@ -49147,10 +49139,6 @@
   },
   "stockUnitPlace": "Place",
   "@stockUnitPlace": {
-    "description": "#4435 handling units"
-  },
-  "stockUnitQuantity": "Quantity",
-  "@stockUnitQuantity": {
     "description": "#4435 handling units"
   },
   "stockUnitRepack": "Repack into boxes",

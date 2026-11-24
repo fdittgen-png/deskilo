@@ -12,6 +12,9 @@ import '../../../core/help/help_dot.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
+import '../../../core/trace/trace_logger.dart';
+import '../../../core/ui/app_sheet.dart';
+import '../../../core/ui/app_snack.dart';
 import '../../../core/ui/dropdown_field.dart';
 import '../../../core/ui/kit/page_title.dart';
 import '../../../core/ui/loading_view.dart';
@@ -33,7 +36,7 @@ class StockUnitsScreen extends ConsumerStatefulWidget {
 class _StockUnitsState extends ConsumerState<StockUnitsScreen> {
   String? _place;
 
-  void _told(String text) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(text)));
+  void _told(String text) => AppSnack.success(context, text);
 
   void _read(String workspaceId, {String? unitId}) {
     ref.invalidate(handlingUnitListProvider);
@@ -80,11 +83,11 @@ class _StockUnitsState extends ConsumerState<StockUnitsScreen> {
       body: workspaceId == null
           ? const LoadingView()
           : ListView(
-              padding: const EdgeInsets.all(AppSpacing.md),
+              padding: const EdgeInsets.all(AppSpacing.md).add(const EdgeInsets.only(bottom: kFabSafeBottom)),
               children: [
                 Text(l10n.stockUnitsIntro),
                 const SizedBox(height: AppSpacing.md),
-                _PlaceFilter(workspaceId: workspaceId, place: _place, onChanged: (v) => setState(() => _place = v)),
+                _PlaceFilter(key: const ValueKey('stock-units-place-filter'), workspaceId: workspaceId, place: _place, onChanged: (v) => setState(() => _place = v)),
                 const SizedBox(height: AppSpacing.md),
                 _Units(workspaceId: workspaceId, place: _place, onOpen: (u) => _open(workspaceId, u)),
               ],
@@ -92,7 +95,7 @@ class _StockUnitsState extends ConsumerState<StockUnitsScreen> {
     );
   }
 
-  Future<void> _open(String workspaceId, HandlingUnit unit) => showModalBottomSheet<void>(
+  Future<void> _open(String workspaceId, HandlingUnit unit) => showAppSheet<void>(
     context: context,
     isScrollControlled: true,
     builder: (sheet) => _UnitSheet(
@@ -108,7 +111,7 @@ class _StockUnitsState extends ConsumerState<StockUnitsScreen> {
 }
 
 class _PlaceFilter extends ConsumerWidget {
-  const _PlaceFilter({required this.workspaceId, required this.place, required this.onChanged});
+  const _PlaceFilter({super.key, required this.workspaceId, required this.place, required this.onChanged});
 
   final String workspaceId;
   final String? place;
@@ -176,7 +179,6 @@ class _UnitSheet extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final units = ref.read(stockHandlingUnitsProvider);
     final detail = ref.watch(handlingUnitProvider((workspaceId: workspaceId, unitId: unitId)));
     return SafeArea(
       child: Padding(
@@ -190,77 +192,10 @@ class _UnitSheet extends ConsumerWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Text('${d.unit.code} · ${unitKindText(l10n, d.unit.kind)} · ${d.unit.locationCode}', style: Theme.of(context).textTheme.titleMedium),
-                      const SizedBox(height: AppSpacing.sm),
-                      Text(l10n.stockUnitContent, style: Theme.of(context).textTheme.labelLarge),
-                      if (d.lines.isEmpty) Text(l10n.stockUnitContentNone),
-                      for (final l in d.lines)
-                        ListTile(
-                          contentPadding: EdgeInsets.zero,
-                          title: Text(l.itemName),
-                          subtitle: Text([if (l.lotCode.isNotEmpty) l.lotCode, for (final p in l.pieces) if (p.tag.isNotEmpty) p.tag].join(' · ')),
-                          trailing: Text('${l.quantity.text} ${l.unit}'),
-                        ),
-                      for (final c in d.children) ListTile(contentPadding: EdgeInsets.zero, title: Text(c.code), subtitle: Text(l10n.stockUnitNestedIn(d.unit.code))),
+                      _UnitContent(detail: d),
                       if (d.unit.isOpen) ...[
                         const SizedBox(height: AppSpacing.md),
-                        Wrap(
-                          spacing: AppSpacing.sm,
-                          children: [
-                            FilledButton(
-                              key: const ValueKey('stock-unit-move'),
-                              onPressed: () async {
-                                final nav = Navigator.of(context);
-                                final all = await places();
-                                if (!context.mounted) return;
-                                await showMoveUnitSheet(
-                                  context,
-                                  units,
-                                  workspaceId: workspaceId,
-                                  unit: d.unit,
-                                  places: all,
-                                  onDone: (moved, place) async {
-                                    nav.pop();
-                                    changed(l10n.stockUnitMoved(moved.code, place));
-                                  },
-                                );
-                              },
-                              child: Text(l10n.stockUnitMove),
-                            ),
-                            OutlinedButton(
-                              key: const ValueKey('stock-unit-repack'),
-                              onPressed: () async {
-                                final nav = Navigator.of(context);
-                                await showRepackSheet(
-                                  context,
-                                  units,
-                                  workspaceId: workspaceId,
-                                  detail: d,
-                                  onDone: (made) async {
-                                    nav.pop();
-                                    changed(l10n.stockUnitRepacked(made.length));
-                                  },
-                                );
-                              },
-                              child: Text(l10n.stockUnitRepack),
-                            ),
-                            TextButton(
-                              key: const ValueKey('stock-unit-unpack'),
-                              onPressed: () async {
-                                final nav = Navigator.of(context);
-                                final text = l10n.stockUnitUnpacked(d.unit.code);
-                                final failure = await _unpack(l10n, units, d.unit);
-                                if (failure != null && context.mounted) {
-                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(failure)));
-                                  return;
-                                }
-                                nav.pop();
-                                changed(text);
-                              },
-                              child: Text(l10n.stockUnitUnpack),
-                            ),
-                          ],
-                        ),
+                        _UnitActions(workspaceId: workspaceId, detail: d, places: places, changed: changed),
                         Text(l10n.stockUnitUnpackHint, style: Theme.of(context).textTheme.bodySmall),
                       ],
                     ],
@@ -270,12 +205,113 @@ class _UnitSheet extends ConsumerWidget {
       ),
     );
   }
+}
+
+/// The unit's head line and what it holds.
+class _UnitContent extends StatelessWidget {
+  const _UnitContent({required this.detail});
+
+  final HandlingUnitDetail detail;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final d = detail;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text('${d.unit.code} · ${unitKindText(l10n, d.unit.kind)} · ${d.unit.locationCode}', style: Theme.of(context).textTheme.titleMedium),
+        const SizedBox(height: AppSpacing.sm),
+        Text(l10n.stockUnitContent, style: Theme.of(context).textTheme.labelLarge),
+        if (d.lines.isEmpty) Text(l10n.stockUnitContentNone),
+        for (final l in d.lines)
+          ListTile(
+            contentPadding: EdgeInsets.zero,
+            title: Text(l.itemName),
+            subtitle: Text([if (l.lotCode.isNotEmpty) l.lotCode, for (final p in l.pieces) if (p.tag.isNotEmpty) p.tag].join(' · ')),
+            trailing: Text('${l.quantity.text} ${l.unit}'),
+          ),
+        for (final c in d.children) ListTile(contentPadding: EdgeInsets.zero, title: Text(c.code), subtitle: Text(l10n.stockUnitNestedIn(d.unit.code))),
+      ],
+    );
+  }
+}
+
+/// Move, repack and unpack of an open unit.
+class _UnitActions extends ConsumerWidget {
+  const _UnitActions({required this.workspaceId, required this.detail, required this.places, required this.changed});
+
+  final String workspaceId;
+  final HandlingUnitDetail detail;
+  final Future<List<StockPlaceConfig>> Function() places;
+  final void Function(String text) changed;
+
+  Future<void> _move(BuildContext context, StockHandlingUnits units) async {
+    final nav = Navigator.of(context);
+    final l10n = context.l10n;
+    final all = await places();
+    if (!context.mounted) return;
+    await showMoveUnitSheet(
+      context,
+      units,
+      workspaceId: workspaceId,
+      unit: detail.unit,
+      places: all,
+      onDone: (moved, place) async {
+        nav.pop();
+        changed(l10n.stockUnitMoved(moved.code, place));
+      },
+    );
+  }
+
+  Future<void> _repack(BuildContext context, StockHandlingUnits units) async {
+    final nav = Navigator.of(context);
+    final l10n = context.l10n;
+    await showRepackSheet(
+      context,
+      units,
+      workspaceId: workspaceId,
+      detail: detail,
+      onDone: (made) async {
+        nav.pop();
+        changed(l10n.stockUnitRepacked(made.length));
+      },
+    );
+  }
+
+  Future<void> _unpackIt(BuildContext context, StockHandlingUnits units) async {
+    final nav = Navigator.of(context);
+    final l10n = context.l10n;
+    final text = l10n.stockUnitUnpacked(detail.unit.code);
+    final failure = await _unpack(l10n, units, detail.unit);
+    if (failure != null) {
+      if (context.mounted) AppSnack.error(context, failure);
+      return;
+    }
+    nav.pop();
+    changed(text);
+  }
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
+    final units = ref.read(stockHandlingUnitsProvider);
+    return Wrap(
+      spacing: AppSpacing.sm,
+      children: [
+        FilledButton(key: const ValueKey('stock-unit-move'), onPressed: () => _move(context, units), child: Text(l10n.stockUnitMove)),
+        OutlinedButton(key: const ValueKey('stock-unit-repack'), onPressed: () => _repack(context, units), child: Text(l10n.stockUnitRepack)),
+        TextButton(key: const ValueKey('stock-unit-unpack'), onPressed: () => _unpackIt(context, units), child: Text(l10n.stockUnitUnpack)),
+      ],
+    );
+  }
 
   Future<String?> _unpack(AppLocalizations l10n, StockHandlingUnits units, HandlingUnit unit) async {
     try {
       await units.unpack(workspaceId, newRequestId(), unitId: unit.id, revision: unit.revision);
       return null;
-    } on StockConfigFailure catch (e) {
+    } on StockConfigFailure catch (e, st) {
+      TraceLogger.instance.error('stock', 'a unit could not be unpacked', error: e.runtimeType, stackTrace: st);
       return stockSaveProblem(l10n, e);
     }
   }
