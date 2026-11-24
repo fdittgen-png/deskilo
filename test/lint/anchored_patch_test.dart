@@ -29,6 +29,11 @@ import 'lint_sources.dart';
 /// `function` re-created after being patched, each verified by hand.
 /// Recorded as `function@recreating-migration`.
 const _reviewed = {
+  // #4436/0947 restates counter_receipt_finalize_v1 from the LIVE dev body (pg_get_functiondef at schema 943:
+  // md5(prosrc) 82076ff9fd420cc1a000a8265d50d298, the 0939 body, which carries 0908's share lock on the sale's till
+  // session). The diff to it adds only the goods items' lock before their lots are planned and the plan around what
+  // the earlier lines take; pgTAP 561, 553, 525 and 520 green on dev with 0947, rolled back.
+  'counter_receipt_finalize_v1@0947',
   // #4165/0901 restates settle_online_payment from the LIVE dev definition
   // (pg_get_functiondef, the 0797 body with 0393's gate and 0757's
   // captured/reversed return) and adds only the explicit branch: the

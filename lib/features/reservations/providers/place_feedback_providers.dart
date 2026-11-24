@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
 
-import 'package:flutter_riverpod/flutter_riverpod.dart' show FutureProvider, Provider;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meta/meta.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -121,9 +121,13 @@ final roomOfferRepositoryProvider = Provider<RoomOfferRepository>(
 /// offered to them, or rented rooms are off — is shown as nothing at all.
 final roomOfferProvider = FutureProvider.autoDispose
     .family<RoomOfferView, ({String workspaceId, String officeId})>((ref, key) {
-      if (!ref
-          .watch(enabledFeaturesSyncProvider)
-          .contains(WorkspaceFeature.externalRooms)) {
+      // only the flag decides: the feature set is rebuilt when the installation's schema answers (#3729), and a rebuilt
+      // set with the flag unchanged must not ask the server for the offer again
+      if (!ref.watch(
+        enabledFeaturesSyncProvider.select(
+          (features) => features.contains(WorkspaceFeature.externalRooms),
+        ),
+      )) {
         throw StateError('rented rooms are switched off');
       }
       return ref
