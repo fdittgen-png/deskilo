@@ -310,7 +310,7 @@ class _FinanceDocument extends ConsumerWidget {
                         number,
                         period,
                         Padding(
-                          padding: const EdgeInsets.only(top: 2, bottom: 4),
+                          padding: const EdgeInsets.only(top: 2, bottom: AppSpacing.xs),
                           child: workspace,
                         ),
                         states,

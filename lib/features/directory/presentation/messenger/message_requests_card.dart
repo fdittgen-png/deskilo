@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/private_value.dart';
 import '../../providers/blocks_providers.dart';
@@ -39,9 +40,9 @@ class MessageRequestsCard extends ConsumerWidget {
 
     return Card(
       key: const ValueKey('message-requests'),
-      margin: const EdgeInsets.fromLTRB(12, 8, 12, 0),
+      margin: const EdgeInsets.fromLTRB(AppSpacing.md, AppSpacing.sm, AppSpacing.md, 0),
       child: Padding(
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.all(AppSpacing.md),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

@@ -5,6 +5,7 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/l10n/lexicon.dart';
 import '../../../../core/settings/booking_windows.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../plan/domain/half_day_windows.dart';
@@ -292,7 +293,7 @@ class SpaceActFormState extends State<SpaceActForm> {
           ],
         ),
         if (booksWindow) ...[
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.md),
           if (_dayBased)
             Wrap(
               spacing: 8,
@@ -334,7 +335,7 @@ class SpaceActFormState extends State<SpaceActForm> {
                     ),
                   ),
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.sm),
                 Expanded(
                   child: OutlinedButton.icon(
                     key: ValueKey('$prefix-period-end'),
@@ -372,7 +373,7 @@ class SpaceActFormState extends State<SpaceActForm> {
                 children: [
                   Icon(Icons.info_outline,
                       size: 18, color: theme.colorScheme.error),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: AppSpacing.sm),
                   Expanded(
                     child: Text(
                       widget.refusalTextOf?.call(refusal) ??

@@ -350,7 +350,7 @@ class _VatScreenState extends ConsumerState<VatScreen> {
       // accommodation rate).
       if (catalogueNote != null)
         Padding(
-          padding: const EdgeInsets.only(top: 4),
+          padding: const EdgeInsets.only(top: AppSpacing.xs),
           child: Text(
             catalogueNote,
             key: const ValueKey('vat-catalogue-note'),

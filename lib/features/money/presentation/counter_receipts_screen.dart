@@ -18,6 +18,7 @@ import '../../../core/l10n/context_l10n.dart';
 import '../../../core/share/text_sharer.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/trace_logger.dart';
+import '../../../core/ui/adaptive/window_class.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../core/ui/async_read_body.dart';
 import '../../../core/ui/kit/page_title.dart';
@@ -73,7 +74,7 @@ class _Book extends ConsumerWidget {
     final issued = book.issued;
     return Center(
       child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 840),
+        constraints: const BoxConstraints(maxWidth: WindowClass.expandedMinWidth),
         child: ListView(
           key: const ValueKey('counter-receipts'),
           padding: const EdgeInsets.all(AppSpacing.md),

@@ -11,6 +11,7 @@ import '../../../../core/diagnostics/support_bundle.dart';
 import '../../../../core/files/file_saver.dart';
 import '../../../../core/instance/schema_compatibility.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/kit/page_bar.dart';
@@ -188,7 +189,7 @@ class _SupportBundleScreenState extends ConsumerState<SupportBundleScreen> {
     return Scaffold(
       appBar: pageBar(context, title: l10n.supportTitle),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -197,7 +198,7 @@ class _SupportBundleScreenState extends ConsumerState<SupportBundleScreen> {
             ),
             if (demo)
               Text(l10n.supportDemo),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
             DropdownButton<int>(
               key: const ValueKey('support-window'),
               value: _hours,

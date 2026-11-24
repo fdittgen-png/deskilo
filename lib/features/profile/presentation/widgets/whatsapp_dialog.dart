@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/phone/phone_entry.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/phone_field.dart';
@@ -92,7 +93,7 @@ class WhatsappDialogState extends ConsumerState<WhatsappDialog> {
         children: [
           if (_needsCorrection)
             Padding(
-              padding: const EdgeInsets.only(bottom: 12),
+              padding: const EdgeInsets.only(bottom: AppSpacing.md),
               child: Text(
                 l10n.phoneNeedsCorrection,
                 key: const ValueKey('whatsapp-needs-correction'),

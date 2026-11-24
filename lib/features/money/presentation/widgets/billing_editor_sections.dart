@@ -6,6 +6,7 @@ import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../domain/package.dart';
 import '../../domain/subscription_levels.dart';
@@ -70,7 +71,7 @@ class BillingVatHint extends StatelessWidget {
     );
     if (rate == null) return const SizedBox.shrink();
     return Padding(
-      padding: const EdgeInsets.only(top: 2, bottom: 4),
+      padding: const EdgeInsets.only(top: 2, bottom: AppSpacing.xs),
       child: Text(
         tariffRateId.isEmpty
             ? (l10n.billingPricesVatHint(rate))
@@ -234,7 +235,7 @@ class BillingNewPackageRow extends StatelessWidget {
             label: l10n.billingPackageName,
           ),
         ),
-        const SizedBox(width: 8),
+        const SizedBox(width: AppSpacing.sm),
         Expanded(
           child: AppTextField(
             controller: days,
@@ -242,7 +243,7 @@ class BillingNewPackageRow extends StatelessWidget {
             label: l10n.billingPackageDays,
           ),
         ),
-        const SizedBox(width: 8),
+        const SizedBox(width: AppSpacing.sm),
         Expanded(
           flex: 2,
           child: AppTextField(

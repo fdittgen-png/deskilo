@@ -513,14 +513,14 @@ class _BookingSheetState extends State<BookingSheet> {
               );
 
   Widget _refusalRow(BookingRefusal refusal, AppLocalizations l10n) => Padding(
-                padding: const EdgeInsets.only(top: 8),
+                padding: const EdgeInsets.only(top: AppSpacing.sm),
                 child: Row(
                   key: const ValueKey('booking-gate-refusal'),
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Icon(Icons.info_outline,
                         size: 18, color: Theme.of(context).colorScheme.error),
-                    const SizedBox(width: 8),
+                    const SizedBox(width: AppSpacing.sm),
                     Expanded(
                       child: Text(
                         widget.refusalTextOf?.call(refusal) ??

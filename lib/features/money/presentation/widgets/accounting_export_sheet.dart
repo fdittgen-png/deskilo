@@ -114,7 +114,7 @@ class _FormatTile extends StatelessWidget {
                 .obligations
                 .contains(Obligation.completePostedBooks))
               Padding(
-                padding: const EdgeInsets.only(top: 4),
+                padding: const EdgeInsets.only(top: AppSpacing.xs),
                 child: Text(
                   // #2379 — a file of the local book's postings is complete
                   // books when everything passes through the app; one
@@ -131,7 +131,7 @@ class _FormatTile extends StatelessWidget {
               ),
             if (format.uncertifiedSoftware)
               Padding(
-                padding: const EdgeInsets.only(top: 4),
+                padding: const EdgeInsets.only(top: AppSpacing.xs),
                 child: Text(
                   l10n.exportUncertifiedSoftware,
                   key: const ValueKey('accounting-export-uncertified'),

@@ -6,6 +6,7 @@ import '../../../../core/format/cents.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/text/collation.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/seat_state_colors.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../plan/domain/floor_plan.dart';
@@ -164,7 +165,7 @@ class SeatListView extends ConsumerWidget {
         ?.copyWith(color: dayOpen ? null : theme.disabledColor);
     return ListTile(
       key: ValueKey(key),
-      contentPadding: EdgeInsetsDirectional.only(start: 16 + indent, end: 16),
+      contentPadding: EdgeInsetsDirectional.only(start: AppSpacing.lg + indent, end: AppSpacing.lg),
       leading: Icon(icon, color: dayOpen ? null : theme.disabledColor),
       title: Text(name, style: titleStyle),
       subtitle: subtitle == null ? null : Text(subtitle),
@@ -432,7 +433,7 @@ class SeatListView extends ConsumerWidget {
           ),
           key: ValueKey('list-seat-${seat.id}'),
           contentPadding:
-              EdgeInsetsDirectional.only(start: 16 + indent, end: 16),
+              EdgeInsetsDirectional.only(start: AppSpacing.lg + indent, end: AppSpacing.lg),
           title: Text(seat.name.isEmpty ? place : seat.name),
           subtitle:
               Text(seatRowSubtitle(l10n, seat, place: place, stateText: stateText)),
@@ -448,7 +449,7 @@ class SeatListView extends ConsumerWidget {
         ),
         if (placeFeedbackShown(ref, PlaceKind.seat))
           Padding(
-            padding: EdgeInsetsDirectional.only(start: 72 + indent, end: 16),
+            padding: EdgeInsetsDirectional.only(start: 72 + indent, end: AppSpacing.lg),
             child: Align(alignment: AlignmentDirectional.centerStart,
               child: PlaceFeedbackChip(kind: PlaceKind.seat, id: seat.id,
                 title: seat.name.isEmpty ? place : seat.name)),

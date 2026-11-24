@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/settings/booking_windows.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/act_trace.dart';
 import '../../../../core/trace/trace_logger.dart';
@@ -249,7 +250,7 @@ class _SpaceActSheetState extends ConsumerState<_SpaceActSheet> {
         // version cannot read: it says so, and the server decides.
         const UnreadableRowsNotice(areas: [reservationsArea]),
         if (mine != null) ...[
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.sm),
           Text(
             l10n.spaceYoursNow,
             key: const ValueKey('space-act-yours'),
@@ -257,7 +258,7 @@ class _SpaceActSheetState extends ConsumerState<_SpaceActSheet> {
           ),
         ],
         if (ownRefusal != null) ...[
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.sm),
           Text(
             ownRefusal,
             key: const ValueKey('space-act-own-standing'),
@@ -267,7 +268,7 @@ class _SpaceActSheetState extends ConsumerState<_SpaceActSheet> {
           ),
         ],
         if (blocking != null) ...[
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.sm),
           Text(
             '${blocking.status == ReservationStatus.checkedIn ? (l10n.planOccupiedBy(name)) : (l10n.planReservedBy(name))}'
             ' · ${l10n.planUntil(ref.watch(appFormatProvider).time(blocking.endsAt))}',
@@ -275,7 +276,7 @@ class _SpaceActSheetState extends ConsumerState<_SpaceActSheet> {
             style: theme.textTheme.bodySmall,
           ),
           if (canMessageReserver(ref, blocking)) ...[
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             MessageReserverButton(
               widgetKey: const ValueKey('space-act-message'),
               blocking: blocking,
@@ -284,7 +285,7 @@ class _SpaceActSheetState extends ConsumerState<_SpaceActSheet> {
             ),
           ],
         ],
-        const SizedBox(height: 16),
+        const SizedBox(height: AppSpacing.lg),
         FilledButton.icon(
           key: const ValueKey('space-act-confirm'),
           onPressed: _busy || refused ? null : () => _confirm(choice),

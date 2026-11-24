@@ -382,7 +382,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         ),
         body: _centered(Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [modeSwitch, const SizedBox(height: 24),
+          children: [modeSwitch, const SizedBox(height: AppSpacing.xl),
             InvitationJoinPanel(code: _inviteCode, navigation: widget.navigation)],
         )),
       );
@@ -451,7 +451,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           if (widget.hostLabel case final host?) OnboardingHostLine(host) else modeSwitch,
-          const SizedBox(height: 24),
+          const SizedBox(height: AppSpacing.xl),
           TextFormField(
             key: const ValueKey('onboarding-name'),
             controller: _name,
@@ -516,14 +516,14 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
               });
             },
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.md),
           PlaceFields(
             currency: _currency,
             currencyFocus: _currencyFocus,
             timezone: _timezone,
             timezoneFocus: _timezoneFocus,
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.md),
           CreationShapeSelector(
             key: const ValueKey('onboarding-creation-shape-selector'),
             value: _shape,

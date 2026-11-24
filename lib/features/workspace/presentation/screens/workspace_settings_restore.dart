@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/files/file_drop.dart';
 import '../../../../core/files/file_picker.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/retention_text.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -250,7 +251,7 @@ class WorkspaceSettingsRestore {
               if (configuration != null && !choice.apply)
                 Text(l10n
                     .workspaceXmlImportPreviewConfigurationSkipped),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.md),
               Text(
                 l10n.workspaceXmlImportPreviewWarning,
                 style: theme.textTheme.bodyMedium

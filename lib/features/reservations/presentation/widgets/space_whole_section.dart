@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../domain/reservation.dart';
 import '../../domain/space_bookability.dart';
 import 'space_conflict_actions.dart';
@@ -41,7 +42,7 @@ class SpaceWholeSection {
     final myWholeReservation = bookability.myWholeReservation;
     final target = bookability.wholeTarget!;
     return [
-      const SizedBox(height: 12),
+      const SizedBox(height: AppSpacing.md),
       if (myWholeReservation != null)
         ..._myWholeActions(context, myWholeReservation)
       else if (bookability.allowed)
@@ -74,7 +75,7 @@ class SpaceWholeSection {
               key: const ValueKey('space-yours'),
               style: Theme.of(context).textTheme.bodySmall,
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             // The one action that moves this booking forward, whichever
             // state it is in. Offering "check in" to a booking already
             // checked in is what made the sheet unusable.
@@ -123,7 +124,7 @@ class SpaceWholeSection {
                 icon: const Icon(Icons.login_outlined),
                 label: Text(l10n.kioskCheckIn),
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: AppSpacing.sm),
             ],
             OutlinedButton.icon(
               key: const ValueKey('space-reserve'),
@@ -135,7 +136,7 @@ class SpaceWholeSection {
               label: Text(l10n.shellReserveButton),
             ),
             if (blocking != null) ...[
-              const SizedBox(height: 8),
+              const SizedBox(height: AppSpacing.sm),
               Text(
                 blocking.memberId == myId
                     ? (l10n.spaceBlockedByYou)

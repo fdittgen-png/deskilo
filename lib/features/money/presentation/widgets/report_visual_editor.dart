@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/edge_fade_scroll.dart';
 import '../../../../core/ui/kit/kit_metrics.dart';
 import '../../domain/invoice_pdf_template.dart';
@@ -325,7 +326,7 @@ class ReportVisualEditorState extends ConsumerState<ReportVisualEditor>
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Container(
-          margin: const EdgeInsets.symmetric(vertical: 4),
+          margin: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
           padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
           color: ReportPage.backdrop,
           child: Text(
@@ -353,7 +354,7 @@ class ReportVisualEditorState extends ConsumerState<ReportVisualEditor>
               children: [
                 for (final field in InvoicePdfTemplate.placeholders)
                   Padding(
-                    padding: const EdgeInsets.only(right: 4),
+                    padding: const EdgeInsets.only(right: AppSpacing.xs),
                     child: ActionChip(
                       key: ValueKey('${widget.bandKey}-token-$field'),
                       visualDensity: VisualDensity.compact,

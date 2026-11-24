@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -215,11 +216,11 @@ class _InstanceOwnerSheetState extends ConsumerState<InstanceOwnerSheet> {
                 l10n.instanceOwnerTitle,
                 style: theme.textTheme.titleLarge,
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: AppSpacing.sm),
               Text(
                 l10n.instanceOwnerHelp,
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: AppSpacing.sm),
               if (info.owners.isEmpty)
                 Text(
                   l10n.instanceOwnerNone,
@@ -229,7 +230,7 @@ class _InstanceOwnerSheetState extends ConsumerState<InstanceOwnerSheet> {
                 _person(info.owners[i], keyId: 'owner-$i'),
               if (info.you != null)
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 8),
+                  padding: const EdgeInsets.only(bottom: AppSpacing.sm),
                   child: Text(
                     info.isOwner
                         ? (l10n.instanceYouAreOwner)
@@ -244,11 +245,11 @@ class _InstanceOwnerSheetState extends ConsumerState<InstanceOwnerSheet> {
                   l10n.instanceClaimTitle,
                   style: theme.textTheme.titleMedium,
                 ),
-                const SizedBox(height: 4),
+                const SizedBox(height: AppSpacing.xs),
                 Text(
                   l10n.instanceClaimBody,
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: AppSpacing.sm),
                 FilledButton(
                   key: const ValueKey('instance-claim'),
                   onPressed: _busy ? null : _claim,
@@ -261,13 +262,13 @@ class _InstanceOwnerSheetState extends ConsumerState<InstanceOwnerSheet> {
                   l10n.instanceDelegatesTitle,
                   style: theme.textTheme.titleMedium,
                 ),
-                const SizedBox(height: 4),
+                const SizedBox(height: AppSpacing.xs),
                 Text(
                   l10n.instanceDelegatesHelp,
                 ),
                 if (info.delegates.isEmpty)
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
                     child: Text(
                       l10n.instanceDelegatesNone,
                       key: const ValueKey('instance-delegates-none'),
@@ -291,7 +292,7 @@ class _InstanceOwnerSheetState extends ConsumerState<InstanceOwnerSheet> {
                   ),
               ],
               if (info.isOwner) ...[
-                const SizedBox(height: 8),
+                const SizedBox(height: AppSpacing.sm),
                 TextField(
                   key: const ValueKey('instance-delegate-email'),
                   controller: _email,
@@ -304,7 +305,7 @@ class _InstanceOwnerSheetState extends ConsumerState<InstanceOwnerSheet> {
                   ),
                   onSubmitted: (_) => _busy ? null : _delegate(),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: AppSpacing.sm),
                 FilledButton.tonal(
                   key: const ValueKey('instance-delegate-add'),
                   onPressed: _busy ? null : _delegate,
@@ -312,7 +313,7 @@ class _InstanceOwnerSheetState extends ConsumerState<InstanceOwnerSheet> {
                 ),
               ],
               if (_outcome != null) ...[
-                const SizedBox(height: 8),
+                const SizedBox(height: AppSpacing.sm),
                 Text(
                   _outcome!,
                   key: const ValueKey('instance-outcome'),

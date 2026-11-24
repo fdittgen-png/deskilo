@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/navigation/routes.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
@@ -246,7 +247,7 @@ class MoneyOnlinePayment {
       builder: (context) => SheetShell(
         title: l10n.payOnlineChooseTitle,
         children: [
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.md),
           for (final candidate in gateway.providers) ...[
             FilledButton.tonalIcon(
               key: ValueKey('pay-provider-${candidate.wireName}'),
@@ -254,7 +255,7 @@ class MoneyOnlinePayment {
               icon: const Icon(Icons.account_balance_wallet_outlined),
               label: Text(paymentProviderLabel(l10n, candidate)),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
           ],
         ],
       ),
@@ -419,7 +420,7 @@ class PaymentDiagnosticsDialog extends StatelessWidget {
             l10n.payOnlineDiagHint,
             style: small,
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.sm),
           for (final line in lines)
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 2),

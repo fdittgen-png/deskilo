@@ -69,7 +69,7 @@ class _ConsentScreenState extends ConsumerState<ConsentScreen> {
                 const SizedBox(height: AppSpacing.md),
                 for (final s in privacySections(l10n)) ...[
                   Text(s.title, style: theme.textTheme.titleMedium),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: AppSpacing.xs),
                   Text(s.body, style: theme.textTheme.bodyMedium),
                   if (s.more.isNotEmpty) ...[
                     const SizedBox(height: AppSpacing.xs),
@@ -84,7 +84,7 @@ class _ConsentScreenState extends ConsumerState<ConsentScreen> {
                     l10n.privacyNoticeTitle,
                     style: theme.textTheme.titleMedium,
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: AppSpacing.xs),
                   PrivacyNoticeView(notice: notice, showVersion: false),
                   const SizedBox(height: AppSpacing.md),
                 ],

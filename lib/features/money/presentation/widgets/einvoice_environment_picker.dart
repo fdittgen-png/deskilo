@@ -72,7 +72,7 @@ Future<String?> pickEInvoiceEnvironment(
               ),
               onTap: () => Navigator.of(context).pop(env),
             ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.sm),
         ],
       ),
     ),

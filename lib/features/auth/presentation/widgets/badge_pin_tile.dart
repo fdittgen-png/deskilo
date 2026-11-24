@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -201,7 +202,7 @@ class _BadgePinSheetState extends ConsumerState<_BadgePinSheet> {
                 : (l10n.badgePinSetAction),
             style: Theme.of(context).textTheme.titleLarge,
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.sm),
           Text(
             l10n.badgePinExplain,
             style: Theme.of(context).textTheme.bodySmall,
@@ -212,14 +213,14 @@ class _BadgePinSheetState extends ConsumerState<_BadgePinSheet> {
             controller: _pin,
             label: l10n.badgePinNewLabel,
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.md),
           _field(
             key: const ValueKey('badge-pin-confirm'),
             controller: _confirm,
             label: l10n.badgePinConfirmLabel,
           ),
           if (_error != null) ...[
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.md),
             Text(
               _error!,
               key: const ValueKey('badge-pin-error'),

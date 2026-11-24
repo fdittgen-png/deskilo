@@ -126,7 +126,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                 ),
                 onTap: () => Navigator.of(context).pop('following'),
               ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
           ],
         ),
       ),

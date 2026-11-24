@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/report_image_failure.dart';
 
@@ -39,7 +40,7 @@ class ReportImageNotice extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Icon(Icons.error_outline, size: 18, color: color),
-        const SizedBox(width: 4),
+        const SizedBox(width: AppSpacing.xs),
         Flexible(
           child: Text(
             l10n.reportImageProblem(name, reportImageReason(l10n, error)),

@@ -277,12 +277,12 @@ class _RefPickerSheetState extends State<_RefPickerSheet> {
                             ),
                         ],
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               const Icon(Icons.swap_vert, size: 18),
-                              const SizedBox(width: 4),
+                              const SizedBox(width: AppSpacing.xs),
                               Text(
                                 _sortLabel(l10n, _filter.sort),
                                 style: theme.textTheme.labelLarge,
@@ -406,7 +406,7 @@ class _QuickChips extends StatelessWidget {
           ),
           children: [
             Padding(
-              padding: const EdgeInsets.only(right: 8),
+              padding: const EdgeInsets.only(right: AppSpacing.sm),
               child: ChoiceChip(
                 key: Key('$keyPrefix-quick-all'),
                 label: Text('${l10n.refFilterAll} · $total'),
@@ -416,7 +416,7 @@ class _QuickChips extends StatelessWidget {
             ),
             for (final o in options)
               Padding(
-                padding: const EdgeInsets.only(right: 8),
+                padding: const EdgeInsets.only(right: AppSpacing.sm),
                 child: ChoiceChip(
                   key: Key('$keyPrefix-quick-${o.value.id}'),
                   label: Text('${o.value.label} · ${o.count}'),

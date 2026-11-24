@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
 
 /// Correct a message you wrote (0382): the words in a field, nothing else.
 Future<String?> showEditMessageDialog(BuildContext context, String initial) {
@@ -21,7 +22,7 @@ Future<String?> showEditMessageDialog(BuildContext context, String initial) {
             minLines: 1,
             maxLines: 6,
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.sm),
           Text(
             l10n.messengerEditWindow,
             style: Theme.of(dialog).textTheme.bodySmall,

@@ -5,6 +5,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/l10n/context_l10n.dart';
+import '../../../core/motion/motion.dart';
 import '../../../core/storage/space_prefs_store.dart';
 import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_spacing.dart';
@@ -133,7 +134,7 @@ class MeGroupHeader extends StatelessWidget {
                   children: [
                     AnimatedRotation(
                       turns: folded ? -0.25 : 0,
-                      duration: const Duration(milliseconds: 150),
+                      duration: MotionTokens.quick,
                       child: const Icon(Icons.expand_more),
                     ),
                     const SizedBox(width: AppSpacing.xs),

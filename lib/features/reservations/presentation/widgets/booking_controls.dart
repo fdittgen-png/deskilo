@@ -91,7 +91,7 @@ class WindowControls extends StatelessWidget {
           // taking two rows and taking three. The 48 is the tap target
           // itself, so this shrinks the padding, never the target.
           labelPadding: EdgeInsets.zero,
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: AppSpacing.sm),
           // No checkmark: it is drawn INSIDE the chip, beside an icon
           // that is already the label, so a selected chip grew by 18dp
           // and read as two symbols meaning one thing. The fill says

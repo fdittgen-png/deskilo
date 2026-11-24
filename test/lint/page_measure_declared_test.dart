@@ -8,6 +8,7 @@
 // stays free.
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../tool/code_health_budgets.dart';
 import 'lint_sources.dart';
 
 final _selfMeasure = RegExp(r'\b(WorkArea|ReadingColumn)\(');
@@ -38,6 +39,25 @@ void main() {
       selfMeasured(sources),
       isEmpty,
       reason: 'declare `measure:` on the route in lib/app/route_classes.dart',
+    );
+  });
+
+  // #4421 — a raw `maxWidth: <number>` is a measure the route does not
+  // declare either; the ones that remain are budgeted per file
+  // (`rawMaxWidth` in the code-health baseline) and only fall.
+  test('no screen grows a raw maxWidth', () {
+    final problems = budgetFailures(
+      Budgets.load(),
+      measureBudgetActuals(),
+      only: 'rawMaxWidth',
+    );
+    expect(
+      problems,
+      isEmpty,
+      reason:
+          '${problems.join('\n')}\n\n'
+          'Declare the page measure on the route, or use a named width '
+          '(kReadingColumnWidth and its siblings in page_measures.dart).',
     );
   });
 }

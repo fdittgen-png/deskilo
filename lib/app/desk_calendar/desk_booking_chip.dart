@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import '../../core/i18n/format_controller.dart';
 import '../../core/l10n/context_l10n.dart';
 import '../../core/theme/app_radius.dart';
+import '../../core/theme/app_spacing.dart';
 import '../../features/reservations/domain/reservation.dart';
 import '../../features/reservations/presentation/widgets/booking_range_text.dart';
 
@@ -106,7 +107,7 @@ class DeskBookingChip extends StatelessWidget {
           child: Align(
             alignment: AlignmentDirectional.centerStart,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4),
+              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xs),
               child: _Words(
                 id: booking.id,
                 range: showHours ? range : null,

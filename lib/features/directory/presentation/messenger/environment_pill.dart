@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../core/theme/status_colors.dart';
 
@@ -25,10 +26,10 @@ class EnvironmentLabel extends StatelessWidget {
     return Row(
       children: [
         Flexible(child: Text(name, overflow: TextOverflow.ellipsis)),
-        const SizedBox(width: 8),
+        const SizedBox(width: AppSpacing.sm),
         Container(
           key: ValueKey(isProd ? 'env-pill-prod' : 'env-pill-dev'),
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: 2),
           decoration: BoxDecoration(
             color: isProd ? fill : Colors.transparent,
             borderRadius: AppRadius.lgAll,

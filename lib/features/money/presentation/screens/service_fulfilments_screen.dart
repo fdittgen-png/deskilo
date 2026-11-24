@@ -13,6 +13,7 @@ import '../../../../core/help/help_dot.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/navigation/routes.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/adaptive/page_measures.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -50,7 +51,7 @@ class ServiceFulfilmentsScreen extends ConsumerWidget {
           ? const SizedBox.shrink()
           : Center(
               child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 720),
+                constraints: const BoxConstraints(maxWidth: kReadingColumnWidth),
                 child: _Body(workspaceId: workspace.id),
               ),
             ),

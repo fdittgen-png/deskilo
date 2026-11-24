@@ -7,6 +7,7 @@ import '../../../../core/nfc/nfc_uid_reader.dart';
 import '../../../../core/scan/qr_scan_widget.dart';
 import '../../../../core/scan/scan_camera_box.dart';
 import '../../../../core/scan/scan_no_camera.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/space_code.dart';
@@ -101,13 +102,13 @@ class _SpaceScanSheetState extends State<SpaceScanSheet> {
     return SheetShell(
       title: l10n.spaceScanTitle,
       children: [
-        const SizedBox(height: 8),
+        const SizedBox(height: AppSpacing.sm),
         Text(
           l10n.spaceScanHint,
           style: Theme.of(context).textTheme.bodySmall,
         ),
         if (widget.nfc != null) ...[
-          const SizedBox(height: 4),
+          const SizedBox(height: AppSpacing.xs),
           Row(
             key: const ValueKey('space-scan-nfc-hint'),
             children: [
@@ -124,7 +125,7 @@ class _SpaceScanSheetState extends State<SpaceScanSheet> {
         ],
         if (_unknownTag)
           Padding(
-            padding: const EdgeInsets.only(top: 8),
+            padding: const EdgeInsets.only(top: AppSpacing.sm),
             child: Text(
               l10n.spaceScanUnknownTag,
               key: const ValueKey('space-scan-unknown-tag'),
@@ -135,7 +136,7 @@ class _SpaceScanSheetState extends State<SpaceScanSheet> {
           ),
         if (widget.scanBuilder == null && widget.explainNoCamera)
           Padding(
-            padding: const EdgeInsets.only(top: 8),
+            padding: const EdgeInsets.only(top: AppSpacing.sm),
             child: Text(
               scanNoCameraSentence(l10n),
               key: const ValueKey('space-scan-no-camera'),
@@ -143,7 +144,7 @@ class _SpaceScanSheetState extends State<SpaceScanSheet> {
             ),
           ),
         if (widget.scanBuilder != null) ...[
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.md),
           // Shared camera box with the lens FLIP button (field request).
           ScanCameraBox(
             cameraKey: const ValueKey('space-scan-camera'),
@@ -152,7 +153,7 @@ class _SpaceScanSheetState extends State<SpaceScanSheet> {
             defaultFront: false,
           ),
         ],
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.md),
         TextField(
           key: const ValueKey('space-scan-field'),
           controller: _controller,
@@ -165,7 +166,7 @@ class _SpaceScanSheetState extends State<SpaceScanSheet> {
           ),
           onSubmitted: _submit,
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: AppSpacing.lg),
         FilledButton(
           key: const ValueKey('space-scan-submit'),
           onPressed: () => _submit(_controller.text),

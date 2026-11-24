@@ -10,6 +10,7 @@ import '../../../../core/scan/qr_scan_widget.dart';
 import '../../../../core/scan/scan_camera_box.dart';
 import '../../../../core/scan/scan_no_camera.dart';
 import '../../../../core/settings/booking_windows.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -296,7 +297,7 @@ class _BadgeCaptureState extends State<_BadgeCapture> {
           l10n.kioskPresentBadge,
           style: Theme.of(context).textTheme.titleMedium,
         ),
-        const SizedBox(height: 4),
+        const SizedBox(height: AppSpacing.xs),
         Text(
           _nfc == _NfcUiState.reading
               ? (l10n.kioskBadgeHintNfc)
@@ -305,14 +306,14 @@ class _BadgeCaptureState extends State<_BadgeCapture> {
         ),
         if (_nfc == _NfcUiState.reading)
           const Padding(
-            padding: EdgeInsets.only(top: 12),
+            padding: EdgeInsets.only(top: AppSpacing.md),
             child: Center(
               child: Icon(Icons.contactless_outlined, size: 44),
             ),
           ),
         if (nfcProblem != null)
           Padding(
-            padding: const EdgeInsets.only(top: 12),
+            padding: const EdgeInsets.only(top: AppSpacing.md),
             child: Row(
               key: const ValueKey('kiosk-nfc-status'),
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -322,7 +323,7 @@ class _BadgeCaptureState extends State<_BadgeCapture> {
                   size: 20,
                   color: Theme.of(context).colorScheme.error,
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.sm),
                 Expanded(
                   child: Text(
                     nfcProblem,
@@ -334,7 +335,7 @@ class _BadgeCaptureState extends State<_BadgeCapture> {
           ),
         if (widget.scanBuilder == null && widget.explainNoCamera)
           Padding(
-            padding: const EdgeInsets.only(top: 12),
+            padding: const EdgeInsets.only(top: AppSpacing.md),
             child: Text(
               scanNoCameraSentence(l10n),
               key: const ValueKey('kiosk-no-camera'),
@@ -343,7 +344,7 @@ class _BadgeCaptureState extends State<_BadgeCapture> {
           ),
         if (widget.scanBuilder != null && _cameraReady && !_cameraMode)
           Padding(
-            padding: const EdgeInsets.only(top: 12),
+            padding: const EdgeInsets.only(top: AppSpacing.md),
             child: OutlinedButton.icon(
               key: const ValueKey('kiosk-scan-qr-button'),
               onPressed: () => setState(() => _cameraMode = true),
@@ -354,13 +355,13 @@ class _BadgeCaptureState extends State<_BadgeCapture> {
             ),
           ),
         if (widget.scanBuilder != null && _cameraReady && _cameraMode) ...[
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.md),
           ScanCameraBox(
             cameraKey: const ValueKey('kiosk-badge-camera'),
             onCode: _submit,
           ),
         ],
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.md),
         TextField(
           key: const ValueKey('kiosk-badge-field'),
           controller: _controller,
@@ -372,7 +373,7 @@ class _BadgeCaptureState extends State<_BadgeCapture> {
           // Wedge scanners terminate with Enter — submit directly.
           onSubmitted: _submit,
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: AppSpacing.lg),
         FilledButton(
           key: const ValueKey('kiosk-badge-submit'),
           onPressed: () => _submit(_controller.text),

@@ -79,7 +79,7 @@ class FinancesDevSection extends StatelessWidget {
     final tone = AppEnvironmentColors.developmentOf(Theme.of(context).brightness);
     return Padding(
       key: const ValueKey('finances-dev-section'),
-      padding: const EdgeInsets.fromLTRB(4, AppSpacing.lg, 4, AppSpacing.sm),
+      padding: const EdgeInsets.fromLTRB(AppSpacing.xs, AppSpacing.lg, AppSpacing.xs, AppSpacing.sm),
       child: Row(
         children: [
           Icon(Icons.science_outlined, size: 18, color: tone),

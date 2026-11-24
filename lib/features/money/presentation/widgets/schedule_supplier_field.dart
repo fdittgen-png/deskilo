@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../providers/expense_schedule_providers.dart';
 import '../../providers/supplier_providers.dart';
@@ -33,7 +34,7 @@ class ScheduleSupplierField extends ConsumerWidget {
     if (active.isEmpty) return const SizedBox.shrink();
     final l10n = context.l10n;
     return Padding(
-      padding: const EdgeInsets.only(top: 12),
+      padding: const EdgeInsets.only(top: AppSpacing.md),
       child: DropdownButtonFormField<String?>(
         key: const ValueKey('schedule-supplier'),
         initialValue: active.any((s) => s.id == value) ? value : null,

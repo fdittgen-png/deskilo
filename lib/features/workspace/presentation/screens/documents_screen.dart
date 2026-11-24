@@ -110,7 +110,7 @@ class DocumentsScreen extends ConsumerWidget {
                             value: p,
                             child: Row(children: [
                               Icon(providerIcon(p), size: 18),
-                              const SizedBox(width: 8),
+                              const SizedBox(width: AppSpacing.sm),
                               Text(providerName(p)),
                             ]),
                           ),

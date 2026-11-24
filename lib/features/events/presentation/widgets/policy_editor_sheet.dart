@@ -161,7 +161,7 @@ class PolicyEditorSheetState extends State<PolicyEditorSheet> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(widget.title, style: theme.textTheme.titleLarge),
-              const SizedBox(height: 8),
+              const SizedBox(height: AppSpacing.sm),
               ListTile(
                 contentPadding: EdgeInsets.zero,
                 title: HelpDotTitle(
@@ -321,7 +321,7 @@ class PolicyEditorSheetState extends State<PolicyEditorSheet> {
                 // empty means every amount.
                 if (_amountDomain)
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 8),
+                    padding: const EdgeInsets.only(bottom: AppSpacing.sm),
                     child: TextField(
                       key: const Key('validation-min-amount'),
                       controller: _minAmount,
@@ -388,7 +388,7 @@ class PolicyEditorSheetState extends State<PolicyEditorSheet> {
                         ?.copyWith(color: theme.colorScheme.error),
                   ),
                 ),
-              const SizedBox(height: 8),
+              const SizedBox(height: AppSpacing.sm),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -397,7 +397,7 @@ class PolicyEditorSheetState extends State<PolicyEditorSheet> {
                     onPressed: () => Navigator.of(context).pop(),
                     child: Text(l10n.commonCancel),
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: AppSpacing.sm),
                   FilledButton(
                     key: const ValueKey('policy-editor-sheet-save'),
                     onPressed: _save,

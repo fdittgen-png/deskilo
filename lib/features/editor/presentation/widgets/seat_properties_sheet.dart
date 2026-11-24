@@ -103,14 +103,14 @@ Future<void> showSeatPropertiesSheet(
                 },
                 style: Theme.of(context).textTheme.titleMedium,
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.md),
               TextField(
                 controller: name,
                 decoration: InputDecoration(
                   labelText: l10n.editorSeatNameLabel,
                 ),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.md),
               Text(l10n.editorOrientationLabel),
               // #1216 — four bare arrows say nothing about what "up"
               // means. It is the direction on the PLAN, the same one
@@ -122,7 +122,7 @@ Future<void> showSeatPropertiesSheet(
                       color: Theme.of(context).colorScheme.onSurfaceVariant,
                     ),
               ),
-              const SizedBox(height: 4),
+              const SizedBox(height: AppSpacing.xs),
               SegmentedButton<SeatOrientation>(
                 segments: const [
                   ButtonSegment(
@@ -146,14 +146,14 @@ Future<void> showSeatPropertiesSheet(
                 onSelectionChanged: (selection) =>
                     setSheetState(() => orientation = selection.first),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.md),
               TextField(
                 controller: chair,
                 decoration: InputDecoration(
                   labelText: l10n.editorChairLabel,
                 ),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.md),
               ResourceFields(
                 seat: seat,
                 draft: resource,
@@ -163,7 +163,7 @@ Future<void> showSeatPropertiesSheet(
                     a.supplementCents > 0 ? currency.formatMinor(a.supplementCents) : null),
               ),
               Text(l10n.accessoriesTitle),
-              const SizedBox(height: 4),
+              const SizedBox(height: AppSpacing.xs),
               // #1216 — a link, not an instruction. Telling somebody
               // where to go and making them walk there themselves is
               // two taps and a memory of the sentence; this is one
@@ -205,7 +205,7 @@ Future<void> showSeatPropertiesSheet(
                       ),
                   ],
                 ),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.md),
               // #585 — a physical tag on the chair resolves to this
               // seat like its printed QR card (#604: flag-gated).
               if (seatTagsOn)
@@ -248,7 +248,7 @@ Future<void> showSeatPropertiesSheet(
                 value: blocked,
                 onChanged: (v) => setSheetState(() => blocked = v),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.md),
               FilledButton(
                 key: ValueKey('seat-properties-sheet-save-$levelId'),
                 onPressed: () => Navigator.of(context).pop(true),

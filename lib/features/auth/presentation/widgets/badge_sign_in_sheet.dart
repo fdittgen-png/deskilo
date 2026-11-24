@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/nfc/nfc_uid_reader.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/badge_sign_in.dart';
@@ -34,7 +35,7 @@ Future<void> showBadgeSignInSheet(
       context: context,
       isScrollControlled: true,
       builder: (_) => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: AppSpacing.xl),
         child: _BadgeSignInSheet(scannedUid: scannedUid),
       ),
     );
@@ -182,7 +183,7 @@ class _BadgeSignInSheetState extends ConsumerState<_BadgeSignInSheet> {
           const SizedBox(height: 20),
           if (who == null) ..._scanStep(l10n) else ..._pinStep(l10n, who),
           if (_failure != null) ...[
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
             Text(
               _failureText(l10n),
               key: const ValueKey('badge-signin-error'),
@@ -190,7 +191,7 @@ class _BadgeSignInSheetState extends ConsumerState<_BadgeSignInSheet> {
               style: TextStyle(color: Theme.of(context).colorScheme.error),
             ),
           ],
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.sm),
           TextButton(
             key: const ValueKey('badge-sign-in-sheet-sign-in-use-email'),
             onPressed: _busy ? null : () => Navigator.of(context).pop(),
@@ -207,7 +208,7 @@ class _BadgeSignInSheetState extends ConsumerState<_BadgeSignInSheet> {
           size: 64,
           color: Theme.of(context).colorScheme.primary,
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: AppSpacing.lg),
         Text(
           _reading
               ? (l10n.badgeSignInTapPrompt)
@@ -216,7 +217,7 @@ class _BadgeSignInSheetState extends ConsumerState<_BadgeSignInSheet> {
           textAlign: TextAlign.center,
         ),
         if (!_reading && _failure == BadgeSignInFailure.unavailable) ...[
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.md),
           OutlinedButton(
             key: const ValueKey('badge-signin-retry'),
             onPressed: _busy ? null : _scan,
@@ -237,7 +238,7 @@ class _BadgeSignInSheetState extends ConsumerState<_BadgeSignInSheet> {
           style: Theme.of(context).textTheme.titleMedium,
           textAlign: TextAlign.center,
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: AppSpacing.lg),
         TextField(
           key: const ValueKey('badge-signin-pin'),
           controller: _pin,
@@ -253,7 +254,7 @@ class _BadgeSignInSheetState extends ConsumerState<_BadgeSignInSheet> {
             border: const OutlineInputBorder(),
           ),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: AppSpacing.lg),
         FilledButton(
           key: const ValueKey('badge-signin-submit'),
           onPressed: _busy ? null : _submit,

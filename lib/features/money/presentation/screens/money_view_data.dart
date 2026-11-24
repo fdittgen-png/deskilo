@@ -10,6 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../events/domain/workspace_event.dart';
 import '../../../events/providers/event_providers.dart';
@@ -220,7 +221,7 @@ class MoneyViewData {
             intents: onlineAttempts,
             currencyCode: currencyCode,
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.sm),
         ],
       ];
 }

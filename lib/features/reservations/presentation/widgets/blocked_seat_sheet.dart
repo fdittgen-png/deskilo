@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
 
 /// Sheet on a blocked seat for owners/delegated admins (#161): explains the
 /// block and offers to make the seat reservable again (pops true).
@@ -29,7 +30,7 @@ class BlockedSeatSheet extends StatelessWidget {
             title: Text(l10n.planMakeReservable),
             onTap: () => Navigator.of(context).pop(true),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.sm),
         ],
       ),
     );

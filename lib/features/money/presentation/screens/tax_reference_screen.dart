@@ -81,7 +81,7 @@ class _TaxReferenceScreenState extends ConsumerState<TaxReferenceScreen> {
           : null,
       body: !owner
           ? Center(child: Padding(
-              padding: const EdgeInsets.all(24),
+              padding: const EdgeInsets.all(AppSpacing.xl),
               child: Text(l10n.taxRefNotAllowed, textAlign: TextAlign.center),
             ))
           : _body(context),
@@ -109,12 +109,12 @@ class _TaxReferenceScreenState extends ConsumerState<TaxReferenceScreen> {
             return byCountry != 0 ? byCountry : a.key.compareTo(b.key);
           });
         return ListView(
-          padding: const EdgeInsets.fromLTRB(16, 8, 16, kFabSafeBottom),
+          padding: const EdgeInsets.fromLTRB(AppSpacing.lg, AppSpacing.sm, AppSpacing.lg, kFabSafeBottom),
           children: [
             Text(l10n.taxRefIntro),
             if (set.origin == TaxReferenceOrigin.bundle)
               Padding(
-                padding: const EdgeInsets.only(top: 8),
+                padding: const EdgeInsets.only(top: AppSpacing.sm),
                 child: Text(l10n.taxRefOfflineCopy),
               ),
             const SizedBox(height: AppSpacing.md),
@@ -136,7 +136,7 @@ class _TaxReferenceScreenState extends ConsumerState<TaxReferenceScreen> {
             ),
             if (rows.isEmpty)
               Padding(
-                padding: const EdgeInsets.only(top: 16),
+                padding: const EdgeInsets.only(top: AppSpacing.lg),
                 child: Text(l10n.taxRefEmpty),
               ),
             for (final r in rows)

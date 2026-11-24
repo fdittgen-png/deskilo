@@ -9,6 +9,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../application/template_workbook.dart';
@@ -135,7 +136,7 @@ class _WorkbookExportDialogState extends State<_WorkbookExportDialog> {
               liveRegion: true,
               child: Text(label, key: const ValueKey('workbook-export-stage')),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.md),
             LinearProgressIndicator(
               value:
                   p == null || p.total == 0 || p.stage != WorkbookStage.reading

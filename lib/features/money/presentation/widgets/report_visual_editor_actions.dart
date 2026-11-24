@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/kit/kit_metrics.dart';
 import '../../domain/invoice_report.dart';
 import '../../providers/money_providers.dart';
@@ -207,7 +208,7 @@ mixin ReportVisualEditorActions on ConsumerState<ReportVisualEditor> {
     switch (line.kind) {
       case ReportLineKind.title:
         return Padding(
-          padding: const EdgeInsets.only(bottom: 4),
+          padding: const EdgeInsets.only(bottom: AppSpacing.xs),
           child: Text.rich(visualTokenized(line.content, ReportPage.heading)),
         );
       case ReportLineKind.section:
@@ -235,7 +236,7 @@ mixin ReportVisualEditorActions on ConsumerState<ReportVisualEditor> {
                         child:
                             Text.rich(visualTokenized(cells[c].trim(), style))) else Flexible(
                         child: Padding(
-                          padding: const EdgeInsets.only(left: 12),
+                          padding: const EdgeInsets.only(left: AppSpacing.md),
                           child: Text.rich(
                               visualTokenized(cells[c].trim(), style),
                               textAlign: TextAlign.right),
@@ -246,7 +247,7 @@ mixin ReportVisualEditorActions on ConsumerState<ReportVisualEditor> {
         );
       case ReportLineKind.divider:
         return Container(
-            margin: const EdgeInsets.symmetric(vertical: 8),
+            margin: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
             height: 2,
             color: ReportPage.accent);
       case ReportLineKind.spacer:
@@ -275,11 +276,11 @@ mixin ReportVisualEditorActions on ConsumerState<ReportVisualEditor> {
             ? Row(mainAxisSize: MainAxisSize.min, children: [
                 const Icon(Icons.image_outlined,
                     size: 18, color: ReportPage.chrome),
-                const SizedBox(width: 4),
+                const SizedBox(width: AppSpacing.xs),
                 Text(image.name, style: ReportPage.small),
               ])
             : Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4),
+                padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
                 child: Align(
                   // #822 — size and alignment as the PDF draws them.
                   alignment: reportImageAlignment(image.align),
@@ -292,7 +293,7 @@ mixin ReportVisualEditorActions on ConsumerState<ReportVisualEditor> {
         // OUTSIDE the document's typography.
         return Row(children: [
           const Icon(Icons.code, size: 14, color: ReportPage.chrome),
-          const SizedBox(width: 4),
+          const SizedBox(width: AppSpacing.xs),
           Expanded(
             child: Text(
               line.content,
@@ -399,7 +400,7 @@ mixin ReportVisualEditorActions on ConsumerState<ReportVisualEditor> {
             value: kind,
             child: Row(mainAxisSize: MainAxisSize.min, children: [
               Icon(reportLineIcon(kind), size: 18),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.sm),
               Flexible(
                 child: Text(reportLineName(kind, l10n),
                     overflow: TextOverflow.ellipsis),

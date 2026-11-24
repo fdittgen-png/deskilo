@@ -80,7 +80,7 @@ class DocumentsFaceActions extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        for (final b in buttons) ...[const SizedBox(height: 8), b],
+        for (final b in buttons) ...[const SizedBox(height: AppSpacing.sm), b],
       ],
     );
   }

@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../../../../core/theme/app_spacing.dart';
 import '../../../profile/presentation/widgets/member_avatar.dart';
 
 /// The self-dismissing receipt: who, what, where, until when — big
@@ -76,17 +77,17 @@ class KioskSuccessCardState extends State<KioskSuccessCard> {
               hasAvatar: widget.hasAvatar,
               radius: 32,
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
           ],
           Text(
             widget.memberName,
             key: const ValueKey('kiosk-summary-name'),
             style: Theme.of(context).textTheme.titleLarge,
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: AppSpacing.xs),
           Text(widget.targetName),
           if (rangeText != null) ...[
-            const SizedBox(height: 4),
+            const SizedBox(height: AppSpacing.xs),
             Text(
               rangeText,
               key: const ValueKey('kiosk-summary-range'),

@@ -264,7 +264,7 @@ class VatRateValidityLines extends StatelessWidget {
           if (draft.isDated)
             Padding(
               key: ValueKey('vat-rate-validity-$index'),
-              padding: const EdgeInsets.only(bottom: 4),
+              padding: const EdgeInsets.only(bottom: AppSpacing.xs),
               child: Text(
                 [
                   draft.label.text,

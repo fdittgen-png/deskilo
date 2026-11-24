@@ -6,6 +6,7 @@ import '../../../core/help/help_anchors.dart';
 import '../../../core/help/help_dot.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/share/file_sharer.dart';
+import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../auth/providers/auth_providers.dart';
@@ -81,7 +82,7 @@ Future<void> pickMemberOveragePolicy(
                       : Icons.radio_button_unchecked,
                   color: Theme.of(context).colorScheme.primary,
                 ),
-                const SizedBox(width: 12),
+                const SizedBox(width: AppSpacing.md),
                 Expanded(child: Text(label)),
               ],
             ),
@@ -216,7 +217,7 @@ Future<void> pickMemberCoOwner(
                       : Icons.radio_button_unchecked,
                   color: Theme.of(context).colorScheme.primary,
                 ),
-                const SizedBox(width: 12),
+                const SizedBox(width: AppSpacing.md),
                 Expanded(child: Text(label)),
               ],
             ),
@@ -311,7 +312,7 @@ Future<void> pickMemberReservationLimit(
             l10n.memberReservationLimitExplainer,
             style: Theme.of(context).textTheme.bodySmall,
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.md),
           Wrap(
             spacing: 8,
             runSpacing: 4,
@@ -334,7 +335,7 @@ Future<void> pickMemberReservationLimit(
                 ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.md),
           TextField(
             controller: custom,
             keyboardType: TextInputType.number,
@@ -411,7 +412,7 @@ Future<void> pickMemberSimultaneousLimit(
             l10n.memberSimultaneousLimitExplainer,
             style: Theme.of(context).textTheme.bodySmall,
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.md),
           Wrap(
             spacing: 8,
             runSpacing: 4,

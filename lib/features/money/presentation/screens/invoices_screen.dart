@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/navigation/routes.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/domain/workspace_permission.dart';
@@ -207,7 +208,7 @@ Widget _memberMenu(BuildContext context, List<MoreEntry> entries) =>
             child: Row(
               children: [
                 Icon(e.$2, size: 20),
-                const SizedBox(width: 12),
+                const SizedBox(width: AppSpacing.md),
                 Flexible(child: Text(e.$3)),
               ],
             ),
@@ -217,7 +218,7 @@ Widget _memberMenu(BuildContext context, List<MoreEntry> entries) =>
         // The worded button is a whole target, not just its words.
         constraints: const BoxConstraints(minHeight: 48),
         child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12),
+        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -245,11 +246,11 @@ class _Banner extends StatelessWidget {
       return const SizedBox.shrink();
     }
     return Padding(
-      padding: const EdgeInsets.fromLTRB(12, 8, 12, 0),
+      padding: const EdgeInsets.fromLTRB(AppSpacing.md, AppSpacing.sm, AppSpacing.md, 0),
       child: Card(
         key: const ValueKey('invoicing-banner'),
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(12, 8, 4, 4),
+          padding: const EdgeInsets.fromLTRB(AppSpacing.md, AppSpacing.sm, AppSpacing.xs, AppSpacing.xs),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -264,7 +265,7 @@ class _Banner extends StatelessWidget {
                       color: scheme.onSurfaceVariant,
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: AppSpacing.md),
                   Expanded(
                     child: Text(
                       text,

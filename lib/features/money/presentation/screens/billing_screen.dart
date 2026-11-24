@@ -7,6 +7,7 @@ import '../../../../core/format/cents.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/async_read_body.dart';
@@ -425,7 +426,7 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
     final rates = ref.watch(vatRatesProvider).value ?? const <VatRate>[]; // empty-ok: an unread rate shows no "incl. VAT" helper, never a wrong one
     final currencySymbol = appFormatOf(context).moneyIn(workspace?.currencyCode).currencySymbol;
     final fields = FormScroll(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(AppSpacing.lg),
       children: [
         BillingSectionHeader(
           title: l10n.billingFeeBands,
@@ -443,7 +444,7 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
           _bandRow(l10n, i, currencySymbol),
         if (_bandsInvalid)
           Padding(
-            padding: const EdgeInsets.only(top: 8),
+            padding: const EdgeInsets.only(top: AppSpacing.sm),
             child: Text(
               l10n.billingBandsInvalid,
               style: TextStyle(color: Theme.of(context).colorScheme.error),
@@ -471,7 +472,7 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
           title: l10n.billingLevels,
           anchor: HelpAnchor.billingLevels,
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: AppSpacing.sm),
         BillingLevelChips(
           enabledPresets: _enabledPresets,
           extraLevels: _extraLevels,
@@ -502,7 +503,7 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
           l10n.billingPackagesHint,
           style: Theme.of(context).textTheme.bodySmall,
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: AppSpacing.sm),
         for (final package in widget.packages)
           // #537 — currency + the pack's own VAT rate on the row.
           BillingPackageTile(
@@ -512,7 +513,7 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
             rates: rates,
             onToggle: () => _togglePackage(package),
           ),
-        const SizedBox(height: 8),
+        const SizedBox(height: AppSpacing.sm),
         BillingSectionHeader(
           title: l10n.billingNewPackage,
           anchor: HelpAnchor.billingPackageNew,
@@ -549,7 +550,7 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
           elevation: 3,
           child: SafeArea(
             child: Padding(
-              padding: const EdgeInsets.all(12),
+              padding: const EdgeInsets.all(AppSpacing.md),
               child: FilledButton.icon(
                 key: const ValueKey('billing-save'),
                 style: FilledButton.styleFrom(

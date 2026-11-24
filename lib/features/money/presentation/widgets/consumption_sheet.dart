@@ -88,7 +88,7 @@ Future<void> showConsumptionSheet(
                   : (l10n.consumptionAddForMember(subjectName)),
               style: Theme.of(context).textTheme.titleMedium,
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.md),
             DropdownButtonFormField<ServiceItem>(
               // #731 — labels grew a stock suffix; never let them clip.
               key: ValueKey('consumption-sheet-service-$subjectMemberId'),
@@ -111,7 +111,7 @@ Future<void> showConsumptionSheet(
               ],
               onChanged: (v) => setSheetState(() => service = v ?? service),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.md),
             Row(
               children: [
                 Expanded(
@@ -139,7 +139,7 @@ Future<void> showConsumptionSheet(
                 ),
               ],
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.md),
             TextField(
               key: ValueKey('consumption-sheet-period-label-$subjectMemberId'),
               controller: period,
@@ -152,7 +152,7 @@ Future<void> showConsumptionSheet(
                 labelText: l10n.consumptionPeriodLabel,
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
             FilledButton(
               key: const ValueKey('consumption-submit'),
               onPressed: consumptionOutcome(

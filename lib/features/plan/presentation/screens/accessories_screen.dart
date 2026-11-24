@@ -260,7 +260,7 @@ class _AccessorySheetState extends State<_AccessorySheet> {
                 : (l10n.accessoriesEdit),
             style: Theme.of(context).textTheme.titleMedium,
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.md),
           TextField(
             controller: _name,
             autofocus: widget.accessory == null,
@@ -295,7 +295,7 @@ class _AccessorySheetState extends State<_AccessorySheet> {
               value: _active,
               onChanged: (v) => setState(() => _active = v),
             ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.sm),
           FilledButton(
             key: const ValueKey('accessories-save'),
             onPressed: _submit,

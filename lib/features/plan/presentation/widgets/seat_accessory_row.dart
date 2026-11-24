@@ -6,6 +6,7 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/accessory.dart';
@@ -76,7 +77,7 @@ class SeatAccessoryRow extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 8),
+        const SizedBox(height: AppSpacing.sm),
         Wrap(
           key: chipsKey,
           spacing: 6,
@@ -85,7 +86,7 @@ class SeatAccessoryRow extends ConsumerWidget {
             for (final accessory in accessories)
               Container(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
                 decoration: BoxDecoration(
                   color: theme.colorScheme.surfaceContainerHighest,
                   borderRadius: AppRadius.mdAll,
@@ -102,7 +103,7 @@ class SeatAccessoryRow extends ConsumerWidget {
           ],
         ),
         if (anyPriced) ...[
-          const SizedBox(height: 4),
+          const SizedBox(height: AppSpacing.xs),
           // Unit hint for the (+price) suffixes: supplements are billed
           // per half-day (#170); shown only when a priced chip is visible.
           Text(

@@ -158,7 +158,7 @@ class _BackendScreenState extends ConsumerState<BackendScreen> {
               l10n.backendShareHint,
               style: Theme.of(context).textTheme.bodySmall,
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.md),
             Container(
               color: Colors.white,
               padding: AppSpacing.mdAll,

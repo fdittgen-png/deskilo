@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/invoice_line_text.dart';
@@ -50,7 +51,7 @@ class InvoicePreviewBody extends ConsumerWidget {
     }
     if (loading || preview == null) {
       return const Padding(
-        padding: EdgeInsets.symmetric(vertical: 16),
+        padding: EdgeInsets.symmetric(vertical: AppSpacing.lg),
         child: LoadingView(),
       );
     }
@@ -151,7 +152,7 @@ class _Note extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 12),
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
       child: Text(
         text,
         key: ValueKey(keyName),

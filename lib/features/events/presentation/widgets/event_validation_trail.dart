@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/validation_policy.dart';
 import '../../domain/workspace_event.dart';
@@ -48,7 +49,7 @@ class EventValidationTrail extends ConsumerWidget {
     if (trail.decisions.isEmpty && !pending) return const SizedBox.shrink();
 
     return Padding(
-      padding: const EdgeInsets.only(top: 8),
+      padding: const EdgeInsets.only(top: AppSpacing.sm),
       child: ValidationTrail(
         key: ValueKey('event-trail-$eventId'),
         decisions: trail.decisions,
