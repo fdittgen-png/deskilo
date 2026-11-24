@@ -5034,9 +5034,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get billingAccessCodeCopy => 'Code kopieren';
 
   @override
-  String get billingAccessCodeField => 'Code';
-
-  @override
   String billingAccessCodeOnce(String date) {
     return 'Geben Sie diesen Code jetzt an den Kunden weiter. Er wird nur einmal angezeigt und kann nicht erneut gelesen werden. Er gilt bis $date.';
   }
@@ -38247,9 +38244,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get stockUnitContentNone => 'Nichts darin.';
 
   @override
-  String get stockUnitItem => 'Artikel';
-
-  @override
   String get stockUnitKind => 'Art';
 
   @override
@@ -38301,9 +38295,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get stockUnitPlace => 'Ort';
-
-  @override
-  String get stockUnitQuantity => 'Menge';
 
   @override
   String get stockUnitRepack => 'In Kisten umpacken';

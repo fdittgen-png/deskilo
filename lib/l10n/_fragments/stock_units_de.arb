@@ -14,8 +14,6 @@
   "stockUnitKindBox": "Schachtel",
   "stockUnitKindOther": "Andere",
   "stockUnitPlace": "Ort",
-  "stockUnitItem": "Artikel",
-  "stockUnitQuantity": "Menge",
   "stockUnitContent": "Inhalt",
   "stockUnitContentNone": "Nichts darin.",
   "stockUnitMove": "Bewegen",

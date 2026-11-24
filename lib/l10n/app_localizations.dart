@@ -7844,12 +7844,6 @@ abstract class AppLocalizations {
   /// the billing access of a customer to their own invoices (#4164)
   ///
   /// In en, this message translates to:
-  /// **'Code'**
-  String get billingAccessCodeField;
-
-  /// the billing access of a customer to their own invoices (#4164)
-  ///
-  /// In en, this message translates to:
   /// **'Give this code to the customer now. It is shown only once and cannot be read again. It is valid until {date}.'**
   String billingAccessCodeOnce(String date);
 
@@ -60631,12 +60625,6 @@ abstract class AppLocalizations {
   /// #4435 handling units
   ///
   /// In en, this message translates to:
-  /// **'Item'**
-  String get stockUnitItem;
-
-  /// #4435 handling units
-  ///
-  /// In en, this message translates to:
   /// **'Kind'**
   String get stockUnitKind;
 
@@ -60723,12 +60711,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Place'**
   String get stockUnitPlace;
-
-  /// #4435 handling units
-  ///
-  /// In en, this message translates to:
-  /// **'Quantity'**
-  String get stockUnitQuantity;
 
   /// #4435 handling units
   ///

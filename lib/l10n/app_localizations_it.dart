@@ -5025,9 +5025,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get billingAccessCodeCopy => 'Copiare il codice';
 
   @override
-  String get billingAccessCodeField => 'Codice';
-
-  @override
   String billingAccessCodeOnce(String date) {
     return 'Consegni subito questo codice al cliente. Viene mostrato una sola volta e non può essere riletto. È valido fino al $date.';
   }
@@ -38181,9 +38178,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get stockUnitContentNone => 'Niente dentro.';
 
   @override
-  String get stockUnitItem => 'Articolo';
-
-  @override
   String get stockUnitKind => 'Tipo';
 
   @override
@@ -38236,9 +38230,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get stockUnitPlace => 'Luogo';
-
-  @override
-  String get stockUnitQuantity => 'Quantità';
 
   @override
   String get stockUnitRepack => 'Riconfeziona in scatole';
