@@ -12613,6 +12613,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get featureStockExpiryReportTitle => 'Der Verfallsbericht';
 
   @override
+  String get featureStockHandlingUnitsDesc =>
+      'Ware bewegt sich in der Palette oder dem Karton, in dem sie ankam, oder in den eigenen umgepackten Einheiten des Ladens und bleibt über das Umpacken rückverfolgbar.';
+
+  @override
+  String get featureStockHandlingUnitsTitle => 'Packeinheiten';
+
+  @override
   String get featureStockItemGroupsDesc =>
       'Artikel gruppieren, damit ihre Einstellungen geteilt werden: Nachverfolgung, Haltbarkeit, Etikettenmodus, Einheiten, Mehrwertsteuer, Kasse und mehr. Ein Artikel erbt den Wert seiner Gruppe, außer er behält seinen eigenen; eine Änderung an der Gruppe zeigt vor dem Speichern, wie viele Artikel sie erreicht.';
 
@@ -29303,6 +29310,18 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get refusalStockUnit =>
       'Dieser Artikel hat diese Einheit nicht. Fügen Sie die Einheit dem Artikel hinzu oder geben Sie die Menge in einer seiner Einheiten ein.';
+
+  @override
+  String get refusalStockUnitChanged =>
+      'Diese Einheit hat sich seit dem Lesen geändert: jemand hat sie bewegt oder ausgepackt. Lesen Sie sie neu.';
+
+  @override
+  String get refusalStockUnitCodeTaken =>
+      'Dieser Einheitencode wird in diesem Betrieb bereits verwendet. Wählen Sie einen anderen Code.';
+
+  @override
+  String get refusalStockUnitContent =>
+      'Der Inhalt der Einheit passt nicht: Menge, Charge, Stück oder Ort. Prüfen Sie den Inhalt.';
 
   @override
   String get refusalStockVariant =>

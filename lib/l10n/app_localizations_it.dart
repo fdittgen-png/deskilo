@@ -12595,6 +12595,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featureStockExpiryReportTitle => 'Il rapporto di scadenza';
 
   @override
+  String get featureStockHandlingUnitsDesc =>
+      'Le merci si spostano nel bancale o nel cartone in cui sono arrivate, o nelle unità riconfezionate del negozio, e restano tracciabili attraverso il riconfezionamento.';
+
+  @override
+  String get featureStockHandlingUnitsTitle => 'Unità di movimentazione';
+
+  @override
   String get featureStockItemGroupsDesc =>
       'Raggruppi gli articoli per condividerne le impostazioni: tracciabilità, scadenza, modalità etichetta, unità, IVA, cassa e altro. Un articolo eredita il valore del suo gruppo salvo che mantenga il proprio; una modifica al gruppo mostra quanti articoli raggiunge prima di essere salvata.';
 
@@ -29254,6 +29261,18 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get refusalStockUnit =>
       'Questo articolo non ha questa unità. Aggiungi l\'unità all\'articolo o inserisci la quantità in un\'unità che ha.';
+
+  @override
+  String get refusalStockUnitChanged =>
+      'Questa unità è cambiata dopo la lettura: qualcuno l\'ha spostata o disfatta. La rilegga.';
+
+  @override
+  String get refusalStockUnitCodeTaken =>
+      'Questo codice di unità è già usato in questa azienda. Scelga un altro codice.';
+
+  @override
+  String get refusalStockUnitContent =>
+      'Il contenuto dell\'unità non va bene: quantità, lotto, pezzo o luogo. Controlli il contenuto.';
 
   @override
   String get refusalStockVariant =>

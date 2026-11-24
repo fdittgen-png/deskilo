@@ -20356,6 +20356,18 @@ abstract class AppLocalizations {
   /// **'The expiry report'**
   String get featureStockExpiryReportTitle;
 
+  /// #4435 the handling units feature: what it does
+  ///
+  /// In en, this message translates to:
+  /// **'Goods move in the pallet or carton they were received in, or in the store\'s own repackaged units, and stay traceable through the repack.'**
+  String get featureStockHandlingUnitsDesc;
+
+  /// #4435 the handling units feature: its name
+  ///
+  /// In en, this message translates to:
+  /// **'Handling units'**
+  String get featureStockHandlingUnitsTitle;
+
   /// #4361 feature description
   ///
   /// In en, this message translates to:
@@ -46541,6 +46553,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This item has no such unit. Add the unit to the item, or enter the quantity in a unit it lists.'**
   String get refusalStockUnit;
+
+  /// #4435 refusal
+  ///
+  /// In en, this message translates to:
+  /// **'This unit changed since you read it: someone moved or unpacked it. Read it again.'**
+  String get refusalStockUnitChanged;
+
+  /// #4435 refusal
+  ///
+  /// In en, this message translates to:
+  /// **'This unit code is already used in this business. Choose another code.'**
+  String get refusalStockUnitCodeTaken;
+
+  /// #4435 refusal
+  ///
+  /// In en, this message translates to:
+  /// **'What the unit holds does not fit: the quantity, the lot, the piece or the place. Check the content.'**
+  String get refusalStockUnitContent;
 
   /// #4169 (0837) DKG12: an item with variants moved, sold or counted without naming one.
   ///

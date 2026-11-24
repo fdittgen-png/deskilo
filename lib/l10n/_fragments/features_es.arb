@@ -356,6 +356,14 @@
   "@featureStockExpiryReportDesc": {
     "description": "#4431 the expiry report feature: what it does"
   },
+  "featureStockHandlingUnitsTitle": "Unidades de manipulación",
+  "featureStockHandlingUnitsDesc": "La mercancía se mueve en el palé o la caja en que llegó, o en las unidades reenvasadas de la tienda, y sigue siendo trazable a través del reenvasado.",
+  "@featureStockHandlingUnitsTitle": {
+    "description": "#4435 the handling units feature: its name"
+  },
+  "@featureStockHandlingUnitsDesc": {
+    "description": "#4435 the handling units feature: what it does"
+  },
   "featureStockTagReadsTitle": "Lectura de muchas etiquetas",
   "featureStockTagReadsDesc": "Un lector UHF en modo teclado lee muchas etiquetas a la vez para recibir, mover y contar: las etiquetas se reúnen, se eliminan duplicados y se resuelven, y no se envía nada hasta que la persona confirma."
 }

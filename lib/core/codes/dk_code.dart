@@ -68,6 +68,9 @@ abstract final class DkCode {
   static const dkg24 = 'DKG24';
   static const dkg25 = 'DKG25';
   static const dkg26 = 'DKG26';
+  static const dkg27 = 'DKG27';
+  static const dkg28 = 'DKG28';
+  static const dkg29 = 'DKG29';
   static const dkgzz = 'DKGZZ';
   static const dkh01 = 'DKH01';
   static const dkh02 = 'DKH02';

@@ -12648,6 +12648,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get featureStockExpiryReportTitle => 'Le rapport de péremption';
 
   @override
+  String get featureStockHandlingUnitsDesc =>
+      'Les marchandises circulent dans la palette ou le carton où elles sont arrivées, ou dans les unités reconditionnées du magasin, et restent traçables à travers le reconditionnement.';
+
+  @override
+  String get featureStockHandlingUnitsTitle => 'Unités de manutention';
+
+  @override
   String get featureStockItemGroupsDesc =>
       'Regroupez les articles pour partager leurs réglages : suivi, durée de conservation, mode d\'étiquette, unités, TVA, caisse et plus. Un article hérite de la valeur de son groupe sauf s\'il garde la sienne ; un changement de groupe montre combien d\'articles il touche avant d\'être enregistré.';
 
@@ -29341,6 +29348,18 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get refusalStockUnit =>
       'Cet article n\'a pas cette unité. Ajoutez l\'unité à l\'article, ou saisissez la quantité dans une unité qu\'il connaît.';
+
+  @override
+  String get refusalStockUnitChanged =>
+      'Cette unité a changé depuis votre lecture : quelqu\'un l\'a déplacée ou défaite. Relisez-la.';
+
+  @override
+  String get refusalStockUnitCodeTaken =>
+      'Ce code d\'unité est déjà utilisé dans cette entreprise. Choisissez un autre code.';
+
+  @override
+  String get refusalStockUnitContent =>
+      'Le contenu de l\'unité ne convient pas : quantité, lot, pièce ou emplacement. Vérifiez le contenu.';
 
   @override
   String get refusalStockVariant =>

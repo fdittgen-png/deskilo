@@ -7810,6 +7810,14 @@
   "@featureStockExpiryReportTitle": {
     "description": "#4431 the expiry report feature: its name"
   },
+  "featureStockHandlingUnitsDesc": "Le merci si spostano nel bancale o nel cartone in cui sono arrivate, o nelle unità riconfezionate del negozio, e restano tracciabili attraverso il riconfezionamento.",
+  "@featureStockHandlingUnitsDesc": {
+    "description": "#4435 the handling units feature: what it does"
+  },
+  "featureStockHandlingUnitsTitle": "Unità di movimentazione",
+  "@featureStockHandlingUnitsTitle": {
+    "description": "#4435 the handling units feature: its name"
+  },
   "featureStockItemGroupsDesc": "Raggruppi gli articoli per condividerne le impostazioni: tracciabilità, scadenza, modalità etichetta, unità, IVA, cassa e altro. Un articolo eredita il valore del suo gruppo salvo che mantenga il proprio; una modifica al gruppo mostra quanti articoli raggiunge prima di essere salvata.",
   "featureStockItemGroupsTitle": "Gruppi di articoli",
   "featureStockLotsDesc": "Seguire le merci per lotto o per data di scadenza, con una durata di conservazione. Disattivato: nessun articolo è seguito per lotto e ciò che è stato registrato resta invariato.",
@@ -16704,6 +16712,9 @@
   "refusalStockTagBound": "Questa etichetta è già su un altro articolo, luogo o pezzo. La ritiri prima lì.",
   "refusalStockTagRetiredLately": "Questa etichetta è stata ritirata da poco e non può ancora essere associata di nuovo. Il tempo di attesa è un'impostazione dell'attività.",
   "refusalStockUnit": "Questo articolo non ha questa unità. Aggiungi l'unità all'articolo o inserisci la quantità in un'unità che ha.",
+  "refusalStockUnitChanged": "Questa unità è cambiata dopo la lettura: qualcuno l'ha spostata o disfatta. La rilegga.",
+  "refusalStockUnitCodeTaken": "Questo codice di unità è già usato in questa azienda. Scelga un altro codice.",
+  "refusalStockUnitContent": "Il contenuto dell'unità non va bene: quantità, lotto, pezzo o luogo. Controlli il contenuto.",
   "refusalStockVariant": "Questo articolo ha delle varianti: indicare quale (colore, taglia) spostare, vendere o contare. Nulla è stato modificato.",
   "@refusalStockVariant": {
     "description": "#4169 (0837) DKG12: an item with variants moved, sold or counted without naming one."

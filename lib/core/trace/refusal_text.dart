@@ -176,6 +176,11 @@ enum KnownRefusal {
   stockNamePieces,
   stockPieceWhere,
 
+  /// #4435 (0929) — DKG27: a handling unit changed since it was read; DKG28: its content does not fit; DKG29: its code is taken.
+  stockUnitChanged,
+  stockUnitContent,
+  stockUnitCodeTaken,
+
   /// #4008 (0782) — DKM01: a member who left comes back as a new member,
   /// never by changing their old row (for instance to paused).
   memberReturnsAsNew,
@@ -253,6 +258,9 @@ const Map<String, KnownRefusal> _codedRefusals = {
   DkCode.dkg24: KnownRefusal.stockPieceInStock,
   DkCode.dkg25: KnownRefusal.stockNamePieces,
   DkCode.dkg26: KnownRefusal.stockPieceWhere,
+  DkCode.dkg27: KnownRefusal.stockUnitChanged,
+  DkCode.dkg28: KnownRefusal.stockUnitContent,
+  DkCode.dkg29: KnownRefusal.stockUnitCodeTaken,
   DkCode.dkl01: KnownRefusal.counterUnsupported,
   DkCode.dkl02: KnownRefusal.counterEssentials,
   DkCode.dkl04: KnownRefusal.counterNotOpen,
@@ -382,6 +390,9 @@ String? _tagRefusalText(AppLocalizations l10n, KnownRefusal refusal) => switch (
       KnownRefusal.stockPieceInStock => l10n.refusalStockPieceInStock,
       KnownRefusal.stockNamePieces => l10n.refusalStockNamePieces,
       KnownRefusal.stockPieceWhere => l10n.refusalStockPieceWhere,
+      KnownRefusal.stockUnitChanged => l10n.refusalStockUnitChanged,
+      KnownRefusal.stockUnitContent => l10n.refusalStockUnitContent,
+      KnownRefusal.stockUnitCodeTaken => l10n.refusalStockUnitCodeTaken,
       _ => _counterRefusalText(l10n, refusal),
     };
 
