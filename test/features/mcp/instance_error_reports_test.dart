@@ -4,6 +4,7 @@
 // each with its kind, code, version, platform and time, its redacted stack
 // when opened, older ones on request; nothing yet says so, and a refused or
 // failed read is the shared read failure with Try again.
+import 'package:deskilo/core/codes/dk_code.dart';
 import 'package:deskilo/core/demo/data/instance_repository.dart';
 import 'package:deskilo/features/mcp/presentation/widgets/instance_error_reports.dart';
 import 'package:deskilo/features/workspace/domain/instance_trace_report.dart';
@@ -53,7 +54,7 @@ void main() {
     tester,
   ) async {
     final repo = FakeInstanceRepository()
-      ..traceReportRows.addAll([_report(1, code: 'DKN01'), _report(2)]);
+      ..traceReportRows.addAll([_report(1, code: DkCode.dkn01), _report(2)]);
     await _open(tester, repo);
     final first = find.byKey(const ValueKey('instance-error-report-r1'));
     final second = find.byKey(const ValueKey('instance-error-report-r2'));
