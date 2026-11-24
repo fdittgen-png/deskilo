@@ -2,14 +2,17 @@
 //
 // #4418 -- each swept wire vocabulary decodes a value from the future to its
 // named unknown, and the screen says the neutral wording for it.
+import 'package:deskilo/features/money/application/issue_month_readiness.dart';
 import 'package:deskilo/features/money/domain/account_activity.dart';
 import 'package:deskilo/features/money/domain/finance_overview.dart';
+import 'package:deskilo/features/money/domain/invoice_missing.dart';
 import 'package:deskilo/features/money/domain/payment_intent.dart';
 import 'package:deskilo/features/money/domain/report_kind.dart';
 import 'package:deskilo/features/money/presentation/invoice_status.dart';
 import 'package:deskilo/features/money/presentation/report_kind_labels.dart';
 import 'package:deskilo/features/money/presentation/widgets/finance_claim_state.dart';
 import 'package:deskilo/features/money/presentation/widgets/host_activity.dart';
+import 'package:deskilo/features/money/presentation/widgets/invoice_missing_sales_tax.dart';
 import 'package:deskilo/features/money/presentation/widgets/online_payment_status_card.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
@@ -154,6 +157,22 @@ void main() {
       const kind = ReportKind(id: 'delivery_note', slot: ReportDocSlot('delivery_note'));
       expect(kind.document, ReportDocument.unknown);
       expect(reportKindLabel(_en, kind), 'delivery_note');
+    });
+  });
+
+  group('missing invoice essential', () {
+    test('every known key reads back with its own words; a key from the '
+        'future is unknown, shown as itself and kept on its side', () {
+      for (final m in InvoiceMissing.values) {
+        if (m == InvoiceMissing.unknown) continue;
+        expect(InvoiceMissing.fromWire(m.wire), m);
+        expect(invoiceMissingLabel(_en, m.wire), isNot(m.wire), reason: m.wire);
+      }
+      expect(InvoiceMissing.fromWire('seller_eori_future'), InvoiceMissing.unknown);
+      expect(invoiceMissingLabel(_en, 'seller_eori_future'), 'seller_eori_future');
+      expect(isBusinessEssential('seller_eori_future'), isTrue);
+      expect(isBusinessEssential('buyer_eori_future'), isFalse);
+      expect(isBusinessEssential(InvoiceMissing.exemptionReason.wire), isTrue);
     });
   });
 }

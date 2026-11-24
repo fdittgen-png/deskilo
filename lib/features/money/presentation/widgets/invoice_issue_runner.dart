@@ -9,6 +9,7 @@ import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/issue_invoice.dart';
+import '../../domain/invoice_missing.dart';
 import 'invoice_unknown_outcome_dialog.dart';
 
 /// Sends [attempt] once and tells the person what is true: issued, held for
@@ -76,7 +77,9 @@ String invoiceRefusalText(
     DkCode.dki07 => l10n.invoiceAlreadyInvoiced,
     // #3994 — a correction is of the kind of the invoice it replaces.
     DkCode.dki08 => l10n.invoiceCorrectionKeepsKind,
-    DkCode.dki01 when refusal.details == 'invoice_feature_disabled' =>
+    DkCode.dki01
+        when InvoiceMissing.fromWire(refusal.details) ==
+            InvoiceMissing.invoiceFeatureDisabled =>
       l10n.invoiceFeatureDisabled,
     DkCode.dki01 => l10n.invoiceEssentialsRefused,
     _ => fallback ?? l10n.workspaceGenericError,

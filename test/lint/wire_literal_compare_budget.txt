@@ -4,7 +4,7 @@
 #   lib/features/stock/** -- the stock lane (StockRefusal);
 #   lib/features/money/**/*till*, *counter* -- the till lane;
 #   customer_quote_editor_screen, standalone_invoice_screen, standalone_line_form -- the document composer lane.
-# total 1108 in 176 files
+# total 1075 in 171 files
 1 lib/core/demo/presentation/demo_setup_card.dart
 3 lib/features/auth/presentation/screens/linked_accounts_screen.dart
 2 lib/features/calendar/presentation/screens/calendar_screen.dart
@@ -41,7 +41,6 @@
 9 lib/features/members/presentation/widgets/privacy_admin_sheets.dart
 1 lib/features/money/application/generic_journal_export.dart
 1 lib/features/money/application/invoice_detail_facts.dart
-2 lib/features/money/application/issue_month_readiness.dart
 1 lib/features/money/presentation/accounting_export_run.dart
 1 lib/features/money/presentation/accounting_export_saft.dart
 2 lib/features/money/presentation/counter_readiness_panel.dart
@@ -50,7 +49,6 @@
 2 lib/features/money/presentation/engagements/engagement_text.dart
 5 lib/features/money/presentation/gobd_procedure_document.dart
 2 lib/features/money/presentation/invoice_einvoice_actions.dart
-2 lib/features/money/presentation/invoicing/invoice_month_result.dart
 3 lib/features/money/presentation/quotes/quote_decision_sheet.dart
 2 lib/features/money/presentation/report_actions.dart
 15 lib/features/money/presentation/report_defaults.dart
@@ -82,9 +80,6 @@
 3 lib/features/money/presentation/widgets/expense_repartition_sheet.dart
 3 lib/features/money/presentation/widgets/expense_sheet.dart
 3 lib/features/money/presentation/widgets/invoice_integrity_chip.dart
-1 lib/features/money/presentation/widgets/invoice_issue_runner.dart
-1 lib/features/money/presentation/widgets/invoice_missing_banner.dart
-27 lib/features/money/presentation/widgets/invoice_missing_sales_tax.dart
 2 lib/features/money/presentation/widgets/legal_identity_sections.dart
 3 lib/features/money/presentation/widgets/member_tax_certificates.dart
 2 lib/features/money/presentation/widgets/purchase_dialogs.dart

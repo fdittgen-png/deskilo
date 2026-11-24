@@ -29,18 +29,35 @@ String reportKindLabel(AppLocalizations l10n, ReportKind kind) {
     ReportDocument.vatDeclaration => l10n.vatDeclTitle,
     ReportDocument.vat => l10n.reportDocVat,
     ReportDocument.coa => l10n.reportDocCoa,
-    ReportDocument.generalLedger => l10n.reportDocGeneralLedger,
-    ReportDocument.trialBalance => l10n.reportDocTrialBalance,
-    ReportDocument.journals => l10n.reportDocJournals,
+    ReportDocument.generalLedger ||
+    ReportDocument.trialBalance ||
+    ReportDocument.journals => _bookLabel(l10n, kind.document),
     ReportDocument.bankReconciliation => l10n.bankReconTitle,
     ReportDocument.badges => l10n.reportDocBadges,
     ReportDocument.spaceCodes => l10n.reportDocSpaceCodes,
     // The documents a business sends in trading.
-    ReportDocument.purchaseOrder => l10n.reportDocPurchaseOrder,
-    ReportDocument.quote => l10n.reportDocQuote,
-    ReportDocument.stockExpiry => l10n.reportDocStockExpiry,
+    ReportDocument.purchaseOrder ||
+    ReportDocument.quote ||
+    ReportDocument.stockExpiry => _tradingDocumentLabel(l10n, kind.document),
     // A reminder is named by its level above; an id this app does not
     // register keeps the editor usable with the id for a name.
     ReportDocument.reminder || ReportDocument.unknown => kind.id,
   };
 }
+
+/// The documents a business sends in trading: a purchase order, a quote; and
+/// the stock's expiry report.
+String _tradingDocumentLabel(AppLocalizations l10n, ReportDocument document) =>
+    switch (document) {
+      ReportDocument.purchaseOrder => l10n.reportDocPurchaseOrder,
+      ReportDocument.quote => l10n.reportDocQuote,
+      _ => l10n.reportDocStockExpiry,
+    };
+
+/// #2376 — the books as an accountant reads them.
+String _bookLabel(AppLocalizations l10n, ReportDocument document) =>
+    switch (document) {
+      ReportDocument.generalLedger => l10n.reportDocGeneralLedger,
+      ReportDocument.trialBalance => l10n.reportDocTrialBalance,
+      _ => l10n.reportDocJournals,
+    };
