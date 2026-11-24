@@ -50,6 +50,7 @@ class SupportBundle {
           ? appVersion
           : null,
       'requiredSchemaVersion': requiredSchemaVersion,
+      'needsSchemaVersion': appNeedsSchemaVersion,
       'schemaVersion':
           schemaVersion != null && schemaVersion > 0 && schemaVersion <= 1000000
           ? schemaVersion

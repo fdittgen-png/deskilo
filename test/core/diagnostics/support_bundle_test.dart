@@ -28,6 +28,7 @@ void main() {
       'platform',
       'appVersion',
       'requiredSchemaVersion',
+      'needsSchemaVersion',
       'schemaVersion',
       'window',
       'capabilityEvidence',

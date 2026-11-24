@@ -282,8 +282,11 @@ select
   static List<DoctorFinding> checkSchema(
     List<Map<String, Object?>> rows, {
     int required = requiredSchemaVersion,
+    int needs = appNeedsSchemaVersion,
     List<String> bundleMigrations = const [],
   }) {
+    // #3729 — three numbers: built against, needs at least, and the marker.
+    final floor = needs < required ? needs : required;
     if (rows.isEmpty) {
       return const [
         DoctorFinding(DoctorLevel.alarm, 'Schema',
@@ -311,17 +314,18 @@ select
         ),
       ];
     }
-    if (marker < required) {
+    if (marker < floor) {
       final missing = [
         for (final name in bundleMigrations)
           if ((int.tryParse(name.split('_').first) ?? 0) > marker) name,
       ];
-      final behindBy = missing.isEmpty ? required - marker : missing.length;
+      final behindBy = missing.isEmpty ? floor - marker : missing.length;
       return [
         DoctorFinding(
           DoctorLevel.alarm,
           'Schema is behind',
-          'version $marker, and this app needs $required — behind by '
+          'version $marker, and this app needs at least $floor (built against '
+              '$required) — behind by '
               '$behindBy${missing.isEmpty ? '' : ': ${missing.join(', ')}'}.\n'
               '        A newer app on an older schema stops at "This server '
               'needs an update".\n$install',
@@ -335,6 +339,10 @@ select
         'Schema',
         marker == required
             ? 'version $marker, current — $tables tables'
+            : marker < required
+            ? 'version $marker, older than this tool ($required) but at '
+                'least what the app needs ($floor) — supported; features '
+                'that need a newer schema are not offered'
             : 'version $marker, ahead of this tool ($required) — supported; '
                 'update the tooling before installing from it',
       ),
