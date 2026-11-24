@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/form_choice_controls.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../domain/till_drawer.dart';
 import '../../domain/till_drawer_rules.dart';
@@ -54,10 +55,9 @@ Future<bool> showTillEditSheet(BuildContext context, WidgetRef ref, {required St
           autofocus: true,
         ),
         if (till != null)
-          SwitchListTile(
+          AppSwitchRow(
             key: const ValueKey('drawer-till-active'),
-            contentPadding: EdgeInsets.zero,
-            title: Text(l10n.tillDrawerTillActive),
+            title: l10n.tillDrawerTillActive,
             value: active,
             onChanged: (v) {
               active = v;

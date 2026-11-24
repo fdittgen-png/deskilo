@@ -266,18 +266,7 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
     recordedPaymentsRepositoryProvider.overrideWith(
       (ref) => demoPickSpace(ref, payments),
     ),
-    tillPortProvider.overrideWith((ref) => demoPickSpace(ref, tills)),
-    // #4367 — the drawer follows the business's settings and the person's rights, as the server does.
-    tillDrawerPortProvider.overrideWith((ref) {
-      return demoPickSpace<DemoTillDrawer>(ref, drawers)
-        ..rules = (() => ref.read(currentSettingsProvider).asData?.value == null
-            ? const DrawerSettings(blindCount: true, byDenomination: false, reasons: ['change', 'expense', 'other'], paidOutLimitMinor: 0)
-            : _drawerSettingsOf(ref.read(currentSettingsProvider).requireValue))
-        ..canSeeFinances = (() => ref.read(myPermissionsProvider).contains(WorkspacePermission.viewFinances))
-        ..canRecordOutgoing = (() => ref.read(myPermissionsProvider).contains(WorkspacePermission.recordOutgoingPayments))
-        ..me = (() => ref.read(myMemberProvider).value?.id ?? 'demo-member');
-    }),
-    tillOfflinePortProvider.overrideWith((ref) => demoPickSpace(ref, tills)),
+    ..._tillOverrides(tills, drawers),
   ];
 }
 
@@ -450,6 +439,23 @@ List<Override> _hmrcOverrides(DemoFixture fixture) => [
 ];
 
 /// #4366 — each space's till: its own counter, its own numbers.
+/// The till's ports: its sales, its cash drawer (which follows the business's settings and the person's rights, as the server
+/// does) and its offline sales, each answered by the space the scope is looking at.
+List<Override> _tillOverrides(DemoSpaces<DemoTill> tills, DemoSpaces<DemoTillDrawer> drawers) => [
+    tillPortProvider.overrideWith((ref) => demoPickSpace(ref, tills)),
+    // #4367 — the drawer follows the business's settings and the person's rights, as the server does.
+    tillDrawerPortProvider.overrideWith((ref) {
+      return demoPickSpace<DemoTillDrawer>(ref, drawers)
+        ..rules = (() => ref.read(currentSettingsProvider).asData?.value == null
+            ? const DrawerSettings(blindCount: true, byDenomination: false, reasons: ['change', 'expense', 'other'], paidOutLimitMinor: 0)
+            : _drawerSettingsOf(ref.read(currentSettingsProvider).requireValue))
+        ..canSeeFinances = (() => ref.read(myPermissionsProvider).contains(WorkspacePermission.viewFinances))
+        ..canRecordOutgoing = (() => ref.read(myPermissionsProvider).contains(WorkspacePermission.recordOutgoingPayments))
+        ..me = (() => ref.read(myMemberProvider).value?.id ?? 'demo-member');
+    }),
+    tillOfflinePortProvider.overrideWith((ref) => demoPickSpace(ref, tills)),
+];
+
 DemoSpaces<DemoTill> _demoTills(DemoFixture fixture, DemoSpaces<DemoTillDrawer> drawers) => demoSpacesOf(
   (key) => DemoTill(
     drawer: drawers.at(key),

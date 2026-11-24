@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/form_choice_controls.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../domain/till_drawer.dart';
 import '../../domain/till_drawer_rules.dart';
@@ -60,20 +61,20 @@ Future<bool> showCashEntrySheet(
       },
       builder: (context, refresh) {
         return [
-          Wrap(
-            spacing: 8,
-            children: [
+          AppChoiceChips<String>(
+            choices: [
               for (final k in const ['paid_in', 'paid_out'])
-                ChoiceChip(
+                AppChoice(
+                  value: k,
                   key: ValueKey('drawer-entry-$k'),
-                  label: Text(k == 'paid_in' ? l10n.tillDrawerEntryPaidIn : l10n.tillDrawerEntryPaidOut),
-                  selected: kind == k,
-                  onSelected: (_) {
-                    kind = k;
-                    refresh();
-                  },
+                  label: k == 'paid_in' ? l10n.tillDrawerEntryPaidIn : l10n.tillDrawerEntryPaidOut,
                 ),
             ],
+            selected: kind,
+            onSelected: (k) {
+              kind = k;
+              refresh();
+            },
           ),
           const FormGap(),
           AppAmountField(
@@ -91,20 +92,13 @@ Future<bool> showCashEntrySheet(
           const FormGap(),
           Text(l10n.tillDrawerEntryReason, style: Theme.of(context).textTheme.titleSmall),
           const FormGap.small(),
-          Wrap(
-            spacing: 8,
-            children: [
-              for (final r in settings.reasons)
-                ChoiceChip(
-                  key: ValueKey('drawer-entry-reason-$r'),
-                  label: Text(r),
-                  selected: reason == r,
-                  onSelected: (_) {
-                    reason = r;
-                    refresh();
-                  },
-                ),
-            ],
+          AppChoiceChips<String>(
+            choices: [for (final r in settings.reasons) AppChoice(value: r, key: ValueKey('drawer-entry-reason-$r'), label: r)],
+            selected: reason,
+            onSelected: (r) {
+              reason = r;
+              refresh();
+            },
           ),
           // read under the sheet's own scope: the builder's context sits above it
           Builder(
