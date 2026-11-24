@@ -22,10 +22,11 @@ import 'demo_stock_candidates.dart';
 import 'demo_stock_config_commands.dart';
 import 'money/demo_standalone_invoice_commands.dart' show DemoInvoiceGoods;
 
-const _beans = StockItem(id: 'demo-item-beans', name: 'Coffee beans', unit: 'kg');
-const _milk = StockItem(id: 'demo-item-milk', name: 'Oat milk', unit: 'l');
-const _mugs = StockItem(id: 'demo-item-mugs', name: 'Mugs', unit: 'piece');
-const _syrup = StockItem(id: 'demo-item-syrup', name: 'Syrup', unit: 'l');
+// #4366 -- the beans are weighed at the counter and sit under their own key colour; the till categories are the shop's shelves.
+const _beans = StockItem(id: 'demo-item-beans', name: 'Coffee beans', unit: 'kg', tillCategory: 'Coffee', quickKeyColour: '#6d4c41', soldByWeight: true);
+const _milk = StockItem(id: 'demo-item-milk', name: 'Oat milk', unit: 'l', tillCategory: 'Fresh');
+const _mugs = StockItem(id: 'demo-item-mugs', name: 'Mugs', unit: 'piece', tillCategory: 'Gifts');
+const _syrup = StockItem(id: 'demo-item-syrup', name: 'Syrup', unit: 'l', tillCategory: 'Coffee');
 // A T-shirt with no stock yet: the item the Demo's variants are edited on.
 const _shirt = StockItem(id: 'demo-item-shirt', name: 'T-shirt', unit: 'piece');
 // #4362 -- a gift basket, each piece tagged one by one, and a crate of apples, one tag per crate.

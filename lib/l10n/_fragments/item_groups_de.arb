@@ -110,5 +110,25 @@
   "itemGroupReasonGroupUnknown": "Diese Gruppe gibt es nicht.",
   "itemGroupReasonNotOverridable": "Für diese Einstellung gibt es keinen eigenen Wert.",
   "itemGroupReasonHasMovements": "es hat schon Bewegungen",
-  "itemGroupFailed": "Die Artikelgruppen konnten nicht gelesen werden."
+  "itemGroupFailed": "Die Artikelgruppen konnten nicht gelesen werden.",
+  "itemGroupTillCategory": "Kassenkategorie",
+  "@itemGroupTillCategory": {
+    "description": "#4366 item groups: the till parameters"
+  },
+  "itemGroupKeyColour": "Farbe der Schnelltaste (#rrggbb)",
+  "@itemGroupKeyColour": {
+    "description": "#4366 item groups: the till parameters"
+  },
+  "itemGroupDepositItem": "Pfandartikel",
+  "@itemGroupDepositItem": {
+    "description": "#4366 item groups: the till parameters"
+  },
+  "itemGroupDepositAmount": "Pfandbetrag (kleinste Einheit)",
+  "@itemGroupDepositAmount": {
+    "description": "#4366 item groups: the till parameters"
+  },
+  "itemGroupLabelTemplate": "Etikettenvorlage",
+  "@itemGroupLabelTemplate": {
+    "description": "#4366 item groups: the till parameters"
+  }
 }

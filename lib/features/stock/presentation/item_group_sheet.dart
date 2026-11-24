@@ -25,6 +25,7 @@ import '../../../l10n/app_localizations.dart';
 import '../domain/item_groups.dart';
 import '../domain/purchase_factor.dart';
 import '../domain/stock_config.dart';
+import '../domain/stock_page.dart' show StockItem;
 import '../domain/stock_service_creator.dart';
 import '../domain/workspace_units.dart';
 import 'item_group_text.dart';
@@ -36,7 +37,7 @@ import 'stock_quantity_field.dart';
 
 /// What a sheet offers beside the group itself: the places a home zone is chosen from, the VAT rates, and whether the
 /// person may see and set what an item costs or sells for (manageServices and viewFinances).
-typedef GroupChoices = ({List<StockPlaceConfig> places, List<StockVatChoice> vat, bool finance, List<WorkspaceUnit> units});
+typedef GroupChoices = ({List<StockPlaceConfig> places, List<StockVatChoice> vat, bool finance, List<StockItem> items, List<WorkspaceUnit> units});
 
 /// Opens the sheet of [group] (null: a new group); true when something was saved or deleted.
 Future<bool> showItemGroupSheet(
@@ -45,7 +46,7 @@ Future<bool> showItemGroupSheet(
   required String workspaceId,
   required ItemGroup? group,
   required List<ItemGroup> groups,
-  GroupChoices choices = const (places: <StockPlaceConfig>[], vat: <StockVatChoice>[], finance: false, units: <WorkspaceUnit>[]),
+  GroupChoices choices = const (places: <StockPlaceConfig>[], vat: <StockVatChoice>[], finance: false, items: <StockItem>[], units: <WorkspaceUnit>[]),
 }) {
   final l10n = context.l10n;
   final draft = _GroupDraft(port, workspaceId, group, groups, choices, appFormatOf(context));
@@ -79,6 +80,7 @@ class _GroupDraft {
       tagMode = group?.params['tag_mode'] as String?,
       unit = group?.params['inventory_unit'] as String?,
       sold = group?.params['sold_by_weight'] as bool?,
+      depositItem = group?.params[groupParamDepositItem] as String?,
       zone = group?.params['home_zone_id'] as String?,
       vat = group?.params['vat_rate_id'] as String?,
       supply = group?.params['supply_class'] as String?,
@@ -88,6 +90,10 @@ class _GroupDraft {
         'shelf': '${group?.params['shelf_life_days'] ?? ''}',
         'count': '${group?.params['count_every_days'] ?? ''}',
         'age': '${group?.params['min_age'] ?? ''}',
+        'tillCategory': '${group?.params[groupParamCategory] ?? ''}',
+        'keyColour': '${group?.params[groupParamColour] ?? ''}',
+        'depositMinor': '${group?.params[groupParamDepositMinor] ?? ''}',
+        'labelTemplate': '${group?.params[groupParamLabelTemplate] ?? ''}',
         'purchaseUnit': '${group?.params['default_purchase_unit'] ?? ''}',
         'factor': group?.params['default_purchase_factor_num'] == null
             ? ''
@@ -120,6 +126,7 @@ class _GroupDraft {
   String? tagMode;
   String? unit;
   bool? sold;
+  String? depositItem;
   String? zone;
   String? vat;
   String? supply;
@@ -129,6 +136,8 @@ class _GroupDraft {
   String? _previewOf;
 
   int? _int(String key) => int.tryParse(fields.text(key));
+
+  String? _text(String key) => fields.text(key).trim().isEmpty ? null : fields.text(key).trim();
 
   /// A decimal typed with the member's own separators, as the dot-decimal text the server reads; null when empty or not one.
   String? _decimal(String key) {
@@ -154,6 +163,11 @@ class _GroupDraft {
       'count_every_days': _int('count'),
       'min_age': _int('age'),
       'sold_by_weight': sold,
+      groupParamCategory: _text('tillCategory'),
+      groupParamColour: _text('keyColour'),
+      groupParamDepositItem: depositItem,
+      groupParamDepositMinor: _int('depositMinor'),
+      groupParamLabelTemplate: _text('labelTemplate'),
       'default_purchase_unit': fields.text('purchaseUnit').isEmpty ? null : fields.text('purchaseUnit'),
       'default_purchase_factor_num': _factor?.num,
       'default_purchase_factor_den': _factor?.den,
@@ -170,10 +184,19 @@ class _GroupDraft {
     },
   );
 
+  /// The till's own settings: a category and a template are words, a colour is #rrggbb, a deposit an amount.
+  FieldErrors _tillErrors(AppLocalizations l10n) => {
+    if (fields.text('keyColour').isNotEmpty && !RegExp(r'^#[0-9a-fA-F]{6}$').hasMatch(fields.text('keyColour'))) 'keyColour': l10n.stockReasonOutOfRange,
+    if (fields.text('depositMinor').isNotEmpty && _int('depositMinor') == null) 'depositMinor': l10n.stockReasonOutOfRange,
+    if (fields.text('tillCategory').trim().length > 40) 'tillCategory': l10n.stockReasonOutOfRange,
+    if (fields.text('labelTemplate').trim().length > 60) 'labelTemplate': l10n.stockReasonOutOfRange,
+  };
+
   FieldErrors validate(AppLocalizations l10n) => {
     if (fields.text('name').isEmpty) 'name': l10n.stockReasonNameMalformed,
     for (final (key, field) in [('shelf', 'shelf'), ('count', 'count'), ('age', 'age')])
       if (fields.text(key).isNotEmpty && (_int(key) ?? 0) < 1) field: l10n.stockReasonOutOfRange,
+    ..._tillErrors(l10n),
     // a purchase unit and its factor go together, and the factor is one number or a fraction above zero
     if (fields.text('factor').isNotEmpty && _factor == null) 'factor': l10n.stockReasonOutOfRange,
     if (fields.text('purchaseUnit').isNotEmpty && fields.text('factor').isEmpty) 'factor': l10n.stockReasonOutOfRange,
@@ -224,6 +247,7 @@ class _GroupDraft {
     ];
     return [
       ..._basicFields(l10n, edit, parents),
+      ..._tillFields(l10n, edit),
       ..._proposalFields(context, l10n, edit),
       ..._financeFields(context, l10n, edit),
       ..._footer(context, l10n),
@@ -307,6 +331,32 @@ class _GroupDraft {
         items: [(null, l10n.itemGroupNotSet), (true, l10n.itemGroupYes), (false, l10n.itemGroupNo)],
         onChanged: (v) => edit(() => sold = v),
       )
+  ];
+
+  /// #4366 -- what the till reads: the quick key's category and colour, the deposit and the label template.
+  List<Widget> _tillFields(AppLocalizations l10n, void Function(void Function()) edit) => [
+      const FormGap(), AppTextField(key: const ValueKey('item-group-till-category'), controller: fields['tillCategory'], fieldKey: 'tillCategory', label: l10n.itemGroupTillCategory, onChanged: (_) => _preview = null),
+      const FormGap(), AppTextField(key: const ValueKey('item-group-key-colour'), controller: fields['keyColour'], fieldKey: 'keyColour', label: l10n.itemGroupKeyColour, onChanged: (_) => _preview = null),
+      const FormGap(),
+      AppDropdownField<String?>(
+        key: const ValueKey('item-group-deposit-item'),
+        label: l10n.itemGroupDepositItem,
+        value: depositItem,
+        items: [(null, l10n.itemGroupNotSet), for (final i in choices.items) (i.id, i.name)],
+        onChanged: (v) => edit(() => depositItem = v),
+      ),
+      const FormGap(),
+      AppTextField(
+        key: const ValueKey('item-group-deposit-minor'),
+        controller: fields['depositMinor'],
+        fieldKey: 'depositMinor',
+        label: l10n.itemGroupDepositAmount,
+        keyboardType: TextInputType.number,
+        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+        onChanged: (_) => _preview = null,
+      ),
+      const FormGap(),
+      AppTextField(key: const ValueKey('item-group-label-template'), controller: fields['labelTemplate'], fieldKey: 'labelTemplate', label: l10n.itemGroupLabelTemplate, onChanged: (_) => _preview = null),
   ];
 
   List<Widget> _proposalFields(BuildContext context, AppLocalizations l10n, void Function(void Function()) edit) => [

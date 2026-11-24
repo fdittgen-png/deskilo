@@ -30121,6 +30121,18 @@ abstract class AppLocalizations {
   /// **'Group deleted.'**
   String get itemGroupDeleted;
 
+  /// #4366 item groups: the till parameters
+  ///
+  /// In en, this message translates to:
+  /// **'Deposit amount (minor units)'**
+  String get itemGroupDepositAmount;
+
+  /// #4366 item groups: the till parameters
+  ///
+  /// In en, this message translates to:
+  /// **'Deposit item'**
+  String get itemGroupDepositItem;
+
   /// #4361 G12 item groups: itemGroupFailed
   ///
   /// In en, this message translates to:
@@ -30179,6 +30191,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Default home zone'**
   String get itemGroupHomeZone;
+
+  /// #4366 item groups: the till parameters
+  ///
+  /// In en, this message translates to:
+  /// **'Quick-key colour (#rrggbb)'**
+  String get itemGroupKeyColour;
+
+  /// #4366 item groups: the till parameters
+  ///
+  /// In en, this message translates to:
+  /// **'Label template'**
+  String get itemGroupLabelTemplate;
 
   /// #4361 G12 finance parameters of an item group
   ///
@@ -30424,6 +30448,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'One tag per piece'**
   String get itemGroupTagUnit;
+
+  /// #4366 item groups: the till parameters
+  ///
+  /// In en, this message translates to:
+  /// **'Till category'**
+  String get itemGroupTillCategory;
 
   /// #4361 G12 item groups: itemGroupTrackingSerial
   ///
@@ -65863,6 +65893,30 @@ abstract class AppLocalizations {
   /// #4366 the till
   ///
   /// In en, this message translates to:
+  /// **'age {age}+ confirmed'**
+  String tillAgeConfirmedLine(String age);
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'No, do not sell'**
+  String get tillAgeNo;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'This item is for customers aged {age} or over. Is the customer at least {age}?'**
+  String tillAgeQuestion(String age);
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'Yes, {age} or over'**
+  String tillAgeYes(String age);
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
   /// **'Tap an item to start a sale.'**
   String get tillBasketEmpty;
 
@@ -65895,6 +65949,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The cash given is less than the total.'**
   String get tillCashShort;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get tillCategoryAll;
 
   /// #4366 the till
   ///
@@ -66098,6 +66158,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'a fiscal register is required'**
   String get tillDeclarationRegister;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'deposit'**
+  String get tillDepositLine;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'The deposit of {name} is not for sale at the counter. Nothing was added.'**
+  String tillDepositMissing(String name);
 
   /// #4367 till sessions: the cash drawer
   ///
@@ -66593,6 +66665,12 @@ abstract class AppLocalizations {
   /// #4366 the till
   ///
   /// In en, this message translates to:
+  /// **'This item is not for sale at the counter.'**
+  String get tillNotForCounter;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
   /// **'Not ready in your country: {operation}'**
   String tillNotReady(String operation);
 
@@ -66983,10 +67061,16 @@ abstract class AppLocalizations {
   /// **'Try again'**
   String get tillRetry;
 
-  /// #4436 the till: a scanned code that names nothing the till rings up
+  /// #4366 the till
   ///
   /// In en, this message translates to:
-  /// **'{code} is not something this till sells.'**
+  /// **'Scan a code'**
+  String get tillScanLabel;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'The code {code} names no item. Nothing was added.'**
   String tillScanUnknown(String code);
 
   /// #4366 the till
@@ -67024,6 +67108,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Piece {code}'**
   String tillTrackPiece(String code);
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'Weigh this item first.'**
+  String get tillWeighFirst;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'The exact weight from the scale, for example 0.350.'**
+  String get tillWeightHint;
+
+  /// #4366 the till
+  ///
+  /// In en, this message translates to:
+  /// **'Weight in {unit}'**
+  String tillWeightTitle(String unit);
 
   /// Tip (#2313) on the availability surface: a scenario "To …: …".
   ///

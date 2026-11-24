@@ -11379,6 +11379,14 @@
   "itemGroupCountEvery": "Contar cada (días)",
   "itemGroupDelete": "Eliminar el grupo",
   "itemGroupDeleted": "Grupo eliminado.",
+  "itemGroupDepositAmount": "Importe del depósito (céntimos)",
+  "@itemGroupDepositAmount": {
+    "description": "#4366 item groups: the till parameters"
+  },
+  "itemGroupDepositItem": "Artículo de depósito",
+  "@itemGroupDepositItem": {
+    "description": "#4366 item groups: the till parameters"
+  },
   "itemGroupFailed": "No se pudieron leer los grupos de artículos.",
   "itemGroupFinanceHint": "Estos ajustes requieren el derecho a gestionar servicios y a ver las finanzas.",
   "@itemGroupFinanceHint": {
@@ -11396,6 +11404,14 @@
   "itemGroupHomeZone": "Zona de almacén por defecto",
   "@itemGroupHomeZone": {
     "description": "#4361 G12 proposals: the home zone a group proposes to an item"
+  },
+  "itemGroupKeyColour": "Color de la tecla rápida (#rrggbb)",
+  "@itemGroupKeyColour": {
+    "description": "#4366 item groups: the till parameters"
+  },
+  "itemGroupLabelTemplate": "Plantilla de etiqueta",
+  "@itemGroupLabelTemplate": {
+    "description": "#4366 item groups: the till parameters"
   },
   "itemGroupMargin": "Margen objetivo sobre el coste (%)",
   "@itemGroupMargin": {
@@ -11476,6 +11492,10 @@
   },
   "itemGroupTagNone": "Sin etiquetas",
   "itemGroupTagUnit": "Una etiqueta por pieza",
+  "itemGroupTillCategory": "Categoría en caja",
+  "@itemGroupTillCategory": {
+    "description": "#4366 item groups: the till parameters"
+  },
   "itemGroupTrackingSerial": "Por pieza (serie)",
   "itemGroupUseGroup": "Usar el valor del grupo",
   "itemGroupYes": "Sí",
@@ -24018,12 +24038,47 @@
   "@threadRefsIn": {
     "description": "Me thread: which workspace the references speak about"
   },
+  "tillAgeConfirmedLine": "edad {age}+ confirmada",
+  "@tillAgeConfirmedLine": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "age": {
+        "type": "String"
+      }
+    }
+  },
+  "tillAgeNo": "No, no vender",
+  "@tillAgeNo": {
+    "description": "#4366 the till"
+  },
+  "tillAgeQuestion": "Este artículo es para clientes de {age} años o más. ¿Tiene el cliente al menos {age}?",
+  "@tillAgeQuestion": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "age": {
+        "type": "String"
+      }
+    }
+  },
+  "tillAgeYes": "Sí, {age} o más",
+  "@tillAgeYes": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "age": {
+        "type": "String"
+      }
+    }
+  },
   "tillBasketEmpty": "Toque un artículo para empezar una venta.",
   "tillBasketTitle": "Cesta",
   "tillCashExact": "Importe exacto",
   "tillCashGiven": "Efectivo entregado",
   "tillCashInvalid": "Introduzca el importe entregado como número.",
   "tillCashShort": "El efectivo entregado es inferior al total.",
+  "tillCategoryAll": "Todos",
+  "@tillCategoryAll": {
+    "description": "#4366 the till"
+  },
   "tillChangeDue": "Cambio a devolver: {amount}",
   "tillConfirmSale": "Confirmar la venta",
   "@tillConfirmSale": {
@@ -24060,6 +24115,19 @@
   "tillDayToday": "Día a cerrar: {date}",
   "tillDeclarationNone": "ninguna obligación de caja fiscal",
   "tillDeclarationRegister": "se exige una caja fiscal",
+  "tillDepositLine": "depósito",
+  "@tillDepositLine": {
+    "description": "#4366 the till"
+  },
+  "tillDepositMissing": "El depósito de {name} no está a la venta en el mostrador. No se ha añadido nada.",
+  "@tillDepositMissing": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "tillDrawerAddTill": "Añadir una caja",
   "tillDrawerAmountInvalid": "Escriba un importe.",
   "tillDrawerAmountZero": "El importe debe ser mayor que cero.",
@@ -24153,6 +24221,10 @@
     "description": "#4366 the till: title of the question asked when leaving with a sale waiting to be confirmed"
   },
   "tillNextCustomer": "Siguiente cliente",
+  "tillNotForCounter": "Este artículo no está a la venta en el mostrador.",
+  "@tillNotForCounter": {
+    "description": "#4366 the till"
+  },
   "tillNotReady": "Aún no está listo en su país: {operation}",
   "tillNotReadyHint": "No se numera ni se cobra nada mientras la operación del país no esté admitida.",
   "tillOfflineBanner": "Sin conexión: solo efectivo. Las ventas se guardan en este dispositivo y se envían cuando vuelve la conexión.",
@@ -24336,9 +24408,13 @@
   "@tillRetry": {
     "description": "#4366 the till: ask the server again"
   },
-  "tillScanUnknown": "{code} no es algo que venda esta caja.",
+  "tillScanLabel": "Escanear un código",
+  "@tillScanLabel": {
+    "description": "#4366 the till"
+  },
+  "tillScanUnknown": "El código {code} no designa ningún artículo. No se ha añadido nada.",
   "@tillScanUnknown": {
-    "description": "#4436 the till: a scanned code that names nothing the till rings up",
+    "description": "#4366 the till",
     "placeholders": {
       "code": {
         "type": "String"
@@ -24366,6 +24442,23 @@
     "description": "#4436 the till: a piece a sold line took, named by its tag",
     "placeholders": {
       "code": {
+        "type": "String"
+      }
+    }
+  },
+  "tillWeighFirst": "Pese primero este artículo.",
+  "@tillWeighFirst": {
+    "description": "#4366 the till"
+  },
+  "tillWeightHint": "El peso exacto de la balanza, por ejemplo 0,350.",
+  "@tillWeightHint": {
+    "description": "#4366 the till"
+  },
+  "tillWeightTitle": "Peso en {unit}",
+  "@tillWeightTitle": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "unit": {
         "type": "String"
       }
     }

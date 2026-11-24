@@ -57,6 +57,8 @@
 
       "lib/features/reservations/presentation/widgets/booking_sheet.dart": 644,
 
+      "lib/features/stock/presentation/item_group_sheet.dart": 544,
+
       "lib/features/task_recorder/application/recorder_controller.dart": 548,
 
       "lib/features/task_recorder/domain/coverage_manifest.dart": 522,

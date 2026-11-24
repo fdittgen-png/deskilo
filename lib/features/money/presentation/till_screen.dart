@@ -25,15 +25,19 @@ import '../../../core/ui/kit/page_title.dart';
 import '../../../core/ui/loading_view.dart';
 import '../domain/counter_till.dart';
 import '../domain/till_drawer.dart';
+import '../domain/till_quantity.dart';
 import '../providers/till_drawer_providers.dart';
 import '../providers/till_providers.dart';
 import 'counter_readiness_panel.dart';
 import 'counter_receipt_view.dart';
 import 'till_basket.dart';
 import 'till_cash_dialog.dart';
+import 'till_keys.dart';
 import 'till_offline_mode.dart';
 import 'till_offline_panel.dart';
 import 'till_offline_report.dart';
+import 'till_prompts.dart';
+import 'till_scan.dart';
 import 'till_session.dart';
 import 'till_text.dart';
 
@@ -358,6 +362,39 @@ class _TillState extends ConsumerState<_Till> {
     if (given != null) await _session.payCash(given);
   }
 
+  /// A tap on a key: a weighed item asks the weight first, an age-restricted one the customer's age, an item with a
+  /// deposit adds it; what cannot be rung up is said, and nothing is added.
+  Future<void> _ring(TillKey key) async {
+    final l10n = context.l10n;
+    var quantity = '1';
+    if (key.weighed) {
+      final typed = await showTillQuantityDialog(context, current: TillLine(itemId: key.id, name: key.name, quantity: '', unit: key.unit), weigh: true);
+      if (typed == null) return;
+      final exact = tillQuantityOf(typed);
+      if (exact == null) {
+        _session.reject(l10n.tillWeighFirst);
+        return;
+      }
+      quantity = exact;
+    }
+    final min = key.minAge;
+    final known = _session.state.value.lines.any((l) => l.itemId == key.id && l.depositFor == null && l.ageConfirmed != null);
+    if (min != null && !known) {
+      if (!mounted || !await showTillAgeDialog(context, name: key.name, minAge: min)) return;
+    }
+    ({String itemId, String name, String unit})? deposit;
+    final depositId = key.depositItemId;
+    if (depositId != null) {
+      final item = (widget.keys.value ?? const <TillKey>[]).where((k) => k.id == depositId).firstOrNull; // empty-ok: a deposit not on sale is refused below
+      if (item == null) {
+        _session.reject(l10n.tillDepositMissing(key.name));
+        return;
+      }
+      deposit = (itemId: item.id, name: item.name, unit: item.unit);
+    }
+    await _session.add(itemId: key.id, name: key.name, unit: key.unit, quantity: quantity, ageConfirmed: min, deposit: deposit);
+  }
+
   Future<void> _setQuantity(int index) async {
     final l10n = context.l10n;
     final typed = await showTillQuantityDialog(context, current: _session.state.value.lines[index]);
@@ -381,7 +418,14 @@ class _TillState extends ConsumerState<_Till> {
     }
     switch (found) {
       case TillScanItem(:final key):
-        await _session.add(itemId: key.id, name: key.name, unit: key.unit);
+        // rung up like its key (a weighed item asks the weight, an age-limited one the age, one with a deposit adds it);
+        // an item that is not a key at the counter is said in words and nothing is added
+        final onKey = (widget.keys.value ?? const <TillKey>[]).where((k) => k.id == key.id).firstOrNull; // empty-ok: no key is the refusal below
+        if (onKey == null) {
+          _session.reject(l10n.tillNotForCounter);
+        } else {
+          await _ring(onKey);
+        }
       case TillScanPiece(:final key, :final tag):
         await _session.addPiece(itemId: key.id, name: key.name, unit: key.unit, tag: tag, twice: l10n.tillPieceTwice(tag));
       case TillScanUnknown(:final code):
@@ -402,10 +446,13 @@ class _TillState extends ConsumerState<_Till> {
       ),
       child: LayoutBuilder(
       builder: (context, box) {
-        final keys = _Keys(
-          key: const ValueKey('till-keys'),
-          items: widget.keys,
-          onTap: (i) => unawaited(_session.add(itemId: i.id, name: i.name, unit: i.unit)),
+        final keys = Column(
+          children: [
+            if (widget.scan != null) TillScanField(onScan: _scanned),
+            Expanded(
+              child: TillKeys(key: const ValueKey('till-keys'), items: widget.keys, onTap: (i) => unawaited(_ring(i))),
+            ),
+          ],
         );
         final basket = ValueListenableBuilder<TillState>(
           valueListenable: _session.state,
@@ -447,40 +494,6 @@ class _TillState extends ConsumerState<_Till> {
         );
       },
     ),
-    );
-  }
-}
-
-/// The items as keys.
-class _Keys extends StatelessWidget {
-  const _Keys({super.key, required this.items, required this.onTap});
-
-  final AsyncValue<List<TillKey>> items;
-  final void Function(TillKey) onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = context.l10n;
-    return items.when(
-      loading: () => const LoadingView(),
-      error: (e, _) => _Notice(text: tillProblemText(l10n, e)),
-      data: (list) => list.isEmpty
-          ? _Notice(text: l10n.tillKeysEmpty)
-          : GridView.builder(
-              padding: const EdgeInsets.all(AppSpacing.md),
-              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 160,
-                mainAxisExtent: 64,
-                mainAxisSpacing: AppSpacing.sm,
-                crossAxisSpacing: AppSpacing.sm,
-              ),
-              itemCount: list.length,
-              itemBuilder: (context, i) => FilledButton.tonal(
-                key: ValueKey('till-key-${list[i].id}'),
-                onPressed: () => onTap(list[i]),
-                child: Text(list[i].name, maxLines: 2, overflow: TextOverflow.ellipsis, textAlign: TextAlign.center),
-              ),
-            ),
     );
   }
 }

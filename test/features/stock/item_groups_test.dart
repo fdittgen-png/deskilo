@@ -140,6 +140,28 @@ void main() {
         expect(find.textContaining('carton'), findsWidgets, reason: 'the group line says what it proposes');
       });
 
+      testWidgets('a group carries what the till reads: category, key colour, deposit amount and label template; a colour is #rrggbb', (tester) async {
+        final w = await _open(tester, size);
+        await _tap(tester, 'item-group-add');
+        await tester.enterText(find.byKey(const ValueKey('item-group-name')), 'Beverages');
+        await tester.enterText(find.byKey(const ValueKey('item-group-till-category')), 'Cold drinks');
+        await tester.enterText(find.byKey(const ValueKey('item-group-key-colour')), 'blue');
+        await _tap(tester, 'item-group-save');
+        expect(find.text(_en.stockReasonOutOfRange), findsOneWidget);
+        expect((await w.groups('ws-1')).where((g) => g.name == 'Beverages'), isEmpty);
+        await tester.enterText(find.byKey(const ValueKey('item-group-key-colour')), '#1E88E5');
+        await tester.enterText(find.byKey(const ValueKey('item-group-deposit-minor')), '25');
+        await tester.enterText(find.byKey(const ValueKey('item-group-label-template')), 'shelf-small');
+        await _tap(tester, 'item-group-save');
+        // the settings are previewed first; a second save applies them
+        await _tap(tester, 'item-group-save');
+        final saved = (await w.groups('ws-1')).firstWhere((g) => g.name == 'Beverages');
+        expect(saved.params['till_category'], 'Cold drinks');
+        expect(saved.params['quick_key_colour'], '#1E88E5');
+        expect(saved.params['deposit_minor'], 25);
+        expect(saved.params['label_template'], 'shelf-small');
+      });
+
       testWidgets('a purchase unit needs its factor, a factor is one number or a fraction above zero, and a third is exact', (tester) async {
         final w = await _open(tester, size);
         await _tap(tester, 'item-group-add');

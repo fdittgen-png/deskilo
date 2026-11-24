@@ -116,7 +116,7 @@ class TillReadiness {
 
 /// A line of the basket as the till sends it: an item and an exact quantity; the server prices it.
 class TillLine {
-  const TillLine({required this.itemId, required this.name, required this.quantity, required this.unit, this.pieces = const []});
+  const TillLine({required this.itemId, required this.name, required this.quantity, required this.unit, this.pieces = const [], this.ageConfirmed, this.depositFor});
 
   final String itemId;
   final String name;
@@ -129,14 +129,29 @@ class TillLine {
   /// exactly these pieces, and the server refuses a quantity that is not their number.
   final List<String> pieces;
 
+  /// The age the operator confirmed the customer has for this line (the item's minimum), kept on the line; null when
+  /// the item has no age limit.
+  final int? ageConfirmed;
+
+  /// The item whose deposit this line is: it follows that line's quantity and goes with it. Null for an ordinary line.
+  final String? depositFor;
+
   /// The line at quantity [q]. Named pieces stay only when [q] is exactly their number: any other quantity (a tap on the item's key, a
   /// typed number) leaves the line a plain quantity of the item, because the server refuses a quantity that is not the number of its
   /// named pieces (DKG25) and would say so only after the cash was taken.
-  TillLine withQuantity(String q) => TillLine(itemId: itemId, name: name, quantity: q, unit: unit, pieces: tillQuantityOf(q) == '${pieces.length}' ? pieces : const []);
+  TillLine withQuantity(String q) => TillLine(
+    itemId: itemId,
+    name: name,
+    quantity: q,
+    unit: unit,
+    pieces: tillQuantityOf(q) == '${pieces.length}' ? pieces : const [],
+    ageConfirmed: ageConfirmed,
+    depositFor: depositFor,
+  );
 
   /// The line with the piece tagged [tag] added: one more, named.
   TillLine withPiece(String tag) =>
-      TillLine(itemId: itemId, name: name, quantity: '${pieces.length + 1}', unit: unit, pieces: [...pieces, tag]);
+      TillLine(itemId: itemId, name: name, quantity: '${pieces.length + 1}', unit: unit, pieces: [...pieces, tag], ageConfirmed: ageConfirmed, depositFor: depositFor);
 
   Map<String, Object?> toJson() => {
     'item_id': itemId,
@@ -348,7 +363,17 @@ abstract interface class TillPort {
 
 /// #4366 -- an item the till offers as a key: what a tap rings up.
 class TillKey {
-  const TillKey({required this.id, required this.name, required this.unit, this.grossMinor});
+  const TillKey({
+    required this.id,
+    required this.name,
+    required this.unit,
+    this.grossMinor,
+    this.category,
+    this.colour,
+    this.minAge,
+    this.weighed = false,
+    this.depositItemId,
+  });
 
   final String id;
   final String name;
@@ -357,4 +382,19 @@ class TillKey {
   /// #4373 -- the item's price, gross, minor units of one unit, when the route knows it: what the till falls back on when it sells
   /// offline. The server prices every online sale; this is never used for one.
   final int? grossMinor;
+
+  /// The group of keys it sits under (the item's till category); null for the keys without one.
+  final String? category;
+
+  /// The key's colour as `#rrggbb`, or null for the default.
+  final String? colour;
+
+  /// The age a customer must be, confirmed by the operator on the line; null when there is no limit.
+  final int? minAge;
+
+  /// Sold by weight: the key asks the weight in [unit] instead of ringing up one.
+  final bool weighed;
+
+  /// The item whose deposit is added with this one, or null.
+  final String? depositItemId;
 }

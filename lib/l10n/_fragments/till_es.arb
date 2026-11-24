@@ -73,9 +73,9 @@
       }
     }
   },
-  "tillScanUnknown": "{code} no es algo que venda esta caja.",
+  "tillScanUnknown": "El código {code} no designa ningún artículo. No se ha añadido nada.",
   "@tillScanUnknown": {
-    "description": "#4436 the till: a scanned code that names nothing the till rings up",
+    "description": "#4366 the till",
     "placeholders": {
       "code": {
         "type": "String"
@@ -90,5 +90,78 @@
         "type": "String"
       }
     }
+  },
+  "tillWeighFirst": "Pese primero este artículo.",
+  "@tillWeighFirst": {
+    "description": "#4366 the till"
+  },
+  "tillWeightTitle": "Peso en {unit}",
+  "@tillWeightTitle": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "tillWeightHint": "El peso exacto de la balanza, por ejemplo 0,350.",
+  "@tillWeightHint": {
+    "description": "#4366 the till"
+  },
+  "tillAgeQuestion": "Este artículo es para clientes de {age} años o más. ¿Tiene el cliente al menos {age}?",
+  "@tillAgeQuestion": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "age": {
+        "type": "String"
+      }
+    }
+  },
+  "tillAgeNo": "No, no vender",
+  "@tillAgeNo": {
+    "description": "#4366 the till"
+  },
+  "tillAgeYes": "Sí, {age} o más",
+  "@tillAgeYes": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "age": {
+        "type": "String"
+      }
+    }
+  },
+  "tillAgeConfirmedLine": "edad {age}+ confirmada",
+  "@tillAgeConfirmedLine": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "age": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDepositLine": "depósito",
+  "@tillDepositLine": {
+    "description": "#4366 the till"
+  },
+  "tillDepositMissing": "El depósito de {name} no está a la venta en el mostrador. No se ha añadido nada.",
+  "@tillDepositMissing": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "tillCategoryAll": "Todos",
+  "@tillCategoryAll": {
+    "description": "#4366 the till"
+  },
+  "tillScanLabel": "Escanear un código",
+  "@tillScanLabel": {
+    "description": "#4366 the till"
+  },
+  "tillNotForCounter": "Este artículo no está a la venta en el mostrador.",
+  "@tillNotForCounter": {
+    "description": "#4366 the till"
   }
 }

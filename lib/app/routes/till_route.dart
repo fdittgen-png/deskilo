@@ -35,7 +35,21 @@ class TillRoute extends ConsumerWidget {
         ? const AsyncValue<List<TillKey>>.loading()
         : ref
               .watch(stockItemsProvider(workspaceId))
-              .whenData((items) => [for (final i in items) if (i.active) TillKey(id: i.id, name: i.name, unit: i.unit, grossMinor: prices[i.id])]);
+              .whenData((items) => [
+                for (final i in items)
+                  if (i.active)
+                    TillKey(
+                      id: i.id,
+                      name: i.name,
+                      unit: i.unit,
+                      grossMinor: prices[i.id],
+                      category: i.tillCategory,
+                      colour: i.quickKeyColour,
+                      minAge: i.minAge,
+                      weighed: i.soldByWeight,
+                      depositItemId: i.depositItemId,
+                    ),
+              ]);
     return TillScreen(
       workspaceId: workspaceId,
       currency: workspace?.currencyCode ?? '',

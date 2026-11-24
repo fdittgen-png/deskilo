@@ -73,9 +73,9 @@
       }
     }
   },
-  "tillScanUnknown": "{code} non è un articolo venduto da questa cassa.",
+  "tillScanUnknown": "Il codice {code} non indica alcun articolo. Non è stato aggiunto nulla.",
   "@tillScanUnknown": {
-    "description": "#4436 the till: a scanned code that names nothing the till rings up",
+    "description": "#4366 the till",
     "placeholders": {
       "code": {
         "type": "String"
@@ -90,5 +90,78 @@
         "type": "String"
       }
     }
+  },
+  "tillWeighFirst": "Pesi prima questo articolo.",
+  "@tillWeighFirst": {
+    "description": "#4366 the till"
+  },
+  "tillWeightTitle": "Peso in {unit}",
+  "@tillWeightTitle": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "tillWeightHint": "Il peso esatto della bilancia, per esempio 0,350.",
+  "@tillWeightHint": {
+    "description": "#4366 the till"
+  },
+  "tillAgeQuestion": "Questo articolo è riservato ai clienti di almeno {age} anni. Il cliente ha almeno {age} anni?",
+  "@tillAgeQuestion": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "age": {
+        "type": "String"
+      }
+    }
+  },
+  "tillAgeNo": "No, non vendere",
+  "@tillAgeNo": {
+    "description": "#4366 the till"
+  },
+  "tillAgeYes": "Sì, {age} anni o più",
+  "@tillAgeYes": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "age": {
+        "type": "String"
+      }
+    }
+  },
+  "tillAgeConfirmedLine": "età {age}+ confermata",
+  "@tillAgeConfirmedLine": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "age": {
+        "type": "String"
+      }
+    }
+  },
+  "tillDepositLine": "cauzione",
+  "@tillDepositLine": {
+    "description": "#4366 the till"
+  },
+  "tillDepositMissing": "La cauzione di {name} non è in vendita al banco. Non è stato aggiunto nulla.",
+  "@tillDepositMissing": {
+    "description": "#4366 the till",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "tillCategoryAll": "Tutti",
+  "@tillCategoryAll": {
+    "description": "#4366 the till"
+  },
+  "tillScanLabel": "Scansiona un codice",
+  "@tillScanLabel": {
+    "description": "#4366 the till"
+  },
+  "tillNotForCounter": "Questo articolo non è in vendita al banco.",
+  "@tillNotForCounter": {
+    "description": "#4366 the till"
   }
 }
