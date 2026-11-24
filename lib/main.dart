@@ -144,6 +144,7 @@ Future<void> main() async {
         businessWorkspacesFromApp, // #4167
         tillPortFromApp, // #4366
         tillDrawerPortFromApp, // #4367
+        tillOfflinePortFromApp, // #4373
         businessDayFromApp, // #4426
         privateValuesFromAccount, // #2552
         eventSourceOpenersFromMoney, // #2573

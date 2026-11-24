@@ -18784,6 +18784,18 @@ abstract class AppLocalizations {
   /// **'The space file (XML) carries the whole configuration — tariffs, legal identity, booking and validation rules, roles, document designs, sites, closure days — and importing it applies it, even on a space that already has bookings. Off: the file carries settings and floor plan only.'**
   String get featureConfigurationTransferDesc;
 
+  /// #4373 feature description
+  ///
+  /// In en, this message translates to:
+  /// **'When the connection is lost the till keeps selling for cash, records each sale on the device and sends the sales in order once the connection returns. Other ways to pay wait for the connection.'**
+  String get featureCounterOfflineCashDesc;
+
+  /// #4373 feature name
+  ///
+  /// In en, this message translates to:
+  /// **'Selling offline, cash only'**
+  String get featureCounterOfflineCashTitle;
+
   /// #4184 feature description
   ///
   /// In en, this message translates to:
@@ -20355,6 +20367,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The expiry report'**
   String get featureStockExpiryReportTitle;
+
+  /// #4435 the handling units feature: what it does
+  ///
+  /// In en, this message translates to:
+  /// **'Goods move in the pallet or carton they were received in, or in the store\'s own repackaged units, and stay traceable through the repack.'**
+  String get featureStockHandlingUnitsDesc;
+
+  /// #4435 the handling units feature: its name
+  ///
+  /// In en, this message translates to:
+  /// **'Handling units'**
+  String get featureStockHandlingUnitsTitle;
 
   /// #4361 feature description
   ///
@@ -46326,6 +46350,12 @@ abstract class AppLocalizations {
   /// **'This receipt is no longer an open draft, or a receipt was already issued for the same sale.'**
   String get refusalCounterNotOpen;
 
+  /// #4373 refusal
+  ///
+  /// In en, this message translates to:
+  /// **'A sale sent from the till under this number was already received with other content. Nothing was recorded again; look at the list of offline sales.'**
+  String get refusalCounterOfflineConflict;
+
   /// #4185 refusal
   ///
   /// In en, this message translates to:
@@ -46541,6 +46571,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This item has no such unit. Add the unit to the item, or enter the quantity in a unit it lists.'**
   String get refusalStockUnit;
+
+  /// #4435 refusal
+  ///
+  /// In en, this message translates to:
+  /// **'This unit changed since you read it: someone moved or unpacked it. Read it again.'**
+  String get refusalStockUnitChanged;
+
+  /// #4435 refusal
+  ///
+  /// In en, this message translates to:
+  /// **'This unit code is already used in this business. Choose another code.'**
+  String get refusalStockUnitCodeTaken;
+
+  /// #4435 refusal
+  ///
+  /// In en, this message translates to:
+  /// **'What the unit holds does not fit: the quantity, the lot, the piece or the place. Check the content.'**
+  String get refusalStockUnitContent;
 
   /// #4169 (0837) DKG12: an item with variants moved, sold or counted without naming one.
   ///
@@ -51324,6 +51372,24 @@ abstract class AppLocalizations {
   /// **'What you declare about the fiscal rules for a sale at the counter: none means no fiscal cash-register obligation applies to your business (your own declaration, recorded on each receipt); register required means one does. A receipt is issued only where your country\'s operation is supported under the case you declare.'**
   String get settingHintCounterFiscalObligation;
 
+  /// #4373 setting hint
+  ///
+  /// In en, this message translates to:
+  /// **'How long after the till lost its connection a cash sale made offline is still accepted when it is sent. Later sales are refused and listed for the owner.'**
+  String get settingHintCounterOfflineMaxMinutes;
+
+  /// #4373 setting hint
+  ///
+  /// In en, this message translates to:
+  /// **'How many cash sales made offline one till session accepts. Further sales are refused and listed for the owner.'**
+  String get settingHintCounterOfflineMaxSales;
+
+  /// #4373 setting hint
+  ///
+  /// In en, this message translates to:
+  /// **'How far, in percent, the price of an offline sale may differ from the item\'s price when the sale is sent. 0 means the price must be the same.'**
+  String get settingHintCounterOfflinePriceTolerance;
+
   /// #4367 setting label/hint or refusal
   ///
   /// In en, this message translates to:
@@ -51971,6 +52037,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Fiscal rules for counter sales'**
   String get settingLabelCounterFiscalObligation;
+
+  /// #4373 setting label
+  ///
+  /// In en, this message translates to:
+  /// **'Longest offline period (minutes)'**
+  String get settingLabelCounterOfflineMaxMinutes;
+
+  /// #4373 setting label
+  ///
+  /// In en, this message translates to:
+  /// **'Most offline sales per till session'**
+  String get settingLabelCounterOfflineMaxSales;
+
+  /// #4373 setting label
+  ///
+  /// In en, this message translates to:
+  /// **'Price difference allowed offline (%)'**
+  String get settingLabelCounterOfflinePriceTolerance;
 
   /// #4367 setting label/hint or refusal
   ///

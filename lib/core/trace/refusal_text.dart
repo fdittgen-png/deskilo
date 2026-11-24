@@ -171,10 +171,18 @@ enum KnownRefusal {
   counterDayClose,
   counterDayOpen,
 
+  /// #4373 (0937) -- DKL16: a request id or a sequence number of an offline sale already holds another sale.
+  counterOfflineConflict,
+
   /// #4362 (0887) — DKG25: the pieces of a piece-tracked item must be named;
   /// DKG26: a named piece is not where the movement takes it from.
   stockNamePieces,
   stockPieceWhere,
+
+  /// #4435 (0929) — DKG27: a handling unit changed since it was read; DKG28: its content does not fit; DKG29: its code is taken.
+  stockUnitChanged,
+  stockUnitContent,
+  stockUnitCodeTaken,
 
   /// #4008 (0782) — DKM01: a member who left comes back as a new member,
   /// never by changing their old row (for instance to paused).
@@ -253,6 +261,9 @@ const Map<String, KnownRefusal> _codedRefusals = {
   DkCode.dkg24: KnownRefusal.stockPieceInStock,
   DkCode.dkg25: KnownRefusal.stockNamePieces,
   DkCode.dkg26: KnownRefusal.stockPieceWhere,
+  DkCode.dkg27: KnownRefusal.stockUnitChanged,
+  DkCode.dkg28: KnownRefusal.stockUnitContent,
+  DkCode.dkg29: KnownRefusal.stockUnitCodeTaken,
   DkCode.dkl01: KnownRefusal.counterUnsupported,
   DkCode.dkl02: KnownRefusal.counterEssentials,
   DkCode.dkl04: KnownRefusal.counterNotOpen,
@@ -266,6 +277,7 @@ const Map<String, KnownRefusal> _codedRefusals = {
   DkCode.dkl13: KnownRefusal.counterCashEntry,
   DkCode.dkl14: KnownRefusal.counterDayClose,
   DkCode.dkl15: KnownRefusal.counterDayOpen,
+  DkCode.dkl16: KnownRefusal.counterOfflineConflict,
   // #4008 — a member who left (0782).
   DkCode.dkm01: KnownRefusal.memberReturnsAsNew,
 };
@@ -382,6 +394,9 @@ String? _tagRefusalText(AppLocalizations l10n, KnownRefusal refusal) => switch (
       KnownRefusal.stockPieceInStock => l10n.refusalStockPieceInStock,
       KnownRefusal.stockNamePieces => l10n.refusalStockNamePieces,
       KnownRefusal.stockPieceWhere => l10n.refusalStockPieceWhere,
+      KnownRefusal.stockUnitChanged => l10n.refusalStockUnitChanged,
+      KnownRefusal.stockUnitContent => l10n.refusalStockUnitContent,
+      KnownRefusal.stockUnitCodeTaken => l10n.refusalStockUnitCodeTaken,
       _ => _counterRefusalText(l10n, refusal),
     };
 
@@ -400,6 +415,7 @@ String? _counterRefusalText(AppLocalizations l10n, KnownRefusal refusal) => swit
       KnownRefusal.counterCashEntry => l10n.refusalCounterCashEntry,
       KnownRefusal.counterDayClose => l10n.refusalCounterDayClose,
       KnownRefusal.counterDayOpen => l10n.refusalCounterDayOpen,
+      KnownRefusal.counterOfflineConflict => l10n.refusalCounterOfflineConflict,
       _ => null,
     };
 

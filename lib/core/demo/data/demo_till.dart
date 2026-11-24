@@ -5,6 +5,7 @@
 // sums of the lines); a sale numbers the receipt from a counter of its own and answers the same sale again under the
 // same request id. A country that is not ready is a Demo choice: [ready] false answers the server's `unavailable`.
 import 'package:deskilo/features/money/domain/counter_till.dart';
+import 'package:deskilo/features/money/domain/till_offline.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import '../../codes/dk_code.dart';
@@ -18,7 +19,7 @@ PostgrestException _refused(String code, String message, {String? reason}) =>
 /// The prices of Demo items the stock registry does not carry (the T-shirt the variants are edited on), in cents.
 const _unstocked = <String, int>{'demo-item-shirt': 1900, 'demo-item-basket': 3900, 'demo-item-apples': 1800};
 
-class DemoTill implements TillPort {
+class DemoTill implements TillPort, TillOfflinePort {
   DemoTill({required this.country, required this.currency, required this.vatPercent, this.ready = true, this.minorDigits = 2, this.drawer});
 
   final String country;
@@ -108,5 +109,45 @@ class DemoTill implements TillPort {
     final till = _tillOf.remove(receiptId);
     if (till != null) drawer?.recordCashSale(till, tenders.where((t) => t.kind == 'cash').fold(0, (a, t) => a + t.amountMinor), number: sold.number);
     return _done[requestId] = sold;
+  }
+
+  // #4373 -- the offline sales: the server's rules in memory (cash only, an item's price as it is now, each request once, a gap reported).
+  final Map<String, OfflineSaleResult> _offlineByRequest = {};
+  final Map<String, List<OfflineSaleRow>> _offlineRows = {};
+
+  @override
+  Future<OfflineSyncAnswer> sync(String workspaceId, {required String sessionId, required DateTime offlineSince, required List<OfflineSale> sales, required int minorDigits}) async {
+    final rows = _offlineRows.putIfAbsent(sessionId, () => []);
+    final results = <OfflineSaleResult>[];
+    for (final sale in sales) {
+      final again = _offlineByRequest[sale.requestId];
+      if (again != null) {
+        results.add(OfflineSaleResult(seq: again.seq, requestId: again.requestId, accepted: again.accepted, reason: again.reason, number: again.number, replayed: true));
+        continue;
+      }
+      final priced = [for (final l in sale.lines) DemoStockRegistry.catalogue[l.itemId]?.$2 ?? _unstocked[l.itemId]];
+      final reason = [for (var i = 0; i < priced.length; i++) if (priced[i] == null) 'item' else if (priced[i] != sale.lines[i].unitMinor) 'price'].firstOrNull ?? '';
+      final number = reason.isEmpty ? 'R-${(++_sales).toString().padLeft(5, '0')}' : '';
+      final result = OfflineSaleResult(seq: sale.seq, requestId: sale.requestId, accepted: reason.isEmpty, reason: reason, number: number, replayed: false);
+      _offlineByRequest[sale.requestId] = result;
+      results.add(result);
+      rows.add(OfflineSaleRow(
+        seq: sale.seq, accepted: reason.isEmpty, reason: reason, number: number, totalMinor: reason.isEmpty ? sale.totalMinor : null,
+        cashGivenMinor: sale.cashGivenMinor, changeMinor: sale.changeMinor, occurredAt: sale.occurredAt,
+      ));
+    }
+    return OfflineSyncAnswer(results: results, gaps: _gapsOf(rows));
+  }
+
+  @override
+  Future<OfflineList> list(String workspaceId, {required String sessionId}) async {
+    final rows = [...?_offlineRows[sessionId]]..sort((a, b) => a.seq.compareTo(b.seq));
+    return OfflineList(sales: rows, gaps: _gapsOf(rows));
+  }
+
+  List<int> _gapsOf(List<OfflineSaleRow> rows) {
+    final seen = {for (final r in rows) r.seq};
+    final top = seen.fold<int>(0, (a, b) => a > b ? a : b);
+    return [for (var n = 1; n <= top; n++) if (!seen.contains(n)) n];
   }
 }

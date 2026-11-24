@@ -277,6 +277,7 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
         ..canRecordOutgoing = (() => ref.read(myPermissionsProvider).contains(WorkspacePermission.recordOutgoingPayments))
         ..me = (() => ref.read(myMemberProvider).value?.id ?? 'demo-member');
     }),
+    tillOfflinePortProvider.overrideWith((ref) => demoPickSpace(ref, tills)),
   ];
 }
 
